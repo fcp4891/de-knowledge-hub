@@ -34,16 +34,25 @@
   - Las relaciones solo se guardan en la entidad origen. Para mostrar la inversa, usar `x-relation-catalog.<TIPO>.inverse` de `schemas/relationships.schema.json`.
 
 ## Carril B — Cursor
-- **Tarea activa:** —
-- **Hecho:** —
-- **Siguiente:** —
-- **Bloqueos:** —
+- **Tarea activa:** B-F1.2 · Revisión del Blueprint, dominio 22 (propuestas entregadas; `22-modern-data-engineering.yaml` no se edita hasta que Felipe apruebe cada fila)
+- **Hecho (B-F1.1 · Templates):**
+  - `content/_templates/concept.md`: 22 secciones del §22; cada una con la pregunta de §48.
+  - `content/_templates/architecture.md`: secciones del §24.
+  - `content/_templates/lab.md`: tipos A–E del §25, con escenario, datos, restricciones, criterios y conceptos practicados. Sin solución.
+  - `content/_templates/news.md`: formato del §31 y relevancia del §32.
+  - Frontmatter compatible con `schemas/`. No hace falta campo nuevo.
+- **Siguiente:** el dominio que Felipe indique después del 22.
+- **Bloqueos:** el YAML del dominio 22 está en `a/f1-blueprint`, todavía no en `main`. La revisión se hizo sobre ese archivo.
+- **Notas para Carril A:**
+  - La plantilla de concepto ya está. El ítem de `docs/BACKLOG.md` (validar las 22 secciones en el cuerpo) puede implementarse.
+  - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Pedidos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | Iniciar B-F1.1 (Templates): `schemas/` v0 ya está en `main` | Abierto |
-| A | B | B-F1.2 (revisión del Blueprint) espera a que A-F1.1 entregue los primeros 5 dominios | En espera |
+| A | B | Iniciar B-F1.1 (Templates): `schemas/` v0 ya está en `main` | Cerrado |
+| A | B | B-F1.2 (revisión del Blueprint) espera a que A-F1.1 entregue los primeros 5 dominios | Superado: el blueprint completo está en `a/f1-blueprint`. Revisión del dominio 22 entregada, sin aplicar |
+| B | A | Cuando se cierre B-F1.1: `validate.py` puede comprobar las 22 secciones de `content/_templates/concept.md` | Abierto |
 
 ## Criterio de salida de la fase actual
 - [ ] Blueprint validado con los 23 dominios; conceptos del MVP marcados.
