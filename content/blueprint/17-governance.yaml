@@ -1,0 +1,94 @@
+# Knowledge Blueprint v1 · Dominio 17 (plan maestro §19: Gobierno)
+domain:
+  id: "17"
+  slug: governance
+  title: Gobierno de datos
+  description: Catálogo, metadata, linaje, responsabilidades, clasificación y ciclo de vida del dato en la organización.
+
+subdomains:
+  - slug: metadata-and-lineage
+    title: Metadata y linaje
+    concepts:
+      - slug: data-catalog
+        title: Catálogo de datos
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_technologies: [gcp-dataplex, microsoft-purview, aws-glue]
+        related_concepts: [metadata-management]
+      - slug: metadata-management
+        title: Gestión de metadata
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+      - slug: data-lineage
+        title: Linaje de datos
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_technologies: [openlineage, gcp-dataplex]
+        related_concepts: [data-catalog, root-cause-analysis]
+        note: Aparece en §18 y §19; una sola ficha con ambas perspectivas (operativa y de gobierno).
+
+  - slug: ownership-and-organization
+    title: Responsabilidades y organización
+    concepts:
+      - slug: data-ownership
+        title: Ownership
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [data-products]
+      - slug: data-stewardship
+        title: Stewardship
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [data-ownership]
+      - slug: data-domains
+        title: Dominios de datos
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [data-mesh, data-ownership]
+      - slug: data-classification
+        title: Clasificación de datos
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [data-catalog]
+
+  - slug: retention-and-lifecycle
+    title: Retención y ciclo de vida
+    concepts:
+      - slug: data-retention
+        title: Retención
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [data-classification]
+      - slug: data-lifecycle-management
+        title: Gestión del ciclo de vida
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [data-retention, gcs-storage-classes-and-lifecycle, data-lifecycle]
+        note: Políticas de gobierno; distinto del ciclo de vida conceptual de 01-fundamentals.

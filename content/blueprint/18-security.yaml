@@ -1,0 +1,113 @@
+# Knowledge Blueprint v1 · Dominio 18 (plan maestro §19: Seguridad)
+# Policy tags es terminología de GCP y vive en 08-gcp (bigquery-policy-tags).
+domain:
+  id: "18"
+  slug: security
+  title: Seguridad
+  description: Control de acceso, cifrado, secretos e identidades de servicio aplicados a plataformas de datos.
+
+subdomains:
+  - slug: access-control
+    title: Control de acceso
+    concepts:
+      - slug: iam-fundamentals
+        title: Fundamentos de IAM
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: false
+        related_concepts: [gcp-iam-for-data, aws-iam-for-data, entra-id-for-data]
+      - slug: rbac
+        title: RBAC
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [iam-fundamentals]
+      - slug: abac
+        title: ABAC
+        kind: concept
+        classification: core
+        level: advanced
+        importance: medium
+        mvp: false
+        related_concepts: [rbac]
+      - slug: least-privilege
+        title: Mínimo privilegio
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: false
+        related_concepts: [iam-fundamentals]
+      - slug: service-accounts
+        title: Cuentas de servicio
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [least-privilege]
+      - slug: row-level-security
+        title: Seguridad a nivel de fila
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [bigquery-security]
+      - slug: column-level-security
+        title: Seguridad a nivel de columna
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [bigquery-policy-tags]
+      - slug: data-masking
+        title: Enmascaramiento de datos
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        added_by: blueprint
+        related_concepts: [column-level-security]
+
+  - slug: encryption-and-secrets
+    title: Cifrado y secretos
+    concepts:
+      - slug: encryption-at-rest
+        title: Cifrado en reposo
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [key-management]
+      - slug: encryption-in-transit
+        title: Cifrado en tránsito
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+      - slug: key-management
+        title: Gestión de claves (KMS)
+        kind: concept
+        classification: core
+        level: advanced
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-cloud-kms]
+        related_concepts: [gcp-cmek-with-kms]
+      - slug: secrets-management
+        title: Gestión de secretos
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [gcp-secret-manager-usage, key-vault-secrets, ci-cd-secrets]

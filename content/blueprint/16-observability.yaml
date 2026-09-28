@@ -1,0 +1,123 @@
+# Knowledge Blueprint v1 · Dominio 16 (plan maestro §18)
+# Se diferencia de Data Quality (15). Lineage vive en 17-governance y se enlaza.
+domain:
+  id: "16"
+  slug: observability
+  title: Observabilidad
+  description: Señales, salud de pipelines, acuerdos de servicio y respuesta a incidentes en plataformas de datos.
+
+subdomains:
+  - slug: telemetry
+    title: Telemetría
+    concepts:
+      - slug: data-observability
+        title: Data observability
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [data-quality-dimensions]
+        note: Explicar la diferencia con Data Quality (§18).
+      - slug: observability-logs
+        title: Logs
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: false
+        related_concepts: [python-logging]
+      - slug: observability-metrics
+        title: Métricas
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: false
+      - slug: observability-traces
+        title: Trazas
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+
+  - slug: data-signals
+    title: Señales sobre los datos
+    concepts:
+      - slug: data-freshness
+        title: Freshness
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [data-observability]
+      - slug: volume-anomalies
+        title: Anomalías de volumen
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [data-observability]
+      - slug: schema-change-detection
+        title: Detección de cambios de schema
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [schema-evolution]
+      - slug: pipeline-health
+        title: Salud de pipelines
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [orchestration-observability]
+
+  - slug: reliability-operations
+    title: Acuerdos de servicio e incidentes
+    concepts:
+      - slug: data-sla
+        title: SLA
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [data-slo]
+      - slug: data-slo
+        title: SLO
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [data-freshness]
+      - slug: alerting
+        title: Alertas
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [data-slo]
+      - slug: incident-response
+        title: Respuesta a incidentes
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [alerting]
+      - slug: root-cause-analysis
+        title: Análisis de causa raíz
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [incident-response, observability-logs]

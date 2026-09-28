@@ -1,0 +1,89 @@
+# Knowledge Blueprint v1 · Dominio 20 (plan maestro §21)
+# Las tecnologías son entidades (A-F1.2); aquí se inventarían los conceptos para entenderlas sin un cloud concreto.
+# Airflow, Terraform, Kubernetes y Beam tienen sus conceptos en 06, 12, 13 y 03.
+domain:
+  id: "20"
+  slug: open-data-stack
+  title: Open Data Stack
+  description: Tecnologías independientes del cloud y los conceptos necesarios para usarlas con criterio.
+
+subdomains:
+  - slug: open-stack-overview
+    title: Panorama
+    concepts:
+      - slug: open-data-stack-overview
+        title: Qué es el open data stack
+        kind: concept
+        classification: modern
+        level: basic
+        importance: medium
+        mvp: false
+        related_technologies: [apache-airflow, apache-spark, apache-kafka, apache-beam, dbt, terraform, postgresql, kubernetes]
+        note: Evita interpretar Data Engineering solo a través de productos cloud (§21).
+
+  - slug: open-table-formats
+    title: Open table formats
+    concepts:
+      - slug: open-table-formats
+        title: Open table formats
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        related_technologies: [apache-iceberg, delta-lake, apache-hudi]
+        related_concepts: [lakehouse, acid, parquet-format]
+      - slug: table-format-comparison
+        title: Comparación entre Iceberg, Delta Lake y Hudi
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_technologies: [apache-iceberg, delta-lake, apache-hudi]
+        related_concepts: [open-table-formats]
+
+  - slug: processing-and-messaging
+    title: Procesamiento y mensajería
+    concepts:
+      - slug: spark-execution-model
+        title: Modelo de ejecución de Spark
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: high
+        mvp: false
+        related_technologies: [apache-spark]
+        related_concepts: [pyspark-dataframes]
+      - slug: kafka-architecture
+        title: Arquitectura de Kafka
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_technologies: [apache-kafka]
+        related_concepts: [topics-and-partitions, offsets]
+
+  - slug: transformation-and-storage
+    title: Transformación y almacenamiento
+    concepts:
+      - slug: dbt-core-concepts
+        title: Conceptos centrales de dbt
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        related_technologies: [dbt]
+        related_concepts: [dbt-tests, materialization-strategies, dataform-workflows]
+        note: Models, ref, materializations; comparar con Dataform sin presentarlos como equivalentes.
+      - slug: postgresql-for-data-engineers
+        title: PostgreSQL para Data Engineers
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [postgresql]
+        related_concepts: [change-data-capture, oltp-vs-olap]
