@@ -1,12 +1,13 @@
 # STATUS — Data Engineering Knowledge Hub
 
-**Fase actual:** F0 — Fundaciones
+**Fase actual:** F1 — Knowledge Blueprint v1 (F0 cerrada y aprobada el 2026-09-28)
 **Última actualización:** 2026-09-28
 
 ---
 
 ## Carril A — Claude Code
-- **Tarea activa:** — (A-F0 cerrada, pendiente del gate humano)
+- **Tarea activa:** A-F1.1 · Blueprint de dominios (rama `a/f1-blueprint`), plan pendiente de aprobación
+- **Cerrado:** A-F0 · Repo y contratos base (merge en `main`)
 - **Hecho (A-F0 · Repo y contratos base):**
   - Estructura del repo según ROADMAP §3, `Makefile` (validate, test, build, dev, install), `.gitattributes` (`eol=lf`), CI en `.github/workflows/ci.yml`.
   - `rules/project.mdc` movido a `.cursor/rules/project.mdc`.
@@ -25,7 +26,7 @@
   - Ajuste de gate: `RELATED_TO` abierta a cualquier tipo; `ALTERNATIVE_TO` con `type_groups` (mismo tipo; technology y cloud_service comparten grupo). Test que fija los pares que necesitan F2–F6.
   - 42 tests en `tests/test_validate.py`. `make validate` y `make test` en verde.
   - `docs/adr/ADR-000-content-as-code.md`.
-- **Siguiente:** gate humano de F0 y después A-F1.1 (Blueprint).
+- **Siguiente:** A-F1.2 (Tecnologías y matriz), después de A-F1.1.
 - **Bloqueos:** —
 - **Cambios de contrato (con ADR):** creación inicial de `schemas/` y ajuste de pares en el gate de F0 (ADR-000).
 - **Notas para Carril B:**
@@ -41,10 +42,18 @@
 ## Pedidos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| | | | |
+| A | B | Iniciar B-F1.1 (Templates): `schemas/` v0 ya está en `main` | Abierto |
+| A | B | B-F1.2 (revisión del Blueprint) espera a que A-F1.1 entregue los primeros 5 dominios | En espera |
 
 ## Criterio de salida de la fase actual
-- [x] `make validate` pasa con la ficha de ejemplo `change-data-capture` (11 entidades; `make test`: 42 passed) — **gate aprobado 2026-09-28**
+- [ ] Blueprint validado con los 23 dominios; conceptos del MVP marcados.
+- [ ] Templates cerrados.
+- [ ] Source Registry con fuentes oficiales para todas las tecnologías del MVP.
+- [ ] ADR-001 aprobado.
+- [ ] Gate humano.
+
+## Fases cerradas
+- **F0 — Fundaciones** (2026-09-28): `make validate` en verde con la ficha `change-data-capture`; 42 tests.
 
 ## Decisiones pendientes para el gate humano
 - —

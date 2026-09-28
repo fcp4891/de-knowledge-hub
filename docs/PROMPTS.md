@@ -86,6 +86,7 @@ Reglas:
 - Marca mvp: true solo para los dominios del MVP (§51): Fundamentos, SQL, Modelado, Pipelines, Arquitectura y GCP.
 - No escribas contenido de fichas todavía; solo el inventario.
 - Crea el schema blueprint.schema.json si no existe y hazlo pasar por validate.
+- Reutiliza los slugs de los stubs existentes (debezium, apache-kafka, gcp-datastream, idempotency).
 
 Al final: tabla resumen con número de conceptos por dominio, cuántos son mvp y cuántos agregaste.
 Trabaja dominio por dominio y valida cada 5 dominios.
