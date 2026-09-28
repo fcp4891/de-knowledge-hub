@@ -2,11 +2,16 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "relationships.schema.json",
   "title": "Relación del Knowledge Graph",
-  "description": "Una arista saliente declarada en el frontmatter de la entidad origen (§34, §42). Cada relación se guarda en una sola dirección; x-relation-catalog declara el nombre inverso para la UI y los pares origen/destino válidos, que validate.py verifica.",
+  "description": "Una arista saliente declarada en el frontmatter de la entidad origen (§34, §42). Cada relación se guarda en una sola dirección; x-relation-catalog declara el nombre inverso para la UI y los pares origen/destino válidos, que validate.py verifica. type_groups (opcional) exige que origen y destino pertenezcan al mismo grupo.",
   "type": "object",
-  "required": ["type", "target"],
+  "required": [
+    "type",
+    "target"
+  ],
   "properties": {
-    "type": { "$ref": "#/$defs/relation_type" },
+    "type": {
+      "$ref": "#/$defs/relation_type"
+    },
     "target": {
       "description": "Slug de la entidad destino. Debe existir en content/.",
       "$ref": "enums.schema.json#/$defs/slug"
@@ -42,99 +47,268 @@
       "inverse": "used_by",
       "symmetric": false,
       "description": "El origen utiliza el destino como componente.",
-      "source_types": ["concept", "technology", "cloud_service", "pattern", "architecture", "code_snippet", "lab"],
-      "target_types": ["concept", "technology", "cloud_service", "pattern"]
+      "source_types": [
+        "concept",
+        "technology",
+        "cloud_service",
+        "pattern",
+        "architecture",
+        "code_snippet",
+        "lab"
+      ],
+      "target_types": [
+        "concept",
+        "technology",
+        "cloud_service",
+        "pattern"
+      ]
     },
     "IMPLEMENTS": {
       "inverse": "implemented_by",
       "symmetric": false,
       "description": "El origen es una implementación concreta del concepto o patrón destino.",
-      "source_types": ["technology", "cloud_service", "pattern", "architecture", "code_snippet"],
-      "target_types": ["concept", "pattern", "technology"]
+      "source_types": [
+        "technology",
+        "cloud_service",
+        "pattern",
+        "architecture",
+        "code_snippet"
+      ],
+      "target_types": [
+        "concept",
+        "pattern",
+        "technology"
+      ]
     },
     "DEPENDS_ON": {
       "inverse": "dependency_of",
       "symmetric": false,
       "description": "El origen requiere el destino para funcionar o para entenderse.",
-      "source_types": ["concept", "technology", "cloud_service", "pattern", "architecture", "code_snippet", "lab"],
-      "target_types": ["concept", "technology", "cloud_service", "pattern", "architecture"]
+      "source_types": [
+        "concept",
+        "technology",
+        "cloud_service",
+        "pattern",
+        "architecture",
+        "code_snippet",
+        "lab"
+      ],
+      "target_types": [
+        "concept",
+        "technology",
+        "cloud_service",
+        "pattern",
+        "architecture"
+      ]
     },
     "ALTERNATIVE_TO": {
       "inverse": "alternative_to",
       "symmetric": true,
-      "description": "Alternativa con diferencias; nunca significa equivalencia exacta.",
-      "source_types": ["concept", "technology", "cloud_service", "pattern", "architecture"],
-      "target_types": ["concept", "technology", "cloud_service", "pattern", "architecture"]
+      "description": "Alternativa con diferencias; nunca significa equivalencia exacta. Origen y destino deben pertenecer al mismo grupo de type_groups.",
+      "source_types": [
+        "concept",
+        "technology",
+        "cloud_service",
+        "pattern",
+        "architecture"
+      ],
+      "target_types": [
+        "concept",
+        "technology",
+        "cloud_service",
+        "pattern",
+        "architecture"
+      ],
+      "type_groups": [
+        [
+          "concept"
+        ],
+        [
+          "pattern"
+        ],
+        [
+          "architecture"
+        ],
+        [
+          "technology",
+          "cloud_service"
+        ]
+      ]
     },
     "RELATED_TO": {
       "inverse": "related_to",
       "symmetric": true,
       "description": "Relación temática sin semántica más específica.",
-      "source_types": ["concept", "technology", "cloud_service", "pattern", "architecture", "code_snippet", "lab", "interview_question"],
-      "target_types": ["concept", "technology", "cloud_service", "pattern", "architecture", "code_snippet", "lab"]
+      "source_types": [
+        "concept",
+        "technology",
+        "cloud_service",
+        "pattern",
+        "architecture",
+        "code_snippet",
+        "lab",
+        "news",
+        "release",
+        "source",
+        "job_description",
+        "interview_question",
+        "personal_note"
+      ],
+      "target_types": [
+        "concept",
+        "technology",
+        "cloud_service",
+        "pattern",
+        "architecture",
+        "code_snippet",
+        "lab",
+        "news",
+        "release",
+        "source",
+        "job_description",
+        "interview_question",
+        "personal_note"
+      ]
     },
     "REPLACES": {
       "inverse": "replaced_by",
       "symmetric": false,
       "description": "El origen sucede oficialmente al destino (deprecación o reemplazo declarado por el proveedor).",
-      "source_types": ["technology", "cloud_service", "pattern"],
-      "target_types": ["technology", "cloud_service", "pattern"]
+      "source_types": [
+        "technology",
+        "cloud_service",
+        "pattern"
+      ],
+      "target_types": [
+        "technology",
+        "cloud_service",
+        "pattern"
+      ]
     },
     "EXTENDS": {
       "inverse": "extended_by",
       "symmetric": false,
       "description": "El origen amplía o especializa el destino.",
-      "source_types": ["concept", "technology", "cloud_service", "pattern", "architecture"],
-      "target_types": ["concept", "technology", "cloud_service", "pattern", "architecture"]
+      "source_types": [
+        "concept",
+        "technology",
+        "cloud_service",
+        "pattern",
+        "architecture"
+      ],
+      "target_types": [
+        "concept",
+        "technology",
+        "cloud_service",
+        "pattern",
+        "architecture"
+      ]
     },
     "RUNS_ON": {
       "inverse": "hosts",
       "symmetric": false,
       "description": "El origen se ejecuta sobre el destino (p. ej. un proyecto open source sobre un servicio administrado).",
-      "source_types": ["technology", "cloud_service"],
-      "target_types": ["technology", "cloud_service"]
+      "source_types": [
+        "technology",
+        "cloud_service"
+      ],
+      "target_types": [
+        "technology",
+        "cloud_service"
+      ]
     },
     "PRODUCES": {
       "inverse": "produced_by",
       "symmetric": false,
       "description": "El origen genera datos, eventos o artefactos del tipo destino.",
-      "source_types": ["concept", "technology", "cloud_service", "pattern", "architecture"],
-      "target_types": ["concept", "technology", "cloud_service"]
+      "source_types": [
+        "concept",
+        "technology",
+        "cloud_service",
+        "pattern",
+        "architecture"
+      ],
+      "target_types": [
+        "concept",
+        "technology",
+        "cloud_service"
+      ]
     },
     "CONSUMES": {
       "inverse": "consumed_by",
       "symmetric": false,
       "description": "El origen lee datos, eventos o artefactos del destino.",
-      "source_types": ["concept", "technology", "cloud_service", "pattern", "architecture"],
-      "target_types": ["concept", "technology", "cloud_service"]
+      "source_types": [
+        "concept",
+        "technology",
+        "cloud_service",
+        "pattern",
+        "architecture"
+      ],
+      "target_types": [
+        "concept",
+        "technology",
+        "cloud_service"
+      ]
     },
     "PRACTICES": {
       "inverse": "practiced_in",
       "symmetric": false,
       "description": "El laboratorio o la pregunta ejercita el destino.",
-      "source_types": ["lab", "interview_question"],
-      "target_types": ["concept", "technology", "cloud_service", "pattern", "architecture"]
+      "source_types": [
+        "lab",
+        "interview_question"
+      ],
+      "target_types": [
+        "concept",
+        "technology",
+        "cloud_service",
+        "pattern",
+        "architecture"
+      ]
     },
     "AFFECTS": {
       "inverse": "affected_by",
       "symmetric": false,
       "description": "La novedad o release impacta al destino.",
-      "source_types": ["news", "release"],
-      "target_types": ["concept", "technology", "cloud_service", "pattern", "architecture"]
+      "source_types": [
+        "news",
+        "release"
+      ],
+      "target_types": [
+        "concept",
+        "technology",
+        "cloud_service",
+        "pattern",
+        "architecture"
+      ]
     },
     "UPDATES": {
       "inverse": "updated_by",
       "symmetric": false,
       "description": "La release publica una nueva versión o cambio del destino.",
-      "source_types": ["release"],
-      "target_types": ["technology", "cloud_service"]
+      "source_types": [
+        "release"
+      ],
+      "target_types": [
+        "technology",
+        "cloud_service"
+      ]
     },
     "REQUIRES": {
       "inverse": "required_by",
       "symmetric": false,
       "description": "La oferta laboral exige el destino.",
-      "source_types": ["job_description"],
-      "target_types": ["concept", "technology", "cloud_service", "pattern", "architecture"]
+      "source_types": [
+        "job_description"
+      ],
+      "target_types": [
+        "concept",
+        "technology",
+        "cloud_service",
+        "pattern",
+        "architecture"
+      ]
     }
   }
 }

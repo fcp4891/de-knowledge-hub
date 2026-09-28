@@ -222,6 +222,16 @@ def check_relations(
             report.add(doc.location, f"{where}: slug destino inexistente")
         elif target.data["type"] not in rule["target_types"]:
             report.add(doc.location, f"{where}: destino de tipo {target.data['type']} no permitido")
+        elif not same_type_group(rule, source_type, target.data["type"]):
+            report.add(doc.location, f"{where}: {source_type} y {target.data['type']} no pertenecen al mismo grupo de tipos")
+
+
+def same_type_group(rule: dict[str, Any], source_type: str, target_type: str) -> bool:
+    """True si la relación no define type_groups o ambos tipos comparten grupo."""
+    groups = rule.get("type_groups")
+    if groups is None:
+        return True
+    return any(source_type in group and target_type in group for group in groups)
 
 
 # --- Orquestación ------------------------------------------------------------

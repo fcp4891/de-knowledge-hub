@@ -13,7 +13,7 @@ El activo central del Knowledge Hub es el modelo de conocimiento: conceptos, tec
 
 1. **La fuente de verdad es `content/`**, versionado en Git:
    - Las fichas son archivos Markdown con frontmatter YAML (`.md`).
-   - Los datos estructurados sin cuerpo (registro de fuentes, stubs, blueprint, matriz) son archivos YAML (`.yaml`). Un archivo puede contener varios documentos separados por `---`.
+   - Los datos estructurados sin cuerpo (registro de fuentes, stubs, blueprint, matriz) son archivos YAML (`.yaml`). Un archivo puede contener varios documentos separados por `---`; esto se reserva para registros como `sources/registry.yaml`. Las fichas y entidades de conocimiento van en un archivo por entidad.
 2. **El contrato es `schemas/`** (JSON Schema draft 2020-12):
    - `enums.schema.json`: vocabularios controlados.
    - `base.schema.json`: metadata mínima (§40).
@@ -21,6 +21,8 @@ El activo central del Knowledge Hub es el modelo de conocimiento: conceptos, tec
    - `relationships.schema.json`: tipos de relación, con sus pares origen/destino permitidos y su nombre inverso (§34, §42).
 3. **Cada entidad lleva `id = <type>:<slug>`.** El `slug` es único en todo `content/`.
 4. **Las relaciones se declaran en la entidad origen y en una sola dirección.** La inversa (por ejemplo, `IMPLEMENTS` ↔ `implemented_by`) no se almacena: se deriva al consultar, usando el campo `inverse` de `x-relation-catalog`.
+   - `RELATED_TO` admite cualquier tipo de entidad como origen y como destino.
+   - `ALTERNATIVE_TO` es simétrica y usa `type_groups`: origen y destino deben ser del mismo tipo. La excepción es `technology` y `cloud_service`, que forman un solo grupo para permitir alternativas entre open source y servicio administrado, o entre clouds.
 5. **`scripts/validate.py` controla la entrada** (`make validate`, también en CI). Rechaza:
    - schemas incumplidos;
    - ids o slugs duplicados;

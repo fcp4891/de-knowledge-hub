@@ -244,6 +244,22 @@ def test_relation_with_disallowed_target_type(content: Path) -> None:
     assert_error(run(content), "destino de tipo source no permitido")
 
 
+def test_alternative_to_rejects_different_type_group(content: Path) -> None:
+    write_md(content, "concepts/a.md", concept("a", relations=[{"type": "ALTERNATIVE_TO", "target": "kafka"}]))
+    write_yaml(content, "technologies/kafka.yaml", technology("kafka"))
+    assert_error(run(content), "concept y technology no pertenecen al mismo grupo")
+
+
+def test_alternative_to_allows_technology_and_cloud_service(content: Path) -> None:
+    service = entity(
+        "cloud_service", "pubsub", provider="gcp", category="streaming", classification="modern",
+        relations=[{"type": "ALTERNATIVE_TO", "target": "kafka"}],
+    )
+    write_yaml(content, "technologies/pubsub.yaml", service)
+    write_yaml(content, "technologies/kafka.yaml", technology("kafka"))
+    assert run(content).ok
+
+
 def test_self_relation(content: Path) -> None:
     write_md(content, "concepts/a.md", concept("a", relations=[{"type": "RELATED_TO", "target": "a"}]))
     assert_error(run(content), "consigo misma")
@@ -304,3 +320,32 @@ def test_relation_catalog_is_well_formed() -> None:
         assert set(rule["target_types"]) <= types, name
         if rule["symmetric"]:
             assert rule["inverse"] == name.lower(), name
+        for group in rule.get("type_groups", []):
+            assert set(group) <= set(rule["source_types"]) & set(rule["target_types"]), name
+
+
+ALL_TYPES = "*"
+REQUIRED_PAIRS = [
+    ("IMPLEMENTS", ["code_snippet"], ["concept", "pattern"]),
+    ("USES", ["architecture"], ["technology", "cloud_service", "concept"]),
+    ("PRACTICES", ["lab"], ["concept", "architecture"]),
+    ("AFFECTS", ["news"], ["technology", "cloud_service"]),
+    ("REQUIRES", ["job_description"], ["concept", "technology", "cloud_service"]),
+    ("RUNS_ON", ["technology"], ["cloud_service"]),
+    ("RELATED_TO", ALL_TYPES, ALL_TYPES),
+]
+
+
+@pytest.mark.parametrize(("relation", "sources", "targets"), REQUIRED_PAIRS)
+def test_relation_catalog_covers_required_pairs(relation: str, sources: Any, targets: Any) -> None:
+    """Pares que F2–F6 necesitan (acordados en el gate de F0)."""
+    all_types = load_json("enums.schema.json")["$defs"]["entity_type"]["enum"]
+    rule = load_json("relationships.schema.json")["x-relation-catalog"][relation]
+    assert set(all_types if sources == ALL_TYPES else sources) <= set(rule["source_types"])
+    assert set(all_types if targets == ALL_TYPES else targets) <= set(rule["target_types"])
+
+
+def test_alternative_to_is_symmetric_within_type_groups() -> None:
+    rule = load_json("relationships.schema.json")["x-relation-catalog"]["ALTERNATIVE_TO"]
+    assert rule["symmetric"] is True
+    assert ["technology", "cloud_service"] in rule["type_groups"]
