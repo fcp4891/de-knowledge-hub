@@ -1,0 +1,313 @@
+# Knowledge Blueprint v1 · Dominio 08 (plan maestro §10)
+# Conceptos específicos de producto, con prefijo, enlazados al concepto genérico (ADR-003).
+# Detalles de producto (límites, precios, comportamiento) se verifican al redactar la ficha.
+domain:
+  id: "08"
+  slug: gcp
+  title: Google Cloud Platform
+  description: Cómo se implementan los conceptos de Data Engineering con los servicios prioritarios de GCP.
+
+subdomains:
+  - slug: bigquery
+    title: BigQuery
+    concepts:
+      - slug: bigquery-architecture
+        title: Arquitectura de BigQuery
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: true
+        related_technologies: [gcp-bigquery]
+        related_concepts: [data-warehouse, row-vs-columnar-formats]
+        note: Incluye la separación storage vs compute (§10.2).
+      - slug: bigquery-sql-dialect
+        title: SQL en BigQuery (GoogleSQL)
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-bigquery]
+        related_concepts: [sql-qualify, sql-unnest, sql-structs]
+      - slug: bigquery-partitioning
+        title: Particionamiento en BigQuery
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: true
+        related_technologies: [gcp-bigquery]
+        related_concepts: [partitioning, partition-pruning]
+      - slug: bigquery-clustering
+        title: Clustering en BigQuery
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: true
+        related_technologies: [gcp-bigquery]
+        related_concepts: [clustering, bigquery-partitioning]
+      - slug: bigquery-slots
+        title: Slots y capacidad de cómputo
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-bigquery]
+        related_concepts: [bigquery-cost-model]
+      - slug: bigquery-query-optimization
+        title: Optimización de consultas en BigQuery
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: high
+        mvp: true
+        related_technologies: [gcp-bigquery]
+        related_concepts: [query-plans, scan-reduction, join-optimization]
+      - slug: bigquery-cost-model
+        title: Modelo de costos de BigQuery
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: true
+        related_technologies: [gcp-bigquery]
+        related_concepts: [scan-reduction]
+        note: Precios y modalidades cambian; ficha siempre con fuente y last_verified.
+      - slug: bigquery-materialized-views
+        title: Vistas materializadas en BigQuery
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-bigquery]
+        related_concepts: [materialization-strategies]
+      - slug: bigquery-external-tables
+        title: Tablas externas en BigQuery
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-bigquery, gcp-cloud-storage]
+        related_concepts: [data-lake]
+      - slug: bigquery-biglake-tables
+        title: Tablas BigLake
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-biglake, gcp-bigquery]
+        related_concepts: [bigquery-external-tables, lakehouse]
+      - slug: bigquery-security
+        title: Seguridad en BigQuery
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-bigquery, gcp-iam]
+        related_concepts: [gcp-iam-for-data]
+      - slug: bigquery-policy-tags
+        title: Policy tags en BigQuery
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-bigquery, gcp-dataplex]
+        related_concepts: [bigquery-security]
+      - slug: bigquery-information-schema
+        title: INFORMATION_SCHEMA en BigQuery
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-bigquery]
+        related_concepts: [bigquery-monitoring]
+      - slug: bigquery-monitoring
+        title: Monitoreo de BigQuery
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-bigquery]
+      - slug: bigquery-incremental-models
+        title: Modelos incrementales en BigQuery
+        kind: pattern
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        related_technologies: [gcp-bigquery]
+        related_concepts: [incremental-load, sql-merge, dataform-incremental-tables]
+
+  - slug: storage
+    title: Cloud Storage
+    concepts:
+      - slug: gcs-buckets-and-objects
+        title: Buckets y objetos en Cloud Storage
+        kind: concept
+        classification: modern
+        level: basic
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-cloud-storage]
+        related_concepts: [data-lake]
+      - slug: gcs-storage-classes-and-lifecycle
+        title: Clases de almacenamiento y lifecycle en Cloud Storage
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: true
+        related_technologies: [gcp-cloud-storage]
+        related_concepts: [gcs-buckets-and-objects]
+
+  - slug: messaging-and-processing
+    title: Mensajería y procesamiento
+    concepts:
+      - slug: pubsub-topics-and-subscriptions
+        title: Topics y suscripciones en Pub/Sub
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: true
+        related_technologies: [gcp-pubsub]
+        related_concepts: [streaming-ingestion]
+      - slug: pubsub-delivery-semantics
+        title: Entrega, orden y reintentos en Pub/Sub
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: high
+        mvp: true
+        related_technologies: [gcp-pubsub]
+        related_concepts: [dead-letter-queue, idempotency]
+      - slug: dataflow-execution-model
+        title: Modelo de ejecución de Dataflow
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: high
+        mvp: true
+        related_technologies: [gcp-dataflow, apache-beam]
+        related_concepts: [beam-programming-model]
+      - slug: dataflow-streaming-pipelines
+        title: Pipelines streaming en Dataflow
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-dataflow, gcp-pubsub]
+        related_concepts: [dataflow-execution-model, streaming-pipeline-architecture]
+
+  - slug: orchestration-and-transformation
+    title: Orquestación y transformación
+    concepts:
+      - slug: composer-environments
+        title: Entornos de Cloud Composer
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: true
+        related_technologies: [gcp-cloud-composer, apache-airflow]
+        related_concepts: [open-source-vs-managed-orchestration, airflow-architecture]
+      - slug: dataform-workflows
+        title: Workflows SQL con Dataform
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-dataform, gcp-bigquery]
+        related_concepts: [data-transformation]
+      - slug: dataform-incremental-tables
+        title: Tablas incrementales en Dataform
+        kind: pattern
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: true
+        related_technologies: [gcp-dataform]
+        related_concepts: [dataform-workflows, incremental-load]
+
+  - slug: compute-and-databases
+    title: Cómputo y bases de datos
+    concepts:
+      - slug: cloud-run-for-data
+        title: Cloud Run para cargas de datos
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-cloud-run]
+        related_concepts: [api-ingestion]
+      - slug: cloud-sql-as-source
+        title: Cloud SQL como fuente de datos
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-cloud-sql, gcp-datastream]
+        related_concepts: [change-data-capture, database-ingestion]
+
+  - slug: governance-and-security
+    title: Gobierno y seguridad
+    concepts:
+      - slug: dataplex-governance
+        title: Gobierno de datos con Dataplex
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-dataplex]
+      - slug: gcp-iam-for-data
+        title: IAM de GCP para plataformas de datos
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: true
+        related_technologies: [gcp-iam]
+      - slug: gcp-secret-manager-usage
+        title: Gestión de secretos con Secret Manager
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-secret-manager]
+      - slug: gcp-cmek-with-kms
+        title: Claves administradas por el cliente (CMEK) con Cloud KMS
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: low
+        mvp: false
+        related_technologies: [gcp-cloud-kms]
+
+  - slug: ai
+    title: IA
+    concepts:
+      - slug: vertex-ai-for-data-engineers
+        title: Vertex AI para Data Engineers
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-vertex-ai]
+        related_concepts: [ml-feature-pipeline-architecture]

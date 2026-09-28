@@ -1,0 +1,144 @@
+# Knowledge Blueprint v1 · Dominio 14 (plan maestro §16)
+# Dead-letter queues y replay viven en 05-pipelines y se enlazan.
+domain:
+  id: "14"
+  slug: streaming
+  title: Streaming y Event-Driven
+  description: Eventos, brokers, semánticas de entrega y procesamiento en el tiempo.
+
+subdomains:
+  - slug: streaming-fundamentals
+    title: Fundamentos
+    concepts:
+      - slug: events
+        title: Eventos
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: false
+        related_concepts: [event-driven-architecture]
+      - slug: producers-and-consumers
+        title: Producers y consumers
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: false
+        related_concepts: [events, message-brokers]
+      - slug: message-brokers
+        title: Brokers
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_technologies: [apache-kafka, gcp-pubsub, aws-kinesis, aws-msk, azure-event-hubs]
+      - slug: topics-and-partitions
+        title: Topics y particiones
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_technologies: [apache-kafka]
+        related_concepts: [message-brokers, event-ordering]
+      - slug: offsets
+        title: Offsets
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [apache-kafka]
+        related_concepts: [replay, topics-and-partitions]
+      - slug: event-ordering
+        title: Orden de eventos
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [pubsub-delivery-semantics]
+
+  - slug: delivery-semantics
+    title: Semánticas de entrega
+    concepts:
+      - slug: delivery-semantics
+        title: At-most-once y at-least-once
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [idempotency, retries]
+        note: Agrupa "delivery semantics", "at-most-once" y "at-least-once" del plan.
+      - slug: exactly-once-semantics
+        title: Exactly-once y sus matices
+        kind: concept
+        classification: core
+        level: advanced
+        importance: high
+        mvp: false
+        related_concepts: [delivery-semantics, idempotency, checkpoints]
+        note: Depende del alcance (broker, procesador, sink); nunca se asume extremo a extremo.
+
+  - slug: time-and-state
+    title: Tiempo, ventanas y estado
+    concepts:
+      - slug: event-time-vs-processing-time
+        title: Event time vs processing time
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [late-arriving-data]
+      - slug: watermarks
+        title: Watermarks
+        kind: concept
+        classification: core
+        level: advanced
+        importance: high
+        mvp: false
+        related_concepts: [event-time-vs-processing-time, late-arriving-data]
+      - slug: windowing
+        title: Ventanas
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [watermarks]
+      - slug: stateful-stream-processing
+        title: Procesamiento con estado
+        kind: concept
+        classification: core
+        level: advanced
+        importance: medium
+        mvp: false
+        added_by: blueprint
+        related_concepts: [windowing, checkpoints]
+        note: Necesario para entender ventanas, joins entre streams y exactly-once.
+      - slug: backpressure
+        title: Backpressure
+        kind: concept
+        classification: core
+        level: advanced
+        importance: low
+        mvp: false
+        added_by: blueprint
+        related_concepts: [producers-and-consumers]
+
+  - slug: stream-processing-engines
+    title: Motores de procesamiento
+    concepts:
+      - slug: spark-structured-streaming
+        title: Spark Structured Streaming
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_technologies: [apache-spark]
+        related_concepts: [windowing, dataflow-streaming-pipelines]

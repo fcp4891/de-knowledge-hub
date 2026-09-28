@@ -1,0 +1,171 @@
+# Knowledge Blueprint v1 · Dominio 09 (plan maestro §11)
+# Objetivo: entender cómo los conceptos conocidos se implementan en AWS, no memorizar el catálogo.
+domain:
+  id: "09"
+  slug: aws
+  title: Amazon Web Services
+  description: Implementación en AWS de los conceptos de almacenamiento, procesamiento, streaming, orquestación y gobierno.
+
+subdomains:
+  - slug: storage-and-analytics
+    title: Almacenamiento y analítica
+    concepts:
+      - slug: s3-data-lake
+        title: Data lake sobre S3
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        related_technologies: [aws-s3]
+        related_concepts: [data-lake, gcs-buckets-and-objects]
+      - slug: redshift-architecture
+        title: Arquitectura de Redshift
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        related_technologies: [aws-redshift]
+        related_concepts: [data-warehouse, bigquery-architecture]
+      - slug: athena-serverless-queries
+        title: Consultas serverless con Athena
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [aws-athena, aws-s3]
+        related_concepts: [bigquery-external-tables]
+      - slug: glue-catalog-and-etl
+        title: Glue Data Catalog y Glue ETL
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        related_technologies: [aws-glue]
+        related_concepts: [data-transformation]
+
+  - slug: processing-and-streaming
+    title: Procesamiento y streaming
+    concepts:
+      - slug: emr-spark-clusters
+        title: Spark sobre EMR
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_technologies: [aws-emr, apache-spark]
+        related_concepts: [pyspark-dataframes]
+      - slug: kinesis-data-streams
+        title: Kinesis Data Streams
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [aws-kinesis]
+        related_concepts: [streaming-ingestion, pubsub-topics-and-subscriptions]
+      - slug: msk-managed-kafka
+        title: Kafka administrado con MSK
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [aws-msk, apache-kafka]
+        related_concepts: [kinesis-data-streams]
+
+  - slug: orchestration-and-compute
+    title: Orquestación y cómputo
+    concepts:
+      - slug: lambda-for-data
+        title: Lambda para cargas de datos
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [aws-lambda]
+        related_concepts: [event-driven-pipelines, cloud-run-for-data]
+      - slug: step-functions-workflows
+        title: Workflows con Step Functions
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [aws-step-functions]
+        related_concepts: [orchestration-landscape]
+      - slug: mwaa-managed-airflow
+        title: Airflow administrado con MWAA
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [aws-mwaa, apache-airflow]
+        related_concepts: [open-source-vs-managed-orchestration, composer-environments]
+      - slug: rds-as-source
+        title: RDS como fuente de datos
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: low
+        mvp: false
+        related_technologies: [aws-rds, aws-dms]
+        related_concepts: [database-ingestion, change-data-capture]
+
+  - slug: governance-and-operations
+    title: Gobierno, seguridad y operación
+    concepts:
+      - slug: lake-formation-permissions
+        title: Permisos con Lake Formation
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_technologies: [aws-lake-formation]
+        related_concepts: [dataplex-governance]
+      - slug: aws-iam-for-data
+        title: IAM de AWS para plataformas de datos
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        related_technologies: [aws-iam]
+        related_concepts: [gcp-iam-for-data]
+      - slug: cloudwatch-for-data-pipelines
+        title: CloudWatch para pipelines de datos
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [aws-cloudwatch]
+
+  - slug: ai
+    title: IA
+    concepts:
+      - slug: bedrock-for-data-engineers
+        title: Bedrock para Data Engineers
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: low
+        mvp: false
+        related_technologies: [aws-bedrock]
+      - slug: sagemaker-for-data-engineers
+        title: SageMaker para Data Engineers
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: low
+        mvp: false
+        related_technologies: [aws-sagemaker]
+        related_concepts: [ml-feature-pipeline-architecture]
+        note: Solo cuando corresponda (§11).

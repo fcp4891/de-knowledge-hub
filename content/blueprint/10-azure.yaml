@@ -1,0 +1,151 @@
+# Knowledge Blueprint v1 · Dominio 10 (plan maestro §12)
+# Ecosistema en evolución (ADF, Synapse, Fabric, Databricks): las fichas deben verificarse con fuente reciente.
+domain:
+  id: "10"
+  slug: azure
+  title: Microsoft Azure
+  description: Implementación en Azure y Microsoft Fabric de los conceptos de almacenamiento, integración, streaming y gobierno.
+
+subdomains:
+  - slug: analytics-platform
+    title: Plataforma analítica
+    concepts:
+      - slug: azure-analytics-landscape
+        title: Relación entre ADF, Synapse, Fabric y Databricks
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        related_technologies: [azure-data-factory, azure-synapse, microsoft-fabric, azure-databricks]
+        note: El plan pide mantenerlo especialmente actualizado (§12).
+      - slug: adls-gen2-storage
+        title: Almacenamiento en ADLS Gen2
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        related_technologies: [azure-adls]
+        related_concepts: [data-lake, s3-data-lake]
+      - slug: data-factory-pipelines
+        title: Pipelines en Azure Data Factory
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        related_technologies: [azure-data-factory]
+        related_concepts: [orchestration-landscape]
+      - slug: fabric-onelake-and-workloads
+        title: OneLake y cargas de trabajo en Microsoft Fabric
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        related_technologies: [microsoft-fabric]
+        related_concepts: [lakehouse, azure-analytics-landscape]
+      - slug: synapse-analytics
+        title: Azure Synapse Analytics
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [azure-synapse]
+        related_concepts: [azure-analytics-landscape]
+      - slug: azure-databricks-lakehouse
+        title: Lakehouse con Azure Databricks
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_technologies: [azure-databricks, delta-lake, apache-spark]
+        related_concepts: [lakehouse-architecture]
+
+  - slug: streaming-and-compute
+    title: Streaming y cómputo
+    concepts:
+      - slug: event-hubs-streaming
+        title: Streaming con Event Hubs
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [azure-event-hubs]
+        related_concepts: [streaming-ingestion, pubsub-topics-and-subscriptions, kinesis-data-streams]
+      - slug: azure-functions-for-data
+        title: Azure Functions para cargas de datos
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: low
+        mvp: false
+        related_technologies: [azure-functions]
+        related_concepts: [lambda-for-data]
+      - slug: container-apps-for-data
+        title: Container Apps para cargas de datos
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: low
+        mvp: false
+        related_technologies: [azure-container-apps]
+        related_concepts: [cloud-run-for-data]
+      - slug: azure-sql-as-source
+        title: Azure SQL como fuente de datos
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: low
+        mvp: false
+        related_technologies: [azure-sql]
+        related_concepts: [database-ingestion, change-data-capture]
+
+  - slug: governance-and-security
+    title: Gobierno y seguridad
+    concepts:
+      - slug: purview-governance
+        title: Gobierno de datos con Microsoft Purview
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [microsoft-purview]
+        related_concepts: [dataplex-governance, lake-formation-permissions]
+      - slug: entra-id-for-data
+        title: Microsoft Entra ID para plataformas de datos
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [microsoft-entra-id]
+        related_concepts: [gcp-iam-for-data, aws-iam-for-data]
+      - slug: key-vault-secrets
+        title: Gestión de secretos con Key Vault
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [azure-key-vault]
+        related_concepts: [gcp-secret-manager-usage]
+
+  - slug: ai
+    title: IA
+    concepts:
+      - slug: azure-ai-for-data-engineers
+        title: Servicios de IA de Azure para Data Engineers
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: low
+        mvp: false
+        related_technologies: [azure-ai]
+        related_concepts: [vertex-ai-for-data-engineers, bedrock-for-data-engineers]
+        note: Nombres y empaquetado de los servicios de IA de Azure cambian con frecuencia; verificar al redactar.

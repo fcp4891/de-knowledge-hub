@@ -159,6 +159,8 @@ Alcance fijo (§51): Fundamentos, SQL, Modelado, Pipelines, Arquitectura, GCP (B
 | 10 labs (tipos A–E, §25) | Vista de laboratorio + registro de solución personal |
 | Endpoints de arquitecturas y labs | Navegación por problema (§36) |
 
+**Nota (gate F1):** las arquitecturas de F4 pueden referenciar conceptos que no son MVP en el blueprint. Por ejemplo, `medallion-architecture` se mantiene en F4 aunque tenga `mvp: false`.
+
 **Salida: MVP cerrado.** → **Pausa de uso real: 2–3 semanas.** Solo se corrigen bugs y se completa contenido. Todo lo nuevo va al Backlog.
 
 ---

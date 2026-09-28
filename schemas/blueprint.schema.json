@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "blueprint.schema.json",
+  "title": "Knowledge Blueprint · dominio",
+  "description": "Inventario jerárquico dominio → subdominio → concepto (§52.A, §54). Un archivo content/blueprint/<id>-<slug>.yaml por dominio. No es una entidad: no lleva type ni id de entidad. x-mvp-domains lista los dominios del MVP (§51); fuera de ellos, mvp: true exige mvp_reason.",
+  "type": "object",
+  "required": ["domain", "subdomains"],
+  "properties": {
+    "domain": { "$ref": "#/$defs/domain" },
+    "subdomains": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/subdomain" }
+    }
+  },
+  "additionalProperties": false,
+  "x-mvp-domains": ["fundamentals", "sql", "data-modeling", "pipelines", "architecture", "gcp"],
+  "$defs": {
+    "domain": {
+      "type": "object",
+      "required": ["id", "slug", "title", "description"],
+      "properties": {
+        "id": { "description": "Número de dominio de dos dígitos (§54).", "type": "string", "pattern": "^\\d{2}$" },
+        "slug": { "$ref": "enums.schema.json#/$defs/slug" },
+        "title": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "subdomain": {
+      "type": "object",
+      "required": ["slug", "title", "concepts"],
+      "properties": {
+        "slug": { "$ref": "enums.schema.json#/$defs/slug" },
+        "title": { "type": "string", "minLength": 1 },
+        "concepts": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/concept" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "concept": {
+      "type": "object",
+      "required": ["slug", "title", "kind", "classification", "level", "importance", "mvp"],
+      "properties": {
+        "slug": {
+          "description": "Único en todo el blueprint y coincidente con el slug de la futura entidad.",
+          "$ref": "enums.schema.json#/$defs/slug"
+        },
+        "title": { "type": "string", "minLength": 1 },
+        "kind": {
+          "description": "Tipo de entidad que tendrá la ficha.",
+          "enum": ["concept", "pattern", "architecture"]
+        },
+        "classification": { "$ref": "enums.schema.json#/$defs/classification" },
+        "level": { "$ref": "enums.schema.json#/$defs/level" },
+        "importance": { "$ref": "enums.schema.json#/$defs/importance" },
+        "mvp": { "type": "boolean" },
+        "mvp_reason": {
+          "description": "Obligatorio si mvp: true fuera de x-mvp-domains: qué tecnología del MVP (§51) lo exige.",
+          "type": "string",
+          "minLength": 1
+        },
+        "related_technologies": {
+          "description": "Slugs de technology o cloud_service. Se resuelven contra el inventario de A-F1.2.",
+          "type": "array",
+          "items": { "$ref": "enums.schema.json#/$defs/slug" },
+          "uniqueItems": true
+        },
+        "related_concepts": {
+          "description": "Slugs de otros conceptos del blueprint.",
+          "type": "array",
+          "items": { "$ref": "enums.schema.json#/$defs/slug" },
+          "uniqueItems": true
+        },
+        "added_by": {
+          "description": "blueprint = concepto no listado en el plan maestro, agregado para revisión (B-F1.2).",
+          "const": "blueprint"
+        },
+        "note": { "description": "Matiz para la revisión humana.", "type": "string" }
+      },
+      "additionalProperties": false,
+      "if": { "properties": { "mvp": { "const": false } }, "required": ["mvp"] },
+      "then": { "not": { "required": ["mvp_reason"] } }
+    }
+  }
+}

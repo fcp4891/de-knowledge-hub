@@ -1,0 +1,271 @@
+# Knowledge Blueprint v1 · Dominio 02 (plan maestro §4.2)
+# Conceptos SQL genéricos; las particularidades de BigQuery viven en 08-gcp.
+domain:
+  id: "02"
+  slug: sql
+  title: SQL avanzado
+  description: SQL aplicado al trabajo de datos, con patrones de carga y optimización en warehouses.
+
+subdomains:
+  - slug: sql-language
+    title: Lenguaje
+    concepts:
+      - slug: sql-advanced-select
+        title: SELECT avanzado
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+        note: Agregaciones avanzadas (GROUPING SETS, ROLLUP), filtros y orden de evaluación.
+      - slug: sql-joins
+        title: JOIN
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: true
+      - slug: sql-subqueries
+        title: Subqueries
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+        related_concepts: [sql-cte]
+      - slug: sql-cte
+        title: CTE (WITH)
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: true
+      - slug: sql-recursive-cte
+        title: CTE recursivas
+        kind: concept
+        classification: core
+        level: advanced
+        importance: low
+        mvp: false
+        related_concepts: [sql-cte]
+      - slug: sql-window-functions
+        title: Window functions y funciones analíticas
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        note: Agrupa "window functions" y "funciones analíticas" del plan; son el mismo mecanismo.
+      - slug: sql-qualify
+        title: QUALIFY
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: true
+        related_technologies: [gcp-bigquery]
+        related_concepts: [sql-window-functions, deduplication]
+        note: No es SQL estándar; existe en algunos dialectos (p. ej. BigQuery). Verificar soporte por motor.
+      - slug: sql-case-expressions
+        title: CASE
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+      - slug: sql-arrays
+        title: ARRAY
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [sql-unnest]
+      - slug: sql-structs
+        title: STRUCT
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [sql-arrays]
+      - slug: sql-unnest
+        title: UNNEST
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_technologies: [gcp-bigquery]
+      - slug: sql-pivot
+        title: PIVOT y UNPIVOT
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: low
+        mvp: false
+      - slug: sql-merge
+        title: MERGE
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_concepts: [upsert, idempotency]
+      - slug: sql-date-functions
+        title: Funciones de fecha
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+      - slug: sql-json-functions
+        title: Funciones JSON
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [json-format]
+
+  - slug: sql-patterns
+    title: Patrones SQL para Data Engineering
+    concepts:
+      - slug: incremental-load
+        title: Carga incremental
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_concepts: [sql-merge, idempotency, partitioning]
+      - slug: deduplication
+        title: Deduplicación
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_concepts: [sql-window-functions]
+      - slug: scd-type-1
+        title: SCD Type 1
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [slowly-changing-dimensions, upsert]
+      - slug: scd-type-2
+        title: SCD Type 2
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_concepts: [slowly-changing-dimensions, sql-merge, surrogate-keys]
+      - slug: upsert
+        title: Upsert
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_concepts: [idempotency]
+      - slug: change-detection
+        title: Detección de cambios
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [change-data-capture, incremental-load]
+        note: Técnicas SQL (hash de fila, comparación de columnas) distintas de CDC basado en log.
+      - slug: data-reconciliation
+        title: Reconciliación
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+      - slug: sql-quality-checks
+        title: Controles de calidad en SQL
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [data-reconciliation]
+      - slug: surrogate-key-generation
+        title: Generación de surrogate keys
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [surrogate-keys]
+
+  - slug: sql-performance
+    title: Performance
+    concepts:
+      - slug: query-plans
+        title: Planes de ejecución
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+      - slug: partition-pruning
+        title: Partition pruning
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_concepts: [partitioning, scan-reduction]
+      - slug: clustering
+        title: Clustering
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_concepts: [partitioning]
+      - slug: predicate-pushdown
+        title: Predicate pushdown
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [parquet-format]
+      - slug: scan-reduction
+        title: Reducción de datos escaneados
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+      - slug: materialization-strategies
+        title: Estrategias de materialización
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+      - slug: join-optimization
+        title: Optimización de joins
+        kind: concept
+        classification: core
+        level: advanced
+        importance: medium
+        mvp: false
+        related_concepts: [sql-joins, query-plans]
+      - slug: cloud-warehouse-optimization
+        title: Optimización específica de warehouses cloud
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-bigquery, aws-redshift, microsoft-fabric]
+        note: Visión comparada; el detalle de BigQuery está en 08-gcp.

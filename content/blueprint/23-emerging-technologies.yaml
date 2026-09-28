@@ -1,0 +1,91 @@
+# Knowledge Blueprint v1 · Dominio 23 (plan maestro §3.3, §20 "Sistemas modernos")
+# Todo es emerging: evoluciona rápido y nunca se presenta como reemplazo automático de lo consolidado (§3.3).
+# Las fichas de este dominio requieren verificación frecuente (Update Engine, F5).
+domain:
+  id: "23"
+  slug: emerging-technologies
+  title: Tecnologías emergentes
+  description: Tecnologías y patrones en evolución rápida que pueden adquirir relevancia profesional.
+
+subdomains:
+  - slug: agentic-data-engineering
+    title: IA agéntica aplicada a datos
+    concepts:
+      - slug: model-context-protocol
+        title: Model Context Protocol (MCP)
+        kind: concept
+        classification: emerging
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [tool-calling, llm-agents]
+      - slug: data-agents
+        title: Agentes aplicados a datos
+        kind: concept
+        classification: emerging
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [llm-agents, natural-language-catalog-interfaces]
+      - slug: agentic-workflows
+        title: Workflows agénticos
+        kind: concept
+        classification: emerging
+        level: advanced
+        importance: low
+        mvp: false
+        related_concepts: [llm-agents, data-orchestration]
+        note: Compararlos con orquestación determinista; no la reemplazan.
+      - slug: agentic-data-engineering
+        title: Agentic Data Engineering
+        kind: concept
+        classification: emerging
+        level: advanced
+        importance: low
+        mvp: false
+        related_concepts: [data-agents, agentic-workflows, ai-pipeline-generation]
+      - slug: llm-driven-automation
+        title: Automatización mediante LLM
+        kind: concept
+        classification: emerging
+        level: intermediate
+        importance: low
+        mvp: false
+        related_concepts: [guardrails, llm-evaluation]
+      - slug: ai-assisted-development
+        title: Desarrollo asistido por IA
+        kind: concept
+        classification: emerging
+        level: basic
+        importance: medium
+        mvp: false
+        related_concepts: [code-review, ai-assisted-sql-generation]
+
+  - slug: evolving-standards
+    title: Estándares en evolución
+    concepts:
+      - slug: emerging-semantic-layers
+        title: Nuevas semantic layers
+        kind: concept
+        classification: emerging
+        level: intermediate
+        importance: low
+        mvp: false
+        related_concepts: [semantic-layer]
+      - slug: interoperability-standards
+        title: Nuevos estándares de interoperabilidad
+        kind: concept
+        classification: emerging
+        level: intermediate
+        importance: low
+        mvp: false
+        related_concepts: [open-table-formats]
+        note: Catálogos abiertos, APIs de catálogo y formatos de intercambio; alcance a precisar en la revisión.
+      - slug: open-table-format-evolution
+        title: Evolución de los open table formats
+        kind: concept
+        classification: emerging
+        level: advanced
+        importance: medium
+        mvp: false
+        related_concepts: [open-table-formats, table-format-comparison]

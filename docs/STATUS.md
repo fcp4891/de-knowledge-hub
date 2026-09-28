@@ -6,7 +6,20 @@
 ---
 
 ## Carril A — Claude Code
-- **Tarea activa:** A-F1.1 · Blueprint de dominios (rama `a/f1-blueprint`), plan pendiente de aprobación
+- **Tarea activa:** A-F1.2 · Tecnologías y Cloud Capability Matrix (rama `a/f1-technologies`), plan pendiente de aprobación.
+- **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
+- **Cerrado y mergeado en `main`:** A-F1.1 · Blueprint de dominios.
+- **Hecho (A-F1.1 · Blueprint de dominios):**
+  - `schemas/blueprint.schema.json` y `docs/adr/ADR-003-knowledge-blueprint.md`: modelo del blueprint y convención de slugs de tecnología.
+  - `content/blueprint/01-fundamentals.yaml` … `23-emerging-technologies.yaml`: 23 dominios, 353 conceptos, 80 `mvp: true`, 15 `added_by: blueprint`.
+  - MVP (opción B): 5 en `python`, 5 en `orchestration` y 4 en `infrastructure-as-code`, todos con `mvp_reason`. Tope de ~80 respetado.
+  - Revisión del dominio 22 aplicada: +3 conceptos (`data-platform-engineering`, `data-versioning`, `zero-etl-and-federation`), ajustes de importancia, nivel y relaciones.
+  - Medallion se mantiene en F4 aunque no sea MVP (nota en ROADMAP F4).
+  - Ajuste de MVP en el gate (el total sigue en 80):
+    - 12: entra `infrastructure-as-code`, sale `terraform-modules`.
+    - 07: entra `event-driven-architecture`, sale `medallion-architecture`.
+  - `validate.py`: validación del blueprint y cruce con las entidades existentes. `--report` imprime el resumen y las tecnologías pendientes.
+  - 20 tests nuevos; en total 62, en verde.
 - **Cerrado:** A-F0 · Repo y contratos base (merge en `main`)
 - **Hecho (A-F0 · Repo y contratos base):**
   - Estructura del repo según ROADMAP §3, `Makefile` (validate, test, build, dev, install), `.gitattributes` (`eol=lf`), CI en `.github/workflows/ci.yml`.
@@ -26,23 +39,25 @@
   - Ajuste de gate: `RELATED_TO` abierta a cualquier tipo; `ALTERNATIVE_TO` con `type_groups` (mismo tipo; technology y cloud_service comparten grupo). Test que fija los pares que necesitan F2–F6.
   - 42 tests en `tests/test_validate.py`. `make validate` y `make test` en verde.
   - `docs/adr/ADR-000-content-as-code.md`.
-- **Siguiente:** A-F1.2 (Tecnologías y matriz), después de A-F1.1.
+- **Siguiente:** A-F1.3 (Source Registry), después de A-F1.2.
 - **Bloqueos:** —
 - **Cambios de contrato (con ADR):** creación inicial de `schemas/` y ajuste de pares en el gate de F0 (ADR-000).
 - **Notas para Carril B:**
+  - **Regla (gate F1):** Cursor revisa y propone cambios sobre `content/blueprint/`; solo Carril A edita esos archivos.
   - Los valores de `type` están en snake_case (`cloud_service`, `code_snippet`…).
   - Las relaciones solo se guardan en la entidad origen. Para mostrar la inversa, usar `x-relation-catalog.<TIPO>.inverse` de `schemas/relationships.schema.json`.
 
 ## Carril B — Cursor
-- **Tarea activa:** B-F1.2 · Revisión del Blueprint, dominio 22 (propuestas entregadas; `22-modern-data-engineering.yaml` no se edita hasta que Felipe apruebe cada fila)
-- **Hecho (B-F1.1 · Templates):**
+- **Tarea activa:** —
+- **Hecho (B-F1.1 · Templates):** commit en `b/f1-templates`.
   - `content/_templates/concept.md`: 22 secciones del §22; cada una con la pregunta de §48.
   - `content/_templates/architecture.md`: secciones del §24.
   - `content/_templates/lab.md`: tipos A–E del §25, con escenario, datos, restricciones, criterios y conceptos practicados. Sin solución.
   - `content/_templates/news.md`: formato del §31 y relevancia del §32.
   - Frontmatter compatible con `schemas/`. No hace falta campo nuevo.
-- **Siguiente:** el dominio que Felipe indique después del 22.
-- **Bloqueos:** el YAML del dominio 22 está en `a/f1-blueprint`, todavía no en `main`. La revisión se hizo sobre ese archivo.
+- **Dominio 22:** propuestas consolidadas. Las aplica Carril A. Carril B no edita `content/blueprint/`.
+- **Siguiente:** `b/f1-review` desde `main`, revisión del dominio 01 (solo propuestas).
+- **Bloqueos:** —
 - **Notas para Carril A:**
   - La plantilla de concepto ya está. El ítem de `docs/BACKLOG.md` (validar las 22 secciones en el cuerpo) puede implementarse.
   - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
@@ -50,9 +65,8 @@
 ## Pedidos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | Iniciar B-F1.1 (Templates): `schemas/` v0 ya está en `main` | Cerrado |
-| A | B | B-F1.2 (revisión del Blueprint) espera a que A-F1.1 entregue los primeros 5 dominios | Superado: el blueprint completo está en `a/f1-blueprint`. Revisión del dominio 22 entregada, sin aplicar |
-| B | A | Cuando se cierre B-F1.1: `validate.py` puede comprobar las 22 secciones de `content/_templates/concept.md` | Abierto |
+| A | B | Iniciar B-F1.1 (Templates): `schemas/` v0 ya está en `main` | Cerrado (`b/f1-templates`) |
+| A | B | B-F1.2: crear la rama `b/f1-review` desde `main`. El blueprint completo (23 dominios) ya está mergeado. Revisar en especial los 15 `added_by: blueprint`. El dominio 22 ya está revisado y aplicado | Abierto |
 
 ## Criterio de salida de la fase actual
 - [ ] Blueprint validado con los 23 dominios; conceptos del MVP marcados.

@@ -1,0 +1,119 @@
+# Knowledge Blueprint v1 · Dominio 11 (plan maestro §14: Git y CI/CD; §3.2: CI/CD para datos, GitOps)
+domain:
+  id: "11"
+  slug: devops
+  title: DevOps
+  description: Control de versiones, CI/CD y prácticas de entrega aplicadas a plataformas y pipelines de datos.
+
+subdomains:
+  - slug: git
+    title: Git
+    concepts:
+      - slug: git-branching-strategies
+        title: Estrategias de branching
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: false
+        related_technologies: [git]
+      - slug: pull-requests
+        title: Pull requests
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: false
+        related_technologies: [git, github-actions]
+        related_concepts: [code-review]
+      - slug: code-review
+        title: Code review
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+      - slug: git-tags-and-releases
+        title: Tags y releases
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+        related_technologies: [git]
+
+  - slug: ci-cd
+    title: CI/CD
+    concepts:
+      - slug: ci-cd-pipelines
+        title: Pipelines de CI/CD
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_technologies: [github-actions, gitlab-ci, azure-devops]
+      - slug: automated-testing-in-ci
+        title: Testing automatizado en CI
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [ci-cd-pipelines, testing-with-pytest]
+      - slug: build-artifacts
+        title: Build y artefactos
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [ci-cd-pipelines]
+      - slug: deployment-strategies
+        title: Estrategias de despliegue
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [rollback]
+      - slug: environment-promotion
+        title: Entornos y promoción entre ellos
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [deployment-strategies]
+      - slug: ci-cd-secrets
+        title: Secretos en CI/CD
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [gcp-secret-manager-usage]
+      - slug: rollback
+        title: Rollback
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+      - slug: ci-cd-for-data
+        title: CI/CD para datos
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [ci-cd-pipelines, sql-quality-checks, environment-promotion]
+        note: Tests de modelos SQL, entornos efímeros y despliegue de transformaciones.
+      - slug: gitops
+        title: GitOps
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: low
+        mvp: false
+        related_concepts: [ci-cd-pipelines]

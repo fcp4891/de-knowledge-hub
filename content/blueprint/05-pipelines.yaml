@@ -1,0 +1,160 @@
+# Knowledge Blueprint v1 · Dominio 05 (plan maestro §7)
+# Idempotencia vive en 01-fundamentals; aquí se enlaza.
+domain:
+  id: "05"
+  slug: pipelines
+  title: Pipelines de datos
+  description: Patrones completos de ingesta, procesamiento y confiabilidad, de la fuente al consumo (Source → Raw → Curated → Serving).
+
+subdomains:
+  - slug: pipeline-stages
+    title: Etapas de un pipeline
+    concepts:
+      - slug: pipeline-layers
+        title: Capas raw, curated y serving
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: false
+        related_concepts: [data-pipeline, data-lake]
+
+  - slug: ingestion
+    title: Ingesta
+    concepts:
+      - slug: batch-ingestion
+        title: Ingesta batch
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: true
+        related_technologies: [gcp-cloud-storage, gcp-bigquery]
+        related_concepts: [batch-vs-streaming, data-ingestion]
+      - slug: streaming-ingestion
+        title: Ingesta streaming
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_technologies: [gcp-pubsub, gcp-dataflow, apache-kafka]
+        related_concepts: [batch-vs-streaming]
+      - slug: change-data-capture
+        title: Change Data Capture
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_technologies: [debezium, gcp-datastream, aws-dms, apache-kafka]
+        related_concepts: [idempotency, scd-type-2, sql-merge]
+      - slug: api-ingestion
+        title: Ingesta desde APIs
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_concepts: [retries, incremental-pipelines]
+      - slug: file-ingestion
+        title: Ingesta de archivos
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: true
+        related_technologies: [gcp-cloud-storage]
+        related_concepts: [parquet-format, schema-evolution]
+      - slug: database-ingestion
+        title: Ingesta desde bases de datos
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [change-data-capture, incremental-load]
+
+  - slug: pipeline-patterns
+    title: Patrones de pipeline
+    concepts:
+      - slug: incremental-pipelines
+        title: Pipelines incrementales
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_concepts: [incremental-load, idempotency, late-arriving-data]
+        note: Estado y watermarks a nivel de pipeline; la carga SQL está en incremental-load (02-sql).
+      - slug: event-driven-pipelines
+        title: Pipelines event-driven
+        kind: pattern
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-pubsub, gcp-cloud-run]
+        related_concepts: [streaming-ingestion]
+      - slug: pipeline-dependencies
+        title: Dependencias entre procesos
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [data-orchestration]
+
+  - slug: reliability
+    title: Confiabilidad y recuperación
+    concepts:
+      - slug: retries
+        title: Retries
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_concepts: [idempotency]
+        note: Backoff exponencial y jitter; solo es seguro con operaciones idempotentes.
+      - slug: checkpoints
+        title: Checkpoints
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [failure-recovery]
+      - slug: dead-letter-queue
+        title: Dead-letter queue
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_technologies: [gcp-pubsub]
+        related_concepts: [retries]
+      - slug: replay
+        title: Replay
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_concepts: [idempotency, backfill]
+      - slug: backfill
+        title: Backfill
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_concepts: [idempotency, partitioning]
+      - slug: failure-recovery
+        title: Recuperación ante fallas
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [retries, checkpoints, replay]

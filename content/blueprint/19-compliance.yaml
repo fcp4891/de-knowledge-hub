@@ -1,0 +1,66 @@
+# Knowledge Blueprint v1 · Dominio 19 (plan maestro §19: Compliance)
+# Explicación técnica, no asesoría legal (§19). Toda ficha de este dominio requiere fuente oficial y last_verified.
+domain:
+  id: "19"
+  slug: compliance
+  title: Compliance
+  description: Marcos regulatorios relevantes para el trabajo con datos, desde su impacto técnico y sin constituir asesoría legal.
+
+subdomains:
+  - slug: compliance-foundations
+    title: Fundamentos
+    concepts:
+      - slug: compliance-scope-for-data-engineers
+        title: Alcance del compliance para Data Engineers
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+        note: Distingue explicación técnica de asesoría legal (§19).
+      - slug: pii-identification
+        title: Identificación de datos personales (PII)
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [data-classification, data-masking]
+
+  - slug: regulatory-frameworks
+    title: Marcos regulatorios
+    concepts:
+      - slug: gdpr
+        title: GDPR
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [data-retention, pii-identification]
+      - slug: lgpd
+        title: LGPD (Brasil)
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: low
+        mvp: false
+        related_concepts: [gdpr]
+      - slug: chile-data-protection
+        title: Legislación chilena de protección de datos personales
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [gdpr]
+        note: Marco normativo en transición; verificar ley vigente y fechas de entrada en vigor contra fuente oficial antes de redactar.
+      - slug: corporate-data-policies
+        title: Políticas corporativas de datos
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+        related_concepts: [data-classification, data-retention]
