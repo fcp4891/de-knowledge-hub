@@ -16,7 +16,8 @@ subdomains:
         classification: core
         level: basic
         importance: high
-        mvp: false
+        mvp: true
+        mvp_reason: Terraform (§51); marco conceptual (declarativo, versionado, reproducible) de todos los snippets de infraestructura.
         related_technologies: [terraform]
         related_concepts: [ci-cd-pipelines]
 
@@ -47,10 +48,10 @@ subdomains:
         classification: modern
         level: intermediate
         importance: high
-        mvp: true
-        mvp_reason: Terraform (§51); estructura reutilizable de los snippets de infraestructura.
+        mvp: false
         related_technologies: [terraform]
         related_concepts: [terraform-variables-and-outputs]
+        note: Fuera del MVP (gate F1); los snippets del MVP no requieren módulos.
       - slug: terraform-state
         title: State
         kind: concept

@@ -6,14 +6,18 @@
 ---
 
 ## Carril A — Claude Code
-- **Tarea activa:** — (A-F1.1 cerrada en la rama `a/f1-blueprint`, pendiente de merge a `main`)
+- **Tarea activa:** A-F1.2 · Tecnologías y Cloud Capability Matrix (rama `a/f1-technologies`), plan pendiente de aprobación.
+- **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
+- **Cerrado y mergeado en `main`:** A-F1.1 · Blueprint de dominios.
 - **Hecho (A-F1.1 · Blueprint de dominios):**
   - `schemas/blueprint.schema.json` y `docs/adr/ADR-003-knowledge-blueprint.md`: modelo del blueprint y convención de slugs de tecnología.
   - `content/blueprint/01-fundamentals.yaml` … `23-emerging-technologies.yaml`: 23 dominios, 353 conceptos, 80 `mvp: true`, 15 `added_by: blueprint`.
   - MVP (opción B): 5 en `python`, 5 en `orchestration` y 4 en `infrastructure-as-code`, todos con `mvp_reason`. Tope de ~80 respetado.
+  - Ajuste de MVP en el gate (el total sigue en 80):
+    - 12: entra `infrastructure-as-code`, sale `terraform-modules`.
+    - 07: entra `event-driven-architecture`, sale `medallion-architecture`.
   - `validate.py`: validación del blueprint y cruce con las entidades existentes. `--report` imprime el resumen y las tecnologías pendientes.
   - 20 tests nuevos; en total 62, en verde.
-- **Siguiente:** A-F1.2 (Tecnologías y matriz). Las 84 tecnologías referenciadas sin entidad se listan con `python scripts/validate.py --report`. Deben seguir la convención de slugs de ADR-003. A-F1.2 convierte en error cualquier tecnología sin resolver.
 - **Cerrado:** A-F0 · Repo y contratos base (merge en `main`)
 - **Hecho (A-F0 · Repo y contratos base):**
   - Estructura del repo según ROADMAP §3, `Makefile` (validate, test, build, dev, install), `.gitattributes` (`eol=lf`), CI en `.github/workflows/ci.yml`.
@@ -33,7 +37,7 @@
   - Ajuste de gate: `RELATED_TO` abierta a cualquier tipo; `ALTERNATIVE_TO` con `type_groups` (mismo tipo; technology y cloud_service comparten grupo). Test que fija los pares que necesitan F2–F6.
   - 42 tests en `tests/test_validate.py`. `make validate` y `make test` en verde.
   - `docs/adr/ADR-000-content-as-code.md`.
-- **Siguiente:** A-F1.2 (Tecnologías y matriz), después de A-F1.1.
+- **Siguiente:** A-F1.3 (Source Registry), después de A-F1.2.
 - **Bloqueos:** —
 - **Cambios de contrato (con ADR):** creación inicial de `schemas/` y ajuste de pares en el gate de F0 (ADR-000).
 - **Notas para Carril B:**
@@ -49,8 +53,8 @@
 ## Pedidos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | Iniciar B-F1.1 (Templates): `schemas/` v0 ya está en `main` | Abierto |
-| A | B | B-F1.2 (revisión del Blueprint): los 23 dominios están completos en `content/blueprint/` (rama `a/f1-blueprint` hasta el merge). Revisar en especial los 15 `added_by: blueprint` y el dominio 22 | Abierto |
+| A | B | Iniciar B-F1.1 (Templates): `schemas/` v0 ya está en `main` | Abierto (en curso en `b/f1-templates`) |
+| A | B | B-F1.2: crear la rama `b/f1-review` desde `main`. El blueprint completo (23 dominios) ya está mergeado. Revisar en especial los 15 `added_by: blueprint`. El dominio 22 ya tiene una revisión propuesta (13 filas, abajo) | Abierto |
 
 ## Criterio de salida de la fase actual
 - [ ] Blueprint validado con los 23 dominios; conceptos del MVP marcados.
@@ -63,4 +67,12 @@
 - **F0 — Fundaciones** (2026-09-28): `make validate` en verde con la ficha `change-data-capture`; 42 tests.
 
 ## Decisiones pendientes para el gate humano
-- —
+- **Medallion en F4:** `medallion-architecture` salió del MVP del blueprint, pero sigue en la lista de las 5 arquitecturas de F4 (ROADMAP). Hay que elegir entre:
+  - sustituirla en F4 por `event-driven-architecture`;
+  - mantenerla en F4 aunque no sea MVP.
+- **Revisión del dominio 22:** 13 propuestas pendientes de aprobación fila por fila. Resumen:
+  - eliminar `semantic-layer`, que duplica `semantic-models`;
+  - agregar `data-platform-engineering` y `data-versioning`;
+  - agregar `zero-etl-and-federation` como emerging (opcional);
+  - subir la importancia de `analytics-engineering`;
+  - agregar notas y relaciones.

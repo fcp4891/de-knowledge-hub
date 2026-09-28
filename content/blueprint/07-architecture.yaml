@@ -1,5 +1,6 @@
 # Knowledge Blueprint v1 · Dominio 07 (plan maestro §9)
-# Arquitecturas de referencia del Architecture Lab. Las 5 mvp son las de F4 (ROADMAP).
+# Arquitecturas de referencia del Architecture Lab. Cambio de MVP en el gate F1: entra event-driven,
+# sale medallion (sigue en la lista de F4 del ROADMAP; ver STATUS, decisiones pendientes).
 domain:
   id: "07"
   slug: architecture
@@ -65,9 +66,9 @@ subdomains:
         classification: modern
         level: intermediate
         importance: high
-        mvp: true
+        mvp: false
         related_concepts: [pipeline-layers, lakehouse]
-        note: Bronze/silver/gold es una convención de capas, no un estándar formal.
+        note: Bronze/silver/gold es una convención de capas, no un estándar formal. Fuera del MVP (gate F1) por solaparse con pipeline-layers y lakehouse.
 
   - slug: streaming-architectures
     title: Arquitecturas streaming y event-driven
@@ -95,7 +96,7 @@ subdomains:
         classification: modern
         level: intermediate
         importance: high
-        mvp: false
+        mvp: true
         related_technologies: [gcp-pubsub, apache-kafka]
         related_concepts: [event-driven-pipelines]
       - slug: real-time-analytics-architecture
