@@ -7,3 +7,6 @@ Formato: `- [fase sugerida] idea — origen`
 - [F1] validate.py: avisar si una entidad tiene `stub: true` y `verification_status: verified` — A-F0
 - [F1] Ampliar las fuentes de la ficha CDC y crear las entidades SCD2, MERGE incremental, streaming y WAL, hoy mencionadas solo en texto — A-F0
 - [F5] Un script que compruebe periódicamente `url_verified` de las fuentes, en lugar de hacerlo a mano — A-F0
+- [F1] Blueprint: añadir "fuentes candidatas" por dominio (§54) cuando exista el Source Registry (A-F1.3) — A-F1.1
+- [F1] Revisar si `data-quality-dimensions` debe separarse en una ficha por dimensión — A-F1.1
+- [F2] Explorer: mostrar los conceptos del blueprint que aún no tienen ficha como "pendiente", en vez de ocultarlos — A-F1.1

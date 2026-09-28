@@ -1,0 +1,246 @@
+# Knowledge Blueprint v1 · Dominio 21 (plan maestro §20)
+# Distinguir capacidad experimental de práctica consolidada (§20): classification lo refleja.
+# MCP, agentes de datos y workflows agénticos viven en 23-emerging-technologies (§3.3).
+domain:
+  id: "21"
+  slug: ai-for-data-engineering
+  title: IA aplicada a Data Engineering
+  description: Fundamentos de LLM, retrieval y sistemas con IA, y sus casos de uso concretos en ingeniería de datos.
+
+subdomains:
+  - slug: ai-fundamentals
+    title: Fundamentos
+    concepts:
+      - slug: llm-fundamentals
+        title: Fundamentos de LLM
+        kind: concept
+        classification: modern
+        level: basic
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-vertex-ai, aws-bedrock, azure-ai]
+      - slug: tokens
+        title: Tokens
+        kind: concept
+        classification: modern
+        level: basic
+        importance: medium
+        mvp: false
+        related_concepts: [llm-fundamentals]
+      - slug: context-windows
+        title: Ventanas de contexto
+        kind: concept
+        classification: modern
+        level: basic
+        importance: medium
+        mvp: false
+        related_concepts: [tokens]
+      - slug: embeddings
+        title: Embeddings
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [llm-fundamentals]
+      - slug: structured-outputs
+        title: Salidas estructuradas
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [data-validation-with-pydantic, schema-validation]
+      - slug: tool-calling
+        title: Function / tool calling
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [structured-outputs]
+        note: Aparece dos veces en §20; una sola ficha.
+      - slug: prompt-engineering
+        title: Prompt engineering
+        kind: concept
+        classification: modern
+        level: basic
+        importance: medium
+        mvp: false
+
+  - slug: retrieval
+    title: Retrieval
+    concepts:
+      - slug: vector-databases
+        title: Bases de datos vectoriales
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [pgvector]
+        related_concepts: [embeddings]
+      - slug: chunking
+        title: Chunking
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [rag]
+      - slug: rag
+        title: RAG
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [embeddings, vector-databases, rag-data-pipeline-architecture]
+      - slug: hybrid-rag
+        title: Hybrid RAG
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_concepts: [rag, metadata-filtering]
+        note: Combinación de búsqueda léxica y semántica.
+      - slug: reranking
+        title: Reranking
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: low
+        mvp: false
+        related_concepts: [rag]
+      - slug: metadata-filtering
+        title: Filtrado por metadata
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [rag, metadata-management]
+
+  - slug: ai-systems
+    title: Sistemas con IA
+    concepts:
+      - slug: llm-agents
+        title: Agentes basados en LLM
+        kind: concept
+        classification: emerging
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [tool-calling]
+        note: Práctica en evolución; no se presenta como reemplazo de pipelines deterministas.
+      - slug: multi-agent-systems
+        title: Sistemas multi-agente
+        kind: concept
+        classification: emerging
+        level: advanced
+        importance: low
+        mvp: false
+        related_concepts: [llm-agents]
+        note: Solo cuando tenga sentido (§20).
+      - slug: llm-evaluation
+        title: Evaluación de sistemas con LLM
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [rag]
+      - slug: llm-observability
+        title: Observabilidad de sistemas con LLM
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [observability-traces, llm-evaluation]
+      - slug: guardrails
+        title: Guardrails
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [structured-outputs]
+
+  - slug: data-engineering-ai-use-cases
+    title: Casos de uso en Data Engineering
+    concepts:
+      - slug: ai-assisted-sql-generation
+        title: Generación asistida de SQL
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [sql-quality-checks]
+        note: Siempre con revisión humana y validación del SQL generado.
+      - slug: ai-generated-documentation
+        title: Documentación automática
+        kind: concept
+        classification: modern
+        level: basic
+        importance: low
+        mvp: false
+        related_concepts: [data-catalog]
+      - slug: ai-data-classification
+        title: Clasificación de datos con IA
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [data-classification, pii-identification]
+      - slug: ai-anomaly-detection
+        title: Detección de anomalías con IA
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [volume-anomalies]
+      - slug: ai-metadata-enrichment
+        title: Enriquecimiento de metadata con IA
+        kind: concept
+        classification: emerging
+        level: intermediate
+        importance: low
+        mvp: false
+        related_concepts: [metadata-management]
+      - slug: ai-pipeline-generation
+        title: Generación de pipelines con IA
+        kind: concept
+        classification: emerging
+        level: advanced
+        importance: low
+        mvp: false
+        related_concepts: [data-pipeline]
+      - slug: ai-error-analysis
+        title: Análisis de errores con IA
+        kind: concept
+        classification: emerging
+        level: intermediate
+        importance: low
+        mvp: false
+        related_concepts: [root-cause-analysis]
+      - slug: natural-language-catalog-interfaces
+        title: Interfaces en lenguaje natural sobre catálogos
+        kind: concept
+        classification: emerging
+        level: intermediate
+        importance: low
+        mvp: false
+        related_concepts: [data-catalog, rag]
+      - slug: rag-over-technical-docs
+        title: RAG sobre documentación técnica
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [rag, chunking]

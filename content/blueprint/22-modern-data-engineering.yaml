@@ -1,0 +1,84 @@
+# Knowledge Blueprint v1 · Dominio 22 (plan maestro §3.2)
+# La mayoría de los temas "modern" del §3.2 ya tienen ficha en su dominio (lakehouse, data-contracts,
+# data-observability, open-table-formats, ci-cd-for-data, gitops, medallion-architecture); aquí se enlazan.
+# Los conceptos propios de este dominio no figuran en el plan: todos llevan added_by para revisión (B-F1.2).
+domain:
+  id: "22"
+  slug: modern-data-engineering
+  title: Modern Data Engineering
+  description: Prácticas y enfoques ampliamente adoptados hoy, que complementan y no reemplazan los fundamentos.
+
+subdomains:
+  - slug: modern-practices
+    title: Prácticas modernas
+    concepts:
+      - slug: modern-data-stack
+        title: Modern data stack
+        kind: concept
+        classification: modern
+        level: basic
+        importance: medium
+        mvp: false
+        added_by: blueprint
+        related_concepts: [lakehouse, data-contracts, data-observability, open-table-formats, ci-cd-for-data, gitops, medallion-architecture]
+        note: Punto de entrada que conecta los temas modern del §3.2.
+      - slug: analytics-engineering
+        title: Analytics engineering
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        added_by: blueprint
+        related_technologies: [dbt, gcp-dataform]
+        related_concepts: [dbt-core-concepts, dataform-workflows, etl-vs-elt]
+      - slug: dataops
+        title: DataOps
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        added_by: blueprint
+        related_concepts: [ci-cd-for-data, data-observability]
+      - slug: finops-for-data
+        title: FinOps para plataformas de datos
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [bigquery-cost-model, scan-reduction]
+
+  - slug: data-activation-and-sharing
+    title: Activación y compartición de datos
+    concepts:
+      - slug: reverse-etl
+        title: Reverse ETL
+        kind: pattern
+        classification: modern
+        level: intermediate
+        importance: low
+        mvp: false
+        added_by: blueprint
+        related_concepts: [etl-vs-elt]
+      - slug: data-sharing
+        title: Compartición de datos entre organizaciones
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: low
+        mvp: false
+        added_by: blueprint
+        related_concepts: [data-products, data-contracts]
+      - slug: semantic-layer
+        title: Semantic layer
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        added_by: blueprint
+        related_concepts: [semantic-models]
+        note: Capa de métricas compartida; su evolución reciente está en 23 (emerging-semantic-layers).

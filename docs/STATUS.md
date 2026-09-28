@@ -6,8 +6,14 @@
 ---
 
 ## Carril A — Claude Code
-- **Tarea activa:** A-F1.1 · Blueprint de dominios (rama `a/f1-blueprint`), en curso
-- **Progreso A-F1.1:** plan aprobado (opción B, tope ~80 mvp). Bloques 1–4/5 (01–20) validados: 310 conceptos, 80 mvp, 8 agregados, 83 tecnologías pendientes para A-F1.2.
+- **Tarea activa:** — (A-F1.1 cerrada en la rama `a/f1-blueprint`, pendiente de merge a `main`)
+- **Hecho (A-F1.1 · Blueprint de dominios):**
+  - `schemas/blueprint.schema.json` y `docs/adr/ADR-003-knowledge-blueprint.md`: modelo del blueprint y convención de slugs de tecnología.
+  - `content/blueprint/01-fundamentals.yaml` … `23-emerging-technologies.yaml`: 23 dominios, 353 conceptos, 80 `mvp: true`, 15 `added_by: blueprint`.
+  - MVP (opción B): 5 en `python`, 5 en `orchestration` y 4 en `infrastructure-as-code`, todos con `mvp_reason`. Tope de ~80 respetado.
+  - `validate.py`: validación del blueprint y cruce con las entidades existentes. `--report` imprime el resumen y las tecnologías pendientes.
+  - 20 tests nuevos; en total 62, en verde.
+- **Siguiente:** A-F1.2 (Tecnologías y matriz). Las 84 tecnologías referenciadas sin entidad se listan con `python scripts/validate.py --report`. Deben seguir la convención de slugs de ADR-003. A-F1.2 convierte en error cualquier tecnología sin resolver.
 - **Cerrado:** A-F0 · Repo y contratos base (merge en `main`)
 - **Hecho (A-F0 · Repo y contratos base):**
   - Estructura del repo según ROADMAP §3, `Makefile` (validate, test, build, dev, install), `.gitattributes` (`eol=lf`), CI en `.github/workflows/ci.yml`.
@@ -44,7 +50,7 @@
 | De | Para | Pedido | Estado |
 |---|---|---|---|
 | A | B | Iniciar B-F1.1 (Templates): `schemas/` v0 ya está en `main` | Abierto |
-| A | B | B-F1.2 (revisión del Blueprint) puede empezar: dominios 01–10 en `content/blueprint/` de la rama `a/f1-blueprint`. Proponer cambios en tabla; no editar hasta el cierre de A-F1.1 | Abierto |
+| A | B | B-F1.2 (revisión del Blueprint): los 23 dominios están completos en `content/blueprint/` (rama `a/f1-blueprint` hasta el merge). Revisar en especial los 15 `added_by: blueprint` y el dominio 22 | Abierto |
 
 ## Criterio de salida de la fase actual
 - [ ] Blueprint validado con los 23 dominios; conceptos del MVP marcados.
