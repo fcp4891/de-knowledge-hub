@@ -1,0 +1,242 @@
+# Knowledge Blueprint v1 · Dominio 03 (plan maestro §5)
+# Python aplicado a datos, no curso genérico. Fuera de los dominios MVP: mvp solo con mvp_reason (máx. ~5).
+domain:
+  id: "03"
+  slug: python
+  title: Python para Data Engineering
+  description: Python aplicado a ingesta, transformación, validación y construcción de pipelines.
+
+subdomains:
+  - slug: python-core
+    title: Python core
+    concepts:
+      - slug: python-data-structures
+        title: Estructuras de datos
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+        related_technologies: [python]
+      - slug: python-comprehensions
+        title: Comprehensions
+        kind: concept
+        classification: core
+        level: basic
+        importance: low
+        mvp: false
+        related_technologies: [python]
+      - slug: python-functions
+        title: Funciones
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+        related_technologies: [python]
+      - slug: python-typing
+        title: Typing
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [python]
+      - slug: python-classes
+        title: Clases
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+        related_technologies: [python]
+      - slug: python-exceptions
+        title: Excepciones
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+        related_technologies: [python]
+      - slug: python-context-managers
+        title: Context managers
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [python]
+      - slug: python-iterators
+        title: Iteradores
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: low
+        mvp: false
+        related_technologies: [python]
+      - slug: python-generators
+        title: Generadores
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [python]
+        related_concepts: [python-iterators]
+      - slug: python-decorators
+        title: Decoradores
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: low
+        mvp: false
+        related_technologies: [python]
+      - slug: python-file-handling
+        title: Manejo de archivos
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+        related_technologies: [python]
+      - slug: python-concurrency
+        title: Concurrencia, paralelismo y asincronía
+        kind: concept
+        classification: core
+        level: advanced
+        importance: medium
+        mvp: false
+        related_technologies: [python]
+        note: Incluye el caso "procesamiento paralelo" del §5.3.
+
+  - slug: python-libraries
+    title: Librerías para datos
+    concepts:
+      - slug: python-dataframes
+        title: DataFrames en Python
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_technologies: [pandas, polars]
+        related_concepts: [arrow-columnar-memory]
+      - slug: arrow-columnar-memory
+        title: Formato columnar en memoria con Arrow
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_technologies: [pyarrow]
+        related_concepts: [row-vs-columnar-formats, parquet-format]
+      - slug: data-validation-with-pydantic
+        title: Validación de datos con Pydantic
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: true
+        mvp_reason: Python (§51); validación de payloads en la ingesta API de A-F3.2.
+        related_technologies: [pydantic]
+        related_concepts: [python-typing, schema-evolution]
+      - slug: http-clients
+        title: Clientes HTTP
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+        related_technologies: [requests, httpx]
+      - slug: data-apis-with-fastapi
+        title: APIs de datos con FastAPI
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [fastapi]
+        related_concepts: [data-validation-with-pydantic]
+      - slug: testing-with-pytest
+        title: Testing con pytest
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        mvp_reason: Python (§51); pruebas de los snippets de ingesta y transformación.
+        related_technologies: [pytest]
+      - slug: python-logging
+        title: Logging
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: true
+        mvp_reason: Python (§51); trazabilidad de la ingesta API con retries.
+        related_technologies: [python]
+      - slug: beam-programming-model
+        title: Modelo de programación de Apache Beam
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_technologies: [apache-beam, gcp-dataflow]
+      - slug: pyspark-dataframes
+        title: DataFrames en PySpark
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [apache-spark]
+        related_concepts: [python-dataframes]
+
+  - slug: python-use-cases
+    title: Casos reales
+    concepts:
+      - slug: python-api-consumption
+        title: Consumo de APIs
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        mvp_reason: Python (§51); snippet "ingesta API con retries" de A-F3.2.
+        related_technologies: [requests, httpx]
+        related_concepts: [http-clients, api-ingestion]
+        note: Paginación, autenticación, rate limits.
+      - slug: python-file-processing
+        title: Procesamiento de archivos
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+        related_concepts: [python-file-handling, file-ingestion]
+      - slug: python-database-io
+        title: Lectura y escritura en bases de datos
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [database-ingestion]
+      - slug: python-error-handling-and-retries
+        title: Manejo de errores y retries
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        mvp_reason: Python (§51); snippet "ingesta API con retries" de A-F3.2.
+        related_concepts: [python-exceptions, retries, idempotency]
+      - slug: python-pipeline-structure
+        title: Estructura de un pipeline en Python
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [data-pipeline, testing-with-pytest, python-logging]

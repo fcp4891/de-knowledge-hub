@@ -1,0 +1,235 @@
+# Knowledge Blueprint v1 · Dominio 01 (plan maestro §4.1)
+# CDC, backfill y replay tienen su ficha en 05-pipelines (ADR-003: un solo dominio por concepto).
+domain:
+  id: "01"
+  slug: fundamentals
+  title: Fundamentos de Data Engineering
+  description: Conceptos base, estables e independientes de proveedor, sobre cómo se mueve, almacena y procesa el dato.
+
+subdomains:
+  - slug: foundations
+    title: Qué es Data Engineering
+    concepts:
+      - slug: what-is-data-engineering
+        title: Qué es Data Engineering
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: true
+        related_concepts: [data-lifecycle, data-pipeline]
+      - slug: data-lifecycle
+        title: Ciclo de vida del dato
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: true
+        related_concepts: [data-ingestion, data-transformation]
+
+  - slug: processing-paradigms
+    title: Paradigmas de procesamiento
+    concepts:
+      - slug: etl-vs-elt
+        title: ETL vs ELT
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: true
+        related_concepts: [data-transformation, data-warehouse]
+      - slug: batch-vs-streaming
+        title: Batch vs streaming
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: true
+        related_concepts: [late-arriving-data]
+      - slug: oltp-vs-olap
+        title: OLTP vs OLAP
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: true
+        related_concepts: [row-vs-columnar-formats, data-warehouse]
+
+  - slug: storage-paradigms
+    title: Paradigmas de almacenamiento analítico
+    concepts:
+      - slug: data-lake
+        title: Data Lake
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: true
+        related_technologies: [gcp-cloud-storage, aws-s3, azure-adls]
+        related_concepts: [parquet-format, lakehouse]
+      - slug: data-warehouse
+        title: Data Warehouse
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: true
+        related_technologies: [gcp-bigquery, aws-redshift, microsoft-fabric]
+        related_concepts: [data-mart]
+      - slug: lakehouse
+        title: Lakehouse
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: true
+        related_technologies: [apache-iceberg, delta-lake, apache-hudi, gcp-biglake]
+        related_concepts: [data-lake, data-warehouse]
+      - slug: data-mart
+        title: Data Mart
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+
+  - slug: pipeline-design
+    title: Diseño de pipelines
+    concepts:
+      - slug: data-pipeline
+        title: Data pipeline
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: true
+        related_concepts: [data-ingestion, data-transformation, data-orchestration]
+      - slug: data-ingestion
+        title: Ingesta de datos
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: false
+      - slug: data-transformation
+        title: Transformación de datos
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: false
+      - slug: data-orchestration
+        title: Orquestación de datos
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: false
+        note: Visión general; el detalle está en el dominio 06-orchestration.
+      - slug: idempotency
+        title: Idempotencia
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_concepts: [data-pipeline]
+      - slug: schema-evolution
+        title: Schema evolution
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_concepts: [avro-format, parquet-format, data-contracts]
+      - slug: late-arriving-data
+        title: Late-arriving data
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_concepts: [idempotency]
+      - slug: data-contracts
+        title: Data contracts
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [schema-evolution]
+
+  - slug: consistency-and-transactions
+    title: Consistencia y transacciones
+    concepts:
+      - slug: data-consistency
+        title: Consistencia de datos
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [acid, cap-theorem]
+      - slug: acid
+        title: ACID
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+      - slug: cap-theorem
+        title: Teorema CAP
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+
+  - slug: data-formats
+    title: Formatos y organización física
+    concepts:
+      - slug: row-vs-columnar-formats
+        title: Formatos orientados a filas vs columnares
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: true
+        related_concepts: [parquet-format, avro-format]
+      - slug: parquet-format
+        title: Parquet
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_concepts: [compression]
+      - slug: avro-format
+        title: Avro
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+      - slug: json-format
+        title: JSON como formato de datos
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+      - slug: compression
+        title: Compresión
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+      - slug: partitioning
+        title: Particionamiento
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_concepts: [parquet-format]

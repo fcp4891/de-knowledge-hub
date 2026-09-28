@@ -6,7 +6,8 @@
 ---
 
 ## Carril A — Claude Code
-- **Tarea activa:** A-F1.1 · Blueprint de dominios (rama `a/f1-blueprint`), plan pendiente de aprobación
+- **Tarea activa:** A-F1.1 · Blueprint de dominios (rama `a/f1-blueprint`), en curso
+- **Progreso A-F1.1:** plan aprobado (opción B, tope ~80 mvp). Bloque 1/5 (01–05) validado: 117 conceptos, 54 mvp, 25 tecnologías pendientes para A-F1.2.
 - **Cerrado:** A-F0 · Repo y contratos base (merge en `main`)
 - **Hecho (A-F0 · Repo y contratos base):**
   - Estructura del repo según ROADMAP §3, `Makefile` (validate, test, build, dev, install), `.gitattributes` (`eol=lf`), CI en `.github/workflows/ci.yml`.
