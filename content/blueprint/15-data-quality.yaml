@@ -1,0 +1,88 @@
+# Knowledge Blueprint v1 · Dominio 15 (plan maestro §17)
+# Controles SQL y reconciliación viven en 02-sql y se enlazan. Observabilidad es un dominio aparte (16).
+domain:
+  id: "15"
+  slug: data-quality
+  title: Data Quality
+  description: Dimensiones de calidad, formas de implementar validaciones y patrones de publicación con control de calidad.
+
+subdomains:
+  - slug: quality-dimensions
+    title: Dimensiones
+    concepts:
+      - slug: data-quality-dimensions
+        title: Dimensiones de calidad de datos
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: false
+        note: Completeness, accuracy, consistency, validity, uniqueness y timeliness (§17); se podría separar por dimensión en la revisión.
+
+  - slug: quality-implementations
+    title: Implementaciones
+    concepts:
+      - slug: dbt-tests
+        title: Tests en dbt
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [dbt]
+        related_concepts: [sql-quality-checks]
+      - slug: dataform-assertions
+        title: Assertions en Dataform
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-dataform]
+        related_concepts: [dataform-workflows, dbt-tests]
+      - slug: great-expectations-validation
+        title: Validación con Great Expectations y equivalentes
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: low
+        mvp: false
+        related_technologies: [great-expectations]
+      - slug: custom-data-validators
+        title: Validadores propios
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [data-validation-with-pydantic]
+      - slug: schema-validation
+        title: Validación de schemas
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [schema-evolution, data-contracts]
+
+  - slug: quality-patterns
+    title: Patrones
+    concepts:
+      - slug: quality-gate
+        title: Quality gate
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [data-reconciliation, schema-validation]
+        note: Source → Validation → Transformation → Quality Gate → Publish (§17).
+      - slug: write-audit-publish
+        title: Write-Audit-Publish
+        kind: pattern
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        added_by: blueprint
+        related_concepts: [quality-gate]

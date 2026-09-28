@@ -1,0 +1,94 @@
+# Knowledge Blueprint v1 · Dominio 13 (plan maestro §15)
+domain:
+  id: "13"
+  slug: containers
+  title: Containers y plataforma
+  description: Contenedores, su construcción y las plataformas donde se ejecutan cargas de datos en cada cloud.
+
+subdomains:
+  - slug: container-fundamentals
+    title: Fundamentos de contenedores
+    concepts:
+      - slug: container-images
+        title: Imágenes
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: false
+        related_technologies: [docker]
+      - slug: containers
+        title: Contenedores
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: false
+        related_technologies: [docker]
+        related_concepts: [container-images]
+      - slug: dockerfile
+        title: Dockerfile
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: false
+        related_technologies: [docker]
+        related_concepts: [container-images]
+      - slug: container-volumes
+        title: Volúmenes
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+        related_technologies: [docker]
+      - slug: container-networking
+        title: Networking de contenedores
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [docker]
+      - slug: docker-compose-environments
+        title: Entornos locales con Docker Compose
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+        related_technologies: [docker-compose]
+        related_concepts: [containers]
+      - slug: container-registries
+        title: Registries
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-artifact-registry, aws-ecr, azure-container-registry]
+        related_concepts: [container-images]
+
+  - slug: container-platforms
+    title: Plataformas de ejecución
+    concepts:
+      - slug: kubernetes-fundamentals
+        title: Fundamentos de Kubernetes
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [kubernetes]
+        related_concepts: [containers]
+      - slug: container-platforms-by-cloud
+        title: Plataformas de contenedores por cloud
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-cloud-run, gcp-gke, aws-ecs, aws-fargate, aws-eks, azure-container-apps, azure-aks]
+        related_concepts: [kubernetes-fundamentals, cloud-run-for-data, container-apps-for-data]
+        note: Serverless de contenedores frente a Kubernetes administrado; no son equivalentes.

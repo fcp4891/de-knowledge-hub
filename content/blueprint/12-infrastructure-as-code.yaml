@@ -1,0 +1,131 @@
+# Knowledge Blueprint v1 · Dominio 12 (plan maestro §14: Infrastructure as Code)
+# Fuera de los dominios MVP: mvp solo para lo que exige Terraform en el MVP (snippets de BigQuery, GCS e IAM de A-F3.2).
+domain:
+  id: "12"
+  slug: infrastructure-as-code
+  title: Infrastructure as Code
+  description: Definición declarativa y versionada de la infraestructura de datos, principalmente con Terraform.
+
+subdomains:
+  - slug: iac-foundations
+    title: Fundamentos
+    concepts:
+      - slug: infrastructure-as-code
+        title: Infrastructure as Code
+        kind: concept
+        classification: core
+        level: basic
+        importance: high
+        mvp: false
+        related_technologies: [terraform]
+        related_concepts: [ci-cd-pipelines]
+
+  - slug: terraform
+    title: Terraform
+    concepts:
+      - slug: terraform-providers
+        title: Providers
+        kind: concept
+        classification: modern
+        level: basic
+        importance: high
+        mvp: true
+        mvp_reason: Terraform (§51); el provider de Google Cloud es la base de los snippets de BigQuery, GCS e IAM.
+        related_technologies: [terraform]
+        related_concepts: [infrastructure-as-code]
+      - slug: terraform-variables-and-outputs
+        title: Variables y outputs
+        kind: concept
+        classification: modern
+        level: basic
+        importance: medium
+        mvp: false
+        related_technologies: [terraform]
+      - slug: terraform-modules
+        title: Módulos
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: true
+        mvp_reason: Terraform (§51); estructura reutilizable de los snippets de infraestructura.
+        related_technologies: [terraform]
+        related_concepts: [terraform-variables-and-outputs]
+      - slug: terraform-state
+        title: State
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: true
+        mvp_reason: Terraform (§51); sin entender el state no se puede operar Terraform con seguridad.
+        related_technologies: [terraform]
+        related_concepts: [terraform-drift]
+      - slug: terraform-remote-state
+        title: Remote state
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        related_technologies: [terraform, gcp-cloud-storage]
+        related_concepts: [terraform-state]
+      - slug: terraform-plan-apply
+        title: Ciclo plan/apply
+        kind: concept
+        classification: modern
+        level: basic
+        importance: high
+        mvp: true
+        mvp_reason: Terraform (§51); flujo de trabajo mínimo para aplicar los snippets.
+        related_technologies: [terraform]
+        related_concepts: [terraform-state]
+      - slug: terraform-environments
+        title: Entornos en Terraform
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [terraform]
+        related_concepts: [environment-promotion, terraform-modules]
+      - slug: terraform-drift
+        title: Drift
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [terraform]
+      - slug: terraform-security
+        title: Seguridad en Terraform
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_technologies: [terraform]
+        related_concepts: [terraform-state, ci-cd-secrets]
+        note: Secretos en el state, permisos del ejecutor y revisión de planes.
+
+  - slug: other-iac-tools
+    title: Otras herramientas
+    concepts:
+      - slug: cloudformation-basics
+        title: Fundamentos de CloudFormation
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: low
+        mvp: false
+        related_technologies: [aws-cloudformation]
+        related_concepts: [infrastructure-as-code]
+      - slug: bicep-basics
+        title: Fundamentos de Bicep
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: low
+        mvp: false
+        related_technologies: [azure-bicep]
+        related_concepts: [infrastructure-as-code]
