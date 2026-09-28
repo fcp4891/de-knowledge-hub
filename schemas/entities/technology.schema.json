@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "entities/technology.schema.json",
+  "title": "Technology",
+  "description": "Tecnología o proyecto (open source o comercial) independiente de un proveedor cloud concreto.",
+  "allOf": [
+    {
+      "$ref": "../base.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "vendor",
+    "category",
+    "classification"
+  ],
+  "properties": {
+    "type": {
+      "const": "technology"
+    },
+    "vendor": {
+      "$ref": "../enums.schema.json#/$defs/vendor"
+    },
+    "category": {
+      "$ref": "../enums.schema.json#/$defs/slug"
+    },
+    "importance": {
+      "$ref": "../enums.schema.json#/$defs/importance"
+    },
+    "homepage": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    }
+  },
+  "unevaluatedProperties": false
+}

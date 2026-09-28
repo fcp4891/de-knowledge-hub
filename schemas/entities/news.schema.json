@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "entities/news.schema.json",
+  "title": "News",
+  "description": "Novedad técnica (§31) clasificada por relevancia (§32).",
+  "allOf": [
+    {
+      "$ref": "../base.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "published_at",
+    "relevance",
+    "review_state"
+  ],
+  "properties": {
+    "type": {
+      "const": "news"
+    },
+    "published_at": {
+      "$ref": "../enums.schema.json#/$defs/date"
+    },
+    "relevance": {
+      "enum": [
+        "critical",
+        "important",
+        "useful",
+        "watch"
+      ]
+    },
+    "review_state": {
+      "enum": [
+        "pending_review",
+        "approved",
+        "discarded"
+      ]
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    }
+  },
+  "unevaluatedProperties": false
+}

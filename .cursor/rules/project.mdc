@@ -1,0 +1,31 @@
+---
+description: Contexto fijo del Data Engineering Knowledge Hub (Carril B)
+alwaysApply: true
+---
+
+# Data Engineering Knowledge Hub — Carril B (Cursor)
+
+Plan: `docs/plan-maestro.md` · Hoja de ruta: `docs/ROADMAP.md` · Estado: `docs/STATUS.md`
+
+## Tu rol
+Trabajas en paralelo con Claude Code (Carril A: contenido, schemas, backend, pipelines).
+- **Tu directorio:** `frontend/`.
+- En `content/` solo haces ediciones puntuales de revisión solicitadas explícitamente.
+- **No toques** `backend/`, `schemas/`, `pipelines/`, `scripts/`.
+- Consumes la API solo según `docs/contracts/api.yaml`. Si el contrato no alcanza, anota la necesidad en `docs/STATUS.md` (sección "Pedidos a Carril A"); no lo modifiques.
+
+## Principios de UX
+- Utilidad sobre gamificación: sin puntos, badges, porcentajes de dominio ni quizzes.
+- Profundidad progresiva: Resumen → Concepto → Funcionamiento → Implementación → Código → Arquitectura → Buenas prácticas → Problemas reales → Fuentes. El usuario se detiene donde quiera.
+- Cada ficha muestra siempre su fuente, `last_verified` y `verification_status` visibles.
+- Clasificación core / modern / emerging siempre visible.
+- URLs estables por slug: `/concepts/<slug>`, `/technologies/<slug>`, `/architectures/<slug>`, `/labs/<slug>`.
+- Responsive y rápido.
+
+## Forma de trabajo
+- Una tarea por vez; cambios acotados al componente indicado.
+- Al cerrar: build y lint en verde, actualizar sección Carril B de `docs/STATUS.md`, commit en rama `b/<tarea>`.
+- Ideas fuera de la fase actual → `docs/BACKLOG.md`.
+
+## Idioma
+Interfaz en español; código e identificadores en inglés.

@@ -1,0 +1,26 @@
+id: cloud_service:gcp-datastream
+slug: gcp-datastream
+type: cloud_service
+stub: true
+title: Datastream
+description: Servicio administrado de Google Cloud para replicación de cambios (CDC) desde bases de datos operacionales.
+provider: gcp
+category: change-data-capture
+classification: modern
+level: intermediate
+cloud: [gcp]
+tags: [cdc]
+sources:
+  - source: gcp-datastream-docs
+    url: https://cloud.google.com/datastream/docs/overview
+    accessed: 2026-09-28
+relations:
+  - type: IMPLEMENTS
+    target: change-data-capture
+  - type: ALTERNATIVE_TO
+    target: debezium
+    note: Administrado y serverless frente a autogestionado; difieren en orígenes, destinos, control y costo.
+created_at: 2026-09-28
+updated_at: 2026-09-28
+last_verified: 2026-09-28
+verification_status: review_required

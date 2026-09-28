@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "entities/release.schema.json",
+  "title": "Release",
+  "description": "Versión publicada de una tecnología o servicio.",
+  "allOf": [
+    {
+      "$ref": "../base.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "product",
+    "released_at"
+  ],
+  "properties": {
+    "type": {
+      "const": "release"
+    },
+    "product": {
+      "$ref": "../enums.schema.json#/$defs/slug"
+    },
+    "version": {
+      "type": "string"
+    },
+    "released_at": {
+      "$ref": "../enums.schema.json#/$defs/date"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    }
+  },
+  "unevaluatedProperties": false
+}

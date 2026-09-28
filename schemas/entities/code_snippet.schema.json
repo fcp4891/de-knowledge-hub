@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "entities/code_snippet.schema.json",
+  "title": "CodeSnippet",
+  "description": "Fragmento de código de la Code Library (§23).",
+  "allOf": [
+    {
+      "$ref": "../base.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "language"
+  ],
+  "properties": {
+    "type": {
+      "const": "code_snippet"
+    },
+    "language": {
+      "enum": [
+        "sql",
+        "python",
+        "terraform",
+        "yaml",
+        "bash",
+        "json",
+        "other"
+      ]
+    },
+    "dialect": {
+      "description": "Dialecto o runtime (p. ej. bigquery, postgresql).",
+      "type": "string"
+    },
+    "requirements": {
+      "description": "Qué necesita el snippet para ejecutarse.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "unevaluatedProperties": false
+}

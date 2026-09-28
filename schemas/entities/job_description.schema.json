@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "entities/job_description.schema.json",
+  "title": "JobDescription",
+  "description": "Oferta laboral analizada por el Career Engine (§27).",
+  "allOf": [
+    {
+      "$ref": "../base.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "role"
+  ],
+  "properties": {
+    "type": {
+      "const": "job_description"
+    },
+    "role": {
+      "type": "string",
+      "minLength": 1
+    },
+    "company": {
+      "type": "string"
+    },
+    "seniority": {
+      "type": "string"
+    },
+    "analyzed_at": {
+      "$ref": "../enums.schema.json#/$defs/date"
+    }
+  },
+  "unevaluatedProperties": false
+}

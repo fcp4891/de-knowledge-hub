@@ -1,0 +1,306 @@
+"""Tests de scripts/validate.py con contenido temporal y los schemas reales."""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+from typing import Any
+
+import pytest
+import yaml
+
+from scripts import validate as v
+
+ROOT = Path(__file__).resolve().parent.parent
+SCHEMAS = ROOT / "schemas"
+TODAY = "2026-09-28"
+
+
+def entity(type_: str, slug: str, **fields: Any) -> dict[str, Any]:
+    base = {
+        "id": f"{type_}:{slug}",
+        "slug": slug,
+        "type": type_,
+        "title": slug.replace("-", " ").title(),
+        "description": f"Descripción de {slug}.",
+        "created_at": TODAY,
+        "updated_at": TODAY,
+        "verification_status": "review_required",
+    }
+    return {**base, **fields}
+
+
+def concept(slug: str, **fields: Any) -> dict[str, Any]:
+    defaults = {
+        "domain": "pipelines",
+        "classification": "core",
+        "level": "intermediate",
+        "importance": "high",
+        "last_verified": TODAY,
+    }
+    return entity("concept", slug, **{**defaults, **fields})
+
+
+def technology(slug: str, **fields: Any) -> dict[str, Any]:
+    defaults = {"vendor": "open-source", "category": "streaming", "classification": "modern"}
+    return entity("technology", slug, **{**defaults, **fields})
+
+
+def source(slug: str) -> dict[str, Any]:
+    return entity(
+        "source",
+        slug,
+        url="https://example.org/docs/",
+        source_type="official_docs",
+        authority_level=1,
+        provider="example",
+    )
+
+
+def write_md(content: Path, relative: str, data: dict[str, Any], body: str = "## 1. Resumen\n") -> None:
+    path = content / relative
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(f"---\n{yaml.safe_dump(data, allow_unicode=True)}---\n\n{body}", encoding="utf-8")
+
+
+def write_yaml(content: Path, relative: str, *docs: dict[str, Any]) -> None:
+    path = content / relative
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(yaml.safe_dump_all(docs, allow_unicode=True), encoding="utf-8")
+
+
+def run(content: Path) -> v.Report:
+    return v.validate(content, SCHEMAS)
+
+
+def assert_error(report: v.Report, *fragments: str) -> None:
+    assert not report.ok
+    joined = "\n".join(report.errors)
+    for fragment in fragments:
+        assert fragment in joined, f"'{fragment}' no aparece en:\n{joined}"
+
+
+@pytest.fixture
+def content(tmp_path: Path) -> Path:
+    root = tmp_path / "content"
+    root.mkdir()
+    return root
+
+
+# --- Contenido real ----------------------------------------------------------
+
+
+def test_repository_content_is_valid() -> None:
+    report = run(ROOT / "content")
+    assert report.ok, "\n".join(report.errors)
+    assert report.documents > 0
+
+
+def test_main_returns_zero_for_repository(capsys: pytest.CaptureFixture[str]) -> None:
+    assert v.main([]) == 0
+    assert "OK:" in capsys.readouterr().out
+
+
+# --- Casos válidos -----------------------------------------------------------
+
+
+def test_minimal_valid_concept(content: Path) -> None:
+    write_md(content, "concepts/cdc.md", concept("cdc"))
+    report = run(content)
+    assert report.ok, report.errors
+    assert report.documents == 1
+
+
+def test_valid_graph_with_relations_and_sources(content: Path) -> None:
+    write_yaml(content, "sources/registry.yaml", source("docs-a"), source("docs-b"))
+    write_md(
+        content,
+        "concepts/cdc.md",
+        concept(
+            "cdc",
+            technologies=["kafka"],
+            related_topics=["idempotency"],
+            sources=[{"source": "docs-a", "url": "https://example.org/docs/cdc", "accessed": TODAY}],
+            relations=[{"type": "RELATED_TO", "target": "idempotency"}],
+        ),
+    )
+    write_md(content, "concepts/idempotency.md", concept("idempotency", stub=True))
+    write_yaml(content, "technologies/kafka.yaml", technology("kafka", relations=[{"type": "IMPLEMENTS", "target": "cdc"}]))
+    report = run(content)
+    assert report.ok, report.errors
+    assert report.documents == 5
+
+
+def test_verified_with_sources_is_valid(content: Path) -> None:
+    write_yaml(content, "sources/r.yaml", source("docs-a"))
+    write_md(content, "concepts/cdc.md", concept("cdc", verification_status="verified", sources=[{"source": "docs-a"}]))
+    assert run(content).ok
+
+
+def test_underscore_directories_are_ignored(content: Path) -> None:
+    write_md(content, "_templates/concept.md", {"type": "concept"})
+    write_md(content, "concepts/cdc.md", concept("cdc"))
+    report = run(content)
+    assert report.ok, report.errors
+    assert report.documents == 1
+
+
+# --- Errores de schema -------------------------------------------------------
+
+
+def test_missing_required_field(content: Path) -> None:
+    data = concept("cdc")
+    del data["classification"]
+    write_md(content, "concepts/cdc.md", data)
+    assert_error(run(content), "concepts", "cdc.md", "'classification' is a required property")
+
+
+def test_invalid_enum_value(content: Path) -> None:
+    write_md(content, "concepts/cdc.md", concept("cdc", classification="legacy"))
+    assert_error(run(content), "[classification]", "'legacy' is not one of")
+
+
+def test_unknown_property_is_rejected(content: Path) -> None:
+    write_md(content, "concepts/cdc.md", concept("cdc", clasification="core"))
+    assert_error(run(content), "Unevaluated properties are not allowed", "clasification")
+
+
+def test_stub_must_be_boolean(content: Path) -> None:
+    write_md(content, "concepts/cdc.md", concept("cdc", stub="yes"))
+    assert_error(run(content), "[stub]")
+
+
+def test_invalid_slug_format(content: Path) -> None:
+    write_md(content, "concepts/cdc.md", concept("Change_Data_Capture", id="concept:change-data-capture"))
+    assert_error(run(content), "[slug]")
+
+
+def test_invalid_date(content: Path) -> None:
+    write_md(content, "concepts/cdc.md", concept("cdc", last_verified="28-09-2026"))
+    assert_error(run(content), "[last_verified]")
+
+
+def test_unknown_type(content: Path) -> None:
+    write_md(content, "concepts/x.md", entity("widget", "x"))
+    assert_error(run(content), "type desconocido o ausente: 'widget'")
+
+
+def test_verified_without_sources(content: Path) -> None:
+    write_md(content, "concepts/cdc.md", concept("cdc", verification_status="verified"))
+    assert_error(run(content), "'sources' is a required property")
+
+
+def test_markdown_without_frontmatter(content: Path) -> None:
+    (content / "concepts").mkdir()
+    (content / "concepts" / "cdc.md").write_text("# CDC\n", encoding="utf-8")
+    assert_error(run(content), "no empieza con frontmatter")
+
+
+def test_unclosed_frontmatter(content: Path) -> None:
+    (content / "concepts").mkdir()
+    (content / "concepts" / "cdc.md").write_text("---\ntitle: x\n", encoding="utf-8")
+    assert_error(run(content), "sin delimitador de cierre")
+
+
+def test_invalid_yaml(content: Path) -> None:
+    (content / "sources").mkdir()
+    (content / "sources" / "bad.yaml").write_text("id: [unclosed\n", encoding="utf-8")
+    assert_error(run(content), "no se pudo parsear")
+
+
+# --- Errores globales --------------------------------------------------------
+
+
+def test_id_must_match_type_and_slug(content: Path) -> None:
+    write_md(content, "concepts/cdc.md", concept("cdc", id="concept:other"))
+    assert_error(run(content), "[id] debe ser 'concept:cdc'")
+
+
+def test_duplicate_slug(content: Path) -> None:
+    write_md(content, "concepts/cdc.md", concept("cdc"))
+    write_yaml(content, "technologies/cdc.yaml", technology("cdc"))
+    assert_error(run(content), "[slug] 'cdc' duplicado")
+
+
+def test_duplicate_within_multidocument_yaml(content: Path) -> None:
+    write_yaml(content, "sources/registry.yaml", source("docs-a"), source("docs-a"))
+    assert_error(run(content), "registry.yaml#1", "duplicado")
+
+
+def test_relation_to_missing_slug(content: Path) -> None:
+    write_md(content, "concepts/cdc.md", concept("cdc", relations=[{"type": "RELATED_TO", "target": "ghost"}]))
+    assert_error(run(content), "RELATED_TO -> 'ghost'", "slug destino inexistente")
+
+
+def test_relation_with_disallowed_source_type(content: Path) -> None:
+    write_md(content, "concepts/a.md", concept("a", relations=[{"type": "PRACTICES", "target": "b"}]))
+    write_md(content, "concepts/b.md", concept("b"))
+    assert_error(run(content), "origen de tipo concept no permitido")
+
+
+def test_relation_with_disallowed_target_type(content: Path) -> None:
+    write_yaml(content, "sources/r.yaml", source("docs-a"))
+    write_md(content, "concepts/a.md", concept("a", relations=[{"type": "USES", "target": "docs-a"}]))
+    assert_error(run(content), "destino de tipo source no permitido")
+
+
+def test_self_relation(content: Path) -> None:
+    write_md(content, "concepts/a.md", concept("a", relations=[{"type": "RELATED_TO", "target": "a"}]))
+    assert_error(run(content), "consigo misma")
+
+
+def test_unknown_relation_type(content: Path) -> None:
+    write_md(content, "concepts/b.md", concept("b"))
+    write_md(content, "concepts/a.md", concept("a", relations=[{"type": "LIKES", "target": "b"}]))
+    assert_error(run(content), "[relations.0.type]")
+
+
+def test_missing_related_topic(content: Path) -> None:
+    write_md(content, "concepts/a.md", concept("a", related_topics=["ghost"]))
+    assert_error(run(content), "[related_topics.0] slug inexistente")
+
+
+def test_technologies_must_reference_technology(content: Path) -> None:
+    write_md(content, "concepts/a.md", concept("a", technologies=["b"]))
+    write_md(content, "concepts/b.md", concept("b"))
+    assert_error(run(content), "se esperaba technology o cloud_service")
+
+
+def test_source_ref_must_point_to_source(content: Path) -> None:
+    write_md(content, "concepts/a.md", concept("a", sources=[{"source": "b"}]))
+    write_md(content, "concepts/b.md", concept("b"))
+    assert_error(run(content), "[sources.0.source] 'b' es concept, no source")
+
+
+def test_main_returns_one_on_errors(content: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    write_md(content, "concepts/cdc.md", concept("cdc", classification="legacy"))
+    assert v.main(["--content", str(content)]) == 1
+    assert "ERROR" in capsys.readouterr().out
+
+
+# --- Coherencia de los schemas -----------------------------------------------
+
+
+def load_json(name: str) -> dict[str, Any]:
+    return json.loads((SCHEMAS / name).read_text(encoding="utf-8"))
+
+
+def test_every_entity_type_has_a_schema() -> None:
+    types = set(load_json("enums.schema.json")["$defs"]["entity_type"]["enum"])
+    files = {p.name.removesuffix(".schema.json") for p in (SCHEMAS / "entities").glob("*.schema.json")}
+    assert types == files
+
+
+def test_relation_catalog_matches_enum() -> None:
+    schema = load_json("relationships.schema.json")
+    assert set(schema["$defs"]["relation_type"]["enum"]) == set(schema["x-relation-catalog"])
+
+
+def test_relation_catalog_is_well_formed() -> None:
+    types = set(load_json("enums.schema.json")["$defs"]["entity_type"]["enum"])
+    for name, rule in load_json("relationships.schema.json")["x-relation-catalog"].items():
+        assert rule["inverse"], name
+        assert set(rule["source_types"]) <= types, name
+        assert set(rule["target_types"]) <= types, name
+        if rule["symmetric"]:
+            assert rule["inverse"] == name.lower(), name

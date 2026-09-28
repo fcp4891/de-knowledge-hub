@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "entities/pattern.schema.json",
+  "title": "Pattern",
+  "description": "Patrón reutilizable de diseño o implementación (p. ej. MERGE incremental, SCD2).",
+  "allOf": [
+    {
+      "$ref": "../base.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "domain",
+    "classification",
+    "level"
+  ],
+  "properties": {
+    "type": {
+      "const": "pattern"
+    },
+    "importance": {
+      "$ref": "../enums.schema.json#/$defs/importance"
+    }
+  },
+  "unevaluatedProperties": false
+}

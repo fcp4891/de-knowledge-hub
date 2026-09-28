@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "entities/concept.schema.json",
+  "title": "Concept",
+  "description": "Concepto de conocimiento (§22). El cuerpo Markdown sigue las 22 secciones de la plantilla.",
+  "allOf": [
+    {
+      "$ref": "../base.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "domain",
+    "classification",
+    "level",
+    "importance",
+    "last_verified"
+  ],
+  "properties": {
+    "type": {
+      "const": "concept"
+    },
+    "importance": {
+      "$ref": "../enums.schema.json#/$defs/importance"
+    },
+    "category": {
+      "$ref": "../enums.schema.json#/$defs/slug"
+    }
+  },
+  "unevaluatedProperties": false
+}

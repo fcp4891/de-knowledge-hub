@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "entities/interview_question.schema.json",
+  "title": "InterviewQuestion",
+  "description": "Pregunta técnica abierta (§26, §28). Sin alternativas ni puntaje.",
+  "allOf": [
+    {
+      "$ref": "../base.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "question",
+    "level"
+  ],
+  "properties": {
+    "type": {
+      "const": "interview_question"
+    },
+    "question": {
+      "type": "string",
+      "minLength": 1
+    },
+    "expected_points": {
+      "description": "Elementos que una respuesta sólida debería mencionar.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "unevaluatedProperties": false
+}

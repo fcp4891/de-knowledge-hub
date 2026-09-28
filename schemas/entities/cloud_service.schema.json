@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "entities/cloud_service.schema.json",
+  "title": "CloudService",
+  "description": "Servicio administrado de un proveedor cloud (GCP, AWS, Azure).",
+  "allOf": [
+    {
+      "$ref": "../base.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "provider",
+    "category",
+    "classification"
+  ],
+  "properties": {
+    "type": {
+      "const": "cloud_service"
+    },
+    "provider": {
+      "enum": [
+        "gcp",
+        "aws",
+        "azure"
+      ]
+    },
+    "category": {
+      "$ref": "../enums.schema.json#/$defs/slug"
+    },
+    "importance": {
+      "$ref": "../enums.schema.json#/$defs/importance"
+    }
+  },
+  "unevaluatedProperties": false
+}

@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "base.schema.json",
+  "title": "Metadata base",
+  "description": "Metadata mínima común a toda entidad (§40). Los schemas de schemas/entities/ la extienden con allOf y cierran propiedades con unevaluatedProperties.",
+  "type": "object",
+  "required": [
+    "id",
+    "slug",
+    "type",
+    "title",
+    "description",
+    "created_at",
+    "updated_at",
+    "verification_status"
+  ],
+  "properties": {
+    "id": {
+      "description": "Identificador estable con forma <type>:<slug>. validate.py verifica la coherencia con type y slug.",
+      "type": "string",
+      "pattern": "^[a-z_]+:[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "slug": { "$ref": "enums.schema.json#/$defs/slug" },
+    "type": { "$ref": "enums.schema.json#/$defs/entity_type" },
+    "title": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "description": { "type": "string", "minLength": 1, "maxLength": 500 },
+    "domain": { "$ref": "enums.schema.json#/$defs/slug" },
+    "subdomain": { "$ref": "enums.schema.json#/$defs/slug" },
+    "classification": { "$ref": "enums.schema.json#/$defs/classification" },
+    "level": { "$ref": "enums.schema.json#/$defs/level" },
+    "cloud": {
+      "type": "array",
+      "items": { "$ref": "enums.schema.json#/$defs/cloud" },
+      "uniqueItems": true
+    },
+    "technologies": {
+      "description": "Slugs de entidades technology o cloud_service asociadas. Deben existir.",
+      "type": "array",
+      "items": { "$ref": "enums.schema.json#/$defs/slug" },
+      "uniqueItems": true
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+      "uniqueItems": true
+    },
+    "related_topics": {
+      "description": "Slugs de entidades relacionadas para navegación. Deben existir.",
+      "type": "array",
+      "items": { "$ref": "enums.schema.json#/$defs/slug" },
+      "uniqueItems": true
+    },
+    "sources": {
+      "description": "Referencias a entidades source del Source Registry, con la página concreta consultada.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/source_ref" }
+    },
+    "relations": {
+      "description": "Aristas salientes del Knowledge Graph. Se guardan en una sola dirección; la inversa se deriva (ver relationships.schema.json).",
+      "type": "array",
+      "items": { "$ref": "relationships.schema.json" }
+    },
+    "created_at": { "$ref": "enums.schema.json#/$defs/date" },
+    "updated_at": { "$ref": "enums.schema.json#/$defs/date" },
+    "last_verified": { "$ref": "enums.schema.json#/$defs/date" },
+    "verification_status": { "$ref": "enums.schema.json#/$defs/verification_status" },
+    "stub": {
+      "description": "true si la entidad es un marcador mínimo creado para sostener relaciones; su contenido está pendiente.",
+      "type": "boolean"
+    }
+  },
+  "allOf": [
+    {
+      "description": "Una entidad verified (salvo las propias source) debe tener al menos una fuente y fecha de verificación.",
+      "if": {
+        "properties": {
+          "verification_status": { "const": "verified" },
+          "type": { "not": { "const": "source" } }
+        },
+        "required": ["verification_status", "type"]
+      },
+      "then": {
+        "required": ["sources", "last_verified"],
+        "properties": { "sources": { "minItems": 1 } }
+      }
+    }
+  ],
+  "$defs": {
+    "source_ref": {
+      "type": "object",
+      "required": ["source"],
+      "properties": {
+        "source": {
+          "description": "Slug de una entidad de tipo source.",
+          "$ref": "enums.schema.json#/$defs/slug"
+        },
+        "url": {
+          "description": "Página concreta consultada dentro de la fuente.",
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://"
+        },
+        "accessed": { "$ref": "enums.schema.json#/$defs/date" },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

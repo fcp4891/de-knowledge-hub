@@ -1,0 +1,110 @@
+# Source Registry (§30). Un documento YAML por fuente, separados por ---.
+# Borrador F0: solo las fuentes que usa la ficha de ejemplo. Se completa en A-F1.3.
+# url_verified: true = la URL respondió HTTP 200 en la fecha last_verified.
+id: source:postgresql-docs
+slug: postgresql-docs
+type: source
+title: PostgreSQL Documentation
+description: Documentación oficial de PostgreSQL.
+url: https://www.postgresql.org/docs/current/
+source_type: official_docs
+authority_level: 1
+provider: postgresql
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: 2026-09-28
+updated_at: 2026-09-28
+last_verified: 2026-09-28
+verification_status: verified
+---
+id: source:debezium-docs
+slug: debezium-docs
+type: source
+title: Debezium Documentation
+description: Documentación oficial del proyecto Debezium.
+url: https://debezium.io/documentation/
+source_type: official_docs
+authority_level: 1
+provider: debezium
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: [debezium]
+created_at: 2026-09-28
+updated_at: 2026-09-28
+last_verified: 2026-09-28
+verification_status: verified
+---
+id: source:apache-kafka-docs
+slug: apache-kafka-docs
+type: source
+title: Apache Kafka Documentation
+description: Documentación oficial de Apache Kafka.
+url: https://kafka.apache.org/documentation/
+source_type: official_docs
+authority_level: 1
+provider: apache
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: [apache-kafka]
+created_at: 2026-09-28
+updated_at: 2026-09-28
+last_verified: 2026-09-28
+verification_status: verified
+---
+id: source:gcp-datastream-docs
+slug: gcp-datastream-docs
+type: source
+title: Google Cloud Datastream documentation
+description: Documentación oficial de Datastream en Google Cloud.
+url: https://cloud.google.com/datastream/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: monthly
+trust: high
+technologies: [gcp-datastream]
+created_at: 2026-09-28
+updated_at: 2026-09-28
+last_verified: 2026-09-28
+verification_status: verified
+---
+id: source:aws-dms-docs
+slug: aws-dms-docs
+type: source
+title: AWS Database Migration Service User Guide
+description: Guía oficial de AWS Database Migration Service.
+url: https://docs.aws.amazon.com/dms/latest/userguide/Welcome.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: monthly
+trust: high
+technologies: []
+created_at: 2026-09-28
+updated_at: 2026-09-28
+last_verified: 2026-09-28
+verification_status: verified
+---
+id: source:microsoft-learn
+slug: microsoft-learn
+type: source
+title: Microsoft Learn
+description: Documentación oficial de Microsoft (SQL Server, Azure).
+url: https://learn.microsoft.com/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: monthly
+trust: high
+technologies: []
+created_at: 2026-09-28
+updated_at: 2026-09-28
+last_verified: 2026-09-28
+verification_status: verified

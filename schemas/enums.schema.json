@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "enums.schema.json",
+  "title": "Enumeraciones compartidas",
+  "description": "Vocabularios controlados del Knowledge Hub. Plan maestro §3, §22, §30, §33, §40, §41.",
+  "$defs": {
+    "entity_type": {
+      "description": "Tipos de entidad (§41). El valor determina el schema en schemas/entities/<type>.schema.json.",
+      "enum": [
+        "concept",
+        "technology",
+        "cloud_service",
+        "pattern",
+        "architecture",
+        "code_snippet",
+        "lab",
+        "news",
+        "release",
+        "source",
+        "job_description",
+        "interview_question",
+        "personal_note"
+      ]
+    },
+    "classification": {
+      "description": "Tipo de conocimiento (§3). Emerging nunca se presenta como reemplazo de lo consolidado.",
+      "enum": ["core", "modern", "emerging"]
+    },
+    "level": {
+      "description": "Nivel de profundidad del contenido.",
+      "enum": ["basic", "intermediate", "advanced"]
+    },
+    "importance": {
+      "description": "Importancia profesional del tema (§22).",
+      "enum": ["high", "medium", "low"]
+    },
+    "verification_status": {
+      "description": "Estado de vigencia (§33).",
+      "enum": ["verified", "review_required", "potentially_outdated", "deprecated", "archived"]
+    },
+    "source_type": {
+      "description": "Tipo de fuente (§30). Nivel de autoridad asociado: official_docs=1, release_notes=2, engineering_blog=3, spec_paper=4, secondary=5.",
+      "enum": ["official_docs", "release_notes", "engineering_blog", "spec_paper", "secondary"]
+    },
+    "cloud": {
+      "description": "Proveedor cloud al que aplica el contenido; agnostic si es independiente de proveedor.",
+      "enum": ["gcp", "aws", "azure", "agnostic"]
+    },
+    "vendor": {
+      "description": "Origen de una tecnología: proyecto open source, servicio administrado de un proveedor u otro.",
+      "enum": ["gcp", "aws", "azure", "open-source", "other"]
+    },
+    "slug": {
+      "description": "Identificador estable en kebab-case, único en todo content/.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "maxLength": 100
+    },
+    "date": {
+      "description": "Fecha ISO 8601 (YYYY-MM-DD).",
+      "type": "string",
+      "format": "date",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    }
+  }
+}

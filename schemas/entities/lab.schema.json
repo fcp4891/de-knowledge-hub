@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "entities/lab.schema.json",
+  "title": "Lab",
+  "description": "Laboratorio práctico (§25). Sin solución cerrada ni puntaje.",
+  "allOf": [
+    {
+      "$ref": "../base.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "lab_type",
+    "level"
+  ],
+  "properties": {
+    "type": {
+      "const": "lab"
+    },
+    "lab_type": {
+      "description": "A=implementation, B=debugging, C=optimization, D=architecture, E=comparison.",
+      "enum": [
+        "implementation",
+        "debugging",
+        "optimization",
+        "architecture",
+        "comparison"
+      ]
+    }
+  },
+  "unevaluatedProperties": false
+}

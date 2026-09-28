@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "entities/personal_note.schema.json",
+  "title": "PersonalNote",
+  "description": "Nota personal asociada a una entidad (§37). Vive normalmente en la base de datos, no en content/.",
+  "allOf": [
+    {
+      "$ref": "../base.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "about"
+  ],
+  "properties": {
+    "type": {
+      "const": "personal_note"
+    },
+    "about": {
+      "description": "Slug de la entidad a la que se refiere la nota.",
+      "$ref": "../enums.schema.json#/$defs/slug"
+    }
+  },
+  "unevaluatedProperties": false
+}

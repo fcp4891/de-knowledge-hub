@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "entities/source.schema.json",
+  "title": "Source",
+  "description": "Entrada del Source Registry (§30).",
+  "allOf": [
+    {
+      "$ref": "../base.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "url",
+    "source_type",
+    "authority_level",
+    "provider"
+  ],
+  "properties": {
+    "type": {
+      "const": "source"
+    },
+    "url": {
+      "description": "URL base de la fuente.",
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    },
+    "source_type": {
+      "$ref": "../enums.schema.json#/$defs/source_type"
+    },
+    "authority_level": {
+      "description": "Nivel 1 (máxima autoridad) a 5 (secundaria).",
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "provider": {
+      "type": "string",
+      "minLength": 1
+    },
+    "url_verified": {
+      "type": "boolean"
+    },
+    "review_frequency": {
+      "enum": [
+        "daily",
+        "weekly",
+        "monthly",
+        "quarterly",
+        "yearly"
+      ]
+    },
+    "trust": {
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ]
+    }
+  },
+  "unevaluatedProperties": false
+}

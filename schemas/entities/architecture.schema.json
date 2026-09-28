@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "entities/architecture.schema.json",
+  "title": "Architecture",
+  "description": "Arquitectura de referencia del Architecture Lab (§24).",
+  "allOf": [
+    {
+      "$ref": "../base.schema.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "classification",
+    "level"
+  ],
+  "properties": {
+    "type": {
+      "const": "architecture"
+    },
+    "importance": {
+      "$ref": "../enums.schema.json#/$defs/importance"
+    }
+  },
+  "unevaluatedProperties": false
+}
