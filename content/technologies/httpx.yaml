@@ -1,0 +1,18 @@
+id: technology:httpx
+slug: httpx
+type: technology
+stub: true
+title: HTTPX
+description: Cliente HTTP para Python con soporte síncrono y asíncrono.
+vendor: open-source
+category: python-library
+classification: modern
+mvp: false
+cloud:
+- agnostic
+relations:
+- type: ALTERNATIVE_TO
+  target: requests
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+verification_status: review_required

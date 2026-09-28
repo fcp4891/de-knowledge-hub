@@ -1,0 +1,18 @@
+id: technology:pandas
+slug: pandas
+type: technology
+stub: true
+title: pandas
+description: Librería de Python para análisis y manipulación de datos tabulares.
+vendor: open-source
+category: python-library
+classification: core
+mvp: false
+cloud:
+- agnostic
+relations:
+- type: DEPENDS_ON
+  target: python
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+verification_status: review_required

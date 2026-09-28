@@ -22,7 +22,7 @@
       "$ref": "../enums.schema.json#/$defs/vendor"
     },
     "category": {
-      "$ref": "../enums.schema.json#/$defs/slug"
+      "$ref": "../enums.schema.json#/$defs/category"
     },
     "importance": {
       "$ref": "../enums.schema.json#/$defs/importance"
@@ -31,6 +31,14 @@
       "type": "string",
       "format": "uri",
       "pattern": "^https://"
+    },
+    "mvp": {
+      "description": "true solo para las tecnologías iniciales del MVP (§51).",
+      "type": "boolean"
+    },
+    "note": {
+      "description": "Matiz para revisión humana (p. ej. empaquetado del producto).",
+      "type": "string"
     }
   },
   "unevaluatedProperties": false
