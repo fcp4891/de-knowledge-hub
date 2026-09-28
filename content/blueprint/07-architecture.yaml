@@ -1,0 +1,181 @@
+# Knowledge Blueprint v1 · Dominio 07 (plan maestro §9)
+# Arquitecturas de referencia del Architecture Lab. Las 5 mvp son las de F4 (ROADMAP).
+domain:
+  id: "07"
+  slug: architecture
+  title: Arquitecturas de datos
+  description: Arquitecturas de referencia con problema, componentes, trade-offs e implementación por cloud.
+
+subdomains:
+  - slug: reference-architectures
+    title: Arquitecturas analíticas de referencia
+    concepts:
+      - slug: batch-pipeline-architecture
+        title: Arquitectura de pipeline batch
+        kind: architecture
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        added_by: blueprint
+        related_technologies: [gcp-cloud-storage, gcp-bigquery, gcp-cloud-composer]
+        related_concepts: [batch-ingestion, incremental-load, backfill]
+        note: No figura en §9 pero es una de las 5 arquitecturas de F4 (ROADMAP).
+      - slug: streaming-pipeline-architecture
+        title: Arquitectura de pipeline streaming
+        kind: architecture
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        added_by: blueprint
+        related_technologies: [gcp-pubsub, gcp-dataflow, gcp-bigquery]
+        related_concepts: [streaming-ingestion, dead-letter-queue]
+        note: No figura en §9 pero es una de las 5 arquitecturas de F4 (ROADMAP).
+      - slug: modern-data-warehouse-architecture
+        title: Modern Data Warehouse
+        kind: architecture
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        related_technologies: [gcp-bigquery, aws-redshift, microsoft-fabric]
+        related_concepts: [data-warehouse, etl-vs-elt]
+      - slug: data-lake-architecture
+        title: Arquitectura Data Lake
+        kind: architecture
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-cloud-storage, aws-s3, azure-adls]
+        related_concepts: [data-lake]
+      - slug: lakehouse-architecture
+        title: Arquitectura Lakehouse
+        kind: architecture
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_technologies: [apache-iceberg, delta-lake, gcp-biglake]
+        related_concepts: [lakehouse, data-lake-architecture]
+      - slug: medallion-architecture
+        title: Medallion Architecture
+        kind: architecture
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: true
+        related_concepts: [pipeline-layers, lakehouse]
+        note: Bronze/silver/gold es una convención de capas, no un estándar formal.
+
+  - slug: streaming-architectures
+    title: Arquitecturas streaming y event-driven
+    concepts:
+      - slug: lambda-architecture
+        title: Lambda Architecture
+        kind: architecture
+        classification: core
+        level: advanced
+        importance: medium
+        mvp: false
+        related_concepts: [batch-vs-streaming, kappa-architecture]
+      - slug: kappa-architecture
+        title: Kappa Architecture
+        kind: architecture
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_technologies: [apache-kafka]
+        related_concepts: [replay]
+      - slug: event-driven-architecture
+        title: Event-driven architecture
+        kind: architecture
+        classification: modern
+        level: intermediate
+        importance: high
+        mvp: false
+        related_technologies: [gcp-pubsub, apache-kafka]
+        related_concepts: [event-driven-pipelines]
+      - slug: real-time-analytics-architecture
+        title: Real-time analytics
+        kind: architecture
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_concepts: [streaming-pipeline-architecture]
+
+  - slug: integration-architectures
+    title: Arquitecturas de integración
+    concepts:
+      - slug: cdc-architecture
+        title: Arquitectura CDC (PostgreSQL → BigQuery)
+        kind: architecture
+        classification: core
+        level: advanced
+        importance: high
+        mvp: true
+        related_technologies: [gcp-datastream, debezium, gcp-bigquery, gcp-cloud-sql]
+        related_concepts: [change-data-capture, sql-merge]
+      - slug: api-to-warehouse-architecture
+        title: API → Data Warehouse
+        kind: architecture
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: true
+        related_technologies: [gcp-cloud-run, gcp-cloud-storage, gcp-bigquery]
+        related_concepts: [api-ingestion, python-api-consumption]
+      - slug: iot-pipeline-architecture
+        title: Pipeline IoT
+        kind: architecture
+        classification: modern
+        level: advanced
+        importance: low
+        mvp: false
+        related_concepts: [streaming-ingestion]
+
+  - slug: ml-ai-architectures
+    title: Arquitecturas para ML e IA
+    concepts:
+      - slug: ml-feature-pipeline-architecture
+        title: ML feature pipeline
+        kind: architecture
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_technologies: [gcp-vertex-ai]
+        related_concepts: [batch-pipeline-architecture]
+      - slug: rag-data-pipeline-architecture
+        title: RAG data pipeline
+        kind: architecture
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_concepts: [file-ingestion]
+        note: Componentes y prácticas en evolución rápida; verificar vigencia al redactar.
+
+  - slug: organizational-architectures
+    title: Arquitecturas organizacionales
+    concepts:
+      - slug: data-mesh
+        title: Data Mesh
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        related_concepts: [data-products, data-contracts]
+        note: Enfoque sociotécnico; aparece también en §6 del plan.
+      - slug: data-products
+        title: Data Products
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        related_concepts: [data-contracts]
