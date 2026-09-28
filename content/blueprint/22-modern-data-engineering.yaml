@@ -1,7 +1,7 @@
 # Knowledge Blueprint v1 · Dominio 22 (plan maestro §3.2)
 # La mayoría de los temas "modern" del §3.2 ya tienen ficha en su dominio (lakehouse, data-contracts,
 # data-observability, open-table-formats, ci-cd-for-data, gitops, medallion-architecture); aquí se enlazan.
-# Los conceptos propios de este dominio no figuran en el plan: todos llevan added_by para revisión (B-F1.2).
+# Los conceptos propios de este dominio no figuran en el plan: todos llevan added_by (revisión B-F1.2 aplicada en el gate F1).
 domain:
   id: "22"
   slug: modern-data-engineering
@@ -17,21 +17,21 @@ subdomains:
         kind: concept
         classification: modern
         level: basic
-        importance: medium
+        importance: low
         mvp: false
         added_by: blueprint
         related_concepts: [lakehouse, data-contracts, data-observability, open-table-formats, ci-cd-for-data, gitops, medallion-architecture]
-        note: Punto de entrada que conecta los temas modern del §3.2.
+        note: Etiqueta histórica con adopción en declive; se conserva como mapa de entrada y por su presencia en ofertas.
       - slug: analytics-engineering
         title: Analytics engineering
         kind: concept
         classification: modern
         level: intermediate
-        importance: medium
+        importance: high
         mvp: false
         added_by: blueprint
         related_technologies: [dbt, gcp-dataform]
-        related_concepts: [dbt-core-concepts, dataform-workflows, etl-vs-elt]
+        related_concepts: [dbt-core-concepts, dataform-workflows, etl-vs-elt, semantic-models, star-schema]
       - slug: dataops
         title: DataOps
         kind: concept
@@ -40,26 +40,47 @@ subdomains:
         importance: medium
         mvp: false
         added_by: blueprint
-        related_concepts: [ci-cd-for-data, data-observability]
+        related_concepts: [ci-cd-for-data, data-observability, orchestration-observability, environment-promotion]
+        note: Paraguas de prácticas; no sustituye CI/CD (11), calidad (15) ni observabilidad (16).
       - slug: finops-for-data
         title: FinOps para plataformas de datos
         kind: concept
         classification: modern
-        level: intermediate
+        level: advanced
         importance: high
         mvp: false
         added_by: blueprint
-        related_concepts: [bigquery-cost-model, scan-reduction]
+        related_concepts: [bigquery-cost-model, scan-reduction, bigquery-slots, gcs-storage-classes-and-lifecycle, partition-pruning]
+      - slug: data-platform-engineering
+        title: Plataforma de datos como producto
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [data-mesh, data-products, ci-cd-for-data, infrastructure-as-code]
+        note: Plataforma self-serve, estándares y caminos recomendados; base de la "data platform corporativa" (§24, ejemplo 9).
+      - slug: data-versioning
+        title: Versionado de datos y time travel
+        kind: concept
+        classification: modern
+        level: intermediate
+        importance: medium
+        mvp: false
+        added_by: blueprint
+        related_concepts: [open-table-formats, backfill, replay]
+        note: Snapshots, time travel y clones para reproducibilidad, auditoría y recuperación.
 
   - slug: data-activation-and-sharing
-    title: Activación y compartición de datos
+    title: Activación, compartición y acceso a datos
     concepts:
       - slug: reverse-etl
         title: Reverse ETL
         kind: pattern
         classification: modern
         level: intermediate
-        importance: low
+        importance: medium
         mvp: false
         added_by: blueprint
         related_concepts: [etl-vs-elt]
@@ -68,10 +89,11 @@ subdomains:
         kind: concept
         classification: modern
         level: intermediate
-        importance: low
+        importance: medium
         mvp: false
         added_by: blueprint
-        related_concepts: [data-products, data-contracts]
+        related_concepts: [data-products, data-contracts, interoperability-standards]
+        note: Mecanismos para dar acceso a datos fuera del equipo u organización; distinto de data-products, que define qué se ofrece y con qué garantías.
       - slug: semantic-layer
         title: Semantic layer
         kind: concept
@@ -81,4 +103,14 @@ subdomains:
         mvp: false
         added_by: blueprint
         related_concepts: [semantic-models]
-        note: Capa de métricas compartida; su evolución reciente está en 23 (emerging-semantic-layers).
+        note: semantic-models (04) es la estructura del modelo; esta ficha es la capa de métricas gobernadas; lo que evoluciona está en emerging-semantic-layers (23).
+      - slug: zero-etl-and-federation
+        title: Zero-ETL y consultas federadas
+        kind: concept
+        classification: emerging
+        level: intermediate
+        importance: low
+        mvp: false
+        added_by: blueprint
+        related_concepts: [bigquery-external-tables, change-data-capture, etl-vs-elt]
+        note: Terminología de proveedores en evolución; verificar cada afirmación con documentación oficial. No reemplaza a ELT.

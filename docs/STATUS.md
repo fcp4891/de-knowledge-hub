@@ -13,6 +13,8 @@
   - `schemas/blueprint.schema.json` y `docs/adr/ADR-003-knowledge-blueprint.md`: modelo del blueprint y convención de slugs de tecnología.
   - `content/blueprint/01-fundamentals.yaml` … `23-emerging-technologies.yaml`: 23 dominios, 353 conceptos, 80 `mvp: true`, 15 `added_by: blueprint`.
   - MVP (opción B): 5 en `python`, 5 en `orchestration` y 4 en `infrastructure-as-code`, todos con `mvp_reason`. Tope de ~80 respetado.
+  - Revisión del dominio 22 aplicada: +3 conceptos (`data-platform-engineering`, `data-versioning`, `zero-etl-and-federation`), ajustes de importancia, nivel y relaciones.
+  - Medallion se mantiene en F4 aunque no sea MVP (nota en ROADMAP F4).
   - Ajuste de MVP en el gate (el total sigue en 80):
     - 12: entra `infrastructure-as-code`, sale `terraform-modules`.
     - 07: entra `event-driven-architecture`, sale `medallion-architecture`.
@@ -41,6 +43,7 @@
 - **Bloqueos:** —
 - **Cambios de contrato (con ADR):** creación inicial de `schemas/` y ajuste de pares en el gate de F0 (ADR-000).
 - **Notas para Carril B:**
+  - **Regla (gate F1):** Cursor revisa y propone cambios sobre `content/blueprint/`; solo Carril A edita esos archivos.
   - Los valores de `type` están en snake_case (`cloud_service`, `code_snippet`…).
   - Las relaciones solo se guardan en la entidad origen. Para mostrar la inversa, usar `x-relation-catalog.<TIPO>.inverse` de `schemas/relationships.schema.json`.
 
@@ -54,7 +57,7 @@
 | De | Para | Pedido | Estado |
 |---|---|---|---|
 | A | B | Iniciar B-F1.1 (Templates): `schemas/` v0 ya está en `main` | Abierto (en curso en `b/f1-templates`) |
-| A | B | B-F1.2: crear la rama `b/f1-review` desde `main`. El blueprint completo (23 dominios) ya está mergeado. Revisar en especial los 15 `added_by: blueprint`. El dominio 22 ya tiene una revisión propuesta (13 filas, abajo) | Abierto |
+| A | B | B-F1.2: crear la rama `b/f1-review` desde `main`. El blueprint completo (23 dominios) ya está mergeado. Revisar en especial los 15 `added_by: blueprint`. El dominio 22 ya está revisado y aplicado | Abierto |
 
 ## Criterio de salida de la fase actual
 - [ ] Blueprint validado con los 23 dominios; conceptos del MVP marcados.
@@ -67,12 +70,4 @@
 - **F0 — Fundaciones** (2026-09-28): `make validate` en verde con la ficha `change-data-capture`; 42 tests.
 
 ## Decisiones pendientes para el gate humano
-- **Medallion en F4:** `medallion-architecture` salió del MVP del blueprint, pero sigue en la lista de las 5 arquitecturas de F4 (ROADMAP). Hay que elegir entre:
-  - sustituirla en F4 por `event-driven-architecture`;
-  - mantenerla en F4 aunque no sea MVP.
-- **Revisión del dominio 22:** 13 propuestas pendientes de aprobación fila por fila. Resumen:
-  - eliminar `semantic-layer`, que duplica `semantic-models`;
-  - agregar `data-platform-engineering` y `data-versioning`;
-  - agregar `zero-etl-and-federation` como emerging (opcional);
-  - subir la importancia de `analytics-engineering`;
-  - agregar notas y relaciones.
+- —

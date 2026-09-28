@@ -10,3 +10,4 @@ Formato: `- [fase sugerida] idea — origen`
 - [F1] Blueprint: añadir "fuentes candidatas" por dominio (§54) cuando exista el Source Registry (A-F1.3) — A-F1.1
 - [F1] Revisar si `data-quality-dimensions` debe separarse en una ficha por dimensión — A-F1.1
 - [F2] Explorer: mostrar los conceptos del blueprint que aún no tienen ficha como "pendiente", en vez de ocultarlos — A-F1.1
+- [F4] Blueprint 07: agregar `corporate-data-platform-architecture` (§24, ejemplo 9) como implementación de referencia de `data-platform-engineering` — revisión del dominio 22
