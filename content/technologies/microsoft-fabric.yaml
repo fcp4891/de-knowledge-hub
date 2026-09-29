@@ -1,0 +1,16 @@
+id: cloud_service:microsoft-fabric
+slug: microsoft-fabric
+type: cloud_service
+stub: true
+title: Microsoft Fabric
+description: Plataforma analítica SaaS de Microsoft que integra lakehouse, warehouse, integración y BI sobre OneLake.
+provider: azure
+category: lakehouse-platform
+classification: modern
+mvp: false
+cloud:
+- azure
+note: Producto SaaS de Microsoft, no un servicio de Azure en sentido estricto; se modela con provider azure (ADR-004).
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+verification_status: review_required

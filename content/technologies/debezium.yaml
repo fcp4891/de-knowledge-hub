@@ -5,8 +5,9 @@ stub: true
 title: Debezium
 description: Plataforma open source de Change Data Capture basada en conectores que leen el log de transacciones de la base de datos.
 vendor: open-source
-category: change-data-capture
+category: cdc-replication
 classification: modern
+mvp: false
 level: intermediate
 cloud: [agnostic]
 tags: [cdc, streaming]

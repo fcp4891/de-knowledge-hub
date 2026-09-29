@@ -1,0 +1,18 @@
+id: technology:pydantic
+slug: pydantic
+type: technology
+stub: true
+title: Pydantic
+description: Validación de datos en Python basada en type hints.
+vendor: open-source
+category: python-library
+classification: modern
+mvp: false
+cloud:
+- agnostic
+relations:
+- type: DEPENDS_ON
+  target: python
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+verification_status: review_required

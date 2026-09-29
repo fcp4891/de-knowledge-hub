@@ -1,0 +1,16 @@
+id: cloud_service:microsoft-purview
+slug: microsoft-purview
+type: cloud_service
+stub: true
+title: Microsoft Purview
+description: Soluciones de Microsoft para gobierno de datos, catálogo y cumplimiento.
+provider: azure
+category: governance-catalog
+classification: modern
+mvp: false
+cloud:
+- azure
+note: Producto de Microsoft que trasciende Azure; se modela con provider azure (ADR-004).
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+verification_status: review_required

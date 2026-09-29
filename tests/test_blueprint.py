@@ -75,12 +75,10 @@ def test_mvp_outside_mvp_domains_with_reason(content: Path) -> None:
     assert run(content).ok
 
 
-def test_pending_technologies_are_reported_not_errors(content: Path) -> None:
+def test_related_technology_resolved(content: Path) -> None:
     write_yaml(content, "technologies/kafka.yaml", technology("kafka"))
-    write_domain(content, domain_doc("14", "streaming", bp_concept("topics", related_technologies=["kafka", "gcp-pubsub"])))
-    report = run(content)
-    assert report.ok, report.errors
-    assert report.pending_technologies == {"gcp-pubsub": ["topics"]}
+    write_domain(content, domain_doc("14", "streaming", bp_concept("topics", related_technologies=["kafka"])))
+    assert run(content).ok
 
 
 def test_entity_matches_blueprint(content: Path) -> None:
@@ -144,6 +142,11 @@ def test_self_related_concept(content: Path) -> None:
 def test_mvp_outside_mvp_domains_without_reason(content: Path) -> None:
     write_domain(content, domain_doc("03", "python", bp_concept("retries-in-python", mvp=True)))
     assert_error(run(content), "[mvp_reason]")
+
+
+def test_unresolved_related_technology_is_error(content: Path) -> None:
+    write_domain(content, domain_doc("14", "streaming", bp_concept("topics", related_technologies=["gcp-pubsub"])))
+    assert_error(run(content), "[related_technologies] tecnología inexistente: 'gcp-pubsub'")
 
 
 def test_related_technology_with_wrong_type(content: Path) -> None:

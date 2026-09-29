@@ -1,0 +1,15 @@
+id: cloud_service:gcp-cloud-run
+slug: gcp-cloud-run
+type: cloud_service
+stub: true
+title: Cloud Run
+description: Plataforma serverless de Google Cloud para ejecutar contenedores como servicios o jobs.
+provider: gcp
+category: serverless-containers
+classification: modern
+mvp: false
+cloud:
+- gcp
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+verification_status: review_required

@@ -1,0 +1,16 @@
+id: cloud_service:azure-key-vault
+slug: azure-key-vault
+type: cloud_service
+stub: true
+title: Azure Key Vault
+description: Almacenamiento de secretos, claves y certificados en Azure.
+provider: azure
+category: secrets
+classification: modern
+mvp: false
+cloud:
+- azure
+note: Cubre secretos y claves; en la matriz aparece en ambas capacidades.
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+verification_status: review_required

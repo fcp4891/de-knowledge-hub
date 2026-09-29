@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "matrix.schema.json",
+  "title": "Cloud Capability Matrix",
+  "description": "Vista transversal por capacidad (§13, §52.C). Una equivalencia nunca implica que los productos sean idénticos: cada celda exige diferencias y cuándo NO es equivalente. No es una entidad; validate.py la procesa aparte (ADR-004).",
+  "type": "object",
+  "required": ["capabilities"],
+  "properties": {
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/capability" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "capability": {
+      "type": "object",
+      "required": ["id", "title", "concepts", "clouds", "verification_status", "last_verified"],
+      "properties": {
+        "id": { "$ref": "enums.schema.json#/$defs/category" },
+        "title": { "type": "string", "minLength": 1 },
+        "concepts": {
+          "description": "Conceptos del blueprint que anclan la capacidad (concepto antes que producto, §2.1).",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "enums.schema.json#/$defs/slug" },
+          "uniqueItems": true
+        },
+        "clouds": {
+          "type": "object",
+          "required": ["gcp", "aws", "azure"],
+          "properties": {
+            "gcp": { "$ref": "#/$defs/cell" },
+            "aws": { "$ref": "#/$defs/cell" },
+            "azure": { "$ref": "#/$defs/cell" }
+          },
+          "additionalProperties": false
+        },
+        "note": { "type": "string" },
+        "verification_status": { "$ref": "enums.schema.json#/$defs/verification_status" },
+        "last_verified": { "$ref": "enums.schema.json#/$defs/date" }
+      },
+      "additionalProperties": false
+    },
+    "cell": {
+      "type": "object",
+      "required": ["services", "differences", "not_equivalent_when"],
+      "properties": {
+        "services": {
+          "description": "Slugs de cloud_service del proveedor de la columna.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "enums.schema.json#/$defs/slug" },
+          "uniqueItems": true
+        },
+        "differences": {
+          "description": "Diferencias arquitectónicas clave frente a las otras columnas.",
+          "type": "string",
+          "minLength": 20
+        },
+        "not_equivalent_when": {
+          "description": "Casos en que la equivalencia no se sostiene.",
+          "type": "string",
+          "minLength": 20
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,16 @@
+id: cloud_service:aws-sagemaker
+slug: aws-sagemaker
+type: cloud_service
+stub: true
+title: Amazon SageMaker
+description: Plataforma de AWS para desarrollar y operar modelos de ML.
+provider: aws
+category: ai-platform
+classification: modern
+mvp: false
+cloud:
+- aws
+note: El nombre y empaquetado de SageMaker han cambiado; verificar al redactar la ficha.
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+verification_status: review_required

@@ -1,0 +1,15 @@
+id: cloud_service:aws-kinesis
+slug: aws-kinesis
+type: cloud_service
+stub: true
+title: Amazon Kinesis Data Streams
+description: Servicio de AWS para ingesta y procesamiento de streams de datos.
+provider: aws
+category: stream-messaging
+classification: modern
+mvp: false
+cloud:
+- aws
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+verification_status: review_required

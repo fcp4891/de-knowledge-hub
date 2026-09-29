@@ -1,0 +1,348 @@
+# Cloud Capability Matrix v1 (plan maestro §13, §52.C; ADR-004).
+# Una equivalencia nunca implica productos idénticos. Diferencias descritas a nivel arquitectónico,
+# sin cifras ni límites de producto. Todo en review_required hasta verificar con fuentes Nivel 1–2 (A-F1.3).
+# Fuera de la matriz por ahora (ADR-004): IaC (Terraform es multicloud), transformación SQL y CI/CD.
+capabilities:
+  - id: object-storage
+    title: Almacenamiento de objetos
+    concepts: [data-lake, gcs-buckets-and-objects]
+    clouds:
+      gcp:
+        services: [gcp-cloud-storage]
+        differences: Espacio de nombres plano por bucket; se integra de forma nativa con BigQuery (tablas externas y BigLake) y con Dataflow.
+        not_equivalent_when: Se requiere semántica de sistema de archivos jerárquico con renombrado atómico de directorios.
+      aws:
+        services: [aws-s3]
+        differences: Espacio de nombres plano; es la base del ecosistema de lake de AWS (Athena, Glue, Lake Formation, EMR).
+        not_equivalent_when: Se asume el mismo modelo de clases de almacenamiento, permisos o notificaciones que en otro proveedor.
+      azure:
+        services: [azure-adls]
+        differences: Construido sobre Blob Storage con espacio de nombres jerárquico opcional y ACL de estilo POSIX a nivel de directorio y archivo.
+        not_equivalent_when: Se diseña pensando en un namespace plano o se ignora la diferencia entre permisos RBAC y ACL.
+    verification_status: review_required
+    last_verified: 2026-09-28
+
+  - id: data-warehouse
+    title: Data warehouse
+    concepts: [data-warehouse]
+    clouds:
+      gcp:
+        services: [gcp-bigquery]
+        differences: Serverless, con almacenamiento y cómputo separados y administrados; la capacidad se gestiona por demanda o por reserva, no por clúster.
+        not_equivalent_when: Se necesita control explícito del clúster, tuning físico por nodo o un motor que se apague y encienda por completo.
+      aws:
+        services: [aws-redshift]
+        differences: Tiene opciones de clúster aprovisionado y serverless; el diseño físico (distribución y orden) influye más en el rendimiento.
+        not_equivalent_when: Se trasladan decisiones de BigQuery (particionamiento y clustering) sin revisar la distribución y el orden de Redshift.
+      azure:
+        services: [microsoft-fabric, azure-synapse]
+        differences: Fabric Warehouse opera sobre OneLake dentro de una plataforma SaaS; Synapse ofrece pools SQL dedicados y serverless.
+        not_equivalent_when: Se trata Fabric y Synapse como el mismo producto o se ignora que su posicionamiento está en evolución.
+    verification_status: review_required
+    last_verified: 2026-09-28
+
+  - id: query-engine
+    title: Consultas SQL sobre el lake
+    concepts: [bigquery-external-tables, lakehouse]
+    clouds:
+      gcp:
+        services: [gcp-bigquery, gcp-biglake]
+        differences: Las consultas sobre el lake pasan por el motor de BigQuery mediante tablas externas o BigLake, con gobierno integrado.
+        not_equivalent_when: Se espera un motor independiente del warehouse con facturación y capacidad separadas.
+      aws:
+        services: [aws-athena]
+        differences: Motor serverless separado del warehouse que consulta S3 usando el catálogo de Glue.
+        not_equivalent_when: Se espera el rendimiento y las funciones de un warehouse con almacenamiento administrado.
+      azure:
+        services: [azure-synapse]
+        differences: Los pools SQL serverless consultan archivos del lake sin cargarlos; Fabric ofrece un enfoque alternativo sobre OneLake.
+        not_equivalent_when: Se asume el mismo soporte de formatos de tabla abiertos o el mismo modelo de costos que Athena o BigQuery.
+    verification_status: review_required
+    last_verified: 2026-09-28
+
+  - id: stream-messaging
+    title: Mensajería y streaming de eventos
+    concepts: [message-brokers, streaming-ingestion]
+    clouds:
+      gcp:
+        services: [gcp-pubsub]
+        differences: Servicio global publish/subscribe sin particiones gestionadas por el usuario; el orden depende de las claves de ordenamiento.
+        not_equivalent_when: Se necesita la semántica de log particionado de Kafka (offsets controlados por el consumidor, compactación por clave).
+      aws:
+        services: [aws-kinesis, aws-msk]
+        differences: Kinesis usa shards administrados por AWS; MSK es Kafka administrado con semántica de log particionado.
+        not_equivalent_when: Se trata Kinesis como Kafka o se omite que MSK exige operar conceptos de Kafka (particiones, retención, consumer groups).
+      azure:
+        services: [azure-event-hubs]
+        differences: Log particionado para ingesta de eventos; ofrece un endpoint compatible con el protocolo de Kafka.
+        not_equivalent_when: Se asume que la compatibilidad con el protocolo de Kafka implica todas las funciones del ecosistema Kafka.
+    verification_status: review_required
+    last_verified: 2026-09-28
+
+  - id: cdc-replication
+    title: CDC y replicación de bases de datos
+    concepts: [change-data-capture, database-ingestion]
+    clouds:
+      gcp:
+        services: [gcp-datastream]
+        differences: Servicio serverless de CDC desde bases operacionales hacia destinos de Google Cloud.
+        not_equivalent_when: Se necesita transformar en vuelo o llegar a destinos fuera de los soportados sin procesamiento adicional.
+      aws:
+        services: [aws-dms]
+        differences: Servicio de migración y replicación continua con instancias o modo serverless, orígenes y destinos heterogéneos.
+        not_equivalent_when: Se espera un modelo operativo idéntico al de Datastream (instancias de replicación, tareas, validación).
+      azure:
+        services: [azure-data-factory]
+        differences: Data Factory incorpora capacidades de CDC dentro de un servicio de integración más amplio.
+        not_equivalent_when: Se asume un servicio dedicado de replicación equivalente a Datastream o DMS.
+    note: Debezium (open source) es la alternativa independiente de cloud.
+    verification_status: review_required
+    last_verified: 2026-09-28
+
+  - id: data-processing
+    title: Procesamiento batch y streaming
+    concepts: [batch-vs-streaming, data-transformation]
+    clouds:
+      gcp:
+        services: [gcp-dataflow, gcp-dataproc]
+        differences: Dataflow ejecuta Beam de forma serverless con autoescalado; Dataproc ofrece Spark administrado con clústeres o serverless.
+        not_equivalent_when: Se asume que un pipeline Spark corre en Dataflow o que uno Beam corre en Dataproc sin cambiar el modelo de programación.
+      aws:
+        services: [aws-glue, aws-emr]
+        differences: Glue ofrece jobs ETL serverless basados en Spark y catálogo; EMR ofrece clústeres y opciones serverless para varios frameworks.
+        not_equivalent_when: Se busca un equivalente serverless de Beam con el mismo modelo unificado batch/streaming.
+      azure:
+        services: [microsoft-fabric, azure-databricks]
+        differences: Fabric integra Spark dentro de su plataforma SaaS; Azure Databricks ofrece un runtime propio basado en Spark y Delta Lake.
+        not_equivalent_when: Se asume que Fabric y Databricks comparten gobierno, facturación o runtime.
+    verification_status: review_required
+    last_verified: 2026-09-28
+
+  - id: orchestration
+    title: Orquestación de pipelines
+    concepts: [data-orchestration, open-source-vs-managed-orchestration]
+    clouds:
+      gcp:
+        services: [gcp-cloud-composer]
+        differences: Airflow administrado; el usuario escribe DAG de Airflow y Google opera la infraestructura del entorno.
+        not_equivalent_when: Se necesita orquestación basada en estados sin código Python o un orquestador sin costo base de entorno.
+      aws:
+        services: [aws-mwaa, aws-step-functions]
+        differences: MWAA es Airflow administrado; Step Functions es un orquestador de máquinas de estado nativo de AWS, con otro modelo.
+        not_equivalent_when: Se trata Step Functions como Airflow; no usa DAG en Python ni comparte su ecosistema de operadores.
+      azure:
+        services: [azure-data-factory, microsoft-fabric]
+        differences: Data Factory y los pipelines de Fabric son orquestadores low-code centrados en actividades de integración.
+        not_equivalent_when: Se espera escribir DAG de Airflow en Python o usar sus operadores y su scheduler.
+    verification_status: review_required
+    last_verified: 2026-09-28
+
+  - id: serverless-compute
+    title: Cómputo serverless por eventos
+    concepts: [event-driven-pipelines]
+    clouds:
+      gcp:
+        services: [gcp-cloud-run]
+        differences: Ejecuta contenedores como servicios o jobs, lo que permite empaquetar dependencias arbitrarias.
+        not_equivalent_when: Se busca un modelo de función pura sin contenedor ni imagen que gestionar.
+      aws:
+        services: [aws-lambda]
+        differences: Funciones por evento con integración nativa con los servicios de AWS; también acepta imágenes de contenedor.
+        not_equivalent_when: La carga necesita ejecuciones largas o recursos que excedan el modelo de función.
+      azure:
+        services: [azure-functions]
+        differences: Funciones por evento con varios planes de hospedaje que cambian el escalado y el arranque en frío.
+        not_equivalent_when: Se asume el mismo comportamiento de escalado sin revisar el plan de hospedaje.
+    verification_status: review_required
+    last_verified: 2026-09-28
+
+  - id: serverless-containers
+    title: Contenedores serverless
+    concepts: [container-platforms-by-cloud]
+    clouds:
+      gcp:
+        services: [gcp-cloud-run]
+        differences: Contenedores sin administrar clúster, con escalado a cero para servicios.
+        not_equivalent_when: Se requiere control de nodos, sidecars complejos o APIs de Kubernetes.
+      aws:
+        services: [aws-fargate, aws-ecs]
+        differences: Fargate aporta cómputo serverless para tareas de ECS (o pods de EKS); ECS define servicios y tareas.
+        not_equivalent_when: Se espera el modelo de Cloud Run (URL por servicio, escalado a cero por defecto) sin configurar ECS.
+      azure:
+        services: [azure-container-apps]
+        differences: Contenedores serverless con escalado por eventos, construidos sobre componentes de Kubernetes que no se exponen.
+        not_equivalent_when: Se necesita acceso completo a la API de Kubernetes.
+    verification_status: review_required
+    last_verified: 2026-09-28
+
+  - id: container-orchestration
+    title: Kubernetes administrado
+    concepts: [kubernetes-fundamentals]
+    clouds:
+      gcp:
+        services: [gcp-gke]
+        differences: Kubernetes administrado, con modos que van desde nodos gestionados por el usuario hasta operación más automatizada.
+        not_equivalent_when: Se asume el mismo modelo de red, identidad de workloads o actualizaciones que en otro proveedor.
+      aws:
+        services: [aws-eks]
+        differences: Plano de control administrado; los nodos pueden ser propios, grupos administrados o Fargate.
+        not_equivalent_when: Se ignora la integración específica con IAM y VPC de AWS.
+      azure:
+        services: [azure-aks]
+        differences: Kubernetes administrado integrado con Entra ID y la red de Azure.
+        not_equivalent_when: Se trasladan manifiestos sin revisar almacenamiento, ingress e identidad propios de Azure.
+    verification_status: review_required
+    last_verified: 2026-09-28
+
+  - id: container-registry
+    title: Registro de contenedores
+    concepts: [container-registries]
+    clouds:
+      gcp:
+        services: [gcp-artifact-registry]
+        differences: Registro de imágenes y de paquetes de lenguajes en un solo servicio.
+        not_equivalent_when: Se asume que la política de acceso y replicación coincide con la de otro proveedor.
+      aws:
+        services: [aws-ecr]
+        differences: Registro de imágenes integrado con IAM y con los servicios de contenedores de AWS.
+        not_equivalent_when: Se necesita un registro de paquetes de lenguajes en el mismo servicio.
+      azure:
+        services: [azure-container-registry]
+        differences: Registro de imágenes integrado con AKS y con Entra ID.
+        not_equivalent_when: Se asume el mismo modelo de niveles de servicio y replicación geográfica.
+    verification_status: review_required
+    last_verified: 2026-09-28
+
+  - id: relational-database
+    title: Bases de datos relacionales administradas
+    concepts: [oltp-vs-olap, database-ingestion]
+    clouds:
+      gcp:
+        services: [gcp-cloud-sql]
+        differences: PostgreSQL, MySQL y SQL Server administrados; suele ser el origen de CDC hacia BigQuery vía Datastream.
+        not_equivalent_when: Se necesita escala horizontal de escritura más allá de un motor relacional tradicional.
+      aws:
+        services: [aws-rds]
+        differences: Varios motores administrados; Aurora es una familia aparte con otra arquitectura de almacenamiento.
+        not_equivalent_when: Se confunde RDS con Aurora o se asume el mismo soporte de replicación lógica por motor.
+      azure:
+        services: [azure-sql]
+        differences: Familia centrada en SQL Server; PostgreSQL y MySQL son servicios distintos en Azure.
+        not_equivalent_when: El origen es PostgreSQL; Azure SQL no es el equivalente directo de Cloud SQL para PostgreSQL.
+    verification_status: review_required
+    last_verified: 2026-09-28
+
+  - id: governance-catalog
+    title: Gobierno y catálogo
+    concepts: [data-catalog, data-lineage]
+    clouds:
+      gcp:
+        services: [gcp-dataplex]
+        differences: Catálogo, gestión de metadata y gobierno sobre datos de BigQuery y Cloud Storage.
+        not_equivalent_when: Se espera un producto de cumplimiento más amplio que el gobierno técnico de datos.
+      aws:
+        services: [aws-lake-formation, aws-glue]
+        differences: Lake Formation gobierna permisos sobre el lake; el catálogo técnico vive en Glue Data Catalog.
+        not_equivalent_when: Se busca en un solo servicio catálogo, linaje y permisos finos.
+      azure:
+        services: [microsoft-purview]
+        differences: Suite de gobierno, catálogo y cumplimiento que abarca datos dentro y fuera de Azure.
+        not_equivalent_when: Se asume que solo gobierna datos de Azure o que se limita a permisos técnicos.
+    verification_status: review_required
+    last_verified: 2026-09-28
+
+  - id: identity-access
+    title: Identidad y acceso
+    concepts: [iam-fundamentals, service-accounts]
+    clouds:
+      gcp:
+        services: [gcp-iam]
+        differences: Roles asignados a principales sobre una jerarquía de recursos (organización, carpetas, proyectos); usa cuentas de servicio para cargas.
+        not_equivalent_when: Se trasladan políticas basadas en documentos JSON por recurso de AWS sin rediseñar.
+      aws:
+        services: [aws-iam]
+        differences: Políticas JSON asociadas a identidades y recursos; las cargas asumen roles.
+        not_equivalent_when: Se asume herencia jerárquica de permisos similar a la de GCP.
+      azure:
+        services: [microsoft-entra-id]
+        differences: El directorio de identidad es Entra ID; la autorización sobre recursos se hace con Azure RBAC y managed identities.
+        not_equivalent_when: Se confunde identidad (Entra ID) con autorización sobre recursos (Azure RBAC).
+    verification_status: review_required
+    last_verified: 2026-09-28
+
+  - id: secrets
+    title: Gestión de secretos
+    concepts: [secrets-management]
+    clouds:
+      gcp:
+        services: [gcp-secret-manager]
+        differences: Secretos versionados con control de acceso por IAM.
+        not_equivalent_when: Se necesita en el mismo servicio la gestión de claves criptográficas y certificados.
+      aws:
+        services: [aws-secrets-manager]
+        differences: Secretos con rotación integrada para algunos servicios de AWS.
+        not_equivalent_when: Se asume la misma integración de rotación fuera de los servicios soportados.
+      azure:
+        services: [azure-key-vault]
+        differences: Un mismo servicio gestiona secretos, claves y certificados.
+        not_equivalent_when: Se separan secretos y claves en servicios distintos como en GCP o AWS.
+    verification_status: review_required
+    last_verified: 2026-09-28
+
+  - id: key-management
+    title: Gestión de claves (KMS)
+    concepts: [key-management, encryption-at-rest]
+    clouds:
+      gcp:
+        services: [gcp-cloud-kms]
+        differences: Claves administradas por el cliente (CMEK) para cifrar datos de servicios como BigQuery y Cloud Storage.
+        not_equivalent_when: Se asume que todos los servicios aceptan CMEK con las mismas condiciones.
+      aws:
+        services: [aws-kms]
+        differences: Claves integradas con la mayoría de los servicios de AWS mediante políticas de clave.
+        not_equivalent_when: Se trasladan políticas de clave de AWS a otro proveedor sin rediseñar permisos.
+      azure:
+        services: [azure-key-vault]
+        differences: Claves gestionadas en Key Vault (o HSM administrado) junto con secretos y certificados.
+        not_equivalent_when: Se espera un servicio de claves separado del de secretos.
+    verification_status: review_required
+    last_verified: 2026-09-28
+
+  - id: monitoring
+    title: Monitoreo y alertas
+    concepts: [observability-metrics, alerting]
+    clouds:
+      gcp:
+        services: [gcp-cloud-monitoring]
+        differences: Métricas y alertas integradas con los servicios de Google Cloud; los logs viven en un servicio hermano.
+        not_equivalent_when: Se espera observabilidad de datos (freshness, volumen, schema) sin instrumentación adicional.
+      aws:
+        services: [aws-cloudwatch]
+        differences: Métricas, logs y alarmas en una misma familia de servicios.
+        not_equivalent_when: Se asume que las métricas de infraestructura cubren la calidad o frescura de los datos.
+      azure:
+        services: [azure-monitor]
+        differences: Plataforma de métricas y logs con consultas sobre Log Analytics.
+        not_equivalent_when: Se trasladan dashboards o alertas sin adaptar el lenguaje de consultas y el modelo de datos.
+    verification_status: review_required
+    last_verified: 2026-09-28
+
+  - id: ai-platform
+    title: Plataforma de IA
+    concepts: [llm-fundamentals, ml-feature-pipeline-architecture]
+    clouds:
+      gcp:
+        services: [gcp-vertex-ai]
+        differences: Una plataforma unificada para ML clásico e IA generativa, integrada con BigQuery.
+        not_equivalent_when: Se asume el mismo catálogo de modelos o las mismas condiciones de uso que en otro proveedor.
+      aws:
+        services: [aws-bedrock, aws-sagemaker]
+        differences: Bedrock expone modelos fundacionales por API; SageMaker cubre el ciclo de vida de ML. Son servicios separados.
+        not_equivalent_when: Se trata Bedrock como plataforma de entrenamiento o SageMaker como catálogo de modelos fundacionales.
+      azure:
+        services: [azure-ai]
+        differences: Servicios de IA de Microsoft con empaquetado y nombres en evolución frecuente.
+        not_equivalent_when: Se asume un producto único y estable equivalente a Vertex AI.
+    note: Capacidad en evolución rápida; revisar con más frecuencia que el resto (Update Engine, F5).
+    verification_status: review_required
+    last_verified: 2026-09-28

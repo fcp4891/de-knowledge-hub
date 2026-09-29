@@ -1,0 +1,16 @@
+id: cloud_service:azure-synapse
+slug: azure-synapse
+type: cloud_service
+stub: true
+title: Azure Synapse Analytics
+description: Servicio analítico de Azure que combina data warehouse, SQL y Spark.
+provider: azure
+category: data-warehouse
+classification: modern
+mvp: false
+cloud:
+- azure
+note: Relación con Microsoft Fabric en evolución; verificar posicionamiento vigente.
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+verification_status: review_required
