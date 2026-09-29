@@ -6,7 +6,16 @@
 ---
 
 ## Carril A — Claude Code
-- **Tarea activa:** — (A-F1.2 cerrada y mergeada en `main`)
+- **Tarea activa:** — (A-F1.3 cerrada y mergeada en `main`)
+- **Hecho (A-F1.3 · Source Registry):**
+  - `content/sources/registry.yaml`: 26 fuentes.
+    - Las 6 de F0, reverificadas y enlazadas a sus tecnologías (`postgresql`, `aws-dms`).
+    - 20 nuevas para las 9 tecnologías MVP: documentación (Nivel 1) y release notes (Nivel 2) de cada una. Terraform suma además las del provider Google.
+  - Verificación real de cada URL: HTTP 200 y `<title>` del producto. Se guarda la URL final; las de GCP redirigen a `docs.cloud.google.com`.
+  - 25 fuentes con `url_verified: true`. La excepción es `terraform-provider-google-docs`: el Terraform Registry es una SPA con título genérico, así que queda en `review_required`.
+  - `validate.py`: toda tecnología `mvp` sin una fuente Nivel 1–2 con `url_verified` es **error**.
+  - Tests: 80 en total (6 nuevos).
+  - Hallazgo: la documentación de Cloud Composer se titula ahora «Managed Service for Apache Airflow». Está anotado en `gcp-cloud-composer`; el slug no cambia.
 - **Revisión B-F1.2 del dominio 01 aplicada** (12 filas aprobadas en `docs/reviews/blueprint-01.md`, rama `b/f1-review`):
   - 8 filas con cambios: +`schema-on-read-vs-schema-on-write`, +`csv-format`, relaciones y notas, y `data-consistency` pasa a importance high;
   - 4 filas confirman valores actuales y no cambian nada.
@@ -60,7 +69,7 @@
   - Ajuste de gate: `RELATED_TO` abierta a cualquier tipo; `ALTERNATIVE_TO` con `type_groups` (mismo tipo; technology y cloud_service comparten grupo). Test que fija los pares que necesitan F2–F6.
   - 42 tests en `tests/test_validate.py`. `make validate` y `make test` en verde.
   - `docs/adr/ADR-000-content-as-code.md`.
-- **Siguiente:** A-F1.3 (Source Registry). La prioridad son las fuentes Nivel 1–2 de las 9 tecnologías MVP. Después hay que verificar las celdas de la matriz.
+- **Siguiente:** gate humano de F1. Las tareas de Carril A de F1 están cerradas.
 - **Bloqueos:** —
 - **Cambios de contrato (con ADR):**
   - creación inicial de `schemas/` y ajuste de pares en el gate de F0 (ADR-000);
@@ -87,7 +96,7 @@
 ## Criterio de salida de la fase actual
 - [ ] Blueprint validado con los 23 dominios; conceptos del MVP marcados.
 - [ ] Templates cerrados.
-- [ ] Source Registry con fuentes oficiales para todas las tecnologías del MVP.
+- [x] Source Registry con fuentes oficiales para todas las tecnologías del MVP. Lo comprueba `make validate` (error si falta alguna); las 9 tienen fuentes Nivel 1 y 2 verificadas.
 - [ ] ADR-001 aprobado.
 - [ ] Gate humano.
 
@@ -95,4 +104,4 @@
 - **F0 — Fundaciones** (2026-09-28): `make validate` en verde con la ficha `change-data-capture`; 42 tests.
 
 ## Decisiones pendientes para el gate humano
-- —
+- **Cloud Composer:** la documentación oficial usa el título «Managed Service for Apache Airflow». ¿Se cambia el `title` de `gcp-cloud-composer`? El slug se mantiene en cualquier caso.

@@ -14,3 +14,7 @@ Formato: `- [fase sugerida] idea — origen`
 - [F2] Dividir `scripts/validate.py` (unas 530 líneas) en módulos: entidades, blueprint y matriz — A-F1.2
 - [F1/F3] Matriz: decidir cómo representar las capacidades sin un servicio nativo equivalente en cada cloud (IaC, transformación SQL, CI/CD) — A-F1.2
 - [F3] Inventario: agregar los servicios PostgreSQL administrados de Azure y Aurora de AWS si las fichas de CDC o relacionales los necesitan — A-F1.2
+- [F7] Source Registry, bloque 2: una fuente Nivel 1 verificada para cada una de las 83 tecnologías no MVP — A-F1.3
+- [F5] Source Registry: agregar `feed_url` (RSS/XML) a las fuentes `release_notes`, para que las ingiera el Update Engine; requiere ADR — A-F1.3
+- [F3] Verificar a mano `terraform-provider-google-docs`: es una SPA y el título genérico no confirma el contenido — A-F1.3
+- [F3] Ficha CDC: actualizar las URLs de `cloud.google.com/...` a su destino final en `docs.cloud.google.com` — A-F1.3

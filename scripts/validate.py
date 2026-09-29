@@ -269,6 +269,19 @@ def same_type_group(rule: dict[str, Any], source_type: str, target_type: str) ->
     return any(source_type in group and target_type in group for group in groups)
 
 
+def check_mvp_source_coverage(docs: list[Document], report: Report) -> None:
+    """Criterio de salida F1: toda tecnología mvp tiene una fuente Nivel 1–2 con URL verificada."""
+    covered = {
+        tech
+        for doc in docs
+        if doc.data["type"] == "source" and doc.data["authority_level"] <= 2 and doc.data.get("url_verified")
+        for tech in doc.data.get("technologies", [])
+    }
+    for doc in docs:
+        if doc.data["type"] in TECHNOLOGY_TYPES and doc.data.get("mvp") and doc.data["slug"] not in covered:
+            report.add(doc.location, f"[mvp] '{doc.data['slug']}' no tiene fuente Nivel 1–2 con url_verified")
+
+
 # --- Blueprint (ADR-003) -----------------------------------------------------
 
 
@@ -476,6 +489,7 @@ def validate(content_dir: Path, schemas_dir: Path) -> Report:
         check_slug_lists(doc, by_slug, report)
         check_sources(doc, by_slug, report)
         check_relations(doc, by_slug, catalog, report)
+    check_mvp_source_coverage(valid_docs, report)
     index = validate_blueprints(content_dir, schemas_dir, by_slug, valid_docs, report)
     validate_matrices(content_dir, schemas_dir, index, by_slug, report)
     report.technologies = [doc.data for doc in valid_docs if doc.data["type"] in TECHNOLOGY_TYPES]

@@ -1,6 +1,6 @@
-# Source Registry (§30). Un documento YAML por fuente, separados por ---.
-# Borrador F0: solo las fuentes que usa la ficha de ejemplo. Se completa en A-F1.3.
-# url_verified: true = la URL respondió HTTP 200 en la fecha last_verified.
+# Source Registry (§30, §52.D). Un documento YAML por fuente, separados por ---.
+# url_verified: true = la URL respondió HTTP 200 y su <title> corresponde al producto en la fecha last_verified.
+# Se guarda la URL final tras redirecciones. Alcance A-F1.3: fuentes de F0 + Nivel 1–2 de las 9 tecnologías MVP.
 id: source:postgresql-docs
 slug: postgresql-docs
 type: source
@@ -13,10 +13,11 @@ provider: postgresql
 url_verified: true
 review_frequency: quarterly
 trust: high
-technologies: []
-created_at: 2026-09-28
-updated_at: 2026-09-28
-last_verified: 2026-09-28
+technologies:
+- postgresql
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
 verification_status: verified
 ---
 id: source:debezium-docs
@@ -31,17 +32,18 @@ provider: debezium
 url_verified: true
 review_frequency: quarterly
 trust: high
-technologies: [debezium]
-created_at: 2026-09-28
-updated_at: 2026-09-28
-last_verified: 2026-09-28
+technologies:
+- debezium
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
 verification_status: verified
 ---
 id: source:apache-kafka-docs
 slug: apache-kafka-docs
 type: source
 title: Apache Kafka Documentation
-description: Documentación oficial de Apache Kafka.
+description: Documentación oficial de Apache Kafka (la página redirige por JavaScript a la versión vigente).
 url: https://kafka.apache.org/documentation/
 source_type: official_docs
 authority_level: 1
@@ -49,28 +51,30 @@ provider: apache
 url_verified: true
 review_frequency: quarterly
 trust: high
-technologies: [apache-kafka]
-created_at: 2026-09-28
-updated_at: 2026-09-28
-last_verified: 2026-09-28
+technologies:
+- apache-kafka
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
 verification_status: verified
 ---
 id: source:gcp-datastream-docs
 slug: gcp-datastream-docs
 type: source
-title: Google Cloud Datastream documentation
+title: Datastream documentation
 description: Documentación oficial de Datastream en Google Cloud.
-url: https://cloud.google.com/datastream/docs
+url: https://docs.cloud.google.com/datastream/docs
 source_type: official_docs
 authority_level: 1
 provider: gcp
 url_verified: true
 review_frequency: monthly
 trust: high
-technologies: [gcp-datastream]
-created_at: 2026-09-28
-updated_at: 2026-09-28
-last_verified: 2026-09-28
+technologies:
+- gcp-datastream
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
 verification_status: verified
 ---
 id: source:aws-dms-docs
@@ -85,18 +89,19 @@ provider: aws
 url_verified: true
 review_frequency: monthly
 trust: high
-technologies: []
-created_at: 2026-09-28
-updated_at: 2026-09-28
-last_verified: 2026-09-28
+technologies:
+- aws-dms
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
 verification_status: verified
 ---
 id: source:microsoft-learn
 slug: microsoft-learn
 type: source
 title: Microsoft Learn
-description: Documentación oficial de Microsoft (SQL Server, Azure).
-url: https://learn.microsoft.com/
+description: Portal de documentación oficial de Microsoft (SQL Server, Azure). Fuente general; las fuentes por servicio se agregan en F7.
+url: https://learn.microsoft.com/en-us/
 source_type: official_docs
 authority_level: 1
 provider: azure
@@ -104,7 +109,389 @@ url_verified: true
 review_frequency: monthly
 trust: high
 technologies: []
-created_at: 2026-09-28
-updated_at: 2026-09-28
-last_verified: 2026-09-28
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
+verification_status: verified
+---
+id: source:gcp-bigquery-docs
+slug: gcp-bigquery-docs
+type: source
+title: BigQuery documentation
+description: Documentación oficial de BigQuery en Google Cloud.
+url: https://docs.cloud.google.com/bigquery/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: monthly
+trust: high
+technologies:
+- gcp-bigquery
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
+verification_status: verified
+---
+id: source:gcp-bigquery-release-notes
+slug: gcp-bigquery-release-notes
+type: source
+title: BigQuery release notes
+description: Release notes oficiales de BigQuery en Google Cloud.
+url: https://docs.cloud.google.com/bigquery/docs/release-notes
+source_type: release_notes
+authority_level: 2
+provider: gcp
+url_verified: true
+review_frequency: weekly
+trust: high
+technologies:
+- gcp-bigquery
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
+verification_status: verified
+---
+id: source:gcp-cloud-storage-docs
+slug: gcp-cloud-storage-docs
+type: source
+title: Cloud Storage documentation
+description: Documentación oficial de Cloud Storage en Google Cloud.
+url: https://docs.cloud.google.com/storage/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: monthly
+trust: high
+technologies:
+- gcp-cloud-storage
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
+verification_status: verified
+---
+id: source:gcp-cloud-storage-release-notes
+slug: gcp-cloud-storage-release-notes
+type: source
+title: Cloud Storage release notes
+description: Release notes oficiales de Cloud Storage en Google Cloud.
+url: https://docs.cloud.google.com/storage/docs/release-notes
+source_type: release_notes
+authority_level: 2
+provider: gcp
+url_verified: true
+review_frequency: weekly
+trust: high
+technologies:
+- gcp-cloud-storage
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
+verification_status: verified
+---
+id: source:gcp-pubsub-docs
+slug: gcp-pubsub-docs
+type: source
+title: Pub/Sub documentation
+description: Documentación oficial de Pub/Sub en Google Cloud.
+url: https://docs.cloud.google.com/pubsub/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: monthly
+trust: high
+technologies:
+- gcp-pubsub
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
+verification_status: verified
+---
+id: source:gcp-pubsub-release-notes
+slug: gcp-pubsub-release-notes
+type: source
+title: Pub/Sub release notes
+description: Release notes oficiales de Pub/Sub en Google Cloud.
+url: https://docs.cloud.google.com/pubsub/docs/release-notes
+source_type: release_notes
+authority_level: 2
+provider: gcp
+url_verified: true
+review_frequency: weekly
+trust: high
+technologies:
+- gcp-pubsub
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
+verification_status: verified
+---
+id: source:gcp-dataflow-docs
+slug: gcp-dataflow-docs
+type: source
+title: Dataflow documentation
+description: Documentación oficial de Dataflow en Google Cloud.
+url: https://docs.cloud.google.com/dataflow/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: monthly
+trust: high
+technologies:
+- gcp-dataflow
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
+verification_status: verified
+---
+id: source:gcp-dataflow-release-notes
+slug: gcp-dataflow-release-notes
+type: source
+title: Dataflow release notes
+description: Release notes oficiales de Dataflow en Google Cloud.
+url: https://docs.cloud.google.com/dataflow/docs/release-notes
+source_type: release_notes
+authority_level: 2
+provider: gcp
+url_verified: true
+review_frequency: weekly
+trust: high
+technologies:
+- gcp-dataflow
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
+verification_status: verified
+---
+id: source:gcp-cloud-composer-docs
+slug: gcp-cloud-composer-docs
+type: source
+title: Managed Service for Apache Airflow documentation
+description: 'Documentación oficial de Cloud Composer (título actual en la documentación: «Managed Service for Apache Airflow») en Google Cloud.'
+url: https://docs.cloud.google.com/composer/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: monthly
+trust: high
+technologies:
+- gcp-cloud-composer
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
+verification_status: verified
+---
+id: source:gcp-cloud-composer-release-notes
+slug: gcp-cloud-composer-release-notes
+type: source
+title: Managed Service for Apache Airflow release notes
+description: 'Release notes oficiales de Cloud Composer (título actual en la documentación: «Managed Service for Apache Airflow») en Google Cloud.'
+url: https://docs.cloud.google.com/composer/docs/release-notes
+source_type: release_notes
+authority_level: 2
+provider: gcp
+url_verified: true
+review_frequency: weekly
+trust: high
+technologies:
+- gcp-cloud-composer
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
+verification_status: verified
+---
+id: source:gcp-dataform-docs
+slug: gcp-dataform-docs
+type: source
+title: Dataform documentation
+description: Documentación oficial de Dataform en Google Cloud.
+url: https://docs.cloud.google.com/dataform/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: monthly
+trust: high
+technologies:
+- gcp-dataform
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
+verification_status: verified
+---
+id: source:gcp-dataform-release-notes
+slug: gcp-dataform-release-notes
+type: source
+title: Dataform release notes
+description: Release notes oficiales de Dataform en Google Cloud.
+url: https://docs.cloud.google.com/dataform/docs/release-notes
+source_type: release_notes
+authority_level: 2
+provider: gcp
+url_verified: true
+review_frequency: weekly
+trust: high
+technologies:
+- gcp-dataform
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
+verification_status: verified
+---
+id: source:apache-airflow-docs
+slug: apache-airflow-docs
+type: source
+title: Apache Airflow Documentation
+description: Documentación oficial del proyecto Apache Airflow.
+url: https://airflow.apache.org/docs/
+source_type: official_docs
+authority_level: 1
+provider: apache
+url_verified: true
+review_frequency: monthly
+trust: high
+technologies:
+- apache-airflow
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
+verification_status: verified
+---
+id: source:apache-airflow-release-notes
+slug: apache-airflow-release-notes
+type: source
+title: Apache Airflow Release Notes
+description: Release notes oficiales de la versión estable de Apache Airflow.
+url: https://airflow.apache.org/docs/apache-airflow/stable/release_notes.html
+source_type: release_notes
+authority_level: 2
+provider: apache
+url_verified: true
+review_frequency: weekly
+trust: high
+technologies:
+- apache-airflow
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
+verification_status: verified
+---
+id: source:python-docs
+slug: python-docs
+type: source
+title: Python Documentation
+description: Documentación oficial de Python 3.
+url: https://docs.python.org/3/
+source_type: official_docs
+authority_level: 1
+provider: python
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- python
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
+verification_status: verified
+---
+id: source:python-whatsnew
+slug: python-whatsnew
+type: source
+title: What's New in Python
+description: Cambios oficiales por versión de Python (What's New).
+url: https://docs.python.org/3/whatsnew/
+source_type: release_notes
+authority_level: 2
+provider: python
+url_verified: true
+review_frequency: monthly
+trust: high
+technologies:
+- python
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
+verification_status: verified
+---
+id: source:terraform-docs
+slug: terraform-docs
+type: source
+title: Terraform documentation
+description: Documentación oficial de Terraform (HashiCorp Developer).
+url: https://developer.hashicorp.com/terraform/docs
+source_type: official_docs
+authority_level: 1
+provider: hashicorp
+url_verified: true
+review_frequency: monthly
+trust: high
+technologies:
+- terraform
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
+verification_status: verified
+---
+id: source:terraform-releases
+slug: terraform-releases
+type: source
+title: Terraform releases
+description: Releases oficiales de Terraform en el repositorio de HashiCorp.
+url: https://github.com/hashicorp/terraform/releases
+source_type: release_notes
+authority_level: 2
+provider: hashicorp
+url_verified: true
+review_frequency: weekly
+trust: high
+technologies:
+- terraform
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
+verification_status: verified
+---
+id: source:terraform-provider-google-docs
+slug: terraform-provider-google-docs
+type: source
+title: Terraform Google provider documentation
+description: 'Documentación del provider hashicorp/google en el Terraform Registry. Página SPA con título genérico: contenido no confirmado automáticamente.'
+url: https://registry.terraform.io/providers/hashicorp/google/latest/docs
+source_type: official_docs
+authority_level: 1
+provider: hashicorp
+url_verified: false
+review_frequency: monthly
+trust: high
+technologies:
+- terraform
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
+verification_status: review_required
+---
+id: source:terraform-provider-google-releases
+slug: terraform-provider-google-releases
+type: source
+title: Terraform Google provider releases
+description: Releases oficiales del provider hashicorp/google en su repositorio.
+url: https://github.com/hashicorp/terraform-provider-google/releases
+source_type: release_notes
+authority_level: 2
+provider: hashicorp
+url_verified: true
+review_frequency: weekly
+trust: high
+technologies:
+- terraform
+- gcp-bigquery
+- gcp-cloud-storage
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+last_verified: '2026-09-28'
 verification_status: verified

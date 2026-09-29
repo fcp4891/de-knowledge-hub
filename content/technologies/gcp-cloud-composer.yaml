@@ -10,6 +10,7 @@ classification: modern
 mvp: true
 cloud:
 - gcp
+note: 'La documentación oficial se titula «Managed Service for Apache Airflow» (verificado 2026-09-28); confirmar si es un cambio de nombre del producto antes de redactar la ficha. El slug no cambia.'
 created_at: '2026-09-28'
 updated_at: '2026-09-28'
 verification_status: review_required
