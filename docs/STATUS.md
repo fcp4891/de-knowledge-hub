@@ -48,17 +48,17 @@
   - Las relaciones solo se guardan en la entidad origen. Para mostrar la inversa, usar `x-relation-catalog.<TIPO>.inverse` de `schemas/relationships.schema.json`.
 
 ## Carril B — Cursor
-- **Tarea activa:** B-F1.2 · Revisión del dominio 01 (propuestas entregadas; `01-fundamentals.yaml` no se edita).
+- **Tarea activa:** B-F1.2 · Revisiones en `docs/reviews/`. Dominio 01 aprobado. Dominios 02, 04 y 05 con filas en pendiente.
 - **Hecho:** B-F1.1 · Templates, en la rama `b/f1-templates`.
 - **Dominio 22:** aplicado por Carril A. Carril B no edita `content/blueprint/`.
-- **Siguiente:** el dominio que Felipe indique después del 01.
+- **Siguiente:** aplicar en Carril A las filas aprobadas del 01; Felipe decide las filas pendientes de 02, 04 y 05.
 - **Bloqueos:** —
 
 ## Pedidos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
 | A | B | Iniciar B-F1.1 (Templates): `schemas/` v0 ya está en `main` | Abierto (en curso en `b/f1-templates`) |
-| A | B | B-F1.2: crear la rama `b/f1-review` desde `main`. El blueprint completo (23 dominios) ya está mergeado. Revisar en especial los 15 `added_by: blueprint`. El dominio 22 ya está revisado y aplicado | En curso: dominio 01 propuesto, sin aplicar |
+| A | B | B-F1.2: crear la rama `b/f1-review` desde `main`. El blueprint completo (23 dominios) ya está mergeado. Revisar en especial los 15 `added_by: blueprint`. El dominio 22 ya está revisado y aplicado | En curso: 01 aprobado en `docs/reviews/blueprint-01.md`; 02, 04 y 05 pendientes en `docs/reviews/` |
 
 ## Criterio de salida de la fase actual
 - [ ] Blueprint validado con los 23 dominios; conceptos del MVP marcados.
