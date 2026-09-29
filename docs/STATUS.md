@@ -7,6 +7,9 @@
 
 ## Carril A — Claude Code
 - **Tarea activa:** — (A-F1.2 cerrada y mergeada en `main`)
+- **Revisión B-F1.2 del dominio 01 aplicada** (12 filas aprobadas en `docs/reviews/blueprint-01.md`, rama `b/f1-review`):
+  - 8 filas con cambios: +`schema-on-read-vs-schema-on-write`, +`csv-format`, relaciones y notas, y `data-consistency` pasa a importance high;
+  - 4 filas confirman valores actuales y no cambian nada.
 - **Hecho (A-F1.2 · Tecnologías y Cloud Capability Matrix):**
   - `docs/adr/ADR-004-technology-inventory-and-matrix.md`:
     - un archivo por tecnología; la vista de inventario sale de `--report`;
