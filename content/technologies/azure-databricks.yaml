@@ -1,0 +1,16 @@
+id: cloud_service:azure-databricks
+slug: azure-databricks
+type: cloud_service
+stub: true
+title: Azure Databricks
+description: Plataforma Databricks ofrecida como servicio de Azure.
+provider: azure
+category: lakehouse-platform
+classification: modern
+mvp: false
+cloud:
+- azure
+note: Servicio de primera parte de Azure operado junto con Databricks.
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+verification_status: review_required

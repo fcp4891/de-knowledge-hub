@@ -1,0 +1,15 @@
+id: cloud_service:gcp-pubsub
+slug: gcp-pubsub
+type: cloud_service
+stub: true
+title: Pub/Sub
+description: Servicio de mensajería asíncrona publish/subscribe de Google Cloud.
+provider: gcp
+category: stream-messaging
+classification: modern
+mvp: true
+cloud:
+- gcp
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+verification_status: review_required

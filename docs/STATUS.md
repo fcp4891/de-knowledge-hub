@@ -6,7 +6,28 @@
 ---
 
 ## Carril A — Claude Code
-- **Tarea activa:** A-F1.2 · Tecnologías y Cloud Capability Matrix (rama `a/f1-technologies`), plan pendiente de aprobación.
+- **Tarea activa:** — (A-F1.2 cerrada y mergeada en `main`)
+- **Revisión B-F1.2 del dominio 01 aplicada** (12 filas aprobadas en `docs/reviews/blueprint-01.md`, rama `b/f1-review`):
+  - 8 filas con cambios: +`schema-on-read-vs-schema-on-write`, +`csv-format`, relaciones y notas, y `data-consistency` pasa a importance high;
+  - 4 filas confirman valores actuales y no cambian nada.
+- **Hecho (A-F1.2 · Tecnologías y Cloud Capability Matrix):**
+  - `docs/adr/ADR-004-technology-inventory-and-matrix.md`:
+    - un archivo por tecnología; la vista de inventario sale de `--report`;
+    - campos `mvp` y `note`, y enumeración `category`;
+    - `RUNS_ON` para open source → servicio administrado; `IMPLEMENTS` solo hacia concepto o patrón;
+    - productos de Microsoft como `cloud_service` con `provider: azure`.
+  - Inventario: 92 tecnologías en `content/technologies/`, todas `stub: true` y `review_required`.
+    - Por tipo: 61 `cloud_service` (19 GCP, 24 AWS, 18 Azure) y 31 `technology`.
+    - 9 MVP, las de §51.
+    - 5 servicios agregados solo para la matriz: `gcp-dataproc`, `gcp-cloud-monitoring`, `aws-secrets-manager`, `aws-kms`, `azure-monitor`.
+  - `content/matrix/capabilities.yaml`: 18 capacidades ancladas a conceptos del blueprint.
+    - Cada celda lleva `differences` y `not_equivalent_when`.
+    - Todas las celdas quedan en `review_required`.
+  - `validate.py`:
+    - un `related_technologies` sin resolver ahora es error;
+    - valida la matriz: schema, conceptos ancla, y que cada servicio sea un `cloud_service` del proveedor de su columna;
+    - `--report` muestra el inventario por tipo, vendor y MVP.
+  - Tests: 74 en total (12 nuevos).
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
 - **Cerrado y mergeado en `main`:** A-F1.1 · Blueprint de dominios.
 - **Hecho (A-F1.1 · Blueprint de dominios):**
@@ -39,12 +60,16 @@
   - Ajuste de gate: `RELATED_TO` abierta a cualquier tipo; `ALTERNATIVE_TO` con `type_groups` (mismo tipo; technology y cloud_service comparten grupo). Test que fija los pares que necesitan F2–F6.
   - 42 tests en `tests/test_validate.py`. `make validate` y `make test` en verde.
   - `docs/adr/ADR-000-content-as-code.md`.
-- **Siguiente:** A-F1.3 (Source Registry), después de A-F1.2.
+- **Siguiente:** A-F1.3 (Source Registry). La prioridad son las fuentes Nivel 1–2 de las 9 tecnologías MVP. Después hay que verificar las celdas de la matriz.
 - **Bloqueos:** —
-- **Cambios de contrato (con ADR):** creación inicial de `schemas/` y ajuste de pares en el gate de F0 (ADR-000).
+- **Cambios de contrato (con ADR):**
+  - creación inicial de `schemas/` y ajuste de pares en el gate de F0 (ADR-000);
+  - `blueprint.schema.json` (ADR-003);
+  - enumeración `category`, `mvp` y `note` en tecnologías, y `matrix.schema.json` (ADR-004).
 - **Notas para Carril B:**
   - **Regla (gate F1):** Cursor revisa y propone cambios sobre `content/blueprint/`; solo Carril A edita esos archivos.
   - Los valores de `type` están en snake_case (`cloud_service`, `code_snippet`…).
+  - Tecnologías: `category` es ahora una enumeración (`enums.schema.json#/$defs/category`) y `mvp` marca las 9 de §51. La matriz está en `content/matrix/capabilities.yaml` (schema `matrix.schema.json`).
   - Las relaciones solo se guardan en la entidad origen. Para mostrar la inversa, usar `x-relation-catalog.<TIPO>.inverse` de `schemas/relationships.schema.json`.
 
 ## Carril B — Cursor

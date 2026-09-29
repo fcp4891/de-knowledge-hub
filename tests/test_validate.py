@@ -42,7 +42,7 @@ def concept(slug: str, **fields: Any) -> dict[str, Any]:
 
 
 def technology(slug: str, **fields: Any) -> dict[str, Any]:
-    defaults = {"vendor": "open-source", "category": "streaming", "classification": "modern"}
+    defaults = {"vendor": "open-source", "category": "stream-messaging", "classification": "modern"}
     return entity("technology", slug, **{**defaults, **fields})
 
 
@@ -165,6 +165,16 @@ def test_unknown_property_is_rejected(content: Path) -> None:
     assert_error(run(content), "Unevaluated properties are not allowed", "clasification")
 
 
+def test_technology_category_must_be_in_enum(content: Path) -> None:
+    write_yaml(content, "technologies/kafka.yaml", technology("kafka", category="streaming"))
+    assert_error(run(content), "[category] 'streaming' is not one of")
+
+
+def test_technology_mvp_must_be_boolean(content: Path) -> None:
+    write_yaml(content, "technologies/kafka.yaml", technology("kafka", mvp="yes"))
+    assert_error(run(content), "[mvp]")
+
+
 def test_stub_must_be_boolean(content: Path) -> None:
     write_md(content, "concepts/cdc.md", concept("cdc", stub="yes"))
     assert_error(run(content), "[stub]")
@@ -252,7 +262,7 @@ def test_alternative_to_rejects_different_type_group(content: Path) -> None:
 
 def test_alternative_to_allows_technology_and_cloud_service(content: Path) -> None:
     service = entity(
-        "cloud_service", "pubsub", provider="gcp", category="streaming", classification="modern",
+        "cloud_service", "pubsub", provider="gcp", category="stream-messaging", classification="modern",
         relations=[{"type": "ALTERNATIVE_TO", "target": "kafka"}],
     )
     write_yaml(content, "technologies/pubsub.yaml", service)

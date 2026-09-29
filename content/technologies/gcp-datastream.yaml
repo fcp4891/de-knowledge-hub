@@ -5,8 +5,9 @@ stub: true
 title: Datastream
 description: Servicio administrado de Google Cloud para replicación de cambios (CDC) desde bases de datos operacionales.
 provider: gcp
-category: change-data-capture
+category: cdc-replication
 classification: modern
+mvp: false
 level: intermediate
 cloud: [gcp]
 tags: [cdc]

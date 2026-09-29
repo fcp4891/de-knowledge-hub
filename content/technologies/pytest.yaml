@@ -1,0 +1,18 @@
+id: technology:pytest
+slug: pytest
+type: technology
+stub: true
+title: pytest
+description: Framework de testing para Python.
+vendor: open-source
+category: python-library
+classification: core
+mvp: false
+cloud:
+- agnostic
+relations:
+- type: DEPENDS_ON
+  target: python
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+verification_status: review_required

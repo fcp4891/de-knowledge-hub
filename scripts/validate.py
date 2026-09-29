@@ -5,7 +5,8 @@ separados por ---), valida cada entidad según su `type` y verifica la
 integridad global: ids y slugs únicos, referencias existentes y pares
 origen/destino permitidos por relationships.schema.json.
 
-content/blueprint/ se valida aparte contra blueprint.schema.json (ADR-003).
+content/blueprint/ y content/matrix/ se validan aparte contra blueprint.schema.json
+(ADR-003) y matrix.schema.json (ADR-004).
 
 Uso: python scripts/validate.py [--content DIR] [--schemas DIR] [--report]
 """
@@ -30,6 +31,9 @@ CONTENT_EXTENSIONS = {".md", ".yaml", ".yml"}
 SLUG_LIST_FIELDS = ("technologies", "related_topics")
 TECHNOLOGY_TYPES = {"technology", "cloud_service"}
 BLUEPRINT_DIR = "blueprint"
+MATRIX_DIR = "matrix"
+STRUCTURE_DIRS = frozenset({BLUEPRINT_DIR, MATRIX_DIR})
+CLOUD_COLUMNS = ("gcp", "aws", "azure")
 
 
 @dataclass(frozen=True)
@@ -71,7 +75,8 @@ class Report:
     errors: list[str] = field(default_factory=list)
     documents: int = 0
     blueprint_rows: list[BlueprintRow] = field(default_factory=list)
-    pending_technologies: dict[str, list[str]] = field(default_factory=dict)
+    technologies: list[dict[str, Any]] = field(default_factory=list)
+    matrix_capabilities: int = 0
 
     def add(self, location: str, message: str) -> None:
         self.errors.append(f"{location}: {message}")
@@ -112,13 +117,13 @@ def build_validators(schemas_dir: Path) -> dict[str, Draft202012Validator]:
 # --- Lectura de contenido ----------------------------------------------------
 
 
-def iter_content_files(content_dir: Path, exclude_top: str | None = None) -> Iterator[Path]:
+def iter_content_files(content_dir: Path, exclude_top: frozenset[str] = frozenset()) -> Iterator[Path]:
     """Archivos de contenido, ignorando carpetas o archivos que empiezan con _ o ."""
     for path in sorted(content_dir.rglob("*")):
         relative = path.relative_to(content_dir).parts
         if any(part.startswith(("_", ".")) for part in relative):
             continue
-        if exclude_top is not None and relative[0] == exclude_top:
+        if relative[0] in exclude_top:
             continue
         if path.is_file() and path.suffix in CONTENT_EXTENSIONS:
             yield path
@@ -155,7 +160,7 @@ def parse_file(path: Path) -> list[Any]:
 
 def load_documents(content_dir: Path, report: Report) -> list[Document]:
     documents = []
-    for path in iter_content_files(content_dir, exclude_top=BLUEPRINT_DIR):
+    for path in iter_content_files(content_dir, exclude_top=STRUCTURE_DIRS):
         shown = path.relative_to(content_dir.parent)
         try:
             raw_docs = parse_file(path)
@@ -267,20 +272,21 @@ def same_type_group(rule: dict[str, Any], source_type: str, target_type: str) ->
 # --- Blueprint (ADR-003) -----------------------------------------------------
 
 
-def load_blueprint_schema(schemas_dir: Path) -> tuple[Draft202012Validator, set[str]]:
-    schema = json.loads((schemas_dir / "blueprint.schema.json").read_text(encoding="utf-8"))
+def load_structure_schema(schemas_dir: Path, name: str) -> tuple[Draft202012Validator, dict[str, Any]]:
+    schema = json.loads((schemas_dir / name).read_text(encoding="utf-8"))
     validator = Draft202012Validator(
         schema, registry=load_registry(schemas_dir), format_checker=Draft202012Validator.FORMAT_CHECKER
     )
-    return validator, set(schema["x-mvp-domains"])
+    return validator, schema
 
 
-def load_blueprints(content_dir: Path, report: Report) -> list[Document]:
-    blueprint_dir = content_dir / BLUEPRINT_DIR
-    if not blueprint_dir.is_dir():
+def load_structures(content_dir: Path, subdir: str, report: Report) -> list[Document]:
+    """Archivos YAML de una estructura no-entidad (blueprint, matriz)."""
+    structure_dir = content_dir / subdir
+    if not structure_dir.is_dir():
         return []
     documents = []
-    for path in iter_content_files(blueprint_dir):
+    for path in iter_content_files(structure_dir):
         shown = path.relative_to(content_dir.parent)
         try:
             raw = yaml.safe_load(path.read_text(encoding="utf-8"))
@@ -288,17 +294,21 @@ def load_blueprints(content_dir: Path, report: Report) -> list[Document]:
             report.add(str(shown), f"no se pudo parsear: {exc}")
             continue
         if not isinstance(raw, dict):
-            report.add(str(shown), "el blueprint no es un objeto YAML")
+            report.add(str(shown), "el archivo no es un objeto YAML")
             continue
         documents.append(Document(shown, 0, normalize(raw)))
     return documents
 
 
-def validate_blueprint(doc: Document, validator: Draft202012Validator, report: Report) -> bool:
+def validate_structure(doc: Document, validator: Draft202012Validator, report: Report) -> bool:
     errors = sorted(validator.iter_errors(doc.data), key=lambda e: list(e.path))
     for error in errors:
         report.add(doc.location, f"[{format_path(error.path)}] {error.message}")
-    if errors:
+    return not errors
+
+
+def validate_blueprint(doc: Document, validator: Draft202012Validator, report: Report) -> bool:
+    if not validate_structure(doc, validator, report):
         return False
     domain = doc.data["domain"]
     expected = f"{domain['id']}-{domain['slug']}"
@@ -354,7 +364,7 @@ def check_blueprint_technologies(index: BlueprintIndex, by_slug: dict[str, Docum
         for tech in entry.data.get("related_technologies", []):
             target = by_slug.get(tech)
             if target is None:
-                report.pending_technologies.setdefault(tech, []).append(entry.data["slug"])
+                report.add(entry.location, f"[related_technologies] tecnología inexistente: '{tech}'")
             elif target.data["type"] not in TECHNOLOGY_TYPES:
                 report.add(
                     entry.location,
@@ -391,17 +401,61 @@ def summarize_blueprint(docs: list[Document]) -> list[BlueprintRow]:
 
 def validate_blueprints(
     content_dir: Path, schemas_dir: Path, by_slug: dict[str, Document], entities: list[Document], report: Report
-) -> None:
-    validator, mvp_domains = load_blueprint_schema(schemas_dir)
-    blueprints = [doc for doc in load_blueprints(content_dir, report) if validate_blueprint(doc, validator, report)]
+) -> BlueprintIndex | None:
+    validator, schema = load_structure_schema(schemas_dir, "blueprint.schema.json")
+    mvp_domains = set(schema["x-mvp-domains"])
+    docs = load_structures(content_dir, BLUEPRINT_DIR, report)
+    blueprints = [doc for doc in docs if validate_blueprint(doc, validator, report)]
     if not blueprints:
-        return
+        return None
     index = index_blueprint(blueprints, report)
     check_blueprint_concepts(index, mvp_domains, report)
     check_blueprint_technologies(index, by_slug, report)
     for doc in entities:
         check_entity_in_blueprint(doc, index, report)
     report.blueprint_rows = summarize_blueprint(blueprints)
+    return index
+
+
+# --- Cloud Capability Matrix (ADR-004) ---------------------------------------
+
+
+def check_matrix_cell(
+    location: str, column: str, cell: dict[str, Any], by_slug: dict[str, Document], report: Report
+) -> None:
+    for i, service in enumerate(cell["services"]):
+        where = f"{location}.clouds.{column}.services.{i}]"
+        target = by_slug.get(service)
+        if target is None:
+            report.add(where, f"servicio inexistente: '{service}'")
+        elif target.data["type"] != "cloud_service":
+            report.add(where, f"'{service}' es {target.data['type']}, se esperaba cloud_service")
+        elif target.data["provider"] != column:
+            report.add(where, f"'{service}' es de {target.data['provider']}, no de {column}")
+
+
+def check_matrix(doc: Document, index: BlueprintIndex | None, by_slug: dict[str, Document], report: Report) -> int:
+    seen: set[str] = set()
+    for i, capability in enumerate(doc.data["capabilities"]):
+        location = f"{doc.location} [capabilities.{i}"
+        if capability["id"] in seen:
+            report.add(f"{location}]", f"capacidad duplicada: '{capability['id']}'")
+        seen.add(capability["id"])
+        for concept in capability["concepts"]:
+            if index is None or concept not in index.concepts:
+                report.add(f"{location}.concepts]", f"concepto inexistente en el blueprint: '{concept}'")
+        for column in CLOUD_COLUMNS:
+            check_matrix_cell(location, column, capability["clouds"][column], by_slug, report)
+    return len(seen)
+
+
+def validate_matrices(
+    content_dir: Path, schemas_dir: Path, index: BlueprintIndex | None, by_slug: dict[str, Document], report: Report
+) -> None:
+    validator, _ = load_structure_schema(schemas_dir, "matrix.schema.json")
+    for doc in load_structures(content_dir, MATRIX_DIR, report):
+        if validate_structure(doc, validator, report):
+            report.matrix_capabilities += check_matrix(doc, index, by_slug, report)
 
 
 # --- Orquestación ------------------------------------------------------------
@@ -422,7 +476,9 @@ def validate(content_dir: Path, schemas_dir: Path) -> Report:
         check_slug_lists(doc, by_slug, report)
         check_sources(doc, by_slug, report)
         check_relations(doc, by_slug, catalog, report)
-    validate_blueprints(content_dir, schemas_dir, by_slug, valid_docs, report)
+    index = validate_blueprints(content_dir, schemas_dir, by_slug, valid_docs, report)
+    validate_matrices(content_dir, schemas_dir, index, by_slug, report)
+    report.technologies = [doc.data for doc in valid_docs if doc.data["type"] in TECHNOLOGY_TYPES]
     return report
 
 
@@ -433,10 +489,21 @@ def print_blueprint_report(report: Report) -> None:
         print(f"| {row.domain_id} | {row.domain} | {row.concepts} | {row.mvp} | {row.added} |")
     totals = [sum(getattr(r, name) for r in report.blueprint_rows) for name in ("concepts", "mvp", "added")]
     print(f"| | **Total** | {totals[0]} | {totals[1]} | {totals[2]} |")
-    pending = report.pending_technologies
-    print(f"\nTecnologías referenciadas sin entidad (pendientes A-F1.2): {len(pending)}")
-    for tech in sorted(pending):
-        print(f"- {tech} ({len(pending[tech])})")
+    print_inventory_report(report)
+
+
+def print_inventory_report(report: Report) -> None:
+    counts: dict[str, int] = {}
+    for tech in report.technologies:
+        origin = tech.get("provider") or tech.get("vendor")
+        key = f"{tech['type']} · {origin}"
+        counts[key] = counts.get(key, 0) + 1
+    print(f"\nInventario de tecnologías: {len(report.technologies)}")
+    for key in sorted(counts):
+        print(f"- {key}: {counts[key]}")
+    mvp = sorted(tech["slug"] for tech in report.technologies if tech.get("mvp"))
+    print(f"MVP ({len(mvp)}): {', '.join(mvp)}")
+    print(f"Capacidades en la matriz: {report.matrix_capabilities}")
 
 
 def main(argv: list[str] | None = None) -> int:

@@ -1,0 +1,16 @@
+id: cloud_service:microsoft-entra-id
+slug: microsoft-entra-id
+type: cloud_service
+stub: true
+title: Microsoft Entra ID
+description: Servicio de identidad y acceso de Microsoft (antes Azure Active Directory).
+provider: azure
+category: identity-access
+classification: modern
+mvp: false
+cloud:
+- azure
+note: Producto de Microsoft que trasciende Azure; se modela con provider azure (ADR-004).
+created_at: '2026-09-28'
+updated_at: '2026-09-28'
+verification_status: review_required

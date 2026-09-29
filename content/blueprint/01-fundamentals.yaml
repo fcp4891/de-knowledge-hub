@@ -84,7 +84,7 @@ subdomains:
         importance: high
         mvp: true
         related_technologies: [apache-iceberg, delta-lake, apache-hudi, gcp-biglake]
-        related_concepts: [data-lake, data-warehouse]
+        related_concepts: [data-lake, data-warehouse, lakehouse-architecture]
       - slug: data-mart
         title: Data Mart
         kind: concept
@@ -92,6 +92,16 @@ subdomains:
         level: basic
         importance: medium
         mvp: false
+      - slug: schema-on-read-vs-schema-on-write
+        title: Schema-on-read vs schema-on-write
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [data-lake, data-warehouse, lakehouse]
+        note: Agregado en la revisión B-F1.2 del dominio 01.
 
   - slug: pipeline-design
     title: Diseño de pipelines
@@ -103,7 +113,7 @@ subdomains:
         level: basic
         importance: high
         mvp: true
-        related_concepts: [data-ingestion, data-transformation, data-orchestration]
+        related_concepts: [data-ingestion, data-transformation, data-orchestration, change-data-capture, backfill, replay]
       - slug: data-ingestion
         title: Ingesta de datos
         kind: concept
@@ -133,7 +143,7 @@ subdomains:
         level: intermediate
         importance: high
         mvp: true
-        related_concepts: [data-pipeline]
+        related_concepts: [data-pipeline, delivery-semantics]
       - slug: schema-evolution
         title: Schema evolution
         kind: concept
@@ -149,7 +159,7 @@ subdomains:
         level: intermediate
         importance: high
         mvp: true
-        related_concepts: [idempotency]
+        related_concepts: [idempotency, event-time-vs-processing-time]
       - slug: data-contracts
         title: Data contracts
         kind: concept
@@ -167,7 +177,7 @@ subdomains:
         kind: concept
         classification: core
         level: intermediate
-        importance: medium
+        importance: high
         mvp: false
         related_concepts: [acid, cap-theorem]
       - slug: acid
@@ -218,6 +228,16 @@ subdomains:
         level: basic
         importance: medium
         mvp: false
+      - slug: csv-format
+        title: CSV
+        kind: concept
+        classification: core
+        level: basic
+        importance: medium
+        mvp: false
+        added_by: blueprint
+        related_concepts: [file-ingestion, json-format]
+        note: Agregado en la revisión B-F1.2 del dominio 01.
       - slug: compression
         title: Compresión
         kind: concept
@@ -233,3 +253,4 @@ subdomains:
         importance: high
         mvp: true
         related_concepts: [parquet-format]
+        note: Layout físico de los datos; partition-pruning y clustering viven en 02-sql.
