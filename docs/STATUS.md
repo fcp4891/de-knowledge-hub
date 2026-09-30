@@ -10,7 +10,7 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | — (A-F2.4 cerrada; tareas de F2 terminadas) | Gate de F2 | — |
+| A · Claude Code | — (lote 1 de F3 adelantado: 10 fichas) | Gate de F2 | — |
 | B · Cursor | — (B-F2.2 cerrada y mergeada) | B-F2.3 · Búsqueda, relaciones, notas y estado | — |
 
 ## Pedidos abiertos entre carriles
@@ -21,6 +21,8 @@
 
 ## Criterio de salida de la fase actual (F2)
 - [ ] Con 10 fichas reales se puede navegar Explorer → ficha → relacionados → fuente → búsqueda → nota.
+  - Datos y API listos: 10 fichas reales (en `review_required`, aceptado para F2), relaciones, fuentes, búsqueda FTS y `/me`.
+  - Falta la navegación completa en el frontend (B-F2.3: búsqueda, notas y estado).
 - [ ] Gate humano.
 
 ## Avance de F2
@@ -30,6 +32,8 @@
 - A-F2.3 · API FastAPI + búsqueda FTS en español e inglés (ADR-005).
 - B-F2.2 · Fichas de concepto y tecnología con profundidad progresiva (modo mock).
 - A-F2.4 · Estado personal `/me` en PostgreSQL (ADR-006).
+- Lote 1 de F3 adelantado: validación de las 22 secciones y 10 fichas reales.
+- Remoto y CI: `origin` en GitHub; CI verde en GitHub Actions (Linux).
 
 ## Fases cerradas
 - **F0 — Fundaciones** (2026-09-28): `make validate` en verde con la ficha `change-data-capture`.

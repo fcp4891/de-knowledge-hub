@@ -83,13 +83,14 @@ def test_only_changed_file_is_recompiled(engine: Engine, content: Path) -> None:
 # --- Borrado -----------------------------------------------------------------
 
 EXTRA_PAGE = """---
-id: concept:etl-vs-elt
-slug: etl-vs-elt
+id: concept:data-mart
+slug: data-mart
 type: concept
-title: ETL vs ELT
+stub: true
+title: Data Mart
 description: Ficha de prueba del compilador.
 domain: fundamentals
-subdomain: processing-paradigms
+subdomain: storage-paradigms
 classification: core
 level: basic
 importance: high
@@ -109,21 +110,21 @@ Prueba.
 
 
 def test_deleted_page_is_removed_with_its_edges(engine: Engine, content: Path) -> None:
-    page = content / "concepts" / "etl-vs-elt.md"
+    page = content / "concepts" / "data-mart.md"
     page.write_text(EXTRA_PAGE, encoding="utf-8")
     compile_content(engine, content, SCHEMAS)
-    assert count(engine, "entities", "slug = 'etl-vs-elt'") == 1
-    assert count(engine, "concept_pages", "slug = 'etl-vs-elt'") == 1
-    assert count(engine, "edges", "source_slug = 'etl-vs-elt' and origin = 'entity'") == 1
+    assert count(engine, "entities", "slug = 'data-mart'") == 1
+    assert count(engine, "concept_pages", "slug = 'data-mart'") == 1
+    assert count(engine, "edges", "source_slug = 'data-mart' and origin = 'entity'") == 1
 
     page.unlink()
     stats = compile_content(engine, content, SCHEMAS)
-    assert stats.deleted == ["concepts/etl-vs-elt.md"]
-    assert count(engine, "entities", "slug = 'etl-vs-elt'") == 0
-    assert count(engine, "concept_pages", "slug = 'etl-vs-elt'") == 0
-    assert count(engine, "edges", "(source_slug = 'etl-vs-elt' or target_slug = 'etl-vs-elt') and origin = 'entity'") == 0
+    assert stats.deleted == ["concepts/data-mart.md"]
+    assert count(engine, "entities", "slug = 'data-mart'") == 0
+    assert count(engine, "concept_pages", "slug = 'data-mart'") == 0
+    assert count(engine, "edges", "(source_slug = 'data-mart' or target_slug = 'data-mart') and origin = 'entity'") == 0
     # El concepto sigue en el blueprint: sus aristas de origen blueprint se mantienen.
-    assert count(engine, "concepts", "slug = 'etl-vs-elt'") == 1
+    assert count(engine, "concepts", "slug = 'data-mart'") == 1
 
 
 def test_deleted_technology_removes_typed_rows_sources_and_edges(engine: Engine, content: Path) -> None:

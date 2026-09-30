@@ -86,6 +86,19 @@ MVP = [
 ]
 
 
+# Lote 1 de F3 (2026-09-30): guías de AWS usadas por las fichas; verificadas con HTTP 200 + <title>.
+BATCH1 = [
+    ('aws-redshift-docs', 'Amazon Redshift Database Developer Guide', 'Guía oficial para desarrolladores de bases de datos de Amazon Redshift.',
+     'https://docs.aws.amazon.com/redshift/latest/dg/welcome.html', "official_docs", 1, "aws", True, "quarterly", ['aws-redshift']),
+    ('aws-sqs-docs', 'Amazon SQS Developer Guide', 'Guía oficial para desarrolladores de Amazon Simple Queue Service.',
+     'https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html', "official_docs", 1, "aws", True, "quarterly", []),
+    ('aws-athena-docs', 'Amazon Athena User Guide', 'Guía oficial de usuario de Amazon Athena.',
+     'https://docs.aws.amazon.com/athena/latest/ug/what-is.html', "official_docs", 1, "aws", True, "quarterly", ['aws-athena']),
+    ('aws-kinesis-docs', 'Amazon Kinesis Data Streams Developer Guide', 'Guía oficial para desarrolladores de Amazon Kinesis Data Streams.',
+     'https://docs.aws.amazon.com/streams/latest/dev/introduction.html', "official_docs", 1, "aws", True, "quarterly", ['aws-kinesis']),
+]
+
+
 def review_frequency(slug: str, source_type: str) -> str:
     """Política del gate F1: documentación trimestral, release notes mensual, Python trimestral."""
     if source_type == "official_docs" or slug.startswith("python-"):
@@ -93,18 +106,21 @@ def review_frequency(slug: str, source_type: str) -> str:
     return "monthly"
 
 
-def entry(row: tuple[Any, ...]) -> dict[str, Any]:
+BATCH1_DATE = "2026-09-30"
+
+
+def entry(row: tuple[Any, ...], created: str = TODAY) -> dict[str, Any]:
     slug, title, description, url, source_type, level, provider, verified, _, techs = row
     return {
         "id": f"source:{slug}", "slug": slug, "type": "source", "title": title, "description": description,
         "url": url, "source_type": source_type, "authority_level": level, "provider": provider,
         "url_verified": verified, "review_frequency": review_frequency(slug, source_type), "trust": "high", "technologies": techs,
-        "created_at": TODAY, "updated_at": TODAY, "last_verified": TODAY, "verification_status": "verified" if verified else "review_required",
+        "created_at": created, "updated_at": created, "last_verified": created, "verification_status": "verified" if verified else "review_required",
     }
 
 
 def build() -> str:
-    docs = [entry(row) for row in [*F0, *MVP]]
+    docs = [entry(row) for row in [*F0, *MVP]] + [entry(row, created=BATCH1_DATE) for row in BATCH1]
     return HEADER + yaml.safe_dump_all(docs, allow_unicode=True, sort_keys=False, width=140)
 
 

@@ -1,0 +1,15 @@
+{
+  "slug": "aws-sqs-docs",
+  "title": "Amazon SQS Developer Guide",
+  "description": "Guía oficial para desarrolladores de Amazon Simple Queue Service.",
+  "url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html",
+  "source_type": "official_docs",
+  "authority_level": 1,
+  "provider": "aws",
+  "url_verified": true,
+  "review_frequency": "quarterly",
+  "trust": "high",
+  "technologies": [],
+  "last_verified": "2026-09-30",
+  "verification_status": "verified"
+}

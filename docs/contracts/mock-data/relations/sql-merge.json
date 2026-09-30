@@ -2,6 +2,27 @@
   "slug": "sql-merge",
   "groups": [
     {
+      "type": "USES",
+      "direction": "incoming",
+      "label": "used_by",
+      "items": [
+        {
+          "slug": "incremental-load",
+          "title": "Carga incremental",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "El modo upsert de la carga incremental se implementa con MERGE."
+        },
+        {
+          "slug": "scd-type-2",
+          "title": "SCD Type 2",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "El cierre de versiones y la inserción de la nueva se implementan con MERGE o con dos sentencias."
+        }
+      ]
+    },
+    {
       "type": "RELATED_TO",
       "direction": "both",
       "label": "related_to",
@@ -24,15 +45,15 @@
           "slug": "change-data-capture",
           "title": "Change Data Capture",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "MERGE es la forma habitual de aplicar un lote de cambios en el destino."
         },
         {
           "slug": "idempotency",
           "title": "Idempotencia",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "MERGE con clave y condición de versión es la forma habitual de escribir idempotentemente en un warehouse."
         },
         {
           "slug": "bigquery-incremental-models",

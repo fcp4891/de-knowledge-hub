@@ -7,6 +7,13 @@
       "label": "related_to",
       "items": [
         {
+          "slug": "change-data-capture",
+          "title": "Change Data Capture",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "CDC convierte una base operacional en un flujo de eventos."
+        },
+        {
           "slug": "batch-ingestion",
           "title": "Ingesta batch",
           "entity_type": "concept",

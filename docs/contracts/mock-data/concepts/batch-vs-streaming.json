@@ -2,28 +2,216 @@
   "id": "concept:batch-vs-streaming",
   "title": "Batch vs streaming",
   "slug": "batch-vs-streaming",
-  "description": null,
+  "description": "Procesar datos en lotes acotados cada cierto tiempo o como un flujo continuo de eventos, y cómo elegir según latencia, costo y complejidad.",
   "type": "concept",
   "domain": "fundamentals",
   "subdomain": "processing-paradigms",
   "classification": "core",
   "level": "basic",
-  "cloud": [],
-  "technologies": [],
-  "tags": [],
+  "cloud": [
+    "gcp",
+    "aws",
+    "azure",
+    "agnostic"
+  ],
+  "technologies": [
+    "gcp-dataflow",
+    "gcp-pubsub",
+    "apache-beam",
+    "aws-kinesis",
+    "azure-event-hubs"
+  ],
+  "tags": [
+    "pipelines",
+    "streaming",
+    "batch"
+  ],
   "related_topics": [
+    "change-data-capture",
+    "dead-letter-queue",
+    "idempotency",
     "late-arriving-data"
   ],
-  "sources": [],
-  "created_at": null,
-  "updated_at": null,
-  "last_verified": null,
-  "verification_status": null,
+  "sources": [
+    {
+      "source": "gcp-dataflow-docs",
+      "title": "Dataflow documentation",
+      "url": "https://docs.cloud.google.com/dataflow/docs/concepts/beam-programming-model",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Apache Beam es un modelo unificado para pipelines batch y streaming; windowing sobre colecciones no acotadas según el timestamp de cada elemento (event time)."
+    },
+    {
+      "source": "gcp-pubsub-docs",
+      "title": "Pub/Sub documentation",
+      "url": "https://docs.cloud.google.com/pubsub/docs/subscription-overview",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Entrega at-least-once por defecto y sin garantías de orden."
+    },
+    {
+      "source": "aws-kinesis-docs",
+      "title": "Amazon Kinesis Data Streams Developer Guide",
+      "url": "https://docs.aws.amazon.com/streams/latest/dev/introduction.html",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Kinesis Data Streams recolecta y procesa grandes streams de registros en tiempo real."
+    },
+    {
+      "source": "microsoft-learn",
+      "title": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Event Hubs es una plataforma de streaming con particiones ordenadas y compatibilidad con Apache Kafka."
+    }
+  ],
+  "created_at": "2026-09-30",
+  "updated_at": "2026-09-30",
+  "last_verified": "2026-09-30",
+  "verification_status": "review_required",
   "kind": "concept",
   "importance": "high",
   "mvp": true,
-  "has_page": false,
+  "has_page": true,
   "stub": false,
   "note": null,
-  "sections": []
+  "sections": [
+    {
+      "number": 1,
+      "key": "summary",
+      "title": "Resumen",
+      "markdown": "**Batch** procesa un conjunto acotado de datos de una vez, cada cierto tiempo (por ejemplo, el día anterior). **Streaming** procesa un flujo no acotado de eventos a medida que llegan. La elección depende de la latencia que el negocio realmente necesita, porque el streaming exige más en operación, en manejo del tiempo y en costo."
+    },
+    {
+      "number": 2,
+      "key": "what_is",
+      "title": "Qué es",
+      "markdown": "Son dos modos de procesamiento, no dos tecnologías. Muchos motores admiten ambos: Apache Beam, que ejecuta Dataflow, define batch y streaming con un mismo modelo. La diferencia de fondo es si los datos de entrada están **acotados** (bounded) o **no acotados** (unbounded)."
+    },
+    {
+      "number": 3,
+      "key": "problem",
+      "title": "Problema que resuelve",
+      "markdown": "Obliga a decidir cuán frescos deben estar los datos y cuánto cuesta lograrlo. Un informe diario no gana nada con streaming. La detección de fraude o un tablero operativo sí necesitan segundos."
+    },
+    {
+      "number": 4,
+      "key": "how_it_works",
+      "title": "Cómo funciona",
+      "markdown": "- **Batch**: se lee un rango cerrado (un día, un archivo), se transforma y se escribe. Si falla, se reintenta el rango completo.\n- **Streaming**: se leen eventos de un broker (Pub/Sub, Kafka, Kinesis, Event Hubs) y se procesan de forma continua. Para agregar, se agrupan en **ventanas** según el tiempo del evento (*event time*), no según cuándo se procesa. Hay que decidir qué hacer con los eventos que llegan tarde."
+    },
+    {
+      "number": 5,
+      "key": "when_to_use",
+      "title": "Cuándo utilizarlo",
+      "markdown": "- **Batch**: informes periódicos, cargas históricas, backfills, transformaciones pesadas sin urgencia.\n- **Streaming**: reacción en segundos (alertas, fraude, personalización), tableros operativos, integración event-driven entre sistemas."
+    },
+    {
+      "number": 6,
+      "key": "when_not_to_use",
+      "title": "Cuándo no utilizarlo",
+      "markdown": "- **Streaming** no conviene si nadie consume los datos antes de la próxima ventana batch: pagas la complejidad sin beneficio.\n- **Batch** no conviene si el valor del dato se pierde en minutos, o si los lotes crecen tanto que no terminan antes del siguiente ciclo."
+    },
+    {
+      "number": 7,
+      "key": "simple_example",
+      "title": "Ejemplo sencillo",
+      "markdown": "Contar ventas por hora:\n\n- En **batch**, un job a las 01:00 lee las ventas del día anterior y escribe 24 filas.\n- En **streaming**, cada venta entra a una ventana de una hora según su timestamp, y el conteo se emite al cerrarse la ventana."
+    },
+    {
+      "number": 8,
+      "key": "production_example",
+      "title": "Ejemplo de producción",
+      "markdown": "Pedidos publicados en Pub/Sub alimentan un pipeline de Dataflow que agrega por ventanas de 5 minutos para un tablero operativo, con una dead-letter para mensajes inválidos. En paralelo, un batch nocturno recalcula el día completo desde la capa raw y corrige los eventos tardíos. La cifra oficial es la del batch; la del tablero es provisional."
+    },
+    {
+      "number": 9,
+      "key": "architecture",
+      "title": "Arquitectura",
+      "markdown": "```mermaid\nflowchart LR\n  EV[Eventos] --> BR[Broker]\n  BR --> ST[Streaming: ventanas por event time] --> DASH[Tablero en minutos]\n  BR --> RAW[(Raw)]\n  RAW --> BT[Batch nocturno] --> DWH[(Cifras oficiales)]\n```"
+    },
+    {
+      "number": 10,
+      "key": "code",
+      "title": "Código",
+      "markdown": "```python\n# Apache Beam (Python): el mismo conteo por ventana sirve para batch o streaming.\n# Requiere: pip install apache-beam[gcp]; en streaming, la fuente es ReadFromPubSub en lugar de un Create.\nimport apache_beam as beam\nfrom apache_beam.transforms.window import FixedWindows, TimestampedValue\n\nwith beam.Pipeline() as p:\n    (\n        p\n        | beam.Create([(\"tienda-1\", 1_759_200_000), (\"tienda-1\", 1_759_200_120), (\"tienda-2\", 1_759_203_700)])\n        | beam.Map(lambda kv: TimestampedValue(kv[0], kv[1]))  # event time = timestamp del evento\n        | beam.WindowInto(FixedWindows(3600))                   # ventanas de 1 hora\n        | beam.combiners.Count.PerElement()\n        | beam.Map(print)\n    )\n```"
+    },
+    {
+      "number": 11,
+      "key": "gcp",
+      "title": "GCP",
+      "markdown": "- **Dataflow** ejecuta pipelines de Apache Beam, un modelo unificado para batch y streaming, con ventanas según el timestamp de cada elemento.\n- **Pub/Sub** es la entrada típica en streaming. Su entrega por defecto es at-least-once y sin orden garantizado, así que el pipeline debe ser idempotente."
+    },
+    {
+      "number": 12,
+      "key": "aws",
+      "title": "AWS",
+      "markdown": "**Kinesis Data Streams** recolecta y procesa grandes streams de registros en tiempo real. No es un equivalente directo de Pub/Sub: su modelo de capacidad y de lectura es distinto.\n\n<!-- VERIFY: modelo de capacidad (shards / on-demand) y de retención de Kinesis Data Streams, no citado aquí. -->"
+    },
+    {
+      "number": 13,
+      "key": "azure",
+      "title": "Azure",
+      "markdown": "**Event Hubs** es una plataforma de streaming con particiones ordenadas para escalar el throughput y compatibilidad con Apache Kafka. Esa compatibilidad cubre el protocolo, no necesariamente todo el ecosistema de Kafka. Tampoco es lo mismo que Pub/Sub, que no expone particiones al usuario."
+    },
+    {
+      "number": 14,
+      "key": "best_practices",
+      "title": "Buenas prácticas",
+      "markdown": "- Partir de la latencia que el negocio necesita, no de la tecnología.\n- En streaming, agrupar por event time y definir explícitamente cómo tratar los eventos tardíos.\n- Guardar siempre el crudo para poder recalcular en batch (reconciliación).\n- Diseñar consumidores idempotentes: la entrega por defecto suele ser at-least-once."
+    },
+    {
+      "number": 15,
+      "key": "common_mistakes",
+      "title": "Errores frecuentes",
+      "markdown": "- Elegir streaming \"por moderno\" para datos que se consultan una vez al día.\n- Agregar por processing time y obtener cifras distintas en cada reproceso.\n- No tener dead-letter ni reintentos: un mensaje malformado detiene o descarta en silencio.\n- Suponer orden global en un broker que no lo garantiza."
+    },
+    {
+      "number": 16,
+      "key": "trade_offs",
+      "title": "Trade-offs",
+      "markdown": "El batch es más barato, más simple de operar y de reprocesar, pero tiene más latencia. El streaming baja la latencia a segundos, a cambio de operación continua, manejo de estado y tiempo, y más costo. Muchas plataformas combinan ambos: streaming para lo provisional, batch para la cifra oficial."
+    },
+    {
+      "number": 17,
+      "key": "related_concepts",
+      "title": "Conceptos relacionados",
+      "markdown": "- `change-data-capture`: convierte una base en un flujo.\n- `dead-letter-queue`, `idempotency`: requisitos del streaming confiable.\n- Del blueprint, pendientes de ficha: `event-time-vs-processing-time`, `windowing`, `watermarks`, `late-arriving-data`, `lambda-architecture`, `kappa-architecture`."
+    },
+    {
+      "number": 18,
+      "key": "open_questions",
+      "title": "Preguntas técnicas abiertas",
+      "markdown": "1. ¿Qué preguntas le harías al negocio antes de decidir entre batch y streaming para un tablero de ventas?\n2. ¿Cómo reconciliarías las cifras de un pipeline streaming con las de un batch nocturno?\n3. ¿Qué haces con los eventos que llegan horas tarde a una agregación por ventanas?"
+    },
+    {
+      "number": 19,
+      "key": "related_lab",
+      "title": "Laboratorio relacionado",
+      "markdown": "Pendiente (F4): arquitecturas \"Streaming pipeline\" y \"Batch pipeline\" (§24) y lab de tipo D sobre analytics casi en tiempo real (§25)."
+    },
+    {
+      "number": 20,
+      "key": "sources",
+      "title": "Fuentes",
+      "markdown": "- Google Cloud: *Programming model for Apache Beam* (Dataflow); *Subscription overview* (Pub/Sub).\n- AWS: *What is Amazon Kinesis Data Streams?*\n- Microsoft Learn: *What is Azure Event Hubs*.\n\nEl detalle de cada fuente está en `sources` del frontmatter."
+    },
+    {
+      "number": 21,
+      "key": "last_verified",
+      "title": "Fecha de última verificación",
+      "markdown": "2026-09-30. Hay un punto VERIFY (capacidad y retención de Kinesis). La ficha queda en `review_required` hasta la revisión humana (B-F3.1)."
+    },
+    {
+      "number": 22,
+      "key": "change_history",
+      "title": "Historial de cambios importantes",
+      "markdown": "- 2026-09-30: creación (lote 1 de F3)."
+    }
+  ]
 }

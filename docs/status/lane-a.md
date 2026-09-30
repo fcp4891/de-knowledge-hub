@@ -5,7 +5,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-09-29
 
 ## Actual
-- **Tarea activa:** — (A-F2.4 cerrada y mergeada en `main`; Carril A terminó sus tareas de F2)
+- **Tarea activa:** — (lote 1 de F3 adelantado para el gate de F2; mergeado en `main`)
 - **Mergeado para Carril B:** `b/f2-cards` (3e50c05) en `main`, 2026-09-30.
 - **Siguiente:** gate de F2.
 - **Bloqueos:** —
@@ -14,6 +14,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 ## Pedidos a Carril B
 | Pedido | Estado |
 |---|---|
+| **Mocks regenerados con 10 fichas reales** (lote 1 de F3): `change-data-capture`, `idempotency`, `etl-vs-elt`, `batch-vs-streaming`, `partitioning`, `sql-merge`, `scd-type-2` (pattern), `incremental-load` (pattern), `dead-letter-queue` (pattern) y `bigquery-partitioning` tienen `has_page: true` y sus 22 secciones. Cambian solo datos; el contrato no cambia. Los 3 patrones tienen `type: pattern` | Informativo |
 | **`/me` real disponible (A-F2.4): ya se puede quitar el mock de `/me`.** Con `make db-up && make build && make dev`, toda la API (conocimiento, búsqueda y `/me`) sirve datos reales en `http://localhost:8000/api/v1`. Ver ADR-006: `last_studied_at` lo envía el cliente (si no viene se conserva); un slug sin registro devuelve `not_reviewed` | Abierto |
 | **Cambio de contrato (notas, ADR-006, aditivo):** nuevos `PUT /me/notes/{slug}/{note_id}` (cuerpo `NoteUpdate`, devuelve `Note`) y `DELETE /me/notes/{slug}/{note_id}` (204). Nuevo mock `me/notes/change-data-capture.updated.json`. Regenerar el cliente tipado (también cubre el `422` de ADR-005) | Abierto |
 | **API real disponible (A-F2.3).** `make db-up && make build && make dev` → `http://localhost:8000/api/v1` (CORS para `http://localhost:3000`). Sirve exactamente los mocks de conocimiento. Excepciones: `/search` (FTS real; los mocks de búsqueda solo son ejemplos de forma, ADR-005) y `/me` (sigue en mock hasta A-F2.4) | Abierto |
@@ -34,6 +35,13 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Enumeración `category`, `mvp` y `note` en tecnologías, y `matrix.schema.json` (ADR-004).
 
 ## Historial
+
+### Lote 1 de F3, adelantado para el gate de F2 (2026-09-30)
+- `validate.py` + `scripts/page_sections.py`: las fichas `concept`/`pattern` que no son stub deben tener las 22 secciones de la plantilla, en orden, con sus títulos y sin secciones vacías. También se comprueba que domain y subdomain coincidan con el blueprint. (Primera tarea de F3 del BACKLOG.)
+- 10 fichas en `content/concepts/` (7 concept y 3 pattern), todas en `review_required` hasta la revisión B-F3.1: 40 referencias a fuentes y 4 puntos VERIFY.
+- Cada afirmación de producto se verificó leyendo la página oficial (texto extraído), no solo la URL. Nuevas fuentes: `aws-redshift-docs`, `aws-sqs-docs`, `aws-athena-docs`, `aws-kinesis-docs` (también en el generador).
+- Base recompilada y mocks regenerados (83 respuestas). 379 tests, 0 omitidos.
+- Remoto `origin` = github.com/fcp4891/de-knowledge-hub; la CI en GitHub Actions (Linux) pasa: 352 tests en el primer push.
 
 ### A-F2.4 · Estado personal /me (2026-09-30)
 - Migración `0003`: `me_study_states`, `me_notes`, `me_favorites`, con `user_id` fijo `default` en la PK. Sin FK a contenido: el compilador nunca las toca.

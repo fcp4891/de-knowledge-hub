@@ -2,30 +2,213 @@
   "id": "pattern:incremental-load",
   "title": "Carga incremental",
   "slug": "incremental-load",
-  "description": null,
+  "description": "Patrón para cargar en cada ejecución solo los datos nuevos o modificados desde la última carga, en lugar de reprocesar la tabla completa.",
   "type": "pattern",
   "domain": "sql",
   "subdomain": "sql-patterns",
   "classification": "core",
   "level": "intermediate",
-  "cloud": [],
-  "technologies": [],
-  "tags": [],
+  "cloud": [
+    "gcp",
+    "aws",
+    "azure",
+    "agnostic"
+  ],
+  "technologies": [
+    "gcp-bigquery",
+    "gcp-dataform"
+  ],
+  "tags": [
+    "sql",
+    "pipelines",
+    "performance"
+  ],
   "related_topics": [
     "sql-merge",
     "idempotency",
-    "partitioning"
+    "partitioning",
+    "bigquery-partitioning"
   ],
-  "sources": [],
-  "created_at": null,
-  "updated_at": null,
-  "last_verified": null,
-  "verification_status": null,
+  "sources": [
+    {
+      "source": "gcp-dataform-docs",
+      "title": "Dataform documentation",
+      "url": "https://docs.cloud.google.com/dataform/docs/create-tables",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Tablas incrementales en Dataform; se construyen desde cero la primera vez y luego insertan o fusionan filas nuevas; uniqueKey fusiona filas con la misma clave."
+    },
+    {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/partitioned-tables",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Escritura en particiones específicas sin afectar a las demás."
+    },
+    {
+      "source": "aws-athena-docs",
+      "title": "Amazon Athena User Guide",
+      "url": "https://docs.aws.amazon.com/athena/latest/ug/partitions.html",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Particiones en S3 para restringir los datos escaneados."
+    },
+    {
+      "source": "microsoft-learn",
+      "title": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-tables-partition",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Partition switching para reemplazar una sección de la tabla."
+    }
+  ],
+  "created_at": "2026-09-30",
+  "updated_at": "2026-09-30",
+  "last_verified": "2026-09-30",
+  "verification_status": "review_required",
   "kind": "pattern",
   "importance": "high",
   "mvp": true,
-  "has_page": false,
+  "has_page": true,
   "stub": false,
   "note": "Es el patrón SQL; el estado y los watermarks del pipeline están en incremental-pipelines (05).",
-  "sections": []
+  "sections": [
+    {
+      "number": 1,
+      "key": "summary",
+      "title": "Resumen",
+      "markdown": "Una carga incremental procesa en cada ejecución solo lo que cambió desde la última vez, en vez de recargar todo. Para eso necesita un criterio fiable para saber qué es \"nuevo\" (un watermark, un CDC o una partición) y una escritura idempotente en el destino."
+    },
+    {
+      "number": 2,
+      "key": "what_is",
+      "title": "Qué es",
+      "markdown": "Es un patrón de carga con tres piezas:\n\n1. **Detección de lo nuevo**: por marca de agua (`updated_at > último valor`), por partición (el día D) o por CDC.\n2. **Aplicación en el destino**: append, sobrescritura de partición o upsert (`MERGE`).\n3. **Estado**: dónde se guarda \"hasta dónde se cargó\"."
+    },
+    {
+      "number": 3,
+      "key": "problem",
+      "title": "Problema que resuelve",
+      "markdown": "Las cargas completas crecen con la tabla: más costo, más tiempo y más carga sobre el origen en cada ejecución. La carga incremental mantiene el trabajo proporcional al cambio, no al tamaño total."
+    },
+    {
+      "number": 4,
+      "key": "how_it_works",
+      "title": "Cómo funciona",
+      "markdown": "Hay tres variantes de escritura:\n\n- **Append**: para datos inmutables (eventos, logs). Solo se agregan filas nuevas.\n- **Sobrescritura por partición**: se reemplaza por completo el período afectado. Es simple e idempotente.\n- **Upsert** (`MERGE` por clave): para entidades que cambian (clientes, pedidos).\n\nEl watermark debe guardarse **después** de una escritura exitosa y con un margen de solapamiento para cubrir los datos que llegan tarde."
+    },
+    {
+      "number": 5,
+      "key": "when_to_use",
+      "title": "Cuándo utilizarlo",
+      "markdown": "- Tablas grandes que cambian poco en relación con su tamaño.\n- Orígenes con una columna fiable de modificación, particiones temporales o CDC.\n- Cargas frecuentes (horarias, cada 15 minutos) donde la carga completa no cabe en la ventana."
+    },
+    {
+      "number": 6,
+      "key": "when_not_to_use",
+      "title": "Cuándo no utilizarlo",
+      "markdown": "- Tablas pequeñas: una carga completa es más simple y sin estado.\n- Orígenes sin forma fiable de detectar cambios (sin `updated_at`, con borrados físicos invisibles). Allí conviene CDC o una carga completa periódica.\n- Cuando la lógica de negocio recalcula toda la historia en cada ejecución."
+    },
+    {
+      "number": 7,
+      "key": "simple_example",
+      "title": "Ejemplo sencillo",
+      "markdown": "Cada hora: leer del origen las filas con `updated_at > '2026-09-30 10:00'` (el último watermark), aplicarlas con `MERGE` por `id` y guardar como nuevo watermark el máximo `updated_at` cargado."
+    },
+    {
+      "number": 8,
+      "key": "production_example",
+      "title": "Ejemplo de producción",
+      "markdown": "La tabla de pedidos se carga cada 15 minutos con un watermark que se solapa 30 minutos, para cubrir las transacciones que se confirman tarde en el origen. El `MERGE` con condición de versión absorbe el solapamiento sin duplicar. Una vez por semana, una reconciliación compara conteos y sumas con el origen y, si difieren, dispara un backfill de las particiones afectadas."
+    },
+    {
+      "number": 9,
+      "key": "architecture",
+      "title": "Arquitectura",
+      "markdown": "```mermaid\nflowchart LR\n  WM[(Estado: watermark)] --> EX[Extraer cambios desde el watermark menos el margen]\n  SRC[(Origen)] --> EX\n  EX --> AP[MERGE / sobrescritura de partición]\n  AP --> DWH[(Destino)]\n  AP -->|éxito| WM\n```"
+    },
+    {
+      "number": 10,
+      "key": "code",
+      "title": "Código",
+      "markdown": "```sql\n-- Dataform (SQLX), tabla incremental con uniqueKey: la primera vez se construye completa;\n-- después solo procesa lo nuevo y fusiona por order_id en lugar de agregar duplicados.\nconfig {\n  type: \"incremental\",\n  uniqueKey: [\"order_id\"]\n}\n\nSELECT order_id, status, updated_at\nFROM ${ref(\"raw_orders\")}\n${when(incremental(),\n  `WHERE updated_at > (SELECT MAX(updated_at) FROM ${self()}) - INTERVAL 30 MINUTE`)}\n```"
+    },
+    {
+      "number": 11,
+      "key": "gcp",
+      "title": "GCP",
+      "markdown": "- **Dataform** tiene tablas `incremental`: la primera ejecución construye la tabla desde cero y las siguientes solo insertan o fusionan filas nuevas según la condición configurada con `when(incremental(), ...)`. Con `uniqueKey`, fusiona las filas de la misma clave en lugar de agregarlas.\n- En **BigQuery**, las tablas particionadas permiten escribir una partición concreta sin afectar a las demás, lo que hace idempotente la sobrescritura por período."
+    },
+    {
+      "number": 12,
+      "key": "aws",
+      "title": "AWS",
+      "markdown": "En un lake consultado con **Athena**, lo incremental suele ser escribir la partición nueva en S3 (y registrarla en el catálogo). En **Redshift**, se usa `MERGE` desde staging. No hay un equivalente directo a las tablas incrementales de Dataform dentro del servicio."
+    },
+    {
+      "number": 13,
+      "key": "azure",
+      "title": "Azure",
+      "markdown": "En el dedicated SQL pool de **Synapse**, el *partition switching* permite cargar un período en una tabla de staging y conmutarlo con la partición del destino, un reemplazo rápido de una sección de la tabla. El upsert se hace con `MERGE` de T-SQL."
+    },
+    {
+      "number": 14,
+      "key": "best_practices",
+      "title": "Buenas prácticas",
+      "markdown": "- Guardar el watermark solo tras escribir con éxito, y solapar la ventana.\n- Hacer la escritura idempotente (sobrescritura de partición o `MERGE` con versión).\n- Tener un modo de carga completa o backfill por rango para recuperarse.\n- Reconciliar periódicamente contra el origen (conteos, sumas, rangos)."
+    },
+    {
+      "number": 15,
+      "key": "common_mistakes",
+      "title": "Errores frecuentes",
+      "markdown": "- Watermark basado en la hora de ejecución en lugar de la de los datos.\n- Guardar el watermark antes de confirmar la escritura: si esta falla, se pierden datos.\n- No detectar borrados en el origen.\n- Watermark sin solapamiento: se pierden las filas que se confirman tarde."
+    },
+    {
+      "number": 16,
+      "key": "trade_offs",
+      "title": "Trade-offs",
+      "markdown": "Menos costo y latencia por ejecución, a cambio de estado que mantener, casos borde (datos tardíos, borrados, reprocesos) y la necesidad de reconciliar. La carga completa es cara pero sin estado y siempre correcta."
+    },
+    {
+      "number": 17,
+      "key": "related_concepts",
+      "title": "Conceptos relacionados",
+      "markdown": "- `sql-merge`: modo upsert.\n- `idempotency`: requisito para reintentos seguros.\n- `partitioning`, `bigquery-partitioning`: sobrescritura por período.\n- Del blueprint, pendientes de ficha: `incremental-pipelines`, `change-detection`, `data-reconciliation`, `dataform-incremental-tables`."
+    },
+    {
+      "number": 18,
+      "key": "open_questions",
+      "title": "Preguntas técnicas abiertas",
+      "markdown": "1. ¿Cómo diseñarías el watermark de una carga incremental si el origen confirma transacciones con varios minutos de retraso?\n2. ¿Cómo detectarías y propagarías los borrados físicos del origen en una carga incremental por `updated_at`?\n3. ¿Qué señales te harían volver de incremental a carga completa?"
+    },
+    {
+      "number": 19,
+      "key": "related_lab",
+      "title": "Laboratorio relacionado",
+      "markdown": "Pendiente (F4): lab de tipo A \"Implementar una carga incremental desde una tabla staging hacia una tabla final\" (§25)."
+    },
+    {
+      "number": 20,
+      "key": "sources",
+      "title": "Fuentes",
+      "markdown": "- Google Cloud: *Create tables* (Dataform, tablas incrementales y `uniqueKey`); *Introduction to partitioned tables* (BigQuery).\n- AWS: *Partition your data* (Amazon Athena).\n- Microsoft Learn: *Partitioning tables in dedicated SQL pool* (Azure Synapse).\n\nEl detalle de cada fuente está en `sources` del frontmatter."
+    },
+    {
+      "number": 21,
+      "key": "last_verified",
+      "title": "Fecha de última verificación",
+      "markdown": "2026-09-30. La ficha queda en `review_required` hasta la revisión humana (B-F3.1)."
+    },
+    {
+      "number": 22,
+      "key": "change_history",
+      "title": "Historial de cambios importantes",
+      "markdown": "- 2026-09-30: creación (lote 1 de F3)."
+    }
+  ]
 }

@@ -70,7 +70,7 @@
           "type": "concept",
           "domain": "gcp",
           "classification": "modern",
-          "snippet": "Particionamiento en BigQuery",
+          "snippet": "Cómo BigQuery divide una tabla en particiones por fecha, por momento de ingesta o por rangos de enteros para leer menos datos y gestionar el ciclo de vida.",
           "score": 6.0
         },
         {

@@ -1,0 +1,169 @@
+---
+id: concept:etl-vs-elt
+slug: etl-vs-elt
+type: concept
+title: ETL vs ELT
+description: Dos formas de ordenar un pipeline, transformar antes de cargar (ETL) o cargar y transformar dentro del destino (ELT), y cuándo conviene cada una.
+domain: fundamentals
+subdomain: processing-paradigms
+category: fundamentals
+classification: core
+level: basic
+importance: high
+cloud: [gcp, aws, azure, agnostic]
+technologies: [gcp-bigquery, gcp-dataform, gcp-dataflow, gcp-datastream]
+tags: [pipelines, architecture]
+related_topics: [incremental-load, change-data-capture]
+sources:
+  - source: gcp-datastream-docs
+    url: https://docs.cloud.google.com/datastream/docs/overview
+    accessed: 2026-09-30
+    note: Datastream se presenta como base de pipelines ELT de baja latencia hacia BigQuery.
+  - source: gcp-dataform-docs
+    url: https://docs.cloud.google.com/dataform/docs/create-tables
+    accessed: 2026-09-30
+    note: Dataform compila SQLX y crea las tablas en BigQuery (transformación dentro del warehouse).
+  - source: gcp-dataflow-docs
+    url: https://docs.cloud.google.com/dataflow/docs/concepts/beam-programming-model
+    accessed: 2026-09-30
+    note: Apache Beam, modelo unificado para pipelines batch y streaming, ejecutado en Dataflow.
+relations:
+  - type: RELATED_TO
+    target: incremental-load
+    note: En ELT, la carga incremental suele resolverse dentro del warehouse.
+created_at: 2026-09-30
+updated_at: 2026-09-30
+last_verified: 2026-09-30
+verification_status: review_required
+---
+
+## 1. Resumen
+
+**ETL** extrae, transforma fuera del destino y carga el resultado. **ELT** extrae, carga los datos crudos en el warehouse o el lake y los transforma allí, normalmente con SQL. ELT domina con los warehouses cloud actuales, pero ETL sigue siendo necesario cuando hay que filtrar, anonimizar o reducir antes de cargar.
+
+## 2. Qué es
+
+Son dos órdenes posibles de las mismas etapas. No son productos ni herramientas: la misma herramienta puede usarse en ambos estilos, y un pipeline real suele mezclarlos (limpieza ligera antes de cargar y modelado dentro del warehouse).
+
+## 3. Problema que resuelve
+
+Obliga a decidir **dónde** se transforma, y eso define costo, latencia, trazabilidad y seguridad:
+
+- Transformar fuera (ETL) evita cargar datos que no deben estar en el destino.
+- Transformar dentro (ELT) aprovecha el motor del warehouse, conserva el dato crudo para reprocesar y deja las transformaciones en SQL versionado.
+
+## 4. Cómo funciona
+
+- **ETL**: fuente → motor de transformación (Spark, Beam, un script) → destino con datos ya modelados.
+- **ELT**: fuente → carga cruda (capa raw) → transformaciones SQL dentro del destino (capas curated y serving) → consumo.
+
+## 5. Cuándo utilizarlo
+
+- **ELT**: el destino es un warehouse con cómputo escalable, se quiere conservar el crudo para reprocesos y el equipo trabaja en SQL.
+- **ETL**: datos sensibles que no deben aterrizar sin tratar, volúmenes que conviene reducir antes (filtrado, agregación) o transformaciones que SQL expresa mal (parsing complejo, ML, enriquecimiento con servicios externos).
+
+## 6. Cuándo no utilizarlo
+
+- **ELT** no conviene si cargar el crudo viola requisitos de privacidad o si el destino no tiene cómputo suficiente.
+- **ETL** no conviene si obliga a reconstruir toda la lógica fuera del warehouse para cada cambio, o si se pierde el crudo necesario para auditar y reprocesar.
+
+## 7. Ejemplo sencillo
+
+Pedidos de una base operacional:
+
+- En **ELT** se cargan tal cual en `raw.orders` y una vista o tabla SQL calcula `curated.orders_daily`.
+- En **ETL** un script calcula los totales diarios y solo carga `orders_daily`.
+
+## 8. Ejemplo de producción
+
+CDC de PostgreSQL a BigQuery con Datastream (capa raw) y transformaciones versionadas en Dataform hacia las capas curated y serving: ELT. En el mismo proyecto, un pipeline de Dataflow anonimiza datos personales de un feed externo antes de cargarlo: ETL. Ambos conviven.
+
+## 9. Arquitectura
+
+```mermaid
+flowchart LR
+  subgraph ETL
+    A1[Fuente] --> T1[Transformación externa] --> D1[(Destino modelado)]
+  end
+  subgraph ELT
+    A2[Fuente] --> R2[(Raw en el destino)] --> T2[SQL en el destino] --> D2[(Curated y serving)]
+  end
+```
+
+## 10. Código
+
+```sql
+-- ELT en BigQuery (ejecutable adaptando nombres): la transformación vive dentro del warehouse.
+-- Requiere: raw.orders(order_id, created_at TIMESTAMP, amount NUMERIC).
+CREATE OR REPLACE TABLE `proyecto.curated.orders_daily`
+PARTITION BY dia AS
+SELECT DATE(created_at) AS dia, COUNT(*) AS pedidos, SUM(amount) AS monto
+FROM `proyecto.raw.orders`
+GROUP BY dia;
+```
+
+## 11. GCP
+
+- **Datastream** se presenta en su documentación como base de pipelines ELT de baja latencia hacia BigQuery.
+- **Dataform** compila definiciones SQLX y crea las tablas en BigQuery: es transformación dentro del warehouse (la T de ELT).
+- **Dataflow** ejecuta pipelines de Apache Beam y sirve para ETL cuando hay que transformar antes de cargar.
+
+## 12. AWS
+
+El patrón ELT se aplica sobre **Redshift**, y el ETL suele hacerse con Glue o EMR antes de cargar.
+
+<!-- VERIFY: posicionamiento actual de Glue y de las transformaciones dentro de Redshift en la documentación de AWS; esta sección no cita afirmaciones de producto más allá de su rol. -->
+
+## 13. Azure
+
+En Azure y Microsoft Fabric, el mismo par se da con Data Factory o los pipelines de Fabric para mover y transformar, y con SQL en Fabric Warehouse o Synapse para transformar dentro.
+
+<!-- VERIFY: rol actual de Data Factory frente a Fabric (ecosistema en evolución; ver azure-analytics-landscape). -->
+
+## 14. Buenas prácticas
+
+- Conservar siempre una capa raw inmutable cuando la privacidad lo permita: habilita reprocesos.
+- Versionar las transformaciones (SQL en Git, Dataform o dbt) y probarlas.
+- Decidir por dato qué debe transformarse antes de aterrizar (PII, volumen) y documentarlo.
+- Hacer incrementales las transformaciones pesadas.
+
+## 15. Errores frecuentes
+
+- Cargar datos personales crudos a un warehouse amplio "porque es ELT".
+- Duplicar la misma lógica en el ETL y en el SQL del warehouse.
+- Perder el crudo y no poder reconstruir tras un error de transformación.
+- Tratar ELT como "no modelar": el modelado sigue siendo necesario, solo cambia dónde ocurre.
+
+## 16. Trade-offs
+
+ELT gana en agilidad, trazabilidad y uso del cómputo del warehouse, a cambio de almacenar más (crudo y capas) y de pagar cómputo del warehouse en cada transformación. ETL reduce lo que se almacena y protege datos sensibles, a cambio de mantener otro motor y otra base de código.
+
+## 17. Conceptos relacionados
+
+- `incremental-load`: cómo hacer incremental la transformación.
+- `change-data-capture`: fuente habitual de la capa raw en ELT.
+- Del blueprint, pendientes de ficha: `data-transformation`, `pipeline-layers`, `medallion-architecture`, `analytics-engineering`.
+
+## 18. Preguntas técnicas abiertas
+
+1. ¿Qué datos de tu organización no deberían aterrizar crudos en el warehouse, y cómo cambia eso el diseño?
+2. ¿Cómo reprocesarías seis meses de datos si descubres un error en una transformación de un pipeline ETL sin capa raw?
+3. ¿En qué casos combinarías ETL y ELT en el mismo flujo?
+
+## 19. Laboratorio relacionado
+
+Pendiente (F4): arquitectura "API → Data Warehouse" (§24).
+
+## 20. Fuentes
+
+- Google Cloud: *Datastream overview*; *Create tables* (Dataform); *Programming model for Apache Beam* (Dataflow).
+
+El detalle de cada fuente está en `sources` del frontmatter.
+
+## 21. Fecha de última verificación
+
+2026-09-30. Hay dos puntos VERIFY (AWS y Azure). La ficha queda en `review_required` hasta la revisión humana (B-F3.1).
+
+## 22. Historial de cambios importantes
+
+- 2026-09-30: creación (lote 1 de F3).

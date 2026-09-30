@@ -2,29 +2,205 @@
   "id": "concept:etl-vs-elt",
   "title": "ETL vs ELT",
   "slug": "etl-vs-elt",
-  "description": null,
+  "description": "Dos formas de ordenar un pipeline, transformar antes de cargar (ETL) o cargar y transformar dentro del destino (ELT), y cuándo conviene cada una.",
   "type": "concept",
   "domain": "fundamentals",
   "subdomain": "processing-paradigms",
   "classification": "core",
   "level": "basic",
-  "cloud": [],
-  "technologies": [],
-  "tags": [],
+  "cloud": [
+    "gcp",
+    "aws",
+    "azure",
+    "agnostic"
+  ],
+  "technologies": [
+    "gcp-bigquery",
+    "gcp-dataform",
+    "gcp-dataflow",
+    "gcp-datastream"
+  ],
+  "tags": [
+    "pipelines",
+    "architecture"
+  ],
   "related_topics": [
+    "incremental-load",
+    "change-data-capture",
     "data-transformation",
     "data-warehouse"
   ],
-  "sources": [],
-  "created_at": null,
-  "updated_at": null,
-  "last_verified": null,
-  "verification_status": null,
+  "sources": [
+    {
+      "source": "gcp-datastream-docs",
+      "title": "Datastream documentation",
+      "url": "https://docs.cloud.google.com/datastream/docs/overview",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Datastream se presenta como base de pipelines ELT de baja latencia hacia BigQuery."
+    },
+    {
+      "source": "gcp-dataform-docs",
+      "title": "Dataform documentation",
+      "url": "https://docs.cloud.google.com/dataform/docs/create-tables",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Dataform compila SQLX y crea las tablas en BigQuery (transformación dentro del warehouse)."
+    },
+    {
+      "source": "gcp-dataflow-docs",
+      "title": "Dataflow documentation",
+      "url": "https://docs.cloud.google.com/dataflow/docs/concepts/beam-programming-model",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Apache Beam, modelo unificado para pipelines batch y streaming, ejecutado en Dataflow."
+    }
+  ],
+  "created_at": "2026-09-30",
+  "updated_at": "2026-09-30",
+  "last_verified": "2026-09-30",
+  "verification_status": "review_required",
   "kind": "concept",
   "importance": "high",
   "mvp": true,
-  "has_page": false,
+  "has_page": true,
   "stub": false,
   "note": null,
-  "sections": []
+  "sections": [
+    {
+      "number": 1,
+      "key": "summary",
+      "title": "Resumen",
+      "markdown": "**ETL** extrae, transforma fuera del destino y carga el resultado. **ELT** extrae, carga los datos crudos en el warehouse o el lake y los transforma allí, normalmente con SQL. ELT domina con los warehouses cloud actuales, pero ETL sigue siendo necesario cuando hay que filtrar, anonimizar o reducir antes de cargar."
+    },
+    {
+      "number": 2,
+      "key": "what_is",
+      "title": "Qué es",
+      "markdown": "Son dos órdenes posibles de las mismas etapas. No son productos ni herramientas: la misma herramienta puede usarse en ambos estilos, y un pipeline real suele mezclarlos (limpieza ligera antes de cargar y modelado dentro del warehouse)."
+    },
+    {
+      "number": 3,
+      "key": "problem",
+      "title": "Problema que resuelve",
+      "markdown": "Obliga a decidir **dónde** se transforma, y eso define costo, latencia, trazabilidad y seguridad:\n\n- Transformar fuera (ETL) evita cargar datos que no deben estar en el destino.\n- Transformar dentro (ELT) aprovecha el motor del warehouse, conserva el dato crudo para reprocesar y deja las transformaciones en SQL versionado."
+    },
+    {
+      "number": 4,
+      "key": "how_it_works",
+      "title": "Cómo funciona",
+      "markdown": "- **ETL**: fuente → motor de transformación (Spark, Beam, un script) → destino con datos ya modelados.\n- **ELT**: fuente → carga cruda (capa raw) → transformaciones SQL dentro del destino (capas curated y serving) → consumo."
+    },
+    {
+      "number": 5,
+      "key": "when_to_use",
+      "title": "Cuándo utilizarlo",
+      "markdown": "- **ELT**: el destino es un warehouse con cómputo escalable, se quiere conservar el crudo para reprocesos y el equipo trabaja en SQL.\n- **ETL**: datos sensibles que no deben aterrizar sin tratar, volúmenes que conviene reducir antes (filtrado, agregación) o transformaciones que SQL expresa mal (parsing complejo, ML, enriquecimiento con servicios externos)."
+    },
+    {
+      "number": 6,
+      "key": "when_not_to_use",
+      "title": "Cuándo no utilizarlo",
+      "markdown": "- **ELT** no conviene si cargar el crudo viola requisitos de privacidad o si el destino no tiene cómputo suficiente.\n- **ETL** no conviene si obliga a reconstruir toda la lógica fuera del warehouse para cada cambio, o si se pierde el crudo necesario para auditar y reprocesar."
+    },
+    {
+      "number": 7,
+      "key": "simple_example",
+      "title": "Ejemplo sencillo",
+      "markdown": "Pedidos de una base operacional:\n\n- En **ELT** se cargan tal cual en `raw.orders` y una vista o tabla SQL calcula `curated.orders_daily`.\n- En **ETL** un script calcula los totales diarios y solo carga `orders_daily`."
+    },
+    {
+      "number": 8,
+      "key": "production_example",
+      "title": "Ejemplo de producción",
+      "markdown": "CDC de PostgreSQL a BigQuery con Datastream (capa raw) y transformaciones versionadas en Dataform hacia las capas curated y serving: ELT. En el mismo proyecto, un pipeline de Dataflow anonimiza datos personales de un feed externo antes de cargarlo: ETL. Ambos conviven."
+    },
+    {
+      "number": 9,
+      "key": "architecture",
+      "title": "Arquitectura",
+      "markdown": "```mermaid\nflowchart LR\n  subgraph ETL\n    A1[Fuente] --> T1[Transformación externa] --> D1[(Destino modelado)]\n  end\n  subgraph ELT\n    A2[Fuente] --> R2[(Raw en el destino)] --> T2[SQL en el destino] --> D2[(Curated y serving)]\n  end\n```"
+    },
+    {
+      "number": 10,
+      "key": "code",
+      "title": "Código",
+      "markdown": "```sql\n-- ELT en BigQuery (ejecutable adaptando nombres): la transformación vive dentro del warehouse.\n-- Requiere: raw.orders(order_id, created_at TIMESTAMP, amount NUMERIC).\nCREATE OR REPLACE TABLE `proyecto.curated.orders_daily`\nPARTITION BY dia AS\nSELECT DATE(created_at) AS dia, COUNT(*) AS pedidos, SUM(amount) AS monto\nFROM `proyecto.raw.orders`\nGROUP BY dia;\n```"
+    },
+    {
+      "number": 11,
+      "key": "gcp",
+      "title": "GCP",
+      "markdown": "- **Datastream** se presenta en su documentación como base de pipelines ELT de baja latencia hacia BigQuery.\n- **Dataform** compila definiciones SQLX y crea las tablas en BigQuery: es transformación dentro del warehouse (la T de ELT).\n- **Dataflow** ejecuta pipelines de Apache Beam y sirve para ETL cuando hay que transformar antes de cargar."
+    },
+    {
+      "number": 12,
+      "key": "aws",
+      "title": "AWS",
+      "markdown": "El patrón ELT se aplica sobre **Redshift**, y el ETL suele hacerse con Glue o EMR antes de cargar.\n\n<!-- VERIFY: posicionamiento actual de Glue y de las transformaciones dentro de Redshift en la documentación de AWS; esta sección no cita afirmaciones de producto más allá de su rol. -->"
+    },
+    {
+      "number": 13,
+      "key": "azure",
+      "title": "Azure",
+      "markdown": "En Azure y Microsoft Fabric, el mismo par se da con Data Factory o los pipelines de Fabric para mover y transformar, y con SQL en Fabric Warehouse o Synapse para transformar dentro.\n\n<!-- VERIFY: rol actual de Data Factory frente a Fabric (ecosistema en evolución; ver azure-analytics-landscape). -->"
+    },
+    {
+      "number": 14,
+      "key": "best_practices",
+      "title": "Buenas prácticas",
+      "markdown": "- Conservar siempre una capa raw inmutable cuando la privacidad lo permita: habilita reprocesos.\n- Versionar las transformaciones (SQL en Git, Dataform o dbt) y probarlas.\n- Decidir por dato qué debe transformarse antes de aterrizar (PII, volumen) y documentarlo.\n- Hacer incrementales las transformaciones pesadas."
+    },
+    {
+      "number": 15,
+      "key": "common_mistakes",
+      "title": "Errores frecuentes",
+      "markdown": "- Cargar datos personales crudos a un warehouse amplio \"porque es ELT\".\n- Duplicar la misma lógica en el ETL y en el SQL del warehouse.\n- Perder el crudo y no poder reconstruir tras un error de transformación.\n- Tratar ELT como \"no modelar\": el modelado sigue siendo necesario, solo cambia dónde ocurre."
+    },
+    {
+      "number": 16,
+      "key": "trade_offs",
+      "title": "Trade-offs",
+      "markdown": "ELT gana en agilidad, trazabilidad y uso del cómputo del warehouse, a cambio de almacenar más (crudo y capas) y de pagar cómputo del warehouse en cada transformación. ETL reduce lo que se almacena y protege datos sensibles, a cambio de mantener otro motor y otra base de código."
+    },
+    {
+      "number": 17,
+      "key": "related_concepts",
+      "title": "Conceptos relacionados",
+      "markdown": "- `incremental-load`: cómo hacer incremental la transformación.\n- `change-data-capture`: fuente habitual de la capa raw en ELT.\n- Del blueprint, pendientes de ficha: `data-transformation`, `pipeline-layers`, `medallion-architecture`, `analytics-engineering`."
+    },
+    {
+      "number": 18,
+      "key": "open_questions",
+      "title": "Preguntas técnicas abiertas",
+      "markdown": "1. ¿Qué datos de tu organización no deberían aterrizar crudos en el warehouse, y cómo cambia eso el diseño?\n2. ¿Cómo reprocesarías seis meses de datos si descubres un error en una transformación de un pipeline ETL sin capa raw?\n3. ¿En qué casos combinarías ETL y ELT en el mismo flujo?"
+    },
+    {
+      "number": 19,
+      "key": "related_lab",
+      "title": "Laboratorio relacionado",
+      "markdown": "Pendiente (F4): arquitectura \"API → Data Warehouse\" (§24)."
+    },
+    {
+      "number": 20,
+      "key": "sources",
+      "title": "Fuentes",
+      "markdown": "- Google Cloud: *Datastream overview*; *Create tables* (Dataform); *Programming model for Apache Beam* (Dataflow).\n\nEl detalle de cada fuente está en `sources` del frontmatter."
+    },
+    {
+      "number": 21,
+      "key": "last_verified",
+      "title": "Fecha de última verificación",
+      "markdown": "2026-09-30. Hay dos puntos VERIFY (AWS y Azure). La ficha queda en `review_required` hasta la revisión humana (B-F3.1)."
+    },
+    {
+      "number": 22,
+      "key": "change_history",
+      "title": "Historial de cambios importantes",
+      "markdown": "- 2026-09-30: creación (lote 1 de F3)."
+    }
+  ]
 }

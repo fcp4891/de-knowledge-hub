@@ -28,19 +28,19 @@
   ],
   "related_topics": [
     "idempotency",
-    "scd-type-2",
     "sql-merge",
+    "scd-type-2",
     "schema-evolution"
   ],
   "sources": [
     {
       "source": "postgresql-docs",
       "title": "PostgreSQL Documentation",
-      "url": "https://www.postgresql.org/docs/current/logicaldecoding.html",
+      "url": "https://www.postgresql.org/docs/current/logicaldecoding-explanation.html",
       "source_type": "official_docs",
       "authority_level": 1,
-      "accessed": "2026-09-28",
-      "note": null
+      "accessed": "2026-09-30",
+      "note": "Logical decoding sobre el WAL; los slots emiten cada cambio una vez en operación normal, pueden reenviar cambios tras un crash e impiden eliminar WAL requerido."
     },
     {
       "source": "debezium-docs",
@@ -54,11 +54,11 @@
     {
       "source": "gcp-datastream-docs",
       "title": "Datastream documentation",
-      "url": "https://cloud.google.com/datastream/docs/overview",
+      "url": "https://docs.cloud.google.com/datastream/docs/overview",
       "source_type": "official_docs",
       "authority_level": 1,
-      "accessed": "2026-09-28",
-      "note": null
+      "accessed": "2026-09-30",
+      "note": "Datastream es un servicio serverless de CDC y replicación; admite PostgreSQL como origen y BigQuery como destino."
     },
     {
       "source": "aws-dms-docs",
@@ -66,8 +66,8 @@
       "url": "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html",
       "source_type": "official_docs",
       "authority_level": 1,
-      "accessed": "2026-09-28",
-      "note": null
+      "accessed": "2026-09-30",
+      "note": "DMS lee los logs de transacciones con la API nativa de cada motor; su CDC no es replicación en tiempo real."
     },
     {
       "source": "microsoft-learn",
@@ -75,13 +75,13 @@
       "url": "https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server",
       "source_type": "official_docs",
       "authority_level": 1,
-      "accessed": "2026-09-28",
-      "note": null
+      "accessed": "2026-09-30",
+      "note": "CDC de SQL Server lee el log de transacciones y escribe tablas de cambios; aplica a SQL Server, Azure SQL Managed Instance y Azure SQL Database."
     }
   ],
   "created_at": "2026-09-28",
-  "updated_at": "2026-09-28",
-  "last_verified": "2026-09-28",
+  "updated_at": "2026-09-30",
+  "last_verified": "2026-09-30",
   "verification_status": "review_required",
   "kind": "concept",
   "importance": "high",
@@ -94,103 +94,103 @@
       "number": 1,
       "key": "summary",
       "title": "Resumen",
-      "markdown": "CDC captura los cambios de una base de datos a medida que ocurren y los entrega como un flujo de eventos ordenado, para no tener que re-extraer tablas completas."
+      "markdown": "CDC captura los cambios de una base de datos a medida que ocurren y los entrega como un flujo ordenado de eventos, para no tener que re-extraer tablas completas. Es la base de la replicación de bases operacionales hacia un data warehouse con baja latencia."
     },
     {
       "number": 2,
       "key": "what_is",
       "title": "Qué es",
-      "markdown": "Es un patrón de integración: en lugar de consultar el estado actual de las tablas, se observa **qué cambió** (insert, update, delete) y se publica cada cambio con su posición en el historial de la base."
+      "markdown": "Es un patrón de integración: en lugar de consultar el estado actual de las tablas, se observa **qué cambió** (insert, update, delete) y se publica cada cambio con su posición en el historial de la base (en PostgreSQL, el LSN del WAL)."
     },
     {
       "number": 3,
       "key": "problem",
       "title": "Problema que resuelve",
-      "markdown": "Las extracciones completas o por timestamp son costosas, no detectan borrados y cargan la base operacional. CDC reduce latencia y carga, y conserva el historial de cambios."
+      "markdown": "Las extracciones completas o por timestamp son costosas, cargan la base operacional y no detectan borrados físicos. CDC reduce latencia y carga sobre el origen, y conserva la secuencia de cambios."
     },
     {
       "number": 4,
       "key": "how_it_works",
       "title": "Cómo funciona",
-      "markdown": "Variantes principales:\n\n- **Basado en log** (preferido): lee el log de transacciones (WAL en PostgreSQL, binlog en MySQL). En PostgreSQL se apoya en *logical decoding* y *replication slots*.\n- **Basado en triggers**: escribe cada cambio en una tabla auxiliar; más carga sobre el origen.\n- **Basado en consultas** (timestamp/versión): simple, pero no ve borrados físicos ni estados intermedios.\n\n<!-- VERIFY: detalle de logical decoding y replication slots contra la documentación de PostgreSQL de la versión objetivo. -->"
+      "markdown": "Hay tres variantes:\n\n- **Basado en log** (preferido): lee el log de transacciones del motor. En PostgreSQL, *logical decoding* decodifica el write-ahead log (WAL) en un flujo de cambios, y un *replication slot* guarda la posición de cada consumidor.\n- **Basado en triggers**: cada cambio se escribe en una tabla auxiliar. Añade carga a cada transacción del origen.\n- **Basado en consultas** (timestamp o versión): simple, pero no ve borrados físicos ni estados intermedios.\n\nUn detalle con consecuencias: un slot de PostgreSQL emite cada cambio una sola vez en operación normal, pero su posición se persiste en los checkpoints, así que **tras un crash puede reenviar cambios recientes**. El consumidor debe tolerar duplicados."
     },
     {
       "number": 5,
       "key": "when_to_use",
       "title": "Cuándo utilizarlo",
-      "markdown": "- Replicar tablas OLTP hacia un data warehouse con baja latencia.\n- Alimentar arquitecturas event-driven a partir de una base existente.\n- Mantener historial de cambios (por ejemplo, para SCD2)."
+      "markdown": "- Replicar tablas OLTP hacia un data warehouse con baja latencia.\n- Alimentar arquitecturas event-driven a partir de una base existente, sin modificar la aplicación.\n- Conservar el historial de cambios, por ejemplo para SCD2."
     },
     {
       "number": 6,
       "key": "when_not_to_use",
       "title": "Cuándo no utilizarlo",
-      "markdown": "- Tablas pequeñas o de baja frecuencia de cambio, donde una carga completa periódica es más simple.\n- Cuando no hay acceso ni permisos al log de transacciones del origen.\n- Cuando el equipo no puede operar la infraestructura (slots, conectores, esquemas) que exige."
+      "markdown": "- Tablas pequeñas o que cambian poco, donde una carga completa periódica es más simple de operar.\n- Cuando no hay acceso ni permisos al log de transacciones del origen.\n- Cuando el equipo no puede operar la infraestructura que exige (slots, conectores, evolución de esquema)."
     },
     {
       "number": 7,
       "key": "simple_example",
       "title": "Ejemplo sencillo",
-      "markdown": "Una tabla `orders` en PostgreSQL: cada `UPDATE` de estado genera un evento con el valor anterior, el nuevo y la posición (LSN) en el WAL."
+      "markdown": "Una tabla `orders` en PostgreSQL: cada `UPDATE` de estado genera un evento con el valor nuevo, la operación (`u`) y la posición (LSN) en el WAL. El consumidor aplica el evento en el destino si su LSN es mayor que el último aplicado."
     },
     {
       "number": 8,
       "key": "production_example",
       "title": "Ejemplo de producción",
-      "markdown": "PostgreSQL → servicio CDC → staging en el data warehouse → `MERGE` idempotente hacia la tabla final, con deduplicación por clave primaria y posición del log."
+      "markdown": "PostgreSQL → servicio CDC → staging en el data warehouse → `MERGE` idempotente hacia la tabla final, deduplicando por clave primaria y posición del log. Operación: alertas sobre el retraso de replicación y sobre el WAL retenido por el slot, y un procedimiento de backfill para reconstruir una tabla si el flujo se interrumpe."
     },
     {
       "number": 9,
       "key": "architecture",
       "title": "Arquitectura",
-      "markdown": "```mermaid\nflowchart LR\n  DB[(PostgreSQL)] -->|WAL| CDC[Conector CDC]\n  CDC --> BUS[Log de eventos]\n  BUS --> STG[Staging]\n  STG -->|MERGE idempotente| DWH[(Data Warehouse)]\n```"
+      "markdown": "```mermaid\nflowchart LR\n  DB[(PostgreSQL)] -->|WAL| CDC[Conector CDC]\n  CDC --> BUS[Log de eventos o staging]\n  BUS --> STG[Staging]\n  STG -->|MERGE idempotente| DWH[(Data Warehouse)]\n```"
     },
     {
       "number": 10,
       "key": "code",
       "title": "Código",
-      "markdown": "```sql\n-- Aplicación idempotente de cambios desde staging (SQL genérico, ilustrativo).\nMERGE INTO orders AS t\nUSING staged_changes AS s\n  ON t.order_id = s.order_id\nWHEN MATCHED AND s.op = 'd' AND s.lsn > t.lsn THEN DELETE\nWHEN MATCHED AND s.lsn > t.lsn THEN UPDATE SET status = s.status, lsn = s.lsn\nWHEN NOT MATCHED AND s.op <> 'd' THEN INSERT (order_id, status, lsn) VALUES (s.order_id, s.status, s.lsn);\n```"
+      "markdown": "```sql\n-- BigQuery: aplica el último cambio por clave desde staging (ejecutable adaptando nombres).\n-- Requiere: tabla orders(order_id, status, lsn) y staged_changes(order_id, status, op, lsn).\nMERGE `proyecto.dataset.orders` AS t\nUSING (\n  SELECT * FROM `proyecto.dataset.staged_changes`\n  WHERE TRUE\n  QUALIFY ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY lsn DESC) = 1\n) AS s\nON t.order_id = s.order_id\nWHEN MATCHED AND s.op = 'd' AND s.lsn > t.lsn THEN DELETE\nWHEN MATCHED AND s.lsn > t.lsn THEN UPDATE SET status = s.status, lsn = s.lsn\nWHEN NOT MATCHED AND s.op != 'd' THEN INSERT (order_id, status, lsn) VALUES (s.order_id, s.status, s.lsn);\n```\n\nLa deduplicación previa es obligatoria: BigQuery devuelve un error si una fila del destino coincide con más de una fila de origen (\"UPDATE/MERGE must match at most one source row for each target row\")."
     },
     {
       "number": 11,
       "key": "gcp",
       "title": "GCP",
-      "markdown": "Datastream ofrece CDC administrado desde bases operacionales hacia destinos de Google Cloud.\n\n<!-- VERIFY: orígenes y destinos soportados por Datastream (incluido BigQuery) contra https://cloud.google.com/datastream/docs/overview -->"
+      "markdown": "**Datastream** es el servicio serverless de CDC y replicación de Google Cloud: no hay recursos que aprovisionar y escala solo. Admite PostgreSQL (incluido Cloud SQL) entre sus orígenes y BigQuery como destino, y combina backfill inicial con cambios continuos."
     },
     {
       "number": 12,
       "key": "aws",
       "title": "AWS",
-      "markdown": "AWS DMS soporta replicación continua de cambios además de cargas completas. No es equivalente a Datastream: difieren orígenes, destinos, modelo de despliegue y costo.\n\n<!-- VERIFY: modos de tarea CDC de DMS contra https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html -->"
+      "markdown": "**AWS DMS** hace cargas completas y replicación continua: lee los logs de transacciones con la API nativa de cada motor. La propia documentación advierte que su CDC **no es replicación en tiempo real**: la latencia depende de la carga del origen, la red y la instancia de replicación. Frente a Datastream, se opera con instancias (o modo serverless) y tareas, y admite más combinaciones de origen y destino."
     },
     {
       "number": 13,
       "key": "azure",
       "title": "Azure",
-      "markdown": "SQL Server y Azure SQL incluyen una funcionalidad nativa de CDC basada en tablas de cambios. Es un mecanismo en el motor, no un servicio de replicación como Datastream o DMS.\n\n<!-- VERIFY: disponibilidad por edición/servicio contra Microsoft Learn. -->"
+      "markdown": "SQL Server, Azure SQL Managed Instance y Azure SQL Database tienen **CDC nativo en el motor**: un proceso lee el log de transacciones y escribe *tablas de cambios* consultables con funciones. Es un mecanismo del motor, no un servicio de replicación como Datastream o DMS: mover esos cambios a otro sistema requiere una herramienta adicional."
     },
     {
       "number": 14,
       "key": "best_practices",
       "title": "Buenas prácticas",
-      "markdown": "- Aplicar cambios de forma idempotente, ordenados por posición del log.\n- Monitorear el retraso de replicación y el crecimiento del WAL retenido por slots.\n- Gestionar la evolución de esquema de forma explícita."
+      "markdown": "- Aplicar los cambios de forma idempotente, ordenados por la posición del log.\n- Monitorear el retraso de replicación y el WAL retenido: un slot sin consumidor impide eliminar WAL y consume disco.\n- Gestionar la evolución de esquema de forma explícita y probarla antes de producción.\n- Tener un procedimiento de re-snapshot (backfill) documentado."
     },
     {
       "number": 15,
       "key": "common_mistakes",
       "title": "Errores frecuentes",
-      "markdown": "- Replication slots abandonados que retienen WAL y llenan el disco del origen.\n- Asumir entrega exactly-once sin deduplicación en destino.\n- Ignorar los borrados en el destino."
+      "markdown": "- Replication slots abandonados que retienen WAL hasta llenar el disco del origen.\n- Asumir entrega exactly-once sin deduplicar en el destino (un crash puede reenviar cambios).\n- Ignorar los borrados en el destino.\n- Aplicar un `MERGE` sin deduplicar el lote por clave."
     },
     {
       "number": 16,
       "key": "trade_offs",
       "title": "Trade-offs",
-      "markdown": "Menor latencia y carga de lectura sobre el origen, a cambio de más complejidad operativa y de acoplamiento al formato del log del motor."
+      "markdown": "Menor latencia y carga de lectura sobre el origen, a cambio de más complejidad operativa y de acoplamiento al formato del log de cada motor. Un servicio administrado (Datastream, DMS) reduce la operación, pero limita orígenes, destinos y control fino frente a Debezium autogestionado."
     },
     {
       "number": 17,
       "key": "related_concepts",
       "title": "Conceptos relacionados",
-      "markdown": "- Idempotencia\n- Pendientes de crear en F1: SCD2, MERGE incremental, streaming, WAL."
+      "markdown": "- `idempotency`: los consumidores deben tolerar reentregas.\n- `sql-merge`: aplica un lote de cambios en el destino.\n- `scd-type-2`: conserva cada versión del registro.\n- Del blueprint, pendientes de ficha: `cdc-architecture`, `schema-evolution`, `database-ingestion`."
     },
     {
       "number": 18,
@@ -208,19 +208,19 @@
       "number": 20,
       "key": "sources",
       "title": "Fuentes",
-      "markdown": "Ver `sources` en el frontmatter: PostgreSQL (logical decoding), Debezium, Datastream, AWS DMS, Microsoft Learn."
+      "markdown": "- PostgreSQL: *Logical Decoding Concepts* (slots, WAL, reenvío tras crash).\n- Debezium: conector de PostgreSQL.\n- Google Cloud: *Datastream overview*.\n- AWS: *Creating tasks for ongoing replication using AWS DMS*.\n- Microsoft Learn: *What is change data capture (CDC)?*\n\nEl detalle de cada fuente está en `sources` del frontmatter."
     },
     {
       "number": 21,
       "key": "last_verified",
       "title": "Fecha de última verificación",
-      "markdown": "2026-09-28 (URLs comprobadas; afirmaciones de producto pendientes: `review_required`)."
+      "markdown": "2026-09-30. Las afirmaciones de producto se contrastaron con las páginas oficiales citadas. La ficha queda en `review_required` hasta la revisión humana (B-F3.1)."
     },
     {
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-28: creación como ficha de ejemplo de F0."
+      "markdown": "- 2026-09-28: creación como ficha de ejemplo de F0.\n- 2026-09-30: lote 1 de F3. Secciones de GCP, AWS y Azure verificadas con documentación oficial; ejemplo de MERGE con deduplicación; reenvío de cambios tras un crash."
     }
   ]
 }

@@ -41,9 +41,9 @@
       "level": "basic",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "batch-vs-streaming",
@@ -55,9 +55,9 @@
       "level": "basic",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "oltp-vs-olap",
@@ -211,7 +211,7 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "review_required",
-      "last_verified": "2026-09-28"
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "schema-evolution",
@@ -391,9 +391,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "sql-advanced-select",
@@ -587,9 +587,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "sql-date-functions",
@@ -629,9 +629,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "deduplication",
@@ -671,9 +671,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "upsert",
@@ -1513,7 +1513,7 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "review_required",
-      "last_verified": "2026-09-28"
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "api-ingestion",
@@ -1637,9 +1637,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "replay",
@@ -2127,9 +2127,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "bigquery-clustering",

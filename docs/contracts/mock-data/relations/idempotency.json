@@ -2,6 +2,20 @@
   "slug": "idempotency",
   "groups": [
     {
+      "type": "DEPENDS_ON",
+      "direction": "incoming",
+      "label": "dependency_of",
+      "items": [
+        {
+          "slug": "incremental-load",
+          "title": "Carga incremental",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Sin idempotencia, cada reintento duplica el incremento."
+        }
+      ]
+    },
+    {
       "type": "RELATED_TO",
       "direction": "both",
       "label": "related_to",
@@ -63,6 +77,13 @@
           "note": null
         },
         {
+          "slug": "dead-letter-queue",
+          "title": "Dead-letter queue",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Los reintentos previos a la DLQ exigen consumidores idempotentes."
+        },
+        {
           "slug": "pubsub-delivery-semantics",
           "title": "Entrega, orden y reintentos en Pub/Sub",
           "entity_type": "concept",
@@ -94,8 +115,8 @@
           "slug": "sql-merge",
           "title": "MERGE",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "MERGE con clave y condición de versión es la forma habitual de escribir idempotentemente en un warehouse."
         },
         {
           "slug": "incremental-pipelines",

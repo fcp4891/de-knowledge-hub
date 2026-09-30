@@ -2,6 +2,34 @@
   "slug": "incremental-load",
   "groups": [
     {
+      "type": "USES",
+      "direction": "outgoing",
+      "label": "uses",
+      "items": [
+        {
+          "slug": "sql-merge",
+          "title": "MERGE",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "El modo upsert de la carga incremental se implementa con MERGE."
+        }
+      ]
+    },
+    {
+      "type": "DEPENDS_ON",
+      "direction": "outgoing",
+      "label": "depends_on",
+      "items": [
+        {
+          "slug": "idempotency",
+          "title": "Idempotencia",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Sin idempotencia, cada reintento duplica el incremento."
+        }
+      ]
+    },
+    {
       "type": "RELATED_TO",
       "direction": "both",
       "label": "related_to",
@@ -19,6 +47,13 @@
           "entity_type": "pattern",
           "origin": "blueprint",
           "note": null
+        },
+        {
+          "slug": "etl-vs-elt",
+          "title": "ETL vs ELT",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "En ELT, la carga incremental suele resolverse dentro del warehouse."
         },
         {
           "slug": "idempotency",

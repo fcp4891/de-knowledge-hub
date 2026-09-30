@@ -9,27 +9,224 @@
   "classification": "core",
   "level": "intermediate",
   "cloud": [
+    "gcp",
+    "aws",
+    "azure",
     "agnostic"
   ],
-  "technologies": [],
+  "technologies": [
+    "gcp-pubsub",
+    "gcp-bigquery"
+  ],
   "tags": [
     "pipelines",
     "reliability"
   ],
   "related_topics": [
+    "sql-merge",
+    "change-data-capture",
+    "dead-letter-queue",
     "data-pipeline",
     "delivery-semantics"
   ],
-  "sources": [],
+  "sources": [
+    {
+      "source": "gcp-pubsub-docs",
+      "title": "Pub/Sub documentation",
+      "url": "https://docs.cloud.google.com/pubsub/docs/subscription-overview",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Por defecto Pub/Sub entrega al menos una vez (at-least-once), sin garantías de orden."
+    },
+    {
+      "source": "gcp-pubsub-docs",
+      "title": "Pub/Sub documentation",
+      "url": "https://docs.cloud.google.com/pubsub/docs/exactly-once-delivery",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Exactly-once solo en suscripciones pull (no push ni export) y solo dentro de una región."
+    },
+    {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "MERGE exige que cada fila del destino coincida con a lo sumo una fila de origen."
+    },
+    {
+      "source": "aws-sqs-docs",
+      "title": "Amazon SQS Developer Guide",
+      "url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Un mensaje puede recibirse varias veces (hasta maxReceiveCount) antes de pasar a la DLQ."
+    },
+    {
+      "source": "microsoft-learn",
+      "title": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dead-letter-queues",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Service Bus reentrega hasta el max delivery count antes de mover el mensaje a la DLQ."
+    },
+    {
+      "source": "microsoft-learn",
+      "title": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/merge-transact-sql",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "El MERGE de T-SQL da error si varias filas de origen coinciden con una del destino."
+    }
+  ],
   "created_at": "2026-09-28",
-  "updated_at": "2026-09-28",
-  "last_verified": "2026-09-28",
+  "updated_at": "2026-09-30",
+  "last_verified": "2026-09-30",
   "verification_status": "review_required",
   "kind": "concept",
   "importance": "high",
   "mvp": true,
   "has_page": true,
-  "stub": true,
+  "stub": false,
   "note": null,
-  "sections": []
+  "sections": [
+    {
+      "number": 1,
+      "key": "summary",
+      "title": "Resumen",
+      "markdown": "Un proceso es idempotente si ejecutarlo una o varias veces con la misma entrada deja el sistema en el mismo estado. En datos es la condición que hace seguros los reintentos, los reprocesos y los backfills: sin ella, cada reintento puede duplicar o corromper datos."
+    },
+    {
+      "number": 2,
+      "key": "what_is",
+      "title": "Qué es",
+      "markdown": "Es una propiedad del **efecto** de una operación, no de su código. `SET estado = 'pagado'` es idempotente; `saldo = saldo + 10` no lo es. En un pipeline, la unidad idempotente suele ser una tarea (cargar un día, procesar un lote) identificada por una clave estable."
+    },
+    {
+      "number": 3,
+      "key": "problem",
+      "title": "Problema que resuelve",
+      "markdown": "Los sistemas distribuidos reintentan: un broker reentrega un mensaje, un orquestador relanza una tarea fallida, un operador vuelve a ejecutar un día. Si la escritura no es idempotente, cada reintento produce duplicados o totales inflados, y el error aparece semanas después en un informe."
+    },
+    {
+      "number": 4,
+      "key": "how_it_works",
+      "title": "Cómo funciona",
+      "markdown": "Las técnicas habituales son:\n\n- **Clave natural o de negocio + upsert** (`MERGE`): repetir la carga actualiza la misma fila en vez de insertar otra.\n- **Sobrescritura por partición**: cada ejecución reemplaza por completo la partición que le corresponde (por ejemplo, un día).\n- **Deduplicación por identificador de evento**: el consumidor descarta los eventos ya aplicados.\n- **Condición de versión**: aplicar un cambio solo si su versión (timestamp, LSN, número de secuencia) es mayor que la ya guardada."
+    },
+    {
+      "number": 5,
+      "key": "when_to_use",
+      "title": "Cuándo utilizarlo",
+      "markdown": "Siempre que una operación pueda repetirse: consumo de colas o streams con entrega at-least-once, tareas orquestadas con reintentos, backfills y reprocesos, y cargas incrementales."
+    },
+    {
+      "number": 6,
+      "key": "when_not_to_use",
+      "title": "Cuándo no utilizarlo",
+      "markdown": "Hay efectos que no deben repetirse y que no se pueden volver idempotentes solo con la escritura. En esos casos se necesita coordinación explícita (registro de ejecuciones, bloqueo o confirmación de dos fases). Ejemplos: enviar un correo o cobrar un pago. Forzar la idempotencia en una tabla de auditoría que debe registrar cada intento también es un error: allí cada intento sí debe contar."
+    },
+    {
+      "number": 7,
+      "key": "simple_example",
+      "title": "Ejemplo sencillo",
+      "markdown": "Cargar las ventas del 2026-09-30: `DELETE WHERE fecha = '2026-09-30'` seguido de `INSERT` de ese día. Ejecutarlo dos veces deja el mismo resultado. Solo con `INSERT`, la segunda ejecución duplicaría el día."
+    },
+    {
+      "number": 8,
+      "key": "production_example",
+      "title": "Ejemplo de producción",
+      "markdown": "Un consumidor lee eventos de pedidos de Pub/Sub, cuya entrega por defecto es at-least-once. Escribe en staging con el `message_id` y aplica cada 5 minutos un `MERGE` al destino, con clave `order_id` y condición `s.updated_at > t.updated_at`. Un reinicio del consumidor reentrega mensajes, pero el destino no cambia."
+    },
+    {
+      "number": 9,
+      "key": "architecture",
+      "title": "Arquitectura",
+      "markdown": "```mermaid\nflowchart LR\n  SRC[Fuente con reentregas] --> STG[Staging con id de evento]\n  STG -->|dedup por clave| DEDUP[Último evento por clave]\n  DEDUP -->|MERGE con condición de versión| DWH[(Destino)]\n```"
+    },
+    {
+      "number": 10,
+      "key": "code",
+      "title": "Código",
+      "markdown": "```sql\n-- BigQuery: carga idempotente de un lote (ejecutable adaptando nombres).\n-- Requiere: destino orders(order_id, status, updated_at) y staging orders_stg con las mismas columnas.\nMERGE `proyecto.dataset.orders` AS t\nUSING (\n  SELECT * FROM `proyecto.dataset.orders_stg`\n  WHERE TRUE\n  QUALIFY ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY updated_at DESC) = 1\n) AS s\nON t.order_id = s.order_id\nWHEN MATCHED AND s.updated_at > t.updated_at THEN\n  UPDATE SET status = s.status, updated_at = s.updated_at\nWHEN NOT MATCHED THEN\n  INSERT (order_id, status, updated_at) VALUES (s.order_id, s.status, s.updated_at);\n```"
+    },
+    {
+      "number": 11,
+      "key": "gcp",
+      "title": "GCP",
+      "markdown": "- **Pub/Sub** entrega at-least-once por defecto: el consumidor debe ser idempotente. Las suscripciones pull pueden activar exactly-once delivery, pero solo aplica a suscripciones pull (no push ni export) y dentro de una misma región.\n- En **BigQuery**, el `MERGE` falla si una fila del destino coincide con más de una fila de origen: hay que deduplicar el lote antes de aplicarlo."
+    },
+    {
+      "number": 12,
+      "key": "aws",
+      "title": "AWS",
+      "markdown": "En **SQS**, un mensaje que no se procesa bien vuelve a recibirse hasta `maxReceiveCount` veces antes de pasar a la dead-letter queue: el consumidor debe tolerar la repetición. En **Redshift**, `MERGE` cumple el mismo papel que en BigQuery, pero con otras reglas ante duplicados (ver `sql-merge`)."
+    },
+    {
+      "number": 13,
+      "key": "azure",
+      "title": "Azure",
+      "markdown": "En **Service Bus**, un mensaje se reentrega hasta su *max delivery count* antes de pasar a la dead-letter queue. En Azure SQL, Synapse y Fabric Warehouse, el `MERGE` de T-SQL da error si una fila del destino coincide con varias filas de origen, igual que en BigQuery. Son mecanismos distintos con el mismo requisito: consumidores y escrituras idempotentes."
+    },
+    {
+      "number": 14,
+      "key": "best_practices",
+      "title": "Buenas prácticas",
+      "markdown": "- Diseñar cada tarea con una clave de ejecución estable (fecha lógica, lote o partición), no con \"ahora\".\n- Preferir sobrescribir particiones o usar `MERGE` antes que `INSERT` ciego.\n- Guardar un identificador de evento o una versión para poder descartar lo ya aplicado.\n- Probar explícitamente la reejecución: correr dos veces y comparar el resultado."
+    },
+    {
+      "number": 15,
+      "key": "common_mistakes",
+      "title": "Errores frecuentes",
+      "markdown": "- Usar la hora de ejecución (`CURRENT_TIMESTAMP`) como clave o filtro: cada reintento procesa otra ventana.\n- `INSERT` sin deduplicar tras un reintento del orquestador.\n- Asumir exactly-once de extremo a extremo porque un componente lo ofrece.\n- Totales acumulativos (`x = x + delta`) sin control de versión."
+    },
+    {
+      "number": 16,
+      "key": "trade_offs",
+      "title": "Trade-offs",
+      "markdown": "La idempotencia cuesta: más almacenamiento (staging, identificadores), `MERGE` más caros que `INSERT` y diseño adicional. A cambio, los reintentos y backfills se vuelven operaciones rutinarias. Sobrescribir particiones es simple y barato si el grano es la partición; el `MERGE` es más flexible pero lee más datos."
+    },
+    {
+      "number": 17,
+      "key": "related_concepts",
+      "title": "Conceptos relacionados",
+      "markdown": "- `sql-merge`: la herramienta habitual para escribir idempotentemente.\n- `change-data-capture`: el CDC reenvía cambios; el destino debe tolerarlo.\n- `dead-letter-queue`: complemento de los reintentos para mensajes que nunca se procesan.\n- Del blueprint, pendientes de ficha: `retries`, `backfill`, `replay`, `delivery-semantics`."
+    },
+    {
+      "number": 18,
+      "key": "open_questions",
+      "title": "Preguntas técnicas abiertas",
+      "markdown": "1. ¿Cómo harías idempotente un pipeline que agrega totales diarios si los eventos pueden llegar duplicados y tarde?\n2. ¿Qué diferencia hay entre deduplicar en el consumidor y hacer idempotente la escritura en el destino, y cuándo elegirías cada una?\n3. ¿Cómo probarías en CI que una tarea de carga es idempotente?"
+    },
+    {
+      "number": 19,
+      "key": "related_lab",
+      "title": "Laboratorio relacionado",
+      "markdown": "Pendiente (F4): lab de tipo B \"Un pipeline comenzó a insertar duplicados después de un retry\" (§25)."
+    },
+    {
+      "number": 20,
+      "key": "sources",
+      "title": "Fuentes",
+      "markdown": "- Google Cloud: *Subscription overview* y *Exactly-once delivery* de Pub/Sub; *DML statements* de BigQuery.\n- AWS: *Using dead-letter queues in Amazon SQS*.\n- Microsoft Learn: *Service Bus dead-letter queues*; *MERGE (Transact-SQL)*.\n\nEl detalle de cada fuente está en `sources` del frontmatter."
+    },
+    {
+      "number": 21,
+      "key": "last_verified",
+      "title": "Fecha de última verificación",
+      "markdown": "2026-09-30. La ficha queda en `review_required` hasta la revisión humana (B-F3.1)."
+    },
+    {
+      "number": 22,
+      "key": "change_history",
+      "title": "Historial de cambios importantes",
+      "markdown": "- 2026-09-28: creada como stub en F0.\n- 2026-09-30: ficha completa (lote 1 de F3)."
+    }
+  ]
 }

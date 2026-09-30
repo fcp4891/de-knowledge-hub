@@ -21,6 +21,13 @@
           "note": null
         },
         {
+          "slug": "idempotency",
+          "title": "Idempotencia",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Los reintentos previos a la DLQ exigen consumidores idempotentes."
+        },
+        {
           "slug": "gcp-pubsub",
           "title": "Pub/Sub",
           "entity_type": "cloud_service",

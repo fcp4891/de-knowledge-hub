@@ -19,6 +19,7 @@ from backend.app import projection as p
 ROOT = Path(__file__).resolve().parent.parent
 API = yaml.safe_load((ROOT / "docs/contracts/api.yaml").read_text(encoding="utf-8"))
 MOCKS = ROOT / "docs/contracts/mock-data"
+PAGES = {p.stem for p in (ROOT / "content" / "concepts").glob("*.md")}
 INDEX: dict[str, str] = json.loads((MOCKS / "index.json").read_text(encoding="utf-8"))
 ENUMS = json.loads((ROOT / "schemas/enums.schema.json").read_text(encoding="utf-8"))["$defs"]
 RELATIONS = json.loads((ROOT / "schemas/relationships.schema.json").read_text(encoding="utf-8"))
@@ -119,11 +120,11 @@ def test_concept_list_covers_blueprint(index: p.ContentIndex) -> None:
     listing = p.concept_list(index, limit=1000)
     assert listing["total"] == len(index.concepts)
     with_page = {c["slug"] for c in listing["items"] if c["has_page"]}
-    assert with_page == {"change-data-capture", "idempotency"}
+    assert with_page == PAGES
 
 
 def test_concept_without_page_has_no_sections(index: p.ContentIndex) -> None:
-    detail = p.concept_detail(index, "etl-vs-elt")
+    detail = p.concept_detail(index, "data-mart")
     assert detail["has_page"] is False and detail["sections"] == [] and detail["verification_status"] is None
 
 

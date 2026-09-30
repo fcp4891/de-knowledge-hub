@@ -1,0 +1,17 @@
+{
+  "slug": "aws-kinesis-docs",
+  "title": "Amazon Kinesis Data Streams Developer Guide",
+  "description": "Guía oficial para desarrolladores de Amazon Kinesis Data Streams.",
+  "url": "https://docs.aws.amazon.com/streams/latest/dev/introduction.html",
+  "source_type": "official_docs",
+  "authority_level": 1,
+  "provider": "aws",
+  "url_verified": true,
+  "review_frequency": "quarterly",
+  "trust": "high",
+  "technologies": [
+    "aws-kinesis"
+  ],
+  "last_verified": "2026-09-30",
+  "verification_status": "verified"
+}

@@ -2,7 +2,7 @@
 
 Formato: `- [fase sugerida] idea — origen`
 
-- **[F3 · primera tarea]** validate.py: verificar que el cuerpo de las fichas `concept` tenga las 22 secciones de `content/_templates/concept.md`, en orden y con sus títulos — A-F0, prioridad fijada al abrir F2
+- ~~**[F3 · primera tarea]** validar las 22 secciones de las fichas~~ — hecho (lote 1 de F3, adelantado en F2)
 - [F1] validate.py: comprobar que `sources[].url` pertenezca al dominio del `url` de la fuente referenciada — A-F0
 - [F1] validate.py: avisar si una entidad tiene `stub: true` y `verification_status: verified` — A-F0
 - [F1] Ampliar las fuentes de la ficha CDC y crear las entidades SCD2, MERGE incremental, streaming y WAL, hoy mencionadas solo en texto — A-F0
@@ -23,3 +23,4 @@ Formato: `- [fase sugerida] idea — origen`
 - ~~[F2 · A-F2.3] Mover `projection.py` a `backend/app/`~~ — hecho en A-F2.3
 - [F3] Mover `scripts/validate.py` a un paquete compartido (`backend/content/`): el compilador lo importa desde `scripts/` — A-F2.3
 - [F4] Respaldo del estado personal (`me_*`), el único dato que no se regenera desde Git (§49 backups; ADR-006) — A-F2.4
+- [F3] CI: actualizar `actions/checkout` y `actions/setup-python` a versiones que no usen Node.js 20 (GitHub las marca como obsoletas) y fijar la imagen de Ubuntu antes del cambio de `ubuntu-latest` anunciado para el 2026-10-19 — primer run de CI

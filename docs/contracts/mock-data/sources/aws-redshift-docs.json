@@ -1,0 +1,17 @@
+{
+  "slug": "aws-redshift-docs",
+  "title": "Amazon Redshift Database Developer Guide",
+  "description": "Guía oficial para desarrolladores de bases de datos de Amazon Redshift.",
+  "url": "https://docs.aws.amazon.com/redshift/latest/dg/welcome.html",
+  "source_type": "official_docs",
+  "authority_level": 1,
+  "provider": "aws",
+  "url_verified": true,
+  "review_frequency": "quarterly",
+  "trust": "high",
+  "technologies": [
+    "aws-redshift"
+  ],
+  "last_verified": "2026-09-30",
+  "verification_status": "verified"
+}

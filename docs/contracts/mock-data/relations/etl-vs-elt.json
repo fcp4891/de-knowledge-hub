@@ -14,6 +14,13 @@
           "note": null
         },
         {
+          "slug": "incremental-load",
+          "title": "Carga incremental",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "En ELT, la carga incremental suele resolverse dentro del warehouse."
+        },
+        {
           "slug": "data-warehouse",
           "title": "Data Warehouse",
           "entity_type": "concept",

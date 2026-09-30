@@ -2,29 +2,203 @@
   "id": "concept:sql-merge",
   "title": "MERGE",
   "slug": "sql-merge",
-  "description": null,
+  "description": "Sentencia SQL que inserta, actualiza o borra filas de una tabla destino según su coincidencia con una tabla origen, en una sola operación.",
   "type": "concept",
   "domain": "sql",
   "subdomain": "sql-language",
   "classification": "core",
   "level": "intermediate",
-  "cloud": [],
-  "technologies": [],
-  "tags": [],
-  "related_topics": [
-    "upsert",
-    "idempotency"
+  "cloud": [
+    "gcp",
+    "aws",
+    "azure"
   ],
-  "sources": [],
-  "created_at": null,
-  "updated_at": null,
-  "last_verified": null,
-  "verification_status": null,
+  "technologies": [
+    "gcp-bigquery",
+    "aws-redshift"
+  ],
+  "tags": [
+    "sql",
+    "dml",
+    "upsert"
+  ],
+  "related_topics": [
+    "idempotency",
+    "scd-type-2",
+    "incremental-load",
+    "upsert"
+  ],
+  "sources": [
+    {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Sintaxis de MERGE (incluye WHEN NOT MATCHED BY SOURCE), bytes procesados y el error si un destino coincide con más de una fila de origen."
+    },
+    {
+      "source": "aws-redshift-docs",
+      "title": "Amazon Redshift Database Developer Guide",
+      "url": "https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "MERGE de Redshift; si varias filas del destino coinciden con la misma fila de origen, Redshift elimina los duplicados y conserva una; modo REMOVE DUPLICATES."
+    },
+    {
+      "source": "microsoft-learn",
+      "title": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/merge-transact-sql",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "MERGE de T-SQL aplica a SQL Server, Azure SQL, Synapse (solo dedicated SQL pool) y Fabric; error si varias filas de origen coinciden con una del destino."
+    }
+  ],
+  "created_at": "2026-09-30",
+  "updated_at": "2026-09-30",
+  "last_verified": "2026-09-30",
+  "verification_status": "review_required",
   "kind": "concept",
   "importance": "high",
   "mvp": true,
-  "has_page": false,
+  "has_page": true,
   "stub": false,
   "note": null,
-  "sections": []
+  "sections": [
+    {
+      "number": 1,
+      "key": "summary",
+      "title": "Resumen",
+      "markdown": "`MERGE` compara una tabla destino con una tabla origen mediante una condición y, en una sola sentencia, actualiza las filas que coinciden, inserta las que faltan y, opcionalmente, borra. Es la herramienta central de las cargas incrementales, los upserts y SCD2 en un data warehouse."
+    },
+    {
+      "number": 2,
+      "key": "what_is",
+      "title": "Qué es",
+      "markdown": "Es una sentencia DML del estándar SQL que combina `INSERT`, `UPDATE` y `DELETE`. Sus cláusulas `WHEN MATCHED` y `WHEN NOT MATCHED` definen qué hacer con cada fila según si encuentra pareja en el otro lado."
+    },
+    {
+      "number": 3,
+      "key": "problem",
+      "title": "Problema que resuelve",
+      "markdown": "Sin `MERGE`, aplicar un lote de cambios requiere varias sentencias (`UPDATE` de las existentes, `INSERT` de las nuevas) y cuidado para que sean coherentes entre sí. `MERGE` expresa la sincronización completa en una operación, con una sola lectura de las tablas."
+    },
+    {
+      "number": 4,
+      "key": "how_it_works",
+      "title": "Cómo funciona",
+      "markdown": "1. Se unen destino (`target`) y origen (`source`) por la condición `ON`.\n2. Cada fila cae en un caso:\n   - `WHEN MATCHED`: existe en ambos lados → `UPDATE` o `DELETE`.\n   - `WHEN NOT MATCHED [BY TARGET]`: existe solo en el origen → `INSERT`.\n   - `WHEN NOT MATCHED BY SOURCE` (en los motores que lo admiten, como BigQuery y T-SQL): existe solo en el destino → `UPDATE` o `DELETE`.\n3. Cada cláusula admite condiciones extra (`AND s.version > t.version`).\n\nLa regla clave: **cada fila del destino debe coincidir con a lo sumo una fila del origen**. Qué pasa si no se cumple cambia según el motor (ver GCP, AWS y Azure)."
+    },
+    {
+      "number": 5,
+      "key": "when_to_use",
+      "title": "Cuándo utilizarlo",
+      "markdown": "- Upserts de lotes de cambios (CDC, cargas incrementales).\n- SCD tipo 1 y tipo 2.\n- Sincronizar una tabla con una fuente de verdad, incluidos los borrados (`NOT MATCHED BY SOURCE`)."
+    },
+    {
+      "number": 6,
+      "key": "when_not_to_use",
+      "title": "Cuándo no utilizarlo",
+      "markdown": "- Cargas solo de inserción (logs, eventos inmutables): un `INSERT` o un append es más barato.\n- Reemplazo completo de una partición: sobrescribirla suele ser más simple y barato que emparejar fila a fila.\n- Lotes enormes contra tablas enormes sin filtrar la ventana afectada: se lee todo el destino."
+    },
+    {
+      "number": 7,
+      "key": "simple_example",
+      "title": "Ejemplo sencillo",
+      "markdown": "```sql\nMERGE inventario t\nUSING llegadas s ON t.producto = s.producto\nWHEN MATCHED THEN UPDATE SET cantidad = t.cantidad + s.cantidad\nWHEN NOT MATCHED THEN INSERT (producto, cantidad) VALUES (s.producto, s.cantidad);\n```"
+    },
+    {
+      "number": 8,
+      "key": "production_example",
+      "title": "Ejemplo de producción",
+      "markdown": "Un job aplica cada hora los cambios de clientes llegados por CDC. Antes del `MERGE`, deduplica el lote por `customer_id` quedándose con el cambio más reciente. Aplica solo si la versión es mayor, filtra el destino por las particiones afectadas para no leer toda la tabla y registra cuántas filas se insertaron y actualizaron para reconciliar contra el origen."
+    },
+    {
+      "number": 9,
+      "key": "architecture",
+      "title": "Arquitectura",
+      "markdown": "```mermaid\nflowchart LR\n  CH[Lote de cambios] --> DD[Dedup por clave]\n  DD --> M{MERGE}\n  M -->|MATCHED y versión mayor| U[UPDATE]\n  M -->|NOT MATCHED| I[INSERT]\n  M -->|NOT MATCHED BY SOURCE| D[DELETE opcional]\n```"
+    },
+    {
+      "number": 10,
+      "key": "code",
+      "title": "Código",
+      "markdown": "```sql\n-- BigQuery (ejecutable adaptando nombres). Requiere customers(customer_id, email, version)\n-- y customers_stg con las mismas columnas.\nMERGE `proyecto.dataset.customers` AS t\nUSING (\n  SELECT * FROM `proyecto.dataset.customers_stg`\n  WHERE TRUE\n  QUALIFY ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY version DESC) = 1\n) AS s\nON t.customer_id = s.customer_id\nWHEN MATCHED AND s.version > t.version THEN\n  UPDATE SET email = s.email, version = s.version\nWHEN NOT MATCHED THEN\n  INSERT (customer_id, email, version) VALUES (s.customer_id, s.email, s.version);\n```"
+    },
+    {
+      "number": 11,
+      "key": "gcp",
+      "title": "GCP",
+      "markdown": "En **BigQuery**, `MERGE` admite `WHEN NOT MATCHED BY SOURCE`. Si una fila del destino coincide con más de una fila del origen, la sentencia falla con *\"UPDATE/MERGE must match at most one source row for each target row\"*. Sobre los bytes procesados, la documentación indica: con solo cláusulas `INSERT` se factura el origen; si hay `UPDATE` o `DELETE`, se factura origen más destino. Filtrar el destino por partición reduce ese costo."
+    },
+    {
+      "number": 12,
+      "key": "aws",
+      "title": "AWS",
+      "markdown": "**Redshift** tiene `MERGE`, pero con un comportamiento distinto ante duplicados: si varias filas del destino coinciden con la misma fila de origen, **elimina los duplicados, conserva una y la actualiza**, en lugar de fallar. Además ofrece un modo simplificado, `REMOVE DUPLICATES`, que exige que origen y destino tengan columnas compatibles. No es el mismo `MERGE` que el de BigQuery: el mismo SQL puede fallar en uno y en el otro borrar filas en silencio."
+    },
+    {
+      "number": 13,
+      "key": "azure",
+      "title": "Azure",
+      "markdown": "El `MERGE` de T-SQL aplica a SQL Server, Azure SQL Database, Azure SQL Managed Instance, Azure Synapse Analytics (solo dedicated SQL pool) y Warehouse en Microsoft Fabric. Si más de una fila del origen coincide con una fila del destino en un `UPDATE`, devuelve error: no puede actualizar la misma fila más de una vez. Admite `WHEN NOT MATCHED BY SOURCE`."
+    },
+    {
+      "number": 14,
+      "key": "best_practices",
+      "title": "Buenas prácticas",
+      "markdown": "- Deduplicar siempre el origen por la clave de la condición `ON`.\n- Añadir una condición de versión en `WHEN MATCHED` para no retroceder datos.\n- Limitar el destino a la ventana afectada (particiones) cuando el motor lo permita.\n- Registrar filas insertadas, actualizadas y borradas para reconciliar."
+    },
+    {
+      "number": 15,
+      "key": "common_mistakes",
+      "title": "Errores frecuentes",
+      "markdown": "- Clave `ON` que no es única en el origen: error en BigQuery y T-SQL, borrado silencioso de duplicados en Redshift.\n- Olvidar la condición de versión y sobrescribir datos nuevos con cambios viejos.\n- `WHEN NOT MATCHED BY SOURCE THEN DELETE` con un origen parcial (un lote incremental): borra todo lo que no vino en el lote.\n- Portar un `MERGE` entre motores sin revisar su semántica."
+    },
+    {
+      "number": 16,
+      "key": "trade_offs",
+      "title": "Trade-offs",
+      "markdown": "Una sentencia atómica y legible frente a varias sentencias coordinadas. A cambio, suele leer más datos que un `INSERT` y su semántica cambia entre motores. Para reemplazos completos de partición, sobrescribir es más simple."
+    },
+    {
+      "number": 17,
+      "key": "related_concepts",
+      "title": "Conceptos relacionados",
+      "markdown": "- `idempotency`: `MERGE` con versión es la escritura idempotente típica.\n- `scd-type-2`, `incremental-load`: patrones que se implementan con `MERGE`.\n- Del blueprint, pendientes de ficha: `upsert`, `deduplication`, `sql-window-functions`, `sql-qualify`."
+    },
+    {
+      "number": 18,
+      "key": "open_questions",
+      "title": "Preguntas técnicas abiertas",
+      "markdown": "1. ¿Qué pasa en tu warehouse si el lote de origen trae dos cambios para la misma clave, y cómo lo evitas?\n2. ¿Cuándo usarías `WHEN NOT MATCHED BY SOURCE THEN DELETE` y qué riesgo introduce en una carga incremental?\n3. ¿Cómo reducirías el costo de un `MERGE` diario sobre una tabla de varios TB?"
+    },
+    {
+      "number": 19,
+      "key": "related_lab",
+      "title": "Laboratorio relacionado",
+      "markdown": "Pendiente (F4): lab de tipo A \"Implementar una carga incremental desde una tabla staging hacia una tabla final\" (§25)."
+    },
+    {
+      "number": 20,
+      "key": "sources",
+      "title": "Fuentes",
+      "markdown": "- Google Cloud: *DML statements in GoogleSQL* (BigQuery).\n- AWS: *MERGE* (Amazon Redshift).\n- Microsoft Learn: *MERGE (Transact-SQL)*.\n\nEl detalle de cada fuente está en `sources` del frontmatter."
+    },
+    {
+      "number": 21,
+      "key": "last_verified",
+      "title": "Fecha de última verificación",
+      "markdown": "2026-09-30. La ficha queda en `review_required` hasta la revisión humana (B-F3.1)."
+    },
+    {
+      "number": 22,
+      "key": "change_history",
+      "title": "Historial de cambios importantes",
+      "markdown": "- 2026-09-30: creación (lote 1 de F3)."
+    }
+  ]
 }

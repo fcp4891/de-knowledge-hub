@@ -6,15 +6,6 @@
       "type": "concept",
       "items": [
         {
-          "slug": "batch-vs-streaming",
-          "title": "Batch vs streaming",
-          "type": "concept",
-          "domain": "fundamentals",
-          "classification": "core",
-          "snippet": "Batch vs streaming",
-          "score": 6.5
-        },
-        {
           "slug": "dataflow-streaming-pipelines",
           "title": "Pipelines streaming en Dataflow",
           "type": "concept",
@@ -40,6 +31,15 @@
           "classification": "modern",
           "snippet": "Streaming con Event Hubs",
           "score": 6.0
+        },
+        {
+          "slug": "batch-vs-streaming",
+          "title": "Batch vs streaming",
+          "type": "concept",
+          "domain": "fundamentals",
+          "classification": "core",
+          "snippet": "Procesar datos en lotes acotados cada cierto tiempo o como un flujo continuo de eventos, y cómo elegir según latencia, costo y complejidad.",
+          "score": 5.5
         },
         {
           "slug": "streaming-ingestion",

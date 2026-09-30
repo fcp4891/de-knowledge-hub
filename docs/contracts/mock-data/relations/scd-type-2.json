@@ -2,6 +2,20 @@
   "slug": "scd-type-2",
   "groups": [
     {
+      "type": "USES",
+      "direction": "outgoing",
+      "label": "uses",
+      "items": [
+        {
+          "slug": "sql-merge",
+          "title": "MERGE",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "El cierre de versiones y la inserción de la nueva se implementan con MERGE o con dos sentencias."
+        }
+      ]
+    },
+    {
       "type": "RELATED_TO",
       "direction": "both",
       "label": "related_to",
@@ -10,8 +24,8 @@
           "slug": "change-data-capture",
           "title": "Change Data Capture",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "CDC alimenta historiales SCD2 con cada versión del registro."
         },
         {
           "slug": "sql-merge",

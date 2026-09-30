@@ -29,6 +29,7 @@ SCHEMAS = ROOT / "schemas"
 PREFIX = "/api/v1"
 EXCLUDED = ("/me/", "/search")
 EQUIVALENT = sorted(k for k in INDEX if split_request(k)[0] == "GET" and not any(e in k for e in EXCLUDED))
+PAGES = {p.stem for p in (ROOT / "content" / "concepts").glob("*.md")}
 API = yaml.safe_load((ROOT / "docs/contracts/api.yaml").read_text(encoding="utf-8"))
 
 
@@ -147,8 +148,8 @@ def test_concept_filters_match_content(client: TestClient, params: dict[str, str
 
 
 def test_has_page_filter(client: TestClient) -> None:
-    body = get(client, "/concepts", has_page="true").json()
-    assert {c["slug"] for c in body["items"]} == {"change-data-capture", "idempotency"}
+    body = get(client, "/concepts", has_page="true", limit=500).json()
+    assert {c["slug"] for c in body["items"]} == PAGES
 
 
 def test_technology_filters(client: TestClient) -> None:

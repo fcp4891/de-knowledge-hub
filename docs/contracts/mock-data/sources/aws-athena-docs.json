@@ -1,0 +1,17 @@
+{
+  "slug": "aws-athena-docs",
+  "title": "Amazon Athena User Guide",
+  "description": "Guía oficial de usuario de Amazon Athena.",
+  "url": "https://docs.aws.amazon.com/athena/latest/ug/what-is.html",
+  "source_type": "official_docs",
+  "authority_level": 1,
+  "provider": "aws",
+  "url_verified": true,
+  "review_frequency": "quarterly",
+  "trust": "high",
+  "technologies": [
+    "aws-athena"
+  ],
+  "last_verified": "2026-09-30",
+  "verification_status": "verified"
+}

@@ -2,30 +2,205 @@
   "id": "pattern:scd-type-2",
   "title": "SCD Type 2",
   "slug": "scd-type-2",
-  "description": null,
+  "description": "Patrón para conservar el historial de una dimensión creando una nueva fila por cada cambio, con vigencia desde y hasta, en lugar de sobrescribir.",
   "type": "pattern",
   "domain": "sql",
   "subdomain": "sql-patterns",
   "classification": "core",
   "level": "intermediate",
-  "cloud": [],
-  "technologies": [],
-  "tags": [],
+  "cloud": [
+    "gcp",
+    "aws",
+    "azure",
+    "agnostic"
+  ],
+  "technologies": [
+    "gcp-bigquery",
+    "aws-redshift"
+  ],
+  "tags": [
+    "sql",
+    "modeling",
+    "history"
+  ],
   "related_topics": [
-    "slowly-changing-dimensions",
     "sql-merge",
+    "change-data-capture",
+    "incremental-load",
+    "slowly-changing-dimensions",
     "surrogate-keys"
   ],
-  "sources": [],
-  "created_at": null,
-  "updated_at": null,
-  "last_verified": null,
-  "verification_status": null,
+  "sources": [
+    {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "MERGE con WHEN NOT MATCHED BY SOURCE y el error si una fila del destino coincide con varias de origen."
+    },
+    {
+      "source": "aws-redshift-docs",
+      "title": "Amazon Redshift Database Developer Guide",
+      "url": "https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "MERGE de Redshift y su manejo de filas duplicadas del destino."
+    },
+    {
+      "source": "microsoft-learn",
+      "title": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/merge-transact-sql",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "MERGE de T-SQL en Synapse (dedicated SQL pool) y Fabric Warehouse."
+    }
+  ],
+  "created_at": "2026-09-30",
+  "updated_at": "2026-09-30",
+  "last_verified": "2026-09-30",
+  "verification_status": "review_required",
   "kind": "pattern",
   "importance": "high",
   "mvp": true,
-  "has_page": false,
+  "has_page": true,
   "stub": false,
   "note": null,
-  "sections": []
+  "sections": [
+    {
+      "number": 1,
+      "key": "summary",
+      "title": "Resumen",
+      "markdown": "SCD Type 2 conserva la historia de una dimensión. Cada vez que cambia un atributo relevante, cierra la fila vigente (fecha \"hasta\") e inserta una nueva con los valores actuales. Así, un hecho de marzo se une con el cliente tal como era en marzo, no como es hoy."
+    },
+    {
+      "number": 2,
+      "key": "what_is",
+      "title": "Qué es",
+      "markdown": "Es uno de los tipos de *Slowly Changing Dimensions* de Kimball. Cada versión es una fila con su propia surrogate key, más columnas de vigencia (`valid_from`, `valid_to`) y un indicador de versión actual (`is_current`)."
+    },
+    {
+      "number": 3,
+      "key": "problem",
+      "title": "Problema que resuelve",
+      "markdown": "Si la dimensión se sobrescribe (SCD tipo 1), los informes históricos cambian retroactivamente: las ventas del año pasado aparecen asignadas a la región actual del cliente. SCD2 permite responder \"¿cómo era el dato cuando ocurrió el hecho?\"."
+    },
+    {
+      "number": 4,
+      "key": "how_it_works",
+      "title": "Cómo funciona",
+      "markdown": "1. Se detecta el cambio comparando el registro entrante con la versión vigente: por atributos o por un hash de los atributos seguidos.\n2. Se **cierra** la versión vigente: `valid_to = momento del cambio` e `is_current = false`.\n3. Se **inserta** la nueva versión: `valid_from = momento del cambio`, `valid_to = null` (o una fecha lejana) e `is_current = true`.\n4. Los hechos guardan la surrogate key de la versión vigente al momento del hecho."
+    },
+    {
+      "number": 5,
+      "key": "when_to_use",
+      "title": "Cuándo utilizarlo",
+      "markdown": "- Atributos de dimensión cuyo cambio debe respetarse en el histórico: región, segmento, plan comercial.\n- Auditoría: reconstruir el estado de una entidad en una fecha.\n- Fuentes CDC que ya entregan cada versión con su timestamp."
+    },
+    {
+      "number": 6,
+      "key": "when_not_to_use",
+      "title": "Cuándo no utilizarlo",
+      "markdown": "- Atributos que pueden corregirse sin conservar historia (una errata en un nombre): tipo 1.\n- Atributos que cambian muy seguido (un contador, la última visita): la dimensión explota en versiones. Mejor un hecho o una minidimensión.\n- Cuando nadie consulta la historia: añade complejidad a cada join."
+    },
+    {
+      "number": 7,
+      "key": "simple_example",
+      "title": "Ejemplo sencillo",
+      "markdown": "El cliente 42 pasa de la región \"Norte\" a \"Sur\" el 2026-09-15:\n\n| sk | cliente_id | región | valid_from | valid_to | is_current |\n|---|---|---|---|---|---|\n| 101 | 42 | Norte | 2025-01-10 | 2026-09-15 | false |\n| 187 | 42 | Sur | 2026-09-15 | null | true |"
+    },
+    {
+      "number": 8,
+      "key": "production_example",
+      "title": "Ejemplo de producción",
+      "markdown": "La dimensión de clientes se alimenta con CDC. Cada lote se deduplica por cliente, quedándose con el último cambio de cada atributo seguido. Se compara por hash contra la versión vigente y se aplica en una transacción que cierra e inserta. Un control diario verifica que cada cliente tenga exactamente una versión vigente y que las vigencias no se superpongan."
+    },
+    {
+      "number": 9,
+      "key": "architecture",
+      "title": "Arquitectura",
+      "markdown": "```mermaid\nflowchart LR\n  SRC[Cambios del origen] --> DD[Dedup y hash de atributos]\n  DD --> CMP{¿Cambió frente a la versión vigente?}\n  CMP -->|sí| CLOSE[Cerrar versión vigente]\n  CLOSE --> INS[Insertar nueva versión]\n  CMP -->|no| SKIP[Sin cambios]\n```"
+    },
+    {
+      "number": 10,
+      "key": "code",
+      "title": "Código",
+      "markdown": "```sql\n-- BigQuery (ejecutable adaptando nombres), en una transacción de varias sentencias.\n-- Requiere: dim_cliente(sk STRING, cliente_id STRING, region STRING, valid_from TIMESTAMP,\n--           valid_to TIMESTAMP, is_current BOOL) y cambios(cliente_id, region, cambiado_en TIMESTAMP),\n--           con un cambio por cliente (deduplicado antes).\nBEGIN TRANSACTION;\n\n-- 1. Cerrar la versión vigente de los clientes con cambio real.\nUPDATE `proyecto.dataset.dim_cliente` d\nSET valid_to = c.cambiado_en, is_current = FALSE\nFROM `proyecto.dataset.cambios` c\nWHERE d.cliente_id = c.cliente_id AND d.is_current AND d.region != c.region;\n\n-- 2. Insertar la nueva versión para clientes nuevos o recién cerrados.\nINSERT INTO `proyecto.dataset.dim_cliente` (sk, cliente_id, region, valid_from, valid_to, is_current)\nSELECT GENERATE_UUID(), c.cliente_id, c.region, c.cambiado_en, NULL, TRUE\nFROM `proyecto.dataset.cambios` c\nLEFT JOIN `proyecto.dataset.dim_cliente` d\n  ON d.cliente_id = c.cliente_id AND d.is_current\nWHERE d.cliente_id IS NULL;\n\nCOMMIT TRANSACTION;\n```"
+    },
+    {
+      "number": 11,
+      "key": "gcp",
+      "title": "GCP",
+      "markdown": "En **BigQuery** se implementa con dos sentencias en una transacción (como arriba) o con un `MERGE` sobre un origen preparado. En ambos casos el lote debe traer un cambio por clave: el `MERGE` de BigQuery falla si una fila del destino coincide con varias de origen."
+    },
+    {
+      "number": 12,
+      "key": "aws",
+      "title": "AWS",
+      "markdown": "En **Redshift** el patrón es el mismo, pero su `MERGE` no falla ante varias filas coincidentes: elimina duplicados del destino y conserva una. Si la dimensión tuviera por error dos versiones vigentes, Redshift podría \"arreglarlas\" en silencio en vez de avisar. Conviene validar la unicidad de la versión vigente antes de aplicar."
+    },
+    {
+      "number": 13,
+      "key": "azure",
+      "title": "Azure",
+      "markdown": "En Synapse (dedicated SQL pool) y Fabric Warehouse, el `MERGE` de T-SQL da error si varias filas de origen coinciden con una del destino, como en BigQuery. El patrón y los controles son los mismos, con sintaxis T-SQL."
+    },
+    {
+      "number": 14,
+      "key": "best_practices",
+      "title": "Buenas prácticas",
+      "markdown": "- Definir explícitamente qué atributos disparan una nueva versión (y usar hash para compararlos).\n- Usar la fecha del cambio en el origen, no la de la carga, para `valid_from`.\n- Controlar que haya exactamente una versión vigente por clave y que no haya huecos ni superposiciones.\n- Particionar o clusterizar la dimensión por `is_current` o por la clave natural si es grande."
+    },
+    {
+      "number": 15,
+      "key": "common_mistakes",
+      "title": "Errores frecuentes",
+      "markdown": "- Crear una versión nueva en cada carga aunque nada haya cambiado (sin comparar atributos).\n- Usar la fecha de carga como vigencia: los reprocesos desplazan la historia.\n- Unir hechos con la dimensión solo por clave natural, lo que trae todas las versiones y duplica los hechos.\n- Procesar varios cambios de la misma clave en un lote sin ordenarlos."
+    },
+    {
+      "number": 16,
+      "key": "trade_offs",
+      "title": "Trade-offs",
+      "markdown": "Historia fiel y auditable, a cambio de dimensiones más grandes, joins por rango de vigencia o surrogate key, y cargas más complejas. El tipo 1 es trivial pero reescribe el pasado; otros tipos (3, 4, 6) cubren casos intermedios."
+    },
+    {
+      "number": 17,
+      "key": "related_concepts",
+      "title": "Conceptos relacionados",
+      "markdown": "- `sql-merge`: herramienta de implementación.\n- `change-data-capture`: fuente natural de versiones.\n- `incremental-load`: la carga SCD2 es una carga incremental.\n- Del blueprint, pendientes de ficha: `slowly-changing-dimensions`, `scd-type-1`, `surrogate-keys`, `dimension-tables`."
+    },
+    {
+      "number": 18,
+      "key": "open_questions",
+      "title": "Preguntas técnicas abiertas",
+      "markdown": "1. ¿Qué harías si un lote trae tres cambios del mismo cliente en el mismo día?\n2. ¿Cómo corregirías una versión cargada con una vigencia equivocada sin romper los hechos ya asociados?\n3. ¿Qué controles automáticos pondrías sobre una dimensión SCD2 en producción?"
+    },
+    {
+      "number": 19,
+      "key": "related_lab",
+      "title": "Laboratorio relacionado",
+      "markdown": "Pendiente (F4): lab de tipo A sobre SCD2 con MERGE (§25)."
+    },
+    {
+      "number": 20,
+      "key": "sources",
+      "title": "Fuentes",
+      "markdown": "- Google Cloud: *DML statements in GoogleSQL* (BigQuery).\n- AWS: *MERGE* (Amazon Redshift).\n- Microsoft Learn: *MERGE (Transact-SQL)*.\n\nEl detalle de cada fuente está en `sources` del frontmatter."
+    },
+    {
+      "number": 21,
+      "key": "last_verified",
+      "title": "Fecha de última verificación",
+      "markdown": "2026-09-30. La ficha queda en `review_required` hasta la revisión humana (B-F3.1)."
+    },
+    {
+      "number": 22,
+      "key": "change_history",
+      "title": "Historial de cambios importantes",
+      "markdown": "- 2026-09-30: creación (lote 1 de F3)."
+    }
+  ]
 }

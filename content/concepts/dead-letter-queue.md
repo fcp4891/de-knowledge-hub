@@ -1,0 +1,170 @@
+---
+id: pattern:dead-letter-queue
+slug: dead-letter-queue
+type: pattern
+title: Dead-letter queue
+description: Patrón que aparta los mensajes que no pueden procesarse tras varios intentos a una cola o tópico separado, para no bloquear el flujo ni perderlos.
+domain: pipelines
+subdomain: reliability
+classification: core
+level: intermediate
+importance: high
+cloud: [gcp, aws, azure, agnostic]
+technologies: [gcp-pubsub]
+tags: [streaming, reliability, messaging]
+related_topics: [idempotency, batch-vs-streaming]
+sources:
+  - source: gcp-pubsub-docs
+    url: https://docs.cloud.google.com/pubsub/docs/dead-letter-topics
+    accessed: 2026-09-30
+    note: Dead-letter topics; intentos de entrega entre 5 (mínimo y por defecto) y 100 (máximo); conteo aproximado y best-effort; el mensaje se reenvía envuelto con atributos de la suscripción de origen.
+  - source: aws-sqs-docs
+    url: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html
+    accessed: 2026-09-30
+    note: Redrive policy con maxReceiveCount; redrive de la DLQ para devolver mensajes; en colas estándar la expiración se basa en el timestamp de encolado original.
+  - source: microsoft-learn
+    url: https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dead-letter-queues
+    accessed: 2026-09-30
+    note: Cada cola y suscripción de Service Bus tiene una subcola DLQ que no se crea ni borra por separado; MaxDeliveryCountExceeded; mensajes expirados también pueden ir a la DLQ.
+relations:
+  - type: RELATED_TO
+    target: idempotency
+    note: Los reintentos previos a la DLQ exigen consumidores idempotentes.
+created_at: 2026-09-30
+updated_at: 2026-09-30
+last_verified: 2026-09-30
+verification_status: review_required
+---
+
+## 1. Resumen
+
+Una dead-letter queue (DLQ) es un destino separado donde van los mensajes que un consumidor no logró procesar tras un número de intentos. Evita que un mensaje "venenoso" bloquee o recicle sin fin el flujo principal, y conserva el mensaje para diagnosticarlo y reprocesarlo.
+
+## 2. Qué es
+
+Es un patrón de mensajería: una cola, tópico o subcola secundaria asociada al flujo principal, más una regla (número máximo de entregas, expiración) que decide cuándo un mensaje se aparta.
+
+## 3. Problema que resuelve
+
+Sin DLQ, un mensaje que siempre falla (malformado, con una referencia inexistente, un bug) tiene dos malos destinos:
+
+- se reintenta indefinidamente, consume recursos y retrasa al resto;
+- se descarta en silencio y se pierde.
+
+## 4. Cómo funciona
+
+1. El consumidor recibe el mensaje y no lo confirma (error o timeout).
+2. El broker lo reentrega y cuenta los intentos.
+3. Al superar el máximo configurado, lo mueve a la DLQ, a menudo con metadatos del motivo o del origen.
+4. Un proceso aparte monitorea la DLQ, diagnostica y, una vez corregida la causa, reinyecta los mensajes al flujo principal (*redrive*).
+
+## 5. Cuándo utilizarlo
+
+- Consumo de colas o tópicos en producción, siempre que un mensaje individual pueda fallar.
+- Pipelines streaming que no deben detenerse por un evento inválido.
+- Integraciones con datos externos de calidad variable.
+
+## 6. Cuándo no utilizarlo
+
+- Cuando el orden estricto es obligatorio y saltar un mensaje rompe la semántica: apartarlo reordena el flujo. Allí puede convenir detener y alertar.
+- Como sustituto de la validación: si la mitad de los mensajes termina en la DLQ, el problema es el contrato de datos.
+- Para errores transitorios (una caída breve del destino): los reintentos con backoff son la primera línea.
+
+## 7. Ejemplo sencillo
+
+Un consumidor de pedidos recibe un mensaje con `amount = "abc"`. Falla 5 veces y el broker lo mueve a `orders-dlq`. El flujo sigue y una alerta avisa que la DLQ tiene mensajes.
+
+## 8. Ejemplo de producción
+
+La suscripción de eventos tiene un dead-letter topic con 10 intentos de entrega. Un job diario lee la DLQ y clasifica los errores (esquema inválido, referencia inexistente, bug). Además publica métricas y abre un incidente si la tasa supera un umbral. Tras desplegar la corrección, reinyecta los mensajes, y el destino no se duplica porque la escritura es idempotente.
+
+## 9. Arquitectura
+
+```mermaid
+flowchart LR
+  P[Productor] --> T[Tópico o cola principal]
+  T --> C[Consumidor]
+  C -->|falla N veces| DLQ[Dead-letter]
+  DLQ --> MON[Monitoreo y diagnóstico]
+  MON -->|redrive tras corregir| T
+```
+
+## 10. Código
+
+```bash
+# Pub/Sub (gcloud): suscripción con dead-letter topic y 10 intentos de entrega.
+# Requiere: tópicos "orders" y "orders-dlq" creados y los permisos IAM de la cuenta de servicio de Pub/Sub
+# sobre el dead-letter topic (publicar) y la suscripción (suscribirse), según la documentación.
+gcloud pubsub subscriptions create orders-sub \
+  --topic=orders \
+  --dead-letter-topic=orders-dlq \
+  --max-delivery-attempts=10
+gcloud pubsub subscriptions create orders-dlq-sub --topic=orders-dlq
+```
+
+## 11. GCP
+
+En **Pub/Sub**, una suscripción puede tener un *dead-letter topic*:
+
+- El número de intentos de entrega va de 5 (mínimo y valor por defecto) a 100 (máximo).
+- El conteo es **aproximado**, porque el reenvío es best-effort: un mensaje puede reenviarse antes o después del número configurado.
+- El mensaje se reenvía envuelto en uno nuevo, con atributos que identifican la suscripción de origen.
+- Hace falta una suscripción aparte sobre el dead-letter topic para leerlo.
+
+## 12. AWS
+
+En **SQS**, una *redrive policy* define `maxReceiveCount`: cuántas veces puede recibirse un mensaje antes de pasar a la DLQ. SQS ofrece *DLQ redrive* para devolver mensajes a la cola de origen. En colas estándar, la expiración del mensaje se calcula desde su encolado **original**: el tiempo en la cola principal cuenta para la retención de la DLQ. A diferencia de Pub/Sub, la DLQ es otra cola que se crea y se asocia por ARN.
+
+## 13. Azure
+
+En **Service Bus**, cada cola y cada suscripción de tópico tiene su propia **subcola** dead-letter: no se crea explícitamente y no puede borrarse ni gestionarse por separado. Un mensaje llega a ella al superar su *max delivery count* (motivo `MaxDeliveryCountExceeded`), y también puede llegar por expiración (TTL) si se configura así. No es una cola independiente como en SQS.
+
+## 14. Buenas prácticas
+
+- Alertar sobre el tamaño y la tasa de ingreso a la DLQ: una DLQ silenciosa es pérdida de datos diferida.
+- Guardar el motivo del error junto al mensaje.
+- Tener un procedimiento de redrive documentado y consumidores idempotentes.
+- Distinguir errores transitorios (reintentar con backoff) de permanentes (apartar).
+
+## 15. Errores frecuentes
+
+- Configurar la DLQ y no leerla nunca.
+- Ajustar los intentos al mínimo y mandar a la DLQ fallos transitorios.
+- Reinyectar sin corregir la causa: los mensajes vuelven a la DLQ.
+- Olvidar los permisos que el broker necesita para publicar en la DLQ (en Pub/Sub, sin ellos no se cuentan los intentos).
+
+## 16. Trade-offs
+
+Resiliencia y trazabilidad del flujo, a cambio de un proceso operativo más (monitoreo, diagnóstico, redrive) y de perder el orden de los mensajes apartados. Sin DLQ, el sistema es más simple pero frágil ante un único mensaje malo.
+
+## 17. Conceptos relacionados
+
+- `idempotency`: requisito de los reintentos y del redrive.
+- `batch-vs-streaming`: la DLQ es típica del streaming.
+- Del blueprint, pendientes de ficha: `retries`, `replay`, `delivery-semantics`, `pubsub-delivery-semantics`.
+
+## 18. Preguntas técnicas abiertas
+
+1. ¿Cómo decidirías el número máximo de intentos antes de apartar un mensaje?
+2. ¿Qué harías si el orden de los eventos por cliente importa y uno de ellos termina en la DLQ?
+3. ¿Cómo diseñarías el proceso de redrive para que sea seguro y auditable?
+
+## 19. Laboratorio relacionado
+
+Pendiente (F4): arquitectura "Streaming pipeline" (§24).
+
+## 20. Fuentes
+
+- Google Cloud: *Dead-letter topics* (Pub/Sub).
+- AWS: *Using dead-letter queues in Amazon SQS*.
+- Microsoft Learn: *Service Bus dead-letter queues*.
+
+El detalle de cada fuente está en `sources` del frontmatter.
+
+## 21. Fecha de última verificación
+
+2026-09-30. La ficha queda en `review_required` hasta la revisión humana (B-F3.1).
+
+## 22. Historial de cambios importantes
+
+- 2026-09-30: creación (lote 1 de F3).

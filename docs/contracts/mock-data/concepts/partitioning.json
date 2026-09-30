@@ -2,28 +2,204 @@
   "id": "concept:partitioning",
   "title": "Particionamiento",
   "slug": "partitioning",
-  "description": null,
+  "description": "Organización física de una tabla o dataset en segmentos según el valor de una columna, para leer menos datos y gestionar el ciclo de vida por segmento.",
   "type": "concept",
   "domain": "fundamentals",
   "subdomain": "data-formats",
   "classification": "core",
   "level": "intermediate",
-  "cloud": [],
-  "technologies": [],
-  "tags": [],
+  "cloud": [
+    "gcp",
+    "aws",
+    "azure",
+    "agnostic"
+  ],
+  "technologies": [
+    "gcp-bigquery",
+    "aws-athena",
+    "azure-synapse"
+  ],
+  "tags": [
+    "performance",
+    "storage",
+    "cost"
+  ],
   "related_topics": [
+    "bigquery-partitioning",
+    "incremental-load",
     "parquet-format"
   ],
-  "sources": [],
-  "created_at": null,
-  "updated_at": null,
-  "last_verified": null,
-  "verification_status": null,
+  "sources": [
+    {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/partitioned-tables",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Tipos de partición en BigQuery, pruning y gestión por partición."
+    },
+    {
+      "source": "aws-athena-docs",
+      "title": "Amazon Athena User Guide",
+      "url": "https://docs.aws.amazon.com/athena/latest/ug/partitions.html",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Athena particiona datos en S3 por cualquier clave (estilo Hive u otro) para limitar los datos escaneados."
+    },
+    {
+      "source": "microsoft-learn",
+      "title": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-tables-partition",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Particiones en Synapse dedicated SQL pool; demasiadas particiones perjudican el rendimiento; partition switching."
+    }
+  ],
+  "created_at": "2026-09-30",
+  "updated_at": "2026-09-30",
+  "last_verified": "2026-09-30",
+  "verification_status": "review_required",
   "kind": "concept",
   "importance": "high",
   "mvp": true,
-  "has_page": false,
+  "has_page": true,
   "stub": false,
   "note": "Layout físico de los datos; partition-pruning y clustering viven en 02-sql.",
-  "sections": []
+  "sections": [
+    {
+      "number": 1,
+      "key": "summary",
+      "title": "Resumen",
+      "markdown": "Particionar es dividir físicamente los datos de una tabla según el valor de una columna (casi siempre, una fecha). Así las consultas que filtran por esa columna leen solo los segmentos necesarios, y cada segmento puede cargarse, reemplazarse o borrarse por separado."
+    },
+    {
+      "number": 2,
+      "key": "what_is",
+      "title": "Qué es",
+      "markdown": "Es una decisión de **layout físico**, no de modelo lógico: la tabla sigue siendo una sola para quien la consulta. Cada motor lo implementa distinto: particiones gestionadas por el warehouse, carpetas en un data lake (`dt=2026-09-30/`) o particiones de tabla en un motor relacional."
+    },
+    {
+      "number": 3,
+      "key": "problem",
+      "title": "Problema que resuelve",
+      "markdown": "- **Lectura**: sin partición, cualquier filtro por fecha recorre toda la tabla.\n- **Operación**: reemplazar un día o borrar datos viejos obliga a reescribir o filtrar la tabla entera.\n- **Costo**: en motores que cobran por datos escaneados, leer de más cuesta dinero."
+    },
+    {
+      "number": 4,
+      "key": "how_it_works",
+      "title": "Cómo funciona",
+      "markdown": "Al escribir, cada fila va al segmento que le corresponde según la columna de partición. Al leer, el motor compara el filtro de la consulta con los límites de cada segmento y salta los que no pueden contener filas (*partition pruning*). Las operaciones de mantenimiento (reemplazar, expirar, mover) trabajan con segmentos completos."
+    },
+    {
+      "number": 5,
+      "key": "when_to_use",
+      "title": "Cuándo utilizarlo",
+      "markdown": "- Tablas grandes que se consultan casi siempre por un rango de fechas u otra columna de baja cardinalidad.\n- Datos con ciclo de vida por tiempo (retención, archivado).\n- Cargas incrementales por período, donde reemplazar el segmento del período hace la carga idempotente."
+    },
+    {
+      "number": 6,
+      "key": "when_not_to_use",
+      "title": "Cuándo no utilizarlo",
+      "markdown": "- Tablas pequeñas: el costo de gestión supera el beneficio.\n- Columnas de alta cardinalidad (IDs): generan demasiados segmentos pequeños. Para esos filtros suele convenir clustering u ordenamiento.\n- Cuando las consultas casi nunca filtran por la columna candidata."
+    },
+    {
+      "number": 7,
+      "key": "simple_example",
+      "title": "Ejemplo sencillo",
+      "markdown": "Una tabla de ventas particionada por día: `SELECT SUM(monto) WHERE fecha = '2026-09-29'` lee un solo segmento en vez de años de historia."
+    },
+    {
+      "number": 8,
+      "key": "production_example",
+      "title": "Ejemplo de producción",
+      "markdown": "Un data lake guarda eventos en `s3://bucket/eventos/dt=YYYY-MM-DD/`. El pipeline diario reescribe solo la carpeta del día (idempotente) y las consultas de Athena filtran por `dt`. Una regla de ciclo de vida archiva las carpetas de más de 400 días. Además, se controla que ningún día quede vacío o duplicado."
+    },
+    {
+      "number": 9,
+      "key": "architecture",
+      "title": "Arquitectura",
+      "markdown": "```mermaid\nflowchart LR\n  W[Escritura] -->|valor de la columna| P1[Segmento 2026-09-28]\n  W --> P2[Segmento 2026-09-29]\n  W --> P3[Segmento 2026-09-30]\n  Q[Consulta con filtro de fecha] -->|pruning| P2\n```"
+    },
+    {
+      "number": 10,
+      "key": "code",
+      "title": "Código",
+      "markdown": "```sql\n-- BigQuery (ejecutable adaptando nombres): partición diaria y reemplazo idempotente de un día.\nCREATE TABLE IF NOT EXISTS `proyecto.dataset.ventas` (venta_id STRING, fecha DATE, monto NUMERIC)\nPARTITION BY fecha;\n\nDELETE FROM `proyecto.dataset.ventas` WHERE fecha = '2026-09-29';\nINSERT INTO `proyecto.dataset.ventas`\nSELECT venta_id, fecha, monto FROM `proyecto.dataset.ventas_stg` WHERE fecha = '2026-09-29';\n```"
+    },
+    {
+      "number": 11,
+      "key": "gcp",
+      "title": "GCP",
+      "markdown": "**BigQuery** particiona por columna de tiempo, por momento de ingesta o por rangos de enteros, con pruning y gestión por partición (expiración, escritura en una partición concreta). El detalle está en `bigquery-partitioning`."
+    },
+    {
+      "number": 12,
+      "key": "aws",
+      "title": "AWS",
+      "markdown": "En **Athena**, particionar los datos de S3 por cualquier clave (a menudo en carpetas estilo Hive) limita los datos escaneados por consulta, mejora el rendimiento y reduce el costo. La partición vive en la estructura de carpetas y en el catálogo, no en un almacenamiento administrado como el de BigQuery: hay que mantener sincronizados datos y metadatos."
+    },
+    {
+      "number": 13,
+      "key": "azure",
+      "title": "Azure",
+      "markdown": "El dedicated SQL pool de **Azure Synapse** admite particiones de tabla, con splitting, merging y switching para mover o reemplazar segmentos rápidamente. La documentación advierte que demasiadas particiones perjudican el rendimiento en tablas columnstore, porque cada tabla ya está repartida en 60 distribuciones. El criterio de tamaño es muy distinto al de BigQuery."
+    },
+    {
+      "number": 14,
+      "key": "best_practices",
+      "title": "Buenas prácticas",
+      "markdown": "- Elegir la columna por los filtros reales de las consultas, no por intuición.\n- Mantener un tamaño de segmento sano: ni demasiados segmentos diminutos ni uno gigante.\n- Escribir por segmento completo para que las cargas sean idempotentes.\n- Verificar el pruning en el plan o en los bytes escaneados."
+    },
+    {
+      "number": 15,
+      "key": "common_mistakes",
+      "title": "Errores frecuentes",
+      "markdown": "- Particionar por una columna de alta cardinalidad.\n- Filtros que envuelven la columna en una función e impiden el pruning.\n- Particionar por la fecha de carga cuando las consultas usan la fecha del evento.\n- En un data lake, escribir archivos nuevos sin registrar la partición en el catálogo."
+    },
+    {
+      "number": 16,
+      "key": "trade_offs",
+      "title": "Trade-offs",
+      "markdown": "Menos datos leídos y operaciones por segmento, a cambio de rigidez: la partición se define al crear la tabla, cada motor impone límites y un mal diseño se paga en cada consulta. Clustering y ordenamiento complementan la partición para filtros de alta cardinalidad."
+    },
+    {
+      "number": 17,
+      "key": "related_concepts",
+      "title": "Conceptos relacionados",
+      "markdown": "- `bigquery-partitioning`: implementación en BigQuery.\n- `incremental-load`: carga por segmento.\n- Del blueprint, pendientes de ficha: `partition-pruning`, `clustering`, `parquet-format`."
+    },
+    {
+      "number": 18,
+      "key": "open_questions",
+      "title": "Preguntas técnicas abiertas",
+      "markdown": "1. ¿Qué columna usarías para particionar una tabla de eventos que se consulta por fecha y por cliente, y por qué?\n2. ¿Cómo afecta el particionamiento a la idempotencia de una carga diaria?\n3. ¿Qué señales te indicarían que una tabla tiene demasiadas particiones?"
+    },
+    {
+      "number": 19,
+      "key": "related_lab",
+      "title": "Laboratorio relacionado",
+      "markdown": "Pendiente (F4): lab de tipo C sobre reducción de datos escaneados (§25)."
+    },
+    {
+      "number": 20,
+      "key": "sources",
+      "title": "Fuentes",
+      "markdown": "- Google Cloud: *Introduction to partitioned tables* (BigQuery).\n- AWS: *Partition your data* (Amazon Athena).\n- Microsoft Learn: *Partitioning tables in dedicated SQL pool* (Azure Synapse).\n\nEl detalle de cada fuente está en `sources` del frontmatter."
+    },
+    {
+      "number": 21,
+      "key": "last_verified",
+      "title": "Fecha de última verificación",
+      "markdown": "2026-09-30. La ficha queda en `review_required` hasta la revisión humana (B-F3.1)."
+    },
+    {
+      "number": 22,
+      "key": "change_history",
+      "title": "Historial de cambios importantes",
+      "markdown": "- 2026-09-30: creación (lote 1 de F3)."
+    }
+  ]
 }

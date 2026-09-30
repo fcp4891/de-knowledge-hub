@@ -35,6 +35,20 @@
           "note": null
         }
       ]
+    },
+    {
+      "type": "EXTENDS",
+      "direction": "outgoing",
+      "label": "extends",
+      "items": [
+        {
+          "slug": "partitioning",
+          "title": "Particionamiento",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Implementación de BigQuery del concepto general."
+        }
+      ]
     }
   ]
 }
