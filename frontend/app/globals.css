@@ -354,8 +354,103 @@ details.panel summary + * {
     align-items: start;
   }
 
-  .relation-panel {
-    position: sticky;
-    top: 4.5rem;
-  }
+.relation-panel {
+  position: sticky;
+  top: 4.5rem;
+}
+}
+
+.api-banner {
+  margin: 0;
+  padding: 0.45rem 1.25rem;
+  background: var(--emerging);
+}
+
+.brand button,
+.personal-form button,
+.note-actions button,
+.search-panel input,
+.personal-form select,
+.personal-form textarea {
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  padding: 0.35rem 0.5rem;
+}
+
+.brand button {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.brand kbd {
+  font-size: 0.75rem;
+  margin-left: 0.35rem;
+}
+
+.personal-form {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0.75rem 0;
+}
+
+.personal-form label {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.personal-form .check {
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.note {
+  margin-top: 0.8rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--line);
+}
+
+.note-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.note-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.search-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  align-items: start;
+  justify-content: center;
+  padding: 12vh 1rem 1rem;
+  background: rgb(28 25 21 / 0.35);
+}
+
+.search-panel {
+  width: min(40rem, 100%);
+  max-height: 70vh;
+  overflow: auto;
+  padding: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+}
+
+.search-panel input {
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+.search-panel h2,
+.search-panel h3 {
+  margin: 0.8rem 0 0.45rem;
+  font-size: 1rem;
 }

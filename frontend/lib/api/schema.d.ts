@@ -608,6 +608,7 @@ export interface operations {
                 };
             };
             404: components["responses"]["NotFound"];
+            422: components["responses"]["ValidationError"];
         };
     };
     listConcepts: {
@@ -638,6 +639,7 @@ export interface operations {
                     "application/json": components["schemas"]["ConceptList"];
                 };
             };
+            422: components["responses"]["ValidationError"];
         };
     };
     getConcept: {
@@ -661,6 +663,7 @@ export interface operations {
                 };
             };
             404: components["responses"]["NotFound"];
+            422: components["responses"]["ValidationError"];
         };
     };
     listTechnologies: {
@@ -689,6 +692,7 @@ export interface operations {
                     "application/json": components["schemas"]["TechnologyList"];
                 };
             };
+            422: components["responses"]["ValidationError"];
         };
     };
     getTechnology: {
@@ -712,6 +716,7 @@ export interface operations {
                 };
             };
             404: components["responses"]["NotFound"];
+            422: components["responses"]["ValidationError"];
         };
     };
     getRelations: {
@@ -735,6 +740,7 @@ export interface operations {
                 };
             };
             404: components["responses"]["NotFound"];
+            422: components["responses"]["ValidationError"];
         };
     };
     getSource: {
@@ -758,6 +764,7 @@ export interface operations {
                 };
             };
             404: components["responses"]["NotFound"];
+            422: components["responses"]["ValidationError"];
         };
     };
     search: {
@@ -809,6 +816,7 @@ export interface operations {
                     "application/json": components["schemas"]["StudyStateList"];
                 };
             };
+            422: components["responses"]["ValidationError"];
         };
     };
     getStudyState: {
@@ -832,6 +840,7 @@ export interface operations {
                 };
             };
             404: components["responses"]["NotFound"];
+            422: components["responses"]["ValidationError"];
         };
     };
     putStudyState: {
@@ -883,6 +892,7 @@ export interface operations {
                 };
             };
             404: components["responses"]["NotFound"];
+            422: components["responses"]["ValidationError"];
         };
     };
     createNote: {
@@ -934,6 +944,7 @@ export interface operations {
                     "application/json": components["schemas"]["FavoriteList"];
                 };
             };
+            422: components["responses"]["ValidationError"];
         };
     };
     getFavorite: {
@@ -957,6 +968,7 @@ export interface operations {
                 };
             };
             404: components["responses"]["NotFound"];
+            422: components["responses"]["ValidationError"];
         };
     };
     putFavorite: {
@@ -984,6 +996,7 @@ export interface operations {
                 };
             };
             404: components["responses"]["NotFound"];
+            422: components["responses"]["ValidationError"];
         };
     };
 }

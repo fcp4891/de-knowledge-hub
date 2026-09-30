@@ -1,8 +1,9 @@
+import { ApiFailure } from "@/components/ApiFailure";
 import { CapabilityList } from "@/components/card/CapabilityList";
 import { CardHeader } from "@/components/card/CardHeader";
+import { PersonalPanel } from "@/components/card/PersonalPanel";
 import { RelationPanel } from "@/components/card/RelationPanel";
 import { SourceList } from "@/components/card/SourceList";
-import { MockMiss } from "@/components/MockMiss";
 import { getRelations, getTechnology } from "@/lib/api/client";
 
 export default async function TechnologyPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -12,7 +13,7 @@ export default async function TechnologyPage({ params }: { params: Promise<{ slu
   if (!technology.ok) {
     return (
       <div className="page">
-        {technology.reason === "mock_missing" ? <MockMiss slug={slug} /> : <p>No existe.</p>}
+        <ApiFailure result={technology} slug={slug} />
       </div>
     );
   }
@@ -37,6 +38,7 @@ export default async function TechnologyPage({ params }: { params: Promise<{ slu
       </p>
       <div className="card-layout">
         <div className="sections">
+          <PersonalPanel slug={data.slug} />
           {data.note ? <p>{data.note}</p> : null}
           <CapabilityList capabilities={data.capabilities} />
           <SourceList sources={data.sources} />

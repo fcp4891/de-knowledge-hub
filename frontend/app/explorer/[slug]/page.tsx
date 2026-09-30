@@ -1,7 +1,7 @@
 import Link from "next/link";
 
+import { ApiFailure } from "@/components/ApiFailure";
 import { ConceptMeta } from "@/components/ConceptMeta";
-import { MockMiss } from "@/components/MockMiss";
 import { getDomain } from "@/lib/api/client";
 import type { Classification, ConceptSummary, Level } from "@/lib/api/types";
 
@@ -28,7 +28,7 @@ export default async function DomainPage({
   if (!domain.ok) {
     return (
       <div className="page">
-        <MockMiss slug={slug} />
+        <ApiFailure result={domain} slug={slug} />
       </div>
     );
   }

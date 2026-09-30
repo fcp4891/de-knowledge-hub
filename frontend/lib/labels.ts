@@ -1,4 +1,4 @@
-import type { Level, StudyStatus, VerificationStatus } from "./api/types";
+import type { Level, ResultType, StudyStatus, VerificationStatus } from "./api/types";
 
 export const LEVEL_LABEL: Record<Level, string> = {
   basic: "básico",
@@ -20,6 +20,15 @@ export const RELATION_LABEL: Record<string, string> = {
   hosts: "Aloja",
   alternative_to: "Alternativa a",
   runs_on: "Se ejecuta en",
+};
+
+export const RESULT_LABEL: Record<ResultType, string> = {
+  concept: "Conceptos",
+  pattern: "Patrones",
+  architecture: "Arquitecturas",
+  technology: "Tecnologías",
+  cloud_service: "Servicios cloud",
+  source: "Fuentes",
 };
 
 export const STUDY_LABEL: Record<StudyStatus, string> = {

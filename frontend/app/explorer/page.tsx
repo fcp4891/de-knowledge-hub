@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { MockMiss } from "@/components/MockMiss";
+import { ApiFailure } from "@/components/ApiFailure";
 import { listDomains } from "@/lib/api/client";
 
 export default async function ExplorerPage() {
@@ -28,7 +28,7 @@ export default async function ExplorerPage() {
           ))}
         </div>
       ) : (
-        <MockMiss />
+        <ApiFailure result={domains} />
       )}
     </div>
   );

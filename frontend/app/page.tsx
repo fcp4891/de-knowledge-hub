@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { MockMiss } from "@/components/MockMiss";
+import { ApiFailure } from "@/components/ApiFailure";
 import { listConcepts, listStudyStates } from "@/lib/api/client";
 import { STUDY_LABEL } from "@/lib/labels";
 import type { StudyState } from "@/lib/api/types";
@@ -32,6 +32,7 @@ export default async function HomePage() {
     <div className="page">
       <h1>Data Engineering Knowledge Hub</h1>
       <p className="lead">Continúa por donde ibas. El resto del inicio todavía no tiene datos.</p>
+      {catalog.ok ? null : <ApiFailure result={catalog} />}
       <div className="sections">
         <StudySection title="Continuar estudiando" items={states.ok ? continuing : null} titles={titles} />
         <StudySection
@@ -63,7 +64,7 @@ function StudySection({
     <section className="panel">
       <h2>{title}</h2>
       {items === null ? (
-        <MockMiss />
+        <p>No se pudo cargar esta lista.</p>
       ) : items.length === 0 ? (
         <p className="muted">Nada en esta lista.</p>
       ) : (

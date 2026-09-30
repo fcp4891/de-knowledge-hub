@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { MockMiss } from "@/components/MockMiss";
+import { ApiFailure } from "@/components/ApiFailure";
 import type { ApiResult, RelationGroups } from "@/lib/api/types";
 import { entityHref } from "@/lib/entityHref";
 import { RELATION_LABEL } from "@/lib/labels";
@@ -9,7 +9,7 @@ export function RelationPanel({ result }: { result: ApiResult<RelationGroups> })
   return (
     <aside className="panel relation-panel">
       <h2>Relaciones</h2>
-      {result.ok ? <RelationGroupsView groups={result.data} /> : result.reason === "mock_missing" ? <MockMiss /> : <p>No existe.</p>}
+      {result.ok ? <RelationGroupsView groups={result.data} /> : <ApiFailure result={result} />}
     </aside>
   );
 }

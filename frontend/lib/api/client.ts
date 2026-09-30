@@ -1,3 +1,12 @@
+import {
+  createPersonalNote,
+  getPersonalFavorite,
+  getPersonalStudyState,
+  listPersonalNotes,
+  listPersonalStudyStates,
+  putPersonalFavorite,
+  putPersonalStudyState,
+} from "./personal";
 import { readMock } from "./mock";
 import type {
   ApiResult,
@@ -5,31 +14,72 @@ import type {
   ConceptList,
   DomainDetail,
   DomainList,
+  Favorite,
+  Note,
+  NoteList,
   RelationGroups,
   SearchResults,
+  StudyState,
   StudyStateList,
+  StudyStateUpdate,
   StudyStatus,
   TechnologyDetail,
 } from "./types";
 
-export function isMockMode(): boolean {
-  return (process.env.API_MODE ?? "mock") === "mock";
+function usesMock(livePath: string): boolean {
+  if ((process.env.API_MODE ?? "hybrid") === "mock") {
+    return true;
+  }
+  return livePath.startsWith("/me");
 }
 
-async function apiGet<T>(key: string, livePath: string): Promise<ApiResult<T>> {
-  if (isMockMode()) {
-    return readMock<T>(key);
+async function problemDetail(response: Response): Promise<string> {
+  try {
+    const body = (await response.json()) as { title?: string; detail?: string };
+    if (typeof body.detail === "string" && body.detail.length > 0) {
+      return body.detail;
+    }
+    if (typeof body.title === "string" && body.title.length > 0) {
+      return body.title;
+    }
+  } catch {
+    return "Datos no válidos.";
   }
+  return "Datos no válidos.";
+}
 
+async function liveRequest<T>(method: string, livePath: string, body?: unknown): Promise<ApiResult<T>> {
   const base = process.env.API_BASE_URL ?? "http://localhost:8000/api/v1";
-  const response = await fetch(`${base}${livePath}`, { cache: "no-store" });
-  if (response.status === 404) {
-    return { ok: false, reason: "not_found" };
+  try {
+    const response = await fetch(`${base}${livePath}`, {
+      method,
+      cache: "no-store",
+      headers: body === undefined ? undefined : { "content-type": "application/json" },
+      body: body === undefined ? undefined : JSON.stringify(body),
+    });
+    if (response.status === 404) {
+      return { ok: false, reason: "not_found" };
+    }
+    if (response.status === 422) {
+      return { ok: false, reason: "validation", detail: await problemDetail(response) };
+    }
+    if (!response.ok) {
+      return { ok: false, reason: "unavailable", detail: `La API respondió ${response.status}.` };
+    }
+    if (response.status === 204) {
+      return { ok: true, data: undefined as T };
+    }
+    return { ok: true, data: (await response.json()) as T };
+  } catch {
+    return { ok: false, reason: "unavailable", detail: "No se pudo contactar la API." };
   }
-  if (!response.ok) {
-    throw new Error(`La API respondió ${response.status} en ${livePath}`);
+}
+
+async function apiGet<T>(mockKey: string, livePath: string): Promise<ApiResult<T>> {
+  if (usesMock(livePath)) {
+    return readMock<T>(mockKey);
   }
-  return { ok: true, data: (await response.json()) as T };
+  return liveRequest<T>("GET", livePath);
 }
 
 export function listDomains(): Promise<ApiResult<DomainList>> {
@@ -62,15 +112,37 @@ export function getRelations(slug: string): Promise<ApiResult<RelationGroups>> {
 }
 
 export function listStudyStates(state?: StudyStatus): Promise<ApiResult<StudyStateList>> {
-  const resource = state ? `/me/study-state?state=${state}` : "/me/study-state";
-  return apiGet(`GET ${resource}`, resource);
+  return listPersonalStudyStates(state);
+}
+
+export function getStudyState(slug: string): Promise<ApiResult<StudyState>> {
+  return getPersonalStudyState(slug);
+}
+
+export function putStudyState(slug: string, update: StudyStateUpdate): Promise<ApiResult<StudyState>> {
+  return putPersonalStudyState(slug, update);
+}
+
+export function getFavorite(slug: string): Promise<ApiResult<Favorite>> {
+  return getPersonalFavorite(slug);
+}
+
+export function putFavorite(slug: string, favorite: boolean): Promise<ApiResult<Favorite>> {
+  return putPersonalFavorite(slug, favorite);
+}
+
+export function listNotes(slug: string): Promise<ApiResult<NoteList>> {
+  return listPersonalNotes(slug);
+}
+
+export function createNote(slug: string, bodyMarkdown: string): Promise<ApiResult<Note>> {
+  return createPersonalNote(slug, bodyMarkdown);
 }
 
 /**
- * Coincidencia ya resuelta en el mock (o, en vivo, por la API).
+ * En vivo, la API ya agrupó y ordenó los resultados.
  * No reordena ni recalcula `score`.
  */
 export function search(query: string): Promise<ApiResult<SearchResults>> {
-  const resource = `/search?q=${query}`;
-  return apiGet(`GET ${resource}`, resource);
+  return apiGet(`GET /search?q=${query}`, `/search?q=${encodeURIComponent(query)}`);
 }
