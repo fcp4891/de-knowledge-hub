@@ -25,6 +25,7 @@ subdomains:
         level: basic
         importance: high
         mvp: true
+        note: Semi-join y anti-join van en esta ficha.
       - slug: sql-subqueries
         title: Subqueries
         kind: concept
@@ -59,7 +60,7 @@ subdomains:
       - slug: sql-qualify
         title: QUALIFY
         kind: concept
-        classification: core
+        classification: modern
         level: intermediate
         importance: medium
         mvp: true
@@ -73,6 +74,15 @@ subdomains:
         level: basic
         importance: medium
         mvp: false
+      - slug: sql-nulls
+        title: NULL y lógica de tres valores
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        added_by: blueprint
+        note: Efecto de NULL en filtros, joins y agregaciones. Agregado en la revisión B-F1.2 del dominio 02.
       - slug: sql-arrays
         title: ARRAY
         kind: concept
@@ -81,6 +91,7 @@ subdomains:
         importance: medium
         mvp: false
         related_concepts: [sql-unnest]
+        note: El modelo ARRAY/STRUCT de BigQuery no es el de Redshift ni el de Fabric; el dialecto está en bigquery-sql-dialect.
       - slug: sql-structs
         title: STRUCT
         kind: concept
@@ -89,6 +100,7 @@ subdomains:
         importance: medium
         mvp: false
         related_concepts: [sql-arrays]
+        note: El modelo ARRAY/STRUCT de BigQuery no es el de Redshift ni el de Fabric; el dialecto está en bigquery-sql-dialect.
       - slug: sql-unnest
         title: UNNEST
         kind: concept
@@ -119,6 +131,7 @@ subdomains:
         level: basic
         importance: medium
         mvp: false
+        note: Zonas horarias y DATE vs TIMESTAMP van en esta ficha.
       - slug: sql-json-functions
         title: Funciones JSON
         kind: concept
@@ -139,6 +152,7 @@ subdomains:
         importance: high
         mvp: true
         related_concepts: [sql-merge, idempotency, partitioning]
+        note: Es el patrón SQL; el estado y los watermarks del pipeline están en incremental-pipelines (05).
       - slug: deduplication
         title: Deduplicación
         kind: pattern
@@ -170,7 +184,7 @@ subdomains:
         level: intermediate
         importance: high
         mvp: true
-        related_concepts: [idempotency]
+        related_concepts: [idempotency, sql-merge]
       - slug: change-detection
         title: Detección de cambios
         kind: pattern
@@ -187,6 +201,7 @@ subdomains:
         level: intermediate
         importance: high
         mvp: true
+        related_concepts: [sql-quality-checks, incremental-load, change-detection]
       - slug: sql-quality-checks
         title: Controles de calidad en SQL
         kind: pattern
@@ -230,6 +245,7 @@ subdomains:
         importance: high
         mvp: true
         related_concepts: [partitioning]
+        note: No es el sort key de Redshift ni el clustering de Fabric; el detalle de BigQuery está en bigquery-clustering.
       - slug: predicate-pushdown
         title: Predicate pushdown
         kind: concept
@@ -243,7 +259,7 @@ subdomains:
         kind: concept
         classification: core
         level: intermediate
-        importance: medium
+        importance: high
         mvp: false
       - slug: materialization-strategies
         title: Estrategias de materialización
@@ -257,7 +273,7 @@ subdomains:
         kind: concept
         classification: core
         level: advanced
-        importance: medium
+        importance: high
         mvp: false
         related_concepts: [sql-joins, query-plans]
       - slug: cloud-warehouse-optimization
@@ -268,4 +284,5 @@ subdomains:
         importance: medium
         mvp: false
         related_technologies: [gcp-bigquery, aws-redshift, microsoft-fabric]
+        related_concepts: [bigquery-query-optimization]
         note: Visión comparada; el detalle de BigQuery está en 08-gcp.

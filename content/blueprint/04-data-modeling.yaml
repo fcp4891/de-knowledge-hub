@@ -64,7 +64,8 @@ subdomains:
         level: intermediate
         importance: high
         mvp: true
-        related_concepts: [star-schema]
+        related_concepts: [star-schema, medallion-architecture, data-mesh, data-products]
+        note: Medallion, Data Mesh y Data Products figuran en §6, pero sus fichas viven en 07.
       - slug: star-schema
         title: Star Schema
         kind: pattern
@@ -89,6 +90,7 @@ subdomains:
         importance: high
         mvp: true
         related_concepts: [grain]
+        note: Cubre hechos de transacción, snapshot periódico, snapshot acumulativo y factless.
       - slug: dimension-tables
         title: Dimensiones
         kind: concept
@@ -97,6 +99,7 @@ subdomains:
         importance: high
         mvp: true
         related_concepts: [slowly-changing-dimensions]
+        note: Cubre dimensiones degenerate, role-playing, junk y bridge (many-to-many).
       - slug: grain
         title: Grain
         kind: concept
@@ -112,6 +115,7 @@ subdomains:
         importance: high
         mvp: true
         related_concepts: [dimension-tables]
+        note: Cubre natural vs surrogate; la generación SQL sigue en surrogate-key-generation.
       - slug: slowly-changing-dimensions
         title: Slowly Changing Dimensions (SCD)
         kind: concept
@@ -119,17 +123,18 @@ subdomains:
         level: intermediate
         importance: high
         mvp: true
-        related_concepts: [scd-type-1, scd-type-2]
+        related_concepts: [scd-type-1, scd-type-2, late-arriving-data]
+        note: Cubre los tipos 0, 1, 2, 3, 4 y 6; el SQL de los tipos 1 y 2 sigue en 02.
       - slug: conformed-dimensions
         title: Dimensiones conformadas
         kind: concept
         classification: core
         level: intermediate
-        importance: medium
+        importance: high
         mvp: false
         added_by: blueprint
         related_concepts: [kimball-methodology, dimension-tables]
-        note: Base del bus matrix de Kimball; no figura en el listado del plan.
+        note: Base del bus matrix de Kimball; no figura en el listado del plan. Incluye el bus matrix; no se crea ficha aparte.
 
   - slug: alternative-models
     title: Modelos alternativos
@@ -142,6 +147,7 @@ subdomains:
         importance: medium
         mvp: false
         related_concepts: [kimball-methodology]
+        note: No reemplaza a Kimball.
       - slug: one-big-table
         title: One Big Table (OBT)
         kind: pattern
@@ -150,7 +156,7 @@ subdomains:
         importance: medium
         mvp: false
         related_technologies: [gcp-bigquery]
-        related_concepts: [denormalization, star-schema]
+        related_concepts: [denormalization, star-schema, scan-reduction]
       - slug: semantic-models
         title: Modelos semánticos
         kind: concept
@@ -158,4 +164,5 @@ subdomains:
         level: intermediate
         importance: medium
         mvp: false
-        related_concepts: [star-schema]
+        related_concepts: [star-schema, semantic-layer]
+        note: Esta ficha es la estructura del modelo; semantic-layer (22) es la capa de métricas gobernadas.

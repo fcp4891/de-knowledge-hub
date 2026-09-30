@@ -1,7 +1,7 @@
 # STATUS — Data Engineering Knowledge Hub
 
 **Fase actual:** F1 — Knowledge Blueprint v1 (F0 cerrada y aprobada el 2026-09-28)
-**Última actualización:** 2026-09-28
+**Última actualización:** 2026-09-29
 
 ---
 
@@ -15,10 +15,13 @@
   - 25 fuentes con `url_verified: true`. La excepción es `terraform-provider-google-docs`: el Terraform Registry es una SPA con título genérico, así que queda en `review_required`.
   - `validate.py`: toda tecnología `mvp` sin una fuente Nivel 1–2 con `url_verified` es **error**.
   - Tests: 80 en total (6 nuevos).
-  - Hallazgo: la documentación de Cloud Composer se titula ahora «Managed Service for Apache Airflow». Está anotado en `gcp-cloud-composer`; el slug no cambia.
+  - `gcp-cloud-composer`: el título pasa a «Managed Service for Apache Airflow (ex Cloud Composer)», con los tags `cloud-composer` y `composer`. La nota cita el anuncio del 2026-04-15 en las release notes oficiales. El slug no cambia.
 - **Revisión B-F1.2 del dominio 01 aplicada** (12 filas aprobadas en `docs/reviews/blueprint-01.md`, rama `b/f1-review`):
   - 8 filas con cambios: +`schema-on-read-vs-schema-on-write`, +`csv-format`, relaciones y notas, y `data-consistency` pasa a importance high;
   - 4 filas confirman valores actuales y no cambian nada.
+- **Revisiones B-F1.2 de los dominios 02, 04 y 05 aplicadas** (`docs/reviews/blueprint-02/04/05.md`, commit 9e45320; 39 filas aprobadas):
+  - nuevo concepto `sql-nulls`;
+  - importancias, relaciones y notas de alcance; `sql-qualify` pasa a `modern`.
 - **Hecho (A-F1.2 · Tecnologías y Cloud Capability Matrix):**
   - `docs/adr/ADR-004-technology-inventory-and-matrix.md`:
     - un archivo por tecnología; la vista de inventario sale de `--report`;
@@ -104,4 +107,4 @@
 - **F0 — Fundaciones** (2026-09-28): `make validate` en verde con la ficha `change-data-capture`; 42 tests.
 
 ## Decisiones pendientes para el gate humano
-- **Cloud Composer:** la documentación oficial usa el título «Managed Service for Apache Airflow». ¿Se cambia el `title` de `gcp-cloud-composer`? El slug se mantiene en cualquier caso.
+- —

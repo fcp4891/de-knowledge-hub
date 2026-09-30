@@ -17,7 +17,7 @@ subdomains:
         level: basic
         importance: high
         mvp: false
-        related_concepts: [data-pipeline, data-lake]
+        related_concepts: [data-pipeline, data-lake, medallion-architecture]
 
   - slug: ingestion
     title: Ingesta
@@ -39,7 +39,8 @@ subdomains:
         importance: high
         mvp: true
         related_technologies: [gcp-pubsub, gcp-dataflow, apache-kafka]
-        related_concepts: [batch-vs-streaming]
+        related_concepts: [batch-vs-streaming, delivery-semantics, event-time-vs-processing-time]
+        note: El micro-batch se explica en esta ficha.
       - slug: change-data-capture
         title: Change Data Capture
         kind: concept
@@ -48,7 +49,7 @@ subdomains:
         importance: high
         mvp: true
         related_technologies: [debezium, gcp-datastream, aws-dms, apache-kafka]
-        related_concepts: [idempotency, scd-type-2, sql-merge]
+        related_concepts: [idempotency, scd-type-2, sql-merge, schema-evolution]
       - slug: api-ingestion
         title: Ingesta desde APIs
         kind: concept
@@ -57,6 +58,7 @@ subdomains:
         importance: high
         mvp: true
         related_concepts: [retries, incremental-pipelines]
+        note: Paginación, rate limit y el contrato HTTP van en esta ficha.
       - slug: file-ingestion
         title: Ingesta de archivos
         kind: concept
@@ -65,15 +67,16 @@ subdomains:
         importance: high
         mvp: true
         related_technologies: [gcp-cloud-storage]
-        related_concepts: [parquet-format, schema-evolution]
+        related_concepts: [parquet-format, schema-evolution, csv-format]
       - slug: database-ingestion
         title: Ingesta desde bases de datos
         kind: concept
         classification: core
         level: intermediate
-        importance: medium
+        importance: high
         mvp: false
         related_concepts: [change-data-capture, incremental-load]
+        note: La ficha es la decisión full / incremental / CDC, no una cuarta técnica.
 
   - slug: pipeline-patterns
     title: Patrones de pipeline
@@ -85,17 +88,17 @@ subdomains:
         level: intermediate
         importance: high
         mvp: true
-        related_concepts: [incremental-load, idempotency, late-arriving-data]
-        note: Estado y watermarks a nivel de pipeline; la carga SQL está en incremental-load (02-sql).
+        related_concepts: [incremental-load, idempotency, late-arriving-data, watermarks]
+        note: Estado y watermarks a nivel de pipeline; la carga SQL está en incremental-load (02-sql). El full refresh se contrasta en esta ficha.
       - slug: event-driven-pipelines
         title: Pipelines event-driven
         kind: pattern
         classification: modern
         level: intermediate
-        importance: medium
+        importance: high
         mvp: false
         related_technologies: [gcp-pubsub, gcp-cloud-run]
-        related_concepts: [streaming-ingestion]
+        related_concepts: [streaming-ingestion, event-driven-orchestration, event-driven-architecture]
       - slug: pipeline-dependencies
         title: Dependencias entre procesos
         kind: concept
@@ -103,7 +106,8 @@ subdomains:
         level: intermediate
         importance: medium
         mvp: false
-        related_concepts: [data-orchestration]
+        related_concepts: [data-orchestration, dag]
+        note: Task y scheduler están en el dominio 06.
 
   - slug: reliability
     title: Confiabilidad y recuperación
@@ -115,16 +119,16 @@ subdomains:
         level: intermediate
         importance: high
         mvp: true
-        related_concepts: [idempotency]
-        note: Backoff exponencial y jitter; solo es seguro con operaciones idempotentes.
+        related_concepts: [idempotency, exactly-once-semantics]
+        note: Backoff exponencial y jitter; solo es seguro con operaciones idempotentes. Un reintento no es entrega exactly-once.
       - slug: checkpoints
         title: Checkpoints
         kind: concept
         classification: core
         level: intermediate
-        importance: medium
+        importance: high
         mvp: false
-        related_concepts: [failure-recovery]
+        related_concepts: [failure-recovery, streaming-ingestion, watermarks]
       - slug: dead-letter-queue
         title: Dead-letter queue
         kind: pattern
@@ -134,6 +138,7 @@ subdomains:
         mvp: true
         related_technologies: [gcp-pubsub]
         related_concepts: [retries]
+        note: El mensaje venenoso se trata en esta ficha.
       - slug: replay
         title: Replay
         kind: concept
@@ -142,6 +147,7 @@ subdomains:
         importance: high
         mvp: true
         related_concepts: [idempotency, backfill]
+        note: Reprocesar eventos ya capturados; distinto de backfill.
       - slug: backfill
         title: Backfill
         kind: concept
@@ -150,6 +156,7 @@ subdomains:
         importance: high
         mvp: true
         related_concepts: [idempotency, partitioning]
+        note: Completar un rango histórico; catchup (06) es la política del scheduler, no esta ficha.
       - slug: failure-recovery
         title: Recuperación ante fallas
         kind: concept
@@ -157,4 +164,4 @@ subdomains:
         level: intermediate
         importance: high
         mvp: false
-        related_concepts: [retries, checkpoints, replay]
+        related_concepts: [retries, checkpoints, replay, backfill]
