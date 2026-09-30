@@ -6,14 +6,18 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-09-30
 
 ## Actual
-- **Tarea activa:** B-F3 UX. El estado de estudio y «pendiente de profundizar» se guardan al cambiarlos.
-- **Siguiente:** B-F3.1, revisión de las 10 fichas del lote 1.
-- **Bloqueos:** ninguno. El proceso que ya estaba en el puerto 8000 todavía responde sin `has_page`; la etiqueta aparece cuando esa API es la de ADR-007.
+- **Tarea activa:** en espera. B-F3.1 del lote 1 está aprobada; B-F3 UX está mergeada.
+- **Siguiente:** revisar el lote 2 cuando Carril A lo entregue.
+- **Bloqueos:** ninguno.
 
 ### B-F3 UX
 - El selector de estado y la casilla «Pendiente de profundizar» llaman a `PUT /me/study-state/{slug}` al cambiar, con `last_studied_at` de ahora.
 - Se quitó el botón «Guardar estado». El mensaje sigue siendo «Estado guardado.».
 - Cliente regenerado (ADR-007). En la búsqueda, un resultado con `has_page: false` muestra «ficha pendiente». El orden de los grupos no se toca.
+
+### B-F3.1
+- Una tabla de §48 por cada una de las 10 fichas del lote 1. Felipe aprobó todas las filas el 2026-09-30. No se editó `content/`.
+- Los 4 VERIFY (ETL en AWS, ETL en Azure, máximo de particiones de BigQuery, capacidad y retención de Kinesis) quedan destacados y sin inventar el dato.
 
 ### B-F2.3
 - Cliente regenerado desde el contrato de `main` (422 de ADR-005; PUT y DELETE de notas de ADR-006).
