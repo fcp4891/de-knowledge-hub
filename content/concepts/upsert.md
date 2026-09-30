@@ -25,7 +25,7 @@ sources:
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html
     accessed: 2026-09-30
-    note: MERGE de Redshift; falla (Found multiple matches to update the same tuple) si varias filas de origen coinciden con una fila del destino; solo en modo simplificado REMOVE DUPLICATES, cuando varias filas del destino coinciden con la misma fila de origen, elimina los duplicados del destino y conserva una. Requiere permisos UPDATE, DELETE e INSERT según las operaciones.
+    note: MERGE de Redshift; falla (Found multiple matches to update the same tuple) si varias filas de origen coinciden con una fila del destino; solo en modo simplificado REMOVE DUPLICATES, cuando varias filas del destino coinciden con la misma fila de origen, elimina los duplicados del destino y conserva una; las duplicadas del destino sin coincidencia en el origen no se tocan. Requiere permisos UPDATE, DELETE e INSERT según las operaciones.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/statements/merge-transact-sql
     accessed: 2026-09-30
@@ -137,7 +137,7 @@ En **BigQuery**, el upsert se escribe con `MERGE`. Si una fila del destino coinc
 
 ## 12. AWS
 
-En **Redshift**, el upsert se escribe con `MERGE` y, como en BigQuery, falla si varias filas de origen coinciden con una fila del destino. Redshift ofrece además un modo simplificado, `REMOVE DUPLICATES`, que actualiza lo que coincide e inserta lo que falta sin cláusulas `WHEN`. Es más rápido, pero no admite condición de versión y elimina en silencio los duplicados del destino que coinciden con una fila de origen.
+En **Redshift**, el upsert se escribe con `MERGE` y, como en BigQuery, falla si varias filas de origen coinciden con una fila del destino. Redshift ofrece además un modo simplificado, `REMOVE DUPLICATES`, que actualiza lo que coincide e inserta lo que falta sin cláusulas `WHEN`. Es más rápido, pero no admite condición de versión y elimina en silencio los duplicados del destino que coinciden con una fila de origen (los que no coinciden quedan).
 
 ## 13. Azure
 
@@ -198,3 +198,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 2 de F3).
+- 2026-09-30: revisión B-F3.1 aplicada: en `REMOVE DUPLICATES`, los duplicados del destino sin coincidencia con el origen no se tocan.

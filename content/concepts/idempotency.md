@@ -34,7 +34,7 @@ sources:
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html
     accessed: 2026-09-30
-    note: MERGE de Redshift; falla (Found multiple matches to update the same tuple) si varias filas de origen coinciden con una fila del destino; solo en modo simplificado REMOVE DUPLICATES, cuando varias filas del destino coinciden con la misma fila de origen, elimina los duplicados del destino y conserva una.
+    note: MERGE de Redshift; falla (Found multiple matches to update the same tuple) si varias filas de origen coinciden con una fila del destino; solo en modo simplificado REMOVE DUPLICATES, cuando varias filas del destino coinciden con la misma fila de origen, elimina los duplicados del destino y conserva una; las duplicadas del destino que no coinciden con ninguna fila de origen no se tocan.
   - source: aws-sqs-docs
     url: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html
     accessed: 2026-09-30
@@ -143,7 +143,7 @@ WHEN NOT MATCHED THEN
 
 ## 12. AWS
 
-En **SQS**, un mensaje que no se procesa bien vuelve a recibirse hasta `maxReceiveCount` veces antes de pasar a la dead-letter queue: el consumidor debe tolerar la repetición. En **Redshift**, `MERGE` cumple el mismo papel que en BigQuery y también falla si varias filas de origen coinciden con una fila del destino; su modo simplificado `REMOVE DUPLICATES` además elimina en silencio duplicados del destino.
+En **SQS**, un mensaje que no se procesa bien vuelve a recibirse hasta `maxReceiveCount` veces antes de pasar a la dead-letter queue: el consumidor debe tolerar la repetición. En **Redshift**, `MERGE` cumple el mismo papel que en BigQuery y también falla si varias filas de origen coinciden con una fila del destino; su modo simplificado `REMOVE DUPLICATES` además elimina en silencio los duplicados del destino que coinciden con una fila de origen, y deja los que no coinciden.
 
 ## 13. Azure
 
@@ -206,3 +206,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: ficha completa (lote 1 de F3).
 - 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.
 - 2026-09-30: corregido el comportamiento de `MERGE` en Redshift ante duplicados (detectado al preparar el lote 2): falla con varias filas de origen por fila destino; la eliminación de duplicados del destino es solo del modo `REMOVE DUPLICATES`.
+- 2026-09-30: revisión B-F3.1 del lote 2 aplicada: en `REMOVE DUPLICATES`, los duplicados del destino sin coincidencia con el origen no se tocan.

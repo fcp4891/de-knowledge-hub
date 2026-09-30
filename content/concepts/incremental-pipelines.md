@@ -10,7 +10,7 @@ classification: core
 level: intermediate
 importance: high
 cloud: [gcp, aws, azure, agnostic]
-technologies: [apache-airflow, gcp-dataform, gcp-bigquery, aws-glue, azure-data-factory]
+technologies: [apache-airflow, gcp-cloud-composer, gcp-dataform, gcp-bigquery, aws-glue, azure-data-factory]
 tags: [pipelines, performance, reliability]
 related_topics: [incremental-load, idempotency, change-data-capture, backfill]
 sources:
@@ -33,11 +33,19 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/transactions
     accessed: 2026-09-30
-    note: Transacciones de varias sentencias con commit o rollback atómico.
+    note: "Transacciones de varias sentencias con commit o rollback atómico; admiten CREATE TEMP TABLE; sin session mode, un error sin manejador hace fallar la consulta y BigQuery revierte la transacción; dentro de una transacción CURRENT_TIMESTAMP devuelve el inicio de la transacción."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language
+    accessed: 2026-09-30
+    note: Lenguaje procedural de BigQuery con DECLARE ... DEFAULT (subconsulta), SET, IF ... END IF, RAISE USING MESSAGE y BEGIN TRANSACTION; ejemplo oficial con CREATE TEMP TABLE dentro de una transacción.
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax
     accessed: 2026-09-30
     note: Sintaxis de MERGE; error si una fila destino coincide con más de una fila de origen.
+  - source: gcp-cloud-composer-docs
+    url: https://docs.cloud.google.com/composer/docs/composer-3/composer-overview
+    accessed: 2026-09-30
+    note: Cloud Composer evoluciona a Managed Service for Apache Airflow (cambio de nombre); Managed Airflow es un servicio totalmente administrado de orquestación de workflows construido sobre Apache Airflow.
 relations:
   - type: USES
     target: incremental-load
@@ -117,16 +125,35 @@ flowchart LR
 ## 10. Código
 
 ```sql
--- Etapa incremental por watermark, idempotente y atómica (BigQuery).
--- Requiere: tabla de control etl_control(fuente, watermark) y destino con clave pedido_id.
+-- Etapa incremental por watermark, idempotente y atómica (script de BigQuery).
+-- Requiere: etl_control(fuente, watermark) con una fila por fuente y destino con clave pedido_id.
+DECLARE wm_anterior TIMESTAMP DEFAULT (
+  SELECT watermark FROM `proyecto.dwh.etl_control` WHERE fuente = 'pedidos');
+DECLARE corte TIMESTAMP DEFAULT CURRENT_TIMESTAMP();  -- lo posterior a "ahora" espera a otra ejecución
+DECLARE wm_nuevo TIMESTAMP;
+
+IF wm_anterior IS NULL THEN
+  RAISE USING MESSAGE = 'Falta la fila de etl_control para pedidos: no se procesa nada';
+END IF;
+
+-- Lote: una fila por clave, solo entre la marca anterior y el corte (sin timestamps futuros).
+CREATE TEMP TABLE lote AS
+SELECT * FROM `proyecto.staging.pedidos`
+WHERE updated_at > wm_anterior AND updated_at <= corte
+QUALIFY ROW_NUMBER() OVER (PARTITION BY pedido_id ORDER BY updated_at DESC) = 1;
+
+-- La marca nueva sale del lote leído, no del destino; con lote vacío no se mueve.
+SET wm_nuevo = COALESCE((SELECT MAX(updated_at) FROM lote), wm_anterior);
+
 BEGIN TRANSACTION;
 
+-- Si otra ejecución movió la marca, el error revierte la transacción.
+IF (SELECT watermark FROM `proyecto.dwh.etl_control` WHERE fuente = 'pedidos') IS DISTINCT FROM wm_anterior THEN
+  RAISE USING MESSAGE = 'etl_control cambió durante la ejecución: se revierte';
+END IF;
+
 MERGE `proyecto.dwh.pedidos` AS t
-USING (
-  SELECT * FROM `proyecto.staging.pedidos`
-  WHERE updated_at > (SELECT watermark FROM `proyecto.dwh.etl_control` WHERE fuente = 'pedidos')
-  QUALIFY ROW_NUMBER() OVER (PARTITION BY pedido_id ORDER BY updated_at DESC) = 1  -- una fila por clave
-) AS s
+USING lote AS s
 ON t.pedido_id = s.pedido_id
 WHEN MATCHED AND s.updated_at > t.updated_at THEN
   UPDATE SET estado = s.estado, monto = s.monto, updated_at = s.updated_at
@@ -134,17 +161,23 @@ WHEN NOT MATCHED THEN
   INSERT (pedido_id, estado, monto, updated_at) VALUES (s.pedido_id, s.estado, s.monto, s.updated_at);
 
 UPDATE `proyecto.dwh.etl_control`
-SET watermark = (SELECT MAX(updated_at) FROM `proyecto.dwh.pedidos`)
-WHERE fuente = 'pedidos';
+SET watermark = wm_nuevo
+WHERE fuente = 'pedidos' AND watermark = wm_anterior;
 
 COMMIT TRANSACTION;
 ```
 
-El watermark se actualiza en la misma transacción que la escritura: si algo falla, no avanza, y la siguiente ejecución repite el mismo delta sin duplicar.
+Tres decisiones hacen seguro el avance de la marca:
+
+- **La marca sale del lote leído**, no de `MAX(updated_at)` del destino. Una fila del destino con un timestamp futuro no puede adelantarla y hacer que se salten filas de staging.
+- **Timestamps futuros:** solo entra lo que tiene `updated_at <= corte`. Una fila con reloj adelantado espera a una ejecución posterior en lugar de mover la marca hacia el futuro. Conviene contar esas filas y alertar si aparecen.
+- **Estado de control ausente o cambiado:** si no existe la fila de `etl_control`, el script se detiene antes de escribir. Si otra ejecución la cambió, el `RAISE` dentro de la transacción la revierte: un error sin manejador hace fallar la consulta y BigQuery revierte la transacción.
+
+El `MERGE` y el avance de la marca van en la misma transacción: si algo falla, la marca no avanza y la siguiente ejecución repite el mismo lote sin duplicar.
 
 ## 11. GCP
 
-En **Dataform**, una tabla `incremental` se construye desde cero la primera vez y luego inserta o fusiona solo las filas nuevas; con `uniqueKey` fusiona las filas que tienen la misma clave. La orquestación por intervalos se hace con **Managed Service for Apache Airflow (ex Cloud Composer)**, que ejecuta Dags de Airflow con su *data interval*.
+En **Dataform**, una tabla `incremental` se construye desde cero la primera vez y luego inserta o fusiona solo las filas nuevas; con `uniqueKey` fusiona las filas que tienen la misma clave. La orquestación por intervalos se hace con **Managed Service for Apache Airflow (ex Cloud Composer)**, el nuevo nombre de Cloud Composer: un servicio administrado construido sobre Apache Airflow, así que sus Dags tienen el mismo *data interval*.
 
 ## 12. AWS
 
@@ -164,7 +197,8 @@ El estado del watermark lo guarda el propio pipeline (por ejemplo, en una tabla)
 ## 14. Buenas prácticas
 
 - Preferir el intervalo de la ejecución como estado cuando el origen lo permite: hace triviales los reintentos y los backfills.
-- Si se usa watermark, avanzarlo solo después de escribir y, cuando sea posible, en la misma transacción.
+- Si se usa watermark, tomarlo del lote procesado (no del destino) y avanzarlo solo después de escribir, en la misma transacción cuando sea posible.
+- Acotar cada lote con un corte (`updated_at <= corte`) para que los timestamps futuros no adelanten la marca.
 - Hacer incrementales todas las etapas costosas, no solo la extracción.
 - Mantener una forma documentada de hacer una recarga completa.
 - **Seguridad:** proteger la tabla de control del estado: quien la modifica puede saltarse o repetir datos.
@@ -174,6 +208,8 @@ El estado del watermark lo guarda el propio pipeline (por ejemplo, en una tabla)
 ## 15. Errores frecuentes
 
 - Avanzar el watermark antes de escribir y perder datos si la escritura falla.
+- Calcular la marca nueva como `MAX(updated_at)` de la tabla destino: una fila con timestamp futuro la adelanta y se saltan filas.
+- Suponer que la fila de control existe: un `UPDATE` que no afecta filas no da error.
 - Usar `>=` o `>` sin pensar en empates de timestamp y perder o duplicar filas.
 - Suponer que un watermark por `updated_at` captura los borrados.
 - Hacer incremental solo la extracción y recalcular completo en las etapas siguientes.
@@ -203,7 +239,7 @@ Pendiente (F4): pipeline incremental con watermark y backfill (lab de tipo A).
 ## 20. Fuentes
 
 - Apache Airflow: *Dag Runs*.
-- Google Cloud: *Create tables* (Dataform), *Multi-statement transactions* y *DML syntax* (BigQuery).
+- Google Cloud: *Create tables* (Dataform); *Multi-statement transactions*, *Procedural language* y *DML syntax* (BigQuery); *Managed Airflow overview* (Managed Service for Apache Airflow).
 - AWS: *Tracking processed data using job bookmarks* (Glue).
 - Microsoft Learn: *Incrementally copy data from a source data store to a destination data store* (Data Factory).
 
@@ -216,3 +252,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 2 de F3).
+- 2026-09-30: revisión B-F3.1 aplicada: el watermark sale del lote leído, con corte para timestamps futuros y rollback si falta o cambia la fila de control; nombre y fuente de Managed Service for Apache Airflow.

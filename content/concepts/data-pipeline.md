@@ -11,7 +11,7 @@ classification: core
 level: basic
 importance: high
 cloud: [gcp, aws, azure, agnostic]
-technologies: [apache-airflow, gcp-dataflow, aws-glue, azure-data-factory]
+technologies: [apache-airflow, gcp-cloud-composer, gcp-dataflow, gcp-bigquery, aws-glue, azure-data-factory]
 tags: [pipelines, fundamentals, orchestration]
 related_topics: [etl-vs-elt, batch-vs-streaming, idempotency, retries]
 sources:
@@ -39,6 +39,14 @@ sources:
     url: https://airflow.apache.org/docs/apache-airflow/stable/templates-ref.html
     accessed: 2026-09-30
     note: ds es la logical date del Dag run como YYYY-MM-DD; solo está disponible cuando el DagRun tiene logical_date.
+  - source: gcp-cloud-composer-docs
+    url: https://docs.cloud.google.com/composer/docs/composer-3/composer-overview
+    accessed: 2026-09-30
+    note: Cloud Composer evoluciona a Managed Service for Apache Airflow (cambio de nombre); Managed Airflow es un servicio totalmente administrado de orquestación de workflows construido sobre Apache Airflow.
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/transactions
+    accessed: 2026-09-30
+    note: Transacciones de varias sentencias con commit o rollback atómico.
 relations:
   - type: RELATED_TO
     target: etl-vs-elt
@@ -137,8 +145,8 @@ def ventas_diarias():
         return validate_volume_and_schema(path)
 
     @task
-    def cargar(path: str) -> None:
-        replace_partition(path)                # reemplazo idempotente de la partición del día
+    def cargar(path: str, *, ds: str) -> None:
+        replace_partition(path, day=ds)        # ejecuta el SQL de abajo para el día lógico
 
     cargar(validar(extraer()))
 
@@ -148,9 +156,22 @@ ventas_diarias()
 
 `ds` es la fecha lógica de la ejecución y solo existe cuando el DagRun tiene `logical_date` (las ejecuciones programadas la tienen).
 
+`replace_partition` es idempotente porque reemplaza la partición del día dentro de una transacción. En BigQuery ejecuta:
+
+```sql
+-- replace_partition(day=@dia): reemplazo atómico de la partición del día lógico.
+BEGIN TRANSACTION;
+DELETE FROM `proyecto.dwh.ventas` WHERE fecha = @dia;
+INSERT INTO `proyecto.dwh.ventas`
+SELECT * FROM `proyecto.staging.ventas` WHERE fecha = @dia;
+COMMIT TRANSACTION;
+```
+
+Si algo falla antes del `COMMIT`, la partición queda como estaba; si la tarea se reintenta, el resultado es el mismo.
+
 ## 11. GCP
 
-**Dataflow** ejecuta pipelines de procesamiento unificado batch y streaming: leen de una o más fuentes, transforman y escriben en un destino. La orquestación de varios pasos suele hacerse con **Managed Service for Apache Airflow (ex Cloud Composer)**, que ejecuta Dags de Airflow.
+**Dataflow** ejecuta pipelines de procesamiento unificado batch y streaming: leen de una o más fuentes, transforman y escriben en un destino. La orquestación de varios pasos suele hacerse con **Managed Service for Apache Airflow (ex Cloud Composer)**: Google renombró Cloud Composer y lo describe como un servicio totalmente administrado de orquestación de workflows construido sobre Apache Airflow, así que ejecuta Dags como el de §10.
 
 ## 12. AWS
 
@@ -202,7 +223,7 @@ Pendiente (F4): primer pipeline batch de extremo a extremo (lab de tipo A).
 ## 20. Fuentes
 
 - Apache Airflow: *Dags*, *Pythonic Dags with the TaskFlow API* y *Templates reference*.
-- Google Cloud: *Dataflow overview*.
+- Google Cloud: *Dataflow overview*, *Managed Airflow overview* (Managed Service for Apache Airflow) y *Multi-statement transactions* (BigQuery).
 - AWS: *What is AWS Glue?*.
 - Microsoft Learn: *Introduction to Azure Data Factory*.
 
@@ -215,3 +236,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 2 de F3).
+- 2026-09-30: revisión B-F3.1 aplicada: transacción de `replace_partition` a la vista; nombre y fuente de Managed Service for Apache Airflow.

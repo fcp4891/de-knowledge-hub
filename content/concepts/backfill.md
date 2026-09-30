@@ -35,6 +35,10 @@ sources:
     url: https://learn.microsoft.com/en-us/azure/data-factory/how-to-create-tumbling-window-trigger
     accessed: 2026-09-30
     note: En un tumbling window trigger de Data Factory, startTime y endTime pueden estar en el pasado; cada ventana dispara una ejecución.
+  - source: gcp-cloud-composer-docs
+    url: https://docs.cloud.google.com/composer/docs/composer-3/composer-overview
+    accessed: 2026-09-30
+    note: Cloud Composer evoluciona a Managed Service for Apache Airflow (cambio de nombre); Managed Airflow es un servicio totalmente administrado de orquestación de workflows construido sobre Apache Airflow.
 relations:
   - type: DEPENDS_ON
     target: idempotency
@@ -131,7 +135,7 @@ COMMIT TRANSACTION;
 
 ## 11. GCP
 
-En **Cloud Composer** (Airflow administrado) el backfill se hace con los mecanismos de Airflow: data intervals, backfill por rango y `catchup` (desactivado por defecto). En **BigQuery**, la escritura por partición dentro de una transacción de varias sentencias hace que cada día reprocesado se reemplace de forma atómica.
+En **Managed Service for Apache Airflow (ex Cloud Composer)**, el servicio administrado construido sobre Apache Airflow, el backfill se hace con los mecanismos de Airflow: data intervals, backfill por rango y `catchup` (desactivado por defecto). En **BigQuery**, la escritura por partición dentro de una transacción de varias sentencias hace que cada día reprocesado se reemplace de forma atómica.
 
 ## 12. AWS
 
@@ -183,7 +187,7 @@ Pendiente (F4): lab de tipo B sobre duplicados tras un reproceso (§25).
 ## 20. Fuentes
 
 - Apache Airflow: *Backfill* y *Dag Runs*.
-- Google Cloud: *Multi-statement transactions* (BigQuery).
+- Google Cloud: *Managed Airflow overview* (Managed Service for Apache Airflow) y *Multi-statement transactions* (BigQuery).
 - AWS: *Tracking processed data using job bookmarks* (Glue).
 - Microsoft Learn: *Create tumbling window triggers* (Data Factory).
 
@@ -196,3 +200,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 2 de F3).
+- 2026-09-30: revisión B-F3.1 aplicada: nombre y fuente de Managed Service for Apache Airflow (ex Cloud Composer).

@@ -21,7 +21,7 @@ sources:
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html
     accessed: 2026-09-30
-    note: MERGE de Redshift; falla (Found multiple matches to update the same tuple) si varias filas de origen coinciden con una fila del destino; solo en modo simplificado REMOVE DUPLICATES, cuando varias filas del destino coinciden con la misma fila de origen, elimina los duplicados del destino y conserva una.
+    note: MERGE de Redshift; falla (Found multiple matches to update the same tuple) si varias filas de origen coinciden con una fila del destino; solo en modo simplificado REMOVE DUPLICATES, cuando varias filas del destino coinciden con la misma fila de origen, elimina los duplicados del destino y conserva una; las duplicadas del destino que no coinciden con ninguna fila de origen no se tocan.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/statements/merge-transact-sql
     accessed: 2026-09-30
@@ -131,7 +131,7 @@ En **BigQuery** se implementa con dos sentencias en una transacción (como arrib
 
 ## 12. AWS
 
-En **Redshift** el patrón es el mismo y su `MERGE` también falla si el lote trae varias filas de origen para una misma fila del destino. La diferencia está en el modo simplificado `REMOVE DUPLICATES`: si la dimensión tuviera por error dos versiones vigentes que coinciden con la misma fila de origen, las eliminaría y conservaría una, en silencio. En SCD2 no conviene ese modo; hay que validar la unicidad de la versión vigente antes de aplicar.
+En **Redshift** el patrón es el mismo y su `MERGE` también falla si el lote trae varias filas de origen para una misma fila del destino. La diferencia está en el modo simplificado `REMOVE DUPLICATES`: si la dimensión tuviera por error dos versiones vigentes que coinciden con la misma fila de origen, las eliminaría y conservaría una, en silencio (si no coincidieran con ninguna fila de origen, en cambio, quedarían las dos). En SCD2 no conviene ese modo; hay que validar la unicidad de la versión vigente antes de aplicar.
 
 ## 13. Azure
 
@@ -191,3 +191,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: creación (lote 1 de F3).
 - 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.
 - 2026-09-30: corregido el comportamiento de `MERGE` en Redshift ante duplicados (detectado al preparar el lote 2): falla con varias filas de origen por fila destino; la eliminación de duplicados del destino es solo del modo `REMOVE DUPLICATES`.
+- 2026-09-30: revisión B-F3.1 del lote 2 aplicada: en `REMOVE DUPLICATES`, los duplicados del destino sin coincidencia con el origen no se tocan.
