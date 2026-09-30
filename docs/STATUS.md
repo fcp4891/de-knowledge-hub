@@ -10,17 +10,22 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | — (A-F2.2 cerrada) | A-F2.3 · API y búsqueda | — |
-| B · Cursor | — | B-F2.1 · Scaffold, Home y Explorer (desbloqueada) | — |
+| A · Claude Code | A-F2.3 · API FastAPI y búsqueda FTS (plan pendiente de aprobación) | A-F2.4 · Estado personal | — |
+| B · Cursor | — (B-F2.1 cerrada y mergeada) | B-F2.2 · Fichas de concepto y tecnología | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | B-F2.1 puede empezar: contrato `docs/contracts/api.yaml` (ADR-002) y mocks en `docs/contracts/mock-data/` (ver `index.json`) | Abierto |
+| — | — | — | — |
 
 ## Criterio de salida de la fase actual (F2)
 - [ ] Con 10 fichas reales se puede navegar Explorer → ficha → relacionados → fuente → búsqueda → nota.
 - [ ] Gate humano.
+
+## Avance de F2
+- A-F2.1 · Contrato de API y mocks (ADR-002).
+- A-F2.2 · Compilador `content/` → PostgreSQL.
+- B-F2.1 · Scaffold Next.js con Home y Explorer en modo mock (`frontend/`, `API_MODE=mock`).
 
 ## Fases cerradas
 - **F0 — Fundaciones** (2026-09-28): `make validate` en verde con la ficha `change-data-capture`.

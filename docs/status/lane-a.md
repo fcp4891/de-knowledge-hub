@@ -5,7 +5,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-09-29
 
 ## Actual
-- **Tarea activa:** — (A-F2.2 cerrada y mergeada en `main`)
+- **Tarea activa:** A-F2.3 · API FastAPI y búsqueda FTS (plan pendiente de aprobación).
 - **Siguiente:** A-F2.3 · API FastAPI y búsqueda FTS.
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
@@ -13,7 +13,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 ## Pedidos a Carril B
 | Pedido | Estado |
 |---|---|
-| **B-F2.1 puede empezar.** Contrato en `docs/contracts/api.yaml` (ADR-002) y mocks en `docs/contracts/mock-data/` (`index.json` asocia `MÉTODO /ruta` con su archivo). Los conceptos salen del blueprint con `has_page`; los que no tienen ficha traen `sections: []`. Si el contrato no alcanza, pedirlo aquí en `lane-b.md`, sin modificarlo | Abierto |
+| **B-F2.1 puede empezar.** Contrato en `docs/contracts/api.yaml` (ADR-002) y mocks en `docs/contracts/mock-data/` (`index.json` asocia `MÉTODO /ruta` con su archivo). Los conceptos salen del blueprint con `has_page`; los que no tienen ficha traen `sections: []`. Si el contrato no alcanza, pedirlo aquí en `lane-b.md`, sin modificarlo | Cerrado (B-F2.1 mergeada) |
 
 ## Notas para Carril B
 - **Regla (gate F1):** Cursor revisa y propone cambios sobre `content/blueprint/`; solo Carril A edita esos archivos.
