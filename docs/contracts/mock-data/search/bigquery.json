@@ -11,8 +11,9 @@
           "type": "source",
           "domain": null,
           "classification": null,
+          "has_page": true,
           "snippet": "Documentación oficial de BigQuery en Google Cloud.",
-          "score": 6.0
+          "score": 6.3
         },
         {
           "slug": "gcp-bigquery-release-notes",
@@ -20,8 +21,9 @@
           "type": "source",
           "domain": null,
           "classification": null,
+          "has_page": true,
           "snippet": "Release notes oficiales de BigQuery en Google Cloud.",
-          "score": 6.0
+          "score": 6.3
         }
       ]
     },
@@ -29,11 +31,22 @@
       "type": "concept",
       "items": [
         {
+          "slug": "bigquery-partitioning",
+          "title": "Particionamiento en BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "has_page": true,
+          "snippet": "Cómo BigQuery divide una tabla en particiones por fecha, por momento de ingesta o por rangos de enteros para leer menos datos y gestionar el ciclo de vida.",
+          "score": 6.3
+        },
+        {
           "slug": "bigquery-clustering",
           "title": "Clustering en BigQuery",
           "type": "concept",
           "domain": "gcp",
           "classification": "modern",
+          "has_page": false,
           "snippet": "Clustering en BigQuery",
           "score": 6.0
         },
@@ -43,6 +56,7 @@
           "type": "concept",
           "domain": "gcp",
           "classification": "modern",
+          "has_page": false,
           "snippet": "INFORMATION_SCHEMA en BigQuery",
           "score": 6.0
         },
@@ -52,6 +66,7 @@
           "type": "concept",
           "domain": "gcp",
           "classification": "modern",
+          "has_page": false,
           "snippet": "Monitoreo de BigQuery",
           "score": 6.0
         },
@@ -61,16 +76,8 @@
           "type": "concept",
           "domain": "gcp",
           "classification": "modern",
+          "has_page": false,
           "snippet": "Optimización de consultas en BigQuery",
-          "score": 6.0
-        },
-        {
-          "slug": "bigquery-partitioning",
-          "title": "Particionamiento en BigQuery",
-          "type": "concept",
-          "domain": "gcp",
-          "classification": "modern",
-          "snippet": "Cómo BigQuery divide una tabla en particiones por fecha, por momento de ingesta o por rangos de enteros para leer menos datos y gestionar el ciclo de vida.",
           "score": 6.0
         },
         {
@@ -79,6 +86,7 @@
           "type": "concept",
           "domain": "gcp",
           "classification": "modern",
+          "has_page": false,
           "snippet": "Policy tags en BigQuery",
           "score": 6.0
         },
@@ -88,6 +96,7 @@
           "type": "concept",
           "domain": "gcp",
           "classification": "modern",
+          "has_page": false,
           "snippet": "Authorized views, row-level security y ACL de dataset van aquí; bigquery-policy-tags sigue aparte.",
           "score": 6.0
         },
@@ -97,6 +106,7 @@
           "type": "concept",
           "domain": "gcp",
           "classification": "modern",
+          "has_page": false,
           "snippet": "SQL en BigQuery (GoogleSQL)",
           "score": 6.0
         },
@@ -106,6 +116,7 @@
           "type": "concept",
           "domain": "gcp",
           "classification": "modern",
+          "has_page": false,
           "snippet": "Tablas externas en BigQuery",
           "score": 6.0
         },
@@ -115,6 +126,7 @@
           "type": "concept",
           "domain": "gcp",
           "classification": "modern",
+          "has_page": false,
           "snippet": "Vistas materializadas en BigQuery",
           "score": 6.0
         },
@@ -124,6 +136,7 @@
           "type": "concept",
           "domain": "gcp",
           "classification": "modern",
+          "has_page": false,
           "snippet": "Incluye la separación storage vs compute (§10.2).",
           "score": 5.0
         },
@@ -133,6 +146,7 @@
           "type": "concept",
           "domain": "gcp",
           "classification": "modern",
+          "has_page": false,
           "snippet": "Precios y modalidades cambian; ficha siempre con fuente y last_verified.",
           "score": 5.0
         },
@@ -142,6 +156,7 @@
           "type": "concept",
           "domain": "gcp",
           "classification": "modern",
+          "has_page": false,
           "snippet": "Editions y reservas cambian; ficha con fuente.",
           "score": 2.0
         },
@@ -151,6 +166,7 @@
           "type": "concept",
           "domain": "gcp",
           "classification": "modern",
+          "has_page": false,
           "snippet": "No es una tabla externa.",
           "score": 2.0
         },
@@ -160,6 +176,7 @@
           "type": "concept",
           "domain": "sql",
           "classification": "core",
+          "has_page": false,
           "snippet": "El modelo ARRAY/STRUCT de BigQuery no es el de Redshift ni el de Fabric; el dialecto está en bigquery-sql-dialect.",
           "score": 1.5
         }
@@ -174,6 +191,7 @@
           "type": "pattern",
           "domain": "gcp",
           "classification": "modern",
+          "has_page": false,
           "snippet": "Es el patrón SQL en BigQuery; la implementación de producto es dataform-incremental-tables. No fusionar las fichas.",
           "score": 6.0
         }
@@ -188,8 +206,9 @@
           "type": "cloud_service",
           "domain": null,
           "classification": "modern",
+          "has_page": true,
           "snippet": "Data warehouse serverless de Google Cloud con almacenamiento columnar y cómputo separado.",
-          "score": 5.0
+          "score": 5.3
         }
       ]
     },
@@ -202,6 +221,7 @@
           "type": "architecture",
           "domain": "architecture",
           "classification": "core",
+          "has_page": false,
           "snippet": "El escenario de F4 es PostgreSQL → BigQuery; la ficha explica qué cambia con otro origen o destino.",
           "score": 4.5
         }

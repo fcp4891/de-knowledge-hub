@@ -21,6 +21,7 @@ SECTION_KEYS = [
     "production_example", "architecture", "code", "gcp", "aws", "azure", "best_practices", "common_mistakes",
     "trade_offs", "related_concepts", "open_questions", "related_lab", "sources", "last_verified", "change_history",
 ]
+PAGE_BONUS = 0.3  # ADR-007: igual que backend/app/search.py
 SECTION_HEADING = re.compile(r"^## (\d+)\. (.+)$")
 CLOUDS = ("gcp", "aws", "azure")
 
@@ -343,12 +344,13 @@ def candidates(index: ContentIndex) -> list[dict[str, Any]]:
             "slug": slug, "title": entry.concept["title"], "type": entry.concept["kind"], "domain": entry.domain["slug"],
             "classification": entry.concept["classification"],
             "text": page.get("description") or entry.concept.get("note") or entry.concept["title"],
+            "has_page": bool(page),
         })
     for e in index.entities.values():
         if e["type"] in TECHNOLOGY_TYPES or e["type"] == "source":
             items.append({
                 "slug": e["slug"], "title": e["title"], "type": e["type"], "domain": None,
-                "classification": e.get("classification"), "text": e["description"],
+                "classification": e.get("classification"), "text": e["description"], "has_page": True,
             })
     return items
 
@@ -356,7 +358,9 @@ def candidates(index: ContentIndex) -> list[dict[str, Any]]:
 def score(query: str, item: dict[str, Any]) -> float:
     q = normalize(query)
     points = 3.0 * (q in normalize(item["title"])) + 2.0 * (q in item["slug"]) + 1.0 * (q in normalize(item["text"]))
-    return points + 0.5 if points and item["classification"] == "core" else points
+    if not points:
+        return points
+    return round(points + 0.5 * (item["classification"] == "core") + PAGE_BONUS * item["has_page"], 4)
 
 
 def search(index: ContentIndex, query: str, limit: int = 20) -> dict[str, Any]:
@@ -364,7 +368,7 @@ def search(index: ContentIndex, query: str, limit: int = 20) -> dict[str, Any]:
     hits = sorted((pair for pair in scored if pair[0] > 0), key=lambda p: (-p[0], p[1]["title"].lower()))[:limit]
     groups: dict[str, list[dict[str, Any]]] = {}
     for points, item in hits:
-        result = {key: item[key] for key in ("slug", "title", "type", "domain", "classification")}
+        result = {key: item[key] for key in ("slug", "title", "type", "domain", "classification", "has_page")}
         groups.setdefault(item["type"], []).append({**result, "snippet": item["text"][:200], "score": points})
     return {"query": query, "total": len(hits), "groups": [{"type": t, "items": i} for t, i in groups.items()]}
 
