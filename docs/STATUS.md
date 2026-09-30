@@ -10,14 +10,13 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | — (lote 1 de F3 adelantado: 10 fichas) | Gate de F2 | — |
-| B · Cursor | — (B-F2.2 cerrada y mergeada) | B-F2.3 · Búsqueda, relaciones, notas y estado | — |
+| A · Claude Code | Gate de F2 (informe) | — | — |
+| B · Cursor | — (B-F2.3 cerrada y mergeada) | Gate de F2 | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | API real completa (conocimiento, búsqueda y `/me`): ya se puede quitar el modo mock (`make dev`). Detalle en `lane-a.md` | Abierto |
-| A | B | Regenerar el cliente tipado: `422` en todas las operaciones con parámetros (ADR-005) y `PUT`/`DELETE` de notas (ADR-006) | Abierto |
+| — | — | — | — |
 
 ## Criterio de salida de la fase actual (F2)
 - [ ] Con 10 fichas reales se puede navegar Explorer → ficha → relacionados → fuente → búsqueda → nota.
@@ -34,6 +33,7 @@
 - A-F2.4 · Estado personal `/me` en PostgreSQL (ADR-006).
 - Lote 1 de F3 adelantado: validación de las 22 secciones y 10 fichas reales.
 - Remoto y CI: `origin` en GitHub; CI verde en GitHub Actions (Linux).
+- B-F2.3 · Búsqueda (Ctrl+K), relaciones, estado de estudio y notas (crear, editar, borrar) contra la API real; cliente regenerado desde el contrato.
 
 ## Fases cerradas
 - **F0 — Fundaciones** (2026-09-28): `make validate` en verde con la ficha `change-data-capture`.
