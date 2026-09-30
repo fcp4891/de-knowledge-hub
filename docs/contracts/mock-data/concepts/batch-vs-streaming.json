@@ -67,7 +67,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
-      "note": "Event Hubs es una plataforma de streaming con particiones ordenadas y compatibilidad con Apache Kafka."
+      "note": "Event Hubs es una plataforma de streaming con particiones ordenadas para escalar el throughput y compatibilidad con Apache Kafka que permite ejecutar cargas de Kafka existentes sin cambios de código."
     }
   ],
   "created_at": "2026-09-30",
@@ -157,13 +157,13 @@
       "number": 13,
       "key": "azure",
       "title": "Azure",
-      "markdown": "**Event Hubs** es una plataforma de streaming con particiones ordenadas para escalar el throughput y compatibilidad con Apache Kafka. Esa compatibilidad cubre el protocolo, no necesariamente todo el ecosistema de Kafka. Tampoco es lo mismo que Pub/Sub, que no expone particiones al usuario."
+      "markdown": "**Event Hubs** es una plataforma de streaming con particiones ordenadas para escalar el throughput. Su documentación indica compatibilidad con Apache Kafka que permite ejecutar cargas de Kafka existentes sin cambios de código. Antes de migrar, conviene comprobar que las funciones del ecosistema Kafka que se usen (conectores, transacciones, herramientas) estén cubiertas: es una recomendación, no un límite verificado aquí."
     },
     {
       "number": 14,
       "key": "best_practices",
       "title": "Buenas prácticas",
-      "markdown": "- Partir de la latencia que el negocio necesita, no de la tecnología.\n- En streaming, agrupar por event time y definir explícitamente cómo tratar los eventos tardíos.\n- Guardar siempre el crudo para poder recalcular en batch (reconciliación).\n- Diseñar consumidores idempotentes: la entrega por defecto suele ser at-least-once."
+      "markdown": "- Partir de la latencia que el negocio necesita, no de la tecnología.\n- En streaming, agrupar por event time y definir explícitamente cómo tratar los eventos tardíos.\n- Guardar siempre el crudo para poder recalcular en batch (reconciliación).\n- Diseñar consumidores idempotentes: la entrega por defecto suele ser at-least-once.\n- **Observabilidad:** en streaming, vigilar el retraso del consumidor (antigüedad del mensaje más antiguo sin confirmar), el avance del tiempo de evento y la tasa de eventos tardíos o apartados; en batch, la duración de cada ejecución y la frescura del resultado.\n- **Seguridad:** tópicos y suscripciones son recursos con permisos propios: separar quién publica de quién consume y no transportar datos sensibles que el consumidor no necesite.\n- **Costo:** el streaming consume recursos de forma continua, aunque no haya consultas; el batch concentra el costo en ventanas. Calcular ambos con el volumen real antes de decidir."
     },
     {
       "number": 15,
@@ -211,7 +211,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3)."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos."
     }
   ]
 }

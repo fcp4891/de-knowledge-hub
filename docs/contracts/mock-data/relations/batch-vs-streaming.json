@@ -14,6 +14,20 @@
           "note": "CDC convierte una base operacional en un flujo de eventos."
         },
         {
+          "slug": "dead-letter-queue",
+          "title": "Dead-letter queue",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Un pipeline streaming necesita dónde apartar los eventos que no se pueden procesar."
+        },
+        {
+          "slug": "idempotency",
+          "title": "Idempotencia",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "La entrega at-least-once exige procesar de forma idempotente."
+        },
+        {
           "slug": "batch-ingestion",
           "title": "Ingesta batch",
           "entity_type": "concept",

@@ -42,6 +42,13 @@
           "note": null
         },
         {
+          "slug": "batch-vs-streaming",
+          "title": "Batch vs streaming",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "La entrega at-least-once exige procesar de forma idempotente."
+        },
+        {
           "slug": "incremental-load",
           "title": "Carga incremental",
           "entity_type": "pattern",

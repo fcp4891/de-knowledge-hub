@@ -40,6 +40,15 @@
       "note": "Tipos de partición en BigQuery, pruning y gestión por partición."
     },
     {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/transactions",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Transacciones de varias sentencias con commit o rollback atómico."
+    },
+    {
       "source": "aws-athena-docs",
       "title": "Amazon Athena User Guide",
       "url": "https://docs.aws.amazon.com/athena/latest/ug/partitions.html",
@@ -55,7 +64,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
-      "note": "Particiones en Synapse dedicated SQL pool; demasiadas particiones perjudican el rendimiento; partition switching."
+      "note": "Particiones en Synapse dedicated SQL pool; cada tabla ya está repartida en 60 distribuciones; demasiadas particiones perjudican el rendimiento; partition switching."
     }
   ],
   "created_at": "2026-09-30",
@@ -85,7 +94,7 @@
       "number": 3,
       "key": "problem",
       "title": "Problema que resuelve",
-      "markdown": "- **Lectura**: sin partición, cualquier filtro por fecha recorre toda la tabla.\n- **Operación**: reemplazar un día o borrar datos viejos obliga a reescribir o filtrar la tabla entera.\n- **Costo**: en motores que cobran por datos escaneados, leer de más cuesta dinero."
+      "markdown": "- **Lectura**: sin partición, un filtro por fecha suele recorrer toda la tabla, salvo que otro mecanismo permita saltar bloques (estadísticas de un formato columnar, clustering u ordenamiento).\n- **Operación**: reemplazar un día o borrar datos viejos obliga a reescribir o filtrar la tabla entera.\n- **Costo**: en motores que cobran por datos escaneados, leer de más cuesta dinero."
     },
     {
       "number": 4,
@@ -127,7 +136,7 @@
       "number": 10,
       "key": "code",
       "title": "Código",
-      "markdown": "```sql\n-- BigQuery (ejecutable adaptando nombres): partición diaria y reemplazo idempotente de un día.\nCREATE TABLE IF NOT EXISTS `proyecto.dataset.ventas` (venta_id STRING, fecha DATE, monto NUMERIC)\nPARTITION BY fecha;\n\nDELETE FROM `proyecto.dataset.ventas` WHERE fecha = '2026-09-29';\nINSERT INTO `proyecto.dataset.ventas`\nSELECT venta_id, fecha, monto FROM `proyecto.dataset.ventas_stg` WHERE fecha = '2026-09-29';\n```"
+      "markdown": "```sql\n-- BigQuery (ejecutable adaptando nombres): partición diaria y reemplazo atómico e idempotente de un día.\nCREATE TABLE IF NOT EXISTS `proyecto.dataset.ventas` (venta_id STRING, fecha DATE, monto NUMERIC)\nPARTITION BY fecha;\n\nBEGIN TRANSACTION;\nDELETE FROM `proyecto.dataset.ventas` WHERE fecha = '2026-09-29';\nINSERT INTO `proyecto.dataset.ventas`\nSELECT venta_id, fecha, monto FROM `proyecto.dataset.ventas_stg` WHERE fecha = '2026-09-29';\nCOMMIT TRANSACTION;\n```"
     },
     {
       "number": 11,
@@ -151,7 +160,7 @@
       "number": 14,
       "key": "best_practices",
       "title": "Buenas prácticas",
-      "markdown": "- Elegir la columna por los filtros reales de las consultas, no por intuición.\n- Mantener un tamaño de segmento sano: ni demasiados segmentos diminutos ni uno gigante.\n- Escribir por segmento completo para que las cargas sean idempotentes.\n- Verificar el pruning en el plan o en los bytes escaneados."
+      "markdown": "- Elegir la columna por los filtros reales de las consultas, no por intuición.\n- Mantener un tamaño de segmento sano: ni demasiados segmentos diminutos ni uno gigante.\n- Escribir por segmento completo para que las cargas sean idempotentes.\n- Verificar el pruning en el plan o en los bytes escaneados.\n- **Seguridad:** la partición organiza el dato, no lo protege: el control de acceso se define aparte. La expiración o el borrado por partición sirven para cumplir políticas de retención.\n- **Observabilidad:** vigilar particiones vacías, duplicadas o fuera de rango y el volumen escaneado por consulta."
     },
     {
       "number": 15,
@@ -199,7 +208,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3)."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos."
     }
   ]
 }

@@ -58,6 +58,24 @@
       "note": "MERGE exige que cada fila del destino coincida con a lo sumo una fila de origen."
     },
     {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/transactions",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Las transacciones de varias sentencias confirman o revierten atómicamente las mutaciones (inserts, deletes) sobre una o más tablas."
+    },
+    {
+      "source": "aws-redshift-docs",
+      "title": "Amazon Redshift Database Developer Guide",
+      "url": "https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "MERGE de Redshift; si varias filas del destino coinciden con la misma fila de origen, elimina duplicados y conserva una."
+    },
+    {
       "source": "aws-sqs-docs",
       "title": "Amazon SQS Developer Guide",
       "url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html",
@@ -136,7 +154,7 @@
       "number": 7,
       "key": "simple_example",
       "title": "Ejemplo sencillo",
-      "markdown": "Cargar las ventas del 2026-09-30: `DELETE WHERE fecha = '2026-09-30'` seguido de `INSERT` de ese día. Ejecutarlo dos veces deja el mismo resultado. Solo con `INSERT`, la segunda ejecución duplicaría el día."
+      "markdown": "Cargar las ventas del 2026-09-30 reemplazando el día completo **dentro de una transacción**: `DELETE` del día seguido de `INSERT` del día, confirmados juntos. Ejecutarlo dos veces deja el mismo resultado. Sin transacción, un fallo entre ambas sentencias dejaría el día vacío; solo con `INSERT`, la segunda ejecución lo duplicaría.\n\n```sql\n-- BigQuery: reemplazo atómico de un día (transacción de varias sentencias).\nBEGIN TRANSACTION;\nDELETE FROM `proyecto.dataset.ventas` WHERE fecha = '2026-09-30';\nINSERT INTO `proyecto.dataset.ventas`\nSELECT * FROM `proyecto.dataset.ventas_stg` WHERE fecha = '2026-09-30';\nCOMMIT TRANSACTION;\n```"
     },
     {
       "number": 8,
@@ -166,7 +184,7 @@
       "number": 12,
       "key": "aws",
       "title": "AWS",
-      "markdown": "En **SQS**, un mensaje que no se procesa bien vuelve a recibirse hasta `maxReceiveCount` veces antes de pasar a la dead-letter queue: el consumidor debe tolerar la repetición. En **Redshift**, `MERGE` cumple el mismo papel que en BigQuery, pero con otras reglas ante duplicados (ver `sql-merge`)."
+      "markdown": "En **SQS**, un mensaje que no se procesa bien vuelve a recibirse hasta `maxReceiveCount` veces antes de pasar a la dead-letter queue: el consumidor debe tolerar la repetición. En **Redshift**, `MERGE` cumple el mismo papel que en BigQuery, pero si varias filas del destino coinciden con la misma fila de origen, elimina los duplicados y conserva una en lugar de fallar."
     },
     {
       "number": 13,
@@ -178,7 +196,7 @@
       "number": 14,
       "key": "best_practices",
       "title": "Buenas prácticas",
-      "markdown": "- Diseñar cada tarea con una clave de ejecución estable (fecha lógica, lote o partición), no con \"ahora\".\n- Preferir sobrescribir particiones o usar `MERGE` antes que `INSERT` ciego.\n- Guardar un identificador de evento o una versión para poder descartar lo ya aplicado.\n- Probar explícitamente la reejecución: correr dos veces y comparar el resultado."
+      "markdown": "- Diseñar cada tarea con una clave de ejecución estable (fecha lógica, lote o partición), no con \"ahora\".\n- Preferir sobrescribir particiones o usar `MERGE` antes que `INSERT` ciego.\n- Guardar un identificador de evento o una versión para poder descartar lo ya aplicado.\n- Probar explícitamente la reejecución: correr dos veces y comparar el resultado.\n- **Efectos externos** (correo, cobro, llamada a otra API): registrar una clave de idempotencia (id de evento o de operación) antes de producir el efecto y consultarla antes de repetirlo; si el destino externo acepta una clave de idempotencia, enviarla.\n- **Observabilidad:** controlar duplicados comparando `COUNT(*)` con `COUNT(DISTINCT clave)` por partición o lote, y alertar si difieren.\n- **Seguridad:** el identificador de evento no debe contener datos personales; las tablas de staging y de claves heredan la misma clasificación que el dato.\n- **Costo:** un `MERGE` con `UPDATE` o `DELETE` factura origen más destino en BigQuery; filtrar el destino a la ventana afectada lo reduce."
     },
     {
       "number": 15,
@@ -226,7 +244,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-28: creada como stub en F0.\n- 2026-09-30: ficha completa (lote 1 de F3)."
+      "markdown": "- 2026-09-28: creada como stub en F0.\n- 2026-09-30: ficha completa (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos."
     }
   ]
 }

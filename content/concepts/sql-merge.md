@@ -26,11 +26,17 @@ sources:
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/statements/merge-transact-sql
     accessed: 2026-09-30
-    note: MERGE de T-SQL aplica a SQL Server, Azure SQL, Synapse (solo dedicated SQL pool) y Fabric; error si varias filas de origen coinciden con una del destino.
+    note: MERGE de T-SQL aplica a SQL Server, Azure SQL Database, Azure SQL Managed Instance, Azure Synapse Analytics (solo dedicated SQL pool), SQL database en Fabric y Warehouse en Fabric; error si varias filas de origen coinciden con una del destino.
 relations:
   - type: RELATED_TO
     target: idempotency
     note: Con clave y condición de versión, MERGE hace idempotente la carga.
+  - type: RELATED_TO
+    target: scd-type-2
+    note: SCD2 se implementa con MERGE o con sentencias equivalentes.
+  - type: RELATED_TO
+    target: incremental-load
+    note: El modo upsert de la carga incremental usa MERGE.
 created_at: 2026-09-30
 updated_at: 2026-09-30
 last_verified: 2026-09-30
@@ -47,7 +53,7 @@ Es una sentencia DML del estándar SQL que combina `INSERT`, `UPDATE` y `DELETE`
 
 ## 3. Problema que resuelve
 
-Sin `MERGE`, aplicar un lote de cambios requiere varias sentencias (`UPDATE` de las existentes, `INSERT` de las nuevas) y cuidado para que sean coherentes entre sí. `MERGE` expresa la sincronización completa en una operación, con una sola lectura de las tablas.
+Sin `MERGE`, aplicar un lote de cambios requiere varias sentencias (`UPDATE` de las existentes, `INSERT` de las nuevas) y cuidado para que sean coherentes entre sí. `MERGE` expresa la sincronización completa en una sola sentencia; cuántas veces lee cada tabla depende del plan de cada motor.
 
 ## 4. Cómo funciona
 
@@ -75,11 +81,14 @@ La regla clave: **cada fila del destino debe coincidir con a lo sumo una fila de
 ## 7. Ejemplo sencillo
 
 ```sql
+-- Sincroniza el stock con el último conteo de origen: reejecutarlo deja el mismo resultado.
 MERGE inventario t
-USING llegadas s ON t.producto = s.producto
-WHEN MATCHED THEN UPDATE SET cantidad = t.cantidad + s.cantidad
+USING conteos s ON t.producto = s.producto
+WHEN MATCHED THEN UPDATE SET cantidad = s.cantidad
 WHEN NOT MATCHED THEN INSERT (producto, cantidad) VALUES (s.producto, s.cantidad);
 ```
+
+Una variante frecuente, `SET cantidad = t.cantidad + s.cantidad` (sumar llegadas), **no es idempotente**: cada reejecución del mismo lote vuelve a sumar e infla el inventario. Si hay que acumular, el lote necesita un identificador que permita saber si ya se aplicó.
 
 ## 8. Ejemplo de producción
 
@@ -132,6 +141,7 @@ El `MERGE` de T-SQL aplica a SQL Server, Azure SQL Database, Azure SQL Managed I
 - Añadir una condición de versión en `WHEN MATCHED` para no retroceder datos.
 - Limitar el destino a la ventana afectada (particiones) cuando el motor lo permita.
 - Registrar filas insertadas, actualizadas y borradas para reconciliar.
+- **Seguridad:** `MERGE` necesita en el destino los permisos de cada acción que declara (insertar, actualizar, borrar); usar una cuenta de servicio de carga, no la de consulta.
 
 ## 15. Errores frecuentes
 
@@ -175,3 +185,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 1 de F3).
+- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.

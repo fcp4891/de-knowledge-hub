@@ -30,6 +30,12 @@ relations:
   - type: USES
     target: sql-merge
     note: El cierre de versiones y la inserción de la nueva se implementan con MERGE o con dos sentencias.
+  - type: RELATED_TO
+    target: change-data-capture
+    note: CDC entrega cada versión del registro.
+  - type: RELATED_TO
+    target: incremental-load
+    note: La carga SCD2 es una carga incremental.
 created_at: 2026-09-30
 updated_at: 2026-09-30
 last_verified: 2026-09-30
@@ -42,7 +48,7 @@ SCD Type 2 conserva la historia de una dimensión. Cada vez que cambia un atribu
 
 ## 2. Qué es
 
-Es uno de los tipos de *Slowly Changing Dimensions* de Kimball. Cada versión es una fila con su propia surrogate key, más columnas de vigencia (`valid_from`, `valid_to`) y un indicador de versión actual (`is_current`).
+Es uno de los tipos de *Slowly Changing Dimensions* del modelado dimensional de Kimball, un concepto consolidado de la literatura, no una característica de un producto. Cada versión es una fila con su propia surrogate key, más columnas de vigencia (`valid_from`, `valid_to`) y un indicador de versión actual (`is_current`).
 
 ## 3. Problema que resuelve
 
@@ -54,6 +60,8 @@ Si la dimensión se sobrescribe (SCD tipo 1), los informes históricos cambian r
 2. Se **cierra** la versión vigente: `valid_to = momento del cambio` e `is_current = false`.
 3. Se **inserta** la nueva versión: `valid_from = momento del cambio`, `valid_to = null` (o una fecha lejana) e `is_current = true`.
 4. Los hechos guardan la surrogate key de la versión vigente al momento del hecho.
+
+**Convención de vigencia:** el intervalo es semiabierto, `[valid_from, valid_to)`. `valid_from` es inclusivo y `valid_to` es exclusivo, así que la versión vieja cierra en el mismo instante en que abre la nueva sin solaparse. Una versión vigente en el instante `t` cumple `valid_from <= t AND (valid_to IS NULL OR t < valid_to)`.
 
 ## 5. Cuándo utilizarlo
 
@@ -69,7 +77,7 @@ Si la dimensión se sobrescribe (SCD tipo 1), los informes históricos cambian r
 
 ## 7. Ejemplo sencillo
 
-El cliente 42 pasa de la región "Norte" a "Sur" el 2026-09-15:
+El cliente 42 pasa de la región "Norte" a "Sur" el 2026-09-15 (vigencias `[valid_from, valid_to)`):
 
 | sk | cliente_id | región | valid_from | valid_to | is_current |
 |---|---|---|---|---|---|
@@ -135,6 +143,8 @@ En Synapse (dedicated SQL pool) y Fabric Warehouse, el `MERGE` de T-SQL da error
 - Usar la fecha del cambio en el origen, no la de la carga, para `valid_from`.
 - Controlar que haya exactamente una versión vigente por clave y que no haya huecos ni superposiciones.
 - Particionar o clusterizar la dimensión por `is_current` o por la clave natural si es grande.
+- **Seguridad:** SCD2 conserva cada versión de los atributos: si incluyen datos personales, una solicitud de borrado o una política de retención afecta a todas las versiones, no solo a la vigente.
+- **Costo:** la dimensión crece con cada cambio de los atributos seguidos; elegir esos atributos con cuidado controla el tamaño.
 
 ## 15. Errores frecuentes
 
@@ -179,3 +189,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 1 de F3).
+- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.

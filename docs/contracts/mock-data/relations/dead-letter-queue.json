@@ -14,6 +14,13 @@
           "note": null
         },
         {
+          "slug": "batch-vs-streaming",
+          "title": "Batch vs streaming",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Un pipeline streaming necesita dónde apartar los eventos que no se pueden procesar."
+        },
+        {
           "slug": "pubsub-delivery-semantics",
           "title": "Entrega, orden y reintentos en Pub/Sub",
           "entity_type": "concept",

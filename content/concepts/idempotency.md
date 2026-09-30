@@ -27,6 +27,14 @@ sources:
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax
     accessed: 2026-09-30
     note: MERGE exige que cada fila del destino coincida con a lo sumo una fila de origen.
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/transactions
+    accessed: 2026-09-30
+    note: Las transacciones de varias sentencias confirman o revierten atómicamente las mutaciones (inserts, deletes) sobre una o más tablas.
+  - source: aws-redshift-docs
+    url: https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html
+    accessed: 2026-09-30
+    note: MERGE de Redshift; si varias filas del destino coinciden con la misma fila de origen, elimina duplicados y conserva una.
   - source: aws-sqs-docs
     url: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html
     accessed: 2026-09-30
@@ -43,6 +51,12 @@ relations:
   - type: RELATED_TO
     target: sql-merge
     note: MERGE con clave y condición de versión es la forma habitual de escribir idempotentemente en un warehouse.
+  - type: RELATED_TO
+    target: change-data-capture
+    note: El CDC puede reenviar cambios; el destino debe aplicarlos de forma idempotente.
+  - type: RELATED_TO
+    target: dead-letter-queue
+    note: Los reintentos previos a la DLQ exigen consumidores idempotentes.
 created_at: 2026-09-28
 updated_at: 2026-09-30
 last_verified: 2026-09-30
@@ -80,7 +94,16 @@ Hay efectos que no deben repetirse y que no se pueden volver idempotentes solo c
 
 ## 7. Ejemplo sencillo
 
-Cargar las ventas del 2026-09-30: `DELETE WHERE fecha = '2026-09-30'` seguido de `INSERT` de ese día. Ejecutarlo dos veces deja el mismo resultado. Solo con `INSERT`, la segunda ejecución duplicaría el día.
+Cargar las ventas del 2026-09-30 reemplazando el día completo **dentro de una transacción**: `DELETE` del día seguido de `INSERT` del día, confirmados juntos. Ejecutarlo dos veces deja el mismo resultado. Sin transacción, un fallo entre ambas sentencias dejaría el día vacío; solo con `INSERT`, la segunda ejecución lo duplicaría.
+
+```sql
+-- BigQuery: reemplazo atómico de un día (transacción de varias sentencias).
+BEGIN TRANSACTION;
+DELETE FROM `proyecto.dataset.ventas` WHERE fecha = '2026-09-30';
+INSERT INTO `proyecto.dataset.ventas`
+SELECT * FROM `proyecto.dataset.ventas_stg` WHERE fecha = '2026-09-30';
+COMMIT TRANSACTION;
+```
 
 ## 8. Ejemplo de producción
 
@@ -120,7 +143,7 @@ WHEN NOT MATCHED THEN
 
 ## 12. AWS
 
-En **SQS**, un mensaje que no se procesa bien vuelve a recibirse hasta `maxReceiveCount` veces antes de pasar a la dead-letter queue: el consumidor debe tolerar la repetición. En **Redshift**, `MERGE` cumple el mismo papel que en BigQuery, pero con otras reglas ante duplicados (ver `sql-merge`).
+En **SQS**, un mensaje que no se procesa bien vuelve a recibirse hasta `maxReceiveCount` veces antes de pasar a la dead-letter queue: el consumidor debe tolerar la repetición. En **Redshift**, `MERGE` cumple el mismo papel que en BigQuery, pero si varias filas del destino coinciden con la misma fila de origen, elimina los duplicados y conserva una en lugar de fallar.
 
 ## 13. Azure
 
@@ -132,6 +155,10 @@ En **Service Bus**, un mensaje se reentrega hasta su *max delivery count* antes 
 - Preferir sobrescribir particiones o usar `MERGE` antes que `INSERT` ciego.
 - Guardar un identificador de evento o una versión para poder descartar lo ya aplicado.
 - Probar explícitamente la reejecución: correr dos veces y comparar el resultado.
+- **Efectos externos** (correo, cobro, llamada a otra API): registrar una clave de idempotencia (id de evento o de operación) antes de producir el efecto y consultarla antes de repetirlo; si el destino externo acepta una clave de idempotencia, enviarla.
+- **Observabilidad:** controlar duplicados comparando `COUNT(*)` con `COUNT(DISTINCT clave)` por partición o lote, y alertar si difieren.
+- **Seguridad:** el identificador de evento no debe contener datos personales; las tablas de staging y de claves heredan la misma clasificación que el dato.
+- **Costo:** un `MERGE` con `UPDATE` o `DELETE` factura origen más destino en BigQuery; filtrar el destino a la ventana afectada lo reduce.
 
 ## 15. Errores frecuentes
 
@@ -177,3 +204,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-09-28: creada como stub en F0.
 - 2026-09-30: ficha completa (lote 1 de F3).
+- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.

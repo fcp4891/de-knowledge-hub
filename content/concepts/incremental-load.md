@@ -26,6 +26,10 @@ sources:
     url: https://docs.aws.amazon.com/athena/latest/ug/partitions.html
     accessed: 2026-09-30
     note: Particiones en S3 para restringir los datos escaneados.
+  - source: aws-redshift-docs
+    url: https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html
+    accessed: 2026-09-30
+    note: MERGE de Redshift para aplicar cambios desde una tabla de origen.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-tables-partition
     accessed: 2026-09-30
@@ -37,6 +41,12 @@ relations:
   - type: DEPENDS_ON
     target: idempotency
     note: Sin idempotencia, cada reintento duplica el incremento.
+  - type: RELATED_TO
+    target: partitioning
+    note: La sobrescritura por período trabaja con particiones.
+  - type: RELATED_TO
+    target: bigquery-partitioning
+    note: En BigQuery, cada ejecución puede escribir solo la partición de su período.
 created_at: 2026-09-30
 updated_at: 2026-09-30
 last_verified: 2026-09-30
@@ -123,7 +133,7 @@ ${when(incremental(),
 
 ## 12. AWS
 
-En un lake consultado con **Athena**, lo incremental suele ser escribir la partición nueva en S3 (y registrarla en el catálogo). En **Redshift**, se usa `MERGE` desde staging. No hay un equivalente directo a las tablas incrementales de Dataform dentro del servicio.
+En un lake consultado con **Athena**, lo incremental suele ser escribir la partición nueva en S3 (y registrarla en el catálogo). En **Redshift**, el modo upsert se implementa con `MERGE` desde una tabla de staging.
 
 ## 13. Azure
 
@@ -135,6 +145,7 @@ En el dedicated SQL pool de **Synapse**, el *partition switching* permite cargar
 - Hacer la escritura idempotente (sobrescritura de partición o `MERGE` con versión).
 - Tener un modo de carga completa o backfill por rango para recuperarse.
 - Reconciliar periódicamente contra el origen (conteos, sumas, rangos).
+- **Seguridad:** leer del origen con un usuario de solo lectura y, si la carga es pesada, desde una réplica; el watermark no debe exponer datos del origen.
 
 ## 15. Errores frecuentes
 
@@ -179,3 +190,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 1 de F3).
+- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.

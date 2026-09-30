@@ -17,7 +17,7 @@ sources:
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/dead-letter-topics
     accessed: 2026-09-30
-    note: Dead-letter topics; intentos de entrega entre 5 (mínimo y por defecto) y 100 (máximo); conteo aproximado y best-effort; el mensaje se reenvía envuelto con atributos de la suscripción de origen.
+    note: Dead-letter topics; intentos de entrega entre 5 (mínimo y por defecto) y 100 (máximo); conteo aproximado y best-effort; el mensaje se reenvía envuelto con atributos de la suscripción de origen; Pub/Sub solo cuenta intentos si el dead-letter topic está bien configurado y con los permisos IAM correctos.
   - source: aws-sqs-docs
     url: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html
     accessed: 2026-09-30
@@ -30,6 +30,9 @@ relations:
   - type: RELATED_TO
     target: idempotency
     note: Los reintentos previos a la DLQ exigen consumidores idempotentes.
+  - type: RELATED_TO
+    target: batch-vs-streaming
+    note: La DLQ es típica de los pipelines streaming.
 created_at: 2026-09-30
 updated_at: 2026-09-30
 last_verified: 2026-09-30
@@ -125,6 +128,8 @@ En **Service Bus**, cada cola y cada suscripción de tópico tiene su propia **s
 - Guardar el motivo del error junto al mensaje.
 - Tener un procedimiento de redrive documentado y consumidores idempotentes.
 - Distinguir errores transitorios (reintentar con backoff) de permanentes (apartar).
+- **Costo:** los mensajes retenidos en la DLQ ocupan almacenamiento del broker mientras no se procesan; definir una retención acorde al tiempo de diagnóstico y no conservarlos indefinidamente. En SQS, la expiración cuenta desde el encolado original, así que un mensaje que pasó mucho tiempo en la cola principal expira antes en la DLQ.
+- **Seguridad:** la DLQ contiene los mismos datos que el flujo principal: aplicar los mismos permisos y la misma clasificación.
 
 ## 15. Errores frecuentes
 
@@ -168,3 +173,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 1 de F3).
+- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.

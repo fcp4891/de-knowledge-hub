@@ -74,7 +74,7 @@
       "number": 1,
       "key": "summary",
       "title": "Resumen",
-      "markdown": "**ETL** extrae, transforma fuera del destino y carga el resultado. **ELT** extrae, carga los datos crudos en el warehouse o el lake y los transforma allí, normalmente con SQL. ELT domina con los warehouses cloud actuales, pero ETL sigue siendo necesario cuando hay que filtrar, anonimizar o reducir antes de cargar."
+      "markdown": "**ETL** extrae, transforma fuera del destino y carga el resultado. **ELT** extrae, carga los datos crudos en el warehouse o el lake y los transforma allí, normalmente con SQL. ELT es la opción natural cuando el destino tiene cómputo escalable; ETL sigue siendo necesario cuando hay que filtrar, anonimizar o reducir antes de cargar. Es un criterio de diseño, no una medición del mercado."
     },
     {
       "number": 2,
@@ -152,7 +152,7 @@
       "number": 14,
       "key": "best_practices",
       "title": "Buenas prácticas",
-      "markdown": "- Conservar siempre una capa raw inmutable cuando la privacidad lo permita: habilita reprocesos.\n- Versionar las transformaciones (SQL en Git, Dataform o dbt) y probarlas.\n- Decidir por dato qué debe transformarse antes de aterrizar (PII, volumen) y documentarlo.\n- Hacer incrementales las transformaciones pesadas."
+      "markdown": "- Conservar siempre una capa raw inmutable cuando la privacidad lo permita: habilita reprocesos.\n- Versionar las transformaciones (SQL en Git, Dataform o dbt) y probarlas.\n- Decidir por dato qué debe transformarse antes de aterrizar (PII, volumen) y documentarlo.\n- Hacer incrementales las transformaciones pesadas.\n- **Observabilidad:** medir por capa (raw, curated, serving) conteos, frescura y errores de transformación, y alertar cuando una capa deja de avanzar respecto de la anterior.\n- **Seguridad:** en ELT, la capa raw contiene el dato sin tratar: restringir su acceso más que el de las capas modeladas; en ETL, el motor intermedio también ve el dato crudo."
     },
     {
       "number": 15,
@@ -200,7 +200,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3)."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos."
     }
   ]
 }

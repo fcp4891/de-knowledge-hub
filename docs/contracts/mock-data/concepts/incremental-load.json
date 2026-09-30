@@ -58,6 +58,15 @@
       "note": "Particiones en S3 para restringir los datos escaneados."
     },
     {
+      "source": "aws-redshift-docs",
+      "title": "Amazon Redshift Database Developer Guide",
+      "url": "https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "MERGE de Redshift para aplicar cambios desde una tabla de origen."
+    },
+    {
       "source": "microsoft-learn",
       "title": "Microsoft Learn",
       "url": "https://learn.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-tables-partition",
@@ -148,7 +157,7 @@
       "number": 12,
       "key": "aws",
       "title": "AWS",
-      "markdown": "En un lake consultado con **Athena**, lo incremental suele ser escribir la partición nueva en S3 (y registrarla en el catálogo). En **Redshift**, se usa `MERGE` desde staging. No hay un equivalente directo a las tablas incrementales de Dataform dentro del servicio."
+      "markdown": "En un lake consultado con **Athena**, lo incremental suele ser escribir la partición nueva en S3 (y registrarla en el catálogo). En **Redshift**, el modo upsert se implementa con `MERGE` desde una tabla de staging."
     },
     {
       "number": 13,
@@ -160,7 +169,7 @@
       "number": 14,
       "key": "best_practices",
       "title": "Buenas prácticas",
-      "markdown": "- Guardar el watermark solo tras escribir con éxito, y solapar la ventana.\n- Hacer la escritura idempotente (sobrescritura de partición o `MERGE` con versión).\n- Tener un modo de carga completa o backfill por rango para recuperarse.\n- Reconciliar periódicamente contra el origen (conteos, sumas, rangos)."
+      "markdown": "- Guardar el watermark solo tras escribir con éxito, y solapar la ventana.\n- Hacer la escritura idempotente (sobrescritura de partición o `MERGE` con versión).\n- Tener un modo de carga completa o backfill por rango para recuperarse.\n- Reconciliar periódicamente contra el origen (conteos, sumas, rangos).\n- **Seguridad:** leer del origen con un usuario de solo lectura y, si la carga es pesada, desde una réplica; el watermark no debe exponer datos del origen."
     },
     {
       "number": 15,
@@ -208,7 +217,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3)."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos."
     }
   ]
 }

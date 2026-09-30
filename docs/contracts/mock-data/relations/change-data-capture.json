@@ -105,6 +105,13 @@
           "note": null
         },
         {
+          "slug": "etl-vs-elt",
+          "title": "ETL vs ELT",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "CDC alimenta la capa raw en un flujo ELT."
+        },
+        {
           "slug": "idempotency",
           "title": "Idempotencia",
           "entity_type": "concept",

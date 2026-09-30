@@ -54,7 +54,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
-      "note": "MERGE de T-SQL aplica a SQL Server, Azure SQL, Synapse (solo dedicated SQL pool) y Fabric; error si varias filas de origen coinciden con una del destino."
+      "note": "MERGE de T-SQL aplica a SQL Server, Azure SQL Database, Azure SQL Managed Instance, Azure Synapse Analytics (solo dedicated SQL pool), SQL database en Fabric y Warehouse en Fabric; error si varias filas de origen coinciden con una del destino."
     }
   ],
   "created_at": "2026-09-30",
@@ -84,7 +84,7 @@
       "number": 3,
       "key": "problem",
       "title": "Problema que resuelve",
-      "markdown": "Sin `MERGE`, aplicar un lote de cambios requiere varias sentencias (`UPDATE` de las existentes, `INSERT` de las nuevas) y cuidado para que sean coherentes entre sí. `MERGE` expresa la sincronización completa en una operación, con una sola lectura de las tablas."
+      "markdown": "Sin `MERGE`, aplicar un lote de cambios requiere varias sentencias (`UPDATE` de las existentes, `INSERT` de las nuevas) y cuidado para que sean coherentes entre sí. `MERGE` expresa la sincronización completa en una sola sentencia; cuántas veces lee cada tabla depende del plan de cada motor."
     },
     {
       "number": 4,
@@ -108,7 +108,7 @@
       "number": 7,
       "key": "simple_example",
       "title": "Ejemplo sencillo",
-      "markdown": "```sql\nMERGE inventario t\nUSING llegadas s ON t.producto = s.producto\nWHEN MATCHED THEN UPDATE SET cantidad = t.cantidad + s.cantidad\nWHEN NOT MATCHED THEN INSERT (producto, cantidad) VALUES (s.producto, s.cantidad);\n```"
+      "markdown": "```sql\n-- Sincroniza el stock con el último conteo de origen: reejecutarlo deja el mismo resultado.\nMERGE inventario t\nUSING conteos s ON t.producto = s.producto\nWHEN MATCHED THEN UPDATE SET cantidad = s.cantidad\nWHEN NOT MATCHED THEN INSERT (producto, cantidad) VALUES (s.producto, s.cantidad);\n```\n\nUna variante frecuente, `SET cantidad = t.cantidad + s.cantidad` (sumar llegadas), **no es idempotente**: cada reejecución del mismo lote vuelve a sumar e infla el inventario. Si hay que acumular, el lote necesita un identificador que permita saber si ya se aplicó."
     },
     {
       "number": 8,
@@ -150,7 +150,7 @@
       "number": 14,
       "key": "best_practices",
       "title": "Buenas prácticas",
-      "markdown": "- Deduplicar siempre el origen por la clave de la condición `ON`.\n- Añadir una condición de versión en `WHEN MATCHED` para no retroceder datos.\n- Limitar el destino a la ventana afectada (particiones) cuando el motor lo permita.\n- Registrar filas insertadas, actualizadas y borradas para reconciliar."
+      "markdown": "- Deduplicar siempre el origen por la clave de la condición `ON`.\n- Añadir una condición de versión en `WHEN MATCHED` para no retroceder datos.\n- Limitar el destino a la ventana afectada (particiones) cuando el motor lo permita.\n- Registrar filas insertadas, actualizadas y borradas para reconciliar.\n- **Seguridad:** `MERGE` necesita en el destino los permisos de cada acción que declara (insertar, actualizar, borrar); usar una cuenta de servicio de carga, no la de consulta."
     },
     {
       "number": 15,
@@ -198,7 +198,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3)."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos."
     }
   ]
 }

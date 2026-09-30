@@ -14,6 +14,13 @@
           "note": null
         },
         {
+          "slug": "incremental-load",
+          "title": "Carga incremental",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Cada ejecución incremental puede reemplazar solo su partición."
+        },
+        {
           "slug": "bigquery-clustering",
           "title": "Clustering en BigQuery",
           "entity_type": "concept",
@@ -24,8 +31,8 @@
           "slug": "partitioning",
           "title": "Particionamiento",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Implementación en BigQuery."
         },
         {
           "slug": "partition-pruning",

@@ -21,6 +21,13 @@
           "note": "En ELT, la carga incremental suele resolverse dentro del warehouse."
         },
         {
+          "slug": "change-data-capture",
+          "title": "Change Data Capture",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "CDC alimenta la capa raw en un flujo ELT."
+        },
+        {
           "slug": "data-warehouse",
           "title": "Data Warehouse",
           "entity_type": "concept",

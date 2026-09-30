@@ -19,6 +19,10 @@ sources:
     url: https://docs.cloud.google.com/bigquery/docs/partitioned-tables
     accessed: 2026-09-30
     note: Tipos de partición en BigQuery, pruning y gestión por partición.
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/transactions
+    accessed: 2026-09-30
+    note: Transacciones de varias sentencias con commit o rollback atómico.
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/partitions.html
     accessed: 2026-09-30
@@ -26,7 +30,14 @@ sources:
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-tables-partition
     accessed: 2026-09-30
-    note: Particiones en Synapse dedicated SQL pool; demasiadas particiones perjudican el rendimiento; partition switching.
+    note: Particiones en Synapse dedicated SQL pool; cada tabla ya está repartida en 60 distribuciones; demasiadas particiones perjudican el rendimiento; partition switching.
+relations:
+  - type: RELATED_TO
+    target: bigquery-partitioning
+    note: Implementación en BigQuery.
+  - type: RELATED_TO
+    target: incremental-load
+    note: La carga por período reemplaza segmentos completos.
 created_at: 2026-09-30
 updated_at: 2026-09-30
 last_verified: 2026-09-30
@@ -43,7 +54,7 @@ Es una decisión de **layout físico**, no de modelo lógico: la tabla sigue sie
 
 ## 3. Problema que resuelve
 
-- **Lectura**: sin partición, cualquier filtro por fecha recorre toda la tabla.
+- **Lectura**: sin partición, un filtro por fecha suele recorrer toda la tabla, salvo que otro mecanismo permita saltar bloques (estadísticas de un formato columnar, clustering u ordenamiento).
 - **Operación**: reemplazar un día o borrar datos viejos obliga a reescribir o filtrar la tabla entera.
 - **Costo**: en motores que cobran por datos escaneados, leer de más cuesta dinero.
 
@@ -84,13 +95,15 @@ flowchart LR
 ## 10. Código
 
 ```sql
--- BigQuery (ejecutable adaptando nombres): partición diaria y reemplazo idempotente de un día.
+-- BigQuery (ejecutable adaptando nombres): partición diaria y reemplazo atómico e idempotente de un día.
 CREATE TABLE IF NOT EXISTS `proyecto.dataset.ventas` (venta_id STRING, fecha DATE, monto NUMERIC)
 PARTITION BY fecha;
 
+BEGIN TRANSACTION;
 DELETE FROM `proyecto.dataset.ventas` WHERE fecha = '2026-09-29';
 INSERT INTO `proyecto.dataset.ventas`
 SELECT venta_id, fecha, monto FROM `proyecto.dataset.ventas_stg` WHERE fecha = '2026-09-29';
+COMMIT TRANSACTION;
 ```
 
 ## 11. GCP
@@ -111,6 +124,8 @@ El dedicated SQL pool de **Azure Synapse** admite particiones de tabla, con spli
 - Mantener un tamaño de segmento sano: ni demasiados segmentos diminutos ni uno gigante.
 - Escribir por segmento completo para que las cargas sean idempotentes.
 - Verificar el pruning en el plan o en los bytes escaneados.
+- **Seguridad:** la partición organiza el dato, no lo protege: el control de acceso se define aparte. La expiración o el borrado por partición sirven para cumplir políticas de retención.
+- **Observabilidad:** vigilar particiones vacías, duplicadas o fuera de rango y el volumen escaneado por consulta.
 
 ## 15. Errores frecuentes
 
@@ -154,3 +169,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 1 de F3).
+- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.

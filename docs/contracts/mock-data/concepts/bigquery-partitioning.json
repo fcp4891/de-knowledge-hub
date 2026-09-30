@@ -33,7 +33,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
-      "note": "Tipos de partición (columna de tiempo, ingesta, rango de enteros), particiones __NULL__ y __UNPARTITIONED__, pruning, expiración de particiones, combinación con clustering."
+      "note": "Tipos de partición (columna de tiempo, ingesta, rango de enteros), particiones __NULL__ y __UNPARTITIONED__ (valores anteriores a 1960-01-01 o posteriores a 2159-12-31), pruning, expiración de particiones, combinación con clustering."
     },
     {
       "source": "gcp-bigquery-docs",
@@ -60,7 +60,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
-      "note": "Ejemplos oficiales de CREATE TABLE con RANGE_BUCKET(customer_id, GENERATE_ARRAY(0, 100, 10)) y opciones de expiración."
+      "note": "Ejemplos oficiales de CREATE TABLE con RANGE_BUCKET(customer_id, GENERATE_ARRAY(0, 100, 10)), partition_expiration_days y require_partition_filter."
     },
     {
       "source": "aws-athena-docs",
@@ -70,6 +70,24 @@
       "authority_level": 1,
       "accessed": "2026-09-30",
       "note": "Athena particiona por cualquier clave (estilo Hive u otro) para limitar los datos escaneados."
+    },
+    {
+      "source": "aws-redshift-docs",
+      "title": "Amazon Redshift Database Developer Guide",
+      "url": "https://docs.aws.amazon.com/redshift/latest/dg/t_Sorting_data.html",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Redshift optimiza con sort keys."
+    },
+    {
+      "source": "aws-redshift-docs",
+      "title": "Amazon Redshift Database Developer Guide",
+      "url": "https://docs.aws.amazon.com/redshift/latest/dg/t_Distributing_data.html",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Redshift reparte las filas entre los nodos según el estilo de distribución de la tabla."
     },
     {
       "source": "microsoft-learn",
@@ -162,7 +180,7 @@
       "number": 12,
       "key": "aws",
       "title": "AWS",
-      "markdown": "No hay un equivalente directo en un único servicio:\n\n- **Athena** particiona datos en S3 por cualquier clave (a menudo carpetas estilo Hive, `dt=2026-09-30/`) y así limita los datos escaneados.\n- **Redshift** optimiza con claves de distribución y de orden, y no tiene particiones de tabla como las de BigQuery.\n\nTrasladar un diseño de BigQuery exige revisar el modelo físico de cada servicio."
+      "markdown": "No hay un equivalente directo en un único servicio:\n\n- **Athena** particiona datos en S3 por cualquier clave (a menudo carpetas estilo Hive, `dt=2026-09-30/`) y así limita los datos escaneados.\n- **Redshift** optimiza el layout físico con el estilo de distribución (cómo reparte filas entre nodos) y con sort keys; ese es el modelo que hay que diseñar al migrar, en lugar de las particiones de BigQuery.\n\nTrasladar un diseño de BigQuery exige revisar el modelo físico de cada servicio."
     },
     {
       "number": 13,
@@ -174,7 +192,7 @@
       "number": 14,
       "key": "best_practices",
       "title": "Buenas prácticas",
-      "markdown": "- Particionar por la columna que usan los filtros más frecuentes (casi siempre, la fecha del evento).\n- Elegir la granularidad según el volumen: diaria por defecto; mensual si habría demasiadas particiones.\n- Combinar con clustering para el segundo filtro más común.\n- Fijar la expiración de particiones según la política de retención.\n- Revisar en `INFORMATION_SCHEMA` y en el plan de ejecución que las consultas hacen pruning."
+      "markdown": "- Particionar por la columna que usan los filtros más frecuentes (casi siempre, la fecha del evento).\n- Elegir la granularidad según el volumen: diaria por defecto; mensual si habría demasiadas particiones.\n- Combinar con clustering para el segundo filtro más común.\n- Fijar la expiración de particiones según la política de retención.\n- Revisar en `INFORMATION_SCHEMA` y en el plan de ejecución que las consultas hacen pruning.\n- **Costo:** la opción `require_partition_filter` obliga a filtrar por la columna de partición y evita consultas que lean la tabla entera por descuido.\n- **Seguridad:** la partición no controla el acceso; la expiración de particiones ayuda a cumplir la retención definida para el dato."
     },
     {
       "number": 15,
@@ -222,7 +240,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3)."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos."
     }
   ]
 }

@@ -80,7 +80,7 @@
       "number": 2,
       "key": "what_is",
       "title": "Qué es",
-      "markdown": "Es uno de los tipos de *Slowly Changing Dimensions* de Kimball. Cada versión es una fila con su propia surrogate key, más columnas de vigencia (`valid_from`, `valid_to`) y un indicador de versión actual (`is_current`)."
+      "markdown": "Es uno de los tipos de *Slowly Changing Dimensions* del modelado dimensional de Kimball, un concepto consolidado de la literatura, no una característica de un producto. Cada versión es una fila con su propia surrogate key, más columnas de vigencia (`valid_from`, `valid_to`) y un indicador de versión actual (`is_current`)."
     },
     {
       "number": 3,
@@ -92,7 +92,7 @@
       "number": 4,
       "key": "how_it_works",
       "title": "Cómo funciona",
-      "markdown": "1. Se detecta el cambio comparando el registro entrante con la versión vigente: por atributos o por un hash de los atributos seguidos.\n2. Se **cierra** la versión vigente: `valid_to = momento del cambio` e `is_current = false`.\n3. Se **inserta** la nueva versión: `valid_from = momento del cambio`, `valid_to = null` (o una fecha lejana) e `is_current = true`.\n4. Los hechos guardan la surrogate key de la versión vigente al momento del hecho."
+      "markdown": "1. Se detecta el cambio comparando el registro entrante con la versión vigente: por atributos o por un hash de los atributos seguidos.\n2. Se **cierra** la versión vigente: `valid_to = momento del cambio` e `is_current = false`.\n3. Se **inserta** la nueva versión: `valid_from = momento del cambio`, `valid_to = null` (o una fecha lejana) e `is_current = true`.\n4. Los hechos guardan la surrogate key de la versión vigente al momento del hecho.\n\n**Convención de vigencia:** el intervalo es semiabierto, `[valid_from, valid_to)`. `valid_from` es inclusivo y `valid_to` es exclusivo, así que la versión vieja cierra en el mismo instante en que abre la nueva sin solaparse. Una versión vigente en el instante `t` cumple `valid_from <= t AND (valid_to IS NULL OR t < valid_to)`."
     },
     {
       "number": 5,
@@ -110,7 +110,7 @@
       "number": 7,
       "key": "simple_example",
       "title": "Ejemplo sencillo",
-      "markdown": "El cliente 42 pasa de la región \"Norte\" a \"Sur\" el 2026-09-15:\n\n| sk | cliente_id | región | valid_from | valid_to | is_current |\n|---|---|---|---|---|---|\n| 101 | 42 | Norte | 2025-01-10 | 2026-09-15 | false |\n| 187 | 42 | Sur | 2026-09-15 | null | true |"
+      "markdown": "El cliente 42 pasa de la región \"Norte\" a \"Sur\" el 2026-09-15 (vigencias `[valid_from, valid_to)`):\n\n| sk | cliente_id | región | valid_from | valid_to | is_current |\n|---|---|---|---|---|---|\n| 101 | 42 | Norte | 2025-01-10 | 2026-09-15 | false |\n| 187 | 42 | Sur | 2026-09-15 | null | true |"
     },
     {
       "number": 8,
@@ -152,7 +152,7 @@
       "number": 14,
       "key": "best_practices",
       "title": "Buenas prácticas",
-      "markdown": "- Definir explícitamente qué atributos disparan una nueva versión (y usar hash para compararlos).\n- Usar la fecha del cambio en el origen, no la de la carga, para `valid_from`.\n- Controlar que haya exactamente una versión vigente por clave y que no haya huecos ni superposiciones.\n- Particionar o clusterizar la dimensión por `is_current` o por la clave natural si es grande."
+      "markdown": "- Definir explícitamente qué atributos disparan una nueva versión (y usar hash para compararlos).\n- Usar la fecha del cambio en el origen, no la de la carga, para `valid_from`.\n- Controlar que haya exactamente una versión vigente por clave y que no haya huecos ni superposiciones.\n- Particionar o clusterizar la dimensión por `is_current` o por la clave natural si es grande.\n- **Seguridad:** SCD2 conserva cada versión de los atributos: si incluyen datos personales, una solicitud de borrado o una política de retención afecta a todas las versiones, no solo a la vigente.\n- **Costo:** la dimensión crece con cada cambio de los atributos seguidos; elegir esos atributos con cuidado controla el tamaño."
     },
     {
       "number": 15,
@@ -200,7 +200,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3)."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos."
     }
   ]
 }

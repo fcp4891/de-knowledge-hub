@@ -19,13 +19,22 @@ sources:
     url: https://www.postgresql.org/docs/current/logicaldecoding-explanation.html
     accessed: 2026-09-30
     note: Logical decoding sobre el WAL; los slots emiten cada cambio una vez en operación normal, pueden reenviar cambios tras un crash e impiden eliminar WAL requerido.
+  - source: postgresql-docs
+    url: https://www.postgresql.org/docs/current/logical-replication-security.html
+    accessed: 2026-09-30
+    note: El rol de la conexión de replicación necesita el atributo REPLICATION (o ser superusuario).
+  - source: postgresql-docs
+    url: https://www.postgresql.org/docs/current/view-pg-replication-slots.html
+    accessed: 2026-09-30
+    note: La vista pg_replication_slots expone restart_lsn (WAL más antiguo que el consumidor aún puede necesitar) y confirmed_flush_lsn (hasta dónde confirmó el consumidor).
   - source: debezium-docs
     url: https://debezium.io/documentation/reference/stable/connectors/postgresql.html
-    accessed: 2026-09-28
+    accessed: 2026-09-30
+    note: El conector de PostgreSQL de Debezium usa logical decoding (pgoutput desde PostgreSQL 10).
   - source: gcp-datastream-docs
     url: https://docs.cloud.google.com/datastream/docs/overview
     accessed: 2026-09-30
-    note: Datastream es un servicio serverless de CDC y replicación; admite PostgreSQL como origen y BigQuery como destino.
+    note: Datastream es un servicio serverless de CDC y replicación, sin recursos que aprovisionar ni administrar y que escala automáticamente; admite PostgreSQL como origen y BigQuery como destino.
   - source: aws-dms-docs
     url: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html
     accessed: 2026-09-30
@@ -66,7 +75,7 @@ Las extracciones completas o por timestamp son costosas, cargan la base operacio
 
 Hay tres variantes:
 
-- **Basado en log** (preferido): lee el log de transacciones del motor. En PostgreSQL, *logical decoding* decodifica el write-ahead log (WAL) en un flujo de cambios, y un *replication slot* guarda la posición de cada consumidor.
+- **Basado en log** (preferido): lee el log de transacciones del motor. En PostgreSQL, *logical decoding* decodifica el write-ahead log (WAL) en un flujo de cambios, y un *replication slot* guarda la posición de cada consumidor. Debezium, por ejemplo, lee ese flujo con el plugin `pgoutput`.
 - **Basado en triggers**: cada cambio se escribe en una tabla auxiliar. Añade carga a cada transacción del origen.
 - **Basado en consultas** (timestamp o versión): simple, pero no ve borrados físicos ni estados intermedios.
 
@@ -139,6 +148,9 @@ SQL Server, Azure SQL Managed Instance y Azure SQL Database tienen **CDC nativo 
 - Monitorear el retraso de replicación y el WAL retenido: un slot sin consumidor impide eliminar WAL y consume disco.
 - Gestionar la evolución de esquema de forma explícita y probarla antes de producción.
 - Tener un procedimiento de re-snapshot (backfill) documentado.
+- **Seguridad:** el rol de replicación necesita el atributo `REPLICATION` (o ser superusuario): usar un rol dedicado, con acceso solo a las tablas publicadas, credenciales en un gestor de secretos y conexión cifrada hacia el conector.
+- **Observabilidad:** medir, por slot, cuánto WAL retiene y cuánto retrasa el consumidor a partir de `restart_lsn` y `confirmed_flush_lsn` en `pg_replication_slots`, y alertar sobre ambos. Además, conciliar conteos entre origen y destino.
+- **Costo:** el WAL retenido ocupa disco en el origen; el servicio de CDC (Datastream o la instancia de DMS) y las escrituras en el destino se facturan aparte. Sin precios aquí: dependen del servicio y cambian.
 
 ## 15. Errores frecuentes
 
@@ -186,3 +198,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-09-28: creación como ficha de ejemplo de F0.
 - 2026-09-30: lote 1 de F3. Secciones de GCP, AWS y Azure verificadas con documentación oficial; ejemplo de MERGE con deduplicación; reenvío de cambios tras un crash.
+- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.

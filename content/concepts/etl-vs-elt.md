@@ -31,6 +31,9 @@ relations:
   - type: RELATED_TO
     target: incremental-load
     note: En ELT, la carga incremental suele resolverse dentro del warehouse.
+  - type: RELATED_TO
+    target: change-data-capture
+    note: CDC alimenta la capa raw en un flujo ELT.
 created_at: 2026-09-30
 updated_at: 2026-09-30
 last_verified: 2026-09-30
@@ -39,7 +42,7 @@ verification_status: review_required
 
 ## 1. Resumen
 
-**ETL** extrae, transforma fuera del destino y carga el resultado. **ELT** extrae, carga los datos crudos en el warehouse o el lake y los transforma allí, normalmente con SQL. ELT domina con los warehouses cloud actuales, pero ETL sigue siendo necesario cuando hay que filtrar, anonimizar o reducir antes de cargar.
+**ETL** extrae, transforma fuera del destino y carga el resultado. **ELT** extrae, carga los datos crudos en el warehouse o el lake y los transforma allí, normalmente con SQL. ELT es la opción natural cuando el destino tiene cómputo escalable; ETL sigue siendo necesario cuando hay que filtrar, anonimizar o reducir antes de cargar. Es un criterio de diseño, no una medición del mercado.
 
 ## 2. Qué es
 
@@ -126,6 +129,8 @@ En Azure y Microsoft Fabric, el mismo par se da con Data Factory o los pipelines
 - Versionar las transformaciones (SQL en Git, Dataform o dbt) y probarlas.
 - Decidir por dato qué debe transformarse antes de aterrizar (PII, volumen) y documentarlo.
 - Hacer incrementales las transformaciones pesadas.
+- **Observabilidad:** medir por capa (raw, curated, serving) conteos, frescura y errores de transformación, y alertar cuando una capa deja de avanzar respecto de la anterior.
+- **Seguridad:** en ELT, la capa raw contiene el dato sin tratar: restringir su acceso más que el de las capas modeladas; en ETL, el motor intermedio también ve el dato crudo.
 
 ## 15. Errores frecuentes
 
@@ -167,3 +172,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 1 de F3).
+- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.

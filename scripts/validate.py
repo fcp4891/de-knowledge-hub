@@ -288,6 +288,17 @@ def check_mvp_source_coverage(docs: list[Document], report: Report) -> None:
             report.add(doc.location, f"[mvp] '{doc.data['slug']}' no tiene fuente Nivel 1–2 con url_verified")
 
 
+def check_topics_in_relations(docs: list[Document], report: Report) -> None:
+    """Fichas concept/pattern: todo related_topics debe estar en relations (el grafo solo ve relations)."""
+    for doc in docs:
+        if doc.data["type"] not in page_sections.PAGE_TYPES:
+            continue
+        targets = {r["target"] for r in doc.data.get("relations", [])}
+        for slug in doc.data.get("related_topics", []):
+            if slug not in targets:
+                report.add(doc.location, f"[related_topics] '{slug}' no está en relations: el grafo no lo verá")
+
+
 def check_page_sections(content_dir: Path, docs: list[Document], report: Report) -> None:
     """Fichas concept/pattern no stub: las 22 secciones de la plantilla (§22)."""
     titles = page_sections.template_titles(content_dir)
@@ -517,6 +528,7 @@ def validate(content_dir: Path, schemas_dir: Path) -> Report:
         check_relations(doc, by_slug, catalog, report)
     check_mvp_source_coverage(valid_docs, report)
     check_page_sections(content_dir, valid_docs, report)
+    check_topics_in_relations(valid_docs, report)
     index = validate_blueprints(content_dir, schemas_dir, by_slug, valid_docs, report)
     validate_matrices(content_dir, schemas_dir, index, by_slug, report)
     report.technologies = [doc.data for doc in valid_docs if doc.data["type"] in TECHNOLOGY_TYPES]

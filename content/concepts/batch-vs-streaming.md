@@ -30,11 +30,17 @@ sources:
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about
     accessed: 2026-09-30
-    note: Event Hubs es una plataforma de streaming con particiones ordenadas y compatibilidad con Apache Kafka.
+    note: Event Hubs es una plataforma de streaming con particiones ordenadas para escalar el throughput y compatibilidad con Apache Kafka que permite ejecutar cargas de Kafka existentes sin cambios de código.
 relations:
   - type: RELATED_TO
     target: change-data-capture
     note: CDC convierte una base operacional en un flujo de eventos.
+  - type: RELATED_TO
+    target: dead-letter-queue
+    note: Un pipeline streaming necesita dónde apartar los eventos que no se pueden procesar.
+  - type: RELATED_TO
+    target: idempotency
+    note: La entrega at-least-once exige procesar de forma idempotente.
 created_at: 2026-09-30
 updated_at: 2026-09-30
 last_verified: 2026-09-30
@@ -121,7 +127,7 @@ with beam.Pipeline() as p:
 
 ## 13. Azure
 
-**Event Hubs** es una plataforma de streaming con particiones ordenadas para escalar el throughput y compatibilidad con Apache Kafka. Esa compatibilidad cubre el protocolo, no necesariamente todo el ecosistema de Kafka. Tampoco es lo mismo que Pub/Sub, que no expone particiones al usuario.
+**Event Hubs** es una plataforma de streaming con particiones ordenadas para escalar el throughput. Su documentación indica compatibilidad con Apache Kafka que permite ejecutar cargas de Kafka existentes sin cambios de código. Antes de migrar, conviene comprobar que las funciones del ecosistema Kafka que se usen (conectores, transacciones, herramientas) estén cubiertas: es una recomendación, no un límite verificado aquí.
 
 ## 14. Buenas prácticas
 
@@ -129,6 +135,9 @@ with beam.Pipeline() as p:
 - En streaming, agrupar por event time y definir explícitamente cómo tratar los eventos tardíos.
 - Guardar siempre el crudo para poder recalcular en batch (reconciliación).
 - Diseñar consumidores idempotentes: la entrega por defecto suele ser at-least-once.
+- **Observabilidad:** en streaming, vigilar el retraso del consumidor (antigüedad del mensaje más antiguo sin confirmar), el avance del tiempo de evento y la tasa de eventos tardíos o apartados; en batch, la duración de cada ejecución y la frescura del resultado.
+- **Seguridad:** tópicos y suscripciones son recursos con permisos propios: separar quién publica de quién consume y no transportar datos sensibles que el consumidor no necesite.
+- **Costo:** el streaming consume recursos de forma continua, aunque no haya consultas; el batch concentra el costo en ventanas. Calcular ambos con el volumen real antes de decidir.
 
 ## 15. Errores frecuentes
 
@@ -172,3 +181,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 1 de F3).
+- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.

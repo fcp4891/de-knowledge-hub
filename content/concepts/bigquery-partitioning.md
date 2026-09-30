@@ -18,7 +18,7 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/partitioned-tables
     accessed: 2026-09-30
-    note: Tipos de partición (columna de tiempo, ingesta, rango de enteros), particiones __NULL__ y __UNPARTITIONED__, pruning, expiración de particiones, combinación con clustering.
+    note: Tipos de partición (columna de tiempo, ingesta, rango de enteros), particiones __NULL__ y __UNPARTITIONED__ (valores anteriores a 1960-01-01 o posteriores a 2159-12-31), pruning, expiración de particiones, combinación con clustering.
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax
     accessed: 2026-09-30
@@ -30,11 +30,19 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/creating-partitioned-tables
     accessed: 2026-09-30
-    note: Ejemplos oficiales de CREATE TABLE con RANGE_BUCKET(customer_id, GENERATE_ARRAY(0, 100, 10)) y opciones de expiración.
+    note: Ejemplos oficiales de CREATE TABLE con RANGE_BUCKET(customer_id, GENERATE_ARRAY(0, 100, 10)), partition_expiration_days y require_partition_filter.
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/partitions.html
     accessed: 2026-09-30
     note: Athena particiona por cualquier clave (estilo Hive u otro) para limitar los datos escaneados.
+  - source: aws-redshift-docs
+    url: https://docs.aws.amazon.com/redshift/latest/dg/t_Sorting_data.html
+    accessed: 2026-09-30
+    note: Redshift optimiza con sort keys.
+  - source: aws-redshift-docs
+    url: https://docs.aws.amazon.com/redshift/latest/dg/t_Distributing_data.html
+    accessed: 2026-09-30
+    note: Redshift reparte las filas entre los nodos según el estilo de distribución de la tabla.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-tables-partition
     accessed: 2026-09-30
@@ -43,6 +51,9 @@ relations:
   - type: EXTENDS
     target: partitioning
     note: Implementación de BigQuery del concepto general.
+  - type: RELATED_TO
+    target: incremental-load
+    note: Cada ejecución incremental puede reemplazar solo su partición.
 created_at: 2026-09-30
 updated_at: 2026-09-30
 last_verified: 2026-09-30
@@ -143,7 +154,7 @@ Esta ficha trata del propio servicio. Hay que combinar la partición con el **cl
 No hay un equivalente directo en un único servicio:
 
 - **Athena** particiona datos en S3 por cualquier clave (a menudo carpetas estilo Hive, `dt=2026-09-30/`) y así limita los datos escaneados.
-- **Redshift** optimiza con claves de distribución y de orden, y no tiene particiones de tabla como las de BigQuery.
+- **Redshift** optimiza el layout físico con el estilo de distribución (cómo reparte filas entre nodos) y con sort keys; ese es el modelo que hay que diseñar al migrar, en lugar de las particiones de BigQuery.
 
 Trasladar un diseño de BigQuery exige revisar el modelo físico de cada servicio.
 
@@ -158,6 +169,8 @@ El dedicated SQL pool de **Azure Synapse** admite particiones de tabla, pero la 
 - Combinar con clustering para el segundo filtro más común.
 - Fijar la expiración de particiones según la política de retención.
 - Revisar en `INFORMATION_SCHEMA` y en el plan de ejecución que las consultas hacen pruning.
+- **Costo:** la opción `require_partition_filter` obliga a filtrar por la columna de partición y evita consultas que lean la tabla entera por descuido.
+- **Seguridad:** la partición no controla el acceso; la expiración de particiones ayuda a cumplir la retención definida para el dato.
 
 ## 15. Errores frecuentes
 
@@ -201,3 +214,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 1 de F3).
+- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.

@@ -93,3 +93,18 @@ def test_page_matching_blueprint_is_valid(content: Path) -> None:
     write_domain(content, domain_doc("01", "fundamentals", bp_concept("a"), subdomain="core-topics"))
     write_md(content, "concepts/a.md", concept("a", domain="fundamentals", subdomain="core-topics"))
     assert run(content).ok
+
+
+# --- related_topics también en relations (criterio de la revisión B-F3.1) ------
+
+
+def test_related_topic_must_be_a_relation(content: Path) -> None:
+    write_md(content, "concepts/b.md", concept("b"))
+    write_md(content, "concepts/a.md", concept("a", related_topics=["b"]))
+    assert_error(run(content), "[related_topics] 'b' no está en relations")
+
+
+def test_related_topic_with_relation_is_valid(content: Path) -> None:
+    write_md(content, "concepts/b.md", concept("b"))
+    write_md(content, "concepts/a.md", concept("a", related_topics=["b"], relations=[{"type": "RELATED_TO", "target": "b"}]))
+    assert run(content).ok

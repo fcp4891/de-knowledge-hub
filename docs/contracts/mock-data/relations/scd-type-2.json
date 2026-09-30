@@ -21,6 +21,13 @@
       "label": "related_to",
       "items": [
         {
+          "slug": "incremental-load",
+          "title": "Carga incremental",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "La carga SCD2 es una carga incremental."
+        },
+        {
           "slug": "change-data-capture",
           "title": "Change Data Capture",
           "entity_type": "concept",
@@ -31,8 +38,8 @@
           "slug": "sql-merge",
           "title": "MERGE",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "SCD2 se implementa con MERGE o con sentencias equivalentes."
         },
         {
           "slug": "slowly-changing-dimensions",
