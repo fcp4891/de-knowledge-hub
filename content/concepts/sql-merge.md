@@ -22,7 +22,7 @@ sources:
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html
     accessed: 2026-09-30
-    note: MERGE de Redshift; si varias filas del destino coinciden con la misma fila de origen, Redshift elimina los duplicados y conserva una; modo REMOVE DUPLICATES.
+    note: MERGE de Redshift; falla (Found multiple matches to update the same tuple) si varias filas de origen coinciden con una fila del destino; solo en modo simplificado REMOVE DUPLICATES, cuando varias filas del destino coinciden con la misma fila de origen, elimina los duplicados del destino y conserva una.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/statements/merge-transact-sql
     accessed: 2026-09-30
@@ -129,7 +129,7 @@ En **BigQuery**, `MERGE` admite `WHEN NOT MATCHED BY SOURCE`. Si una fila del de
 
 ## 12. AWS
 
-**Redshift** tiene `MERGE`, pero con un comportamiento distinto ante duplicados: si varias filas del destino coinciden con la misma fila de origen, **elimina los duplicados, conserva una y la actualiza**, en lugar de fallar. Además ofrece un modo simplificado, `REMOVE DUPLICATES`, que exige que origen y destino tengan columnas compatibles. No es el mismo `MERGE` que el de BigQuery: el mismo SQL puede fallar en uno y en el otro borrar filas en silencio.
+**Redshift** tiene `MERGE` y, como BigQuery, falla si varias filas del origen coinciden con una fila del destino (*"Found multiple matches to update the same tuple"*). Además ofrece un modo simplificado, `REMOVE DUPLICATES`, sin cláusulas `WHEN`, que exige que origen y destino tengan el mismo número de columnas, tipos compatibles y el mismo orden. En ese modo, si varias filas **del destino** coinciden con la misma fila de origen, **elimina los duplicados del destino, conserva una y la actualiza**. No es el mismo `MERGE` que el de BigQuery: en modo simplificado puede borrar filas del destino en silencio.
 
 ## 13. Azure
 
@@ -145,7 +145,7 @@ El `MERGE` de T-SQL aplica a SQL Server, Azure SQL Database, Azure SQL Managed I
 
 ## 15. Errores frecuentes
 
-- Clave `ON` que no es única en el origen: error en BigQuery y T-SQL, borrado silencioso de duplicados en Redshift.
+- Clave `ON` que no es única en el origen: error en BigQuery, T-SQL y Redshift. Clave no única en el destino: en Redshift con `REMOVE DUPLICATES`, borrado silencioso de los duplicados del destino.
 - Olvidar la condición de versión y sobrescribir datos nuevos con cambios viejos.
 - `WHEN NOT MATCHED BY SOURCE THEN DELETE` con un origen parcial (un lote incremental): borra todo lo que no vino en el lote.
 - Portar un `MERGE` entre motores sin revisar su semántica.
@@ -186,3 +186,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-09-30: creación (lote 1 de F3).
 - 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.
+- 2026-09-30: corregido el comportamiento de `MERGE` en Redshift ante duplicados (detectado al preparar el lote 2): falla con varias filas de origen por fila destino; la eliminación de duplicados del destino es solo del modo `REMOVE DUPLICATES`.
