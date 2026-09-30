@@ -6,8 +6,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-09-30
 
 ## Actual
-- **Tarea activa:** en espera. B-F3.1 del lote 1 está aprobada; B-F3 UX está mergeada.
-- **Siguiente:** revisar el lote 2 cuando Carril A lo entregue.
+- **Tarea activa:** B-F3.1 del lote 2, en `docs/reviews/cards-lote2.md`. Las filas están en pendiente.
+- **Siguiente:** decisión de Felipe sobre esas filas. No se editó `content/`.
 - **Bloqueos:** ninguno.
 
 ### B-F3 UX
@@ -15,7 +15,11 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Se quitó el botón «Guardar estado». El mensaje sigue siendo «Estado guardado.».
 - Cliente regenerado (ADR-007). En la búsqueda, un resultado con `has_page: false` muestra «ficha pendiente». El orden de los grupos no se toca.
 
-### B-F3.1
+### B-F3.1 · lote 2
+- Diez fichas, tabla de §48, más la corrección de `MERGE` en Redshift (`cb77a2f`) contrastada con la página oficial. Filas en pendiente.
+- Los criterios del lote 1 (§14 con seguridad, observabilidad y costo; ejemplos atómicos e idempotentes; `relations` completo) se cumplen, con las salvedades anotadas en la revisión.
+
+### B-F3.1 · lote 1
 - Una tabla de §48 por cada una de las 10 fichas del lote 1. Felipe aprobó todas las filas el 2026-09-30. No se editó `content/`.
 - Los 4 VERIFY (ETL en AWS, ETL en Azure, máximo de particiones de BigQuery, capacidad y retención de Kinesis) quedan destacados y sin inventar el dato.
 
