@@ -3,8 +3,9 @@
 Consulta search_documents con websearch_to_tsquery en español (es_unaccent) y en inglés
 (en_unaccent) y toma el mejor rank de ambos. El slug (en inglés) se indexa con peso A junto al
 título (en español). Suma 1.0 si alguna palabra del título (sin tildes) o del slug empieza por la
-consulta, 0.5 más si el título o el slug coinciden exactamente, y 0.1 a lo `core`. Un concepto con ficha tiene dos documentos (blueprint y ficha): se
-queda el de mayor puntaje, prefiriendo la ficha si empatan. Agrupa por tipo como §35.
+consulta, 0.5 más si el título o el slug coinciden exactamente, 0.1 a lo `core` y 0.3 a lo que
+tiene ficha (`has_page`, ADR-007). Un concepto con ficha tiene dos documentos (blueprint y ficha):
+se queda el de mayor puntaje, prefiriendo la ficha si empatan. Agrupa por tipo como §35.
 """
 
 from __future__ import annotations
@@ -16,6 +17,7 @@ from sqlalchemy import Engine, text
 TITLE_BONUS = 1.0
 EXACT_BONUS = 0.5
 CORE_BONUS = 0.1
+PAGE_BONUS = 0.3  # ADR-007: a igual coincidencia, primero lo que ya tiene ficha
 FILTER_COLUMNS = ("type", "domain", "classification")
 
 # Alguna palabra del título o del slug empieza por la consulta ("particion" no coincide con "Compartición").
@@ -48,10 +50,19 @@ best AS (
     SELECT DISTINCT ON (slug) *
     FROM scored
     ORDER BY slug, base DESC, (origin = 'entity') DESC
+),
+flagged AS (
+    -- has_page: el slug tiene un documento de entidad (ficha), aunque ese documento no coincida con la consulta.
+    SELECT b.*, EXISTS (
+        SELECT 1 FROM search_documents e WHERE e.slug = b.slug AND e.origin = 'entity'
+    ) AS has_page
+    FROM best b
 )
-SELECT slug, type, title, domain, classification, snippet,
-       round((base + CASE WHEN classification = 'core' THEN :core_bonus ELSE 0 END)::numeric, 4)::float AS score
-FROM best
+SELECT slug, type, title, domain, classification, snippet, has_page,
+       round((base
+              + CASE WHEN classification = 'core' THEN :core_bonus ELSE 0 END
+              + CASE WHEN has_page THEN :page_bonus ELSE 0 END)::numeric, 4)::float AS score
+FROM flagged
 WHERE {filters}
 ORDER BY score DESC, lower(title), slug
 LIMIT :limit
@@ -78,7 +89,8 @@ def search(engine: Engine, query: str, limit: int = 20, filters: dict[str, str |
     params = {
         "q": query, "plain": escape_like(query.strip()), "slug_plain": escape_like(slug_form(query)),
         "exact": query.strip(), "slug_exact": slug_form(query),
-        "limit": limit, "title_bonus": TITLE_BONUS, "exact_bonus": EXACT_BONUS, "core_bonus": CORE_BONUS, **active,
+        "limit": limit, "title_bonus": TITLE_BONUS, "exact_bonus": EXACT_BONUS, "core_bonus": CORE_BONUS,
+        "page_bonus": PAGE_BONUS, **active,
     }
     with engine.connect() as conn:
         rows = conn.execute(text(build_query(active)), params).mappings().all()

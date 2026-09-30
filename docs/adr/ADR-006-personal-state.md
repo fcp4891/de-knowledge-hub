@@ -36,5 +36,5 @@ El seguimiento personal de §37 incluye: estados manuales (sin quizzes ni notas 
 
 ## Consecuencias
 
-- El respaldo del estado personal (§49 "backups") pasa a ser necesario: es el único dato que no se puede regenerar desde Git. Queda en BACKLOG.
+- El respaldo del estado personal (§49 "backups") es necesario: es el único dato que no se puede regenerar desde Git. Implementado en F3: `make backup-me` y `make restore-me` (`scripts/personal_backup.py`, pg_dump de las tablas `me_*` a un directorio fuera del repo, configurable con `BACKUP_DIR`).
 - Borrar el volumen de Docker (`dekh-pgdata`) borra el estado personal. `make db-down` conserva el volumen.

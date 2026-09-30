@@ -1,6 +1,6 @@
 # STATUS — Data Engineering Knowledge Hub
 
-**Fase actual:** F2 — Plataforma MVP (esqueleto funcional). F1 aprobada el 2026-09-29.
+**Fase actual:** F3 — Contenido Core del MVP. F2 aprobada el 2026-09-30.
 **Última actualización:** 2026-09-30
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**
@@ -10,32 +10,25 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | Gate de F2 (informe) | — | — |
-| B · Cursor | — (B-F2.3 cerrada y mergeada) | Gate de F2 | — |
+| A · Claude Code | — (tareas previas de F3 cerradas) | Lote 2 de fichas (plan pendiente) | — |
+| B · Cursor | — | B-F3.1 · Revisión del lote 1 (10 fichas en `review_required`) | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| — | — | — | — |
+| A | B | Regenerar el cliente tipado: `has_page` en resultados de búsqueda (ADR-007) | Abierto |
 
-## Criterio de salida de la fase actual (F2)
-- [ ] Con 10 fichas reales se puede navegar Explorer → ficha → relacionados → fuente → búsqueda → nota.
-  - Datos y API listos: 10 fichas reales (en `review_required`, aceptado para F2), relaciones, fuentes, búsqueda FTS y `/me`.
-  - Falta la navegación completa en el frontend (B-F2.3: búsqueda, notas y estado).
+## Criterio de salida de la fase actual (F3)
+- [ ] 60–80 fichas `verified` (hoy: 10 fichas, todas en `review_required`).
+- [ ] Cero fichas sin fuentes.
 - [ ] Gate humano.
 
-## Avance de F2
-- A-F2.1 · Contrato de API y mocks (ADR-002).
-- A-F2.2 · Compilador `content/` → PostgreSQL.
-- B-F2.1 · Scaffold Next.js con Home y Explorer en modo mock (`frontend/`, `API_MODE=mock`).
-- A-F2.3 · API FastAPI + búsqueda FTS en español e inglés (ADR-005).
-- B-F2.2 · Fichas de concepto y tecnología con profundidad progresiva (modo mock).
-- A-F2.4 · Estado personal `/me` en PostgreSQL (ADR-006).
-- Lote 1 de F3 adelantado: validación de las 22 secciones y 10 fichas reales.
-- Remoto y CI: `origin` en GitHub; CI verde en GitHub Actions (Linux).
-- B-F2.3 · Búsqueda (Ctrl+K), relaciones, estado de estudio y notas (crear, editar, borrar) contra la API real; cliente regenerado desde el contrato.
-
 ## Fases cerradas
+- **F2 — Plataforma MVP** (2026-09-30):
+  - contrato de API y mocks (ADR-002), compilador a PostgreSQL, API FastAPI con FTS en español e inglés (ADR-005) y estado personal `/me` (ADR-006);
+  - frontend Next.js: Home, Explorer, fichas, búsqueda (Ctrl+K), relaciones, estado de estudio y notas contra la API real;
+  - lote 1 de F3 adelantado (10 fichas) y validación de las 22 secciones;
+  - remoto en GitHub con CI verde (Linux).
 - **F0 — Fundaciones** (2026-09-28): `make validate` en verde con la ficha `change-data-capture`.
 - **F1 — Knowledge Blueprint v1** (2026-09-29):
   - blueprint de 23 dominios (359 conceptos, 80 MVP) con los dominios MVP revisados;

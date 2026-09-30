@@ -11,8 +11,9 @@
           "type": "concept",
           "domain": "fundamentals",
           "classification": "core",
+          "has_page": true,
           "snippet": "Propiedad de un proceso que produce el mismo resultado final al ejecutarse una o varias veces con la misma entrada.",
-          "score": 3.5
+          "score": 3.8
         }
       ]
     }

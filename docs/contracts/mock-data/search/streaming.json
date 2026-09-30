@@ -11,6 +11,7 @@
           "type": "concept",
           "domain": "gcp",
           "classification": "modern",
+          "has_page": false,
           "snippet": "Pipelines streaming en Dataflow",
           "score": 6.0
         },
@@ -20,6 +21,7 @@
           "type": "concept",
           "domain": "streaming",
           "classification": "modern",
+          "has_page": false,
           "snippet": "Spark Structured Streaming",
           "score": 6.0
         },
@@ -29,6 +31,7 @@
           "type": "concept",
           "domain": "azure",
           "classification": "modern",
+          "has_page": false,
           "snippet": "Streaming con Event Hubs",
           "score": 6.0
         },
@@ -38,8 +41,9 @@
           "type": "concept",
           "domain": "fundamentals",
           "classification": "core",
+          "has_page": true,
           "snippet": "Procesar datos en lotes acotados cada cierto tiempo o como un flujo continuo de eventos, y cómo elegir según latencia, costo y complejidad.",
-          "score": 5.5
+          "score": 5.8
         },
         {
           "slug": "streaming-ingestion",
@@ -47,6 +51,7 @@
           "type": "concept",
           "domain": "pipelines",
           "classification": "core",
+          "has_page": false,
           "snippet": "El micro-batch se explica en esta ficha.",
           "score": 5.5
         }
@@ -61,6 +66,7 @@
           "type": "architecture",
           "domain": "architecture",
           "classification": "core",
+          "has_page": false,
           "snippet": "No figura en §9 pero es una de las 5 arquitecturas de F4 (ROADMAP).",
           "score": 5.5
         },
@@ -70,6 +76,7 @@
           "type": "architecture",
           "domain": "architecture",
           "classification": "modern",
+          "has_page": false,
           "snippet": "Variante de streaming, no una arquitectura de estudio prioritario.",
           "score": 1.0
         },
@@ -79,6 +86,7 @@
           "type": "architecture",
           "domain": "architecture",
           "classification": "modern",
+          "has_page": false,
           "snippet": "Es la consulta de baja latencia, no el pipeline de streaming.",
           "score": 1.0
         }
@@ -93,8 +101,9 @@
           "type": "technology",
           "domain": null,
           "classification": "modern",
+          "has_page": true,
           "snippet": "Modelo de programación unificado open source para pipelines batch y streaming, ejecutable en varios runners.",
-          "score": 1.0
+          "score": 1.3
         },
         {
           "slug": "apache-kafka",
@@ -102,8 +111,9 @@
           "type": "technology",
           "domain": null,
           "classification": "modern",
+          "has_page": true,
           "snippet": "Plataforma distribuida open source de streaming de eventos basada en un log particionado y replicado.",
-          "score": 1.0
+          "score": 1.3
         },
         {
           "slug": "apache-spark",
@@ -111,8 +121,9 @@
           "type": "technology",
           "domain": null,
           "classification": "modern",
+          "has_page": true,
           "snippet": "Motor open source de procesamiento distribuido para batch, SQL y streaming.",
-          "score": 1.0
+          "score": 1.3
         }
       ]
     },
@@ -125,8 +136,9 @@
           "type": "cloud_service",
           "domain": null,
           "classification": "modern",
+          "has_page": true,
           "snippet": "Servicio administrado de Google Cloud para ejecutar pipelines de Apache Beam en batch y streaming.",
-          "score": 1.0
+          "score": 1.3
         }
       ]
     }

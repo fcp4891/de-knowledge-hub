@@ -216,6 +216,20 @@ def test_search_groups_by_type_and_orders_by_score(client: TestClient) -> None:
         assert scores == sorted(scores, reverse=True)
 
 
+def test_search_flags_pages(client: TestClient) -> None:
+    items = {i["slug"]: i for g in get(client, "/search", q="data lake").json()["groups"] for i in g["items"]}
+    assert items["data-lake"]["has_page"] is False          # concepto del blueprint sin ficha
+    assert items["azure-adls"]["has_page"] is True          # tecnología: tiene entidad
+    parti = {i["slug"]: i for g in get(client, "/search", q="particion").json()["groups"] for i in g["items"]}
+    assert parti["partitioning"]["has_page"] is True and parti["topics-and-partitions"]["has_page"] is False
+
+
+def test_page_bonus_breaks_ties_in_favor_of_pages(client: TestClient) -> None:
+    items = {i["slug"]: i["score"] for g in get(client, "/search", q="particion").json()["groups"] for i in g["items"]}
+    # Mismo texto de coincidencia; antes empataban. Ahora gana el que tiene ficha.
+    assert items["partitioning"] > items["topics-and-partitions"]
+
+
 def test_search_escapes_like_wildcards(client: TestClient) -> None:
     assert get(client, "/search", q="%%").json()["total"] == 0
 

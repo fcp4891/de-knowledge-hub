@@ -644,9 +644,12 @@ components:
     # --- Búsqueda ---
     SearchResult:
       type: object
-      required: [slug, title, type, classification, snippet, score]
+      required: [slug, title, type, classification, snippet, score, has_page]
       properties:
         slug: { $ref: "#/components/schemas/Slug" }
+        has_page:
+          type: boolean
+          description: true si el resultado tiene entidad en content/ (ficha). Un concepto del blueprint sin ficha devuelve false (ADR-007).
         title: { type: string }
         type: { $ref: "#/components/schemas/ResultType" }
         domain: { oneOf: [{ $ref: "#/components/schemas/Slug" }, { type: "null" }] }

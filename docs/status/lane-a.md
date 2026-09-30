@@ -5,7 +5,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-09-29
 
 ## Actual
-- **Tarea activa:** gate de F2 (informe). `b/f2-search` (087f21f) mergeada en `main`.
+- **Tarea activa:** — (tareas previas de F3 cerradas). Siguiente: lote 2 de fichas, plan pendiente de aprobación.
 - **Mergeado para Carril B:** `b/f2-cards` (3e50c05) en `main`, 2026-09-30.
 - **Siguiente:** gate de F2.
 - **Bloqueos:** —
@@ -14,6 +14,8 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 ## Pedidos a Carril B
 | Pedido | Estado |
 |---|---|
+| **Contrato (ADR-007, aditivo): `has_page` en cada resultado de `/search`.** `false` = concepto del blueprint sin ficha (mostrar "ficha pendiente"); `true` = tiene entidad (ficha, tecnología o fuente). La búsqueda suma 0.3 a los resultados con ficha. Regenerar el cliente tipado (`npm run generate:api`); mocks de búsqueda regenerados | Abierto |
+| **UX hallada en el gate F2:** el estado de estudio solo se guarda con "Guardar estado", mientras que el favorito se guarda al instante; sin aviso de cambios sin guardar. Propuesta: guardar al cambiar el estado o marcar "sin guardar" | Abierto |
 | **Mocks regenerados con 10 fichas reales** (lote 1 de F3): `change-data-capture`, `idempotency`, `etl-vs-elt`, `batch-vs-streaming`, `partitioning`, `sql-merge`, `scd-type-2` (pattern), `incremental-load` (pattern), `dead-letter-queue` (pattern) y `bigquery-partitioning` tienen `has_page: true` y sus 22 secciones. Cambian solo datos; el contrato no cambia. Los 3 patrones tienen `type: pattern` | Informativo |
 | **`/me` real disponible (A-F2.4): ya se puede quitar el mock de `/me`.** Con `make db-up && make build && make dev`, toda la API (conocimiento, búsqueda y `/me`) sirve datos reales en `http://localhost:8000/api/v1`. Ver ADR-006: `last_studied_at` lo envía el cliente (si no viene se conserva); un slug sin registro devuelve `not_reviewed` | Cerrado (B-F2.3) |
 | **Cambio de contrato (notas, ADR-006, aditivo):** nuevos `PUT /me/notes/{slug}/{note_id}` (cuerpo `NoteUpdate`, devuelve `Note`) y `DELETE /me/notes/{slug}/{note_id}` (204). Nuevo mock `me/notes/change-data-capture.updated.json`. Regenerar el cliente tipado (también cubre el `422` de ADR-005) | Cerrado (B-F2.3) |
@@ -35,6 +37,12 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Enumeración `category`, `mvp` y `note` en tecnologías, y `matrix.schema.json` (ADR-004).
 
 ## Historial
+
+### F3 · Tareas previas (2026-09-30)
+- Búsqueda: `has_page` en cada resultado y +0.3 a lo que tiene ficha (ADR-007, cambio aditivo del contrato). Mocks de búsqueda regenerados.
+- CI: job de frontend (npm ci, lint, build con `API_MODE=mock`), acciones `@v7` (node24) y `ubuntu-24.04`.
+- Respaldo del estado personal: `make backup-me` / `make restore-me` (pg_dump de `me_*` a `BACKUP_DIR`, fuera del repo).
+- Volumen Docker viejo `des_conocimiento-carril-a_dekh-pgdata` eliminado (sin contenedores que lo usaran; estado personal vacío). La base de desarrollo usa `dekh_dekh-pgdata` (proyecto Compose `dekh`).
 
 ### Lote 1 de F3, adelantado para el gate de F2 (2026-09-30)
 - `validate.py` + `scripts/page_sections.py`: las fichas `concept`/`pattern` que no son stub deben tener las 22 secciones de la plantilla, en orden, con sus títulos y sin secciones vacías. También se comprueba que domain y subdomain coincidan con el blueprint. (Primera tarea de F3 del BACKLOG.)
