@@ -2,13 +2,18 @@
 
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
-**Fase:** F2 (F1 cerrada el 2026-09-29)
+**Fase:** F3 (F2 cerrada el 2026-09-30)
 **Última actualización:** 2026-09-30
 
 ## Actual
-- **Tarea activa:** B-F2.3 cerrada. Búsqueda, relaciones y `/me` contra la API real.
-- **Siguiente:** gate de F2, cuando se pida.
+- **Tarea activa:** B-F3.1. Revisión del lote 1 en `docs/reviews/cards-lote1.md`. Las filas están en pendiente.
+- **Siguiente:** decisión de Felipe sobre esas filas. No se editó `content/`.
 - **Bloqueos:** ninguno.
+- El guardado automático del estado de estudio y la etiqueta «ficha pendiente» están en `b/f3-ux`, no en esta rama.
+
+### B-F3.1
+- Una tabla de §48 por cada una de las 10 fichas del lote 1. Cinco criterios, todos en pendiente.
+- Los 4 VERIFY (ETL en AWS, ETL en Azure, máximo de particiones de BigQuery, capacidad y retención de Kinesis) quedan destacados y sin inventar el dato.
 
 ### B-F2.3
 - Cliente regenerado desde el contrato de `main` (422 de ADR-005; PUT y DELETE de notas de ADR-006).
