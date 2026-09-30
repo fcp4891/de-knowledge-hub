@@ -5,7 +5,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-09-29
 
 ## Actual
-- **Tarea activa:** gate de F2 (informe). `b/f2-search` (087f21f) mergeada en `main`.
+- **Tarea activa:** tareas previas de F3: búsqueda con `has_page`, CI de frontend, respaldo de `/me` y limpieza del volumen viejo.
 - **Mergeado para Carril B:** `b/f2-cards` (3e50c05) en `main`, 2026-09-30.
 - **Siguiente:** gate de F2.
 - **Bloqueos:** —
