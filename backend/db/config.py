@@ -1,0 +1,17 @@
+"""Configuración de la conexión a PostgreSQL."""
+
+from __future__ import annotations
+
+import os
+
+from sqlalchemy import Engine, create_engine
+
+DEFAULT_DATABASE_URL = "postgresql+psycopg://dekh:dekh@localhost:54329/dekh"
+
+
+def database_url() -> str:
+    return os.environ.get("DATABASE_URL", DEFAULT_DATABASE_URL)
+
+
+def make_engine(url: str | None = None) -> Engine:
+    return create_engine(url or database_url(), future=True)

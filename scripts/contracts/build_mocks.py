@@ -103,8 +103,14 @@ def write_me(w: MockWriter) -> None:
     w.write("PUT /me/favorites/change-data-capture", "me/favorites/change-data-capture.json", FAVORITE)
 
 
-def build(out: Path, content_dir: Path = ROOT / "content", schemas_dir: Path = ROOT / "schemas") -> dict[str, str]:
-    index = p.load_index(content_dir, schemas_dir)
+def build(
+    out: Path,
+    content_dir: Path = ROOT / "content",
+    schemas_dir: Path = ROOT / "schemas",
+    index: p.ContentIndex | None = None,
+) -> dict[str, str]:
+    """Escribe los mocks. Con `index` usa ese índice (p. ej. leído de PostgreSQL) en vez de content/."""
+    index = index or p.load_index(content_dir, schemas_dir)
     if out.exists():
         shutil.rmtree(out)
     writer = MockWriter(out)

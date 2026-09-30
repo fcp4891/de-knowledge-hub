@@ -1,0 +1,21 @@
+# PostgreSQL local para el compilador y la API (ADR-001). La base es derivada de content/ y desechable.
+name: dekh
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: dekh
+      POSTGRES_PASSWORD: dekh
+      POSTGRES_DB: dekh
+    ports:
+      - "54329:5432"
+    volumes:
+      - dekh-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dekh -d dekh"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  dekh-pgdata:

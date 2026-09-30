@@ -2,3 +2,7 @@
 jsonschema>=4.22,<5
 pyyaml>=6.0,<7
 pytest>=8,<10
+# F2 (A-F2.2): compilador content/ -> PostgreSQL.
+sqlalchemy>=2.0,<3        # definición del esquema (Core) y acceso a PostgreSQL
+psycopg[binary]>=3.1,<4   # driver PostgreSQL para SQLAlchemy
+alembic>=1.13,<2          # migraciones versionadas del esquema derivado

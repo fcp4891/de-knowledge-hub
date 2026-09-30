@@ -1,7 +1,7 @@
 # STATUS — Data Engineering Knowledge Hub
 
 **Fase actual:** F2 — Plataforma MVP (esqueleto funcional). F1 aprobada el 2026-09-29.
-**Última actualización:** 2026-09-29
+**Última actualización:** 2026-09-30
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**
 > El estado detallado de cada carril está en `docs/status/lane-a.md` y `docs/status/lane-b.md`; cada carril edita solo el suyo.
@@ -10,7 +10,7 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | — (A-F2.1 cerrada) | A-F2.2 · Compilador | — |
+| A · Claude Code | — (A-F2.2 cerrada) | A-F2.3 · API y búsqueda | — |
 | B · Cursor | — | B-F2.1 · Scaffold, Home y Explorer (desbloqueada) | — |
 
 ## Pedidos abiertos entre carriles

@@ -7,6 +7,22 @@ on:
 jobs:
   validate-and-test:
     runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres:17
+        env:
+          POSTGRES_USER: dekh
+          POSTGRES_PASSWORD: dekh
+          POSTGRES_DB: dekh
+        ports:
+          - 54329:5432
+        options: >-
+          --health-cmd "pg_isready -U dekh -d dekh"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 30
+    env:
+      DATABASE_URL: postgresql+psycopg://dekh:dekh@localhost:54329/dekh
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -14,4 +30,5 @@ jobs:
           python-version: "3.12"
       - run: python -m pip install -r requirements.txt
       - run: make validate
+      - run: make build
       - run: make test

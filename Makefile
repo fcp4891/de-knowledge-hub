@@ -1,9 +1,9 @@
-.PHONY: help install validate test build dev mocks
+.PHONY: help install validate test build dev mocks db-up db-down migrate compile
 
 PYTHON ?= python
 
 help:
-	@echo Objetivos: install validate test build dev mocks
+	@echo Objetivos: install validate test mocks db-up db-down migrate compile build dev
 
 install:
 	$(PYTHON) -m pip install -r requirements.txt
@@ -17,8 +17,19 @@ test:
 mocks: validate
 	$(PYTHON) -m scripts.contracts.build_mocks
 
-build: validate
-	@echo build: compilador content a PostgreSQL pendiente en A-F2.2
+db-up:
+	docker compose up -d --wait
+
+db-down:
+	docker compose down
+
+migrate:
+	$(PYTHON) -m alembic upgrade head
+
+compile:
+	$(PYTHON) -m scripts.compile
+
+build: validate migrate compile
 
 dev:
 	@echo dev: backend y frontend pendientes en F2

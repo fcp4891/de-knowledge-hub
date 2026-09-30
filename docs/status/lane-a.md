@@ -5,8 +5,8 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-09-29
 
 ## Actual
-- **Tarea activa:** — (A-F2.1 cerrada y mergeada en `main`)
-- **Siguiente:** A-F2.2 · Compilador `content/` → PostgreSQL.
+- **Tarea activa:** — (A-F2.2 cerrada y mergeada en `main`)
+- **Siguiente:** A-F2.3 · API FastAPI y búsqueda FTS.
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
 
@@ -28,6 +28,16 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Enumeración `category`, `mvp` y `note` en tecnologías, y `matrix.schema.json` (ADR-004).
 
 ## Historial
+
+### A-F2.2 · Compilador content/ → PostgreSQL (2026-09-30)
+- `backend/db/schema.py` (SQLAlchemy Core) + migración Alembic `0001_initial`, que coincide con el esquema: lo verifica un test.
+  - Tablas: `entities` (columnas §40 + `data` JSONB con el frontmatter completo + `body_markdown`), `technologies`, `sources`, `concept_pages`, `entity_sources`, `edges` (origin entity/blueprint, `metadata` JSONB), `domains`, `subdomains`, `concepts`, `capabilities`, `capability_cells` y `content_files` (sha256 + versión del compilador).
+  - Cada fila guarda su `file_path` con ON DELETE CASCADE: recompilar o borrar un archivo elimina exactamente lo que produjo.
+- `backend/db/compiler.py` + `scripts/compile.py`: valida antes; compila solo archivos cambiados; en una transacción; en dos fases (borrar, luego insertar), así un slug puede moverse de archivo. `--full` fuerza todo.
+- `backend/db/reader.py`: reconstruye el `ContentIndex` desde PostgreSQL; la proyección de A-F2.1 lo sirve sin cambios. Los mocks generados desde la base son idénticos byte a byte a los versionados.
+- `docker-compose.yml` (postgres:17, puerto 54329), `.env.example`, Makefile (`db-up`, `db-down`, `migrate`, `compile`; `build` = validate + migrate + compile), CI con servicio PostgreSQL.
+- Dependencias nuevas: SQLAlchemy, psycopg y Alembic (justificadas en el commit).
+- 9 tests de base de datos contra PostgreSQL real, 0 omitidos: idempotencia, recompilación completa, solo lo cambiado, borrado con aristas, slug movido, contenido inválido sin cambios, migración vs. esquema y equivalencia con los mocks. 190 tests en total.
 
 ### A-F2.1 · Contrato de API y mock-data (2026-09-29)
 - `docs/contracts/api.yaml`: OpenAPI 3.1, 14 rutas (18 operaciones), metadata §40 en todo detalle; ADR-002.
