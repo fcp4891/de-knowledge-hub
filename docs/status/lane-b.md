@@ -6,8 +6,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-09-30
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote 2, en `docs/reviews/cards-lote2.md`. Las filas están en pendiente.
-- **Siguiente:** decisión de Felipe sobre esas filas. No se editó `content/`.
+- **Tarea activa:** en espera. B-F3.1 del lote 2 está aprobada.
+- **Siguiente:** revisar el lote 3 cuando Carril A lo entregue. No se editó `content/`.
 - **Bloqueos:** ninguno.
 
 ### B-F3 UX
@@ -16,8 +16,7 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Cliente regenerado (ADR-007). En la búsqueda, un resultado con `has_page: false` muestra «ficha pendiente». El orden de los grupos no se toca.
 
 ### B-F3.1 · lote 2
-- Diez fichas, tabla de §48, más la corrección de `MERGE` en Redshift (`cb77a2f`) contrastada con la página oficial. Filas en pendiente.
-- Los criterios del lote 1 (§14 con seguridad, observabilidad y costo; ejemplos atómicos e idempotentes; `relations` completo) se cumplen, con las salvedades anotadas en la revisión.
+- Diez fichas, tabla de §48, más la corrección de `MERGE` en Redshift (`cb77a2f`). Felipe aprobó todas las filas el 2026-09-30, incluidas las tres salvedades y la precisión de `REMOVE DUPLICATES`. No se editó `content/`.
 
 ### B-F3.1 · lote 1
 - Una tabla de §48 por cada una de las 10 fichas del lote 1. Felipe aprobó todas las filas el 2026-09-30. No se editó `content/`.
