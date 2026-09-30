@@ -2,20 +2,22 @@
 
 Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
-**Última actualización:** 2026-09-29
+**Última actualización:** 2026-09-30
 
 ## Actual
-- **Tarea activa:** — (tareas previas de F3 cerradas). Siguiente: lote 2 de fichas, plan pendiente de aprobación.
-- **Mergeado para Carril B:** `b/f2-cards` (3e50c05) en `main`, 2026-09-30.
-- **Siguiente:** gate de F2.
+- **Tarea activa:** — (lote 2 de F3 entregado).
+- **Mergeado para Carril B:** `b/f3-ux` (d1d305d) y `b/f3-review` (c48ddbd) en `main`, 2026-09-30.
+- **Siguiente:** deuda técnica (mover `validate` a `backend/`, warning de pytest), mientras Carril B revisa el lote 2.
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
 
 ## Pedidos a Carril B
 | Pedido | Estado |
 |---|---|
-| **Contrato (ADR-007, aditivo): `has_page` en cada resultado de `/search`.** `false` = concepto del blueprint sin ficha (mostrar "ficha pendiente"); `true` = tiene entidad (ficha, tecnología o fuente). La búsqueda suma 0.3 a los resultados con ficha. Regenerar el cliente tipado (`npm run generate:api`); mocks de búsqueda regenerados | Abierto |
-| **UX hallada en el gate F2:** el estado de estudio solo se guarda con "Guardar estado", mientras que el favorito se guarda al instante; sin aviso de cambios sin guardar. Propuesta: guardar al cambiar el estado o marcar "sin guardar" | Abierto |
+| **B-F3.2 · Revisar el lote 2** (10 fichas en `review_required`): `backfill`, `replay`, `retries` (pattern), `pubsub-delivery-semantics`, `data-pipeline`, `incremental-pipelines` (pattern), `late-arriving-data`, `partition-pruning`, `upsert` (pattern) y `bigquery-clustering`. Sin VERIFY abiertos. Revisar también la corrección de `MERGE` de Redshift en `sql-merge`, `scd-type-2` e `idempotency` (cb77a2f), porque cambia filas aprobadas en B-F3.1 | Abierto |
+| **Mocks regenerados con 20 fichas** (lote 2): cambian solo datos; el contrato no cambia | Informativo |
+| **Contrato (ADR-007, aditivo): `has_page` en cada resultado de `/search`.** `false` = concepto del blueprint sin ficha (mostrar "ficha pendiente"); `true` = tiene entidad (ficha, tecnología o fuente). La búsqueda suma 0.3 a los resultados con ficha. Regenerar el cliente tipado (`npm run generate:api`); mocks de búsqueda regenerados | Cerrado (B-F3 UX) |
+| **UX hallada en el gate F2:** el estado de estudio solo se guarda con "Guardar estado", mientras que el favorito se guarda al instante; sin aviso de cambios sin guardar. Propuesta: guardar al cambiar el estado o marcar "sin guardar" | Cerrado (B-F3 UX) |
 | **Mocks regenerados con 10 fichas reales** (lote 1 de F3): `change-data-capture`, `idempotency`, `etl-vs-elt`, `batch-vs-streaming`, `partitioning`, `sql-merge`, `scd-type-2` (pattern), `incremental-load` (pattern), `dead-letter-queue` (pattern) y `bigquery-partitioning` tienen `has_page: true` y sus 22 secciones. Cambian solo datos; el contrato no cambia. Los 3 patrones tienen `type: pattern` | Informativo |
 | **`/me` real disponible (A-F2.4): ya se puede quitar el mock de `/me`.** Con `make db-up && make build && make dev`, toda la API (conocimiento, búsqueda y `/me`) sirve datos reales en `http://localhost:8000/api/v1`. Ver ADR-006: `last_studied_at` lo envía el cliente (si no viene se conserva); un slug sin registro devuelve `not_reviewed` | Cerrado (B-F2.3) |
 | **Cambio de contrato (notas, ADR-006, aditivo):** nuevos `PUT /me/notes/{slug}/{note_id}` (cuerpo `NoteUpdate`, devuelve `Note`) y `DELETE /me/notes/{slug}/{note_id}` (204). Nuevo mock `me/notes/change-data-capture.updated.json`. Regenerar el cliente tipado (también cubre el `422` de ADR-005) | Cerrado (B-F2.3) |
@@ -37,6 +39,13 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Enumeración `category`, `mvp` y `note` en tecnologías, y `matrix.schema.json` (ADR-004).
 
 ## Historial
+
+### Lote 2 de F3 y revisión del lote 1 (2026-09-30)
+- Merge de `b/f3-ux` y `b/f3-review` a `main`.
+- Revisión B-F3.1 aplicada (54 filas): ejemplos DELETE+INSERT dentro de una transacción; el `MERGE` simple de `sql-merge` asigna la cantidad y marca la variante aditiva como no idempotente; seguridad, observabilidad y costo en §14; 15 relaciones nuevas. Nueva regla de `validate`: todo `related_topics` debe estar en `relations`.
+- Los 4 VERIFY del lote 1 se resolvieron con documentación oficial (nueva fuente `aws-glue-docs`).
+- Corrección de `MERGE` en Redshift en 3 fichas del lote 1 (falla ante varias filas de origen por fila destino; la eliminación de duplicados es solo del modo `REMOVE DUPLICATES`).
+- Lote 2: 10 fichas (7 concept, 3 pattern) en `review_required`, 37 URLs verificadas con HTTP 200 y texto leído, sin VERIFY abiertos. Nueva fuente `aws-managed-flink-docs`. Mocks regenerados (84 respuestas). 391 tests.
 
 ### F3 · Tareas previas (2026-09-30)
 - Búsqueda: `has_page` en cada resultado y +0.3 a lo que tiene ficha (ADR-007, cambio aditivo del contrato). Mocks de búsqueda regenerados.

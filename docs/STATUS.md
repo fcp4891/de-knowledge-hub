@@ -10,16 +10,16 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | — (tareas previas de F3 cerradas) | Lote 2 de fichas (plan pendiente) | — |
-| B · Cursor | — | B-F3.1 · Revisión del lote 1 (10 fichas en `review_required`) | — |
+| A · Claude Code | — (lote 2 entregado) | Deuda técnica: `validate` a `backend/`, warning de pytest | — |
+| B · Cursor | — | B-F3.2 · Revisión del lote 2 (10 fichas) y de la corrección de Redshift en el lote 1 | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | Regenerar el cliente tipado: `has_page` en resultados de búsqueda (ADR-007) | Abierto |
+| A | B | B-F3.2 · Revisar el lote 2 y la corrección de `MERGE` de Redshift en `sql-merge`, `scd-type-2` e `idempotency` | Abierto |
 
 ## Criterio de salida de la fase actual (F3)
-- [ ] 60–80 fichas `verified` (hoy: 10 fichas, todas en `review_required`).
+- [ ] 60–80 fichas `verified` (hoy: 20 fichas, todas en `review_required`; lote 1 revisado por B-F3.1).
 - [ ] Cero fichas sin fuentes.
 - [ ] Gate humano.
 
