@@ -6,14 +6,20 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-09-30
 
 ## Actual
-- **Tarea activa:** B-F2.1 cerrada. `frontend/` con Next.js, cliente tipado desde `docs/contracts/api.yaml` y modo mock (`API_MODE`, por defecto `mock`) leyendo `docs/contracts/mock-data/index.json`.
-- **Siguiente:** B-F2.2, ficha completa de concepto, cuando se pida. La búsqueda en UI queda para B-F2.3.
+- **Tarea activa:** B-F2.2 cerrada. Fichas en `/concepts/[slug]` y `/technologies/[slug]`.
+- **Siguiente:** B-F2.3 (búsqueda, relaciones navegables ya parcialmente en el panel, notas y estado de estudio) cuando se pida.
 - **Bloqueos:** ninguno.
 
-### Límites del mock en esta entrega
-- Solo 10 conceptos tienen detalle. Un slug que no está en el índice muestra «Sin datos en modo mock.» y no rompe la página.
-- La búsqueda mock es coincidencia simple ya resuelta en el JSON. El cliente no reordena ni recalcula `score`. No hay caja de búsqueda en esta tarea.
-- Home usa datos solo en Continuar estudiando (`reviewing`), Necesita repaso y Conceptos recientes (orden del mock de `/me/study-state`). El resto del §38 queda como título vacío.
+### B-F2.2
+- Concepto: resumen siempre visible, el resto colapsado, pestañas GCP/AWS/Azure, código con resaltado y copiar, Mermaid en arquitectura, relaciones por tipo y fuentes con nivel.
+- Tecnología: cabecera y matriz de capacidades, con diferencias y pestañas de equivalentes.
+- Mermaid y highlight.js se cargan solo si la ficha tiene diagrama o código.
+- Un slug ausente del índice sigue en «Sin datos en modo mock.» Una ficha stub sin secciones lo dice, sin inventar contenido.
+- `main` ya traía el merge de B-F2.1; esta rama lo integró al crearse.
+
+### Límites del mock
+- Solo 10 conceptos y 5 tecnologías tienen detalle. Casi todas las fichas de concepto están vacías; la completa de ejemplo es `change-data-capture`.
+- La búsqueda mock no se reordena. No hay caja de búsqueda (B-F2.3).
 
 ## Pedidos a Carril A
 | Pedido | Estado |

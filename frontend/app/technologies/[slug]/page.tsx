@@ -1,0 +1,48 @@
+import { CapabilityList } from "@/components/card/CapabilityList";
+import { CardHeader } from "@/components/card/CardHeader";
+import { RelationPanel } from "@/components/card/RelationPanel";
+import { SourceList } from "@/components/card/SourceList";
+import { MockMiss } from "@/components/MockMiss";
+import { getRelations, getTechnology } from "@/lib/api/client";
+
+export default async function TechnologyPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const [technology, relations] = await Promise.all([getTechnology(slug), getRelations(slug)]);
+
+  if (!technology.ok) {
+    return (
+      <div className="page">
+        {technology.reason === "mock_missing" ? <MockMiss slug={slug} /> : <p>No existe.</p>}
+      </div>
+    );
+  }
+
+  const data = technology.data;
+
+  return (
+    <div className="page">
+      <CardHeader
+        title={data.title}
+        description={data.description}
+        classification={data.classification}
+        level={data.level}
+        mvp={data.mvp}
+        lastVerified={data.last_verified}
+        verificationStatus={data.verification_status}
+      />
+      <p className="meta">
+        <span>{data.origin}</span>
+        <span>{data.category}</span>
+        {data.stub ? <span>marcador</span> : null}
+      </p>
+      <div className="card-layout">
+        <div className="sections">
+          {data.note ? <p>{data.note}</p> : null}
+          <CapabilityList capabilities={data.capabilities} />
+          <SourceList sources={data.sources} />
+        </div>
+        <RelationPanel result={relations} />
+      </div>
+    </div>
+  );
+}
