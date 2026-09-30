@@ -2,6 +2,10 @@
 # url_verified: true = la URL respondió HTTP 200 y su <title> corresponde al producto en la fecha last_verified.
 # Se guarda la URL final tras redirecciones. Alcance A-F1.3: fuentes de F0 + Nivel 1–2 de las 9 tecnologías MVP.
 # Frecuencias de revisión (gate F1): docs trimestral, release notes mensual, Python trimestral.
+# Regla de niveles en fichas (F3, lote 3): las afirmaciones de producto (servicios, APIs, límites, defaults)
+# exigen fuente Nivel 1–2. Las afirmaciones conceptuales pueden apoyarse en una referencia canónica Nivel 4
+# (source_type spec_paper, p. ej. Kimball Group o una RFC). validate rechaza en fichas las fuentes Nivel 3 y 5
+# y exige al menos una fuente Nivel 1–2 por ficha.
 id: source:postgresql-docs
 slug: postgresql-docs
 type: source
@@ -604,6 +608,155 @@ url_verified: true
 review_frequency: quarterly
 trust: high
 technologies: []
+created_at: '2026-09-30'
+updated_at: '2026-09-30'
+last_verified: '2026-09-30'
+verification_status: verified
+---
+id: source:kimball-group-techniques
+slug: kimball-group-techniques
+type: source
+title: Kimball Dimensional Modeling Techniques
+description: 'Técnicas de modelado dimensional de Kimball Group: referencia conceptual canónica (Nivel 4) para modelado dimensional; no respalda afirmaciones de producto.'
+url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/
+source_type: spec_paper
+authority_level: 4
+provider: kimball-group
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-09-30'
+updated_at: '2026-09-30'
+last_verified: '2026-09-30'
+verification_status: verified
+---
+id: source:ietf-rfc
+slug: ietf-rfc
+type: source
+title: IETF RFC Editor
+description: 'Especificaciones RFC de la IETF (p. ej. semántica HTTP): referencia conceptual canónica (Nivel 4).'
+url: https://www.rfc-editor.org/
+source_type: spec_paper
+authority_level: 4
+provider: ietf
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-09-30'
+updated_at: '2026-09-30'
+last_verified: '2026-09-30'
+verification_status: verified
+---
+id: source:apache-parquet-docs
+slug: apache-parquet-docs
+type: source
+title: Apache Parquet documentation
+description: Documentación oficial y especificación del formato Apache Parquet.
+url: https://parquet.apache.org/docs/
+source_type: official_docs
+authority_level: 1
+provider: apache
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- pyarrow
+created_at: '2026-09-30'
+updated_at: '2026-09-30'
+last_verified: '2026-09-30'
+verification_status: verified
+---
+id: source:apache-avro-docs
+slug: apache-avro-docs
+type: source
+title: Apache Avro documentation
+description: Documentación oficial y especificación de Apache Avro.
+url: https://avro.apache.org/docs/
+source_type: official_docs
+authority_level: 1
+provider: apache
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-09-30'
+updated_at: '2026-09-30'
+last_verified: '2026-09-30'
+verification_status: verified
+---
+id: source:aws-boto3-docs
+slug: aws-boto3-docs
+type: source
+title: Boto3 Developer Guide
+description: Guía oficial del SDK de AWS para Python (Boto3).
+url: https://docs.aws.amazon.com/boto3/latest/guide/
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- python
+created_at: '2026-09-30'
+updated_at: '2026-09-30'
+last_verified: '2026-09-30'
+verification_status: verified
+---
+id: source:gcp-python-api-core-docs
+slug: gcp-python-api-core-docs
+type: source
+title: google-api-core documentation
+description: Referencia oficial de google-api-core, base de las bibliotecas cliente de Google Cloud para Python.
+url: https://googleapis.dev/python/google-api-core/latest/
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- python
+created_at: '2026-09-30'
+updated_at: '2026-09-30'
+last_verified: '2026-09-30'
+verification_status: verified
+---
+id: source:aws-step-functions-docs
+slug: aws-step-functions-docs
+type: source
+title: AWS Step Functions Developer Guide
+description: Guía oficial para desarrolladores de AWS Step Functions.
+url: https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- aws-step-functions
+created_at: '2026-09-30'
+updated_at: '2026-09-30'
+last_verified: '2026-09-30'
+verification_status: verified
+---
+id: source:aws-mwaa-docs
+slug: aws-mwaa-docs
+type: source
+title: Amazon MWAA User Guide
+description: Guía oficial de Amazon Managed Workflows for Apache Airflow.
+url: https://docs.aws.amazon.com/mwaa/latest/userguide/what-is-mwaa.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- aws-mwaa
 created_at: '2026-09-30'
 updated_at: '2026-09-30'
 last_verified: '2026-09-30'

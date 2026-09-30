@@ -23,6 +23,10 @@ HEADER = """# Source Registry (§30, §52.D). Un documento YAML por fuente, sepa
 # url_verified: true = la URL respondió HTTP 200 y su <title> corresponde al producto en la fecha last_verified.
 # Se guarda la URL final tras redirecciones. Alcance A-F1.3: fuentes de F0 + Nivel 1–2 de las 9 tecnologías MVP.
 # Frecuencias de revisión (gate F1): docs trimestral, release notes mensual, Python trimestral.
+# Regla de niveles en fichas (F3, lote 3): las afirmaciones de producto (servicios, APIs, límites, defaults)
+# exigen fuente Nivel 1–2. Las afirmaciones conceptuales pueden apoyarse en una referencia canónica Nivel 4
+# (source_type spec_paper, p. ej. Kimball Group o una RFC). validate rechaza en fichas las fuentes Nivel 3 y 5
+# y exige al menos una fuente Nivel 1–2 por ficha.
 """
 
 GCP_DOCS = "https://docs.cloud.google.com"
@@ -102,12 +106,38 @@ BATCH1 = [
     ("aws-managed-flink-docs", "Amazon Managed Service for Apache Flink Developer Guide",
      "Guía oficial para desarrolladores de Amazon Managed Service for Apache Flink.",
      "https://docs.aws.amazon.com/managed-flink/latest/java/what-is.html", "official_docs", 1, "aws", True, "quarterly", []),
+    # Lote 3: modelado (Kimball, Nivel 4 canónico), HTTP (RFC, Nivel 4), formatos y SDKs (Nivel 1).
+    ('kimball-group-techniques', 'Kimball Dimensional Modeling Techniques',
+     'Técnicas de modelado dimensional de Kimball Group: referencia conceptual canónica (Nivel 4) para modelado dimensional; no respalda afirmaciones de producto.',
+     'https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/', 'spec_paper', 4, 'kimball-group', True, "quarterly", []),
+    ('ietf-rfc', 'IETF RFC Editor',
+     'Especificaciones RFC de la IETF (p. ej. semántica HTTP): referencia conceptual canónica (Nivel 4).',
+     'https://www.rfc-editor.org/', 'spec_paper', 4, 'ietf', True, "quarterly", []),
+    ('apache-parquet-docs', 'Apache Parquet documentation',
+     'Documentación oficial y especificación del formato Apache Parquet.',
+     'https://parquet.apache.org/docs/', 'official_docs', 1, 'apache', True, "quarterly", ['pyarrow']),
+    ('apache-avro-docs', 'Apache Avro documentation',
+     'Documentación oficial y especificación de Apache Avro.',
+     'https://avro.apache.org/docs/', 'official_docs', 1, 'apache', True, "quarterly", []),
+    ('aws-boto3-docs', 'Boto3 Developer Guide',
+     'Guía oficial del SDK de AWS para Python (Boto3).',
+     'https://docs.aws.amazon.com/boto3/latest/guide/', 'official_docs', 1, 'aws', True, "quarterly", ['python']),
+    ('gcp-python-api-core-docs', 'google-api-core documentation',
+     'Referencia oficial de google-api-core, base de las bibliotecas cliente de Google Cloud para Python.',
+     'https://googleapis.dev/python/google-api-core/latest/', 'official_docs', 1, 'gcp', True, "quarterly", ['python']),
+    ('aws-step-functions-docs', 'AWS Step Functions Developer Guide',
+     'Guía oficial para desarrolladores de AWS Step Functions.',
+     'https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html', 'official_docs', 1, 'aws', True, "quarterly", ['aws-step-functions']),
+    ('aws-mwaa-docs', 'Amazon MWAA User Guide',
+     'Guía oficial de Amazon Managed Workflows for Apache Airflow.',
+     'https://docs.aws.amazon.com/mwaa/latest/userguide/what-is-mwaa.html', 'official_docs', 1, 'aws', True, "quarterly", ['aws-mwaa']),
 ]
 
 
 def review_frequency(slug: str, source_type: str) -> str:
-    """Política del gate F1: documentación trimestral, release notes mensual, Python trimestral."""
-    if source_type == "official_docs" or slug.startswith("python-"):
+    """Política del gate F1: documentación trimestral, release notes mensual, Python trimestral.
+    Las referencias canónicas (spec_paper, lote 3 de F3) cambian poco: trimestral."""
+    if source_type in ("official_docs", "spec_paper") or slug.startswith("python-"):
         return "quarterly"
     return "monthly"
 

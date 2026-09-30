@@ -286,6 +286,45 @@ def check_mvp_source_coverage(docs: list[Document], report: Report) -> None:
             report.add(doc.location, f"[mvp] '{doc.data['slug']}' no tiene fuente Nivel 1–2 con url_verified")
 
 
+# enums.schema.json#/$defs/source_type: nivel de autoridad que corresponde a cada tipo de fuente (§30).
+SOURCE_TYPE_LEVEL = {"official_docs": 1, "release_notes": 2, "engineering_blog": 3, "spec_paper": 4, "secondary": 5}
+PAGE_SOURCE_LEVELS = {1, 2, 4}  # Nivel 4 solo como referencia conceptual canónica (spec_paper)
+PRODUCT_SOURCE_LEVELS = {1, 2}
+
+
+def check_source_level(doc: Document, report: Report) -> None:
+    """Fuente: authority_level coherente con su source_type."""
+    if doc.data["type"] != "source":
+        return
+    expected = SOURCE_TYPE_LEVEL[doc.data["source_type"]]
+    if doc.data["authority_level"] != expected:
+        report.add(
+            doc.location,
+            f"[authority_level] {doc.data['source_type']} corresponde al Nivel {expected}, no al {doc.data['authority_level']}",
+        )
+
+
+def check_page_source_levels(docs: list[Document], by_slug: dict[str, Document], report: Report) -> None:
+    """Fichas concept/pattern: fuentes Nivel 1–2 o Nivel 4 canónico, y al menos una Nivel 1–2 (afirmaciones de producto)."""
+    for doc in docs:
+        if doc.data["type"] not in page_sections.PAGE_TYPES or doc.data.get("stub"):
+            continue
+        levels = []
+        for i, ref in enumerate(doc.data.get("sources", [])):
+            target = by_slug.get(ref["source"])
+            if target is None or target.data["type"] != "source":
+                continue  # check_sources ya lo reporta
+            level = target.data["authority_level"]
+            levels.append(level)
+            if level not in PAGE_SOURCE_LEVELS:
+                report.add(
+                    doc.location,
+                    f"[sources.{i}.source] '{ref['source']}' es Nivel {level}: en fichas solo Nivel 1–2 o Nivel 4 canónico",
+                )
+        if levels and not PRODUCT_SOURCE_LEVELS.intersection(levels):
+            report.add(doc.location, "[sources] la ficha necesita al menos una fuente Nivel 1–2 (afirmaciones de producto)")
+
+
 def check_topics_in_relations(docs: list[Document], report: Report) -> None:
     """Fichas concept/pattern: todo related_topics debe estar en relations (el grafo solo ve relations)."""
     for doc in docs:
@@ -524,9 +563,11 @@ def validate(content_dir: Path, schemas_dir: Path) -> Report:
         check_slug_lists(doc, by_slug, report)
         check_sources(doc, by_slug, report)
         check_relations(doc, by_slug, catalog, report)
+        check_source_level(doc, report)
     check_mvp_source_coverage(valid_docs, report)
     check_page_sections(content_dir, valid_docs, report)
     check_topics_in_relations(valid_docs, report)
+    check_page_source_levels(valid_docs, by_slug, report)
     index = validate_blueprints(content_dir, schemas_dir, by_slug, valid_docs, report)
     validate_matrices(content_dir, schemas_dir, index, by_slug, report)
     report.technologies = [doc.data for doc in valid_docs if doc.data["type"] in TECHNOLOGY_TYPES]

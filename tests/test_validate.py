@@ -46,13 +46,13 @@ def technology(slug: str, **fields: Any) -> dict[str, Any]:
     return entity("technology", slug, **{**defaults, **fields})
 
 
-def source(slug: str) -> dict[str, Any]:
+def source(slug: str, source_type: str = "official_docs", authority_level: int = 1) -> dict[str, Any]:
     return entity(
         "source",
         slug,
         url="https://example.org/docs/",
-        source_type="official_docs",
-        authority_level=1,
+        source_type=source_type,
+        authority_level=authority_level,
         provider="example",
     )
 
@@ -135,6 +135,33 @@ def test_verified_with_sources_is_valid(content: Path) -> None:
     write_yaml(content, "sources/r.yaml", source("docs-a"))
     write_md(content, "concepts/cdc.md", concept("cdc", verification_status="verified", sources=[{"source": "docs-a"}]))
     assert run(content).ok
+
+
+def test_source_level_must_match_source_type(content: Path) -> None:
+    write_yaml(content, "sources/r.yaml", source("kimball", source_type="spec_paper", authority_level=1))
+    assert_error(run(content), "[authority_level] spec_paper corresponde al Nivel 4, no al 1")
+
+
+def test_page_may_cite_canonical_level_4_with_a_level_1_source(content: Path) -> None:
+    write_yaml(content, "sources/r.yaml", source("docs-a"), source("kimball", "spec_paper", 4))
+    write_md(content, "concepts/scd.md", concept("scd", sources=[{"source": "docs-a"}, {"source": "kimball"}]))
+    assert run(content).ok
+
+
+def test_page_rejects_level_3_and_5_sources(content: Path) -> None:
+    write_yaml(content, "sources/r.yaml", source("docs-a"), source("blog", "engineering_blog", 3), source("wiki", "secondary", 5))
+    write_md(content, "concepts/a.md", concept("a", sources=[{"source": "docs-a"}, {"source": "blog"}, {"source": "wiki"}]))
+    assert_error(
+        run(content),
+        "[sources.1.source] 'blog' es Nivel 3: en fichas solo Nivel 1–2 o Nivel 4 canónico",
+        "[sources.2.source] 'wiki' es Nivel 5",
+    )
+
+
+def test_page_needs_a_level_1_or_2_source(content: Path) -> None:
+    write_yaml(content, "sources/r.yaml", source("kimball", "spec_paper", 4))
+    write_md(content, "concepts/scd.md", concept("scd", sources=[{"source": "kimball"}]))
+    assert_error(run(content), "la ficha necesita al menos una fuente Nivel 1–2")
 
 
 def test_underscore_directories_are_ignored(content: Path) -> None:
