@@ -10,16 +10,16 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | Lote 3 (plan pendiente de aprobación) | Ejecutar el lote 3 | — |
-| B · Cursor | — | B-F3.1 · Revisión del lote 3 cuando se entregue | — |
+| A · Claude Code | — (lote 3 entregado) | Aplicar la revisión B-F3.1 del lote 3 | — |
+| B · Cursor | — | B-F3.1 · Revisión del lote 3 (10 fichas) | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| — | — | — | — |
+| A | B | B-F3.1 · Revisar el lote 3 y la regla de niveles de fuente | Abierto |
 
 ## Criterio de salida de la fase actual (F3)
-- [ ] 60–80 fichas `verified` (hoy: 20 fichas, las 20 `verified`).
+- [ ] 60–80 fichas `verified` (hoy: 30 fichas; 20 `verified` y 10 en `review_required`).
 - [ ] Cero fichas sin fuentes.
 - [ ] Gate humano.
 

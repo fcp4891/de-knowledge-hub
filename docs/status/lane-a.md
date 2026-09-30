@@ -5,15 +5,16 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-09-30
 
 ## Actual
-- **Tarea activa:** lote 3 de F3, plan pendiente de aprobación.
+- **Tarea activa:** — (lote 3 de F3 entregado).
 - **Mergeado para Carril B:** `b/f3-review-2` (dc65b9e) en `main`, 2026-09-30.
-- **Siguiente:** ejecutar el lote 3 cuando Felipe apruebe el plan.
+- **Siguiente:** aplicar la revisión B-F3.1 del lote 3 cuando esté aprobada. Arquitecturas (`cdc-architecture`, `batch-pipeline-architecture`) quedan para F4.
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
 
 ## Pedidos a Carril B
 | Pedido | Estado |
 |---|---|
+| **B-F3.1 · Revisar el lote 3** (10 fichas en `review_required`): `clustering`, `python-error-handling-and-retries` (pattern), `slowly-changing-dimensions`, `api-ingestion`, `catchup`, `data-reconciliation` (pattern), `parquet-format`, `schema-evolution`, `surrogate-keys` y `dag`. Sin VERIFY abiertos. Revisar también la regla nueva de niveles (Nivel 4 canónico solo para afirmaciones conceptuales; ver Notas) | Abierto |
 | ~~B-F3.1 · Revisar el lote 2~~ (10 fichas): `backfill`, `replay`, `retries` (pattern), `pubsub-delivery-semantics`, `data-pipeline`, `incremental-pipelines` (pattern), `late-arriving-data`, `partition-pruning`, `upsert` (pattern) y `bigquery-clustering`. Sin VERIFY abiertos. Revisar también la corrección de `MERGE` de Redshift en `sql-merge`, `scd-type-2` e `idempotency` (cb77a2f), porque cambia filas aprobadas en B-F3.1 | Cerrado (revisión aplicada; las 20 fichas `verified`) |
 | **Entorno de Python del proyecto:** `.venv/` con Python 3.12 (`make venv`; README, «Entorno de Python»). El `Makefile` y la CI lo usan; si Carril B ejecuta objetivos de Python en su worktree (por ejemplo `make dev` o `make mocks`), primero `make venv` allí | Informativo |
 | **Mocks regenerados con 20 fichas `verified`**: cambian solo datos (`verification_status`); el contrato no cambia | Informativo |
@@ -28,6 +29,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 | **B-F2.1 puede empezar.** Contrato en `docs/contracts/api.yaml` (ADR-002) y mocks en `docs/contracts/mock-data/` (`index.json` asocia `MÉTODO /ruta` con su archivo). Los conceptos salen del blueprint con `has_page`; los que no tienen ficha traen `sections: []`. Si el contrato no alcanza, pedirlo aquí en `lane-b.md`, sin modificarlo | Cerrado (B-F2.1 mergeada) |
 
 ## Notas para Carril B
+- **Regla de niveles de fuente (F3, lote 3, 2026-09-30):** las afirmaciones **de producto** (servicios, APIs, límites, valores por defecto) exigen fuente Nivel 1–2. Las afirmaciones **conceptuales** pueden apoyarse en una referencia canónica Nivel 4 (`source_type: spec_paper`), como `kimball-group-techniques` (modelado dimensional) o `ietf-rfc` (semántica HTTP). `validate` lo refleja así: en fichas `concept`/`pattern` rechaza fuentes Nivel 3 y 5, exige al menos una fuente Nivel 1–2 por ficha y comprueba que `authority_level` coincida con `source_type`. La separación entre afirmación conceptual y de producto la verifica la revisión B-F3.1. La regla también está en la cabecera de `content/sources/registry.yaml`.
 - **Regla (F3, 2026-09-30):** cuando se aplica la revisión aprobada de un lote y la ficha no tiene VERIFY pendientes, pasa a `verification_status: verified` con `last_verified` de ese día. Lotes 1 y 2: las 20 fichas están `verified`.
 - **Nombres:** B-F3.1 es la revisión de fichas (cada lote); B-F3.2 es la Code Library.
 - **Regla (gate F1):** Cursor revisa y propone cambios sobre `content/blueprint/`; solo Carril A edita esos archivos.
@@ -42,6 +44,11 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Enumeración `category`, `mvp` y `note` en tecnologías, y `matrix.schema.json` (ADR-004).
 
 ## Historial
+
+### Lote 3 de F3 (2026-09-30)
+- Regla de niveles de fuente: producto Nivel 1–2; conceptual también Nivel 4 canónico (`spec_paper`). `validate`: fuentes Nivel 3 y 5 rechazadas en fichas, al menos una Nivel 1–2 por ficha, `authority_level` coherente con `source_type` (4 tests).
+- Fuentes nuevas: `kimball-group-techniques` e `ietf-rfc` (Nivel 4); `apache-parquet-docs`, `apache-avro-docs`, `aws-boto3-docs`, `gcp-python-api-core-docs`, `aws-step-functions-docs`, `aws-mwaa-docs` (Nivel 1).
+- 10 fichas (8 concept, 2 pattern) en `review_required`; 61 URLs verificadas con HTTP 200 y URL final. Los VERIFY que surgieron (API de TaskFlow, `max_active_runs`, `ADD COLUMN IF NOT EXISTS`, modos de Event Hubs, cliente HTTP) se resolvieron con documentación oficial; el ejemplo de ingesta usa `urllib.request` de la biblioteca estándar. Los ejemplos de reintento se probaron con fallos simulados. 395 tests.
 
 ### Entorno, revisión del lote 2 y verified (2026-09-30)
 - `.venv/` propio (Python 3.12): `make venv`; el `Makefile` usa siempre su intérprete y se detiene si falta; `scripts/` corta con instrucciones si corre con otro Python; la CI crea el entorno con `make venv`. README nuevo con el procedimiento. No se instala nada en el Python global.
