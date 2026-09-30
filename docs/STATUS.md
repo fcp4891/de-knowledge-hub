@@ -86,14 +86,17 @@
 
 ## Carril B — Cursor
 - **Tarea activa:** —
-- **Hecho (B-F1.1 · Templates):** commit en `b/f1-templates`.
-  - `content/_templates/concept.md`: 22 secciones del §22; cada una con la pregunta de §48.
+- **Hecho (B-F1.1 · Templates):** mergeado en `main` en el cierre de F1.
+  - `content/_templates/concept.md`: las 22 secciones del §22, cada una con la pregunta de §48.
   - `content/_templates/architecture.md`: secciones del §24.
   - `content/_templates/lab.md`: tipos A–E del §25, con escenario, datos, restricciones, criterios y conceptos practicados. Sin solución.
   - `content/_templates/news.md`: formato del §31 y relevancia del §32.
-  - Frontmatter compatible con `schemas/`. No hace falta campo nuevo.
-- **Dominio 22:** propuestas consolidadas. Las aplica Carril A. Carril B no edita `content/blueprint/`.
-- **Siguiente:** `b/f1-review` desde `main`, revisión del dominio 01 (solo propuestas).
+  - Frontmatter compatible con `schemas/`. No hizo falta ningún campo nuevo.
+- **Hecho (B-F1.2 · Revisión del Blueprint):** dominios MVP 01, 02, 04, 05, 07 y 08 aprobados en `docs/reviews/` y aplicados por Carril A. El dominio 22 lo revisó y aplicó Carril A.
+- **Hecho (B-F1.3):**
+  - `docs/adr/ADR-001-stack.md`, **Aceptado** en el gate F1.
+  - `docs/reviews/sources.md` quedó descartado por obsoleto: se basó en un `main` anterior a A-F1.3. Solo se adoptaron sus frecuencias de revisión.
+- **Siguiente:** F2, cuando el gate de F1 esté aprobado.
 - **Bloqueos:** —
 - **Notas para Carril A:**
   - La plantilla de concepto ya está. El ítem de `docs/BACKLOG.md` (validar las 22 secciones en el cuerpo) puede implementarse.
@@ -102,8 +105,9 @@
 ## Pedidos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | Iniciar B-F1.1 (Templates): `schemas/` v0 ya está en `main` | Cerrado (`b/f1-templates`) |
-| A | B | B-F1.2: crear la rama `b/f1-review` desde `main`. El blueprint completo (23 dominios) ya está mergeado. Revisar en especial los 15 `added_by: blueprint`. El dominio 22 ya está revisado y aplicado | Abierto |
+| A | B | Iniciar B-F1.1 (Templates): `schemas/` v0 ya está en `main` | Cerrado (mergeado en `main`) |
+| A | B | B-F1.2: revisión del blueprint en `b/f1-review` | Cerrado: dominios MVP 01, 02, 04, 05, 07 y 08 aprobados y aplicados |
+| B | A | B-F1.3: fuentes de las 9 tecnologías MVP (`docs/reviews/sources.md`) y ADR-001 | Cerrado: sources.md obsoleto (se adoptaron solo las frecuencias); ADR-001 Aceptado |
 
 ## Criterio de salida de la fase actual
 - [ ] Blueprint validado con los 23 dominios; conceptos del MVP marcados.
