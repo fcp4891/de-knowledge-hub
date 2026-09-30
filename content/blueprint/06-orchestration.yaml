@@ -19,7 +19,8 @@ subdomains:
         mvp: true
         mvp_reason: Airflow/Composer (§51); unidad básica del snippet "DAG de Airflow" de A-F3.2.
         related_technologies: [apache-airflow, gcp-cloud-composer]
-        related_concepts: [data-orchestration, pipeline-dependencies]
+        related_concepts: [data-orchestration, pipeline-dependencies, scheduler, idempotency]
+        note: Lo mínimo de una task idempotente va aquí; el detalle sigue en orchestration-task, fuera del MVP.
       - slug: orchestration-task
         title: Task
         kind: concept
@@ -36,8 +37,9 @@ subdomains:
         importance: high
         mvp: true
         mvp_reason: Airflow/Composer (§51); entender cuándo y cómo se ejecutan los DAG.
-        related_technologies: [apache-airflow]
+        related_technologies: [apache-airflow, gcp-cloud-composer]
         related_concepts: [dag]
+        note: Decidir cuándo corre el DAG no es catchup.
       - slug: sensors
         title: Sensors
         kind: concept
@@ -94,8 +96,9 @@ subdomains:
         importance: high
         mvp: true
         mvp_reason: Airflow/Composer (§51); componentes que Composer administra.
-        related_technologies: [apache-airflow]
-        related_concepts: [scheduler, dag]
+        related_technologies: [apache-airflow, gcp-cloud-composer]
+        related_concepts: [scheduler, dag, open-source-vs-managed-orchestration]
+        note: Webserver, scheduler, workers y base de metadatos; Composer los administra, y el diagrama no es el de un Airflow auto-hospedado.
       - slug: airflow-operators-and-hooks
         title: Operators y hooks de Airflow
         kind: concept
@@ -114,7 +117,8 @@ subdomains:
         mvp: true
         mvp_reason: Airflow/Composer (§51); el plan exige diferenciar el proyecto open source del servicio que lo ejecuta.
         related_technologies: [apache-airflow, gcp-cloud-composer, aws-mwaa]
-        related_concepts: [airflow-architecture]
+        related_concepts: [airflow-architecture, composer-environments]
+        note: 'Composer y MWAA no son Airflow con otro nombre: difieren la versión pinneada, la red y qué opera el usuario.'
       - slug: orchestration-landscape
         title: Panorama de orquestadores
         kind: concept

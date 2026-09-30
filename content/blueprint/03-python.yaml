@@ -139,7 +139,8 @@ subdomains:
         mvp: true
         mvp_reason: Python (§51); validación de payloads en la ingesta API de A-F3.2.
         related_technologies: [pydantic]
-        related_concepts: [python-typing, schema-evolution]
+        related_concepts: [python-typing, schema-evolution, python-api-consumption, data-contracts]
+        note: Valida el payload en el borde; el contrato sigue en data-contracts. Typing sigue fuera del MVP.
       - slug: http-clients
         title: Clientes HTTP
         kind: concept
@@ -166,15 +167,19 @@ subdomains:
         mvp: true
         mvp_reason: Python (§51); pruebas de los snippets de ingesta y transformación.
         related_technologies: [pytest]
+        related_concepts: [python-api-consumption, python-error-handling-and-retries]
+        note: La ficha prueba ingesta y transformación; no es un curso de pytest.
       - slug: python-logging
         title: Logging
         kind: concept
         classification: core
-        level: basic
+        level: intermediate
         importance: high
         mvp: true
         mvp_reason: Python (§51); trazabilidad de la ingesta API con retries.
         related_technologies: [python]
+        related_concepts: [python-api-consumption, python-error-handling-and-retries, observability-logs]
+        note: Logs estructurados y qué no se loguea van aquí; observability-logs (16) sigue fuera del MVP.
       - slug: beam-programming-model
         title: Modelo de programación de Apache Beam
         kind: concept
@@ -205,8 +210,8 @@ subdomains:
         mvp: true
         mvp_reason: Python (§51); snippet "ingesta API con retries" de A-F3.2.
         related_technologies: [requests, httpx]
-        related_concepts: [http-clients, api-ingestion]
-        note: Paginación, autenticación, rate limits.
+        related_concepts: [http-clients, api-ingestion, data-validation-with-pydantic, python-error-handling-and-retries, python-logging]
+        note: Paginación, autenticación, rate limits. requests y httpx se detallan en http-clients, fuera del MVP.
       - slug: python-file-processing
         title: Procesamiento de archivos
         kind: concept
@@ -231,7 +236,8 @@ subdomains:
         importance: high
         mvp: true
         mvp_reason: Python (§51); snippet "ingesta API con retries" de A-F3.2.
-        related_concepts: [python-exceptions, retries, idempotency]
+        related_concepts: [python-exceptions, retries, idempotency, python-api-consumption]
+        note: Backoff y jitter están en retries (05); aquí va el código (excepciones, timeouts) y cuándo no reintentar.
       - slug: python-pipeline-structure
         title: Estructura de un pipeline en Python
         kind: pattern

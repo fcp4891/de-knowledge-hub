@@ -29,6 +29,11 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ## Historial
 
+### Revisión B-F1b de 03, 06 y 12 (2026-09-29)
+- 16 filas aprobadas aplicadas: relaciones, tecnologías, notas de alcance; `python-logging` y `terraform-plan-apply` pasan a `intermediate`.
+- Fila 06-3 rechazada (catchup a `modern`): no se aplica, `catchup` sigue `core`.
+- `b/f1b-review` mergeada; conflicto add/add en `lane-b.md` resuelto combinando ambas versiones.
+
 ### F2 · Ajustes previos (2026-09-29)
 - Estado dividido en `docs/status/lane-a.md` y `docs/status/lane-b.md`; `docs/STATUS.md` pasa a ser un resumen.
 - Generadores de arranque versionados en `scripts/generators/` (`technologies.py`, `sources.py`), con rutas relativas y datos al día. Tests: la salida valida contra los schemas, son idempotentes y el registro generado solo difiere del actual en `updated_at`. `sources.py` no sobrescribe sin `--force`.

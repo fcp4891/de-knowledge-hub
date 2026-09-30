@@ -19,7 +19,8 @@ subdomains:
         mvp: true
         mvp_reason: Terraform (§51); marco conceptual (declarativo, versionado, reproducible) de todos los snippets de infraestructura.
         related_technologies: [terraform]
-        related_concepts: [ci-cd-pipelines]
+        related_concepts: [ci-cd-pipelines, terraform-state, terraform-plan-apply]
+        note: La ficha es el marco (declarativo, versionado, reproducible), no el tutorial de Terraform.
 
   - slug: terraform
     title: Terraform
@@ -32,8 +33,9 @@ subdomains:
         importance: high
         mvp: true
         mvp_reason: Terraform (§51); el provider de Google Cloud es la base de los snippets de BigQuery, GCS e IAM.
-        related_technologies: [terraform]
+        related_technologies: [terraform, gcp-bigquery, gcp-cloud-storage, gcp-iam]
         related_concepts: [infrastructure-as-code]
+        note: El provider de Google no equivale al de AWS ni al de Azure; el pin de versión va aquí.
       - slug: terraform-variables-and-outputs
         title: Variables y outputs
         kind: concept
@@ -61,7 +63,8 @@ subdomains:
         mvp: true
         mvp_reason: Terraform (§51); sin entender el state no se puede operar Terraform con seguridad.
         related_technologies: [terraform]
-        related_concepts: [terraform-drift]
+        related_concepts: [terraform-drift, terraform-security]
+        note: Se menciona el backend remoto en Cloud Storage (terraform-remote-state sigue fuera del MVP) y el riesgo de secretos en el state.
       - slug: terraform-remote-state
         title: Remote state
         kind: concept
@@ -75,12 +78,13 @@ subdomains:
         title: Ciclo plan/apply
         kind: concept
         classification: modern
-        level: basic
+        level: intermediate
         importance: high
         mvp: true
         mvp_reason: Terraform (§51); flujo de trabajo mínimo para aplicar los snippets.
         related_technologies: [terraform]
         related_concepts: [terraform-state]
+        note: Leer el plan y no aplicar a ciegas; los módulos siguen fuera del MVP.
       - slug: terraform-environments
         title: Entornos en Terraform
         kind: concept
