@@ -251,6 +251,36 @@ paths:
         "404": { $ref: "#/components/responses/NotFound" }
         "422": { $ref: "#/components/responses/ValidationError" }
 
+  /me/notes/{slug}/{note_id}:
+    put:
+      tags: [me]
+      operationId: updateNote
+      summary: Reemplaza el texto de una nota personal (ADR-006).
+      parameters: [{ $ref: "#/components/parameters/Slug" }, { $ref: "#/components/parameters/NoteId" }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/NoteUpdate" }
+      responses:
+        "200":
+          description: Nota actualizada.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Note" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "422": { $ref: "#/components/responses/ValidationError" }
+    delete:
+      tags: [me]
+      operationId: deleteNote
+      summary: Borra una nota personal (ADR-006).
+      parameters: [{ $ref: "#/components/parameters/Slug" }, { $ref: "#/components/parameters/NoteId" }]
+      responses:
+        "204":
+          description: Nota borrada.
+        "404": { $ref: "#/components/responses/NotFound" }
+        "422": { $ref: "#/components/responses/ValidationError" }
+
   /me/favorites:
     get:
       tags: [me]
@@ -315,6 +345,11 @@ components:
       name: offset
       in: query
       schema: { type: integer, minimum: 0, default: 0 }
+    NoteId:
+      name: note_id
+      in: path
+      required: true
+      schema: { type: string, minLength: 1, maxLength: 64, pattern: "^[A-Za-z0-9-]+$" }
 
   responses:
     NotFound:
@@ -674,6 +709,12 @@ components:
         updated_at: { $ref: "#/components/schemas/DateTime" }
       additionalProperties: false
     NoteCreate:
+      type: object
+      required: [body_markdown]
+      properties:
+        body_markdown: { type: string, minLength: 1, maxLength: 20000 }
+      additionalProperties: false
+    NoteUpdate:
       type: object
       required: [body_markdown]
       properties:

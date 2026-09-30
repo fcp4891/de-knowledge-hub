@@ -22,3 +22,4 @@ Formato: `- [fase sugerida] idea — origen`
 - [F2/F3] Validar `docs/contracts/api.yaml` como OpenAPI 3.1 con `openapi-spec-validator` (dependencia nueva, justificar en el commit) — A-F2.1
 - ~~[F2 · A-F2.3] Mover `projection.py` a `backend/app/`~~ — hecho en A-F2.3
 - [F3] Mover `scripts/validate.py` a un paquete compartido (`backend/content/`): el compilador lo importa desde `scripts/` — A-F2.3
+- [F4] Respaldo del estado personal (`me_*`), el único dato que no se regenera desde Git (§49 backups; ADR-006) — A-F2.4

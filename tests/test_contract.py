@@ -61,8 +61,14 @@ def test_mock_matches_contract(request_key: str) -> None:
 
 
 def test_every_operation_has_a_mock() -> None:
+    """Toda operación con cuerpo de respuesta tiene mock; las que solo responden 204 no lo necesitan."""
     covered = {(split_request(k)[0].lower(), match_path(split_request(k)[1])) for k in INDEX}
-    declared = {(method, template) for template, ops in API["paths"].items() for method in ops}
+    declared = {
+        (method, template)
+        for template, ops in API["paths"].items()
+        for method, op in ops.items()
+        if not set(op["responses"]) & {"204"}
+    }
     assert declared == covered
 
 
