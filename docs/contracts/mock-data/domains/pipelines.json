@@ -130,9 +130,9 @@
           "level": "intermediate",
           "importance": "high",
           "mvp": true,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-09-30"
         },
         {
           "slug": "event-driven-pipelines",
@@ -178,9 +178,9 @@
           "level": "intermediate",
           "importance": "high",
           "mvp": true,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-09-30"
         },
         {
           "slug": "checkpoints",
@@ -220,9 +220,9 @@
           "level": "intermediate",
           "importance": "high",
           "mvp": true,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-09-30"
         },
         {
           "slug": "backfill",
@@ -234,9 +234,9 @@
           "level": "intermediate",
           "importance": "high",
           "mvp": true,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-09-30"
         },
         {
           "slug": "failure-recovery",

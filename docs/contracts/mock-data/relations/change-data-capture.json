@@ -133,6 +133,13 @@
           "note": "MERGE es la forma habitual de aplicar un lote de cambios en el destino."
         },
         {
+          "slug": "incremental-pipelines",
+          "title": "Pipelines incrementales",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "CDC es una forma de obtener el delta en la primera etapa."
+        },
+        {
           "slug": "postgresql-for-data-engineers",
           "title": "PostgreSQL para Data Engineers",
           "entity_type": "concept",

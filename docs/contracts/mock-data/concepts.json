@@ -153,9 +153,9 @@
       "level": "basic",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "data-ingestion",
@@ -237,9 +237,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "data-contracts",
@@ -685,9 +685,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "change-detection",
@@ -769,9 +769,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "clustering",
@@ -1567,9 +1567,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "event-driven-pipelines",
@@ -1609,9 +1609,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "checkpoints",
@@ -1651,9 +1651,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "backfill",
@@ -1665,9 +1665,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "failure-recovery",
@@ -2141,9 +2141,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "bigquery-slots",
@@ -2351,9 +2351,9 @@
       "level": "advanced",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "dataflow-execution-model",

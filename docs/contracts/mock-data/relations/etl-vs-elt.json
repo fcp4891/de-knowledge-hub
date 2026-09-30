@@ -28,6 +28,13 @@
           "note": "CDC alimenta la capa raw en un flujo ELT."
         },
         {
+          "slug": "data-pipeline",
+          "title": "Data pipeline",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "ETL y ELT son dos formas de ordenar los pasos de un pipeline."
+        },
+        {
           "slug": "data-warehouse",
           "title": "Data Warehouse",
           "entity_type": "concept",

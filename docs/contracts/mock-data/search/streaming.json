@@ -1,6 +1,6 @@
 {
   "query": "streaming",
-  "total": 12,
+  "total": 13,
   "groups": [
     {
       "type": "concept",
@@ -54,6 +54,16 @@
           "has_page": false,
           "snippet": "El micro-batch se explica en esta ficha.",
           "score": 5.5
+        },
+        {
+          "slug": "late-arriving-data",
+          "title": "Late-arriving data",
+          "type": "concept",
+          "domain": "fundamentals",
+          "classification": "core",
+          "has_page": true,
+          "snippet": "Registros cuyo tiempo de evento pertenece a un período que el pipeline ya procesó o cerró; cómo detectarlos y reincorporarlos en batch y en streaming.",
+          "score": 1.8
         }
       ]
     },

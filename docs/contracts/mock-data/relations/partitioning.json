@@ -2,6 +2,20 @@
   "slug": "partitioning",
   "groups": [
     {
+      "type": "DEPENDS_ON",
+      "direction": "incoming",
+      "label": "dependency_of",
+      "items": [
+        {
+          "slug": "partition-pruning",
+          "title": "Partition pruning",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Sin partición no hay nada que podar."
+        }
+      ]
+    },
+    {
       "type": "RELATED_TO",
       "direction": "both",
       "label": "related_to",
@@ -10,8 +24,8 @@
           "slug": "backfill",
           "title": "Backfill",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Reprocesar por partición completa hace el backfill simple e idempotente."
         },
         {
           "slug": "incremental-load",
@@ -26,6 +40,20 @@
           "entity_type": "concept",
           "origin": "blueprint",
           "note": null
+        },
+        {
+          "slug": "bigquery-clustering",
+          "title": "Clustering en BigQuery",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Clustering es una forma de organización física complementaria a la partición."
+        },
+        {
+          "slug": "late-arriving-data",
+          "title": "Datos que llegan tarde",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Particionar por fecha de evento hace que un dato tardío caiga en una partición ya cerrada."
         },
         {
           "slug": "physical-data-model",

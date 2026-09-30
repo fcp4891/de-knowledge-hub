@@ -54,6 +54,13 @@
           "entity_type": "concept",
           "origin": "blueprint",
           "note": null
+        },
+        {
+          "slug": "upsert",
+          "title": "Upsert",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "SCD2 no sobrescribe: cierra la versión vigente e inserta una nueva, en lugar de un upsert simple."
         }
       ]
     }

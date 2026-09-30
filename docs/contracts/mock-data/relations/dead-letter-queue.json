@@ -24,8 +24,8 @@
           "slug": "pubsub-delivery-semantics",
           "title": "Entrega, orden y reintentos en Pub/Sub",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "El dead-letter topic limita los intentos de entrega."
         },
         {
           "slug": "idempotency",
@@ -42,11 +42,18 @@
           "note": null
         },
         {
+          "slug": "replay",
+          "title": "Replay",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "El redrive de una DLQ es un replay acotado a los mensajes apartados."
+        },
+        {
           "slug": "retries",
           "title": "Retries",
           "entity_type": "pattern",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Cuando los reintentos se agotan, el mensaje se aparta a la DLQ."
         }
       ]
     }

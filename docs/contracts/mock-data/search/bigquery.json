@@ -31,6 +31,16 @@
       "type": "concept",
       "items": [
         {
+          "slug": "bigquery-clustering",
+          "title": "Clustering en BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "has_page": true,
+          "snippet": "Ordenamiento de una tabla de BigQuery por hasta cuatro columnas para que las consultas filtradas poden bloques; complementa al particionamiento.",
+          "score": 6.3
+        },
+        {
           "slug": "bigquery-partitioning",
           "title": "Particionamiento en BigQuery",
           "type": "concept",
@@ -39,16 +49,6 @@
           "has_page": true,
           "snippet": "Cómo BigQuery divide una tabla en particiones por fecha, por momento de ingesta o por rangos de enteros para leer menos datos y gestionar el ciclo de vida.",
           "score": 6.3
-        },
-        {
-          "slug": "bigquery-clustering",
-          "title": "Clustering en BigQuery",
-          "type": "concept",
-          "domain": "gcp",
-          "classification": "modern",
-          "has_page": false,
-          "snippet": "Clustering en BigQuery",
-          "score": 6.0
         },
         {
           "slug": "bigquery-information-schema",

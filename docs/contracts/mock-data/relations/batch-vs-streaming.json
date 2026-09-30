@@ -14,6 +14,20 @@
           "note": "CDC convierte una base operacional en un flujo de eventos."
         },
         {
+          "slug": "data-pipeline",
+          "title": "Data pipeline",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Un pipeline procesa por lotes, en streaming o ambos."
+        },
+        {
+          "slug": "late-arriving-data",
+          "title": "Datos que llegan tarde",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "El tratamiento difiere entre batch (reprocesar períodos) y streaming (watermarks y triggers)."
+        },
+        {
           "slug": "dead-letter-queue",
           "title": "Dead-letter queue",
           "entity_type": "pattern",
@@ -45,13 +59,6 @@
           "slug": "lambda-architecture",
           "title": "Lambda Architecture",
           "entity_type": "architecture",
-          "origin": "blueprint",
-          "note": null
-        },
-        {
-          "slug": "late-arriving-data",
-          "title": "Late-arriving data",
-          "entity_type": "concept",
           "origin": "blueprint",
           "note": null
         }

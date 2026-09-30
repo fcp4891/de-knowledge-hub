@@ -16,6 +16,20 @@
       ]
     },
     {
+      "type": "USES",
+      "direction": "incoming",
+      "label": "used_by",
+      "items": [
+        {
+          "slug": "incremental-pipelines",
+          "title": "Pipelines incrementales",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Cada etapa aplica una carga incremental sobre su destino."
+        }
+      ]
+    },
+    {
       "type": "DEPENDS_ON",
       "direction": "outgoing",
       "label": "depends_on",
@@ -40,6 +54,13 @@
           "entity_type": "architecture",
           "origin": "blueprint",
           "note": null
+        },
+        {
+          "slug": "backfill",
+          "title": "Backfill",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Un backfill suele reutilizar la carga incremental con un rango explícito."
         },
         {
           "slug": "change-detection",
@@ -124,6 +145,13 @@
           "entity_type": "pattern",
           "origin": "blueprint",
           "note": null
+        },
+        {
+          "slug": "upsert",
+          "title": "Upsert",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "El modo upsert es una de las formas de escribir el delta."
         }
       ]
     }

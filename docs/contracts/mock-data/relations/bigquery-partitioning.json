@@ -24,8 +24,8 @@
           "slug": "bigquery-clustering",
           "title": "Clustering en BigQuery",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Partición y clustering se combinan; el clustering actúa dentro de cada partición."
         },
         {
           "slug": "partitioning",
@@ -38,8 +38,8 @@
           "slug": "partition-pruning",
           "title": "Partition pruning",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "En BigQuery, el pruning depende del tipo de partición y de cómo se escribe el filtro."
         }
       ]
     },

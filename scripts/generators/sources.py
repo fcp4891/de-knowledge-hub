@@ -98,6 +98,10 @@ BATCH1 = [
      'https://docs.aws.amazon.com/streams/latest/dev/introduction.html', "official_docs", 1, "aws", True, "quarterly", ['aws-kinesis']),
     ("aws-glue-docs", "AWS Glue Developer Guide", "Guía oficial para desarrolladores de AWS Glue.",
      "https://docs.aws.amazon.com/glue/latest/dg/what-is-glue.html", "official_docs", 1, "aws", True, "quarterly", ["aws-glue"]),
+    # Lote 2: event time y watermarks en AWS (late-arriving-data).
+    ("aws-managed-flink-docs", "Amazon Managed Service for Apache Flink Developer Guide",
+     "Guía oficial para desarrolladores de Amazon Managed Service for Apache Flink.",
+     "https://docs.aws.amazon.com/managed-flink/latest/java/what-is.html", "official_docs", 1, "aws", True, "quarterly", []),
 ]
 
 

@@ -590,3 +590,21 @@ created_at: '2026-09-30'
 updated_at: '2026-09-30'
 last_verified: '2026-09-30'
 verification_status: verified
+---
+id: source:aws-managed-flink-docs
+slug: aws-managed-flink-docs
+type: source
+title: Amazon Managed Service for Apache Flink Developer Guide
+description: Guía oficial para desarrolladores de Amazon Managed Service for Apache Flink.
+url: https://docs.aws.amazon.com/managed-flink/latest/java/what-is.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-09-30'
+updated_at: '2026-09-30'
+last_verified: '2026-09-30'
+verification_status: verified

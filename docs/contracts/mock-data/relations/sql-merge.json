@@ -19,6 +19,13 @@
           "entity_type": "pattern",
           "origin": "entity",
           "note": "El cierre de versiones y la inserción de la nueva se implementan con MERGE o con dos sentencias."
+        },
+        {
+          "slug": "upsert",
+          "title": "Upsert",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "En los data warehouses, el upsert se escribe con MERGE."
         }
       ]
     },
