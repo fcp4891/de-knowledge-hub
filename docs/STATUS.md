@@ -10,13 +10,13 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | Tareas previas de F3 (búsqueda `has_page`, CI, respaldo de `/me`) | Lote 2 de fichas | — |
+| A · Claude Code | — (tareas previas de F3 cerradas) | Lote 2 de fichas (plan pendiente) | — |
 | B · Cursor | — | B-F3.1 · Revisión del lote 1 (10 fichas en `review_required`) | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| — | — | — | — |
+| A | B | Regenerar el cliente tipado: `has_page` en resultados de búsqueda (ADR-007) | Abierto |
 
 ## Criterio de salida de la fase actual (F3)
 - [ ] 60–80 fichas `verified` (hoy: 10 fichas, todas en `review_required`).

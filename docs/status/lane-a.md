@@ -5,7 +5,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-09-29
 
 ## Actual
-- **Tarea activa:** tareas previas de F3: búsqueda con `has_page`, CI de frontend, respaldo de `/me` y limpieza del volumen viejo.
+- **Tarea activa:** — (tareas previas de F3 cerradas). Siguiente: lote 2 de fichas, plan pendiente de aprobación.
 - **Mergeado para Carril B:** `b/f2-cards` (3e50c05) en `main`, 2026-09-30.
 - **Siguiente:** gate de F2.
 - **Bloqueos:** —
@@ -37,6 +37,12 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Enumeración `category`, `mvp` y `note` en tecnologías, y `matrix.schema.json` (ADR-004).
 
 ## Historial
+
+### F3 · Tareas previas (2026-09-30)
+- Búsqueda: `has_page` en cada resultado y +0.3 a lo que tiene ficha (ADR-007, cambio aditivo del contrato). Mocks de búsqueda regenerados.
+- CI: job de frontend (npm ci, lint, build con `API_MODE=mock`), acciones `@v7` (node24) y `ubuntu-24.04`.
+- Respaldo del estado personal: `make backup-me` / `make restore-me` (pg_dump de `me_*` a `BACKUP_DIR`, fuera del repo).
+- Volumen Docker viejo `des_conocimiento-carril-a_dekh-pgdata` eliminado (sin contenedores que lo usaran; estado personal vacío). La base de desarrollo usa `dekh_dekh-pgdata` (proyecto Compose `dekh`).
 
 ### Lote 1 de F3, adelantado para el gate de F2 (2026-09-30)
 - `validate.py` + `scripts/page_sections.py`: las fichas `concept`/`pattern` que no son stub deben tener las 22 secciones de la plantilla, en orden, con sus títulos y sin secciones vacías. También se comprueba que domain y subdomain coincidan con el blueprint. (Primera tarea de F3 del BACKLOG.)
