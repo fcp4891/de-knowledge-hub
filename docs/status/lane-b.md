@@ -3,12 +3,17 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F2 (F1 cerrada el 2026-09-29)
-**Última actualización:** 2026-09-29
+**Última actualización:** 2026-09-30
 
 ## Actual
-- **Tarea activa:** — en espera del contrato de API de Carril A.
-- **Siguiente:** B-F2.1 · Scaffold, Home y Explorer, cuando Carril A publique el contrato (A-F2.1). Este carril no edita `content/blueprint/`.
-- **Bloqueos:** espera `docs/contracts/api.yaml` y `docs/contracts/mock-data/` (A-F2.1).
+- **Tarea activa:** B-F2.1 cerrada. `frontend/` con Next.js, cliente tipado desde `docs/contracts/api.yaml` y modo mock (`API_MODE`, por defecto `mock`) leyendo `docs/contracts/mock-data/index.json`.
+- **Siguiente:** B-F2.2, ficha completa de concepto, cuando se pida. La búsqueda en UI queda para B-F2.3.
+- **Bloqueos:** ninguno.
+
+### Límites del mock en esta entrega
+- Solo 10 conceptos tienen detalle. Un slug que no está en el índice muestra «Sin datos en modo mock.» y no rompe la página.
+- La búsqueda mock es coincidencia simple ya resuelta en el JSON. El cliente no reordena ni recalcula `score`. No hay caja de búsqueda en esta tarea.
+- Home usa datos solo en Continuar estudiando (`reviewing`), Necesita repaso y Conceptos recientes (orden del mock de `/me/study-state`). El resto del §38 queda como título vacío.
 
 ## Pedidos a Carril A
 | Pedido | Estado |
