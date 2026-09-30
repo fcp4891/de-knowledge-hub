@@ -6,13 +6,13 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-09-30
 
 ## Actual
-- **Tarea activa:** B-F3.1. Revisión del lote 1 en `docs/reviews/cards-lote1.md`. Las filas están en pendiente.
-- **Siguiente:** decisión de Felipe sobre esas filas. No se editó `content/`.
+- **Tarea activa:** en espera. B-F3.1 del lote 1 está aprobada.
+- **Siguiente:** revisar el lote 2 cuando Carril A lo entregue.
 - **Bloqueos:** ninguno.
 - El guardado automático del estado de estudio y la etiqueta «ficha pendiente» están en `b/f3-ux`, no en esta rama.
 
 ### B-F3.1
-- Una tabla de §48 por cada una de las 10 fichas del lote 1. Cinco criterios, todos en pendiente.
+- Una tabla de §48 por cada una de las 10 fichas del lote 1. Felipe aprobó todas las filas el 2026-09-30. No se editó `content/`.
 - Los 4 VERIFY (ETL en AWS, ETL en Azure, máximo de particiones de BigQuery, capacidad y retención de Kinesis) quedan destacados y sin inventar el dato.
 
 ### B-F2.3
