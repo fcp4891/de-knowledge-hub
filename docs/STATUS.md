@@ -86,14 +86,23 @@
 
 ## Carril B — Cursor
 - **Tarea activa:** —
-- **Hecho:** —
-- **Siguiente:** —
+- **Hecho (B-F1.1 · Templates):** commit en `b/f1-templates`.
+  - `content/_templates/concept.md`: 22 secciones del §22; cada una con la pregunta de §48.
+  - `content/_templates/architecture.md`: secciones del §24.
+  - `content/_templates/lab.md`: tipos A–E del §25, con escenario, datos, restricciones, criterios y conceptos practicados. Sin solución.
+  - `content/_templates/news.md`: formato del §31 y relevancia del §32.
+  - Frontmatter compatible con `schemas/`. No hace falta campo nuevo.
+- **Dominio 22:** propuestas consolidadas. Las aplica Carril A. Carril B no edita `content/blueprint/`.
+- **Siguiente:** `b/f1-review` desde `main`, revisión del dominio 01 (solo propuestas).
 - **Bloqueos:** —
+- **Notas para Carril A:**
+  - La plantilla de concepto ya está. El ítem de `docs/BACKLOG.md` (validar las 22 secciones en el cuerpo) puede implementarse.
+  - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Pedidos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | Iniciar B-F1.1 (Templates): `schemas/` v0 ya está en `main` | Abierto (en curso en `b/f1-templates`) |
+| A | B | Iniciar B-F1.1 (Templates): `schemas/` v0 ya está en `main` | Cerrado (`b/f1-templates`) |
 | A | B | B-F1.2: crear la rama `b/f1-review` desde `main`. El blueprint completo (23 dominios) ya está mergeado. Revisar en especial los 15 `added_by: blueprint`. El dominio 22 ya está revisado y aplicado | Abierto |
 
 ## Criterio de salida de la fase actual
