@@ -105,6 +105,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
                           {item.classification ? (
                             <span className={`badge classification-${item.classification}`}>{item.classification}</span>
                           ) : null}
+                          {item.has_page === false ? <span className="badge">ficha pendiente</span> : null}
                         </p>
                         {item.snippet ? <p className="muted">{item.snippet}</p> : null}
                       </li>
