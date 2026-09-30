@@ -13,7 +13,7 @@
 3. **Todo lo que no es de la fase actual va a `docs/BACKLOG.md`.** Sin excepciones, aunque sea "rápido".
 4. **Los contratos no se tocan sin ADR.** `schemas/` y `docs/contracts/` solo cambian con un ADR en `docs/adr/`.
 5. **Timebox.** Si una fase excede su tiempo en >50 %, se **recorta alcance**, no se extiende el plazo.
-6. **Cierre de tarea = tests verdes + `STATUS.md` actualizado + commit.** Sin esto la tarea no está terminada.
+6. **Cierre de tarea = tests verdes + estado del carril actualizado (`docs/status/lane-*.md`) + commit.** Sin esto la tarea no está terminada. `docs/STATUS.md` es un resumen que solo actualiza Carril A al mergear.
 7. **Gate humano.** Al final de cada fase, Felipe revisa y aprueba antes de avanzar.
 8. **Uso real antes de automatizar.** Tras cerrar el MVP (F4) se usa la plataforma 2–3 semanas antes de construir el Update Engine.
 
@@ -29,7 +29,7 @@
 
 **Git:** ramas `a/<tarea>` y `b/<tarea>`, merge a `main` al cerrar cada tarea. Recomendado: un worktree por carril para que ambos trabajen simultáneamente sin conflictos.
 
-**Handoff entre carriles:** únicamente mediante `docs/STATUS.md` y los contratos. Nunca se re-explica contexto en el chat.
+**Handoff entre carriles:** únicamente mediante `docs/status/lane-*.md` (pedidos), el resumen `docs/STATUS.md` y los contratos. Nunca se re-explica contexto en el chat.
 
 ---
 
@@ -43,7 +43,8 @@ de-knowledge-hub/
 ├── docs/
 │   ├── plan-maestro.md
 │   ├── ROADMAP.md
-│   ├── STATUS.md                 # estado vivo de ambos carriles
+│   ├── STATUS.md                 # resumen (solo Carril A, al mergear)
+│   ├── status/                   # lane-a.md, lane-b.md: estado de cada carril
 │   ├── BACKLOG.md                # ideas fuera de fase
 │   ├── adr/                      # decisiones de arquitectura
 │   └── contracts/                # OpenAPI, formato de datos compilados
@@ -215,7 +216,7 @@ AWS → Azure → Modern → Emerging (§44, fases de contenido 3–5), reutiliz
 - Tareas grandes: pedir primero el plan, aprobarlo y luego ejecutar.
 - Indicar siempre los archivos concretos; nunca "lee todo `content/`".
 - Modelo más capaz para diseño, schemas y ADR; modelo más económico para lotes repetitivos (fichas, snippets, tests).
-- Leer `STATUS.md` en lugar de re-explicar el contexto.
+- Leer `STATUS.md` y el archivo de estado del carril en lugar de re-explicar el contexto.
 
 **Cursor**
 - Prompts acotados con referencias `@archivo`.

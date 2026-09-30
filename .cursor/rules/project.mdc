@@ -5,14 +5,14 @@ alwaysApply: true
 
 # Data Engineering Knowledge Hub — Carril B (Cursor)
 
-Plan: `docs/plan-maestro.md` · Hoja de ruta: `docs/ROADMAP.md` · Estado: `docs/STATUS.md`
+Plan: `docs/plan-maestro.md` · Hoja de ruta: `docs/ROADMAP.md` · Estado: `docs/STATUS.md` (resumen) y `docs/status/lane-b.md` (tu estado)
 
 ## Tu rol
 Trabajas en paralelo con Claude Code (Carril A: contenido, schemas, backend, pipelines).
 - **Tu directorio:** `frontend/`.
 - En `content/` solo haces ediciones puntuales de revisión solicitadas explícitamente.
 - **No toques** `backend/`, `schemas/`, `pipelines/`, `scripts/`.
-- Consumes la API solo según `docs/contracts/api.yaml`. Si el contrato no alcanza, anota la necesidad en `docs/STATUS.md` (sección "Pedidos a Carril A"); no lo modifiques.
+- Consumes la API solo según `docs/contracts/api.yaml`. Si el contrato no alcanza, anota la necesidad en `docs/status/lane-b.md` (sección "Pedidos a Carril A"); no lo modifiques.
 
 ## Principios de UX
 - Utilidad sobre gamificación: sin puntos, badges, porcentajes de dominio ni quizzes.
@@ -24,7 +24,9 @@ Trabajas en paralelo con Claude Code (Carril A: contenido, schemas, backend, pip
 
 ## Forma de trabajo
 - Una tarea por vez; cambios acotados al componente indicado.
-- Al cerrar: build y lint en verde, actualizar sección Carril B de `docs/STATUS.md`, commit en rama `b/<tarea>`.
+- Al cerrar: build y lint en verde, actualizar `docs/status/lane-b.md`, commit en rama `b/<tarea>`.
+- **Estado:** solo editas `docs/status/lane-b.md`. No edites `docs/STATUS.md` (lo actualiza Carril A al mergear) ni `docs/status/lane-a.md`.
+- En `content/blueprint/` solo propones cambios (en `docs/reviews/`); los aplica Carril A.
 - Ideas fuera de la fase actual → `docs/BACKLOG.md`.
 
 ## Idioma

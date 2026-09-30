@@ -12,14 +12,15 @@ Trabajas en paralelo con Cursor (Carril B, frontend y revisión).
 - `docs/contracts/` y `schemas/` solo cambian con un ADR en `docs/adr/`.
 
 ## Al iniciar cada sesión
-1. Lee `docs/STATUS.md`.
+1. Lee `docs/STATUS.md` (resumen) y `docs/status/lane-a.md` (tu estado detallado).
 2. Confirma la fase actual en `docs/ROADMAP.md`.
 3. Trabaja **solo** en la tarea asignada. Ideas fuera de alcance → `docs/BACKLOG.md`.
 
 ## Al cerrar cada tarea
 1. `make validate` y `make test` en verde.
-2. Actualiza `docs/STATUS.md` (sección Carril A): qué se hizo, qué queda, bloqueos, cambios de contrato.
-3. Commit en la rama `a/<tarea>` con mensaje descriptivo.
+2. Actualiza `docs/status/lane-a.md`: qué se hizo, qué queda, bloqueos, cambios de contrato y pedidos a Carril B.
+3. Al mergear a `main`, actualiza el resumen `docs/STATUS.md`. Solo Carril A lo edita; nunca edites `docs/status/lane-b.md`.
+4. Commit en la rama `a/<tarea>` con mensaje descriptivo.
 
 ## Reglas de contenido (no negociables)
 - Fuente de verdad: Markdown + frontmatter YAML en `content/`. La base de datos es derivada.

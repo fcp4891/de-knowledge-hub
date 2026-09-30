@@ -9,7 +9,7 @@ Carril A = Claude Code · Carril B = Cursor. Las tareas en la misma fila pueden 
 
 ### 0.1 Inicio de sesión (ambos carriles)
 ```text
-Lee docs/STATUS.md y la fase actual en docs/ROADMAP.md.
+Lee docs/STATUS.md (resumen), tu archivo de estado (docs/status/lane-a.md o lane-b.md) y la fase actual en docs/ROADMAP.md.
 Tu tarea es exclusivamente: <PEGAR TAREA>.
 Antes de escribir código, dame un plan de máximo 8 pasos con los archivos que vas a crear o modificar. Espera mi aprobación.
 ```
@@ -18,7 +18,8 @@ Antes de escribir código, dame un plan de máximo 8 pasos con los archivos que 
 ```text
 Cierra la tarea:
 1. Ejecuta validate/test (Carril A) o build/lint (Carril B) y corrige hasta que pasen.
-2. Actualiza tu sección en docs/STATUS.md: hecho, siguiente, bloqueos, pedidos al otro carril.
+2. Actualiza solo tu archivo de estado (docs/status/lane-a.md o lane-b.md): hecho, siguiente, bloqueos, pedidos al otro carril.
+   docs/STATUS.md es un resumen: solo Carril A lo actualiza, al mergear a main.
 3. Mueve a docs/BACKLOG.md cualquier idea que haya surgido fuera de alcance.
 4. Haz commit en tu rama con un mensaje descriptivo.
 Resume en 5 líneas lo que quedó.
@@ -127,7 +128,7 @@ Crea en content/_templates/ cuatro plantillas Markdown con frontmatter YAML comp
 - news.md: formato del §31 más la clasificación del §32.
 
 Cada sección lleva un comentario HTML de 1 línea con la pregunta que debe responder (§48).
-No modifiques schemas/: si falta un campo, anótalo en docs/STATUS.md como pedido a Carril A.
+No modifiques schemas/: si falta un campo, anótalo en docs/status/lane-b.md como pedido a Carril A.
 ```
 
 ### B-F1.2 · Revisión del Blueprint (Cursor, iterativo con Felipe)
@@ -177,7 +178,7 @@ Tarea F2.1 — Contrato. Es bloqueante para Carril B: hazla primero y compacta.
    Toda entidad expone metadata §40, incluyendo last_verified y verification_status.
 2. docs/contracts/mock-data/: respuestas JSON de ejemplo para cada endpoint, construidas a partir de content/ real (al menos 10 conceptos y 5 tecnologías).
 3. ADR-002-api-contract.md.
-Actualiza STATUS.md avisando a Carril B que puede comenzar.
+Actualiza docs/status/lane-a.md y, al mergear, docs/STATUS.md, avisando a Carril B que puede comenzar.
 ```
 
 ### A-F2.2 · Compilador content → PostgreSQL
@@ -236,7 +237,7 @@ Implementa /concepts/[slug] y /technologies/[slug]:
 1. Búsqueda global (atajo de teclado) con resultados agrupados por tipo (§35).
 2. Navegación entre entidades por relaciones.
 3. En la ficha: selector de estado de estudio, favoritos y notas personales en Markdown.
-Cuando el backend real esté listo (ver STATUS.md), desactiva los mocks y prueba de extremo a extremo.
+Cuando el backend real esté listo (ver docs/STATUS.md y docs/status/lane-a.md), desactiva los mocks y prueba de extremo a extremo.
 ```
 
 ---
@@ -292,7 +293,7 @@ El SQL y Python deben ser ejecutables o incluir exactamente qué requieren.
 
 1. Vista /snippets con filtros por lenguaje, patrón y cloud; ficha de snippet con explicación y conceptos relacionados.
 2. En la ficha de concepto: mini-grafo del vecindario a 1 salto (nodos coloreados por tipo de entidad), clicable.
-Si faltan endpoints, pídelos en STATUS.md.
+Si faltan endpoints, pídelos en docs/status/lane-b.md.
 ```
 
 ---
