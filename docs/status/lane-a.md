@@ -5,7 +5,8 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-09-29
 
 ## Actual
-- **Tarea activa:** — (A-F2.3 cerrada y mergeada en `main`)
+- **Tarea activa:** A-F2.4 · Estado personal `/me` (plan pendiente de aprobación).
+- **Mergeado para Carril B:** `b/f2-cards` (3e50c05) en `main`, 2026-09-30.
 - **Siguiente:** A-F2.4 · Estado personal (`/me`).
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
