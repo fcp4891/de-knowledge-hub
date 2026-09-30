@@ -26,6 +26,7 @@ jobs:
           --health-retries 30
     env:
       DATABASE_URL: postgresql+psycopg://dekh:dekh@localhost:54329/dekh
+      BACKUP_RUNNER: docker-host  # pg_dump/psql en un contenedor postgres:17 con red del host
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7

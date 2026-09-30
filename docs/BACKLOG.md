@@ -22,5 +22,6 @@ Formato: `- [fase sugerida] idea — origen`
 - [F2/F3] Validar `docs/contracts/api.yaml` como OpenAPI 3.1 con `openapi-spec-validator` (dependencia nueva, justificar en el commit) — A-F2.1
 - ~~[F2 · A-F2.3] Mover `projection.py` a `backend/app/`~~ — hecho en A-F2.3
 - [F3] Mover `scripts/validate.py` a un paquete compartido (`backend/content/`): el compilador lo importa desde `scripts/` — A-F2.3
-- [F4] Respaldo del estado personal (`me_*`), el único dato que no se regenera desde Git (§49 backups; ADR-006) — A-F2.4
+- ~~[F4] Respaldo del estado personal~~ — hecho en F3 (`make backup-me` / `make restore-me`)
+- [F4] Programar `make backup-me` (tarea programada de Windows o cron) y rotar respaldos antiguos — F3
 - [F3] CI: actualizar `actions/checkout` y `actions/setup-python` a versiones que no usen Node.js 20 (GitHub las marca como obsoletas) y fijar la imagen de Ubuntu antes del cambio de `ubuntu-latest` anunciado para el 2026-10-19 — primer run de CI
