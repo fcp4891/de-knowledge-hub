@@ -29,7 +29,7 @@ subdomains:
         importance: medium
         mvp: false
         related_technologies: [gcp-bigquery]
-        related_concepts: [sql-qualify, sql-unnest, sql-structs]
+        related_concepts: [sql-qualify, sql-unnest, sql-structs, sql-arrays]
       - slug: bigquery-partitioning
         title: Particionamiento en BigQuery
         kind: concept
@@ -53,10 +53,11 @@ subdomains:
         kind: concept
         classification: modern
         level: advanced
-        importance: medium
+        importance: high
         mvp: false
         related_technologies: [gcp-bigquery]
-        related_concepts: [bigquery-cost-model]
+        related_concepts: [bigquery-cost-model, finops-for-data]
+        note: Editions y reservas cambian; ficha con fuente.
       - slug: bigquery-query-optimization
         title: Optimización de consultas en BigQuery
         kind: concept
@@ -65,7 +66,7 @@ subdomains:
         importance: high
         mvp: true
         related_technologies: [gcp-bigquery]
-        related_concepts: [query-plans, scan-reduction, join-optimization]
+        related_concepts: [query-plans, scan-reduction, join-optimization, cloud-warehouse-optimization]
       - slug: bigquery-cost-model
         title: Modelo de costos de BigQuery
         kind: concept
@@ -102,16 +103,18 @@ subdomains:
         importance: medium
         mvp: false
         related_technologies: [gcp-biglake, gcp-bigquery]
-        related_concepts: [bigquery-external-tables, lakehouse]
+        related_concepts: [bigquery-external-tables, lakehouse, open-table-formats]
+        note: No es una tabla externa.
       - slug: bigquery-security
         title: Seguridad en BigQuery
         kind: concept
         classification: modern
         level: intermediate
-        importance: medium
+        importance: high
         mvp: false
         related_technologies: [gcp-bigquery, gcp-iam]
         related_concepts: [gcp-iam-for-data]
+        note: Authorized views, row-level security y ACL de dataset van aquí; bigquery-policy-tags sigue aparte.
       - slug: bigquery-policy-tags
         title: Policy tags en BigQuery
         kind: concept
@@ -135,9 +138,10 @@ subdomains:
         kind: concept
         classification: modern
         level: intermediate
-        importance: medium
+        importance: high
         mvp: false
         related_technologies: [gcp-bigquery]
+        related_concepts: [bigquery-cost-model, bigquery-slots, bigquery-information-schema]
       - slug: bigquery-incremental-models
         title: Modelos incrementales en BigQuery
         kind: pattern
@@ -147,6 +151,7 @@ subdomains:
         mvp: false
         related_technologies: [gcp-bigquery]
         related_concepts: [incremental-load, sql-merge, dataform-incremental-tables]
+        note: Es el patrón SQL en BigQuery; la implementación de producto es dataform-incremental-tables. No fusionar las fichas.
 
   - slug: storage
     title: Cloud Storage
@@ -156,19 +161,21 @@ subdomains:
         kind: concept
         classification: modern
         level: basic
-        importance: medium
-        mvp: false
+        importance: high
+        mvp: true
         related_technologies: [gcp-cloud-storage]
-        related_concepts: [data-lake]
+        related_concepts: [data-lake, pubsub-topics-and-subscriptions]
+        note: Las notificaciones de objetos hacia Pub/Sub van en esta ficha.
       - slug: gcs-storage-classes-and-lifecycle
         title: Clases de almacenamiento y lifecycle en Cloud Storage
         kind: concept
         classification: modern
         level: intermediate
         importance: high
-        mvp: true
+        mvp: false
         related_technologies: [gcp-cloud-storage]
         related_concepts: [gcs-buckets-and-objects]
+        note: Nombres de clases y precios cambian; ficha con fuente y last_verified.
 
   - slug: messaging-and-processing
     title: Mensajería y procesamiento
@@ -190,7 +197,8 @@ subdomains:
         importance: high
         mvp: true
         related_technologies: [gcp-pubsub]
-        related_concepts: [dead-letter-queue, idempotency]
+        related_concepts: [dead-letter-queue, idempotency, delivery-semantics, exactly-once-semantics]
+        note: Pub/Sub es at-least-once; una suscripción exactly-once no equivale al exactly-once de Dataflow.
       - slug: dataflow-execution-model
         title: Modelo de ejecución de Dataflow
         kind: concept
@@ -205,10 +213,10 @@ subdomains:
         kind: concept
         classification: modern
         level: advanced
-        importance: medium
+        importance: high
         mvp: false
         related_technologies: [gcp-dataflow, gcp-pubsub]
-        related_concepts: [dataflow-execution-model, streaming-pipeline-architecture]
+        related_concepts: [dataflow-execution-model, streaming-pipeline-architecture, watermarks, checkpoints, pubsub-delivery-semantics]
 
   - slug: orchestration-and-transformation
     title: Orquestación y transformación
@@ -222,15 +230,17 @@ subdomains:
         mvp: true
         related_technologies: [gcp-cloud-composer, apache-airflow]
         related_concepts: [open-source-vs-managed-orchestration, airflow-architecture]
+        note: La generación del entorno cambia; verificar al redactar.
       - slug: dataform-workflows
         title: Workflows SQL con Dataform
         kind: concept
         classification: modern
         level: intermediate
-        importance: medium
+        importance: high
         mvp: false
         related_technologies: [gcp-dataform, gcp-bigquery]
         related_concepts: [data-transformation]
+        note: El workflow es el prerrequisito de dataform-incremental-tables, que es la ficha MVP.
       - slug: dataform-incremental-tables
         title: Tablas incrementales en Dataform
         kind: pattern
@@ -258,10 +268,11 @@ subdomains:
         kind: concept
         classification: modern
         level: intermediate
-        importance: medium
+        importance: high
         mvp: false
         related_technologies: [gcp-cloud-sql, gcp-datastream]
-        related_concepts: [change-data-capture, database-ingestion]
+        related_concepts: [change-data-capture, database-ingestion, cdc-architecture]
+        note: Datastream se explica aquí y en la arquitectura CDC; no se crea ficha de producto.
 
   - slug: governance-and-security
     title: Gobierno y seguridad
@@ -274,6 +285,8 @@ subdomains:
         importance: medium
         mvp: false
         related_technologies: [gcp-dataplex]
+        related_concepts: [data-catalog, data-lineage]
+        note: Catálogo y linaje siguen en el dominio 17; aquí solo el servicio.
       - slug: gcp-iam-for-data
         title: IAM de GCP para plataformas de datos
         kind: concept
@@ -311,3 +324,4 @@ subdomains:
         mvp: false
         related_technologies: [gcp-vertex-ai]
         related_concepts: [ml-feature-pipeline-architecture]
+        note: RAG y agentes están en el dominio 21; aquí solo el servicio.

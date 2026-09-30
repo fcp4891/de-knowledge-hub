@@ -6,7 +6,15 @@
 ---
 
 ## Carril A — Claude Code
-- **Tarea activa:** — (A-F1.3 cerrada y mergeada en `main`)
+- **Tarea activa:** — (F1 cerrada por Carril A; gate de F1 pendiente de aprobación humana)
+- **Cierre F1 (2026-09-29):**
+  - Revisiones 07 y 08 aplicadas (32 filas aprobadas):
+    - en 08, `gcs-buckets-and-objects` entra al MVP y `gcs-storage-classes-and-lifecycle` sale;
+    - `lambda-architecture` pasa a `modern` y `rag-data-pipeline-architecture` a `emerging`;
+    - importancias, relaciones y notas de alcance.
+  - Frecuencias del registro alineadas a la propuesta de Carril B: documentación trimestral, release notes mensual, Python trimestral.
+  - ADR-001 Aceptado.
+  - `b/f1-templates` y `b/f1-review` mergeadas en `main`.
 - **Hecho (A-F1.3 · Source Registry):**
   - `content/sources/registry.yaml`: 26 fuentes.
     - Las 6 de F0, reverificadas y enlazadas a sus tecnologías (`postgresql`, `aws-dms`).
@@ -110,11 +118,11 @@
 | B | A | B-F1.3: fuentes de las 9 tecnologías MVP (`docs/reviews/sources.md`) y ADR-001 | Cerrado: sources.md obsoleto (se adoptaron solo las frecuencias); ADR-001 Aceptado |
 
 ## Criterio de salida de la fase actual
-- [ ] Blueprint validado con los 23 dominios; conceptos del MVP marcados.
-- [ ] Templates cerrados.
+- [x] Blueprint validado con los 23 dominios; conceptos del MVP marcados (359 conceptos, 80 mvp; dominios MVP revisados por B-F1.2).
+- [x] Templates cerrados (`content/_templates/`: concept, architecture, lab, news).
 - [x] Source Registry con fuentes oficiales para todas las tecnologías del MVP. Lo comprueba `make validate` (error si falta alguna); las 9 tienen fuentes Nivel 1 y 2 verificadas.
-- [ ] ADR-001 aprobado.
-- [ ] Gate humano.
+- [x] ADR-001 aprobado (Aceptado, 2026-09-29).
+- [ ] Gate humano (informe entregado; pendiente de aprobación).
 
 ## Fases cerradas
 - **F0 — Fundaciones** (2026-09-28): `make validate` en verde con la ficha `change-data-capture`; 42 tests.

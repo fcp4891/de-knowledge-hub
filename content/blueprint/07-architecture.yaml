@@ -20,7 +20,7 @@ subdomains:
         mvp: true
         added_by: blueprint
         related_technologies: [gcp-cloud-storage, gcp-bigquery, gcp-cloud-composer]
-        related_concepts: [batch-ingestion, incremental-load, backfill]
+        related_concepts: [batch-ingestion, incremental-load, backfill, pipeline-layers]
         note: No figura en §9 pero es una de las 5 arquitecturas de F4 (ROADMAP).
       - slug: streaming-pipeline-architecture
         title: Arquitectura de pipeline streaming
@@ -31,7 +31,7 @@ subdomains:
         mvp: true
         added_by: blueprint
         related_technologies: [gcp-pubsub, gcp-dataflow, gcp-bigquery]
-        related_concepts: [streaming-ingestion, dead-letter-queue]
+        related_concepts: [streaming-ingestion, dead-letter-queue, watermarks, checkpoints]
         note: No figura en §9 pero es una de las 5 arquitecturas de F4 (ROADMAP).
       - slug: modern-data-warehouse-architecture
         title: Modern Data Warehouse
@@ -41,7 +41,7 @@ subdomains:
         importance: high
         mvp: false
         related_technologies: [gcp-bigquery, aws-redshift, microsoft-fabric]
-        related_concepts: [data-warehouse, etl-vs-elt]
+        related_concepts: [data-warehouse, etl-vs-elt, bigquery-architecture]
       - slug: data-lake-architecture
         title: Arquitectura Data Lake
         kind: architecture
@@ -56,10 +56,10 @@ subdomains:
         kind: architecture
         classification: modern
         level: advanced
-        importance: medium
+        importance: high
         mvp: false
         related_technologies: [apache-iceberg, delta-lake, gcp-biglake]
-        related_concepts: [lakehouse, data-lake-architecture]
+        related_concepts: [lakehouse, data-lake-architecture, open-table-formats]
       - slug: medallion-architecture
         title: Medallion Architecture
         kind: architecture
@@ -68,7 +68,7 @@ subdomains:
         importance: high
         mvp: false
         related_concepts: [pipeline-layers, lakehouse]
-        note: Bronze/silver/gold es una convención de capas, no un estándar formal. Fuera del MVP (gate F1) por solaparse con pipeline-layers y lakehouse.
+        note: Bronze/silver/gold es una convención de capas, no un estándar formal. Fuera del MVP (gate F1) por solaparse con pipeline-layers y lakehouse. Sigue en las 5 arquitecturas de F4 aunque no sea MVP del blueprint.
 
   - slug: streaming-architectures
     title: Arquitecturas streaming y event-driven
@@ -76,11 +76,12 @@ subdomains:
       - slug: lambda-architecture
         title: Lambda Architecture
         kind: architecture
-        classification: core
+        classification: modern
         level: advanced
         importance: medium
         mvp: false
         related_concepts: [batch-vs-streaming, kappa-architecture]
+        note: Se estudia para reconocer el doble camino batch más speed; no es el diseño por defecto.
       - slug: kappa-architecture
         title: Kappa Architecture
         kind: architecture
@@ -89,7 +90,7 @@ subdomains:
         importance: medium
         mvp: false
         related_technologies: [apache-kafka]
-        related_concepts: [replay]
+        related_concepts: [replay, lambda-architecture, streaming-pipeline-architecture]
       - slug: event-driven-architecture
         title: Event-driven architecture
         kind: architecture
@@ -98,7 +99,8 @@ subdomains:
         importance: high
         mvp: true
         related_technologies: [gcp-pubsub, apache-kafka]
-        related_concepts: [event-driven-pipelines]
+        related_concepts: [event-driven-pipelines, streaming-pipeline-architecture]
+        note: Reaccionar a eventos de negocio no es el pipeline de ingesta continua.
       - slug: real-time-analytics-architecture
         title: Real-time analytics
         kind: architecture
@@ -107,6 +109,7 @@ subdomains:
         importance: medium
         mvp: false
         related_concepts: [streaming-pipeline-architecture]
+        note: Es la consulta de baja latencia, no el pipeline de streaming.
 
   - slug: integration-architectures
     title: Arquitecturas de integración
@@ -119,7 +122,8 @@ subdomains:
         importance: high
         mvp: true
         related_technologies: [gcp-datastream, debezium, gcp-bigquery, gcp-cloud-sql]
-        related_concepts: [change-data-capture, sql-merge]
+        related_concepts: [change-data-capture, sql-merge, idempotency, schema-evolution]
+        note: El escenario de F4 es PostgreSQL → BigQuery; la ficha explica qué cambia con otro origen o destino.
       - slug: api-to-warehouse-architecture
         title: API → Data Warehouse
         kind: architecture
@@ -136,7 +140,8 @@ subdomains:
         level: advanced
         importance: low
         mvp: false
-        related_concepts: [streaming-ingestion]
+        related_concepts: [streaming-ingestion, streaming-pipeline-architecture]
+        note: Variante de streaming, no una arquitectura de estudio prioritario.
 
   - slug: ml-ai-architectures
     title: Arquitecturas para ML e IA
@@ -153,12 +158,12 @@ subdomains:
       - slug: rag-data-pipeline-architecture
         title: RAG data pipeline
         kind: architecture
-        classification: modern
+        classification: emerging
         level: advanced
         importance: medium
         mvp: false
-        related_concepts: [file-ingestion]
-        note: Componentes y prácticas en evolución rápida; verificar vigencia al redactar.
+        related_concepts: [file-ingestion, rag]
+        note: Componentes y prácticas en evolución rápida; verificar vigencia al redactar. El patrón de retrieval está en el dominio 21; aquí va el pipeline de datos. No reemplaza al warehouse.
 
   - slug: organizational-architectures
     title: Arquitecturas organizacionales
@@ -170,7 +175,7 @@ subdomains:
         level: advanced
         importance: medium
         mvp: false
-        related_concepts: [data-products, data-contracts]
+        related_concepts: [data-products, data-contracts, data-platform-engineering]
         note: Enfoque sociotécnico; aparece también en §6 del plan.
       - slug: data-products
         title: Data Products
@@ -179,4 +184,4 @@ subdomains:
         level: intermediate
         importance: medium
         mvp: false
-        related_concepts: [data-contracts]
+        related_concepts: [data-contracts, data-mesh]

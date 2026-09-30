@@ -1,6 +1,6 @@
 # ADR-001 — Stack de la plataforma
 
-- **Estado:** Propuesto
+- **Estado:** Aceptado (gate F1, 2026-09-29)
 - **Fecha:** 2026-09-29
 - **Fase:** F1 — Knowledge Blueprint v1 (tarea B-F1.3). Lo confirma el gate humano de F1.
 - **Referencias:** ROADMAP §4 y fase F7; plan maestro §49; ADR-000.
@@ -23,7 +23,7 @@ El catálogo del MVP es pequeño (fichas, relaciones y búsqueda por texto). No 
 
 ## Decisión
 
-Propuesta por defecto del ROADMAP §4, pendiente del gate:
+Propuesta por defecto del ROADMAP §4, aceptada en el gate de F1:
 
 | Capa | Decisión |
 |---|---|

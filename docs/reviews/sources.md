@@ -1,5 +1,7 @@
 # Revisión B-F1.3 · Fuentes de las 9 tecnologías MVP
 
+> **OBSOLETO (gate F1, 2026-09-29).** Se basó en un `main` anterior a `741000b` (A-F1.3), que ya agregó y verificó estas fuentes en `content/sources/registry.yaml`. Se descarta. Solo se adoptaron sus frecuencias de revisión: documentación trimestral, release notes mensual y Python trimestral.
+
 Alcance reducido: solo `apache-airflow`, `gcp-cloud-composer`, `gcp-bigquery`, `gcp-cloud-storage`, `gcp-pubsub`, `gcp-dataflow`, `gcp-dataform`, `python` y `terraform`. Carril B no edita `content/sources/registry.yaml`.
 
 El registry actual (6 entradas de F0) no lista ninguna de las nueve en `technologies`. No hay fuente secundaria con nivel inflado para ellas: el hueco es la ausencia. Las URLs de abajo respondieron HTTP 200 el 2026-09-29. Las de Google son la URL final, tras la redirección desde `cloud.google.com`.

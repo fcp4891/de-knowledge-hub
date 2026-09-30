@@ -10,7 +10,7 @@ Formato: `- [fase sugerida] idea — origen`
 - [F1] Blueprint: añadir "fuentes candidatas" por dominio (§54) cuando exista el Source Registry (A-F1.3) — A-F1.1
 - [F1] Revisar si `data-quality-dimensions` debe separarse en una ficha por dimensión — A-F1.1
 - [F2] Explorer: mostrar los conceptos del blueprint que aún no tienen ficha como "pendiente", en vez de ocultarlos — A-F1.1
-- [F4] Blueprint 07: agregar `corporate-data-platform-architecture` (§24, ejemplo 9) como implementación de referencia de `data-platform-engineering` — revisión del dominio 22
+- ~~[F4] Blueprint 07: agregar `corporate-data-platform-architecture`~~ — **descartado**: la revisión 07, fila 14, decidió no crear el slug; lo cubren `modern-data-warehouse-architecture`, `lakehouse-architecture` y `data-mesh`
 - [F2] Dividir `scripts/validate.py` (unas 530 líneas) en módulos: entidades, blueprint y matriz — A-F1.2
 - [F1/F3] Matriz: decidir cómo representar las capacidades sin un servicio nativo equivalente en cada cloud (IaC, transformación SQL, CI/CD) — A-F1.2
 - [F3] Inventario: agregar los servicios PostgreSQL administrados de Azure y Aurora de AWS si las fichas de CDC o relacionales los necesitan — A-F1.2
