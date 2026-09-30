@@ -2,13 +2,18 @@
 
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
-**Fase:** F2 (F1 cerrada el 2026-09-29)
+**Fase:** F3 (F2 cerrada el 2026-09-30)
 **Última actualización:** 2026-09-30
 
 ## Actual
-- **Tarea activa:** B-F2.3 cerrada. Búsqueda, relaciones y `/me` contra la API real.
-- **Siguiente:** gate de F2, cuando se pida.
-- **Bloqueos:** ninguno.
+- **Tarea activa:** B-F3 UX. El estado de estudio y «pendiente de profundizar» se guardan al cambiarlos.
+- **Siguiente:** B-F3.1, revisión de las 10 fichas del lote 1.
+- **Bloqueos:** `has_page` en resultados de búsqueda no está en el contrato ni confirmado en `lane-a.md`. `SearchResult` sigue sin ese campo. La etiqueta «ficha pendiente» espera ese cambio.
+
+### B-F3 UX
+- El selector de estado y la casilla «Pendiente de profundizar» llaman a `PUT /me/study-state/{slug}` al cambiar, con `last_studied_at` de ahora.
+- Se quitó el botón «Guardar estado». El mensaje sigue siendo «Estado guardado.».
+- «Ficha pendiente» en la búsqueda queda pendiente hasta que Carril A agregue `has_page` al resultado.
 
 ### B-F2.3
 - Cliente regenerado desde el contrato de `main` (422 de ADR-005; PUT y DELETE de notas de ADR-006).

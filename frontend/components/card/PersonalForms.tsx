@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { addNote, editNote, removeNote, saveFavorite, saveStudyState } from "@/lib/personalActions";
@@ -20,10 +20,16 @@ export function StudyForm({ slug, current }: { slug: string; current: StudyState
   const [state, setState] = useState(current.state);
   const [pendingDeepDive, setPendingDeepDive] = useState(current.pending_deep_dive);
   const [message, setMessage] = useState<string | null>(null);
+  const latest = useRef({ state: current.state, pendingDeepDive: current.pending_deep_dive });
 
-  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const result = await saveStudyState(slug, state, pendingDeepDive);
+  async function persist(nextState: StudyStatus, nextPending: boolean) {
+    latest.current = { state: nextState, pendingDeepDive: nextPending };
+    setState(nextState);
+    setPendingDeepDive(nextPending);
+    const result = await saveStudyState(slug, nextState, nextPending);
+    if (latest.current.state !== nextState || latest.current.pendingDeepDive !== nextPending) {
+      return;
+    }
     setMessage(result.ok ? "Estado guardado." : (result.detail ?? "No se pudo guardar."));
     if (result.ok) {
       router.refresh();
@@ -31,10 +37,15 @@ export function StudyForm({ slug, current }: { slug: string; current: StudyState
   }
 
   return (
-    <form className="personal-form" onSubmit={(event) => void onSubmit(event)}>
+    <div className="personal-form">
       <label>
         Estado de estudio
-        <select value={state} onChange={(event) => setState(event.target.value as StudyStatus)}>
+        <select
+          value={state}
+          onChange={(event) =>
+            void persist(event.target.value as StudyStatus, latest.current.pendingDeepDive)
+          }
+        >
           {STUDY_STATES.map((value) => (
             <option key={value} value={value}>
               {STUDY_LABEL[value]}
@@ -46,13 +57,12 @@ export function StudyForm({ slug, current }: { slug: string; current: StudyState
         <input
           type="checkbox"
           checked={pendingDeepDive}
-          onChange={(event) => setPendingDeepDive(event.target.checked)}
+          onChange={(event) => void persist(latest.current.state, event.target.checked)}
         />
         Pendiente de profundizar
       </label>
-      <button type="submit">Guardar estado</button>
       {message ? <p className="muted">{message}</p> : null}
-    </form>
+    </div>
   );
 }
 
