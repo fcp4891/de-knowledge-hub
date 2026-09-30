@@ -15,7 +15,7 @@ from typing import Any
 import pytest
 import yaml
 from fastapi.testclient import TestClient
-from httpx import Response
+from httpx2 import Response
 from jsonschema import Draft202012Validator
 
 from backend.app import projection as p
