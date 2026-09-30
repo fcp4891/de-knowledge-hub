@@ -43,7 +43,7 @@ relations:
 created_at: 2026-09-30
 updated_at: 2026-09-30
 last_verified: 2026-09-30
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -191,8 +191,9 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-09-30. La ficha queda en `review_required` hasta la revisión humana (B-F3.2).
+2026-09-30. Pasa a `verified`: revisión B-F3.1 del lote 2 aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 2 de F3).
+- 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).

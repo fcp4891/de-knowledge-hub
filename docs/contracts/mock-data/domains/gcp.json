@@ -63,7 +63,7 @@
           "importance": "high",
           "mvp": true,
           "has_page": true,
-          "verification_status": "review_required",
+          "verification_status": "verified",
           "last_verified": "2026-09-30"
         },
         {
@@ -285,7 +285,7 @@
           "importance": "high",
           "mvp": true,
           "has_page": true,
-          "verification_status": "review_required",
+          "verification_status": "verified",
           "last_verified": "2026-09-30"
         },
         {

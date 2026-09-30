@@ -40,7 +40,7 @@ relations:
 created_at: 2026-09-30
 updated_at: 2026-09-30
 last_verified: 2026-09-30
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -180,7 +180,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-09-30. La ficha queda en `review_required` hasta la revisión humana (B-F3.1).
+2026-09-30. Pasa a `verified`: revisión de cb77a2f (B-F3.1 del lote 2) aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
@@ -188,3 +188,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.
 - 2026-09-30: corregido el comportamiento de `MERGE` en Redshift ante duplicados (detectado al preparar el lote 2): falla con varias filas de origen por fila destino; la eliminación de duplicados del destino es solo del modo `REMOVE DUPLICATES`.
 - 2026-09-30: revisión B-F3.1 del lote 2 aplicada: en `REMOVE DUPLICATES`, los duplicados del destino sin coincidencia con el origen no se tocan.
+- 2026-09-30: `verification_status: verified` (revisión de cb77a2f (B-F3.1 del lote 2) aplicada; sin VERIFY pendientes).

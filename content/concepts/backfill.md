@@ -55,7 +55,7 @@ relations:
 created_at: 2026-09-30
 updated_at: 2026-09-30
 last_verified: 2026-09-30
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -195,9 +195,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-09-30. Las opciones de la CLI coinciden con el ejemplo oficial de Airflow 3.3.2 (stable al 2026-09-30). La ficha queda en `review_required` hasta la revisión humana (B-F3.2).
+2026-09-30. Las opciones de la CLI coinciden con el ejemplo oficial de Airflow 3.3.2 (stable al 2026-09-30). Pasa a `verified`: revisión B-F3.1 del lote 2 aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 2 de F3).
 - 2026-09-30: revisión B-F3.1 aplicada: nombre y fuente de Managed Service for Apache Airflow (ex Cloud Composer).
+- 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).

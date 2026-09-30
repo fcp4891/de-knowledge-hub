@@ -73,7 +73,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
-      "note": "MERGE de Redshift; falla (Found multiple matches to update the same tuple) si varias filas de origen coinciden con una fila del destino; solo en modo simplificado REMOVE DUPLICATES, cuando varias filas del destino coinciden con la misma fila de origen, elimina los duplicados del destino y conserva una."
+      "note": "MERGE de Redshift; falla (Found multiple matches to update the same tuple) si varias filas de origen coinciden con una fila del destino; solo en modo simplificado REMOVE DUPLICATES, cuando varias filas del destino coinciden con la misma fila de origen, elimina los duplicados del destino y conserva una; las duplicadas del destino que no coinciden con ninguna fila de origen no se tocan."
     },
     {
       "source": "aws-sqs-docs",
@@ -106,7 +106,7 @@
   "created_at": "2026-09-28",
   "updated_at": "2026-09-30",
   "last_verified": "2026-09-30",
-  "verification_status": "review_required",
+  "verification_status": "verified",
   "kind": "concept",
   "importance": "high",
   "mvp": true,
@@ -184,7 +184,7 @@
       "number": 12,
       "key": "aws",
       "title": "AWS",
-      "markdown": "En **SQS**, un mensaje que no se procesa bien vuelve a recibirse hasta `maxReceiveCount` veces antes de pasar a la dead-letter queue: el consumidor debe tolerar la repetición. En **Redshift**, `MERGE` cumple el mismo papel que en BigQuery y también falla si varias filas de origen coinciden con una fila del destino; su modo simplificado `REMOVE DUPLICATES` además elimina en silencio duplicados del destino."
+      "markdown": "En **SQS**, un mensaje que no se procesa bien vuelve a recibirse hasta `maxReceiveCount` veces antes de pasar a la dead-letter queue: el consumidor debe tolerar la repetición. En **Redshift**, `MERGE` cumple el mismo papel que en BigQuery y también falla si varias filas de origen coinciden con una fila del destino; su modo simplificado `REMOVE DUPLICATES` además elimina en silencio los duplicados del destino que coinciden con una fila de origen, y deja los que no coinciden."
     },
     {
       "number": 13,
@@ -238,13 +238,13 @@
       "number": 21,
       "key": "last_verified",
       "title": "Fecha de última verificación",
-      "markdown": "2026-09-30. La ficha queda en `review_required` hasta la revisión humana (B-F3.1)."
+      "markdown": "2026-09-30. Pasa a `verified`: revisión de cb77a2f (B-F3.1 del lote 2) aplicada, sin VERIFY pendientes."
     },
     {
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-28: creada como stub en F0.\n- 2026-09-30: ficha completa (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: corregido el comportamiento de `MERGE` en Redshift ante duplicados (detectado al preparar el lote 2): falla con varias filas de origen por fila destino; la eliminación de duplicados del destino es solo del modo `REMOVE DUPLICATES`."
+      "markdown": "- 2026-09-28: creada como stub en F0.\n- 2026-09-30: ficha completa (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: corregido el comportamiento de `MERGE` en Redshift ante duplicados (detectado al preparar el lote 2): falla con varias filas de origen por fila destino; la eliminación de duplicados del destino es solo del modo `REMOVE DUPLICATES`.\n- 2026-09-30: revisión B-F3.1 del lote 2 aplicada: en `REMOVE DUPLICATES`, los duplicados del destino sin coincidencia con el origen no se tocan.\n- 2026-09-30: `verification_status: verified` (revisión de cb77a2f (B-F3.1 del lote 2) aplicada; sin VERIFY pendientes)."
     }
   ]
 }
