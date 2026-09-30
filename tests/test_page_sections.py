@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from scripts import page_sections
+from backend.content import page_sections
 from tests.test_blueprint import bp_concept, domain_doc, write_domain
 from tests.test_validate import assert_error, concept, content, entity, run, write_md  # noqa: F401
 

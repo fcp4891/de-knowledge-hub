@@ -30,10 +30,13 @@ def run_online() -> None:
             context.run_migrations()
         return
     engine = create_engine(url())
-    with engine.connect() as conn:
-        context.configure(connection=conn, target_metadata=target_metadata)
-        with context.begin_transaction():
-            context.run_migrations()
+    try:
+        with engine.connect() as conn:
+            context.configure(connection=conn, target_metadata=target_metadata)
+            with context.begin_transaction():
+                context.run_migrations()
+    finally:
+        engine.dispose()  # sin esto, el pool deja la conexión abierta (ResourceWarning)
 
 
 if context.is_offline_mode():

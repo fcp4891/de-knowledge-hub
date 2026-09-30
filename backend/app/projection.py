@@ -13,7 +13,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-from scripts import validate as v
+from backend.content import validate as v
 
 TECHNOLOGY_TYPES = {"technology", "cloud_service"}
 SECTION_KEYS = [

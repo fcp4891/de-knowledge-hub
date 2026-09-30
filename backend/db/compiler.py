@@ -24,7 +24,7 @@ from sqlalchemy.dialects.postgresql import REGCONFIG, TSVECTOR
 from sqlalchemy.sql.elements import ColumnElement
 
 from backend.db import schema as t
-from scripts import validate as v
+from backend.content import validate as v
 from backend.app.projection import markdown_body, sections
 
 COMPILER_VERSION = "2"  # 2: search_documents (A-F2.3)

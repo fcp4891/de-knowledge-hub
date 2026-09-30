@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from scripts import validate as v
+from backend.content import validate as v
 from scripts.generators import sources, technologies
 
 ROOT = Path(__file__).resolve().parent.parent

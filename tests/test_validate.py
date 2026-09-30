@@ -1,4 +1,4 @@
-"""Tests de scripts/validate.py con contenido temporal y los schemas reales."""
+"""Tests de backend/content/validate.py con contenido temporal y los schemas reales."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from typing import Any
 import pytest
 import yaml
 
-from scripts import validate as v
+from backend.content import validate as v
 
 ROOT = Path(__file__).resolve().parent.parent
 SCHEMAS = ROOT / "schemas"

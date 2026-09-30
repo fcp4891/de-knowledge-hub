@@ -12,7 +12,7 @@ from typing import Any
 from sqlalchemy import Connection, Engine, select
 
 from backend.db import schema as t
-from scripts import validate as v
+from backend.content import validate as v
 from backend.app.projection import BlueprintEntry, ContentIndex
 
 

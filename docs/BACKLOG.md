@@ -11,7 +11,7 @@ Formato: `- [fase sugerida] idea — origen`
 - [F1] Revisar si `data-quality-dimensions` debe separarse en una ficha por dimensión — A-F1.1
 - [F2] Explorer: mostrar los conceptos del blueprint que aún no tienen ficha como "pendiente", en vez de ocultarlos — A-F1.1
 - ~~[F4] Blueprint 07: agregar `corporate-data-platform-architecture`~~ — **descartado**: la revisión 07, fila 14, decidió no crear el slug; lo cubren `modern-data-warehouse-architecture`, `lakehouse-architecture` y `data-mesh`
-- [F2] Dividir `scripts/validate.py` (unas 530 líneas) en módulos: entidades, blueprint y matriz — A-F1.2
+- [F2] Dividir `backend/content/validate.py` (unas 580 líneas) en módulos: entidades, blueprint y matriz — A-F1.2
 - [F1/F3] Matriz: decidir cómo representar las capacidades sin un servicio nativo equivalente en cada cloud (IaC, transformación SQL, CI/CD) — A-F1.2
 - [F3] Inventario: agregar los servicios PostgreSQL administrados de Azure y Aurora de AWS si las fichas de CDC o relacionales los necesitan — A-F1.2
 - [F7] Source Registry, bloque 2: una fuente Nivel 1 verificada para cada una de las 83 tecnologías no MVP — A-F1.3
@@ -21,7 +21,7 @@ Formato: `- [fase sugerida] idea — origen`
 - [F3] Blueprint y matriz: actualizar los títulos y textos que dicen "Cloud Composer" (p. ej. `composer-environments`) al nombre nuevo «Managed Service for Apache Airflow» cuando se redacten las fichas — gate F1
 - [F2/F3] Validar `docs/contracts/api.yaml` como OpenAPI 3.1 con `openapi-spec-validator` (dependencia nueva, justificar en el commit) — A-F2.1
 - ~~[F2 · A-F2.3] Mover `projection.py` a `backend/app/`~~ — hecho en A-F2.3
-- [F3] Mover `scripts/validate.py` a un paquete compartido (`backend/content/`): el compilador lo importa desde `scripts/` — A-F2.3
+- ~~[F3] Mover `scripts/validate.py` a un paquete compartido (`backend/content/`)~~ — hecho en la deuda técnica de F3
 - ~~[F4] Respaldo del estado personal~~ — hecho en F3 (`make backup-me` / `make restore-me`)
 - [F4] Programar `make backup-me` (tarea programada de Windows o cron) y rotar respaldos antiguos — F3
 - [F3] CI: actualizar `actions/checkout` y `actions/setup-python` a versiones que no usen Node.js 20 (GitHub las marca como obsoletas) y fijar la imagen de Ubuntu antes del cambio de `ubuntu-latest` anunciado para el 2026-10-19 — primer run de CI
