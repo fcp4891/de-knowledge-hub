@@ -1,8 +1,9 @@
+import { ApiFailure } from "@/components/ApiFailure";
 import { CardHeader } from "@/components/card/CardHeader";
 import { ConceptBody } from "@/components/card/ConceptBody";
+import { PersonalPanel } from "@/components/card/PersonalPanel";
 import { RelationPanel } from "@/components/card/RelationPanel";
 import { SourceList } from "@/components/card/SourceList";
-import { MockMiss } from "@/components/MockMiss";
 import { getConcept, getRelations } from "@/lib/api/client";
 
 export default async function ConceptPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -12,7 +13,7 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
   if (!concept.ok) {
     return (
       <div className="page">
-        {concept.reason === "mock_missing" ? <MockMiss slug={slug} /> : <p>No existe.</p>}
+        <ApiFailure result={concept} slug={slug} />
       </div>
     );
   }
@@ -34,6 +35,7 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
       />
       <div className="card-layout">
         <div className="sections">
+          <PersonalPanel slug={data.slug} />
           <ConceptBody sections={data.sections} omitSourceSection={data.sources.length > 0} />
           <SourceList sources={data.sources} />
         </div>
