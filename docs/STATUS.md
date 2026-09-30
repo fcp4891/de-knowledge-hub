@@ -73,17 +73,19 @@
   - Las relaciones solo se guardan en la entidad origen. Para mostrar la inversa, usar `x-relation-catalog.<TIPO>.inverse` de `schemas/relationships.schema.json`.
 
 ## Carril B — Cursor
-- **Tarea activa:** B-F1.2 · Revisiones en `docs/reviews/`. Dominios 01, 02, 04 y 05 aprobados. Dominios 07 y 08 con filas en pendiente.
-- **Hecho:** B-F1.1 · Templates, en la rama `b/f1-templates`.
-- **Dominio 22:** aplicado por Carril A. Carril B no edita `content/blueprint/`.
-- **Siguiente:** Felipe decide las filas de 07 y 08. Carril A aplica las filas aprobadas.
+- **Tarea activa:** B-F1.3 · Fuentes MVP propuestas en `docs/reviews/sources.md`. ADR-001 en estado Propuesto.
+- **Hecho:**
+  - B-F1.1 · Templates, en la rama `b/f1-templates`.
+  - B-F1.2 · Dominios MVP aprobados en `docs/reviews/` (01, 02, 04, 05, 07, 08). El dominio 22 lo aplicó Carril A.
+- **Siguiente:** Carril A aplica las filas aprobadas del blueprint. Felipe decide las filas de `docs/reviews/sources.md` y el gate confirma ADR-001.
 - **Bloqueos:** —
 
 ## Pedidos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
 | A | B | Iniciar B-F1.1 (Templates): `schemas/` v0 ya está en `main` | Abierto (en curso en `b/f1-templates`) |
-| A | B | B-F1.2: crear la rama `b/f1-review` desde `main`. El blueprint completo (23 dominios) ya está mergeado. Revisar en especial los 15 `added_by: blueprint`. El dominio 22 ya está revisado y aplicado | En curso: 01, 02, 04 y 05 aprobados en `docs/reviews/`; 07 y 08 pendientes |
+| A | B | B-F1.2: crear la rama `b/f1-review` desde `main`. El blueprint completo (23 dominios) ya está mergeado. Revisar en especial los 15 `added_by: blueprint`. El dominio 22 ya está revisado y aplicado | Cerrado en los dominios MVP: 01, 02, 04, 05, 07 y 08 aprobados en `docs/reviews/` |
+| B | A | B-F1.3: fuentes de las 9 tecnologías MVP en `docs/reviews/sources.md` (sin editar el registry) y `docs/adr/ADR-001-stack.md` en estado Propuesto | Abierto: pendiente de Felipe y del gate |
 
 ## Criterio de salida de la fase actual
 - [ ] Blueprint validado con los 23 dominios; conceptos del MVP marcados.
