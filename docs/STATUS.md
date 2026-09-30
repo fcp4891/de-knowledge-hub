@@ -10,16 +10,16 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | — (deuda técnica cerrada) | Aplicar la revisión B-F3.1 del lote 2 | — |
-| B · Cursor | — | B-F3.1 · Revisión del lote 2 (10 fichas) y de la corrección de Redshift en el lote 1 | — |
+| A · Claude Code | Lote 3 (plan pendiente de aprobación) | Ejecutar el lote 3 | — |
+| B · Cursor | — | B-F3.1 · Revisión del lote 3 cuando se entregue | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | B-F3.1 · Revisar el lote 2 y la corrección de `MERGE` de Redshift en `sql-merge`, `scd-type-2` e `idempotency` | Abierto |
+| — | — | — | — |
 
 ## Criterio de salida de la fase actual (F3)
-- [ ] 60–80 fichas `verified` (hoy: 20 fichas; 7 `verified` y 13 en `review_required`).
+- [ ] 60–80 fichas `verified` (hoy: 20 fichas, las 20 `verified`).
 - [ ] Cero fichas sin fuentes.
 - [ ] Gate humano.
 

@@ -5,17 +5,18 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-09-30
 
 ## Actual
-- **Tarea activa:** — (deuda técnica cerrada).
-- **Mergeado para Carril B:** `b/f3-ux` (d1d305d) y `b/f3-review` (c48ddbd) en `main`, 2026-09-30.
-- **Siguiente:** aplicar la revisión B-F3.1 del lote 2 cuando esté aprobada.
+- **Tarea activa:** lote 3 de F3, plan pendiente de aprobación.
+- **Mergeado para Carril B:** `b/f3-review-2` (dc65b9e) en `main`, 2026-09-30.
+- **Siguiente:** ejecutar el lote 3 cuando Felipe apruebe el plan.
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
 
 ## Pedidos a Carril B
 | Pedido | Estado |
 |---|---|
-| **B-F3.1 · Revisar el lote 2** (10 fichas en `review_required`): `backfill`, `replay`, `retries` (pattern), `pubsub-delivery-semantics`, `data-pipeline`, `incremental-pipelines` (pattern), `late-arriving-data`, `partition-pruning`, `upsert` (pattern) y `bigquery-clustering`. Sin VERIFY abiertos. Revisar también la corrección de `MERGE` de Redshift en `sql-merge`, `scd-type-2` e `idempotency` (cb77a2f), porque cambia filas aprobadas en B-F3.1 | Abierto |
-| **Mocks regenerados con 20 fichas** (lote 2): cambian solo datos; el contrato no cambia | Informativo |
+| ~~B-F3.1 · Revisar el lote 2~~ (10 fichas): `backfill`, `replay`, `retries` (pattern), `pubsub-delivery-semantics`, `data-pipeline`, `incremental-pipelines` (pattern), `late-arriving-data`, `partition-pruning`, `upsert` (pattern) y `bigquery-clustering`. Sin VERIFY abiertos. Revisar también la corrección de `MERGE` de Redshift en `sql-merge`, `scd-type-2` e `idempotency` (cb77a2f), porque cambia filas aprobadas en B-F3.1 | Cerrado (revisión aplicada; las 20 fichas `verified`) |
+| **Entorno de Python del proyecto:** `.venv/` con Python 3.12 (`make venv`; README, «Entorno de Python»). El `Makefile` y la CI lo usan; si Carril B ejecuta objetivos de Python en su worktree (por ejemplo `make dev` o `make mocks`), primero `make venv` allí | Informativo |
+| **Mocks regenerados con 20 fichas `verified`**: cambian solo datos (`verification_status`); el contrato no cambia | Informativo |
 | **Contrato (ADR-007, aditivo): `has_page` en cada resultado de `/search`.** `false` = concepto del blueprint sin ficha (mostrar "ficha pendiente"); `true` = tiene entidad (ficha, tecnología o fuente). La búsqueda suma 0.3 a los resultados con ficha. Regenerar el cliente tipado (`npm run generate:api`); mocks de búsqueda regenerados | Cerrado (B-F3 UX) |
 | **UX hallada en el gate F2:** el estado de estudio solo se guarda con "Guardar estado", mientras que el favorito se guarda al instante; sin aviso de cambios sin guardar. Propuesta: guardar al cambiar el estado o marcar "sin guardar" | Cerrado (B-F3 UX) |
 | **Mocks regenerados con 10 fichas reales** (lote 1 de F3): `change-data-capture`, `idempotency`, `etl-vs-elt`, `batch-vs-streaming`, `partitioning`, `sql-merge`, `scd-type-2` (pattern), `incremental-load` (pattern), `dead-letter-queue` (pattern) y `bigquery-partitioning` tienen `has_page: true` y sus 22 secciones. Cambian solo datos; el contrato no cambia. Los 3 patrones tienen `type: pattern` | Informativo |
@@ -27,7 +28,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 | **B-F2.1 puede empezar.** Contrato en `docs/contracts/api.yaml` (ADR-002) y mocks en `docs/contracts/mock-data/` (`index.json` asocia `MÉTODO /ruta` con su archivo). Los conceptos salen del blueprint con `has_page`; los que no tienen ficha traen `sections: []`. Si el contrato no alcanza, pedirlo aquí en `lane-b.md`, sin modificarlo | Cerrado (B-F2.1 mergeada) |
 
 ## Notas para Carril B
-- **Regla (F3, 2026-09-30):** cuando se aplica la revisión aprobada de un lote y la ficha no tiene VERIFY pendientes, pasa a `verification_status: verified` con `last_verified` de ese día. Lote 1: 7 fichas `verified`; `sql-merge`, `scd-type-2` e `idempotency` esperan la revisión de cb77a2f.
+- **Regla (F3, 2026-09-30):** cuando se aplica la revisión aprobada de un lote y la ficha no tiene VERIFY pendientes, pasa a `verification_status: verified` con `last_verified` de ese día. Lotes 1 y 2: las 20 fichas están `verified`.
 - **Nombres:** B-F3.1 es la revisión de fichas (cada lote); B-F3.2 es la Code Library.
 - **Regla (gate F1):** Cursor revisa y propone cambios sobre `content/blueprint/`; solo Carril A edita esos archivos.
 - **Regla (F2):** cada carril actualiza solo su archivo en `docs/status/`. `docs/STATUS.md` es un resumen que actualiza Carril A al mergear.
@@ -41,6 +42,11 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Enumeración `category`, `mvp` y `note` en tecnologías, y `matrix.schema.json` (ADR-004).
 
 ## Historial
+
+### Entorno, revisión del lote 2 y verified (2026-09-30)
+- `.venv/` propio (Python 3.12): `make venv`; el `Makefile` usa siempre su intérprete y se detiene si falta; `scripts/` corta con instrucciones si corre con otro Python; la CI crea el entorno con `make venv`. README nuevo con el procedimiento. No se instala nada en el Python global.
+- Merge de `b/f3-review-2` y revisión B-F3.1 del lote 2 aplicada: watermark de `incremental-pipelines` tomado del lote leído, con corte para timestamps futuros y rollback si falta o cambia la fila de control; transacción de `replace_partition` en `data-pipeline`; «Managed Service for Apache Airflow (ex Cloud Composer)» con la página oficial de Managed Airflow; precisión de `REMOVE DUPLICATES` en `sql-merge`, `scd-type-2`, `idempotency` y `upsert`.
+- Regla de `verified`: lote 2 completo y las 3 fichas pendientes del lote 1. Las 20 fichas quedan `verified`. 391 tests.
 
 ### Deuda técnica de F3 (2026-09-30)
 - `validate.py` y `page_sections.py` se movieron a `backend/content/` (BACKLOG A-F2.3). El compilador, el lector y la proyección importan de ahí; `scripts/validate.py` queda como punto de entrada de `make validate`.
