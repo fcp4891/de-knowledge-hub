@@ -1,0 +1,89 @@
+{
+  "slug": "gcp-cloud-storage",
+  "groups": [
+    {
+      "type": "RELATED_TO",
+      "direction": "both",
+      "label": "related_to",
+      "items": [
+        {
+          "slug": "api-to-warehouse-architecture",
+          "title": "API → Data Warehouse",
+          "entity_type": "architecture",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "data-lake-architecture",
+          "title": "Arquitectura Data Lake",
+          "entity_type": "architecture",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "batch-pipeline-architecture",
+          "title": "Arquitectura de pipeline batch",
+          "entity_type": "architecture",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "gcs-buckets-and-objects",
+          "title": "Buckets y objetos en Cloud Storage",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "gcs-storage-classes-and-lifecycle",
+          "title": "Clases de almacenamiento y lifecycle en Cloud Storage",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "data-lake",
+          "title": "Data Lake",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "batch-ingestion",
+          "title": "Ingesta batch",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "file-ingestion",
+          "title": "Ingesta de archivos",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "terraform-providers",
+          "title": "Providers",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "terraform-remote-state",
+          "title": "Remote state",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "bigquery-external-tables",
+          "title": "Tablas externas en BigQuery",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        }
+      ]
+    }
+  ]
+}

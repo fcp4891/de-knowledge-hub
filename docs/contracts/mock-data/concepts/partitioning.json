@@ -1,0 +1,29 @@
+{
+  "id": "concept:partitioning",
+  "title": "Particionamiento",
+  "slug": "partitioning",
+  "description": null,
+  "type": "concept",
+  "domain": "fundamentals",
+  "subdomain": "data-formats",
+  "classification": "core",
+  "level": "intermediate",
+  "cloud": [],
+  "technologies": [],
+  "tags": [],
+  "related_topics": [
+    "parquet-format"
+  ],
+  "sources": [],
+  "created_at": null,
+  "updated_at": null,
+  "last_verified": null,
+  "verification_status": null,
+  "kind": "concept",
+  "importance": "high",
+  "mvp": true,
+  "has_page": false,
+  "stub": false,
+  "note": "Layout físico de los datos; partition-pruning y clustering viven en 02-sql.",
+  "sections": []
+}

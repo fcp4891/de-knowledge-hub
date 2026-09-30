@@ -1,0 +1,15 @@
+{
+  "slug": "microsoft-learn",
+  "title": "Microsoft Learn",
+  "description": "Portal de documentación oficial de Microsoft (SQL Server, Azure). Fuente general; las fuentes por servicio se agregan en F7.",
+  "url": "https://learn.microsoft.com/en-us/",
+  "source_type": "official_docs",
+  "authority_level": 1,
+  "provider": "azure",
+  "url_verified": true,
+  "review_frequency": "quarterly",
+  "trust": "high",
+  "technologies": [],
+  "last_verified": "2026-09-28",
+  "verification_status": "verified"
+}

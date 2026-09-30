@@ -1,0 +1,162 @@
+{
+  "id": "22",
+  "slug": "modern-data-engineering",
+  "title": "Modern Data Engineering",
+  "description": "Prácticas y enfoques ampliamente adoptados hoy, que complementan y no reemplazan los fundamentos.",
+  "concept_count": 10,
+  "mvp_count": 0,
+  "subdomains": [
+    {
+      "slug": "modern-practices",
+      "title": "Prácticas modernas",
+      "concepts": [
+        {
+          "slug": "modern-data-stack",
+          "title": "Modern data stack",
+          "kind": "concept",
+          "domain": "modern-data-engineering",
+          "subdomain": "modern-practices",
+          "classification": "modern",
+          "level": "basic",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "analytics-engineering",
+          "title": "Analytics engineering",
+          "kind": "concept",
+          "domain": "modern-data-engineering",
+          "subdomain": "modern-practices",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "dataops",
+          "title": "DataOps",
+          "kind": "concept",
+          "domain": "modern-data-engineering",
+          "subdomain": "modern-practices",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "finops-for-data",
+          "title": "FinOps para plataformas de datos",
+          "kind": "concept",
+          "domain": "modern-data-engineering",
+          "subdomain": "modern-practices",
+          "classification": "modern",
+          "level": "advanced",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "data-platform-engineering",
+          "title": "Plataforma de datos como producto",
+          "kind": "concept",
+          "domain": "modern-data-engineering",
+          "subdomain": "modern-practices",
+          "classification": "modern",
+          "level": "advanced",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "data-versioning",
+          "title": "Versionado de datos y time travel",
+          "kind": "concept",
+          "domain": "modern-data-engineering",
+          "subdomain": "modern-practices",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "data-activation-and-sharing",
+      "title": "Activación, compartición y acceso a datos",
+      "concepts": [
+        {
+          "slug": "reverse-etl",
+          "title": "Reverse ETL",
+          "kind": "pattern",
+          "domain": "modern-data-engineering",
+          "subdomain": "data-activation-and-sharing",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "data-sharing",
+          "title": "Compartición de datos entre organizaciones",
+          "kind": "concept",
+          "domain": "modern-data-engineering",
+          "subdomain": "data-activation-and-sharing",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "semantic-layer",
+          "title": "Semantic layer",
+          "kind": "concept",
+          "domain": "modern-data-engineering",
+          "subdomain": "data-activation-and-sharing",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "zero-etl-and-federation",
+          "title": "Zero-ETL y consultas federadas",
+          "kind": "concept",
+          "domain": "modern-data-engineering",
+          "subdomain": "data-activation-and-sharing",
+          "classification": "emerging",
+          "level": "intermediate",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "slug": "idempotency",
+  "groups": [
+    {
+      "type": "RELATED_TO",
+      "direction": "both",
+      "label": "related_to",
+      "items": [
+        {
+          "slug": "cdc-architecture",
+          "title": "Arquitectura CDC (PostgreSQL → BigQuery)",
+          "entity_type": "architecture",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "delivery-semantics",
+          "title": "At-most-once y at-least-once",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "backfill",
+          "title": "Backfill",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "incremental-load",
+          "title": "Carga incremental",
+          "entity_type": "pattern",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "catchup",
+          "title": "Catchup",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "change-data-capture",
+          "title": "Change Data Capture",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Los consumidores de CDC deben aplicar cambios de forma idempotente ante reentregas."
+        },
+        {
+          "slug": "dag",
+          "title": "DAG",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "data-pipeline",
+          "title": "Data pipeline",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "pubsub-delivery-semantics",
+          "title": "Entrega, orden y reintentos en Pub/Sub",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "exactly-once-semantics",
+          "title": "Exactly-once y sus matices",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "late-arriving-data",
+          "title": "Late-arriving data",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "python-error-handling-and-retries",
+          "title": "Manejo de errores y retries",
+          "entity_type": "pattern",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "sql-merge",
+          "title": "MERGE",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "incremental-pipelines",
+          "title": "Pipelines incrementales",
+          "entity_type": "pattern",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "replay",
+          "title": "Replay",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "retries",
+          "title": "Retries",
+          "entity_type": "pattern",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "orchestration-task",
+          "title": "Task",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "upsert",
+          "title": "Upsert",
+          "entity_type": "pattern",
+          "origin": "blueprint",
+          "note": null
+        }
+      ]
+    }
+  ]
+}

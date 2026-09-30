@@ -1,0 +1,31 @@
+{
+  "id": "pattern:incremental-load",
+  "title": "Carga incremental",
+  "slug": "incremental-load",
+  "description": null,
+  "type": "pattern",
+  "domain": "sql",
+  "subdomain": "sql-patterns",
+  "classification": "core",
+  "level": "intermediate",
+  "cloud": [],
+  "technologies": [],
+  "tags": [],
+  "related_topics": [
+    "sql-merge",
+    "idempotency",
+    "partitioning"
+  ],
+  "sources": [],
+  "created_at": null,
+  "updated_at": null,
+  "last_verified": null,
+  "verification_status": null,
+  "kind": "pattern",
+  "importance": "high",
+  "mvp": true,
+  "has_page": false,
+  "stub": false,
+  "note": "Es el patrón SQL; el estado y los watermarks del pipeline están en incremental-pipelines (05).",
+  "sections": []
+}

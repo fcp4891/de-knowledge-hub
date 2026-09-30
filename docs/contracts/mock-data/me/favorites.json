@@ -1,0 +1,12 @@
+{
+  "total": 1,
+  "limit": 50,
+  "offset": 0,
+  "items": [
+    {
+      "slug": "change-data-capture",
+      "favorite": true,
+      "updated_at": "2026-09-29T10:06:00Z"
+    }
+  ]
+}

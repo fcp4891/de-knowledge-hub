@@ -1,0 +1,30 @@
+{
+  "id": "concept:sql-merge",
+  "title": "MERGE",
+  "slug": "sql-merge",
+  "description": null,
+  "type": "concept",
+  "domain": "sql",
+  "subdomain": "sql-language",
+  "classification": "core",
+  "level": "intermediate",
+  "cloud": [],
+  "technologies": [],
+  "tags": [],
+  "related_topics": [
+    "upsert",
+    "idempotency"
+  ],
+  "sources": [],
+  "created_at": null,
+  "updated_at": null,
+  "last_verified": null,
+  "verification_status": null,
+  "kind": "concept",
+  "importance": "high",
+  "mvp": true,
+  "has_page": false,
+  "stub": false,
+  "note": null,
+  "sections": []
+}

@@ -1,0 +1,134 @@
+{
+  "query": "streaming",
+  "total": 12,
+  "groups": [
+    {
+      "type": "concept",
+      "items": [
+        {
+          "slug": "batch-vs-streaming",
+          "title": "Batch vs streaming",
+          "type": "concept",
+          "domain": "fundamentals",
+          "classification": "core",
+          "snippet": "Batch vs streaming",
+          "score": 6.5
+        },
+        {
+          "slug": "dataflow-streaming-pipelines",
+          "title": "Pipelines streaming en Dataflow",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "snippet": "Pipelines streaming en Dataflow",
+          "score": 6.0
+        },
+        {
+          "slug": "spark-structured-streaming",
+          "title": "Spark Structured Streaming",
+          "type": "concept",
+          "domain": "streaming",
+          "classification": "modern",
+          "snippet": "Spark Structured Streaming",
+          "score": 6.0
+        },
+        {
+          "slug": "event-hubs-streaming",
+          "title": "Streaming con Event Hubs",
+          "type": "concept",
+          "domain": "azure",
+          "classification": "modern",
+          "snippet": "Streaming con Event Hubs",
+          "score": 6.0
+        },
+        {
+          "slug": "streaming-ingestion",
+          "title": "Ingesta streaming",
+          "type": "concept",
+          "domain": "pipelines",
+          "classification": "core",
+          "snippet": "El micro-batch se explica en esta ficha.",
+          "score": 5.5
+        }
+      ]
+    },
+    {
+      "type": "architecture",
+      "items": [
+        {
+          "slug": "streaming-pipeline-architecture",
+          "title": "Arquitectura de pipeline streaming",
+          "type": "architecture",
+          "domain": "architecture",
+          "classification": "core",
+          "snippet": "No figura en §9 pero es una de las 5 arquitecturas de F4 (ROADMAP).",
+          "score": 5.5
+        },
+        {
+          "slug": "iot-pipeline-architecture",
+          "title": "Pipeline IoT",
+          "type": "architecture",
+          "domain": "architecture",
+          "classification": "modern",
+          "snippet": "Variante de streaming, no una arquitectura de estudio prioritario.",
+          "score": 1.0
+        },
+        {
+          "slug": "real-time-analytics-architecture",
+          "title": "Real-time analytics",
+          "type": "architecture",
+          "domain": "architecture",
+          "classification": "modern",
+          "snippet": "Es la consulta de baja latencia, no el pipeline de streaming.",
+          "score": 1.0
+        }
+      ]
+    },
+    {
+      "type": "technology",
+      "items": [
+        {
+          "slug": "apache-beam",
+          "title": "Apache Beam",
+          "type": "technology",
+          "domain": null,
+          "classification": "modern",
+          "snippet": "Modelo de programación unificado open source para pipelines batch y streaming, ejecutable en varios runners.",
+          "score": 1.0
+        },
+        {
+          "slug": "apache-kafka",
+          "title": "Apache Kafka",
+          "type": "technology",
+          "domain": null,
+          "classification": "modern",
+          "snippet": "Plataforma distribuida open source de streaming de eventos basada en un log particionado y replicado.",
+          "score": 1.0
+        },
+        {
+          "slug": "apache-spark",
+          "title": "Apache Spark",
+          "type": "technology",
+          "domain": null,
+          "classification": "modern",
+          "snippet": "Motor open source de procesamiento distribuido para batch, SQL y streaming.",
+          "score": 1.0
+        }
+      ]
+    },
+    {
+      "type": "cloud_service",
+      "items": [
+        {
+          "slug": "gcp-dataflow",
+          "title": "Dataflow",
+          "type": "cloud_service",
+          "domain": null,
+          "classification": "modern",
+          "snippet": "Servicio administrado de Google Cloud para ejecutar pipelines de Apache Beam en batch y streaming.",
+          "score": 1.0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,208 @@
+{
+  "slug": "gcp-bigquery",
+  "groups": [
+    {
+      "type": "RELATED_TO",
+      "direction": "both",
+      "label": "related_to",
+      "items": [
+        {
+          "slug": "api-to-warehouse-architecture",
+          "title": "API → Data Warehouse",
+          "entity_type": "architecture",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "cdc-architecture",
+          "title": "Arquitectura CDC (PostgreSQL → BigQuery)",
+          "entity_type": "architecture",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "bigquery-architecture",
+          "title": "Arquitectura de BigQuery",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "batch-pipeline-architecture",
+          "title": "Arquitectura de pipeline batch",
+          "entity_type": "architecture",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "streaming-pipeline-architecture",
+          "title": "Arquitectura de pipeline streaming",
+          "entity_type": "architecture",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "bigquery-clustering",
+          "title": "Clustering en BigQuery",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "data-warehouse",
+          "title": "Data Warehouse",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "bigquery-information-schema",
+          "title": "INFORMATION_SCHEMA en BigQuery",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "batch-ingestion",
+          "title": "Ingesta batch",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "bigquery-cost-model",
+          "title": "Modelo de costos de BigQuery",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "bigquery-incremental-models",
+          "title": "Modelos incrementales en BigQuery",
+          "entity_type": "pattern",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "modern-data-warehouse-architecture",
+          "title": "Modern Data Warehouse",
+          "entity_type": "architecture",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "bigquery-monitoring",
+          "title": "Monitoreo de BigQuery",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "one-big-table",
+          "title": "One Big Table (OBT)",
+          "entity_type": "pattern",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "bigquery-query-optimization",
+          "title": "Optimización de consultas en BigQuery",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "cloud-warehouse-optimization",
+          "title": "Optimización específica de warehouses cloud",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "bigquery-partitioning",
+          "title": "Particionamiento en BigQuery",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "bigquery-policy-tags",
+          "title": "Policy tags en BigQuery",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "terraform-providers",
+          "title": "Providers",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "sql-qualify",
+          "title": "QUALIFY",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "bigquery-security",
+          "title": "Seguridad en BigQuery",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "bigquery-slots",
+          "title": "Slots y capacidad de cómputo",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "bigquery-sql-dialect",
+          "title": "SQL en BigQuery (GoogleSQL)",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "bigquery-biglake-tables",
+          "title": "Tablas BigLake",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "bigquery-external-tables",
+          "title": "Tablas externas en BigQuery",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "sql-unnest",
+          "title": "UNNEST",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "bigquery-materialized-views",
+          "title": "Vistas materializadas en BigQuery",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "dataform-workflows",
+          "title": "Workflows SQL con Dataform",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        }
+      ]
+    }
+  ]
+}

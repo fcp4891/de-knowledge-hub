@@ -1,0 +1,20 @@
+{
+  "query": "idempotencia",
+  "total": 1,
+  "groups": [
+    {
+      "type": "concept",
+      "items": [
+        {
+          "slug": "idempotency",
+          "title": "Idempotencia",
+          "type": "concept",
+          "domain": "fundamentals",
+          "classification": "core",
+          "snippet": "Propiedad de un proceso que produce el mismo resultado final al ejecutarse una o varias veces con la misma entrada.",
+          "score": 3.5
+        }
+      ]
+    }
+  ]
+}

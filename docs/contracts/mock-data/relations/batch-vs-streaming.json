@@ -1,0 +1,40 @@
+{
+  "slug": "batch-vs-streaming",
+  "groups": [
+    {
+      "type": "RELATED_TO",
+      "direction": "both",
+      "label": "related_to",
+      "items": [
+        {
+          "slug": "batch-ingestion",
+          "title": "Ingesta batch",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "streaming-ingestion",
+          "title": "Ingesta streaming",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "lambda-architecture",
+          "title": "Lambda Architecture",
+          "entity_type": "architecture",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "late-arriving-data",
+          "title": "Late-arriving data",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        }
+      ]
+    }
+  ]
+}

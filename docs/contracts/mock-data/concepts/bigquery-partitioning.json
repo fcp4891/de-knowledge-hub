@@ -1,0 +1,32 @@
+{
+  "id": "concept:bigquery-partitioning",
+  "title": "Particionamiento en BigQuery",
+  "slug": "bigquery-partitioning",
+  "description": null,
+  "type": "concept",
+  "domain": "gcp",
+  "subdomain": "bigquery",
+  "classification": "modern",
+  "level": "intermediate",
+  "cloud": [],
+  "technologies": [
+    "gcp-bigquery"
+  ],
+  "tags": [],
+  "related_topics": [
+    "partitioning",
+    "partition-pruning"
+  ],
+  "sources": [],
+  "created_at": null,
+  "updated_at": null,
+  "last_verified": null,
+  "verification_status": null,
+  "kind": "concept",
+  "importance": "high",
+  "mvp": true,
+  "has_page": false,
+  "stub": false,
+  "note": null,
+  "sections": []
+}

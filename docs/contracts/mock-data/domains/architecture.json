@@ -1,0 +1,278 @@
+{
+  "id": "07",
+  "slug": "architecture",
+  "title": "Arquitecturas de datos",
+  "description": "Arquitecturas de referencia con problema, componentes, trade-offs e implementación por cloud.",
+  "concept_count": 17,
+  "mvp_count": 5,
+  "subdomains": [
+    {
+      "slug": "reference-architectures",
+      "title": "Arquitecturas analíticas de referencia",
+      "concepts": [
+        {
+          "slug": "batch-pipeline-architecture",
+          "title": "Arquitectura de pipeline batch",
+          "kind": "architecture",
+          "domain": "architecture",
+          "subdomain": "reference-architectures",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "streaming-pipeline-architecture",
+          "title": "Arquitectura de pipeline streaming",
+          "kind": "architecture",
+          "domain": "architecture",
+          "subdomain": "reference-architectures",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "modern-data-warehouse-architecture",
+          "title": "Modern Data Warehouse",
+          "kind": "architecture",
+          "domain": "architecture",
+          "subdomain": "reference-architectures",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "data-lake-architecture",
+          "title": "Arquitectura Data Lake",
+          "kind": "architecture",
+          "domain": "architecture",
+          "subdomain": "reference-architectures",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "lakehouse-architecture",
+          "title": "Arquitectura Lakehouse",
+          "kind": "architecture",
+          "domain": "architecture",
+          "subdomain": "reference-architectures",
+          "classification": "modern",
+          "level": "advanced",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "medallion-architecture",
+          "title": "Medallion Architecture",
+          "kind": "architecture",
+          "domain": "architecture",
+          "subdomain": "reference-architectures",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "streaming-architectures",
+      "title": "Arquitecturas streaming y event-driven",
+      "concepts": [
+        {
+          "slug": "lambda-architecture",
+          "title": "Lambda Architecture",
+          "kind": "architecture",
+          "domain": "architecture",
+          "subdomain": "streaming-architectures",
+          "classification": "modern",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "kappa-architecture",
+          "title": "Kappa Architecture",
+          "kind": "architecture",
+          "domain": "architecture",
+          "subdomain": "streaming-architectures",
+          "classification": "modern",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "event-driven-architecture",
+          "title": "Event-driven architecture",
+          "kind": "architecture",
+          "domain": "architecture",
+          "subdomain": "streaming-architectures",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "real-time-analytics-architecture",
+          "title": "Real-time analytics",
+          "kind": "architecture",
+          "domain": "architecture",
+          "subdomain": "streaming-architectures",
+          "classification": "modern",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "integration-architectures",
+      "title": "Arquitecturas de integración",
+      "concepts": [
+        {
+          "slug": "cdc-architecture",
+          "title": "Arquitectura CDC (PostgreSQL → BigQuery)",
+          "kind": "architecture",
+          "domain": "architecture",
+          "subdomain": "integration-architectures",
+          "classification": "core",
+          "level": "advanced",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "api-to-warehouse-architecture",
+          "title": "API → Data Warehouse",
+          "kind": "architecture",
+          "domain": "architecture",
+          "subdomain": "integration-architectures",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "iot-pipeline-architecture",
+          "title": "Pipeline IoT",
+          "kind": "architecture",
+          "domain": "architecture",
+          "subdomain": "integration-architectures",
+          "classification": "modern",
+          "level": "advanced",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "ml-ai-architectures",
+      "title": "Arquitecturas para ML e IA",
+      "concepts": [
+        {
+          "slug": "ml-feature-pipeline-architecture",
+          "title": "ML feature pipeline",
+          "kind": "architecture",
+          "domain": "architecture",
+          "subdomain": "ml-ai-architectures",
+          "classification": "modern",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "rag-data-pipeline-architecture",
+          "title": "RAG data pipeline",
+          "kind": "architecture",
+          "domain": "architecture",
+          "subdomain": "ml-ai-architectures",
+          "classification": "emerging",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "organizational-architectures",
+      "title": "Arquitecturas organizacionales",
+      "concepts": [
+        {
+          "slug": "data-mesh",
+          "title": "Data Mesh",
+          "kind": "concept",
+          "domain": "architecture",
+          "subdomain": "organizational-architectures",
+          "classification": "modern",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "data-products",
+          "title": "Data Products",
+          "kind": "concept",
+          "domain": "architecture",
+          "subdomain": "organizational-architectures",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    }
+  ]
+}

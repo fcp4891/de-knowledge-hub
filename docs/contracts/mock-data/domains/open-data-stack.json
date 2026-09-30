@@ -1,0 +1,132 @@
+{
+  "id": "20",
+  "slug": "open-data-stack",
+  "title": "Open Data Stack",
+  "description": "Tecnologías independientes del cloud y los conceptos necesarios para usarlas con criterio.",
+  "concept_count": 7,
+  "mvp_count": 0,
+  "subdomains": [
+    {
+      "slug": "open-stack-overview",
+      "title": "Panorama",
+      "concepts": [
+        {
+          "slug": "open-data-stack-overview",
+          "title": "Qué es el open data stack",
+          "kind": "concept",
+          "domain": "open-data-stack",
+          "subdomain": "open-stack-overview",
+          "classification": "modern",
+          "level": "basic",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "open-table-formats",
+      "title": "Open table formats",
+      "concepts": [
+        {
+          "slug": "open-table-formats",
+          "title": "Open table formats",
+          "kind": "concept",
+          "domain": "open-data-stack",
+          "subdomain": "open-table-formats",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "table-format-comparison",
+          "title": "Comparación entre Iceberg, Delta Lake y Hudi",
+          "kind": "concept",
+          "domain": "open-data-stack",
+          "subdomain": "open-table-formats",
+          "classification": "modern",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "processing-and-messaging",
+      "title": "Procesamiento y mensajería",
+      "concepts": [
+        {
+          "slug": "spark-execution-model",
+          "title": "Modelo de ejecución de Spark",
+          "kind": "concept",
+          "domain": "open-data-stack",
+          "subdomain": "processing-and-messaging",
+          "classification": "modern",
+          "level": "advanced",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "kafka-architecture",
+          "title": "Arquitectura de Kafka",
+          "kind": "concept",
+          "domain": "open-data-stack",
+          "subdomain": "processing-and-messaging",
+          "classification": "modern",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "transformation-and-storage",
+      "title": "Transformación y almacenamiento",
+      "concepts": [
+        {
+          "slug": "dbt-core-concepts",
+          "title": "Conceptos centrales de dbt",
+          "kind": "concept",
+          "domain": "open-data-stack",
+          "subdomain": "transformation-and-storage",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "postgresql-for-data-engineers",
+          "title": "PostgreSQL para Data Engineers",
+          "kind": "concept",
+          "domain": "open-data-stack",
+          "subdomain": "transformation-and-storage",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    }
+  ]
+}

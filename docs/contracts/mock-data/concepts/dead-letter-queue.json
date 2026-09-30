@@ -1,0 +1,31 @@
+{
+  "id": "pattern:dead-letter-queue",
+  "title": "Dead-letter queue",
+  "slug": "dead-letter-queue",
+  "description": null,
+  "type": "pattern",
+  "domain": "pipelines",
+  "subdomain": "reliability",
+  "classification": "core",
+  "level": "intermediate",
+  "cloud": [],
+  "technologies": [
+    "gcp-pubsub"
+  ],
+  "tags": [],
+  "related_topics": [
+    "retries"
+  ],
+  "sources": [],
+  "created_at": null,
+  "updated_at": null,
+  "last_verified": null,
+  "verification_status": null,
+  "kind": "pattern",
+  "importance": "high",
+  "mvp": true,
+  "has_page": false,
+  "stub": false,
+  "note": "El mensaje venenoso se trata en esta ficha.",
+  "sections": []
+}

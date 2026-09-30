@@ -1,0 +1,159 @@
+{
+  "slug": "change-data-capture",
+  "groups": [
+    {
+      "type": "IMPLEMENTS",
+      "direction": "incoming",
+      "label": "implemented_by",
+      "items": [
+        {
+          "slug": "aws-dms",
+          "title": "AWS Database Migration Service",
+          "entity_type": "cloud_service",
+          "origin": "entity",
+          "note": null
+        },
+        {
+          "slug": "gcp-datastream",
+          "title": "Datastream",
+          "entity_type": "cloud_service",
+          "origin": "entity",
+          "note": null
+        },
+        {
+          "slug": "debezium",
+          "title": "Debezium",
+          "entity_type": "technology",
+          "origin": "entity",
+          "note": null
+        }
+      ]
+    },
+    {
+      "type": "RELATED_TO",
+      "direction": "both",
+      "label": "related_to",
+      "items": [
+        {
+          "slug": "apache-kafka",
+          "title": "Apache Kafka",
+          "entity_type": "technology",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "cdc-architecture",
+          "title": "Arquitectura CDC (PostgreSQL → BigQuery)",
+          "entity_type": "architecture",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "aws-dms",
+          "title": "AWS Database Migration Service",
+          "entity_type": "cloud_service",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "azure-sql-as-source",
+          "title": "Azure SQL como fuente de datos",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "cloud-sql-as-source",
+          "title": "Cloud SQL como fuente de datos",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "data-pipeline",
+          "title": "Data pipeline",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "gcp-datastream",
+          "title": "Datastream",
+          "entity_type": "cloud_service",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "debezium",
+          "title": "Debezium",
+          "entity_type": "technology",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "change-detection",
+          "title": "Detección de cambios",
+          "entity_type": "pattern",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "idempotency",
+          "title": "Idempotencia",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Los consumidores de CDC deben aplicar cambios de forma idempotente ante reentregas."
+        },
+        {
+          "slug": "database-ingestion",
+          "title": "Ingesta desde bases de datos",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "sql-merge",
+          "title": "MERGE",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "postgresql-for-data-engineers",
+          "title": "PostgreSQL para Data Engineers",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "rds-as-source",
+          "title": "RDS como fuente de datos",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "scd-type-2",
+          "title": "SCD Type 2",
+          "entity_type": "pattern",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "schema-evolution",
+          "title": "Schema evolution",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "zero-etl-and-federation",
+          "title": "Zero-ETL y consultas federadas",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        }
+      ]
+    }
+  ]
+}

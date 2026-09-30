@@ -1,0 +1,210 @@
+{
+  "id": "16",
+  "slug": "observability",
+  "title": "Observabilidad",
+  "description": "Señales, salud de pipelines, acuerdos de servicio y respuesta a incidentes en plataformas de datos.",
+  "concept_count": 13,
+  "mvp_count": 0,
+  "subdomains": [
+    {
+      "slug": "telemetry",
+      "title": "Telemetría",
+      "concepts": [
+        {
+          "slug": "data-observability",
+          "title": "Data observability",
+          "kind": "concept",
+          "domain": "observability",
+          "subdomain": "telemetry",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "observability-logs",
+          "title": "Logs",
+          "kind": "concept",
+          "domain": "observability",
+          "subdomain": "telemetry",
+          "classification": "core",
+          "level": "basic",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "observability-metrics",
+          "title": "Métricas",
+          "kind": "concept",
+          "domain": "observability",
+          "subdomain": "telemetry",
+          "classification": "core",
+          "level": "basic",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "observability-traces",
+          "title": "Trazas",
+          "kind": "concept",
+          "domain": "observability",
+          "subdomain": "telemetry",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "data-signals",
+      "title": "Señales sobre los datos",
+      "concepts": [
+        {
+          "slug": "data-freshness",
+          "title": "Freshness",
+          "kind": "concept",
+          "domain": "observability",
+          "subdomain": "data-signals",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "volume-anomalies",
+          "title": "Anomalías de volumen",
+          "kind": "concept",
+          "domain": "observability",
+          "subdomain": "data-signals",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "schema-change-detection",
+          "title": "Detección de cambios de schema",
+          "kind": "concept",
+          "domain": "observability",
+          "subdomain": "data-signals",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "pipeline-health",
+          "title": "Salud de pipelines",
+          "kind": "concept",
+          "domain": "observability",
+          "subdomain": "data-signals",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "reliability-operations",
+      "title": "Acuerdos de servicio e incidentes",
+      "concepts": [
+        {
+          "slug": "data-sla",
+          "title": "SLA",
+          "kind": "concept",
+          "domain": "observability",
+          "subdomain": "reliability-operations",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "data-slo",
+          "title": "SLO",
+          "kind": "concept",
+          "domain": "observability",
+          "subdomain": "reliability-operations",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "alerting",
+          "title": "Alertas",
+          "kind": "concept",
+          "domain": "observability",
+          "subdomain": "reliability-operations",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "incident-response",
+          "title": "Respuesta a incidentes",
+          "kind": "concept",
+          "domain": "observability",
+          "subdomain": "reliability-operations",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "root-cause-analysis",
+          "title": "Análisis de causa raíz",
+          "kind": "concept",
+          "domain": "observability",
+          "subdomain": "reliability-operations",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    }
+  ]
+}

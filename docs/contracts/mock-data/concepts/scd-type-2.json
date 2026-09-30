@@ -1,0 +1,31 @@
+{
+  "id": "pattern:scd-type-2",
+  "title": "SCD Type 2",
+  "slug": "scd-type-2",
+  "description": null,
+  "type": "pattern",
+  "domain": "sql",
+  "subdomain": "sql-patterns",
+  "classification": "core",
+  "level": "intermediate",
+  "cloud": [],
+  "technologies": [],
+  "tags": [],
+  "related_topics": [
+    "slowly-changing-dimensions",
+    "sql-merge",
+    "surrogate-keys"
+  ],
+  "sources": [],
+  "created_at": null,
+  "updated_at": null,
+  "last_verified": null,
+  "verification_status": null,
+  "kind": "pattern",
+  "importance": "high",
+  "mvp": true,
+  "has_page": false,
+  "stub": false,
+  "note": null,
+  "sections": []
+}

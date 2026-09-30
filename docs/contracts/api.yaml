@@ -1,0 +1,697 @@
+openapi: 3.1.0
+jsonSchemaDialect: https://json-schema.org/draft/2020-12/schema
+info:
+  title: Data Engineering Knowledge Hub API
+  version: 0.1.0
+  description: |
+    Contrato de la API del MVP (ADR-002). Solo lectura sobre el conocimiento; lectura y escritura sobre el estado personal (/me).
+    Los datos se derivan de content/ (ADR-000). Los conceptos vienen del Knowledge Blueprint (ADR-003) y `has_page` indica si ya tienen ficha.
+    Las relaciones combinan las aristas de las entidades (origin: entity) y los related_* del blueprint (origin: blueprint, tipo RELATED_TO).
+    Mocks de cada respuesta en docs/contracts/mock-data/ (index.json).
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Backend local (A-F2.3)
+
+tags:
+  - name: knowledge
+  - name: search
+  - name: me
+
+paths:
+  /domains:
+    get:
+      tags: [knowledge]
+      operationId: listDomains
+      summary: Dominios del blueprint con conteos.
+      responses:
+        "200":
+          description: Los 23 dominios, ordenados por id.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/DomainList" }
+
+  /domains/{slug}:
+    get:
+      tags: [knowledge]
+      operationId: getDomain
+      summary: Dominio con sus subdominios y conceptos.
+      parameters: [{ $ref: "#/components/parameters/Slug" }]
+      responses:
+        "200":
+          description: Dominio.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/DomainDetail" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /concepts:
+    get:
+      tags: [knowledge]
+      operationId: listConcepts
+      summary: Conceptos, patrones y arquitecturas del blueprint.
+      parameters:
+        - { name: domain, in: query, schema: { $ref: "#/components/schemas/Slug" } }
+        - { name: subdomain, in: query, schema: { $ref: "#/components/schemas/Slug" } }
+        - { name: kind, in: query, schema: { $ref: "#/components/schemas/Kind" } }
+        - { name: classification, in: query, schema: { $ref: "#/components/schemas/Classification" } }
+        - { name: level, in: query, schema: { $ref: "#/components/schemas/Level" } }
+        - { name: mvp, in: query, schema: { type: boolean } }
+        - { name: has_page, in: query, schema: { type: boolean } }
+        - { $ref: "#/components/parameters/Limit" }
+        - { $ref: "#/components/parameters/Offset" }
+      responses:
+        "200":
+          description: Página de conceptos, ordenados por dominio, subdominio y posición en el blueprint.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ConceptList" }
+
+  /concepts/{slug}:
+    get:
+      tags: [knowledge]
+      operationId: getConcept
+      summary: Concepto con metadata §40 y, si tiene ficha, sus secciones.
+      parameters: [{ $ref: "#/components/parameters/Slug" }]
+      responses:
+        "200":
+          description: Concepto.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ConceptDetail" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /technologies:
+    get:
+      tags: [knowledge]
+      operationId: listTechnologies
+      summary: Inventario de tecnologías y servicios cloud.
+      parameters:
+        - { name: type, in: query, schema: { $ref: "#/components/schemas/TechnologyType" } }
+        - { name: origin, in: query, schema: { $ref: "#/components/schemas/Origin" } }
+        - { name: category, in: query, schema: { type: string } }
+        - { name: classification, in: query, schema: { $ref: "#/components/schemas/Classification" } }
+        - { name: mvp, in: query, schema: { type: boolean } }
+        - { $ref: "#/components/parameters/Limit" }
+        - { $ref: "#/components/parameters/Offset" }
+      responses:
+        "200":
+          description: Página de tecnologías, ordenadas por slug.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/TechnologyList" }
+
+  /technologies/{slug}:
+    get:
+      tags: [knowledge]
+      operationId: getTechnology
+      summary: Tecnología con metadata §40, fuentes y comparación en la Cloud Capability Matrix.
+      parameters: [{ $ref: "#/components/parameters/Slug" }]
+      responses:
+        "200":
+          description: Tecnología.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/TechnologyDetail" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /entities/{slug}/relations:
+    get:
+      tags: [knowledge]
+      operationId: getRelations
+      summary: Relaciones de cualquier entidad o concepto, agrupadas por tipo y dirección.
+      parameters: [{ $ref: "#/components/parameters/Slug" }]
+      responses:
+        "200":
+          description: Grupos de relaciones.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/RelationGroups" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /sources/{slug}:
+    get:
+      tags: [knowledge]
+      operationId: getSource
+      summary: Fuente del Source Registry.
+      parameters: [{ $ref: "#/components/parameters/Slug" }]
+      responses:
+        "200":
+          description: Fuente.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Source" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /search:
+    get:
+      tags: [search]
+      operationId: search
+      summary: Búsqueda de texto con resultados agrupados por tipo (§35).
+      parameters:
+        - { name: q, in: query, required: true, schema: { type: string, minLength: 2, maxLength: 200 } }
+        - { name: type, in: query, schema: { $ref: "#/components/schemas/ResultType" } }
+        - { name: domain, in: query, schema: { $ref: "#/components/schemas/Slug" } }
+        - { name: classification, in: query, schema: { $ref: "#/components/schemas/Classification" } }
+        - { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 50, default: 20 } }
+      responses:
+        "200":
+          description: Resultados agrupados.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SearchResults" }
+        "422": { $ref: "#/components/responses/ValidationError" }
+
+  /me/study-state:
+    get:
+      tags: [me]
+      operationId: listStudyStates
+      summary: Estados de estudio registrados, del más reciente al más antiguo (Home §38).
+      parameters:
+        - { name: state, in: query, schema: { $ref: "#/components/schemas/StudyStatus" } }
+        - { $ref: "#/components/parameters/Limit" }
+        - { $ref: "#/components/parameters/Offset" }
+      responses:
+        "200":
+          description: Página de estados.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/StudyStateList" }
+
+  /me/study-state/{slug}:
+    get:
+      tags: [me]
+      operationId: getStudyState
+      summary: Estado de estudio de un concepto o tecnología. Sin registro previo devuelve `not_reviewed`.
+      parameters: [{ $ref: "#/components/parameters/Slug" }]
+      responses:
+        "200":
+          description: Estado.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/StudyState" }
+        "404": { $ref: "#/components/responses/NotFound" }
+    put:
+      tags: [me]
+      operationId: putStudyState
+      summary: Crea o reemplaza el estado de estudio (idempotente).
+      parameters: [{ $ref: "#/components/parameters/Slug" }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/StudyStateUpdate" }
+      responses:
+        "200":
+          description: Estado guardado.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/StudyState" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "422": { $ref: "#/components/responses/ValidationError" }
+
+  /me/notes/{slug}:
+    get:
+      tags: [me]
+      operationId: listNotes
+      summary: Notas personales de un concepto o tecnología, de la más reciente a la más antigua.
+      parameters: [{ $ref: "#/components/parameters/Slug" }]
+      responses:
+        "200":
+          description: Notas.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/NoteList" }
+        "404": { $ref: "#/components/responses/NotFound" }
+    post:
+      tags: [me]
+      operationId: createNote
+      summary: Agrega una nota personal en Markdown.
+      parameters: [{ $ref: "#/components/parameters/Slug" }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/NoteCreate" }
+      responses:
+        "201":
+          description: Nota creada.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Note" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "422": { $ref: "#/components/responses/ValidationError" }
+
+  /me/favorites:
+    get:
+      tags: [me]
+      operationId: listFavorites
+      summary: Favoritos, del más reciente al más antiguo.
+      parameters:
+        - { $ref: "#/components/parameters/Limit" }
+        - { $ref: "#/components/parameters/Offset" }
+      responses:
+        "200":
+          description: Página de favoritos.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/FavoriteList" }
+
+  /me/favorites/{slug}:
+    get:
+      tags: [me]
+      operationId: getFavorite
+      summary: Si un concepto o tecnología está marcado como favorito.
+      parameters: [{ $ref: "#/components/parameters/Slug" }]
+      responses:
+        "200":
+          description: Favorito.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Favorite" }
+        "404": { $ref: "#/components/responses/NotFound" }
+    put:
+      tags: [me]
+      operationId: putFavorite
+      summary: Marca o desmarca como favorito (idempotente).
+      parameters: [{ $ref: "#/components/parameters/Slug" }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/FavoriteUpdate" }
+      responses:
+        "200":
+          description: Favorito guardado.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Favorite" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+components:
+  parameters:
+    Slug:
+      name: slug
+      in: path
+      required: true
+      schema: { $ref: "#/components/schemas/Slug" }
+    Limit:
+      name: limit
+      in: query
+      schema: { type: integer, minimum: 1, maximum: 500, default: 50 }
+    Offset:
+      name: offset
+      in: query
+      schema: { type: integer, minimum: 0, default: 0 }
+
+  responses:
+    NotFound:
+      description: No existe un recurso con ese slug.
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+    ValidationError:
+      description: Parámetros o cuerpo inválidos.
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+
+  schemas:
+    # --- Vocabularios (deben coincidir con schemas/enums.schema.json; lo verifica tests/test_contract.py) ---
+    Slug: { type: string, pattern: "^[a-z0-9]+(-[a-z0-9]+)*$", maxLength: 100 }
+    Date: { type: string, format: date }
+    DateTime: { type: string, format: date-time }
+    Classification: { enum: [core, modern, emerging] }
+    Level: { enum: [basic, intermediate, advanced] }
+    Importance: { enum: [high, medium, low] }
+    VerificationStatus: { enum: [verified, review_required, potentially_outdated, deprecated, archived] }
+    Cloud: { enum: [gcp, aws, azure, agnostic] }
+    Kind: { description: Tipo de ficha que tendrá el concepto (ADR-003)., enum: [concept, pattern, architecture] }
+    TechnologyType: { enum: [technology, cloud_service] }
+    Origin: { description: Proveedor (cloud_service) o vendor (technology)., enum: [gcp, aws, azure, open-source, other] }
+    SourceType: { enum: [official_docs, release_notes, engineering_blog, spec_paper, secondary] }
+    RelationType:
+      enum: [USES, IMPLEMENTS, DEPENDS_ON, ALTERNATIVE_TO, RELATED_TO, REPLACES, EXTENDS, RUNS_ON, PRODUCES, CONSUMES, PRACTICES, AFFECTS, UPDATES, REQUIRES]
+    EntityType:
+      enum: [concept, pattern, architecture, technology, cloud_service, code_snippet, lab, news, release, source, job_description, interview_question, personal_note]
+    ResultType: { enum: [concept, pattern, architecture, technology, cloud_service, source] }
+    StudyStatus:
+      description: Estados manuales de §37.
+      enum: [not_reviewed, reviewing, understood, applied, needs_review]
+
+    Problem:
+      description: Error en formato RFC 9457.
+      type: object
+      required: [title, status]
+      properties:
+        type: { type: string }
+        title: { type: string }
+        status: { type: integer }
+        detail: { type: string }
+
+    Page:
+      type: object
+      required: [total, limit, offset]
+      properties:
+        total: { type: integer, minimum: 0 }
+        limit: { type: integer, minimum: 1 }
+        offset: { type: integer, minimum: 0 }
+
+    # --- Dominios ---
+    DomainSummary:
+      type: object
+      required: [id, slug, title, description, concept_count, mvp_count]
+      properties:
+        id: { type: string, pattern: "^\\d{2}$" }
+        slug: { $ref: "#/components/schemas/Slug" }
+        title: { type: string }
+        description: { type: string }
+        concept_count: { type: integer, minimum: 0 }
+        mvp_count: { type: integer, minimum: 0 }
+    DomainList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items: { allOf: [{ $ref: "#/components/schemas/DomainSummary" }], unevaluatedProperties: false }
+      additionalProperties: false
+    DomainDetail:
+      allOf: [{ $ref: "#/components/schemas/DomainSummary" }]
+      type: object
+      required: [subdomains]
+      properties:
+        subdomains:
+          type: array
+          items:
+            type: object
+            required: [slug, title, concepts]
+            properties:
+              slug: { $ref: "#/components/schemas/Slug" }
+              title: { type: string }
+              concepts: { type: array, items: { $ref: "#/components/schemas/ConceptSummary" } }
+            additionalProperties: false
+      unevaluatedProperties: false
+
+    # --- Conceptos ---
+    ConceptSummary:
+      type: object
+      required: [slug, title, kind, domain, subdomain, classification, level, importance, mvp, has_page, verification_status, last_verified]
+      properties:
+        slug: { $ref: "#/components/schemas/Slug" }
+        title: { type: string }
+        kind: { $ref: "#/components/schemas/Kind" }
+        domain: { $ref: "#/components/schemas/Slug" }
+        subdomain: { $ref: "#/components/schemas/Slug" }
+        classification: { $ref: "#/components/schemas/Classification" }
+        level: { $ref: "#/components/schemas/Level" }
+        importance: { $ref: "#/components/schemas/Importance" }
+        mvp: { type: boolean }
+        has_page: { type: boolean, description: true si existe la ficha en content/. }
+        verification_status:
+          description: Estado de la ficha; null si aún no tiene ficha.
+          oneOf: [{ $ref: "#/components/schemas/VerificationStatus" }, { type: "null" }]
+        last_verified: { oneOf: [{ $ref: "#/components/schemas/Date" }, { type: "null" }] }
+      additionalProperties: false
+    ConceptList:
+      allOf: [{ $ref: "#/components/schemas/Page" }]
+      type: object
+      required: [items]
+      properties:
+        items: { type: array, items: { $ref: "#/components/schemas/ConceptSummary" } }
+      unevaluatedProperties: false
+
+    Metadata:
+      description: Metadata mínima §40. Los campos que aún no tienen valor (concepto sin ficha) son null o lista vacía.
+      type: object
+      required: [id, title, slug, description, type, domain, subdomain, classification, level, cloud, technologies, tags, related_topics, sources, created_at, updated_at, last_verified, verification_status]
+      properties:
+        id: { type: string }
+        title: { type: string }
+        slug: { $ref: "#/components/schemas/Slug" }
+        description: { type: [string, "null"] }
+        type: { $ref: "#/components/schemas/EntityType" }
+        domain: { oneOf: [{ $ref: "#/components/schemas/Slug" }, { type: "null" }] }
+        subdomain: { oneOf: [{ $ref: "#/components/schemas/Slug" }, { type: "null" }] }
+        classification: { oneOf: [{ $ref: "#/components/schemas/Classification" }, { type: "null" }] }
+        level: { oneOf: [{ $ref: "#/components/schemas/Level" }, { type: "null" }] }
+        cloud: { type: array, items: { $ref: "#/components/schemas/Cloud" } }
+        technologies: { type: array, items: { $ref: "#/components/schemas/Slug" } }
+        tags: { type: array, items: { type: string } }
+        related_topics: { type: array, items: { $ref: "#/components/schemas/Slug" } }
+        sources: { type: array, items: { $ref: "#/components/schemas/SourceRef" } }
+        created_at: { oneOf: [{ $ref: "#/components/schemas/Date" }, { type: "null" }] }
+        updated_at: { oneOf: [{ $ref: "#/components/schemas/Date" }, { type: "null" }] }
+        last_verified: { oneOf: [{ $ref: "#/components/schemas/Date" }, { type: "null" }] }
+        verification_status: { oneOf: [{ $ref: "#/components/schemas/VerificationStatus" }, { type: "null" }] }
+
+    Section:
+      description: Una de las 22 secciones de la ficha (§22), en Markdown.
+      type: object
+      required: [number, key, title, markdown]
+      properties:
+        number: { type: integer, minimum: 1, maximum: 22 }
+        key:
+          enum: [summary, what_is, problem, how_it_works, when_to_use, when_not_to_use, simple_example, production_example,
+                 architecture, code, gcp, aws, azure, best_practices, common_mistakes, trade_offs, related_concepts,
+                 open_questions, related_lab, sources, last_verified, change_history]
+        title: { type: string }
+        markdown: { type: string }
+      additionalProperties: false
+
+    ConceptDetail:
+      allOf: [{ $ref: "#/components/schemas/Metadata" }]
+      type: object
+      required: [kind, importance, mvp, has_page, stub, sections]
+      properties:
+        kind: { $ref: "#/components/schemas/Kind" }
+        importance: { $ref: "#/components/schemas/Importance" }
+        mvp: { type: boolean }
+        has_page: { type: boolean }
+        stub: { type: boolean, description: true si la ficha es un marcador con contenido pendiente. }
+        note: { type: [string, "null"], description: Nota de alcance del blueprint. }
+        sections: { type: array, items: { $ref: "#/components/schemas/Section" }, description: Vacía si has_page es false. }
+      unevaluatedProperties: false
+
+    # --- Tecnologías ---
+    TechnologySummary:
+      type: object
+      required: [slug, title, type, origin, category, classification, mvp, stub, verification_status]
+      properties:
+        slug: { $ref: "#/components/schemas/Slug" }
+        title: { type: string }
+        type: { $ref: "#/components/schemas/TechnologyType" }
+        origin: { $ref: "#/components/schemas/Origin" }
+        category: { type: string }
+        classification: { $ref: "#/components/schemas/Classification" }
+        mvp: { type: boolean }
+        stub: { type: boolean }
+        verification_status: { $ref: "#/components/schemas/VerificationStatus" }
+      additionalProperties: false
+    TechnologyList:
+      allOf: [{ $ref: "#/components/schemas/Page" }]
+      type: object
+      required: [items]
+      properties:
+        items: { type: array, items: { $ref: "#/components/schemas/TechnologySummary" } }
+      unevaluatedProperties: false
+
+    CapabilityCell:
+      description: Posición de la tecnología en la Cloud Capability Matrix, con las celdas de los otros clouds para comparar.
+      type: object
+      required: [capability, title, cloud, differences, not_equivalent_when, equivalents, verification_status]
+      properties:
+        capability: { type: string }
+        title: { type: string }
+        cloud: { enum: [gcp, aws, azure] }
+        differences: { type: string }
+        not_equivalent_when: { type: string }
+        equivalents:
+          type: object
+          description: Por cloud distinto al de la tecnología, sus servicios, diferencias y cuándo no son equivalentes.
+          additionalProperties:
+            type: object
+            required: [services, differences, not_equivalent_when]
+            properties:
+              services: { type: array, items: { $ref: "#/components/schemas/Slug" } }
+              differences: { type: string }
+              not_equivalent_when: { type: string }
+            additionalProperties: false
+        verification_status: { $ref: "#/components/schemas/VerificationStatus" }
+      additionalProperties: false
+
+    TechnologyDetail:
+      allOf: [{ $ref: "#/components/schemas/Metadata" }]
+      type: object
+      required: [origin, category, mvp, stub, capabilities]
+      properties:
+        origin: { $ref: "#/components/schemas/Origin" }
+        category: { type: string }
+        mvp: { type: boolean }
+        stub: { type: boolean }
+        note: { type: [string, "null"] }
+        capabilities: { type: array, items: { $ref: "#/components/schemas/CapabilityCell" } }
+      unevaluatedProperties: false
+
+    # --- Relaciones ---
+    RelationItem:
+      type: object
+      required: [slug, title, entity_type, origin]
+      properties:
+        slug: { $ref: "#/components/schemas/Slug" }
+        title: { type: string }
+        entity_type: { $ref: "#/components/schemas/EntityType" }
+        origin: { enum: [entity, blueprint], description: entity = arista en content/; blueprint = related_* del blueprint. }
+        note: { type: [string, "null"] }
+      additionalProperties: false
+    RelationGroup:
+      type: object
+      required: [type, direction, label, items]
+      properties:
+        type: { $ref: "#/components/schemas/RelationType" }
+        direction: { enum: [outgoing, incoming, both], description: both para relaciones simétricas. }
+        label: { type: string, description: Nombre para la UI; en incoming es la inversa del catálogo (p. ej. implemented_by). }
+        items: { type: array, items: { $ref: "#/components/schemas/RelationItem" } }
+      additionalProperties: false
+    RelationGroups:
+      type: object
+      required: [slug, groups]
+      properties:
+        slug: { $ref: "#/components/schemas/Slug" }
+        groups: { type: array, items: { $ref: "#/components/schemas/RelationGroup" } }
+      additionalProperties: false
+
+    # --- Fuentes ---
+    SourceRef:
+      description: Fuente citada por una entidad, resuelta contra el Source Registry.
+      type: object
+      required: [source, title, url, source_type, authority_level]
+      properties:
+        source: { $ref: "#/components/schemas/Slug" }
+        title: { type: string }
+        url: { type: string, format: uri, description: Página concreta consultada (o la URL base de la fuente). }
+        source_type: { $ref: "#/components/schemas/SourceType" }
+        authority_level: { type: integer, minimum: 1, maximum: 5 }
+        accessed: { oneOf: [{ $ref: "#/components/schemas/Date" }, { type: "null" }] }
+        note: { type: [string, "null"] }
+      additionalProperties: false
+    Source:
+      type: object
+      required: [slug, title, description, url, source_type, authority_level, provider, url_verified, review_frequency, trust, technologies, last_verified, verification_status]
+      properties:
+        slug: { $ref: "#/components/schemas/Slug" }
+        title: { type: string }
+        description: { type: string }
+        url: { type: string, format: uri }
+        source_type: { $ref: "#/components/schemas/SourceType" }
+        authority_level: { type: integer, minimum: 1, maximum: 5 }
+        provider: { type: string }
+        url_verified: { type: boolean }
+        review_frequency: { enum: [daily, weekly, monthly, quarterly, yearly] }
+        trust: { enum: [high, medium, low] }
+        technologies: { type: array, items: { $ref: "#/components/schemas/Slug" } }
+        last_verified: { oneOf: [{ $ref: "#/components/schemas/Date" }, { type: "null" }] }
+        verification_status: { $ref: "#/components/schemas/VerificationStatus" }
+      additionalProperties: false
+
+    # --- Búsqueda ---
+    SearchResult:
+      type: object
+      required: [slug, title, type, classification, snippet, score]
+      properties:
+        slug: { $ref: "#/components/schemas/Slug" }
+        title: { type: string }
+        type: { $ref: "#/components/schemas/ResultType" }
+        domain: { oneOf: [{ $ref: "#/components/schemas/Slug" }, { type: "null" }] }
+        classification: { oneOf: [{ $ref: "#/components/schemas/Classification" }, { type: "null" }] }
+        snippet: { type: string }
+        score: { type: number, minimum: 0 }
+      additionalProperties: false
+    SearchResults:
+      type: object
+      required: [query, total, groups]
+      properties:
+        query: { type: string }
+        total: { type: integer, minimum: 0 }
+        groups:
+          type: array
+          items:
+            type: object
+            required: [type, items]
+            properties:
+              type: { $ref: "#/components/schemas/ResultType" }
+              items: { type: array, items: { $ref: "#/components/schemas/SearchResult" } }
+            additionalProperties: false
+      additionalProperties: false
+
+    # --- Estado personal (§37) ---
+    StudyState:
+      type: object
+      required: [slug, state, pending_deep_dive, last_studied_at, updated_at]
+      properties:
+        slug: { $ref: "#/components/schemas/Slug" }
+        state: { $ref: "#/components/schemas/StudyStatus" }
+        pending_deep_dive: { type: boolean }
+        last_studied_at: { oneOf: [{ $ref: "#/components/schemas/DateTime" }, { type: "null" }] }
+        updated_at: { oneOf: [{ $ref: "#/components/schemas/DateTime" }, { type: "null" }] }
+      additionalProperties: false
+    StudyStateUpdate:
+      type: object
+      required: [state]
+      properties:
+        state: { $ref: "#/components/schemas/StudyStatus" }
+        pending_deep_dive: { type: boolean, default: false }
+        last_studied_at: { $ref: "#/components/schemas/DateTime" }
+      additionalProperties: false
+    StudyStateList:
+      allOf: [{ $ref: "#/components/schemas/Page" }]
+      type: object
+      required: [items]
+      properties:
+        items: { type: array, items: { $ref: "#/components/schemas/StudyState" } }
+      unevaluatedProperties: false
+
+    Note:
+      type: object
+      required: [id, slug, body_markdown, created_at, updated_at]
+      properties:
+        id: { type: string }
+        slug: { $ref: "#/components/schemas/Slug" }
+        body_markdown: { type: string, minLength: 1 }
+        created_at: { $ref: "#/components/schemas/DateTime" }
+        updated_at: { $ref: "#/components/schemas/DateTime" }
+      additionalProperties: false
+    NoteCreate:
+      type: object
+      required: [body_markdown]
+      properties:
+        body_markdown: { type: string, minLength: 1, maxLength: 20000 }
+      additionalProperties: false
+    NoteList:
+      type: object
+      required: [slug, items]
+      properties:
+        slug: { $ref: "#/components/schemas/Slug" }
+        items: { type: array, items: { $ref: "#/components/schemas/Note" } }
+      additionalProperties: false
+
+    Favorite:
+      type: object
+      required: [slug, favorite, updated_at]
+      properties:
+        slug: { $ref: "#/components/schemas/Slug" }
+        favorite: { type: boolean }
+        updated_at: { oneOf: [{ $ref: "#/components/schemas/DateTime" }, { type: "null" }] }
+      additionalProperties: false
+    FavoriteUpdate:
+      type: object
+      required: [favorite]
+      properties:
+        favorite: { type: boolean }
+      additionalProperties: false
+    FavoriteList:
+      allOf: [{ $ref: "#/components/schemas/Page" }]
+      type: object
+      required: [items]
+      properties:
+        items: { type: array, items: { $ref: "#/components/schemas/Favorite" } }
+      unevaluatedProperties: false

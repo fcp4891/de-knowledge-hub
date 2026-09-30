@@ -1,0 +1,188 @@
+{
+  "items": [
+    {
+      "id": "01",
+      "slug": "fundamentals",
+      "title": "Fundamentos de Data Engineering",
+      "description": "Conceptos base, estables e independientes de proveedor, sobre cómo se mueve, almacena y procesa el dato.",
+      "concept_count": 28,
+      "mvp_count": 16
+    },
+    {
+      "id": "02",
+      "slug": "sql",
+      "title": "SQL avanzado",
+      "description": "SQL aplicado al trabajo de datos, con patrones de carga y optimización en warehouses.",
+      "concept_count": 33,
+      "mvp_count": 14
+    },
+    {
+      "id": "03",
+      "slug": "python",
+      "title": "Python para Data Engineering",
+      "description": "Python aplicado a ingesta, transformación, validación y construcción de pipelines.",
+      "concept_count": 26,
+      "mvp_count": 5
+    },
+    {
+      "id": "04",
+      "slug": "data-modeling",
+      "title": "Modelado de datos",
+      "description": "Niveles de modelado, normalización, modelado dimensional y modelos alternativos para analítica.",
+      "concept_count": 17,
+      "mvp_count": 9
+    },
+    {
+      "id": "05",
+      "slug": "pipelines",
+      "title": "Pipelines de datos",
+      "description": "Patrones completos de ingesta, procesamiento y confiabilidad, de la fuente al consumo (Source → Raw → Curated → Serving).",
+      "concept_count": 16,
+      "mvp_count": 10
+    },
+    {
+      "id": "06",
+      "slug": "orchestration",
+      "title": "Orquestación",
+      "description": "Conceptos de orquestación independientes de proveedor y diferencia entre proyectos open source y servicios administrados.",
+      "concept_count": 12,
+      "mvp_count": 5
+    },
+    {
+      "id": "07",
+      "slug": "architecture",
+      "title": "Arquitecturas de datos",
+      "description": "Arquitecturas de referencia con problema, componentes, trade-offs e implementación por cloud.",
+      "concept_count": 17,
+      "mvp_count": 5
+    },
+    {
+      "id": "08",
+      "slug": "gcp",
+      "title": "Google Cloud Platform",
+      "description": "Cómo se implementan los conceptos de Data Engineering con los servicios prioritarios de GCP.",
+      "concept_count": 31,
+      "mvp_count": 12
+    },
+    {
+      "id": "09",
+      "slug": "aws",
+      "title": "Amazon Web Services",
+      "description": "Implementación en AWS de los conceptos de almacenamiento, procesamiento, streaming, orquestación y gobierno.",
+      "concept_count": 16,
+      "mvp_count": 0
+    },
+    {
+      "id": "10",
+      "slug": "azure",
+      "title": "Microsoft Azure",
+      "description": "Implementación en Azure y Microsoft Fabric de los conceptos de almacenamiento, integración, streaming y gobierno.",
+      "concept_count": 14,
+      "mvp_count": 0
+    },
+    {
+      "id": "11",
+      "slug": "devops",
+      "title": "DevOps",
+      "description": "Control de versiones, CI/CD y prácticas de entrega aplicadas a plataformas y pipelines de datos.",
+      "concept_count": 13,
+      "mvp_count": 0
+    },
+    {
+      "id": "12",
+      "slug": "infrastructure-as-code",
+      "title": "Infrastructure as Code",
+      "description": "Definición declarativa y versionada de la infraestructura de datos, principalmente con Terraform.",
+      "concept_count": 12,
+      "mvp_count": 4
+    },
+    {
+      "id": "13",
+      "slug": "containers",
+      "title": "Containers y plataforma",
+      "description": "Contenedores, su construcción y las plataformas donde se ejecutan cargas de datos en cada cloud.",
+      "concept_count": 9,
+      "mvp_count": 0
+    },
+    {
+      "id": "14",
+      "slug": "streaming",
+      "title": "Streaming y Event-Driven",
+      "description": "Eventos, brokers, semánticas de entrega y procesamiento en el tiempo.",
+      "concept_count": 14,
+      "mvp_count": 0
+    },
+    {
+      "id": "15",
+      "slug": "data-quality",
+      "title": "Data Quality",
+      "description": "Dimensiones de calidad, formas de implementar validaciones y patrones de publicación con control de calidad.",
+      "concept_count": 8,
+      "mvp_count": 0
+    },
+    {
+      "id": "16",
+      "slug": "observability",
+      "title": "Observabilidad",
+      "description": "Señales, salud de pipelines, acuerdos de servicio y respuesta a incidentes en plataformas de datos.",
+      "concept_count": 13,
+      "mvp_count": 0
+    },
+    {
+      "id": "17",
+      "slug": "governance",
+      "title": "Gobierno de datos",
+      "description": "Catálogo, metadata, linaje, responsabilidades, clasificación y ciclo de vida del dato en la organización.",
+      "concept_count": 9,
+      "mvp_count": 0
+    },
+    {
+      "id": "18",
+      "slug": "security",
+      "title": "Seguridad",
+      "description": "Control de acceso, cifrado, secretos e identidades de servicio aplicados a plataformas de datos.",
+      "concept_count": 12,
+      "mvp_count": 0
+    },
+    {
+      "id": "19",
+      "slug": "compliance",
+      "title": "Compliance",
+      "description": "Marcos regulatorios relevantes para el trabajo con datos, desde su impacto técnico y sin constituir asesoría legal.",
+      "concept_count": 6,
+      "mvp_count": 0
+    },
+    {
+      "id": "20",
+      "slug": "open-data-stack",
+      "title": "Open Data Stack",
+      "description": "Tecnologías independientes del cloud y los conceptos necesarios para usarlas con criterio.",
+      "concept_count": 7,
+      "mvp_count": 0
+    },
+    {
+      "id": "21",
+      "slug": "ai-for-data-engineering",
+      "title": "IA aplicada a Data Engineering",
+      "description": "Fundamentos de LLM, retrieval y sistemas con IA, y sus casos de uso concretos en ingeniería de datos.",
+      "concept_count": 27,
+      "mvp_count": 0
+    },
+    {
+      "id": "22",
+      "slug": "modern-data-engineering",
+      "title": "Modern Data Engineering",
+      "description": "Prácticas y enfoques ampliamente adoptados hoy, que complementan y no reemplazan los fundamentos.",
+      "concept_count": 10,
+      "mvp_count": 0
+    },
+    {
+      "id": "23",
+      "slug": "emerging-technologies",
+      "title": "Tecnologías emergentes",
+      "description": "Tecnologías y patrones en evolución rápida que pueden adquirir relevancia profesional.",
+      "concept_count": 9,
+      "mvp_count": 0
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "id": "13",
+  "slug": "containers",
+  "title": "Containers y plataforma",
+  "description": "Contenedores, su construcción y las plataformas donde se ejecutan cargas de datos en cada cloud.",
+  "concept_count": 9,
+  "mvp_count": 0,
+  "subdomains": [
+    {
+      "slug": "container-fundamentals",
+      "title": "Fundamentos de contenedores",
+      "concepts": [
+        {
+          "slug": "container-images",
+          "title": "Imágenes",
+          "kind": "concept",
+          "domain": "containers",
+          "subdomain": "container-fundamentals",
+          "classification": "core",
+          "level": "basic",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "containers",
+          "title": "Contenedores",
+          "kind": "concept",
+          "domain": "containers",
+          "subdomain": "container-fundamentals",
+          "classification": "core",
+          "level": "basic",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "dockerfile",
+          "title": "Dockerfile",
+          "kind": "concept",
+          "domain": "containers",
+          "subdomain": "container-fundamentals",
+          "classification": "core",
+          "level": "basic",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "container-volumes",
+          "title": "Volúmenes",
+          "kind": "concept",
+          "domain": "containers",
+          "subdomain": "container-fundamentals",
+          "classification": "core",
+          "level": "basic",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "container-networking",
+          "title": "Networking de contenedores",
+          "kind": "concept",
+          "domain": "containers",
+          "subdomain": "container-fundamentals",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "docker-compose-environments",
+          "title": "Entornos locales con Docker Compose",
+          "kind": "concept",
+          "domain": "containers",
+          "subdomain": "container-fundamentals",
+          "classification": "core",
+          "level": "basic",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "container-registries",
+          "title": "Registries",
+          "kind": "concept",
+          "domain": "containers",
+          "subdomain": "container-fundamentals",
+          "classification": "core",
+          "level": "basic",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "container-platforms",
+      "title": "Plataformas de ejecución",
+      "concepts": [
+        {
+          "slug": "kubernetes-fundamentals",
+          "title": "Fundamentos de Kubernetes",
+          "kind": "concept",
+          "domain": "containers",
+          "subdomain": "container-platforms",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "container-platforms-by-cloud",
+          "title": "Plataformas de contenedores por cloud",
+          "kind": "concept",
+          "domain": "containers",
+          "subdomain": "container-platforms",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    }
+  ]
+}

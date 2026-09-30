@@ -1,0 +1,61 @@
+{
+  "slug": "partitioning",
+  "groups": [
+    {
+      "type": "RELATED_TO",
+      "direction": "both",
+      "label": "related_to",
+      "items": [
+        {
+          "slug": "backfill",
+          "title": "Backfill",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "incremental-load",
+          "title": "Carga incremental",
+          "entity_type": "pattern",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "clustering",
+          "title": "Clustering",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "physical-data-model",
+          "title": "Modelo físico",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "parquet-format",
+          "title": "Parquet",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "bigquery-partitioning",
+          "title": "Particionamiento en BigQuery",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "partition-pruning",
+          "title": "Partition pruning",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        }
+      ]
+    }
+  ]
+}

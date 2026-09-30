@@ -1,0 +1,28 @@
+{
+  "total": 3,
+  "limit": 50,
+  "offset": 0,
+  "items": [
+    {
+      "slug": "change-data-capture",
+      "state": "reviewing",
+      "pending_deep_dive": true,
+      "last_studied_at": "2026-09-29T10:00:00Z",
+      "updated_at": "2026-09-29T10:00:00Z"
+    },
+    {
+      "slug": "idempotency",
+      "state": "needs_review",
+      "pending_deep_dive": false,
+      "last_studied_at": "2026-09-20T18:30:00Z",
+      "updated_at": "2026-09-28T09:00:00Z"
+    },
+    {
+      "slug": "sql-merge",
+      "state": "understood",
+      "pending_deep_dive": false,
+      "last_studied_at": "2026-09-25T21:15:00Z",
+      "updated_at": "2026-09-25T21:15:00Z"
+    }
+  ]
+}

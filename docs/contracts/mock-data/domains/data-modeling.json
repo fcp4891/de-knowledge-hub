@@ -1,0 +1,272 @@
+{
+  "id": "04",
+  "slug": "data-modeling",
+  "title": "Modelado de datos",
+  "description": "Niveles de modelado, normalización, modelado dimensional y modelos alternativos para analítica.",
+  "concept_count": 17,
+  "mvp_count": 9,
+  "subdomains": [
+    {
+      "slug": "modeling-levels",
+      "title": "Niveles de modelado",
+      "concepts": [
+        {
+          "slug": "conceptual-data-model",
+          "title": "Modelo conceptual",
+          "kind": "concept",
+          "domain": "data-modeling",
+          "subdomain": "modeling-levels",
+          "classification": "core",
+          "level": "basic",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "logical-data-model",
+          "title": "Modelo lógico",
+          "kind": "concept",
+          "domain": "data-modeling",
+          "subdomain": "modeling-levels",
+          "classification": "core",
+          "level": "basic",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "physical-data-model",
+          "title": "Modelo físico",
+          "kind": "concept",
+          "domain": "data-modeling",
+          "subdomain": "modeling-levels",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "normalization",
+      "title": "Normalización",
+      "concepts": [
+        {
+          "slug": "normalization",
+          "title": "Normalización",
+          "kind": "concept",
+          "domain": "data-modeling",
+          "subdomain": "normalization",
+          "classification": "core",
+          "level": "basic",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "denormalization",
+          "title": "Desnormalización",
+          "kind": "concept",
+          "domain": "data-modeling",
+          "subdomain": "normalization",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "dimensional-modeling",
+      "title": "Modelado dimensional",
+      "concepts": [
+        {
+          "slug": "kimball-methodology",
+          "title": "Metodología Kimball",
+          "kind": "concept",
+          "domain": "data-modeling",
+          "subdomain": "dimensional-modeling",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "star-schema",
+          "title": "Star Schema",
+          "kind": "pattern",
+          "domain": "data-modeling",
+          "subdomain": "dimensional-modeling",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "snowflake-schema",
+          "title": "Snowflake Schema",
+          "kind": "pattern",
+          "domain": "data-modeling",
+          "subdomain": "dimensional-modeling",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "fact-tables",
+          "title": "Tablas de hechos",
+          "kind": "concept",
+          "domain": "data-modeling",
+          "subdomain": "dimensional-modeling",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "dimension-tables",
+          "title": "Dimensiones",
+          "kind": "concept",
+          "domain": "data-modeling",
+          "subdomain": "dimensional-modeling",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "grain",
+          "title": "Grain",
+          "kind": "concept",
+          "domain": "data-modeling",
+          "subdomain": "dimensional-modeling",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "surrogate-keys",
+          "title": "Surrogate keys",
+          "kind": "concept",
+          "domain": "data-modeling",
+          "subdomain": "dimensional-modeling",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "slowly-changing-dimensions",
+          "title": "Slowly Changing Dimensions (SCD)",
+          "kind": "concept",
+          "domain": "data-modeling",
+          "subdomain": "dimensional-modeling",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "conformed-dimensions",
+          "title": "Dimensiones conformadas",
+          "kind": "concept",
+          "domain": "data-modeling",
+          "subdomain": "dimensional-modeling",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "alternative-models",
+      "title": "Modelos alternativos",
+      "concepts": [
+        {
+          "slug": "data-vault",
+          "title": "Data Vault",
+          "kind": "pattern",
+          "domain": "data-modeling",
+          "subdomain": "alternative-models",
+          "classification": "modern",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "one-big-table",
+          "title": "One Big Table (OBT)",
+          "kind": "pattern",
+          "domain": "data-modeling",
+          "subdomain": "alternative-models",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "semantic-models",
+          "title": "Modelos semánticos",
+          "kind": "concept",
+          "domain": "data-modeling",
+          "subdomain": "alternative-models",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    }
+  ]
+}

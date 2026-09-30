@@ -1,0 +1,190 @@
+{
+  "id": "18",
+  "slug": "security",
+  "title": "Seguridad",
+  "description": "Control de acceso, cifrado, secretos e identidades de servicio aplicados a plataformas de datos.",
+  "concept_count": 12,
+  "mvp_count": 0,
+  "subdomains": [
+    {
+      "slug": "access-control",
+      "title": "Control de acceso",
+      "concepts": [
+        {
+          "slug": "iam-fundamentals",
+          "title": "Fundamentos de IAM",
+          "kind": "concept",
+          "domain": "security",
+          "subdomain": "access-control",
+          "classification": "core",
+          "level": "basic",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "rbac",
+          "title": "RBAC",
+          "kind": "concept",
+          "domain": "security",
+          "subdomain": "access-control",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "abac",
+          "title": "ABAC",
+          "kind": "concept",
+          "domain": "security",
+          "subdomain": "access-control",
+          "classification": "core",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "least-privilege",
+          "title": "Mínimo privilegio",
+          "kind": "concept",
+          "domain": "security",
+          "subdomain": "access-control",
+          "classification": "core",
+          "level": "basic",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "service-accounts",
+          "title": "Cuentas de servicio",
+          "kind": "concept",
+          "domain": "security",
+          "subdomain": "access-control",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "row-level-security",
+          "title": "Seguridad a nivel de fila",
+          "kind": "concept",
+          "domain": "security",
+          "subdomain": "access-control",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "column-level-security",
+          "title": "Seguridad a nivel de columna",
+          "kind": "concept",
+          "domain": "security",
+          "subdomain": "access-control",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "data-masking",
+          "title": "Enmascaramiento de datos",
+          "kind": "concept",
+          "domain": "security",
+          "subdomain": "access-control",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "encryption-and-secrets",
+      "title": "Cifrado y secretos",
+      "concepts": [
+        {
+          "slug": "encryption-at-rest",
+          "title": "Cifrado en reposo",
+          "kind": "concept",
+          "domain": "security",
+          "subdomain": "encryption-and-secrets",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "encryption-in-transit",
+          "title": "Cifrado en tránsito",
+          "kind": "concept",
+          "domain": "security",
+          "subdomain": "encryption-and-secrets",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "key-management",
+          "title": "Gestión de claves (KMS)",
+          "kind": "concept",
+          "domain": "security",
+          "subdomain": "encryption-and-secrets",
+          "classification": "core",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "secrets-management",
+          "title": "Gestión de secretos",
+          "kind": "concept",
+          "domain": "security",
+          "subdomain": "encryption-and-secrets",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    }
+  ]
+}

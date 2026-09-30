@@ -1,0 +1,82 @@
+{
+  "slug": "incremental-load",
+  "groups": [
+    {
+      "type": "RELATED_TO",
+      "direction": "both",
+      "label": "related_to",
+      "items": [
+        {
+          "slug": "batch-pipeline-architecture",
+          "title": "Arquitectura de pipeline batch",
+          "entity_type": "architecture",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "change-detection",
+          "title": "Detección de cambios",
+          "entity_type": "pattern",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "idempotency",
+          "title": "Idempotencia",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "database-ingestion",
+          "title": "Ingesta desde bases de datos",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "sql-merge",
+          "title": "MERGE",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "bigquery-incremental-models",
+          "title": "Modelos incrementales en BigQuery",
+          "entity_type": "pattern",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "partitioning",
+          "title": "Particionamiento",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "incremental-pipelines",
+          "title": "Pipelines incrementales",
+          "entity_type": "pattern",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "data-reconciliation",
+          "title": "Reconciliación",
+          "entity_type": "pattern",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "dataform-incremental-tables",
+          "title": "Tablas incrementales en Dataform",
+          "entity_type": "pattern",
+          "origin": "blueprint",
+          "note": null
+        }
+      ]
+    }
+  ]
+}

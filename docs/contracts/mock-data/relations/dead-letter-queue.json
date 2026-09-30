@@ -1,0 +1,40 @@
+{
+  "slug": "dead-letter-queue",
+  "groups": [
+    {
+      "type": "RELATED_TO",
+      "direction": "both",
+      "label": "related_to",
+      "items": [
+        {
+          "slug": "streaming-pipeline-architecture",
+          "title": "Arquitectura de pipeline streaming",
+          "entity_type": "architecture",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "pubsub-delivery-semantics",
+          "title": "Entrega, orden y reintentos en Pub/Sub",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "gcp-pubsub",
+          "title": "Pub/Sub",
+          "entity_type": "cloud_service",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "retries",
+          "title": "Retries",
+          "entity_type": "pattern",
+          "origin": "blueprint",
+          "note": null
+        }
+      ]
+    }
+  ]
+}

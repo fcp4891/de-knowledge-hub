@@ -1,0 +1,190 @@
+{
+  "id": "06",
+  "slug": "orchestration",
+  "title": "Orquestación",
+  "description": "Conceptos de orquestación independientes de proveedor y diferencia entre proyectos open source y servicios administrados.",
+  "concept_count": 12,
+  "mvp_count": 5,
+  "subdomains": [
+    {
+      "slug": "orchestration-concepts",
+      "title": "Conceptos de orquestación",
+      "concepts": [
+        {
+          "slug": "dag",
+          "title": "DAG",
+          "kind": "concept",
+          "domain": "orchestration",
+          "subdomain": "orchestration-concepts",
+          "classification": "core",
+          "level": "basic",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "orchestration-task",
+          "title": "Task",
+          "kind": "concept",
+          "domain": "orchestration",
+          "subdomain": "orchestration-concepts",
+          "classification": "core",
+          "level": "basic",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "scheduler",
+          "title": "Scheduler",
+          "kind": "concept",
+          "domain": "orchestration",
+          "subdomain": "orchestration-concepts",
+          "classification": "core",
+          "level": "basic",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "sensors",
+          "title": "Sensors",
+          "kind": "concept",
+          "domain": "orchestration",
+          "subdomain": "orchestration-concepts",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "catchup",
+          "title": "Catchup",
+          "kind": "concept",
+          "domain": "orchestration",
+          "subdomain": "orchestration-concepts",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "dynamic-workflows",
+          "title": "Workflows dinámicos",
+          "kind": "concept",
+          "domain": "orchestration",
+          "subdomain": "orchestration-concepts",
+          "classification": "modern",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "event-driven-orchestration",
+          "title": "Orquestación event-driven",
+          "kind": "concept",
+          "domain": "orchestration",
+          "subdomain": "orchestration-concepts",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "orchestration-observability",
+          "title": "Observabilidad de la orquestación",
+          "kind": "concept",
+          "domain": "orchestration",
+          "subdomain": "orchestration-concepts",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "orchestration-tools",
+      "title": "Herramientas y servicios",
+      "concepts": [
+        {
+          "slug": "airflow-architecture",
+          "title": "Arquitectura de Apache Airflow",
+          "kind": "concept",
+          "domain": "orchestration",
+          "subdomain": "orchestration-tools",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "airflow-operators-and-hooks",
+          "title": "Operators y hooks de Airflow",
+          "kind": "concept",
+          "domain": "orchestration",
+          "subdomain": "orchestration-tools",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "open-source-vs-managed-orchestration",
+          "title": "Orquestador open source vs servicio administrado",
+          "kind": "concept",
+          "domain": "orchestration",
+          "subdomain": "orchestration-tools",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "orchestration-landscape",
+          "title": "Panorama de orquestadores",
+          "kind": "concept",
+          "domain": "orchestration",
+          "subdomain": "orchestration-tools",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    }
+  ]
+}

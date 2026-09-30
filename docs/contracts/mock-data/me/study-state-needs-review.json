@@ -1,0 +1,14 @@
+{
+  "total": 1,
+  "limit": 50,
+  "offset": 0,
+  "items": [
+    {
+      "slug": "idempotency",
+      "state": "needs_review",
+      "pending_deep_dive": false,
+      "last_studied_at": "2026-09-20T18:30:00Z",
+      "updated_at": "2026-09-28T09:00:00Z"
+    }
+  ]
+}

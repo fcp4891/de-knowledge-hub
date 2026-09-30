@@ -1,0 +1,78 @@
+{
+  "id": "cloud_service:gcp-bigquery",
+  "title": "BigQuery",
+  "slug": "gcp-bigquery",
+  "description": "Data warehouse serverless de Google Cloud con almacenamiento columnar y cómputo separado.",
+  "type": "cloud_service",
+  "domain": null,
+  "subdomain": null,
+  "classification": "modern",
+  "level": null,
+  "cloud": [
+    "gcp"
+  ],
+  "technologies": [],
+  "tags": [],
+  "related_topics": [],
+  "sources": [],
+  "created_at": "2026-09-28",
+  "updated_at": "2026-09-28",
+  "last_verified": null,
+  "verification_status": "review_required",
+  "origin": "gcp",
+  "category": "data-warehouse",
+  "mvp": true,
+  "stub": true,
+  "note": null,
+  "capabilities": [
+    {
+      "capability": "data-warehouse",
+      "title": "Data warehouse",
+      "cloud": "gcp",
+      "differences": "Serverless, con almacenamiento y cómputo separados y administrados; la capacidad se gestiona por demanda o por reserva, no por clúster.",
+      "not_equivalent_when": "Se necesita control explícito del clúster, tuning físico por nodo o un motor que se apague y encienda por completo.",
+      "equivalents": {
+        "aws": {
+          "services": [
+            "aws-redshift"
+          ],
+          "differences": "Tiene opciones de clúster aprovisionado y serverless; el diseño físico (distribución y orden) influye más en el rendimiento.",
+          "not_equivalent_when": "Se trasladan decisiones de BigQuery (particionamiento y clustering) sin revisar la distribución y el orden de Redshift."
+        },
+        "azure": {
+          "services": [
+            "microsoft-fabric",
+            "azure-synapse"
+          ],
+          "differences": "Fabric Warehouse opera sobre OneLake dentro de una plataforma SaaS; Synapse ofrece pools SQL dedicados y serverless.",
+          "not_equivalent_when": "Se trata Fabric y Synapse como el mismo producto o se ignora que su posicionamiento está en evolución."
+        }
+      },
+      "verification_status": "review_required"
+    },
+    {
+      "capability": "query-engine",
+      "title": "Consultas SQL sobre el lake",
+      "cloud": "gcp",
+      "differences": "Las consultas sobre el lake pasan por el motor de BigQuery mediante tablas externas o BigLake, con gobierno integrado.",
+      "not_equivalent_when": "Se espera un motor independiente del warehouse con facturación y capacidad separadas.",
+      "equivalents": {
+        "aws": {
+          "services": [
+            "aws-athena"
+          ],
+          "differences": "Motor serverless separado del warehouse que consulta S3 usando el catálogo de Glue.",
+          "not_equivalent_when": "Se espera el rendimiento y las funciones de un warehouse con almacenamiento administrado."
+        },
+        "azure": {
+          "services": [
+            "azure-synapse"
+          ],
+          "differences": "Los pools SQL serverless consultan archivos del lake sin cargarlos; Fabric ofrece un enfoque alternativo sobre OneLake.",
+          "not_equivalent_when": "Se asume el mismo soporte de formatos de tabla abiertos o el mismo modelo de costos que Athena o BigQuery."
+        }
+      },
+      "verification_status": "review_required"
+    }
+  ]
+}

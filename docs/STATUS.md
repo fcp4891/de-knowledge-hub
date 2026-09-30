@@ -10,13 +10,13 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | A-F2.1 · Contrato de API y mock-data | A-F2.2 · Compilador | — |
-| B · Cursor | — | B-F2.1 · Scaffold, Home y Explorer | Espera A-F2.1 |
+| A · Claude Code | — (A-F2.1 cerrada) | A-F2.2 · Compilador | — |
+| B · Cursor | — | B-F2.1 · Scaffold, Home y Explorer (desbloqueada) | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| — | — | — | — |
+| A | B | B-F2.1 puede empezar: contrato `docs/contracts/api.yaml` (ADR-002) y mocks en `docs/contracts/mock-data/` (ver `index.json`) | Abierto |
 
 ## Criterio de salida de la fase actual (F2)
 - [ ] Con 10 fichas reales se puede navegar Explorer → ficha → relacionados → fuente → búsqueda → nota.

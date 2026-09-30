@@ -1,0 +1,264 @@
+{
+  "id": "09",
+  "slug": "aws",
+  "title": "Amazon Web Services",
+  "description": "Implementación en AWS de los conceptos de almacenamiento, procesamiento, streaming, orquestación y gobierno.",
+  "concept_count": 16,
+  "mvp_count": 0,
+  "subdomains": [
+    {
+      "slug": "storage-and-analytics",
+      "title": "Almacenamiento y analítica",
+      "concepts": [
+        {
+          "slug": "s3-data-lake",
+          "title": "Data lake sobre S3",
+          "kind": "concept",
+          "domain": "aws",
+          "subdomain": "storage-and-analytics",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "redshift-architecture",
+          "title": "Arquitectura de Redshift",
+          "kind": "concept",
+          "domain": "aws",
+          "subdomain": "storage-and-analytics",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "athena-serverless-queries",
+          "title": "Consultas serverless con Athena",
+          "kind": "concept",
+          "domain": "aws",
+          "subdomain": "storage-and-analytics",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "glue-catalog-and-etl",
+          "title": "Glue Data Catalog y Glue ETL",
+          "kind": "concept",
+          "domain": "aws",
+          "subdomain": "storage-and-analytics",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "processing-and-streaming",
+      "title": "Procesamiento y streaming",
+      "concepts": [
+        {
+          "slug": "emr-spark-clusters",
+          "title": "Spark sobre EMR",
+          "kind": "concept",
+          "domain": "aws",
+          "subdomain": "processing-and-streaming",
+          "classification": "modern",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "kinesis-data-streams",
+          "title": "Kinesis Data Streams",
+          "kind": "concept",
+          "domain": "aws",
+          "subdomain": "processing-and-streaming",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "msk-managed-kafka",
+          "title": "Kafka administrado con MSK",
+          "kind": "concept",
+          "domain": "aws",
+          "subdomain": "processing-and-streaming",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "orchestration-and-compute",
+      "title": "Orquestación y cómputo",
+      "concepts": [
+        {
+          "slug": "lambda-for-data",
+          "title": "Lambda para cargas de datos",
+          "kind": "concept",
+          "domain": "aws",
+          "subdomain": "orchestration-and-compute",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "step-functions-workflows",
+          "title": "Workflows con Step Functions",
+          "kind": "concept",
+          "domain": "aws",
+          "subdomain": "orchestration-and-compute",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "mwaa-managed-airflow",
+          "title": "Airflow administrado con MWAA",
+          "kind": "concept",
+          "domain": "aws",
+          "subdomain": "orchestration-and-compute",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "rds-as-source",
+          "title": "RDS como fuente de datos",
+          "kind": "concept",
+          "domain": "aws",
+          "subdomain": "orchestration-and-compute",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "governance-and-operations",
+      "title": "Gobierno, seguridad y operación",
+      "concepts": [
+        {
+          "slug": "lake-formation-permissions",
+          "title": "Permisos con Lake Formation",
+          "kind": "concept",
+          "domain": "aws",
+          "subdomain": "governance-and-operations",
+          "classification": "modern",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "aws-iam-for-data",
+          "title": "IAM de AWS para plataformas de datos",
+          "kind": "concept",
+          "domain": "aws",
+          "subdomain": "governance-and-operations",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "cloudwatch-for-data-pipelines",
+          "title": "CloudWatch para pipelines de datos",
+          "kind": "concept",
+          "domain": "aws",
+          "subdomain": "governance-and-operations",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "ai",
+      "title": "IA",
+      "concepts": [
+        {
+          "slug": "bedrock-for-data-engineers",
+          "title": "Bedrock para Data Engineers",
+          "kind": "concept",
+          "domain": "aws",
+          "subdomain": "ai",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "sagemaker-for-data-engineers",
+          "title": "SageMaker para Data Engineers",
+          "kind": "concept",
+          "domain": "aws",
+          "subdomain": "ai",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    }
+  ]
+}

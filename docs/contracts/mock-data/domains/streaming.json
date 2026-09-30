@@ -1,0 +1,230 @@
+{
+  "id": "14",
+  "slug": "streaming",
+  "title": "Streaming y Event-Driven",
+  "description": "Eventos, brokers, semánticas de entrega y procesamiento en el tiempo.",
+  "concept_count": 14,
+  "mvp_count": 0,
+  "subdomains": [
+    {
+      "slug": "streaming-fundamentals",
+      "title": "Fundamentos",
+      "concepts": [
+        {
+          "slug": "events",
+          "title": "Eventos",
+          "kind": "concept",
+          "domain": "streaming",
+          "subdomain": "streaming-fundamentals",
+          "classification": "core",
+          "level": "basic",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "producers-and-consumers",
+          "title": "Producers y consumers",
+          "kind": "concept",
+          "domain": "streaming",
+          "subdomain": "streaming-fundamentals",
+          "classification": "core",
+          "level": "basic",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "message-brokers",
+          "title": "Brokers",
+          "kind": "concept",
+          "domain": "streaming",
+          "subdomain": "streaming-fundamentals",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "topics-and-partitions",
+          "title": "Topics y particiones",
+          "kind": "concept",
+          "domain": "streaming",
+          "subdomain": "streaming-fundamentals",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "offsets",
+          "title": "Offsets",
+          "kind": "concept",
+          "domain": "streaming",
+          "subdomain": "streaming-fundamentals",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "event-ordering",
+          "title": "Orden de eventos",
+          "kind": "concept",
+          "domain": "streaming",
+          "subdomain": "streaming-fundamentals",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "delivery-semantics",
+      "title": "Semánticas de entrega",
+      "concepts": [
+        {
+          "slug": "delivery-semantics",
+          "title": "At-most-once y at-least-once",
+          "kind": "concept",
+          "domain": "streaming",
+          "subdomain": "delivery-semantics",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "exactly-once-semantics",
+          "title": "Exactly-once y sus matices",
+          "kind": "concept",
+          "domain": "streaming",
+          "subdomain": "delivery-semantics",
+          "classification": "core",
+          "level": "advanced",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "time-and-state",
+      "title": "Tiempo, ventanas y estado",
+      "concepts": [
+        {
+          "slug": "event-time-vs-processing-time",
+          "title": "Event time vs processing time",
+          "kind": "concept",
+          "domain": "streaming",
+          "subdomain": "time-and-state",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "watermarks",
+          "title": "Watermarks",
+          "kind": "concept",
+          "domain": "streaming",
+          "subdomain": "time-and-state",
+          "classification": "core",
+          "level": "advanced",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "windowing",
+          "title": "Ventanas",
+          "kind": "concept",
+          "domain": "streaming",
+          "subdomain": "time-and-state",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "stateful-stream-processing",
+          "title": "Procesamiento con estado",
+          "kind": "concept",
+          "domain": "streaming",
+          "subdomain": "time-and-state",
+          "classification": "core",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "backpressure",
+          "title": "Backpressure",
+          "kind": "concept",
+          "domain": "streaming",
+          "subdomain": "time-and-state",
+          "classification": "core",
+          "level": "advanced",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "stream-processing-engines",
+      "title": "Motores de procesamiento",
+      "concepts": [
+        {
+          "slug": "spark-structured-streaming",
+          "title": "Spark Structured Streaming",
+          "kind": "concept",
+          "domain": "streaming",
+          "subdomain": "stream-processing-engines",
+          "classification": "modern",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    }
+  ]
+}

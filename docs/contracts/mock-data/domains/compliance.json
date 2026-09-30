@@ -1,0 +1,106 @@
+{
+  "id": "19",
+  "slug": "compliance",
+  "title": "Compliance",
+  "description": "Marcos regulatorios relevantes para el trabajo con datos, desde su impacto técnico y sin constituir asesoría legal.",
+  "concept_count": 6,
+  "mvp_count": 0,
+  "subdomains": [
+    {
+      "slug": "compliance-foundations",
+      "title": "Fundamentos",
+      "concepts": [
+        {
+          "slug": "compliance-scope-for-data-engineers",
+          "title": "Alcance del compliance para Data Engineers",
+          "kind": "concept",
+          "domain": "compliance",
+          "subdomain": "compliance-foundations",
+          "classification": "core",
+          "level": "basic",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "pii-identification",
+          "title": "Identificación de datos personales (PII)",
+          "kind": "concept",
+          "domain": "compliance",
+          "subdomain": "compliance-foundations",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "regulatory-frameworks",
+      "title": "Marcos regulatorios",
+      "concepts": [
+        {
+          "slug": "gdpr",
+          "title": "GDPR",
+          "kind": "concept",
+          "domain": "compliance",
+          "subdomain": "regulatory-frameworks",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "lgpd",
+          "title": "LGPD (Brasil)",
+          "kind": "concept",
+          "domain": "compliance",
+          "subdomain": "regulatory-frameworks",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "chile-data-protection",
+          "title": "Legislación chilena de protección de datos personales",
+          "kind": "concept",
+          "domain": "compliance",
+          "subdomain": "regulatory-frameworks",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "corporate-data-policies",
+          "title": "Políticas corporativas de datos",
+          "kind": "concept",
+          "domain": "compliance",
+          "subdomain": "regulatory-frameworks",
+          "classification": "core",
+          "level": "basic",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    }
+  ]
+}

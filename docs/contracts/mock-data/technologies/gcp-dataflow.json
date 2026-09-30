@@ -1,0 +1,55 @@
+{
+  "id": "cloud_service:gcp-dataflow",
+  "title": "Dataflow",
+  "slug": "gcp-dataflow",
+  "description": "Servicio administrado de Google Cloud para ejecutar pipelines de Apache Beam en batch y streaming.",
+  "type": "cloud_service",
+  "domain": null,
+  "subdomain": null,
+  "classification": "modern",
+  "level": null,
+  "cloud": [
+    "gcp"
+  ],
+  "technologies": [],
+  "tags": [],
+  "related_topics": [],
+  "sources": [],
+  "created_at": "2026-09-28",
+  "updated_at": "2026-09-28",
+  "last_verified": null,
+  "verification_status": "review_required",
+  "origin": "gcp",
+  "category": "data-processing",
+  "mvp": true,
+  "stub": true,
+  "note": null,
+  "capabilities": [
+    {
+      "capability": "data-processing",
+      "title": "Procesamiento batch y streaming",
+      "cloud": "gcp",
+      "differences": "Dataflow ejecuta Beam de forma serverless con autoescalado; Dataproc ofrece Spark administrado con clústeres o serverless.",
+      "not_equivalent_when": "Se asume que un pipeline Spark corre en Dataflow o que uno Beam corre en Dataproc sin cambiar el modelo de programación.",
+      "equivalents": {
+        "aws": {
+          "services": [
+            "aws-glue",
+            "aws-emr"
+          ],
+          "differences": "Glue ofrece jobs ETL serverless basados en Spark y catálogo; EMR ofrece clústeres y opciones serverless para varios frameworks.",
+          "not_equivalent_when": "Se busca un equivalente serverless de Beam con el mismo modelo unificado batch/streaming."
+        },
+        "azure": {
+          "services": [
+            "microsoft-fabric",
+            "azure-databricks"
+          ],
+          "differences": "Fabric integra Spark dentro de su plataforma SaaS; Azure Databricks ofrece un runtime propio basado en Spark y Delta Lake.",
+          "not_equivalent_when": "Se asume que Fabric y Databricks comparten gobierno, facturación o runtime."
+        }
+      },
+      "verification_status": "review_required"
+    }
+  ]
+}

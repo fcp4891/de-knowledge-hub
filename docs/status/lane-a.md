@@ -5,7 +5,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-09-29
 
 ## Actual
-- **Tarea activa:** A-F2.1 · Contrato de API y mock-data (plan pendiente de aprobación).
+- **Tarea activa:** — (A-F2.1 cerrada y mergeada en `main`)
 - **Siguiente:** A-F2.2 · Compilador `content/` → PostgreSQL.
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
@@ -13,7 +13,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 ## Pedidos a Carril B
 | Pedido | Estado |
 |---|---|
-| — | — |
+| **B-F2.1 puede empezar.** Contrato en `docs/contracts/api.yaml` (ADR-002) y mocks en `docs/contracts/mock-data/` (`index.json` asocia `MÉTODO /ruta` con su archivo). Los conceptos salen del blueprint con `has_page`; los que no tienen ficha traen `sections: []`. Si el contrato no alcanza, pedirlo aquí en `lane-b.md`, sin modificarlo | Abierto |
 
 ## Notas para Carril B
 - **Regla (gate F1):** Cursor revisa y propone cambios sobre `content/blueprint/`; solo Carril A edita esos archivos.
@@ -28,6 +28,12 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Enumeración `category`, `mvp` y `note` en tecnologías, y `matrix.schema.json` (ADR-004).
 
 ## Historial
+
+### A-F2.1 · Contrato de API y mock-data (2026-09-29)
+- `docs/contracts/api.yaml`: OpenAPI 3.1, 14 rutas (18 operaciones), metadata §40 en todo detalle; ADR-002.
+- Decisiones: conceptos desde el blueprint con `has_page`; relaciones de entidades + blueprint (`origin`); `/sources/{slug}`; listados `GET /me/study-state?state=` y `GET /me/favorites`.
+- `scripts/contracts/projection.py` (referencia ejecutable de las formas) y `build_mocks.py` (`make mocks`): 74 respuestas generadas desde `content/`, con 10 conceptos, 5 tecnologías, 23 dominios, relaciones, fuentes citadas, 3 búsquedas y estado personal de ejemplo.
+- Tests de contrato: cada mock cumple su schema, cada operación tiene mock, mocks al día, enums del contrato iguales a `schemas/`.
 
 ### Revisión B-F1b de 03, 06 y 12 (2026-09-29)
 - 16 filas aprobadas aplicadas: relaciones, tecnologías, notas de alcance; `python-logging` y `terraform-plan-apply` pasan a `intermediate`.

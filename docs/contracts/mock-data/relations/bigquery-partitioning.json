@@ -1,0 +1,40 @@
+{
+  "slug": "bigquery-partitioning",
+  "groups": [
+    {
+      "type": "RELATED_TO",
+      "direction": "both",
+      "label": "related_to",
+      "items": [
+        {
+          "slug": "gcp-bigquery",
+          "title": "BigQuery",
+          "entity_type": "cloud_service",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "bigquery-clustering",
+          "title": "Clustering en BigQuery",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "partitioning",
+          "title": "Particionamiento",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "partition-pruning",
+          "title": "Partition pruning",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "slug": "apache-airflow",
+  "groups": [
+    {
+      "type": "ALTERNATIVE_TO",
+      "direction": "both",
+      "label": "alternative_to",
+      "items": [
+        {
+          "slug": "dagster",
+          "title": "Dagster",
+          "entity_type": "technology",
+          "origin": "entity",
+          "note": "Tecnología a seguir (§8); no reemplaza a Airflow."
+        },
+        {
+          "slug": "prefect",
+          "title": "Prefect",
+          "entity_type": "technology",
+          "origin": "entity",
+          "note": "Tecnología a seguir (§8); no reemplaza a Airflow."
+        }
+      ]
+    },
+    {
+      "type": "RELATED_TO",
+      "direction": "both",
+      "label": "related_to",
+      "items": [
+        {
+          "slug": "mwaa-managed-airflow",
+          "title": "Airflow administrado con MWAA",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "airflow-architecture",
+          "title": "Arquitectura de Apache Airflow",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "catchup",
+          "title": "Catchup",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "dag",
+          "title": "DAG",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "composer-environments",
+          "title": "Entornos de Cloud Composer",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "airflow-operators-and-hooks",
+          "title": "Operators y hooks de Airflow",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "open-source-vs-managed-orchestration",
+          "title": "Orquestador open source vs servicio administrado",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "open-data-stack-overview",
+          "title": "Qué es el open data stack",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "scheduler",
+          "title": "Scheduler",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "sensors",
+          "title": "Sensors",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "dynamic-workflows",
+          "title": "Workflows dinámicos",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        }
+      ]
+    },
+    {
+      "type": "RUNS_ON",
+      "direction": "outgoing",
+      "label": "runs_on",
+      "items": [
+        {
+          "slug": "aws-mwaa",
+          "title": "Amazon MWAA",
+          "entity_type": "cloud_service",
+          "origin": "entity",
+          "note": null
+        },
+        {
+          "slug": "gcp-cloud-composer",
+          "title": "Managed Service for Apache Airflow (ex Cloud Composer)",
+          "entity_type": "cloud_service",
+          "origin": "entity",
+          "note": null
+        }
+      ]
+    }
+  ]
+}

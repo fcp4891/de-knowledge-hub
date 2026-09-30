@@ -1,0 +1,230 @@
+{
+  "id": "10",
+  "slug": "azure",
+  "title": "Microsoft Azure",
+  "description": "Implementación en Azure y Microsoft Fabric de los conceptos de almacenamiento, integración, streaming y gobierno.",
+  "concept_count": 14,
+  "mvp_count": 0,
+  "subdomains": [
+    {
+      "slug": "analytics-platform",
+      "title": "Plataforma analítica",
+      "concepts": [
+        {
+          "slug": "azure-analytics-landscape",
+          "title": "Relación entre ADF, Synapse, Fabric y Databricks",
+          "kind": "concept",
+          "domain": "azure",
+          "subdomain": "analytics-platform",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "adls-gen2-storage",
+          "title": "Almacenamiento en ADLS Gen2",
+          "kind": "concept",
+          "domain": "azure",
+          "subdomain": "analytics-platform",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "data-factory-pipelines",
+          "title": "Pipelines en Azure Data Factory",
+          "kind": "concept",
+          "domain": "azure",
+          "subdomain": "analytics-platform",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "fabric-onelake-and-workloads",
+          "title": "OneLake y cargas de trabajo en Microsoft Fabric",
+          "kind": "concept",
+          "domain": "azure",
+          "subdomain": "analytics-platform",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "synapse-analytics",
+          "title": "Azure Synapse Analytics",
+          "kind": "concept",
+          "domain": "azure",
+          "subdomain": "analytics-platform",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "azure-databricks-lakehouse",
+          "title": "Lakehouse con Azure Databricks",
+          "kind": "concept",
+          "domain": "azure",
+          "subdomain": "analytics-platform",
+          "classification": "modern",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "streaming-and-compute",
+      "title": "Streaming y cómputo",
+      "concepts": [
+        {
+          "slug": "event-hubs-streaming",
+          "title": "Streaming con Event Hubs",
+          "kind": "concept",
+          "domain": "azure",
+          "subdomain": "streaming-and-compute",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "azure-functions-for-data",
+          "title": "Azure Functions para cargas de datos",
+          "kind": "concept",
+          "domain": "azure",
+          "subdomain": "streaming-and-compute",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "container-apps-for-data",
+          "title": "Container Apps para cargas de datos",
+          "kind": "concept",
+          "domain": "azure",
+          "subdomain": "streaming-and-compute",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "azure-sql-as-source",
+          "title": "Azure SQL como fuente de datos",
+          "kind": "concept",
+          "domain": "azure",
+          "subdomain": "streaming-and-compute",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "governance-and-security",
+      "title": "Gobierno y seguridad",
+      "concepts": [
+        {
+          "slug": "purview-governance",
+          "title": "Gobierno de datos con Microsoft Purview",
+          "kind": "concept",
+          "domain": "azure",
+          "subdomain": "governance-and-security",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "entra-id-for-data",
+          "title": "Microsoft Entra ID para plataformas de datos",
+          "kind": "concept",
+          "domain": "azure",
+          "subdomain": "governance-and-security",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "key-vault-secrets",
+          "title": "Gestión de secretos con Key Vault",
+          "kind": "concept",
+          "domain": "azure",
+          "subdomain": "governance-and-security",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "ai",
+      "title": "IA",
+      "concepts": [
+        {
+          "slug": "azure-ai-for-data-engineers",
+          "title": "Servicios de IA de Azure para Data Engineers",
+          "kind": "concept",
+          "domain": "azure",
+          "subdomain": "ai",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    }
+  ]
+}

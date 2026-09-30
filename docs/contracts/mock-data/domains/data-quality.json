@@ -1,0 +1,140 @@
+{
+  "id": "15",
+  "slug": "data-quality",
+  "title": "Data Quality",
+  "description": "Dimensiones de calidad, formas de implementar validaciones y patrones de publicación con control de calidad.",
+  "concept_count": 8,
+  "mvp_count": 0,
+  "subdomains": [
+    {
+      "slug": "quality-dimensions",
+      "title": "Dimensiones",
+      "concepts": [
+        {
+          "slug": "data-quality-dimensions",
+          "title": "Dimensiones de calidad de datos",
+          "kind": "concept",
+          "domain": "data-quality",
+          "subdomain": "quality-dimensions",
+          "classification": "core",
+          "level": "basic",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "quality-implementations",
+      "title": "Implementaciones",
+      "concepts": [
+        {
+          "slug": "dbt-tests",
+          "title": "Tests en dbt",
+          "kind": "concept",
+          "domain": "data-quality",
+          "subdomain": "quality-implementations",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "dataform-assertions",
+          "title": "Assertions en Dataform",
+          "kind": "concept",
+          "domain": "data-quality",
+          "subdomain": "quality-implementations",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "great-expectations-validation",
+          "title": "Validación con Great Expectations y equivalentes",
+          "kind": "concept",
+          "domain": "data-quality",
+          "subdomain": "quality-implementations",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "custom-data-validators",
+          "title": "Validadores propios",
+          "kind": "concept",
+          "domain": "data-quality",
+          "subdomain": "quality-implementations",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "schema-validation",
+          "title": "Validación de schemas",
+          "kind": "concept",
+          "domain": "data-quality",
+          "subdomain": "quality-implementations",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "quality-patterns",
+      "title": "Patrones",
+      "concepts": [
+        {
+          "slug": "quality-gate",
+          "title": "Quality gate",
+          "kind": "pattern",
+          "domain": "data-quality",
+          "subdomain": "quality-patterns",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "write-audit-publish",
+          "title": "Write-Audit-Publish",
+          "kind": "pattern",
+          "domain": "data-quality",
+          "subdomain": "quality-patterns",
+          "classification": "modern",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    }
+  ]
+}

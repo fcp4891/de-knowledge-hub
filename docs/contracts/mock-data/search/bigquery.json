@@ -1,0 +1,211 @@
+{
+  "query": "bigquery",
+  "total": 20,
+  "groups": [
+    {
+      "type": "source",
+      "items": [
+        {
+          "slug": "gcp-bigquery-docs",
+          "title": "BigQuery documentation",
+          "type": "source",
+          "domain": null,
+          "classification": null,
+          "snippet": "Documentación oficial de BigQuery en Google Cloud.",
+          "score": 6.0
+        },
+        {
+          "slug": "gcp-bigquery-release-notes",
+          "title": "BigQuery release notes",
+          "type": "source",
+          "domain": null,
+          "classification": null,
+          "snippet": "Release notes oficiales de BigQuery en Google Cloud.",
+          "score": 6.0
+        }
+      ]
+    },
+    {
+      "type": "concept",
+      "items": [
+        {
+          "slug": "bigquery-clustering",
+          "title": "Clustering en BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "snippet": "Clustering en BigQuery",
+          "score": 6.0
+        },
+        {
+          "slug": "bigquery-information-schema",
+          "title": "INFORMATION_SCHEMA en BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "snippet": "INFORMATION_SCHEMA en BigQuery",
+          "score": 6.0
+        },
+        {
+          "slug": "bigquery-monitoring",
+          "title": "Monitoreo de BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "snippet": "Monitoreo de BigQuery",
+          "score": 6.0
+        },
+        {
+          "slug": "bigquery-query-optimization",
+          "title": "Optimización de consultas en BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "snippet": "Optimización de consultas en BigQuery",
+          "score": 6.0
+        },
+        {
+          "slug": "bigquery-partitioning",
+          "title": "Particionamiento en BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "snippet": "Particionamiento en BigQuery",
+          "score": 6.0
+        },
+        {
+          "slug": "bigquery-policy-tags",
+          "title": "Policy tags en BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "snippet": "Policy tags en BigQuery",
+          "score": 6.0
+        },
+        {
+          "slug": "bigquery-security",
+          "title": "Seguridad en BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "snippet": "Authorized views, row-level security y ACL de dataset van aquí; bigquery-policy-tags sigue aparte.",
+          "score": 6.0
+        },
+        {
+          "slug": "bigquery-sql-dialect",
+          "title": "SQL en BigQuery (GoogleSQL)",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "snippet": "SQL en BigQuery (GoogleSQL)",
+          "score": 6.0
+        },
+        {
+          "slug": "bigquery-external-tables",
+          "title": "Tablas externas en BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "snippet": "Tablas externas en BigQuery",
+          "score": 6.0
+        },
+        {
+          "slug": "bigquery-materialized-views",
+          "title": "Vistas materializadas en BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "snippet": "Vistas materializadas en BigQuery",
+          "score": 6.0
+        },
+        {
+          "slug": "bigquery-architecture",
+          "title": "Arquitectura de BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "snippet": "Incluye la separación storage vs compute (§10.2).",
+          "score": 5.0
+        },
+        {
+          "slug": "bigquery-cost-model",
+          "title": "Modelo de costos de BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "snippet": "Precios y modalidades cambian; ficha siempre con fuente y last_verified.",
+          "score": 5.0
+        },
+        {
+          "slug": "bigquery-slots",
+          "title": "Slots y capacidad de cómputo",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "snippet": "Editions y reservas cambian; ficha con fuente.",
+          "score": 2.0
+        },
+        {
+          "slug": "bigquery-biglake-tables",
+          "title": "Tablas BigLake",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "snippet": "No es una tabla externa.",
+          "score": 2.0
+        },
+        {
+          "slug": "sql-arrays",
+          "title": "ARRAY",
+          "type": "concept",
+          "domain": "sql",
+          "classification": "core",
+          "snippet": "El modelo ARRAY/STRUCT de BigQuery no es el de Redshift ni el de Fabric; el dialecto está en bigquery-sql-dialect.",
+          "score": 1.5
+        }
+      ]
+    },
+    {
+      "type": "pattern",
+      "items": [
+        {
+          "slug": "bigquery-incremental-models",
+          "title": "Modelos incrementales en BigQuery",
+          "type": "pattern",
+          "domain": "gcp",
+          "classification": "modern",
+          "snippet": "Es el patrón SQL en BigQuery; la implementación de producto es dataform-incremental-tables. No fusionar las fichas.",
+          "score": 6.0
+        }
+      ]
+    },
+    {
+      "type": "cloud_service",
+      "items": [
+        {
+          "slug": "gcp-bigquery",
+          "title": "BigQuery",
+          "type": "cloud_service",
+          "domain": null,
+          "classification": "modern",
+          "snippet": "Data warehouse serverless de Google Cloud con almacenamiento columnar y cómputo separado.",
+          "score": 5.0
+        }
+      ]
+    },
+    {
+      "type": "architecture",
+      "items": [
+        {
+          "slug": "cdc-architecture",
+          "title": "Arquitectura CDC (PostgreSQL → BigQuery)",
+          "type": "architecture",
+          "domain": "architecture",
+          "classification": "core",
+          "snippet": "El escenario de F4 es PostgreSQL → BigQuery; la ficha explica qué cambia con otro origen o destino.",
+          "score": 4.5
+        }
+      ]
+    }
+  ]
+}

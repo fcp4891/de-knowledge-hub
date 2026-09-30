@@ -1,0 +1,54 @@
+{
+  "slug": "etl-vs-elt",
+  "groups": [
+    {
+      "type": "RELATED_TO",
+      "direction": "both",
+      "label": "related_to",
+      "items": [
+        {
+          "slug": "analytics-engineering",
+          "title": "Analytics engineering",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "data-warehouse",
+          "title": "Data Warehouse",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "modern-data-warehouse-architecture",
+          "title": "Modern Data Warehouse",
+          "entity_type": "architecture",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "reverse-etl",
+          "title": "Reverse ETL",
+          "entity_type": "pattern",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "data-transformation",
+          "title": "Transformación de datos",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "zero-etl-and-federation",
+          "title": "Zero-ETL y consultas federadas",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        }
+      ]
+    }
+  ]
+}

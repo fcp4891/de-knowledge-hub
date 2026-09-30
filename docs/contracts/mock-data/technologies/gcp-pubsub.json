@@ -1,0 +1,54 @@
+{
+  "id": "cloud_service:gcp-pubsub",
+  "title": "Pub/Sub",
+  "slug": "gcp-pubsub",
+  "description": "Servicio de mensajería asíncrona publish/subscribe de Google Cloud.",
+  "type": "cloud_service",
+  "domain": null,
+  "subdomain": null,
+  "classification": "modern",
+  "level": null,
+  "cloud": [
+    "gcp"
+  ],
+  "technologies": [],
+  "tags": [],
+  "related_topics": [],
+  "sources": [],
+  "created_at": "2026-09-28",
+  "updated_at": "2026-09-28",
+  "last_verified": null,
+  "verification_status": "review_required",
+  "origin": "gcp",
+  "category": "stream-messaging",
+  "mvp": true,
+  "stub": true,
+  "note": null,
+  "capabilities": [
+    {
+      "capability": "stream-messaging",
+      "title": "Mensajería y streaming de eventos",
+      "cloud": "gcp",
+      "differences": "Servicio global publish/subscribe sin particiones gestionadas por el usuario; el orden depende de las claves de ordenamiento.",
+      "not_equivalent_when": "Se necesita la semántica de log particionado de Kafka (offsets controlados por el consumidor, compactación por clave).",
+      "equivalents": {
+        "aws": {
+          "services": [
+            "aws-kinesis",
+            "aws-msk"
+          ],
+          "differences": "Kinesis usa shards administrados por AWS; MSK es Kafka administrado con semántica de log particionado.",
+          "not_equivalent_when": "Se trata Kinesis como Kafka o se omite que MSK exige operar conceptos de Kafka (particiones, retención, consumer groups)."
+        },
+        "azure": {
+          "services": [
+            "azure-event-hubs"
+          ],
+          "differences": "Log particionado para ingesta de eventos; ofrece un endpoint compatible con el protocolo de Kafka.",
+          "not_equivalent_when": "Se asume que la compatibilidad con el protocolo de Kafka implica todas las funciones del ecosistema Kafka."
+        }
+      },
+      "verification_status": "review_required"
+    }
+  ]
+}

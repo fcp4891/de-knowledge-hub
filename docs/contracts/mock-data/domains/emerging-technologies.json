@@ -1,0 +1,148 @@
+{
+  "id": "23",
+  "slug": "emerging-technologies",
+  "title": "Tecnologías emergentes",
+  "description": "Tecnologías y patrones en evolución rápida que pueden adquirir relevancia profesional.",
+  "concept_count": 9,
+  "mvp_count": 0,
+  "subdomains": [
+    {
+      "slug": "agentic-data-engineering",
+      "title": "IA agéntica aplicada a datos",
+      "concepts": [
+        {
+          "slug": "model-context-protocol",
+          "title": "Model Context Protocol (MCP)",
+          "kind": "concept",
+          "domain": "emerging-technologies",
+          "subdomain": "agentic-data-engineering",
+          "classification": "emerging",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "data-agents",
+          "title": "Agentes aplicados a datos",
+          "kind": "concept",
+          "domain": "emerging-technologies",
+          "subdomain": "agentic-data-engineering",
+          "classification": "emerging",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "agentic-workflows",
+          "title": "Workflows agénticos",
+          "kind": "concept",
+          "domain": "emerging-technologies",
+          "subdomain": "agentic-data-engineering",
+          "classification": "emerging",
+          "level": "advanced",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "agentic-data-engineering",
+          "title": "Agentic Data Engineering",
+          "kind": "concept",
+          "domain": "emerging-technologies",
+          "subdomain": "agentic-data-engineering",
+          "classification": "emerging",
+          "level": "advanced",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "llm-driven-automation",
+          "title": "Automatización mediante LLM",
+          "kind": "concept",
+          "domain": "emerging-technologies",
+          "subdomain": "agentic-data-engineering",
+          "classification": "emerging",
+          "level": "intermediate",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "ai-assisted-development",
+          "title": "Desarrollo asistido por IA",
+          "kind": "concept",
+          "domain": "emerging-technologies",
+          "subdomain": "agentic-data-engineering",
+          "classification": "emerging",
+          "level": "basic",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "evolving-standards",
+      "title": "Estándares en evolución",
+      "concepts": [
+        {
+          "slug": "emerging-semantic-layers",
+          "title": "Nuevas semantic layers",
+          "kind": "concept",
+          "domain": "emerging-technologies",
+          "subdomain": "evolving-standards",
+          "classification": "emerging",
+          "level": "intermediate",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "interoperability-standards",
+          "title": "Nuevos estándares de interoperabilidad",
+          "kind": "concept",
+          "domain": "emerging-technologies",
+          "subdomain": "evolving-standards",
+          "classification": "emerging",
+          "level": "intermediate",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "open-table-format-evolution",
+          "title": "Evolución de los open table formats",
+          "kind": "concept",
+          "domain": "emerging-technologies",
+          "subdomain": "evolving-standards",
+          "classification": "emerging",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    }
+  ]
+}

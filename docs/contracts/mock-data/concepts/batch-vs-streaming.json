@@ -1,0 +1,29 @@
+{
+  "id": "concept:batch-vs-streaming",
+  "title": "Batch vs streaming",
+  "slug": "batch-vs-streaming",
+  "description": null,
+  "type": "concept",
+  "domain": "fundamentals",
+  "subdomain": "processing-paradigms",
+  "classification": "core",
+  "level": "basic",
+  "cloud": [],
+  "technologies": [],
+  "tags": [],
+  "related_topics": [
+    "late-arriving-data"
+  ],
+  "sources": [],
+  "created_at": null,
+  "updated_at": null,
+  "last_verified": null,
+  "verification_status": null,
+  "kind": "concept",
+  "importance": "high",
+  "mvp": true,
+  "has_page": false,
+  "stub": false,
+  "note": null,
+  "sections": []
+}

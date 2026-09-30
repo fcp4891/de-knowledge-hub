@@ -1,0 +1,28 @@
+{
+  "id": "technology:apache-airflow",
+  "title": "Apache Airflow",
+  "slug": "apache-airflow",
+  "description": "Plataforma open source para definir, programar y monitorear workflows como DAG en Python.",
+  "type": "technology",
+  "domain": null,
+  "subdomain": null,
+  "classification": "modern",
+  "level": null,
+  "cloud": [
+    "agnostic"
+  ],
+  "technologies": [],
+  "tags": [],
+  "related_topics": [],
+  "sources": [],
+  "created_at": "2026-09-28",
+  "updated_at": "2026-09-28",
+  "last_verified": null,
+  "verification_status": "review_required",
+  "origin": "open-source",
+  "category": "orchestration",
+  "mvp": true,
+  "stub": true,
+  "note": null,
+  "capabilities": []
+}

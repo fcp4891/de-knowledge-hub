@@ -1,0 +1,30 @@
+{
+  "id": "concept:etl-vs-elt",
+  "title": "ETL vs ELT",
+  "slug": "etl-vs-elt",
+  "description": null,
+  "type": "concept",
+  "domain": "fundamentals",
+  "subdomain": "processing-paradigms",
+  "classification": "core",
+  "level": "basic",
+  "cloud": [],
+  "technologies": [],
+  "tags": [],
+  "related_topics": [
+    "data-transformation",
+    "data-warehouse"
+  ],
+  "sources": [],
+  "created_at": null,
+  "updated_at": null,
+  "last_verified": null,
+  "verification_status": null,
+  "kind": "concept",
+  "importance": "high",
+  "mvp": true,
+  "has_page": false,
+  "stub": false,
+  "note": null,
+  "sections": []
+}

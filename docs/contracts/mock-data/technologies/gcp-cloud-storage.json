@@ -1,0 +1,53 @@
+{
+  "id": "cloud_service:gcp-cloud-storage",
+  "title": "Cloud Storage",
+  "slug": "gcp-cloud-storage",
+  "description": "Almacenamiento de objetos de Google Cloud.",
+  "type": "cloud_service",
+  "domain": null,
+  "subdomain": null,
+  "classification": "modern",
+  "level": null,
+  "cloud": [
+    "gcp"
+  ],
+  "technologies": [],
+  "tags": [],
+  "related_topics": [],
+  "sources": [],
+  "created_at": "2026-09-28",
+  "updated_at": "2026-09-28",
+  "last_verified": null,
+  "verification_status": "review_required",
+  "origin": "gcp",
+  "category": "object-storage",
+  "mvp": true,
+  "stub": true,
+  "note": null,
+  "capabilities": [
+    {
+      "capability": "object-storage",
+      "title": "Almacenamiento de objetos",
+      "cloud": "gcp",
+      "differences": "Espacio de nombres plano por bucket; se integra de forma nativa con BigQuery (tablas externas y BigLake) y con Dataflow.",
+      "not_equivalent_when": "Se requiere semántica de sistema de archivos jerárquico con renombrado atómico de directorios.",
+      "equivalents": {
+        "aws": {
+          "services": [
+            "aws-s3"
+          ],
+          "differences": "Espacio de nombres plano; es la base del ecosistema de lake de AWS (Athena, Glue, Lake Formation, EMR).",
+          "not_equivalent_when": "Se asume el mismo modelo de clases de almacenamiento, permisos o notificaciones que en otro proveedor."
+        },
+        "azure": {
+          "services": [
+            "azure-adls"
+          ],
+          "differences": "Construido sobre Blob Storage con espacio de nombres jerárquico opcional y ACL de estilo POSIX a nivel de directorio y archivo.",
+          "not_equivalent_when": "Se diseña pensando en un namespace plano o se ignora la diferencia entre permisos RBAC y ACL."
+        }
+      },
+      "verification_status": "review_required"
+    }
+  ]
+}

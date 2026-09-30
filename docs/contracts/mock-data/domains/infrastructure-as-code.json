@@ -1,0 +1,196 @@
+{
+  "id": "12",
+  "slug": "infrastructure-as-code",
+  "title": "Infrastructure as Code",
+  "description": "Definición declarativa y versionada de la infraestructura de datos, principalmente con Terraform.",
+  "concept_count": 12,
+  "mvp_count": 4,
+  "subdomains": [
+    {
+      "slug": "iac-foundations",
+      "title": "Fundamentos",
+      "concepts": [
+        {
+          "slug": "infrastructure-as-code",
+          "title": "Infrastructure as Code",
+          "kind": "concept",
+          "domain": "infrastructure-as-code",
+          "subdomain": "iac-foundations",
+          "classification": "core",
+          "level": "basic",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "terraform",
+      "title": "Terraform",
+      "concepts": [
+        {
+          "slug": "terraform-providers",
+          "title": "Providers",
+          "kind": "concept",
+          "domain": "infrastructure-as-code",
+          "subdomain": "terraform",
+          "classification": "modern",
+          "level": "basic",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "terraform-variables-and-outputs",
+          "title": "Variables y outputs",
+          "kind": "concept",
+          "domain": "infrastructure-as-code",
+          "subdomain": "terraform",
+          "classification": "modern",
+          "level": "basic",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "terraform-modules",
+          "title": "Módulos",
+          "kind": "concept",
+          "domain": "infrastructure-as-code",
+          "subdomain": "terraform",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "terraform-state",
+          "title": "State",
+          "kind": "concept",
+          "domain": "infrastructure-as-code",
+          "subdomain": "terraform",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "terraform-remote-state",
+          "title": "Remote state",
+          "kind": "concept",
+          "domain": "infrastructure-as-code",
+          "subdomain": "terraform",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "terraform-plan-apply",
+          "title": "Ciclo plan/apply",
+          "kind": "concept",
+          "domain": "infrastructure-as-code",
+          "subdomain": "terraform",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "terraform-environments",
+          "title": "Entornos en Terraform",
+          "kind": "concept",
+          "domain": "infrastructure-as-code",
+          "subdomain": "terraform",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "terraform-drift",
+          "title": "Drift",
+          "kind": "concept",
+          "domain": "infrastructure-as-code",
+          "subdomain": "terraform",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "terraform-security",
+          "title": "Seguridad en Terraform",
+          "kind": "concept",
+          "domain": "infrastructure-as-code",
+          "subdomain": "terraform",
+          "classification": "modern",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "other-iac-tools",
+      "title": "Otras herramientas",
+      "concepts": [
+        {
+          "slug": "cloudformation-basics",
+          "title": "Fundamentos de CloudFormation",
+          "kind": "concept",
+          "domain": "infrastructure-as-code",
+          "subdomain": "other-iac-tools",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "bicep-basics",
+          "title": "Fundamentos de Bicep",
+          "kind": "concept",
+          "domain": "infrastructure-as-code",
+          "subdomain": "other-iac-tools",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    }
+  ]
+}

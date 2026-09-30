@@ -19,3 +19,4 @@ Formato: `- [fase sugerida] idea — origen`
 - [F3] Verificar a mano `terraform-provider-google-docs`: es una SPA y el título genérico no confirma el contenido — A-F1.3
 - [F3] Ficha CDC: actualizar las URLs de `cloud.google.com/...` a su destino final en `docs.cloud.google.com` — A-F1.3
 - [F3] Blueprint y matriz: actualizar los títulos y textos que dicen "Cloud Composer" (p. ej. `composer-environments`) al nombre nuevo «Managed Service for Apache Airflow» cuando se redacten las fichas — gate F1
+- [F2/F3] Validar `docs/contracts/api.yaml` como OpenAPI 3.1 con `openapi-spec-validator` (dependencia nueva, justificar en el commit) — A-F2.1

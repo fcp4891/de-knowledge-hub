@@ -1,0 +1,258 @@
+{
+  "id": "05",
+  "slug": "pipelines",
+  "title": "Pipelines de datos",
+  "description": "Patrones completos de ingesta, procesamiento y confiabilidad, de la fuente al consumo (Source → Raw → Curated → Serving).",
+  "concept_count": 16,
+  "mvp_count": 10,
+  "subdomains": [
+    {
+      "slug": "pipeline-stages",
+      "title": "Etapas de un pipeline",
+      "concepts": [
+        {
+          "slug": "pipeline-layers",
+          "title": "Capas raw, curated y serving",
+          "kind": "concept",
+          "domain": "pipelines",
+          "subdomain": "pipeline-stages",
+          "classification": "core",
+          "level": "basic",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "ingestion",
+      "title": "Ingesta",
+      "concepts": [
+        {
+          "slug": "batch-ingestion",
+          "title": "Ingesta batch",
+          "kind": "concept",
+          "domain": "pipelines",
+          "subdomain": "ingestion",
+          "classification": "core",
+          "level": "basic",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "streaming-ingestion",
+          "title": "Ingesta streaming",
+          "kind": "concept",
+          "domain": "pipelines",
+          "subdomain": "ingestion",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "change-data-capture",
+          "title": "Change Data Capture",
+          "kind": "concept",
+          "domain": "pipelines",
+          "subdomain": "ingestion",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-09-28"
+        },
+        {
+          "slug": "api-ingestion",
+          "title": "Ingesta desde APIs",
+          "kind": "concept",
+          "domain": "pipelines",
+          "subdomain": "ingestion",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "file-ingestion",
+          "title": "Ingesta de archivos",
+          "kind": "concept",
+          "domain": "pipelines",
+          "subdomain": "ingestion",
+          "classification": "core",
+          "level": "basic",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "database-ingestion",
+          "title": "Ingesta desde bases de datos",
+          "kind": "concept",
+          "domain": "pipelines",
+          "subdomain": "ingestion",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "pipeline-patterns",
+      "title": "Patrones de pipeline",
+      "concepts": [
+        {
+          "slug": "incremental-pipelines",
+          "title": "Pipelines incrementales",
+          "kind": "pattern",
+          "domain": "pipelines",
+          "subdomain": "pipeline-patterns",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "event-driven-pipelines",
+          "title": "Pipelines event-driven",
+          "kind": "pattern",
+          "domain": "pipelines",
+          "subdomain": "pipeline-patterns",
+          "classification": "modern",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "pipeline-dependencies",
+          "title": "Dependencias entre procesos",
+          "kind": "concept",
+          "domain": "pipelines",
+          "subdomain": "pipeline-patterns",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    },
+    {
+      "slug": "reliability",
+      "title": "Confiabilidad y recuperación",
+      "concepts": [
+        {
+          "slug": "retries",
+          "title": "Retries",
+          "kind": "pattern",
+          "domain": "pipelines",
+          "subdomain": "reliability",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "checkpoints",
+          "title": "Checkpoints",
+          "kind": "concept",
+          "domain": "pipelines",
+          "subdomain": "reliability",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "dead-letter-queue",
+          "title": "Dead-letter queue",
+          "kind": "pattern",
+          "domain": "pipelines",
+          "subdomain": "reliability",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "replay",
+          "title": "Replay",
+          "kind": "concept",
+          "domain": "pipelines",
+          "subdomain": "reliability",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "backfill",
+          "title": "Backfill",
+          "kind": "concept",
+          "domain": "pipelines",
+          "subdomain": "reliability",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": true,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "failure-recovery",
+          "title": "Recuperación ante fallas",
+          "kind": "concept",
+          "domain": "pipelines",
+          "subdomain": "reliability",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "high",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        }
+      ]
+    }
+  ]
+}

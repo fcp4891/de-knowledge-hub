@@ -1,0 +1,12 @@
+{
+  "slug": "change-data-capture",
+  "items": [
+    {
+      "id": "note-0001",
+      "slug": "change-data-capture",
+      "body_markdown": "Revisar qué pasa con los replication slots si el consumidor se detiene un fin de semana.",
+      "created_at": "2026-09-29T10:05:00Z",
+      "updated_at": "2026-09-29T10:05:00Z"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "slug": "scd-type-2",
+  "groups": [
+    {
+      "type": "RELATED_TO",
+      "direction": "both",
+      "label": "related_to",
+      "items": [
+        {
+          "slug": "change-data-capture",
+          "title": "Change Data Capture",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "sql-merge",
+          "title": "MERGE",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "slowly-changing-dimensions",
+          "title": "Slowly Changing Dimensions (SCD)",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        },
+        {
+          "slug": "surrogate-keys",
+          "title": "Surrogate keys",
+          "entity_type": "concept",
+          "origin": "blueprint",
+          "note": null
+        }
+      ]
+    }
+  ]
+}
