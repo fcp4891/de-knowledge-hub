@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { addNote, saveFavorite, saveStudyState } from "@/lib/personalActions";
-import type { Favorite, StudyState, StudyStatus } from "@/lib/api/types";
+import { addNote, editNote, removeNote, saveFavorite, saveStudyState } from "@/lib/personalActions";
+import type { Favorite, Note, StudyState, StudyStatus } from "@/lib/api/types";
 import { STUDY_LABEL } from "@/lib/labels";
 
 const STUDY_STATES: StudyStatus[] = [
@@ -112,5 +112,87 @@ export function NoteForm({ slug }: { slug: string }) {
       <button type="submit">Agregar nota</button>
       {message ? <p className="muted">{message}</p> : null}
     </form>
+  );
+}
+
+export function NoteItem({
+  slug,
+  note,
+  when,
+  children,
+}: {
+  slug: string;
+  note: Note;
+  when: string;
+  children: React.ReactNode;
+}) {
+  const router = useRouter();
+  const [editing, setEditing] = useState(false);
+  const [body, setBody] = useState(note.body_markdown);
+  const [message, setMessage] = useState<string | null>(null);
+
+  async function save(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (body.trim().length < 1) {
+      setMessage("La nota debe tener entre 1 y 20000 caracteres.");
+      return;
+    }
+    const result = await editNote(slug, note.id, body);
+    if (result.ok) {
+      setEditing(false);
+      setMessage("Nota actualizada.");
+      router.refresh();
+    } else {
+      setMessage(result.detail ?? "No se pudo guardar.");
+    }
+  }
+
+  async function remove() {
+    const result = await removeNote(slug, note.id);
+    setMessage(result.ok ? "Nota borrada." : (result.detail ?? "No se pudo borrar."));
+    if (result.ok) {
+      router.refresh();
+    }
+  }
+
+  return (
+    <article className="note">
+      {editing ? (
+        <form className="personal-form" onSubmit={(event) => void save(event)}>
+          <label>
+            Editar nota
+            <textarea value={body} onChange={(event) => setBody(event.target.value)} rows={4} maxLength={20000} />
+          </label>
+          <div className="note-actions">
+            <button type="submit">Guardar nota</button>
+            <button
+              type="button"
+              onClick={() => {
+                setEditing(false);
+                setBody(note.body_markdown);
+              }}
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      ) : (
+        children
+      )}
+      <p className="meta">
+        <span>{when}</span>
+      </p>
+      {editing ? null : (
+        <div className="note-actions">
+          <button type="button" onClick={() => setEditing(true)}>
+            Editar
+          </button>
+          <button type="button" onClick={() => void remove()}>
+            Borrar
+          </button>
+        </div>
+      )}
+      {message ? <p className="muted">{message}</p> : null}
+    </article>
   );
 }

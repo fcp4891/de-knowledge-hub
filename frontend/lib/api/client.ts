@@ -1,12 +1,3 @@
-import {
-  createPersonalNote,
-  getPersonalFavorite,
-  getPersonalStudyState,
-  listPersonalNotes,
-  listPersonalStudyStates,
-  putPersonalFavorite,
-  putPersonalStudyState,
-} from "./personal";
 import { readMock } from "./mock";
 import type {
   ApiResult,
@@ -27,10 +18,10 @@ import type {
 } from "./types";
 
 function usesMock(livePath: string): boolean {
-  if ((process.env.API_MODE ?? "hybrid") === "mock") {
-    return true;
+  if (livePath.startsWith("/me")) {
+    return false;
   }
-  return livePath.startsWith("/me");
+  return (process.env.API_MODE ?? "hybrid") === "mock";
 }
 
 async function problemDetail(response: Response): Promise<string> {
@@ -67,7 +58,7 @@ async function liveRequest<T>(method: string, livePath: string, body?: unknown):
       return { ok: false, reason: "unavailable", detail: `La API respondió ${response.status}.` };
     }
     if (response.status === 204) {
-      return { ok: true, data: undefined as T };
+      return { ok: true, data: null as T };
     }
     return { ok: true, data: (await response.json()) as T };
   } catch {
@@ -112,31 +103,40 @@ export function getRelations(slug: string): Promise<ApiResult<RelationGroups>> {
 }
 
 export function listStudyStates(state?: StudyStatus): Promise<ApiResult<StudyStateList>> {
-  return listPersonalStudyStates(state);
+  const resource = state ? `/me/study-state?state=${state}` : "/me/study-state";
+  return liveRequest("GET", resource);
 }
 
 export function getStudyState(slug: string): Promise<ApiResult<StudyState>> {
-  return getPersonalStudyState(slug);
+  return liveRequest("GET", `/me/study-state/${slug}`);
 }
 
 export function putStudyState(slug: string, update: StudyStateUpdate): Promise<ApiResult<StudyState>> {
-  return putPersonalStudyState(slug, update);
+  return liveRequest("PUT", `/me/study-state/${slug}`, update);
 }
 
 export function getFavorite(slug: string): Promise<ApiResult<Favorite>> {
-  return getPersonalFavorite(slug);
+  return liveRequest("GET", `/me/favorites/${slug}`);
 }
 
 export function putFavorite(slug: string, favorite: boolean): Promise<ApiResult<Favorite>> {
-  return putPersonalFavorite(slug, favorite);
+  return liveRequest("PUT", `/me/favorites/${slug}`, { favorite });
 }
 
 export function listNotes(slug: string): Promise<ApiResult<NoteList>> {
-  return listPersonalNotes(slug);
+  return liveRequest("GET", `/me/notes/${slug}`);
 }
 
 export function createNote(slug: string, bodyMarkdown: string): Promise<ApiResult<Note>> {
-  return createPersonalNote(slug, bodyMarkdown);
+  return liveRequest("POST", `/me/notes/${slug}`, { body_markdown: bodyMarkdown });
+}
+
+export function updateNote(slug: string, noteId: string, bodyMarkdown: string): Promise<ApiResult<Note>> {
+  return liveRequest("PUT", `/me/notes/${slug}/${noteId}`, { body_markdown: bodyMarkdown });
+}
+
+export function deleteNote(slug: string, noteId: string): Promise<ApiResult<null>> {
+  return liveRequest("DELETE", `/me/notes/${slug}/${noteId}`);
 }
 
 /**

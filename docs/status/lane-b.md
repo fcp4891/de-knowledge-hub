@@ -6,16 +6,16 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-09-30
 
 ## Actual
-- **Tarea activa:** B-F2.3 cerrada. Búsqueda global, relaciones contra la API y estudio personal en la ficha.
-- **Siguiente:** conectar Editar y Borrar notas cuando `docs/status/lane-a.md` confirme PUT y DELETE en el contrato (A-F2.4).
+- **Tarea activa:** B-F2.3 cerrada. Búsqueda, relaciones y `/me` contra la API real.
+- **Siguiente:** gate de F2, cuando se pida.
 - **Bloqueos:** ninguno.
 
 ### B-F2.3
-- Cliente regenerado desde `docs/contracts/api.yaml` (422, ADR-005).
-- Modo híbrido por defecto: conocimiento y búsqueda en `http://localhost:8000/api/v1`. `/me` sigue en mock, con cambios en memoria del proceso de Next.
+- Cliente regenerado desde el contrato de `main` (422 de ADR-005; PUT y DELETE de notas de ADR-006).
+- Conocimiento, búsqueda y `/me` van a `http://localhost:8000/api/v1`. Ya no hay mock de `/me`.
 - Búsqueda con Ctrl+K o ⌘K, debounce de 250 ms, grupos en el orden de la API.
 - Al guardar el estado de estudio se envía `last_studied_at` con la fecha actual.
-- Editar y Borrar notas están en la ficha y deshabilitados: `lane-a.md` todavía no confirma esas operaciones.
+- Editar y Borrar notas llaman a `PUT` y `DELETE /me/notes/{slug}/{note_id}`.
 
 ### B-F2.2
 - Concepto: resumen siempre visible, el resto colapsado, pestañas GCP/AWS/Azure, código con resaltado y copiar, Mermaid en arquitectura, relaciones por tipo y fuentes con nivel.
@@ -25,7 +25,7 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - `main` ya traía el merge de B-F2.1; esta rama lo integró al crearse.
 
 ### Límites del mock
-- Solo 10 conceptos y 5 tecnologías tienen detalle. Casi todas las fichas de concepto están vacías; la completa de ejemplo es `change-data-capture`.
+- Solo 10 conceptos y 5 tecnologías tenían detalle en el mock. El conocimiento y `/me` salen ahora de la API.
 - La búsqueda real no se reordena en el frontend. Los mocks de búsqueda siguen siendo solo ejemplos de forma (ADR-005).
 
 ## Pedidos a Carril A

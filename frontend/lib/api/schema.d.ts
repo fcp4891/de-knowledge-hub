@@ -210,6 +210,24 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/me/notes/{slug}/{note_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Reemplaza el texto de una nota personal (ADR-006). */
+        put: operations["updateNote"];
+        post?: never;
+        /** Borra una nota personal (ADR-006). */
+        delete: operations["deleteNote"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/me/favorites": {
         parameters: {
             query?: never;
@@ -520,6 +538,9 @@ export interface components {
         NoteCreate: {
             body_markdown: string;
         };
+        NoteUpdate: {
+            body_markdown: string;
+        };
         NoteList: {
             slug: components["schemas"]["Slug"];
             items: components["schemas"]["Note"][];
@@ -560,6 +581,7 @@ export interface components {
         Slug: components["schemas"]["Slug"];
         Limit: number;
         Offset: number;
+        NoteId: string;
     };
     requestBodies: never;
     headers: never;
@@ -918,6 +940,58 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["Note"];
                 };
+            };
+            404: components["responses"]["NotFound"];
+            422: components["responses"]["ValidationError"];
+        };
+    };
+    updateNote: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: components["parameters"]["Slug"];
+                note_id: components["parameters"]["NoteId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NoteUpdate"];
+            };
+        };
+        responses: {
+            /** @description Nota actualizada. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Note"];
+                };
+            };
+            404: components["responses"]["NotFound"];
+            422: components["responses"]["ValidationError"];
+        };
+    };
+    deleteNote: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: components["parameters"]["Slug"];
+                note_id: components["parameters"]["NoteId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Nota borrada. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             404: components["responses"]["NotFound"];
             422: components["responses"]["ValidationError"];

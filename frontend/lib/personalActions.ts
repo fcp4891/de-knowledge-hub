@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
-import { createNote, putFavorite, putStudyState } from "@/lib/api/client";
+import { createNote, deleteNote, putFavorite, putStudyState, updateNote } from "@/lib/api/client";
 import type { ApiResult, Favorite, Note, StudyState, StudyStatus } from "@/lib/api/types";
 
 function refresh(slug: string) {
@@ -37,6 +37,22 @@ export async function saveFavorite(slug: string, favorite: boolean): Promise<Api
 
 export async function addNote(slug: string, bodyMarkdown: string): Promise<ApiResult<Note>> {
   const result = await createNote(slug, bodyMarkdown);
+  if (result.ok) {
+    refresh(slug);
+  }
+  return result;
+}
+
+export async function editNote(slug: string, noteId: string, bodyMarkdown: string): Promise<ApiResult<Note>> {
+  const result = await updateNote(slug, noteId, bodyMarkdown);
+  if (result.ok) {
+    refresh(slug);
+  }
+  return result;
+}
+
+export async function removeNote(slug: string, noteId: string): Promise<ApiResult<null>> {
+  const result = await deleteNote(slug, noteId);
   if (result.ok) {
     refresh(slug);
   }

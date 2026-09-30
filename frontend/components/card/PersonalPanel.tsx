@@ -1,4 +1,5 @@
-import { FavoriteButton, NoteForm, StudyForm } from "@/components/card/PersonalForms";
+import { ApiFailure } from "@/components/ApiFailure";
+import { FavoriteButton, NoteForm, NoteItem, StudyForm } from "@/components/card/PersonalForms";
 import { MarkdownBody } from "@/components/markdown/MarkdownBody";
 import { getFavorite, getStudyState, listNotes } from "@/lib/api/client";
 
@@ -27,29 +28,20 @@ export async function PersonalPanel({ slug }: { slug: string }) {
           <StudyForm slug={slug} current={study.data} />
         </>
       ) : (
-        <p>{study.detail ?? "No se pudo cargar el estado."}</p>
+        <ApiFailure result={study} />
       )}
-      {favorite.ok ? <FavoriteButton slug={slug} current={favorite.data} /> : null}
+      {favorite.ok ? <FavoriteButton slug={slug} current={favorite.data} /> : <ApiFailure result={favorite} />}
       <h3>Notas</h3>
       {notes.ok && notes.data.items.length === 0 ? <p className="muted">Sin notas.</p> : null}
-      {notes.ok
-        ? notes.data.items.map((note) => (
-            <article key={note.id} className="note">
-              <MarkdownBody markdown={note.body_markdown} />
-              <p className="meta">
-                <span>{formatWhen(note.created_at)}</span>
-              </p>
-              <div className="note-actions">
-                <button type="button" disabled title="Disponible cuando el contrato incluya editar notas.">
-                  Editar
-                </button>
-                <button type="button" disabled title="Disponible cuando el contrato incluya borrar notas.">
-                  Borrar
-                </button>
-              </div>
-            </article>
-          ))
-        : null}
+      {notes.ok ? (
+        notes.data.items.map((note) => (
+          <NoteItem key={note.id} slug={slug} note={note} when={formatWhen(note.created_at)}>
+            <MarkdownBody markdown={note.body_markdown} />
+          </NoteItem>
+        ))
+      ) : (
+        <ApiFailure result={notes} />
+      )}
       <NoteForm slug={slug} />
     </section>
   );
