@@ -112,6 +112,13 @@
           "note": "CDC alimenta la capa raw en un flujo ELT."
         },
         {
+          "slug": "schema-evolution",
+          "title": "Evolución de esquema",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Un cambio de esquema en la base de origen llega por CDC y debe propagarse sin romper el pipeline."
+        },
+        {
           "slug": "idempotency",
           "title": "Idempotencia",
           "entity_type": "concept",
@@ -154,18 +161,18 @@
           "note": null
         },
         {
+          "slug": "data-reconciliation",
+          "title": "Reconciliación de datos",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "En replicación por CDC, la reconciliación detecta cambios perdidos o aplicados dos veces."
+        },
+        {
           "slug": "scd-type-2",
           "title": "SCD Type 2",
           "entity_type": "pattern",
           "origin": "entity",
           "note": "CDC alimenta historiales SCD2 con cada versión del registro."
-        },
-        {
-          "slug": "schema-evolution",
-          "title": "Schema evolution",
-          "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
         },
         {
           "slug": "zero-etl-and-federation",

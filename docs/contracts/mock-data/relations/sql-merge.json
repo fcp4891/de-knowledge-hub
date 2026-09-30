@@ -56,6 +56,13 @@
           "note": "MERGE es la forma habitual de aplicar un lote de cambios en el destino."
         },
         {
+          "slug": "slowly-changing-dimensions",
+          "title": "Dimensiones lentamente cambiantes (SCD)",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Los tipos 1 y 2 se aplican con MERGE o sentencias equivalentes."
+        },
+        {
           "slug": "idempotency",
           "title": "Idempotencia",
           "entity_type": "concept",

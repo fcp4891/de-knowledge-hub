@@ -35,25 +35,25 @@
           "note": "CDC alimenta historiales SCD2 con cada versión del registro."
         },
         {
+          "slug": "surrogate-keys",
+          "title": "Claves sustitutas (surrogate keys)",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Cada fila nueva del tipo 2 recibe una clave sustituta nueva."
+        },
+        {
+          "slug": "slowly-changing-dimensions",
+          "title": "Dimensiones lentamente cambiantes (SCD)",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "El tipo más usado tiene su propia ficha con el SQL."
+        },
+        {
           "slug": "sql-merge",
           "title": "MERGE",
           "entity_type": "concept",
           "origin": "entity",
           "note": "SCD2 se implementa con MERGE o con sentencias equivalentes."
-        },
-        {
-          "slug": "slowly-changing-dimensions",
-          "title": "Slowly Changing Dimensions (SCD)",
-          "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
-        },
-        {
-          "slug": "surrogate-keys",
-          "title": "Surrogate keys",
-          "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
         },
         {
           "slug": "upsert",

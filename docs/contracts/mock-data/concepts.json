@@ -223,9 +223,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "late-arriving-data",
@@ -321,9 +321,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "avro-format",
@@ -713,9 +713,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "sql-quality-checks",
@@ -783,9 +783,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "predicate-pushdown",
@@ -1203,9 +1203,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "python-pipeline-structure",
@@ -1385,9 +1385,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "slowly-changing-dimensions",
@@ -1399,9 +1399,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "conformed-dimensions",
@@ -1525,9 +1525,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "file-ingestion",
@@ -1693,9 +1693,9 @@
       "level": "basic",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "orchestration-task",
@@ -1749,9 +1749,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-09-30"
     },
     {
       "slug": "dynamic-workflows",

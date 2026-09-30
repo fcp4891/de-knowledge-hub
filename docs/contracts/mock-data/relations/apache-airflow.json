@@ -50,7 +50,7 @@
         },
         {
           "slug": "dag",
-          "title": "DAG",
+          "title": "DAG (grafo de tareas de un pipeline)",
           "entity_type": "concept",
           "origin": "blueprint",
           "note": null

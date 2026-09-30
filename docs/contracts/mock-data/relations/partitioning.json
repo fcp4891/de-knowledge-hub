@@ -36,10 +36,10 @@
         },
         {
           "slug": "clustering",
-          "title": "Clustering",
+          "title": "Clustering (ordenamiento físico de datos)",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "La partición descarta particiones enteras; el clustering ordena dentro de ellas."
         },
         {
           "slug": "bigquery-clustering",
@@ -56,15 +56,15 @@
           "note": "Particionar por fecha de evento hace que un dato tardío caiga en una partición ya cerrada."
         },
         {
-          "slug": "physical-data-model",
-          "title": "Modelo físico",
+          "slug": "parquet-format",
+          "title": "Formato Parquet",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Los archivos Parquet se organizan en carpetas por partición en los lakes."
         },
         {
-          "slug": "parquet-format",
-          "title": "Parquet",
+          "slug": "physical-data-model",
+          "title": "Modelo físico",
           "entity_type": "concept",
           "origin": "blueprint",
           "note": null

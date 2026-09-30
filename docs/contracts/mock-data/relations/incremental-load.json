@@ -127,10 +127,10 @@
         },
         {
           "slug": "data-reconciliation",
-          "title": "Reconciliación",
+          "title": "Reconciliación de datos",
           "entity_type": "pattern",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Cada carga incremental debería cerrar con una reconciliación del período."
         },
         {
           "slug": "scd-type-2",

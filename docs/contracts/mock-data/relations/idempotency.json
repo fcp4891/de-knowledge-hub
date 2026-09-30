@@ -21,11 +21,32 @@
           "note": "Sin idempotencia, cada reintento duplica el incremento."
         },
         {
+          "slug": "catchup",
+          "title": "Catchup",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Catchup ejecuta muchos intervalos pasados; cada ejecución debe poder repetirse sin duplicar."
+        },
+        {
+          "slug": "dag",
+          "title": "DAG (grafo de tareas de un pipeline)",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Las tareas de un Dag se reintentan y reejecutan; cada una debe ser idempotente."
+        },
+        {
           "slug": "late-arriving-data",
           "title": "Datos que llegan tarde",
           "entity_type": "concept",
           "origin": "entity",
           "note": "Reprocesar un período para incluir datos tardíos debe ser idempotente."
+        },
+        {
+          "slug": "python-error-handling-and-retries",
+          "title": "Manejo de errores y reintentos en Python",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Reintentar solo es seguro si la operación es idempotente."
         },
         {
           "slug": "incremental-pipelines",
@@ -106,7 +127,7 @@
         },
         {
           "slug": "dag",
-          "title": "DAG",
+          "title": "DAG (grafo de tareas de un pipeline)",
           "entity_type": "concept",
           "origin": "blueprint",
           "note": null
@@ -147,8 +168,15 @@
           "note": null
         },
         {
+          "slug": "api-ingestion",
+          "title": "Ingesta desde APIs",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Reprocesar una página o un período no debe duplicar registros en el destino."
+        },
+        {
           "slug": "python-error-handling-and-retries",
-          "title": "Manejo de errores y retries",
+          "title": "Manejo de errores y reintentos en Python",
           "entity_type": "pattern",
           "origin": "blueprint",
           "note": null
