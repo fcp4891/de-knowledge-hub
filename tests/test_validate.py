@@ -139,7 +139,7 @@ def test_verified_with_sources_is_valid(content: Path) -> None:
 
 def test_underscore_directories_are_ignored(content: Path) -> None:
     write_md(content, "_templates/concept.md", {"type": "concept"})
-    write_md(content, "concepts/cdc.md", concept("cdc"))
+    write_md(content, "concepts/cdc.md", concept("cdc"), body="## 1. Resumen\n\nContenido.\n")
     report = run(content)
     assert report.ok, report.errors
     assert report.documents == 1

@@ -1,0 +1,66 @@
+"""Estructura de las fichas: las 22 secciones de content/_templates/concept.md (§22).
+
+La plantilla es la fuente única de los títulos. Una ficha `concept` o `pattern` que no es stub debe
+tener los encabezados `## N. Título` del 1 al 22, en orden, con los títulos de la plantilla y sin
+secciones vacías (un comentario HTML solo no cuenta como contenido).
+"""
+
+from __future__ import annotations
+
+import re
+from pathlib import Path
+
+HEADING = re.compile(r"^## (\d+)\. (.+?)\s*$")
+HTML_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
+TEMPLATE = Path("_templates") / "concept.md"
+PAGE_TYPES = {"concept", "pattern"}
+
+
+def body_of(text: str) -> str:
+    """Cuerpo Markdown tras el frontmatter (el archivo ya pasó split_frontmatter)."""
+    lines = text.splitlines()
+    closing = next(i for i, line in enumerate(lines[1:], start=1) if line.strip() == "---")
+    return "\n".join(lines[closing + 1 :])
+
+
+def sections(body: str) -> list[tuple[int, str, str]]:
+    """(número, título, contenido) de cada encabezado `## N. Título`, en el orden del archivo."""
+    found: list[tuple[int, str, list[str]]] = []
+    for line in body.splitlines():
+        match = HEADING.match(line)
+        if match:
+            found.append((int(match.group(1)), match.group(2), []))
+        elif found:
+            found[-1][2].append(line)
+    return [(number, title, "\n".join(lines)) for number, title, lines in found]
+
+
+def template_titles(content_dir: Path) -> list[str] | None:
+    """Títulos de la plantilla en orden; None si content/ no tiene una plantilla con secciones."""
+    path = content_dir / TEMPLATE
+    if not path.is_file():
+        return None
+    titles = [title for _, title, _ in sections(body_of(path.read_text(encoding="utf-8")))]
+    return titles or None
+
+
+def is_empty(content: str) -> bool:
+    return not HTML_COMMENT.sub("", content).strip()
+
+
+def check(body: str, titles: list[str]) -> list[str]:
+    """Errores de estructura de la ficha frente a los títulos de la plantilla."""
+    found = sections(body)
+    errors = []
+    numbers = [number for number, _, _ in found]
+    expected = list(range(1, len(titles) + 1))
+    if numbers != expected:
+        missing = sorted(set(expected) - set(numbers))
+        detail = f"faltan {missing}" if missing else f"orden encontrado {numbers}"
+        errors.append(f"[secciones] se esperan las {len(titles)} secciones de la plantilla en orden; {detail}")
+    for number, title, content in found:
+        if 1 <= number <= len(titles) and title != titles[number - 1]:
+            errors.append(f"[secciones] la sección {number} debe titularse '{titles[number - 1]}', no '{title}'")
+        if is_empty(content):
+            errors.append(f"[secciones] la sección {number} ('{title}') está vacía")
+    return errors

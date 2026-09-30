@@ -1,0 +1,95 @@
+"""Tests de la estructura de fichas: las 22 secciones de la plantilla (§22)."""
+
+from __future__ import annotations
+
+import shutil
+from pathlib import Path
+
+import pytest
+
+from scripts import page_sections
+from tests.test_blueprint import bp_concept, domain_doc, write_domain
+from tests.test_validate import assert_error, concept, content, entity, run, write_md  # noqa: F401
+
+ROOT = Path(__file__).resolve().parent.parent
+TITLES = page_sections.template_titles(ROOT / "content")
+
+
+def full_body(titles: list[str] | None = None, empty: int | None = None) -> str:
+    titles = titles or TITLES or []
+    parts = [f"## {n}. {t}\n\n{'<!-- solo comentario -->' if n == empty else 'Contenido.'}\n" for n, t in enumerate(titles, 1)]
+    return "\n".join(parts)
+
+
+@pytest.fixture
+def with_template(content: Path) -> Path:
+    (content / "_templates").mkdir()
+    shutil.copy(ROOT / "content/_templates/concept.md", content / "_templates/concept.md")
+    return content
+
+
+def test_template_has_22_sections() -> None:
+    assert TITLES is not None and len(TITLES) == 22
+    assert TITLES[0] == "Resumen" and TITLES[-1] == "Historial de cambios importantes"
+
+
+def test_complete_page_is_valid(with_template: Path) -> None:
+    write_md(with_template, "concepts/a.md", concept("a"), body=full_body())
+    assert run(with_template).ok
+
+
+def test_pattern_pages_are_checked(with_template: Path) -> None:
+    pattern = entity("pattern", "p", domain="pipelines", classification="core", level="intermediate")
+    write_md(with_template, "concepts/p.md", pattern, body="## 1. Resumen\n\nx\n")
+    assert_error(run(with_template), "[secciones]")
+
+
+def test_missing_section(with_template: Path) -> None:
+    body = full_body(TITLES[:21])
+    write_md(with_template, "concepts/a.md", concept("a"), body=body)
+    assert_error(run(with_template), "faltan [22]")
+
+
+def test_sections_out_of_order(with_template: Path) -> None:
+    sections = full_body().split("\n## ")
+    sections[1], sections[2] = sections[2], sections[1]
+    write_md(with_template, "concepts/a.md", concept("a"), body="\n## ".join(sections))
+    assert_error(run(with_template), "orden encontrado")
+
+
+def test_wrong_title(with_template: Path) -> None:
+    titles = list(TITLES)
+    titles[5] = "Cuándo evitarlo"
+    write_md(with_template, "concepts/a.md", concept("a"), body=full_body(titles))
+    assert_error(run(with_template), "la sección 6 debe titularse 'Cuándo no utilizarlo'")
+
+
+def test_section_with_only_a_comment_is_empty(with_template: Path) -> None:
+    write_md(with_template, "concepts/a.md", concept("a"), body=full_body(empty=18))
+    assert_error(run(with_template), "la sección 18 ('Preguntas técnicas abiertas') está vacía")
+
+
+def test_stub_is_exempt(with_template: Path) -> None:
+    write_md(with_template, "concepts/a.md", concept("a", stub=True), body="<!-- pendiente -->\n")
+    assert run(with_template).ok
+
+
+def test_without_template_the_check_is_skipped(content: Path) -> None:
+    write_md(content, "concepts/a.md", concept("a"), body="sin secciones\n")
+    assert run(content).ok
+
+
+# --- Coherencia con el blueprint ---------------------------------------------
+
+
+def test_page_domain_must_match_blueprint(content: Path) -> None:
+    write_domain(content, domain_doc("01", "fundamentals", bp_concept("a"), subdomain="core-topics"))
+    write_domain(content, domain_doc("05", "pipelines", bp_concept("b"), subdomain="ingestion"))
+    write_md(content, "concepts/a.md", concept("a", domain="pipelines", subdomain="ingestion"))
+    assert_error(run(content), "el blueprint ubica 'a' en fundamentals/core-topics, no en pipelines/ingestion")
+
+
+def test_page_matching_blueprint_is_valid(content: Path) -> None:
+    write_domain(content, domain_doc("01", "fundamentals", bp_concept("a"), subdomain="core-topics"))
+    write_md(content, "concepts/a.md", concept("a", domain="fundamentals", subdomain="core-topics"))
+    assert run(content).ok

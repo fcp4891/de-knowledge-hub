@@ -26,6 +26,11 @@ import yaml
 from jsonschema import Draft202012Validator
 from referencing import Registry, Resource
 
+if __package__ in (None, ""):  # ejecutado como `python scripts/validate.py`
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from scripts import page_sections  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT_EXTENSIONS = {".md", ".yaml", ".yml"}
 SLUG_LIST_FIELDS = ("technologies", "related_topics")
@@ -51,6 +56,7 @@ class Document:
 class BlueprintConcept:
     location: str
     domain: str
+    subdomain: str
     kind: str
     data: dict[str, Any]
 
@@ -282,6 +288,19 @@ def check_mvp_source_coverage(docs: list[Document], report: Report) -> None:
             report.add(doc.location, f"[mvp] '{doc.data['slug']}' no tiene fuente Nivel 1–2 con url_verified")
 
 
+def check_page_sections(content_dir: Path, docs: list[Document], report: Report) -> None:
+    """Fichas concept/pattern no stub: las 22 secciones de la plantilla (§22)."""
+    titles = page_sections.template_titles(content_dir)
+    if titles is None:
+        return
+    for doc in docs:
+        if doc.path.suffix != ".md" or doc.data["type"] not in page_sections.PAGE_TYPES or doc.data.get("stub"):
+            continue
+        body = page_sections.body_of((content_dir.parent / doc.path).read_text(encoding="utf-8"))
+        for error in page_sections.check(body, titles):
+            report.add(doc.location, error)
+
+
 # --- Blueprint (ADR-003) -----------------------------------------------------
 
 
@@ -330,11 +349,11 @@ def validate_blueprint(doc: Document, validator: Draft202012Validator, report: R
     return True
 
 
-def iter_blueprint_concepts(doc: Document) -> Iterator[tuple[str, dict[str, Any]]]:
-    """(ubicación, concepto) de cada concepto del archivo."""
+def iter_blueprint_concepts(doc: Document) -> Iterator[tuple[str, str, dict[str, Any]]]:
+    """(ubicación, subdominio, concepto) de cada concepto del archivo."""
     for i, subdomain in enumerate(doc.data["subdomains"]):
         for j, concept in enumerate(subdomain["concepts"]):
-            yield f"{doc.location} [subdomains.{i}.concepts.{j}]", concept
+            yield f"{doc.location} [subdomains.{i}.concepts.{j}]", subdomain["slug"], concept
 
 
 def index_blueprint(docs: list[Document], report: Report) -> BlueprintIndex:
@@ -351,12 +370,12 @@ def index_blueprint(docs: list[Document], report: Report) -> BlueprintIndex:
             if subdomain["slug"] in subdomains:
                 report.add(doc.location, f"subdominio duplicado: '{subdomain['slug']}'")
             subdomains.add(subdomain["slug"])
-        for location, concept in iter_blueprint_concepts(doc):
+        for location, subdomain_slug, concept in iter_blueprint_concepts(doc):
             slug = concept["slug"]
             if slug in index.concepts:
                 report.add(location, f"concepto '{slug}' duplicado (ya definido en {index.concepts[slug].location})")
                 continue
-            index.concepts[slug] = BlueprintConcept(location, domain["slug"], concept["kind"], concept)
+            index.concepts[slug] = BlueprintConcept(location, domain["slug"], subdomain_slug, concept["kind"], concept)
     return index
 
 
@@ -392,14 +411,21 @@ def check_entity_in_blueprint(doc: Document, index: BlueprintIndex, report: Repo
     elif subdomain is not None and subdomain not in index.subdomains.get(domain, set()):
         report.add(doc.location, f"[subdomain] '{subdomain}' no existe en el dominio '{domain}' del blueprint")
     entry = index.concepts.get(doc.data["slug"])
-    if entry is not None and entry.kind != doc.data["type"]:
+    if entry is None:
+        return
+    if entry.kind != doc.data["type"]:
         report.add(doc.location, f"[type] el blueprint declara '{doc.data['slug']}' como {entry.kind}")
+    if domain is not None and (domain, subdomain) != (entry.domain, entry.subdomain):
+        report.add(
+            doc.location,
+            f"[domain] el blueprint ubica '{doc.data['slug']}' en {entry.domain}/{entry.subdomain}, no en {domain}/{subdomain}",
+        )
 
 
 def summarize_blueprint(docs: list[Document]) -> list[BlueprintRow]:
     rows = []
     for doc in sorted(docs, key=lambda d: d.data["domain"]["id"]):
-        concepts = [concept for _, concept in iter_blueprint_concepts(doc)]
+        concepts = [concept for _, _, concept in iter_blueprint_concepts(doc)]
         rows.append(
             BlueprintRow(
                 domain_id=doc.data["domain"]["id"],
@@ -490,6 +516,7 @@ def validate(content_dir: Path, schemas_dir: Path) -> Report:
         check_sources(doc, by_slug, report)
         check_relations(doc, by_slug, catalog, report)
     check_mvp_source_coverage(valid_docs, report)
+    check_page_sections(content_dir, valid_docs, report)
     index = validate_blueprints(content_dir, schemas_dir, by_slug, valid_docs, report)
     validate_matrices(content_dir, schemas_dir, index, by_slug, report)
     report.technologies = [doc.data for doc in valid_docs if doc.data["type"] in TECHNOLOGY_TYPES]
