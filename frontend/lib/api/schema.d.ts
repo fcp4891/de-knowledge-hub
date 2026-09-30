@@ -497,6 +497,8 @@ export interface components {
         };
         SearchResult: {
             slug: components["schemas"]["Slug"];
+            /** @description true si el resultado tiene entidad en content/ (ficha). Un concepto del blueprint sin ficha devuelve false (ADR-007). */
+            has_page: boolean;
             title: string;
             type: components["schemas"]["ResultType"];
             domain?: components["schemas"]["Slug"] | null;
