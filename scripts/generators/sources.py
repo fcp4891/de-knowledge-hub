@@ -96,6 +96,8 @@ BATCH1 = [
      'https://docs.aws.amazon.com/athena/latest/ug/what-is.html', "official_docs", 1, "aws", True, "quarterly", ['aws-athena']),
     ('aws-kinesis-docs', 'Amazon Kinesis Data Streams Developer Guide', 'Guía oficial para desarrolladores de Amazon Kinesis Data Streams.',
      'https://docs.aws.amazon.com/streams/latest/dev/introduction.html', "official_docs", 1, "aws", True, "quarterly", ['aws-kinesis']),
+    ("aws-glue-docs", "AWS Glue Developer Guide", "Guía oficial para desarrolladores de AWS Glue.",
+     "https://docs.aws.amazon.com/glue/latest/dg/what-is-glue.html", "official_docs", 1, "aws", True, "quarterly", ["aws-glue"]),
 ]
 
 

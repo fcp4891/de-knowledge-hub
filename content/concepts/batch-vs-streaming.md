@@ -27,6 +27,14 @@ sources:
     url: https://docs.aws.amazon.com/streams/latest/dev/introduction.html
     accessed: 2026-09-30
     note: Kinesis Data Streams recolecta y procesa grandes streams de registros en tiempo real.
+  - source: aws-kinesis-docs
+    url: https://docs.aws.amazon.com/streams/latest/dev/how-do-i-size-a-stream.html
+    accessed: 2026-09-30
+    note: Kinesis Data Streams ofrece los modos On-demand Standard, On-demand Advantage y Provisioned, y permite cambiar entre ellos.
+  - source: aws-kinesis-docs
+    url: https://docs.aws.amazon.com/streams/latest/dev/kinesis-extended-retention.html
+    accessed: 2026-09-30
+    note: Retención de 24 horas por defecto, ampliable hasta 8760 horas (365 días).
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about
     accessed: 2026-09-30
@@ -121,9 +129,7 @@ with beam.Pipeline() as p:
 
 ## 12. AWS
 
-**Kinesis Data Streams** recolecta y procesa grandes streams de registros en tiempo real. No es un equivalente directo de Pub/Sub: su modelo de capacidad y de lectura es distinto.
-
-<!-- VERIFY: modelo de capacidad (shards / on-demand) y de retención de Kinesis Data Streams, no citado aquí. -->
+**Kinesis Data Streams** recolecta y procesa grandes streams de registros en tiempo real. Su capacidad se gestiona con un modo elegido por stream: **On-demand Standard**, **On-demand Advantage** o **Provisioned**, y se puede cambiar de modo. Los registros se retienen **24 horas por defecto, ampliables hasta 8760 horas (365 días)**, lo que permite volver a leerlos dentro de ese plazo. No es un equivalente directo de Pub/Sub: el modelo de capacidad, de retención y de lectura es distinto.
 
 ## 13. Azure
 
@@ -169,16 +175,17 @@ Pendiente (F4): arquitecturas "Streaming pipeline" y "Batch pipeline" (§24) y l
 ## 20. Fuentes
 
 - Google Cloud: *Programming model for Apache Beam* (Dataflow); *Subscription overview* (Pub/Sub).
-- AWS: *What is Amazon Kinesis Data Streams?*
+- AWS: *What is Amazon Kinesis Data Streams?*; *Choose the right mode to stream in*; *Change the data retention period*.
 - Microsoft Learn: *What is Azure Event Hubs*.
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-09-30. Hay un punto VERIFY (capacidad y retención de Kinesis). La ficha queda en `review_required` hasta la revisión humana (B-F3.1).
+2026-09-30. El VERIFY de Kinesis (modos de capacidad y retención) se resolvió con documentación oficial. La ficha queda en `review_required` hasta que Felipe la marque como verificada.
 
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 1 de F3).
 - 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.
+- 2026-09-30: VERIFY resuelto: modos de capacidad y retención de Kinesis Data Streams.

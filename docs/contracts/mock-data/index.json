@@ -61,6 +61,7 @@
   "GET /search?q=streaming": "search/streaming.json",
   "GET /sources/aws-athena-docs": "sources/aws-athena-docs.json",
   "GET /sources/aws-dms-docs": "sources/aws-dms-docs.json",
+  "GET /sources/aws-glue-docs": "sources/aws-glue-docs.json",
   "GET /sources/aws-kinesis-docs": "sources/aws-kinesis-docs.json",
   "GET /sources/aws-redshift-docs": "sources/aws-redshift-docs.json",
   "GET /sources/aws-sqs-docs": "sources/aws-sqs-docs.json",

@@ -61,6 +61,24 @@
       "note": "Kinesis Data Streams recolecta y procesa grandes streams de registros en tiempo real."
     },
     {
+      "source": "aws-kinesis-docs",
+      "title": "Amazon Kinesis Data Streams Developer Guide",
+      "url": "https://docs.aws.amazon.com/streams/latest/dev/how-do-i-size-a-stream.html",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Kinesis Data Streams ofrece los modos On-demand Standard, On-demand Advantage y Provisioned, y permite cambiar entre ellos."
+    },
+    {
+      "source": "aws-kinesis-docs",
+      "title": "Amazon Kinesis Data Streams Developer Guide",
+      "url": "https://docs.aws.amazon.com/streams/latest/dev/kinesis-extended-retention.html",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Retención de 24 horas por defecto, ampliable hasta 8760 horas (365 días)."
+    },
+    {
       "source": "microsoft-learn",
       "title": "Microsoft Learn",
       "url": "https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about",
@@ -151,7 +169,7 @@
       "number": 12,
       "key": "aws",
       "title": "AWS",
-      "markdown": "**Kinesis Data Streams** recolecta y procesa grandes streams de registros en tiempo real. No es un equivalente directo de Pub/Sub: su modelo de capacidad y de lectura es distinto.\n\n<!-- VERIFY: modelo de capacidad (shards / on-demand) y de retención de Kinesis Data Streams, no citado aquí. -->"
+      "markdown": "**Kinesis Data Streams** recolecta y procesa grandes streams de registros en tiempo real. Su capacidad se gestiona con un modo elegido por stream: **On-demand Standard**, **On-demand Advantage** o **Provisioned**, y se puede cambiar de modo. Los registros se retienen **24 horas por defecto, ampliables hasta 8760 horas (365 días)**, lo que permite volver a leerlos dentro de ese plazo. No es un equivalente directo de Pub/Sub: el modelo de capacidad, de retención y de lectura es distinto."
     },
     {
       "number": 13,
@@ -199,19 +217,19 @@
       "number": 20,
       "key": "sources",
       "title": "Fuentes",
-      "markdown": "- Google Cloud: *Programming model for Apache Beam* (Dataflow); *Subscription overview* (Pub/Sub).\n- AWS: *What is Amazon Kinesis Data Streams?*\n- Microsoft Learn: *What is Azure Event Hubs*.\n\nEl detalle de cada fuente está en `sources` del frontmatter."
+      "markdown": "- Google Cloud: *Programming model for Apache Beam* (Dataflow); *Subscription overview* (Pub/Sub).\n- AWS: *What is Amazon Kinesis Data Streams?*; *Choose the right mode to stream in*; *Change the data retention period*.\n- Microsoft Learn: *What is Azure Event Hubs*.\n\nEl detalle de cada fuente está en `sources` del frontmatter."
     },
     {
       "number": 21,
       "key": "last_verified",
       "title": "Fecha de última verificación",
-      "markdown": "2026-09-30. Hay un punto VERIFY (capacidad y retención de Kinesis). La ficha queda en `review_required` hasta la revisión humana (B-F3.1)."
+      "markdown": "2026-09-30. El VERIFY de Kinesis (modos de capacidad y retención) se resolvió con documentación oficial. La ficha queda en `review_required` hasta que Felipe la marque como verificada."
     },
     {
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: VERIFY resuelto: modos de capacidad y retención de Kinesis Data Streams."
     }
   ]
 }

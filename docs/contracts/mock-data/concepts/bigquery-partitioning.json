@@ -63,6 +63,15 @@
       "note": "Ejemplos oficiales de CREATE TABLE con RANGE_BUCKET(customer_id, GENERATE_ARRAY(0, 100, 10)), partition_expiration_days y require_partition_filter."
     },
     {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/quotas",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Cada tabla particionada admite hasta 10.000 particiones; si se supera, la documentación sugiere usar clustering además o en lugar de la partición."
+    },
+    {
       "source": "aws-athena-docs",
       "title": "Amazon Athena User Guide",
       "url": "https://docs.aws.amazon.com/athena/latest/ug/partitions.html",
@@ -144,7 +153,7 @@
       "number": 6,
       "key": "when_not_to_use",
       "title": "Cuándo no utilizarlo",
-      "markdown": "- Tablas pequeñas, donde el beneficio es mínimo.\n- Una granularidad tan fina que la tabla alcanzaría el máximo de particiones por tabla. La documentación recomienda entonces una granularidad más gruesa (mensual en vez de diaria) combinada con clustering.\n- Filtros que casi nunca usan la columna de partición: no habrá pruning.\n\n<!-- VERIFY: valor numérico actual del máximo de particiones por tabla en la página de cuotas de BigQuery (no se cita aquí). -->"
+      "markdown": "- Tablas pequeñas, donde el beneficio es mínimo.\n- Una granularidad tan fina que la tabla superaría el máximo de **10.000 particiones por tabla** (cuota vigente al 2026-09-30). La documentación recomienda entonces una granularidad más gruesa (mensual en vez de diaria) o clustering además o en lugar de la partición.\n- Filtros que casi nunca usan la columna de partición: no habrá pruning."
     },
     {
       "number": 7,
@@ -228,19 +237,19 @@
       "number": 20,
       "key": "sources",
       "title": "Fuentes",
-      "markdown": "- Google Cloud: *Introduction to partitioned tables* y *DML statements in GoogleSQL* (BigQuery).\n- AWS: *Partition your data* (Amazon Athena).\n- Microsoft Learn: *Partitioning tables in dedicated SQL pool* (Azure Synapse).\n\nEl detalle de cada fuente está en `sources` del frontmatter."
+      "markdown": "- Google Cloud: *Introduction to partitioned tables*, *Create partitioned tables*, *Data definition language*, *DML statements in GoogleSQL* y *Quotas and limits* (BigQuery).\n- AWS: *Partition your data* (Amazon Athena); *Sort keys* y *Data distribution for query optimization* (Amazon Redshift).\n- Microsoft Learn: *Partitioning tables in dedicated SQL pool* (Azure Synapse).\n\nEl detalle de cada fuente está en `sources` del frontmatter."
     },
     {
       "number": 21,
       "key": "last_verified",
       "title": "Fecha de última verificación",
-      "markdown": "2026-09-30. Queda un punto VERIFY: el valor numérico del máximo de particiones por tabla. La ficha queda en `review_required` hasta la revisión humana (B-F3.1)."
+      "markdown": "2026-09-30. El VERIFY del máximo de particiones se resolvió con la página de cuotas (10.000 por tabla). La ficha queda en `review_required` hasta que Felipe la marque como verificada."
     },
     {
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: VERIFY resuelto: máximo de 10.000 particiones por tabla (página de cuotas)."
     }
   ]
 }

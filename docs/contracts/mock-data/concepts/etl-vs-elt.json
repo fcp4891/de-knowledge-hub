@@ -57,6 +57,42 @@
       "authority_level": 1,
       "accessed": "2026-09-30",
       "note": "Apache Beam, modelo unificado para pipelines batch y streaming, ejecutado en Dataflow."
+    },
+    {
+      "source": "aws-glue-docs",
+      "title": "AWS Glue Developer Guide",
+      "url": "https://docs.aws.amazon.com/glue/latest/dg/what-is-glue.html",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "AWS Glue es un servicio serverless de integración de datos; permite crear, ejecutar y monitorear pipelines ETL que cargan datos en data lakes."
+    },
+    {
+      "source": "aws-redshift-docs",
+      "title": "Amazon Redshift Database Developer Guide",
+      "url": "https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Redshift ejecuta DML como MERGE, lo que permite transformar con SQL dentro del warehouse."
+    },
+    {
+      "source": "microsoft-learn",
+      "title": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/azure/data-factory/introduction",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Microsoft presenta Data Factory en Microsoft Fabric como la siguiente generación de Azure Data Factory; recomienda empezar por Fabric y permite migrar cargas de ADF."
+    },
+    {
+      "source": "microsoft-learn",
+      "title": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/fabric/data-factory/data-factory-overview",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-09-30",
+      "note": "Data Factory en Microsoft Fabric integra y transforma datos dentro de Fabric."
     }
   ],
   "created_at": "2026-09-30",
@@ -140,13 +176,13 @@
       "number": 12,
       "key": "aws",
       "title": "AWS",
-      "markdown": "El patrón ELT se aplica sobre **Redshift**, y el ETL suele hacerse con Glue o EMR antes de cargar.\n\n<!-- VERIFY: posicionamiento actual de Glue y de las transformaciones dentro de Redshift en la documentación de AWS; esta sección no cita afirmaciones de producto más allá de su rol. -->"
+      "markdown": "- **AWS Glue** es, según su documentación, un servicio serverless de integración de datos para crear, ejecutar y monitorear pipelines ETL que cargan datos en data lakes: es la pieza habitual cuando hay que transformar **antes** de cargar.\n- En **Redshift**, la transformación **dentro** del warehouse se hace con SQL, incluido `MERGE`: es el lado ELT.\n\nNo son lo mismo que Dataflow y Dataform: el reparto de funciones es parecido, pero cambian el modelo de ejecución, el lenguaje y la facturación."
     },
     {
       "number": 13,
       "key": "azure",
       "title": "Azure",
-      "markdown": "En Azure y Microsoft Fabric, el mismo par se da con Data Factory o los pipelines de Fabric para mover y transformar, y con SQL en Fabric Warehouse o Synapse para transformar dentro.\n\n<!-- VERIFY: rol actual de Data Factory frente a Fabric (ecosistema en evolución; ver azure-analytics-landscape). -->"
+      "markdown": "En Azure, Microsoft presenta **Data Factory en Microsoft Fabric** como la siguiente generación de Azure Data Factory: recomienda empezar por Fabric y permite migrar las cargas de ADF existentes (documentación consultada el 2026-09-30). El reparto sigue el mismo par: Data Factory mueve y transforma antes de cargar, y el SQL de Fabric Warehouse (o de Synapse en instalaciones existentes) transforma dentro. Es un ecosistema en evolución: esta sección se revisa con las fuentes, no se da por estable."
     },
     {
       "number": 14,
@@ -188,19 +224,19 @@
       "number": 20,
       "key": "sources",
       "title": "Fuentes",
-      "markdown": "- Google Cloud: *Datastream overview*; *Create tables* (Dataform); *Programming model for Apache Beam* (Dataflow).\n\nEl detalle de cada fuente está en `sources` del frontmatter."
+      "markdown": "- Google Cloud: *Datastream overview*; *Create tables* (Dataform); *Programming model for Apache Beam* (Dataflow).\n- AWS: *What is AWS Glue?*; *MERGE* (Amazon Redshift).\n- Microsoft Learn: *Introduction to Azure Data Factory*; *What is Data Factory* (Microsoft Fabric).\n\nEl detalle de cada fuente está en `sources` del frontmatter."
     },
     {
       "number": 21,
       "key": "last_verified",
       "title": "Fecha de última verificación",
-      "markdown": "2026-09-30. Hay dos puntos VERIFY (AWS y Azure). La ficha queda en `review_required` hasta la revisión humana (B-F3.1)."
+      "markdown": "2026-09-30. Los dos puntos VERIFY (AWS y Azure) se resolvieron con documentación oficial. La ficha queda en `review_required` hasta que Felipe la marque como verificada."
     },
     {
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: VERIFY de AWS (Glue, Redshift) y de Azure (Data Factory frente a Fabric) resueltos con documentación oficial."
     }
   ]
 }

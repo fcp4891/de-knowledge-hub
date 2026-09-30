@@ -571,3 +571,22 @@ created_at: '2026-09-30'
 updated_at: '2026-09-30'
 last_verified: '2026-09-30'
 verification_status: verified
+---
+id: source:aws-glue-docs
+slug: aws-glue-docs
+type: source
+title: AWS Glue Developer Guide
+description: Guía oficial para desarrolladores de AWS Glue.
+url: https://docs.aws.amazon.com/glue/latest/dg/what-is-glue.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- aws-glue
+created_at: '2026-09-30'
+updated_at: '2026-09-30'
+last_verified: '2026-09-30'
+verification_status: verified

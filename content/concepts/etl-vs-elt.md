@@ -27,6 +27,22 @@ sources:
     url: https://docs.cloud.google.com/dataflow/docs/concepts/beam-programming-model
     accessed: 2026-09-30
     note: Apache Beam, modelo unificado para pipelines batch y streaming, ejecutado en Dataflow.
+  - source: aws-glue-docs
+    url: https://docs.aws.amazon.com/glue/latest/dg/what-is-glue.html
+    accessed: 2026-09-30
+    note: AWS Glue es un servicio serverless de integración de datos; permite crear, ejecutar y monitorear pipelines ETL que cargan datos en data lakes.
+  - source: aws-redshift-docs
+    url: https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html
+    accessed: 2026-09-30
+    note: Redshift ejecuta DML como MERGE, lo que permite transformar con SQL dentro del warehouse.
+  - source: microsoft-learn
+    url: https://learn.microsoft.com/en-us/azure/data-factory/introduction
+    accessed: 2026-09-30
+    note: Microsoft presenta Data Factory en Microsoft Fabric como la siguiente generación de Azure Data Factory; recomienda empezar por Fabric y permite migrar cargas de ADF.
+  - source: microsoft-learn
+    url: https://learn.microsoft.com/en-us/fabric/data-factory/data-factory-overview
+    accessed: 2026-09-30
+    note: Data Factory en Microsoft Fabric integra y transforma datos dentro de Fabric.
 relations:
   - type: RELATED_TO
     target: incremental-load
@@ -113,15 +129,14 @@ GROUP BY dia;
 
 ## 12. AWS
 
-El patrón ELT se aplica sobre **Redshift**, y el ETL suele hacerse con Glue o EMR antes de cargar.
+- **AWS Glue** es, según su documentación, un servicio serverless de integración de datos para crear, ejecutar y monitorear pipelines ETL que cargan datos en data lakes: es la pieza habitual cuando hay que transformar **antes** de cargar.
+- En **Redshift**, la transformación **dentro** del warehouse se hace con SQL, incluido `MERGE`: es el lado ELT.
 
-<!-- VERIFY: posicionamiento actual de Glue y de las transformaciones dentro de Redshift en la documentación de AWS; esta sección no cita afirmaciones de producto más allá de su rol. -->
+No son lo mismo que Dataflow y Dataform: el reparto de funciones es parecido, pero cambian el modelo de ejecución, el lenguaje y la facturación.
 
 ## 13. Azure
 
-En Azure y Microsoft Fabric, el mismo par se da con Data Factory o los pipelines de Fabric para mover y transformar, y con SQL en Fabric Warehouse o Synapse para transformar dentro.
-
-<!-- VERIFY: rol actual de Data Factory frente a Fabric (ecosistema en evolución; ver azure-analytics-landscape). -->
+En Azure, Microsoft presenta **Data Factory en Microsoft Fabric** como la siguiente generación de Azure Data Factory: recomienda empezar por Fabric y permite migrar las cargas de ADF existentes (documentación consultada el 2026-09-30). El reparto sigue el mismo par: Data Factory mueve y transforma antes de cargar, y el SQL de Fabric Warehouse (o de Synapse en instalaciones existentes) transforma dentro. Es un ecosistema en evolución: esta sección se revisa con las fuentes, no se da por estable.
 
 ## 14. Buenas prácticas
 
@@ -162,14 +177,17 @@ Pendiente (F4): arquitectura "API → Data Warehouse" (§24).
 ## 20. Fuentes
 
 - Google Cloud: *Datastream overview*; *Create tables* (Dataform); *Programming model for Apache Beam* (Dataflow).
+- AWS: *What is AWS Glue?*; *MERGE* (Amazon Redshift).
+- Microsoft Learn: *Introduction to Azure Data Factory*; *What is Data Factory* (Microsoft Fabric).
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-09-30. Hay dos puntos VERIFY (AWS y Azure). La ficha queda en `review_required` hasta la revisión humana (B-F3.1).
+2026-09-30. Los dos puntos VERIFY (AWS y Azure) se resolvieron con documentación oficial. La ficha queda en `review_required` hasta que Felipe la marque como verificada.
 
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 1 de F3).
 - 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.
+- 2026-09-30: VERIFY de AWS (Glue, Redshift) y de Azure (Data Factory frente a Fabric) resueltos con documentación oficial.

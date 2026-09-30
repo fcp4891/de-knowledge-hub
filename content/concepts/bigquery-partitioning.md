@@ -31,6 +31,10 @@ sources:
     url: https://docs.cloud.google.com/bigquery/docs/creating-partitioned-tables
     accessed: 2026-09-30
     note: Ejemplos oficiales de CREATE TABLE con RANGE_BUCKET(customer_id, GENERATE_ARRAY(0, 100, 10)), partition_expiration_days y require_partition_filter.
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/quotas
+    accessed: 2026-09-30
+    note: Cada tabla particionada admite hasta 10.000 particiones; si se supera, la documentación sugiere usar clustering además o en lugar de la partición.
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/partitions.html
     accessed: 2026-09-30
@@ -95,10 +99,8 @@ Según la documentación, conviene particionar cuando se quiere:
 ## 6. Cuándo no utilizarlo
 
 - Tablas pequeñas, donde el beneficio es mínimo.
-- Una granularidad tan fina que la tabla alcanzaría el máximo de particiones por tabla. La documentación recomienda entonces una granularidad más gruesa (mensual en vez de diaria) combinada con clustering.
+- Una granularidad tan fina que la tabla superaría el máximo de **10.000 particiones por tabla** (cuota vigente al 2026-09-30). La documentación recomienda entonces una granularidad más gruesa (mensual en vez de diaria) o clustering además o en lugar de la partición.
 - Filtros que casi nunca usan la columna de partición: no habrá pruning.
-
-<!-- VERIFY: valor numérico actual del máximo de particiones por tabla en la página de cuotas de BigQuery (no se cita aquí). -->
 
 ## 7. Ejemplo sencillo
 
@@ -201,17 +203,18 @@ Pendiente (F4): lab de tipo C "Una consulta BigQuery procesa 4 TB diariamente. A
 
 ## 20. Fuentes
 
-- Google Cloud: *Introduction to partitioned tables* y *DML statements in GoogleSQL* (BigQuery).
-- AWS: *Partition your data* (Amazon Athena).
+- Google Cloud: *Introduction to partitioned tables*, *Create partitioned tables*, *Data definition language*, *DML statements in GoogleSQL* y *Quotas and limits* (BigQuery).
+- AWS: *Partition your data* (Amazon Athena); *Sort keys* y *Data distribution for query optimization* (Amazon Redshift).
 - Microsoft Learn: *Partitioning tables in dedicated SQL pool* (Azure Synapse).
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-09-30. Queda un punto VERIFY: el valor numérico del máximo de particiones por tabla. La ficha queda en `review_required` hasta la revisión humana (B-F3.1).
+2026-09-30. El VERIFY del máximo de particiones se resolvió con la página de cuotas (10.000 por tabla). La ficha queda en `review_required` hasta que Felipe la marque como verificada.
 
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 1 de F3).
 - 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.
+- 2026-09-30: VERIFY resuelto: máximo de 10.000 particiones por tabla (página de cuotas).
