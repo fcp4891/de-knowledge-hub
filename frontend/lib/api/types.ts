@@ -12,6 +12,13 @@ export type StudyStatus = components["schemas"]["StudyStatus"];
 export type Classification = components["schemas"]["Classification"];
 export type Level = components["schemas"]["Level"];
 export type SearchResults = components["schemas"]["SearchResults"];
+export type TechnologyDetail = components["schemas"]["TechnologyDetail"];
+export type RelationGroups = components["schemas"]["RelationGroups"];
+export type CapabilityCell = components["schemas"]["CapabilityCell"];
+export type SourceRef = components["schemas"]["SourceRef"];
+export type EntityType = components["schemas"]["EntityType"];
+export type VerificationStatus = components["schemas"]["VerificationStatus"];
+export type Section = components["schemas"]["Section"];
 
 export type ApiResult<T> =
   | { ok: true; data: T }

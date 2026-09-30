@@ -1,12 +1,13 @@
-import Link from "next/link";
-
-import { ConceptMeta } from "@/components/ConceptMeta";
+import { CardHeader } from "@/components/card/CardHeader";
+import { ConceptBody } from "@/components/card/ConceptBody";
+import { RelationPanel } from "@/components/card/RelationPanel";
+import { SourceList } from "@/components/card/SourceList";
 import { MockMiss } from "@/components/MockMiss";
-import { getConcept } from "@/lib/api/client";
+import { getConcept, getRelations } from "@/lib/api/client";
 
 export default async function ConceptPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const concept = await getConcept(slug);
+  const [concept, relations] = await Promise.all([getConcept(slug), getRelations(slug)]);
 
   if (!concept.ok) {
     return (
@@ -20,21 +21,24 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
 
   return (
     <div className="page">
-      {data.domain ? (
-        <p className="meta">
-          <Link href={`/explorer/${data.domain}`}>Volver al dominio</Link>
-        </p>
-      ) : null}
-      <h1>{data.title}</h1>
-      {data.classification && data.level ? (
-        <ConceptMeta classification={data.classification} level={data.level} mvp={data.mvp} />
-      ) : null}
-      {data.description ? <p>{data.description}</p> : null}
-      <p className="meta">
-        <span>{data.verification_status ?? "sin verificación"}</span>
-        <span>{data.last_verified ?? "sin fecha"}</span>
-        <span>{data.has_page ? "con ficha" : "sin ficha"}</span>
-      </p>
+      <CardHeader
+        title={data.title}
+        description={data.description}
+        classification={data.classification}
+        level={data.level}
+        mvp={data.mvp}
+        lastVerified={data.last_verified}
+        verificationStatus={data.verification_status}
+        backHref={data.domain ? `/explorer/${data.domain}` : undefined}
+        backLabel="Volver al dominio"
+      />
+      <div className="card-layout">
+        <div className="sections">
+          <ConceptBody sections={data.sections} omitSourceSection={data.sources.length > 0} />
+          <SourceList sources={data.sources} />
+        </div>
+        <RelationPanel result={relations} />
+      </div>
     </div>
   );
 }

@@ -5,9 +5,11 @@ import type {
   ConceptList,
   DomainDetail,
   DomainList,
+  RelationGroups,
   SearchResults,
   StudyStateList,
   StudyStatus,
+  TechnologyDetail,
 } from "./types";
 
 export function isMockMode(): boolean {
@@ -46,6 +48,16 @@ export function listConcepts(): Promise<ApiResult<ConceptList>> {
 
 export function getConcept(slug: string): Promise<ApiResult<ConceptDetail>> {
   const resource = `/concepts/${slug}`;
+  return apiGet(`GET ${resource}`, resource);
+}
+
+export function getTechnology(slug: string): Promise<ApiResult<TechnologyDetail>> {
+  const resource = `/technologies/${slug}`;
+  return apiGet(`GET ${resource}`, resource);
+}
+
+export function getRelations(slug: string): Promise<ApiResult<RelationGroups>> {
+  const resource = `/entities/${slug}/relations`;
   return apiGet(`GET ${resource}`, resource);
 }
 
