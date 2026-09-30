@@ -2,11 +2,12 @@
 
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
+**Fase:** F2 (F1 cerrada el 2026-09-29)
 **Última actualización:** 2026-09-29
 
 ## Actual
-- **Tarea activa:** —
-- **Siguiente:** B-F2.1 · Scaffold, Home y Explorer, cuando Carril A publique el contrato (A-F2.1).
+- **Tarea activa:** — en espera del contrato de API de Carril A.
+- **Siguiente:** B-F2.1 · Scaffold, Home y Explorer, cuando Carril A publique el contrato (A-F2.1). Este carril no edita `content/blueprint/`.
 - **Bloqueos:** espera `docs/contracts/api.yaml` y `docs/contracts/mock-data/` (A-F2.1).
 
 ## Pedidos a Carril A
@@ -18,6 +19,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F1b · Revisión de los MVP de 03, 06 y 12
+- Revisión de los `mvp: true` de los dominios 03, 06 y 12 en `docs/reviews/`. Todas las filas aprobadas, salvo `catchup` (fila 3 de `docs/reviews/blueprint-06.md`), rechazada: sigue `core` porque el §8 lo lista como concepto independiente de proveedor.
 
 ### B-F1.3 · Fuentes y ADR-001
 - `docs/adr/ADR-001-stack.md`, **Aceptado** en el gate F1.
