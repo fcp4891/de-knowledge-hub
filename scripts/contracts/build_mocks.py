@@ -42,6 +42,11 @@ NOTE = {
     "body_markdown": "Revisar qué pasa con los replication slots si el consumidor se detiene un fin de semana.",
     "created_at": "2026-09-29T10:05:00Z", "updated_at": "2026-09-29T10:05:00Z",
 }
+NOTE_UPDATED = {
+    **NOTE,
+    "body_markdown": NOTE["body_markdown"] + " Confirmado: el WAL retenido crece hasta que el slot se consume o se elimina.",
+    "updated_at": "2026-09-30T08:00:00Z",
+}
 FAVORITE = {"slug": "change-data-capture", "favorite": True, "updated_at": "2026-09-29T10:06:00Z"}
 
 
@@ -98,6 +103,7 @@ def write_me(w: MockWriter) -> None:
             {"slug": "etl-vs-elt", "state": "not_reviewed", "pending_deep_dive": False, "last_studied_at": None, "updated_at": None})
     w.write("GET /me/notes/change-data-capture", "me/notes/change-data-capture.json", {"slug": "change-data-capture", "items": [NOTE]})
     w.write("POST /me/notes/change-data-capture", "me/notes/change-data-capture.created.json", NOTE)
+    w.write("PUT /me/notes/change-data-capture/note-0001", "me/notes/change-data-capture.updated.json", NOTE_UPDATED)
     w.write("GET /me/favorites", "me/favorites.json", {"total": 1, "limit": 50, "offset": 0, "items": [FAVORITE]})
     w.write("GET /me/favorites/change-data-capture", "me/favorites/change-data-capture.json", FAVORITE)
     w.write("PUT /me/favorites/change-data-capture", "me/favorites/change-data-capture.json", FAVORITE)

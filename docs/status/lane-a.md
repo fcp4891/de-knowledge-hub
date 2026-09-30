@@ -5,15 +5,17 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-09-29
 
 ## Actual
-- **Tarea activa:** A-F2.4 · Estado personal `/me` (plan pendiente de aprobación).
+- **Tarea activa:** — (A-F2.4 cerrada y mergeada en `main`; Carril A terminó sus tareas de F2)
 - **Mergeado para Carril B:** `b/f2-cards` (3e50c05) en `main`, 2026-09-30.
-- **Siguiente:** A-F2.4 · Estado personal (`/me`).
+- **Siguiente:** gate de F2.
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
 
 ## Pedidos a Carril B
 | Pedido | Estado |
 |---|---|
+| **`/me` real disponible (A-F2.4): ya se puede quitar el mock de `/me`.** Con `make db-up && make build && make dev`, toda la API (conocimiento, búsqueda y `/me`) sirve datos reales en `http://localhost:8000/api/v1`. Ver ADR-006: `last_studied_at` lo envía el cliente (si no viene se conserva); un slug sin registro devuelve `not_reviewed` | Abierto |
+| **Cambio de contrato (notas, ADR-006, aditivo):** nuevos `PUT /me/notes/{slug}/{note_id}` (cuerpo `NoteUpdate`, devuelve `Note`) y `DELETE /me/notes/{slug}/{note_id}` (204). Nuevo mock `me/notes/change-data-capture.updated.json`. Regenerar el cliente tipado (también cubre el `422` de ADR-005) | Abierto |
 | **API real disponible (A-F2.3).** `make db-up && make build && make dev` → `http://localhost:8000/api/v1` (CORS para `http://localhost:3000`). Sirve exactamente los mocks de conocimiento. Excepciones: `/search` (FTS real; los mocks de búsqueda solo son ejemplos de forma, ADR-005) y `/me` (sigue en mock hasta A-F2.4) | Abierto |
 | **Regenerar el cliente tipado** (`frontend/lib/api/schema.d.ts`): el contrato declara ahora `422` (problem+json) en todas las operaciones con parámetros (ADR-005, cambio aditivo) | Abierto |
 | **`b/f2-frontend` (dae1677) mergeada en `main`** (merge 947cbd1, 2026-09-30). Traer `main` a la rama de trabajo de Carril B antes de B-F2.2 | Informativo |
@@ -32,6 +34,13 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Enumeración `category`, `mvp` y `note` en tecnologías, y `matrix.schema.json` (ADR-004).
 
 ## Historial
+
+### A-F2.4 · Estado personal /me (2026-09-30)
+- Migración `0003`: `me_study_states`, `me_notes`, `me_favorites`, con `user_id` fijo `default` en la PK. Sin FK a contenido: el compilador nunca las toca.
+- `backend/app/personal.py` (SQL por petición, upserts) y `routers/me.py` (cuerpos validados con Pydantic). 404 si el slug no es concepto ni tecnología.
+- Estado de slugs que ya no existen: se conserva, se oculta de los listados y su `GET` da 404. `last_studied_at` lo fija el cliente.
+- Contrato: `PUT` y `DELETE /me/notes/{slug}/{note_id}` (aditivo). ADR-006.
+- 44 tests contra PostgreSQL real: mocks de `/me` reproducidos (salvo campos del servidor), contrato, semántica de estados, notas y favoritos, independencia del compilador, huérfanos.
 
 ### A-F2.3 · API FastAPI y búsqueda FTS (2026-09-30)
 - `backend/app/`: routers por recurso (domains, concepts, technologies, relations, sources, search), repositorio con índice en memoria leído de PostgreSQL (se recarga si cambia `content_files`), errores `problem+json`, CORS y `/openapi.json` = contrato. `make dev`.

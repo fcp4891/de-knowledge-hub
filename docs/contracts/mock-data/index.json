@@ -72,5 +72,6 @@
   "GET /technologies?limit=500": "technologies.json",
   "POST /me/notes/change-data-capture": "me/notes/change-data-capture.created.json",
   "PUT /me/favorites/change-data-capture": "me/favorites/change-data-capture.json",
+  "PUT /me/notes/change-data-capture/note-0001": "me/notes/change-data-capture.updated.json",
   "PUT /me/study-state/change-data-capture": "me/study-state/change-data-capture.json"
 }

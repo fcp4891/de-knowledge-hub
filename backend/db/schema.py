@@ -12,6 +12,7 @@ from __future__ import annotations
 from sqlalchemy import (
     ARRAY,
     Boolean,
+    CheckConstraint,
     Column,
     Date,
     DateTime,
@@ -202,4 +203,52 @@ search_documents = Table(
     file_fk(),
     Index("ix_search_documents_tsv_es", "tsv_es", postgresql_using="gin"),
     Index("ix_search_documents_tsv_en", "tsv_en", postgresql_using="gin"),
+)
+
+
+# --- Estado personal (§37, A-F2.4, ADR-006) ----------------------------------
+# Dato de uso, NO derivado de content/ (ADR-000): sin FK a content_files ni a entities; el compilador
+# nunca lo toca. user_id existe para un futuro multiusuario; hoy siempre vale "default".
+
+STUDY_STATES = ("not_reviewed", "reviewing", "understood", "applied", "needs_review")
+DEFAULT_USER = "default"
+
+
+def user_column() -> Column[str]:
+    return Column("user_id", String(50), primary_key=True, server_default=DEFAULT_USER)
+
+
+me_study_states = Table(
+    "me_study_states",
+    metadata,
+    user_column(),
+    Column("slug", String(100), primary_key=True),
+    Column("state", String(20), nullable=False),
+    Column("pending_deep_dive", Boolean, nullable=False, server_default="false"),
+    Column("last_studied_at", DateTime(timezone=True)),
+    Column("updated_at", DateTime(timezone=True), nullable=False),
+    CheckConstraint(f"state IN ({', '.join(repr(s) for s in STUDY_STATES)})", name="ck_me_study_states_state"),
+    Index("ix_me_study_states_user_updated", "user_id", "updated_at"),
+)
+
+me_notes = Table(
+    "me_notes",
+    metadata,
+    user_column(),
+    Column("id", String(64), primary_key=True),
+    Column("slug", String(100), nullable=False),
+    Column("body_markdown", Text, nullable=False),
+    Column("created_at", DateTime(timezone=True), nullable=False),
+    Column("updated_at", DateTime(timezone=True), nullable=False),
+    Index("ix_me_notes_user_slug_created", "user_id", "slug", "created_at"),
+)
+
+me_favorites = Table(
+    "me_favorites",
+    metadata,
+    user_column(),
+    Column("slug", String(100), primary_key=True),
+    Column("favorite", Boolean, nullable=False),
+    Column("updated_at", DateTime(timezone=True), nullable=False),
+    Index("ix_me_favorites_user_updated", "user_id", "updated_at"),
 )

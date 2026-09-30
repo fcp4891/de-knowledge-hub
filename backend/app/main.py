@@ -2,7 +2,7 @@
 
 /openapi.json devuelve docs/contracts/api.yaml, no un esquema generado: el contrato es la
 referencia. Las respuestas de conocimiento salen de la proyección sobre el índice en memoria
-leído de PostgreSQL; /search consulta PostgreSQL FTS. /me llega en A-F2.4.
+leído de PostgreSQL; /search consulta PostgreSQL FTS; /me usa SQL por petición (ADR-006).
 Arranque local: make dev.
 """
 
@@ -19,13 +19,13 @@ from sqlalchemy import Engine
 
 from backend.app import errors
 from backend.app.repository import KnowledgeRepository
-from backend.app.routers import concepts, domains, relations, search, sources, technologies
+from backend.app.routers import concepts, domains, me, relations, search, sources, technologies
 from backend.db.config import make_engine
 
 ROOT = Path(__file__).resolve().parents[2]
 CONTRACT = ROOT / "docs" / "contracts" / "api.yaml"
 API_PREFIX = "/api/v1"
-ROUTERS = (domains, concepts, technologies, relations, sources, search)
+ROUTERS = (domains, concepts, technologies, relations, sources, search, me)
 
 
 def cors_origins() -> list[str]:
@@ -43,7 +43,7 @@ def create_app(engine: Engine | None = None) -> FastAPI:
     app = FastAPI(title="Data Engineering Knowledge Hub API", version="0.1.0")
     app.state.repository = KnowledgeRepository(engine or make_engine(), ROOT / "schemas")
     app.add_middleware(
-        CORSMiddleware, allow_origins=cors_origins(), allow_methods=["GET", "PUT", "POST"], allow_headers=["*"]
+        CORSMiddleware, allow_origins=cors_origins(), allow_methods=["GET", "PUT", "POST", "DELETE"], allow_headers=["*"]
     )
     errors.install(app)
     for module in ROUTERS:
