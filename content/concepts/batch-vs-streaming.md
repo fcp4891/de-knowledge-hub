@@ -52,7 +52,7 @@ relations:
 created_at: 2026-09-30
 updated_at: 2026-09-30
 last_verified: 2026-09-30
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -182,10 +182,11 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-09-30. El VERIFY de Kinesis (modos de capacidad y retención) se resolvió con documentación oficial. La ficha queda en `review_required` hasta que Felipe la marque como verificada.
+2026-09-30. El VERIFY de Kinesis (modos de capacidad y retención) se resolvió con documentación oficial. Pasa a `verified`: revisión B-F3.1 aprobada y aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 1 de F3).
 - 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.
 - 2026-09-30: VERIFY resuelto: modos de capacidad y retención de Kinesis Data Streams.
+- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).

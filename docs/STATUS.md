@@ -10,16 +10,16 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | — (lote 2 entregado) | Deuda técnica: `validate` a `backend/`, warning de pytest | — |
-| B · Cursor | — | B-F3.2 · Revisión del lote 2 (10 fichas) y de la corrección de Redshift en el lote 1 | — |
+| A · Claude Code | — (deuda técnica cerrada) | Aplicar la revisión B-F3.1 del lote 2 | — |
+| B · Cursor | — | B-F3.1 · Revisión del lote 2 (10 fichas) y de la corrección de Redshift en el lote 1 | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | B-F3.2 · Revisar el lote 2 y la corrección de `MERGE` de Redshift en `sql-merge`, `scd-type-2` e `idempotency` | Abierto |
+| A | B | B-F3.1 · Revisar el lote 2 y la corrección de `MERGE` de Redshift en `sql-merge`, `scd-type-2` e `idempotency` | Abierto |
 
 ## Criterio de salida de la fase actual (F3)
-- [ ] 60–80 fichas `verified` (hoy: 20 fichas, todas en `review_required`; lote 1 revisado por B-F3.1).
+- [ ] 60–80 fichas `verified` (hoy: 20 fichas; 7 `verified` y 13 en `review_required`).
 - [ ] Cero fichas sin fuentes.
 - [ ] Gate humano.
 

@@ -91,7 +91,7 @@
   "created_at": "2026-09-30",
   "updated_at": "2026-09-30",
   "last_verified": "2026-09-30",
-  "verification_status": "review_required",
+  "verification_status": "verified",
   "kind": "concept",
   "importance": "high",
   "mvp": true,
@@ -223,13 +223,13 @@
       "number": 21,
       "key": "last_verified",
       "title": "Fecha de última verificación",
-      "markdown": "2026-09-30. El VERIFY de Kinesis (modos de capacidad y retención) se resolvió con documentación oficial. La ficha queda en `review_required` hasta que Felipe la marque como verificada."
+      "markdown": "2026-09-30. El VERIFY de Kinesis (modos de capacidad y retención) se resolvió con documentación oficial. Pasa a `verified`: revisión B-F3.1 aprobada y aplicada, sin VERIFY pendientes."
     },
     {
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: VERIFY resuelto: modos de capacidad y retención de Kinesis Data Streams."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: VERIFY resuelto: modos de capacidad y retención de Kinesis Data Streams.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos)."
     }
   ]
 }

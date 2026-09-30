@@ -56,7 +56,7 @@ relations:
 created_at: 2026-09-28
 updated_at: 2026-09-30
 last_verified: 2026-09-30
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -192,10 +192,11 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-09-30. Las afirmaciones de producto se contrastaron con las páginas oficiales citadas. La ficha queda en `review_required` hasta la revisión humana (B-F3.1).
+2026-09-30. Las afirmaciones de producto se contrastaron con las páginas oficiales citadas. Pasa a `verified`: revisión B-F3.1 aprobada y aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-09-28: creación como ficha de ejemplo de F0.
 - 2026-09-30: lote 1 de F3. Secciones de GCP, AWS y Azure verificadas con documentación oficial; ejemplo de MERGE con deduplicación; reenvío de cambios tras un crash.
 - 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.
+- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).
