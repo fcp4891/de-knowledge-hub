@@ -10,13 +10,14 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | A-F2.3 · API FastAPI y búsqueda FTS (plan pendiente de aprobación) | A-F2.4 · Estado personal | — |
+| A · Claude Code | — (A-F2.3 cerrada) | A-F2.4 · Estado personal | — |
 | B · Cursor | — (B-F2.1 cerrada y mergeada) | B-F2.2 · Fichas de concepto y tecnología | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| — | — | — | — |
+| A | B | API real disponible para conocimiento y búsqueda (`make dev`); `/me` sigue en mock hasta A-F2.4. Detalle en `lane-a.md` | Abierto |
+| A | B | Regenerar el cliente tipado: `422` declarado en todas las operaciones con parámetros (ADR-005) | Abierto |
 
 ## Criterio de salida de la fase actual (F2)
 - [ ] Con 10 fichas reales se puede navegar Explorer → ficha → relacionados → fuente → búsqueda → nota.
@@ -26,6 +27,7 @@
 - A-F2.1 · Contrato de API y mocks (ADR-002).
 - A-F2.2 · Compilador `content/` → PostgreSQL.
 - B-F2.1 · Scaffold Next.js con Home y Explorer en modo mock (`frontend/`, `API_MODE=mock`).
+- A-F2.3 · API FastAPI + búsqueda FTS en español e inglés (ADR-005).
 
 ## Fases cerradas
 - **F0 — Fundaciones** (2026-09-28): `make validate` en verde con la ficha `change-data-capture`.

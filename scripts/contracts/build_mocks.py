@@ -14,7 +14,7 @@ import shutil
 from pathlib import Path
 from typing import Any
 
-from scripts.contracts import projection as p
+from backend.app import projection as p
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "docs" / "contracts" / "mock-data"

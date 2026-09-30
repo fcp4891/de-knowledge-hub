@@ -7,63 +7,22 @@ un motivo explícito; la tarea no se da por cerrada con estos tests omitidos.
 
 from __future__ import annotations
 
-import shutil
-import uuid
-from collections.abc import Iterator
 from pathlib import Path
 from typing import Any
 
 import pytest
-from alembic import command
 from alembic.autogenerate import compare_metadata
-from alembic.config import Config
 from alembic.migration import MigrationContext
-from sqlalchemy import Engine, create_engine, make_url, select, text
+from sqlalchemy import Engine, select, text
 
 from backend.db import schema as t
 from backend.db.compiler import CompileError, compile_content
-from backend.db.config import database_url
 from backend.db.reader import load_index_from_db
 from scripts.contracts import build_mocks
 
 ROOT = Path(__file__).resolve().parent.parent
 SCHEMAS = ROOT / "schemas"
 SNAPSHOT_EXCLUDED = {("content_files", "compiled_at"), ("edges", "id")}
-
-
-def admin_engine() -> Engine:
-    url = make_url(database_url()).set(database="postgres")
-    return create_engine(url, isolation_level="AUTOCOMMIT")
-
-
-@pytest.fixture
-def engine() -> Iterator[Engine]:
-    admin = admin_engine()
-    try:
-        with admin.connect() as conn:
-            conn.execute(text("select 1"))
-    except Exception as exc:  # noqa: BLE001 - cualquier fallo de conexión implica omitir
-        pytest.skip(f"PostgreSQL no disponible ({database_url()}): {exc.__class__.__name__}")
-    name = f"dekh_test_{uuid.uuid4().hex[:10]}"
-    with admin.connect() as conn:
-        conn.execute(text(f'CREATE DATABASE "{name}"'))
-    url = make_url(database_url()).set(database=name)
-    config = Config(str(ROOT / "alembic.ini"))
-    config.set_main_option("sqlalchemy.url", url.render_as_string(hide_password=False))
-    command.upgrade(config, "head")
-    engine = create_engine(url)
-    yield engine
-    engine.dispose()
-    with admin.connect() as conn:
-        conn.execute(text(f'DROP DATABASE "{name}" WITH (FORCE)'))
-    admin.dispose()
-
-
-@pytest.fixture
-def content(tmp_path: Path) -> Path:
-    copy = tmp_path / "content"
-    shutil.copytree(ROOT / "content", copy)
-    return copy
 
 
 def snapshot(engine: Engine) -> dict[str, list[tuple[Any, ...]]]:

@@ -19,14 +19,19 @@ from pathlib import Path
 from typing import Any
 
 import yaml
-from sqlalchemy import Connection, Engine, delete, insert, select
+from sqlalchemy import Connection, Engine, cast, delete, func, insert, literal, literal_column, select
+from sqlalchemy.dialects.postgresql import REGCONFIG, TSVECTOR
+from sqlalchemy.sql.elements import ColumnElement
 
 from backend.db import schema as t
 from scripts import validate as v
-from scripts.contracts.projection import markdown_body, sections
+from backend.app.projection import markdown_body, sections
 
-COMPILER_VERSION = "1"
+COMPILER_VERSION = "2"  # 2: search_documents (A-F2.3)
 TECHNOLOGY_TYPES = {"technology", "cloud_service"}
+SEARCHABLE_TYPES = {"concept", "pattern", "architecture", "technology", "cloud_service", "source"}
+SEARCH_CONFIGS = {"tsv_es": "es_unaccent", "tsv_en": "en_unaccent"}
+WEIGHTS = ("A", "B", "C", "D")
 
 
 class CompileError(Exception):
@@ -88,6 +93,8 @@ def insert_entity(conn: Connection, file_path: str, position: int, data: dict[st
         stub=data.get("stub", False), data=data, body_markdown=body, position=position, file_path=file_path,
     ))
     insert_typed(conn, data, body)
+    if data["type"] in SEARCHABLE_TYPES:
+        insert_search_document(conn, file_path, "entity", entity_search_document(data, body))
     for i, ref in enumerate(data.get("sources", [])):
         conn.execute(insert(t.entity_sources).values(
             entity_slug=data["slug"], position=i, source_slug=ref["source"], url=ref.get("url"),
@@ -115,6 +122,52 @@ def insert_typed(conn: Connection, data: dict[str, Any], body: str | None) -> No
             slug=slug, importance=data.get("importance"), category=data.get("category"),
             section_count=len(sections(body or "")),
         ))
+
+
+def weighted_tsvector(config: str, parts: list[tuple[str, str]]) -> ColumnElement[Any]:
+    """setweight(to_tsvector(config, texto), peso) concatenado para cada (peso, texto)."""
+    vectors = [
+        func.setweight(
+            func.to_tsvector(cast(literal(config), REGCONFIG), text or ""),
+            literal_column(f"'{weight}'::\"char\""),  # peso fijo A–D, no viene de content/
+            type_=TSVECTOR,
+        )
+        for weight, text in parts
+        if weight in WEIGHTS
+    ]
+    expression = vectors[0]
+    for vector in vectors[1:]:
+        expression = expression.op("||", return_type=TSVECTOR)(vector)
+    return expression
+
+
+def insert_search_document(conn: Connection, file_path: str, origin: str, doc: dict[str, Any]) -> None:
+    """doc: slug, type, title, domain, classification, snippet, tags, summary, body."""
+    # El slug (en inglés) se indexa junto al título (en español): "partitioning" encuentra "Particionamiento".
+    title = f"{doc['title']} {doc['slug'].replace('-', ' ')}"
+    parts = [("A", title), ("B", doc["tags"]), ("C", doc["summary"]), ("D", doc["body"])]
+    conn.execute(insert(t.search_documents).values(
+        slug=doc["slug"], origin=origin, type=doc["type"], title=doc["title"], domain=doc["domain"],
+        classification=doc["classification"], snippet=doc["snippet"][:200], file_path=file_path,
+        **{column: weighted_tsvector(config, parts) for column, config in SEARCH_CONFIGS.items()},
+    ))
+
+
+def entity_search_document(data: dict[str, Any], body: str | None) -> dict[str, Any]:
+    return {
+        "slug": data["slug"], "type": data["type"], "title": data["title"], "domain": data.get("domain"),
+        "classification": data.get("classification"), "snippet": data.get("description") or data["title"],
+        "tags": " ".join(data.get("tags", [])), "summary": data.get("description") or "", "body": body or "",
+    }
+
+
+def concept_search_document(domain: str, concept: dict[str, Any]) -> dict[str, Any]:
+    note = concept.get("note") or ""
+    return {
+        "slug": concept["slug"], "type": concept["kind"], "title": concept["title"], "domain": domain,
+        "classification": concept["classification"], "snippet": note or concept["title"],
+        "tags": "", "summary": note, "body": "",
+    }
 
 
 def insert_edge(
@@ -147,6 +200,7 @@ def insert_concept(
         kind=concept["kind"], title=concept["title"], classification=concept["classification"], level=concept["level"],
         importance=concept["importance"], mvp=concept["mvp"], data=concept, file_path=file_path,
     ))
+    insert_search_document(conn, file_path, "blueprint", concept_search_document(domain, concept))
     targets = [*concept.get("related_concepts", []), *concept.get("related_technologies", [])]
     for i, target in enumerate(targets):
         insert_edge(conn, file_path, i, concept["slug"], "RELATED_TO", target, "blueprint", None)

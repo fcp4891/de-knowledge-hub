@@ -6,3 +6,7 @@ pytest>=8,<10
 sqlalchemy>=2.0,<3        # definición del esquema (Core) y acceso a PostgreSQL
 psycopg[binary]>=3.1,<4   # driver PostgreSQL para SQLAlchemy
 alembic>=1.13,<2          # migraciones versionadas del esquema derivado
+# F2 (A-F2.3): API.
+fastapi>=0.115,<1         # API HTTP (ADR-001)
+uvicorn[standard]>=0.30,<1  # servidor ASGI para make dev
+httpx>=0.27,<1            # cliente HTTP de fastapi.testclient en los tests

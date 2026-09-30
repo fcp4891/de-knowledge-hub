@@ -1,4 +1,4 @@
-"""Proyección de content/ a las representaciones de docs/contracts/api.yaml (ADR-002).
+"""Proyección del ContentIndex a las representaciones de docs/contracts/api.yaml (ADR-002, ADR-005).
 
 Funciones puras sobre un ContentIndex. Las usa build_mocks.py y son la referencia de forma
 para la API real (A-F2.3): la API debe devolver exactamente estas estructuras.
@@ -123,8 +123,17 @@ def page_of(items: list[Any], limit: int, offset: int) -> dict[str, Any]:
     return {"total": len(items), "limit": limit, "offset": offset, "items": items[offset : offset + limit]}
 
 
-def concept_list(index: ContentIndex, limit: int = 50, offset: int = 0) -> dict[str, Any]:
-    return page_of([concept_summary(index, slug) for slug in index.concepts], limit, offset)
+def matches(item: dict[str, Any], filters: dict[str, Any]) -> bool:
+    """True si el item cumple todos los filtros con valor (None = sin filtro)."""
+    return all(item.get(key) == value for key, value in filters.items() if value is not None)
+
+
+def concept_list(
+    index: ContentIndex, limit: int = 50, offset: int = 0, filters: dict[str, Any] | None = None
+) -> dict[str, Any]:
+    """Filtros: domain, subdomain, kind, classification, level, mvp, has_page (claves de ConceptSummary)."""
+    items = [concept_summary(index, slug) for slug in index.concepts]
+    return page_of([i for i in items if matches(i, filters or {})], limit, offset)
 
 
 def sections(body: str) -> list[dict[str, Any]]:
@@ -200,9 +209,13 @@ def technology_summary(tech: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def technology_list(index: ContentIndex, limit: int = 50, offset: int = 0) -> dict[str, Any]:
+def technology_list(
+    index: ContentIndex, limit: int = 50, offset: int = 0, filters: dict[str, Any] | None = None
+) -> dict[str, Any]:
+    """Filtros: type, origin, category, classification, mvp (claves de TechnologySummary)."""
     techs = sorted((e for e in index.entities.values() if e["type"] in TECHNOLOGY_TYPES), key=lambda e: e["slug"])
-    return page_of([technology_summary(t) for t in techs], limit, offset)
+    items = [technology_summary(t) for t in techs]
+    return page_of([i for i in items if matches(i, filters or {})], limit, offset)
 
 
 def capability_cells(index: ContentIndex, slug: str) -> list[dict[str, Any]]:

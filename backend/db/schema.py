@@ -23,7 +23,7 @@ from sqlalchemy import (
     Table,
     Text,
 )
-from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy.dialects.postgresql import JSONB, TSVECTOR
 
 metadata = MetaData()
 
@@ -185,4 +185,21 @@ capability_cells = Table(
     Column("services", ARRAY(String(100)), nullable=False),
     Column("differences", Text, nullable=False),
     Column("not_equivalent_when", Text, nullable=False),
+)
+
+search_documents = Table(
+    "search_documents",
+    metadata,
+    Column("slug", String(100), primary_key=True),
+    Column("origin", String(10), primary_key=True, comment="blueprint | entity"),
+    Column("type", String(30), nullable=False, comment="ResultType del contrato"),
+    Column("title", Text, nullable=False),
+    Column("domain", String(100)),
+    Column("classification", String(20)),
+    Column("snippet", Text, nullable=False),
+    Column("tsv_es", TSVECTOR, nullable=False, comment="Config es_unaccent: título A, tags B, resumen C, cuerpo D."),
+    Column("tsv_en", TSVECTOR, nullable=False, comment="Config en_unaccent, mismos pesos."),
+    file_fk(),
+    Index("ix_search_documents_tsv_es", "tsv_es", postgresql_using="gin"),
+    Index("ix_search_documents_tsv_en", "tsv_en", postgresql_using="gin"),
 )

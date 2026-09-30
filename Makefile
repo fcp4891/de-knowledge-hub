@@ -32,4 +32,4 @@ compile:
 build: validate migrate compile
 
 dev:
-	@echo dev: backend y frontend pendientes en F2
+	$(PYTHON) -m uvicorn backend.app.main:app --reload --port 8000

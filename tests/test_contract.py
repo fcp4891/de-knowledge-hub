@@ -14,7 +14,7 @@ from referencing import Registry
 from referencing.jsonschema import DRAFT202012
 
 from scripts.contracts import build_mocks
-from scripts.contracts import projection as p
+from backend.app import projection as p
 
 ROOT = Path(__file__).resolve().parent.parent
 API = yaml.safe_load((ROOT / "docs/contracts/api.yaml").read_text(encoding="utf-8"))

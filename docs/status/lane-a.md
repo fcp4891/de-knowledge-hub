@@ -5,14 +5,16 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-09-29
 
 ## Actual
-- **Tarea activa:** A-F2.3 · API FastAPI y búsqueda FTS (plan pendiente de aprobación).
-- **Siguiente:** A-F2.3 · API FastAPI y búsqueda FTS.
+- **Tarea activa:** — (A-F2.3 cerrada y mergeada en `main`)
+- **Siguiente:** A-F2.4 · Estado personal (`/me`).
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
 
 ## Pedidos a Carril B
 | Pedido | Estado |
 |---|---|
+| **API real disponible (A-F2.3).** `make db-up && make build && make dev` → `http://localhost:8000/api/v1` (CORS para `http://localhost:3000`). Sirve exactamente los mocks de conocimiento. Excepciones: `/search` (FTS real; los mocks de búsqueda solo son ejemplos de forma, ADR-005) y `/me` (sigue en mock hasta A-F2.4) | Abierto |
+| **Regenerar el cliente tipado** (`frontend/lib/api/schema.d.ts`): el contrato declara ahora `422` (problem+json) en todas las operaciones con parámetros (ADR-005, cambio aditivo) | Abierto |
 | **`b/f2-frontend` (dae1677) mergeada en `main`** (merge 947cbd1, 2026-09-30). Traer `main` a la rama de trabajo de Carril B antes de B-F2.2 | Informativo |
 | **B-F2.1 puede empezar.** Contrato en `docs/contracts/api.yaml` (ADR-002) y mocks en `docs/contracts/mock-data/` (`index.json` asocia `MÉTODO /ruta` con su archivo). Los conceptos salen del blueprint con `has_page`; los que no tienen ficha traen `sections: []`. Si el contrato no alcanza, pedirlo aquí en `lane-b.md`, sin modificarlo | Cerrado (B-F2.1 mergeada) |
 
@@ -29,6 +31,14 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Enumeración `category`, `mvp` y `note` en tecnologías, y `matrix.schema.json` (ADR-004).
 
 ## Historial
+
+### A-F2.3 · API FastAPI y búsqueda FTS (2026-09-30)
+- `backend/app/`: routers por recurso (domains, concepts, technologies, relations, sources, search), repositorio con índice en memoria leído de PostgreSQL (se recarga si cambia `content_files`), errores `problem+json`, CORS y `/openapi.json` = contrato. `make dev`.
+- `projection.py` movido a `backend/app/`; filtros de `/concepts` y `/technologies`.
+- Búsqueda: migración `0002` (`search_documents`, `es_unaccent` / `en_unaccent`, índices GIN); ranking en español e inglés con slug indexado, prefijo de palabra, coincidencia exacta y `core`. ADR-005.
+- Contrato: `422` declarado en todas las operaciones con parámetros (aditivo, ADR-005).
+- Dependencias en requirements: FastAPI, uvicorn, httpx.
+- Tests contra PostgreSQL real: 61 respuestas idénticas a sus mocks (todas las de conocimiento); contrato (incluidos 404/422 y búsqueda); filtros contra `content/`; ranking FTS; recarga tras recompilar.
 
 ### A-F2.2 · Compilador content/ → PostgreSQL (2026-09-30)
 - `backend/db/schema.py` (SQLAlchemy Core) + migración Alembic `0001_initial`, que coincide con el esquema: lo verifica un test.

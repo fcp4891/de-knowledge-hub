@@ -13,7 +13,7 @@ from sqlalchemy import Connection, Engine, select
 
 from backend.db import schema as t
 from scripts import validate as v
-from scripts.contracts.projection import BlueprintEntry, ContentIndex
+from backend.app.projection import BlueprintEntry, ContentIndex
 
 
 def read_entities(conn: Connection, index: ContentIndex) -> None:
