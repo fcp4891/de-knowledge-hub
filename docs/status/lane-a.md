@@ -5,8 +5,8 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-01
 
 ## Actual
-- **Tarea activa:** — (lote 4 de F3 entregado).
-- **Mergeado para Carril B:** `b/f3-graph` (ce313db) y `b/f3-review-3` (3f35a80) en `main`, 2026-10-01.
+- **Tarea activa:** lote 5 de F3, plan pendiente de aprobación.
+- **Mergeado para Carril B:** `b/f3-snippets-ui` (a6237d2) y `b/f3-review-4` (f95b495) en `main`, 2026-10-01.
 - **Siguiente:** aplicar la revisión B-F3.1 del lote 4 cuando esté aprobada y, en ese mismo commit, crear los snippets `terraform-gcs-bucket` y `terraform-bigquery-iam` (recursos IAM de miembro, aditivos). Snippets: siguen en `review_required` hasta `docs/reviews/snippets-1.md`. Lote 5: `batch-ingestion` y `python-logging` entre otras. Arquitecturas (`cdc-architecture`, `batch-pipeline-architecture`) quedan para F4.
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
@@ -14,8 +14,9 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 ## Pedidos a Carril B
 | Pedido | Estado |
 |---|---|
-| **B-F3.1 · Revisar el lote 4** (10 fichas en `review_required`): `infrastructure-as-code`, `terraform-providers`, `terraform-state`, `terraform-plan-apply`, `gcs-buckets-and-objects`, `gcp-iam-for-data`, `dimension-tables`, `python-api-consumption`, `scheduler` y `file-ingestion`. Sin VERIFY abiertos. Revisar también la §10 nueva de `pubsub-delivery-semantics` (consumidor real de Pub/Sub) | Abierto |
-| **B-F3.1 · Revisar los snippets** (`docs/reviews/snippets-1.md`): los 8 de la Code Library siguen en `review_required` | Abierto |
+| ~~B-F3.1 · Revisar el lote 4~~ (10 fichas): `infrastructure-as-code`, `terraform-providers`, `terraform-state`, `terraform-plan-apply`, `gcs-buckets-and-objects`, `gcp-iam-for-data`, `dimension-tables`, `python-api-consumption`, `scheduler` y `file-ingestion`. Sin VERIFY abiertos. Revisar también la §10 nueva de `pubsub-delivery-semantics` (consumidor real de Pub/Sub) | Cerrado (revisión aplicada; las 40 fichas `verified`) |
+| ~~B-F3.1 · Revisar los snippets~~ (`snippets-1.md`) | Cerrado (los 8 `verified`) |
+| **Revisar 2 snippets nuevos** (`snippets-2.md`): `terraform-gcs-bucket` y `terraform-bigquery-iam` (recursos IAM `*_iam_member`, no autoritativos), en `review_required` | Abierto |
 | **B-F3.2 · Vista `/snippets` (Code Library, ADR-008, cambio aditivo del contrato).** Regenerar el cliente tipado (`npm run generate:api`). Endpoints nuevos: `GET /snippets` (filtros `language`, `cloud`, `implements`; `limit`, `offset`; devuelve `SnippetList`) y `GET /snippets/{slug}` (`SnippetDetail`: metadata común, `language`, `dialect`, `requirements`, `implements` y `sections` con 10 claves fijas: `what_it_solves`, `code`, `how_it_works`, `when_to_use`, `when_not_to_use`, `risks`, `requirements`, `related_concepts`, `sources`, `change_history`). La búsqueda devuelve resultados `type: code_snippet` (`ResultType`). En la ficha de concepto, los snippets salen de `GET /entities/{slug}/relations`, grupo `IMPLEMENTS` entrante (`label: implemented_by`). Mocks: `GET /snippets?limit=500`, `GET /snippets/<slug>` y `GET /entities/<slug>/relations` de los snippets (8 desde el 2026-10-01, con `bigquery-reconciliation`; 107 respuestas en total). **El contrato de snippets ya está en `main`** (ADR-008, a76907b) | Abierto |
 | ~~B-F3.1 · Revisar el lote 3~~ (10 fichas): `clustering`, `python-error-handling-and-retries` (pattern), `slowly-changing-dimensions`, `api-ingestion`, `catchup`, `data-reconciliation` (pattern), `parquet-format`, `schema-evolution`, `surrogate-keys` y `dag`. Sin VERIFY abiertos. Revisar también la regla nueva de niveles (Nivel 4 canónico solo para afirmaciones conceptuales; ver Notas) | Cerrado (revisión aplicada; las 30 fichas `verified`) |
 | ~~B-F3.1 · Revisar el lote 2~~ (10 fichas): `backfill`, `replay`, `retries` (pattern), `pubsub-delivery-semantics`, `data-pipeline`, `incremental-pipelines` (pattern), `late-arriving-data`, `partition-pruning`, `upsert` (pattern) y `bigquery-clustering`. Sin VERIFY abiertos. Revisar también la corrección de `MERGE` de Redshift en `sql-merge`, `scd-type-2` e `idempotency` (cb77a2f), porque cambia filas aprobadas en B-F3.1 | Cerrado (revisión aplicada; las 20 fichas `verified`) |
@@ -48,6 +49,12 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Code Library: `/snippets`, `/snippets/{slug}`, `Language`, `Snippet*` y `code_snippet` en `ResultType` (ADR-008, aditivo).
 
 ## Historial
+
+### Snippets y lote 4 verified, HCL de fichas en la CI (2026-10-01)
+- Merge de `b/f3-snippets-ui` y `b/f3-review-4`.
+- Revisión de snippets aplicada (`CREATE OR REPLACE TEMP TABLE`, también en `incremental-pipelines` §10); los 8 snippets `verified`.
+- Revisión del lote 4 sin cambios pedidos; las 40 fichas `verified`. Snippets nuevos `terraform-gcs-bucket` y `terraform-bigquery-iam` (`review_required`); `terraform-bigquery-partitioned-table` implementa también `infrastructure-as-code` y `terraform-providers`.
+- `make validate-terraform` valida también el HCL de las fichas (3 bloques, ninguno excluido); marcador `<!-- validate-terraform: excluido — motivo -->` para fragmentos intencionales.
 
 ### Lote 4 de F3 y consumidor de Pub/Sub (2026-10-01)
 - `b/f3-review-3` ya estaba en `main` (5ee8499); nada que mergear.
