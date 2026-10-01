@@ -47,6 +47,18 @@ sources:
     url: https://docs.cloud.google.com/bigquery/docs/transactions
     accessed: 2026-09-30
     note: Transacciones de varias sentencias con commit o rollback atómico.
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/parameterized-queries
+    accessed: 2026-10-01
+    note: "Con la biblioteca cliente de Python: bigquery.Client(), QueryJobConfig(query_parameters=[ScalarQueryParameter(nombre, tipo, valor)]) y client.query_and_wait(query, job_config=...); parámetros con nombre usando @nombre."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/multi-statement-queries
+    accessed: 2026-10-01
+    note: "Consultas de varias sentencias; su ejemplo usa un parámetro de consulta (@id) dentro de la consulta."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/access-control
+    accessed: 2026-10-01
+    note: "roles/bigquery.jobUser permite ejecutar consultas en el proyecto; roles/bigquery.dataEditor sobre un dataset permite modificar sus tablas."
 relations:
   - type: RELATED_TO
     target: etl-vs-elt
@@ -61,8 +73,8 @@ relations:
     target: retries
     note: Los reintentos acotados son parte del control de fallos del pipeline.
 created_at: 2026-09-30
-updated_at: 2026-09-30
-last_verified: 2026-09-30
+updated_at: 2026-10-01
+last_verified: 2026-10-01
 verification_status: verified
 ---
 
@@ -127,47 +139,54 @@ flowchart LR
 ## 10. Código
 
 ```python
-# Airflow 3 (TaskFlow): pipeline diario de tres pasos con dependencias explícitas.
-# Requiere: apache-airflow 3.x. Las funciones extract/validate/load son del proyecto.
+# Airflow 3 (TaskFlow) + google-cloud-bigquery: validar el staging y reemplazar la partición del día lógico.
 from datetime import datetime
 
 from airflow.sdk import dag, task
+from google.cloud import bigquery
+
+COUNT_STAGING = """
+SELECT COUNT(*) AS filas FROM `proyecto.staging.ventas` WHERE fecha = CAST(@dia AS DATE)
+"""
+
+REPLACE_PARTITION = """
+BEGIN TRANSACTION;
+DELETE FROM `proyecto.dwh.ventas` WHERE fecha = CAST(@dia AS DATE);
+INSERT INTO `proyecto.dwh.ventas`
+SELECT * FROM `proyecto.staging.ventas` WHERE fecha = CAST(@dia AS DATE);
+COMMIT TRANSACTION;
+"""
+
+
+def day_config(ds: str) -> bigquery.QueryJobConfig:
+    return bigquery.QueryJobConfig(query_parameters=[bigquery.ScalarQueryParameter("dia", "STRING", ds)])
 
 
 @dag(schedule="@daily", start_date=datetime(2026, 9, 1), catchup=False)
 def ventas_diarias():
     @task(retries=3)
-    def extraer(*, ds: str) -> str:            # clave de contexto como argumento keyword-only
-        return extract_orders(day=ds)          # fecha lógica (YYYY-MM-DD), no "ahora"
+    def validar_staging(*, ds: str) -> int:
+        rows = list(bigquery.Client().query_and_wait(COUNT_STAGING, job_config=day_config(ds)))
+        filas = rows[0].filas
+        if filas == 0:
+            raise ValueError(f"staging vacío para {ds}: no se reemplaza la partición")
+        return filas
 
-    @task
-    def validar(path: str) -> str:
-        return validate_volume_and_schema(path)
+    @task(retries=3)
+    def reemplazar_particion(filas: int, *, ds: str) -> None:
+        bigquery.Client().query_and_wait(REPLACE_PARTITION, job_config=day_config(ds))
 
-    @task
-    def cargar(path: str, *, ds: str) -> None:
-        replace_partition(path, day=ds)        # ejecuta el SQL de abajo para el día lógico
-
-    cargar(validar(extraer()))
+    reemplazar_particion(validar_staging())
 
 
 ventas_diarias()
 ```
 
-`ds` es la fecha lógica de la ejecución y solo existe cuando el DagRun tiene `logical_date` (las ejecuciones programadas la tienen).
+El Dag tiene dos tareas: `validar_staging` cuenta las filas del día lógico en staging y falla si no hay ninguna, para que una extracción vacía no borre la partición buena; `reemplazar_particion` depende de ella y ejecuta el `DELETE` + `INSERT` del día en una transacción de BigQuery. Si algo falla antes del `COMMIT`, la partición queda como estaba, y reintentar o reejecutar el día da el mismo resultado.
 
-`replace_partition` es idempotente porque reemplaza la partición del día dentro de una transacción. En BigQuery ejecuta:
+`ds` es la fecha lógica de la ejecución y solo existe cuando el DagRun tiene `logical_date` (las ejecuciones programadas la tienen). El día se pasa como parámetro de consulta (`@dia`), no concatenado en el SQL.
 
-```sql
--- replace_partition(day=@dia): reemplazo atómico de la partición del día lógico.
-BEGIN TRANSACTION;
-DELETE FROM `proyecto.dwh.ventas` WHERE fecha = @dia;
-INSERT INTO `proyecto.dwh.ventas`
-SELECT * FROM `proyecto.staging.ventas` WHERE fecha = @dia;
-COMMIT TRANSACTION;
-```
-
-Si algo falla antes del `COMMIT`, la partición queda como estaba; si la tarea se reintenta, el resultado es el mismo.
+Requiere Apache Airflow 3.x con `google-cloud-bigquery`, credenciales con `roles/bigquery.jobUser` en el proyecto y `roles/bigquery.dataEditor` en los datasets, y las tablas `staging.ventas` y `dwh.ventas` con una columna `fecha`. Es el código del snippet `airflow-daily-partition-dag`, que detalla requisitos, riesgos y cómo ejecutarlo.
 
 ## 11. GCP
 
@@ -223,7 +242,7 @@ Pendiente (F4): primer pipeline batch de extremo a extremo (lab de tipo A).
 ## 20. Fuentes
 
 - Apache Airflow: *Dags*, *Pythonic Dags with the TaskFlow API* y *Templates reference*.
-- Google Cloud: *Dataflow overview*, *Managed Airflow overview* (Managed Service for Apache Airflow) y *Multi-statement transactions* (BigQuery).
+- Google Cloud: *Dataflow overview*, *Managed Airflow overview* (Managed Service for Apache Airflow) y *Multi-statement transactions*, *Run parameterized queries*, *Work with multi-statement queries* y *BigQuery IAM roles and permissions* (BigQuery).
 - AWS: *What is AWS Glue?*.
 - Microsoft Learn: *Introduction to Azure Data Factory*.
 
@@ -231,10 +250,11 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-09-30. El código de §10 coincide con el tutorial de TaskFlow y la referencia de templates de Airflow 3.3.2. Pasa a `verified`: revisión B-F3.1 del lote 2 aplicada, sin VERIFY pendientes.
+2026-10-01. El código de §10 coincide con el tutorial de TaskFlow y la referencia de templates de Airflow 3.3.2. Pasa a `verified`: revisión B-F3.1 del lote 2 aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 2 de F3).
 - 2026-09-30: revisión B-F3.1 aplicada: transacción de `replace_partition` a la vista; nombre y fuente de Managed Service for Apache Airflow.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
+- 2026-10-01: §10 alineada con el snippet ejecutable `airflow-daily-partition-dag`: el código anterior llamaba a funciones no definidas (`extract_orders`, `validate_volume_and_schema`, `replace_partition`).
