@@ -1,0 +1,40 @@
+{
+  "slug": "terraform-gcs-bucket",
+  "groups": [
+    {
+      "type": "IMPLEMENTS",
+      "direction": "outgoing",
+      "label": "implements",
+      "items": [
+        {
+          "slug": "gcs-buckets-and-objects",
+          "title": "Buckets y objetos en Cloud Storage",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Bucket con acceso uniforme, prevención de acceso público, soft delete y ciclo de vida."
+        },
+        {
+          "slug": "infrastructure-as-code",
+          "title": "Infraestructura como código (IaC)",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Los buckets declarados como código y revisados."
+        }
+      ]
+    },
+    {
+      "type": "RELATED_TO",
+      "direction": "both",
+      "label": "related_to",
+      "items": [
+        {
+          "slug": "terraform-state",
+          "title": "State de Terraform",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "El segundo bucket es el backend del state, con versionado."
+        }
+      ]
+    }
+  ]
+}

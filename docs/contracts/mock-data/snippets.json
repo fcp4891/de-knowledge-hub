@@ -1,5 +1,5 @@
 {
-  "total": 8,
+  "total": 10,
   "limit": 500,
   "offset": 0,
   "items": [
@@ -106,6 +106,21 @@
       "verification_status": "verified"
     },
     {
+      "slug": "terraform-bigquery-iam",
+      "title": "Cuenta de servicio de un pipeline con permisos mínimos en Terraform",
+      "description": "Cuenta de servicio de un pipeline con concesiones IAM aditivas (recursos *_iam_member): ejecutar consultas en el proyecto, editar un dataset de BigQuery y leer un bucket, sin reemplazar las políticas existentes.",
+      "language": "terraform",
+      "dialect": "hcl",
+      "cloud": [
+        "gcp"
+      ],
+      "implements": [
+        "gcp-iam-for-data",
+        "infrastructure-as-code"
+      ],
+      "verification_status": "review_required"
+    },
+    {
       "slug": "terraform-bigquery-partitioned-table",
       "title": "Tabla particionada y con clustering en BigQuery con Terraform",
       "description": "Dataset y tabla de BigQuery declarados en Terraform, particionada por día con filtro de partición obligatorio, clustering y protección contra borrado.",
@@ -115,9 +130,26 @@
         "gcp"
       ],
       "implements": [
-        "bigquery-partitioning"
+        "bigquery-partitioning",
+        "infrastructure-as-code",
+        "terraform-providers"
       ],
       "verification_status": "verified"
+    },
+    {
+      "slug": "terraform-gcs-bucket",
+      "title": "Buckets de Cloud Storage para el lake y el state con Terraform",
+      "description": "Bucket raw de un data lake con acceso uniforme, prevención de acceso público, soft delete y reglas de ciclo de vida, y bucket del state de Terraform con versionado, declarados en Terraform.",
+      "language": "terraform",
+      "dialect": "hcl",
+      "cloud": [
+        "gcp"
+      ],
+      "implements": [
+        "gcs-buckets-and-objects",
+        "infrastructure-as-code"
+      ],
+      "verification_status": "review_required"
     }
   ]
 }

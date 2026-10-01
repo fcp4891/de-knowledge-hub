@@ -21,11 +21,25 @@
       "label": "implements",
       "items": [
         {
+          "slug": "infrastructure-as-code",
+          "title": "Infraestructura como código (IaC)",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Dataset y tabla declarados como código, revisables y reproducibles."
+        },
+        {
           "slug": "bigquery-partitioning",
           "title": "Particionamiento en BigQuery",
           "entity_type": "concept",
           "origin": "entity",
           "note": "Partición diaria por columna con filtro de partición obligatorio."
+        },
+        {
+          "slug": "terraform-providers",
+          "title": "Providers de Terraform",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Declara hashicorp/google en required_providers con una restricción de versión mayor."
         }
       ]
     },

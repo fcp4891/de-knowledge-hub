@@ -1,0 +1,153 @@
+{
+  "id": "code_snippet:terraform-gcs-bucket",
+  "title": "Buckets de Cloud Storage para el lake y el state con Terraform",
+  "slug": "terraform-gcs-bucket",
+  "description": "Bucket raw de un data lake con acceso uniforme, prevención de acceso público, soft delete y reglas de ciclo de vida, y bucket del state de Terraform con versionado, declarados en Terraform.",
+  "type": "code_snippet",
+  "domain": null,
+  "subdomain": null,
+  "classification": "modern",
+  "level": "basic",
+  "cloud": [
+    "gcp"
+  ],
+  "technologies": [
+    "terraform",
+    "gcp-cloud-storage"
+  ],
+  "tags": [
+    "terraform",
+    "iac",
+    "gcs",
+    "data-lake"
+  ],
+  "related_topics": [
+    "gcs-buckets-and-objects",
+    "infrastructure-as-code",
+    "terraform-state"
+  ],
+  "sources": [
+    {
+      "source": "terraform-provider-google-docs",
+      "title": "Terraform Google provider documentation",
+      "url": "https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/storage_bucket.html.markdown",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "google_storage_bucket: name (minúsculas, hasta 63 caracteres) y location obligatorios; uniform_bucket_level_access (false por defecto); public_access_prevention inherited o enforced (inherited por defecto); soft_delete_policy.retention_duration_seconds entre 604800 (7 días, por defecto) y 7776000 (90 días); versioning.enabled; lifecycle_rule con action (Delete, SetStorageClass con storage_class) y condition (por ejemplo age en días; con varias condiciones deben cumplirse todas); force_destroy false por defecto: borrar un bucket con objetos falla."
+    },
+    {
+      "source": "gcp-cloud-storage-docs",
+      "title": "Cloud Storage documentation",
+      "url": "https://docs.cloud.google.com/storage/docs/uniform-bucket-level-access",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "Con acceso uniforme a nivel de bucket, las ACL se desactivan y solo IAM concede acceso al bucket y sus objetos."
+    },
+    {
+      "source": "gcp-cloud-storage-docs",
+      "title": "Cloud Storage documentation",
+      "url": "https://docs.cloud.google.com/storage/docs/object-versioning",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "Object Versioning conserva versiones no actuales al reemplazar o borrar; Google recomienda soft delete para protegerse de borrados accidentales o maliciosos."
+    },
+    {
+      "source": "gcp-cloud-storage-docs",
+      "title": "Cloud Storage documentation",
+      "url": "https://docs.cloud.google.com/storage/docs/storage-classes",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "Coldline tiene duración mínima de 90 días y cargos de recuperación."
+    },
+    {
+      "source": "terraform-docs",
+      "title": "Terraform documentation",
+      "url": "https://developer.hashicorp.com/terraform/language/backend/gcs",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "El backend gcs requiere que el bucket exista antes y recomienda activar Object Versioning para recuperar el state."
+    }
+  ],
+  "created_at": "2026-10-01",
+  "updated_at": "2026-10-01",
+  "last_verified": "2026-10-01",
+  "verification_status": "review_required",
+  "language": "terraform",
+  "dialect": "hcl",
+  "requirements": [
+    "Terraform 1.x y el provider hashicorp/google 8.x (terraform init lo descarga).",
+    "Para aplicar: un proyecto de GCP, credenciales (Application Default Credentials) y permiso para crear buckets. Para validar (terraform validate) no hacen falta credenciales.",
+    "Variables project_id y prefijo; los nombres de bucket son globales, así que el prefijo debe hacerlos únicos."
+  ],
+  "implements": [
+    "gcs-buckets-and-objects",
+    "infrastructure-as-code"
+  ],
+  "sections": [
+    {
+      "number": 1,
+      "key": "what_it_solves",
+      "title": "Qué resuelve",
+      "markdown": "Declara como código los dos buckets que casi toda plataforma de datos en Google Cloud necesita: la capa raw del lake, con las protecciones que recomienda `gcs-buckets-and-objects`, y el bucket del state de Terraform, con el versionado que pide el backend `gcs`. Implementa `gcs-buckets-and-objects` e `infrastructure-as-code`."
+    },
+    {
+      "number": 2,
+      "key": "code",
+      "title": "Código",
+      "markdown": "```hcl\nterraform {\n  required_providers {\n    google = {\n      source  = \"hashicorp/google\"\n      version = \"~> 8.0\"\n    }\n  }\n}\n\nvariable \"project_id\" {\n  type        = string\n  description = \"Proyecto de GCP donde se crean los buckets.\"\n}\n\nvariable \"prefijo\" {\n  type        = string\n  description = \"Prefijo para que los nombres de bucket sean únicos (los nombres son globales).\"\n}\n\nprovider \"google\" {\n  project = var.project_id\n}\n\n# Capa raw del lake: solo IAM, sin acceso público, con soft delete y ciclo de vida.\nresource \"google_storage_bucket\" \"lake_raw\" {\n  name                        = \"${var.prefijo}-lake-raw\"\n  location                    = \"US-CENTRAL1\"\n  uniform_bucket_level_access = true\n  public_access_prevention    = \"enforced\"\n  force_destroy               = false # borrar el bucket con objetos falla\n\n  soft_delete_policy {\n    retention_duration_seconds = 2592000 # 30 días (rango permitido: 7 a 90 días)\n  }\n\n  lifecycle_rule {\n    condition {\n      age = 90\n    }\n    action {\n      type          = \"SetStorageClass\"\n      storage_class = \"COLDLINE\"\n    }\n  }\n\n  lifecycle_rule {\n    condition {\n      age = 1095\n    }\n    action {\n      type = \"Delete\"\n    }\n  }\n}\n\n# Backend del state de Terraform: versionado para recuperar el state ante errores.\nresource \"google_storage_bucket\" \"tfstate\" {\n  name                        = \"${var.prefijo}-tfstate\"\n  location                    = \"US-CENTRAL1\"\n  uniform_bucket_level_access = true\n  public_access_prevention    = \"enforced\"\n  force_destroy               = false\n\n  versioning {\n    enabled = true\n  }\n}\n```"
+    },
+    {
+      "number": 3,
+      "key": "how_it_works",
+      "title": "Cómo funciona",
+      "markdown": "- **`lake_raw`:**\n  - `uniform_bucket_level_access` desactiva las ACL, así que solo IAM concede acceso;\n  - `public_access_prevention = \"enforced\"` impide exponer el bucket;\n  - `soft_delete_policy` retiene 30 días los objetos borrados, dentro del rango de 7 a 90 días;\n  - una regla pasa a Coldline los objetos de más de 90 días y otra los borra a los 1095 días (3 años);\n  - `force_destroy = false` hace fallar el borrado del bucket si tiene objetos.\n- **`tfstate`:** mismo acceso, más `versioning.enabled = true`, que el backend `gcs` recomienda para recuperar el state. Se crea antes de configurar el backend, porque el backend exige que el bucket ya exista.\n\nEs **idempotente**: un segundo `apply` sin cambios no modifica nada."
+    },
+    {
+      "number": 4,
+      "key": "when_to_use",
+      "title": "Cuándo usarlo",
+      "markdown": "- Al crear la capa raw de un lake en Cloud Storage.\n- Al preparar el backend remoto del state de Terraform."
+    },
+    {
+      "number": 5,
+      "key": "when_not_to_use",
+      "title": "Cuándo no usarlo",
+      "markdown": "- Para datos de lectura frecuente después de 90 días: la regla a Coldline encarecería las lecturas.\n- Si los datos raw deben conservarse más de 3 años por regulación: ajustar o quitar la regla de borrado.\n- Para el bucket del state, no gestionarlo desde la misma configuración que lo usa como backend: se crea en una configuración aparte o antes."
+    },
+    {
+      "number": 6,
+      "key": "risks",
+      "title": "Riesgos",
+      "markdown": "- **Regla de borrado:** borra objetos de forma automática; revisar la retención con el negocio antes de aplicarla.\n- **Coldline:** tiene duración mínima de 90 días y cobra la recuperación; si se leen seguido, cuesta más que Standard.\n- **Nombres globales:** si el nombre ya existe en otro proyecto, el `apply` falla; el prefijo debe ser propio.\n- **Seguridad:** el bucket del state puede contener secretos; restringir su acceso a la cuenta de despliegue y a administradores."
+    },
+    {
+      "number": 7,
+      "key": "requirements",
+      "title": "Requisitos y cómo ejecutarlo",
+      "markdown": "Ver `requirements` en el encabezado. Validar sin credenciales con `terraform init -backend=false` y `terraform validate` (la CI lo hace en cada push). Aplicar con `terraform plan -var project_id=MI_PROYECTO -var prefijo=miempresa` y `terraform apply` del plan revisado."
+    },
+    {
+      "number": 8,
+      "key": "related_concepts",
+      "title": "Conceptos relacionados",
+      "markdown": "- `gcs-buckets-and-objects` e `infrastructure-as-code`: lo que implementa.\n- `terraform-state`: el bucket del state y su backend."
+    },
+    {
+      "number": 9,
+      "key": "sources",
+      "title": "Fuentes",
+      "markdown": "- HashiCorp: documentación de `google_storage_bucket` (repositorio oficial del provider) y backend `gcs`.\n- Google Cloud: *Uniform bucket-level access*, *Object Versioning* y *Storage classes*.\n\nEl detalle está en `sources` del encabezado."
+    },
+    {
+      "number": 10,
+      "key": "change_history",
+      "title": "Historial de cambios",
+      "markdown": "- 2026-10-01: creación (A-F3.2, lote 4), tras la revisión B-F3.1 del lote 4."
+    }
+  ]
+}

@@ -24,7 +24,9 @@
   "related_topics": [
     "bigquery-partitioning",
     "bigquery-clustering",
-    "partition-pruning"
+    "partition-pruning",
+    "infrastructure-as-code",
+    "terraform-providers"
   ],
   "sources": [
     {
@@ -76,7 +78,9 @@
     "Variable project_id con el proyecto destino."
   ],
   "implements": [
-    "bigquery-partitioning"
+    "bigquery-partitioning",
+    "infrastructure-as-code",
+    "terraform-providers"
   ],
   "sections": [
     {
@@ -125,7 +129,7 @@
       "number": 8,
       "key": "related_concepts",
       "title": "Conceptos relacionados",
-      "markdown": "- `bigquery-partitioning`: el patrón que implementa.\n- `bigquery-clustering`: el orden dentro de cada partición.\n- `partition-pruning`: lo que garantiza `require_partition_filter`.\n- Con el lote 4: fichas de Terraform (`infrastructure-as-code`, `terraform-state`) y snippets de Cloud Storage e IAM."
+      "markdown": "- `bigquery-partitioning`: el patrón que implementa.\n- `bigquery-clustering`: el orden dentro de cada partición.\n- `partition-pruning`: lo que garantiza `require_partition_filter`.\n- `infrastructure-as-code` y `terraform-providers`: el marco y el provider que implementa.\n- `terraform-gcs-bucket` y `terraform-bigquery-iam`: los snippets de Cloud Storage e IAM."
     },
     {
       "number": 9,
@@ -137,7 +141,7 @@
       "number": 10,
       "key": "change_history",
       "title": "Historial de cambios",
-      "markdown": "- 2026-10-01: creación (A-F3.2).\n- 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes)."
+      "markdown": "- 2026-10-01: creación (A-F3.2).\n- 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).\n- 2026-10-01: implementa también `infrastructure-as-code` y `terraform-providers`, verificadas con el lote 4."
     }
   ]
 }

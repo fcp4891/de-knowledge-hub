@@ -1,0 +1,26 @@
+{
+  "slug": "terraform-bigquery-iam",
+  "groups": [
+    {
+      "type": "IMPLEMENTS",
+      "direction": "outgoing",
+      "label": "implements",
+      "items": [
+        {
+          "slug": "gcp-iam-for-data",
+          "title": "IAM de Google Cloud para plataformas de datos",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Cuenta de servicio por pipeline y roles predefinidos en el recurso más específico."
+        },
+        {
+          "slug": "infrastructure-as-code",
+          "title": "Infraestructura como código (IaC)",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Concesiones declaradas como código, aditivas."
+        }
+      ]
+    }
+  ]
+}

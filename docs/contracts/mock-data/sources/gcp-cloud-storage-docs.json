@@ -1,0 +1,17 @@
+{
+  "slug": "gcp-cloud-storage-docs",
+  "title": "Cloud Storage documentation",
+  "description": "Documentación oficial de Cloud Storage en Google Cloud.",
+  "url": "https://docs.cloud.google.com/storage/docs",
+  "source_type": "official_docs",
+  "authority_level": 1,
+  "provider": "gcp",
+  "url_verified": true,
+  "review_frequency": "quarterly",
+  "trust": "high",
+  "technologies": [
+    "gcp-cloud-storage"
+  ],
+  "last_verified": "2026-09-28",
+  "verification_status": "verified"
+}

@@ -15,7 +15,7 @@ level: intermediate
 cloud: [gcp]
 technologies: [terraform, gcp-bigquery]
 tags: [terraform, iac, bigquery, partitioning]
-related_topics: [bigquery-partitioning, bigquery-clustering, partition-pruning]
+related_topics: [bigquery-partitioning, bigquery-clustering, partition-pruning, infrastructure-as-code, terraform-providers]
 sources:
   - source: terraform-provider-google-docs
     url: https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/bigquery_table.html.markdown
@@ -43,6 +43,12 @@ relations:
   - type: RELATED_TO
     target: partition-pruning
     note: require_partition_filter obliga a que toda consulta pueda podar particiones.
+  - type: IMPLEMENTS
+    target: infrastructure-as-code
+    note: Dataset y tabla declarados como código, revisables y reproducibles.
+  - type: IMPLEMENTS
+    target: terraform-providers
+    note: Declara hashicorp/google en required_providers con una restricción de versión mayor.
 created_at: 2026-10-01
 updated_at: 2026-10-01
 last_verified: 2026-10-01
@@ -142,7 +148,8 @@ Ver `requirements` en el encabezado. Guardar el código como `main.tf`:
 - `bigquery-partitioning`: el patrón que implementa.
 - `bigquery-clustering`: el orden dentro de cada partición.
 - `partition-pruning`: lo que garantiza `require_partition_filter`.
-- Con el lote 4: fichas de Terraform (`infrastructure-as-code`, `terraform-state`) y snippets de Cloud Storage e IAM.
+- `infrastructure-as-code` y `terraform-providers`: el marco y el provider que implementa.
+- `terraform-gcs-bucket` y `terraform-bigquery-iam`: los snippets de Cloud Storage e IAM.
 
 ## 9. Fuentes
 
@@ -154,3 +161,4 @@ El detalle está en `sources` del encabezado.
 
 - 2026-10-01: creación (A-F3.2).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).
+- 2026-10-01: implementa también `infrastructure-as-code` y `terraform-providers`, verificadas con el lote 4.
