@@ -16,6 +16,20 @@
       ]
     },
     {
+      "type": "IMPLEMENTS",
+      "direction": "incoming",
+      "label": "implemented_by",
+      "items": [
+        {
+          "slug": "bigquery-scd-type-2",
+          "title": "SCD tipo 2 en BigQuery",
+          "entity_type": "code_snippet",
+          "origin": "entity",
+          "note": "Cierre de la versión vigente e inserción de la nueva, en una transacción."
+        }
+      ]
+    },
+    {
       "type": "RELATED_TO",
       "direction": "both",
       "label": "related_to",

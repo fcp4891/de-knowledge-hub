@@ -2,6 +2,20 @@
   "slug": "bigquery-partitioning",
   "groups": [
     {
+      "type": "IMPLEMENTS",
+      "direction": "incoming",
+      "label": "implemented_by",
+      "items": [
+        {
+          "slug": "terraform-bigquery-partitioned-table",
+          "title": "Tabla particionada y con clustering en BigQuery con Terraform",
+          "entity_type": "code_snippet",
+          "origin": "entity",
+          "note": "Partición diaria por columna con filtro de partición obligatorio."
+        }
+      ]
+    },
+    {
       "type": "RELATED_TO",
       "direction": "both",
       "label": "related_to",
@@ -26,6 +40,13 @@
           "entity_type": "concept",
           "origin": "entity",
           "note": "Partición y clustering se combinan; el clustering actúa dentro de cada partición."
+        },
+        {
+          "slug": "airflow-daily-partition-dag",
+          "title": "DAG diario de Airflow que reemplaza una partición de BigQuery",
+          "entity_type": "code_snippet",
+          "origin": "entity",
+          "note": "La unidad de reemplazo es la partición diaria."
         },
         {
           "slug": "partitioning",

@@ -30,6 +30,27 @@
       ]
     },
     {
+      "type": "IMPLEMENTS",
+      "direction": "incoming",
+      "label": "implemented_by",
+      "items": [
+        {
+          "slug": "bigquery-incremental-merge-watermark",
+          "title": "MERGE incremental por watermark en BigQuery",
+          "entity_type": "code_snippet",
+          "origin": "entity",
+          "note": "Escritura del delta con MERGE por clave y versión."
+        },
+        {
+          "slug": "dataform-incremental-model",
+          "title": "Modelo incremental en Dataform con uniqueKey",
+          "entity_type": "code_snippet",
+          "origin": "entity",
+          "note": "Carga incremental con fusión por clave (modo upsert) y relectura de un margen."
+        }
+      ]
+    },
+    {
       "type": "DEPENDS_ON",
       "direction": "outgoing",
       "label": "depends_on",

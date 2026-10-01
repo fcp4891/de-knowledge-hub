@@ -35,6 +35,13 @@
           "note": "Las tareas de un Dag se reintentan y reejecutan; cada una debe ser idempotente."
         },
         {
+          "slug": "airflow-daily-partition-dag",
+          "title": "DAG diario de Airflow que reemplaza una partición de BigQuery",
+          "entity_type": "code_snippet",
+          "origin": "entity",
+          "note": "El reemplazo transaccional de la partición hace seguro reintentar y reejecutar."
+        },
+        {
           "slug": "late-arriving-data",
           "title": "Datos que llegan tarde",
           "entity_type": "concept",
@@ -42,11 +49,39 @@
           "note": "Reprocesar un período para incluir datos tardíos debe ser idempotente."
         },
         {
+          "slug": "bigquery-deduplicate-latest",
+          "title": "Deduplicar por clave y aplicar la última versión en BigQuery",
+          "entity_type": "code_snippet",
+          "origin": "entity",
+          "note": "Aplicar el mismo lote dos veces deja la tabla igual."
+        },
+        {
+          "slug": "python-api-ingestion-retries",
+          "title": "Ingesta de una API con reintentos en Python",
+          "entity_type": "code_snippet",
+          "origin": "entity",
+          "note": "Páginas con nombre determinista por día; repetir la ingesta sobrescribe en vez de duplicar."
+        },
+        {
           "slug": "python-error-handling-and-retries",
           "title": "Manejo de errores y reintentos en Python",
           "entity_type": "pattern",
           "origin": "entity",
           "note": "Reintentar solo es seguro si la operación es idempotente."
+        },
+        {
+          "slug": "bigquery-incremental-merge-watermark",
+          "title": "MERGE incremental por watermark en BigQuery",
+          "entity_type": "code_snippet",
+          "origin": "entity",
+          "note": "Repetir el script con el mismo staging no duplica ni retrocede datos."
+        },
+        {
+          "slug": "dataform-incremental-model",
+          "title": "Modelo incremental en Dataform con uniqueKey",
+          "entity_type": "code_snippet",
+          "origin": "entity",
+          "note": "Con uniqueKey, releer el margen o repetir la ejecución no duplica filas."
         },
         {
           "slug": "incremental-pipelines",
@@ -68,6 +103,13 @@
           "entity_type": "pattern",
           "origin": "entity",
           "note": "Reintentar una operación no idempotente puede duplicar su efecto."
+        },
+        {
+          "slug": "bigquery-scd-type-2",
+          "title": "SCD tipo 2 en BigQuery",
+          "entity_type": "code_snippet",
+          "origin": "entity",
+          "note": "Repetir la transacción con los mismos cambios no crea versiones nuevas."
         }
       ]
     },
