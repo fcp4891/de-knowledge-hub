@@ -11,7 +11,7 @@ classification: modern
 level: advanced
 importance: high
 cloud: [gcp]
-technologies: [gcp-pubsub]
+technologies: [gcp-pubsub, postgresql, python]
 tags: [streaming, messaging, gcp]
 related_topics: [idempotency, dead-letter-queue, retries, replay]
 sources:
@@ -35,6 +35,42 @@ sources:
     url: https://docs.cloud.google.com/pubsub/docs/dead-letter-topics
     accessed: 2026-09-30
     note: Dead-letter topic con 5 a 100 intentos de entrega (5 por defecto); el conteo es aproximado porque el reenvío es best-effort.
+  - source: gcp-pubsub-docs
+    url: https://docs.cloud.google.com/pubsub/docs/publish-receive-messages-client-library
+    accessed: 2026-10-01
+    note: "Quickstart en Python: pubsub_v1.SubscriberClient(), subscriber.subscription_path(project_id, subscription_id), subscriber.subscribe(subscription_path, callback=callback) devuelve un future; dentro de with subscriber, future.result(timeout=...) y, ante TimeoutError, future.cancel() y future.result()."
+  - source: gcp-pubsub-docs
+    url: https://docs.cloud.google.com/python/docs/reference/pubsub/latest/google.cloud.pubsub_v1.subscriber.message.Message
+    accessed: 2026-10-01
+    note: "Message: message_id, data (bytes), attributes y publish_time. ack() confirma; conviene no confirmar hasta terminar de procesar y, como los acks son best effort, el procesamiento debe ser idempotente. nack() rechaza el mensaje para que se reentregue, de inmediato o con demora, a este u otro suscriptor."
+  - source: gcp-pubsub-docs
+    url: https://docs.cloud.google.com/python/docs/reference/pubsub/latest/google.cloud.pubsub_v1.types.FlowControl
+    accessed: 2026-10-01
+    note: "FlowControl(max_bytes=104857600, max_messages=1000, max_lease_duration=3600, ...): controla el ritmo con el que se obtienen mensajes en una suscripción asíncrona."
+  - source: gcp-pubsub-docs
+    url: https://docs.cloud.google.com/python/docs/reference/pubsub/latest/google.cloud.pubsub_v1.subscriber.client.Client
+    accessed: 2026-10-01
+    note: "Client.subscribe(subscription, callback, flow_control=..., scheduler=..., ...)."
+  - source: psycopg-docs
+    url: https://www.psycopg.org/psycopg3/docs/api/connections.html
+    accessed: 2026-10-01
+    note: "Connection.connect(conninfo, autocommit=False, ...) con una URL postgresql:// o pares clave=valor; Connection.execute(query, params) con marcadores %s."
+  - source: psycopg-docs
+    url: https://www.psycopg.org/psycopg3/docs/advanced/async.html
+    accessed: 2026-10-01
+    note: "En una misma conexión la ejecución de consultas se serializa (la conexión coordina el acceso de los cursores); varios hilos pueden compartirla; para mucha concurrencia conviene un pool de conexiones."
+  - source: psycopg-docs
+    url: https://www.psycopg.org/psycopg3/docs/api/errors.html
+    accessed: 2026-10-01
+    note: "psycopg.Error es la clase base de todas las excepciones que lanza psycopg."
+  - source: postgresql-docs
+    url: https://www.postgresql.org/docs/current/sql-insert.html
+    accessed: 2026-10-01
+    note: "ON CONFLICT DO UPDATE garantiza un resultado atómico INSERT o UPDATE incluso con alta concurrencia; la fila propuesta se lee con excluded; admite una condición WHERE."
+  - source: gcp-pubsub-docs
+    url: https://docs.cloud.google.com/pubsub/docs/access-control
+    accessed: 2026-10-01
+    note: "roles/pubsub.subscriber permite consumir mensajes de una suscripción."
   - source: aws-sqs-docs
     url: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html
     accessed: 2026-09-30
@@ -57,8 +93,8 @@ relations:
     target: replay
     note: Seek permite reentregar mensajes desde un snapshot o un timestamp.
 created_at: 2026-09-30
-updated_at: 2026-09-30
-last_verified: 2026-09-30
+updated_at: 2026-10-01
+last_verified: 2026-10-01
 verification_status: verified
 ---
 
@@ -113,13 +149,76 @@ flowchart LR
 ## 10. Código
 
 ```python
-# Consumidor idempotente (esquema): la corrección no depende de que el mensaje llegue una sola vez.
-# Requiere: google-cloud-pubsub y una tabla destino con MERGE por (customer_id, version).
-def handle(message) -> None:
-    event = parse(message.data)                     # validación: si falla, se registra y se confirma
-    upsert_customer(event.customer_id, event.version, event.payload)  # MERGE: repetir no duplica
-    message.ack()                                   # confirmar después de escribir, nunca antes
+# Consumidor de Pub/Sub idempotente (streaming pull): upsert en PostgreSQL por clave y versión,
+# confirmación (ack) solo después de escribir.
+# Requiere: Python 3.12, google-cloud-pubsub y psycopg 3; una suscripción pull; DATABASE_URL apuntando a
+# PostgreSQL con la tabla customers(customer_id TEXT PRIMARY KEY, version BIGINT NOT NULL, payload JSONB NOT NULL);
+# credenciales de Google Cloud con permiso para consumir la suscripción (por ejemplo roles/pubsub.subscriber).
+import json
+import logging
+import os
+from concurrent.futures import TimeoutError
+
+import psycopg
+from google.cloud import pubsub_v1
+
+UPSERT = """
+INSERT INTO customers AS c (customer_id, version, payload)
+VALUES (%s, %s, %s)
+ON CONFLICT (customer_id) DO UPDATE
+SET version = excluded.version, payload = excluded.payload
+WHERE c.version < excluded.version
+"""
+
+log = logging.getLogger("customers-consumer")
+conn = psycopg.connect(os.environ["DATABASE_URL"], autocommit=True)  # cada sentencia se confirma sola
+
+
+def parse(data: bytes) -> tuple[str, int, str]:
+    event = json.loads(data)
+    return str(event["customer_id"]), int(event["version"]), json.dumps(event["payload"])
+
+
+def callback(message: pubsub_v1.subscriber.message.Message) -> None:
+    try:
+        customer_id, version, payload = parse(message.data)
+    except (ValueError, KeyError, TypeError) as exc:      # JSON inválido o campos faltantes: permanente
+        log.error("mensaje %s inválido: %s", message.message_id, exc)
+        message.ack()                                     # no reintentar; queda registrado
+        return
+    try:
+        conn.execute(UPSERT, (customer_id, version, payload))  # repetir el mismo mensaje no cambia nada
+    except psycopg.Error:
+        log.exception("fallo al escribir el mensaje %s", message.message_id)
+        message.nack()                                    # transitorio: Pub/Sub lo vuelve a entregar
+        return
+    message.ack()                                         # confirmar después de escribir, nunca antes
+
+
+def main(project_id: str, subscription_id: str, timeout: float | None = None) -> None:
+    subscriber = pubsub_v1.SubscriberClient()
+    path = subscriber.subscription_path(project_id, subscription_id)
+    flow = pubsub_v1.types.FlowControl(max_messages=100)  # mensajes sin confirmar a la vez
+    future = subscriber.subscribe(path, callback=callback, flow_control=flow)
+    with subscriber:                                      # cierra el cliente al salir
+        try:
+            future.result(timeout=timeout)
+        except TimeoutError:
+            future.cancel()
+            future.result()
+
+
+if __name__ == "__main__":
+    main(os.environ["GCP_PROJECT"], os.environ["PUBSUB_SUBSCRIPTION"])
 ```
+
+La corrección no depende de que el mensaje llegue una sola vez:
+
+- **Idempotencia:** el `INSERT ... ON CONFLICT DO UPDATE ... WHERE c.version < excluded.version` es una sola sentencia atómica. Una reentrega del mismo mensaje, o de uno más viejo, no cambia la fila.
+- **Orden del ack:** se confirma después de escribir. Si el proceso cae entre la escritura y el ack, el mensaje se reentrega y el upsert lo absorbe.
+- **Errores:** un mensaje inválido se registra y se confirma, porque reintentarlo no lo arregla; con un dead-letter topic configurado, se puede preferir `nack()` para que termine allí. Un error de la base hace `nack()` y Pub/Sub lo vuelve a entregar.
+- **Concurrencia:** el cliente llama al callback desde varios hilos. psycopg serializa las consultas sobre una misma conexión, así que compartirla es seguro; con mucho volumen conviene un pool de conexiones.
+- **Flujo:** `FlowControl(max_messages=100)` limita los mensajes en proceso sin confirmar; el valor por defecto es 1000.
 
 ## 11. GCP
 
@@ -174,7 +273,9 @@ Pendiente (F4): arquitectura "Streaming pipeline" (§24).
 
 ## 20. Fuentes
 
-- Google Cloud: *Subscription overview*, *Exactly-once delivery*, *Order messages*, *Subscription retry policy* y *Dead-letter topics* (Pub/Sub).
+- Google Cloud: *Subscription overview*, *Exactly-once delivery*, *Order messages*, *Subscription retry policy*, *Dead-letter topics*, *Quickstart: publish and receive messages* y la referencia del cliente de Python (`Message`, `FlowControl`, `Client`) (Pub/Sub).
+- Psycopg 3: *Connection classes*, *Concurrent operations* y *errors*.
+- PostgreSQL: *INSERT* (cláusula ON CONFLICT).
 - AWS: *Amazon SQS visibility timeout*.
 - Microsoft Learn: *Event Hubs features and terminology*.
 
@@ -182,9 +283,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-09-30. Pasa a `verified`: revisión B-F3.1 del lote 2 aplicada, sin VERIFY pendientes.
+2026-10-01. El código de §10 se verificó contra el quickstart y la referencia del cliente de Python de Pub/Sub y la documentación de psycopg 3. Pasa a `verified`: revisión B-F3.1 del lote 2 aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 2 de F3).
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
+- 2026-10-01: §10 reemplazada por un consumidor real de Pub/Sub (google-cloud-pubsub, streaming pull) con upsert idempotente en PostgreSQL (psycopg 3) y requisitos exactos; antes era un esquema que llamaba a `parse` y `upsert_customer` sin definirlas.

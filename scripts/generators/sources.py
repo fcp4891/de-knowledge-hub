@@ -131,6 +131,9 @@ BATCH1 = [
     ('aws-mwaa-docs', 'Amazon MWAA User Guide',
      'Guía oficial de Amazon Managed Workflows for Apache Airflow.',
      'https://docs.aws.amazon.com/mwaa/latest/userguide/what-is-mwaa.html', 'official_docs', 1, 'aws', True, "quarterly", ['aws-mwaa']),
+    # 2026-10-01: consumidor de Pub/Sub de pubsub-delivery-semantics (psycopg 3).
+    ('psycopg-docs', 'Psycopg 3 documentation', 'Documentación oficial de psycopg 3, el adaptador de PostgreSQL para Python.',
+     'https://www.psycopg.org/psycopg3/docs/', 'official_docs', 1, 'psycopg', True, "quarterly", ['postgresql', 'python']),
 ]
 
 
@@ -143,6 +146,7 @@ def review_frequency(slug: str, source_type: str) -> str:
 
 
 BATCH1_DATE = "2026-09-30"
+LATER_DATES = {"psycopg-docs": "2026-10-01"}  # fuentes de BATCH1 agregadas después del 2026-09-30
 
 
 def entry(row: tuple[Any, ...], created: str = TODAY) -> dict[str, Any]:
@@ -156,7 +160,7 @@ def entry(row: tuple[Any, ...], created: str = TODAY) -> dict[str, Any]:
 
 
 def build() -> str:
-    docs = [entry(row) for row in [*F0, *MVP]] + [entry(row, created=BATCH1_DATE) for row in BATCH1]
+    docs = [entry(row) for row in [*F0, *MVP]] + [entry(row, created=LATER_DATES.get(row[0], BATCH1_DATE)) for row in BATCH1]
     return HEADER + yaml.safe_dump_all(docs, allow_unicode=True, sort_keys=False, width=140)
 
 
