@@ -39,7 +39,10 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
           <ConceptBody sections={data.sections} omitSourceSection={data.sources.length > 0} />
           <SourceList sources={data.sources} />
         </div>
-        <RelationPanel result={relations} />
+        <RelationPanel
+          result={relations}
+          center={{ slug: data.slug, title: data.title, entityType: data.type }}
+        />
       </div>
     </div>
   );
