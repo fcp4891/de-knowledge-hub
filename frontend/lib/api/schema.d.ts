@@ -106,6 +106,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/snippets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Code Library (§23, ADR-008). Snippets ordenados por slug. */
+        get: operations["listSnippets"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/snippets/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Snippet con su código, explicación del patrón, requisitos y fuentes (ADR-008). */
+        get: operations["getSnippet"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/entities/{slug}/relations": {
         parameters: {
             query?: never;
@@ -301,7 +335,12 @@ export interface components {
         /** @enum {unknown} */
         EntityType: "concept" | "pattern" | "architecture" | "technology" | "cloud_service" | "code_snippet" | "lab" | "news" | "release" | "source" | "job_description" | "interview_question" | "personal_note";
         /** @enum {unknown} */
-        ResultType: "concept" | "pattern" | "architecture" | "technology" | "cloud_service" | "source";
+        ResultType: "concept" | "pattern" | "architecture" | "technology" | "cloud_service" | "code_snippet" | "source";
+        /**
+         * @description Lenguaje de un snippet (code_snippet.schema.json).
+         * @enum {unknown}
+         */
+        Language: "sql" | "python" | "terraform" | "yaml" | "bash" | "json" | "other";
         /**
          * @description Estados manuales de §37.
          * @enum {unknown}
@@ -436,6 +475,36 @@ export interface components {
             stub: boolean;
             note?: string | null;
             capabilities: components["schemas"]["CapabilityCell"][];
+        } & components["schemas"]["Metadata"];
+        /** @description Una de las 10 secciones del snippet (§23), en Markdown. */
+        SnippetSection: {
+            number: number;
+            /** @enum {unknown} */
+            key: "what_it_solves" | "code" | "how_it_works" | "when_to_use" | "when_not_to_use" | "risks" | "requirements" | "related_concepts" | "sources" | "change_history";
+            title: string;
+            markdown: string;
+        };
+        SnippetSummary: {
+            slug: components["schemas"]["Slug"];
+            title: string;
+            description: string;
+            language: components["schemas"]["Language"];
+            dialect: string | null;
+            cloud: components["schemas"]["Cloud"][];
+            /** @description Slugs de concept o pattern que implementa (IMPLEMENTS). */
+            implements: components["schemas"]["Slug"][];
+            verification_status: components["schemas"]["VerificationStatus"];
+        };
+        SnippetList: {
+            items: components["schemas"]["SnippetSummary"][];
+        } & components["schemas"]["Page"];
+        SnippetDetail: {
+            language: components["schemas"]["Language"];
+            dialect: string | null;
+            /** @description Qué necesita el snippet para ejecutarse. */
+            requirements: string[];
+            implements: components["schemas"]["Slug"][];
+            sections: components["schemas"]["SnippetSection"][];
         } & components["schemas"]["Metadata"];
         RelationItem: {
             slug: components["schemas"]["Slug"];
@@ -737,6 +806,58 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TechnologyDetail"];
+                };
+            };
+            404: components["responses"]["NotFound"];
+            422: components["responses"]["ValidationError"];
+        };
+    };
+    listSnippets: {
+        parameters: {
+            query?: {
+                language?: components["schemas"]["Language"];
+                cloud?: components["schemas"]["Cloud"];
+                /** @description Slug del concept o pattern que implementa. */
+                implements?: components["schemas"]["Slug"];
+                limit?: components["parameters"]["Limit"];
+                offset?: components["parameters"]["Offset"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Página de snippets. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SnippetList"];
+                };
+            };
+            422: components["responses"]["ValidationError"];
+        };
+    };
+    getSnippet: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: components["parameters"]["Slug"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Snippet. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SnippetDetail"];
                 };
             };
             404: components["responses"]["NotFound"];

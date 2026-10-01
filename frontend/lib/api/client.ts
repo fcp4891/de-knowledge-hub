@@ -6,10 +6,14 @@ import type {
   DomainDetail,
   DomainList,
   Favorite,
+  Language,
+  Cloud,
   Note,
   NoteList,
   RelationGroups,
   SearchResults,
+  SnippetDetail,
+  SnippetList,
   StudyState,
   StudyStateList,
   StudyStateUpdate,
@@ -99,6 +103,39 @@ export function getTechnology(slug: string): Promise<ApiResult<TechnologyDetail>
 
 export function getRelations(slug: string): Promise<ApiResult<RelationGroups>> {
   const resource = `/entities/${slug}/relations`;
+  return apiGet(`GET ${resource}`, resource);
+}
+
+export function listSnippets(query: {
+  language?: Language;
+  cloud?: Cloud;
+  implements?: string;
+  offset?: number;
+} = {}): Promise<ApiResult<SnippetList>> {
+  const params = new URLSearchParams();
+  if (query.language) {
+    params.set("language", query.language);
+  }
+  if (query.cloud) {
+    params.set("cloud", query.cloud);
+  }
+  if (query.implements) {
+    params.set("implements", query.implements);
+  }
+  if (query.offset && query.offset > 0) {
+    params.set("offset", String(query.offset));
+  }
+  if ([...params.keys()].length === 0) {
+    const resource = "/snippets?limit=500";
+    return apiGet(`GET ${resource}`, resource);
+  }
+  params.set("limit", "50");
+  const resource = `/snippets?${params.toString()}`;
+  return apiGet(`GET ${resource}`, resource);
+}
+
+export function getSnippet(slug: string): Promise<ApiResult<SnippetDetail>> {
+  const resource = `/snippets/${slug}`;
   return apiGet(`GET ${resource}`, resource);
 }
 

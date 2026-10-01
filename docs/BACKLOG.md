@@ -24,4 +24,4 @@ Formato: `- [fase sugerida] idea — origen`
 - ~~[F3] Mover `scripts/validate.py` a un paquete compartido (`backend/content/`)~~ — hecho en la deuda técnica de F3
 - ~~[F4] Respaldo del estado personal~~ — hecho en F3 (`make backup-me` / `make restore-me`)
 - [F4] Programar `make backup-me` (tarea programada de Windows o cron) y rotar respaldos antiguos — F3
-- [F3] CI: actualizar `actions/checkout` y `actions/setup-python` a versiones que no usen Node.js 20 (GitHub las marca como obsoletas) y fijar la imagen de Ubuntu antes del cambio de `ubuntu-latest` anunciado para el 2026-10-19 — primer run de CI
+- [F3] Resaltar HCL en los bloques de código: highlight.js no trae Terraform, así que esos snippets quedan en texto plano con Copiar — B-F3.2

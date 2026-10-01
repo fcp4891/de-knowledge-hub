@@ -1,4 +1,4 @@
-import type { Level, ResultType, StudyStatus, VerificationStatus } from "./api/types";
+import type { Cloud, Language, Level, ResultType, StudyStatus, VerificationStatus } from "./api/types";
 
 export const LEVEL_LABEL: Record<Level, string> = {
   basic: "básico",
@@ -28,7 +28,25 @@ export const RESULT_LABEL: Record<ResultType, string> = {
   architecture: "Arquitecturas",
   technology: "Tecnologías",
   cloud_service: "Servicios cloud",
+  code_snippet: "Snippets",
   source: "Fuentes",
+};
+
+export const LANGUAGE_LABEL: Record<Language, string> = {
+  sql: "SQL",
+  python: "Python",
+  terraform: "Terraform",
+  yaml: "YAML",
+  bash: "Bash",
+  json: "JSON",
+  other: "Otro",
+};
+
+export const CLOUD_LABEL: Record<Cloud, string> = {
+  gcp: "GCP",
+  aws: "AWS",
+  azure: "Azure",
+  agnostic: "agnóstico",
 };
 
 export const STUDY_LABEL: Record<StudyStatus, string> = {

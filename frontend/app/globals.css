@@ -196,6 +196,7 @@ a:hover {
 }
 
 .filters select,
+.filters input,
 .filters button {
   font: inherit;
   color: var(--text);
