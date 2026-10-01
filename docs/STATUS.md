@@ -10,16 +10,17 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | Lote 4 (plan pendiente de aprobación) | Ejecutar el lote 4 | — |
-| B · Cursor | — | B-F3.2 · vista `/snippets` (contrato en `main`) | — |
+| A · Claude Code | — (lote 4 entregado) | Aplicar la revisión B-F3.1 del lote 4 y crear los snippets de GCS e IAM | — |
+| B · Cursor | — | B-F3.2 · vista `/snippets`; B-F3.1 · lote 4 y `snippets-1.md` | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | B-F3.2 · Vista `/snippets` sobre ADR-008 (regenerar cliente) y revisión de los 7 snippets | Abierto |
+| A | B | B-F3.2 · Vista `/snippets` sobre ADR-008 (regenerar cliente) | Abierto |
+| A | B | B-F3.1 · Revisar el lote 4 y los 8 snippets (`snippets-1.md`) | Abierto |
 
 ## Criterio de salida de la fase actual (F3)
-- [ ] 60–80 fichas `verified` (hoy: 30 fichas, las 30 `verified`).
+- [ ] 60–80 fichas `verified` (hoy: 40 fichas; 30 `verified` y 10 en `review_required`).
 - [ ] Cero fichas sin fuentes.
 - [ ] Gate humano.
 
