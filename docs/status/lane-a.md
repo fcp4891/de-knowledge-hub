@@ -5,17 +5,17 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-01
 
 ## Actual
-- **Tarea activa:** — (A-F3.2 Code Library entregada).
-- **Mergeado para Carril B:** `b/f3-review-2` (dc65b9e) en `main`, 2026-09-30.
-- **Siguiente:** aplicar la revisión B-F3.1 del lote 3 cuando esté aprobada (incluye actualizar `python-api-ingestion-retries` si cambia el código de `api-ingestion`, y crear el snippet de reconciliación). Lote 4: fichas MVP de Terraform y snippets de Cloud Storage e IAM. Arquitecturas (`cdc-architecture`, `batch-pipeline-architecture`) quedan para F4.
+- **Tarea activa:** lote 4 de F3, plan pendiente de aprobación.
+- **Mergeado para Carril B:** `b/f3-graph` (ce313db) y `b/f3-review-3` (3f35a80) en `main`, 2026-10-01.
+- **Siguiente:** ejecutar el lote 4 (fichas MVP de Terraform, Cloud Storage e IAM, y snippets de GCS e IAM tras su verificación) cuando Felipe apruebe el plan. Arquitecturas (`cdc-architecture`, `batch-pipeline-architecture`) quedan para F4.
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
 
 ## Pedidos a Carril B
 | Pedido | Estado |
 |---|---|
-| **B-F3.2 · Vista `/snippets` (Code Library, ADR-008, cambio aditivo del contrato).** Regenerar el cliente tipado (`npm run generate:api`). Endpoints nuevos: `GET /snippets` (filtros `language`, `cloud`, `implements`; `limit`, `offset`; devuelve `SnippetList`) y `GET /snippets/{slug}` (`SnippetDetail`: metadata común, `language`, `dialect`, `requirements`, `implements` y `sections` con 10 claves fijas: `what_it_solves`, `code`, `how_it_works`, `when_to_use`, `when_not_to_use`, `risks`, `requirements`, `related_concepts`, `sources`, `change_history`). La búsqueda devuelve resultados `type: code_snippet` (`ResultType`). En la ficha de concepto, los snippets salen de `GET /entities/{slug}/relations`, grupo `IMPLEMENTS` entrante (`label: implemented_by`). Mocks: `GET /snippets?limit=500`, `GET /snippets/<slug>` y `GET /entities/<slug>/relations` de los 7 snippets (105 respuestas en total). Los 7 están en `review_required`: revisarlos con el mismo proceso B-F3.1 | Abierto |
-| **B-F3.1 · Revisar el lote 3** (10 fichas en `review_required`): `clustering`, `python-error-handling-and-retries` (pattern), `slowly-changing-dimensions`, `api-ingestion`, `catchup`, `data-reconciliation` (pattern), `parquet-format`, `schema-evolution`, `surrogate-keys` y `dag`. Sin VERIFY abiertos. Revisar también la regla nueva de niveles (Nivel 4 canónico solo para afirmaciones conceptuales; ver Notas) | Abierto |
+| **B-F3.2 · Vista `/snippets` (Code Library, ADR-008, cambio aditivo del contrato).** Regenerar el cliente tipado (`npm run generate:api`). Endpoints nuevos: `GET /snippets` (filtros `language`, `cloud`, `implements`; `limit`, `offset`; devuelve `SnippetList`) y `GET /snippets/{slug}` (`SnippetDetail`: metadata común, `language`, `dialect`, `requirements`, `implements` y `sections` con 10 claves fijas: `what_it_solves`, `code`, `how_it_works`, `when_to_use`, `when_not_to_use`, `risks`, `requirements`, `related_concepts`, `sources`, `change_history`). La búsqueda devuelve resultados `type: code_snippet` (`ResultType`). En la ficha de concepto, los snippets salen de `GET /entities/{slug}/relations`, grupo `IMPLEMENTS` entrante (`label: implemented_by`). Mocks: `GET /snippets?limit=500`, `GET /snippets/<slug>` y `GET /entities/<slug>/relations` de los snippets (8 desde el 2026-10-01, con `bigquery-reconciliation`; 107 respuestas en total). **El contrato de snippets ya está en `main`** (ADR-008, a76907b) | Abierto |
+| ~~B-F3.1 · Revisar el lote 3~~ (10 fichas): `clustering`, `python-error-handling-and-retries` (pattern), `slowly-changing-dimensions`, `api-ingestion`, `catchup`, `data-reconciliation` (pattern), `parquet-format`, `schema-evolution`, `surrogate-keys` y `dag`. Sin VERIFY abiertos. Revisar también la regla nueva de niveles (Nivel 4 canónico solo para afirmaciones conceptuales; ver Notas) | Cerrado (revisión aplicada; las 30 fichas `verified`) |
 | ~~B-F3.1 · Revisar el lote 2~~ (10 fichas): `backfill`, `replay`, `retries` (pattern), `pubsub-delivery-semantics`, `data-pipeline`, `incremental-pipelines` (pattern), `late-arriving-data`, `partition-pruning`, `upsert` (pattern) y `bigquery-clustering`. Sin VERIFY abiertos. Revisar también la corrección de `MERGE` de Redshift en `sql-merge`, `scd-type-2` e `idempotency` (cb77a2f), porque cambia filas aprobadas en B-F3.1 | Cerrado (revisión aplicada; las 20 fichas `verified`) |
 | **Entorno de Python del proyecto:** `.venv/` con Python 3.12 (`make venv`; README, «Entorno de Python»). El `Makefile` y la CI lo usan; si Carril B ejecuta objetivos de Python en su worktree (por ejemplo `make dev` o `make mocks`), primero `make venv` allí | Informativo |
 | **Mocks regenerados con 20 fichas `verified`**: cambian solo datos (`verification_status`); el contrato no cambia | Informativo |
@@ -31,7 +31,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ## Notas para Carril B
 - **Regla de niveles de fuente (F3, lote 3, 2026-09-30):** las afirmaciones **de producto** (servicios, APIs, límites, valores por defecto) exigen fuente Nivel 1–2. Las afirmaciones **conceptuales** pueden apoyarse en una referencia canónica Nivel 4 (`source_type: spec_paper`), como `kimball-group-techniques` (modelado dimensional) o `ietf-rfc` (semántica HTTP). `validate` lo refleja así: en fichas `concept`/`pattern` rechaza fuentes Nivel 3 y 5, exige al menos una fuente Nivel 1–2 por ficha y comprueba que `authority_level` coincida con `source_type`. La separación entre afirmación conceptual y de producto la verifica la revisión B-F3.1. La regla también está en la cabecera de `content/sources/registry.yaml`.
-- **Regla (F3, 2026-09-30):** cuando se aplica la revisión aprobada de un lote y la ficha no tiene VERIFY pendientes, pasa a `verification_status: verified` con `last_verified` de ese día. Lotes 1 y 2: las 20 fichas están `verified`.
+- **Regla (F3, 2026-09-30):** cuando se aplica la revisión aprobada de un lote y la ficha no tiene VERIFY pendientes, pasa a `verification_status: verified` con `last_verified` de ese día. Lotes 1, 2 y 3: las 30 fichas están `verified`.
 - **Nombres:** B-F3.1 es la revisión de fichas (cada lote); B-F3.2 es la Code Library.
 - **Regla (gate F1):** Cursor revisa y propone cambios sobre `content/blueprint/`; solo Carril A edita esos archivos.
 - **Regla (F2):** cada carril actualiza solo su archivo en `docs/status/`. `docs/STATUS.md` es un resumen que actualiza Carril A al mergear.
@@ -46,6 +46,12 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Code Library: `/snippets`, `/snippets/{slug}`, `Language`, `Snippet*` y `code_snippet` en `ResultType` (ADR-008, aditivo).
 
 ## Historial
+
+### Revisión del lote 3, verified y reconciliación (2026-10-01)
+- Merge de `b/f3-graph` y `b/f3-review-3`.
+- `data-pipeline` §10 alineada con el snippet ejecutable `airflow-daily-partition-dag`. Auditoría de código de fichas `verified`: la otra con funciones no definidas es `pubsub-delivery-semantics` §10 (esquema con `parse` y `upsert_customer`), pendiente de decisión.
+- Revisión B-F3.1 del lote 3 aplicada: `catchup` y `dag` muestran la transacción de reemplazo de la partición y su código es ejecutable. El código de `api-ingestion` no cambió.
+- Lote 3 `verified` (30 fichas `verified` en total). Snippet `bigquery-reconciliation`; `python-api-ingestion-retries` y `airflow-daily-partition-dag` enlazados a las fichas del lote 3. 474 tests.
 
 ### A-F3.2 · Code Library (2026-10-01)
 - Plantilla `content/_templates/snippet.md` (10 secciones, §23). `validate`: secciones de la plantilla, `requirements` no vacío y al menos un `IMPLEMENTS` hacia un concept o pattern `verified`; también `related_topics` = `relations` y regla de niveles de fuente.
