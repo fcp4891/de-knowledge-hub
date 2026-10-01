@@ -238,7 +238,8 @@ def test_search_finds_snippets(client: TestClient) -> None:
 
 def test_snippet_filters_and_not_found(client: TestClient) -> None:
     terraform = get(client, "/snippets", language="terraform").json()
-    assert [i["slug"] for i in terraform["items"]] == ["terraform-bigquery-partitioned-table"]
+    assert "terraform-bigquery-partitioned-table" in [i["slug"] for i in terraform["items"]]
+    assert all(i["language"] == "terraform" for i in terraform["items"])
     assert get(client, "/snippets", implements="upsert").json()["items"][0]["slug"] == "bigquery-deduplicate-latest"
     assert get(client, "/snippets/scd-type-2").status_code == 404   # existe, pero no es un snippet
     assert get(client, "/snippets", language="cobol").status_code == 422
