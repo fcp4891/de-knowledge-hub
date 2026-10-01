@@ -6,15 +6,15 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-01
 
 ## Actual
-- **Tarea activa:** B-F3.2, vista `/snippets` y ficha de snippet. La revisión de los 8 snippets está en pendiente.
-- **Siguiente:** esperar la aprobación de `docs/reviews/snippets-1.md`.
+- **Tarea activa:** en espera de merge. La vista `/snippets` y la revisión de los 8 snippets están aprobadas.
+- **Siguiente:** B-F3.1 del lote 4, en `b/f3-review-4` desde `main`.
 - **Bloqueos:** ninguno.
 
 ### B-F3.2 · snippets
 - `/snippets` filtra con `GET /snippets` por lenguaje, cloud e `implements`.
 - La ficha muestra requisitos, las secciones, el código con resaltado y copiar, y los conceptos que implementa.
 - En la ficha de concepto, los snippets salen del grupo `IMPLEMENTS` entrante. Un `code_snippet` abre `/snippets/<slug>`.
-- Revisión de los 8 snippets en `docs/reviews/snippets-1.md`, filas en pendiente. No se editó `content/`.
+- Felipe aprobó las filas de `docs/reviews/snippets-1.md` el 2026-10-01, incluida `CREATE OR REPLACE TEMP TABLE`. El resaltado de HCL quedó en `docs/BACKLOG.md`. No se editó `content/`.
 
 ### B-F3.1 · lote 3
 - Diez fichas, tabla de §48. Felipe aprobó todas las filas el 2026-10-01, incluida la de `replace_partition` en `catchup` y `dag`. Ninguna afirmación de producto se apoya solo en Kimball o en una RFC. No se editó `content/`.
