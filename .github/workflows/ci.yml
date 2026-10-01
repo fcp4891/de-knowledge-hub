@@ -36,6 +36,11 @@ jobs:
       - run: make validate
       - run: make build
       - run: make test
+      # Snippets de Terraform (ADR-008): init sin backend y validate, sin credenciales ni recursos reales.
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_wrapper: false
+      - run: make validate-terraform
 
   frontend:
     runs-on: ubuntu-24.04

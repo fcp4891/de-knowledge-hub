@@ -1,4 +1,4 @@
-.PHONY: help venv install validate test build dev mocks db-up db-down migrate compile backup-me restore-me
+.PHONY: help venv install validate test build dev mocks db-up db-down migrate compile backup-me restore-me validate-terraform
 
 # Entorno del proyecto: .venv con Python 3.12 (README, «Entorno de Python»). Nunca el Python global.
 ifeq ($(OS),Windows_NT)
@@ -18,7 +18,7 @@ REQUIRE_VENV =
 endif
 
 help:
-	@echo Objetivos: venv install validate test mocks db-up db-down migrate compile build dev backup-me restore-me
+	@echo Objetivos: venv install validate test mocks db-up db-down migrate compile build dev backup-me restore-me validate-terraform
 
 venv:
 	$(BOOTSTRAP_PYTHON) -m venv .venv
@@ -64,6 +64,13 @@ backup-me:
 restore-me:
 	$(REQUIRE_VENV)
 	$(PYTHON) -m scripts.personal_backup restore $(FILE)
+
+# Snippets de Terraform (ADR-008): extrae cada uno a build/ y lo valida sin credenciales. Requiere terraform (la CI lo instala).
+TF_SNIPPETS := build/snippets/terraform
+validate-terraform:
+	$(REQUIRE_VENV)
+	$(PYTHON) -m scripts.snippets.extract --language terraform --out $(TF_SNIPPETS)
+	for dir in $(TF_SNIPPETS)/*/; do 		terraform -chdir=$$dir init -backend=false -input=false -no-color && terraform -chdir=$$dir validate -no-color || exit 1; 	done
 
 dev:
 	$(REQUIRE_VENV)

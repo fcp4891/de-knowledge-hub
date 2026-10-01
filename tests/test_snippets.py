@@ -98,3 +98,15 @@ def test_404_is_not_retried(ingestion: dict[str, Any]) -> None:
     with pytest.raises(HTTPError):
         ingestion["get_page"]("https://api.example/v1/p", {})
     assert len(calls) == 1
+
+
+# --- Extracción de Terraform para la CI (make validate-terraform) ------------
+
+
+def test_extract_terraform_is_idempotent(tmp_path: Path) -> None:
+    from scripts.snippets import extract
+
+    first = extract.extract("terraform", tmp_path / "tf")
+    second = extract.extract("terraform", tmp_path / "tf")
+    assert [p.relative_to(tmp_path) for p in first] == [p.relative_to(tmp_path) for p in second]
+    assert first and all(p.name == "main.tf" and "required_providers" in p.read_text(encoding="utf-8") for p in first)
