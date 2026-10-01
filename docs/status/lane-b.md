@@ -3,15 +3,15 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-09-30
+**Última actualización:** 2026-10-01
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote 3, filas en pendiente en `docs/reviews/cards-lote3.md`.
-- **Siguiente:** esperar la aprobación de Felipe. El mini-grafo de B-F3.2 está en `b/f3-graph` (`ce313db`) y no entra en esta rama. `/snippets` espera snippets de Carril A.
+- **Tarea activa:** en espera. B-F3.1 del lote 3 está aprobada. El grafo de B-F3.2 (`b/f3-graph`, `ce313db`) también está aprobado.
+- **Siguiente:** la vista `/snippets`, cuando Carril A confirme en `docs/status/lane-a.md` que el contrato de snippets está en `main`.
 - **Bloqueos:** ninguno.
 
 ### B-F3.1 · lote 3
-- Diez fichas, tabla de §48. Ninguna afirmación de producto se apoya solo en Kimball o en una RFC (Nivel 4). Propuesta abierta: mostrar la transacción de `replace_partition` en `catchup` y `dag`, o remitir a `backfill`. No se editó `content/`.
+- Diez fichas, tabla de §48. Felipe aprobó todas las filas el 2026-10-01, incluida la de `replace_partition` en `catchup` y `dag`. Ninguna afirmación de producto se apoya solo en Kimball o en una RFC. No se editó `content/`.
 
 ### B-F3 UX
 - El selector de estado y la casilla «Pendiente de profundizar» llaman a `PUT /me/study-state/{slug}` al cambiar, con `last_studied_at` de ahora.
