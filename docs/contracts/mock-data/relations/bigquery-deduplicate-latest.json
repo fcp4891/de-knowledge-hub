@@ -1,0 +1,47 @@
+{
+  "slug": "bigquery-deduplicate-latest",
+  "groups": [
+    {
+      "type": "USES",
+      "direction": "outgoing",
+      "label": "uses",
+      "items": [
+        {
+          "slug": "sql-merge",
+          "title": "MERGE",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "El MERGE aplica la última versión de cada clave."
+        }
+      ]
+    },
+    {
+      "type": "IMPLEMENTS",
+      "direction": "outgoing",
+      "label": "implements",
+      "items": [
+        {
+          "slug": "upsert",
+          "title": "Upsert",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Upsert por clave con deduplicación previa y condición de versión."
+        }
+      ]
+    },
+    {
+      "type": "DEPENDS_ON",
+      "direction": "outgoing",
+      "label": "depends_on",
+      "items": [
+        {
+          "slug": "idempotency",
+          "title": "Idempotencia",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Aplicar el mismo lote dos veces deja la tabla igual."
+        }
+      ]
+    }
+  ]
+}

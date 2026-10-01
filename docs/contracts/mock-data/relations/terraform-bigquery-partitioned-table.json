@@ -1,0 +1,47 @@
+{
+  "slug": "terraform-bigquery-partitioned-table",
+  "groups": [
+    {
+      "type": "USES",
+      "direction": "outgoing",
+      "label": "uses",
+      "items": [
+        {
+          "slug": "bigquery-clustering",
+          "title": "Clustering en BigQuery",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Clustering por la columna de filtro secundaria."
+        }
+      ]
+    },
+    {
+      "type": "IMPLEMENTS",
+      "direction": "outgoing",
+      "label": "implements",
+      "items": [
+        {
+          "slug": "bigquery-partitioning",
+          "title": "Particionamiento en BigQuery",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Partición diaria por columna con filtro de partición obligatorio."
+        }
+      ]
+    },
+    {
+      "type": "RELATED_TO",
+      "direction": "both",
+      "label": "related_to",
+      "items": [
+        {
+          "slug": "partition-pruning",
+          "title": "Partition pruning",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "require_partition_filter obliga a que toda consulta pueda podar particiones."
+        }
+      ]
+    }
+  ]
+}

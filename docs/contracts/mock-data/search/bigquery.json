@@ -3,6 +3,51 @@
   "total": 20,
   "groups": [
     {
+      "type": "code_snippet",
+      "items": [
+        {
+          "slug": "bigquery-incremental-merge-watermark",
+          "title": "MERGE incremental por watermark en BigQuery",
+          "type": "code_snippet",
+          "domain": null,
+          "classification": "core",
+          "has_page": true,
+          "snippet": "Script de BigQuery que carga solo el delta desde la última marca, con MERGE por clave y versión y avance del watermark en la misma transacción.",
+          "score": 6.5
+        },
+        {
+          "slug": "bigquery-scd-type-2",
+          "title": "SCD tipo 2 en BigQuery",
+          "type": "code_snippet",
+          "domain": null,
+          "classification": "core",
+          "has_page": true,
+          "snippet": "Transacción de BigQuery que cierra la versión vigente de los miembros que cambiaron e inserta la nueva versión, sin duplicar si se repite.",
+          "score": 6.5
+        },
+        {
+          "slug": "terraform-bigquery-partitioned-table",
+          "title": "Tabla particionada y con clustering en BigQuery con Terraform",
+          "type": "code_snippet",
+          "domain": null,
+          "classification": "modern",
+          "has_page": true,
+          "snippet": "Dataset y tabla de BigQuery declarados en Terraform, particionada por día con filtro de partición obligatorio, clustering y protección contra borrado.",
+          "score": 6.0
+        },
+        {
+          "slug": "bigquery-deduplicate-latest",
+          "title": "Deduplicar por clave y aplicar la última versión en BigQuery",
+          "type": "code_snippet",
+          "domain": null,
+          "classification": "core",
+          "has_page": true,
+          "snippet": "Deduplica un lote por clave quedándose con la versión más reciente (QUALIFY ROW_NUMBER) y lo aplica con MERGE condicionado a la versión.",
+          "score": 5.5
+        }
+      ]
+    },
+    {
       "type": "source",
       "items": [
         {
@@ -149,36 +194,6 @@
           "has_page": false,
           "snippet": "Precios y modalidades cambian; ficha siempre con fuente y last_verified.",
           "score": 5.0
-        },
-        {
-          "slug": "bigquery-slots",
-          "title": "Slots y capacidad de cómputo",
-          "type": "concept",
-          "domain": "gcp",
-          "classification": "modern",
-          "has_page": false,
-          "snippet": "Editions y reservas cambian; ficha con fuente.",
-          "score": 2.0
-        },
-        {
-          "slug": "bigquery-biglake-tables",
-          "title": "Tablas BigLake",
-          "type": "concept",
-          "domain": "gcp",
-          "classification": "modern",
-          "has_page": false,
-          "snippet": "No es una tabla externa.",
-          "score": 2.0
-        },
-        {
-          "slug": "sql-arrays",
-          "title": "ARRAY",
-          "type": "concept",
-          "domain": "sql",
-          "classification": "core",
-          "has_page": false,
-          "snippet": "El modelo ARRAY/STRUCT de BigQuery no es el de Redshift ni el de Fabric; el dialecto está en bigquery-sql-dialect.",
-          "score": 1.5
         }
       ]
     },
@@ -209,21 +224,6 @@
           "has_page": true,
           "snippet": "Data warehouse serverless de Google Cloud con almacenamiento columnar y cómputo separado.",
           "score": 5.3
-        }
-      ]
-    },
-    {
-      "type": "architecture",
-      "items": [
-        {
-          "slug": "cdc-architecture",
-          "title": "Arquitectura CDC (PostgreSQL → BigQuery)",
-          "type": "architecture",
-          "domain": "architecture",
-          "classification": "core",
-          "has_page": false,
-          "snippet": "El escenario de F4 es PostgreSQL → BigQuery; la ficha explica qué cambia con otro origen o destino.",
-          "score": 4.5
         }
       ]
     }

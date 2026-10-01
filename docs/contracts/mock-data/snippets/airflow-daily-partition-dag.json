@@ -1,0 +1,174 @@
+{
+  "id": "code_snippet:airflow-daily-partition-dag",
+  "title": "DAG diario de Airflow que reemplaza una partición de BigQuery",
+  "slug": "airflow-daily-partition-dag",
+  "description": "Dag de Airflow 3 (TaskFlow) que valida el staging del día lógico y reemplaza la partición del día en BigQuery dentro de una transacción; reejecutarlo no duplica.",
+  "type": "code_snippet",
+  "domain": null,
+  "subdomain": null,
+  "classification": "core",
+  "level": "intermediate",
+  "cloud": [
+    "gcp"
+  ],
+  "technologies": [
+    "apache-airflow",
+    "gcp-cloud-composer",
+    "gcp-bigquery",
+    "python"
+  ],
+  "tags": [
+    "airflow",
+    "orchestration",
+    "bigquery",
+    "idempotency"
+  ],
+  "related_topics": [
+    "data-pipeline",
+    "backfill",
+    "idempotency",
+    "bigquery-partitioning"
+  ],
+  "sources": [
+    {
+      "source": "apache-airflow-docs",
+      "title": "Apache Airflow Documentation",
+      "url": "https://airflow.apache.org/docs/apache-airflow/stable/tutorial/taskflow.html",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "TaskFlow en Airflow 3.3.2 importa dag y task desde airflow.sdk; @task(retries=3) configura reintentos; las claves de contexto se reciben como argumentos keyword-only; pasar el resultado de una tarea a otra crea la dependencia."
+    },
+    {
+      "source": "apache-airflow-docs",
+      "title": "Apache Airflow Documentation",
+      "url": "https://airflow.apache.org/docs/apache-airflow/stable/templates-ref.html",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "ds es la logical date del Dag run como YYYY-MM-DD; solo está disponible cuando el DagRun tiene logical_date."
+    },
+    {
+      "source": "apache-airflow-docs",
+      "title": "Apache Airflow Documentation",
+      "url": "https://airflow.apache.org/docs/task-sdk/stable/api.html",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "catchup: hacer catchup del scheduler o solo correr el último intervalo; False por defecto."
+    },
+    {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/parameterized-queries",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "Con la biblioteca cliente de Python: bigquery.Client(), QueryJobConfig(query_parameters=[ScalarQueryParameter(nombre, tipo, valor)]) y client.query_and_wait(query, job_config=...); parámetros con nombre usando @nombre; un parámetro no puede ser NULL ni reemplazar identificadores o nombres de tabla."
+    },
+    {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/multi-statement-queries",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "Consultas de varias sentencias; su propio ejemplo usa un parámetro de consulta (@id) dentro de la consulta; cada sentencia corre como un job hijo."
+    },
+    {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/transactions",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "Transacciones de varias sentencias con commit o rollback atómico."
+    },
+    {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/access-control",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "roles/bigquery.jobUser permite ejecutar consultas en el proyecto; roles/bigquery.dataEditor sobre un dataset permite modificar sus tablas."
+    }
+  ],
+  "created_at": "2026-10-01",
+  "updated_at": "2026-10-01",
+  "last_verified": "2026-10-01",
+  "verification_status": "review_required",
+  "language": "python",
+  "dialect": "airflow3",
+  "requirements": [
+    "Apache Airflow 3.x (Managed Service for Apache Airflow, Amazon MWAA o autoalojado) con google-cloud-bigquery instalado en el entorno.",
+    "Credenciales de Google Cloud disponibles para el entorno (Application Default Credentials o la cuenta de servicio del entorno) con roles/bigquery.jobUser en el proyecto y roles/bigquery.dataEditor en los datasets.",
+    "Tablas proyecto.staging.ventas y proyecto.dwh.ventas con la misma estructura y una columna fecha DATE; dwh.ventas particionada por fecha.",
+    "El archivo va en la carpeta de Dags del entorno."
+  ],
+  "implements": [
+    "data-pipeline"
+  ],
+  "sections": [
+    {
+      "number": 1,
+      "key": "what_it_solves",
+      "title": "Qué resuelve",
+      "markdown": "Orquesta la carga diaria de una tabla particionada: comprueba que el staging del día lógico tenga datos y reemplaza la partición de ese día en BigQuery dentro de una transacción. Reintentar una tarea, reejecutar el día o hacer un backfill da siempre el mismo resultado. Implementa `data-pipeline` y reutiliza su ejemplo de la sección 10 (TaskFlow y transacción de `replace_partition`), ahora completo y ejecutable."
+    },
+    {
+      "number": 2,
+      "key": "code",
+      "title": "Código",
+      "markdown": "```python\n# Airflow 3 (TaskFlow) + google-cloud-bigquery: validar el staging y reemplazar la partición del día lógico.\nfrom datetime import datetime\n\nfrom airflow.sdk import dag, task\nfrom google.cloud import bigquery\n\nCOUNT_STAGING = \"\"\"\nSELECT COUNT(*) AS filas FROM `proyecto.staging.ventas` WHERE fecha = CAST(@dia AS DATE)\n\"\"\"\n\nREPLACE_PARTITION = \"\"\"\nBEGIN TRANSACTION;\nDELETE FROM `proyecto.dwh.ventas` WHERE fecha = CAST(@dia AS DATE);\nINSERT INTO `proyecto.dwh.ventas`\nSELECT * FROM `proyecto.staging.ventas` WHERE fecha = CAST(@dia AS DATE);\nCOMMIT TRANSACTION;\n\"\"\"\n\n\ndef day_config(ds: str) -> bigquery.QueryJobConfig:\n    return bigquery.QueryJobConfig(query_parameters=[bigquery.ScalarQueryParameter(\"dia\", \"STRING\", ds)])\n\n\n@dag(schedule=\"@daily\", start_date=datetime(2026, 9, 1), catchup=False)\ndef ventas_diarias():\n    @task(retries=3)\n    def validar_staging(*, ds: str) -> int:\n        rows = list(bigquery.Client().query_and_wait(COUNT_STAGING, job_config=day_config(ds)))\n        filas = rows[0].filas\n        if filas == 0:\n            raise ValueError(f\"staging vacío para {ds}: no se reemplaza la partición\")\n        return filas\n\n    @task(retries=3)\n    def reemplazar_particion(filas: int, *, ds: str) -> None:\n        bigquery.Client().query_and_wait(REPLACE_PARTITION, job_config=day_config(ds))\n\n    reemplazar_particion(validar_staging())\n\n\nventas_diarias()\n```"
+    },
+    {
+      "number": 3,
+      "key": "how_it_works",
+      "title": "Cómo funciona",
+      "markdown": "1. El Dag corre una vez por día; `ds` es la **fecha lógica** del intervalo (`YYYY-MM-DD`), no la fecha actual.\n2. `validar_staging` cuenta las filas del día en staging y falla si no hay ninguna: así una extracción vacía no borra la partición buena.\n3. `reemplazar_particion` depende de la anterior (recibe su resultado) y ejecuta el `DELETE` + `INSERT` del día en una **transacción**: si algo falla antes del `COMMIT`, la partición queda como estaba.\n4. El día se pasa como **parámetro de consulta** (`@dia`), no concatenado en el SQL.\n\nEs **idempotente**: reintentar la tarea o reejecutar el día vuelve a reemplazar la misma partición con los mismos datos."
+    },
+    {
+      "number": 4,
+      "key": "when_to_use",
+      "title": "Cuándo usarlo",
+      "markdown": "- Cargas diarias por partición de un staging ya poblado (por ejemplo, con `python-api-ingestion-retries`).\n- Cuando se quiere que reintentos, reejecuciones y backfills no requieran lógica especial."
+    },
+    {
+      "number": 5,
+      "key": "when_not_to_use",
+      "title": "Cuándo no usarlo",
+      "markdown": "- Para cambios por clave dispersos en muchos días: corresponde un `MERGE` (`bigquery-incremental-merge-watermark`).\n- Si el staging no se puede filtrar por la fecha lógica del intervalo.\n- Para flujos de eventos de baja latencia: corresponde streaming, no un Dag diario."
+    },
+    {
+      "number": 6,
+      "key": "risks",
+      "title": "Riesgos",
+      "markdown": "- **Staging parcial:** la validación solo detecta \"vacío\"; si la extracción puede quedar a medias, agregar una comparación de conteos con el origen.\n- **Columnas distintas:** `SELECT *` exige que staging y destino tengan las mismas columnas en el mismo orden; con esquemas que evolucionan, listar las columnas.\n- **Seguridad:** la cuenta del entorno de Airflow necesita escribir en el dataset de destino; limitar sus permisos a esos datasets.\n- **Costo:** cada reejecución reescribe la partición completa del día; con `catchup` activado, un `start_date` antiguo puede lanzar muchas ejecuciones."
+    },
+    {
+      "number": 7,
+      "key": "requirements",
+      "title": "Requisitos y cómo ejecutarlo",
+      "markdown": "Ver `requirements` en el encabezado. Reemplazar `proyecto` y las tablas, copiar el archivo a la carpeta de Dags y activar el Dag. Para reprocesar días pasados, usar un backfill de Airflow sobre el rango (ver `backfill`)."
+    },
+    {
+      "number": 8,
+      "key": "related_concepts",
+      "title": "Conceptos relacionados",
+      "markdown": "- `data-pipeline`: el patrón que implementa.\n- `backfill`: reprocesar rangos reejecutando intervalos.\n- `idempotency`: por qué reintentar es seguro.\n- `bigquery-partitioning`: la partición como unidad de reemplazo.\n- En revisión (lote 3): `dag` y `catchup`."
+    },
+    {
+      "number": 9,
+      "key": "sources",
+      "title": "Fuentes",
+      "markdown": "- Apache Airflow: *Pythonic Dags with the TaskFlow API*, *Templates reference* y *airflow.sdk API Reference*.\n- Google Cloud: *Run parameterized queries*, *Work with multi-statement queries*, *Multi-statement transactions* y *BigQuery IAM roles and permissions* (BigQuery).\n\nEl detalle está en `sources` del encabezado."
+    },
+    {
+      "number": 10,
+      "key": "change_history",
+      "title": "Historial de cambios",
+      "markdown": "- 2026-10-01: creación (A-F3.2), desde la sección 10 de `data-pipeline` tras la revisión B-F3.1 del lote 2."
+    }
+  ]
+}

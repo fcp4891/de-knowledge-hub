@@ -83,7 +83,12 @@ def write_knowledge(index: p.ContentIndex, w: MockWriter) -> None:
     for slug in TECHNOLOGIES:
         details.append(p.technology_detail(index, slug))
         w.write(f"GET /technologies/{slug}", f"technologies/{slug}.json", details[-1])
-    for slug in [*CONCEPTS, *TECHNOLOGIES]:
+    w.write(f"GET /snippets?limit={LIST_LIMIT}", "snippets.json", p.snippet_list(index, limit=LIST_LIMIT))
+    snippets = sorted(e["slug"] for e in index.entities.values() if e["type"] == p.SNIPPET_TYPE)
+    for slug in snippets:
+        details.append(p.snippet_detail(index, slug))
+        w.write(f"GET /snippets/{slug}", f"snippets/{slug}.json", details[-1])
+    for slug in [*CONCEPTS, *TECHNOLOGIES, *snippets]:
         w.write(f"GET /entities/{slug}/relations", f"relations/{slug}.json", p.relation_groups(index, slug))
     for slug in cited_sources(details):
         w.write(f"GET /sources/{slug}", f"sources/{slug}.json", p.source_detail(index, slug))

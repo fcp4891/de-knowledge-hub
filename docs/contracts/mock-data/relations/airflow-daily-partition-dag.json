@@ -1,0 +1,54 @@
+{
+  "slug": "airflow-daily-partition-dag",
+  "groups": [
+    {
+      "type": "IMPLEMENTS",
+      "direction": "outgoing",
+      "label": "implements",
+      "items": [
+        {
+          "slug": "data-pipeline",
+          "title": "Data pipeline",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Pipeline diario con dependencias, reintentos y fecha lógica."
+        }
+      ]
+    },
+    {
+      "type": "DEPENDS_ON",
+      "direction": "outgoing",
+      "label": "depends_on",
+      "items": [
+        {
+          "slug": "idempotency",
+          "title": "Idempotencia",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "El reemplazo transaccional de la partición hace seguro reintentar y reejecutar."
+        }
+      ]
+    },
+    {
+      "type": "RELATED_TO",
+      "direction": "both",
+      "label": "related_to",
+      "items": [
+        {
+          "slug": "backfill",
+          "title": "Backfill",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Como cada ejecución reemplaza su día, un backfill es reejecutar intervalos."
+        },
+        {
+          "slug": "bigquery-partitioning",
+          "title": "Particionamiento en BigQuery",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "La unidad de reemplazo es la partición diaria."
+        }
+      ]
+    }
+  ]
+}

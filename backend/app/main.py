@@ -19,13 +19,13 @@ from sqlalchemy import Engine
 
 from backend.app import errors
 from backend.app.repository import KnowledgeRepository
-from backend.app.routers import concepts, domains, me, relations, search, sources, technologies
+from backend.app.routers import concepts, domains, me, relations, search, snippets, sources, technologies
 from backend.db.config import make_engine
 
 ROOT = Path(__file__).resolve().parents[2]
 CONTRACT = ROOT / "docs" / "contracts" / "api.yaml"
 API_PREFIX = "/api/v1"
-ROUTERS = (domains, concepts, technologies, relations, sources, search, me)
+ROUTERS = (domains, concepts, technologies, snippets, relations, sources, search, me)
 
 
 def cors_origins() -> list[str]:

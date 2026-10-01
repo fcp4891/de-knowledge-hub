@@ -15,6 +15,7 @@ from referencing.jsonschema import DRAFT202012
 
 from scripts.contracts import build_mocks
 from backend.app import projection as p
+from backend.content import page_sections
 
 ROOT = Path(__file__).resolve().parent.parent
 API = yaml.safe_load((ROOT / "docs/contracts/api.yaml").read_text(encoding="utf-8"))
@@ -108,6 +109,14 @@ def test_section_keys_match_contract() -> None:
     assert API["components"]["schemas"]["Section"]["properties"]["key"]["enum"] == p.SECTION_KEYS
 
 
+def test_snippet_contract_matches_schema_and_template() -> None:
+    schema = json.loads((ROOT / "schemas/entities/code_snippet.schema.json").read_text(encoding="utf-8"))
+    assert API["components"]["schemas"]["Language"]["enum"] == schema["properties"]["language"]["enum"]
+    assert API["components"]["schemas"]["SnippetSection"]["properties"]["key"]["enum"] == p.SNIPPET_SECTION_KEYS
+    titles = page_sections.template_titles(ROOT / "content", page_sections.SNIPPET_TEMPLATE)
+    assert titles is not None and len(titles) == len(p.SNIPPET_SECTION_KEYS)
+
+
 # --- Proyección --------------------------------------------------------------
 
 
@@ -165,3 +174,26 @@ def test_search_prefers_title_matches(index: p.ContentIndex) -> None:
     result = p.search(index, "bigquery")
     first = result["groups"][0]["items"][0]
     assert "bigquery" in first["title"].lower()
+
+
+def test_snippet_list_filters(index: p.ContentIndex) -> None:
+    every = p.snippet_list(index, limit=500)["items"]
+    assert every and all(i["implements"] for i in every)
+    python = p.snippet_list(index, limit=500, filters={"language": "python"})["items"]
+    assert python and all(i["language"] == "python" for i in python)
+    scd = p.snippet_list(index, limit=500, filters={"implements": "scd-type-2"})["items"]
+    assert [i["slug"] for i in scd] == ["bigquery-scd-type-2"]
+    assert p.snippet_list(index, limit=500, filters={"cloud": "azure"})["items"] == []
+
+
+def test_snippet_detail_has_its_ten_sections(index: p.ContentIndex) -> None:
+    detail = p.snippet_detail(index, "bigquery-scd-type-2")
+    assert [s["key"] for s in detail["sections"]] == p.SNIPPET_SECTION_KEYS
+    assert detail["requirements"] and detail["implements"] == ["scd-type-2"]
+
+
+def test_concept_lists_its_snippets_as_implemented_by(index: p.ContentIndex) -> None:
+    groups = p.relation_groups(index, "scd-type-2")["groups"]
+    implemented_by = next(g for g in groups if g["type"] == "IMPLEMENTS" and g["direction"] == "incoming")
+    assert implemented_by["label"] == "implemented_by"
+    assert "bigquery-scd-type-2" in [i["slug"] for i in implemented_by["items"]]

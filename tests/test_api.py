@@ -230,6 +230,20 @@ def test_page_bonus_breaks_ties_in_favor_of_pages(client: TestClient) -> None:
     assert items["partitioning"] > items["topics-and-partitions"]
 
 
+def test_search_finds_snippets(client: TestClient) -> None:
+    body = get(client, "/search", q="deduplicar", type="code_snippet").json()
+    assert "bigquery-deduplicate-latest" in slugs(body)
+    assert all(g["type"] == "code_snippet" for g in body["groups"])
+
+
+def test_snippet_filters_and_not_found(client: TestClient) -> None:
+    terraform = get(client, "/snippets", language="terraform").json()
+    assert [i["slug"] for i in terraform["items"]] == ["terraform-bigquery-partitioned-table"]
+    assert get(client, "/snippets", implements="upsert").json()["items"][0]["slug"] == "bigquery-deduplicate-latest"
+    assert get(client, "/snippets/scd-type-2").status_code == 404   # existe, pero no es un snippet
+    assert get(client, "/snippets", language="cobol").status_code == 422
+
+
 def test_search_escapes_like_wildcards(client: TestClient) -> None:
     assert get(client, "/search", q="%%").json()["total"] == 0
 

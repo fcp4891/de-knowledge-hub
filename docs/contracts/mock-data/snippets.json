@@ -1,0 +1,106 @@
+{
+  "total": 7,
+  "limit": 500,
+  "offset": 0,
+  "items": [
+    {
+      "slug": "airflow-daily-partition-dag",
+      "title": "DAG diario de Airflow que reemplaza una partición de BigQuery",
+      "description": "Dag de Airflow 3 (TaskFlow) que valida el staging del día lógico y reemplaza la partición del día en BigQuery dentro de una transacción; reejecutarlo no duplica.",
+      "language": "python",
+      "dialect": "airflow3",
+      "cloud": [
+        "gcp"
+      ],
+      "implements": [
+        "data-pipeline"
+      ],
+      "verification_status": "review_required"
+    },
+    {
+      "slug": "bigquery-deduplicate-latest",
+      "title": "Deduplicar por clave y aplicar la última versión en BigQuery",
+      "description": "Deduplica un lote por clave quedándose con la versión más reciente (QUALIFY ROW_NUMBER) y lo aplica con MERGE condicionado a la versión.",
+      "language": "sql",
+      "dialect": "bigquery",
+      "cloud": [
+        "gcp"
+      ],
+      "implements": [
+        "upsert"
+      ],
+      "verification_status": "review_required"
+    },
+    {
+      "slug": "bigquery-incremental-merge-watermark",
+      "title": "MERGE incremental por watermark en BigQuery",
+      "description": "Script de BigQuery que carga solo el delta desde la última marca, con MERGE por clave y versión y avance del watermark en la misma transacción.",
+      "language": "sql",
+      "dialect": "bigquery",
+      "cloud": [
+        "gcp"
+      ],
+      "implements": [
+        "incremental-pipelines",
+        "incremental-load"
+      ],
+      "verification_status": "review_required"
+    },
+    {
+      "slug": "bigquery-scd-type-2",
+      "title": "SCD tipo 2 en BigQuery",
+      "description": "Transacción de BigQuery que cierra la versión vigente de los miembros que cambiaron e inserta la nueva versión, sin duplicar si se repite.",
+      "language": "sql",
+      "dialect": "bigquery",
+      "cloud": [
+        "gcp"
+      ],
+      "implements": [
+        "scd-type-2"
+      ],
+      "verification_status": "review_required"
+    },
+    {
+      "slug": "dataform-incremental-model",
+      "title": "Modelo incremental en Dataform con uniqueKey",
+      "description": "Tabla incremental de Dataform (SQLX) que se construye completa la primera vez y después fusiona solo lo nuevo por clave, con un margen de relectura.",
+      "language": "sql",
+      "dialect": "dataform-sqlx",
+      "cloud": [
+        "gcp"
+      ],
+      "implements": [
+        "incremental-load"
+      ],
+      "verification_status": "review_required"
+    },
+    {
+      "slug": "python-api-ingestion-retries",
+      "title": "Ingesta de una API con reintentos en Python",
+      "description": "Script de Python (solo biblioteca estándar) que pagina una API por cursor, respeta 429 y Retry-After, reintenta solo errores transitorios y guarda cada página con un nombre determinista.",
+      "language": "python",
+      "dialect": "python3.12",
+      "cloud": [
+        "agnostic"
+      ],
+      "implements": [
+        "retries"
+      ],
+      "verification_status": "review_required"
+    },
+    {
+      "slug": "terraform-bigquery-partitioned-table",
+      "title": "Tabla particionada y con clustering en BigQuery con Terraform",
+      "description": "Dataset y tabla de BigQuery declarados en Terraform, particionada por día con filtro de partición obligatorio, clustering y protección contra borrado.",
+      "language": "terraform",
+      "dialect": "hcl",
+      "cloud": [
+        "gcp"
+      ],
+      "implements": [
+        "bigquery-partitioning"
+      ],
+      "verification_status": "review_required"
+    }
+  ]
+}

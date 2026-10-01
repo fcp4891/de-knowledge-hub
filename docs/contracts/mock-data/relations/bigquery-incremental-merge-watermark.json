@@ -1,0 +1,54 @@
+{
+  "slug": "bigquery-incremental-merge-watermark",
+  "groups": [
+    {
+      "type": "USES",
+      "direction": "outgoing",
+      "label": "uses",
+      "items": [
+        {
+          "slug": "sql-merge",
+          "title": "MERGE",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "El MERGE con condición de versión aplica el lote."
+        }
+      ]
+    },
+    {
+      "type": "IMPLEMENTS",
+      "direction": "outgoing",
+      "label": "implements",
+      "items": [
+        {
+          "slug": "incremental-load",
+          "title": "Carga incremental",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Escritura del delta con MERGE por clave y versión."
+        },
+        {
+          "slug": "incremental-pipelines",
+          "title": "Pipelines incrementales",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Etapa incremental con watermark tomado del lote, corte y rollback si la fila de control falta o cambió."
+        }
+      ]
+    },
+    {
+      "type": "DEPENDS_ON",
+      "direction": "outgoing",
+      "label": "depends_on",
+      "items": [
+        {
+          "slug": "idempotency",
+          "title": "Idempotencia",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Repetir el script con el mismo staging no duplica ni retrocede datos."
+        }
+      ]
+    }
+  ]
+}

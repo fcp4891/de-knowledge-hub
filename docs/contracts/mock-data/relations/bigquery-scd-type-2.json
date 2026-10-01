@@ -1,0 +1,47 @@
+{
+  "slug": "bigquery-scd-type-2",
+  "groups": [
+    {
+      "type": "IMPLEMENTS",
+      "direction": "outgoing",
+      "label": "implements",
+      "items": [
+        {
+          "slug": "scd-type-2",
+          "title": "SCD Type 2",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Cierre de la versión vigente e inserción de la nueva, en una transacción."
+        }
+      ]
+    },
+    {
+      "type": "DEPENDS_ON",
+      "direction": "outgoing",
+      "label": "depends_on",
+      "items": [
+        {
+          "slug": "idempotency",
+          "title": "Idempotencia",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Repetir la transacción con los mismos cambios no crea versiones nuevas."
+        }
+      ]
+    },
+    {
+      "type": "RELATED_TO",
+      "direction": "both",
+      "label": "related_to",
+      "items": [
+        {
+          "slug": "sql-merge",
+          "title": "MERGE",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "El mismo patrón puede escribirse con MERGE sobre un origen preparado."
+        }
+      ]
+    }
+  ]
+}

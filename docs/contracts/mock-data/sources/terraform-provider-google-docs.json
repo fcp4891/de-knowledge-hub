@@ -1,0 +1,17 @@
+{
+  "slug": "terraform-provider-google-docs",
+  "title": "Terraform Google provider documentation",
+  "description": "Documentación del provider hashicorp/google en el Terraform Registry. Página SPA con título genérico: contenido no confirmado automáticamente.",
+  "url": "https://registry.terraform.io/providers/hashicorp/google/latest/docs",
+  "source_type": "official_docs",
+  "authority_level": 1,
+  "provider": "hashicorp",
+  "url_verified": false,
+  "review_frequency": "quarterly",
+  "trust": "high",
+  "technologies": [
+    "terraform"
+  ],
+  "last_verified": "2026-09-28",
+  "verification_status": "review_required"
+}

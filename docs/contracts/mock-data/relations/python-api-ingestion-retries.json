@@ -1,0 +1,33 @@
+{
+  "slug": "python-api-ingestion-retries",
+  "groups": [
+    {
+      "type": "IMPLEMENTS",
+      "direction": "outgoing",
+      "label": "implements",
+      "items": [
+        {
+          "slug": "retries",
+          "title": "Retries",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Reintento de errores transitorios con backoff, jitter, límite y respeto de Retry-After."
+        }
+      ]
+    },
+    {
+      "type": "DEPENDS_ON",
+      "direction": "outgoing",
+      "label": "depends_on",
+      "items": [
+        {
+          "slug": "idempotency",
+          "title": "Idempotencia",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Páginas con nombre determinista por día; repetir la ingesta sobrescribe en vez de duplicar."
+        }
+      ]
+    }
+  ]
+}

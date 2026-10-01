@@ -21,6 +21,11 @@ SECTION_KEYS = [
     "production_example", "architecture", "code", "gcp", "aws", "azure", "best_practices", "common_mistakes",
     "trade_offs", "related_concepts", "open_questions", "related_lab", "sources", "last_verified", "change_history",
 ]
+SNIPPET_TYPE = "code_snippet"
+SNIPPET_SECTION_KEYS = [  # ADR-008: las 10 secciones de content/_templates/snippet.md
+    "what_it_solves", "code", "how_it_works", "when_to_use", "when_not_to_use", "risks", "requirements",
+    "related_concepts", "sources", "change_history",
+]
 PAGE_BONUS = 0.3  # ADR-007: igual que backend/app/search.py
 SECTION_HEADING = re.compile(r"^## (\d+)\. (.+)$")
 CLOUDS = ("gcp", "aws", "azure")
@@ -137,17 +142,17 @@ def concept_list(
     return page_of([i for i in items if matches(i, filters or {})], limit, offset)
 
 
-def sections(body: str) -> list[dict[str, Any]]:
+def sections(body: str, keys: list[str] = SECTION_KEYS) -> list[dict[str, Any]]:
     result: list[dict[str, Any]] = []
     current: dict[str, Any] | None = None
     buffer: list[str] = []
     for line in body.splitlines():
         match = SECTION_HEADING.match(line)
-        if match and 1 <= int(match.group(1)) <= len(SECTION_KEYS):
+        if match and 1 <= int(match.group(1)) <= len(keys):
             if current:
                 result.append({**current, "markdown": "\n".join(buffer).strip()})
             number = int(match.group(1))
-            current, buffer = {"number": number, "key": SECTION_KEYS[number - 1], "title": match.group(2).strip()}, []
+            current, buffer = {"number": number, "key": keys[number - 1], "title": match.group(2).strip()}, []
         elif current:
             buffer.append(line)
     if current:
@@ -249,6 +254,54 @@ def technology_detail(index: ContentIndex, slug: str) -> dict[str, Any]:
     }
 
 
+# --- Code Library (ADR-008) ---------------------------------------------------
+
+
+def implemented(entity: dict[str, Any]) -> list[str]:
+    return [r["target"] for r in entity.get("relations", []) if r["type"] == "IMPLEMENTS"]
+
+
+def snippet_summary(snippet: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "slug": snippet["slug"], "title": snippet["title"], "description": snippet["description"],
+        "language": snippet["language"], "dialect": snippet.get("dialect"), "cloud": snippet.get("cloud", []),
+        "implements": implemented(snippet), "verification_status": snippet["verification_status"],
+    }
+
+
+def snippet_matches(item: dict[str, Any], filters: dict[str, Any]) -> bool:
+    """language exacto; cloud e implements por pertenencia a la lista (None = sin filtro)."""
+    return (
+        filters.get("language") in (None, item["language"])
+        and (filters.get("cloud") is None or filters["cloud"] in item["cloud"])
+        and (filters.get("implements") is None or filters["implements"] in item["implements"])
+    )
+
+
+def snippet_list(
+    index: ContentIndex, limit: int = 50, offset: int = 0, filters: dict[str, Any] | None = None
+) -> dict[str, Any]:
+    """Filtros: language, cloud, implements."""
+    snippets = sorted((e for e in index.entities.values() if e["type"] == SNIPPET_TYPE), key=lambda e: e["slug"])
+    items = [snippet_summary(s) for s in snippets]
+    return page_of([i for i in items if snippet_matches(i, filters or {})], limit, offset)
+
+
+def snippet_detail(index: ContentIndex, slug: str) -> dict[str, Any]:
+    s = index.entities[slug]
+    return {
+        "id": s["id"], "title": s["title"], "slug": slug, "description": s["description"], "type": s["type"],
+        "domain": s.get("domain"), "subdomain": s.get("subdomain"), "classification": s.get("classification"),
+        "level": s.get("level"), "cloud": s.get("cloud", []), "technologies": s.get("technologies", []),
+        "tags": s.get("tags", []), "related_topics": s.get("related_topics", []),
+        "sources": source_refs(index, s.get("sources", [])),
+        "created_at": s["created_at"], "updated_at": s["updated_at"],
+        "last_verified": s.get("last_verified"), "verification_status": s["verification_status"],
+        "language": s["language"], "dialect": s.get("dialect"), "requirements": s.get("requirements", []),
+        "implements": implemented(s), "sections": sections(index.bodies.get(slug, ""), SNIPPET_SECTION_KEYS),
+    }
+
+
 # --- Fuentes -----------------------------------------------------------------
 
 
@@ -347,7 +400,7 @@ def candidates(index: ContentIndex) -> list[dict[str, Any]]:
             "has_page": bool(page),
         })
     for e in index.entities.values():
-        if e["type"] in TECHNOLOGY_TYPES or e["type"] == "source":
+        if e["type"] in TECHNOLOGY_TYPES or e["type"] in ("source", SNIPPET_TYPE):
             items.append({
                 "slug": e["slug"], "title": e["title"], "type": e["type"], "domain": None,
                 "classification": e.get("classification"), "text": e["description"], "has_page": True,
@@ -360,7 +413,8 @@ def score(query: str, item: dict[str, Any]) -> float:
     points = 3.0 * (q in normalize(item["title"])) + 2.0 * (q in item["slug"]) + 1.0 * (q in normalize(item["text"]))
     if not points:
         return points
-    return round(points + 0.5 * (item["classification"] == "core") + PAGE_BONUS * item["has_page"], 4)
+    page_bonus = PAGE_BONUS * (item["has_page"] and item["type"] != SNIPPET_TYPE)  # ADR-008
+    return round(points + 0.5 * (item["classification"] == "core") + page_bonus, 4)
 
 
 def search(index: ContentIndex, query: str, limit: int = 20) -> dict[str, Any]:

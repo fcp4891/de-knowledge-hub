@@ -1,0 +1,33 @@
+{
+  "slug": "dataform-incremental-model",
+  "groups": [
+    {
+      "type": "IMPLEMENTS",
+      "direction": "outgoing",
+      "label": "implements",
+      "items": [
+        {
+          "slug": "incremental-load",
+          "title": "Carga incremental",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Carga incremental con fusión por clave (modo upsert) y relectura de un margen."
+        }
+      ]
+    },
+    {
+      "type": "DEPENDS_ON",
+      "direction": "outgoing",
+      "label": "depends_on",
+      "items": [
+        {
+          "slug": "idempotency",
+          "title": "Idempotencia",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Con uniqueKey, releer el margen o repetir la ejecución no duplica filas."
+        }
+      ]
+    }
+  ]
+}

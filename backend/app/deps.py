@@ -21,7 +21,9 @@ Level = Literal["basic", "intermediate", "advanced"]
 Kind = Literal["concept", "pattern", "architecture"]
 TechnologyType = Literal["technology", "cloud_service"]
 Origin = Literal["gcp", "aws", "azure", "open-source", "other"]
-ResultType = Literal["concept", "pattern", "architecture", "technology", "cloud_service", "source"]
+ResultType = Literal["concept", "pattern", "architecture", "technology", "cloud_service", "code_snippet", "source"]
+Language = Literal["sql", "python", "terraform", "yaml", "bash", "json", "other"]
+Cloud = Literal["gcp", "aws", "azure", "agnostic"]
 
 
 def repository(request: Request) -> KnowledgeRepository:

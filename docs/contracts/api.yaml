@@ -119,6 +119,40 @@ paths:
         "404": { $ref: "#/components/responses/NotFound" }
         "422": { $ref: "#/components/responses/ValidationError" }
 
+  /snippets:
+    get:
+      tags: [knowledge]
+      operationId: listSnippets
+      summary: Code Library (§23, ADR-008). Snippets ordenados por slug.
+      parameters:
+        - { name: language, in: query, schema: { $ref: "#/components/schemas/Language" } }
+        - { name: cloud, in: query, schema: { $ref: "#/components/schemas/Cloud" } }
+        - { name: implements, in: query, description: Slug del concept o pattern que implementa., schema: { $ref: "#/components/schemas/Slug" } }
+        - { $ref: "#/components/parameters/Limit" }
+        - { $ref: "#/components/parameters/Offset" }
+      responses:
+        "200":
+          description: Página de snippets.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SnippetList" }
+        "422": { $ref: "#/components/responses/ValidationError" }
+
+  /snippets/{slug}:
+    get:
+      tags: [knowledge]
+      operationId: getSnippet
+      summary: Snippet con su código, explicación del patrón, requisitos y fuentes (ADR-008).
+      parameters: [{ $ref: "#/components/parameters/Slug" }]
+      responses:
+        "200":
+          description: Snippet.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SnippetDetail" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "422": { $ref: "#/components/responses/ValidationError" }
+
   /entities/{slug}/relations:
     get:
       tags: [knowledge]
@@ -381,7 +415,8 @@ components:
       enum: [USES, IMPLEMENTS, DEPENDS_ON, ALTERNATIVE_TO, RELATED_TO, REPLACES, EXTENDS, RUNS_ON, PRODUCES, CONSUMES, PRACTICES, AFFECTS, UPDATES, REQUIRES]
     EntityType:
       enum: [concept, pattern, architecture, technology, cloud_service, code_snippet, lab, news, release, source, job_description, interview_question, personal_note]
-    ResultType: { enum: [concept, pattern, architecture, technology, cloud_service, source] }
+    ResultType: { enum: [concept, pattern, architecture, technology, cloud_service, code_snippet, source] }
+    Language: { description: Lenguaje de un snippet (code_snippet.schema.json)., enum: [sql, python, terraform, yaml, bash, json, other] }
     StudyStatus:
       description: Estados manuales de §37.
       enum: [not_reviewed, reviewing, understood, applied, needs_review]
@@ -578,6 +613,51 @@ components:
         stub: { type: boolean }
         note: { type: [string, "null"] }
         capabilities: { type: array, items: { $ref: "#/components/schemas/CapabilityCell" } }
+      unevaluatedProperties: false
+
+    # --- Code Library (ADR-008) ---
+    SnippetSection:
+      description: Una de las 10 secciones del snippet (§23), en Markdown.
+      type: object
+      required: [number, key, title, markdown]
+      properties:
+        number: { type: integer, minimum: 1, maximum: 10 }
+        key:
+          enum: [what_it_solves, code, how_it_works, when_to_use, when_not_to_use, risks, requirements, related_concepts,
+                 sources, change_history]
+        title: { type: string }
+        markdown: { type: string }
+      additionalProperties: false
+    SnippetSummary:
+      type: object
+      required: [slug, title, description, language, dialect, cloud, implements, verification_status]
+      properties:
+        slug: { $ref: "#/components/schemas/Slug" }
+        title: { type: string }
+        description: { type: string }
+        language: { $ref: "#/components/schemas/Language" }
+        dialect: { type: [string, "null"] }
+        cloud: { type: array, items: { $ref: "#/components/schemas/Cloud" } }
+        implements: { type: array, items: { $ref: "#/components/schemas/Slug" }, description: Slugs de concept o pattern que implementa (IMPLEMENTS). }
+        verification_status: { $ref: "#/components/schemas/VerificationStatus" }
+      additionalProperties: false
+    SnippetList:
+      allOf: [{ $ref: "#/components/schemas/Page" }]
+      type: object
+      required: [items]
+      properties:
+        items: { type: array, items: { $ref: "#/components/schemas/SnippetSummary" } }
+      unevaluatedProperties: false
+    SnippetDetail:
+      allOf: [{ $ref: "#/components/schemas/Metadata" }]
+      type: object
+      required: [language, dialect, requirements, implements, sections]
+      properties:
+        language: { $ref: "#/components/schemas/Language" }
+        dialect: { type: [string, "null"] }
+        requirements: { type: array, items: { type: string }, description: Qué necesita el snippet para ejecutarse. }
+        implements: { type: array, items: { $ref: "#/components/schemas/Slug" } }
+        sections: { type: array, items: { $ref: "#/components/schemas/SnippetSection" } }
       unevaluatedProperties: false
 
     # --- Relaciones ---

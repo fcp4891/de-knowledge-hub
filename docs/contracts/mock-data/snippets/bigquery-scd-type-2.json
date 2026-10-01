@@ -1,0 +1,143 @@
+{
+  "id": "code_snippet:bigquery-scd-type-2",
+  "title": "SCD tipo 2 en BigQuery",
+  "slug": "bigquery-scd-type-2",
+  "description": "Transacción de BigQuery que cierra la versión vigente de los miembros que cambiaron e inserta la nueva versión, sin duplicar si se repite.",
+  "type": "code_snippet",
+  "domain": null,
+  "subdomain": null,
+  "classification": "core",
+  "level": "intermediate",
+  "cloud": [
+    "gcp"
+  ],
+  "technologies": [
+    "gcp-bigquery"
+  ],
+  "tags": [
+    "sql",
+    "bigquery",
+    "data-modeling",
+    "scd"
+  ],
+  "related_topics": [
+    "scd-type-2",
+    "sql-merge",
+    "idempotency"
+  ],
+  "sources": [
+    {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/transactions",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "Transacciones de varias sentencias con commit o rollback atómico."
+    },
+    {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "UPDATE ... FROM e INSERT ... SELECT; una fila destino que coincide con más de una de origen produce un error."
+    },
+    {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/utility-functions",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "GENERATE_UUID() devuelve un UUID aleatorio como STRING."
+    },
+    {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/access-control",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "roles/bigquery.jobUser permite ejecutar consultas en el proyecto; roles/bigquery.dataEditor sobre un dataset permite modificar sus tablas."
+    }
+  ],
+  "created_at": "2026-10-01",
+  "updated_at": "2026-10-01",
+  "last_verified": "2026-10-01",
+  "verification_status": "review_required",
+  "language": "sql",
+  "dialect": "bigquery",
+  "requirements": [
+    "Dimensión proyecto.dataset.dim_cliente(sk STRING, cliente_id STRING, region STRING, valid_from TIMESTAMP, valid_to TIMESTAMP, is_current BOOL).",
+    "Tabla proyecto.dataset.cambios(cliente_id STRING, region STRING, cambiado_en TIMESTAMP) con un cambio por cliente (deduplicada antes, por ejemplo con bigquery-deduplicate-latest).",
+    "Permisos para ejecutar consultas (roles/bigquery.jobUser) y editar las tablas (roles/bigquery.dataEditor).",
+    "Se ejecuta como un único script de varias sentencias."
+  ],
+  "implements": [
+    "scd-type-2"
+  ],
+  "sections": [
+    {
+      "number": 1,
+      "key": "what_it_solves",
+      "title": "Qué resuelve",
+      "markdown": "Mantiene una dimensión SCD tipo 2 en BigQuery: cuando cambia un atributo con historia (aquí, `region`), cierra la fila vigente e inserta una nueva con su propia clave sustituta. Los hechos anteriores siguen apuntando a la versión que estaba vigente cuando ocurrieron. Es el código de la sección 10 de `scd-type-2`."
+    },
+    {
+      "number": 2,
+      "key": "code",
+      "title": "Código",
+      "markdown": "```sql\n-- BigQuery (ejecutable adaptando nombres), en una transacción de varias sentencias.\n-- Requiere: dim_cliente(sk STRING, cliente_id STRING, region STRING, valid_from TIMESTAMP,\n--           valid_to TIMESTAMP, is_current BOOL) y cambios(cliente_id, region, cambiado_en TIMESTAMP),\n--           con un cambio por cliente (deduplicado antes).\nBEGIN TRANSACTION;\n\n-- 1. Cerrar la versión vigente de los clientes con cambio real.\nUPDATE `proyecto.dataset.dim_cliente` d\nSET valid_to = c.cambiado_en, is_current = FALSE\nFROM `proyecto.dataset.cambios` c\nWHERE d.cliente_id = c.cliente_id AND d.is_current AND d.region != c.region;\n\n-- 2. Insertar la nueva versión para clientes nuevos o recién cerrados.\nINSERT INTO `proyecto.dataset.dim_cliente` (sk, cliente_id, region, valid_from, valid_to, is_current)\nSELECT GENERATE_UUID(), c.cliente_id, c.region, c.cambiado_en, NULL, TRUE\nFROM `proyecto.dataset.cambios` c\nLEFT JOIN `proyecto.dataset.dim_cliente` d\n  ON d.cliente_id = c.cliente_id AND d.is_current\nWHERE d.cliente_id IS NULL;\n\nCOMMIT TRANSACTION;\n```"
+    },
+    {
+      "number": 3,
+      "key": "how_it_works",
+      "title": "Cómo funciona",
+      "markdown": "1. **Cierre:** a los clientes cuya región vigente difiere de la que llega, se les pone `valid_to` y `is_current = FALSE`.\n2. **Inserción:** se inserta una versión nueva para todo cliente que, después del paso 1, no tiene fila vigente: los nuevos y los recién cerrados. La clave sustituta sale de `GENERATE_UUID()`.\n3. Ambos pasos van en una **transacción**: si el `INSERT` falla, el cierre se revierte y la dimensión no queda sin versión vigente.\n\nEs **idempotente**: repetirla con los mismos cambios no cierra nada (la región vigente ya coincide) y no inserta nada (ya hay fila vigente). El intervalo de validez es semiabierto `[valid_from, valid_to)`, como en la ficha."
+    },
+    {
+      "number": 4,
+      "key": "when_to_use",
+      "title": "Cuándo usarlo",
+      "markdown": "- Dimensiones cuyos atributos se analizan históricamente (región, segmento, categoría).\n- Cargas por lotes con un cambio por miembro."
+    },
+    {
+      "number": 5,
+      "key": "when_not_to_use",
+      "title": "Cuándo no usarlo",
+      "markdown": "- Atributos sin valor histórico: sobrescribir (tipo 1) es más simple; ver `slowly-changing-dimensions` cuando se verifique.\n- Lotes con varios cambios por miembro dentro del mismo período: hay que deduplicar antes o generar una versión por cambio en orden.\n- Atributos que cambian muy seguido en dimensiones enormes: el tipo 2 multiplica filas."
+    },
+    {
+      "number": 6,
+      "key": "risks",
+      "title": "Riesgos",
+      "markdown": "- **Varios cambios por cliente en el lote:** se insertarían dos versiones vigentes. Deduplicar antes es obligatorio.\n- **`!=` con NULL:** si `region` puede ser nula, `d.region != c.region` no detecta el paso de NULL a valor; usar `IS DISTINCT FROM` si aplica.\n- **UUID no reproducible:** reconstruir la dimensión desde cero genera claves nuevas; si los hechos ya guardaron claves, hay que reconstruirlos también.\n- **Seguridad:** la historia conserva valores antiguos (direcciones, regiones); aplicar las mismas políticas de acceso que a los datos vigentes.\n- **Costo:** cada cambio agrega una fila; vigilar el crecimiento de la dimensión."
+    },
+    {
+      "number": 7,
+      "key": "requirements",
+      "title": "Requisitos y cómo ejecutarlo",
+      "markdown": "Ver `requirements` en el encabezado. Ejecutar el script completo como una consulta (consola de BigQuery, `bq query --use_legacy_sql=false` o una tarea del orquestador) después de cargar y deduplicar `cambios`. Reemplazar `proyecto` y `dataset`."
+    },
+    {
+      "number": 8,
+      "key": "related_concepts",
+      "title": "Conceptos relacionados",
+      "markdown": "- `scd-type-2`: el patrón que implementa.\n- `sql-merge`: alternativa con `MERGE` sobre un origen preparado.\n- `idempotency`: por qué repetirlo es seguro."
+    },
+    {
+      "number": 9,
+      "key": "sources",
+      "title": "Fuentes",
+      "markdown": "- Google Cloud: *Multi-statement transactions*, *DML syntax*, *Utility functions* y *BigQuery IAM roles and permissions* (BigQuery).\n\nEl detalle está en `sources` del encabezado."
+    },
+    {
+      "number": 10,
+      "key": "change_history",
+      "title": "Historial de cambios",
+      "markdown": "- 2026-10-01: creación (A-F3.2), desde la sección 10 de `scd-type-2` tras la revisión B-F3.1 del lote 1."
+    }
+  ]
+}

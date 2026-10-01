@@ -1,0 +1,143 @@
+{
+  "id": "code_snippet:terraform-bigquery-partitioned-table",
+  "title": "Tabla particionada y con clustering en BigQuery con Terraform",
+  "slug": "terraform-bigquery-partitioned-table",
+  "description": "Dataset y tabla de BigQuery declarados en Terraform, particionada por día con filtro de partición obligatorio, clustering y protección contra borrado.",
+  "type": "code_snippet",
+  "domain": null,
+  "subdomain": null,
+  "classification": "modern",
+  "level": "intermediate",
+  "cloud": [
+    "gcp"
+  ],
+  "technologies": [
+    "terraform",
+    "gcp-bigquery"
+  ],
+  "tags": [
+    "terraform",
+    "iac",
+    "bigquery",
+    "partitioning"
+  ],
+  "related_topics": [
+    "bigquery-partitioning",
+    "bigquery-clustering",
+    "partition-pruning"
+  ],
+  "sources": [
+    {
+      "source": "terraform-provider-google-docs",
+      "title": "Terraform Google provider documentation",
+      "url": "https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/bigquery_table.html.markdown",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "google_bigquery_table: dataset_id y table_id; time_partitioning con type (DAY, HOUR, MONTH, YEAR), field (si falta, partición por tiempo de carga) y expiration_ms; require_partition_filter en el nivel superior (el de time_partitioning está deprecado); clustering hasta cuatro columnas en orden de prioridad; schema es un JSON; deletion_protection: con true o sin definir, apply o destroy que borren la tabla fallan."
+    },
+    {
+      "source": "terraform-provider-google-docs",
+      "title": "Terraform Google provider documentation",
+      "url": "https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/bigquery_dataset.html.markdown",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "google_bigquery_dataset: dataset_id obligatorio (letras, números o guiones bajos, hasta 1.024 caracteres), location opcional; delete_contents_on_destroy en false hace fallar el destroy si el dataset tiene tablas."
+    },
+    {
+      "source": "terraform-docs",
+      "title": "Terraform documentation",
+      "url": "https://developer.hashicorp.com/terraform/language/providers/requirements",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "Los providers se declaran en required_providers dentro del bloque terraform, con source y una restricción de versión; terraform init los instala."
+    },
+    {
+      "source": "terraform-provider-google-releases",
+      "title": "Terraform Google provider releases",
+      "url": "https://github.com/hashicorp/terraform-provider-google/releases",
+      "source_type": "release_notes",
+      "authority_level": 2,
+      "accessed": "2026-10-01",
+      "note": "Última versión del provider al 2026-10-01: v8.5.0 (29 de septiembre de 2026)."
+    }
+  ],
+  "created_at": "2026-10-01",
+  "updated_at": "2026-10-01",
+  "last_verified": "2026-10-01",
+  "verification_status": "review_required",
+  "language": "terraform",
+  "dialect": "hcl",
+  "requirements": [
+    "Terraform 1.x y el provider hashicorp/google 8.x (terraform init lo descarga).",
+    "Para aplicar: un proyecto de GCP, credenciales (Application Default Credentials) y permisos para crear datasets y tablas de BigQuery. Para validar (terraform validate) no hacen falta credenciales.",
+    "Variable project_id con el proyecto destino."
+  ],
+  "implements": [
+    "bigquery-partitioning"
+  ],
+  "sections": [
+    {
+      "number": 1,
+      "key": "what_it_solves",
+      "title": "Qué resuelve",
+      "markdown": "Declara como código una tabla de BigQuery con las decisiones de `bigquery-partitioning` ya tomadas: partición diaria por la columna de fecha, filtro de partición obligatorio para que ninguna consulta escanee toda la tabla, clustering por la columna de filtro secundaria y protección contra borrados accidentales. Aplicar el mismo código otra vez no cambia nada: Terraform compara con el estado y solo aplica diferencias."
+    },
+    {
+      "number": 2,
+      "key": "code",
+      "title": "Código",
+      "markdown": "```hcl\nterraform {\n  required_providers {\n    google = {\n      source  = \"hashicorp/google\"\n      version = \"~> 8.0\"\n    }\n  }\n}\n\nvariable \"project_id\" {\n  type        = string\n  description = \"Proyecto de GCP donde se crean el dataset y la tabla.\"\n}\n\nprovider \"google\" {\n  project = var.project_id\n}\n\nresource \"google_bigquery_dataset\" \"dwh\" {\n  dataset_id                 = \"dwh\"\n  location                   = \"US\"\n  delete_contents_on_destroy = false # un destroy falla si el dataset tiene tablas\n}\n\nresource \"google_bigquery_table\" \"eventos\" {\n  dataset_id = google_bigquery_dataset.dwh.dataset_id\n  table_id   = \"eventos\"\n\n  time_partitioning {\n    type  = \"DAY\"\n    field = \"fecha\"\n  }\n  require_partition_filter = true                       # toda consulta debe filtrar por la partición\n  clustering               = [\"tenant_id\", \"tipo_evento\"] # primero la columna más filtrada\n  deletion_protection      = true                       # apply o destroy que borren la tabla fallan\n\n  schema = jsonencode([\n    { name = \"fecha\", type = \"DATE\", mode = \"REQUIRED\" },\n    { name = \"tenant_id\", type = \"STRING\", mode = \"REQUIRED\" },\n    { name = \"tipo_evento\", type = \"STRING\", mode = \"NULLABLE\" },\n    { name = \"payload\", type = \"JSON\", mode = \"NULLABLE\" },\n  ])\n}\n```"
+    },
+    {
+      "number": 3,
+      "key": "how_it_works",
+      "title": "Cómo funciona",
+      "markdown": "- `required_providers` fija el provider `hashicorp/google` en la versión mayor 8; `terraform init` lo descarga.\n- `time_partitioning` con `type = \"DAY\"` y `field = \"fecha\"` crea una partición por día según esa columna. Sin `field`, la partición sería por tiempo de carga.\n- `require_partition_filter = true` hace fallar las consultas que no filtran por la partición. Va en el nivel superior: dentro de `time_partitioning` está deprecado.\n- `clustering` ordena por hasta cuatro columnas, en orden de prioridad.\n- `deletion_protection = true` hace fallar cualquier `apply` o `destroy` que borraría la tabla.\n- `schema` es un JSON; `jsonencode` lo genera desde HCL.\n\nEs **idempotente**: un segundo `terraform apply` sin cambios no modifica nada."
+    },
+    {
+      "number": 4,
+      "key": "when_to_use",
+      "title": "Cuándo usarlo",
+      "markdown": "- Tablas de eventos o hechos grandes que se consultan por fecha.\n- Cuando la infraestructura de datos se versiona y revisa como código."
+    },
+    {
+      "number": 5,
+      "key": "when_not_to_use",
+      "title": "Cuándo no usarlo",
+      "markdown": "- Tablas pequeñas: la partición agrega metadatos sin beneficio.\n- Tablas creadas y reemplazadas por el propio pipeline (por ejemplo, por Dataform): gestionarlas también con Terraform produce conflictos de propiedad.\n- Si el filtro habitual no es por fecha: la partición por día no ayuda; considerar partición por rango de enteros o solo clustering."
+    },
+    {
+      "number": 6,
+      "key": "risks",
+      "title": "Riesgos",
+      "markdown": "- **Cambios que borrarían la tabla:** si un cambio implica borrar la tabla, `deletion_protection` hace fallar el `apply`; revisar siempre el `terraform plan` antes de aplicar.\n- **Diferencias en `schema`:** como es un texto JSON, cualquier cambio en el texto genera un diff aunque el JSON sea equivalente; generarlo desde HCL con `jsonencode` evita editar el texto a mano.\n- **Seguridad:** las credenciales que aplican Terraform crean y modifican datasets; usar una cuenta de servicio dedicada al despliegue, no la de los pipelines.\n- **Costo:** `require_partition_filter` evita consultas que escanean toda la tabla."
+    },
+    {
+      "number": 7,
+      "key": "requirements",
+      "title": "Requisitos y cómo ejecutarlo",
+      "markdown": "Ver `requirements` en el encabezado. Guardar el código como `main.tf`:\n\n- validar sin credenciales: `terraform init -backend=false` y `terraform validate`; la CI del proyecto lo hace en cada push;\n- aplicar: `terraform init`, `terraform plan -var project_id=MI_PROYECTO` y `terraform apply -var project_id=MI_PROYECTO`."
+    },
+    {
+      "number": 8,
+      "key": "related_concepts",
+      "title": "Conceptos relacionados",
+      "markdown": "- `bigquery-partitioning`: el patrón que implementa.\n- `bigquery-clustering`: el orden dentro de cada partición.\n- `partition-pruning`: lo que garantiza `require_partition_filter`.\n- Con el lote 4: fichas de Terraform (`infrastructure-as-code`, `terraform-state`) y snippets de Cloud Storage e IAM."
+    },
+    {
+      "number": 9,
+      "key": "sources",
+      "title": "Fuentes",
+      "markdown": "- HashiCorp: documentación de `google_bigquery_table` y `google_bigquery_dataset` (repositorio oficial del provider), *Provider requirements* y releases del provider.\n\nEl detalle está en `sources` del encabezado."
+    },
+    {
+      "number": 10,
+      "key": "change_history",
+      "title": "Historial de cambios",
+      "markdown": "- 2026-10-01: creación (A-F3.2)."
+    }
+  ]
+}

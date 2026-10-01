@@ -29,7 +29,7 @@ from backend.app.projection import markdown_body, sections
 
 COMPILER_VERSION = "2"  # 2: search_documents (A-F2.3)
 TECHNOLOGY_TYPES = {"technology", "cloud_service"}
-SEARCHABLE_TYPES = {"concept", "pattern", "architecture", "technology", "cloud_service", "source"}
+SEARCHABLE_TYPES = {"concept", "pattern", "architecture", "technology", "cloud_service", "code_snippet", "source"}
 SEARCH_CONFIGS = {"tsv_es": "es_unaccent", "tsv_en": "en_unaccent"}
 WEIGHTS = ("A", "B", "C", "D")
 

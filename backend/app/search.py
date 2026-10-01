@@ -61,7 +61,8 @@ flagged AS (
 SELECT slug, type, title, domain, classification, snippet, has_page,
        round((base
               + CASE WHEN classification = 'core' THEN :core_bonus ELSE 0 END
-              + CASE WHEN has_page THEN :page_bonus ELSE 0 END)::numeric, 4)::float AS score
+              -- ADR-008: el bonus de ficha no aplica a los snippets (contenido derivado de una ficha).
+              + CASE WHEN has_page AND type <> 'code_snippet' THEN :page_bonus ELSE 0 END)::numeric, 4)::float AS score
 FROM flagged
 WHERE {filters}
 ORDER BY score DESC, lower(title), slug

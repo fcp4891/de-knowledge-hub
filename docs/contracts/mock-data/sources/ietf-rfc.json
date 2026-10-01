@@ -1,0 +1,15 @@
+{
+  "slug": "ietf-rfc",
+  "title": "IETF RFC Editor",
+  "description": "Especificaciones RFC de la IETF (p. ej. semántica HTTP): referencia conceptual canónica (Nivel 4).",
+  "url": "https://www.rfc-editor.org/",
+  "source_type": "spec_paper",
+  "authority_level": 4,
+  "provider": "ietf",
+  "url_verified": true,
+  "review_frequency": "quarterly",
+  "trust": "high",
+  "technologies": [],
+  "last_verified": "2026-09-30",
+  "verification_status": "verified"
+}
