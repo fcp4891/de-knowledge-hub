@@ -43,7 +43,10 @@ export default async function TechnologyPage({ params }: { params: Promise<{ slu
           <CapabilityList capabilities={data.capabilities} />
           <SourceList sources={data.sources} />
         </div>
-        <RelationPanel result={relations} />
+        <RelationPanel
+          result={relations}
+          center={{ slug: data.slug, title: data.title, entityType: data.type }}
+        />
       </div>
     </div>
   );

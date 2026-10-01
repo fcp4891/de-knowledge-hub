@@ -1,14 +1,24 @@
 import Link from "next/link";
 
 import { ApiFailure } from "@/components/ApiFailure";
-import type { ApiResult, RelationGroups } from "@/lib/api/types";
+import type { ApiResult, EntityType, RelationGroups } from "@/lib/api/types";
 import { entityHref } from "@/lib/entityHref";
 import { RELATION_LABEL } from "@/lib/labels";
 
-export function RelationPanel({ result }: { result: ApiResult<RelationGroups> }) {
+export async function RelationPanel({
+  result,
+  center,
+}: {
+  result: ApiResult<RelationGroups>;
+  center: { slug: string; title: string; entityType: EntityType };
+}) {
+  const hasNeighbors = result.ok && result.data.groups.some((group) => group.items.length > 0);
+  const Graph = hasNeighbors ? (await import("./NeighborhoodGraph")).NeighborhoodGraph : null;
+
   return (
     <aside className="panel relation-panel">
       <h2>Relaciones</h2>
+      {Graph ? <Graph center={center} groups={result.ok ? result.data.groups : []} /> : null}
       {result.ok ? <RelationGroupsView groups={result.data} /> : <ApiFailure result={result} />}
     </aside>
   );

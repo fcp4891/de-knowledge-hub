@@ -6,9 +6,16 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-09-30
 
 ## Actual
-- **Tarea activa:** en espera. B-F3.1 del lote 2 está aprobada.
-- **Siguiente:** revisar el lote 3 cuando Carril A lo entregue. No se editó `content/`.
+- **Tarea activa:** B-F3.2, mini-grafo del vecindario en las fichas de concepto y de tecnología.
+- **Siguiente:** B-F3.1 del lote 3. La vista `/snippets` espera a que Carril A cree snippets.
 - **Bloqueos:** ninguno.
+
+### B-F3.2 · grafo
+- El panel de relaciones dibuja el vecindario a 1 salto con `GET /entities/{slug}/relations`.
+- El color del nodo es el tipo de entidad. `origin: blueprint` es línea punteada; `origin: entity` es línea continua.
+- `cytoscape` se carga solo si hay vecinos, con `import()` dinámico.
+- La lista de relaciones sigue debajo. `/snippets` no entra en este cambio.
+- En Chrome: la ficha de concepto y la de tecnología muestran aristas continuas y punteadas, y un clic en un vecino abre su URL.
 
 ### B-F3 UX
 - El selector de estado y la casilla «Pendiente de profundizar» llaman a `PUT /me/study-state/{slug}` al cambiar, con `last_studied_at` de ahora.

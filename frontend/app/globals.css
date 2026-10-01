@@ -263,6 +263,45 @@ a:hover {
   font-size: 0.95rem;
 }
 
+.neighborhood {
+  height: 16rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: var(--bg);
+}
+
+.neighborhood-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.7rem;
+  margin: 0.45rem 0 0.8rem;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.neighborhood-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.swatch {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+}
+
+.legend-line {
+  width: 1.1rem;
+  border-top: 2px solid #5e584f;
+}
+
+.legend-line.dashed {
+  border-top-style: dashed;
+}
+
 .relation-groups section:first-child h3 {
   margin-top: 0;
 }
