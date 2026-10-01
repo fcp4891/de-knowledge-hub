@@ -43,6 +43,7 @@ Cada worktree de git tiene su propio `.venv/` (está en `.gitignore`).
 | `make build` | Valida, migra y compila `content/` a PostgreSQL |
 | `make mocks` | Regenera los mocks de `docs/contracts/mock-data/` |
 | `make dev` | API en `http://localhost:8000/api/v1` |
+| `make validate-terraform` | Extrae el HCL de snippets y fichas y lo valida con `terraform validate` (requiere Terraform; la CI lo ejecuta). Un bloque precedido por `<!-- validate-terraform: excluido — motivo -->` se reporta y no se valida |
 | `make backup-me` / `make restore-me` | Respaldo y restauración del estado personal (`me_*`) |
 
 Flujo típico: `make venv`, `make db-up`, `make build`, `make dev`.

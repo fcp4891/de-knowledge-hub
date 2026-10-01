@@ -110,3 +110,27 @@ def test_extract_terraform_is_idempotent(tmp_path: Path) -> None:
     second = extract.extract("terraform", tmp_path / "tf")
     assert [p.relative_to(tmp_path) for p in first] == [p.relative_to(tmp_path) for p in second]
     assert first and all(p.name == "main.tf" and "required_providers" in p.read_text(encoding="utf-8") for p in first)
+
+
+def test_extract_concepts_writes_each_hcl_block_and_reports_exclusions(tmp_path: Path) -> None:
+    from scripts.snippets import extract
+
+    concepts = tmp_path / "concepts"
+    concepts.mkdir()
+    hcl = 'terraform {\n  required_version = ">= 1.0"\n}\n'
+    (concepts / "a.md").write_text(f"## 10. Código\n\n```hcl\n{hcl}```\n\n```hcl\n{hcl}```\n", encoding="utf-8")
+    (concepts / "b.md").write_text(
+        "## 10. Código\n\n<!-- validate-terraform: excluido — fragmento de un bloque mayor -->\n```hcl\nbucket = \"x\"\n```\n",
+        encoding="utf-8",
+    )
+    written, excluded = extract.extract_concepts("terraform", tmp_path / "out", concepts)
+    assert sorted(p.parent.name for p in written) == ["a-1", "a-2"]
+    assert [(e.path.name, e.reason) for e in excluded] == [("b.md", "fragmento de un bloque mayor")]
+
+
+def test_repository_concepts_with_hcl_are_extracted(tmp_path: Path) -> None:
+    from scripts.snippets import extract
+
+    written, _ = extract.extract_concepts("terraform", tmp_path / "out")
+    assert {p.parent.name for p in written} >= {"infrastructure-as-code", "terraform-providers", "terraform-state"}
+    assert all(p.read_text(encoding="utf-8").strip() for p in written)

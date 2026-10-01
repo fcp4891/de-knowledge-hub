@@ -65,12 +65,17 @@ restore-me:
 	$(REQUIRE_VENV)
 	$(PYTHON) -m scripts.personal_backup restore $(FILE)
 
-# Snippets de Terraform (ADR-008): extrae cada uno a build/ y lo valida sin credenciales. Requiere terraform (la CI lo instala).
-TF_SNIPPETS := build/snippets/terraform
+# HCL de snippets y fichas (ADR-008): extrae cada bloque a build/ y lo valida sin credenciales.
+# Los fragmentos marcados con <!-- validate-terraform: excluido — motivo --> se reportan y no se validan.
+# Requiere terraform (la CI lo instala).
+TF_DIR := build/terraform
 validate-terraform:
 	$(REQUIRE_VENV)
-	$(PYTHON) -m scripts.snippets.extract --language terraform --out $(TF_SNIPPETS)
-	for dir in $(TF_SNIPPETS)/*/; do 		terraform -chdir=$$dir init -backend=false -input=false -no-color && terraform -chdir=$$dir validate -no-color || exit 1; 	done
+	$(PYTHON) -m scripts.snippets.extract --language terraform --out $(TF_DIR)
+	for dir in $(TF_DIR)/*/*/; do \
+		terraform -chdir=$$dir init -backend=false -input=false -no-color && \
+		terraform -chdir=$$dir validate -no-color || exit 1; \
+	done
 
 dev:
 	$(REQUIRE_VENV)
