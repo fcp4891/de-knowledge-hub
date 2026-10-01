@@ -32,6 +32,10 @@ sources:
     accessed: 2026-10-01
     note: "Sintaxis de MERGE; error UPDATE/MERGE must match at most one source row for each target row si una fila destino coincide con más de una de origen."
   - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
+    accessed: 2026-10-01
+    note: "CREATE [OR REPLACE] [TEMP | TEMPORARY] TABLE [IF NOT EXISTS]: OR REPLACE reemplaza la tabla si ya existe."
+  - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/access-control
     accessed: 2026-10-01
     note: "roles/bigquery.jobUser permite ejecutar jobs, incluidas consultas, en el proyecto; roles/bigquery.dataEditor sobre un dataset permite crear, actualizar, leer y borrar sus tablas."
@@ -51,7 +55,7 @@ relations:
 created_at: 2026-10-01
 updated_at: 2026-10-01
 last_verified: 2026-10-01
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Qué resuelve
@@ -73,7 +77,7 @@ IF wm_anterior IS NULL THEN
 END IF;
 
 -- Lote: una fila por clave, solo entre la marca anterior y el corte (sin timestamps futuros).
-CREATE TEMP TABLE lote AS
+CREATE OR REPLACE TEMP TABLE lote AS  -- OR REPLACE: repetir el script en la misma sesión no falla
 SELECT * FROM `proyecto.staging.pedidos`
 WHERE updated_at > wm_anterior AND updated_at <= corte
 QUALIFY ROW_NUMBER() OVER (PARTITION BY pedido_id ORDER BY updated_at DESC) = 1;
@@ -150,3 +154,5 @@ El detalle está en `sources` del encabezado.
 ## 10. Historial de cambios
 
 - 2026-10-01: creación (A-F3.2), desde la sección 10 de `incremental-pipelines` tras la revisión B-F3.1 del lote 2.
+- 2026-10-01: revisión B-F3.2 (snippets-1) aplicada: `CREATE OR REPLACE TEMP TABLE` para que repetir el script en la misma sesión no falle.
+- 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).

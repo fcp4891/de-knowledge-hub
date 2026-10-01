@@ -39,6 +39,10 @@ sources:
     accessed: 2026-09-30
     note: Lenguaje procedural de BigQuery con DECLARE ... DEFAULT (subconsulta), SET, IF ... END IF, RAISE USING MESSAGE y BEGIN TRANSACTION; ejemplo oficial con CREATE TEMP TABLE dentro de una transacción.
   - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
+    accessed: 2026-10-01
+    note: "CREATE [OR REPLACE] [TEMP | TEMPORARY] TABLE [IF NOT EXISTS]: OR REPLACE reemplaza la tabla si ya existe."
+  - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax
     accessed: 2026-09-30
     note: Sintaxis de MERGE; error si una fila destino coincide con más de una fila de origen.
@@ -137,7 +141,7 @@ IF wm_anterior IS NULL THEN
 END IF;
 
 -- Lote: una fila por clave, solo entre la marca anterior y el corte (sin timestamps futuros).
-CREATE TEMP TABLE lote AS
+CREATE OR REPLACE TEMP TABLE lote AS  -- OR REPLACE: repetir el script en la misma sesión no falla
 SELECT * FROM `proyecto.staging.pedidos`
 WHERE updated_at > wm_anterior AND updated_at <= corte
 QUALIFY ROW_NUMBER() OVER (PARTITION BY pedido_id ORDER BY updated_at DESC) = 1;
@@ -254,3 +258,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: creación (lote 2 de F3).
 - 2026-09-30: revisión B-F3.1 aplicada: el watermark sale del lote leído, con corte para timestamps futuros y rollback si falta o cambia la fila de control; nombre y fuente de Managed Service for Apache Airflow.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
+- 2026-10-01: §10 alineada con el snippet `bigquery-incremental-merge-watermark`: `CREATE OR REPLACE TEMP TABLE` (revisión B-F3.2 de snippets).

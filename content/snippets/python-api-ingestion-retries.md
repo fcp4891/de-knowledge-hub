@@ -54,7 +54,7 @@ relations:
 created_at: 2026-10-01
 updated_at: 2026-10-01
 last_verified: 2026-10-01
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Qué resuelve
@@ -179,3 +179,4 @@ El detalle está en `sources` del encabezado.
 
 - 2026-10-01: creación (A-F3.2), desde la sección 10 de `api-ingestion` (lote 3, en revisión). Si la revisión B-F3.1 del lote 3 cambia ese código, este snippet se actualiza en el mismo commit.
 - 2026-10-01: enlazado (IMPLEMENTS) a `api-ingestion` y `python-error-handling-and-retries`, verificadas con el lote 3; la revisión no cambió su código.
+- 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).

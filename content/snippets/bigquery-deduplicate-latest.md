@@ -42,7 +42,7 @@ relations:
 created_at: 2026-10-01
 updated_at: 2026-10-01
 last_verified: 2026-10-01
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Qué resuelve
@@ -112,3 +112,4 @@ El detalle está en `sources` del encabezado.
 ## 10. Historial de cambios
 
 - 2026-10-01: creación (A-F3.2), desde el bloque de BigQuery de la sección 10 de `upsert` tras la revisión B-F3.1 del lote 2.
+- 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).

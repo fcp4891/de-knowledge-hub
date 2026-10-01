@@ -57,6 +57,15 @@
     {
       "source": "gcp-bigquery-docs",
       "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "CREATE [OR REPLACE] [TEMP | TEMPORARY] TABLE [IF NOT EXISTS]: OR REPLACE reemplaza la tabla si ya existe."
+    },
+    {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
       "url": "https://docs.cloud.google.com/bigquery/docs/access-control",
       "source_type": "official_docs",
       "authority_level": 1,
@@ -67,7 +76,7 @@
   "created_at": "2026-10-01",
   "updated_at": "2026-10-01",
   "last_verified": "2026-10-01",
-  "verification_status": "review_required",
+  "verification_status": "verified",
   "language": "sql",
   "dialect": "bigquery",
   "requirements": [
@@ -92,7 +101,7 @@
       "number": 2,
       "key": "code",
       "title": "Código",
-      "markdown": "```sql\n-- Etapa incremental por watermark, idempotente y atómica (script de BigQuery).\n-- Requiere: etl_control(fuente, watermark) con una fila por fuente y destino con clave pedido_id.\nDECLARE wm_anterior TIMESTAMP DEFAULT (\n  SELECT watermark FROM `proyecto.dwh.etl_control` WHERE fuente = 'pedidos');\nDECLARE corte TIMESTAMP DEFAULT CURRENT_TIMESTAMP();  -- lo posterior a \"ahora\" espera a otra ejecución\nDECLARE wm_nuevo TIMESTAMP;\n\nIF wm_anterior IS NULL THEN\n  RAISE USING MESSAGE = 'Falta la fila de etl_control para pedidos: no se procesa nada';\nEND IF;\n\n-- Lote: una fila por clave, solo entre la marca anterior y el corte (sin timestamps futuros).\nCREATE TEMP TABLE lote AS\nSELECT * FROM `proyecto.staging.pedidos`\nWHERE updated_at > wm_anterior AND updated_at <= corte\nQUALIFY ROW_NUMBER() OVER (PARTITION BY pedido_id ORDER BY updated_at DESC) = 1;\n\n-- La marca nueva sale del lote leído, no del destino; con lote vacío no se mueve.\nSET wm_nuevo = COALESCE((SELECT MAX(updated_at) FROM lote), wm_anterior);\n\nBEGIN TRANSACTION;\n\n-- Si otra ejecución movió la marca, el error revierte la transacción.\nIF (SELECT watermark FROM `proyecto.dwh.etl_control` WHERE fuente = 'pedidos') IS DISTINCT FROM wm_anterior THEN\n  RAISE USING MESSAGE = 'etl_control cambió durante la ejecución: se revierte';\nEND IF;\n\nMERGE `proyecto.dwh.pedidos` AS t\nUSING lote AS s\nON t.pedido_id = s.pedido_id\nWHEN MATCHED AND s.updated_at > t.updated_at THEN\n  UPDATE SET estado = s.estado, monto = s.monto, updated_at = s.updated_at\nWHEN NOT MATCHED THEN\n  INSERT (pedido_id, estado, monto, updated_at) VALUES (s.pedido_id, s.estado, s.monto, s.updated_at);\n\nUPDATE `proyecto.dwh.etl_control`\nSET watermark = wm_nuevo\nWHERE fuente = 'pedidos' AND watermark = wm_anterior;\n\nCOMMIT TRANSACTION;\n```"
+      "markdown": "```sql\n-- Etapa incremental por watermark, idempotente y atómica (script de BigQuery).\n-- Requiere: etl_control(fuente, watermark) con una fila por fuente y destino con clave pedido_id.\nDECLARE wm_anterior TIMESTAMP DEFAULT (\n  SELECT watermark FROM `proyecto.dwh.etl_control` WHERE fuente = 'pedidos');\nDECLARE corte TIMESTAMP DEFAULT CURRENT_TIMESTAMP();  -- lo posterior a \"ahora\" espera a otra ejecución\nDECLARE wm_nuevo TIMESTAMP;\n\nIF wm_anterior IS NULL THEN\n  RAISE USING MESSAGE = 'Falta la fila de etl_control para pedidos: no se procesa nada';\nEND IF;\n\n-- Lote: una fila por clave, solo entre la marca anterior y el corte (sin timestamps futuros).\nCREATE OR REPLACE TEMP TABLE lote AS  -- OR REPLACE: repetir el script en la misma sesión no falla\nSELECT * FROM `proyecto.staging.pedidos`\nWHERE updated_at > wm_anterior AND updated_at <= corte\nQUALIFY ROW_NUMBER() OVER (PARTITION BY pedido_id ORDER BY updated_at DESC) = 1;\n\n-- La marca nueva sale del lote leído, no del destino; con lote vacío no se mueve.\nSET wm_nuevo = COALESCE((SELECT MAX(updated_at) FROM lote), wm_anterior);\n\nBEGIN TRANSACTION;\n\n-- Si otra ejecución movió la marca, el error revierte la transacción.\nIF (SELECT watermark FROM `proyecto.dwh.etl_control` WHERE fuente = 'pedidos') IS DISTINCT FROM wm_anterior THEN\n  RAISE USING MESSAGE = 'etl_control cambió durante la ejecución: se revierte';\nEND IF;\n\nMERGE `proyecto.dwh.pedidos` AS t\nUSING lote AS s\nON t.pedido_id = s.pedido_id\nWHEN MATCHED AND s.updated_at > t.updated_at THEN\n  UPDATE SET estado = s.estado, monto = s.monto, updated_at = s.updated_at\nWHEN NOT MATCHED THEN\n  INSERT (pedido_id, estado, monto, updated_at) VALUES (s.pedido_id, s.estado, s.monto, s.updated_at);\n\nUPDATE `proyecto.dwh.etl_control`\nSET watermark = wm_nuevo\nWHERE fuente = 'pedidos' AND watermark = wm_anterior;\n\nCOMMIT TRANSACTION;\n```"
     },
     {
       "number": 3,
@@ -140,7 +149,7 @@
       "number": 10,
       "key": "change_history",
       "title": "Historial de cambios",
-      "markdown": "- 2026-10-01: creación (A-F3.2), desde la sección 10 de `incremental-pipelines` tras la revisión B-F3.1 del lote 2."
+      "markdown": "- 2026-10-01: creación (A-F3.2), desde la sección 10 de `incremental-pipelines` tras la revisión B-F3.1 del lote 2.\n- 2026-10-01: revisión B-F3.2 (snippets-1) aplicada: `CREATE OR REPLACE TEMP TABLE` para que repetir el script en la misma sesión no falle.\n- 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes)."
     }
   ]
 }

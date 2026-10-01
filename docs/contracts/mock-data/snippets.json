@@ -16,7 +16,7 @@
         "data-pipeline",
         "dag"
       ],
-      "verification_status": "review_required"
+      "verification_status": "verified"
     },
     {
       "slug": "bigquery-deduplicate-latest",
@@ -30,7 +30,7 @@
       "implements": [
         "upsert"
       ],
-      "verification_status": "review_required"
+      "verification_status": "verified"
     },
     {
       "slug": "bigquery-incremental-merge-watermark",
@@ -45,7 +45,7 @@
         "incremental-pipelines",
         "incremental-load"
       ],
-      "verification_status": "review_required"
+      "verification_status": "verified"
     },
     {
       "slug": "bigquery-reconciliation",
@@ -59,7 +59,7 @@
       "implements": [
         "data-reconciliation"
       ],
-      "verification_status": "review_required"
+      "verification_status": "verified"
     },
     {
       "slug": "bigquery-scd-type-2",
@@ -73,7 +73,7 @@
       "implements": [
         "scd-type-2"
       ],
-      "verification_status": "review_required"
+      "verification_status": "verified"
     },
     {
       "slug": "dataform-incremental-model",
@@ -87,7 +87,7 @@
       "implements": [
         "incremental-load"
       ],
-      "verification_status": "review_required"
+      "verification_status": "verified"
     },
     {
       "slug": "python-api-ingestion-retries",
@@ -103,7 +103,7 @@
         "api-ingestion",
         "python-error-handling-and-retries"
       ],
-      "verification_status": "review_required"
+      "verification_status": "verified"
     },
     {
       "slug": "terraform-bigquery-partitioned-table",
@@ -117,7 +117,7 @@
       "implements": [
         "bigquery-partitioning"
       ],
-      "verification_status": "review_required"
+      "verification_status": "verified"
     }
   ]
 }
