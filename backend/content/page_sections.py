@@ -1,8 +1,9 @@
-"""Estructura de las fichas: las 22 secciones de content/_templates/concept.md (§22).
+"""Estructura de las fichas y snippets: las secciones de su plantilla en content/_templates/.
 
 La plantilla es la fuente única de los títulos. Una ficha `concept` o `pattern` que no es stub debe
-tener los encabezados `## N. Título` del 1 al 22, en orden, con los títulos de la plantilla y sin
-secciones vacías (un comentario HTML solo no cuenta como contenido).
+tener las 22 secciones de concept.md (§22); un `code_snippet`, las 10 de snippet.md (§23). Los
+encabezados `## N. Título` van en orden, con los títulos de la plantilla y sin secciones vacías
+(un comentario HTML solo no cuenta como contenido).
 """
 
 from __future__ import annotations
@@ -13,7 +14,11 @@ from pathlib import Path
 HEADING = re.compile(r"^## (\d+)\. (.+?)\s*$")
 HTML_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
 TEMPLATE = Path("_templates") / "concept.md"
+SNIPPET_TEMPLATE = Path("_templates") / "snippet.md"
 PAGE_TYPES = {"concept", "pattern"}
+SNIPPET_TYPE = "code_snippet"
+TEMPLATES = {"concept": TEMPLATE, "pattern": TEMPLATE, SNIPPET_TYPE: SNIPPET_TEMPLATE}
+SECTIONED_TYPES = set(TEMPLATES)  # tipos con cuerpo estructurado por secciones
 
 
 def body_of(text: str) -> str:
@@ -35,9 +40,9 @@ def sections(body: str) -> list[tuple[int, str, str]]:
     return [(number, title, "\n".join(lines)) for number, title, lines in found]
 
 
-def template_titles(content_dir: Path) -> list[str] | None:
-    """Títulos de la plantilla en orden; None si content/ no tiene una plantilla con secciones."""
-    path = content_dir / TEMPLATE
+def template_titles(content_dir: Path, template: Path = TEMPLATE) -> list[str] | None:
+    """Títulos de la plantilla en orden; None si content/ no tiene esa plantilla con secciones."""
+    path = content_dir / template
     if not path.is_file():
         return None
     titles = [title for _, title, _ in sections(body_of(path.read_text(encoding="utf-8")))]

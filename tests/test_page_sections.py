@@ -108,3 +108,54 @@ def test_related_topic_with_relation_is_valid(content: Path) -> None:
     write_md(content, "concepts/b.md", concept("b"))
     write_md(content, "concepts/a.md", concept("a", related_topics=["b"], relations=[{"type": "RELATED_TO", "target": "b"}]))
     assert run(content).ok
+
+
+# --- Code Library (§23, ADR-008) ----------------------------------------------
+
+SNIPPET_TITLES = page_sections.template_titles(ROOT / "content", page_sections.SNIPPET_TEMPLATE)
+
+
+def snippet(slug: str, **fields: object) -> dict[str, object]:
+    defaults: dict[str, object] = {
+        "language": "sql", "requirements": ["una tabla de staging"],
+        "relations": [{"type": "IMPLEMENTS", "target": "a"}],
+    }
+    return entity("code_snippet", slug, **{**defaults, **fields})
+
+
+def verified_concept(content: Path, verification_status: str = "verified") -> None:
+    from tests.test_validate import source, write_yaml
+
+    write_yaml(content, "sources/r.yaml", source("docs-a"))
+    write_md(content, "concepts/a.md", concept("a", verification_status=verification_status, sources=[{"source": "docs-a"}]))
+
+
+def test_snippet_template_has_10_sections() -> None:
+    assert SNIPPET_TITLES is not None and len(SNIPPET_TITLES) == 10
+    assert SNIPPET_TITLES[1] == "Código" and SNIPPET_TITLES[-1] == "Historial de cambios"
+
+
+def test_complete_snippet_is_valid(content: Path) -> None:
+    verified_concept(content)
+    write_md(content, "snippets/s.md", snippet("s"), body=full_body(SNIPPET_TITLES))
+    assert run(content).ok
+
+
+def test_snippet_sections_follow_their_template(content: Path) -> None:
+    (content / "_templates").mkdir()
+    shutil.copy(ROOT / "content/_templates/snippet.md", content / "_templates/snippet.md")
+    verified_concept(content)
+    write_md(content, "snippets/s.md", snippet("s"), body=full_body(SNIPPET_TITLES[:9]))
+    assert_error(run(content), "se esperan las 10 secciones de la plantilla en orden; faltan [10]")
+
+
+def test_snippet_needs_requirements(content: Path) -> None:
+    verified_concept(content)
+    write_md(content, "snippets/s.md", snippet("s", requirements=[]))
+    assert_error(run(content), "[requirements] un snippet debe indicar qué necesita para ejecutarse")
+
+
+def test_snippet_must_implement_a_verified_page(content: Path) -> None:
+    verified_concept(content, verification_status="review_required")
+    write_md(content, "snippets/s.md", snippet("s"))
+    assert_error(run(content), "al menos un IMPLEMENTS hacia un concept o pattern verified")

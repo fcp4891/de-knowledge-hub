@@ -305,9 +305,9 @@ def check_source_level(doc: Document, report: Report) -> None:
 
 
 def check_page_source_levels(docs: list[Document], by_slug: dict[str, Document], report: Report) -> None:
-    """Fichas concept/pattern: fuentes Nivel 1–2 o Nivel 4 canónico, y al menos una Nivel 1–2 (afirmaciones de producto)."""
+    """Fichas y snippets: fuentes Nivel 1–2 o Nivel 4 canónico, y al menos una Nivel 1–2 (afirmaciones de producto)."""
     for doc in docs:
-        if doc.data["type"] not in page_sections.PAGE_TYPES or doc.data.get("stub"):
+        if doc.data["type"] not in page_sections.SECTIONED_TYPES or doc.data.get("stub"):
             continue
         levels = []
         for i, ref in enumerate(doc.data.get("sources", [])):
@@ -326,9 +326,9 @@ def check_page_source_levels(docs: list[Document], by_slug: dict[str, Document],
 
 
 def check_topics_in_relations(docs: list[Document], report: Report) -> None:
-    """Fichas concept/pattern: todo related_topics debe estar en relations (el grafo solo ve relations)."""
+    """Fichas y snippets: todo related_topics debe estar en relations (el grafo solo ve relations)."""
     for doc in docs:
-        if doc.data["type"] not in page_sections.PAGE_TYPES:
+        if doc.data["type"] not in page_sections.SECTIONED_TYPES:
             continue
         targets = {r["target"] for r in doc.data.get("relations", [])}
         for slug in doc.data.get("related_topics", []):
@@ -337,16 +337,34 @@ def check_topics_in_relations(docs: list[Document], report: Report) -> None:
 
 
 def check_page_sections(content_dir: Path, docs: list[Document], report: Report) -> None:
-    """Fichas concept/pattern no stub: las 22 secciones de la plantilla (§22)."""
-    titles = page_sections.template_titles(content_dir)
-    if titles is None:
-        return
+    """Fichas (22 secciones, §22) y snippets (10 secciones, §23) no stub: las secciones de su plantilla."""
+    titles = {kind: page_sections.template_titles(content_dir, path) for kind, path in page_sections.TEMPLATES.items()}
     for doc in docs:
-        if doc.path.suffix != ".md" or doc.data["type"] not in page_sections.PAGE_TYPES or doc.data.get("stub"):
+        expected = titles.get(doc.data["type"])
+        if expected is None or doc.path.suffix != ".md" or doc.data.get("stub"):
             continue
         body = page_sections.body_of((content_dir.parent / doc.path).read_text(encoding="utf-8"))
-        for error in page_sections.check(body, titles):
+        for error in page_sections.check(body, expected):
             report.add(doc.location, error)
+
+
+def check_snippets(docs: list[Document], by_slug: dict[str, Document], report: Report) -> None:
+    """Code Library (§23, ADR-008): requirements no vacío y al menos un IMPLEMENTS hacia un concept/pattern verified."""
+    for doc in docs:
+        if doc.data["type"] != page_sections.SNIPPET_TYPE:
+            continue
+        if not doc.data.get("requirements"):
+            report.add(doc.location, "[requirements] un snippet debe indicar qué necesita para ejecutarse")
+        verified = [
+            r["target"]
+            for r in doc.data.get("relations", [])
+            if r["type"] == "IMPLEMENTS"
+            and by_slug.get(r["target"]) is not None
+            and by_slug[r["target"]].data["type"] in page_sections.PAGE_TYPES
+            and by_slug[r["target"]].data["verification_status"] == "verified"
+        ]
+        if not verified:
+            report.add(doc.location, "[relations] un snippet necesita al menos un IMPLEMENTS hacia un concept o pattern verified")
 
 
 # --- Blueprint (ADR-003) -----------------------------------------------------
@@ -568,6 +586,7 @@ def validate(content_dir: Path, schemas_dir: Path) -> Report:
     check_page_sections(content_dir, valid_docs, report)
     check_topics_in_relations(valid_docs, report)
     check_page_source_levels(valid_docs, by_slug, report)
+    check_snippets(valid_docs, by_slug, report)
     index = validate_blueprints(content_dir, schemas_dir, by_slug, valid_docs, report)
     validate_matrices(content_dir, schemas_dir, index, by_slug, report)
     report.technologies = [doc.data for doc in valid_docs if doc.data["type"] in TECHNOLOGY_TYPES]
