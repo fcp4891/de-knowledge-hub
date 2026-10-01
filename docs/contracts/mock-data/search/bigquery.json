@@ -44,6 +44,16 @@
           "has_page": true,
           "snippet": "Deduplica un lote por clave quedándose con la versión más reciente (QUALIFY ROW_NUMBER) y lo aplica con MERGE condicionado a la versión.",
           "score": 5.5
+        },
+        {
+          "slug": "bigquery-reconciliation",
+          "title": "Reconciliación de un día entre origen y destino en BigQuery",
+          "type": "code_snippet",
+          "domain": null,
+          "classification": "core",
+          "has_page": true,
+          "snippet": "Consultas de solo lectura que comparan conteo, suma y una huella agregada (BIT_XOR de FARM_FINGERPRINT) de un día entre el snapshot del origen y el destino, y listan las claves que difieren.",
+          "score": 5.5
         }
       ]
     },
@@ -183,16 +193,6 @@
           "classification": "modern",
           "has_page": false,
           "snippet": "Incluye la separación storage vs compute (§10.2).",
-          "score": 5.0
-        },
-        {
-          "slug": "bigquery-cost-model",
-          "title": "Modelo de costos de BigQuery",
-          "type": "concept",
-          "domain": "gcp",
-          "classification": "modern",
-          "has_page": false,
-          "snippet": "Precios y modalidades cambian; ficha siempre con fuente y last_verified.",
           "score": 5.0
         }
       ]

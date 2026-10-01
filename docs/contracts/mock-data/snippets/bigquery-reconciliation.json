@@ -1,0 +1,143 @@
+{
+  "id": "code_snippet:bigquery-reconciliation",
+  "title": "Reconciliación de un día entre origen y destino en BigQuery",
+  "slug": "bigquery-reconciliation",
+  "description": "Consultas de solo lectura que comparan conteo, suma y una huella agregada (BIT_XOR de FARM_FINGERPRINT) de un día entre el snapshot del origen y el destino, y listan las claves que difieren.",
+  "type": "code_snippet",
+  "domain": null,
+  "subdomain": null,
+  "classification": "core",
+  "level": "intermediate",
+  "cloud": [
+    "gcp"
+  ],
+  "technologies": [
+    "gcp-bigquery"
+  ],
+  "tags": [
+    "sql",
+    "bigquery",
+    "data-quality",
+    "reconciliation"
+  ],
+  "related_topics": [
+    "data-reconciliation",
+    "incremental-load",
+    "backfill"
+  ],
+  "sources": [
+    {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/hash_functions",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "FARM_FINGERPRINT calcula un INT64 con Fingerprint64 de FarmHash sobre un STRING o BYTES; su salida para una entrada dada no cambia nunca."
+    },
+    {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "BIT_XOR([DISTINCT] expression): agregado que aplica un XOR bit a bit sobre la expresión."
+    },
+    {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/parameterized-queries",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "Parámetros con nombre usando @nombre; un parámetro no puede ser NULL ni reemplazar identificadores o nombres de tabla."
+    },
+    {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/access-control",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-01",
+      "note": "roles/bigquery.jobUser permite ejecutar consultas en el proyecto; roles/bigquery.dataViewer sobre un dataset permite listar sus tablas y consultarlas."
+    }
+  ],
+  "created_at": "2026-10-01",
+  "updated_at": "2026-10-01",
+  "last_verified": "2026-10-01",
+  "verification_status": "review_required",
+  "language": "sql",
+  "dialect": "bigquery",
+  "requirements": [
+    "Tabla proyecto.staging.stg_ventas_origen con la copia del origen para el día (venta_id, monto, fecha), tomada en el momento de la extracción.",
+    "Tabla destino proyecto.dwh.ventas(venta_id, monto, fecha).",
+    "Parámetro @dia (DATE) con el día lógico, enlazado como parámetro de consulta.",
+    "Permisos de lectura sobre ambas tablas (por ejemplo roles/bigquery.dataViewer en los datasets) y para ejecutar consultas (roles/bigquery.jobUser)."
+  ],
+  "implements": [
+    "data-reconciliation"
+  ],
+  "sections": [
+    {
+      "number": 1,
+      "key": "what_it_solves",
+      "title": "Qué resuelve",
+      "markdown": "Demuestra que la carga de un día no perdió, duplicó ni alteró filas: compara en una consulta el conteo, la suma de montos y una huella agregada del día entre el snapshot del origen y el destino, y, si algo difiere, lista las claves que faltan, sobran o cambiaron. Implementa el patrón `data-reconciliation` y es el código de su sección 10."
+    },
+    {
+      "number": 2,
+      "key": "code",
+      "title": "Código",
+      "markdown": "```sql\n-- BigQuery: reconciliación de un día entre el snapshot del origen y el destino.\n-- Requiere: stg_ventas_origen (copia del origen para el día) y dwh.ventas; @dia es el día lógico.\nWITH origen AS (\n  SELECT COUNT(*) AS filas, SUM(monto) AS monto,\n         BIT_XOR(FARM_FINGERPRINT(CONCAT(CAST(venta_id AS STRING), '|', CAST(monto AS STRING)))) AS huella\n  FROM `proyecto.staging.stg_ventas_origen`\n  WHERE fecha = @dia\n),\ndestino AS (\n  SELECT COUNT(*) AS filas, SUM(monto) AS monto,\n         BIT_XOR(FARM_FINGERPRINT(CONCAT(CAST(venta_id AS STRING), '|', CAST(monto AS STRING)))) AS huella\n  FROM `proyecto.dwh.ventas`\n  WHERE fecha = @dia\n)\nSELECT\n  o.filas AS filas_origen, d.filas AS filas_destino,\n  o.monto AS monto_origen, d.monto AS monto_destino,\n  o.huella = d.huella AS huella_coincide\nFROM origen AS o CROSS JOIN destino AS d;\n\n-- Si no coincide: detalle por clave (faltantes, sobrantes y distintos).\nSELECT COALESCE(o.venta_id, d.venta_id) AS venta_id,\n       CASE WHEN d.venta_id IS NULL THEN 'falta en destino'\n            WHEN o.venta_id IS NULL THEN 'sobra en destino'\n            ELSE 'monto distinto' END AS diferencia\nFROM (SELECT venta_id, monto FROM `proyecto.staging.stg_ventas_origen` WHERE fecha = @dia) AS o\nFULL OUTER JOIN (SELECT venta_id, monto FROM `proyecto.dwh.ventas` WHERE fecha = @dia) AS d\n  ON o.venta_id = d.venta_id\nWHERE o.venta_id IS NULL OR d.venta_id IS NULL OR o.monto != d.monto;\n```"
+    },
+    {
+      "number": 3,
+      "key": "how_it_works",
+      "title": "Cómo funciona",
+      "markdown": "1. **Resumen por lado:** `COUNT(*)`, `SUM(monto)` y `BIT_XOR(FARM_FINGERPRINT(...))` sobre el mismo día en origen y destino. La huella es el XOR de un hash de 64 bits por fila: con un número por lado se compara todo el día.\n2. **Comparación:** la primera consulta devuelve una fila con las métricas de ambos lados y si la huella coincide.\n3. **Detalle:** si algo no coincide, la segunda consulta compara por clave con un `FULL OUTER JOIN` y clasifica cada diferencia: falta en destino, sobra en destino o monto distinto.\n\nSon consultas de **solo lectura**: repetirlas no cambia nada."
+    },
+    {
+      "number": 4,
+      "key": "when_to_use",
+      "title": "Cuándo usarlo",
+      "markdown": "- Al cerrar cada carga diaria o cada día de un backfill.\n- En migraciones y replicaciones, para demostrar completitud con evidencia."
+    },
+    {
+      "number": 5,
+      "key": "when_not_to_use",
+      "title": "Cuándo no usarlo",
+      "markdown": "- Si no hay un snapshot del origen tomado al extraer: comparar contra un origen que siguió cambiando da falsos positivos.\n- Para comparar fila a fila tablas enormes en cada carga: basta con conteos y sumas, y el detalle solo cuando difieren.\n- Como sustituto de la idempotencia: detecta duplicados, no los evita."
+    },
+    {
+      "number": 6,
+      "key": "risks",
+      "title": "Riesgos",
+      "markdown": "- **Duplicados idénticos:** dos filas iguales duplicadas se anulan en el XOR; por eso el conteo es imprescindible junto a la huella.\n- **Normalización:** la huella depende de cómo se convierte cada valor a texto; ambos lados deben usar la misma expresión (tipos, redondeo, zona horaria).\n- **Seguridad:** el detalle por clave puede exponer datos si se registra completo; registrar claves y tipo de diferencia, no el contenido.\n- **Costo:** las consultas leen las columnas incluidas en la huella; filtrar por la partición del día limita los bytes procesados."
+    },
+    {
+      "number": 7,
+      "key": "requirements",
+      "title": "Requisitos y cómo ejecutarlo",
+      "markdown": "Ver `requirements` en el encabezado. Ejecutar las dos consultas con el parámetro `@dia` (por ejemplo, `bq query --use_legacy_sql=false --parameter=dia:DATE:2026-09-30 < reconciliacion.sql`, o desde el orquestador como en `airflow-daily-partition-dag`). Registrar el resultado en una tabla de reconciliación y fallar o alertar si no coincide."
+    },
+    {
+      "number": 8,
+      "key": "related_concepts",
+      "title": "Conceptos relacionados",
+      "markdown": "- `data-reconciliation`: el patrón que implementa.\n- `incremental-load` y `backfill`: los momentos en que se reconcilia."
+    },
+    {
+      "number": 9,
+      "key": "sources",
+      "title": "Fuentes",
+      "markdown": "- Google Cloud: *Hash functions*, *Aggregate functions*, *Run parameterized queries* y *BigQuery IAM roles and permissions* (BigQuery).\n\nEl detalle está en `sources` del encabezado."
+    },
+    {
+      "number": 10,
+      "key": "change_history",
+      "title": "Historial de cambios",
+      "markdown": "- 2026-10-01: creación (A-F3.2), desde la sección 10 de `data-reconciliation` tras la revisión B-F3.1 del lote 3."
+    }
+  ]
+}

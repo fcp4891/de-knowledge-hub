@@ -154,6 +154,13 @@
           "note": "Cada carga incremental debería cerrar con una reconciliación del período."
         },
         {
+          "slug": "bigquery-reconciliation",
+          "title": "Reconciliación de un día entre origen y destino en BigQuery",
+          "entity_type": "code_snippet",
+          "origin": "entity",
+          "note": "Cierre de cada carga incremental del período."
+        },
+        {
           "slug": "scd-type-2",
           "title": "SCD Type 2",
           "entity_type": "pattern",

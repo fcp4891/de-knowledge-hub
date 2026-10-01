@@ -16,7 +16,7 @@ level: intermediate
 cloud: [gcp]
 technologies: [apache-airflow, gcp-cloud-composer, gcp-bigquery, python]
 tags: [airflow, orchestration, bigquery, idempotency]
-related_topics: [data-pipeline, backfill, idempotency, bigquery-partitioning]
+related_topics: [data-pipeline, backfill, idempotency, bigquery-partitioning, dag, catchup]
 sources:
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/tutorial/taskflow.html
@@ -59,6 +59,12 @@ relations:
   - type: RELATED_TO
     target: bigquery-partitioning
     note: La unidad de reemplazo es la partición diaria.
+  - type: IMPLEMENTS
+    target: dag
+    note: Tareas TaskFlow con dependencias, reintentos y la fecha lógica del intervalo.
+  - type: RELATED_TO
+    target: catchup
+    note: Con catchup activado, cada intervalo recuperado reemplaza su partición sin duplicar.
 created_at: 2026-10-01
 updated_at: 2026-10-01
 last_verified: 2026-10-01
@@ -152,7 +158,8 @@ Ver `requirements` en el encabezado. Reemplazar `proyecto` y las tablas, copiar 
 - `backfill`: reprocesar rangos reejecutando intervalos.
 - `idempotency`: por qué reintentar es seguro.
 - `bigquery-partitioning`: la partición como unidad de reemplazo.
-- En revisión (lote 3): `dag` y `catchup`.
+- `dag`: tareas y dependencias del Dag.
+- `catchup`: recuperación de intervalos pendientes.
 
 ## 9. Fuentes
 
@@ -164,3 +171,4 @@ El detalle está en `sources` del encabezado.
 ## 10. Historial de cambios
 
 - 2026-10-01: creación (A-F3.2), desde la sección 10 de `data-pipeline` tras la revisión B-F3.1 del lote 2.
+- 2026-10-01: enlazado a `dag` (IMPLEMENTS) y `catchup`, verificadas con el lote 3.

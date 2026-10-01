@@ -70,9 +70,9 @@ relations:
     target: idempotency
     note: Las tareas de un Dag se reintentan y reejecutan; cada una debe ser idempotente.
 created_at: 2026-09-30
-updated_at: 2026-09-30
-last_verified: 2026-09-30
-verification_status: review_required
+updated_at: 2026-10-01
+last_verified: 2026-10-01
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -262,9 +262,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-09-30. La ficha queda en `review_required` hasta la revisión humana (B-F3.1).
+2026-10-01. Pasa a `verified`: revisión B-F3.1 del lote 3 aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 3 de F3).
 - 2026-10-01: revisión B-F3.1 aplicada: §10 ejecutable, con validaciones en paralelo y la transacción de reemplazo de la partición a la vista (antes llamaba a funciones no definidas).
+- 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).

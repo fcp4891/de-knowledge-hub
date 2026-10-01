@@ -7,6 +7,20 @@
       "label": "implements",
       "items": [
         {
+          "slug": "api-ingestion",
+          "title": "Ingesta desde APIs",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Paginación por cursor, límite de tasa (429 y Retry-After), credenciales fuera del código y escritura determinista."
+        },
+        {
+          "slug": "python-error-handling-and-retries",
+          "title": "Manejo de errores y reintentos en Python",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Excepciones específicas (HTTPError antes que URLError), transitorias frente a permanentes y reintento acotado."
+        },
+        {
           "slug": "retries",
           "title": "Retries",
           "entity_type": "pattern",

@@ -16,7 +16,7 @@ level: intermediate
 cloud: [agnostic]
 technologies: [python]
 tags: [python, ingestion, http, retries]
-related_topics: [retries, idempotency]
+related_topics: [retries, idempotency, api-ingestion, python-error-handling-and-retries]
 sources:
   - source: python-docs
     url: https://docs.python.org/3/library/urllib.request.html
@@ -45,6 +45,12 @@ relations:
   - type: DEPENDS_ON
     target: idempotency
     note: Páginas con nombre determinista por día; repetir la ingesta sobrescribe en vez de duplicar.
+  - type: IMPLEMENTS
+    target: api-ingestion
+    note: Paginación por cursor, límite de tasa (429 y Retry-After), credenciales fuera del código y escritura determinista.
+  - type: IMPLEMENTS
+    target: python-error-handling-and-retries
+    note: Excepciones específicas (HTTPError antes que URLError), transitorias frente a permanentes y reintento acotado.
 created_at: 2026-10-01
 updated_at: 2026-10-01
 last_verified: 2026-10-01
@@ -53,7 +59,7 @@ verification_status: review_required
 
 ## 1. Qué resuelve
 
-Extrae de una API HTTP los registros modificados en un día lógico, sin perder páginas, sin saturar la API y sin duplicar si se repite. Implementa el patrón `retries`: reintenta solo lo transitorio (429, 5xx, red), respeta `Retry-After` y tiene límite. Reutiliza el código de la sección 10 de la ficha `api-ingestion` (en revisión) y le agrega la escritura determinista de páginas. Cuando `api-ingestion` y `python-error-handling-and-retries` estén verificadas, este snippet se enlazará también a ellas.
+Extrae de una API HTTP los registros modificados en un día lógico, sin perder páginas, sin saturar la API y sin duplicar si se repite. Implementa el patrón `retries`: reintenta solo lo transitorio (429, 5xx, red), respeta `Retry-After` y tiene límite. Reutiliza el código de la sección 10 de la ficha `api-ingestion` (en revisión) y le agrega la escritura determinista de páginas. También implementa `api-ingestion` y `python-error-handling-and-retries`.
 
 ## 2. Código
 
@@ -159,7 +165,8 @@ Ver `requirements` en el encabezado. Ajustar la URL, el recurso y los nombres de
 
 - `retries`: el patrón que implementa.
 - `idempotency`: por qué repetir el día es seguro.
-- En revisión (lote 3): `api-ingestion` y `python-error-handling-and-retries`; los enlaces se agregarán al verificarse.
+- `api-ingestion`: contrato, paginación, límite de tasa y credenciales.
+- `python-error-handling-and-retries`: manejo de excepciones en Python.
 
 ## 9. Fuentes
 
@@ -171,3 +178,4 @@ El detalle está en `sources` del encabezado.
 ## 10. Historial de cambios
 
 - 2026-10-01: creación (A-F3.2), desde la sección 10 de `api-ingestion` (lote 3, en revisión). Si la revisión B-F3.1 del lote 3 cambia ese código, este snippet se actualiza en el mismo commit.
+- 2026-10-01: enlazado (IMPLEMENTS) a `api-ingestion` y `python-error-handling-and-retries`, verificadas con el lote 3; la revisión no cambió su código.

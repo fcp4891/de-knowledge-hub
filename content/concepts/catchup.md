@@ -66,9 +66,9 @@ relations:
     target: idempotency
     note: Catchup ejecuta muchos intervalos pasados; cada ejecución debe poder repetirse sin duplicar.
 created_at: 2026-09-30
-updated_at: 2026-09-30
-last_verified: 2026-09-30
-verification_status: review_required
+updated_at: 2026-10-01
+last_verified: 2026-10-01
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -233,9 +233,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-09-30. `max_active_runs` y `catchup` están en la referencia de la API de Dag del Task SDK de Airflow. La ficha queda en `review_required` hasta la revisión humana (B-F3.1).
+2026-10-01. `max_active_runs` y `catchup` están en la referencia de la API de Dag del Task SDK de Airflow. Pasa a `verified`: revisión B-F3.1 del lote 3 aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 3 de F3).
 - 2026-10-01: revisión B-F3.1 aplicada: §10 muestra la transacción de reemplazo de la partición y es ejecutable (BigQuery con parámetro @dia).
+- 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).

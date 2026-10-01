@@ -27,7 +27,9 @@
     "data-pipeline",
     "backfill",
     "idempotency",
-    "bigquery-partitioning"
+    "bigquery-partitioning",
+    "dag",
+    "catchup"
   ],
   "sources": [
     {
@@ -107,7 +109,8 @@
     "El archivo va en la carpeta de Dags del entorno."
   ],
   "implements": [
-    "data-pipeline"
+    "data-pipeline",
+    "dag"
   ],
   "sections": [
     {
@@ -156,7 +159,7 @@
       "number": 8,
       "key": "related_concepts",
       "title": "Conceptos relacionados",
-      "markdown": "- `data-pipeline`: el patrón que implementa.\n- `backfill`: reprocesar rangos reejecutando intervalos.\n- `idempotency`: por qué reintentar es seguro.\n- `bigquery-partitioning`: la partición como unidad de reemplazo.\n- En revisión (lote 3): `dag` y `catchup`."
+      "markdown": "- `data-pipeline`: el patrón que implementa.\n- `backfill`: reprocesar rangos reejecutando intervalos.\n- `idempotency`: por qué reintentar es seguro.\n- `bigquery-partitioning`: la partición como unidad de reemplazo.\n- `dag`: tareas y dependencias del Dag.\n- `catchup`: recuperación de intervalos pendientes."
     },
     {
       "number": 9,
@@ -168,7 +171,7 @@
       "number": 10,
       "key": "change_history",
       "title": "Historial de cambios",
-      "markdown": "- 2026-10-01: creación (A-F3.2), desde la sección 10 de `data-pipeline` tras la revisión B-F3.1 del lote 2."
+      "markdown": "- 2026-10-01: creación (A-F3.2), desde la sección 10 de `data-pipeline` tras la revisión B-F3.1 del lote 2.\n- 2026-10-01: enlazado a `dag` (IMPLEMENTS) y `catchup`, verificadas con el lote 3."
     }
   ]
 }

@@ -1,0 +1,40 @@
+{
+  "slug": "bigquery-reconciliation",
+  "groups": [
+    {
+      "type": "IMPLEMENTS",
+      "direction": "outgoing",
+      "label": "implements",
+      "items": [
+        {
+          "slug": "data-reconciliation",
+          "title": "Reconciliación de datos",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Conteo, suma de control y huella agregada por día, con bajada al detalle por clave."
+        }
+      ]
+    },
+    {
+      "type": "RELATED_TO",
+      "direction": "both",
+      "label": "related_to",
+      "items": [
+        {
+          "slug": "backfill",
+          "title": "Backfill",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Reconciliación de cada período reprocesado."
+        },
+        {
+          "slug": "incremental-load",
+          "title": "Carga incremental",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Cierre de cada carga incremental del período."
+        }
+      ]
+    }
+  ]
+}

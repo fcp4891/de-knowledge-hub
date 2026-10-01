@@ -7,6 +7,13 @@
       "label": "implements",
       "items": [
         {
+          "slug": "dag",
+          "title": "DAG (grafo de tareas de un pipeline)",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Tareas TaskFlow con dependencias, reintentos y la fecha lógica del intervalo."
+        },
+        {
           "slug": "data-pipeline",
           "title": "Data pipeline",
           "entity_type": "concept",
@@ -40,6 +47,13 @@
           "entity_type": "concept",
           "origin": "entity",
           "note": "Como cada ejecución reemplaza su día, un backfill es reejecutar intervalos."
+        },
+        {
+          "slug": "catchup",
+          "title": "Catchup",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Con catchup activado, cada intervalo recuperado reemplaza su partición sin duplicar."
         },
         {
           "slug": "bigquery-partitioning",

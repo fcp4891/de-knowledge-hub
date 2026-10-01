@@ -1,5 +1,5 @@
 {
-  "total": 7,
+  "total": 8,
   "limit": 500,
   "offset": 0,
   "items": [
@@ -13,7 +13,8 @@
         "gcp"
       ],
       "implements": [
-        "data-pipeline"
+        "data-pipeline",
+        "dag"
       ],
       "verification_status": "review_required"
     },
@@ -43,6 +44,20 @@
       "implements": [
         "incremental-pipelines",
         "incremental-load"
+      ],
+      "verification_status": "review_required"
+    },
+    {
+      "slug": "bigquery-reconciliation",
+      "title": "Reconciliación de un día entre origen y destino en BigQuery",
+      "description": "Consultas de solo lectura que comparan conteo, suma y una huella agregada (BIT_XOR de FARM_FINGERPRINT) de un día entre el snapshot del origen y el destino, y listan las claves que difieren.",
+      "language": "sql",
+      "dialect": "bigquery",
+      "cloud": [
+        "gcp"
+      ],
+      "implements": [
+        "data-reconciliation"
       ],
       "verification_status": "review_required"
     },
@@ -84,7 +99,9 @@
         "agnostic"
       ],
       "implements": [
-        "retries"
+        "retries",
+        "api-ingestion",
+        "python-error-handling-and-retries"
       ],
       "verification_status": "review_required"
     },
