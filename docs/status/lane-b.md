@@ -6,9 +6,12 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-01
 
 ## Actual
-- **Tarea activa:** en espera de merge. La vista `/snippets` y la revisión de los 8 snippets están aprobadas.
-- **Siguiente:** B-F3.1 del lote 4, en `b/f3-review-4` desde `main`.
+- **Tarea activa:** en espera del lote 5.
+- **Siguiente:** B-F3.1 del lote 5, cuando Carril A lo deje en `main`. La vista `/snippets` y su revisión aprobada están en `b/f3-snippets-ui` (`a6237d2`).
 - **Bloqueos:** ninguno.
+
+### B-F3.1 · lote 4
+- Diez fichas, tabla de §48, y aparte el consumidor real de Pub/Sub. Felipe aprobó todas las filas el 2026-10-01. `add-iam-policy-binding` se describe como aditivo y no se llama idempotente. No se editó `content/`.
 
 ### B-F3.2 · snippets
 - `/snippets` filtra con `GET /snippets` por lenguaje, cloud e `implements`.
