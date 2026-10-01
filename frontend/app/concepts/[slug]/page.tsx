@@ -1,6 +1,7 @@
 import { ApiFailure } from "@/components/ApiFailure";
 import { CardHeader } from "@/components/card/CardHeader";
 import { ConceptBody } from "@/components/card/ConceptBody";
+import { ImplementedSnippets } from "@/components/card/ImplementedSnippets";
 import { PersonalPanel } from "@/components/card/PersonalPanel";
 import { RelationPanel } from "@/components/card/RelationPanel";
 import { SourceList } from "@/components/card/SourceList";
@@ -36,6 +37,7 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
       <div className="card-layout">
         <div className="sections">
           <PersonalPanel slug={data.slug} />
+          <ImplementedSnippets groups={relations.ok ? relations.data : { slug: data.slug, groups: [] }} />
           <ConceptBody sections={data.sections} omitSourceSection={data.sources.length > 0} />
           <SourceList sources={data.sources} />
         </div>

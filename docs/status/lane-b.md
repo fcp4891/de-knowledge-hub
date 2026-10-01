@@ -6,9 +6,15 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-01
 
 ## Actual
-- **Tarea activa:** en espera. B-F3.1 del lote 3 está aprobada. El grafo de B-F3.2 (`b/f3-graph`, `ce313db`) también está aprobado.
-- **Siguiente:** la vista `/snippets`, cuando Carril A confirme en `docs/status/lane-a.md` que el contrato de snippets está en `main`.
+- **Tarea activa:** B-F3.2, vista `/snippets` y ficha de snippet. La revisión de los 8 snippets está en pendiente.
+- **Siguiente:** esperar la aprobación de `docs/reviews/snippets-1.md`.
 - **Bloqueos:** ninguno.
+
+### B-F3.2 · snippets
+- `/snippets` filtra con `GET /snippets` por lenguaje, cloud e `implements`.
+- La ficha muestra requisitos, las secciones, el código con resaltado y copiar, y los conceptos que implementa.
+- En la ficha de concepto, los snippets salen del grupo `IMPLEMENTS` entrante. Un `code_snippet` abre `/snippets/<slug>`.
+- Revisión de los 8 snippets en `docs/reviews/snippets-1.md`, filas en pendiente. No se editó `content/`.
 
 ### B-F3.1 · lote 3
 - Diez fichas, tabla de §48. Felipe aprobó todas las filas el 2026-10-01, incluida la de `replace_partition` en `catchup` y `dag`. Ninguna afirmación de producto se apoya solo en Kimball o en una RFC. No se editó `content/`.

@@ -36,6 +36,7 @@ export function SiteHeader({ domains, warning }: { domains: DomainLink[]; warnin
       <div className="brand">
         <Link href="/">Knowledge Hub</Link>
         <Link href="/explorer">Explorer</Link>
+        <Link href="/snippets">Snippets</Link>
         <button type="button" onClick={() => setSearchOpen(true)}>
           Buscar <kbd>Ctrl+K</kbd>
         </button>
