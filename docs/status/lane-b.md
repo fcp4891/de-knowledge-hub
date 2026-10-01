@@ -3,12 +3,15 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-09-30
+**Última actualización:** 2026-10-01
 
 ## Actual
-- **Tarea activa:** B-F3.2, mini-grafo del vecindario en las fichas de concepto y de tecnología.
-- **Siguiente:** B-F3.1 del lote 3. La vista `/snippets` espera a que Carril A cree snippets.
+- **Tarea activa:** en espera. B-F3.1 del lote 3 está aprobada. El grafo de B-F3.2 (`b/f3-graph`, `ce313db`) también está aprobado.
+- **Siguiente:** la vista `/snippets`, cuando Carril A confirme en `docs/status/lane-a.md` que el contrato de snippets está en `main`.
 - **Bloqueos:** ninguno.
+
+### B-F3.1 · lote 3
+- Diez fichas, tabla de §48. Felipe aprobó todas las filas el 2026-10-01, incluida la de `replace_partition` en `catchup` y `dag`. Ninguna afirmación de producto se apoya solo en Kimball o en una RFC. No se editó `content/`.
 
 ### B-F3.2 · grafo
 - El panel de relaciones dibuja el vecindario a 1 salto con `GET /entities/{slug}/relations`.
