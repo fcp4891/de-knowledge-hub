@@ -2,18 +2,19 @@
 
 Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
-**Última actualización:** 2026-09-30
+**Última actualización:** 2026-10-01
 
 ## Actual
-- **Tarea activa:** — (lote 3 de F3 entregado).
+- **Tarea activa:** — (A-F3.2 Code Library entregada).
 - **Mergeado para Carril B:** `b/f3-review-2` (dc65b9e) en `main`, 2026-09-30.
-- **Siguiente:** aplicar la revisión B-F3.1 del lote 3 cuando esté aprobada. Arquitecturas (`cdc-architecture`, `batch-pipeline-architecture`) quedan para F4.
+- **Siguiente:** aplicar la revisión B-F3.1 del lote 3 cuando esté aprobada (incluye actualizar `python-api-ingestion-retries` si cambia el código de `api-ingestion`, y crear el snippet de reconciliación). Lote 4: fichas MVP de Terraform y snippets de Cloud Storage e IAM. Arquitecturas (`cdc-architecture`, `batch-pipeline-architecture`) quedan para F4.
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
 
 ## Pedidos a Carril B
 | Pedido | Estado |
 |---|---|
+| **B-F3.2 · Vista `/snippets` (Code Library, ADR-008, cambio aditivo del contrato).** Regenerar el cliente tipado (`npm run generate:api`). Endpoints nuevos: `GET /snippets` (filtros `language`, `cloud`, `implements`; `limit`, `offset`; devuelve `SnippetList`) y `GET /snippets/{slug}` (`SnippetDetail`: metadata común, `language`, `dialect`, `requirements`, `implements` y `sections` con 10 claves fijas: `what_it_solves`, `code`, `how_it_works`, `when_to_use`, `when_not_to_use`, `risks`, `requirements`, `related_concepts`, `sources`, `change_history`). La búsqueda devuelve resultados `type: code_snippet` (`ResultType`). En la ficha de concepto, los snippets salen de `GET /entities/{slug}/relations`, grupo `IMPLEMENTS` entrante (`label: implemented_by`). Mocks: `GET /snippets?limit=500`, `GET /snippets/<slug>` y `GET /entities/<slug>/relations` de los 7 snippets (105 respuestas en total). Los 7 están en `review_required`: revisarlos con el mismo proceso B-F3.1 | Abierto |
 | **B-F3.1 · Revisar el lote 3** (10 fichas en `review_required`): `clustering`, `python-error-handling-and-retries` (pattern), `slowly-changing-dimensions`, `api-ingestion`, `catchup`, `data-reconciliation` (pattern), `parquet-format`, `schema-evolution`, `surrogate-keys` y `dag`. Sin VERIFY abiertos. Revisar también la regla nueva de niveles (Nivel 4 canónico solo para afirmaciones conceptuales; ver Notas) | Abierto |
 | ~~B-F3.1 · Revisar el lote 2~~ (10 fichas): `backfill`, `replay`, `retries` (pattern), `pubsub-delivery-semantics`, `data-pipeline`, `incremental-pipelines` (pattern), `late-arriving-data`, `partition-pruning`, `upsert` (pattern) y `bigquery-clustering`. Sin VERIFY abiertos. Revisar también la corrección de `MERGE` de Redshift en `sql-merge`, `scd-type-2` e `idempotency` (cb77a2f), porque cambia filas aprobadas en B-F3.1 | Cerrado (revisión aplicada; las 20 fichas `verified`) |
 | **Entorno de Python del proyecto:** `.venv/` con Python 3.12 (`make venv`; README, «Entorno de Python»). El `Makefile` y la CI lo usan; si Carril B ejecuta objetivos de Python en su worktree (por ejemplo `make dev` o `make mocks`), primero `make venv` allí | Informativo |
@@ -42,8 +43,16 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Creación inicial de `schemas/` y ajuste de pares en el gate de F0 (ADR-000).
 - `blueprint.schema.json` (ADR-003).
 - Enumeración `category`, `mvp` y `note` en tecnologías, y `matrix.schema.json` (ADR-004).
+- Code Library: `/snippets`, `/snippets/{slug}`, `Language`, `Snippet*` y `code_snippet` en `ResultType` (ADR-008, aditivo).
 
 ## Historial
+
+### A-F3.2 · Code Library (2026-10-01)
+- Plantilla `content/_templates/snippet.md` (10 secciones, §23). `validate`: secciones de la plantilla, `requirements` no vacío y al menos un `IMPLEMENTS` hacia un concept o pattern `verified`; también `related_topics` = `relations` y regla de niveles de fuente.
+- 7 snippets en `review_required`, reutilizando el código corregido de las fichas: `bigquery-incremental-merge-watermark`, `bigquery-scd-type-2`, `bigquery-deduplicate-latest`, `dataform-incremental-model`, `airflow-daily-partition-dag`, `python-api-ingestion-retries` y `terraform-bigquery-partitioned-table`. 22 URLs verificadas. Diferidos: reconciliación (espera el lote 3) y Terraform de Cloud Storage e IAM (lote 4).
+- ADR-008: endpoints `/snippets` y `/snippets/{slug}`, `code_snippet` en la búsqueda. Los snippets no reciben el bonus de ficha de ADR-007, para no superar a la ficha del concepto en consultas conceptuales.
+- CI: `make validate-terraform` (extrae el HCL y ejecuta `terraform init -backend=false` y `terraform validate` con `hashicorp/setup-terraform@v4`, sin credenciales).
+- Tests: el código Python de los snippets compila y la ingesta se ejecuta con red simulada (paginación, 429, 404, reejecución idempotente).
 
 ### Lote 3 de F3 (2026-09-30)
 - Regla de niveles de fuente: producto Nivel 1–2; conceptual también Nivel 4 canónico (`spec_paper`). `validate`: fuentes Nivel 3 y 5 rechazadas en fichas, al menos una Nivel 1–2 por ficha, `authority_level` coherente con `source_type` (4 tests).
