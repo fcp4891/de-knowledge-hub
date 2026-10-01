@@ -236,9 +236,9 @@
           "level": "basic",
           "importance": "high",
           "mvp": true,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-01"
         },
         {
           "slug": "gcs-storage-classes-and-lifecycle",
@@ -428,9 +428,9 @@
           "level": "intermediate",
           "importance": "high",
           "mvp": true,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-01"
         },
         {
           "slug": "gcp-secret-manager-usage",

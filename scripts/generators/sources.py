@@ -134,6 +134,21 @@ BATCH1 = [
     # 2026-10-01: consumidor de Pub/Sub de pubsub-delivery-semantics (psycopg 3).
     ('psycopg-docs', 'Psycopg 3 documentation', 'Documentación oficial de psycopg 3, el adaptador de PostgreSQL para Python.',
      'https://www.psycopg.org/psycopg3/docs/', 'official_docs', 1, 'psycopg', True, "quarterly", ['postgresql', 'python']),
+    # Lote 4 de F3 (2026-10-01): IaC, almacenamiento, IAM y schedulers.
+    ('gcp-iam-docs', 'Identity and Access Management documentation', 'Documentación oficial de IAM de Google Cloud.',
+     'https://docs.cloud.google.com/iam/docs', 'official_docs', 1, 'gcp', True, "quarterly", ['gcp-iam']),
+    ('gcp-terraform-docs', 'Terraform on Google Cloud documentation', 'Documentación oficial de Google Cloud sobre Terraform y su provider.',
+     'https://docs.cloud.google.com/docs/terraform', 'official_docs', 1, 'gcp', True, "quarterly", ['terraform']),
+    ('gcp-infrastructure-manager-docs', 'Infrastructure Manager documentation', 'Documentación oficial de Infrastructure Manager (Terraform administrado en Google Cloud).',
+     'https://docs.cloud.google.com/infrastructure-manager/docs', 'official_docs', 1, 'gcp', True, "quarterly", ['terraform']),
+    ('aws-s3-docs', 'Amazon S3 User Guide', 'Guía oficial de usuario de Amazon S3.',
+     'https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html', 'official_docs', 1, 'aws', True, "quarterly", ['aws-s3']),
+    ('aws-iam-docs', 'AWS IAM User Guide', 'Guía oficial de usuario de AWS Identity and Access Management.',
+     'https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html', 'official_docs', 1, 'aws', True, "quarterly", ['aws-iam']),
+    ('aws-cloudformation-docs', 'AWS CloudFormation User Guide', 'Guía oficial de usuario de AWS CloudFormation.',
+     'https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html', 'official_docs', 1, 'aws', True, "quarterly", ['aws-cloudformation']),
+    ('aws-eventbridge-scheduler-docs', 'Amazon EventBridge Scheduler User Guide', 'Guía oficial de usuario de Amazon EventBridge Scheduler.',
+     'https://docs.aws.amazon.com/scheduler/latest/UserGuide/what-is-scheduler.html', 'official_docs', 1, 'aws', True, "quarterly", []),
 ]
 
 
@@ -146,7 +161,7 @@ def review_frequency(slug: str, source_type: str) -> str:
 
 
 BATCH1_DATE = "2026-09-30"
-LATER_DATES = {"psycopg-docs": "2026-10-01"}  # fuentes de BATCH1 agregadas después del 2026-09-30
+LATER_DATES = {slug: "2026-10-01" for slug in ("psycopg-docs", "gcp-iam-docs", "gcp-terraform-docs", "gcp-infrastructure-manager-docs", "aws-s3-docs", "aws-iam-docs", "aws-cloudformation-docs", "aws-eventbridge-scheduler-docs")}  # fuentes de BATCH1 agregadas después del 2026-09-30
 
 
 def entry(row: tuple[Any, ...], created: str = TODAY) -> dict[str, Any]:

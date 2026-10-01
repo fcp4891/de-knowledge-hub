@@ -28,6 +28,13 @@
           "note": "Reprocesar por partición completa hace el backfill simple e idempotente."
         },
         {
+          "slug": "gcs-buckets-and-objects",
+          "title": "Buckets y objetos en Cloud Storage",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "En un lake, las particiones suelen ser prefijos de nombre de objeto (fecha=...)."
+        },
+        {
           "slug": "incremental-load",
           "title": "Carga incremental",
           "entity_type": "pattern",

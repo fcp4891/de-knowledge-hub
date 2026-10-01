@@ -134,7 +134,7 @@
         },
         {
           "slug": "terraform-providers",
-          "title": "Providers",
+          "title": "Providers de Terraform",
           "entity_type": "concept",
           "origin": "blueprint",
           "note": null

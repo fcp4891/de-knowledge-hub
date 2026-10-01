@@ -56,6 +56,13 @@
           "note": "Aplicar el mismo lote dos veces deja la tabla igual."
         },
         {
+          "slug": "file-ingestion",
+          "title": "Ingesta de archivos",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Una carga que se repite o un evento duplicado no deben duplicar filas."
+        },
+        {
           "slug": "python-api-ingestion-retries",
           "title": "Ingesta de una API con reintentos en Python",
           "entity_type": "code_snippet",

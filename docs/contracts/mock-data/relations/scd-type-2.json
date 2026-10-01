@@ -70,6 +70,13 @@
           "note": "SCD2 se implementa con MERGE o con sentencias equivalentes."
         },
         {
+          "slug": "dimension-tables",
+          "title": "Tablas de dimensión",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Las columnas de historia de una dimensión tipo 2."
+        },
+        {
           "slug": "upsert",
           "title": "Upsert",
           "entity_type": "pattern",

@@ -781,3 +781,135 @@ created_at: '2026-10-01'
 updated_at: '2026-10-01'
 last_verified: '2026-10-01'
 verification_status: verified
+---
+id: source:gcp-iam-docs
+slug: gcp-iam-docs
+type: source
+title: Identity and Access Management documentation
+description: Documentación oficial de IAM de Google Cloud.
+url: https://docs.cloud.google.com/iam/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- gcp-iam
+created_at: '2026-10-01'
+updated_at: '2026-10-01'
+last_verified: '2026-10-01'
+verification_status: verified
+---
+id: source:gcp-terraform-docs
+slug: gcp-terraform-docs
+type: source
+title: Terraform on Google Cloud documentation
+description: Documentación oficial de Google Cloud sobre Terraform y su provider.
+url: https://docs.cloud.google.com/docs/terraform
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- terraform
+created_at: '2026-10-01'
+updated_at: '2026-10-01'
+last_verified: '2026-10-01'
+verification_status: verified
+---
+id: source:gcp-infrastructure-manager-docs
+slug: gcp-infrastructure-manager-docs
+type: source
+title: Infrastructure Manager documentation
+description: Documentación oficial de Infrastructure Manager (Terraform administrado en Google Cloud).
+url: https://docs.cloud.google.com/infrastructure-manager/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- terraform
+created_at: '2026-10-01'
+updated_at: '2026-10-01'
+last_verified: '2026-10-01'
+verification_status: verified
+---
+id: source:aws-s3-docs
+slug: aws-s3-docs
+type: source
+title: Amazon S3 User Guide
+description: Guía oficial de usuario de Amazon S3.
+url: https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- aws-s3
+created_at: '2026-10-01'
+updated_at: '2026-10-01'
+last_verified: '2026-10-01'
+verification_status: verified
+---
+id: source:aws-iam-docs
+slug: aws-iam-docs
+type: source
+title: AWS IAM User Guide
+description: Guía oficial de usuario de AWS Identity and Access Management.
+url: https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- aws-iam
+created_at: '2026-10-01'
+updated_at: '2026-10-01'
+last_verified: '2026-10-01'
+verification_status: verified
+---
+id: source:aws-cloudformation-docs
+slug: aws-cloudformation-docs
+type: source
+title: AWS CloudFormation User Guide
+description: Guía oficial de usuario de AWS CloudFormation.
+url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- aws-cloudformation
+created_at: '2026-10-01'
+updated_at: '2026-10-01'
+last_verified: '2026-10-01'
+verification_status: verified
+---
+id: source:aws-eventbridge-scheduler-docs
+slug: aws-eventbridge-scheduler-docs
+type: source
+title: Amazon EventBridge Scheduler User Guide
+description: Guía oficial de usuario de Amazon EventBridge Scheduler.
+url: https://docs.aws.amazon.com/scheduler/latest/UserGuide/what-is-scheduler.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-01'
+updated_at: '2026-10-01'
+last_verified: '2026-10-01'
+verification_status: verified

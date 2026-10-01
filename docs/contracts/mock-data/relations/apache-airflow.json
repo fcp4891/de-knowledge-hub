@@ -85,7 +85,7 @@
         },
         {
           "slug": "scheduler",
-          "title": "Scheduler",
+          "title": "Scheduler de orquestación",
           "entity_type": "concept",
           "origin": "blueprint",
           "note": null

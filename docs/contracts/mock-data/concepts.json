@@ -1161,9 +1161,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-01"
     },
     {
       "slug": "python-file-processing",
@@ -1357,9 +1357,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-01"
     },
     {
       "slug": "grain",
@@ -1539,9 +1539,9 @@
       "level": "basic",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-01"
     },
     {
       "slug": "database-ingestion",
@@ -1721,9 +1721,9 @@
       "level": "basic",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-01"
     },
     {
       "slug": "sensors",
@@ -2309,9 +2309,9 @@
       "level": "basic",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-01"
     },
     {
       "slug": "gcs-storage-classes-and-lifecycle",
@@ -2477,9 +2477,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-01"
     },
     {
       "slug": "gcp-secret-manager-usage",
@@ -3135,9 +3135,9 @@
       "level": "basic",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-01"
     },
     {
       "slug": "terraform-providers",
@@ -3149,9 +3149,9 @@
       "level": "basic",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-01"
     },
     {
       "slug": "terraform-variables-and-outputs",
@@ -3191,9 +3191,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-01"
     },
     {
       "slug": "terraform-remote-state",
@@ -3219,9 +3219,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-01"
     },
     {
       "slug": "terraform-environments",
