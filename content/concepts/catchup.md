@@ -11,7 +11,7 @@ classification: core
 level: intermediate
 importance: high
 cloud: [gcp, aws, azure, agnostic]
-technologies: [apache-airflow, gcp-cloud-composer, aws-mwaa, azure-data-factory]
+technologies: [apache-airflow, gcp-cloud-composer, aws-mwaa, azure-data-factory, gcp-bigquery]
 tags: [orchestration, scheduling, reliability]
 related_topics: [backfill, dag, idempotency]
 sources:
@@ -35,6 +35,18 @@ sources:
     url: https://docs.aws.amazon.com/mwaa/latest/userguide/configuring-env-variables.html
     accessed: 2026-09-30
     note: "Amazon MWAA aplica las opciones de configuración de Airflow indicadas en la consola como variables de entorno del contenedor; si airflow.cfg tiene una opción con el mismo nombre, prevalece la de la consola."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/parameterized-queries
+    accessed: 2026-10-01
+    note: "Con la biblioteca cliente de Python: bigquery.Client(), QueryJobConfig(query_parameters=[ScalarQueryParameter(nombre, tipo, valor)]) y client.query_and_wait(query, job_config=...); parámetros con nombre usando @nombre."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/multi-statement-queries
+    accessed: 2026-10-01
+    note: "Consultas de varias sentencias; su ejemplo usa un parámetro de consulta (@id) dentro de la consulta."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/transactions
+    accessed: 2026-10-01
+    note: "Transacciones de varias sentencias con commit o rollback atómico."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/how-to-create-tumbling-window-trigger
     accessed: 2026-09-30
@@ -123,11 +135,21 @@ flowchart LR
 ## 10. Código
 
 ```python
-# Airflow 3: Dag diario con catchup explícito y concurrencia de ejecuciones limitada.
-# Requiere: apache-airflow 3.x; replace_partition es idempotente (reemplaza la partición del día).
+# Airflow 3 + google-cloud-bigquery: Dag diario con catchup explícito y concurrencia de ejecuciones limitada.
+# Requiere: tablas proyecto.staging.ventas y proyecto.dwh.ventas con columna fecha DATE, y credenciales
+# con roles/bigquery.jobUser y roles/bigquery.dataEditor (ver el snippet airflow-daily-partition-dag).
 from datetime import datetime
 
 from airflow.sdk import dag, task
+from google.cloud import bigquery
+
+REPLACE_PARTITION = """
+BEGIN TRANSACTION;
+DELETE FROM `proyecto.dwh.ventas` WHERE fecha = CAST(@dia AS DATE);
+INSERT INTO `proyecto.dwh.ventas`
+SELECT * FROM `proyecto.staging.ventas` WHERE fecha = CAST(@dia AS DATE);
+COMMIT TRANSACTION;
+"""
 
 
 @dag(
@@ -137,9 +159,10 @@ from airflow.sdk import dag, task
     max_active_runs=3,     # no más de 3 días en paralelo contra el origen
 )
 def ventas_diarias():
-    @task
+    @task(retries=3)
     def cargar(*, ds: str) -> None:
-        replace_partition(day=ds)   # procesa el intervalo, nunca "ahora"
+        config = bigquery.QueryJobConfig(query_parameters=[bigquery.ScalarQueryParameter("dia", "STRING", ds)])
+        bigquery.Client().query_and_wait(REPLACE_PARTITION, job_config=config)  # procesa el intervalo, nunca "ahora"
 
     cargar()
 
@@ -147,7 +170,7 @@ def ventas_diarias():
 ventas_diarias()
 ```
 
-Como cada ejecución reemplaza la partición de su día, repetir o recuperar intervalos no duplica datos.
+Cada ejecución reemplaza la partición de su día dentro de una transacción: si algo falla antes del `COMMIT`, la partición queda como estaba, y repetir o recuperar intervalos no duplica datos. El snippet `airflow-daily-partition-dag` agrega la validación del staging antes del reemplazo.
 
 ## 11. GCP
 
@@ -201,6 +224,7 @@ Pendiente (F4): lab de tipo B sobre duplicados tras un reproceso (§25).
 ## 20. Fuentes
 
 - Apache Airflow: *Dag Runs*, *Configuration Reference*, *Backfill* y *airflow.sdk API Reference*.
+- Google Cloud: *Run parameterized queries*, *Work with multi-statement queries* y *Multi-statement transactions* (BigQuery).
 - Google Cloud: *Override Airflow configuration options* (Managed Service for Apache Airflow).
 - AWS: *Using Apache Airflow configuration options on Amazon MWAA*.
 - Microsoft Learn: *Create tumbling window triggers* (Data Factory).
@@ -214,3 +238,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 3 de F3).
+- 2026-10-01: revisión B-F3.1 aplicada: §10 muestra la transacción de reemplazo de la partición y es ejecutable (BigQuery con parámetro @dia).

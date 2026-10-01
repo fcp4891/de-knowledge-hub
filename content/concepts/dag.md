@@ -11,7 +11,7 @@ classification: core
 level: basic
 importance: high
 cloud: [gcp, aws, azure, agnostic]
-technologies: [apache-airflow, gcp-cloud-composer, aws-mwaa, aws-step-functions, azure-data-factory]
+technologies: [apache-airflow, gcp-cloud-composer, aws-mwaa, aws-step-functions, azure-data-factory, gcp-bigquery]
 tags: [orchestration, pipelines, airflow]
 related_topics: [data-pipeline, catchup, idempotency]
 sources:
@@ -43,6 +43,18 @@ sources:
     url: https://docs.aws.amazon.com/step-functions/latest/dg/call-https-apis.html
     accessed: 2026-09-30
     note: "Los estados de Step Functions se definen en ASL (Amazon States Language), por ejemplo el HTTP Task con el recurso http:invoke y su bloque Retry."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/parameterized-queries
+    accessed: 2026-10-01
+    note: "Con la biblioteca cliente de Python: bigquery.Client(), QueryJobConfig(query_parameters=[ScalarQueryParameter(nombre, tipo, valor)]) y client.query_and_wait(query, job_config=...); parámetros con nombre usando @nombre."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/multi-statement-queries
+    accessed: 2026-10-01
+    note: "Consultas de varias sentencias; su ejemplo usa un parámetro de consulta (@id) dentro de la consulta."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/transactions
+    accessed: 2026-10-01
+    note: "Transacciones de varias sentencias con commit o rollback atómico."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/concepts-pipelines-activities
     accessed: 2026-09-30
@@ -127,39 +139,61 @@ flowchart LR
 ## 10. Código
 
 ```python
-# Airflow 3 (TaskFlow): dos extracciones en paralelo, unión, validación y carga idempotente.
-# Requiere: apache-airflow 3.x; extract_*, join, validate y replace_partition son del proyecto.
+# Airflow 3 (TaskFlow) + google-cloud-bigquery: dos validaciones en paralelo y una carga que depende de ambas.
+# Requiere: tablas proyecto.staging.pedidos(fecha, pedido_id, cliente_id, monto), proyecto.staging.clientes
+# (cliente_id, segmento) y proyecto.dwh.ventas(fecha, pedido_id, cliente_id, monto, segmento), y credenciales
+# con roles/bigquery.jobUser y roles/bigquery.dataEditor (ver el snippet airflow-daily-partition-dag).
 from datetime import datetime
 
 from airflow.sdk import dag, task
+from google.cloud import bigquery
+
+COUNT_DAY = "SELECT COUNT(*) AS filas FROM `proyecto.staging.pedidos` WHERE fecha = CAST(@dia AS DATE)"
+COUNT_CUSTOMERS = "SELECT COUNT(*) AS filas FROM `proyecto.staging.clientes`"
+REPLACE_PARTITION = """
+BEGIN TRANSACTION;
+DELETE FROM `proyecto.dwh.ventas` WHERE fecha = CAST(@dia AS DATE);
+INSERT INTO `proyecto.dwh.ventas` (fecha, pedido_id, cliente_id, monto, segmento)
+SELECT p.fecha, p.pedido_id, p.cliente_id, p.monto, c.segmento
+FROM `proyecto.staging.pedidos` AS p
+JOIN `proyecto.staging.clientes` AS c USING (cliente_id)
+WHERE p.fecha = CAST(@dia AS DATE);
+COMMIT TRANSACTION;
+"""
+
+
+def run(sql: str, ds: str) -> list:
+    config = bigquery.QueryJobConfig(query_parameters=[bigquery.ScalarQueryParameter("dia", "STRING", ds)])
+    return list(bigquery.Client().query_and_wait(sql, job_config=config))
 
 
 @dag(schedule="@daily", start_date=datetime(2026, 9, 1), catchup=False)
 def ventas():
     @task(retries=3)
-    def extraer_pedidos(*, ds: str) -> str:
-        return extract_orders(day=ds)            # devuelve una ruta, no los datos
+    def validar_pedidos(*, ds: str) -> int:
+        filas = run(COUNT_DAY, ds)[0].filas
+        if filas == 0:
+            raise ValueError(f"sin pedidos en staging para {ds}")
+        return filas
 
     @task(retries=3)
-    def extraer_clientes(*, ds: str) -> str:
-        return extract_customers(day=ds)
+    def validar_clientes(*, ds: str) -> int:
+        filas = run(COUNT_CUSTOMERS, ds)[0].filas
+        if filas == 0:
+            raise ValueError("staging de clientes vacío")
+        return filas
 
-    @task
-    def unir(pedidos: str, clientes: str) -> str:
-        return join(pedidos, clientes)
+    @task(retries=3)
+    def cargar(pedidos: int, clientes: int, *, ds: str) -> None:
+        run(REPLACE_PARTITION, ds)               # reemplazo transaccional de la partición del día
 
-    @task
-    def cargar(path: str, *, ds: str) -> None:
-        validate(path)
-        replace_partition(path, day=ds)          # reemplazo de la partición del día: repetir no duplica
-
-    cargar(unir(extraer_pedidos(), extraer_clientes()))
+    cargar(validar_pedidos(), validar_clientes())
 
 
 ventas()
 ```
 
-Las dependencias salen de pasar el resultado de una tarea a otra: `extraer_pedidos` y `extraer_clientes` no dependen entre sí y pueden correr en paralelo.
+Las dependencias salen de pasar el resultado de una tarea a otra: `validar_pedidos` y `validar_clientes` no dependen entre sí y pueden correr en paralelo; `cargar` espera a las dos. La carga reemplaza la partición del día dentro de una transacción: si algo falla antes del `COMMIT`, la partición queda como estaba, y reintentar o reejecutar el día no duplica. Las extracciones que llenan el staging serían tareas anteriores con el mismo patrón (por ejemplo, el snippet `python-api-ingestion-retries`).
 
 ## 11. GCP
 
@@ -219,6 +253,7 @@ Pendiente (F4): snippet "DAG de Airflow" (A-F3.2) y lab de tipo A.
 ## 20. Fuentes
 
 - Apache Airflow: *Dags*, *Tasks* y *Pythonic Dags with the TaskFlow API*.
+- Google Cloud: *Run parameterized queries*, *Work with multi-statement queries* y *Multi-statement transactions* (BigQuery).
 - Google Cloud: *Managed Airflow overview*.
 - AWS: *What is Amazon MWAA?*, *What is Step Functions?* y *Call HTTPS APIs in Step Functions workflows*.
 - Microsoft Learn: *Pipelines and activities* (Data Factory).
@@ -232,3 +267,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-09-30: creación (lote 3 de F3).
+- 2026-10-01: revisión B-F3.1 aplicada: §10 ejecutable, con validaciones en paralelo y la transacción de reemplazo de la partición a la vista (antes llamaba a funciones no definidas).
