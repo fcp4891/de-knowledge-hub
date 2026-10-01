@@ -6,9 +6,12 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-09-30
 
 ## Actual
-- **Tarea activa:** en espera. B-F3.1 del lote 2 está aprobada.
-- **Siguiente:** revisar el lote 3 cuando Carril A lo entregue. No se editó `content/`.
+- **Tarea activa:** B-F3.1 del lote 3, filas en pendiente en `docs/reviews/cards-lote3.md`.
+- **Siguiente:** esperar la aprobación de Felipe. El mini-grafo de B-F3.2 está en `b/f3-graph` (`ce313db`) y no entra en esta rama. `/snippets` espera snippets de Carril A.
 - **Bloqueos:** ninguno.
+
+### B-F3.1 · lote 3
+- Diez fichas, tabla de §48. Ninguna afirmación de producto se apoya solo en Kimball o en una RFC (Nivel 4). Propuesta abierta: mostrar la transacción de `replace_partition` en `catchup` y `dag`, o remitir a `backfill`. No se editó `content/`.
 
 ### B-F3 UX
 - El selector de estado y la casilla «Pendiente de profundizar» llaman a `PUT /me/study-state/{slug}` al cambiar, con `last_studied_at` de ahora.
