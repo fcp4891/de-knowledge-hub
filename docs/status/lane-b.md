@@ -6,12 +6,12 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-01
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote 4, filas en pendiente en `docs/reviews/cards-lote4.md`, más la §10 nueva de `pubsub-delivery-semantics`.
-- **Siguiente:** esperar la aprobación de Felipe. La vista `/snippets` y su revisión aprobada están en `b/f3-snippets-ui` (`a6237d2`).
+- **Tarea activa:** en espera del lote 5.
+- **Siguiente:** B-F3.1 del lote 5, cuando Carril A lo deje en `main`. La vista `/snippets` y su revisión aprobada están en `b/f3-snippets-ui` (`a6237d2`).
 - **Bloqueos:** ninguno.
 
 ### B-F3.1 · lote 4
-- Diez fichas, tabla de §48, y aparte el consumidor real de Pub/Sub. `add-iam-policy-binding` se describe como aditivo y no se llama idempotente. No se editó `content/`.
+- Diez fichas, tabla de §48, y aparte el consumidor real de Pub/Sub. Felipe aprobó todas las filas el 2026-10-01. `add-iam-policy-binding` se describe como aditivo y no se llama idempotente. No se editó `content/`.
 
 ### B-F3.1 · lote 3
 - Diez fichas, tabla de §48. Felipe aprobó todas las filas el 2026-10-01, incluida la de `replace_partition` en `catchup` y `dag`. Ninguna afirmación de producto se apoya solo en Kimball o en una RFC. No se editó `content/`.
