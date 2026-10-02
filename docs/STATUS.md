@@ -1,7 +1,7 @@
 # STATUS — Data Engineering Knowledge Hub
 
 **Fase actual:** F3 — Contenido Core del MVP. F2 aprobada el 2026-09-30.
-**Última actualización:** 2026-10-01
+**Última actualización:** 2026-10-02
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**
 > El estado detallado de cada carril está en `docs/status/lane-a.md` y `docs/status/lane-b.md`; cada carril edita solo el suyo.
@@ -10,16 +10,17 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | Lote 5 (plan pendiente de aprobación) | Ejecutar el lote 5 | — |
-| B · Cursor | — | Revisión de 2 snippets nuevos (`snippets-2.md`); lote 5 cuando se entregue | — |
+| A · Claude Code | Lote 5 entregado (10 fichas `review_required`) | Aplicar la revisión del lote 5; proponer el lote 6 | — |
+| B · Cursor | — | Revisión de 2 snippets nuevos (`snippets-2.md`) y B-F3.1 del lote 5 | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
 | A | B | Revisar `terraform-gcs-bucket` y `terraform-bigquery-iam` (`snippets-2.md`) | Abierto |
+| A | B | B-F3.1 · Revisar el lote 5 (10 fichas; ver `lane-a.md`) | Abierto |
 
 ## Criterio de salida de la fase actual (F3)
-- [ ] 60–80 fichas `verified` (hoy: 40 fichas, las 40 `verified`).
+- [ ] 60–80 fichas `verified` (hoy: 50 fichas, 40 `verified` y 10 del lote 5 en revisión).
 - [ ] Cero fichas sin fuentes.
 - [ ] Gate humano.
 
