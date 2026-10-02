@@ -2,12 +2,12 @@
 
 Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
-**Última actualización:** 2026-10-01
+**Última actualización:** 2026-10-02
 
 ## Actual
-- **Tarea activa:** lote 5 de F3, plan pendiente de aprobación.
+- **Tarea activa:** lote 5 de F3 entregado (10 fichas `review_required`), en revisión B-F3.1.
 - **Mergeado para Carril B:** `b/f3-snippets-ui` (a6237d2) y `b/f3-review-4` (f95b495) en `main`, 2026-10-01.
-- **Siguiente:** aplicar la revisión B-F3.1 del lote 4 cuando esté aprobada y, en ese mismo commit, crear los snippets `terraform-gcs-bucket` y `terraform-bigquery-iam` (recursos IAM de miembro, aditivos). Snippets: siguen en `review_required` hasta `docs/reviews/snippets-1.md`. Lote 5: `batch-ingestion` y `python-logging` entre otras. Arquitecturas (`cdc-architecture`, `batch-pipeline-architecture`) quedan para F4.
+- **Siguiente:** aplicar la revisión B-F3.1 del lote 5 cuando esté aprobada; al pasar `deduplication` a `verified`, agregar `IMPLEMENTS` del snippet `bigquery-deduplicate-latest` hacia esa ficha. Lote 6 incluye `row-vs-columnar-formats` y `testing-with-pytest`. Arquitecturas (`cdc-architecture`, `batch-pipeline-architecture`) quedan para F4.
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
 
@@ -16,6 +16,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 |---|---|
 | ~~B-F3.1 · Revisar el lote 4~~ (10 fichas): `infrastructure-as-code`, `terraform-providers`, `terraform-state`, `terraform-plan-apply`, `gcs-buckets-and-objects`, `gcp-iam-for-data`, `dimension-tables`, `python-api-consumption`, `scheduler` y `file-ingestion`. Sin VERIFY abiertos. Revisar también la §10 nueva de `pubsub-delivery-semantics` (consumidor real de Pub/Sub) | Cerrado (revisión aplicada; las 40 fichas `verified`) |
 | ~~B-F3.1 · Revisar los snippets~~ (`snippets-1.md`) | Cerrado (los 8 `verified`) |
+| **B-F3.1 · Revisar el lote 5** (10 fichas): `data-lake`, `python-logging`, `airflow-architecture`, `data-validation-with-pydantic`, `batch-ingestion`, `star-schema` (pattern), `dataform-incremental-tables` (pattern), `pubsub-topics-and-subscriptions`, `deduplication` (pattern) y `fact-tables`. Sin VERIFY abiertos. Fuentes nuevas Nivel 1: `pydantic-docs`, `dbt-docs`, `gcp-cloud-logging-docs`, `aws-cloudwatch-logs-docs`, `aws-lake-formation-docs` y `aws-sns-docs`. `pubsub-topics-and-subscriptions` §10 es HCL: lo valida `make validate-terraform` en la CI | Abierto |
 | **Revisar 2 snippets nuevos** (`snippets-2.md`): `terraform-gcs-bucket` y `terraform-bigquery-iam` (recursos IAM `*_iam_member`, no autoritativos), en `review_required` | Abierto |
 | **B-F3.2 · Vista `/snippets` (Code Library, ADR-008, cambio aditivo del contrato).** Regenerar el cliente tipado (`npm run generate:api`). Endpoints nuevos: `GET /snippets` (filtros `language`, `cloud`, `implements`; `limit`, `offset`; devuelve `SnippetList`) y `GET /snippets/{slug}` (`SnippetDetail`: metadata común, `language`, `dialect`, `requirements`, `implements` y `sections` con 10 claves fijas: `what_it_solves`, `code`, `how_it_works`, `when_to_use`, `when_not_to_use`, `risks`, `requirements`, `related_concepts`, `sources`, `change_history`). La búsqueda devuelve resultados `type: code_snippet` (`ResultType`). En la ficha de concepto, los snippets salen de `GET /entities/{slug}/relations`, grupo `IMPLEMENTS` entrante (`label: implemented_by`). Mocks: `GET /snippets?limit=500`, `GET /snippets/<slug>` y `GET /entities/<slug>/relations` de los snippets (8 desde el 2026-10-01, con `bigquery-reconciliation`; 107 respuestas en total). **El contrato de snippets ya está en `main`** (ADR-008, a76907b) | Abierto |
 | ~~B-F3.1 · Revisar el lote 3~~ (10 fichas): `clustering`, `python-error-handling-and-retries` (pattern), `slowly-changing-dimensions`, `api-ingestion`, `catchup`, `data-reconciliation` (pattern), `parquet-format`, `schema-evolution`, `surrogate-keys` y `dag`. Sin VERIFY abiertos. Revisar también la regla nueva de niveles (Nivel 4 canónico solo para afirmaciones conceptuales; ver Notas) | Cerrado (revisión aplicada; las 30 fichas `verified`) |
@@ -49,6 +50,13 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Code Library: `/snippets`, `/snippets/{slug}`, `Language`, `Snippet*` y `code_snippet` en `ResultType` (ADR-008, aditivo).
 
 ## Historial
+
+### Lote 5 de F3 (2026-10-02)
+- 10 fichas en `review_required`: `data-lake`, `python-logging`, `airflow-architecture`, `data-validation-with-pydantic`, `batch-ingestion`, `star-schema`, `dataform-incremental-tables`, `pubsub-topics-and-subscriptions`, `deduplication` y `fact-tables`. Sin VERIFY; 86 URLs citadas con HTTP 200 y URL final igual a la citada.
+- 6 fuentes Nivel 1 nuevas en el registro y en el generador (`LATER_DATES`).
+- Código: Python de `python-logging`, `data-validation-with-pydantic` (pydantic 2.13.5) y `batch-ingestion` (cliente de BigQuery simulado) ejecutado; HCL de `pubsub-topics-and-subscriptions` validado por la CI.
+- Hallazgos: los Apache Airflow jobs de Fabric soportan Airflow 2.10.5, no Airflow 3; la tabla de adaptadores de dbt no incluye Fabric; `onSchemaChange` de Dataform está en Preview.
+- `test_search_flags_pages`: `data-lake` ya tiene ficha; el caso "concepto sin ficha" pasa a `data-warehouse`.
 
 ### Snippets y lote 4 verified, HCL de fichas en la CI (2026-10-01)
 - Merge de `b/f3-snippets-ui` y `b/f3-review-4`.

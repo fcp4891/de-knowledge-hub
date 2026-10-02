@@ -45,8 +45,8 @@
           "slug": "batch-ingestion",
           "title": "Ingesta batch",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Esta ficha desarrolla el lado batch de esa decisión."
         },
         {
           "slug": "streaming-ingestion",

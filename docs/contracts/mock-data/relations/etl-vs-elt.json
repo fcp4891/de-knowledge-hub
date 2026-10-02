@@ -28,6 +28,13 @@
           "note": "CDC alimenta la capa raw en un flujo ELT."
         },
         {
+          "slug": "data-lake",
+          "title": "Data Lake",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "El lake es la zona de aterrizaje típica del enfoque ELT."
+        },
+        {
           "slug": "data-pipeline",
           "title": "Data pipeline",
           "entity_type": "concept",

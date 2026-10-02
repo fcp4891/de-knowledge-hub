@@ -47,6 +47,13 @@
           "entity_type": "code_snippet",
           "origin": "entity",
           "note": "Carga incremental con fusión por clave (modo upsert) y relectura de un margen."
+        },
+        {
+          "slug": "dataform-incremental-tables",
+          "title": "Tablas incrementales en Dataform",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Dataform genera la carga incremental (INSERT o MERGE) a partir de la definición SQLX."
         }
       ]
     },
@@ -103,6 +110,13 @@
           "entity_type": "concept",
           "origin": "blueprint",
           "note": null
+        },
+        {
+          "slug": "batch-ingestion",
+          "title": "Ingesta batch",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Cada lote trae solo lo nuevo o lo cambiado de su ventana."
         },
         {
           "slug": "database-ingestion",

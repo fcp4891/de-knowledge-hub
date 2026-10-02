@@ -83,9 +83,9 @@
       "level": "basic",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-02"
     },
     {
       "slug": "data-warehouse",
@@ -643,9 +643,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-02"
     },
     {
       "slug": "scd-type-1",
@@ -1063,9 +1063,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-02"
     },
     {
       "slug": "http-clients",
@@ -1119,9 +1119,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-02"
     },
     {
       "slug": "beam-programming-model",
@@ -1315,9 +1315,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-02"
     },
     {
       "slug": "snowflake-schema",
@@ -1343,9 +1343,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-02"
     },
     {
       "slug": "dimension-tables",
@@ -1483,9 +1483,9 @@
       "level": "basic",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-02"
     },
     {
       "slug": "streaming-ingestion",
@@ -1805,9 +1805,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-02"
     },
     {
       "slug": "airflow-operators-and-hooks",
@@ -2337,9 +2337,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-02"
     },
     {
       "slug": "pubsub-delivery-semantics",
@@ -2421,9 +2421,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-02"
     },
     {
       "slug": "cloud-run-for-data",

@@ -913,3 +913,115 @@ created_at: '2026-10-01'
 updated_at: '2026-10-01'
 last_verified: '2026-10-01'
 verification_status: verified
+---
+id: source:pydantic-docs
+slug: pydantic-docs
+type: source
+title: Pydantic Validation documentation
+description: Documentación oficial de Pydantic (validación de datos con modelos tipados).
+url: https://pydantic.dev/docs/validation/latest/get-started/
+source_type: official_docs
+authority_level: 1
+provider: pydantic
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- pydantic
+created_at: '2026-10-01'
+updated_at: '2026-10-01'
+last_verified: '2026-10-01'
+verification_status: verified
+---
+id: source:dbt-docs
+slug: dbt-docs
+type: source
+title: dbt Developer Hub
+description: Documentación oficial de dbt.
+url: https://docs.getdbt.com/docs/introduction
+source_type: official_docs
+authority_level: 1
+provider: dbt-labs
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- dbt
+created_at: '2026-10-01'
+updated_at: '2026-10-01'
+last_verified: '2026-10-01'
+verification_status: verified
+---
+id: source:gcp-cloud-logging-docs
+slug: gcp-cloud-logging-docs
+type: source
+title: Cloud Logging documentation
+description: Documentación oficial de Google Cloud Logging.
+url: https://docs.cloud.google.com/logging/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-01'
+updated_at: '2026-10-01'
+last_verified: '2026-10-01'
+verification_status: verified
+---
+id: source:aws-cloudwatch-logs-docs
+slug: aws-cloudwatch-logs-docs
+type: source
+title: Amazon CloudWatch Logs User Guide
+description: Guía oficial de usuario de Amazon CloudWatch Logs.
+url: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- aws-cloudwatch
+created_at: '2026-10-01'
+updated_at: '2026-10-01'
+last_verified: '2026-10-01'
+verification_status: verified
+---
+id: source:aws-lake-formation-docs
+slug: aws-lake-formation-docs
+type: source
+title: AWS Lake Formation Developer Guide
+description: Guía oficial para desarrolladores de AWS Lake Formation.
+url: https://docs.aws.amazon.com/lake-formation/latest/dg/what-is-lake-formation.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- aws-lake-formation
+created_at: '2026-10-01'
+updated_at: '2026-10-01'
+last_verified: '2026-10-01'
+verification_status: verified
+---
+id: source:aws-sns-docs
+slug: aws-sns-docs
+type: source
+title: Amazon SNS Developer Guide
+description: Guía oficial para desarrolladores de Amazon Simple Notification Service.
+url: https://docs.aws.amazon.com/sns/latest/dg/welcome.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-01'
+updated_at: '2026-10-01'
+last_verified: '2026-10-01'
+verification_status: verified

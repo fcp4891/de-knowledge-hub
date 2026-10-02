@@ -54,6 +54,20 @@
           "entity_type": "pattern",
           "origin": "entity",
           "note": "Cuando los reintentos se agotan, el mensaje se aparta a la DLQ."
+        },
+        {
+          "slug": "pubsub-topics-and-subscriptions",
+          "title": "Topics y suscripciones en Pub/Sub",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "La dead letter policy de la suscripción desvía los mensajes que agotan los intentos."
+        },
+        {
+          "slug": "data-validation-with-pydantic",
+          "title": "Validación de datos con Pydantic",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Los registros rechazados, con sus errores, van a una tabla o cola de rechazados en lugar de detener el lote."
         }
       ]
     }

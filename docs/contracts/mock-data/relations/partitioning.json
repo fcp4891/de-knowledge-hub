@@ -56,6 +56,13 @@
           "note": "Clustering es una forma de organización física complementaria a la partición."
         },
         {
+          "slug": "data-lake",
+          "title": "Data Lake",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Organizar por prefijos de fecha (estilo Hive) permite podar archivos al consultar."
+        },
+        {
           "slug": "late-arriving-data",
           "title": "Datos que llegan tarde",
           "entity_type": "concept",

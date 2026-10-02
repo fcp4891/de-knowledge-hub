@@ -61,6 +61,13 @@
           "entity_type": "concept",
           "origin": "entity",
           "note": "En BigQuery, el pruning depende del tipo de partición y de cómo se escribe el filtro."
+        },
+        {
+          "slug": "dataform-incremental-tables",
+          "title": "Tablas incrementales en Dataform",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Las tablas incrementales suelen estar particionadas por fecha (bigquery.partitionBy)."
         }
       ]
     },

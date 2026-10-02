@@ -148,7 +148,18 @@ BATCH1 = [
     ('aws-cloudformation-docs', 'AWS CloudFormation User Guide', 'Guía oficial de usuario de AWS CloudFormation.',
      'https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html', 'official_docs', 1, 'aws', True, "quarterly", ['aws-cloudformation']),
     ('aws-eventbridge-scheduler-docs', 'Amazon EventBridge Scheduler User Guide', 'Guía oficial de usuario de Amazon EventBridge Scheduler.',
-     'https://docs.aws.amazon.com/scheduler/latest/UserGuide/what-is-scheduler.html', 'official_docs', 1, 'aws', True, "quarterly", []),
+     'https://docs.aws.amazon.com/scheduler/latest/UserGuide/what-is-scheduler.html', 'official_docs', 1, 'aws', True, "quarterly", []),    ('pydantic-docs', 'Pydantic Validation documentation', 'Documentación oficial de Pydantic (validación de datos con modelos tipados).',
+     'https://pydantic.dev/docs/validation/latest/get-started/', 'official_docs', 1, 'pydantic', True, "quarterly", ['pydantic']),
+    ('dbt-docs', 'dbt Developer Hub', 'Documentación oficial de dbt.',
+     'https://docs.getdbt.com/docs/introduction', 'official_docs', 1, 'dbt-labs', True, "quarterly", ['dbt']),
+    ('gcp-cloud-logging-docs', 'Cloud Logging documentation', 'Documentación oficial de Google Cloud Logging.',
+     'https://docs.cloud.google.com/logging/docs', 'official_docs', 1, 'gcp', True, "quarterly", []),
+    ('aws-cloudwatch-logs-docs', 'Amazon CloudWatch Logs User Guide', 'Guía oficial de usuario de Amazon CloudWatch Logs.',
+     'https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html', 'official_docs', 1, 'aws', True, "quarterly", ['aws-cloudwatch']),
+    ('aws-lake-formation-docs', 'AWS Lake Formation Developer Guide', 'Guía oficial para desarrolladores de AWS Lake Formation.',
+     'https://docs.aws.amazon.com/lake-formation/latest/dg/what-is-lake-formation.html', 'official_docs', 1, 'aws', True, "quarterly", ['aws-lake-formation']),
+    ('aws-sns-docs', 'Amazon SNS Developer Guide', 'Guía oficial para desarrolladores de Amazon Simple Notification Service.',
+     'https://docs.aws.amazon.com/sns/latest/dg/welcome.html', 'official_docs', 1, 'aws', True, "quarterly", []),
 ]
 
 
@@ -161,7 +172,7 @@ def review_frequency(slug: str, source_type: str) -> str:
 
 
 BATCH1_DATE = "2026-09-30"
-LATER_DATES = {slug: "2026-10-01" for slug in ("psycopg-docs", "gcp-iam-docs", "gcp-terraform-docs", "gcp-infrastructure-manager-docs", "aws-s3-docs", "aws-iam-docs", "aws-cloudformation-docs", "aws-eventbridge-scheduler-docs")}  # fuentes de BATCH1 agregadas después del 2026-09-30
+LATER_DATES = {slug: "2026-10-01" for slug in ("psycopg-docs", "gcp-iam-docs", "gcp-terraform-docs", "gcp-infrastructure-manager-docs", "aws-s3-docs", "aws-iam-docs", "aws-cloudformation-docs", "aws-eventbridge-scheduler-docs", "pydantic-docs", "dbt-docs", "gcp-cloud-logging-docs", "aws-cloudwatch-logs-docs", "aws-lake-formation-docs", "aws-sns-docs")}  # fuentes de BATCH1 agregadas después del 2026-09-30
 
 
 def entry(row: tuple[Any, ...], created: str = TODAY) -> dict[str, Any]:

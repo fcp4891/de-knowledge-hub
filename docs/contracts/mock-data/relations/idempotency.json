@@ -56,6 +56,13 @@
           "note": "Aplicar el mismo lote dos veces deja la tabla igual."
         },
         {
+          "slug": "batch-ingestion",
+          "title": "Ingesta batch",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Cargar reemplazando el período hace que reintentar o reprocesar no duplique."
+        },
+        {
           "slug": "file-ingestion",
           "title": "Ingesta de archivos",
           "entity_type": "concept",
@@ -117,6 +124,13 @@
           "entity_type": "code_snippet",
           "origin": "entity",
           "note": "Repetir la transacción con los mismos cambios no crea versiones nuevas."
+        },
+        {
+          "slug": "dataform-incremental-tables",
+          "title": "Tablas incrementales en Dataform",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Con uniqueKey, repetir una ejecución o releer un margen fusiona por clave y no duplica; sin uniqueKey, inserta y puede duplicar."
         }
       ]
     },
@@ -201,6 +215,13 @@
           "entity_type": "pattern",
           "origin": "entity",
           "note": "Los reintentos previos a la DLQ exigen consumidores idempotentes."
+        },
+        {
+          "slug": "deduplication",
+          "title": "Deduplicación",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Deduplicar por clave de negocio hace que reprocesar el mismo lote no duplique filas."
         },
         {
           "slug": "pubsub-delivery-semantics",
