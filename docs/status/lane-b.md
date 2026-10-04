@@ -7,8 +7,11 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ## Actual
 - **Tarea activa:** en espera del lote 5.
-- **Siguiente:** B-F3.1 del lote 5, cuando Carril A lo deje en `main`. La vista `/snippets` y su revisión aprobada están en `b/f3-snippets-ui` (`a6237d2`).
+- **Siguiente:** B-F3.1 del lote 5, cuando Carril A lo deje en `main`.
 - **Bloqueos:** ninguno.
+
+### B-F3.2 · snippets 2
+- `terraform-gcs-bucket` y `terraform-bigquery-iam`. Felipe aprobó todas las filas el 2026-10-04. Mínimo privilegio, recursos `*_iam_member`, advertencia de authorized views y costos de Coldline. No se editó `content/`.
 
 ### B-F3.1 · lote 4
 - Diez fichas, tabla de §48, y aparte el consumidor real de Pub/Sub. Felipe aprobó todas las filas el 2026-10-01. `add-iam-policy-binding` se describe como aditivo y no se llama idempotente. No se editó `content/`.
