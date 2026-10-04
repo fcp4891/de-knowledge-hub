@@ -1,7 +1,7 @@
 # STATUS — Data Engineering Knowledge Hub
 
 **Fase actual:** F3 — Contenido Core del MVP. F2 aprobada el 2026-09-30.
-**Última actualización:** 2026-10-02
+**Última actualización:** 2026-10-04
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**
 > El estado detallado de cada carril está en `docs/status/lane-a.md` y `docs/status/lane-b.md`; cada carril edita solo el suyo.
@@ -10,17 +10,17 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | Lote 5 entregado (10 fichas `review_required`) | Aplicar la revisión del lote 5; proponer el lote 6 | — |
-| B · Cursor | — | Revisión de 2 snippets nuevos (`snippets-2.md`) y B-F3.1 del lote 5 | — |
+| A · Claude Code | Lote 5 `verified`; regla de §14 en `validate`; 3 snippets nuevos | Lote 6 (propuesto, pendiente de aprobación) | — |
+| B · Cursor | — | Revisión de 3 snippets nuevos (`snippets-3.md`) y de §14 en 7 fichas del lote 1 | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | Revisar `terraform-gcs-bucket` y `terraform-bigquery-iam` (`snippets-2.md`) | Abierto |
-| A | B | B-F3.1 · Revisar el lote 5 (10 fichas; ver `lane-a.md`) | Abierto |
+| A | B | Revisar `python-structured-logging`, `pytest-ingestion-test` y `pubsub-subscription-terraform` (`snippets-3.md`) | Abierto |
+| A | B | Revisar la §14 corregida de 7 fichas del lote 1 (ver `lane-a.md`) | Abierto |
 
 ## Criterio de salida de la fase actual (F3)
-- [ ] 60–80 fichas `verified` (hoy: 50 fichas, 40 `verified` y 10 del lote 5 en revisión).
+- [ ] 60–80 fichas `verified` (hoy: 50 fichas, las 50 `verified`; el lote 6 lleva a 60).
 - [ ] Cero fichas sin fuentes.
 - [ ] Gate humano.
 
