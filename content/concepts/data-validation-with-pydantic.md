@@ -73,7 +73,7 @@ relations:
     target: python-error-handling-and-retries
     note: Un error de validación es permanente; reintentarlo no lo arregla.
 created_at: 2026-10-02
-updated_at: 2026-10-02
+updated_at: 2026-10-04
 last_verified: 2026-10-02
 verification_status: review_required
 ---
@@ -205,6 +205,7 @@ En **Pub/Sub**, un topic puede tener asociado un **schema** (Avro o Protocol Buf
 - Métricas por `type` de error y un umbral de rechazos que detenga el lote.
 - `Decimal` para dinero; `datetime` con zona horaria.
 - **Seguridad:** `errors(include_input=False)` y cuidado con registrar el payload crudo; los mensajes de error pueden repetir datos sensibles.
+- **Observabilidad:** medir por lote la tasa de rechazo y los rechazos por `type` de error, y alertar ante cambios bruscos: suelen anunciar un cambio de schema en la fuente.
 - **Costo:** validar en Python cada registro cuesta CPU; para volúmenes muy grandes, validar la estructura en el origen o con SQL y dejar en Python solo lo que no se puede expresar ahí.
 
 ## 15. Errores frecuentes
@@ -253,3 +254,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-02: creación (lote 5 de F3).
+- 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.

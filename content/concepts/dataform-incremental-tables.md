@@ -10,14 +10,18 @@ classification: modern
 level: intermediate
 importance: high
 cloud: [gcp, aws, azure]
-technologies: [gcp-dataform, gcp-bigquery, dbt]
+technologies: [gcp-dataform, gcp-bigquery, dbt, microsoft-fabric]
 tags: [sql, dataform, incremental, bigquery]
 related_topics: [incremental-load, idempotency, partition-pruning, bigquery-partitioning, schema-evolution]
 sources:
   - source: gcp-dataform-docs
     url: https://docs.cloud.google.com/dataform/docs/create-tables
     accessed: 2026-10-02
-    note: "Tablas y vistas se reconstruyen desde cero en cada ejecución; una tabla incremental solo la primera vez, y después inserta o fusiona filas nuevas. when(incremental(), ...) agrega la condición incremental y ${self()} referencia la tabla. uniqueKey fusiona por clave. updatePartitionFilter limita las particiones del destino que examina el MERGE y solo funciona con uniqueKey: sin uniqueKey, Dataform usa estrategia de inserción. Para no escanear toda una tabla particionada de origen, declarar el límite como variable en pre_operations (BigQuery scripting) y usarla como expresión constante. Full refresh (--full-refresh o Run with full refresh) ignora when(incremental()) y recrea con CREATE OR REPLACE; protected: true evita la reconstrucción. onSchemaChange (IGNORE por defecto, FAIL, EXTEND, SYNCHRONIZE) está en Preview y requiere Dataform core 3.0.11 o superior; no disponible en la CLI."
+    note: "Tablas y vistas se reconstruyen desde cero en cada ejecución; una tabla incremental solo la primera vez, y después inserta o fusiona filas nuevas. when(incremental(), ...) agrega la condición incremental y ${self()} referencia la tabla. uniqueKey fusiona por clave. updatePartitionFilter limita las particiones del destino que examina el MERGE y solo funciona con uniqueKey: sin uniqueKey, Dataform usa estrategia de inserción. Para no escanear toda una tabla particionada de origen, declarar el límite como variable en pre_operations (BigQuery scripting) y usarla como expresión constante. Full refresh (--full-refresh o Run with full refresh) ignora when(incremental()) y recrea con CREATE OR REPLACE; protected: true evita la reconstrucción. onSchemaChange (IGNORE por defecto, FAIL, EXTEND, SYNCHRONIZE) requiere Dataform core 3.0.11 o superior; la página (consultada el 2026-10-04) marca la sección como Preview y dice que no está disponible en la Dataform CLI."
+  - source: gcp-dataform-docs
+    url: https://docs.cloud.google.com/dataform/docs/reference/dataform-core-reference
+    accessed: 2026-10-04
+    note: "Referencia de Dataform core: onSchemaChange solo es válido en tablas incrementales y es la acción tras detectar columnas agregadas o quitadas en el SELECT; «This feature is in Preview». protected: true hace que la ejecución ignore la opción de full refresh."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/querying-partitioned-tables
     accessed: 2026-10-02
@@ -26,6 +30,14 @@ sources:
     url: https://docs.getdbt.com/docs/build/incremental-models
     accessed: 2026-10-02
     note: "En dbt, materialized='incremental'; is_incremental() es verdadero si el modelo ya existe como tabla, no se pasa --full-refresh y el modelo es incremental. unique_key permite actualizar filas existentes en vez de solo agregar; incremental_strategy elige la estrategia (por ejemplo merge)."
+  - source: microsoft-learn
+    url: https://learn.microsoft.com/en-us/fabric/data-warehouse/tutorial-setup-dbt
+    accessed: 2026-10-04
+    note: "Microsoft Learn documenta dbt para Fabric Data Warehouse con el adaptador dbt-fabric (pip install dbt-fabric; type: fabric en profiles.yml)."
+  - source: microsoft-learn
+    url: https://learn.microsoft.com/en-us/fabric/data-factory/dbt-job-overview
+    accessed: 2026-10-04
+    note: "Los dbt jobs de Fabric (preview, se habilitan en la configuración del tenant) soportan dbt-fabric para Fabric Data Warehouse y dbt-fabricspark para Fabric Lakehouse, entre otros adaptadores, en el runtime administrado."
   - source: dbt-docs
     url: https://docs.getdbt.com/docs/supported-data-platforms
     accessed: 2026-10-02
@@ -47,7 +59,7 @@ relations:
     target: schema-evolution
     note: Cambiar columnas de una incremental exige full refresh u onSchemaChange (Preview).
 created_at: 2026-10-02
-updated_at: 2026-10-02
+updated_at: 2026-10-04
 last_verified: 2026-10-02
 verification_status: review_required
 ---
@@ -161,7 +173,7 @@ El margen de 2 horas relee eventos tardíos; `uniqueKey` evita duplicarlos. `upd
 
 ## 11. GCP
 
-**Dataform** compila el SQLX a sentencias de BigQuery (`CREATE`, `INSERT`, `MERGE`) y las ejecuta en el orden de dependencias del workflow. Además de lo anterior, ofrece `onSchemaChange` para agregar o quitar columnas sin full refresh. Al 2026-10-02 esa opción está en **Preview**, requiere Dataform core 3.0.11 o superior y no está disponible en la CLI. Sus valores son `IGNORE` (por defecto), `FAIL`, `EXTEND` y `SYNCHRONIZE`, y este último puede borrar columnas sin vuelta atrás. El snippet `dataform-incremental-model` muestra la variante mínima.
+**Dataform** compila el SQLX a sentencias de BigQuery (`CREATE`, `INSERT`, `MERGE`) y las ejecuta en el orden de dependencias del workflow. Además de lo anterior, ofrece `onSchemaChange` para agregar o quitar columnas sin full refresh. Al 2026-10-04 esa opción está en **Preview** según la referencia de Dataform core, requiere Dataform core 3.0.11 o superior y la página *Create tables* indica que no está disponible en la Dataform CLI. Sus valores son `IGNORE` (por defecto), `FAIL`, `EXTEND` y `SYNCHRONIZE`, y este último puede borrar columnas sin vuelta atrás. El snippet `dataform-incremental-model` muestra la variante mínima.
 
 ## 12. AWS
 
@@ -169,7 +181,7 @@ AWS no tiene un servicio equivalente a Dataform. El análogo más usado es **dbt
 
 ## 13. Azure
 
-Tampoco hay un equivalente directo. En Synapse o Fabric Warehouse, la carga incremental se escribe con `MERGE` de T-SQL orquestado por pipelines de Data Factory, o con dbt. La tabla de adaptadores de la página *Supported data platforms* de dbt **no** incluye Fabric al 2026-10-02, así que antes de elegir dbt para Fabric hay que verificar qué adaptador existe y quién lo mantiene.
+Tampoco hay un equivalente directo. En Synapse o Fabric Warehouse, la carga incremental se escribe con `MERGE` de T-SQL orquestado por pipelines de Data Factory, o con dbt. Para dbt hay dos adaptadores distintos, documentados por Microsoft Learn: `dbt-fabric` para **Fabric Data Warehouse** y `dbt-fabricspark` para **Fabric Lakehouse**; no son intercambiables. Fabric también ofrece *dbt jobs* (en preview) que los ejecutan en un runtime administrado. Diferencia con AWS: la tabla de adaptadores de la página *Supported data platforms* de dbt **no** incluye Fabric (al 2026-10-04), mientras que sí lista Redshift; el soporte de Fabric viene documentado por Microsoft, no por esa tabla.
 
 ## 14. Buenas prácticas
 
@@ -179,6 +191,7 @@ Tampoco hay un equivalente directo. En Synapse o Fabric Warehouse, la carga incr
 - Marcar `protected: true` las tablas cuya fuente no conserva la historia.
 - Agregar aserciones de unicidad y de no nulos sobre la clave.
 - **Seguridad:** la cuenta de servicio de Dataform escribe en los datasets de destino; limitar sus permisos a esos datasets.
+- **Observabilidad:** revisar por ejecución las filas insertadas o fusionadas y los bytes procesados; un salto en bytes indica que se perdió la poda, y las aserciones de unicidad fallidas, duplicados.
 - **Costo:** sin poda en origen y destino, una incremental puede leer tanto como una reconstrucción; revisar los bytes procesados de cada ejecución.
 
 ## 15. Errores frecuentes
@@ -213,7 +226,8 @@ Pendiente (F4).
 
 ## 20. Fuentes
 
-- Google Cloud: *Create tables* (Dataform) y *Query partitioned tables* (BigQuery).
+- Google Cloud: *Create tables* y *Dataform core reference* (Dataform); *Query partitioned tables* (BigQuery).
+- Microsoft Learn: *Set up dbt for Fabric Data Warehouse* y *dbt Job in Microsoft Fabric*.
 - dbt: *Incremental models* y *Supported data platforms*.
 
 El detalle de cada fuente está en `sources` del frontmatter.
@@ -225,3 +239,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-02: creación (lote 5 de F3).
+- 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14; `dbt-fabric` (Warehouse) y `dbt-fabricspark` (Lakehouse) con fuente de Microsoft Learn; Preview de `onSchemaChange` citado desde la referencia de Dataform core.

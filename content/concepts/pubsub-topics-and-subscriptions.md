@@ -77,7 +77,7 @@ relations:
     target: infrastructure-as-code
     note: Topics y suscripciones se declaran en Terraform, como en la sección 10.
 created_at: 2026-10-02
-updated_at: 2026-10-02
+updated_at: 2026-10-04
 last_verified: 2026-10-02
 verification_status: review_required
 ---
@@ -244,6 +244,7 @@ AWS divide el modelo en dos servicios: **SNS** distribuye (un topic con varios s
 - Dar a cada topic de dead letter su propia suscripción, revisarla y alertar sobre ella.
 - Gestionar topics y suscripciones con Terraform; tratar el filtro como inmutable.
 - **Seguridad:** dar `roles/pubsub.publisher` en el topic y `roles/pubsub.subscriber` en la suscripción, no roles amplios en el proyecto.
+- **Observabilidad:** vigilar por suscripción el backlog de mensajes sin confirmar y su antigüedad, la tasa de nacks y lo que llega al topic de dead letter, con alertas cuando crecen.
 - **Costo:** retener mensajes sin confirmar más de 24 horas tiene cargo adicional; eliminar suscripciones ociosas y usar la retención del topic si se necesita respaldo.
 
 ## 15. Errores frecuentes
@@ -292,3 +293,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-02: creación (lote 5 de F3).
+- 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.

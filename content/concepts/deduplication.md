@@ -52,7 +52,7 @@ relations:
     target: pubsub-delivery-semantics
     note: La entrega at-least-once produce duplicados que se eliminan aguas abajo con este patrón.
 created_at: 2026-10-02
-updated_at: 2026-10-02
+updated_at: 2026-10-04
 last_verified: 2026-10-02
 verification_status: review_required
 ---
@@ -165,6 +165,7 @@ En **T-SQL** (Synapse dedicated SQL pool, Fabric Warehouse) no se usa `QUALIFY`:
 - Deduplicar lo más temprano posible (staging) y medir: contar filas descartadas por ejecución.
 - Limitar la ventana deduplicada a las particiones afectadas (con margen para tardíos) para no releer toda la tabla.
 - **Seguridad:** las filas descartadas pueden contener datos personales; si se guardan para auditoría, aplicarles la misma retención y acceso que a la tabla principal.
+- **Observabilidad:** registrar por ejecución cuántas filas se descartaron como duplicadas y alertar si la proporción cambia bruscamente; un control posterior debe contar cero duplicados por clave en el destino.
 - **Costo:** la función de ventana ordena por partición; filtrar por fecha antes de numerar reduce bytes procesados y memoria.
 
 ## 15. Errores frecuentes
@@ -211,3 +212,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-02: creación (lote 5 de F3).
+- 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.

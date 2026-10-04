@@ -70,7 +70,7 @@ relations:
     target: star-schema
     note: El hecho es el centro del esquema estrella.
 created_at: 2026-10-02
-updated_at: 2026-10-02
+updated_at: 2026-10-04
 last_verified: 2026-10-02
 verification_status: review_required
 ---
@@ -201,6 +201,7 @@ La guía de **Fabric Warehouse** describe los mismos tres tipos de tabla de hech
 - Usar un miembro "desconocido" en la dimensión en vez de dejar claves foráneas nulas.
 - Controlar huérfanos y cuadrar totales contra el origen en cada carga.
 - **Seguridad:** el hecho suele ser la tabla más grande y sensible (montos por cliente); aplicar seguridad a nivel de fila o columna en el motor, no solo en la herramienta de BI.
+- **Observabilidad:** medir por carga filas insertadas, claves huérfanas y diferencia de totales contra el origen, y la frescura de la última partición cargada.
 - **Costo:** particionar por fecha del evento y filtrar siempre por ella; en snapshots periódicos, la densidad multiplica filas: elegir el período con cuidado.
 
 ## 15. Errores frecuentes
@@ -248,3 +249,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-02: creación (lote 5 de F3).
+- 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.

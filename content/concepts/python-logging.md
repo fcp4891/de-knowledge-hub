@@ -50,7 +50,7 @@ relations:
     target: data-pipeline
     note: Los logs con identificador de ejecución y de lote permiten seguir un pipeline de punta a punta.
 created_at: 2026-10-02
-updated_at: 2026-10-02
+updated_at: 2026-10-04
 last_verified: 2026-10-02
 verification_status: review_required
 ---
@@ -204,6 +204,7 @@ En **CloudWatch Logs**, Logs Insights descubre los campos de los eventos en JSON
 - Incluir identificadores de correlación (`run_id`, `batch_id`) en todos los eventos.
 - Una línea JSON por evento, a stdout, en plataformas con agente.
 - **Seguridad:** nunca registrar secretos, tokens, cabeceras de autorización ni datos personales; los logs tienen más lectores y retención que la fuente. Revisar también qué incluyen los tracebacks y las URLs registradas.
+- **Observabilidad:** los logs son una señal, no toda la observabilidad: derivar de ellos métricas (errores por fuente, lotes procesados) y alertas, y vigilar que el propio logging no se detenga (un job que deja de escribir logs también es un fallo).
 - **Costo:** la ingesta y la retención de logs se cobran; `DEBUG` en producción o una línea por fila puede costar más que el propio pipeline.
 
 ## 15. Errores frecuentes
@@ -251,3 +252,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-02: creación (lote 5 de F3).
+- 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.

@@ -64,7 +64,7 @@ relations:
     target: slowly-changing-dimensions
     note: Las dimensiones de la estrella cambian con el tiempo y se historizan con SCD.
 created_at: 2026-10-02
-updated_at: 2026-10-02
+updated_at: 2026-10-04
 last_verified: 2026-10-02
 verification_status: review_required
 ---
@@ -175,6 +175,7 @@ La guía de **Fabric Warehouse** describe el modelo dimensional con estrella com
 - Nombres de negocio en columnas de dimensión: son la interfaz para los usuarios.
 - Cargar dimensiones antes que hechos y controlar huérfanos.
 - **Seguridad:** aplicar seguridad a nivel de fila sobre el hecho filtrando por atributos de dimensión (región, unidad de negocio) en el motor.
+- **Observabilidad:** controlar en cada carga las claves foráneas huérfanas (o asignadas al miembro desconocido), la frescura de cada hecho y que los totales cuadren con el origen.
 - **Costo:** las consultas sobre la estrella deben filtrar por la fecha del hecho para podar particiones; las dimensiones pequeñas cuestan poco, el hecho es el que escala.
 
 ## 15. Errores frecuentes
@@ -221,3 +222,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-02: creación (lote 5 de F3).
+- 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.

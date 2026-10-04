@@ -76,7 +76,7 @@ relations:
     target: etl-vs-elt
     note: El lake es la zona de aterrizaje típica del enfoque ELT.
 created_at: 2026-10-02
-updated_at: 2026-10-02
+updated_at: 2026-10-04
 last_verified: 2026-10-02
 verification_status: review_required
 ---
@@ -194,6 +194,7 @@ El lake vive en **S3**, el catálogo es el **Glue Data Catalog** y el motor SQL 
 - Evitar muchos archivos pequeños: compactar en la zona curada.
 - Todo dato en el lake debe estar en el catálogo, con responsable y descripción.
 - **Seguridad:** gobernar el acceso en la capa de tablas (BigLake, Lake Formation) y no con permisos amplios sobre buckets; cifrar y aplicar retención especialmente a la zona raw, que suele tener datos personales sin enmascarar.
+- **Observabilidad:** registrar por zona y partición cuántos archivos y bytes llegan y cuándo, y alertar si una partición esperada no aparece o trae muchos archivos pequeños; vigilar los bytes leídos por las consultas sobre tablas externas.
 - **Costo:** reglas de ciclo de vida por zona y clases de almacenamiento frías para raw; en motores que cobran por bytes leídos, Parquet y particiones bajan el costo de cada consulta.
 
 ## 15. Errores frecuentes
@@ -242,3 +243,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-02: creación (lote 5 de F3).
+- 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.

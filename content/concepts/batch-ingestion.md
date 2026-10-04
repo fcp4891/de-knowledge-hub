@@ -75,7 +75,7 @@ relations:
     target: incremental-load
     note: Cada lote trae solo lo nuevo o lo cambiado de su ventana.
 created_at: 2026-10-02
-updated_at: 2026-10-02
+updated_at: 2026-10-04
 last_verified: 2026-10-02
 verification_status: review_required
 ---
@@ -191,6 +191,7 @@ En **Data Factory**, la **Copy activity** es la pieza de ingesta batch: lee de l
 - Validar conteos contra la fuente y registrar los períodos completos.
 - Reintentar errores transitorios con backoff; fallar sin reintentar ante errores de datos.
 - **Seguridad:** las credenciales de las fuentes van en un gestor de secretos; la zona de aterrizaje hereda la sensibilidad de los datos de origen.
+- **Observabilidad:** registrar por período filas extraídas, filas cargadas y duración; alertar si un período no se completa a tiempo o si el conteo difiere de la fuente.
 - **Costo y capacidad:** extraer solo la ventana y cargar en formatos columnares; en BigQuery, los load jobs usan por defecto un pool compartido de slots sin capacidad garantizada, así que un batch con plazo estricto no debería depender de su throughput.
 
 ## 15. Errores frecuentes
@@ -239,3 +240,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-02: creación (lote 5 de F3).
+- 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.

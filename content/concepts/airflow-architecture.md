@@ -69,7 +69,7 @@ relations:
     target: backfill
     note: Los backfills se registran y ejecutan con los mismos componentes.
 created_at: 2026-10-02
-updated_at: 2026-10-02
+updated_at: 2026-10-04
 last_verified: 2026-10-02
 verification_status: review_required
 ---
@@ -214,6 +214,7 @@ El **Workflow Orchestration Manager** de Azure Data Factory ya no permite crear 
 - Purgar periódicamente la historia antigua de la base de metadatos (`airflow db clean`).
 - Elegir el executor según la escala: `LocalExecutor` para una máquina, remoto para varias.
 - **Seguridad:** credenciales en un backend de secretos o en las conexiones de Airflow, nunca en los Dag files; restringir quién puede escribir en el Dag bundle, porque eso equivale a ejecutar código en el entorno.
+- **Observabilidad:** vigilar los tiempos de parseo del Dag processor, las tareas encoladas sin empezar, la salud del scheduler y del triggerer y el tamaño de la base de metadatos; alertar por Dag runs fallidos o que superan su duración esperada.
 - **Costo:** en servicios administrados, el entorno cobra aunque no haya tareas; ajustar el mínimo de workers y apagar entornos de desarrollo ociosos.
 
 ## 15. Errores frecuentes
@@ -261,3 +262,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-02: creación (lote 5 de F3).
+- 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.
