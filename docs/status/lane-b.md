@@ -3,12 +3,15 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-01
+**Última actualización:** 2026-10-04
 
 ## Actual
-- **Tarea activa:** en espera del lote 5.
-- **Siguiente:** B-F3.1 del lote 5, cuando Carril A lo deje en `main`.
+- **Tarea activa:** en espera del lote 6.
+- **Siguiente:** B-F3.1 del lote 6, cuando Carril A lo deje en `main`.
 - **Bloqueos:** ninguno.
+
+### B-F3.1 · lote 5
+- Diez fichas, tabla de §48. Felipe aprobó todas las filas el 2026-10-04, incluidas `dbt-fabric` y `dbt-fabricspark`, la fuente de Preview de `onSchemaChange` y la viñeta de Observabilidad en §14. No se editó `content/`.
 
 ### B-F3.2 · snippets 2
 - `terraform-gcs-bucket` y `terraform-bigquery-iam`. Felipe aprobó todas las filas el 2026-10-04. Mínimo privilegio, recursos `*_iam_member`, advertencia de authorized views y costos de Coldline. No se editó `content/`.
