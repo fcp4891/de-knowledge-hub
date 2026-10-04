@@ -118,7 +118,7 @@
         "gcp-iam-for-data",
         "infrastructure-as-code"
       ],
-      "verification_status": "review_required"
+      "verification_status": "verified"
     },
     {
       "slug": "terraform-bigquery-partitioned-table",
@@ -149,7 +149,7 @@
         "gcs-buckets-and-objects",
         "infrastructure-as-code"
       ],
-      "verification_status": "review_required"
+      "verification_status": "verified"
     }
   ]
 }

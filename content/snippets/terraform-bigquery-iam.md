@@ -50,9 +50,9 @@ relations:
     target: infrastructure-as-code
     note: Concesiones declaradas como código, aditivas.
 created_at: 2026-10-01
-updated_at: 2026-10-01
-last_verified: 2026-10-01
-verification_status: review_required
+updated_at: 2026-10-04
+last_verified: 2026-10-04
+verification_status: verified
 ---
 
 ## 1. Qué resuelve
@@ -161,3 +161,4 @@ El detalle está en `sources` del encabezado.
 ## 10. Historial de cambios
 
 - 2026-10-01: creación (A-F3.2, lote 4), tras la revisión B-F3.1 del lote 4.
+- 2026-10-04: `verification_status: verified` (revisión B-F3.2 de `docs/reviews/snippets-2.md` aprobada, sin cambios pedidos; sin VERIFY pendientes).
