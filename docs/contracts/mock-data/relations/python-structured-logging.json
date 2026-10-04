@@ -1,0 +1,33 @@
+{
+  "slug": "python-structured-logging",
+  "groups": [
+    {
+      "type": "IMPLEMENTS",
+      "direction": "outgoing",
+      "label": "implements",
+      "items": [
+        {
+          "slug": "python-logging",
+          "title": "Logging",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Logger por módulo, configuración única en el punto de entrada, JSON por línea y regla explícita de qué no se registra."
+        }
+      ]
+    },
+    {
+      "type": "RELATED_TO",
+      "direction": "both",
+      "label": "related_to",
+      "items": [
+        {
+          "slug": "data-pipeline",
+          "title": "Data pipeline",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "El run_id correlaciona todos los eventos de una ejecución del pipeline."
+        }
+      ]
+    }
+  ]
+}

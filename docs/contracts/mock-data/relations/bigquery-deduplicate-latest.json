@@ -21,6 +21,13 @@
       "label": "implements",
       "items": [
         {
+          "slug": "deduplication",
+          "title": "Deduplicación",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Deduplica el lote por clave con QUALIFY ROW_NUMBER y se queda con la versión más reciente."
+        },
+        {
           "slug": "upsert",
           "title": "Upsert",
           "entity_type": "pattern",

@@ -76,8 +76,8 @@ relations:
     note: Cada lote trae solo lo nuevo o lo cambiado de su ventana.
 created_at: 2026-10-02
 updated_at: 2026-10-04
-last_verified: 2026-10-02
-verification_status: review_required
+last_verified: 2026-10-04
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -235,9 +235,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-02. En `review_required` hasta la revisión B-F3.1 del lote 5.
+2026-10-04. Pasa a `verified`: revisión B-F3.1 del lote 5 aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-02: creación (lote 5 de F3).
 - 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.
+- 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).

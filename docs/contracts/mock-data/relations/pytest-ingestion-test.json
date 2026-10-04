@@ -1,0 +1,40 @@
+{
+  "slug": "pytest-ingestion-test",
+  "groups": [
+    {
+      "type": "IMPLEMENTS",
+      "direction": "outgoing",
+      "label": "implements",
+      "items": [
+        {
+          "slug": "batch-ingestion",
+          "title": "Ingesta batch",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Comprueba que la carga apunta a la partición del día con WRITE_TRUNCATE y que repetirla emite el mismo job."
+        },
+        {
+          "slug": "data-validation-with-pydantic",
+          "title": "Validación de datos con Pydantic",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Comprueba que los válidos pasan y que cada inválido se rechaza con su tipo de error, sin copiar el dato recibido."
+        }
+      ]
+    },
+    {
+      "type": "DEPENDS_ON",
+      "direction": "outgoing",
+      "label": "depends_on",
+      "items": [
+        {
+          "slug": "idempotency",
+          "title": "Idempotencia",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "El test de repetición fija la propiedad que hace seguros los reintentos y los backfills."
+        }
+      ]
+    }
+  ]
+}

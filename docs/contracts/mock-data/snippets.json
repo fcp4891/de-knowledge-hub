@@ -1,5 +1,5 @@
 {
-  "total": 10,
+  "total": 13,
   "limit": 500,
   "offset": 0,
   "items": [
@@ -28,6 +28,7 @@
         "gcp"
       ],
       "implements": [
+        "deduplication",
         "upsert"
       ],
       "verification_status": "verified"
@@ -90,6 +91,37 @@
       "verification_status": "verified"
     },
     {
+      "slug": "pubsub-subscription-terraform",
+      "title": "Suscripción de Pub/Sub con filtro, reintentos y dead letter en Terraform",
+      "description": "Topic, suscripción pull filtrada por atributo, retry policy, dead letter con su propia suscripción y los permisos del agente de servicio de Pub/Sub que la dead letter necesita, declarados en Terraform.",
+      "language": "terraform",
+      "dialect": "hcl",
+      "cloud": [
+        "gcp"
+      ],
+      "implements": [
+        "pubsub-topics-and-subscriptions",
+        "dead-letter-queue",
+        "infrastructure-as-code"
+      ],
+      "verification_status": "review_required"
+    },
+    {
+      "slug": "pytest-ingestion-test",
+      "title": "Tests de pytest para la validación y la carga de una ingesta",
+      "description": "Tests de pytest, sin red ni credenciales, que comprueban la validación en el borde con Pydantic (válidos y rechazados por tipo de error) y que la carga de BigQuery reemplaza solo la partición del día, también al repetirla.",
+      "language": "python",
+      "dialect": "python3.12",
+      "cloud": [
+        "gcp"
+      ],
+      "implements": [
+        "data-validation-with-pydantic",
+        "batch-ingestion"
+      ],
+      "verification_status": "review_required"
+    },
+    {
       "slug": "python-api-ingestion-retries",
       "title": "Ingesta de una API con reintentos en Python",
       "description": "Script de Python (solo biblioteca estándar) que pagina una API por cursor, respeta 429 y Retry-After, reintenta solo errores transitorios y guarda cada página con un nombre determinista.",
@@ -104,6 +136,20 @@
         "python-error-handling-and-retries"
       ],
       "verification_status": "verified"
+    },
+    {
+      "slug": "python-structured-logging",
+      "title": "Logging estructurado en JSON con run_id y redacción de secretos",
+      "description": "Configuración de logging (solo biblioteca estándar) que escribe una línea JSON por evento a stdout, agrega el run_id a todos los eventos y reemplaza los campos sensibles antes de escribirlos.",
+      "language": "python",
+      "dialect": "python3.12",
+      "cloud": [
+        "agnostic"
+      ],
+      "implements": [
+        "python-logging"
+      ],
+      "verification_status": "review_required"
     },
     {
       "slug": "terraform-bigquery-iam",

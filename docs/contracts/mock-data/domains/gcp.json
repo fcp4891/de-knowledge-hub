@@ -271,8 +271,8 @@
           "importance": "high",
           "mvp": true,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-02"
+          "verification_status": "verified",
+          "last_verified": "2026-10-04"
         },
         {
           "slug": "pubsub-delivery-semantics",
@@ -361,8 +361,8 @@
           "importance": "high",
           "mvp": true,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-02"
+          "verification_status": "verified",
+          "last_verified": "2026-10-04"
         }
       ]
     },

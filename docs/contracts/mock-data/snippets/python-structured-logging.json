@@ -1,0 +1,132 @@
+{
+  "id": "code_snippet:python-structured-logging",
+  "title": "Logging estructurado en JSON con run_id y redacción de secretos",
+  "slug": "python-structured-logging",
+  "description": "Configuración de logging (solo biblioteca estándar) que escribe una línea JSON por evento a stdout, agrega el run_id a todos los eventos y reemplaza los campos sensibles antes de escribirlos.",
+  "type": "code_snippet",
+  "domain": null,
+  "subdomain": null,
+  "classification": "core",
+  "level": "intermediate",
+  "cloud": [
+    "agnostic"
+  ],
+  "technologies": [
+    "python"
+  ],
+  "tags": [
+    "python",
+    "logging",
+    "observability",
+    "security"
+  ],
+  "related_topics": [
+    "python-logging",
+    "data-pipeline"
+  ],
+  "sources": [
+    {
+      "source": "python-docs",
+      "title": "Python Documentation",
+      "url": "https://docs.python.org/3/library/logging.html",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-04",
+      "note": "Los filtros pueden modificar los LogRecord en el lugar; los filtros de un handler se consultan antes de que el handler emita el evento, mientras que los de un logger no se aplican a eventos de loggers descendientes. basicConfig con handlers y force=True quita y cierra los handlers existentes del root antes de configurar. getLogger(__name__) es la construcción recomendada. Las claves de extra no deben chocar con los atributos de LogRecord."
+    },
+    {
+      "source": "python-docs",
+      "title": "Python Documentation",
+      "url": "https://docs.python.org/3/howto/logging-cookbook.html",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-04",
+      "note": "Un Filter definido por el usuario puede agregar información de contexto a los LogRecord (atributos adicionales que luego usa el formatter); ejemplo de logging estructurado serializado en JSON. Desde Python 3.7, contextvars da almacenamiento local al contexto, útil tanto con hilos como con asyncio."
+    },
+    {
+      "source": "gcp-cloud-logging-docs",
+      "title": "Cloud Logging documentation",
+      "url": "https://docs.cloud.google.com/logging/docs/structured-logging",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-04",
+      "note": "Un payload JSON guardado en jsonPayload es un log estructurado, consultable por rutas JSON; en GKE, App Engine flexible y Cloud Run functions, un agente integrado envía stdout y stderr a Cloud Logging."
+    }
+  ],
+  "created_at": "2026-10-04",
+  "updated_at": "2026-10-04",
+  "last_verified": "2026-10-04",
+  "verification_status": "review_required",
+  "language": "python",
+  "dialect": "python3.12",
+  "requirements": [
+    "Python 3.12, solo biblioteca estándar.",
+    "Guardar el código como logging_setup.py y llamar a configure_logging(run_id) una sola vez en el punto de entrada del job; los módulos usan logging.getLogger(__name__).",
+    "Una plataforma que recoja stdout (Cloud Run, GKE, contenedores con agente de logs) o cualquier destino que lea JSON por líneas."
+  ],
+  "implements": [
+    "python-logging"
+  ],
+  "sections": [
+    {
+      "number": 1,
+      "key": "what_it_solves",
+      "title": "Qué resuelve",
+      "markdown": "Deja listo el logging de un job de datos en un solo archivo:\n\n- cada evento es **una línea JSON** en stdout, que Cloud Logging, CloudWatch o Log Analytics pueden consultar por campo;\n- **todos** los eventos llevan el `run_id` de la ejecución, aunque los emita un módulo que no lo conoce;\n- los campos sensibles que lleguen por `extra` (`token`, `password`, etc.) se escriben como `[REDACTED]`.\n\nEs el código de la sección 10 de `python-logging`, completado con contexto y redacción."
+    },
+    {
+      "number": 2,
+      "key": "code",
+      "title": "Código",
+      "markdown": "```python\n# logging_setup.py · Python 3.12, solo biblioteca estándar: una línea JSON por evento a stdout,\n# con run_id en todos los eventos y redacción de campos sensibles pasados en extra.\nimport json\nimport logging\nimport sys\nfrom datetime import UTC, datetime\n\nSTANDARD = set(vars(logging.makeLogRecord({}))) | {\"message\", \"asctime\"}  # atributos propios de LogRecord\nSENSITIVE = {\"token\", \"password\", \"secret\", \"authorization\", \"api_key\"}  # nunca salen en claro\n\n\nclass RunContextFilter(logging.Filter):\n    \"\"\"Agrega run_id a cada registro y reemplaza los campos sensibles antes de formatear.\"\"\"\n\n    def __init__(self, run_id: str) -> None:\n        super().__init__()\n        self.run_id = run_id\n\n    def filter(self, record: logging.LogRecord) -> bool:\n        record.run_id = self.run_id\n        for key in SENSITIVE.intersection(vars(record)):\n            setattr(record, key, \"[REDACTED]\")\n        return True  # no descarta: solo modifica el registro\n\n\nclass JsonFormatter(logging.Formatter):\n    def format(self, record: logging.LogRecord) -> str:\n        entry = {\n            \"timestamp\": datetime.fromtimestamp(record.created, UTC).isoformat(),\n            \"severity\": record.levelname,\n            \"logger\": record.name,\n            \"message\": record.getMessage(),\n        }\n        entry.update({k: v for k, v in vars(record).items() if k not in STANDARD})  # run_id y campos de extra\n        if record.exc_info:\n            entry[\"exception\"] = self.formatException(record.exc_info)\n        return json.dumps(entry, ensure_ascii=False, default=str)\n\n\ndef configure_logging(run_id: str, level: str = \"INFO\") -> None:\n    \"\"\"Se llama una vez, en el punto de entrada (nunca en una biblioteca).\"\"\"\n    handler = logging.StreamHandler(sys.stdout)\n    handler.setFormatter(JsonFormatter())\n    handler.addFilter(RunContextFilter(run_id))  # en el handler: cubre los registros de todos los módulos\n    logging.basicConfig(level=level, handlers=[handler], force=True)\n\n\nif __name__ == \"__main__\":\n    configure_logging(run_id=\"2026-10-04T02:00:00Z\")\n    log = logging.getLogger(\"ingest.orders\")\n    log.info(\"lote recibido\", extra={\"batch_id\": \"2026-10-03\", \"rows\": 1200})\n    log.warning(\"reintento\", extra={\"attempt\": 2, \"token\": \"abc123\"})  # token sale como [REDACTED]\n```\n\nSalida:\n\n```text\n{\"timestamp\": \"...\", \"severity\": \"INFO\", \"logger\": \"ingest.orders\", \"message\": \"lote recibido\", \"batch_id\": \"2026-10-03\", \"rows\": 1200, \"run_id\": \"2026-10-04T02:00:00Z\"}\n{\"timestamp\": \"...\", \"severity\": \"WARNING\", \"logger\": \"ingest.orders\", \"message\": \"reintento\", \"attempt\": 2, \"token\": \"[REDACTED]\", \"run_id\": \"2026-10-04T02:00:00Z\"}\n```"
+    },
+    {
+      "number": 3,
+      "key": "how_it_works",
+      "title": "Cómo funciona",
+      "markdown": "1. **Filtro en el handler, no en un logger:** según la documentación de `logging`, los filtros de un handler se consultan antes de emitir cualquier evento que llegue a él, mientras que el filtro de un logger no se aplica a los eventos de sus descendientes. Con el filtro en el handler del root, `ingest.orders`, `ingest.api` o cualquier biblioteca reciben el mismo tratamiento.\n2. **Contexto:** el filtro agrega `run_id` al `LogRecord`, como en el patrón del cookbook de \"filtros para agregar información de contexto\".\n3. **Redacción:** antes de formatear, el filtro reemplaza el valor de cualquier atributo cuyo nombre esté en `SENSITIVE`. Devuelve `True`, así que no descarta eventos.\n4. **Formato:** el `JsonFormatter` escribe los campos fijos, el `run_id`, los de `extra` y, si hay excepción, el traceback, todo en una línea JSON.\n\nConfigurar dos veces es seguro: `force=True` quita y cierra los handlers existentes del root antes de agregar el nuevo, en vez de duplicarlos."
+    },
+    {
+      "number": 4,
+      "key": "when_to_use",
+      "title": "Cuándo usarlo",
+      "markdown": "- Jobs de ingesta o transformación en Python que corren en contenedores, Cloud Run o GKE y escriben a stdout.\n- Cuando hay que seguir una ejecución completa por `run_id` en la plataforma de logs.\n- Cuando los mismos campos (`batch_id`, `attempt`) se usan para métricas y alertas derivadas de logs."
+    },
+    {
+      "number": 5,
+      "key": "when_not_to_use",
+      "title": "Cuándo no usarlo",
+      "markdown": "- En una biblioteca: las bibliotecas no configuran handlers; dejan eso a la aplicación.\n- Si la plataforma ya provee un formateador o un cliente de logging con integración propia y el equipo lo adopta: usar uno, no dos.\n- En servicios concurrentes donde cada petición tiene su propio identificador: el `run_id` fijo del filtro no alcanza; hace falta contexto por petición (por ejemplo, con `contextvars`)."
+    },
+    {
+      "number": 6,
+      "key": "risks",
+      "title": "Riesgos",
+      "markdown": "- **Redacción parcial:** solo cubre atributos pasados por `extra` con esos nombres exactos. Un secreto dentro del **texto** del mensaje, de una URL o de un traceback no se redacta; la regla sigue siendo no registrarlo.\n- **Nombres de campos:** `severity`, `timestamp` y los demás son elección del equipo; revisar las convenciones de campos especiales de la plataforma antes de fijarlos.\n- **Seguridad:** ampliar `SENSITIVE` con los nombres propios del dominio (`rut`, `email`) si se registran en algún `extra`; los logs tienen más lectores y retención que los datos de origen.\n- **Costo:** cada línea se ingiere y se retiene; no registrar una línea por fila procesada ni dejar `DEBUG` en producción."
+    },
+    {
+      "number": 7,
+      "key": "requirements",
+      "title": "Requisitos y cómo ejecutarlo",
+      "markdown": "Ver `requirements` en el encabezado. Ejecutar `python logging_setup.py` muestra las dos líneas de ejemplo. En el job, llamar a `configure_logging(run_id)` al inicio (el orquestador puede pasar el identificador de la ejecución) y usar `logging.getLogger(__name__)` en cada módulo."
+    },
+    {
+      "number": 8,
+      "key": "related_concepts",
+      "title": "Conceptos relacionados",
+      "markdown": "- `python-logging`: el concepto que implementa.\n- `data-pipeline`: correlación de eventos de una ejecución."
+    },
+    {
+      "number": 9,
+      "key": "sources",
+      "title": "Fuentes",
+      "markdown": "- Python: *logging — Logging facility for Python* y *Logging Cookbook*.\n- Google Cloud: *Structured logging* (Cloud Logging).\n\nEl detalle está en `sources` del encabezado."
+    },
+    {
+      "number": 10,
+      "key": "change_history",
+      "title": "Historial de cambios",
+      "markdown": "- 2026-10-04: creación (propuesta aprobada tras el lote 5), desde la sección 10 de `python-logging` con `run_id` y redacción."
+    }
+  ]
+}

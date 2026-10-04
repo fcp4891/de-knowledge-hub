@@ -1,0 +1,15 @@
+{
+  "slug": "gcp-cloud-logging-docs",
+  "title": "Cloud Logging documentation",
+  "description": "Documentación oficial de Google Cloud Logging.",
+  "url": "https://docs.cloud.google.com/logging/docs",
+  "source_type": "official_docs",
+  "authority_level": 1,
+  "provider": "gcp",
+  "url_verified": true,
+  "review_frequency": "quarterly",
+  "trust": "high",
+  "technologies": [],
+  "last_verified": "2026-10-01",
+  "verification_status": "verified"
+}

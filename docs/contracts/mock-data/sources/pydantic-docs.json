@@ -1,0 +1,17 @@
+{
+  "slug": "pydantic-docs",
+  "title": "Pydantic Validation documentation",
+  "description": "Documentación oficial de Pydantic (validación de datos con modelos tipados).",
+  "url": "https://pydantic.dev/docs/validation/latest/get-started/",
+  "source_type": "official_docs",
+  "authority_level": 1,
+  "provider": "pydantic",
+  "url_verified": true,
+  "review_frequency": "quarterly",
+  "trust": "high",
+  "technologies": [
+    "pydantic"
+  ],
+  "last_verified": "2026-10-01",
+  "verification_status": "verified"
+}

@@ -1,0 +1,17 @@
+{
+  "slug": "pytest-docs",
+  "title": "pytest documentation",
+  "description": "Documentación oficial de pytest.",
+  "url": "https://docs.pytest.org/en/stable/",
+  "source_type": "official_docs",
+  "authority_level": 1,
+  "provider": "pytest-dev",
+  "url_verified": true,
+  "review_frequency": "quarterly",
+  "trust": "high",
+  "technologies": [
+    "pytest"
+  ],
+  "last_verified": "2026-10-04",
+  "verification_status": "verified"
+}

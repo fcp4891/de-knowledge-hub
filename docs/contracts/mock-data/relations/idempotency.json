@@ -131,6 +131,13 @@
           "entity_type": "pattern",
           "origin": "entity",
           "note": "Con uniqueKey, repetir una ejecución o releer un margen fusiona por clave y no duplica; sin uniqueKey, inserta y puede duplicar."
+        },
+        {
+          "slug": "pytest-ingestion-test",
+          "title": "Tests de pytest para la validación y la carga de una ingesta",
+          "entity_type": "code_snippet",
+          "origin": "entity",
+          "note": "El test de repetición fija la propiedad que hace seguros los reintentos y los backfills."
         }
       ]
     },

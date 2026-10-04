@@ -1,0 +1,182 @@
+{
+  "id": "code_snippet:pubsub-subscription-terraform",
+  "title": "Suscripción de Pub/Sub con filtro, reintentos y dead letter en Terraform",
+  "slug": "pubsub-subscription-terraform",
+  "description": "Topic, suscripción pull filtrada por atributo, retry policy, dead letter con su propia suscripción y los permisos del agente de servicio de Pub/Sub que la dead letter necesita, declarados en Terraform.",
+  "type": "code_snippet",
+  "domain": null,
+  "subdomain": null,
+  "classification": "modern",
+  "level": "intermediate",
+  "cloud": [
+    "gcp"
+  ],
+  "technologies": [
+    "terraform",
+    "gcp-pubsub",
+    "gcp-iam"
+  ],
+  "tags": [
+    "terraform",
+    "iac",
+    "pubsub",
+    "dead-letter"
+  ],
+  "related_topics": [
+    "pubsub-topics-and-subscriptions",
+    "dead-letter-queue",
+    "infrastructure-as-code"
+  ],
+  "sources": [
+    {
+      "source": "terraform-provider-google-docs",
+      "title": "Terraform Google provider documentation",
+      "url": "https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/pubsub_subscription.html.markdown",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-04",
+      "note": "google_pubsub_subscription: ack_deadline_seconds, message_retention_duration (600s a 2678400s), expiration_policy.ttl (\"\" = nunca expira), filter (no modificable después de crear), dead_letter_policy (max_delivery_attempts entre 5 y 100; el agente de servicio de Pub/Sub necesita permiso para publicar en el topic de dead letter y para confirmar en la suscripción; los mensajes publicados en un topic sin suscripciones se pierden) y retry_policy (minimum_backoff y maximum_backoff entre 0 y 600 s)."
+    },
+    {
+      "source": "terraform-provider-google-docs",
+      "title": "Terraform Google provider documentation",
+      "url": "https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/pubsub_topic_iam.html.markdown",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-04",
+      "note": "google_pubsub_topic_iam_member es no autoritativo: agrega un miembro a un rol y conserva los demás miembros del rol en el topic. Argumentos topic, role y member."
+    },
+    {
+      "source": "terraform-provider-google-docs",
+      "title": "Terraform Google provider documentation",
+      "url": "https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/pubsub_subscription_iam.html.markdown",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-04",
+      "note": "google_pubsub_subscription_iam_member es no autoritativo: agrega un miembro a un rol y conserva los demás. Argumentos subscription (nombre o id), role y member."
+    },
+    {
+      "source": "terraform-provider-google-docs",
+      "title": "Terraform Google provider documentation",
+      "url": "https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/d/project.html.markdown",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-04",
+      "note": "El data source google_project expone number, el identificador numérico del proyecto; sin project_id usa el proyecto del provider."
+    },
+    {
+      "source": "gcp-pubsub-docs",
+      "title": "Pub/Sub documentation",
+      "url": "https://docs.cloud.google.com/pubsub/docs/dead-letter-topics",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-04",
+      "note": "El agente de servicio service-NÚMERO_DE_PROYECTO@gcp-sa-pubsub.iam.gserviceaccount.com necesita roles/pubsub.publisher en el topic de dead letter (para reenviar los mensajes no entregables) y roles/pubsub.subscriber en la suscripción de origen (para confirmarlos)."
+    },
+    {
+      "source": "gcp-pubsub-docs",
+      "title": "Pub/Sub documentation",
+      "url": "https://docs.cloud.google.com/pubsub/docs/subscription-overview",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-04",
+      "note": "Solo los mensajes publicados después de crear la suscripción están disponibles para ella."
+    },
+    {
+      "source": "gcp-pubsub-docs",
+      "title": "Pub/Sub documentation",
+      "url": "https://docs.cloud.google.com/pubsub/docs/subscription-properties",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-04",
+      "note": "El filtro no se puede cambiar ni quitar después de aplicarlo; retener mensajes sin confirmar más de 24 horas tiene cargo adicional."
+    },
+    {
+      "source": "gcp-pubsub-docs",
+      "title": "Pub/Sub documentation",
+      "url": "https://docs.cloud.google.com/pubsub/docs/subscription-message-filter",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-04",
+      "note": "Sintaxis de filtros por atributos, como attributes.name = \"com\"."
+    }
+  ],
+  "created_at": "2026-10-04",
+  "updated_at": "2026-10-04",
+  "last_verified": "2026-10-04",
+  "verification_status": "review_required",
+  "language": "terraform",
+  "dialect": "hcl",
+  "requirements": [
+    "Terraform 1.x y el provider hashicorp/google 8.x (terraform init lo descarga).",
+    "Para aplicar: un proyecto de GCP con la API de Pub/Sub habilitada, credenciales (Application Default Credentials) y permiso para crear topics y suscripciones y modificar sus políticas IAM. Para validar (terraform validate) no hacen falta credenciales.",
+    "Variable project_id; el número del proyecto lo resuelve data.google_project."
+  ],
+  "implements": [
+    "pubsub-topics-and-subscriptions",
+    "dead-letter-queue",
+    "infrastructure-as-code"
+  ],
+  "sections": [
+    {
+      "number": 1,
+      "key": "what_it_solves",
+      "title": "Qué resuelve",
+      "markdown": "Declara una suscripción de Pub/Sub lista para producción: filtrada por un atributo, con backoff en los reintentos y con una dead letter que funciona de verdad. Para que funcione, la dead letter necesita tres cosas que suelen olvidarse:\n\n- su propia suscripción, porque los mensajes que llegan a un topic sin suscripciones se pierden;\n- permiso del agente de servicio de Pub/Sub para **publicar** en el topic de dead letter;\n- permiso del mismo agente para **confirmar** (ack) en la suscripción de origen.\n\nEs la sección 10 de `pubsub-topics-and-subscriptions`, completada con esos permisos."
+    },
+    {
+      "number": 2,
+      "key": "code",
+      "title": "Código",
+      "markdown": "```hcl\n# Topic, suscripción pull filtrada con reintentos y dead letter, y los permisos del agente de\n# servicio de Pub/Sub que la dead letter necesita.\nterraform {\n  required_providers {\n    google = {\n      source  = \"hashicorp/google\"\n      version = \"~> 8.0\"\n    }\n  }\n}\n\nvariable \"project_id\" {\n  type        = string\n  description = \"Proyecto de GCP donde se crean los recursos.\"\n}\n\nprovider \"google\" {\n  project = var.project_id\n}\n\ndata \"google_project\" \"this\" {}\n\nlocals {\n  # Agente de servicio de Pub/Sub del proyecto: reenvía a la dead letter y confirma en el origen.\n  pubsub_agent = \"serviceAccount:service-${data.google_project.this.number}@gcp-sa-pubsub.iam.gserviceaccount.com\"\n}\n\nresource \"google_pubsub_topic\" \"pedidos\" {\n  name = \"pedidos\"\n}\n\nresource \"google_pubsub_topic\" \"pedidos_dead_letter\" {\n  name = \"pedidos-dead-letter\"\n}\n\n# Un topic sin suscripciones pierde lo que recibe: la dead letter necesita la suya.\nresource \"google_pubsub_subscription\" \"pedidos_dead_letter_revision\" {\n  name                       = \"pedidos-dead-letter-revision\"\n  topic                      = google_pubsub_topic.pedidos_dead_letter.id\n  message_retention_duration = \"604800s\" # 7 días para revisar\n\n  expiration_policy {\n    ttl = \"\" # nunca expira\n  }\n}\n\nresource \"google_pubsub_subscription\" \"pedidos_cl\" {\n  name                       = \"pedidos-cl\"\n  topic                      = google_pubsub_topic.pedidos.id\n  ack_deadline_seconds       = 60\n  message_retention_duration = \"259200s\"                    # 3 días\n  filter                     = \"attributes.region = \\\"cl\\\"\" # no se puede modificar después\n\n  expiration_policy {\n    ttl = \"\"\n  }\n\n  retry_policy {\n    minimum_backoff = \"10s\"\n    maximum_backoff = \"300s\"\n  }\n\n  dead_letter_policy {\n    dead_letter_topic     = google_pubsub_topic.pedidos_dead_letter.id\n    max_delivery_attempts = 10\n  }\n}\n\n# Permisos de la dead letter: publicar en el topic de dead letter y confirmar en el origen.\n# *_iam_member es aditivo: no quita a otros miembros del rol.\nresource \"google_pubsub_topic_iam_member\" \"dead_letter_publisher\" {\n  topic  = google_pubsub_topic.pedidos_dead_letter.name\n  role   = \"roles/pubsub.publisher\"\n  member = local.pubsub_agent\n}\n\nresource \"google_pubsub_subscription_iam_member\" \"source_subscriber\" {\n  subscription = google_pubsub_subscription.pedidos_cl.name\n  role         = \"roles/pubsub.subscriber\"\n  member       = local.pubsub_agent\n}\n```"
+    },
+    {
+      "number": 3,
+      "key": "how_it_works",
+      "title": "Cómo funciona",
+      "markdown": "1. **Topic y suscripción:** `pedidos-cl` solo entrega los mensajes con `region = \"cl\"`. Pub/Sub confirma automáticamente los que no coinciden, y el filtro no se puede cambiar después de crearla.\n2. **Reintentos:** tras un nack o un ack deadline vencido, Pub/Sub espera entre 10 y 300 s, con backoff, antes de reenviar.\n3. **Dead letter:** después de 10 intentos, el mensaje se reenvía a `pedidos-dead-letter`, que tiene su propia suscripción de revisión con 7 días de retención.\n4. **Permisos del agente:** `data.google_project` resuelve el número de proyecto, con el que se arma la cuenta del agente de servicio. Los dos `*_iam_member` le dan `roles/pubsub.publisher` en la dead letter y `roles/pubsub.subscriber` en la suscripción de origen, solo sobre esos recursos y no sobre el proyecto.\n\nUn segundo `apply` sin cambios no modifica nada. El `filter` no se puede modificar después de crear la suscripción: cambiarlo implica una suscripción nueva, que solo recibe lo publicado desde su creación."
+    },
+    {
+      "number": 4,
+      "key": "when_to_use",
+      "title": "Cuándo usarlo",
+      "markdown": "- Suscripciones pull consumidas por servicios propios (Cloud Run, GKE, Dataflow) que necesitan aislar los mensajes que fallan siempre.\n- Cuando cada consumidor solo debe recibir una parte del topic, según un atributo.\n- Como base para varias suscripciones del mismo topic, cada una con su filtro y su dead letter."
+    },
+    {
+      "number": 5,
+      "key": "when_not_to_use",
+      "title": "Cuándo no usarlo",
+      "markdown": "- Para suscripciones de export a BigQuery o Cloud Storage, que tienen otros bloques de configuración y permisos propios.\n- Si hay que filtrar por el contenido del mensaje: el filtro solo usa atributos; filtrar en el consumidor o publicar el atributo.\n- Si la política IAM del topic o de la suscripción se administra entera desde otro lugar con recursos autoritativos (`*_iam_policy`): mezclarlos genera conflictos."
+    },
+    {
+      "number": 6,
+      "key": "risks",
+      "title": "Riesgos",
+      "markdown": "- **Filtro inmutable:** cambiar `filter` implica una suscripción nueva, que no recibe lo publicado antes de crearse ni los pendientes de la anterior. Planificarlo creando la nueva antes de retirar la vieja.\n- **Dead letter sin revisión:** si nadie mira `pedidos-dead-letter-revision`, los mensajes vencen a los 7 días; conviene alertar cuando su backlog crece.\n- **Permisos faltantes:** sin los dos `*_iam_member`, la dead letter no recibe nada y los mensajes siguen reintentándose.\n- **Seguridad:** el agente de servicio recibe roles solo sobre el topic de dead letter y la suscripción de origen, no sobre el proyecto. Las cuentas de los consumidores necesitan aparte `roles/pubsub.subscriber` en su suscripción.\n- **Costo:** retener mensajes sin confirmar más de 24 horas tiene cargo adicional; la suscripción de revisión acumula hasta 7 días."
+    },
+    {
+      "number": 7,
+      "key": "requirements",
+      "title": "Requisitos y cómo ejecutarlo",
+      "markdown": "Ver `requirements` en el encabezado. Validar sin credenciales con `terraform init -backend=false` y `terraform validate` (la CI lo hace en cada push). Aplicar con `terraform plan -var project_id=MI_PROYECTO` y `terraform apply` del plan revisado."
+    },
+    {
+      "number": 8,
+      "key": "related_concepts",
+      "title": "Conceptos relacionados",
+      "markdown": "- `pubsub-topics-and-subscriptions`: el modelo de topics, suscripciones y propiedades.\n- `dead-letter-queue`: el patrón de la dead letter.\n- `infrastructure-as-code`: declarar recursos y permisos en Terraform."
+    },
+    {
+      "number": 9,
+      "key": "sources",
+      "title": "Fuentes",
+      "markdown": "- HashiCorp: documentación de `google_pubsub_subscription`, `google_pubsub_topic_iam`, `google_pubsub_subscription_iam` y del data source `google_project` (repositorio oficial del provider).\n- Google Cloud: *Dead-letter topics*, *Subscription overview*, *Subscription properties* y *Filter messages from a subscription* (Pub/Sub).\n\nEl detalle está en `sources` del encabezado."
+    },
+    {
+      "number": 10,
+      "key": "change_history",
+      "title": "Historial de cambios",
+      "markdown": "- 2026-10-04: creación (propuesta aprobada tras el lote 5), desde la sección 10 de `pubsub-topics-and-subscriptions` con los permisos del agente de servicio."
+    }
+  ]
+}

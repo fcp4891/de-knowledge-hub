@@ -2,6 +2,20 @@
   "slug": "dead-letter-queue",
   "groups": [
     {
+      "type": "IMPLEMENTS",
+      "direction": "incoming",
+      "label": "implemented_by",
+      "items": [
+        {
+          "slug": "pubsub-subscription-terraform",
+          "title": "Suscripción de Pub/Sub con filtro, reintentos y dead letter en Terraform",
+          "entity_type": "code_snippet",
+          "origin": "entity",
+          "note": "Dead letter con su propia suscripción de revisión y los permisos del agente de servicio."
+        }
+      ]
+    },
+    {
       "type": "RELATED_TO",
       "direction": "both",
       "label": "related_to",

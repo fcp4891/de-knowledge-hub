@@ -1025,3 +1025,22 @@ created_at: '2026-10-01'
 updated_at: '2026-10-01'
 last_verified: '2026-10-01'
 verification_status: verified
+---
+id: source:pytest-docs
+slug: pytest-docs
+type: source
+title: pytest documentation
+description: Documentación oficial de pytest.
+url: https://docs.pytest.org/en/stable/
+source_type: official_docs
+authority_level: 1
+provider: pytest-dev
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- pytest
+created_at: '2026-10-04'
+updated_at: '2026-10-04'
+last_verified: '2026-10-04'
+verification_status: verified
