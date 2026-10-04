@@ -3,15 +3,15 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-01
+**Última actualización:** 2026-10-04
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote 5, filas en pendiente en `docs/reviews/cards-lote5.md`.
-- **Siguiente:** esperar la aprobación de Felipe. La aprobación de `snippets-2.md` está en `b/f3-review-snippets-2` (`7d29492`).
+- **Tarea activa:** en espera del lote 6.
+- **Siguiente:** B-F3.1 del lote 6, cuando Carril A lo deje en `main`.
 - **Bloqueos:** ninguno.
 
 ### B-F3.1 · lote 5
-- Diez fichas, tabla de §48. Fabric queda en Airflow 2.10.5. Propuesta de agregar `dbt-fabric` con fuente de Microsoft Learn. `onSchemaChange` sigue en Preview. No se editó `content/`.
+- Diez fichas, tabla de §48. Felipe aprobó todas las filas el 2026-10-04, incluidas `dbt-fabric` y `dbt-fabricspark`, la fuente de Preview de `onSchemaChange` y la viñeta de Observabilidad en §14. No se editó `content/`.
 
 ### B-F3.1 · lote 4
 - Diez fichas, tabla de §48, y aparte el consumidor real de Pub/Sub. Felipe aprobó todas las filas el 2026-10-01. `add-iam-policy-binding` se describe como aditivo y no se llama idempotente. No se editó `content/`.
