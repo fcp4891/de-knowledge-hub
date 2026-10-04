@@ -15,9 +15,18 @@ ROOT = Path(__file__).resolve().parent.parent
 TITLES = page_sections.template_titles(ROOT / "content")
 
 
-def full_body(titles: list[str] | None = None, empty: int | None = None) -> str:
+PRACTICES = "- **Seguridad:** x.\n- **Observabilidad:** y.\n- **Costo:** z."
+
+
+def full_body(titles: list[str] | None = None, empty: int | None = None, practices: str = PRACTICES) -> str:
     titles = titles or TITLES or []
-    parts = [f"## {n}. {t}\n\n{'<!-- solo comentario -->' if n == empty else 'Contenido.'}\n" for n, t in enumerate(titles, 1)]
+
+    def content(n: int) -> str:
+        if n == empty:
+            return "<!-- solo comentario -->"
+        return practices if n == page_sections.PRACTICES_SECTION else "Contenido."
+
+    parts = [f"## {n}. {t}\n\n{content(n)}\n" for n, t in enumerate(titles, 1)]
     return "\n".join(parts)
 
 
@@ -67,6 +76,19 @@ def test_wrong_title(with_template: Path) -> None:
 def test_section_with_only_a_comment_is_empty(with_template: Path) -> None:
     write_md(with_template, "concepts/a.md", concept("a"), body=full_body(empty=18))
     assert_error(run(with_template), "la sección 18 ('Preguntas técnicas abiertas') está vacía")
+
+
+def test_practices_need_security_observability_and_cost(with_template: Path) -> None:
+    body = full_body(practices="- **Seguridad:** x.\n- Observabilidad sin rótulo.\n- **Costo y capacidad:** z.")
+    write_md(with_template, "concepts/a.md", concept("a"), body=body)
+    report = run(with_template)
+    assert_error(report, "necesita la viñeta '- **Observabilidad...**'")
+    assert not any("Seguridad..." in e or "Costo..." in e for e in report.errors)
+
+
+def test_check_practices_only_looks_at_section_14() -> None:
+    assert page_sections.check_practices("## 14. Buenas prácticas\n\n- **Seguridad:** x.\n") != []
+    assert page_sections.check_practices("## 1. Qué resuelve\n\nx\n") == []
 
 
 def test_stub_is_exempt(with_template: Path) -> None:

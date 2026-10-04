@@ -39,7 +39,7 @@ relations:
     target: incremental-load
     note: La carga por período reemplaza segmentos completos.
 created_at: 2026-09-30
-updated_at: 2026-09-30
+updated_at: 2026-10-04
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -124,6 +124,7 @@ El dedicated SQL pool de **Azure Synapse** admite particiones de tabla, con spli
 - Mantener un tamaño de segmento sano: ni demasiados segmentos diminutos ni uno gigante.
 - Escribir por segmento completo para que las cargas sean idempotentes.
 - Verificar el pruning en el plan o en los bytes escaneados.
+- **Costo:** en motores que cobran por datos leídos, el pruning reduce directamente el costo de cada consulta; segmentos diminutos y numerosos, en cambio, agregan sobrecarga de metadatos y archivos.
 - **Seguridad:** la partición organiza el dato, no lo protege: el control de acceso se define aparte. La expiración o el borrado por partición sirven para cumplir políticas de retención.
 - **Observabilidad:** vigilar particiones vacías, duplicadas o fuera de rango y el volumen escaneado por consulta.
 
@@ -171,3 +172,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: creación (lote 1 de F3).
 - 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).
+- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).

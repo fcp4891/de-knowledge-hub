@@ -87,7 +87,7 @@ verification_status: review_required    # verified | review_required | potential
 
 ## 14. Buenas prácticas
 
-<!-- ¿Qué conviene hacer para que sea correcto, operable y mantenible? Incluir, si aplica, cómo escala, cómo se asegura y cómo se observa. -->
+<!-- ¿Qué conviene hacer para que sea correcto, operable y mantenible? Incluir, si aplica, cómo escala. Obligatorias (validate): las viñetas `- **Seguridad:**`, `- **Observabilidad:**` y `- **Costo:**`. -->
 
 ## 15. Errores frecuentes
 

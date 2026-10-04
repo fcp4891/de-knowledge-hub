@@ -3,7 +3,9 @@
 La plantilla es la fuente única de los títulos. Una ficha `concept` o `pattern` que no es stub debe
 tener las 22 secciones de concept.md (§22); un `code_snippet`, las 10 de snippet.md (§23). Los
 encabezados `## N. Título` van en orden, con los títulos de la plantilla y sin secciones vacías
-(un comentario HTML solo no cuenta como contenido).
+(un comentario HTML solo no cuenta como contenido). En las fichas, la §14 (Buenas prácticas)
+lleva además las viñetas `- **Seguridad**`, `- **Observabilidad**` y `- **Costo**` (criterio de
+la revisión B-F3.1); el rótulo puede seguir con más texto, como `- **Costo y capacidad:**`.
 """
 
 from __future__ import annotations
@@ -19,6 +21,8 @@ PAGE_TYPES = {"concept", "pattern"}
 SNIPPET_TYPE = "code_snippet"
 TEMPLATES = {"concept": TEMPLATE, "pattern": TEMPLATE, SNIPPET_TYPE: SNIPPET_TEMPLATE}
 SECTIONED_TYPES = set(TEMPLATES)  # tipos con cuerpo estructurado por secciones
+PRACTICES_SECTION = 14
+PRACTICE_BULLETS = ("Seguridad", "Observabilidad", "Costo")
 
 
 def body_of(text: str) -> str:
@@ -69,3 +73,16 @@ def check(body: str, titles: list[str]) -> list[str]:
         if is_empty(content):
             errors.append(f"[secciones] la sección {number} ('{title}') está vacía")
     return errors
+
+
+def check_practices(body: str) -> list[str]:
+    """Errores si la §14 de una ficha no tiene las viñetas de seguridad, observabilidad y costo."""
+    found = [(title, content) for number, title, content in sections(body) if number == PRACTICES_SECTION]
+    if not found:
+        return []  # check() ya reporta la sección faltante
+    title, content = found[0]
+    return [
+        f"[secciones] la sección {PRACTICES_SECTION} ('{title}') necesita la viñeta '- **{label}...**'"
+        for label in PRACTICE_BULLETS
+        if not re.search(rf"^- \*\*{label}\b", content, re.M)
+    ]

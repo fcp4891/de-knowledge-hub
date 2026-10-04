@@ -48,7 +48,7 @@ relations:
     target: bigquery-partitioning
     note: En BigQuery, cada ejecución puede escribir solo la partición de su período.
 created_at: 2026-09-30
-updated_at: 2026-09-30
+updated_at: 2026-10-04
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -144,7 +144,8 @@ En el dedicated SQL pool de **Synapse**, el *partition switching* permite cargar
 - Guardar el watermark solo tras escribir con éxito, y solapar la ventana.
 - Hacer la escritura idempotente (sobrescritura de partición o `MERGE` con versión).
 - Tener un modo de carga completa o backfill por rango para recuperarse.
-- Reconciliar periódicamente contra el origen (conteos, sumas, rangos).
+- **Observabilidad:** registrar en cada ejecución el watermark anterior, el nuevo y las filas leídas; alertar si el watermark deja de avanzar y reconciliar periódicamente contra el origen (conteos, sumas, rangos).
+- **Costo:** leer solo la ventana nueva (más el solape) es lo que abarata la carga; un solape excesivo, o un origen sin índice ni partición en la columna del watermark, pierde esa ventaja.
 - **Seguridad:** leer del origen con un usuario de solo lectura y, si la carga es pesada, desde una réplica; el watermark no debe exponer datos del origen.
 
 ## 15. Errores frecuentes
@@ -192,3 +193,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: creación (lote 1 de F3).
 - 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).
+- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).

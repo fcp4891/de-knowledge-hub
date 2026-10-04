@@ -51,7 +51,7 @@ relations:
     target: change-data-capture
     note: CDC alimenta la capa raw en un flujo ELT.
 created_at: 2026-09-30
-updated_at: 2026-09-30
+updated_at: 2026-10-04
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -143,7 +143,7 @@ En Azure, Microsoft presenta **Data Factory en Microsoft Fabric** como la siguie
 - Conservar siempre una capa raw inmutable cuando la privacidad lo permita: habilita reprocesos.
 - Versionar las transformaciones (SQL en Git, Dataform o dbt) y probarlas.
 - Decidir por dato qué debe transformarse antes de aterrizar (PII, volumen) y documentarlo.
-- Hacer incrementales las transformaciones pesadas.
+- **Costo:** en ELT las transformaciones se pagan con el cómputo del warehouse en cada ejecución: hacer incrementales las pesadas; conservar la capa raw suma almacenamiento, que conviene acotar con retención.
 - **Observabilidad:** medir por capa (raw, curated, serving) conteos, frescura y errores de transformación, y alertar cuando una capa deja de avanzar respecto de la anterior.
 - **Seguridad:** en ELT, la capa raw contiene el dato sin tratar: restringir su acceso más que el de las capas modeladas; en ETL, el motor intermedio también ve el dato crudo.
 
@@ -192,3 +192,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.
 - 2026-09-30: VERIFY de AWS (Glue, Redshift) y de Azure (Data Factory frente a Fabric) resueltos con documentación oficial.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).
+- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).

@@ -58,7 +58,7 @@
     }
   ],
   "created_at": "2026-09-30",
-  "updated_at": "2026-09-30",
+  "updated_at": "2026-10-04",
   "last_verified": "2026-09-30",
   "verification_status": "verified",
   "kind": "concept",
@@ -150,7 +150,7 @@
       "number": 14,
       "key": "best_practices",
       "title": "Buenas prácticas",
-      "markdown": "- Deduplicar siempre el origen por la clave de la condición `ON`.\n- Añadir una condición de versión en `WHEN MATCHED` para no retroceder datos.\n- Limitar el destino a la ventana afectada (particiones) cuando el motor lo permita.\n- Registrar filas insertadas, actualizadas y borradas para reconciliar.\n- **Seguridad:** `MERGE` necesita en el destino los permisos de cada acción que declara (insertar, actualizar, borrar); usar una cuenta de servicio de carga, no la de consulta."
+      "markdown": "- Deduplicar siempre el origen por la clave de la condición `ON`.\n- Añadir una condición de versión en `WHEN MATCHED` para no retroceder datos.\n- **Observabilidad:** registrar filas insertadas, actualizadas y borradas en cada ejecución para reconciliar, y alertar ante errores por filas de origen duplicadas.\n- **Costo:** limitar el destino a la ventana afectada (particiones) cuando el motor lo permita: sin ese filtro, el `MERGE` lee el destino completo en cada ejecución.\n- **Seguridad:** `MERGE` necesita en el destino los permisos de cada acción que declara (insertar, actualizar, borrar); usar una cuenta de servicio de carga, no la de consulta."
     },
     {
       "number": 15,
@@ -198,7 +198,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: corregido el comportamiento de `MERGE` en Redshift ante duplicados (detectado al preparar el lote 2): falla con varias filas de origen por fila destino; la eliminación de duplicados del destino es solo del modo `REMOVE DUPLICATES`.\n- 2026-09-30: revisión B-F3.1 del lote 2 aplicada: en `REMOVE DUPLICATES`, los duplicados del destino sin coincidencia con el origen no se tocan.\n- 2026-09-30: `verification_status: verified` (revisión de cb77a2f (B-F3.1 del lote 2) aplicada; sin VERIFY pendientes)."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: corregido el comportamiento de `MERGE` en Redshift ante duplicados (detectado al preparar el lote 2): falla con varias filas de origen por fila destino; la eliminación de duplicados del destino es solo del modo `REMOVE DUPLICATES`.\n- 2026-09-30: revisión B-F3.1 del lote 2 aplicada: en `REMOVE DUPLICATES`, los duplicados del destino sin coincidencia con el origen no se tocan.\n- 2026-09-30: `verification_status: verified` (revisión de cb77a2f (B-F3.1 del lote 2) aplicada; sin VERIFY pendientes).\n- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`)."
     }
   ]
 }

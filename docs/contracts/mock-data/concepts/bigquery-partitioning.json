@@ -109,7 +109,7 @@
     }
   ],
   "created_at": "2026-09-30",
-  "updated_at": "2026-09-30",
+  "updated_at": "2026-10-04",
   "last_verified": "2026-09-30",
   "verification_status": "verified",
   "kind": "concept",
@@ -201,7 +201,7 @@
       "number": 14,
       "key": "best_practices",
       "title": "Buenas prácticas",
-      "markdown": "- Particionar por la columna que usan los filtros más frecuentes (casi siempre, la fecha del evento).\n- Elegir la granularidad según el volumen: diaria por defecto; mensual si habría demasiadas particiones.\n- Combinar con clustering para el segundo filtro más común.\n- Fijar la expiración de particiones según la política de retención.\n- Revisar en `INFORMATION_SCHEMA` y en el plan de ejecución que las consultas hacen pruning.\n- **Costo:** la opción `require_partition_filter` obliga a filtrar por la columna de partición y evita consultas que lean la tabla entera por descuido.\n- **Seguridad:** la partición no controla el acceso; la expiración de particiones ayuda a cumplir la retención definida para el dato."
+      "markdown": "- Particionar por la columna que usan los filtros más frecuentes (casi siempre, la fecha del evento).\n- Elegir la granularidad según el volumen: diaria por defecto; mensual si habría demasiadas particiones.\n- Combinar con clustering para el segundo filtro más común.\n- Fijar la expiración de particiones según la política de retención.\n- **Observabilidad:** revisar en `INFORMATION_SCHEMA` y en el plan de ejecución que las consultas hacen pruning, y vigilar las consultas que leen muchas más particiones que las esperadas.\n- **Costo:** la opción `require_partition_filter` obliga a filtrar por la columna de partición y evita consultas que lean la tabla entera por descuido.\n- **Seguridad:** la partición no controla el acceso; la expiración de particiones ayuda a cumplir la retención definida para el dato."
     },
     {
       "number": 15,
@@ -249,7 +249,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: VERIFY resuelto: máximo de 10.000 particiones por tabla (página de cuotas).\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos)."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: VERIFY resuelto: máximo de 10.000 particiones por tabla (página de cuotas).\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`)."
     }
   ]
 }

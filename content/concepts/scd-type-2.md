@@ -37,7 +37,7 @@ relations:
     target: incremental-load
     note: La carga SCD2 es una carga incremental.
 created_at: 2026-09-30
-updated_at: 2026-09-30
+updated_at: 2026-10-04
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -141,8 +141,8 @@ En Synapse (dedicated SQL pool) y Fabric Warehouse, el `MERGE` de T-SQL da error
 
 - Definir explícitamente qué atributos disparan una nueva versión (y usar hash para compararlos).
 - Usar la fecha del cambio en el origen, no la de la carga, para `valid_from`.
-- Controlar que haya exactamente una versión vigente por clave y que no haya huecos ni superposiciones.
 - Particionar o clusterizar la dimensión por `is_current` o por la clave natural si es grande.
+- **Observabilidad:** controlar en cada carga que haya exactamente una versión vigente por clave y que no haya huecos ni superposiciones de vigencia, y medir cuántas versiones nuevas genera cada lote.
 - **Seguridad:** SCD2 conserva cada versión de los atributos: si incluyen datos personales, una solicitud de borrado o una política de retención afecta a todas las versiones, no solo a la vigente.
 - **Costo:** la dimensión crece con cada cambio de los atributos seguidos; elegir esos atributos con cuidado controla el tamaño.
 
@@ -193,3 +193,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: corregido el comportamiento de `MERGE` en Redshift ante duplicados (detectado al preparar el lote 2): falla con varias filas de origen por fila destino; la eliminación de duplicados del destino es solo del modo `REMOVE DUPLICATES`.
 - 2026-09-30: revisión B-F3.1 del lote 2 aplicada: en `REMOVE DUPLICATES`, los duplicados del destino sin coincidencia con el origen no se tocan.
 - 2026-09-30: `verification_status: verified` (revisión de cb77a2f (B-F3.1 del lote 2) aplicada; sin VERIFY pendientes).
+- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).

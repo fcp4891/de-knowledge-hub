@@ -34,7 +34,7 @@ relations:
     target: batch-vs-streaming
     note: La DLQ es típica de los pipelines streaming.
 created_at: 2026-09-30
-updated_at: 2026-09-30
+updated_at: 2026-10-04
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -124,10 +124,10 @@ En **Service Bus**, cada cola y cada suscripción de tópico tiene su propia **s
 
 ## 14. Buenas prácticas
 
-- Alertar sobre el tamaño y la tasa de ingreso a la DLQ: una DLQ silenciosa es pérdida de datos diferida.
 - Guardar el motivo del error junto al mensaje.
 - Tener un procedimiento de redrive documentado y consumidores idempotentes.
 - Distinguir errores transitorios (reintentar con backoff) de permanentes (apartar).
+- **Observabilidad:** alertar sobre el tamaño y la tasa de ingreso a la DLQ: una DLQ silenciosa es pérdida de datos diferida.
 - **Costo:** los mensajes retenidos en la DLQ ocupan almacenamiento del broker mientras no se procesan; definir una retención acorde al tiempo de diagnóstico y no conservarlos indefinidamente. En SQS, la expiración cuenta desde el encolado original, así que un mensaje que pasó mucho tiempo en la cola principal expira antes en la DLQ.
 - **Seguridad:** la DLQ contiene los mismos datos que el flujo principal: aplicar los mismos permisos y la misma clasificación.
 
@@ -175,3 +175,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: creación (lote 1 de F3).
 - 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).
+- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).

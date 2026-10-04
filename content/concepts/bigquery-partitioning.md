@@ -59,7 +59,7 @@ relations:
     target: incremental-load
     note: Cada ejecución incremental puede reemplazar solo su partición.
 created_at: 2026-09-30
-updated_at: 2026-09-30
+updated_at: 2026-10-04
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -170,7 +170,7 @@ El dedicated SQL pool de **Azure Synapse** admite particiones de tabla, pero la 
 - Elegir la granularidad según el volumen: diaria por defecto; mensual si habría demasiadas particiones.
 - Combinar con clustering para el segundo filtro más común.
 - Fijar la expiración de particiones según la política de retención.
-- Revisar en `INFORMATION_SCHEMA` y en el plan de ejecución que las consultas hacen pruning.
+- **Observabilidad:** revisar en `INFORMATION_SCHEMA` y en el plan de ejecución que las consultas hacen pruning, y vigilar las consultas que leen muchas más particiones que las esperadas.
 - **Costo:** la opción `require_partition_filter` obliga a filtrar por la columna de partición y evita consultas que lean la tabla entera por descuido.
 - **Seguridad:** la partición no controla el acceso; la expiración de particiones ayuda a cumplir la retención definida para el dato.
 
@@ -219,3 +219,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.
 - 2026-09-30: VERIFY resuelto: máximo de 10.000 particiones por tabla (página de cuotas).
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).
+- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).

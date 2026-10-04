@@ -337,14 +337,18 @@ def check_topics_in_relations(docs: list[Document], report: Report) -> None:
 
 
 def check_page_sections(content_dir: Path, docs: list[Document], report: Report) -> None:
-    """Fichas (22 secciones, §22) y snippets (10 secciones, §23) no stub: las secciones de su plantilla."""
+    """Fichas (22 secciones, §22) y snippets (10 secciones, §23) no stub: las secciones de su plantilla.
+    En las fichas, además, las viñetas Seguridad, Observabilidad y Costo en la §14."""
     titles = {kind: page_sections.template_titles(content_dir, path) for kind, path in page_sections.TEMPLATES.items()}
     for doc in docs:
         expected = titles.get(doc.data["type"])
         if expected is None or doc.path.suffix != ".md" or doc.data.get("stub"):
             continue
         body = page_sections.body_of((content_dir.parent / doc.path).read_text(encoding="utf-8"))
-        for error in page_sections.check(body, expected):
+        errors = page_sections.check(body, expected)
+        if doc.data["type"] in page_sections.PAGE_TYPES:
+            errors += page_sections.check_practices(body)
+        for error in errors:
             report.add(doc.location, error)
 
 

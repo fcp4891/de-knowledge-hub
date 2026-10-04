@@ -77,7 +77,7 @@
     }
   ],
   "created_at": "2026-09-30",
-  "updated_at": "2026-09-30",
+  "updated_at": "2026-10-04",
   "last_verified": "2026-09-30",
   "verification_status": "verified",
   "kind": "pattern",
@@ -169,7 +169,7 @@
       "number": 14,
       "key": "best_practices",
       "title": "Buenas prácticas",
-      "markdown": "- Guardar el watermark solo tras escribir con éxito, y solapar la ventana.\n- Hacer la escritura idempotente (sobrescritura de partición o `MERGE` con versión).\n- Tener un modo de carga completa o backfill por rango para recuperarse.\n- Reconciliar periódicamente contra el origen (conteos, sumas, rangos).\n- **Seguridad:** leer del origen con un usuario de solo lectura y, si la carga es pesada, desde una réplica; el watermark no debe exponer datos del origen."
+      "markdown": "- Guardar el watermark solo tras escribir con éxito, y solapar la ventana.\n- Hacer la escritura idempotente (sobrescritura de partición o `MERGE` con versión).\n- Tener un modo de carga completa o backfill por rango para recuperarse.\n- **Observabilidad:** registrar en cada ejecución el watermark anterior, el nuevo y las filas leídas; alertar si el watermark deja de avanzar y reconciliar periódicamente contra el origen (conteos, sumas, rangos).\n- **Costo:** leer solo la ventana nueva (más el solape) es lo que abarata la carga; un solape excesivo, o un origen sin índice ni partición en la columna del watermark, pierde esa ventaja.\n- **Seguridad:** leer del origen con un usuario de solo lectura y, si la carga es pesada, desde una réplica; el watermark no debe exponer datos del origen."
     },
     {
       "number": 15,
@@ -217,7 +217,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos)."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`)."
     }
   ]
 }
