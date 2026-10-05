@@ -6,9 +6,12 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-05
 
 ## Actual
-- **Tarea activa:** ninguna. B-F3.1 del lote 6 quedó aprobada.
-- **Siguiente:** esperar los lotes del dominio 01.
+- **Tarea activa:** ninguna. Etiquetas de estado en el Explorer (`b/f3b-explorer-tags`).
+- **Siguiente:** esperar el lote F3b-01b.
 - **Bloqueos:** ninguno.
+
+### Explorer · estado de contenido
+- `ConceptSummary` ya trae `verification_status`. Cada concepto muestra Verificada, En revisión o Pendiente junto a la clasificación. El filtro Contenido usa `GET /concepts?has_page=`. La cabecera del dominio dice «N de M con ficha». No se editó `content/`.
 
 ### B-F3.1 · lote 6
 - Diez fichas, tabla de §48. Felipe aprobó todas las filas el 2026-10-05, incluidas las tres precisiones de `bigquery-cost-model`: compromisos solo de Enterprise y Enterprise Plus, time travel y fail-safe en almacenamiento físico, y BigQuery ML dentro de los slots de esas ediciones. No se editó `content/`.

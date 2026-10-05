@@ -3,6 +3,7 @@ import type {
   ApiResult,
   ConceptDetail,
   ConceptList,
+  ConceptSummary,
   DomainDetail,
   DomainList,
   Favorite,
@@ -86,9 +87,46 @@ export function getDomain(slug: string): Promise<ApiResult<DomainDetail>> {
   return apiGet(`GET ${resource}`, resource);
 }
 
-export function listConcepts(): Promise<ApiResult<ConceptList>> {
-  const resource = "/concepts?limit=500";
+export function listConcepts(query: {
+  domain?: string;
+  hasPage?: boolean;
+  offset?: number;
+} = {}): Promise<ApiResult<ConceptList>> {
+  const params = new URLSearchParams();
+  if (query.domain) {
+    params.set("domain", query.domain);
+  }
+  if (query.hasPage !== undefined) {
+    params.set("has_page", String(query.hasPage));
+  }
+  if (query.offset && query.offset > 0) {
+    params.set("offset", String(query.offset));
+  }
+  params.set("limit", "500");
+  const resource = `/concepts?${params.toString()}`;
   return apiGet(`GET ${resource}`, resource);
+}
+
+export async function listAllConcepts(query: {
+  domain?: string;
+  hasPage?: boolean;
+} = {}): Promise<ApiResult<ConceptSummary[]>> {
+  const items: ConceptSummary[] = [];
+  let offset = 0;
+  let total = 0;
+  do {
+    const page = await listConcepts({ ...query, offset });
+    if (!page.ok) {
+      return page;
+    }
+    items.push(...page.data.items);
+    total = page.data.total;
+    if (page.data.items.length === 0) {
+      break;
+    }
+    offset += page.data.items.length;
+  } while (offset < total);
+  return { ok: true, data: items };
 }
 
 export function getConcept(slug: string): Promise<ApiResult<ConceptDetail>> {
