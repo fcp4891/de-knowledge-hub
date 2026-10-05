@@ -73,7 +73,7 @@ relations:
     target: python-error-handling-and-retries
     note: Un error de validación es permanente; reintentarlo no lo arregla.
 created_at: 2026-10-02
-updated_at: 2026-10-04
+updated_at: 2026-10-05
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -151,6 +151,7 @@ flowchart LR
 # Python 3.12 y pydantic 2: valida cada registro de una API en el borde y separa válidos de rechazados.
 from datetime import datetime
 from decimal import Decimal
+from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
@@ -164,9 +165,9 @@ class Order(BaseModel):
     created_at: datetime
 
 
-def validate_page(raw_records: list[bytes]) -> tuple[list[Order], list[dict]]:
+def validate_page(raw_records: list[bytes]) -> tuple[list[Order], list[dict[str, Any]]]:
     valid: list[Order] = []
-    rejected: list[dict] = []
+    rejected: list[dict[str, Any]] = []
     for raw in raw_records:
         try:
             valid.append(Order.model_validate_json(raw))
@@ -256,3 +257,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-02: creación (lote 5 de F3).
 - 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
+- 2026-10-05: §10, cambio mínimo de tipos para pasar `mypy --strict`: `list[dict]` pasa a `list[dict[str, Any]]` (con `from typing import Any`). Sin cambio de comportamiento; pendiente de revisión de Cursor.

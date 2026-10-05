@@ -17,6 +17,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 | ~~B-F3.1 · Revisar el lote 4~~ (10 fichas): `infrastructure-as-code`, `terraform-providers`, `terraform-state`, `terraform-plan-apply`, `gcs-buckets-and-objects`, `gcp-iam-for-data`, `dimension-tables`, `python-api-consumption`, `scheduler` y `file-ingestion`. Sin VERIFY abiertos. Revisar también la §10 nueva de `pubsub-delivery-semantics` (consumidor real de Pub/Sub) | Cerrado (revisión aplicada; las 40 fichas `verified`) |
 | ~~B-F3.1 · Revisar los snippets~~ (`snippets-1.md`) | Cerrado (los 8 `verified`) |
 | **B-F3.1 · Revisar el lote 6** (10 fichas): `row-vs-columnar-formats`, `testing-with-pytest`, `sql-window-functions`, `grain`, `data-warehouse`, `streaming-ingestion`, `oltp-vs-olap`, `bigquery-cost-model` (solo el modelo de precios, sin montos), `acid` y `normalization`. Sin VERIFY. Fuentes nuevas Nivel 1: `apache-spark-docs` y `aws-firehose-docs` | Abierto |
+| **Revisar cambio mínimo en `data-validation-with-pydantic`** (`verified`): en §10, `list[dict]` pasa a `list[dict[str, Any]]` (y `from typing import Any`) para pasar `mypy --strict`. Sin cambio de comportamiento; registrado en su historial | Abierto |
 | **Snippets que se ejecutan en la CI** (informativo): `requirements-snippets.txt` y `make snippets-deps`; `tests/test_snippet_code.py` ejecuta `pytest-ingestion-test` (7 tests, armando `ingest.py` desde las fichas) y `python-structured-logging`. Si Carril B corre `make test` en su worktree sin esas dependencias, el test de ingesta aparece como *skipped* | Informativo |
 | ~~Revisar 3 snippets nuevos~~ (`snippets-3.md`), en `review_required`: `python-structured-logging` (JSON a stdout, `run_id` por filtro en el handler, redacción de campos sensibles de `extra`), `pytest-ingestion-test` (7 tests sin red ni credenciales sobre `validate_page` y `load_day`) y `pubsub-subscription-terraform` (dead letter con los permisos del agente de servicio de Pub/Sub, `*_iam_member`). Fuente nueva `pytest-docs` (Nivel 1) | Cerrado (los 3 `verified`) |
 | ~~Revisar §14 de 7 fichas del lote 1~~ ya `verified`: `bigquery-partitioning`, `dead-letter-queue`, `etl-vs-elt`, `incremental-load`, `partitioning`, `scd-type-2` y `sql-merge`. La regla nueva de `validate` exige las viñetas Seguridad, Observabilidad y Costo; en varias se dio rótulo a una viñeta existente y en otras se agregó la que faltaba (ver el historial de cada ficha) | Cerrado (aprobada en `snippets-3.md`; hallazgos 1 y 2 aplicados) |
@@ -56,13 +57,16 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ## Historial
 
+### Tipos en data-validation-with-pydantic (2026-10-05)
+- §10: `list[dict]` → `list[dict[str, Any]]` en `validate_page` y `rejected`, con `from typing import Any`. Se usa `Any` porque `pytest-ingestion-test` indexa los valores (`rejected[0]["errors"]`). `mypy --strict` pasa sobre el bloque, sobre `ingest.py` armado desde las fichas y sobre el test del snippet (7 tests en verde). La ficha sigue `verified`; pendiente de revisión de Cursor. Las 10 fichas del lote 6 no se tocaron.
+
 ### snippets-3 aplicada, snippets en la CI y lote 6 (2026-10-05)
 - Merge de `b/f3-review-snippets-3` (d53e31b, revisión de Cursor sin hallazgos). La revisión paralela de Carril A (6 hallazgos) había quedado en un commit sobre `main` local sin push (a19a3b3); se descartó de `main` y su contenido se integró en `snippets-3.md` al marcar todo `aprobada`.
 - snippets-3 aplicada: §14 Costo de `sql-merge` (según la fuente de DML de BigQuery) y de `partitioning` (Athena y Synapse); fuentes de `monkeypatch` y *Access control*; `setattr` en el logging; `Protocol` `LoadClient` en `batch-ingestion` §10 (pasa `mypy --strict` con `bigquery.Client` y con el cliente falso). Los 3 snippets `verified`.
 - Dataform: se quita la frase de la CLI; el Preview de `onSchemaChange` queda citado solo desde la referencia de core.
 - `requirements-snippets.txt` + `make snippets-deps` + paso en la CI; `tests/test_snippet_code.py`. En la CI: 518 tests, ninguno saltado.
 - Lote 6 (10 fichas `review_required`), con 77 URLs verificadas (HTTP 200, URL final igual a la citada). SQL de `sql-window-functions`, `oltp-vs-olap`, `acid` y `normalization` probado en PostgreSQL 17 local; pytest de `testing-with-pytest` ejecutado (5 tests). `test_search_flags_pages` usa `lakehouse` como concepto sin ficha.
-- Pendiente menor (fuera de alcance): `list[dict]` sin parámetros de tipo en la §10 de `data-validation-with-pydantic` (mypy `--strict` lo marca).
+- Pendiente menor (fuera de alcance): `list[dict]` sin parámetros de tipo en la §10 de `data-validation-with-pydantic` (mypy `--strict` lo marca). Resuelto el 2026-10-05, ver abajo.
 
 ### Lote 5 verified, regla de §14 y 3 snippets (2026-10-04)
 - Merge de `b/f3-review-snippets-2` y `b/f3-review-5` (conflicto en `lane-b.md` resuelto combinando ambos lados). `terraform-gcs-bucket` y `terraform-bigquery-iam` `verified`.

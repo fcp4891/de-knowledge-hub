@@ -17,6 +17,7 @@
 | De | Para | Pedido | Estado |
 |---|---|---|---|
 | A | B | B-F3.1 · Revisar el lote 6 (10 fichas; ver `lane-a.md`) | Abierto |
+| A | B | Revisar el cambio de tipos en §10 de `data-validation-with-pydantic` (ver `lane-a.md`) | Abierto |
 
 ## Criterio de salida de la fase actual (F3)
 - [ ] 60–80 fichas `verified` (hoy: 60 fichas, 50 `verified` y 10 del lote 6 en revisión).
