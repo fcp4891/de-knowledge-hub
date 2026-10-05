@@ -1,6 +1,6 @@
 # STATUS — Data Engineering Knowledge Hub
 
-**Fase actual:** F3 — Contenido Core del MVP (criterios 1 y 2 cumplidos; gate humano pendiente). Siguiente: F3b — Contenido por dominio (ADR-009), desde 01-fundamentals. F2 aprobada el 2026-09-30.
+**Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 01-fundamentals. F3 aprobada el 2026-10-05; F2 el 2026-09-30.
 **Última actualización:** 2026-10-05
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**
@@ -10,7 +10,7 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | Lote 6 `verified` (60 fichas `verified`) | Gate de F3; F3b por dominio, desde 01-fundamentals | — |
+| A · Claude Code | F3b: lote F3b-01a (01-fundamentals) | Lote F3b-01b; revisión de 01-fundamentals en el navegador | — |
 | B · Cursor | — | Revisión del cambio de tipos en `data-validation-with-pydantic`; F3b | — |
 
 ## Pedidos abiertos entre carriles
@@ -18,12 +18,12 @@
 |---|---|---|---|
 | A | B | Revisar el cambio de tipos en §10 de `data-validation-with-pydantic` (ver `lane-a.md`) | Abierto |
 
-## Criterio de salida de la fase actual (F3)
-- [x] 60–80 fichas `verified` (hoy: 60 fichas, las 60 `verified`).
-- [ ] Cero fichas sin fuentes.
-- [ ] Gate humano.
+## Criterio de salida de la fase actual (F3b, ADR-009)
+- [ ] 01-fundamentals: 28 conceptos con ficha `verified` (hoy 13) y aprobado por Felipe en el navegador. Lotes F3b-01a (10) y F3b-01b (5).
+- [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
 
 ## Fases cerradas
+- **F3 — Contenido Core del MVP** (2026-10-05): 60 fichas `verified` (49 conceptos y 11 patrones) y 13 snippets `verified`, cero fichas sin fuentes; Code Library y grafo en el frontend; snippets de Python y Terraform ejecutados o validados en la CI.
 - **F2 — Plataforma MVP** (2026-09-30):
   - contrato de API y mocks (ADR-002), compilador a PostgreSQL, API FastAPI con FTS en español e inglés (ADR-005) y estado personal `/me` (ADR-006);
   - frontend Next.js: Home, Explorer, fichas, búsqueda (Ctrl+K), relaciones, estado de estudio y notas contra la API real;

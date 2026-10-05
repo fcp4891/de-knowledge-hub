@@ -63,7 +63,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 ### Gate de F3 (prompt 0.4, 2026-10-05)
 - Criterio 1, 60–80 fichas `verified`: **cumplido**. 60 fichas (49 concept, 11 pattern), las 60 `verified`; además 13 snippets `verified`.
 - Criterio 2, cero fichas sin fuentes: **cumplido**. 0 fichas y 0 snippets sin `sources`; 0 marcadores VERIFY; 539 citas (503 Nivel 1, 2 Nivel 2, 34 Nivel 4 conceptuales).
-- Criterio 3, gate humano: **pendiente** de Felipe.
+- Criterio 3, gate humano: **aprobado** por Felipe el 2026-10-05, junto con ADR-009 y el plan de 01-fundamentals.
 - Evidencia: `make validate` OK (222 entidades); CI de `main` ef90c8a en verde (518 tests, 8 HCL válidos, frontend lint y build).
 - Riesgos y deuda: 20 conceptos MVP sin ficha (15 conceptos y las 5 arquitecturas de F4); el SQL de BigQuery de las fichas no se ejecuta contra BigQuery; `terraform-provider-google-docs` sigue `review_required` en el registro; la revisión de snippets-3 no fue independiente; `f/sql` sin mergear; pedido abierto a Cursor por el cambio de tipos en `data-validation-with-pydantic`.
 
