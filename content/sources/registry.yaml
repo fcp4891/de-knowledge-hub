@@ -1044,3 +1044,40 @@ created_at: '2026-10-04'
 updated_at: '2026-10-04'
 last_verified: '2026-10-04'
 verification_status: verified
+---
+id: source:apache-spark-docs
+slug: apache-spark-docs
+type: source
+title: Apache Spark documentation
+description: Documentación oficial de Apache Spark.
+url: https://spark.apache.org/docs/latest/
+source_type: official_docs
+authority_level: 1
+provider: apache
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- apache-spark
+created_at: '2026-10-05'
+updated_at: '2026-10-05'
+last_verified: '2026-10-05'
+verification_status: verified
+---
+id: source:aws-firehose-docs
+slug: aws-firehose-docs
+type: source
+title: Amazon Data Firehose Developer Guide
+description: Guía oficial para desarrolladores de Amazon Data Firehose.
+url: https://docs.aws.amazon.com/firehose/latest/dev/what-is-this-service.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-05'
+updated_at: '2026-10-05'
+last_verified: '2026-10-05'
+verification_status: verified

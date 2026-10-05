@@ -96,6 +96,16 @@
           "score": 6.3
         },
         {
+          "slug": "bigquery-cost-model",
+          "title": "Modelo de costos de BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "has_page": true,
+          "snippet": "Cómo cobra BigQuery (sin montos): cómputo on-demand por bytes procesados o por capacidad en slots (editions y reservas), almacenamiento activo y long-term con facturación lógica o física, y los contro",
+          "score": 6.3
+        },
+        {
           "slug": "bigquery-partitioning",
           "title": "Particionamiento en BigQuery",
           "type": "concept",
@@ -184,16 +194,6 @@
           "has_page": false,
           "snippet": "Vistas materializadas en BigQuery",
           "score": 6.0
-        },
-        {
-          "slug": "bigquery-architecture",
-          "title": "Arquitectura de BigQuery",
-          "type": "concept",
-          "domain": "gcp",
-          "classification": "modern",
-          "has_page": false,
-          "snippet": "Incluye la separación storage vs compute (§10.2).",
-          "score": 5.0
         }
       ]
     },

@@ -51,9 +51,9 @@
           "type": "concept",
           "domain": "pipelines",
           "classification": "core",
-          "has_page": false,
-          "snippet": "El micro-batch se explica en esta ficha.",
-          "score": 5.5
+          "has_page": true,
+          "snippet": "Ingerir eventos de forma continua, a medida que se producen: brokers (Pub/Sub, Kafka, Kinesis, Event Hubs), entrega al menos una vez, tiempo de evento, ventanas y watermarks, escritura a BigQuery o al",
+          "score": 5.8
         },
         {
           "slug": "late-arriving-data",

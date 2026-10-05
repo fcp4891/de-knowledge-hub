@@ -49,6 +49,13 @@
           "note": "La unidad de reemplazo es la partición diaria."
         },
         {
+          "slug": "bigquery-cost-model",
+          "title": "Modelo de costos de BigQuery",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Particionar y filtrar por la partición reduce los bytes procesados en on-demand."
+        },
+        {
           "slug": "partitioning",
           "title": "Particionamiento",
           "entity_type": "concept",

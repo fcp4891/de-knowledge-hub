@@ -63,6 +63,13 @@
           "note": "Organizar por prefijos de fecha (estilo Hive) permite podar archivos al consultar."
         },
         {
+          "slug": "data-warehouse",
+          "title": "Data Warehouse",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Las tablas grandes del warehouse se particionan por fecha para leer menos."
+        },
+        {
           "slug": "late-arriving-data",
           "title": "Datos que llegan tarde",
           "entity_type": "concept",

@@ -220,8 +220,8 @@ def test_search_flags_pages(client: TestClient) -> None:
     items = {i["slug"]: i for g in get(client, "/search", q="data lake").json()["groups"] for i in g["items"]}
     assert items["data-lake"]["has_page"] is True           # concepto con ficha (lote 5)
     assert items["azure-adls"]["has_page"] is True          # tecnología: tiene entidad
-    dwh = {i["slug"]: i for g in get(client, "/search", q="data warehouse").json()["groups"] for i in g["items"]}
-    assert dwh["data-warehouse"]["has_page"] is False       # concepto del blueprint sin ficha
+    lake = {i["slug"]: i for g in get(client, "/search", q="lakehouse").json()["groups"] for i in g["items"]}
+    assert lake["lakehouse"]["has_page"] is False           # concepto del blueprint sin ficha
     parti = {i["slug"]: i for g in get(client, "/search", q="particion").json()["groups"] for i in g["items"]}
     assert parti["partitioning"]["has_page"] is True and parti["topics-and-partitions"]["has_page"] is False
 

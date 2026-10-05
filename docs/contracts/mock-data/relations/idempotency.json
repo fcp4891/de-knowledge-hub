@@ -147,6 +147,13 @@
       "label": "related_to",
       "items": [
         {
+          "slug": "acid",
+          "title": "ACID",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "La atomicidad hace que una carga reintentada no deje estados a medias; la idempotencia, que no duplique."
+        },
+        {
           "slug": "cdc-architecture",
           "title": "Arquitectura CDC (PostgreSQL → BigQuery)",
           "entity_type": "architecture",
@@ -292,6 +299,13 @@
           "entity_type": "concept",
           "origin": "blueprint",
           "note": null
+        },
+        {
+          "slug": "testing-with-pytest",
+          "title": "Testing con pytest",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Un test que ejecuta dos veces la misma operación fija la idempotencia."
         },
         {
           "slug": "upsert",

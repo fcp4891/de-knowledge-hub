@@ -2,12 +2,12 @@
 
 Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
-**Última actualización:** 2026-10-04
+**Última actualización:** 2026-10-05
 
 ## Actual
-- **Tarea activa:** lote 5 `verified` (50 fichas `verified`); 3 snippets nuevos en `review_required`. Lote 6 propuesto, pendiente de aprobación.
-- **Mergeado para Carril B:** `b/f3-review-snippets-2` (7d29492) y `b/f3-review-5` (a51823a) en `main`, 2026-10-04.
-- **Siguiente:** ejecutar el lote 6 cuando se apruebe (incluye `row-vs-columnar-formats` y `testing-with-pytest`); con él F3 llega a 60 fichas `verified`. Arquitecturas (`cdc-architecture`, `batch-pipeline-architecture`) quedan para F4.
+- **Tarea activa:** lote 6 de F3 entregado (10 fichas `review_required`); con su revisión, F3 llega a 60 `verified`.
+- **Mergeado para Carril B:** `b/f3-review-snippets-3` (d53e31b) en `main`, 2026-10-05; `b/f3-review-5` ya estaba en `main`.
+- **Siguiente:** aplicar la revisión B-F3.1 del lote 6. Al pasar a `verified`: `bigquery-deduplicate-latest` implementa también `sql-window-functions`, `pytest-ingestion-test` implementa `testing-with-pytest`, y `deduplication` (§17) deja de listar `sql-window-functions` como pendiente.
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
 
@@ -16,8 +16,10 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 |---|---|
 | ~~B-F3.1 · Revisar el lote 4~~ (10 fichas): `infrastructure-as-code`, `terraform-providers`, `terraform-state`, `terraform-plan-apply`, `gcs-buckets-and-objects`, `gcp-iam-for-data`, `dimension-tables`, `python-api-consumption`, `scheduler` y `file-ingestion`. Sin VERIFY abiertos. Revisar también la §10 nueva de `pubsub-delivery-semantics` (consumidor real de Pub/Sub) | Cerrado (revisión aplicada; las 40 fichas `verified`) |
 | ~~B-F3.1 · Revisar los snippets~~ (`snippets-1.md`) | Cerrado (los 8 `verified`) |
-| **Revisar 3 snippets nuevos** (`snippets-3.md`), en `review_required`: `python-structured-logging` (JSON a stdout, `run_id` por filtro en el handler, redacción de campos sensibles de `extra`), `pytest-ingestion-test` (7 tests sin red ni credenciales sobre `validate_page` y `load_day`) y `pubsub-subscription-terraform` (dead letter con los permisos del agente de servicio de Pub/Sub, `*_iam_member`). Fuente nueva `pytest-docs` (Nivel 1) | Abierto |
-| **Revisar §14 de 7 fichas del lote 1** ya `verified`: `bigquery-partitioning`, `dead-letter-queue`, `etl-vs-elt`, `incremental-load`, `partitioning`, `scd-type-2` y `sql-merge`. La regla nueva de `validate` exige las viñetas Seguridad, Observabilidad y Costo; en varias se dio rótulo a una viñeta existente y en otras se agregó la que faltaba (ver el historial de cada ficha) | Abierto |
+| **B-F3.1 · Revisar el lote 6** (10 fichas): `row-vs-columnar-formats`, `testing-with-pytest`, `sql-window-functions`, `grain`, `data-warehouse`, `streaming-ingestion`, `oltp-vs-olap`, `bigquery-cost-model` (solo el modelo de precios, sin montos), `acid` y `normalization`. Sin VERIFY. Fuentes nuevas Nivel 1: `apache-spark-docs` y `aws-firehose-docs` | Abierto |
+| **Snippets que se ejecutan en la CI** (informativo): `requirements-snippets.txt` y `make snippets-deps`; `tests/test_snippet_code.py` ejecuta `pytest-ingestion-test` (7 tests, armando `ingest.py` desde las fichas) y `python-structured-logging`. Si Carril B corre `make test` en su worktree sin esas dependencias, el test de ingesta aparece como *skipped* | Informativo |
+| ~~Revisar 3 snippets nuevos~~ (`snippets-3.md`), en `review_required`: `python-structured-logging` (JSON a stdout, `run_id` por filtro en el handler, redacción de campos sensibles de `extra`), `pytest-ingestion-test` (7 tests sin red ni credenciales sobre `validate_page` y `load_day`) y `pubsub-subscription-terraform` (dead letter con los permisos del agente de servicio de Pub/Sub, `*_iam_member`). Fuente nueva `pytest-docs` (Nivel 1) | Cerrado (los 3 `verified`) |
+| ~~Revisar §14 de 7 fichas del lote 1~~ ya `verified`: `bigquery-partitioning`, `dead-letter-queue`, `etl-vs-elt`, `incremental-load`, `partitioning`, `scd-type-2` y `sql-merge`. La regla nueva de `validate` exige las viñetas Seguridad, Observabilidad y Costo; en varias se dio rótulo a una viñeta existente y en otras se agregó la que faltaba (ver el historial de cada ficha) | Cerrado (aprobada en `snippets-3.md`; hallazgos 1 y 2 aplicados) |
 | ~~B-F3.1 · Revisar el lote 5~~ (10 fichas): `data-lake`, `python-logging`, `airflow-architecture`, `data-validation-with-pydantic`, `batch-ingestion`, `star-schema` (pattern), `dataform-incremental-tables` (pattern), `pubsub-topics-and-subscriptions`, `deduplication` (pattern) y `fact-tables`. Sin VERIFY abiertos. Fuentes nuevas Nivel 1: `pydantic-docs`, `dbt-docs`, `gcp-cloud-logging-docs`, `aws-cloudwatch-logs-docs`, `aws-lake-formation-docs` y `aws-sns-docs`. `pubsub-topics-and-subscriptions` §10 es HCL: lo valida `make validate-terraform` en la CI | Cerrado (revisión aplicada; las 50 fichas `verified`) |
 | ~~Revisar 2 snippets nuevos~~ (`snippets-2.md`): `terraform-gcs-bucket` y `terraform-bigquery-iam` (recursos IAM `*_iam_member`, no autoritativos), en `review_required` | Cerrado (los 2 `verified`) |
 | **B-F3.2 · Vista `/snippets` (Code Library, ADR-008, cambio aditivo del contrato).** Regenerar el cliente tipado (`npm run generate:api`). Endpoints nuevos: `GET /snippets` (filtros `language`, `cloud`, `implements`; `limit`, `offset`; devuelve `SnippetList`) y `GET /snippets/{slug}` (`SnippetDetail`: metadata común, `language`, `dialect`, `requirements`, `implements` y `sections` con 10 claves fijas: `what_it_solves`, `code`, `how_it_works`, `when_to_use`, `when_not_to_use`, `risks`, `requirements`, `related_concepts`, `sources`, `change_history`). La búsqueda devuelve resultados `type: code_snippet` (`ResultType`). En la ficha de concepto, los snippets salen de `GET /entities/{slug}/relations`, grupo `IMPLEMENTS` entrante (`label: implemented_by`). Mocks: `GET /snippets?limit=500`, `GET /snippets/<slug>` y `GET /entities/<slug>/relations` de los snippets (8 desde el 2026-10-01, con `bigquery-reconciliation`; 107 respuestas en total). **El contrato de snippets ya está en `main`** (ADR-008, a76907b) | Abierto |
@@ -53,6 +55,14 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Code Library: `/snippets`, `/snippets/{slug}`, `Language`, `Snippet*` y `code_snippet` en `ResultType` (ADR-008, aditivo).
 
 ## Historial
+
+### snippets-3 aplicada, snippets en la CI y lote 6 (2026-10-05)
+- Merge de `b/f3-review-snippets-3` (d53e31b, revisión de Cursor sin hallazgos). La revisión paralela de Carril A (6 hallazgos) había quedado en un commit sobre `main` local sin push (a19a3b3); se descartó de `main` y su contenido se integró en `snippets-3.md` al marcar todo `aprobada`.
+- snippets-3 aplicada: §14 Costo de `sql-merge` (según la fuente de DML de BigQuery) y de `partitioning` (Athena y Synapse); fuentes de `monkeypatch` y *Access control*; `setattr` en el logging; `Protocol` `LoadClient` en `batch-ingestion` §10 (pasa `mypy --strict` con `bigquery.Client` y con el cliente falso). Los 3 snippets `verified`.
+- Dataform: se quita la frase de la CLI; el Preview de `onSchemaChange` queda citado solo desde la referencia de core.
+- `requirements-snippets.txt` + `make snippets-deps` + paso en la CI; `tests/test_snippet_code.py`. En la CI: 518 tests, ninguno saltado.
+- Lote 6 (10 fichas `review_required`), con 77 URLs verificadas (HTTP 200, URL final igual a la citada). SQL de `sql-window-functions`, `oltp-vs-olap`, `acid` y `normalization` probado en PostgreSQL 17 local; pytest de `testing-with-pytest` ejecutado (5 tests). `test_search_flags_pages` usa `lakehouse` como concepto sin ficha.
+- Pendiente menor (fuera de alcance): `list[dict]` sin parámetros de tipo en la §10 de `data-validation-with-pydantic` (mypy `--strict` lo marca).
 
 ### Lote 5 verified, regla de §14 y 3 snippets (2026-10-04)
 - Merge de `b/f3-review-snippets-2` y `b/f3-review-5` (conflicto en `lane-b.md` resuelto combinando ambos lados). `terraform-gcs-bucket` y `terraform-bigquery-iam` `verified`.

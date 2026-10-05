@@ -45,8 +45,8 @@
           "slug": "data-warehouse",
           "title": "Data Warehouse",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "En el warehouse cloud se carga primero y se transforma dentro (ELT)."
         },
         {
           "slug": "modern-data-warehouse-architecture",

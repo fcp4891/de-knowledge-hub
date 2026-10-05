@@ -35,6 +35,13 @@
       "label": "related_to",
       "items": [
         {
+          "slug": "acid",
+          "title": "ACID",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Cerrar la versión vigente e insertar la nueva van en la misma transacción."
+        },
+        {
           "slug": "incremental-load",
           "title": "Carga incremental",
           "entity_type": "pattern",
@@ -61,6 +68,13 @@
           "entity_type": "concept",
           "origin": "entity",
           "note": "El tipo más usado tiene su propia ficha con el SQL."
+        },
+        {
+          "slug": "sql-window-functions",
+          "title": "Funciones de ventana",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "LEAD sobre la vigencia permite calcular valid_to a partir de la versión siguiente."
         },
         {
           "slug": "sql-merge",

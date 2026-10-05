@@ -49,6 +49,13 @@
       "label": "related_to",
       "items": [
         {
+          "slug": "acid",
+          "title": "ACID",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Un MERGE es atómico como sentencia; varias sentencias necesitan una transacción."
+        },
+        {
           "slug": "cdc-architecture",
           "title": "Arquitectura CDC (PostgreSQL → BigQuery)",
           "entity_type": "architecture",

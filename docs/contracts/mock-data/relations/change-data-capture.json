@@ -140,6 +140,13 @@
           "note": "MERGE es la forma habitual de aplicar un lote de cambios en el destino."
         },
         {
+          "slug": "oltp-vs-olap",
+          "title": "OLTP vs OLAP",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "CDC lleva los cambios del OLTP al OLAP sin consultas pesadas sobre el origen."
+        },
+        {
           "slug": "incremental-pipelines",
           "title": "Pipelines incrementales",
           "entity_type": "pattern",

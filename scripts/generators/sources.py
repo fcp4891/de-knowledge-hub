@@ -160,7 +160,9 @@ BATCH1 = [
      'https://docs.aws.amazon.com/lake-formation/latest/dg/what-is-lake-formation.html', 'official_docs', 1, 'aws', True, "quarterly", ['aws-lake-formation']),
     ('aws-sns-docs', 'Amazon SNS Developer Guide', 'Guía oficial para desarrolladores de Amazon Simple Notification Service.',
      'https://docs.aws.amazon.com/sns/latest/dg/welcome.html', 'official_docs', 1, 'aws', True, "quarterly", []),    ('pytest-docs', 'pytest documentation', 'Documentación oficial de pytest.',
-     'https://docs.pytest.org/en/stable/', 'official_docs', 1, 'pytest-dev', True, "quarterly", ['pytest']),
+     'https://docs.pytest.org/en/stable/', 'official_docs', 1, 'pytest-dev', True, "quarterly", ['pytest']),    ('apache-spark-docs', 'Apache Spark documentation', 'Documentación oficial de Apache Spark.',
+     'https://spark.apache.org/docs/latest/', 'official_docs', 1, 'apache', True, "quarterly", ['apache-spark']),    ('aws-firehose-docs', 'Amazon Data Firehose Developer Guide', 'Guía oficial para desarrolladores de Amazon Data Firehose.',
+     'https://docs.aws.amazon.com/firehose/latest/dev/what-is-this-service.html', 'official_docs', 1, 'aws', True, "quarterly", []),
 ]
 
 
@@ -173,7 +175,7 @@ def review_frequency(slug: str, source_type: str) -> str:
 
 
 BATCH1_DATE = "2026-09-30"
-LATER_DATES = {slug: "2026-10-01" for slug in ("psycopg-docs", "gcp-iam-docs", "gcp-terraform-docs", "gcp-infrastructure-manager-docs", "aws-s3-docs", "aws-iam-docs", "aws-cloudformation-docs", "aws-eventbridge-scheduler-docs", "pydantic-docs", "dbt-docs", "gcp-cloud-logging-docs", "aws-cloudwatch-logs-docs", "aws-lake-formation-docs", "aws-sns-docs")} | {"pytest-docs": "2026-10-04"}  # fuentes de BATCH1 agregadas después del 2026-09-30
+LATER_DATES = {slug: "2026-10-01" for slug in ("psycopg-docs", "gcp-iam-docs", "gcp-terraform-docs", "gcp-infrastructure-manager-docs", "aws-s3-docs", "aws-iam-docs", "aws-cloudformation-docs", "aws-eventbridge-scheduler-docs", "pydantic-docs", "dbt-docs", "gcp-cloud-logging-docs", "aws-cloudwatch-logs-docs", "aws-lake-formation-docs", "aws-sns-docs")} | {"pytest-docs": "2026-10-04", "apache-spark-docs": "2026-10-05", "aws-firehose-docs": "2026-10-05"}  # fuentes de BATCH1 agregadas después del 2026-09-30
 
 
 def entry(row: tuple[Any, ...], created: str = TODAY) -> dict[str, Any]:
