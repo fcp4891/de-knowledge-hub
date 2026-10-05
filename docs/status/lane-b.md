@@ -6,12 +6,12 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-05
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote 6, filas en pendiente en `docs/reviews/cards-lote6.md`.
-- **Siguiente:** esperar la aprobación de Felipe.
+- **Tarea activa:** ninguna. B-F3.1 del lote 6 quedó aprobada.
+- **Siguiente:** esperar los lotes del dominio 01.
 - **Bloqueos:** ninguno.
 
 ### B-F3.1 · lote 6
-- Diez fichas, tabla de §48. `bigquery-cost-model` no trae montos. Tres precisiones del modelo de precios quedan propuestas. No se editó `content/`.
+- Diez fichas, tabla de §48. Felipe aprobó todas las filas el 2026-10-05, incluidas las tres precisiones de `bigquery-cost-model`: compromisos solo de Enterprise y Enterprise Plus, time travel y fail-safe en almacenamiento físico, y BigQuery ML dentro de los slots de esas ediciones. No se editó `content/`.
 
 ### B-F3.2 · snippets 3
 - Tres snippets y el §14 de `98bc285` (`bigquery-partitioning`, `dead-letter-queue`, `etl-vs-elt`, `incremental-load`, `partitioning`, `scd-type-2`, `sql-merge`). No se editó `content/`.
