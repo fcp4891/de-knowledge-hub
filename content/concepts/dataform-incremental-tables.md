@@ -17,7 +17,7 @@ sources:
   - source: gcp-dataform-docs
     url: https://docs.cloud.google.com/dataform/docs/create-tables
     accessed: 2026-10-02
-    note: "Tablas y vistas se reconstruyen desde cero en cada ejecución; una tabla incremental solo la primera vez, y después inserta o fusiona filas nuevas. when(incremental(), ...) agrega la condición incremental y ${self()} referencia la tabla. uniqueKey fusiona por clave. updatePartitionFilter limita las particiones del destino que examina el MERGE y solo funciona con uniqueKey: sin uniqueKey, Dataform usa estrategia de inserción. Para no escanear toda una tabla particionada de origen, declarar el límite como variable en pre_operations (BigQuery scripting) y usarla como expresión constante. Full refresh (--full-refresh o Run with full refresh) ignora when(incremental()) y recrea con CREATE OR REPLACE; protected: true evita la reconstrucción. onSchemaChange (IGNORE por defecto, FAIL, EXTEND, SYNCHRONIZE) requiere Dataform core 3.0.11 o superior; la página (consultada el 2026-10-04) marca la sección como Preview y dice que no está disponible en la Dataform CLI."
+    note: "Tablas y vistas se reconstruyen desde cero en cada ejecución; una tabla incremental solo la primera vez, y después inserta o fusiona filas nuevas. when(incremental(), ...) agrega la condición incremental y ${self()} referencia la tabla. uniqueKey fusiona por clave. updatePartitionFilter limita las particiones del destino que examina el MERGE y solo funciona con uniqueKey: sin uniqueKey, Dataform usa estrategia de inserción. Para no escanear toda una tabla particionada de origen, declarar el límite como variable en pre_operations (BigQuery scripting) y usarla como expresión constante. Full refresh (--full-refresh o Run with full refresh) ignora when(incremental()) y recrea con CREATE OR REPLACE; protected: true evita la reconstrucción. onSchemaChange (IGNORE por defecto, FAIL, EXTEND, SYNCHRONIZE) requiere Dataform core 3.0.11 o superior."
   - source: gcp-dataform-docs
     url: https://docs.cloud.google.com/dataform/docs/reference/dataform-core-reference
     accessed: 2026-10-04
@@ -59,7 +59,7 @@ relations:
     target: schema-evolution
     note: Cambiar columnas de una incremental exige full refresh u onSchemaChange (Preview).
 created_at: 2026-10-02
-updated_at: 2026-10-04
+updated_at: 2026-10-05
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -173,7 +173,7 @@ El margen de 2 horas relee eventos tardíos; `uniqueKey` evita duplicarlos. `upd
 
 ## 11. GCP
 
-**Dataform** compila el SQLX a sentencias de BigQuery (`CREATE`, `INSERT`, `MERGE`) y las ejecuta en el orden de dependencias del workflow. Además de lo anterior, ofrece `onSchemaChange` para agregar o quitar columnas sin full refresh. Al 2026-10-04 esa opción está en **Preview** según la referencia de Dataform core, requiere Dataform core 3.0.11 o superior y la página *Create tables* indica que no está disponible en la Dataform CLI. Sus valores son `IGNORE` (por defecto), `FAIL`, `EXTEND` y `SYNCHRONIZE`, y este último puede borrar columnas sin vuelta atrás. El snippet `dataform-incremental-model` muestra la variante mínima.
+**Dataform** compila el SQLX a sentencias de BigQuery (`CREATE`, `INSERT`, `MERGE`) y las ejecuta en el orden de dependencias del workflow. Además de lo anterior, ofrece `onSchemaChange` para agregar o quitar columnas sin full refresh. Al 2026-10-04 esa opción está en **Preview** según la referencia de Dataform core, y requiere Dataform core 3.0.11 o superior. Sus valores son `IGNORE` (por defecto), `FAIL`, `EXTEND` y `SYNCHRONIZE`, y este último puede borrar columnas sin vuelta atrás. El snippet `dataform-incremental-model` muestra la variante mínima.
 
 ## 12. AWS
 
@@ -241,3 +241,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-02: creación (lote 5 de F3).
 - 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14; `dbt-fabric` (Warehouse) y `dbt-fabricspark` (Lakehouse) con fuente de Microsoft Learn; Preview de `onSchemaChange` citado desde la referencia de Dataform core.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
+- 2026-10-05: se quita la frase sobre la Dataform CLI sustentada en *Create tables*; queda solo el Preview de `onSchemaChange` citado desde la referencia de Dataform core.
