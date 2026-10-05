@@ -6,12 +6,12 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-05
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote F3b-01a, filas en pendiente en `docs/reviews/cards-f3b-01a.md`.
-- **Siguiente:** esperar la aprobación de Felipe.
+- **Tarea activa:** ninguna. B-F3.1 del lote F3b-01a quedó aprobada.
+- **Siguiente:** esperar el lote F3b-01b.
 - **Bloqueos:** ninguno.
 
 ### B-F3.1 · lote F3b-01a
-- Diez fichas de 01-fundamentals y el cambio de tipos en la §10 de `data-validation-with-pydantic`. `cap-theorem` coincide con Gilbert y Lynch; `lakehouse` se presenta como complemento del warehouse. En `what-is-data-engineering` el resumen junta piezas que no están en las tres certificaciones. No se editó `content/`.
+- Diez fichas de 01-fundamentals y el cambio de tipos en la §10 de `data-validation-with-pydantic`. Felipe aprobó todas las filas el 2026-10-05, incluidas la disponibilidad según Gilbert y Lynch, la fuente de Lake Formation, la atribución por proveedor en `what-is-data-engineering`, las fuentes de `data-ingestion` y el `COPY` de Redshift, y el `REPLACE` de `data-transformation`. No se editó `content/`.
 
 ### B-F3.1 · lote 6
 - Diez fichas, tabla de §48. Felipe aprobó todas las filas el 2026-10-05, incluidas las tres precisiones de `bigquery-cost-model`: compromisos solo de Enterprise y Enterprise Plus, time travel y fail-safe en almacenamiento físico, y BigQuery ML dentro de los slots de esas ediciones. No se editó `content/`.
