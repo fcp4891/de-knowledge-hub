@@ -3,12 +3,15 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-04
+**Última actualización:** 2026-10-05
 
 ## Actual
-- **Tarea activa:** en espera del lote 6.
+- **Tarea activa:** en espera del lote 6. La revisión de `python-structured-logging`, `pytest-ingestion-test`, `pubsub-subscription-terraform` y del §14 de siete fichas del lote 1 está en `docs/reviews/snippets-3.md`, filas en pendiente.
 - **Siguiente:** B-F3.1 del lote 6, cuando Carril A lo deje en `main`.
 - **Bloqueos:** ninguno.
+
+### B-F3.2 · snippets 3
+- Tres snippets y el §14 de `98bc285` (`bigquery-partitioning`, `dead-letter-queue`, `etl-vs-elt`, `incremental-load`, `partitioning`, `scd-type-2`, `sql-merge`). No se editó `content/`.
 
 ### B-F3.1 · lote 5
 - Diez fichas, tabla de §48. Felipe aprobó todas las filas el 2026-10-04, incluidas `dbt-fabric` y `dbt-fabricspark`, la fuente de Preview de `onSchemaChange` y la viñeta de Observabilidad en §14. No se editó `content/`.
