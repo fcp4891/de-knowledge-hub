@@ -15,7 +15,7 @@ level: intermediate
 cloud: [gcp]
 technologies: [pytest, pydantic, gcp-bigquery, python]
 tags: [python, testing, ingestion, data-quality]
-related_topics: [data-validation-with-pydantic, batch-ingestion, idempotency]
+related_topics: [testing-with-pytest, data-validation-with-pydantic, batch-ingestion, idempotency]
 sources:
   - source: pytest-docs
     url: https://docs.pytest.org/en/stable/how-to/assert.html
@@ -50,6 +50,9 @@ sources:
     accessed: 2026-10-04
     note: "Un decorador de partición (tabla$AAAAMMDD) dirige la carga a esa partición; para sobrescribirla en lugar de agregar, la carga debe reemplazar (bq load --replace=true)."
 relations:
+  - type: IMPLEMENTS
+    target: testing-with-pytest
+    note: Assert simple, parametrize y un cliente falso inyectado (Protocol), sin red ni credenciales.
   - type: IMPLEMENTS
     target: data-validation-with-pydantic
     note: Comprueba que los válidos pasan y que cada inválido se rechaza con su tipo de error, sin copiar el dato recibido.
@@ -183,7 +186,7 @@ Ver `requirements` en el encabezado. Con `ingest.py` en la raíz y el test en `t
 
 - `data-validation-with-pydantic` y `batch-ingestion`: lo que prueba.
 - `idempotency`: la propiedad que fija el test de repetición.
-- Del blueprint, pendiente de ficha (lote 6): `testing-with-pytest`.
+- `testing-with-pytest`: el concepto que aplica.
 
 ## 9. Fuentes
 
@@ -198,3 +201,4 @@ El detalle está en `sources` del encabezado.
 
 - 2026-10-04: creación (propuesta aprobada tras el lote 5), sobre el código de las secciones 10 de `data-validation-with-pydantic` y `batch-ingestion`.
 - 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`) aplicada: fuente de `monkeypatch` y cliente tipado con `Protocol`. `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-05: implementa también `testing-with-pytest`, verificada en el lote 6.

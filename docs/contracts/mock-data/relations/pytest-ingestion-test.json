@@ -14,6 +14,13 @@
           "note": "Comprueba que la carga apunta a la partición del día con WRITE_TRUNCATE y que repetirla emite el mismo job."
         },
         {
+          "slug": "testing-with-pytest",
+          "title": "Testing con pytest",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Assert simple, parametrize y un cliente falso inyectado (Protocol), sin red ni credenciales."
+        },
+        {
           "slug": "data-validation-with-pydantic",
           "title": "Validación de datos con Pydantic",
           "entity_type": "concept",

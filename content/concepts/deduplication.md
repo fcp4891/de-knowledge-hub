@@ -12,7 +12,7 @@ importance: high
 cloud: [gcp, aws, azure, agnostic]
 technologies: [gcp-bigquery, aws-redshift, microsoft-fabric]
 tags: [sql, deduplication, window-functions, data-quality]
-related_topics: [upsert, sql-merge, idempotency, pubsub-delivery-semantics]
+related_topics: [upsert, sql-merge, idempotency, pubsub-delivery-semantics, sql-window-functions]
 sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/numbering_functions
@@ -51,8 +51,11 @@ relations:
   - type: RELATED_TO
     target: pubsub-delivery-semantics
     note: La entrega at-least-once produce duplicados que se eliminan aguas abajo con este patrón.
+  - type: DEPENDS_ON
+    target: sql-window-functions
+    note: El patrón se apoya en ROW_NUMBER sobre una partición por clave.
 created_at: 2026-10-02
-updated_at: 2026-10-04
+updated_at: 2026-10-05
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -185,7 +188,7 @@ En **T-SQL** (Synapse dedicated SQL pool, Fabric Warehouse) no se usa `QUALIFY`:
 - `upsert` y `sql-merge`: el paso siguiente a deduplicar el lote.
 - `idempotency`: deduplicar por clave hace repetibles las cargas.
 - `pubsub-delivery-semantics`: una fuente típica de duplicados.
-- Del blueprint, pendiente de ficha: `sql-window-functions`.
+- `sql-window-functions`: `ROW_NUMBER`, `PARTITION BY` y el marco de la ventana.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -214,3 +217,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-02: creación (lote 5 de F3).
 - 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
+- 2026-10-05: `sql-window-functions` deja de figurar como pendiente: ahora es relación (ficha verificada en el lote 6).

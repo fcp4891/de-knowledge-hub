@@ -10,17 +10,16 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | Lote 6 entregado (10 fichas `review_required`); snippets en la CI | Aplicar la revisión del lote 6 (F3 llega a 60 `verified`) | — |
-| B · Cursor | — | B-F3.1 del lote 6 | — |
+| A · Claude Code | Lote 6 `verified` (60 fichas `verified`) | Gate de F3; F3b por dominio, desde 01-fundamentals | — |
+| B · Cursor | — | Revisión del cambio de tipos en `data-validation-with-pydantic`; F3b | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | B-F3.1 · Revisar el lote 6 (10 fichas; ver `lane-a.md`) | Abierto |
 | A | B | Revisar el cambio de tipos en §10 de `data-validation-with-pydantic` (ver `lane-a.md`) | Abierto |
 
 ## Criterio de salida de la fase actual (F3)
-- [ ] 60–80 fichas `verified` (hoy: 60 fichas, 50 `verified` y 10 del lote 6 en revisión).
+- [x] 60–80 fichas `verified` (hoy: 60 fichas, las 60 `verified`).
 - [ ] Cero fichas sin fuentes.
 - [ ] Gate humano.
 

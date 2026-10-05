@@ -24,6 +24,7 @@
     "data-quality"
   ],
   "related_topics": [
+    "testing-with-pytest",
     "data-validation-with-pydantic",
     "batch-ingestion",
     "idempotency"
@@ -114,6 +115,7 @@
     "Guardar el código como tests/test_ingest.py y ejecutar python -m pytest desde la raíz del proyecto."
   ],
   "implements": [
+    "testing-with-pytest",
     "data-validation-with-pydantic",
     "batch-ingestion"
   ],
@@ -164,7 +166,7 @@
       "number": 8,
       "key": "related_concepts",
       "title": "Conceptos relacionados",
-      "markdown": "- `data-validation-with-pydantic` y `batch-ingestion`: lo que prueba.\n- `idempotency`: la propiedad que fija el test de repetición.\n- Del blueprint, pendiente de ficha (lote 6): `testing-with-pytest`."
+      "markdown": "- `data-validation-with-pydantic` y `batch-ingestion`: lo que prueba.\n- `idempotency`: la propiedad que fija el test de repetición.\n- `testing-with-pytest`: el concepto que aplica."
     },
     {
       "number": 9,
@@ -176,7 +178,7 @@
       "number": 10,
       "key": "change_history",
       "title": "Historial de cambios",
-      "markdown": "- 2026-10-04: creación (propuesta aprobada tras el lote 5), sobre el código de las secciones 10 de `data-validation-with-pydantic` y `batch-ingestion`.\n- 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`) aplicada: fuente de `monkeypatch` y cliente tipado con `Protocol`. `verification_status: verified` (sin VERIFY pendientes)."
+      "markdown": "- 2026-10-04: creación (propuesta aprobada tras el lote 5), sobre el código de las secciones 10 de `data-validation-with-pydantic` y `batch-ingestion`.\n- 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`) aplicada: fuente de `monkeypatch` y cliente tipado con `Protocol`. `verification_status: verified` (sin VERIFY pendientes).\n- 2026-10-05: implementa también `testing-with-pytest`, verificada en el lote 6."
     }
   ]
 }

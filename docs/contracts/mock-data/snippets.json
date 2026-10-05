@@ -29,6 +29,7 @@
       ],
       "implements": [
         "deduplication",
+        "sql-window-functions",
         "upsert"
       ],
       "verification_status": "verified"
@@ -116,6 +117,7 @@
         "gcp"
       ],
       "implements": [
+        "testing-with-pytest",
         "data-validation-with-pydantic",
         "batch-ingestion"
       ],

@@ -28,6 +28,13 @@
           "note": "Deduplica el lote por clave con QUALIFY ROW_NUMBER y se queda con la versión más reciente."
         },
         {
+          "slug": "sql-window-functions",
+          "title": "Funciones de ventana",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "ROW_NUMBER() OVER (PARTITION BY clave ORDER BY version DESC) filtrado con QUALIFY."
+        },
+        {
           "slug": "upsert",
           "title": "Upsert",
           "entity_type": "pattern",

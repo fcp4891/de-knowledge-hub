@@ -5,9 +5,9 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-05
 
 ## Actual
-- **Tarea activa:** lote 6 de F3 entregado (10 fichas `review_required`); con su revisión, F3 llega a 60 `verified`.
-- **Mergeado para Carril B:** `b/f3-review-snippets-3` (d53e31b) en `main`, 2026-10-05; `b/f3-review-5` ya estaba en `main`.
-- **Siguiente:** aplicar la revisión B-F3.1 del lote 6. Al pasar a `verified`: `bigquery-deduplicate-latest` implementa también `sql-window-functions`, `pytest-ingestion-test` implementa `testing-with-pytest`, y `deduplication` (§17) deja de listar `sql-window-functions` como pendiente.
+- **Tarea activa:** lote 6 `verified`: F3 llega a 60 fichas `verified`. Gate de F3 (prompt 0.4) en curso.
+- **Mergeado para Carril B:** `b/f3-review-6` (42193cf) en `main`, 2026-10-05. `f/sql` (esqueletos del dominio 02) no se mergea: se usará más adelante.
+- **Siguiente:** fase F3b «Contenido por dominio» (ADR-009), empezando por 01-fundamentals.
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
 
@@ -16,7 +16,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 |---|---|
 | ~~B-F3.1 · Revisar el lote 4~~ (10 fichas): `infrastructure-as-code`, `terraform-providers`, `terraform-state`, `terraform-plan-apply`, `gcs-buckets-and-objects`, `gcp-iam-for-data`, `dimension-tables`, `python-api-consumption`, `scheduler` y `file-ingestion`. Sin VERIFY abiertos. Revisar también la §10 nueva de `pubsub-delivery-semantics` (consumidor real de Pub/Sub) | Cerrado (revisión aplicada; las 40 fichas `verified`) |
 | ~~B-F3.1 · Revisar los snippets~~ (`snippets-1.md`) | Cerrado (los 8 `verified`) |
-| **B-F3.1 · Revisar el lote 6** (10 fichas): `row-vs-columnar-formats`, `testing-with-pytest`, `sql-window-functions`, `grain`, `data-warehouse`, `streaming-ingestion`, `oltp-vs-olap`, `bigquery-cost-model` (solo el modelo de precios, sin montos), `acid` y `normalization`. Sin VERIFY. Fuentes nuevas Nivel 1: `apache-spark-docs` y `aws-firehose-docs` | Abierto |
+| ~~B-F3.1 · Revisar el lote 6~~ (10 fichas): `row-vs-columnar-formats`, `testing-with-pytest`, `sql-window-functions`, `grain`, `data-warehouse`, `streaming-ingestion`, `oltp-vs-olap`, `bigquery-cost-model` (solo el modelo de precios, sin montos), `acid` y `normalization`. Sin VERIFY. Fuentes nuevas Nivel 1: `apache-spark-docs` y `aws-firehose-docs` | Cerrado (revisión aplicada; las 60 fichas `verified`) |
 | **Revisar cambio mínimo en `data-validation-with-pydantic`** (`verified`): en §10, `list[dict]` pasa a `list[dict[str, Any]]` (y `from typing import Any`) para pasar `mypy --strict`. Sin cambio de comportamiento; registrado en su historial | Abierto |
 | **Snippets que se ejecutan en la CI** (informativo): `requirements-snippets.txt` y `make snippets-deps`; `tests/test_snippet_code.py` ejecuta `pytest-ingestion-test` (7 tests, armando `ingest.py` desde las fichas) y `python-structured-logging`. Si Carril B corre `make test` en su worktree sin esas dependencias, el test de ingesta aparece como *skipped* | Informativo |
 | ~~Revisar 3 snippets nuevos~~ (`snippets-3.md`), en `review_required`: `python-structured-logging` (JSON a stdout, `run_id` por filtro en el handler, redacción de campos sensibles de `extra`), `pytest-ingestion-test` (7 tests sin red ni credenciales sobre `validate_page` y `load_day`) y `pubsub-subscription-terraform` (dead letter con los permisos del agente de servicio de Pub/Sub, `*_iam_member`). Fuente nueva `pytest-docs` (Nivel 1) | Cerrado (los 3 `verified`) |
@@ -56,6 +56,10 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Code Library: `/snippets`, `/snippets/{slug}`, `Language`, `Snippet*` y `code_snippet` en `ResultType` (ADR-008, aditivo).
 
 ## Historial
+
+### Lote 6 verified (2026-10-05)
+- Merge de `b/f3-review-6`. Revisión del lote 6 aplicada: en `bigquery-cost-model`, compromisos solo en Enterprise y Enterprise Plus, time travel y fail-safe cobrados solo con facturación física, y BigQuery ML incluido en las reservas de esas ediciones (página de precios consultada el 2026-10-05). Las 10 fichas `verified`: 60 en total.
+- Pendientes aplicados: `bigquery-deduplicate-latest` implementa `sql-window-functions`; `pytest-ingestion-test` implementa `testing-with-pytest`; `deduplication` pasa `sql-window-functions` de pendiente a relación (`DEPENDS_ON`).
 
 ### Tipos en data-validation-with-pydantic (2026-10-05)
 - §10: `list[dict]` → `list[dict[str, Any]]` en `validate_page` y `rejected`, con `from typing import Any`. Se usa `Any` porque `pytest-ingestion-test` indexa los valores (`rejected[0]["errors"]`). `mypy --strict` pasa sobre el bloque, sobre `ingest.py` armado desde las fichas y sobre el test del snippet (7 tests en verde). La ficha sigue `verified`; pendiente de revisión de Cursor. Las 10 fichas del lote 6 no se tocaron.

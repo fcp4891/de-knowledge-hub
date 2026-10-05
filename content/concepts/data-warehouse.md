@@ -67,7 +67,7 @@ relations:
 created_at: 2026-10-05
 updated_at: 2026-10-05
 last_verified: 2026-10-05
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -210,8 +210,9 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-05. En `review_required` hasta la revisión B-F3.1 del lote 6.
+2026-10-05. Pasa a `verified`: revisión B-F3.1 del lote 6 aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-05: creación (lote 6 de F3).
+- 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).

@@ -18,7 +18,7 @@ sources:
   - source: gcp-bigquery-docs
     url: https://cloud.google.com/bigquery/pricing
     accessed: 2026-10-05
-    note: "Dos componentes: cómputo (consultas, UDF, scripts y ciertos DML y DDL) y almacenamiento; otras operaciones se cobran aparte (Omni, BigQuery ML, BI Engine, lecturas y escrituras streaming). Cómputo on-demand: se cobran los bytes procesados por cada consulta, con un primer tramo mensual gratuito; no se cobran consultas con error ni las servidas desde caché; redondeo al MB con mínimo de 10 MB por tabla referenciada y por consulta; cancelar una consulta puede cobrar hasta su costo completo. Cómputo por capacidad: slots (CPU virtuales) en el tiempo, con pago por uso con autoscaling y compromisos opcionales de uno y tres años con descuento, mediante reservas; ediciones Standard, Enterprise y Enterprise Plus; no aplica a almacenamiento, BI Engine, inserciones streaming ni Storage API. Almacenamiento activo y long-term: pasa a long-term la tabla o partición sin modificar durante 90 días consecutivos. Los precios cambian y dependen de la región."
+    note: "Dos componentes: cómputo (consultas, UDF, scripts y ciertos DML y DDL) y almacenamiento; otras operaciones se cobran aparte (Omni, BigQuery ML, BI Engine, lecturas y escrituras streaming). Cómputo on-demand: se cobran los bytes procesados por cada consulta, con un primer tramo mensual gratuito; no se cobran consultas con error ni las servidas desde caché; redondeo al MB con mínimo de 10 MB por tabla referenciada y por consulta; cancelar una consulta puede cobrar hasta su costo completo. Cómputo por capacidad: slots (CPU virtuales) en el tiempo, mediante reservas, con pago por uso con autoscaling; ediciones Standard, Enterprise y Enterprise Plus; los compromisos opcionales de uno y tres años con descuento existen solo en Enterprise y Enterprise Plus; con reservas de Enterprise o Enterprise Plus, el uso de BigQuery ML queda incluido en el uso de las ediciones; no aplica a almacenamiento, BI Engine, inserciones streaming ni Storage API. Almacenamiento activo y long-term: pasa a long-term la tabla o partición sin modificar durante 90 días consecutivos. Time travel y fail-safe no se cobran con facturación lógica y sí con facturación física. Los precios cambian y dependen de la región."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/slots
     accessed: 2026-10-05
@@ -83,7 +83,7 @@ relations:
 created_at: 2026-10-05
 updated_at: 2026-10-05
 last_verified: 2026-10-05
-verification_status: review_required
+verification_status: verified
 ---
 
 <!-- Precios y modalidades cambian: esta ficha describe el modelo, sin montos. Los precios vigentes están en la página de precios de BigQuery, por región. -->
@@ -93,7 +93,7 @@ verification_status: review_required
 BigQuery cobra por separado el **cómputo** y el **almacenamiento**. Para el cómputo hay dos modelos:
 
 - **on-demand**, por bytes procesados en cada consulta;
-- **capacidad**, por slots (CPU virtuales) en el tiempo, con reservas, ediciones y compromisos opcionales.
+- **capacidad**, por slots (CPU virtuales) en el tiempo, con reservas y ediciones; los compromisos opcionales son solo de Enterprise y Enterprise Plus.
 
 El almacenamiento distingue datos **activos** y **long-term** (sin modificar durante 90 días), y cada dataset elige facturar en bytes **lógicos** o **físicos**. Esta ficha explica el modelo y sus palancas, sin montos: los precios cambian y dependen de la región.
 
@@ -104,10 +104,10 @@ Es el esquema de facturación de BigQuery, un servicio administrado de Google Cl
 | Componente | Modelo | Qué se mide |
 |---|---|---|
 | Cómputo | On-demand | Bytes procesados por consulta |
-| Cómputo | Capacidad (editions) | Slots en el tiempo, vía reservas; pago por uso con autoscaling o compromisos de 1 o 3 años |
+| Cómputo | Capacidad (editions) | Slots en el tiempo, vía reservas; Standard, pago por uso con autoscaling; Enterprise y Enterprise Plus, además, compromisos de 1 o 3 años |
 | Almacenamiento | Activo / long-term | Datos modificados en los últimos 90 días o no |
 | Almacenamiento | Lógico / físico | Bytes sin comprimir o comprimidos (por dataset) |
-| Otros | Aparte | Inserciones y lecturas streaming, BigQuery ML, BI Engine, Omni |
+| Otros | Aparte | Inserciones y lecturas streaming, BI Engine, Omni; BigQuery ML aparte, salvo con reservas de Enterprise o Enterprise Plus, donde entra en el uso de las ediciones |
 
 ## 3. Problema que resuelve
 
@@ -121,11 +121,11 @@ Sin entender el modelo aparecen sorpresas: un tablero que escanea toda la tabla 
    - cancelar una consulta puede costar hasta su costo completo.
 
    Como el almacenamiento es columnar, se pagan las columnas leídas de las particiones leídas. `LIMIT` no reduce el costo en tablas no clusterizadas.
-2. **Capacidad:** se compran slots mediante **reservas**, en tres ediciones (Standard, Enterprise, Enterprise Plus), con pago por uso y autoscaling o con compromisos de 1 o 3 años con descuento. Cubre consultas, DML y DDL, pero no el almacenamiento, las inserciones streaming ni la Storage API.
+2. **Capacidad:** se compran slots mediante **reservas**, en tres ediciones (Standard, Enterprise, Enterprise Plus), con pago por uso y autoscaling. Los compromisos de 1 o 3 años con descuento existen solo en Enterprise y Enterprise Plus; Standard es solo pago por uso. Con reservas de esas dos ediciones, BigQuery ML queda incluido en el uso de las ediciones. Cubre consultas, DML y DDL, pero no el almacenamiento, las inserciones streaming ni la Storage API.
 3. **Almacenamiento:**
    - **activo** si la tabla o partición se modificó en los últimos 90 días, **long-term** si no; el cambio es automático;
    - por dataset, **lógico** (sin comprimir, el valor por defecto) o **físico** (comprimido);
-   - time travel y fail-safe retienen datos borrados por un tiempo, lo que también ocupa almacenamiento.
+   - time travel y fail-safe retienen datos borrados por un tiempo: con facturación lógica no se cobran; con facturación física, sí. Conviene considerarlo al elegir el modelo.
 4. **Controles:**
    - dry run para estimar antes de ejecutar;
    - máximo de bytes facturados por consulta: falla sin cargo si la estimación lo supera;
@@ -213,7 +213,7 @@ Para pasar a TiB se divide por 1024⁴. El costo se obtiene multiplicando por el
 En **BigQuery**, la decisión principal es on-demand frente a capacidad, y puede ser distinta por proyecto o carga:
 
 - **On-demand:** no requiere planificar y se paga por bytes, así que el diseño (columnas, particiones, clustering) es directamente costo.
-- **Capacidad:** da costo predecible por slots, con editions, reservas y compromisos; el diseño afecta el tiempo y la concurrencia más que la factura.
+- **Capacidad:** da costo predecible por slots, con editions y reservas (y compromisos en Enterprise y Enterprise Plus); el diseño afecta el tiempo y la concurrencia más que la factura.
 
 El almacenamiento se cobra aparte en ambos casos, con su propio modelo (activo o long-term, lógico o físico).
 
@@ -280,8 +280,9 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-05. En `review_required` hasta la revisión B-F3.1 del lote 6. Precios y modalidades cambian: revisar con la frecuencia del registro de fuentes.
+2026-10-05. Pasa a `verified`: revisión B-F3.1 del lote 6 aplicada, sin VERIFY pendientes. Precios y modalidades cambian: revisar con la frecuencia del registro de fuentes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-05: creación (lote 6 de F3).
+- 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md): compromisos solo en Enterprise y Enterprise Plus, time travel y fail-safe solo cobrados con facturación física, y BigQuery ML incluido en las reservas de esas ediciones. `verification_status: verified` (sin VERIFY pendientes).

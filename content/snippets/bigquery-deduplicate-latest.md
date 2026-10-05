@@ -15,7 +15,7 @@ level: intermediate
 cloud: [gcp]
 technologies: [gcp-bigquery]
 tags: [sql, bigquery, deduplication, upsert]
-related_topics: [deduplication, upsert, sql-merge, idempotency]
+related_topics: [deduplication, sql-window-functions, upsert, sql-merge, idempotency]
 sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax
@@ -34,6 +34,9 @@ relations:
     target: deduplication
     note: Deduplica el lote por clave con QUALIFY ROW_NUMBER y se queda con la versión más reciente.
   - type: IMPLEMENTS
+    target: sql-window-functions
+    note: ROW_NUMBER() OVER (PARTITION BY clave ORDER BY version DESC) filtrado con QUALIFY.
+  - type: IMPLEMENTS
     target: upsert
     note: Upsert por clave con deduplicación previa y condición de versión.
   - type: USES
@@ -43,7 +46,7 @@ relations:
     target: idempotency
     note: Aplicar el mismo lote dos veces deja la tabla igual.
 created_at: 2026-10-01
-updated_at: 2026-10-04
+updated_at: 2026-10-05
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -105,6 +108,7 @@ Ver `requirements` en el encabezado. Ejecutar como una consulta de BigQuery desp
 - `sql-merge`: la sentencia que lo aplica.
 - `idempotency`: por qué repetirlo es seguro.
 - `deduplication`: el patrón de deduplicación por clave que aplica antes del `MERGE`.
+- `sql-window-functions`: `ROW_NUMBER` con `QUALIFY`.
 
 ## 9. Fuentes
 
@@ -117,3 +121,4 @@ El detalle está en `sources` del encabezado.
 - 2026-10-01: creación (A-F3.2), desde el bloque de BigQuery de la sección 10 de `upsert` tras la revisión B-F3.1 del lote 2.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).
 - 2026-10-04: implementa también `deduplication`, verificada en el lote 5.
+- 2026-10-05: implementa también `sql-window-functions`, verificada en el lote 6.
