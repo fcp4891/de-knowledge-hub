@@ -38,6 +38,10 @@ sources:
     accessed: 2026-10-04
     note: "El agente de servicio service-NÚMERO_DE_PROYECTO@gcp-sa-pubsub.iam.gserviceaccount.com necesita roles/pubsub.publisher en el topic de dead letter (para reenviar los mensajes no entregables) y roles/pubsub.subscriber en la suscripción de origen (para confirmarlos)."
   - source: gcp-pubsub-docs
+    url: https://docs.cloud.google.com/pubsub/docs/access-control
+    accessed: 2026-10-05
+    note: "Pub/Sub Subscriber (roles/pubsub.subscriber) da acceso a consumir mensajes de una suscripción; se puede conceder a nivel de suscripción, topic o snapshot. Pub/Sub Publisher (roles/pubsub.publisher) da acceso a publicar en un topic."
+  - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/subscription-overview
     accessed: 2026-10-04
     note: "Solo los mensajes publicados después de crear la suscripción están disponibles para ella."
@@ -60,9 +64,9 @@ relations:
     target: infrastructure-as-code
     note: Recursos y permisos declarados y versionados en Terraform.
 created_at: 2026-10-04
-updated_at: 2026-10-04
-last_verified: 2026-10-04
-verification_status: review_required
+updated_at: 2026-10-05
+last_verified: 2026-10-05
+verification_status: verified
 ---
 
 ## 1. Qué resuelve
@@ -203,10 +207,11 @@ Ver `requirements` en el encabezado. Validar sin credenciales con `terraform ini
 ## 9. Fuentes
 
 - HashiCorp: documentación de `google_pubsub_subscription`, `google_pubsub_topic_iam`, `google_pubsub_subscription_iam` y del data source `google_project` (repositorio oficial del provider).
-- Google Cloud: *Dead-letter topics*, *Subscription overview*, *Subscription properties* y *Filter messages from a subscription* (Pub/Sub).
+- Google Cloud: *Dead-letter topics*, *Access control with IAM*, *Subscription overview*, *Subscription properties* y *Filter messages from a subscription* (Pub/Sub).
 
 El detalle está en `sources` del encabezado.
 
 ## 10. Historial de cambios
 
 - 2026-10-04: creación (propuesta aprobada tras el lote 5), desde la sección 10 de `pubsub-topics-and-subscriptions` con los permisos del agente de servicio.
+- 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`) aplicada: fuente de *Access control* para el rol de los consumidores. `verification_status: verified` (sin VERIFY pendientes).

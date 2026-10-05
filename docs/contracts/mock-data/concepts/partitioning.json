@@ -68,8 +68,8 @@
     }
   ],
   "created_at": "2026-09-30",
-  "updated_at": "2026-10-04",
-  "last_verified": "2026-09-30",
+  "updated_at": "2026-10-05",
+  "last_verified": "2026-10-05",
   "verification_status": "verified",
   "kind": "concept",
   "importance": "high",
@@ -160,7 +160,7 @@
       "number": 14,
       "key": "best_practices",
       "title": "Buenas prácticas",
-      "markdown": "- Elegir la columna por los filtros reales de las consultas, no por intuición.\n- Mantener un tamaño de segmento sano: ni demasiados segmentos diminutos ni uno gigante.\n- Escribir por segmento completo para que las cargas sean idempotentes.\n- Verificar el pruning en el plan o en los bytes escaneados.\n- **Costo:** en motores que cobran por datos leídos, el pruning reduce directamente el costo de cada consulta; segmentos diminutos y numerosos, en cambio, agregan sobrecarga de metadatos y archivos.\n- **Seguridad:** la partición organiza el dato, no lo protege: el control de acceso se define aparte. La expiración o el borrado por partición sirven para cumplir políticas de retención.\n- **Observabilidad:** vigilar particiones vacías, duplicadas o fuera de rango y el volumen escaneado por consulta."
+      "markdown": "- Elegir la columna por los filtros reales de las consultas, no por intuición.\n- Mantener un tamaño de segmento sano: ni demasiados segmentos diminutos ni uno gigante.\n- Escribir por segmento completo para que las cargas sean idempotentes.\n- Verificar el pruning en el plan o en los bytes escaneados.\n- **Costo:** en motores que cobran por datos leídos, el pruning reduce directamente el costo de cada consulta (Athena lo documenta así). En el otro extremo, demasiadas particiones perjudican el rendimiento (Synapse lo documenta para dedicated SQL pool).\n- **Seguridad:** la partición organiza el dato, no lo protege: el control de acceso se define aparte. La expiración o el borrado por partición sirven para cumplir políticas de retención.\n- **Observabilidad:** vigilar particiones vacías, duplicadas o fuera de rango y el volumen escaneado por consulta."
     },
     {
       "number": 15,
@@ -208,7 +208,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`)."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).\n- 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`, hallazgo 2) aplicada: §14 Costo ajustado a sus fuentes."
     }
   ]
 }

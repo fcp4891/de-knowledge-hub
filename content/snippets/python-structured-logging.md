@@ -37,9 +37,9 @@ relations:
     target: data-pipeline
     note: El run_id correlaciona todos los eventos de una ejecución del pipeline.
 created_at: 2026-10-04
-updated_at: 2026-10-04
-last_verified: 2026-10-04
-verification_status: review_required
+updated_at: 2026-10-05
+last_verified: 2026-10-05
+verification_status: verified
 ---
 
 ## 1. Qué resuelve
@@ -74,7 +74,7 @@ class RunContextFilter(logging.Filter):
         self.run_id = run_id
 
     def filter(self, record: logging.LogRecord) -> bool:
-        record.run_id = self.run_id
+        setattr(record, "run_id", self.run_id)  # LogRecord no declara run_id: setattr pasa un chequeo de tipos estricto
         for key in SENSITIVE.intersection(vars(record)):
             setattr(record, key, "[REDACTED]")
         return True  # no descarta: solo modifica el registro
@@ -163,3 +163,4 @@ El detalle está en `sources` del encabezado.
 ## 10. Historial de cambios
 
 - 2026-10-04: creación (propuesta aprobada tras el lote 5), desde la sección 10 de `python-logging` con `run_id` y redacción.
+- 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`) aplicada: `setattr` para `run_id`. `verification_status: verified` (sin VERIFY pendientes).

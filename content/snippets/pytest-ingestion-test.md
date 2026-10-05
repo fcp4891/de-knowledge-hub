@@ -29,6 +29,14 @@ sources:
     url: https://docs.pytest.org/en/stable/explanation/goodpractices.html
     accessed: 2026-10-04
     note: "pytest busca archivos test_*.py o *_test.py y recoge las funciones con prefijo test."
+  - source: pytest-docs
+    url: https://docs.pytest.org/en/stable/how-to/monkeypatch.html
+    accessed: 2026-10-05
+    note: "monkeypatch.setattr reemplaza una función o atributo durante el test (por ejemplo, una llamada a una API que no se quiere hacer); los cambios se deshacen al terminar el test o el fixture."
+  - source: python-docs
+    url: https://docs.python.org/3/library/typing.html
+    accessed: 2026-10-05
+    note: "typing.Protocol: subtipado estructural; una clase con los métodos del protocolo lo cumple sin heredar de él."
   - source: pydantic-docs
     url: https://pydantic.dev/docs/validation/latest/errors/errors/
     accessed: 2026-10-04
@@ -52,9 +60,9 @@ relations:
     target: idempotency
     note: El test de repetición fija la propiedad que hace seguros los reintentos y los backfills.
 created_at: 2026-10-04
-updated_at: 2026-10-04
-last_verified: 2026-10-04
-verification_status: review_required
+updated_at: 2026-10-05
+last_verified: 2026-10-05
+verification_status: verified
 ---
 
 ## 1. Qué resuelve
@@ -143,7 +151,7 @@ def test_repeating_a_day_issues_the_same_job() -> None:
 ## 3. Cómo funciona
 
 1. **Validación:** el test parametrizado (`@pytest.mark.parametrize`) cubre un caso por regla del modelo: monto negativo, moneda en minúsculas, campo extra y JSON inválido. Cada caso comprueba que el válido sigue pasando, que el inválido trae exactamente su `type` de error y que el error no incluye el `input`.
-2. **Cliente falso:** `load_day(client, day)` recibe el cliente como parámetro, así que el test le pasa `FakeClient`, que registra la llamada en lugar de crear un job real. El `LoadJobConfig` sí es el de la biblioteca, de modo que el test comprueba la configuración real.
+2. **Cliente falso:** `load_day(client, day)` recibe el cliente tipado con el `Protocol` `LoadClient` (sección 10 de `batch-ingestion`), que solo exige `load_table_from_uri`. `FakeClient` lo cumple por estructura, sin heredar de `bigquery.Client`, así que el test pasa un chequeo de tipos estricto; registra la llamada en lugar de crear un job real. El `LoadJobConfig` sí es el de la biblioteca, de modo que el test comprueba la configuración real.
 3. **Partición e idempotencia:** el test verifica el URI del día, el decorador `$20261001` y `WRITE_TRUNCATE`. El último test llama dos veces con la misma fecha y exige el mismo job: la propiedad que hace seguros los reintentos y los backfills.
 
 Si alguien cambia `WRITE_TRUNCATE` por `WRITE_APPEND` en `load_day`, fallan los dos tests de carga.
@@ -158,7 +166,7 @@ Si alguien cambia `WRITE_TRUNCATE` por `WRITE_APPEND` en `load_day`, fallan los 
 
 - Para comprobar que BigQuery acepta los datos reales (schema de la tabla, permisos, decorador que coincide con los datos): eso exige un test de integración contra un proyecto de prueba.
 - Para validar calidad sobre datos ya cargados: mejor aserciones SQL (Dataform, dbt) o controles de reconciliación.
-- Si la función crea su propio cliente dentro: primero refactorizarla para recibirlo, o usar `monkeypatch` de pytest para reemplazarlo.
+- Si la función crea su propio cliente dentro: primero refactorizarla para recibirlo, o usar `monkeypatch.setattr` de pytest para reemplazarlo durante el test (el cambio se deshace al terminar).
 
 ## 6. Riesgos
 
@@ -179,7 +187,8 @@ Ver `requirements` en el encabezado. Con `ingest.py` en la raíz y el test en `t
 
 ## 9. Fuentes
 
-- pytest: *How to write and report assertions in tests*, *How to parametrize fixtures and test functions* y *Good Integration Practices*.
+- pytest: *How to write and report assertions in tests*, *How to parametrize fixtures and test functions*, *How to monkeypatch/mock modules and environments* y *Good Integration Practices*.
+- Python: *typing — Support for type hints* (`Protocol`).
 - Pydantic: *Error Handling*.
 - Google Cloud: *Load Parquet data from Cloud Storage* y *Load data into partitioned tables* (BigQuery).
 
@@ -188,3 +197,4 @@ El detalle está en `sources` del encabezado.
 ## 10. Historial de cambios
 
 - 2026-10-04: creación (propuesta aprobada tras el lote 5), sobre el código de las secciones 10 de `data-validation-with-pydantic` y `batch-ingestion`.
+- 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`) aplicada: fuente de `monkeypatch` y cliente tipado con `Protocol`. `verification_status: verified` (sin VERIFY pendientes).

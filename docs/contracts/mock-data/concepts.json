@@ -393,7 +393,7 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-09-30"
+      "last_verified": "2026-10-05"
     },
     {
       "slug": "sql-advanced-select",
@@ -589,7 +589,7 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-09-30"
+      "last_verified": "2026-10-05"
     },
     {
       "slug": "sql-date-functions",

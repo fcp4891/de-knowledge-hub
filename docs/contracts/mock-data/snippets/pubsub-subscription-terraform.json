@@ -76,6 +76,15 @@
     {
       "source": "gcp-pubsub-docs",
       "title": "Pub/Sub documentation",
+      "url": "https://docs.cloud.google.com/pubsub/docs/access-control",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-05",
+      "note": "Pub/Sub Subscriber (roles/pubsub.subscriber) da acceso a consumir mensajes de una suscripción; se puede conceder a nivel de suscripción, topic o snapshot. Pub/Sub Publisher (roles/pubsub.publisher) da acceso a publicar en un topic."
+    },
+    {
+      "source": "gcp-pubsub-docs",
+      "title": "Pub/Sub documentation",
       "url": "https://docs.cloud.google.com/pubsub/docs/subscription-overview",
       "source_type": "official_docs",
       "authority_level": 1,
@@ -102,9 +111,9 @@
     }
   ],
   "created_at": "2026-10-04",
-  "updated_at": "2026-10-04",
-  "last_verified": "2026-10-04",
-  "verification_status": "review_required",
+  "updated_at": "2026-10-05",
+  "last_verified": "2026-10-05",
+  "verification_status": "verified",
   "language": "terraform",
   "dialect": "hcl",
   "requirements": [
@@ -170,13 +179,13 @@
       "number": 9,
       "key": "sources",
       "title": "Fuentes",
-      "markdown": "- HashiCorp: documentación de `google_pubsub_subscription`, `google_pubsub_topic_iam`, `google_pubsub_subscription_iam` y del data source `google_project` (repositorio oficial del provider).\n- Google Cloud: *Dead-letter topics*, *Subscription overview*, *Subscription properties* y *Filter messages from a subscription* (Pub/Sub).\n\nEl detalle está en `sources` del encabezado."
+      "markdown": "- HashiCorp: documentación de `google_pubsub_subscription`, `google_pubsub_topic_iam`, `google_pubsub_subscription_iam` y del data source `google_project` (repositorio oficial del provider).\n- Google Cloud: *Dead-letter topics*, *Access control with IAM*, *Subscription overview*, *Subscription properties* y *Filter messages from a subscription* (Pub/Sub).\n\nEl detalle está en `sources` del encabezado."
     },
     {
       "number": 10,
       "key": "change_history",
       "title": "Historial de cambios",
-      "markdown": "- 2026-10-04: creación (propuesta aprobada tras el lote 5), desde la sección 10 de `pubsub-topics-and-subscriptions` con los permisos del agente de servicio."
+      "markdown": "- 2026-10-04: creación (propuesta aprobada tras el lote 5), desde la sección 10 de `pubsub-topics-and-subscriptions` con los permisos del agente de servicio.\n- 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`) aplicada: fuente de *Access control* para el rol de los consumidores. `verification_status: verified` (sin VERIFY pendientes)."
     }
   ]
 }

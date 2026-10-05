@@ -18,7 +18,7 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax
     accessed: 2026-09-30
-    note: Sintaxis de MERGE (incluye WHEN NOT MATCHED BY SOURCE), bytes procesados y el error si un destino coincide con más de una fila de origen.
+    note: "Sintaxis de MERGE (incluye WHEN NOT MATCHED BY SOURCE) y el error si un destino coincide con más de una fila de origen. Bytes procesados en on-demand: un MERGE solo con INSERT cobra q (lo que lee la sentencia); con UPDATE o DELETE, q + t (tamaño de la tabla destino; en tablas particionadas, de las particiones afectadas)."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html
     accessed: 2026-09-30
@@ -38,8 +38,8 @@ relations:
     target: incremental-load
     note: El modo upsert de la carga incremental usa MERGE.
 created_at: 2026-09-30
-updated_at: 2026-10-04
-last_verified: 2026-09-30
+updated_at: 2026-10-05
+last_verified: 2026-10-05
 verification_status: verified
 ---
 
@@ -140,7 +140,7 @@ El `MERGE` de T-SQL aplica a SQL Server, Azure SQL Database, Azure SQL Managed I
 - Deduplicar siempre el origen por la clave de la condición `ON`.
 - Añadir una condición de versión en `WHEN MATCHED` para no retroceder datos.
 - **Observabilidad:** registrar filas insertadas, actualizadas y borradas en cada ejecución para reconciliar, y alertar ante errores por filas de origen duplicadas.
-- **Costo:** limitar el destino a la ventana afectada (particiones) cuando el motor lo permita: sin ese filtro, el `MERGE` lee el destino completo en cada ejecución.
+- **Costo:** en BigQuery (on-demand), un `MERGE` con `UPDATE` o `DELETE` cobra también el tamaño de la tabla destino, o solo el de las particiones afectadas si está particionada; con solo `INSERT`, cobra lo que lee la sentencia. Limitar el destino a la ventana afectada (particiones) reduce ese costo.
 - **Seguridad:** `MERGE` necesita en el destino los permisos de cada acción que declara (insertar, actualizar, borrar); usar una cuenta de servicio de carga, no la de consulta.
 
 ## 15. Errores frecuentes
@@ -190,3 +190,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: revisión B-F3.1 del lote 2 aplicada: en `REMOVE DUPLICATES`, los duplicados del destino sin coincidencia con el origen no se tocan.
 - 2026-09-30: `verification_status: verified` (revisión de cb77a2f (B-F3.1 del lote 2) aplicada; sin VERIFY pendientes).
 - 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).
+- 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`, hallazgo 1) aplicada: §14 Costo según la fuente de BigQuery.

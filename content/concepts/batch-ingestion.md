@@ -42,7 +42,11 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/python/docs/reference/bigquery/latest/google.cloud.bigquery.job.LoadJob
     accessed: 2026-10-02
-    note: "LoadJob.output_rows: cantidad de filas guardadas en la tabla destino (None hasta que lo informa el servidor)."
+    note: "LoadJob.output_rows: cantidad de filas guardadas en la tabla destino (None hasta que lo informa el servidor). La biblioteca incluye anotaciones de tipos (py.typed)."
+  - source: python-docs
+    url: https://docs.python.org/3/library/typing.html
+    accessed: 2026-10-05
+    note: "typing.Protocol define clases de protocolo para subtipado estructural (duck typing estático): una clase que tiene los métodos del protocolo lo cumple sin heredar de él."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_COPY.html
     accessed: 2026-10-02
@@ -75,7 +79,7 @@ relations:
     target: incremental-load
     note: Cada lote trae solo lo nuevo o lo cambiado de su ventana.
 created_at: 2026-10-02
-updated_at: 2026-10-04
+updated_at: 2026-10-05
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -148,11 +152,27 @@ flowchart LR
 # archivos en gs://empresa-lake/raw/pedidos/dt=AAAA-MM-DD/*.parquet con fecha igual a ese día;
 # credenciales con permiso para crear load jobs y escribir en la tabla.
 from datetime import date
+from typing import Protocol
 
 from google.cloud import bigquery
 
 
-def load_day(client: bigquery.Client, day: date) -> int:
+class LoadJobLike(Protocol):
+    @property
+    def output_rows(self) -> int | None: ...
+
+    def result(self) -> object: ...
+
+
+class LoadClient(Protocol):
+    """Lo único que load_day usa del cliente: bigquery.Client lo cumple, y un cliente falso de test también."""
+
+    def load_table_from_uri(
+        self, source_uris: str, destination: str, /, *, job_config: bigquery.LoadJobConfig
+    ) -> LoadJobLike: ...
+
+
+def load_day(client: LoadClient, day: date) -> int:
     uri = f"gs://empresa-lake/raw/pedidos/dt={day.isoformat()}/*.parquet"
     destination = f"proyecto.staging.pedidos${day:%Y%m%d}"  # decorador: solo esa partición
     job_config = bigquery.LoadJobConfig(
@@ -161,7 +181,7 @@ def load_day(client: bigquery.Client, day: date) -> int:
     )
     job = client.load_table_from_uri(uri, destination, job_config=job_config)
     job.result()  # espera; el job es atómico: carga todo o nada
-    return job.output_rows
+    return job.output_rows or 0  # output_rows es None hasta que el servidor lo informa
 
 
 if __name__ == "__main__":
@@ -170,6 +190,8 @@ if __name__ == "__main__":
 ```
 
 Repetir `load_day` con la misma fecha deja la partición igual: es seguro reintentar y reprocesar. Si algún archivo trae filas de otro día, BigQuery rechaza la carga porque el decorador debe coincidir con los datos.
+
+`LoadClient` es un `Protocol`: describe solo lo que `load_day` usa del cliente. `bigquery.Client` lo cumple sin heredar de él, y un cliente falso de test también, así que la función se puede probar sin red ni credenciales (snippet `pytest-ingestion-test`) y pasa un chequeo de tipos estricto.
 
 ## 11. GCP
 
@@ -228,6 +250,7 @@ Pendiente (F4).
 ## 20. Fuentes
 
 - Google Cloud: *Batch loading data*, *Load data into partitioned tables*, *Introduction to partitioned tables* y *What is BigQuery Data Transfer Service?* (BigQuery); *Load Parquet data from Cloud Storage*; referencia de `Client` y `LoadJob` (biblioteca cliente de Python).
+- Python: *typing — Support for type hints* (`Protocol`).
 - AWS: *COPY* y *Using a manifest to specify data files* (Amazon Redshift).
 - Microsoft Learn: *Copy activity in Azure Data Factory*.
 
@@ -242,3 +265,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-02: creación (lote 5 de F3).
 - 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
+- 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`, hallazgo 6) aplicada: el cliente de `load_day` se tipa con un `Protocol` (`LoadClient`).
