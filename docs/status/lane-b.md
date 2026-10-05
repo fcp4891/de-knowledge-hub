@@ -6,9 +6,12 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-05
 
 ## Actual
-- **Tarea activa:** en espera del lote 6. La revisión de `python-structured-logging`, `pytest-ingestion-test`, `pubsub-subscription-terraform` y del §14 de siete fichas del lote 1 está en `docs/reviews/snippets-3.md`, filas en pendiente.
-- **Siguiente:** B-F3.1 del lote 6, cuando Carril A lo deje en `main`.
+- **Tarea activa:** B-F3.1 del lote 6, filas en pendiente en `docs/reviews/cards-lote6.md`.
+- **Siguiente:** esperar la aprobación de Felipe.
 - **Bloqueos:** ninguno.
+
+### B-F3.1 · lote 6
+- Diez fichas, tabla de §48. `bigquery-cost-model` no trae montos. Tres precisiones del modelo de precios quedan propuestas. No se editó `content/`.
 
 ### B-F3.2 · snippets 3
 - Tres snippets y el §14 de `98bc285` (`bigquery-partitioning`, `dead-letter-queue`, `etl-vs-elt`, `incremental-load`, `partitioning`, `scd-type-2`, `sql-merge`). No se editó `content/`.
