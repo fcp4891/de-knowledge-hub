@@ -7,7 +7,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 ## Actual
 - **Tarea activa:** lote 6 `verified`: F3 llega a 60 fichas `verified`. Gate de F3 (prompt 0.4) en curso.
 - **Mergeado para Carril B:** `b/f3-review-6` (42193cf) en `main`, 2026-10-05. `f/sql` (esqueletos del dominio 02) no se mergea: se usará más adelante.
-- **Siguiente:** fase F3b «Contenido por dominio» (ADR-009), empezando por 01-fundamentals.
+- **Siguiente:** fase F3b «Contenido por dominio» (ADR-009, en `docs/ROADMAP.md`): un dominio a la vez, revisión de Cursor por lote y aprobación de Felipe en el navegador por dominio. Empieza por 01-fundamentals; plan de lotes pendiente de aprobación.
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
 
@@ -56,6 +56,9 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Code Library: `/snippets`, `/snippets/{slug}`, `Language`, `Snippet*` y `code_snippet` en `ResultType` (ADR-008, aditivo).
 
 ## Historial
+
+### F3b en el ROADMAP (2026-10-05)
+- ADR-009: fase F3b entre F3 y F4, un dominio a la vez en el orden del blueprint, lotes de 10 con los criterios de F3, revisión de Cursor por lote y aprobación de Felipe en el navegador por dominio. Las arquitecturas quedan en F4. 299 conceptos sin ficha (unos 30 lotes).
 
 ### Gate de F3 (prompt 0.4, 2026-10-05)
 - Criterio 1, 60–80 fichas `verified`: **cumplido**. 60 fichas (49 concept, 11 pattern), las 60 `verified`; además 13 snippets `verified`.

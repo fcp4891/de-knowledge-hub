@@ -1,6 +1,6 @@
 # STATUS — Data Engineering Knowledge Hub
 
-**Fase actual:** F3 — Contenido Core del MVP. F2 aprobada el 2026-09-30.
+**Fase actual:** F3 — Contenido Core del MVP (criterios 1 y 2 cumplidos; gate humano pendiente). Siguiente: F3b — Contenido por dominio (ADR-009), desde 01-fundamentals. F2 aprobada el 2026-09-30.
 **Última actualización:** 2026-10-05
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**

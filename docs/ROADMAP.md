@@ -152,6 +152,23 @@ Alcance fijo (§51): Fundamentos, SQL, Modelado, Pipelines, Arquitectura, GCP (B
 
 ---
 
+### F3b — Contenido por dominio · continuo · paralelo (ADR-009)
+
+Cambio de alcance del 2026-10-05: antes de F4 se completan las fichas de **todos** los conceptos del blueprint (MVP y no MVP), **un dominio a la vez**, en el orden del blueprint, empezando por `01-fundamentals`.
+
+| Carril A (Claude Code) | Carril B (Cursor) | Felipe |
+|---|---|---|
+| Plan de lotes de 10 del dominio | — | Aprueba el plan |
+| Fichas por lote, mismos criterios que F3 | Revisión de cada lote (B-F3.1) | Aprueba las filas |
+| Lote `verified` al aplicar la revisión | — | — |
+| — | — | Revisa el dominio completo **en el navegador** y lo aprueba antes del siguiente |
+
+**Alcance:** conceptos y patrones. Las arquitecturas (`kind: architecture`) quedan en F4.
+
+**Salida:** todos los dominios aprobados, o decisión explícita de pasar a F4 con los restantes en el backlog. **Gate humano por dominio.**
+
+---
+
 ### F4 — Architecture Lab + Labs · 1,5–2 semanas · paralelo
 
 | Carril A (Claude Code) | Carril B (Cursor) |
@@ -201,6 +218,7 @@ AWS → Azure → Modern → Emerging (§44, fases de contenido 3–5), reutiliz
 | F1 | 1,5 semanas | semana 2 |
 | F2 | 2 semanas | semana 4 |
 | F3 | 2–3 semanas | semana 7 |
+| F3b | por dominio (unos 30 lotes) | orientativo desde aquí (ADR-009) |
 | F4 | 2 semanas | semana 9 — **MVP** |
 | Uso real | 2–3 semanas | semana 12 |
 | F5 | 2–3 semanas | semana 15 |
