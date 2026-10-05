@@ -126,6 +126,13 @@
           "note": "Los consumidores de CDC deben aplicar cambios de forma idempotente ante reentregas."
         },
         {
+          "slug": "data-ingestion",
+          "title": "Ingesta de datos",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Ingesta de cambios desde bases de datos."
+        },
+        {
           "slug": "database-ingestion",
           "title": "Ingesta desde bases de datos",
           "entity_type": "concept",

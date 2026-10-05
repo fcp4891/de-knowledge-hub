@@ -1,6 +1,6 @@
 {
   "query": "idempotencia",
-  "total": 1,
+  "total": 2,
   "groups": [
     {
       "type": "concept",
@@ -14,6 +14,16 @@
           "has_page": true,
           "snippet": "Propiedad de un proceso que produce el mismo resultado final al ejecutarse una o varias veces con la misma entrada.",
           "score": 3.8
+        },
+        {
+          "slug": "data-ingestion",
+          "title": "Ingesta de datos",
+          "type": "concept",
+          "domain": "fundamentals",
+          "classification": "core",
+          "has_page": true,
+          "snippet": "Traer datos desde sus fuentes a la plataforma: los modos (batch, streaming, CDC, transferencias administradas y consulta federada), cómo elegir entre ellos y qué tienen en común (idempotencia, contrat",
+          "score": 1.8
         }
       ]
     }

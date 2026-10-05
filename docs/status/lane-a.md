@@ -5,9 +5,9 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-05
 
 ## Actual
-- **Tarea activa:** lote 6 `verified`: F3 llega a 60 fichas `verified`. Gate de F3 (prompt 0.4) en curso.
+- **Tarea activa:** F3b, dominio 01-fundamentals: lote F3b-01a entregado (10 fichas `review_required`), en revisión B-F3.1.
 - **Mergeado para Carril B:** `b/f3-review-6` (42193cf) en `main`, 2026-10-05. `f/sql` (esqueletos del dominio 02) no se mergea: se usará más adelante.
-- **Siguiente:** fase F3b «Contenido por dominio» (ADR-009, en `docs/ROADMAP.md`): un dominio a la vez, revisión de Cursor por lote y aprobación de Felipe en el navegador por dominio. Empieza por 01-fundamentals; plan de lotes pendiente de aprobación.
+- **Siguiente:** aplicar la revisión de F3b-01a y luego el lote F3b-01b (`avro-format`, `json-format`, `csv-format`, `compression`, `data-contracts`). Al pasar F3b-01a a `verified`, actualizar las menciones «pendiente de ficha» en fichas ya verificadas: `data-lake` (`lakehouse`), `data-warehouse` (`data-mart`, `lakehouse`), `data-pipeline` y `etl-vs-elt` si citan `data-ingestion`, `data-transformation` u `data-orchestration`.
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
 
@@ -16,6 +16,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 |---|---|
 | ~~B-F3.1 · Revisar el lote 4~~ (10 fichas): `infrastructure-as-code`, `terraform-providers`, `terraform-state`, `terraform-plan-apply`, `gcs-buckets-and-objects`, `gcp-iam-for-data`, `dimension-tables`, `python-api-consumption`, `scheduler` y `file-ingestion`. Sin VERIFY abiertos. Revisar también la §10 nueva de `pubsub-delivery-semantics` (consumidor real de Pub/Sub) | Cerrado (revisión aplicada; las 40 fichas `verified`) |
 | ~~B-F3.1 · Revisar los snippets~~ (`snippets-1.md`) | Cerrado (los 8 `verified`) |
+| **B-F3.1 · Revisar el lote F3b-01a** (10 fichas, 01-fundamentals): `what-is-data-engineering`, `data-lifecycle`, `data-ingestion`, `data-transformation`, `data-orchestration`, `lakehouse`, `data-mart`, `schema-on-read-vs-schema-on-write`, `data-consistency` y `cap-theorem`. Sin VERIFY. Fuentes nuevas: `gilbert-lynch-cap-2002` (Nivel 4, solo conceptual), `apache-iceberg-docs`, `delta-lake-docs`, `apache-hudi-docs`, `gcp-spanner-docs`, `gcp-data-engineer-certification`, `aws-data-engineer-certification` y `aws-what-is-data-mart` (Nivel 1). HCL en `data-lifecycle` y `data-mart` (lo valida la CI). Revisar en especial: `lakehouse` no se presenta como reemplazo del warehouse; en `cap-theorem`, la fuente de 2002 se identificó por la lista de publicaciones de Lynch y su formulación se contrastó con el paper de 2012 de los mismos autores | Abierto |
 | ~~B-F3.1 · Revisar el lote 6~~ (10 fichas): `row-vs-columnar-formats`, `testing-with-pytest`, `sql-window-functions`, `grain`, `data-warehouse`, `streaming-ingestion`, `oltp-vs-olap`, `bigquery-cost-model` (solo el modelo de precios, sin montos), `acid` y `normalization`. Sin VERIFY. Fuentes nuevas Nivel 1: `apache-spark-docs` y `aws-firehose-docs` | Cerrado (revisión aplicada; las 60 fichas `verified`) |
 | **Revisar cambio mínimo en `data-validation-with-pydantic`** (`verified`): en §10, `list[dict]` pasa a `list[dict[str, Any]]` (y `from typing import Any`) para pasar `mypy --strict`. Sin cambio de comportamiento; registrado en su historial | Abierto |
 | **Snippets que se ejecutan en la CI** (informativo): `requirements-snippets.txt` y `make snippets-deps`; `tests/test_snippet_code.py` ejecuta `pytest-ingestion-test` (7 tests, armando `ingest.py` desde las fichas) y `python-structured-logging`. Si Carril B corre `make test` en su worktree sin esas dependencias, el test de ingesta aparece como *skipped* | Informativo |
@@ -56,6 +57,12 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Code Library: `/snippets`, `/snippets/{slug}`, `Language`, `Snippet*` y `code_snippet` en `ResultType` (ADR-008, aditivo).
 
 ## Historial
+
+### F3b-01a (2026-10-05)
+- 10 fichas de 01-fundamentals en `review_required`, sin VERIFY; 60 URLs con HTTP 200, URL final igual a la citada y sin 404 «suaves» (la guía de Google Cloud «What is data engineering» responde 200 con contenido 404 y se descartó; se usaron las páginas oficiales de certificación de Google Cloud y AWS y la de Fabric Data Engineering).
+- `cap-theorem`: la prueba de Gilbert y Lynch (2002) se registra como Nivel 4 con la copia del MIT CSAIL (`Brewer6.pdf`; el DOI de ACM responde 403 a clientes automáticos). El texto del PDF no se puede extraer automáticamente (fuentes Type 3); la identidad se confirmó en la lista de publicaciones de Lynch y la formulación del teorema, en *Perspectives on the CAP Theorem* (2012), que la reproduce.
+- Código: el demo de aislamiento de `data-consistency` se ejecutó contra PostgreSQL local, (10, 7) y (10, 10); la simulación de `cap-theorem` se ejecutó y pasa `mypy --strict`; el DAG de `data-orchestration` solo se compiló (sin Airflow instalado).
+- Tests: el concepto sin ficha pasa a `data-mesh` (dominio 07) en `test_search_flags_pages` y en `test_concept_without_page_has_no_sections`.
 
 ### F3b en el ROADMAP (2026-10-05)
 - ADR-009: fase F3b entre F3 y F4, un dominio a la vez en el orden del blueprint, lotes de 10 con los criterios de F3, revisión de Cursor por lote y aprobación de Felipe en el navegador por dominio. Las arquitecturas quedan en F4. 299 conceptos sin ficha (unos 30 lotes).

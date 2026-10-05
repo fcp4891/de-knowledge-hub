@@ -1,6 +1,6 @@
 {
   "query": "streaming",
-  "total": 13,
+  "total": 14,
   "groups": [
     {
       "type": "concept",
@@ -54,6 +54,16 @@
           "has_page": true,
           "snippet": "Ingerir eventos de forma continua, a medida que se producen: brokers (Pub/Sub, Kafka, Kinesis, Event Hubs), entrega al menos una vez, tiempo de evento, ventanas y watermarks, escritura a BigQuery o al",
           "score": 5.8
+        },
+        {
+          "slug": "data-ingestion",
+          "title": "Ingesta de datos",
+          "type": "concept",
+          "domain": "fundamentals",
+          "classification": "core",
+          "has_page": true,
+          "snippet": "Traer datos desde sus fuentes a la plataforma: los modos (batch, streaming, CDC, transferencias administradas y consulta federada), cómo elegir entre ellos y qué tienen en común (idempotencia, contrat",
+          "score": 1.8
         },
         {
           "slug": "late-arriving-data",

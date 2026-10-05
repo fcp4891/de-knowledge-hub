@@ -162,7 +162,22 @@ BATCH1 = [
      'https://docs.aws.amazon.com/sns/latest/dg/welcome.html', 'official_docs', 1, 'aws', True, "quarterly", []),    ('pytest-docs', 'pytest documentation', 'Documentación oficial de pytest.',
      'https://docs.pytest.org/en/stable/', 'official_docs', 1, 'pytest-dev', True, "quarterly", ['pytest']),    ('apache-spark-docs', 'Apache Spark documentation', 'Documentación oficial de Apache Spark.',
      'https://spark.apache.org/docs/latest/', 'official_docs', 1, 'apache', True, "quarterly", ['apache-spark']),    ('aws-firehose-docs', 'Amazon Data Firehose Developer Guide', 'Guía oficial para desarrolladores de Amazon Data Firehose.',
-     'https://docs.aws.amazon.com/firehose/latest/dev/what-is-this-service.html', 'official_docs', 1, 'aws', True, "quarterly", []),
+     'https://docs.aws.amazon.com/firehose/latest/dev/what-is-this-service.html', 'official_docs', 1, 'aws', True, "quarterly", []),    ('gilbert-lynch-cap-2002', "Brewer's conjecture and the feasibility of consistent, available, partition-tolerant web services (Gilbert y Lynch, 2002)",
+     'Prueba formal del teorema CAP (SIGACT News 33(2):48-51, 2002), copia publicada por el grupo TDS del MIT CSAIL: referencia conceptual canónica (Nivel 4); no respalda afirmaciones de producto.',
+     'https://groups.csail.mit.edu/tds/papers/Gilbert/Brewer6.pdf', 'spec_paper', 4, 'mit-csail', True, "quarterly", []),
+    ('apache-iceberg-docs', 'Apache Iceberg documentation', 'Documentación oficial de Apache Iceberg.',
+     'https://iceberg.apache.org/docs/latest/', 'official_docs', 1, 'apache', True, "quarterly", ['apache-iceberg']),
+    ('delta-lake-docs', 'Delta Lake documentation', 'Documentación oficial de Delta Lake.',
+     'https://docs.delta.io/index.html', 'official_docs', 1, 'delta-lake', True, "quarterly", ['delta-lake']),
+    ('apache-hudi-docs', 'Apache Hudi documentation', 'Documentación oficial de Apache Hudi.',
+     'https://hudi.apache.org/docs/overview/', 'official_docs', 1, 'apache', True, "quarterly", ['apache-hudi']),
+    ('gcp-spanner-docs', 'Spanner documentation', 'Documentación oficial de Spanner (Google Cloud).',
+     'https://docs.cloud.google.com/spanner/docs/true-time-external-consistency', 'official_docs', 1, 'gcp', True, "quarterly", []),
+    ('gcp-data-engineer-certification', 'Google Cloud Professional Data Engineer', 'Página oficial de Google Cloud que describe el rol y la certificación Professional Data Engineer.',
+     'https://cloud.google.com/learn/certification/data-engineer', 'official_docs', 1, 'gcp', True, "quarterly", []),
+    ('aws-data-engineer-certification', 'AWS Certified Data Engineer - Associate', 'Página oficial de AWS que describe las competencias de la certificación Data Engineer - Associate.',
+     'https://aws.amazon.com/certification/certified-data-engineer-associate/', 'official_docs', 1, 'aws', True, "quarterly", []),    ('aws-what-is-data-mart', 'What is a Data Mart? (AWS)', 'Página oficial de AWS que explica qué es un data mart, sus tipos y su relación con el data warehouse y el data lake.',
+     'https://aws.amazon.com/what-is/data-mart/', 'official_docs', 1, 'aws', True, "quarterly", []),
 ]
 
 
@@ -175,7 +190,7 @@ def review_frequency(slug: str, source_type: str) -> str:
 
 
 BATCH1_DATE = "2026-09-30"
-LATER_DATES = {slug: "2026-10-01" for slug in ("psycopg-docs", "gcp-iam-docs", "gcp-terraform-docs", "gcp-infrastructure-manager-docs", "aws-s3-docs", "aws-iam-docs", "aws-cloudformation-docs", "aws-eventbridge-scheduler-docs", "pydantic-docs", "dbt-docs", "gcp-cloud-logging-docs", "aws-cloudwatch-logs-docs", "aws-lake-formation-docs", "aws-sns-docs")} | {"pytest-docs": "2026-10-04", "apache-spark-docs": "2026-10-05", "aws-firehose-docs": "2026-10-05"}  # fuentes de BATCH1 agregadas después del 2026-09-30
+LATER_DATES = {slug: "2026-10-01" for slug in ("psycopg-docs", "gcp-iam-docs", "gcp-terraform-docs", "gcp-infrastructure-manager-docs", "aws-s3-docs", "aws-iam-docs", "aws-cloudformation-docs", "aws-eventbridge-scheduler-docs", "pydantic-docs", "dbt-docs", "gcp-cloud-logging-docs", "aws-cloudwatch-logs-docs", "aws-lake-formation-docs", "aws-sns-docs")} | {"pytest-docs": "2026-10-04", "apache-spark-docs": "2026-10-05", "aws-firehose-docs": "2026-10-05", "gilbert-lynch-cap-2002": "2026-10-05", "apache-iceberg-docs": "2026-10-05", "delta-lake-docs": "2026-10-05", "apache-hudi-docs": "2026-10-05", "gcp-spanner-docs": "2026-10-05", "gcp-data-engineer-certification": "2026-10-05", "aws-data-engineer-certification": "2026-10-05", "aws-what-is-data-mart": "2026-10-05"}  # fuentes de BATCH1 agregadas después del 2026-09-30
 
 
 def entry(row: tuple[Any, ...], created: str = TODAY) -> dict[str, Any]:

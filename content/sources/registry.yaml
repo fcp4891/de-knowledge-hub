@@ -1081,3 +1081,151 @@ created_at: '2026-10-05'
 updated_at: '2026-10-05'
 last_verified: '2026-10-05'
 verification_status: verified
+---
+id: source:gilbert-lynch-cap-2002
+slug: gilbert-lynch-cap-2002
+type: source
+title: Brewer's conjecture and the feasibility of consistent, available, partition-tolerant web services (Gilbert y Lynch, 2002)
+description: 'Prueba formal del teorema CAP (SIGACT News 33(2):48-51, 2002), copia publicada por el grupo TDS del MIT CSAIL: referencia conceptual
+  canónica (Nivel 4); no respalda afirmaciones de producto.'
+url: https://groups.csail.mit.edu/tds/papers/Gilbert/Brewer6.pdf
+source_type: spec_paper
+authority_level: 4
+provider: mit-csail
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-05'
+updated_at: '2026-10-05'
+last_verified: '2026-10-05'
+verification_status: verified
+---
+id: source:apache-iceberg-docs
+slug: apache-iceberg-docs
+type: source
+title: Apache Iceberg documentation
+description: Documentación oficial de Apache Iceberg.
+url: https://iceberg.apache.org/docs/latest/
+source_type: official_docs
+authority_level: 1
+provider: apache
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- apache-iceberg
+created_at: '2026-10-05'
+updated_at: '2026-10-05'
+last_verified: '2026-10-05'
+verification_status: verified
+---
+id: source:delta-lake-docs
+slug: delta-lake-docs
+type: source
+title: Delta Lake documentation
+description: Documentación oficial de Delta Lake.
+url: https://docs.delta.io/index.html
+source_type: official_docs
+authority_level: 1
+provider: delta-lake
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- delta-lake
+created_at: '2026-10-05'
+updated_at: '2026-10-05'
+last_verified: '2026-10-05'
+verification_status: verified
+---
+id: source:apache-hudi-docs
+slug: apache-hudi-docs
+type: source
+title: Apache Hudi documentation
+description: Documentación oficial de Apache Hudi.
+url: https://hudi.apache.org/docs/overview/
+source_type: official_docs
+authority_level: 1
+provider: apache
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- apache-hudi
+created_at: '2026-10-05'
+updated_at: '2026-10-05'
+last_verified: '2026-10-05'
+verification_status: verified
+---
+id: source:gcp-spanner-docs
+slug: gcp-spanner-docs
+type: source
+title: Spanner documentation
+description: Documentación oficial de Spanner (Google Cloud).
+url: https://docs.cloud.google.com/spanner/docs/true-time-external-consistency
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-05'
+updated_at: '2026-10-05'
+last_verified: '2026-10-05'
+verification_status: verified
+---
+id: source:gcp-data-engineer-certification
+slug: gcp-data-engineer-certification
+type: source
+title: Google Cloud Professional Data Engineer
+description: Página oficial de Google Cloud que describe el rol y la certificación Professional Data Engineer.
+url: https://cloud.google.com/learn/certification/data-engineer
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-05'
+updated_at: '2026-10-05'
+last_verified: '2026-10-05'
+verification_status: verified
+---
+id: source:aws-data-engineer-certification
+slug: aws-data-engineer-certification
+type: source
+title: AWS Certified Data Engineer - Associate
+description: Página oficial de AWS que describe las competencias de la certificación Data Engineer - Associate.
+url: https://aws.amazon.com/certification/certified-data-engineer-associate/
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-05'
+updated_at: '2026-10-05'
+last_verified: '2026-10-05'
+verification_status: verified
+---
+id: source:aws-what-is-data-mart
+slug: aws-what-is-data-mart
+type: source
+title: What is a Data Mart? (AWS)
+description: Página oficial de AWS que explica qué es un data mart, sus tipos y su relación con el data warehouse y el data lake.
+url: https://aws.amazon.com/what-is/data-mart/
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-05'
+updated_at: '2026-10-05'
+last_verified: '2026-10-05'
+verification_status: verified

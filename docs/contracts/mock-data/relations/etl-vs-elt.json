@@ -66,8 +66,8 @@
           "slug": "data-transformation",
           "title": "Transformación de datos",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Dónde ocurre la transformación respecto de la carga."
         },
         {
           "slug": "zero-etl-and-federation",
