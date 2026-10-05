@@ -33,6 +33,7 @@ jobs:
         with:
           python-version: "3.12"
       - run: make venv BOOTSTRAP_PYTHON=python  # .venv del proyecto, como en local
+      - run: make snippets-deps  # para ejecutar pytest-ingestion-test en make test
       - run: make validate
       - run: make build
       - run: make test

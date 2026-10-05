@@ -1,0 +1,5 @@
+# Dependencias de los snippets de Python de la Code Library que se ejecutan en los tests
+# (tests/test_snippet_code.py). Separadas de requirements.txt: la plataforma no las necesita.
+# Instalar en el .venv del proyecto con `make snippets-deps` (la CI lo hace antes de `make test`).
+google-cloud-bigquery>=3.40,<4   # pytest-ingestion-test: LoadJobConfig y enums reales, sin llamar a la API
+pydantic>=2.7,<3                 # pytest-ingestion-test: validate_page (ya llega como dependencia de fastapi)

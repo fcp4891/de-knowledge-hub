@@ -1,4 +1,4 @@
-.PHONY: help venv install validate test build dev mocks db-up db-down migrate compile backup-me restore-me validate-terraform
+.PHONY: help venv install snippets-deps validate test build dev mocks db-up db-down migrate compile backup-me restore-me validate-terraform
 
 # Entorno del proyecto: .venv con Python 3.12 (README, «Entorno de Python»). Nunca el Python global.
 ifeq ($(OS),Windows_NT)
@@ -18,7 +18,7 @@ REQUIRE_VENV =
 endif
 
 help:
-	@echo Objetivos: venv install validate test mocks db-up db-down migrate compile build dev backup-me restore-me validate-terraform
+	@echo Objetivos: venv install snippets-deps validate test mocks db-up db-down migrate compile build dev backup-me restore-me validate-terraform
 
 venv:
 	$(BOOTSTRAP_PYTHON) -m venv .venv
@@ -28,6 +28,11 @@ venv:
 install:
 	$(REQUIRE_VENV)
 	$(PYTHON) -m pip install -r requirements.txt
+
+# Dependencias de los snippets de Python que se ejecutan en los tests (requirements-snippets.txt).
+snippets-deps:
+	$(REQUIRE_VENV)
+	$(PYTHON) -m pip install -r requirements-snippets.txt
 
 validate:
 	$(REQUIRE_VENV)

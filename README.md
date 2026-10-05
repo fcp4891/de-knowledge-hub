@@ -31,12 +31,23 @@ Si falta `.venv`, los objetivos de `make` se detienen con el aviso «Falta el en
 
 Cada worktree de git tiene su propio `.venv/` (está en `.gitignore`).
 
+### Dependencias de los snippets
+
+Algunos snippets de Python de la Code Library se ejecutan en los tests (`tests/test_snippet_code.py`). Sus dependencias, que la plataforma no necesita, están aparte en `requirements-snippets.txt` (hoy `google-cloud-bigquery` y `pydantic`, para `pytest-ingestion-test`). Se instalan en el mismo `.venv/`:
+
+```bash
+make snippets-deps
+```
+
+Sin ellas, `make test` salta ese test (aparece como *skipped*). La CI las instala antes de `make test`, así que allí siempre corre. El test no usa credenciales ni llama a la API de BigQuery.
+
 ## Comandos habituales
 
 | Comando | Qué hace |
 |---|---|
 | `make venv` | Crea `.venv/` e instala `requirements.txt` |
 | `make install` | Reinstala `requirements.txt` en `.venv/` |
+| `make snippets-deps` | Instala `requirements-snippets.txt` en `.venv/` (snippets que se ejecutan en los tests) |
 | `make validate` | Valida `content/` contra `schemas/` |
 | `make test` | Ejecuta los tests (los de base de datos requieren `make db-up`) |
 | `make db-up` / `make db-down` | Levanta o detiene PostgreSQL en Docker |
