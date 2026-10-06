@@ -3,12 +3,15 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-05
+**Última actualización:** 2026-10-06
 
 ## Actual
-- **Tarea activa:** ninguna. B-F3.1 del lote F3b-01a quedó aprobada; etiquetas de estado en el Explorer (`b/f3b-explorer-tags`).
-- **Siguiente:** esperar el lote F3b-01b.
+- **Tarea activa:** ninguna. B-F3.1 del lote F3b-01b quedó aprobada.
+- **Siguiente:** `b/static-search-tags`: tags en la búsqueda estática.
 - **Bloqueos:** ninguno.
+
+### B-F3.1 · lote F3b-01b
+- Cinco fichas de 01-fundamentals. Felipe aprobó todas las filas el 2026-10-06, incluidas la tabla de BigQuery de `data-contracts` §11 (`not_null` aplicada; `primary_key` y `foreign_key` solo metadatos; `unique` y `check` no definibles), las exclusiones de la §6 y `LZO_1C` / `LZO_1X` en `compression`. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-01a
 - Diez fichas de 01-fundamentals y el cambio de tipos en la §10 de `data-validation-with-pydantic`. Felipe aprobó todas las filas el 2026-10-05, incluidas la disponibilidad según Gilbert y Lynch, la fuente de Lake Formation, la atribución por proveedor en `what-is-data-engineering`, las fuentes de `data-ingestion` y el `COPY` de Redshift, y el `REPLACE` de `data-transformation`. No se editó `content/`.
