@@ -156,17 +156,21 @@ flowchart LR
 ```python
 # tests/test_transform.py · Python 3.12 y pytest: prueba una transformación de un pipeline, sin red.
 import csv
+import re
 from pathlib import Path
 
 import pytest
 
 
+AMOUNT = re.compile(r"^(\d{1,3}(\.\d{3})+|\d+)$")  # miles con punto o sin separador; sin decimales
+
+
 def normalize_amount(raw: str) -> int:
     """Monto en pesos chilenos desde texto con separador de miles: '1.250' -> 1250."""
-    value = int(raw.replace(".", "").strip())
-    if value < 0:
-        raise ValueError(f"monto negativo: {raw!r}")
-    return value
+    text = raw.strip()
+    if not AMOUNT.match(text):  # valida antes de quitar los puntos: '10.50' no pasa a 1050
+        raise ValueError(f"formato de monto inválido: {raw!r}")
+    return int(text.replace(".", ""))
 
 
 def load_rows(path: Path) -> list[dict[str, int | str]]:
@@ -187,16 +191,17 @@ def test_normalize_amount(raw: str, expected: int) -> None:
     assert normalize_amount(raw) == expected
 
 
-def test_negative_amount_is_rejected() -> None:
-    with pytest.raises(ValueError, match="negativo"):
-        normalize_amount("-5")
+@pytest.mark.parametrize("raw", ["10.50", "1.2.3", "12.34", "-5", "N/D", ""])
+def test_invalid_amount_is_rejected(raw: str) -> None:
+    with pytest.raises(ValueError, match="formato"):
+        normalize_amount(raw)
 
 
 def test_load_rows_reads_the_whole_file(sample_csv: Path) -> None:
     assert load_rows(sample_csv) == [{"id": "A1", "amount": 1250}, {"id": "A2", "amount": 90}]
 ```
 
-`python -m pytest -q` ejecuta 5 tests (el parametrizado cuenta 3). En un repositorio real, `normalize_amount` y `load_rows` viven en el paquete del pipeline y el test los importa. El snippet `pytest-ingestion-test` aplica lo mismo a la validación con Pydantic y a una carga de BigQuery con un cliente falso.
+`python -m pytest -q` ejecuta 10 tests (los parametrizados cuentan 3 y 6). Sin la expresión regular, `'10.50'` se convertiría sin error en 1050, `'1.2.3'` en 123 y `'12.34'` en 1234: el test de formatos inválidos lo impide. En un repositorio real, `normalize_amount` y `load_rows` viven en el paquete del pipeline y el test los importa. El snippet `pytest-ingestion-test` aplica lo mismo a la validación con Pydantic y a una carga de BigQuery con un cliente falso.
 
 ## 11. GCP
 
@@ -268,3 +273,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: creación (lote 6 de F3).
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-06: §10, `normalize_amount` valida el formato con una expresión regular antes de quitar los puntos (aprobado por Felipe): `'10.50'`, `'1.2.3'` y `'12.34'` ya no se convierten en 1050, 123 y 1234. Es la expresión de `data-transformation` sin el grupo decimal, porque la función devuelve pesos enteros. El test de negativos pasa a un test parametrizado de formatos inválidos con esos tres casos más `-5`, `N/D` y vacío. Pendiente de revisión de Cursor.
