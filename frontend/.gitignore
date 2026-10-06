@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+# Copia local de los mocks para la demo estática. Carril A publicará estos JSON y habrá que versionarlos.
+/public/data/
+
 # production
 /build
 

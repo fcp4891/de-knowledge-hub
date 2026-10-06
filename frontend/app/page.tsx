@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { ApiFailure } from "@/components/ApiFailure";
+import { HomeLists } from "@/components/HomeLists";
 import { listConcepts, listStudyStates } from "@/lib/api/client";
 import { STUDY_LABEL } from "@/lib/labels";
 import type { StudyState } from "@/lib/api/types";
@@ -15,6 +16,23 @@ const PLACEHOLDERS = [
 ];
 
 export default async function HomePage() {
+  if (process.env.API_MODE === "static") {
+    return (
+      <div className="page">
+        <h1>Data Engineering Knowledge Hub</h1>
+        <p className="lead">Continúa por donde ibas. El resto del inicio todavía no tiene datos.</p>
+        <div className="sections">
+          <HomeLists />
+          {PLACEHOLDERS.map((title) => (
+            <section key={title} className="panel panel-empty" aria-label={title}>
+              <h2>{title}</h2>
+            </section>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   const [catalog, states, needsReview] = await Promise.all([
     listConcepts(),
     listStudyStates(),

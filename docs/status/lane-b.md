@@ -3,12 +3,18 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-05
+**Última actualización:** 2026-10-06
 
 ## Actual
-- **Tarea activa:** ninguna. B-F3.1 del lote 6 quedó aprobada.
-- **Siguiente:** esperar los lotes del dominio 01.
+- **Tarea activa:** ninguna. Demo estática en `b/static-demo`.
+- **Siguiente:** esperar el lote F3b-01b.
 - **Bloqueos:** ninguno.
+
+### Demo estática
+- `API_MODE=static` y `BASE_PATH` (obligatorio, no va fijo en el código). `npm run build:static` deja `frontend/out/`. Durante ese build el script pone `dynamicParams = false` en las cuatro rutas dinámicas, sustituye `personalActions.ts` por el stub sin server actions y restaura ambos al terminar.
+- Los JSON salen de `frontend/public/data/` (mismo `index.json` que los mocks). Esa carpeta está en `.gitignore`. El script la copia desde los mocks si no hay `index.json`, y arma `search-index.json` (`{ documents: [...] }`) si Carril A todavía no lo dejó. Cuando publique los archivos, hay que quitar `/public/data/` de `frontend/.gitignore` para versionarlos. El script no pisa un `index.json` ni un `search-index.json` ya existentes.
+- **Apache:** `frontend/scripts/write-htaccess.mjs` escribe `out/.htaccess` en cada build estático. Carril A no debe generar otro. Lleva `DirectoryIndex index.html`, `ErrorDocument 404 {BASE_PATH}/404.html`, `AddType application/json .json`, `mod_deflate`, caché de un año para `_next/static` y de 5 minutos para HTML y `data/`.
+- En estático, notas, estado y favoritos van a `localStorage`. En `hybrid` siguen en la API. No se editó `content/`.
 
 ### B-F3.1 · lote 6
 - Diez fichas, tabla de §48. Felipe aprobó todas las filas el 2026-10-05, incluidas las tres precisiones de `bigquery-cost-model`: compromisos solo de Enterprise y Enterprise Plus, time travel y fail-safe en almacenamiento físico, y BigQuery ML dentro de los slots de esas ediciones. No se editó `content/`.
