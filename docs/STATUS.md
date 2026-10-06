@@ -10,16 +10,16 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | F3b: lote F3b-01b (01-fundamentals) | Revisión de 01-fundamentals en el navegador | — |
+| A · Claude Code | F3b-01b entregado (`review_required`) | Aplicar B-F3.1 de F3b-01b; luego, revisión de 01-fundamentals en el navegador | — |
 | B · Cursor | — | B-F3.1 del lote F3b-01b | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| — | — | Ninguno abierto | — |
+| A | B | B-F3.1 · Revisar el lote F3b-01b (5 fichas, 1 VERIFY) | Abierto |
 
 ## Criterio de salida de la fase actual (F3b, ADR-009)
-- [ ] 01-fundamentals: 28 conceptos con ficha `verified` (hoy 23 `verified`) y aprobado por Felipe en el navegador. Falta F3b-01b (5).
+- [ ] 01-fundamentals: 28 conceptos con ficha `verified` (hoy 23 `verified` y 5 en `review_required`, lote F3b-01b) y aprobado por Felipe en el navegador.
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
 
 ## Fases cerradas

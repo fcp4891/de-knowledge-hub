@@ -5,7 +5,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-06
 
 ## Actual
-- **Tarea activa:** F3b, dominio 01-fundamentals: F3b-01a `verified` (23 fichas del dominio `verified`); lote F3b-01b en curso.
+- **Tarea activa:** F3b, dominio 01-fundamentals: F3b-01a `verified` (23 fichas del dominio `verified`); lote F3b-01b (5 fichas) en `review_required`, esperando la revisión B-F3.1.
 - **Mergeado para Carril B:** `b/f3b-review-01a` (6641d3c) y `b/f3b-explorer-tags` (eb5706f) en `main`, 2026-10-06. `f/sql` no se mergea.
 - **Siguiente:** revisión de F3b-01b; con ella, 01-fundamentals queda completo (28/28) para tu revisión en el navegador.
 - **Bloqueos:** —
@@ -14,6 +14,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 ## Pedidos a Carril B
 | Pedido | Estado |
 |---|---|
+| **B-F3.1 · Revisar el lote F3b-01b** (5 fichas, 01-fundamentals; completa el dominio): `avro-format`, `json-format`, `csv-format`, `compression` y `data-contracts`. Sin fuentes nuevas. 1 VERIFY en `data-contracts` §11 (qué restricciones aplica BigQuery según la tabla por plataforma de dbt). Criterio de atribución estricta: cada afirmación de producto se atribuye solo a la fuente que la dice (por ejemplo, «contrato» solo donde la fuente usa la palabra: dbt, Pub/Sub, Glue, Event Hubs). Código probado: lector JSON Lines con claves duplicadas, lector CSV, gzip y detección de cambios incompatibles (Python 3.12, `mypy --strict`); el esquema Avro y `bq load` de `avro-format` no se ejecutaron contra GCP. Revisar en especial: `data-contracts` es `modern` y no se presenta como estándar cerrado; en `json-format` y `csv-format`, las diferencias de cada nube frente a los RFC | Abierto |
 | ~~B-F3.1 · Revisar el lote 4~~ (10 fichas): `infrastructure-as-code`, `terraform-providers`, `terraform-state`, `terraform-plan-apply`, `gcs-buckets-and-objects`, `gcp-iam-for-data`, `dimension-tables`, `python-api-consumption`, `scheduler` y `file-ingestion`. Sin VERIFY abiertos. Revisar también la §10 nueva de `pubsub-delivery-semantics` (consumidor real de Pub/Sub) | Cerrado (revisión aplicada; las 40 fichas `verified`) |
 | ~~B-F3.1 · Revisar los snippets~~ (`snippets-1.md`) | Cerrado (los 8 `verified`) |
 | ~~B-F3.1 · Revisar el lote F3b-01a~~ (10 fichas, 01-fundamentals): `what-is-data-engineering`, `data-lifecycle`, `data-ingestion`, `data-transformation`, `data-orchestration`, `lakehouse`, `data-mart`, `schema-on-read-vs-schema-on-write`, `data-consistency` y `cap-theorem`. Sin VERIFY. Fuentes nuevas: `gilbert-lynch-cap-2002` (Nivel 4, solo conceptual), `apache-iceberg-docs`, `delta-lake-docs`, `apache-hudi-docs`, `gcp-spanner-docs`, `gcp-data-engineer-certification`, `aws-data-engineer-certification` y `aws-what-is-data-mart` (Nivel 1). HCL en `data-lifecycle` y `data-mart` (lo valida la CI). Revisar en especial: `lakehouse` no se presenta como reemplazo del warehouse; en `cap-theorem`, la fuente de 2002 se identificó por la lista de publicaciones de Lynch y su formulación se contrastó con el paper de 2012 de los mismos autores | Cerrado (revisión aplicada; las 10 fichas `verified`) |
@@ -57,6 +58,12 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Code Library: `/snippets`, `/snippets/{slug}`, `Language`, `Snippet*` y `code_snippet` en `ResultType` (ADR-008, aditivo).
 
 ## Historial
+
+### F3b-01b (2026-10-06)
+- 5 fichas de 01-fundamentals en `review_required`: `avro-format`, `json-format`, `csv-format`, `compression` y `data-contracts` (`modern`). 27 URLs con HTTP 200 y URL final igual a la citada. Sin fuentes nuevas en el registro.
+- Atribución estricta por fuente: cada nota de `sources` recoge solo lo que dice esa página, y el cuerpo atribuye a cada servicio solo lo que dice su documentación. Un VERIFY: en `data-contracts` §11, las restricciones que aplica BigQuery (las pestañas por plataforma de la página de dbt no llevan nombre en el texto extraído).
+- Código ejecutado: lector JSON Lines estricto (`json-format`), lector CSV con comillas y líneas multilínea (`csv-format`), gzip sin pérdida, de 1.056.661 a 144.050 bytes (`compression`), y detección de cambios incompatibles con los criterios de dbt (`data-contracts`); los de Python pasan `mypy --strict`. No ejecutados: el esquema Avro con `bq load` y el YAML de dbt (no hay GCP ni dbt locales).
+- Pendiente al pasar a `verified`: 7 fichas `verified` todavía listan alguno de estos 5 conceptos como «pendiente de ficha»; se actualizan al aplicar la revisión, como en F3b-01a.
 
 ### Revisión del patrón de conversión numérica con REPLACE (2026-10-06)
 - Búsqueda en fichas y snippets de conversiones que quitan el punto (`REPLACE(..., '.', '')`, `.replace(".", "")`) y convierten a número. Un caso: `testing-with-pytest` §10, `normalize_amount` hace `int(raw.replace(".", "").strip())`: convierte sin error `'10.50'` en 1050, `'1.2.3'` en 123 y `'12.34'` en 1234 (comprobado). Los tests de la ficha no cubren esos casos. No se corrigió: pendiente de tu decisión (propuesta: validar el formato con una expresión regular, como en `data-transformation`, y agregar los casos al test parametrizado).
