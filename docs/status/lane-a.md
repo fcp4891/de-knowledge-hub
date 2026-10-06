@@ -64,6 +64,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 ### Búsqueda de la demo estática y revisión de normalize_amount (2026-10-06)
 - Merge de `b/static-search-fix` (3b50505): `extractField` devuelve el campo pedido, así que MiniSearch usa el id real.
 - `cards-pytest-fix.md`: las 5 filas aprobadas por Felipe, sin cambios en la ficha; `testing-with-pytest` sigue `verified`. Pedido cerrado.
+- `make static` con la corrección: `dist/dekh-static-2026-10-06.zip`, 8.345.159 bytes. Búsqueda verificada en Edge headless por el protocolo de DevTools, sobre el zip extraído y servido en `/DES_conocimiento/`: abrir el diálogo, escribir y leer los resultados del DOM. «bigquery» da 41 resultados, «governance» 3 (por `tags`) e «idempotencia» 4, sin mensaje de error. Los 11 enlaces mostrados responden 200 bajo `/DES_conocimiento/`.
 
 ### Demo estática para cPanel (2026-10-06)
 - `scripts/static/build_static_data.py` genera `frontend/public/data/` con la misma proyección y formato que los mocks, para todo el contenido: 23 dominios, 359 conceptos (284 sin ficha, con `sections: []`), 92 tecnologías, 13 snippets, relaciones de cada uno y 65 fuentes; 1.020 respuestas, 5,6 MB. Sin `/me` ni `/search`. `search-index.json`: 464 documentos (`id`, `slug`, `title`, `type`, `domain`, `classification`, `has_page`, `snippet` con el mismo texto que la búsqueda de la API, y `tags`). Reutiliza `MockWriter`; los mocks no cambian.
