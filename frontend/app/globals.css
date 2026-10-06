@@ -180,6 +180,22 @@ a:hover {
   background: var(--emerging);
 }
 
+.badge-verified {
+  background: #d7eadc;
+  color: #14532d;
+}
+
+.badge-review {
+  background: #f6e4bf;
+  color: #7a4b08;
+}
+
+.badge-pending,
+.badge-page {
+  background: #e6e4df;
+  color: #5c564e;
+}
+
 .filters {
   display: flex;
   flex-wrap: wrap;
