@@ -7,6 +7,14 @@ import { SourceList } from "@/components/card/SourceList";
 import { getRelations, getSnippet } from "@/lib/api/client";
 import type { RelationGroups } from "@/lib/api/types";
 import { CLOUD_LABEL, LANGUAGE_LABEL } from "@/lib/labels";
+import { staticSlugs } from "@/lib/staticParams";
+
+// El build estático cambia este literal a false: Next solo acepta true o false.
+export const dynamicParams = true;
+
+export function generateStaticParams() {
+  return staticSlugs("snippets.json");
+}
 
 function implementedConcepts(slugs: string[], relations: RelationGroups | null) {
   const titles = new Map<string, string>();

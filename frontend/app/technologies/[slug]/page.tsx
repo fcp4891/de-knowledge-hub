@@ -1,10 +1,18 @@
 import { ApiFailure } from "@/components/ApiFailure";
 import { CapabilityList } from "@/components/card/CapabilityList";
 import { CardHeader } from "@/components/card/CardHeader";
-import { PersonalPanel } from "@/components/card/PersonalPanel";
+import { PersonalSlot } from "@/components/card/PersonalSlot";
 import { RelationPanel } from "@/components/card/RelationPanel";
 import { SourceList } from "@/components/card/SourceList";
 import { getRelations, getTechnology } from "@/lib/api/client";
+import { staticSlugs } from "@/lib/staticParams";
+
+// El build estático cambia este literal a false: Next solo acepta true o false.
+export const dynamicParams = true;
+
+export function generateStaticParams() {
+  return staticSlugs("technologies.json");
+}
 
 export default async function TechnologyPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -38,7 +46,7 @@ export default async function TechnologyPage({ params }: { params: Promise<{ slu
       </p>
       <div className="card-layout">
         <div className="sections">
-          <PersonalPanel slug={data.slug} />
+          <PersonalSlot slug={data.slug} />
           {data.note ? <p>{data.note}</p> : null}
           <CapabilityList capabilities={data.capabilities} />
           <SourceList sources={data.sources} />

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useId, useState } from "react";
 
 import type { ApiResult, SearchResults } from "@/lib/api/types";
+import { searchLocal } from "@/lib/browserSearch";
 import { resultHref } from "@/lib/entityHref";
 import { RESULT_LABEL } from "@/lib/labels";
 
@@ -29,8 +30,18 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
     }
     const controller = new AbortController();
     setPending(true);
-    void fetch(`/api/search?q=${encodeURIComponent(debounced)}`, { signal: controller.signal })
-      .then(async (response) => (await response.json()) as ApiResult<SearchResults>)
+    const request =
+      process.env.NEXT_PUBLIC_API_MODE === "static"
+        ? searchLocal(debounced)
+        : fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/search?q=${encodeURIComponent(debounced)}`, {
+            signal: controller.signal,
+          }).then(async (response) => {
+            if (!response.ok) {
+              return { ok: false as const, reason: "unavailable" as const, detail: "No se pudo contactar la API." };
+            }
+            return { ok: true as const, data: (await response.json()) as SearchResults };
+          });
+    void request
       .then((payload) => {
         setResult(payload);
         setPending(false);
