@@ -74,7 +74,7 @@ relations:
 created_at: 2026-10-06
 updated_at: 2026-10-06
 last_verified: 2026-10-06
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -166,7 +166,7 @@ Ejecutado, imprime 1.056.661 bytes sin comprimir y 144.050 con gzip (14 %). La t
 
 **BigQuery** distingue explícitamente los dos tipos:
 
-- carga Avro, Parquet y ORC con compresión interna (en Parquet: GZip, LZO, LZ4_RAW, Snappy o ZSTD), pero no esos archivos comprimidos enteros;
+- carga Avro, Parquet y ORC con compresión interna (en Parquet: GZip, LZO_1C, LZO_1X, LZ4_RAW, Snappy o ZSTD), pero no esos archivos comprimidos enteros;
 - carga CSV y JSON en gzip, aunque sin leerlos en paralelo y más lento que sin comprimir, sin mezclar comprimidos y sin comprimir en un mismo job y con un máximo de 4 GB por archivo gzip.
 
 Para cargar rápido, la documentación recomienda Avro.
@@ -229,8 +229,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-06. En `review_required` hasta la revisión B-F3.1 del lote F3b-01b.
+2026-10-06. Pasa a `verified`: revisión B-F3.1 del lote F3b-01b aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-06: creación (lote F3b-01b, dominio 01-fundamentals).
+- 2026-10-06: revisión B-F3.1 del lote F3b-01b aplicada (docs/reviews/cards-f3b-01b.md): §11 nombra `LZO_1C` y `LZO_1X`, como la documentación de BigQuery.
+- 2026-10-06: `verification_status: verified` (sin VERIFY pendientes).

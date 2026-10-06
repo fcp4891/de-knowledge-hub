@@ -180,8 +180,7 @@ Parquet optimiza la lectura analítica y el espacio, a cambio de escrituras más
 - `partitioning`: carpetas por partición sobre archivos Parquet.
 - `partition-pruning`: poda de particiones, complementaria al salto de bloques.
 - `schema-evolution`: cómo cambia el esquema entre archivos.
-- Con ficha: `row-vs-columnar-formats`.
-- Del blueprint, pendientes de ficha: `avro-format`, `compression`.
+- Con ficha: `row-vs-columnar-formats`, `avro-format`, `compression`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -211,3 +210,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: creación (lote 3 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `row-vs-columnar-formats`, que ya tiene ficha.
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `avro-format`, `compression`, que ya tienen ficha.

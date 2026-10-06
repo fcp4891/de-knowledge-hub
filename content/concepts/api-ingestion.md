@@ -227,8 +227,7 @@ Las herramientas declarativas (conector REST de Data Factory, HTTP Task) reducen
 - `incremental-pipelines`: pedir solo lo nuevo por intervalo.
 - `python-error-handling-and-retries`: el manejo de errores en Python.
 - `idempotency`: repetir un período sin duplicar.
-- Con ficha: `python-api-consumption`, `batch-ingestion`.
-- Del blueprint, pendiente de ficha: `data-contracts`.
+- Con ficha: `python-api-consumption`, `batch-ingestion`, `data-contracts`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -260,3 +259,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: creación (lote 3 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `python-api-consumption`, `batch-ingestion`, que ya tienen ficha.
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `data-contracts`, que ya tiene ficha.

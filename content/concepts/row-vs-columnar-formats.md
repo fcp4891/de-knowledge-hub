@@ -76,7 +76,7 @@ relations:
     target: oltp-vs-olap
     note: OLTP guarda por filas; OLAP, por columnas.
 created_at: 2026-10-05
-updated_at: 2026-10-05
+updated_at: 2026-10-06
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -210,7 +210,7 @@ El columnar lee y comprime mucho mejor para analítica, a cambio de escrituras s
 - `data-warehouse` y `data-lake`: dónde se aplica cada formato.
 - `partition-pruning`: la reducción complementaria por filas.
 - `oltp-vs-olap`: los perfiles de carga que favorecen cada formato.
-- Del blueprint, pendiente de ficha: `avro-format`.
+- Con ficha: `avro-format`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -239,3 +239,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: creación (lote 6 de F3).
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `avro-format`, que ya tiene ficha.

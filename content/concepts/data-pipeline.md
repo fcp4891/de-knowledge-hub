@@ -227,8 +227,8 @@ Más tareas pequeñas dan más control y reintentos finos, a cambio de más sobr
 - `batch-vs-streaming`: el modo de procesamiento.
 - `idempotency`: requisito para reejecutar sin duplicar.
 - `retries`: control de fallos transitorios.
-- Con ficha: `dag`.
-- Del blueprint, pendientes de ficha: `orchestration`, `data-contracts`.
+- Con ficha: `dag`, `data-contracts`.
+- Del blueprint, pendiente de ficha: `orchestration`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -260,3 +260,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
 - 2026-10-01: §10 alineada con el snippet ejecutable `airflow-daily-partition-dag`: el código anterior llamaba a funciones no definidas (`extract_orders`, `validate_volume_and_schema`, `replace_partition`).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `dag`, que ya tiene ficha.
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `data-contracts`, que ya tiene ficha.

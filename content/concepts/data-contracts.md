@@ -18,7 +18,7 @@ sources:
   - source: dbt-docs
     url: https://docs.getdbt.com/docs/mesh/govern/model-contracts
     accessed: 2026-10-06
-    note: "Con contract: enforced: true, el contrato debe incluir name y data_type de cada columna. Opcionalmente admite constraints como not_null en modelos table o incremental. dbt corre una verificación previa (preflight) de que la consulta devuelve esas columnas con esos tipos e incluye columnas, tipos y restricciones en el DDL. Las restricciones pueden ser definibles y aplicadas, definibles y no aplicadas (solo metadatos, más típico en warehouses cloud) o no definibles; la mayoría de las plataformas solo aplica not_null. No admiten contratos los modelos Python, las materializaciones view (sin constraints) o ephemeral, ni los seeds, snapshots y sources. Las pruebas de calidad no forman parte del contrato. dbt recomienda contratos en los modelos «públicos» de los que dependen otros grupos, proyectos, reportes o tableros. Un cambio incompatible es breaking change y exige subir la versión mayor: quitar una columna, cambiar su data_type o quitar o modificar una restricción."
+    note: "Con contract: enforced: true, el contrato debe incluir name y data_type de cada columna. Opcionalmente admite constraints como not_null en modelos table o incremental. dbt corre una verificación previa (preflight) de que la consulta devuelve esas columnas con esos tipos e incluye columnas, tipos y restricciones en el DDL. Las restricciones pueden ser definibles y aplicadas, definibles y no aplicadas (solo metadatos, más típico en warehouses cloud) o no definibles; la mayoría de las plataformas solo aplica not_null. No admiten contratos los modelos Python, las vistas materializadas, las materializaciones ephemeral, las materializaciones custom (salvo que su autor lo agregue), los modelos con CTE recursivas en BigQuery, ni los seeds, snapshots y sources; las vistas admiten nombres y tipos, pero no constraints, y los incrementales requieren on_schema_change: append_new_columns o fail. En la pestaña BigQuery de la tabla de soporte por plataforma: not_null se define y se aplica; primary_key y foreign_key se definen y no se aplican (solo metadatos); unique y check no se pueden definir. Las pruebas de calidad no forman parte del contrato. dbt recomienda contratos en los modelos «públicos» de los que dependen otros grupos, proyectos, reportes o tableros. Un cambio incompatible es breaking change y exige subir la versión mayor: quitar una columna, cambiar su data_type o quitar o modificar una restricción."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/schemas
     accessed: 2026-10-06
@@ -55,7 +55,7 @@ relations:
 created_at: 2026-10-06
 updated_at: 2026-10-06
 last_verified: 2026-10-06
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -111,7 +111,7 @@ Un productor cambia un tipo, renombra una columna o deja de enviar un campo, y l
 ## 6. Cuándo no utilizarlo
 
 - En modelos intermedios internos de un mismo equipo que cambian con frecuencia: el contrato agrega fricción sin consumidores que proteger.
-- En los casos que dbt no admite: modelos Python, materializaciones `ephemeral`, seeds, snapshots y sources. Las vistas admiten nombres y tipos, pero no restricciones.
+- En los casos que dbt no admite: modelos Python, vistas materializadas, materializaciones `ephemeral`, materializaciones custom (salvo que su autor lo agregue), modelos con CTE recursivas en BigQuery, seeds, snapshots y sources. Las vistas admiten nombres y tipos, pero no restricciones, y los incrementales solo admiten contrato con `on_schema_change: append_new_columns` o `fail`.
 - Como sustituto de pruebas de calidad: un contrato de estructura no detecta valores fuera de rango ni duplicados.
 
 ## 7. Ejemplo sencillo
@@ -209,7 +209,15 @@ Ejecutado, imprime los tres problemas: la restricción quitada en `pedido_id`, e
 
 **Pub/Sub** asocia un esquema Avro o Protocol Buffer a un tema y no publica los mensajes que no lo cumplen. La documentación lo describe como un contrato entre publicador y suscriptor y como autoridad central de tipos de mensaje entre equipos. Los esquemas admiten revisiones.
 
-En **BigQuery**, los *model contracts* de dbt aplican nombres y tipos. La mayoría de las plataformas, según dbt, solo aplica `not_null` como restricción. <!-- VERIFY: qué restricciones define y aplica BigQuery según la tabla por plataforma de dbt; en el texto extraído de la página las pestañas por plataforma no llevan nombre y no se pudo asignar cada tabla a su plataforma. -->
+En **BigQuery**, los *model contracts* de dbt aplican nombres y tipos. Según la tabla de dbt para BigQuery:
+
+| Restricción | Se puede definir | Se aplica |
+|---|---|---|
+| `not_null` | Sí | Sí: el modelo no se construye si la viola |
+| `primary_key`, `foreign_key` | Sí | No: solo metadatos |
+| `unique`, `check` | No | No |
+
+Una clave primaria declarada en el contrato, entonces, no impide duplicados: hace falta una prueba de datos.
 
 ## 12. AWS
 
@@ -270,8 +278,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-06. En `review_required` hasta la revisión B-F3.1 del lote F3b-01b.
+2026-10-06. Pasa a `verified`: revisión B-F3.1 del lote F3b-01b aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-06: creación (lote F3b-01b, dominio 01-fundamentals).
+- 2026-10-06: revisión B-F3.1 del lote F3b-01b aplicada (docs/reviews/cards-f3b-01b.md): §11 con la tabla de restricciones de BigQuery según dbt, sin el VERIFY; §6 y la nota de dbt con todas las exclusiones (vistas materializadas, materializaciones custom, CTE recursivas en BigQuery y `on_schema_change` en incrementales).
+- 2026-10-06: `verification_status: verified` (sin VERIFY pendientes).

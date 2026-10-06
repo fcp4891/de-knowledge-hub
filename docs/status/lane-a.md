@@ -5,9 +5,9 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-06
 
 ## Actual
-- **Tarea activa:** F3b, dominio 01-fundamentals: F3b-01a `verified` (23 fichas del dominio `verified`); lote F3b-01b (5 fichas) en `review_required`, esperando la revisión B-F3.1.
-- **Mergeado para Carril B:** `b/f3b-review-01a` (6641d3c) y `b/f3b-explorer-tags` (eb5706f) en `main`, 2026-10-06. `f/sql` no se mergea.
-- **Siguiente:** revisión de F3b-01b; con ella, 01-fundamentals queda completo (28/28) para tu revisión en el navegador.
+- **Tarea activa:** demo estática (`a/static-demo`). 01-fundamentals completo: 28/28 fichas `verified`, pendiente de tu aprobación en el navegador.
+- **Mergeado para Carril B:** `b/f3b-review-01b` (98f13ef), `b/static-demo` (8f96908) y `b/static-search-tags` (e7bb47c) en `main`, 2026-10-06. `f/sql` no se mergea.
+- **Siguiente:** aprobación de 01-fundamentals en el navegador; después, el dominio siguiente del blueprint.
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
 
@@ -15,7 +15,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 | Pedido | Estado |
 |---|---|
 | **Revisar corrección en `testing-with-pytest`** (`verified`, aprobada por Felipe): en §10, `normalize_amount` valida el formato con `^(\d{1,3}(\.\d{3})+|\d+)$` antes de quitar los puntos. Es la expresión de `data-transformation` sin el grupo decimal `(,\d+)?`, porque la función devuelve pesos enteros. El test de negativos pasa a un test parametrizado de formatos inválidos: `'10.50'`, `'1.2.3'`, `'12.34'`, `'-5'`, `'N/D'` y `''`. 10 tests en verde y `mypy --strict`. Registrado en el historial de la ficha | Abierto |
-| **B-F3.1 · Revisar el lote F3b-01b** (5 fichas, 01-fundamentals; completa el dominio): `avro-format`, `json-format`, `csv-format`, `compression` y `data-contracts`. Sin fuentes nuevas. 1 VERIFY en `data-contracts` §11 (qué restricciones aplica BigQuery según la tabla por plataforma de dbt). Criterio de atribución estricta: cada afirmación de producto se atribuye solo a la fuente que la dice (por ejemplo, «contrato» solo donde la fuente usa la palabra: dbt, Pub/Sub, Glue, Event Hubs). Código probado: lector JSON Lines con claves duplicadas, lector CSV, gzip y detección de cambios incompatibles (Python 3.12, `mypy --strict`); el esquema Avro y `bq load` de `avro-format` no se ejecutaron contra GCP. Revisar en especial: `data-contracts` es `modern` y no se presenta como estándar cerrado; en `json-format` y `csv-format`, las diferencias de cada nube frente a los RFC | Abierto |
+| ~~B-F3.1 · Revisar el lote F3b-01b~~ (5 fichas, 01-fundamentals; completa el dominio): `avro-format`, `json-format`, `csv-format`, `compression` y `data-contracts`. Sin fuentes nuevas. 1 VERIFY en `data-contracts` §11 (qué restricciones aplica BigQuery según la tabla por plataforma de dbt). Criterio de atribución estricta: cada afirmación de producto se atribuye solo a la fuente que la dice (por ejemplo, «contrato» solo donde la fuente usa la palabra: dbt, Pub/Sub, Glue, Event Hubs). Código probado: lector JSON Lines con claves duplicadas, lector CSV, gzip y detección de cambios incompatibles (Python 3.12, `mypy --strict`); el esquema Avro y `bq load` de `avro-format` no se ejecutaron contra GCP. Revisar en especial: `data-contracts` es `modern` y no se presenta como estándar cerrado; en `json-format` y `csv-format`, las diferencias de cada nube frente a los RFC | Cerrado (revisión aplicada; las 5 fichas `verified`; 01-fundamentals 28/28) |
 | ~~B-F3.1 · Revisar el lote 4~~ (10 fichas): `infrastructure-as-code`, `terraform-providers`, `terraform-state`, `terraform-plan-apply`, `gcs-buckets-and-objects`, `gcp-iam-for-data`, `dimension-tables`, `python-api-consumption`, `scheduler` y `file-ingestion`. Sin VERIFY abiertos. Revisar también la §10 nueva de `pubsub-delivery-semantics` (consumidor real de Pub/Sub) | Cerrado (revisión aplicada; las 40 fichas `verified`) |
 | ~~B-F3.1 · Revisar los snippets~~ (`snippets-1.md`) | Cerrado (los 8 `verified`) |
 | ~~B-F3.1 · Revisar el lote F3b-01a~~ (10 fichas, 01-fundamentals): `what-is-data-engineering`, `data-lifecycle`, `data-ingestion`, `data-transformation`, `data-orchestration`, `lakehouse`, `data-mart`, `schema-on-read-vs-schema-on-write`, `data-consistency` y `cap-theorem`. Sin VERIFY. Fuentes nuevas: `gilbert-lynch-cap-2002` (Nivel 4, solo conceptual), `apache-iceberg-docs`, `delta-lake-docs`, `apache-hudi-docs`, `gcp-spanner-docs`, `gcp-data-engineer-certification`, `aws-data-engineer-certification` y `aws-what-is-data-mart` (Nivel 1). HCL en `data-lifecycle` y `data-mart` (lo valida la CI). Revisar en especial: `lakehouse` no se presenta como reemplazo del warehouse; en `cap-theorem`, la fuente de 2002 se identificó por la lista de publicaciones de Lynch y su formulación se contrastó con el paper de 2012 de los mismos autores | Cerrado (revisión aplicada; las 10 fichas `verified`) |
@@ -59,6 +59,11 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Code Library: `/snippets`, `/snippets/{slug}`, `Language`, `Snippet*` y `code_snippet` en `ResultType` (ADR-008, aditivo).
 
 ## Historial
+
+### F3b-01b verified: 01-fundamentals 28/28 (2026-10-06)
+- Merge de `b/f3b-review-01b`, `b/static-demo` y `b/static-search-tags` (conflicto en `lane-b.md` resuelto combinando ambos lados) y de `a/testing-pytest-amount`.
+- Revisión aplicada: `data-contracts` §11 con la tabla de restricciones de BigQuery según dbt (`not_null` aplicada; `primary_key` y `foreign_key` solo metadatos; `unique` y `check` no definibles), sin VERIFY; §6 con todas las exclusiones de dbt; `compression` §11 con `LZO_1C` y `LZO_1X`.
+- Las 5 fichas `verified`. Menciones «pendiente de ficha» actualizadas en 7 fichas; solo cambia el texto.
 
 ### Corrección de normalize_amount en testing-with-pytest (2026-10-06)
 - Aprobada por Felipe tras el informe del patrón `REPLACE`. §10 valida el formato antes de convertir (expresión de `data-transformation` sin decimales) y prueba como inválidos `'10.50'`, `'1.2.3'`, `'12.34'`, `'-5'`, `'N/D'` y `''`. La ficha sigue `verified`; queda para revisión de Cursor.
