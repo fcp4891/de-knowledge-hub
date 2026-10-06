@@ -5,15 +5,16 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-06
 
 ## Actual
-- **Tarea activa:** demo estática (`a/static-demo`). 01-fundamentals completo: 28/28 fichas `verified`, pendiente de tu aprobación en el navegador.
+- **Tarea activa:** ninguna. Demo estática entregada (`make static`, zip en `dist/`); la búsqueda espera el arreglo de `extractField` de Carril B. 01-fundamentals completo: 28/28 fichas `verified`, pendiente de tu aprobación en el navegador.
 - **Mergeado para Carril B:** `b/f3b-review-01b` (98f13ef), `b/static-demo` (8f96908) y `b/static-search-tags` (e7bb47c) en `main`, 2026-10-06. `f/sql` no se mergea.
 - **Siguiente:** aprobación de 01-fundamentals en el navegador; después, el dominio siguiente del blueprint.
-- **Bloqueos:** —
+- **Bloqueos:** la búsqueda de la demo estática no carga hasta que Carril B corrija `extractField` en `frontend/lib/browserSearch.ts` (ver Pedidos).
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
 
 ## Pedidos a Carril B
 | Pedido | Estado |
 |---|---|
+| **Demo estática · la búsqueda no carga (urgente)**: en `frontend/lib/browserSearch.ts`, `extractField` devuelve `document.snippet` para todo campo que no sea `tags` ni `title`. MiniSearch usa `extractField` también para `idField` y para `storeFields`, así que el id de cada documento es su `snippet`: `addAll` falla con «duplicate ID» en el primer snippet repetido y la búsqueda muestra «No se pudo cargar el índice de búsqueda». Aunque no fallara, `slug`, `type` y demás campos guardados serían el snippet. Arreglo propuesto, una línea: para los demás campos, `return document[fieldName]` (con el tipo que corresponda). Probado con node y MiniSearch sobre `out/data/search-index.json`: con el arreglo, «bigquery» da 41 resultados, «avro» 4 y «governance» 3 (solo por `tags`). Después, `make static` y nuevo zip. Datos: `frontend/public/data/` la genera `make static-data` (1.020 respuestas) y **no se versiona** (decisión de Felipe): no hay que quitarla de `frontend/.gitignore`. `search-index.json` trae `tags` como lista y excluye las fuentes, porque no tienen página | Abierto |
 | **Revisar corrección en `testing-with-pytest`** (`verified`, aprobada por Felipe): en §10, `normalize_amount` valida el formato con `^(\d{1,3}(\.\d{3})+|\d+)$` antes de quitar los puntos. Es la expresión de `data-transformation` sin el grupo decimal `(,\d+)?`, porque la función devuelve pesos enteros. El test de negativos pasa a un test parametrizado de formatos inválidos: `'10.50'`, `'1.2.3'`, `'12.34'`, `'-5'`, `'N/D'` y `''`. 10 tests en verde y `mypy --strict`. Registrado en el historial de la ficha | Abierto |
 | ~~B-F3.1 · Revisar el lote F3b-01b~~ (5 fichas, 01-fundamentals; completa el dominio): `avro-format`, `json-format`, `csv-format`, `compression` y `data-contracts`. Sin fuentes nuevas. 1 VERIFY en `data-contracts` §11 (qué restricciones aplica BigQuery según la tabla por plataforma de dbt). Criterio de atribución estricta: cada afirmación de producto se atribuye solo a la fuente que la dice (por ejemplo, «contrato» solo donde la fuente usa la palabra: dbt, Pub/Sub, Glue, Event Hubs). Código probado: lector JSON Lines con claves duplicadas, lector CSV, gzip y detección de cambios incompatibles (Python 3.12, `mypy --strict`); el esquema Avro y `bq load` de `avro-format` no se ejecutaron contra GCP. Revisar en especial: `data-contracts` es `modern` y no se presenta como estándar cerrado; en `json-format` y `csv-format`, las diferencias de cada nube frente a los RFC | Cerrado (revisión aplicada; las 5 fichas `verified`; 01-fundamentals 28/28) |
 | ~~B-F3.1 · Revisar el lote 4~~ (10 fichas): `infrastructure-as-code`, `terraform-providers`, `terraform-state`, `terraform-plan-apply`, `gcs-buckets-and-objects`, `gcp-iam-for-data`, `dimension-tables`, `python-api-consumption`, `scheduler` y `file-ingestion`. Sin VERIFY abiertos. Revisar también la §10 nueva de `pubsub-delivery-semantics` (consumidor real de Pub/Sub) | Cerrado (revisión aplicada; las 40 fichas `verified`) |
@@ -59,6 +60,13 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Code Library: `/snippets`, `/snippets/{slug}`, `Language`, `Snippet*` y `code_snippet` en `ResultType` (ADR-008, aditivo).
 
 ## Historial
+
+### Demo estática para cPanel (2026-10-06)
+- `scripts/static/build_static_data.py` genera `frontend/public/data/` con la misma proyección y formato que los mocks, para todo el contenido: 23 dominios, 359 conceptos (284 sin ficha, con `sections: []`), 92 tecnologías, 13 snippets, relaciones de cada uno y 65 fuentes; 1.020 respuestas, 5,6 MB. Sin `/me` ni `/search`. `search-index.json`: 464 documentos (`id`, `slug`, `title`, `type`, `domain`, `classification`, `has_page`, `snippet` con el mismo texto que la búsqueda de la API, y `tags`). Reutiliza `MockWriter`; los mocks no cambian.
+- `scripts/static/package_static.py` y `make static`: `validate`, datos, `npm run build:static` con `BASE_PATH` (por defecto `/DES_conocimiento`) y zip con el contenido de `frontend/out/` en la raíz; falla si faltan `index.html`, `404.html`, `.htaccess` o `data/`, o si `index.html` no usa el `BASE_PATH`. El Makefile desactiva la conversión de rutas de Git Bash, que convertía `/DES_conocimiento` en `C:/Program Files/Git/DES_conocimiento`. `dist/` en `.gitignore`.
+- `tests/test_static_data.py` (11 tests): cada elemento de las listas tiene su detalle y relaciones; claves que lee `staticRead`; sin `/me` ni `/search`; forma del índice; idempotencia; validación de `BASE_PATH`.
+- Verificación sobre el zip extraído y servido en `/DES_conocimiento/`: 36 páginas con 200 (inicio, los 23 dominios del Explorer, una ficha de cada lote, un concepto sin ficha, snippets, un snippet y una tecnología) y 153 enlaces y recursos internos con 200, todos bajo `/DES_conocimiento/`. En Edge headless: el grafo de `data-contracts` dibuja sus canvas de cytoscape; el Explorer de 01 dice «28 de 28 con ficha». La búsqueda falla por `extractField` (pedido a Carril B). `http.server` no aplica el `.htaccess`: el 404 propio y la caché se comprueban en cPanel.
+- README: sección «Demo estática en cPanel».
 
 ### F3b-01b verified: 01-fundamentals 28/28 (2026-10-06)
 - Merge de `b/f3b-review-01b`, `b/static-demo` y `b/static-search-tags` (conflicto en `lane-b.md` resuelto combinando ambos lados) y de `a/testing-pytest-amount`.

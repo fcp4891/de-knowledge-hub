@@ -56,5 +56,20 @@ Sin ellas, `make test` salta ese test (aparece como *skipped*). La CI las instal
 | `make dev` | API en `http://localhost:8000/api/v1` |
 | `make validate-terraform` | Extrae el HCL de snippets y fichas y lo valida con `terraform validate` (requiere Terraform; la CI lo ejecuta). Un bloque precedido por `<!-- validate-terraform: excluido — motivo -->` se reporta y no se valida |
 | `make backup-me` / `make restore-me` | Respaldo y restauración del estado personal (`me_*`) |
+| `make static-data` | Genera `frontend/public/data/`: un JSON por respuesta de la API para todo el contenido, más `index.json` y `search-index.json` (no se versiona) |
+| `make static` | `static-data`, build estático del frontend con `BASE_PATH` (por defecto `/DES_conocimiento`) y zip en `dist/dekh-static-<fecha>.zip` |
 
 Flujo típico: `make venv`, `make db-up`, `make build`, `make dev`.
+
+## Demo estática en cPanel
+
+La demo es el sitio sin API ni base de datos: todo el contenido va en JSON dentro del zip, la búsqueda corre en el navegador y el estado de estudio, las notas y los favoritos se guardan en el `localStorage` del navegador de cada visitante.
+
+1. **Generar el zip.** Requiere `.venv` y `npm ci` en `frontend/`. Ejecuta `make static`. Para otra carpeta del hosting, usa `make static BASE_PATH=/otra_carpeta`. El resultado queda en `dist/dekh-static-<AAAA-MM-DD>.zip`, con `index.html`, `.htaccess` y `data/` en la raíz del zip.
+2. **Crear la carpeta.** En cPanel, abre **Administrador de archivos**, entra en `public_html` y crea la carpeta `DES_conocimiento`. El nombre debe coincidir con `BASE_PATH`, incluidas las mayúsculas.
+3. **Subir el zip.** Entra en `public_html/DES_conocimiento`, usa **Cargar** y sube el zip.
+4. **Extraer.** Selecciona el zip y usa **Extract** con destino `/public_html/DES_conocimiento`. Después borra el zip.
+5. **Comprobar el `.htaccess`.** En **Configuración**, activa «Mostrar archivos ocultos» y comprueba que `.htaccess` está en `public_html/DES_conocimiento`. Lo genera el build del frontend: no lo edites a mano.
+6. **Abrir** https://voltakchile.cl/DES_conocimiento/.
+
+Para actualizar la demo, borra el contenido de `public_html/DES_conocimiento` y repite los pasos 3 y 4 con el zip nuevo. Los datos guardados por cada visitante en su navegador se conservan.

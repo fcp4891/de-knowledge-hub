@@ -10,12 +10,13 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | Demo estática para cPanel (`a/static-demo`) | Dominio siguiente, tras tu aprobación de 01-fundamentals | — |
-| B · Cursor | — | Revisar `normalize_amount` en `testing-with-pytest` | — |
+| A · Claude Code | — (demo estática entregada) | Dominio siguiente, tras tu aprobación de 01-fundamentals | — |
+| B · Cursor | — | Arreglar `extractField` de la búsqueda estática; revisar `normalize_amount` | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
+| A | B | Demo estática: la búsqueda no carga por `extractField` en `browserSearch.ts` (urgente) | Abierto |
 | A | B | Revisar corrección de `normalize_amount` en `testing-with-pytest` (`verified`) | Abierto |
 
 ## Criterio de salida de la fase actual (F3b, ADR-009)

@@ -1,4 +1,4 @@
-.PHONY: help venv install snippets-deps validate test build dev mocks db-up db-down migrate compile backup-me restore-me validate-terraform
+.PHONY: help venv install snippets-deps validate test build dev mocks static static-data db-up db-down migrate compile backup-me restore-me validate-terraform
 
 # Entorno del proyecto: .venv con Python 3.12 (README, «Entorno de Python»). Nunca el Python global.
 ifeq ($(OS),Windows_NT)
@@ -18,7 +18,7 @@ REQUIRE_VENV =
 endif
 
 help:
-	@echo Objetivos: venv install snippets-deps validate test mocks db-up db-down migrate compile build dev backup-me restore-me validate-terraform
+	@echo Objetivos: venv install snippets-deps validate test mocks static static-data db-up db-down migrate compile build dev backup-me restore-me validate-terraform
 
 venv:
 	$(BOOTSTRAP_PYTHON) -m venv .venv
@@ -44,6 +44,15 @@ test:
 
 mocks: validate
 	$(PYTHON) -m scripts.contracts.build_mocks
+
+# Demo estática (cPanel): JSON de todo el contenido en frontend/public/data/, build de Next.js con
+# BASE_PATH y zip en dist/. Git Bash no debe convertir "/DES_conocimiento" en una ruta de Windows.
+BASE_PATH ?= /DES_conocimiento
+static-data: validate
+	$(PYTHON) -m scripts.static.build_static_data
+
+static: static-data
+	MSYS_NO_PATHCONV=1 MSYS2_ARG_CONV_EXCL="*" $(PYTHON) -m scripts.static.package_static --base-path $(BASE_PATH)
 
 db-up:
 	docker compose up -d --wait
