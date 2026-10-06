@@ -17,7 +17,7 @@
 /.next/
 /out/
 
-# Copia local de los mocks para la demo estática. Carril A publicará estos JSON y habrá que versionarlos.
+# Generado por `make static-data`. No se versiona (decisión tomada).
 /public/data/
 
 # production

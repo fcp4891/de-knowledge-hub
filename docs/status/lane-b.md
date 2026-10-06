@@ -6,16 +6,17 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-06
 
 ## Actual
-- **Tarea activa:** ninguna. B-F3.1 del lote F3b-01b quedó aprobada y la búsqueda estática indexa también `tags`.
-- **Siguiente:** esperar a que Carril A deje `tags` en `search-index.json`.
+- **Tarea activa:** ninguna. `extractField` devuelve el campo real (`id` y el resto); title, snippet y tags se leen como antes. Sobre el índice de `make static-data`, `bigquery` devuelve 41 y `governance` 3.
+- **Siguiente:** Carril A regenera la demo (`make static`). La revisión de `normalize_amount` sigue en pendiente.
 - **Bloqueos:** ninguno.
 
 ### Demo estática
 - `API_MODE=static` y `BASE_PATH` (obligatorio, no va fijo en el código). `npm run build:static` deja `frontend/out/`. Durante ese build el script pone `dynamicParams = false` en las cuatro rutas dinámicas, sustituye `personalActions.ts` por el stub sin server actions y restaura ambos al terminar.
-- Los JSON salen de `frontend/public/data/` (mismo `index.json` que los mocks). Esa carpeta está en `.gitignore`. El script la copia desde los mocks si no hay `index.json`, y arma `search-index.json` (`{ documents: [...] }`) si Carril A todavía no lo dejó. Cuando publique los archivos, hay que quitar `/public/data/` de `frontend/.gitignore` para versionarlos. El script no pisa un `index.json` ni un `search-index.json` ya existentes.
+- Los JSON salen de `frontend/public/data/` (mismo `index.json` que los mocks). **`public/data/` no se versiona** (decisión tomada): lo genera `make static-data` y sigue en `frontend/.gitignore`. No hay que quitar esa línea. El script de build solo rellena la carpeta si falta `index.json` o `search-index.json`, y no pisa los que ya existen.
 - **Apache:** `frontend/scripts/write-htaccess.mjs` escribe `out/.htaccess` en cada build estático. Carril A no debe generar otro. Lleva `DirectoryIndex index.html`, `ErrorDocument 404 {BASE_PATH}/404.html`, `AddType application/json .json`, `mod_deflate`, caché de un año para `_next/static` y de 5 minutos para HTML y `data/`.
 - En estático, notas, estado y favoritos van a `localStorage`. En `hybrid` siguen en la API. No se editó `content/`.
-- MiniSearch indexa `title`, `snippet` y `tags`. Carril A incluirá `tags` en `search-index.json` (texto o lista). Si el índice todavía no los trae, la búsqueda sigue por título y snippet.
+- MiniSearch indexa `title`, `snippet` y `tags`. `extractField` lee esos tres campos y, para cualquier otro (incluido `id`), devuelve `document[fieldName]`. Antes el id era el snippet y MiniSearch fallaba con "duplicate ID".
+- Revisión de `normalize_amount` en `docs/reviews/cards-pytest-fix.md` (filas pendiente). No se editó `content/`.
 - El Explorer de `main` (contador «N de M con ficha», filtro Contenido y etiquetas de estado) queda en el navegador: el HTML estático no puede filtrar en el servidor.
 
 ### B-F3.1 · lote F3b-01b

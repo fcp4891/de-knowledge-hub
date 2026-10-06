@@ -51,7 +51,10 @@ function loadIndex(): Promise<MiniSearch<SearchDocument>> {
           if (fieldName === "title") {
             return document.title;
           }
-          return document.snippet;
+          if (fieldName === "snippet") {
+            return document.snippet;
+          }
+          return document[fieldName as keyof SearchDocument];
         },
       });
       mini.addAll(file.documents);
