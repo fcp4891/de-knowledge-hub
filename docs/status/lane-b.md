@@ -6,8 +6,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-06
 
 ## Actual
-- **Tarea activa:** tags en la búsqueda estática (`b/static-search-tags`).
-- **Siguiente:** lint y build estático de esa rama.
+- **Tarea activa:** ninguna. La búsqueda estática indexa también `tags`.
+- **Siguiente:** esperar a que Carril A deje `tags` en `search-index.json`.
 - **Bloqueos:** ninguno.
 
 ### Demo estática
@@ -15,6 +15,7 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los JSON salen de `frontend/public/data/` (mismo `index.json` que los mocks). Esa carpeta está en `.gitignore`. El script la copia desde los mocks si no hay `index.json`, y arma `search-index.json` (`{ documents: [...] }`) si Carril A todavía no lo dejó. Cuando publique los archivos, hay que quitar `/public/data/` de `frontend/.gitignore` para versionarlos. El script no pisa un `index.json` ni un `search-index.json` ya existentes.
 - **Apache:** `frontend/scripts/write-htaccess.mjs` escribe `out/.htaccess` en cada build estático. Carril A no debe generar otro. Lleva `DirectoryIndex index.html`, `ErrorDocument 404 {BASE_PATH}/404.html`, `AddType application/json .json`, `mod_deflate`, caché de un año para `_next/static` y de 5 minutos para HTML y `data/`.
 - En estático, notas, estado y favoritos van a `localStorage`. En `hybrid` siguen en la API. No se editó `content/`.
+- MiniSearch indexa `title`, `snippet` y `tags`. Carril A incluirá `tags` en `search-index.json` (texto o lista). Si el índice todavía no los trae, la búsqueda sigue por título y snippet.
 - El Explorer de `main` (contador «N de M con ficha», filtro Contenido y etiquetas de estado) queda en el navegador: el HTML estático no puede filtrar en el servidor.
 
 ### B-F3.1 · lote F3b-01a

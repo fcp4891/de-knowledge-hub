@@ -11,6 +11,7 @@ export type SearchDocument = {
   classification: Classification | null;
   has_page: boolean;
   snippet: string;
+  tags?: string[] | string;
 };
 
 type SearchIndexFile = { documents: SearchDocument[] };
@@ -37,9 +38,21 @@ function loadIndex(): Promise<MiniSearch<SearchDocument>> {
     })
     .then((file) => {
       const mini = new MiniSearch<SearchDocument>({
-        fields: ["title", "snippet"],
+        fields: ["title", "snippet", "tags"],
         storeFields: ["slug", "title", "type", "domain", "classification", "has_page", "snippet"],
         idField: "id",
+        extractField: (document, fieldName) => {
+          if (fieldName === "tags") {
+            if (Array.isArray(document.tags)) {
+              return document.tags.join(" ");
+            }
+            return document.tags ?? "";
+          }
+          if (fieldName === "title") {
+            return document.title;
+          }
+          return document.snippet;
+        },
       });
       mini.addAll(file.documents);
       return mini;
