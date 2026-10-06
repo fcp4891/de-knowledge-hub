@@ -1086,18 +1086,18 @@ id: source:gilbert-lynch-cap-2002
 slug: gilbert-lynch-cap-2002
 type: source
 title: Brewer's conjecture and the feasibility of consistent, available, partition-tolerant web services (Gilbert y Lynch, 2002)
-description: 'Prueba formal del teorema CAP (SIGACT News 33(2):48-51, 2002), copia publicada por el grupo TDS del MIT CSAIL: referencia conceptual
+description: 'Prueba formal del teorema CAP (SIGACT News 33(2):48-51, 2002), copia publicada por el autor (Seth Gilbert, NUS): referencia conceptual
   canónica (Nivel 4); no respalda afirmaciones de producto.'
-url: https://groups.csail.mit.edu/tds/papers/Gilbert/Brewer6.pdf
+url: https://www.comp.nus.edu.sg/~gilbert/pubs/BrewersConjecture-SigAct.pdf
 source_type: spec_paper
 authority_level: 4
-provider: mit-csail
+provider: gilbert-lynch
 url_verified: true
 review_frequency: quarterly
 trust: high
 technologies: []
 created_at: '2026-10-05'
-updated_at: '2026-10-05'
+updated_at: '2026-10-06'
 last_verified: '2026-10-05'
 verification_status: verified
 ---

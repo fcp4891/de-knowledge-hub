@@ -11,7 +11,7 @@ classification: modern
 level: intermediate
 importance: high
 cloud: [gcp, aws, azure, agnostic]
-technologies: [apache-iceberg, delta-lake, apache-hudi, gcp-biglake, gcp-bigquery, aws-athena, microsoft-fabric]
+technologies: [apache-iceberg, delta-lake, apache-hudi, gcp-biglake, gcp-bigquery, aws-athena, aws-lake-formation, microsoft-fabric]
 tags: [storage, lakehouse, table-formats]
 related_topics: [data-lake, data-warehouse, parquet-format, schema-evolution, acid]
 sources:
@@ -39,6 +39,10 @@ sources:
     url: https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg.html
     accessed: 2026-10-05
     note: "Athena permite lecturas, time travel, escrituras y DDL sobre tablas Apache Iceberg; Iceberg es un formato de tabla abierto que gestiona colecciones grandes de archivos como tablas, con insert, update y delete a nivel de registro, y evolución de esquema y de particiones."
+  - source: aws-lake-formation-docs
+    url: https://docs.aws.amazon.com/lake-formation/latest/dg/what-is-lake-formation.html
+    accessed: 2026-10-06
+    note: "Lake Formation centraliza los controles de acceso del data lake, con políticas a nivel de base de datos, tabla, columna, fila y celda, que respetan Redshift Spectrum, Athena, Glue ETL y EMR."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-overview
     accessed: 2026-10-05
@@ -64,7 +68,7 @@ relations:
     target: acid
     note: La capa de tabla aporta transacciones sobre almacenamiento de objetos.
 created_at: 2026-10-05
-updated_at: 2026-10-05
+updated_at: 2026-10-06
 last_verified: 2026-10-05
 verification_status: review_required
 ---
@@ -236,7 +240,7 @@ Pendiente (F4).
 
 - Apache: *Iceberg documentation* y *Hudi overview*; Delta Lake: *Welcome to the Delta Lake documentation*.
 - Google Cloud: *Apache Iceberg managed tables* e *Introduction to BigLake tables* (BigQuery).
-- AWS: *Query Apache Iceberg tables* (Amazon Athena).
+- AWS: *Query Apache Iceberg tables* (Amazon Athena) y *What is AWS Lake Formation?*
 - Microsoft Learn: *What is a lakehouse?* y *What is Fabric Data Warehouse?*
 
 El detalle de cada fuente está en `sources` del frontmatter.
@@ -248,3 +252,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-05: creación (lote F3b-01a, dominio 01-fundamentals).
+- 2026-10-06: revisión B-F3.1 del lote F3b-01a aplicada (docs/reviews/cards-f3b-01a.md): Lake Formation citado con su fuente.

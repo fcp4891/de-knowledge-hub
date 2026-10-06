@@ -16,9 +16,9 @@ tags: [fundamentals, distributed-systems, consistency]
 related_topics: [data-consistency, acid]
 sources:
   - source: gilbert-lynch-cap-2002
-    url: https://groups.csail.mit.edu/tds/papers/Gilbert/Brewer6.pdf
+    url: https://www.comp.nus.edu.sg/~gilbert/pubs/BrewersConjecture-SigAct.pdf
     accessed: 2026-10-05
-    note: "Gilbert y Lynch (SIGACT News 33(2):48-51, 2002) formalizan y prueban la conjetura de Brewer: en una red sujeta a fallas de comunicación, ningún servicio web puede implementar una memoria compartida atómica de lectura y escritura que garantice una respuesta a cada solicitud. La identidad del PDF se confirmó en la lista de publicaciones de Nancy Lynch (MIT CSAIL); la formulación se contrastó con 'Perspectives on the CAP Theorem' (Gilbert y Lynch, IEEE Computer, 2012), que la reproduce siguiendo la prueba de 2002 y data en 2000 la presentación original de la idea por Brewer."
+    note: "Gilbert y Lynch (SIGACT News 33(2):48-51, 2002), copia del autor. Disponibilidad: toda solicitud recibida por un nodo que no ha fallado debe tener respuesta (el algoritmo debe terminar, sin cota de tiempo). Tolerancia a particiones: la red puede perder arbitrariamente muchos mensajes entre nodos. Teorema 1: en el modelo de red asíncrona es imposible implementar un objeto de lectura y escritura que garantice disponibilidad y consistencia atómica en todas las ejecuciones justas, incluidas aquellas en que se pierden mensajes. Teorema 2: lo mismo en el modelo parcialmente síncrono. El año 2000 de la conjetura de Brewer proviene de 'Perspectives on the CAP Theorem' (Gilbert y Lynch, 2012)."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/cosmos-db/consistency-levels
     accessed: 2026-10-05
@@ -35,7 +35,7 @@ relations:
     target: acid
     note: La C de CAP (atomicidad de las operaciones) no es la C de ACID (reglas de integridad).
 created_at: 2026-10-05
-updated_at: 2026-10-05
+updated_at: 2026-10-06
 last_verified: 2026-10-05
 verification_status: review_required
 ---
@@ -45,7 +45,7 @@ verification_status: review_required
 El teorema CAP dice que, **cuando la red se parte**, un sistema distribuido que replica datos tiene que elegir entre:
 
 - **consistencia:** toda lectura ve la última escritura;
-- **disponibilidad:** toda solicitud recibe respuesta.
+- **disponibilidad:** toda solicitud que recibe un nodo que no ha fallado obtiene respuesta.
 
 No puede garantizar las dos a la vez. Brewer lo planteó como conjetura en 2000, y Gilbert y Lynch lo formalizaron y probaron en 2002. En la práctica no se trata de "elegir dos de tres" en todo momento: la tolerancia a particiones no es opcional en una red real, y la decisión importa durante una partición. Fuera de ellas, el equilibrio que más pesa es entre consistencia y latencia (PACELC).
 
@@ -54,10 +54,10 @@ No puede garantizar las dos a la vez. Brewer lo planteó como conjetura en 2000,
 Es un resultado teórico consolidado de la computación distribuida. En la formulación de Gilbert y Lynch:
 
 - **Consistencia (C):** el servicio se comporta como una memoria atómica de lectura y escritura; cada operación parece ocurrir en un instante único, como si hubiera un solo servidor.
-- **Disponibilidad (A):** toda solicitud recibe una respuesta en algún momento.
+- **Disponibilidad (A):** toda solicitud recibida por un nodo que no ha fallado debe obtener una respuesta; el algoritmo debe terminar, aunque sin cota de tiempo.
 - **Tolerancia a particiones (P):** la comunicación entre servidores puede fallar, con mensajes demorados o perdidos.
 
-**El teorema:** en una red sujeta a fallas de comunicación, ningún servicio puede implementar una memoria atómica de lectura y escritura que garantice una respuesta a cada solicitud.
+**El teorema (Teorema 1 de Gilbert y Lynch):** en el modelo de red asíncrona es imposible implementar un objeto de lectura y escritura que garantice disponibilidad y consistencia atómica en todas las ejecuciones justas, incluidas aquellas en que se pierden mensajes. El Teorema 2 extiende el resultado al modelo parcialmente síncrono.
 
 La C de CAP no es la C de ACID: en ACID, consistencia significa respetar las reglas de integridad de la base.
 
@@ -223,3 +223,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-05: creación (lote F3b-01a, dominio 01-fundamentals).
+- 2026-10-06: revisión B-F3.1 del lote F3b-01a aplicada (docs/reviews/cards-f3b-01a.md): disponibilidad según Gilbert y Lynch (toda solicitud recibida por un nodo que no ha fallado), enunciado del Teorema 1 y fuente cambiada a la copia legible del autor.

@@ -11,7 +11,7 @@ classification: core
 level: basic
 importance: high
 cloud: [gcp, aws, azure, agnostic]
-technologies: [gcp-bigquery, gcp-pubsub, gcp-datastream, aws-dms, aws-kinesis, azure-data-factory]
+technologies: [gcp-bigquery, gcp-pubsub, gcp-datastream, aws-dms, aws-kinesis, aws-redshift, aws-glue, azure-data-factory, azure-event-hubs, microsoft-fabric, debezium]
 tags: [pipelines, ingestion]
 related_topics: [batch-ingestion, streaming-ingestion, change-data-capture, file-ingestion, api-ingestion, data-pipeline]
 sources:
@@ -39,6 +39,26 @@ sources:
     url: https://docs.aws.amazon.com/streams/latest/dev/introduction.html
     accessed: 2026-10-05
     note: "Kinesis Data Streams recolecta y procesa grandes streams de registros en tiempo real."
+  - source: aws-redshift-docs
+    url: https://docs.aws.amazon.com/redshift/latest/dg/r_COPY.html
+    accessed: 2026-10-06
+    note: "COPY carga en Redshift datos de una fuente (lo más común, S3) en una tabla que ya debe existir, agregándolos a las filas existentes."
+  - source: aws-glue-docs
+    url: https://docs.aws.amazon.com/glue/latest/dg/what-is-glue.html
+    accessed: 2026-10-06
+    note: "Los jobs de AWS Glue extraen, transforman y cargan datos; se invocan programados, bajo demanda o por eventos."
+  - source: debezium-docs
+    url: https://debezium.io/documentation/reference/stable/connectors/postgresql.html
+    accessed: 2026-10-06
+    note: "El conector de PostgreSQL de Debezium captura cambios a nivel de fila usando logical decoding."
+  - source: microsoft-learn
+    url: https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about
+    accessed: 2026-10-06
+    note: "Event Hubs ingiere eventos en un log particionado de solo agregado, con clientes propios o de Kafka."
+  - source: microsoft-learn
+    url: https://learn.microsoft.com/en-us/fabric/mirroring/overview
+    accessed: 2026-10-06
+    note: "Mirroring en Fabric replica en casi tiempo real datos y metadatos de bases operacionales a OneLake."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/copy-activity-overview
     accessed: 2026-10-05
@@ -63,7 +83,7 @@ relations:
     target: data-pipeline
     note: La ingesta es la primera etapa de un pipeline.
 created_at: 2026-10-05
-updated_at: 2026-10-05
+updated_at: 2026-10-06
 last_verified: 2026-10-05
 verification_status: review_required
 ---
@@ -216,8 +236,9 @@ Pendiente (F4).
 ## 20. Fuentes
 
 - Google Cloud: *Introduction to loading data*, *bq command-line tool reference* y *Federated query functions* (BigQuery); *Create BigQuery subscriptions* (Pub/Sub).
-- AWS: *Creating tasks for ongoing replication using AWS DMS* y *What is Amazon Kinesis Data Streams?*
-- Microsoft Learn: *Copy activity in Azure Data Factory*.
+- AWS: *Creating tasks for ongoing replication using AWS DMS*, *What is Amazon Kinesis Data Streams?*, *COPY* (Amazon Redshift) y *What is AWS Glue?*
+- Debezium: *PostgreSQL connector*.
+- Microsoft Learn: *Copy activity in Azure Data Factory*, *What is Azure Event Hubs* y *Mirroring in Microsoft Fabric*.
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
@@ -228,3 +249,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-05: creación (lote F3b-01a, dominio 01-fundamentals).
+- 2026-10-06: revisión B-F3.1 del lote F3b-01a aplicada (docs/reviews/cards-f3b-01a.md): fuentes para COPY de Redshift, Glue, Event Hubs, el mirroring de Fabric y Debezium.

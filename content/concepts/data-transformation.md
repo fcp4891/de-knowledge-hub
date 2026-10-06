@@ -28,6 +28,14 @@ sources:
     accessed: 2026-10-05
     note: "SAFE_CAST es como CAST, pero devuelve NULL en lugar de un error en tiempo de ejecución."
   - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/string_functions
+    accessed: 2026-10-06
+    note: "REGEXP_CONTAINS(value, regexp) devuelve TRUE si value coincide parcialmente con la expresión; para coincidencia completa se usan ^ y $, con paréntesis alrededor de todo lo que va entre ellos; la sintaxis es la de la biblioteca re2. REPLACE reemplaza todas las apariciones de una subcadena."
+  - source: dbt-docs
+    url: https://docs.getdbt.com/docs/supported-data-platforms
+    accessed: 2026-10-06
+    note: "La tabla de adaptadores incluye Redshift como Generally available."
+  - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax
     accessed: 2026-10-05
     note: "QUALIFY filtra los resultados de funciones de ventana."
@@ -60,7 +68,7 @@ relations:
     target: dataform-incremental-tables
     note: Transformación incremental declarativa en BigQuery.
 created_at: 2026-10-05
-updated_at: 2026-10-05
+updated_at: 2026-10-06
 last_verified: 2026-10-05
 verification_status: review_required
 ---
@@ -83,7 +91,7 @@ Es la etapa de procesamiento del ciclo de vida del dato. Tipos habituales:
 
 | Tipo | Ejemplo |
 |---|---|
-| Limpieza y tipado | Quitar espacios, convertir `'1.250'` a número, normalizar mayúsculas |
+| Limpieza y tipado | Quitar espacios, convertir `'1.250'` a número según el formato del origen, normalizar mayúsculas |
 | Validación | Rechazar montos negativos o fechas imposibles |
 | Deduplicación | Una fila por clave con la versión más reciente |
 | Integración | Unir pedidos, clientes y productos |
@@ -100,7 +108,7 @@ Los datos crudos llegan con tipos inconsistentes, duplicados, códigos que solo 
 
 1. **Capas:** raw o staging (como llega), luego curated (limpio e integrado), luego marts (modelado para consumo).
 2. **Declarar en código:** cada transformación es una consulta o un modelo versionado. Dataform y dbt resuelven el orden por dependencias y compilan a SQL.
-3. **Transformaciones tolerantes:** `SAFE_CAST` en lugar de `CAST` cuando un valor puede venir mal, para no abortar todo el lote; los inválidos se apartan.
+3. **Transformaciones tolerantes y explícitas:** `SAFE_CAST` en lugar de `CAST` cuando un valor puede venir mal, para no abortar todo el lote; antes de convertir, validar el formato esperado (por ejemplo, con `REGEXP_CONTAINS`), porque una conversión que no falla puede dar un valor equivocado. Los inválidos se apartan.
 4. **Idempotencia:** reemplazar la tabla o la partición, o fusionar por clave, para que reejecutar no duplique.
 5. **Incremental cuando conviene:** procesar solo lo nuevo en tablas grandes (ver `dataform-incremental-tables`).
 6. **Tests de datos:** unicidad, no nulos y relaciones, ejecutados junto con la transformación.
@@ -146,25 +154,34 @@ flowchart LR
 ## 10. Código
 
 ```sql
--- BigQuery: de raw a curated. Tipado tolerante, deduplicación y separación de inválidos.
+-- BigQuery: de raw a curated. Tipado explícito, deduplicación y separación de inválidos.
 -- Requiere: raw.pedidos(pedido_id STRING, monto_txt STRING, creado_en STRING, cargado_en TIMESTAMP).
+-- Formato del monto en el origen: punto de miles y coma decimal ('1.250', '1.250,50', '90').
+-- Solo se convierte lo que cumple ese formato; '10.50', '1,250.00' o 'N/D' quedan en NULL y se
+-- rechazan, en lugar de convertirse en silencio a un valor equivocado ('10.50' no pasa a 1050).
 CREATE OR REPLACE TABLE `proyecto.curated.pedidos` AS
-SELECT
-  pedido_id,
-  SAFE_CAST(REPLACE(TRIM(monto_txt), '.', '') AS NUMERIC) AS monto,  -- NULL si no es número
-  SAFE_CAST(creado_en AS TIMESTAMP) AS creado_en,
-  cargado_en
-FROM `proyecto.raw.pedidos`
-WHERE SAFE_CAST(REPLACE(TRIM(monto_txt), '.', '') AS NUMERIC) >= 0
+WITH tipado AS (
+  SELECT
+    *,
+    IF(REGEXP_CONTAINS(TRIM(monto_txt), r'^((\d{1,3}(\.\d{3})+|\d+)(,\d+)?)$'),
+       SAFE_CAST(REPLACE(REPLACE(TRIM(monto_txt), '.', ''), ',', '.') AS NUMERIC),
+       NULL) AS monto
+  FROM `proyecto.raw.pedidos`
+)
+SELECT pedido_id, monto, SAFE_CAST(creado_en AS TIMESTAMP) AS creado_en, cargado_en
+FROM tipado
+WHERE monto IS NOT NULL                    -- el patrón no admite signo: no hay montos negativos
 QUALIFY ROW_NUMBER() OVER (PARTITION BY pedido_id ORDER BY cargado_en DESC) = 1;
 
--- Los que no pasaron el tipado o la regla, aparte y con motivo (no se descartan en silencio).
+-- Los que no cumplen el formato, aparte y con motivo (no se descartan en silencio).
 CREATE OR REPLACE TABLE `proyecto.curated.pedidos_rechazados` AS
-SELECT *, 'monto inválido o negativo' AS motivo
+SELECT *, 'monto con formato inválido o negativo' AS motivo
 FROM `proyecto.raw.pedidos`
-WHERE SAFE_CAST(REPLACE(TRIM(monto_txt), '.', '') AS NUMERIC) IS NULL
-   OR SAFE_CAST(REPLACE(TRIM(monto_txt), '.', '') AS NUMERIC) < 0;
+WHERE NOT REGEXP_CONTAINS(TRIM(monto_txt), r'^((\d{1,3}(\.\d{3})+|\d+)(,\d+)?)$')
+   OR monto_txt IS NULL;
 ```
+
+Casos probados con la misma expresión (en PostgreSQL y en Python): `'1.250'` → 1250, `'1.250,50'` → 1250.50, `' 3.000 '` → 3000, `'1250'` → 1250, `'0,5'` → 0.5; `'10.50'`, `'1.25'`, `'1,250.00'`, `'N/D'`, `'-5'` y `''` → rechazados.
 
 `CREATE OR REPLACE` hace la transformación repetible. En Dataform, cada `CREATE OR REPLACE` sería un modelo `type: "table"` con sus aserciones.
 
@@ -174,7 +191,7 @@ WHERE SAFE_CAST(REPLACE(TRIM(monto_txt), '.', '') AS NUMERIC) IS NULL
 
 ## 12. AWS
 
-**AWS Glue** transforma, prepara y limpia datos con jobs de Spark. El editor visual genera el código de extracción, transformación y carga, y los jobs corren programados, bajo demanda o por eventos. Para ELT dentro de Redshift se usa SQL, a menudo con dbt. A diferencia de GCP, la herramienta nativa de transformación de AWS está centrada en Spark (Glue), no en SQL versionado.
+**AWS Glue** transforma, prepara y limpia datos con jobs de Spark. El editor visual genera el código de extracción, transformación y carga, y los jobs corren programados, bajo demanda o por eventos. Para ELT dentro de Redshift se usa SQL; dbt es una opción, y su adaptador de Redshift figura como disponible en general (GA). A diferencia de GCP, la herramienta nativa de transformación de AWS está centrada en Spark (Glue), no en SQL versionado.
 
 ## 13. Azure
 
@@ -223,8 +240,8 @@ Pendiente (F4).
 
 ## 20. Fuentes
 
-- Google Cloud: *Introduction to data transformation*, *Conversion functions* y *Query syntax* (BigQuery); *Dataform overview*.
-- dbt: *Add data tests to your DAG*.
+- Google Cloud: *Introduction to data transformation*, *Conversion functions*, *String functions* y *Query syntax* (BigQuery); *Dataform overview*.
+- dbt: *Add data tests to your DAG* y *Supported data platforms*.
 - AWS: *What is AWS Glue?*
 - Microsoft Learn: *Mapping data flows* (Azure Data Factory).
 
@@ -237,3 +254,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-05: creación (lote F3b-01a, dominio 01-fundamentals).
+- 2026-10-06: revisión B-F3.1 del lote F3b-01a aplicada (docs/reviews/cards-f3b-01a.md): el ejemplo valida el formato del monto antes de convertir ('10.50' ya no pasa a 1050) y se probó; dbt en Redshift con fuente.

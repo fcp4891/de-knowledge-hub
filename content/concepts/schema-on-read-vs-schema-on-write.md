@@ -39,6 +39,10 @@ sources:
     url: https://docs.cloud.google.com/bigquery/docs/external-data-sources
     accessed: 2026-10-05
     note: "Una fuente de datos externa se consulta directamente desde BigQuery aunque los datos no estén en su almacenamiento, por ejemplo archivos en Cloud Storage."
+  - source: aws-redshift-docs
+    url: https://docs.aws.amazon.com/redshift/latest/dg/r_COPY.html
+    accessed: 2026-10-06
+    note: "La tabla destino de COPY debe existir en la base; COPY agrega los datos de entrada a las filas existentes."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-overview
     accessed: 2026-10-05
@@ -60,7 +64,7 @@ relations:
     target: oltp-vs-olap
     note: OLTP es schema-on-write con integridad aplicada.
 created_at: 2026-10-05
-updated_at: 2026-10-05
+updated_at: 2026-10-06
 last_verified: 2026-10-05
 verification_status: review_required
 ---
@@ -176,7 +180,7 @@ En **BigQuery** conviven los dos modelos. Las tablas nativas aplican el esquema 
 
 ## 12. AWS
 
-**Athena** es el ejemplo canónico de schema-on-read: guarda el esquema en el **Glue Data Catalog**, lo proyecta sobre los datos de S3 al consultar, y borrar la tabla solo borra la metadata. **Redshift**, en cambio, aplica el esquema al cargar con `COPY`. La misma organización usa los dos según la zona.
+**Athena** es el ejemplo canónico de schema-on-read: guarda el esquema en el **Glue Data Catalog**, lo proyecta sobre los datos de S3 al consultar, y borrar la tabla solo borra la metadata. **Redshift**, en cambio, carga con `COPY` en una tabla que ya debe existir en la base, con su esquema definido. La misma organización usa los dos según la zona.
 
 ## 13. Azure
 
@@ -222,7 +226,7 @@ Pendiente (F4).
 
 ## 20. Fuentes
 
-- AWS: *Create tables in Athena* y *CREATE TABLE* (Amazon Athena).
+- AWS: *Create tables in Athena* y *CREATE TABLE* (Amazon Athena); *COPY* (Amazon Redshift).
 - Microsoft Learn: *Online transaction processing (OLTP)* y *What is a lakehouse?*
 - Google Cloud: *Specify a schema*, *bq command-line tool reference* e *Introduction to external data sources* (BigQuery).
 
@@ -235,3 +239,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-05: creación (lote F3b-01a, dominio 01-fundamentals).
+- 2026-10-06: revisión B-F3.1 del lote F3b-01a aplicada (docs/reviews/cards-f3b-01a.md): COPY de Redshift con fuente.

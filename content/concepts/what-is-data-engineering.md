@@ -52,18 +52,18 @@ relations:
     target: data-orchestration
     note: Una de las responsabilidades centrales.
 created_at: 2026-10-05
-updated_at: 2026-10-05
+updated_at: 2026-10-06
 last_verified: 2026-10-05
 verification_status: review_required
 ---
 
 ## 1. Resumen
 
-La ingeniería de datos diseña, construye y opera los sistemas que llevan los datos desde donde se producen hasta donde se usan, en forma **confiable**: recolectar, almacenar, transformar y entregar. Su producto no es un reporte ni un modelo, sino los pipelines, tablas y plataformas de los que dependen los reportes, los modelos y los productos. Google Cloud, AWS y Microsoft describen el rol con las mismas piezas: ingesta, transformación, orquestación, modelado, ciclo de vida, calidad y seguridad.
+La ingeniería de datos diseña, construye y opera los sistemas que llevan los datos desde donde se producen hasta donde se usan, en forma **confiable**: recolectar, almacenar, transformar y entregar. Su producto no es un reporte ni un modelo, sino los pipelines, tablas y plataformas de los que dependen los reportes, los modelos y los productos. Las descripciones oficiales de Google Cloud, AWS y Microsoft coinciden en el centro (recolectar o ingerir, transformar, almacenar y entregar datos), y cada una agrega énfasis propios, detallados en la sección 2.
 
 ## 2. Qué es
 
-Es una disciplina consolidada de la ingeniería de software aplicada a datos. Las descripciones oficiales coinciden:
+Es una disciplina consolidada de la ingeniería de software aplicada a datos. Cada descripción oficial menciona cosas distintas:
 
 - **Google Cloud:** el data engineer recolecta, transforma, almacena y entrega datos; diseña infraestructura robusta, optimizando rendimiento y seguridad, y elige soluciones según necesidades de negocio y regulatorias.
 - **AWS:** ingerir y transformar datos, orquestar pipelines, diseñar modelos de datos, gestionar ciclos de vida y asegurar calidad.
@@ -158,7 +158,7 @@ En producción, estos pasos los ejecuta un orquestador, con reintentos, controle
 
 ## 11. GCP
 
-Google Cloud describe el rol a través de su certificación Professional Data Engineer: recolectar, transformar, almacenar y entregar datos, y diseñar infraestructura robusta con foco en rendimiento, seguridad y requisitos regulatorios. Las piezas típicas son Cloud Storage, BigQuery, Pub/Sub, Dataflow, Dataform y Managed Airflow (Cloud Composer).
+Google Cloud describe el rol a través de su certificación Professional Data Engineer: recolectar, transformar, almacenar y entregar datos, y diseñar infraestructura robusta con foco en rendimiento, seguridad y requisitos regulatorios. La página de la certificación no enumera productos; en este catálogo, los servicios de GCP que cubren esas tareas se describen en sus fichas (por ejemplo, `data-ingestion` y `data-orchestration`).
 
 ## 12. AWS
 
@@ -221,3 +221,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-05: creación (lote F3b-01a, dominio 01-fundamentals).
+- 2026-10-06: revisión B-F3.1 del lote F3b-01a aplicada (docs/reviews/cards-f3b-01a.md): cada responsabilidad se atribuye solo a la fuente que la menciona; §11 sin productos que la certificación no respalda.
