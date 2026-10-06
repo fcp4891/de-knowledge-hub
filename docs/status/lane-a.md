@@ -58,6 +58,10 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ## Historial
 
+### Revisión del patrón de conversión numérica con REPLACE (2026-10-06)
+- Búsqueda en fichas y snippets de conversiones que quitan el punto (`REPLACE(..., '.', '')`, `.replace(".", "")`) y convierten a número. Un caso: `testing-with-pytest` §10, `normalize_amount` hace `int(raw.replace(".", "").strip())`: convierte sin error `'10.50'` en 1050, `'1.2.3'` en 123 y `'12.34'` en 1234 (comprobado). Los tests de la ficha no cubren esos casos. No se corrigió: pendiente de tu decisión (propuesta: validar el formato con una expresión regular, como en `data-transformation`, y agregar los casos al test parametrizado).
+- Sin el problema: `data-reconciliation` y `bigquery-reconciliation` usan `CAST(monto AS STRING)` para una huella, no para convertir texto a número; `data-transformation` ya valida el formato.
+
 ### F3b-01a verified (2026-10-06)
 - Merge de `b/f3b-review-01a` y `b/f3b-explorer-tags` (conflicto en `lane-b.md` resuelto combinando ambos lados). Revisión aplicada: `data-transformation` valida el formato del monto antes de convertir ('10.50' ya no pasa a 1050; probado en PostgreSQL y Python); atribución estricta por fuente en `what-is-data-engineering`; disponibilidad según Gilbert y Lynch y fuente cambiada a la copia legible del autor (NUS); fuentes para Lake Formation, `COPY`, Glue, Event Hubs, mirroring y Debezium.
 - Las 10 fichas `verified`. Cerrado el pedido del cambio de tipos en `data-validation-with-pydantic`.
