@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
+    "build:static": "node scripts/build-static.mjs",
     "start": "next start",
     "lint": "eslint",
     "generate:api": "openapi-typescript ../docs/contracts/api.yaml -o lib/api/schema.d.ts"
@@ -13,6 +14,7 @@
     "cytoscape": "^3.34.3",
     "highlight.js": "^11.12.0",
     "mermaid": "^12.0.0",
+    "minisearch": "^7.2.0",
     "next": "15.5.26",
     "react": "19.1.0",
     "react-dom": "19.1.0"

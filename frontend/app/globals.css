@@ -463,6 +463,11 @@ details.panel summary + * {
   align-items: center;
 }
 
+.note-body {
+  white-space: pre-wrap;
+  margin: 0;
+}
+
 .note {
   margin-top: 0.8rem;
   padding-top: 0.6rem;

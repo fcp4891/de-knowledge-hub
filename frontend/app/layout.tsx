@@ -5,8 +5,6 @@ import { listDomains } from "@/lib/api/client";
 
 import "./globals.css";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: "Data Engineering Knowledge Hub",
   description: "Estudio de Data Engineering por dominios y conceptos.",

@@ -72,6 +72,10 @@ async function liveRequest<T>(method: string, livePath: string, body?: unknown):
 }
 
 async function apiGet<T>(mockKey: string, livePath: string): Promise<ApiResult<T>> {
+  if ((process.env.API_MODE ?? "hybrid") === "static") {
+    const { readStatic } = await import("./staticRead");
+    return readStatic<T>(mockKey);
+  }
   if (usesMock(livePath)) {
     return readMock<T>(mockKey);
   }
