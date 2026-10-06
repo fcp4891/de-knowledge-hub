@@ -274,3 +274,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: creación (lote 6 de F3).
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-06: §10, `normalize_amount` valida el formato con una expresión regular antes de quitar los puntos (aprobado por Felipe): `'10.50'`, `'1.2.3'` y `'12.34'` ya no se convierten en 1050, 123 y 1234. Es la expresión de `data-transformation` sin el grupo decimal, porque la función devuelve pesos enteros. El test de negativos pasa a un test parametrizado de formatos inválidos con esos tres casos más `-5`, `N/D` y vacío. Pendiente de revisión de Cursor.
+- 2026-10-06: revisión B-F3.1 de la corrección de `normalize_amount` aplicada (docs/reviews/cards-pytest-fix.md), sin cambios pedidos. Sigue `verified`.

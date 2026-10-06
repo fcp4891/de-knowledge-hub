@@ -11,13 +11,12 @@
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
 | A · Claude Code | — (demo estática entregada) | Dominio siguiente, tras tu aprobación de 01-fundamentals | — |
-| B · Cursor | — | Arreglar `extractField` de la búsqueda estática; revisar `normalize_amount` | — |
+| B · Cursor | — | Revisión del dominio siguiente | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | Demo estática: la búsqueda no carga por `extractField` en `browserSearch.ts` (urgente) | Abierto |
-| A | B | Revisar corrección de `normalize_amount` en `testing-with-pytest` (`verified`) | Abierto |
+| — | — | Ninguno abierto | — |
 
 ## Criterio de salida de la fase actual (F3b, ADR-009)
 - [ ] 01-fundamentals: 28 conceptos con ficha `verified` (28/28 desde el 2026-10-06) y aprobado por Felipe en el navegador.
