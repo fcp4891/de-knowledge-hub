@@ -21,8 +21,8 @@
           "importance": "high",
           "mvp": true,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-05"
+          "verification_status": "verified",
+          "last_verified": "2026-10-06"
         },
         {
           "slug": "data-lifecycle",
@@ -35,8 +35,8 @@
           "importance": "high",
           "mvp": true,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-05"
+          "verification_status": "verified",
+          "last_verified": "2026-10-06"
         }
       ]
     },
@@ -131,8 +131,8 @@
           "importance": "high",
           "mvp": true,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-05"
+          "verification_status": "verified",
+          "last_verified": "2026-10-06"
         },
         {
           "slug": "data-mart",
@@ -145,8 +145,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-05"
+          "verification_status": "verified",
+          "last_verified": "2026-10-06"
         },
         {
           "slug": "schema-on-read-vs-schema-on-write",
@@ -159,8 +159,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-05"
+          "verification_status": "verified",
+          "last_verified": "2026-10-06"
         }
       ]
     },
@@ -193,8 +193,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-05"
+          "verification_status": "verified",
+          "last_verified": "2026-10-06"
         },
         {
           "slug": "data-transformation",
@@ -207,8 +207,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-05"
+          "verification_status": "verified",
+          "last_verified": "2026-10-06"
         },
         {
           "slug": "data-orchestration",
@@ -221,8 +221,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-05"
+          "verification_status": "verified",
+          "last_verified": "2026-10-06"
         },
         {
           "slug": "idempotency",
@@ -297,8 +297,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-05"
+          "verification_status": "verified",
+          "last_verified": "2026-10-06"
         },
         {
           "slug": "acid",
@@ -325,8 +325,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-05"
+          "verification_status": "verified",
+          "last_verified": "2026-10-06"
         }
       ]
     },

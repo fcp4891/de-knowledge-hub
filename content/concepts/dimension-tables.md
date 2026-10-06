@@ -66,7 +66,7 @@ relations:
     target: scd-type-2
     note: Las columnas de historia de una dimensión tipo 2.
 created_at: 2026-10-01
-updated_at: 2026-10-01
+updated_at: 2026-10-06
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -209,7 +209,7 @@ Desnormalizar repite datos y hace la dimensión más ancha, a cambio de consulta
 - `slowly-changing-dimensions`: cómo cambia una dimensión en el tiempo.
 - `surrogate-keys`: la clave primaria de la dimensión.
 - `scd-type-2`: las columnas de historia.
-- Del blueprint, pendientes de ficha: `fact-tables`, `star-schema`, `grain`.
+- Con ficha: `fact-tables`, `star-schema`, `grain`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -238,3 +238,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-01: creación (lote 4 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `fact-tables`, `star-schema`, `grain`, que ya tienen ficha.

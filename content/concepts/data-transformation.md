@@ -69,8 +69,8 @@ relations:
     note: Transformación incremental declarativa en BigQuery.
 created_at: 2026-10-05
 updated_at: 2026-10-06
-last_verified: 2026-10-05
-verification_status: review_required
+last_verified: 2026-10-06
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -249,9 +249,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-05. En `review_required` hasta la revisión B-F3.1 del lote F3b-01a.
+2026-10-06. Pasa a `verified`: revisión B-F3.1 del lote F3b-01a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-05: creación (lote F3b-01a, dominio 01-fundamentals).
 - 2026-10-06: revisión B-F3.1 del lote F3b-01a aplicada (docs/reviews/cards-f3b-01a.md): el ejemplo valida el formato del monto antes de convertir ('10.50' ya no pasa a 1050) y se probó; dbt en Redshift con fuente.
+- 2026-10-06: `verification_status: verified` (revisión B-F3.1 del lote F3b-01a aplicada; sin VERIFY pendientes).

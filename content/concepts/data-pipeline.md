@@ -73,7 +73,7 @@ relations:
     target: retries
     note: Los reintentos acotados son parte del control de fallos del pipeline.
 created_at: 2026-09-30
-updated_at: 2026-10-01
+updated_at: 2026-10-06
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -227,7 +227,8 @@ Más tareas pequeñas dan más control y reintentos finos, a cambio de más sobr
 - `batch-vs-streaming`: el modo de procesamiento.
 - `idempotency`: requisito para reejecutar sin duplicar.
 - `retries`: control de fallos transitorios.
-- Del blueprint, pendientes de ficha: `dag`, `orchestration`, `data-contracts`.
+- Con ficha: `dag`.
+- Del blueprint, pendientes de ficha: `orchestration`, `data-contracts`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -258,3 +259,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: revisión B-F3.1 aplicada: transacción de `replace_partition` a la vista; nombre y fuente de Managed Service for Apache Airflow.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
 - 2026-10-01: §10 alineada con el snippet ejecutable `airflow-daily-partition-dag`: el código anterior llamaba a funciones no definidas (`extract_orders`, `validate_volume_and_schema`, `replace_partition`).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `dag`, que ya tiene ficha.

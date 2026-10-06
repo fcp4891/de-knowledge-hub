@@ -70,7 +70,7 @@ relations:
     target: star-schema
     note: El hecho es el centro del esquema estrella.
 created_at: 2026-10-02
-updated_at: 2026-10-04
+updated_at: 2026-10-06
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -221,7 +221,7 @@ El grano atómico da flexibilidad máxima a cambio de volumen; los agregados ace
 - `dimension-tables`: el contexto de cada medida.
 - `surrogate-keys`: las claves que el hecho referencia.
 - `star-schema`: la estructura que forman hechos y dimensiones.
-- Del blueprint, pendiente de ficha: `grain`.
+- Con ficha: `grain`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -251,3 +251,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-02: creación (lote 5 de F3).
 - 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `grain`, que ya tiene ficha.

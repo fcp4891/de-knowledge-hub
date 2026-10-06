@@ -48,7 +48,7 @@ relations:
     target: bigquery-partitioning
     note: En BigQuery, cada ejecución puede escribir solo la partición de su período.
 created_at: 2026-09-30
-updated_at: 2026-10-04
+updated_at: 2026-10-06
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -164,7 +164,8 @@ Menos costo y latencia por ejecución, a cambio de estado que mantener, casos bo
 - `sql-merge`: modo upsert.
 - `idempotency`: requisito para reintentos seguros.
 - `partitioning`, `bigquery-partitioning`: sobrescritura por período.
-- Del blueprint, pendientes de ficha: `incremental-pipelines`, `change-detection`, `data-reconciliation`, `dataform-incremental-tables`.
+- Con ficha: `incremental-pipelines`, `data-reconciliation`, `dataform-incremental-tables`.
+- Del blueprint, pendiente de ficha: `change-detection`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -194,3 +195,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).
 - 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `incremental-pipelines`, `data-reconciliation`, `dataform-incremental-tables`, que ya tienen ficha.

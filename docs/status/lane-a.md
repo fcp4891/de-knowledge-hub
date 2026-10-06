@@ -2,12 +2,12 @@
 
 Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
-**Última actualización:** 2026-10-05
+**Última actualización:** 2026-10-06
 
 ## Actual
-- **Tarea activa:** F3b, dominio 01-fundamentals: lote F3b-01a entregado (10 fichas `review_required`), en revisión B-F3.1.
-- **Mergeado para Carril B:** `b/f3-review-6` (42193cf) en `main`, 2026-10-05. `f/sql` (esqueletos del dominio 02) no se mergea: se usará más adelante.
-- **Siguiente:** aplicar la revisión de F3b-01a y luego el lote F3b-01b (`avro-format`, `json-format`, `csv-format`, `compression`, `data-contracts`). Al pasar F3b-01a a `verified`, actualizar las menciones «pendiente de ficha» en fichas ya verificadas: `data-lake` (`lakehouse`), `data-warehouse` (`data-mart`, `lakehouse`), `data-pipeline` y `etl-vs-elt` si citan `data-ingestion`, `data-transformation` u `data-orchestration`.
+- **Tarea activa:** F3b, dominio 01-fundamentals: F3b-01a `verified` (23 fichas del dominio `verified`); lote F3b-01b en curso.
+- **Mergeado para Carril B:** `b/f3b-review-01a` (6641d3c) y `b/f3b-explorer-tags` (eb5706f) en `main`, 2026-10-06. `f/sql` no se mergea.
+- **Siguiente:** revisión de F3b-01b; con ella, 01-fundamentals queda completo (28/28) para tu revisión en el navegador.
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
 
@@ -16,9 +16,9 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 |---|---|
 | ~~B-F3.1 · Revisar el lote 4~~ (10 fichas): `infrastructure-as-code`, `terraform-providers`, `terraform-state`, `terraform-plan-apply`, `gcs-buckets-and-objects`, `gcp-iam-for-data`, `dimension-tables`, `python-api-consumption`, `scheduler` y `file-ingestion`. Sin VERIFY abiertos. Revisar también la §10 nueva de `pubsub-delivery-semantics` (consumidor real de Pub/Sub) | Cerrado (revisión aplicada; las 40 fichas `verified`) |
 | ~~B-F3.1 · Revisar los snippets~~ (`snippets-1.md`) | Cerrado (los 8 `verified`) |
-| **B-F3.1 · Revisar el lote F3b-01a** (10 fichas, 01-fundamentals): `what-is-data-engineering`, `data-lifecycle`, `data-ingestion`, `data-transformation`, `data-orchestration`, `lakehouse`, `data-mart`, `schema-on-read-vs-schema-on-write`, `data-consistency` y `cap-theorem`. Sin VERIFY. Fuentes nuevas: `gilbert-lynch-cap-2002` (Nivel 4, solo conceptual), `apache-iceberg-docs`, `delta-lake-docs`, `apache-hudi-docs`, `gcp-spanner-docs`, `gcp-data-engineer-certification`, `aws-data-engineer-certification` y `aws-what-is-data-mart` (Nivel 1). HCL en `data-lifecycle` y `data-mart` (lo valida la CI). Revisar en especial: `lakehouse` no se presenta como reemplazo del warehouse; en `cap-theorem`, la fuente de 2002 se identificó por la lista de publicaciones de Lynch y su formulación se contrastó con el paper de 2012 de los mismos autores | Abierto |
+| ~~B-F3.1 · Revisar el lote F3b-01a~~ (10 fichas, 01-fundamentals): `what-is-data-engineering`, `data-lifecycle`, `data-ingestion`, `data-transformation`, `data-orchestration`, `lakehouse`, `data-mart`, `schema-on-read-vs-schema-on-write`, `data-consistency` y `cap-theorem`. Sin VERIFY. Fuentes nuevas: `gilbert-lynch-cap-2002` (Nivel 4, solo conceptual), `apache-iceberg-docs`, `delta-lake-docs`, `apache-hudi-docs`, `gcp-spanner-docs`, `gcp-data-engineer-certification`, `aws-data-engineer-certification` y `aws-what-is-data-mart` (Nivel 1). HCL en `data-lifecycle` y `data-mart` (lo valida la CI). Revisar en especial: `lakehouse` no se presenta como reemplazo del warehouse; en `cap-theorem`, la fuente de 2002 se identificó por la lista de publicaciones de Lynch y su formulación se contrastó con el paper de 2012 de los mismos autores | Cerrado (revisión aplicada; las 10 fichas `verified`) |
 | ~~B-F3.1 · Revisar el lote 6~~ (10 fichas): `row-vs-columnar-formats`, `testing-with-pytest`, `sql-window-functions`, `grain`, `data-warehouse`, `streaming-ingestion`, `oltp-vs-olap`, `bigquery-cost-model` (solo el modelo de precios, sin montos), `acid` y `normalization`. Sin VERIFY. Fuentes nuevas Nivel 1: `apache-spark-docs` y `aws-firehose-docs` | Cerrado (revisión aplicada; las 60 fichas `verified`) |
-| **Revisar cambio mínimo en `data-validation-with-pydantic`** (`verified`): en §10, `list[dict]` pasa a `list[dict[str, Any]]` (y `from typing import Any`) para pasar `mypy --strict`. Sin cambio de comportamiento; registrado en su historial | Abierto |
+| ~~Revisar cambio mínimo en `data-validation-with-pydantic`~~ (`verified`): en §10, `list[dict]` pasa a `list[dict[str, Any]]` (y `from typing import Any`) para pasar `mypy --strict`. Sin cambio de comportamiento; registrado en su historial | Cerrado (aprobado en `cards-f3b-01a.md`) |
 | **Snippets que se ejecutan en la CI** (informativo): `requirements-snippets.txt` y `make snippets-deps`; `tests/test_snippet_code.py` ejecuta `pytest-ingestion-test` (7 tests, armando `ingest.py` desde las fichas) y `python-structured-logging`. Si Carril B corre `make test` en su worktree sin esas dependencias, el test de ingesta aparece como *skipped* | Informativo |
 | ~~Revisar 3 snippets nuevos~~ (`snippets-3.md`), en `review_required`: `python-structured-logging` (JSON a stdout, `run_id` por filtro en el handler, redacción de campos sensibles de `extra`), `pytest-ingestion-test` (7 tests sin red ni credenciales sobre `validate_page` y `load_day`) y `pubsub-subscription-terraform` (dead letter con los permisos del agente de servicio de Pub/Sub, `*_iam_member`). Fuente nueva `pytest-docs` (Nivel 1) | Cerrado (los 3 `verified`) |
 | ~~Revisar §14 de 7 fichas del lote 1~~ ya `verified`: `bigquery-partitioning`, `dead-letter-queue`, `etl-vs-elt`, `incremental-load`, `partitioning`, `scd-type-2` y `sql-merge`. La regla nueva de `validate` exige las viñetas Seguridad, Observabilidad y Costo; en varias se dio rótulo a una viñeta existente y en otras se agregó la que faltaba (ver el historial de cada ficha) | Cerrado (aprobada en `snippets-3.md`; hallazgos 1 y 2 aplicados) |
@@ -57,6 +57,11 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Code Library: `/snippets`, `/snippets/{slug}`, `Language`, `Snippet*` y `code_snippet` en `ResultType` (ADR-008, aditivo).
 
 ## Historial
+
+### F3b-01a verified (2026-10-06)
+- Merge de `b/f3b-review-01a` y `b/f3b-explorer-tags` (conflicto en `lane-b.md` resuelto combinando ambos lados). Revisión aplicada: `data-transformation` valida el formato del monto antes de convertir ('10.50' ya no pasa a 1050; probado en PostgreSQL y Python); atribución estricta por fuente en `what-is-data-engineering`; disponibilidad según Gilbert y Lynch y fuente cambiada a la copia legible del autor (NUS); fuentes para Lake Formation, `COPY`, Glue, Event Hubs, mirroring y Debezium.
+- Las 10 fichas `verified`. Cerrado el pedido del cambio de tipos en `data-validation-with-pydantic`.
+- Menciones «pendiente de ficha» actualizadas en 33 fichas y 1 snippet (`dataform-incremental-model`): los conceptos que ya tienen ficha pasan a «Con ficha». Solo cambia el texto; no se agregaron relaciones.
 
 ### F3b-01a (2026-10-05)
 - 10 fichas de 01-fundamentals en `review_required`, sin VERIFY; 60 URLs con HTTP 200, URL final igual a la citada y sin 404 «suaves» (la guía de Google Cloud «What is data engineering» responde 200 con contenido 404 y se descartó; se usaron las páginas oficiales de certificación de Google Cloud y AWS y la de Fabric Data Engineering).

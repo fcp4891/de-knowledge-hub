@@ -37,7 +37,7 @@ relations:
     target: incremental-load
     note: La carga SCD2 es una carga incremental.
 created_at: 2026-09-30
-updated_at: 2026-10-04
+updated_at: 2026-10-06
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -162,7 +162,8 @@ Historia fiel y auditable, a cambio de dimensiones más grandes, joins por rango
 - `sql-merge`: herramienta de implementación.
 - `change-data-capture`: fuente natural de versiones.
 - `incremental-load`: la carga SCD2 es una carga incremental.
-- Del blueprint, pendientes de ficha: `slowly-changing-dimensions`, `scd-type-1`, `surrogate-keys`, `dimension-tables`.
+- Con ficha: `slowly-changing-dimensions`, `surrogate-keys`, `dimension-tables`.
+- Del blueprint, pendiente de ficha: `scd-type-1`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -194,3 +195,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: revisión B-F3.1 del lote 2 aplicada: en `REMOVE DUPLICATES`, los duplicados del destino sin coincidencia con el origen no se tocan.
 - 2026-09-30: `verification_status: verified` (revisión de cb77a2f (B-F3.1 del lote 2) aplicada; sin VERIFY pendientes).
 - 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `slowly-changing-dimensions`, `surrogate-keys`, `dimension-tables`, que ya tienen ficha.

@@ -34,7 +34,7 @@ relations:
     target: batch-vs-streaming
     note: La DLQ es típica de los pipelines streaming.
 created_at: 2026-09-30
-updated_at: 2026-10-04
+updated_at: 2026-10-06
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -146,7 +146,8 @@ Resiliencia y trazabilidad del flujo, a cambio de un proceso operativo más (mon
 
 - `idempotency`: requisito de los reintentos y del redrive.
 - `batch-vs-streaming`: la DLQ es típica del streaming.
-- Del blueprint, pendientes de ficha: `retries`, `replay`, `delivery-semantics`, `pubsub-delivery-semantics`.
+- Con ficha: `retries`, `replay`, `pubsub-delivery-semantics`.
+- Del blueprint, pendiente de ficha: `delivery-semantics`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -176,3 +177,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).
 - 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `retries`, `replay`, `pubsub-delivery-semantics`, que ya tienen ficha.

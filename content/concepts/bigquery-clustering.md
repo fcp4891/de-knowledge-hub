@@ -38,7 +38,7 @@ relations:
     target: partitioning
     note: Clustering es una forma de organización física complementaria a la partición.
 created_at: 2026-09-30
-updated_at: 2026-09-30
+updated_at: 2026-10-06
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -166,7 +166,8 @@ El clustering admite columnas de alta cardinalidad sin la sobrecarga de muchas p
 - `bigquery-partitioning`: la organización complementaria.
 - `partition-pruning`: poda de particiones; el clustering agrega poda de bloques.
 - `partitioning`: el concepto general.
-- Del blueprint, pendientes de ficha: `bigquery-cost-optimization`, `clustering`, `columnar-storage`.
+- Con ficha: `clustering`.
+- Del blueprint, pendientes de ficha: `bigquery-cost-optimization`, `columnar-storage`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -194,3 +195,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-09-30: creación (lote 2 de F3).
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `clustering`, que ya tiene ficha.

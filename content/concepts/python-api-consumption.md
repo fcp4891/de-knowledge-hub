@@ -66,7 +66,7 @@ relations:
     target: retries
     note: Qué errores conviene reintentar y con qué espera.
 created_at: 2026-10-01
-updated_at: 2026-10-01
+updated_at: 2026-10-06
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -220,7 +220,8 @@ La biblioteca estándar no agrega dependencias, a cambio de más código propio 
 - `api-ingestion`: el diseño de la ingesta completa.
 - `python-error-handling-and-retries`: el manejo de errores alrededor de la llamada.
 - `retries`: qué reintentar y cómo.
-- Del blueprint, pendientes de ficha: `http-clients`, `data-validation-with-pydantic`, `python-logging`.
+- Con ficha: `data-validation-with-pydantic`, `python-logging`.
+- Del blueprint, pendiente de ficha: `http-clients`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -250,3 +251,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-01: creación (lote 4 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `data-validation-with-pydantic`, `python-logging`, que ya tienen ficha.

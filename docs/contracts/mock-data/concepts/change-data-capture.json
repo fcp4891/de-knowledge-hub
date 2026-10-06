@@ -98,7 +98,7 @@
     }
   ],
   "created_at": "2026-09-28",
-  "updated_at": "2026-09-30",
+  "updated_at": "2026-10-06",
   "last_verified": "2026-09-30",
   "verification_status": "verified",
   "kind": "concept",
@@ -208,7 +208,7 @@
       "number": 17,
       "key": "related_concepts",
       "title": "Conceptos relacionados",
-      "markdown": "- `idempotency`: los consumidores deben tolerar reentregas.\n- `sql-merge`: aplica un lote de cambios en el destino.\n- `scd-type-2`: conserva cada versión del registro.\n- Del blueprint, pendientes de ficha: `cdc-architecture`, `schema-evolution`, `database-ingestion`."
+      "markdown": "- `idempotency`: los consumidores deben tolerar reentregas.\n- `sql-merge`: aplica un lote de cambios en el destino.\n- `scd-type-2`: conserva cada versión del registro.\n- Con ficha: `schema-evolution`.\n- Del blueprint, pendientes de ficha: `cdc-architecture`, `database-ingestion`."
     },
     {
       "number": 18,
@@ -238,7 +238,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-28: creación como ficha de ejemplo de F0.\n- 2026-09-30: lote 1 de F3. Secciones de GCP, AWS y Azure verificadas con documentación oficial; ejemplo de MERGE con deduplicación; reenvío de cambios tras un crash.\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos)."
+      "markdown": "- 2026-09-28: creación como ficha de ejemplo de F0.\n- 2026-09-30: lote 1 de F3. Secciones de GCP, AWS y Azure verificadas con documentación oficial; ejemplo de MERGE con deduplicación; reenvío de cambios tras un crash.\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `schema-evolution`, que ya tiene ficha."
     }
   ]
 }

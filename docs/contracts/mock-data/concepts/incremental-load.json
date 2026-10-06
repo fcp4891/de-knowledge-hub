@@ -77,7 +77,7 @@
     }
   ],
   "created_at": "2026-09-30",
-  "updated_at": "2026-10-04",
+  "updated_at": "2026-10-06",
   "last_verified": "2026-09-30",
   "verification_status": "verified",
   "kind": "pattern",
@@ -187,7 +187,7 @@
       "number": 17,
       "key": "related_concepts",
       "title": "Conceptos relacionados",
-      "markdown": "- `sql-merge`: modo upsert.\n- `idempotency`: requisito para reintentos seguros.\n- `partitioning`, `bigquery-partitioning`: sobrescritura por período.\n- Del blueprint, pendientes de ficha: `incremental-pipelines`, `change-detection`, `data-reconciliation`, `dataform-incremental-tables`."
+      "markdown": "- `sql-merge`: modo upsert.\n- `idempotency`: requisito para reintentos seguros.\n- `partitioning`, `bigquery-partitioning`: sobrescritura por período.\n- Con ficha: `incremental-pipelines`, `data-reconciliation`, `dataform-incremental-tables`.\n- Del blueprint, pendiente de ficha: `change-detection`."
     },
     {
       "number": 18,
@@ -217,7 +217,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`)."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `incremental-pipelines`, `data-reconciliation`, `dataform-incremental-tables`, que ya tienen ficha."
     }
   ]
 }

@@ -54,7 +54,7 @@ relations:
     target: backfill
     note: El backfill crea ejecuciones de intervalos pasados por fuera del ritmo normal del scheduler.
 created_at: 2026-10-01
-updated_at: 2026-10-01
+updated_at: 2026-10-06
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -201,7 +201,8 @@ Los horarios fijos son simples y predecibles, pero fallan si los datos llegan ta
 - `dag`: lo que el scheduler ejecuta.
 - `catchup`: la política para intervalos pendientes.
 - `backfill`: ejecuciones de intervalos pasados.
-- Del blueprint, pendientes de ficha: `data-orchestration`, `airflow-architecture`, `pipeline-dependencies`.
+- Con ficha: `data-orchestration`, `airflow-architecture`.
+- Del blueprint, pendiente de ficha: `pipeline-dependencies`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -230,3 +231,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-01: creación (lote 4 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `data-orchestration`, `airflow-architecture`, que ya tienen ficha.

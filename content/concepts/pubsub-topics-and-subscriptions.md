@@ -77,7 +77,7 @@ relations:
     target: infrastructure-as-code
     note: Topics y suscripciones se declaran en Terraform, como en la sección 10.
 created_at: 2026-10-02
-updated_at: 2026-10-04
+updated_at: 2026-10-06
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -265,7 +265,7 @@ Pub/Sub concentra distribución y retención en un servicio administrado con poc
 - `dead-letter-queue`: el patrón detrás de la dead letter policy.
 - `replay`: volver a consumir con retención y seek.
 - `infrastructure-as-code`: declarar topics y suscripciones.
-- Del blueprint, pendiente de ficha: `streaming-ingestion`.
+- Con ficha: `streaming-ingestion`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -295,3 +295,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-02: creación (lote 5 de F3).
 - 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `streaming-ingestion`, que ya tiene ficha.

@@ -65,7 +65,7 @@ relations:
     target: partitioning
     note: Las tablas grandes del warehouse se particionan por fecha para leer menos.
 created_at: 2026-10-05
-updated_at: 2026-10-05
+updated_at: 2026-10-06
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -188,7 +188,7 @@ Consultas rápidas, gobernadas y consistentes, a cambio de modelar y mantener el
 - `star-schema`: el modelo de consumo.
 - `etl-vs-elt`: dónde se transforma.
 - `partitioning`: leer menos en tablas grandes.
-- Del blueprint, pendientes de ficha: `data-mart`, `lakehouse`.
+- Con ficha: `data-mart`, `lakehouse`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -216,3 +216,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: creación (lote 6 de F3).
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `data-mart`, `lakehouse`, que ya tienen ficha.

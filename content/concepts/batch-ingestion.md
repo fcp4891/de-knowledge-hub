@@ -79,7 +79,7 @@ relations:
     target: incremental-load
     note: Cada lote trae solo lo nuevo o lo cambiado de su ventana.
 created_at: 2026-10-02
-updated_at: 2026-10-05
+updated_at: 2026-10-06
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -235,7 +235,7 @@ Simplicidad, costo predecible y reprocesos triviales, a cambio de latencia igual
 - `idempotency`: por qué reemplazar el período.
 - `backfill`: reprocesar períodos pasados.
 - `incremental-load`: traer solo lo nuevo de cada ventana.
-- Del blueprint, pendiente de ficha: `data-ingestion`.
+- Con ficha: `data-ingestion`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -266,3 +266,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
 - 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`, hallazgo 6) aplicada: el cliente de `load_day` se tipa con un `Protocol` (`LoadClient`).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `data-ingestion`, que ya tiene ficha.

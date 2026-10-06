@@ -33,7 +33,7 @@ relations:
     target: idempotency
     note: Con uniqueKey, releer el margen o repetir la ejecución no duplica filas.
 created_at: 2026-10-01
-updated_at: 2026-10-01
+updated_at: 2026-10-06
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -103,7 +103,7 @@ Ver `requirements` en el encabezado. Guardar el modelo en `definitions/orders.sq
 
 - `incremental-load`: el patrón que implementa.
 - `idempotency`: por qué releer el margen no duplica.
-- Pendiente de ficha: `dataform-incremental-tables`.
+- Con ficha: `dataform-incremental-tables`.
 
 ## 9. Fuentes
 
@@ -115,3 +115,4 @@ El detalle está en `sources` del encabezado.
 
 - 2026-10-01: creación (A-F3.2), desde la sección 10 de `incremental-load` tras la revisión B-F3.1 del lote 1.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `dataform-incremental-tables`, que ya tiene ficha.

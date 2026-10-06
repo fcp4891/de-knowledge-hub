@@ -76,7 +76,7 @@ relations:
     target: etl-vs-elt
     note: El lake es la zona de aterrizaje típica del enfoque ELT.
 created_at: 2026-10-02
-updated_at: 2026-10-04
+updated_at: 2026-10-06
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -216,7 +216,7 @@ Almacenamiento barato, flexible y abierto a varios motores, a cambio de gobierno
 - `partitioning`: cómo organizar para leer menos.
 - `schema-evolution`: el problema del schema en lectura.
 - `etl-vs-elt`: el lake como zona de aterrizaje.
-- Del blueprint, pendientes de ficha: `data-warehouse`, `lakehouse`.
+- Con ficha: `data-warehouse`, `lakehouse`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -245,3 +245,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-02: creación (lote 5 de F3).
 - 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `data-warehouse`, `lakehouse`, que ya tienen ficha.

@@ -70,7 +70,7 @@ relations:
     target: idempotency
     note: Las tareas de un Dag se reintentan y reejecutan; cada una debe ser idempotente.
 created_at: 2026-09-30
-updated_at: 2026-10-01
+updated_at: 2026-10-06
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -238,7 +238,8 @@ Dividir en más tareas da reintentos más finos y mejor visibilidad, a cambio de
 - `data-pipeline`: lo que el Dag representa.
 - `catchup`: creación automática de ejecuciones pendientes.
 - `idempotency`: requisito de cada tarea.
-- Del blueprint, pendientes de ficha: `scheduler`, `pipeline-dependencies`, `data-orchestration`.
+- Con ficha: `scheduler`, `data-orchestration`.
+- Del blueprint, pendiente de ficha: `pipeline-dependencies`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -269,3 +270,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: creación (lote 3 de F3).
 - 2026-10-01: revisión B-F3.1 aplicada: §10 ejecutable, con validaciones en paralelo y la transacción de reemplazo de la partición a la vista (antes llamaba a funciones no definidas).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `scheduler`, `data-orchestration`, que ya tienen ficha.

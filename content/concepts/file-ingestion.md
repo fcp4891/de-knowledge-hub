@@ -65,7 +65,7 @@ relations:
     target: idempotency
     note: Una carga que se repite o un evento duplicado no deben duplicar filas.
 created_at: 2026-10-01
-updated_at: 2026-10-01
+updated_at: 2026-10-06
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -195,7 +195,8 @@ Disparar por evento reduce la latencia, a cambio de manejar duplicados, demoras 
 - `schema-evolution`: cambios de esquema entre entregas.
 - `gcs-buckets-and-objects`: dónde llegan los archivos.
 - `idempotency`: por qué repetir la carga no debe duplicar.
-- Del blueprint, pendientes de ficha: `csv-format`, `batch-ingestion`, `data-lake`.
+- Con ficha: `batch-ingestion`, `data-lake`.
+- Del blueprint, pendiente de ficha: `csv-format`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -223,3 +224,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-01: creación (lote 4 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `batch-ingestion`, `data-lake`, que ya tienen ficha.

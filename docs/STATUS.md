@@ -1,7 +1,7 @@
 # STATUS — Data Engineering Knowledge Hub
 
 **Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 01-fundamentals. F3 aprobada el 2026-10-05; F2 el 2026-09-30.
-**Última actualización:** 2026-10-05
+**Última actualización:** 2026-10-06
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**
 > El estado detallado de cada carril está en `docs/status/lane-a.md` y `docs/status/lane-b.md`; cada carril edita solo el suyo.
@@ -10,17 +10,16 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | F3b: lote F3b-01a (01-fundamentals) | Lote F3b-01b; revisión de 01-fundamentals en el navegador | — |
-| B · Cursor | — | B-F3.1 del lote F3b-01a; cambio de tipos en `data-validation-with-pydantic` | — |
+| A · Claude Code | F3b: lote F3b-01b (01-fundamentals) | Revisión de 01-fundamentals en el navegador | — |
+| B · Cursor | — | B-F3.1 del lote F3b-01b | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | Revisar el cambio de tipos en §10 de `data-validation-with-pydantic` (ver `lane-a.md`) | Abierto |
-| A | B | B-F3.1 · Revisar el lote F3b-01a (10 fichas de 01-fundamentals; ver `lane-a.md`) | Abierto |
+| — | — | Ninguno abierto | — |
 
 ## Criterio de salida de la fase actual (F3b, ADR-009)
-- [ ] 01-fundamentals: 28 conceptos con ficha `verified` (hoy 23 fichas: 13 `verified` y 10 de F3b-01a en revisión) y aprobado por Felipe en el navegador. Falta F3b-01b (5).
+- [ ] 01-fundamentals: 28 conceptos con ficha `verified` (hoy 23 `verified`) y aprobado por Felipe en el navegador. Falta F3b-01b (5).
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
 
 ## Fases cerradas

@@ -44,7 +44,7 @@ relations:
     target: scd-type-2
     note: "SCD2 no sobrescribe: cierra la versión vigente e inserta una nueva, en lugar de un upsert simple."
 created_at: 2026-09-30
-updated_at: 2026-09-30
+updated_at: 2026-10-06
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -170,7 +170,8 @@ El upsert por clave mantiene una tabla de estado actual compacta y es idempotent
 - `idempotency`: el upsert con versión es una técnica de idempotencia.
 - `incremental-load`: el modo upsert de la carga incremental.
 - `scd-type-2`: la alternativa cuando hay que conservar la historia.
-- Del blueprint, pendientes de ficha: `deduplication`, `primary-keys`, `optimistic-concurrency`.
+- Con ficha: `deduplication`.
+- Del blueprint, pendientes de ficha: `primary-keys`, `optimistic-concurrency`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -200,3 +201,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: creación (lote 2 de F3).
 - 2026-09-30: revisión B-F3.1 aplicada: en `REMOVE DUPLICATES`, los duplicados del destino sin coincidencia con el origen no se tocan.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `deduplication`, que ya tiene ficha.

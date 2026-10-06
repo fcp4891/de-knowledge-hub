@@ -45,7 +45,7 @@ relations:
     target: api-ingestion
     note: La ingesta de APIs es el caso más común de este manejo de errores.
 created_at: 2026-09-30
-updated_at: 2026-10-01
+updated_at: 2026-10-06
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -189,7 +189,8 @@ Delegar en el SDK da reintentos probados y coherentes, a cambio de menos control
 - `retries`: el patrón general (backoff, jitter, límite).
 - `idempotency`: condición para reintentar sin duplicar.
 - `api-ingestion`: el caso de uso más habitual.
-- Del blueprint, pendientes de ficha: `python-exceptions`, `python-api-consumption`, `python-logging`.
+- Con ficha: `python-api-consumption`, `python-logging`.
+- Del blueprint, pendiente de ficha: `python-exceptions`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -218,3 +219,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-09-30: creación (lote 3 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `python-api-consumption`, `python-logging`, que ya tienen ficha.

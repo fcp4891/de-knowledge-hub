@@ -89,7 +89,7 @@
     }
   ],
   "created_at": "2026-09-30",
-  "updated_at": "2026-09-30",
+  "updated_at": "2026-10-06",
   "last_verified": "2026-09-30",
   "verification_status": "verified",
   "kind": "concept",
@@ -199,7 +199,7 @@
       "number": 17,
       "key": "related_concepts",
       "title": "Conceptos relacionados",
-      "markdown": "- `change-data-capture`: convierte una base en un flujo.\n- `dead-letter-queue`, `idempotency`: requisitos del streaming confiable.\n- Del blueprint, pendientes de ficha: `event-time-vs-processing-time`, `windowing`, `watermarks`, `late-arriving-data`, `lambda-architecture`, `kappa-architecture`."
+      "markdown": "- `change-data-capture`: convierte una base en un flujo.\n- `dead-letter-queue`, `idempotency`: requisitos del streaming confiable.\n- Con ficha: `late-arriving-data`.\n- Del blueprint, pendientes de ficha: `event-time-vs-processing-time`, `windowing`, `watermarks`, `lambda-architecture`, `kappa-architecture`."
     },
     {
       "number": 18,
@@ -229,7 +229,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: VERIFY resuelto: modos de capacidad y retención de Kinesis Data Streams.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos)."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: VERIFY resuelto: modos de capacidad y retención de Kinesis Data Streams.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `late-arriving-data`, que ya tiene ficha."
     }
   ]
 }

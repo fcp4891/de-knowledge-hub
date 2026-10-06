@@ -50,7 +50,7 @@ relations:
     target: idempotency
     note: La entrega at-least-once exige procesar de forma idempotente.
 created_at: 2026-09-30
-updated_at: 2026-09-30
+updated_at: 2026-10-06
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -160,7 +160,8 @@ El batch es más barato, más simple de operar y de reprocesar, pero tiene más 
 
 - `change-data-capture`: convierte una base en un flujo.
 - `dead-letter-queue`, `idempotency`: requisitos del streaming confiable.
-- Del blueprint, pendientes de ficha: `event-time-vs-processing-time`, `windowing`, `watermarks`, `late-arriving-data`, `lambda-architecture`, `kappa-architecture`.
+- Con ficha: `late-arriving-data`.
+- Del blueprint, pendientes de ficha: `event-time-vs-processing-time`, `windowing`, `watermarks`, `lambda-architecture`, `kappa-architecture`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -190,3 +191,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.
 - 2026-09-30: VERIFY resuelto: modos de capacidad y retención de Kinesis Data Streams.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `late-arriving-data`, que ya tiene ficha.

@@ -89,7 +89,7 @@ relations:
     target: file-ingestion
     note: La ingesta de archivos parte de objetos que llegan a un bucket.
 created_at: 2026-10-01
-updated_at: 2026-10-01
+updated_at: 2026-10-06
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -208,7 +208,7 @@ Las clases frías abaratan el almacenamiento a cambio de cargos de recuperación
 - `parquet-format`: el formato habitual de los objetos del lake.
 - `terraform-state`: el bucket como backend del state.
 - `file-ingestion`: la carga de objetos al warehouse.
-- Del blueprint, pendientes de ficha: `data-lake`, `pubsub-topics-and-subscriptions`.
+- Con ficha: `data-lake`, `pubsub-topics-and-subscriptions`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -236,3 +236,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-01: creación (lote 4 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `data-lake`, `pubsub-topics-and-subscriptions`, que ya tienen ficha.

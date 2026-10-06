@@ -41,7 +41,7 @@ relations:
     target: pubsub-delivery-semantics
     note: La política de reintento de Pub/Sub forma parte de su semántica de entrega.
 created_at: 2026-09-30
-updated_at: 2026-09-30
+updated_at: 2026-10-06
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -169,7 +169,8 @@ Más intentos y esperas más largas aumentan la probabilidad de éxito, a cambio
 - `idempotency`: requisito de un reintento seguro.
 - `dead-letter-queue`: destino cuando los reintentos se agotan.
 - `pubsub-delivery-semantics`: reentrega y política de reintento en Pub/Sub.
-- Del blueprint, pendientes de ficha: `python-error-handling-and-retries`, `exactly-once-semantics`, `failure-recovery`.
+- Con ficha: `python-error-handling-and-retries`.
+- Del blueprint, pendientes de ficha: `exactly-once-semantics`, `failure-recovery`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -197,3 +198,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-09-30: creación (lote 2 de F3).
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
+- 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `python-error-handling-and-retries`, que ya tiene ficha.
