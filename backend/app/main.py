@@ -26,11 +26,15 @@ ROOT = Path(__file__).resolve().parents[2]
 CONTRACT = ROOT / "docs" / "contracts" / "api.yaml"
 API_PREFIX = "/api/v1"
 ROUTERS = (domains, concepts, technologies, snippets, relations, sources, search, me)
+# Frontend en modo hybrid: next dev en el 3000 y, con otro worktree ocupando ese puerto, el 3010.
+DEFAULT_CORS_ORIGINS = ("http://localhost:3000", "http://127.0.0.1:3000", "http://127.0.0.1:3010")
 
 
 def cors_origins() -> list[str]:
-    raw = os.environ.get("CORS_ORIGINS", "http://localhost:3000")
-    return [origin.strip() for origin in raw.split(",") if origin.strip()]
+    """Orígenes permitidos: CORS_ORIGINS separado por comas o, si no está o queda vacío, los de por defecto."""
+    raw = os.environ.get("CORS_ORIGINS", "")
+    origins = [origin.strip() for origin in raw.split(",") if origin.strip()]
+    return origins or list(DEFAULT_CORS_ORIGINS)
 
 
 def contract() -> dict[str, Any]:

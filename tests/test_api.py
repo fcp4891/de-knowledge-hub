@@ -19,7 +19,7 @@ from httpx2 import Response
 from jsonschema import Draft202012Validator
 
 from backend.app import projection as p
-from backend.app.main import create_app
+from backend.app.main import DEFAULT_CORS_ORIGINS, cors_origins, create_app
 from backend.db.compiler import compile_content
 from tests.conftest import temporary_database
 from tests.test_contract import INDEX, MOCKS, REGISTRY, match_path, pointer, split_request
@@ -265,3 +265,31 @@ def test_api_reloads_after_recompile(content: Path) -> None:
         compile_content(engine, content, SCHEMAS)
         after = api.get(PREFIX + "/concepts/change-data-capture").json()["description"]
     assert after == "Descripción recompilada." != before
+
+
+# --- CORS (configurable con CORS_ORIGINS) ---
+
+
+def test_cors_defaults_include_local_frontend_ports(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("CORS_ORIGINS", raising=False)
+    assert cors_origins() == ["http://localhost:3000", "http://127.0.0.1:3000", "http://127.0.0.1:3010"]
+
+
+def test_cors_env_overrides_defaults(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("CORS_ORIGINS", " http://localhost:4000 , http://127.0.0.1:4010,")
+    assert cors_origins() == ["http://localhost:4000", "http://127.0.0.1:4010"]
+
+
+def test_cors_empty_env_falls_back_to_defaults(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("CORS_ORIGINS", " , ")
+    assert cors_origins() == list(DEFAULT_CORS_ORIGINS)
+
+
+@pytest.mark.parametrize(("origin", "allowed"), [
+    ("http://127.0.0.1:3010", True),
+    ("http://localhost:3000", True),
+    ("http://otro-sitio.example", False),
+])
+def test_cors_preflight(client: TestClient, origin: str, allowed: bool) -> None:
+    response = client.options(PREFIX + "/domains", headers={"Origin": origin, "Access-Control-Request-Method": "GET"})
+    assert (response.headers.get("access-control-allow-origin") == origin) is allowed

@@ -66,6 +66,10 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ## Historial
 
+### Merge de b/ui-redesign y CORS configurable (2026-10-07)
+- `b/ui-redesign` (1f1a37b) mergeada a `main`; conflicto en `lane-b.md` resuelto combinando ambos lados.
+- Backend: `CORS_ORIGINS` (separado por comas) ya existía; el valor por defecto pasa de `http://localhost:3000` a `http://localhost:3000`, `http://127.0.0.1:3000` y `http://127.0.0.1:3010`, y un valor vacío vuelve al defecto. Tests: defecto, reemplazo por variable, vacío y preflight `OPTIONS` (permitido para 3010 y 3000, rechazado para otro origen). Documentado en `README` y `.env.example`.
+
 ### Revisión de NULL y claves aplicada (2026-10-07)
 - Merge de `b/f3b-review-fixes` (6c47211); filas aprobadas por Felipe. Huellas y claves hash pasan de `CONCAT` con marcador y separador a `FARM_FINGERPRINT(TO_JSON_STRING(STRUCT(...)))`: la tabla de codificaciones JSON de BigQuery dice que `NULL` se codifica como `null` sin comillas y el `STRING` entre comillas con escape, lo que elimina la ambigüedad del marcador (un texto `\N` real) y la del separador dentro de un valor. Equivalente en PostgreSQL: `jsonb_build_array` (cada argumento con `to_jsonb`).
 - `data-reconciliation` §10 publica el caso completo ejecutado en PostgreSQL: dos días, dos lados, conteo, suma, tres huellas (sin marcador, con marcador, JSON) y `!=` frente a `IS DISTINCT FROM`. Día 1: conteo, suma y huella sin marcador coinciden con filas distintas. Día 2: la suma coincide y `!=` no encuentra claves; `IS DISTINCT FROM` encuentra 5 y 6.

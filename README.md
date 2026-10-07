@@ -53,7 +53,7 @@ Sin ellas, `make test` salta ese test (aparece como *skipped*). La CI las instal
 | `make db-up` / `make db-down` | Levanta o detiene PostgreSQL en Docker |
 | `make build` | Valida, migra y compila `content/` a PostgreSQL |
 | `make mocks` | Regenera los mocks de `docs/contracts/mock-data/` |
-| `make dev` | API en `http://localhost:8000/api/v1` |
+| `make dev` | API en `http://localhost:8000/api/v1`. CORS acepta por defecto `http://localhost:3000`, `http://127.0.0.1:3000` y `http://127.0.0.1:3010`; otros puertos del frontend `hybrid`, con `CORS_ORIGINS` separado por comas (ver `.env.example`) |
 | `make validate-terraform` | Extrae el HCL de snippets y fichas y lo valida con `terraform validate` (requiere Terraform; la CI lo ejecuta). Un bloque precedido por `<!-- validate-terraform: excluido — motivo -->` se reporta y no se valida |
 | `make backup-me` / `make restore-me` | Respaldo y restauración del estado personal (`me_*`) |
 | `make static-data` | Genera `frontend/public/data/`: un JSON por respuesta de la API para todo el contenido, más `index.json` y `search-index.json` (no se versiona) |

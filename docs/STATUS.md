@@ -11,7 +11,7 @@
 | Worktree | Quién | Ramas | Alcance |
 |---|---|---|---|
 | `D:\Proyectos_IA\DES_conocimiento-carril-a` | Carril A (Claude Code) | `a/*` | Todo menos `frontend/`. **Único que mergea a `main` y hace push de `main`.** |
-| `D:\Proyectos_IA\DES_conocimiento-ui` | Cursor UI | `b/ui-redesign` | Solo `frontend/` y `docs/design/`. No se mergea a `main` hasta que Felipe avise. |
+| `D:\Proyectos_IA\DES_conocimiento-ui` | Cursor UI | `b/ui-redesign` (cerrada y mergeada a `main` el 2026-10-07) | Solo `frontend/` y `docs/design/`. |
 | `D:\Proyectos_IA\DES_conocimiento-review` | Cursor revisión | `b/f3b-review-*` | Revisiones de fichas (`docs/reviews/`, `lane-b.md`). |
 | `D:\Proyectos_IA\DES_conocimiento` (raíz) | — | — | No se edita. |
 
@@ -20,7 +20,7 @@
 |---|---|---|---|
 | A · Claude Code | — (02-sql 33/33 `verified`) | Merge de `b/ui-redesign` y un solo `make static` cuando Felipe avise; 03-python tras aprobar 02-sql | — |
 | B · Cursor revisión | — (B-F3.1 de 02c entregada) | Revisar los cambios mínimos de `grain` y `CONCAT` con NULL | — |
-| B · Cursor UI | Rediseño UI en `b/ui-redesign` (commit 1 de 5) | Commit 2: Inicio | — |
+| B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
