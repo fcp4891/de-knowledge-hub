@@ -46,6 +46,14 @@ sources:
     url: https://www.postgresql.org/docs/current/functions-string.html
     accessed: 2026-10-07
     note: "concat y concat_ws ignoran los argumentos NULL; md5(text) devuelve el hash MD5 en hexadecimal."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/json_functions
+    accessed: 2026-10-07
+    note: "TO_JSON_STRING convierte un valor SQL en un STRING con formato JSON. Según la tabla de codificaciones JSON: NULL se codifica como null (sin comillas); STRING como cadena JSON, con escape de comillas, barra invertida y caracteres de control; STRUCT como objeto con sus campos. Ejemplo de la página: TO_JSON_STRING(STRUCT(1 AS id, [10, 20] AS coordinates)) → {\"id\":1,\"coordinates\":[10,20]}."
+  - source: postgresql-docs
+    url: https://www.postgresql.org/docs/current/functions-json.html
+    accessed: 2026-10-07
+    note: "jsonb_build_array arma un array JSON con sus argumentos, cada uno convertido con to_jsonb; to_jsonb convierte NULL en null y cualquier escalar que no sea número, booleano ni null en una cadena JSON, con el escape necesario."
 relations:
   - type: RELATED_TO
     target: change-data-capture
@@ -110,6 +118,7 @@ Muchos orígenes (archivos diarios, APIs sin filtro de fecha, réplicas sin log 
    - **`NULL`:** cada motor concatena distinto. BigQuery: `CONCAT` devuelve `NULL` si algún argumento es `NULL`. T-SQL: `CONCAT` convierte `NULL` en cadena vacía. PostgreSQL: `concat` y `concat_ws` ignoran los `NULL`. Redshift: `CONCAT` y `||` devuelven `NULL` si una expresión es `NULL`, como en BigQuery, y su documentación indica `NVL` o `COALESCE`. En todos los casos conviene reemplazar `NULL` por un marcador explícito que no pueda aparecer en los datos.
    - **Separador:** sin separador, `'ab' + 'c'` y `'a' + 'bc'` producen el mismo texto.
    - **Orden y tipos:** siempre las mismas columnas, en el mismo orden y con el mismo formato (fechas, decimales).
+   - **Alternativa sin marcador ni separador:** serializar la fila como JSON antes del hash. En BigQuery, `TO_JSON_STRING(STRUCT(...))` codifica `NULL` como `null` y el texto entre comillas con escape; en PostgreSQL, `jsonb_build_array(...)` hace lo mismo con `to_jsonb`. Así, ni un texto que imite el marcador ni un separador dentro de un valor producen la misma entrada (ver la prueba de `data-reconciliation`).
 5. **Algoritmo:**
    - BigQuery: `FARM_FINGERPRINT` (64 bits, mismo resultado para la misma entrada) o `SHA256`;
    - T-SQL: `HASHBYTES` con `SHA2_256`, porque MD5 y SHA1 están obsoletos;
@@ -203,7 +212,7 @@ En **T-SQL** (Synapse y Fabric Warehouse), `CONCAT` **convierte los `NULL` en ca
 
 ## 14. Buenas prácticas
 
-- Marcador explícito de `NULL` y separador entre columnas en todo hash de fila.
+- Serializar la fila como JSON (`TO_JSON_STRING(STRUCT(...))` en BigQuery, `jsonb_build_array` en PostgreSQL) antes del hash; si se concatena texto, marcador explícito de `NULL` que no pueda aparecer en los datos y separador que tampoco aparezca en los valores.
 - Definir la lista y el orden de columnas del hash en un solo lugar (macro o vista) y versionarla.
 - Normalizar formatos antes de hashear: fechas, decimales y espacios.
 - Guardar el hash junto a la fila cargada para no recalcularlo sobre el destino.
@@ -260,3 +269,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: ficha completa (lote F3b-02c, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02c aplicada (docs/reviews/cards-f3b-02c.md): Redshift: `CONCAT` y `||` devuelven `NULL` con un argumento `NULL` (su página), distinto de T-SQL y de `concat`/`concat_ws` de PostgreSQL.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-07: cambio mínimo para que coincida con la revisión de NULL (docs/reviews/fixes-null-concat.md): §4 y §14 agregan la serialización JSON (`TO_JSON_STRING(STRUCT(...))`, `jsonb_build_array`) como alternativa que elimina las ambigüedades del marcador y del separador. Sigue `verified`, pendiente de revisión de Cursor.

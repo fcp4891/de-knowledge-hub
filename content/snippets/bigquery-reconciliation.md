@@ -42,6 +42,10 @@ sources:
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/operators
     accessed: 2026-10-07
     note: "IS DISTINCT FROM devuelve TRUE si los valores serían distintos para GROUP BY y nunca devuelve NULL."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/json_functions
+    accessed: 2026-10-07
+    note: "TO_JSON_STRING convierte un valor SQL en un STRING con formato JSON. Según la tabla de codificaciones JSON: NULL se codifica como null (sin comillas); STRING como cadena JSON, con escape de comillas, barra invertida y caracteres de control; STRUCT como objeto con sus campos. Ejemplo de la página: TO_JSON_STRING(STRUCT(1 AS id, [10, 20] AS coordinates)) → {\"id\":1,\"coordinates\":[10,20]}."
 relations:
   - type: IMPLEMENTS
     target: data-reconciliation
@@ -69,15 +73,13 @@ Demuestra que la carga de un día no perdió, duplicó ni alteró filas: compara
 -- Requiere: stg_ventas_origen (copia del origen para el día) y dwh.ventas; @dia es el día lógico.
 WITH origen AS (
   SELECT COUNT(*) AS filas, SUM(monto) AS monto,
-         BIT_XOR(FARM_FINGERPRINT(CONCAT(IFNULL(CAST(venta_id AS STRING), '\\N'), '|',
-                                            IFNULL(CAST(monto AS STRING), '\\N')))) AS huella
+         BIT_XOR(FARM_FINGERPRINT(TO_JSON_STRING(STRUCT(venta_id, monto)))) AS huella
   FROM `proyecto.staging.stg_ventas_origen`
   WHERE fecha = @dia
 ),
 destino AS (
   SELECT COUNT(*) AS filas, SUM(monto) AS monto,
-         BIT_XOR(FARM_FINGERPRINT(CONCAT(IFNULL(CAST(venta_id AS STRING), '\\N'), '|',
-                                            IFNULL(CAST(monto AS STRING), '\\N')))) AS huella
+         BIT_XOR(FARM_FINGERPRINT(TO_JSON_STRING(STRUCT(venta_id, monto)))) AS huella
   FROM `proyecto.dwh.ventas`
   WHERE fecha = @dia
 )
@@ -121,7 +123,7 @@ Son consultas de **solo lectura**: repetirlas no cambia nada.
 
 - **Duplicados idénticos:** dos filas iguales duplicadas se anulan en el XOR; por eso el conteo es imprescindible junto a la huella.
 - **Normalización:** la huella depende de cómo se convierte cada valor a texto; ambos lados deben usar la misma expresión (tipos, redondeo, zona horaria).
-- **`NULL`:** `CONCAT` devuelve `NULL` si un argumento es `NULL`, y `BIT_XOR` omitiría esa fila; por eso cada columna lleva el marcador `IFNULL(…, '\\N')`. El caso de prueba está en la sección 10 de `data-reconciliation`.
+- **`NULL` y separador:** la huella usa `TO_JSON_STRING(STRUCT(venta_id, monto))` y no `CONCAT`. `CONCAT` devuelve `NULL` si un argumento es `NULL`, y `BIT_XOR` omitiría esa fila; un marcador de texto como `'\\N'` puede coincidir con un valor real; y un separador como `|` puede aparecer dentro de un valor. Según la documentación de BigQuery, `TO_JSON_STRING` codifica `NULL` como `null` y el texto entre comillas con escape, así que no tiene esas ambigüedades. El caso de prueba con los dos lados está en la sección 10 de `data-reconciliation`.
 - **Seguridad:** el detalle por clave puede exponer datos si se registra completo; registrar claves y tipo de diferencia, no el contenido.
 - **Costo:** las consultas leen las columnas incluidas en la huella; filtrar por la partición del día limita los bytes procesados.
 
@@ -131,7 +133,7 @@ Ver `requirements` en el encabezado. Ejecutar las dos consultas con el parámetr
 
 ## 8. Conceptos relacionados
 
-- `data-reconciliation`: el patrón que implementa.
+- `data-reconciliation`: el patrón que implementa y el caso de prueba con `NULL`.
 - `incremental-load` y `backfill`: los momentos en que se reconcilia.
 
 ## 9. Fuentes
@@ -145,3 +147,4 @@ El detalle está en `sources` del encabezado.
 - 2026-10-01: creación (A-F3.2), desde la sección 10 de `data-reconciliation` tras la revisión B-F3.1 del lote 3.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).
 - 2026-10-07: cambio mínimo (aprobado por Felipe): la huella usa un marcador de NULL (`IFNULL(…, '\\N')`, el de `change-detection`) porque `CONCAT` de BigQuery devuelve NULL con un argumento NULL y `BIT_XOR` omitía esas filas; el detalle por clave compara con `IS DISTINCT FROM` en lugar de `!=`. Sigue `verified`, pendiente de revisión de Cursor.
+- 2026-10-07: revisión de los cambios mínimos de NULL aplicada (docs/reviews/fixes-null-concat.md, aprobada por Felipe): la huella pasa de `CONCAT` con marcador `'\\N'` a `FARM_FINGERPRINT(TO_JSON_STRING(STRUCT(...)))`, respaldado por la tabla de codificaciones JSON de BigQuery (NULL → `null`; texto entre comillas con escape), que elimina la ambigüedad del marcador y la del separador. Sigue `verified`.

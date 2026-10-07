@@ -54,6 +54,14 @@ sources:
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/string_functions
     accessed: 2026-10-07
     note: "CONCAT devuelve NULL si cualquier argumento es NULL."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/json_functions
+    accessed: 2026-10-07
+    note: "TO_JSON_STRING convierte un valor SQL en un STRING con formato JSON. Según la tabla de codificaciones JSON: NULL se codifica como null (sin comillas); STRING como cadena JSON, con escape de comillas, barra invertida y caracteres de control; STRUCT como objeto con sus campos. Ejemplo de la página: TO_JSON_STRING(STRUCT(1 AS id, [10, 20] AS coordinates)) → {\"id\":1,\"coordinates\":[10,20]}."
+  - source: postgresql-docs
+    url: https://www.postgresql.org/docs/current/functions-json.html
+    accessed: 2026-10-07
+    note: "jsonb_build_array arma un array JSON con sus argumentos, cada uno convertido con to_jsonb; to_jsonb convierte NULL en null y cualquier escalar que no sea número, booleano ni null en una cadena JSON, con el escape necesario."
 relations:
   - type: RELATED_TO
     target: surrogate-keys
@@ -109,7 +117,7 @@ Las dimensiones se recargan, se reconstruyen y se versionan (SCD tipo 2). Si la 
    - Redshift no verifica la unicidad de valores insertados explícitamente en una identidad por defecto;
    - Synapse no la garantiza con `IDENTITY_INSERT`, cambios de semilla o un `UPDATE` de la columna de distribución;
    - Fabric la garantiza mientras no se use `IDENTITY_INSERT`; si se insertan valores explícitos, hay que ejecutar `DBCC CHECKIDENT … RESEED` para que los valores nuevos no colisionen.
-3. **Hash determinista:** `FARM_FINGERPRINT(CONCAT('cliente|', IFNULL(CAST(clave_natural AS STRING), '\\N')))` en BigQuery da siempre el mismo `INT64`; sin el marcador, una clave natural `NULL` produce una clave `NULL` (ver `change-detection`), y una clave natural nula debe rechazarse antes con un control de no nulos. Conviene incluir un prefijo de entidad y verificar la unicidad (ver `sql-quality-checks`), porque dos claves naturales distintas pueden colisionar.
+3. **Hash determinista:** `FARM_FINGERPRINT(TO_JSON_STRING(STRUCT('cliente' AS entidad, clave_natural)))` en BigQuery da siempre el mismo `INT64`. `TO_JSON_STRING` codifica `NULL` como `null` y el texto entre comillas con escape, así que no hay ambigüedad de marcador ni de separador; con `CONCAT`, una clave natural `NULL` daría una clave `NULL`. Una clave natural nula debe rechazarse antes con un control de no nulos. Conviene incluir un prefijo de entidad y verificar la unicidad (ver `sql-quality-checks`), porque dos claves naturales distintas pueden colisionar.
 4. **UUID aleatorio:** se genera una vez y se guarda. Volver a generarlo en una recarga cambia todas las claves.
 
 ## 5. Cuándo utilizarlo
@@ -140,7 +148,7 @@ SELECT producto_sk, codigo FROM dim_producto;   -- 1 P1, 3 P3
 
 Un modelo de dbt reconstruía `dim_cliente` completa cada noche y asignaba `cliente_sk` con `ROW_NUMBER() OVER (ORDER BY cliente_id)`. Un día se dio de alta un cliente con un `cliente_id` menor que los existentes, y todas las claves posteriores se corrieron en uno. Los hechos de los días anteriores quedaron apuntando a otros clientes.
 
-El equipo cambió a `FARM_FINGERPRINT(CONCAT('cliente|', IFNULL(CAST(cliente_id AS STRING), '\\N')))`, estable entre recargas, y agregó un control de unicidad sobre `cliente_sk`. Los hechos históricos se recargaron una vez con la clave nueva.
+El equipo cambió a `FARM_FINGERPRINT(TO_JSON_STRING(STRUCT('cliente' AS entidad, cliente_id)))`, estable entre recargas, y agregó un control de unicidad sobre `cliente_sk`. Los hechos históricos se recargaron una vez con la clave nueva.
 
 ## 9. Arquitectura
 
@@ -159,22 +167,22 @@ flowchart LR
 
 ```sql
 -- PostgreSQL (ejecutado). 1) Hash de la clave natural: misma clave en cualquier recarga.
---    Se toman 60 bits del MD5 para que entre en un bigint con signo.
-SELECT codigo, ('x' || left(md5('producto|' || coalesce(codigo, '\N')), 15))::bit(60)::bigint AS producto_sk
-FROM (VALUES ('P1'), ('P3')) AS v(codigo);
+--    Entrada jsonb_build_array (NULL → null, texto → cadena JSON); 60 bits del MD5 para un bigint con signo.
+SELECT codigo, ('x' || left(md5(jsonb_build_array('producto', codigo)::text), 15))::bit(60)::bigint AS producto_sk
+FROM (VALUES ('P1'), ('P3'), (NULL)) AS v(codigo);
 
 -- 2) ROW_NUMBER no es estable: si aparece P0, P1 pasa de 1 a 2.
 SELECT codigo, row_number() OVER (ORDER BY codigo) AS sk FROM (VALUES ('P1'), ('P3')) AS v(codigo);
 SELECT codigo, row_number() OVER (ORDER BY codigo) AS sk FROM (VALUES ('P0'), ('P1'), ('P3')) AS v(codigo);
 
 -- BigQuery (sintaxis documentada; no ejecutado aquí): hash determinista y control de unicidad.
--- SELECT FARM_FINGERPRINT(CONCAT('cliente|', IFNULL(CAST(cliente_id AS STRING), '\\N'))) AS cliente_sk, * FROM stg_cliente;
+-- SELECT FARM_FINGERPRINT(TO_JSON_STRING(STRUCT('cliente' AS entidad, cliente_id))) AS cliente_sk, * FROM stg_cliente;
 -- ASSERT (SELECT COUNT(*) - COUNT(DISTINCT cliente_sk) FROM dim_cliente) = 0 AS 'cliente_sk repetida';
 ```
 
 Resultados en PostgreSQL:
 
-- la consulta 1 da a P1 y P3 claves de 18 dígitos que se repiten igual en cada ejecución;
+- la consulta 1 da a P1 y P3 claves de 18 dígitos que se repiten igual en cada ejecución, y a la fila con `codigo` nulo una clave no nula (con `||` habría sido `NULL`); esa fila igual debe rechazarse antes con un control de no nulos;
 - en la consulta 2, P1 recibe 1 en la primera carga y 2 en la segunda;
 - `gen_random_uuid()` dio un valor distinto en cada llamada;
 - el ejemplo de la sección 7 dejó el hueco del 2.
@@ -269,3 +277,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: revisión B-F3.1 del lote F3b-02c aplicada (docs/reviews/cards-f3b-02c.md): la unicidad de `IDENTITY` en Fabric se acota a su página (no vale con `IDENTITY_INSERT`; después, `DBCC CHECKIDENT … RESEED`), junto a las salvedades de Redshift (`BY DEFAULT`) y Synapse (`IDENTITY_INSERT`, semilla y `UPDATE` de la columna de distribución).
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-07: cambio mínimo (aprobado por Felipe): los hashes de clave natural de §4, §8 y §10 usan el marcador de NULL de `change-detection`, porque `CONCAT` (BigQuery) y `||` (PostgreSQL) devuelven NULL con un argumento NULL. Pendiente de revisión de Cursor junto con el lote F3b-02c.
+- 2026-10-07: revisión de los cambios mínimos de NULL aplicada (docs/reviews/fixes-null-concat.md, aprobada por Felipe): §4, §8 y §10 usan `TO_JSON_STRING(STRUCT(...))` en BigQuery y `jsonb_build_array` en PostgreSQL en lugar de concatenar con marcador; el ejemplo ejecutado incluye una clave natural nula. Sigue `verified`.

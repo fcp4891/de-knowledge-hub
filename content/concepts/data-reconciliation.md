@@ -38,6 +38,14 @@ sources:
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/operators
     accessed: 2026-10-07
     note: "IS DISTINCT FROM devuelve TRUE si los valores serían distintos para GROUP BY y nunca devuelve NULL."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/json_functions
+    accessed: 2026-10-07
+    note: "TO_JSON_STRING convierte un valor SQL en un STRING con formato JSON. Según la tabla de codificaciones JSON: NULL se codifica como null (sin comillas); STRING como cadena JSON, con escape de comillas, barra invertida y caracteres de control; STRUCT como objeto con sus campos. Ejemplo de la página: TO_JSON_STRING(STRUCT(1 AS id, [10, 20] AS coordinates)) → {\"id\":1,\"coordinates\":[10,20]}."
+  - source: postgresql-docs
+    url: https://www.postgresql.org/docs/current/functions-json.html
+    accessed: 2026-10-07
+    note: "jsonb_build_array arma un array JSON con sus argumentos, cada uno convertido con to_jsonb; to_jsonb convierte NULL en null y cualquier escalar que no sea número, booleano ni null en una cadena JSON, con el escape necesario."
 relations:
   - type: RELATED_TO
     target: incremental-load
@@ -126,15 +134,13 @@ flowchart LR
 -- Requiere: stg_ventas_origen (copia del origen para el día) y dwh.ventas; @dia es el día lógico.
 WITH origen AS (
   SELECT COUNT(*) AS filas, SUM(monto) AS monto,
-         BIT_XOR(FARM_FINGERPRINT(CONCAT(IFNULL(CAST(venta_id AS STRING), '\\N'), '|',
-                                            IFNULL(CAST(monto AS STRING), '\\N')))) AS huella
+         BIT_XOR(FARM_FINGERPRINT(TO_JSON_STRING(STRUCT(venta_id, monto)))) AS huella
   FROM `proyecto.staging.stg_ventas_origen`
   WHERE fecha = @dia
 ),
 destino AS (
   SELECT COUNT(*) AS filas, SUM(monto) AS monto,
-         BIT_XOR(FARM_FINGERPRINT(CONCAT(IFNULL(CAST(venta_id AS STRING), '\\N'), '|',
-                                            IFNULL(CAST(monto AS STRING), '\\N')))) AS huella
+         BIT_XOR(FARM_FINGERPRINT(TO_JSON_STRING(STRUCT(venta_id, monto)))) AS huella
   FROM `proyecto.dwh.ventas`
   WHERE fecha = @dia
 )
@@ -155,17 +161,43 @@ FULL OUTER JOIN (SELECT venta_id, monto FROM `proyecto.dwh.ventas` WHERE fecha =
 WHERE o.venta_id IS NULL OR d.venta_id IS NULL OR o.monto IS DISTINCT FROM d.monto;
 ```
 
-Son consultas de solo lectura: repetirlas no cambia nada. Una limitación del XOR: dos filas idénticas duplicadas se anulan entre sí, así que el conteo sigue siendo imprescindible junto a la huella. El marcador `'\\N'` evita que una fila con `monto` nulo quede fuera de la huella.
+Son consultas de solo lectura: repetirlas no cambia nada. El SQL de BigQuery no se ejecutó: requiere GCP. Una limitación del XOR: dos filas idénticas duplicadas se anulan entre sí, así que el conteo sigue siendo imprescindible junto a la huella.
+
+La huella se calcula sobre `TO_JSON_STRING(STRUCT(venta_id, monto))` y no sobre una concatenación. Según la documentación de BigQuery, `TO_JSON_STRING` codifica `NULL` como `null` sin comillas y cada `STRING` entre comillas con escape. Eso elimina dos ambigüedades de concatenar texto:
+
+- **el `NULL`:** `CONCAT` devuelve `NULL` si un argumento es `NULL`, y `BIT_XOR` omitiría la fila; un marcador como `'\\N'` choca con un texto real `\N`;
+- **el separador:** `('a|b', 'c')` y `('a', 'b|c')` dan la misma cadena con `|`.
 
 ```sql
--- PostgreSQL (ejecutado): por qué hace falta el marcador. fp() reproduce FARM_FINGERPRINT (60 bits del MD5);
--- || con un NULL devuelve NULL, como CONCAT en BigQuery.
--- Origen (1, 100), (2, NULL) y destino (1, 100), (3, NULL): mismo conteo, misma suma y filas distintas.
-SELECT bit_xor(fp(venta_id::text || '|' || monto::text)) FROM origen;      -- sin marcador: la fila 2 no cuenta
-SELECT bit_xor(fp(coalesce(venta_id::text, '\N') || '|' || coalesce(monto::text, '\N'))) FROM origen;  -- con marcador
+-- PostgreSQL (ejecutado): la misma comparación con los dos lados. fp() toma 60 bits del MD5 como bigint;
+-- no es FARM_FINGERPRINT, pero muestra el efecto del NULL y de la entrada. jsonb_build_array es el
+-- equivalente documentado de TO_JSON_STRING(STRUCT(...)): NULL → null y texto → cadena JSON con escape.
+-- Día 1: origen (1, 100), (2, NULL); destino (1, 100), (3, NULL).
+-- Día 2: origen (5, 100), (6, NULL); destino (5, NULL), (6, 100).
+SELECT dia, lado, count(*) AS filas, sum(monto) AS suma,
+       bit_xor(fp(venta_id::text || '|' || monto::text))                                 AS sin_marcador,
+       bit_xor(fp(coalesce(venta_id::text, '\N') || '|' || coalesce(monto::text, '\N'))) AS con_marcador,
+       bit_xor(fp(jsonb_build_array(venta_id, monto)::text))                             AS con_json
+FROM (SELECT 'origen' AS lado, * FROM origen UNION ALL SELECT 'destino', * FROM destino) AS lados
+GROUP BY dia, lado;
+
+-- Detalle por clave de un día: != frente a IS DISTINCT FROM.
+SELECT coalesce(o.venta_id, d.venta_id) AS venta_id
+FROM (SELECT * FROM origen WHERE dia = 2) AS o
+FULL JOIN (SELECT * FROM destino WHERE dia = 2) AS d ON o.venta_id = d.venta_id
+WHERE o.venta_id IS NULL OR d.venta_id IS NULL OR o.monto IS DISTINCT FROM d.monto;   -- con != no devuelve nada
 ```
 
-Sin marcador, el conteo (2 y 2), la suma (100 y 100) y la huella coinciden, porque la huella de cada fila con `monto` nulo es `NULL` y `BIT_XOR` la omite: la reconciliación da por buena una carga con filas distintas. Con el marcador, la huella ya no coincide y la diferencia se detecta. En la misma prueba, un `monto` que pasa de 100 a `NULL` no aparece en el detalle con `!=` y sí con `IS DISTINCT FROM`. El SQL de BigQuery de arriba no se ejecutó: requiere GCP.
+| Día | Lado | Filas | Suma | Huella sin marcador | Huella con marcador | Huella JSON | Detalle con `!=` | Detalle con `IS DISTINCT FROM` |
+|---|---|---|---|---|---|---|---|---|
+| 1 | origen | 2 | 100 | igual al destino | distinta | distinta | 2, 3 | 2, 3 |
+| 1 | destino | 2 | 100 | igual al origen | distinta | distinta | | |
+| 2 | origen | 2 | 100 | distinta | distinta | distinta | (ninguna) | 5, 6 |
+| 2 | destino | 2 | 100 | distinta | distinta | distinta | | |
+
+- **Día 1:** conteo, suma y huella sin marcador coinciden aunque las filas son distintas, porque las filas con `monto` nulo quedan fuera de `BIT_XOR`. La huella con marcador y la JSON detectan la diferencia.
+- **Día 2:** la suma coincide y la huella la detecta, pero el detalle con `!=` no encuentra ninguna clave, porque comparar un valor con `NULL` da `NULL`. Con `IS DISTINCT FROM` aparecen las ventas 5 y 6.
+- **Ambigüedades, en la misma prueba:** `coalesce(NULL, '\N')` y el texto `'\N'` producen la misma cadena, y `'a|b' || '|' || 'c'` es igual a `'a' || '|' || 'b|c'`. Con `jsonb_build_array`, ninguno de los dos pares coincide (`[null, "x"]` frente a `["\\N", "x"]`, y `["a|b", "c"]` frente a `["a", "b|c"]`).
 
 ## 11. GCP
 
@@ -248,3 +280,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendientes de ficha a `sql-quality-checks`, `change-detection`, que ya tienen ficha.
 - 2026-10-07: cambio mínimo (aprobado por Felipe): la huella usa un marcador de NULL (`IFNULL(…, '\\N')`, el de `change-detection`) porque `CONCAT` de BigQuery devuelve NULL con un argumento NULL y `BIT_XOR` omitía esas filas; el detalle por clave compara con `IS DISTINCT FROM` en lugar de `!=`. Sigue `verified`, pendiente de revisión de Cursor. §10 agrega un caso con `monto` NULL probado en PostgreSQL.
+- 2026-10-07: revisión de los cambios mínimos de NULL aplicada (docs/reviews/fixes-null-concat.md, aprobada por Felipe): la huella pasa de `CONCAT` con marcador `'\\N'` a `FARM_FINGERPRINT(TO_JSON_STRING(STRUCT(...)))`, respaldado por la tabla de codificaciones JSON de BigQuery (NULL → `null`; texto entre comillas con escape), que elimina la ambigüedad del marcador y la del separador. Sigue `verified`. §10 publica el caso completo en PostgreSQL (dos lados, conteo, suma, tres huellas y `!=` frente a `IS DISTINCT FROM`) con `jsonb_build_array`, el equivalente documentado.

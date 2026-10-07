@@ -43,6 +43,10 @@ sources:
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/string_functions
     accessed: 2026-10-07
     note: "CONCAT devuelve NULL si cualquier argumento es NULL."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/json_functions
+    accessed: 2026-10-07
+    note: "TO_JSON_STRING convierte un valor SQL en un STRING con formato JSON. Según la tabla de codificaciones JSON: NULL se codifica como null (sin comillas); STRING como cadena JSON, con escape de comillas, barra invertida y caracteres de control; STRUCT como objeto con sus campos. Ejemplo de la página: TO_JSON_STRING(STRUCT(1 AS id, [10, 20] AS coordinates)) → {\"id\":1,\"coordinates\":[10,20]}."
 relations:
   - type: RELATED_TO
     target: slowly-changing-dimensions
@@ -121,7 +125,7 @@ flowchart LR
 ## 10. Código
 
 ```sql
--- BigQuery: dos formas de generar la clave sustituta al insertar miembros nuevos.
+-- BigQuery (sintaxis documentada; no ejecutado aquí): dos formas de generar la clave sustituta al insertar miembros nuevos.
 -- Requiere: dim_cliente(cliente_sk, cliente_hk, origen, cliente_id_origen, ...) y stg_cliente deduplicado.
 
 -- a) UUID aleatorio: no requiere coordinación, pero es un STRING de 32 hexadecimales.
@@ -129,8 +133,7 @@ flowchart LR
 INSERT INTO `proyecto.dwh.dim_cliente` (cliente_sk, cliente_hk, origen, cliente_id_origen, valido_desde)
 SELECT
   GENERATE_UUID() AS cliente_sk,
-  FARM_FINGERPRINT(CONCAT(IFNULL(s.origen, '\\N'), '|', IFNULL(s.cliente_id_origen, '\\N'), '|',
-                          IFNULL(CAST(s.valido_desde AS STRING), '\\N'))) AS cliente_hk,  -- CONCAT con un NULL daría NULL
+  FARM_FINGERPRINT(TO_JSON_STRING(STRUCT(s.origen, s.cliente_id_origen, s.valido_desde))) AS cliente_hk,  -- sin CONCAT: NULL → null
   s.origen, s.cliente_id_origen, s.valido_desde
 FROM `proyecto.staging.stg_cliente` AS s
 LEFT JOIN `proyecto.dwh.dim_cliente` AS d
@@ -138,7 +141,7 @@ LEFT JOIN `proyecto.dwh.dim_cliente` AS d
 WHERE d.cliente_id_origen IS NULL;  -- solo miembros o versiones que no existen: reejecutar no duplica
 ```
 
-El ejemplo muestra las dos opciones lado a lado; en un modelo real se elige una. El `LEFT JOIN ... IS NULL` hace que reejecutar la carga no inserte filas duplicadas.
+El ejemplo muestra las dos opciones lado a lado; en un modelo real se elige una. El hash usa `TO_JSON_STRING(STRUCT(...))` y no `CONCAT`: según la documentación de BigQuery, `NULL` se codifica como `null` y el texto entre comillas con escape, así que un `NULL`, un texto que imite un marcador o un separador dentro de un valor no producen la misma entrada. Una clave natural nula igual debe rechazarse antes con un control de no nulos. El `LEFT JOIN ... IS NULL` hace que reejecutar la carga no inserte filas duplicadas.
 
 ## 11. GCP
 
@@ -210,3 +213,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `dimension-tables`, que ya tiene ficha.
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `surrogate-key-generation`, que ya tiene ficha.
 - 2026-10-07: cambio mínimo (aprobado por Felipe): `cliente_hk` usa el marcador de NULL de `change-detection` (`IFNULL(…, '\\N')`), porque `CONCAT` de BigQuery devuelve NULL con un argumento NULL y la clave quedaba NULL. Una clave natural nula sigue debiendo rechazarse con un control de no nulos (ver `sql-quality-checks`). Sigue `verified`, pendiente de revisión de Cursor.
+- 2026-10-07: revisión de los cambios mínimos de NULL aplicada (docs/reviews/fixes-null-concat.md, aprobada por Felipe): `cliente_hk` pasa de `CONCAT` con marcador a `FARM_FINGERPRINT(TO_JSON_STRING(STRUCT(...)))`, respaldado por las codificaciones JSON de BigQuery, que elimina las ambigüedades del marcador y del separador; el bloque queda marcado como sintaxis documentada, no ejecutado. Sigue `verified`.

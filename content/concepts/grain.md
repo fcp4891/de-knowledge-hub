@@ -88,7 +88,7 @@ Sin un grano explícito aparecen las tablas "mezcladas": filas de línea y de to
 2. **Declarar el grano en lenguaje de negocio** ("una fila por línea de ticket") y traducirlo a columnas: las claves que lo identifican.
 3. **Preferir el grano atómico:** permite responder preguntas imprevistas. Los granos resumidos (por día y tienda) son tablas adicionales para rendimiento, no reemplazos.
 4. **Filtrar dimensiones y medidas por coherencia:** una dimensión que tiene varios valores por fila del grano (varios diagnósticos por visita) no entra directa; necesita otro tratamiento (*bridge*). Una medida de otro grano va a otra tabla.
-5. **Comprobar el grano en cada carga:** BigQuery no aplica las claves primarias (`NOT ENFORCED`), Redshift las trata como informativas y Fabric Warehouse solo las admite como `NOT ENFORCED`, así que en los tres una carga puede insertar filas duplicadas sin error. El control lo hace el pipeline: una consulta de duplicados, aserciones de Dataform o tests de dbt.
+5. **Comprobar el grano en cada carga:** BigQuery no aplica las claves primarias (`NOT ENFORCED`), Redshift las trata como informativas y Fabric Warehouse solo las admite como `NONCLUSTERED` y `NOT ENFORCED`, así que en los tres una carga puede insertar filas duplicadas sin error. El control lo hace el pipeline: una consulta de duplicados, aserciones de Dataform o tests de dbt.
 
 ## 5. Cuándo utilizarlo
 
@@ -224,3 +224,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: creación (lote 6 de F3).
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-07: §4: las claves primarias no exigidas se atribuyen por motor con el término de cada página (BigQuery `NOT ENFORCED`, Redshift informativas, Fabric solo `NOT ENFORCED`), en lugar de una afirmación conjunta (criterio de la revisión de F3b-02c). Cambio mínimo en ficha `verified`, pendiente de revisión de Cursor.
+- 2026-10-07: revisión de los cambios mínimos aplicada (docs/reviews/fixes-null-concat.md, aprobada por Felipe): §4 dice «`NONCLUSTERED` y `NOT ENFORCED`» para Fabric, como la §13. Sigue `verified`.
