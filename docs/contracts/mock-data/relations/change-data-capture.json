@@ -99,10 +99,10 @@
         },
         {
           "slug": "change-detection",
-          "title": "Detección de cambios",
+          "title": "Detección de cambios en SQL",
           "entity_type": "pattern",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "El CDC lee los cambios del log de la base; este patrón los deduce comparando versiones."
         },
         {
           "slug": "etl-vs-elt",

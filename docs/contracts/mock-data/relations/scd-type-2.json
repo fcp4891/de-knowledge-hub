@@ -63,6 +63,13 @@
           "note": "Cada fila nueva del tipo 2 recibe una clave sustituta nueva."
         },
         {
+          "slug": "change-detection",
+          "title": "Detección de cambios en SQL",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Saber qué filas cambiaron es la entrada de una carga SCD tipo 2."
+        },
+        {
           "slug": "slowly-changing-dimensions",
           "title": "Dimensiones lentamente cambiantes (SCD)",
           "entity_type": "concept",
@@ -77,11 +84,25 @@
           "note": "LEAD sobre la vigencia permite calcular valid_to a partir de la versión siguiente."
         },
         {
+          "slug": "surrogate-key-generation",
+          "title": "Generación de surrogate keys",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Cada versión de una dimensión tipo 2 necesita su propia clave sustituta."
+        },
+        {
           "slug": "sql-merge",
           "title": "MERGE",
           "entity_type": "concept",
           "origin": "entity",
           "note": "SCD2 se implementa con MERGE o con sentencias equivalentes."
+        },
+        {
+          "slug": "scd-type-1",
+          "title": "SCD Type 1",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Una dimensión puede combinar atributos tipo 1 (sobrescribir) y tipo 2 (versionar)."
         },
         {
           "slug": "dimension-tables",

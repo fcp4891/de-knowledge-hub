@@ -21,8 +21,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-06"
+          "verification_status": "verified",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "sql-joins",
@@ -35,8 +35,8 @@
           "importance": "high",
           "mvp": true,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-06"
+          "verification_status": "verified",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "sql-subqueries",
@@ -49,8 +49,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-06"
+          "verification_status": "verified",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "sql-cte",
@@ -63,8 +63,8 @@
           "importance": "high",
           "mvp": true,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-06"
+          "verification_status": "verified",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "sql-recursive-cte",
@@ -77,7 +77,7 @@
           "importance": "low",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
+          "verification_status": "verified",
           "last_verified": "2026-10-07"
         },
         {
@@ -105,8 +105,8 @@
           "importance": "medium",
           "mvp": true,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-06"
+          "verification_status": "verified",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "sql-case-expressions",
@@ -119,8 +119,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-06"
+          "verification_status": "verified",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "sql-nulls",
@@ -133,8 +133,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-06"
+          "verification_status": "verified",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "sql-arrays",
@@ -147,8 +147,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-06"
+          "verification_status": "verified",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "sql-structs",
@@ -161,8 +161,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-06"
+          "verification_status": "verified",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "sql-unnest",
@@ -175,8 +175,8 @@
           "importance": "high",
           "mvp": true,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-06"
+          "verification_status": "verified",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "sql-pivot",
@@ -189,7 +189,7 @@
           "importance": "low",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
+          "verification_status": "verified",
           "last_verified": "2026-10-07"
         },
         {
@@ -217,7 +217,7 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
+          "verification_status": "verified",
           "last_verified": "2026-10-07"
         },
         {
@@ -231,7 +231,7 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
+          "verification_status": "verified",
           "last_verified": "2026-10-07"
         }
       ]
@@ -278,9 +278,9 @@
           "level": "intermediate",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "scd-type-2",
@@ -320,9 +320,9 @@
           "level": "intermediate",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "data-reconciliation",
@@ -348,9 +348,9 @@
           "level": "intermediate",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "surrogate-key-generation",
@@ -362,9 +362,9 @@
           "level": "intermediate",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-07"
         }
       ]
     },
@@ -383,7 +383,7 @@
           "importance": "high",
           "mvp": true,
           "has_page": true,
-          "verification_status": "review_required",
+          "verification_status": "verified",
           "last_verified": "2026-10-07"
         },
         {
@@ -425,7 +425,7 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
+          "verification_status": "verified",
           "last_verified": "2026-10-07"
         },
         {
@@ -439,7 +439,7 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
+          "verification_status": "verified",
           "last_verified": "2026-10-07"
         },
         {
@@ -453,7 +453,7 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
+          "verification_status": "verified",
           "last_verified": "2026-10-07"
         },
         {
@@ -467,7 +467,7 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
+          "verification_status": "verified",
           "last_verified": "2026-10-07"
         },
         {
@@ -481,7 +481,7 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
+          "verification_status": "verified",
           "last_verified": "2026-10-07"
         }
       ]

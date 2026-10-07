@@ -92,10 +92,10 @@
         },
         {
           "slug": "change-detection",
-          "title": "Detección de cambios",
+          "title": "Detección de cambios en SQL",
           "entity_type": "pattern",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Detectar qué cambió permite cargar solo eso."
         },
         {
           "slug": "materialization-strategies",
