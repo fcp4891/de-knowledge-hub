@@ -6,8 +6,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-07
 
 ## Actual
-- **Tarea activa:** rediseño UI en `b/ui-redesign` (especificación en `docs/design/handoff-ui/README.md`). Plan de 5 commits aprobado, con la página Repaso. Commit 1 de 5 hecho.
-- **Siguiente:** commit 2, Inicio (Continuar, objetivos, itinerario y mapa).
+- **Tarea activa:** rediseño UI en `b/ui-redesign` (especificación en `docs/design/handoff-ui/README.md`). Plan de 5 commits aprobado, con la página Repaso. Commit 2 de 5 hecho.
+- **Siguiente:** commit 3, ruta de dominio.
 - **Bloqueos:** ninguno.
 
 ### Rediseño UI · commit 1 (tokens, fuentes, layout y menú)
@@ -18,6 +18,14 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Página `/repaso`: conceptos en «Necesita repaso», del estudiado hace más tiempo al más reciente, con dominio y «Hace N días» desde `last_studied_at`, y un estado vacío. En `static` la lista se arma en el navegador con el catálogo de conceptos del build.
 - Las vistas existentes siguen con sus estilos: las variables anteriores (`--text`, `--muted`, `--line`) son alias de los tokens nuevos, y `--accent` toma el valor nuevo. Foco visible global.
 - Verificado: lint, `npm run build` y `npm run build:static` con `BASE_PATH=/DES_conocimiento` en verde. En Edge headless, sobre el build estático: menú lateral a 1440 px, barra y menú desplegable a 375 px sin scroll horizontal, y contador y lista de Repaso con un concepto marcado en `localStorage`. Falta probar en Chrome normal (criterio del README; queda para el commit 5).
+
+### Rediseño UI · commit 2 (Inicio)
+- `/` sigue la pantalla 1: fecha, «¿Qué quieres hacer hoy?», tarjeta «Continuar donde quedaste» (el concepto *Revisando* con `last_studied_at` más reciente; en `static`, desde `localStorage`), los 6 objetivos, el itinerario y el mapa. Se quitaron las secciones vacías del inicio anterior.
+- El objetivo se guarda en `localStorage` (`dekh:goal`). Volver a pulsarlo lo deselecciona y el mapa queda neutro: sin números de paso y sin atenuar. Los números del itinerario usan el color `dark` de su capa. El botón dice «Empezar por » más el nombre corto, con espacio, y enlaza a `/explorer/<slug>`.
+- El mapa arma cada estación con sus dos segmentos (sin posiciones absolutas). La grilla es `minmax(92px, 1fr)` y, si no cabe, hace scroll dentro de la fila. «x/y fichas» sale de `concept_count` y de `has_page` en el listado de conceptos. El subdominio de «Continuar» sale del detalle de dominio; el contrato no lo trae en el resumen del concepto.
+- La línea «Ibas en la sección N de 22» se lee de `dekh:reading:<slug>` si ya existe. La ficha todavía no la escribe (commit 4); si no está, esa línea y la barra no aparecen.
+- No se editó `content/` ni el contrato.
+- Verificado: lint, `npm run build` y `npm run build:static` con `BASE_PATH=/DES_conocimiento` en verde. Sobre el export estático, a 1440 px y a 375 px: deseleccionar el objetivo quita números y atenuado; los números del itinerario usan el color oscuro de la capa; el botón es «Empezar por DevOps»; el mapa no desborda la página y las capas largas hacen scroll dentro de la fila. Falta probar en Chrome normal (queda para el commit 5).
 
 ### Demo estática
 - `API_MODE=static` y `BASE_PATH` (obligatorio, no va fijo en el código). `npm run build:static` deja `frontend/out/`. Durante ese build el script pone `dynamicParams = false` en las cuatro rutas dinámicas, sustituye `personalActions.ts` por el stub sin server actions y restaura ambos al terminar.

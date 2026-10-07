@@ -181,8 +181,22 @@ export function getSnippet(slug: string): Promise<ApiResult<SnippetDetail>> {
   return apiGet(`GET ${resource}`, resource);
 }
 
-export function listStudyStates(state?: StudyStatus): Promise<ApiResult<StudyStateList>> {
-  const resource = state ? `/me/study-state?state=${state}` : "/me/study-state";
+export function listStudyStates(
+  state?: StudyStatus,
+  page: { offset?: number; limit?: number } = {},
+): Promise<ApiResult<StudyStateList>> {
+  const params = new URLSearchParams();
+  if (state) {
+    params.set("state", state);
+  }
+  if (page.limit) {
+    params.set("limit", String(page.limit));
+  }
+  if (page.offset && page.offset > 0) {
+    params.set("offset", String(page.offset));
+  }
+  const query = params.toString();
+  const resource = query ? `/me/study-state?${query}` : "/me/study-state";
   return liveRequest("GET", resource);
 }
 
