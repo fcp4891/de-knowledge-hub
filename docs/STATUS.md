@@ -18,18 +18,18 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | — (F3b-02c entregado) | Aplicar B-F3.1 de 02c; `make static` al cerrar 02-sql | — |
-| B · Cursor revisión | B-F3.1 del lote F3b-02c | — | — |
+| A · Claude Code | — (02-sql 33/33 `verified`) | Merge de `b/ui-redesign` y un solo `make static` cuando Felipe avise; 03-python tras aprobar 02-sql | — |
+| B · Cursor revisión | — (B-F3.1 de 02c entregada) | Revisar el cambio mínimo en `grain` | — |
 | B · Cursor UI | Rediseño UI en `b/ui-redesign` (commit 1 de 5) | Commit 2: Inicio | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | B-F3.1 · Revisar el lote F3b-02c (4 patterns, sin VERIFY) | Abierto |
+| A | B | Revisar el cambio mínimo en `grain` (`verified`) | Abierto |
 
 ## Criterio de salida de la fase actual (F3b, ADR-009)
 - [x] 01-fundamentals: 28/28 `verified`, aprobado por Felipe en el navegador el 2026-10-06.
-- [ ] 02-sql: 33 conceptos `verified` (hoy 29 `verified` y 4 en `review_required`, lote F3b-02c) y aprobado por Felipe en el navegador.
+- [ ] 02-sql: 33/33 `verified` desde el 2026-10-07; falta la aprobación de Felipe en el navegador.
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
 
 ## Fases cerradas

@@ -58,7 +58,7 @@ relations:
 created_at: 2026-10-05
 updated_at: 2026-10-07
 last_verified: 2026-10-07
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -260,10 +260,11 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-07. En `review_required` hasta la revisión B-F3.1 del lote F3b-02c.
+2026-10-07. Pasa a `verified`: revisión B-F3.1 del lote F3b-02c aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`).
 - 2026-10-07: ficha completa (lote F3b-02c, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02c aplicada (docs/reviews/cards-f3b-02c.md): claves no exigidas atribuidas por motor según su página (BigQuery: PK y FK; Redshift: unicidad, PK y FK informativas, NOT NULL aplicado; Fabric: PK y UNIQUE NONCLUSTERED NOT ENFORCED, FK NOT ENFORCED); sin «no existen».
+- 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).

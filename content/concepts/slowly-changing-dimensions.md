@@ -81,7 +81,7 @@ relations:
     target: sql-merge
     note: Los tipos 1 y 2 se aplican con MERGE o sentencias equivalentes.
 created_at: 2026-09-30
-updated_at: 2026-10-06
+updated_at: 2026-10-07
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -234,8 +234,7 @@ El tipo 1 es simple y compacto pero pierde la historia. El tipo 2 conserva la hi
 - `surrogate-keys`: requisito del tipo 2.
 - `late-arriving-data`: hechos que llegan antes que su dimensión.
 - `sql-merge`: la sentencia habitual para aplicar cambios.
-- Con ficha: `dimension-tables`, `fact-tables`.
-- Del blueprint, pendiente de ficha: `scd-type-1`.
+- Con ficha: `dimension-tables`, `fact-tables`, `scd-type-1`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -265,3 +264,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: creación (lote 3 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `dimension-tables`, `fact-tables`, que ya tienen ficha.
+- 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `scd-type-1`, que ya tiene ficha.

@@ -41,7 +41,7 @@ relations:
     target: change-data-capture
     note: En replicación por CDC, la reconciliación detecta cambios perdidos o aplicados dos veces.
 created_at: 2026-09-30
-updated_at: 2026-10-01
+updated_at: 2026-10-07
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -197,7 +197,8 @@ Los conteos y sumas son baratos, pero no detectan cambios que se compensan. Los 
 - `incremental-load`: cada carga incremental cierra con una reconciliación.
 - `backfill`: cada período reprocesado se reconcilia.
 - `change-data-capture`: la replicación por CDC se valida contra el origen.
-- Del blueprint, pendientes de ficha: `sql-quality-checks`, `change-detection`, `data-quality-dimensions`.
+- Con ficha: `sql-quality-checks`, `change-detection`.
+- Del blueprint, pendiente de ficha: `data-quality-dimensions`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -225,3 +226,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-09-30: creación (lote 3 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).
+- 2026-10-07: la sección de conceptos relacionados ya no lista como pendientes de ficha a `sql-quality-checks`, `change-detection`, que ya tienen ficha.

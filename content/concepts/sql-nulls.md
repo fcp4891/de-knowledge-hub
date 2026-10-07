@@ -218,7 +218,7 @@ Permitir `NULL` refleja con honestidad que un dato falta, a cambio de exigir cui
 - `sql-case-expressions`: tratamiento explícito con `CASE` y `COALESCE`.
 - `sql-subqueries`: subconsultas escalares sin filas.
 - `data-reconciliation`: comparar valores con nulos.
-- Del blueprint, pendiente de ficha: `change-detection`.
+- Con ficha: `change-detection`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -249,3 +249,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: ficha completa (lote F3b-02a, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): `IS DISTINCT FROM` ya no se presenta como comportamiento de Redshift (lo lista como no admitido); se documenta en PostgreSQL, BigQuery y Fabric Warehouse con su página, sin extenderlo a Synapse. `SUM` de cero filas atribuido a PostgreSQL y a *Aggregate functions* de BigQuery. Tabla de §2 con el motor que documenta cada fila; §10 agrega la comparación segura con nulos sin `IS DISTINCT FROM`, ejecutada en PostgreSQL.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `change-detection`, que ya tiene ficha.
