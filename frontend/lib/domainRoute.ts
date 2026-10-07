@@ -44,6 +44,24 @@ export function nextRecommended<T extends RouteCandidate>(stages: { concepts: T[
   return null;
 }
 
+/** Concepto con ficha que sigue al actual en el orden de la ruta (etapas del blueprint, de básico a avanzado). */
+export function nextInRoute<T extends RouteCandidate & { title: string }>(
+  stages: { concepts: T[] }[],
+  currentSlug: string,
+): T | null {
+  const ordered = stages.flatMap((stage) => orderByLevel(stage.concepts));
+  const index = ordered.findIndex((concept) => concept.slug === currentSlug);
+  if (index < 0) {
+    return null;
+  }
+  for (const concept of ordered.slice(index + 1)) {
+    if (concept.hasPage) {
+      return concept;
+    }
+  }
+  return null;
+}
+
 export function domainIsComplete<T extends RouteCandidate>(stages: { concepts: T[] }[], study: (slug: string) => StudyStatus): boolean {
   const withPage = stages.flatMap((stage) => stage.concepts).filter((concept) => concept.hasPage);
   return withPage.length > 0 && withPage.every((concept) => isMastered(study(concept.slug)));

@@ -6,8 +6,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-07
 
 ## Actual
-- **Tarea activa:** rediseño UI en `b/ui-redesign` (especificación en `docs/design/handoff-ui/README.md`). Plan de 5 commits aprobado, con la página Repaso. Commit 3 de 5 hecho.
-- **Siguiente:** commit 4, ficha en modo lectura y progreso de lectura.
+- **Tarea activa:** rediseño UI en `b/ui-redesign`. Commit 4 de 5 hecho.
+- **Siguiente:** commit 5, pasada responsive y de accesibilidad, y prueba en Chrome normal (`hybrid` y `static`).
 - **Bloqueos:** ninguno.
 
 ### Rediseño UI · commit 1 (tokens, fuentes, layout y menú)
@@ -23,7 +23,7 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - `/` sigue la pantalla 1: fecha, «¿Qué quieres hacer hoy?», tarjeta «Continuar donde quedaste» (el concepto *Revisando* con `last_studied_at` más reciente; en `static`, desde `localStorage`), los 6 objetivos, el itinerario y el mapa. Se quitaron las secciones vacías del inicio anterior.
 - El objetivo se guarda en `localStorage` (`dekh:goal`). Volver a pulsarlo lo deselecciona y el mapa queda neutro: sin números de paso y sin atenuar. Los números del itinerario usan el color `dark` de su capa. El botón dice «Empezar por » más el nombre corto, con espacio, y enlaza a `/explorer/<slug>`.
 - El mapa arma cada estación con sus dos segmentos (sin posiciones absolutas). La grilla es `minmax(92px, 1fr)` y, si no cabe, hace scroll dentro de la fila. «x/y fichas» sale de `concept_count` y de `has_page` en el listado de conceptos. El subdominio de «Continuar» sale del detalle de dominio; el contrato no lo trae en el resumen del concepto.
-- La línea «Ibas en la sección N de 22» se lee de `dekh:reading:<slug>` si ya existe. La ficha todavía no la escribe (commit 4); si no está, esa línea y la barra no aparecen.
+- La línea «Ibas en la sección N de 22» se lee de `dekh:reading:<slug>` si ya existe. La escribe la ficha (commit 4), con el número de la mayor sección vista, su título y la fecha. Si no está, esa línea y la barra no aparecen.
 - No se editó `content/` ni el contrato.
 - Verificado: lint, `npm run build` y `npm run build:static` con `BASE_PATH=/DES_conocimiento` en verde. Sobre el export estático, a 1440 px y a 375 px: deseleccionar el objetivo quita números y atenuado; los números del itinerario usan el color oscuro de la capa; el botón es «Empezar por DevOps»; el mapa no desborda la página y las capas largas hacen scroll dentro de la fila. Falta probar en Chrome normal (queda para el commit 5).
 
@@ -33,6 +33,15 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - La píldora «N para repasar» solo aparece si hay conceptos en `needs_review`. «~N min» sale de las palabras de la ficha (palabras / 200); si la ficha no tiene texto, no se muestra.
 - No se editó `content/` ni el contrato.
 - Verificado: lint, los dos builds en verde. En el export estático de Pipelines: el orden de etapas y de Ingesta coincide con el blueprint; las fichas pendientes son `div` y no enlace; con batch comprendido y archivos aplicado, el siguiente es Ingesta streaming; con todas las fichas comprendidas o aplicadas y el objetivo «Empiezo desde cero», sugiere Orquestación. Sin repasos, la píldora no está. Falta probar en Chrome normal (queda para el commit 5).
+
+### Rediseño UI · commit 4 (ficha en modo lectura)
+- `/concepts/[slug]` sigue la pantalla 3: migas, «Leído N de 22», índice agrupado con `CARD_SECTION_GROUPS`, columna de lectura y panel «Tu estudio».
+- El índice no lista secciones sin texto. El resumen queda siempre visible. Las secciones 3 y 10 salen abiertas; el resto, en `<details>`. «Expandir todo / Contraer todo» abre o cierra esos `<details>`. Multicloud es un `tablist` GCP / AWS / Azure: flechas, Inicio y Fin mueven la pestaña y el foco.
+- La mayor sección vista se guarda en `localStorage` (`dekh:reading:<slug>`: `section`, `title`, `at`). No baja si ya había un número más alto. Alimenta la barra de la ficha y la línea de «Continuar donde quedaste».
+- El pie marca `understood` o `needs_review` (en `static`, `localStorage`; en `hybrid`, la server action que ya existía). «Siguiente en la ruta» es el concepto con ficha que sigue en el orden de la pantalla 2. En Idempotencia, el siguiente es Schema evolution.
+- El panel de estudio usa los cinco estados del contrato, la casilla de profundizar y las notas. «Ver todas» abre el grafo que ya había. En la demo, las notas dicen que se guardan en el navegador.
+- No se editó `content/` ni el contrato. El favorito y la lista de snippets salieron de esta ficha; un snippet relacionado sigue en el grafo.
+- Verificado: lint, `npm run build` y `npm run build:static` con `BASE_PATH=/DES_conocimiento` en verde. `dynamicParams` sigue en `true` y `personalActions.ts` sigue con `"use server"`. En el export estático, a 1440 px y a 375 px, Idempotencia no desborda. El índice resalta la sección visible, las pestañas cambian con el teclado, el progreso queda en `dekh:reading:idempotency` y el Inicio muestra «Ibas en la sección N de 22». Falta probar en Chrome normal (queda para el commit 5).
 
 ### Demo estática
 - `API_MODE=static` y `BASE_PATH` (obligatorio, no va fijo en el código). `npm run build:static` deja `frontend/out/`. Durante ese build el script pone `dynamicParams = false` en las cuatro rutas dinámicas, sustituye `personalActions.ts` por el stub sin server actions y restaura ambos al terminar.

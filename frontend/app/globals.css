@@ -483,28 +483,40 @@ details.panel summary + * {
 }
 
 .code-block {
-  position: relative;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: #f3f1ea;
+}
+
+.code-block-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 0.5rem 0 0.85rem;
+  font-family: var(--font-code), ui-monospace, monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
 }
 
 .code-block pre,
 .diagram {
   overflow-x: auto;
-  margin: 0.5rem 0 0;
+  margin: 0;
   padding: 0.85rem;
   background: #f3f1ea;
-  border-radius: 0.5rem;
+  border-radius: 0 0 0.5rem 0.5rem;
 }
 
 .code-block button {
-  position: absolute;
-  top: 0.45rem;
-  right: 0.45rem;
   font: inherit;
   font-size: 0.8rem;
   border: 1px solid var(--line);
   border-radius: 0.4rem;
   background: var(--surface);
-  padding: 0.2rem 0.45rem;
+  min-height: 32px;
+  padding: 0.2rem 0.55rem;
   cursor: pointer;
 }
 

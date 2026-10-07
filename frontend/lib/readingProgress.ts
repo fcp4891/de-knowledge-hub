@@ -30,3 +30,23 @@ export function readReadingProgress(slug: string): ReadingProgress | null {
     return null;
   }
 }
+
+/** Guarda la mayor sección vista. No baja el número si ya había una más alta. */
+export function writeReadingProgress(slug: string, section: number, title: string): void {
+  if (typeof window === "undefined") {
+    return;
+  }
+  if (!Number.isInteger(section) || section < 1 || section > CARD_SECTION_COUNT) {
+    return;
+  }
+  const current = readReadingProgress(slug);
+  if (current && current.section >= section) {
+    return;
+  }
+  const payload = {
+    section,
+    title,
+    at: new Date().toISOString(),
+  };
+  window.localStorage.setItem(readingStorageKey(slug), JSON.stringify(payload));
+}
