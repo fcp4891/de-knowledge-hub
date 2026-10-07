@@ -3,12 +3,21 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-06
+**Última actualización:** 2026-10-07
 
 ## Actual
-- **Tarea activa:** ninguna. `extractField` devuelve el campo real (`id` y el resto); title, snippet y tags se leen como antes. Sobre el índice de `make static-data`, `bigquery` devuelve 41 y `governance` 3.
-- **Siguiente:** Carril A regenera la demo (`make static`). La revisión de `normalize_amount` sigue en pendiente.
+- **Tarea activa:** rediseño UI en `b/ui-redesign` (especificación en `docs/design/handoff-ui/README.md`). Plan de 5 commits aprobado, con la página Repaso. Commit 1 de 5 hecho.
+- **Siguiente:** commit 2, Inicio (Continuar, objetivos, itinerario y mapa).
 - **Bloqueos:** ninguno.
+
+### Rediseño UI · commit 1 (tokens, fuentes, layout y menú)
+- `docs/design/handoff-ui/` versionado (README, `tokens.css`, `learning-paths.ts` y maquetas). `tokens.css` copiado a `frontend/styles/tokens.css` e importado en el layout raíz.
+- Fuentes IBM Plex Sans, Source Serif 4 y JetBrains Mono con `next/font/google`: se descargan al compilar y se sirven desde `_next/static/media`, sin pedidos a Google en tiempo de ejecución (sirve igual en la demo de cPanel). `--font-ui`, `--font-read` y `--font-code` apuntan a esas fuentes.
+- `SiteHeader` reemplazado por `SideNav`: menú lateral desde 1024 px y barra superior con botón «Menú» (`aria-expanded`) por debajo. Enlaces Inicio · Rutas (`/explorer`) · Repaso · Snippets, con `aria-current`, y Buscar (Ctrl K) que abre la búsqueda existente. **Se quitó la lista de dominios del menú.**
+- Contador de Repaso: en `hybrid`, `total` de `GET /me/study-state?state=needs_review` en el layout; en `static`, desde `localStorage` (`dekh.personal`), actualizado al cambiar. Se oculta si es 0.
+- Página `/repaso`: conceptos en «Necesita repaso», del estudiado hace más tiempo al más reciente, con dominio y «Hace N días» desde `last_studied_at`, y un estado vacío. En `static` la lista se arma en el navegador con el catálogo de conceptos del build.
+- Las vistas existentes siguen con sus estilos: las variables anteriores (`--text`, `--muted`, `--line`) son alias de los tokens nuevos, y `--accent` toma el valor nuevo. Foco visible global.
+- Verificado: lint, `npm run build` y `npm run build:static` con `BASE_PATH=/DES_conocimiento` en verde. En Edge headless, sobre el build estático: menú lateral a 1440 px, barra y menú desplegable a 375 px sin scroll horizontal, y contador y lista de Repaso con un concepto marcado en `localStorage`. Falta probar en Chrome normal (criterio del README; queda para el commit 5).
 
 ### Demo estática
 - `API_MODE=static` y `BASE_PATH` (obligatorio, no va fijo en el código). `npm run build:static` deja `frontend/out/`. Durante ese build el script pone `dynamicParams = false` en las cuatro rutas dinámicas, sustituye `personalActions.ts` por el stub sin server actions y restaura ambos al terminar.
