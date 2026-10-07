@@ -20,9 +20,9 @@
           "level": "basic",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-06"
         },
         {
           "slug": "sql-joins",
@@ -34,9 +34,9 @@
           "level": "basic",
           "importance": "high",
           "mvp": true,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-06"
         },
         {
           "slug": "sql-subqueries",
@@ -48,9 +48,9 @@
           "level": "basic",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-06"
         },
         {
           "slug": "sql-cte",
@@ -62,9 +62,9 @@
           "level": "basic",
           "importance": "high",
           "mvp": true,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-06"
         },
         {
           "slug": "sql-recursive-cte",
@@ -104,9 +104,9 @@
           "level": "intermediate",
           "importance": "medium",
           "mvp": true,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-06"
         },
         {
           "slug": "sql-case-expressions",
@@ -118,9 +118,9 @@
           "level": "basic",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-06"
         },
         {
           "slug": "sql-nulls",
@@ -132,9 +132,9 @@
           "level": "intermediate",
           "importance": "high",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-06"
         },
         {
           "slug": "sql-arrays",
@@ -146,9 +146,9 @@
           "level": "intermediate",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-06"
         },
         {
           "slug": "sql-structs",
@@ -160,9 +160,9 @@
           "level": "intermediate",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-06"
         },
         {
           "slug": "sql-unnest",
@@ -174,9 +174,9 @@
           "level": "intermediate",
           "importance": "high",
           "mvp": true,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-06"
         },
         {
           "slug": "sql-pivot",
