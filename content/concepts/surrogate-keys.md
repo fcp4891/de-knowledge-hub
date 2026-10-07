@@ -39,6 +39,10 @@ sources:
     url: https://learn.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-tables-identity
     accessed: 2026-09-30
     note: "En dedicated SQL pool, la propiedad IDENTITY crea claves sustitutas; por la arquitectura distribuida no garantiza el orden en que se asignan los valores, para escalar en todas las distribuciones sin afectar la carga."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/string_functions
+    accessed: 2026-10-07
+    note: "CONCAT devuelve NULL si cualquier argumento es NULL."
 relations:
   - type: RELATED_TO
     target: slowly-changing-dimensions
@@ -125,7 +129,8 @@ flowchart LR
 INSERT INTO `proyecto.dwh.dim_cliente` (cliente_sk, cliente_hk, origen, cliente_id_origen, valido_desde)
 SELECT
   GENERATE_UUID() AS cliente_sk,
-  FARM_FINGERPRINT(CONCAT(s.origen, '|', s.cliente_id_origen, '|', CAST(s.valido_desde AS STRING))) AS cliente_hk,
+  FARM_FINGERPRINT(CONCAT(IFNULL(s.origen, '\\N'), '|', IFNULL(s.cliente_id_origen, '\\N'), '|',
+                          IFNULL(CAST(s.valido_desde AS STRING), '\\N'))) AS cliente_hk,  -- CONCAT con un NULL daría NULL
   s.origen, s.cliente_id_origen, s.valido_desde
 FROM `proyecto.staging.stg_cliente` AS s
 LEFT JOIN `proyecto.dwh.dim_cliente` AS d
@@ -204,3 +209,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `dimension-tables`, que ya tiene ficha.
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `surrogate-key-generation`, que ya tiene ficha.
+- 2026-10-07: cambio mínimo (aprobado por Felipe): `cliente_hk` usa el marcador de NULL de `change-detection` (`IFNULL(…, '\\N')`), porque `CONCAT` de BigQuery devuelve NULL con un argumento NULL y la clave quedaba NULL. Una clave natural nula sigue debiendo rechazarse con un control de no nulos (ver `sql-quality-checks`). Sigue `verified`, pendiente de revisión de Cursor.

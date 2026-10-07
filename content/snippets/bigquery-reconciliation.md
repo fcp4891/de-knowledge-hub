@@ -34,6 +34,14 @@ sources:
     url: https://docs.cloud.google.com/bigquery/docs/access-control
     accessed: 2026-10-01
     note: "roles/bigquery.jobUser permite ejecutar consultas en el proyecto; roles/bigquery.dataViewer sobre un dataset permite listar sus tablas y consultarlas."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/string_functions
+    accessed: 2026-10-07
+    note: "CONCAT devuelve NULL si cualquier argumento es NULL."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/operators
+    accessed: 2026-10-07
+    note: "IS DISTINCT FROM devuelve TRUE si los valores serían distintos para GROUP BY y nunca devuelve NULL."
 relations:
   - type: IMPLEMENTS
     target: data-reconciliation
@@ -45,7 +53,7 @@ relations:
     target: backfill
     note: Reconciliación de cada período reprocesado.
 created_at: 2026-10-01
-updated_at: 2026-10-01
+updated_at: 2026-10-07
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -61,13 +69,15 @@ Demuestra que la carga de un día no perdió, duplicó ni alteró filas: compara
 -- Requiere: stg_ventas_origen (copia del origen para el día) y dwh.ventas; @dia es el día lógico.
 WITH origen AS (
   SELECT COUNT(*) AS filas, SUM(monto) AS monto,
-         BIT_XOR(FARM_FINGERPRINT(CONCAT(CAST(venta_id AS STRING), '|', CAST(monto AS STRING)))) AS huella
+         BIT_XOR(FARM_FINGERPRINT(CONCAT(IFNULL(CAST(venta_id AS STRING), '\\N'), '|',
+                                            IFNULL(CAST(monto AS STRING), '\\N')))) AS huella
   FROM `proyecto.staging.stg_ventas_origen`
   WHERE fecha = @dia
 ),
 destino AS (
   SELECT COUNT(*) AS filas, SUM(monto) AS monto,
-         BIT_XOR(FARM_FINGERPRINT(CONCAT(CAST(venta_id AS STRING), '|', CAST(monto AS STRING)))) AS huella
+         BIT_XOR(FARM_FINGERPRINT(CONCAT(IFNULL(CAST(venta_id AS STRING), '\\N'), '|',
+                                            IFNULL(CAST(monto AS STRING), '\\N')))) AS huella
   FROM `proyecto.dwh.ventas`
   WHERE fecha = @dia
 )
@@ -85,7 +95,7 @@ SELECT COALESCE(o.venta_id, d.venta_id) AS venta_id,
 FROM (SELECT venta_id, monto FROM `proyecto.staging.stg_ventas_origen` WHERE fecha = @dia) AS o
 FULL OUTER JOIN (SELECT venta_id, monto FROM `proyecto.dwh.ventas` WHERE fecha = @dia) AS d
   ON o.venta_id = d.venta_id
-WHERE o.venta_id IS NULL OR d.venta_id IS NULL OR o.monto != d.monto;
+WHERE o.venta_id IS NULL OR d.venta_id IS NULL OR o.monto IS DISTINCT FROM d.monto;
 ```
 
 ## 3. Cómo funciona
@@ -111,6 +121,7 @@ Son consultas de **solo lectura**: repetirlas no cambia nada.
 
 - **Duplicados idénticos:** dos filas iguales duplicadas se anulan en el XOR; por eso el conteo es imprescindible junto a la huella.
 - **Normalización:** la huella depende de cómo se convierte cada valor a texto; ambos lados deben usar la misma expresión (tipos, redondeo, zona horaria).
+- **`NULL`:** `CONCAT` devuelve `NULL` si un argumento es `NULL`, y `BIT_XOR` omitiría esa fila; por eso cada columna lleva el marcador `IFNULL(…, '\\N')`. El caso de prueba está en la sección 10 de `data-reconciliation`.
 - **Seguridad:** el detalle por clave puede exponer datos si se registra completo; registrar claves y tipo de diferencia, no el contenido.
 - **Costo:** las consultas leen las columnas incluidas en la huella; filtrar por la partición del día limita los bytes procesados.
 
@@ -133,3 +144,4 @@ El detalle está en `sources` del encabezado.
 
 - 2026-10-01: creación (A-F3.2), desde la sección 10 de `data-reconciliation` tras la revisión B-F3.1 del lote 3.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).
+- 2026-10-07: cambio mínimo (aprobado por Felipe): la huella usa un marcador de NULL (`IFNULL(…, '\\N')`, el de `change-detection`) porque `CONCAT` de BigQuery devuelve NULL con un argumento NULL y `BIT_XOR` omitía esas filas; el detalle por clave compara con `IS DISTINCT FROM` en lugar de `!=`. Sigue `verified`, pendiente de revisión de Cursor.

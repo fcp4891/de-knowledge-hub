@@ -19,13 +19,13 @@
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
 | A · Claude Code | — (02-sql 33/33 `verified`) | Merge de `b/ui-redesign` y un solo `make static` cuando Felipe avise; 03-python tras aprobar 02-sql | — |
-| B · Cursor revisión | — (B-F3.1 de 02c entregada) | Revisar el cambio mínimo en `grain` | — |
+| B · Cursor revisión | — (B-F3.1 de 02c entregada) | Revisar los cambios mínimos de `grain` y `CONCAT` con NULL | — |
 | B · Cursor UI | Rediseño UI en `b/ui-redesign` (commit 1 de 5) | Commit 2: Inicio | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | Revisar el cambio mínimo en `grain` (`verified`) | Abierto |
+| A | B | Revisar cambios mínimos en fichas `verified`: `grain` §4 y `CONCAT` con NULL (`data-reconciliation`, `bigquery-reconciliation`, `surrogate-keys`, `surrogate-key-generation`) | Abierto |
 
 ## Criterio de salida de la fase actual (F3b, ADR-009)
 - [x] 01-fundamentals: 28/28 `verified`, aprobado por Felipe en el navegador el 2026-10-06.

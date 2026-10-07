@@ -50,6 +50,10 @@ sources:
     url: https://www.postgresql.org/docs/current/functions-string.html
     accessed: 2026-10-07
     note: "md5(text) devuelve el hash MD5 en hexadecimal."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/string_functions
+    accessed: 2026-10-07
+    note: "CONCAT devuelve NULL si cualquier argumento es NULL."
 relations:
   - type: RELATED_TO
     target: surrogate-keys
@@ -105,7 +109,7 @@ Las dimensiones se recargan, se reconstruyen y se versionan (SCD tipo 2). Si la 
    - Redshift no verifica la unicidad de valores insertados explícitamente en una identidad por defecto;
    - Synapse no la garantiza con `IDENTITY_INSERT`, cambios de semilla o un `UPDATE` de la columna de distribución;
    - Fabric la garantiza mientras no se use `IDENTITY_INSERT`; si se insertan valores explícitos, hay que ejecutar `DBCC CHECKIDENT … RESEED` para que los valores nuevos no colisionen.
-3. **Hash determinista:** `FARM_FINGERPRINT('cliente|' || clave_natural)` en BigQuery da siempre el mismo `INT64`. Conviene incluir un prefijo de entidad y verificar la unicidad (ver `sql-quality-checks`), porque dos claves naturales distintas pueden colisionar.
+3. **Hash determinista:** `FARM_FINGERPRINT(CONCAT('cliente|', IFNULL(CAST(clave_natural AS STRING), '\\N')))` en BigQuery da siempre el mismo `INT64`; sin el marcador, una clave natural `NULL` produce una clave `NULL` (ver `change-detection`), y una clave natural nula debe rechazarse antes con un control de no nulos. Conviene incluir un prefijo de entidad y verificar la unicidad (ver `sql-quality-checks`), porque dos claves naturales distintas pueden colisionar.
 4. **UUID aleatorio:** se genera una vez y se guarda. Volver a generarlo en una recarga cambia todas las claves.
 
 ## 5. Cuándo utilizarlo
@@ -136,7 +140,7 @@ SELECT producto_sk, codigo FROM dim_producto;   -- 1 P1, 3 P3
 
 Un modelo de dbt reconstruía `dim_cliente` completa cada noche y asignaba `cliente_sk` con `ROW_NUMBER() OVER (ORDER BY cliente_id)`. Un día se dio de alta un cliente con un `cliente_id` menor que los existentes, y todas las claves posteriores se corrieron en uno. Los hechos de los días anteriores quedaron apuntando a otros clientes.
 
-El equipo cambió a `FARM_FINGERPRINT(CONCAT('cliente|', cliente_id))`, estable entre recargas, y agregó un control de unicidad sobre `cliente_sk`. Los hechos históricos se recargaron una vez con la clave nueva.
+El equipo cambió a `FARM_FINGERPRINT(CONCAT('cliente|', IFNULL(CAST(cliente_id AS STRING), '\\N')))`, estable entre recargas, y agregó un control de unicidad sobre `cliente_sk`. Los hechos históricos se recargaron una vez con la clave nueva.
 
 ## 9. Arquitectura
 
@@ -156,7 +160,7 @@ flowchart LR
 ```sql
 -- PostgreSQL (ejecutado). 1) Hash de la clave natural: misma clave en cualquier recarga.
 --    Se toman 60 bits del MD5 para que entre en un bigint con signo.
-SELECT codigo, ('x' || left(md5('producto|' || codigo), 15))::bit(60)::bigint AS producto_sk
+SELECT codigo, ('x' || left(md5('producto|' || coalesce(codigo, '\N')), 15))::bit(60)::bigint AS producto_sk
 FROM (VALUES ('P1'), ('P3')) AS v(codigo);
 
 -- 2) ROW_NUMBER no es estable: si aparece P0, P1 pasa de 1 a 2.
@@ -164,7 +168,7 @@ SELECT codigo, row_number() OVER (ORDER BY codigo) AS sk FROM (VALUES ('P1'), ('
 SELECT codigo, row_number() OVER (ORDER BY codigo) AS sk FROM (VALUES ('P0'), ('P1'), ('P3')) AS v(codigo);
 
 -- BigQuery (sintaxis documentada; no ejecutado aquí): hash determinista y control de unicidad.
--- SELECT FARM_FINGERPRINT(CONCAT('cliente|', CAST(cliente_id AS STRING))) AS cliente_sk, * FROM stg_cliente;
+-- SELECT FARM_FINGERPRINT(CONCAT('cliente|', IFNULL(CAST(cliente_id AS STRING), '\\N'))) AS cliente_sk, * FROM stg_cliente;
 -- ASSERT (SELECT COUNT(*) - COUNT(DISTINCT cliente_sk) FROM dim_cliente) = 0 AS 'cliente_sk repetida';
 ```
 
@@ -264,3 +268,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: ficha completa (lote F3b-02c, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02c aplicada (docs/reviews/cards-f3b-02c.md): la unicidad de `IDENTITY` en Fabric se acota a su página (no vale con `IDENTITY_INSERT`; después, `DBCC CHECKIDENT … RESEED`), junto a las salvedades de Redshift (`BY DEFAULT`) y Synapse (`IDENTITY_INSERT`, semilla y `UPDATE` de la columna de distribución).
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-07: cambio mínimo (aprobado por Felipe): los hashes de clave natural de §4, §8 y §10 usan el marcador de NULL de `change-detection`, porque `CONCAT` (BigQuery) y `||` (PostgreSQL) devuelven NULL con un argumento NULL. Pendiente de revisión de Cursor junto con el lote F3b-02c.

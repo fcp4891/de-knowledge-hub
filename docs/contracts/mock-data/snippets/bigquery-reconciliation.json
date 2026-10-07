@@ -61,10 +61,28 @@
       "authority_level": 1,
       "accessed": "2026-10-01",
       "note": "roles/bigquery.jobUser permite ejecutar consultas en el proyecto; roles/bigquery.dataViewer sobre un dataset permite listar sus tablas y consultarlas."
+    },
+    {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/string_functions",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-07",
+      "note": "CONCAT devuelve NULL si cualquier argumento es NULL."
+    },
+    {
+      "source": "gcp-bigquery-docs",
+      "title": "BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/operators",
+      "source_type": "official_docs",
+      "authority_level": 1,
+      "accessed": "2026-10-07",
+      "note": "IS DISTINCT FROM devuelve TRUE si los valores serían distintos para GROUP BY y nunca devuelve NULL."
     }
   ],
   "created_at": "2026-10-01",
-  "updated_at": "2026-10-01",
+  "updated_at": "2026-10-07",
   "last_verified": "2026-10-01",
   "verification_status": "verified",
   "language": "sql",
@@ -89,7 +107,7 @@
       "number": 2,
       "key": "code",
       "title": "Código",
-      "markdown": "```sql\n-- BigQuery: reconciliación de un día entre el snapshot del origen y el destino.\n-- Requiere: stg_ventas_origen (copia del origen para el día) y dwh.ventas; @dia es el día lógico.\nWITH origen AS (\n  SELECT COUNT(*) AS filas, SUM(monto) AS monto,\n         BIT_XOR(FARM_FINGERPRINT(CONCAT(CAST(venta_id AS STRING), '|', CAST(monto AS STRING)))) AS huella\n  FROM `proyecto.staging.stg_ventas_origen`\n  WHERE fecha = @dia\n),\ndestino AS (\n  SELECT COUNT(*) AS filas, SUM(monto) AS monto,\n         BIT_XOR(FARM_FINGERPRINT(CONCAT(CAST(venta_id AS STRING), '|', CAST(monto AS STRING)))) AS huella\n  FROM `proyecto.dwh.ventas`\n  WHERE fecha = @dia\n)\nSELECT\n  o.filas AS filas_origen, d.filas AS filas_destino,\n  o.monto AS monto_origen, d.monto AS monto_destino,\n  o.huella = d.huella AS huella_coincide\nFROM origen AS o CROSS JOIN destino AS d;\n\n-- Si no coincide: detalle por clave (faltantes, sobrantes y distintos).\nSELECT COALESCE(o.venta_id, d.venta_id) AS venta_id,\n       CASE WHEN d.venta_id IS NULL THEN 'falta en destino'\n            WHEN o.venta_id IS NULL THEN 'sobra en destino'\n            ELSE 'monto distinto' END AS diferencia\nFROM (SELECT venta_id, monto FROM `proyecto.staging.stg_ventas_origen` WHERE fecha = @dia) AS o\nFULL OUTER JOIN (SELECT venta_id, monto FROM `proyecto.dwh.ventas` WHERE fecha = @dia) AS d\n  ON o.venta_id = d.venta_id\nWHERE o.venta_id IS NULL OR d.venta_id IS NULL OR o.monto != d.monto;\n```"
+      "markdown": "```sql\n-- BigQuery: reconciliación de un día entre el snapshot del origen y el destino.\n-- Requiere: stg_ventas_origen (copia del origen para el día) y dwh.ventas; @dia es el día lógico.\nWITH origen AS (\n  SELECT COUNT(*) AS filas, SUM(monto) AS monto,\n         BIT_XOR(FARM_FINGERPRINT(CONCAT(IFNULL(CAST(venta_id AS STRING), '\\\\N'), '|',\n                                            IFNULL(CAST(monto AS STRING), '\\\\N')))) AS huella\n  FROM `proyecto.staging.stg_ventas_origen`\n  WHERE fecha = @dia\n),\ndestino AS (\n  SELECT COUNT(*) AS filas, SUM(monto) AS monto,\n         BIT_XOR(FARM_FINGERPRINT(CONCAT(IFNULL(CAST(venta_id AS STRING), '\\\\N'), '|',\n                                            IFNULL(CAST(monto AS STRING), '\\\\N')))) AS huella\n  FROM `proyecto.dwh.ventas`\n  WHERE fecha = @dia\n)\nSELECT\n  o.filas AS filas_origen, d.filas AS filas_destino,\n  o.monto AS monto_origen, d.monto AS monto_destino,\n  o.huella = d.huella AS huella_coincide\nFROM origen AS o CROSS JOIN destino AS d;\n\n-- Si no coincide: detalle por clave (faltantes, sobrantes y distintos).\nSELECT COALESCE(o.venta_id, d.venta_id) AS venta_id,\n       CASE WHEN d.venta_id IS NULL THEN 'falta en destino'\n            WHEN o.venta_id IS NULL THEN 'sobra en destino'\n            ELSE 'monto distinto' END AS diferencia\nFROM (SELECT venta_id, monto FROM `proyecto.staging.stg_ventas_origen` WHERE fecha = @dia) AS o\nFULL OUTER JOIN (SELECT venta_id, monto FROM `proyecto.dwh.ventas` WHERE fecha = @dia) AS d\n  ON o.venta_id = d.venta_id\nWHERE o.venta_id IS NULL OR d.venta_id IS NULL OR o.monto IS DISTINCT FROM d.monto;\n```"
     },
     {
       "number": 3,
@@ -113,7 +131,7 @@
       "number": 6,
       "key": "risks",
       "title": "Riesgos",
-      "markdown": "- **Duplicados idénticos:** dos filas iguales duplicadas se anulan en el XOR; por eso el conteo es imprescindible junto a la huella.\n- **Normalización:** la huella depende de cómo se convierte cada valor a texto; ambos lados deben usar la misma expresión (tipos, redondeo, zona horaria).\n- **Seguridad:** el detalle por clave puede exponer datos si se registra completo; registrar claves y tipo de diferencia, no el contenido.\n- **Costo:** las consultas leen las columnas incluidas en la huella; filtrar por la partición del día limita los bytes procesados."
+      "markdown": "- **Duplicados idénticos:** dos filas iguales duplicadas se anulan en el XOR; por eso el conteo es imprescindible junto a la huella.\n- **Normalización:** la huella depende de cómo se convierte cada valor a texto; ambos lados deben usar la misma expresión (tipos, redondeo, zona horaria).\n- **`NULL`:** `CONCAT` devuelve `NULL` si un argumento es `NULL`, y `BIT_XOR` omitiría esa fila; por eso cada columna lleva el marcador `IFNULL(…, '\\\\N')`. El caso de prueba está en la sección 10 de `data-reconciliation`.\n- **Seguridad:** el detalle por clave puede exponer datos si se registra completo; registrar claves y tipo de diferencia, no el contenido.\n- **Costo:** las consultas leen las columnas incluidas en la huella; filtrar por la partición del día limita los bytes procesados."
     },
     {
       "number": 7,
@@ -137,7 +155,7 @@
       "number": 10,
       "key": "change_history",
       "title": "Historial de cambios",
-      "markdown": "- 2026-10-01: creación (A-F3.2), desde la sección 10 de `data-reconciliation` tras la revisión B-F3.1 del lote 3.\n- 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes)."
+      "markdown": "- 2026-10-01: creación (A-F3.2), desde la sección 10 de `data-reconciliation` tras la revisión B-F3.1 del lote 3.\n- 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).\n- 2026-10-07: cambio mínimo (aprobado por Felipe): la huella usa un marcador de NULL (`IFNULL(…, '\\\\N')`, el de `change-detection`) porque `CONCAT` de BigQuery devuelve NULL con un argumento NULL y `BIT_XOR` omitía esas filas; el detalle por clave compara con `IS DISTINCT FROM` en lugar de `!=`. Sigue `verified`, pendiente de revisión de Cursor."
     }
   ]
 }

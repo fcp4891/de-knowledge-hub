@@ -30,6 +30,14 @@ sources:
     url: https://learn.microsoft.com/en-us/azure/data-factory/copy-activity-data-consistency
     accessed: 2026-09-30
     note: "Verificación de consistencia de la actividad Copy (validateDataConsistency): en archivos binarios compara tamaño, fecha de modificación y checksum; en datos tabulares, la actividad falla si las filas leídas del origen difieren de las copiadas más las incompatibles omitidas; se puede abortar o omitir archivos inconsistentes."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/string_functions
+    accessed: 2026-10-07
+    note: "CONCAT devuelve NULL si cualquier argumento es NULL."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/operators
+    accessed: 2026-10-07
+    note: "IS DISTINCT FROM devuelve TRUE si los valores serían distintos para GROUP BY y nunca devuelve NULL."
 relations:
   - type: RELATED_TO
     target: incremental-load
@@ -118,13 +126,15 @@ flowchart LR
 -- Requiere: stg_ventas_origen (copia del origen para el día) y dwh.ventas; @dia es el día lógico.
 WITH origen AS (
   SELECT COUNT(*) AS filas, SUM(monto) AS monto,
-         BIT_XOR(FARM_FINGERPRINT(CONCAT(CAST(venta_id AS STRING), '|', CAST(monto AS STRING)))) AS huella
+         BIT_XOR(FARM_FINGERPRINT(CONCAT(IFNULL(CAST(venta_id AS STRING), '\\N'), '|',
+                                            IFNULL(CAST(monto AS STRING), '\\N')))) AS huella
   FROM `proyecto.staging.stg_ventas_origen`
   WHERE fecha = @dia
 ),
 destino AS (
   SELECT COUNT(*) AS filas, SUM(monto) AS monto,
-         BIT_XOR(FARM_FINGERPRINT(CONCAT(CAST(venta_id AS STRING), '|', CAST(monto AS STRING)))) AS huella
+         BIT_XOR(FARM_FINGERPRINT(CONCAT(IFNULL(CAST(venta_id AS STRING), '\\N'), '|',
+                                            IFNULL(CAST(monto AS STRING), '\\N')))) AS huella
   FROM `proyecto.dwh.ventas`
   WHERE fecha = @dia
 )
@@ -142,10 +152,20 @@ SELECT COALESCE(o.venta_id, d.venta_id) AS venta_id,
 FROM (SELECT venta_id, monto FROM `proyecto.staging.stg_ventas_origen` WHERE fecha = @dia) AS o
 FULL OUTER JOIN (SELECT venta_id, monto FROM `proyecto.dwh.ventas` WHERE fecha = @dia) AS d
   ON o.venta_id = d.venta_id
-WHERE o.venta_id IS NULL OR d.venta_id IS NULL OR o.monto != d.monto;
+WHERE o.venta_id IS NULL OR d.venta_id IS NULL OR o.monto IS DISTINCT FROM d.monto;
 ```
 
-Son consultas de solo lectura: repetirlas no cambia nada. Una limitación del XOR: dos filas idénticas duplicadas se anulan entre sí, así que el conteo sigue siendo imprescindible junto a la huella.
+Son consultas de solo lectura: repetirlas no cambia nada. Una limitación del XOR: dos filas idénticas duplicadas se anulan entre sí, así que el conteo sigue siendo imprescindible junto a la huella. El marcador `'\\N'` evita que una fila con `monto` nulo quede fuera de la huella.
+
+```sql
+-- PostgreSQL (ejecutado): por qué hace falta el marcador. fp() reproduce FARM_FINGERPRINT (60 bits del MD5);
+-- || con un NULL devuelve NULL, como CONCAT en BigQuery.
+-- Origen (1, 100), (2, NULL) y destino (1, 100), (3, NULL): mismo conteo, misma suma y filas distintas.
+SELECT bit_xor(fp(venta_id::text || '|' || monto::text)) FROM origen;      -- sin marcador: la fila 2 no cuenta
+SELECT bit_xor(fp(coalesce(venta_id::text, '\N') || '|' || coalesce(monto::text, '\N'))) FROM origen;  -- con marcador
+```
+
+Sin marcador, el conteo (2 y 2), la suma (100 y 100) y la huella coinciden, porque la huella de cada fila con `monto` nulo es `NULL` y `BIT_XOR` la omite: la reconciliación da por buena una carga con filas distintas. Con el marcador, la huella ya no coincide y la diferencia se detecta. En la misma prueba, un `monto` que pasa de 100 a `NULL` no aparece en el detalle con `!=` y sí con `IS DISTINCT FROM`. El SQL de BigQuery de arriba no se ejecutó: requiere GCP.
 
 ## 11. GCP
 
@@ -227,3 +247,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: creación (lote 3 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendientes de ficha a `sql-quality-checks`, `change-detection`, que ya tienen ficha.
+- 2026-10-07: cambio mínimo (aprobado por Felipe): la huella usa un marcador de NULL (`IFNULL(…, '\\N')`, el de `change-detection`) porque `CONCAT` de BigQuery devuelve NULL con un argumento NULL y `BIT_XOR` omitía esas filas; el detalle por clave compara con `IS DISTINCT FROM` en lugar de `!=`. Sigue `verified`, pendiente de revisión de Cursor. §10 agrega un caso con `monto` NULL probado en PostgreSQL.
