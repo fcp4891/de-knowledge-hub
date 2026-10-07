@@ -3,12 +3,15 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-06
+**Última actualización:** 2026-10-07
 
 ## Actual
-- **Tarea activa:** ninguna. `extractField` devuelve el campo real (`id` y el resto); title, snippet y tags se leen como antes. Sobre el índice de `make static-data`, `bigquery` devuelve 41 y `governance` 3.
-- **Siguiente:** Carril A regenera la demo (`make static`). La revisión de `normalize_amount` sigue en pendiente.
+- **Tarea activa:** ninguna. En espera del lote F3b-02c.
+- **Siguiente:** revisar 02c cuando Carril A lo pida.
 - **Bloqueos:** ninguno.
+
+### B-F3.1 · lotes F3b-02a y F3b-02b
+- Veinte fichas de 02-sql, tabla de §48. Felipe aprobó todas las filas el 2026-10-07, incluidas las propuestas: `USING` solo fuera de T-SQL; `IS DISTINCT FROM` no en Redshift; `JSON_VALUE` devuelve `NULL` por encima de 4000 caracteres en modo lax; «sintaxis documentada» en Spectrum; hash join, `QUALIFY`, «sintaxis ISO» y el UTC de BigQuery acotados a cada motor. No se editó `content/` ni `frontend/`.
 
 ### Demo estática
 - `API_MODE=static` y `BASE_PATH` (obligatorio, no va fijo en el código). `npm run build:static` deja `frontend/out/`. Durante ese build el script pone `dynamicParams = false` en las cuatro rutas dinámicas, sustituye `personalActions.ts` por el stub sin server actions y restaura ambos al terminar.
@@ -98,6 +101,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lotes F3b-02a y F3b-02b (2026-10-07)
+- Revisión de las 20 fichas de 02-sql. Felipe aprobó todas las filas, incluidas las propuestas de atribución por motor. No se editó `content/`. En espera del lote 02c.
 
 ### B-F1b · Revisión de los MVP de 03, 06 y 12
 - Revisión de los `mvp: true` de los dominios 03, 06 y 12 en `docs/reviews/`. Todas las filas aprobadas, salvo `catchup` (fila 3 de `docs/reviews/blueprint-06.md`), rechazada: sigue `core` porque el §8 lo lista como concepto independiente de proveedor.
