@@ -3,12 +3,17 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-06
+**Última actualización:** 2026-10-07
 
 ## Actual
-- **Tarea activa:** ninguna. `extractField` devuelve el campo real (`id` y el resto); title, snippet y tags se leen como antes. Sobre el índice de `make static-data`, `bigquery` devuelve 41 y `governance` 3.
-- **Siguiente:** Carril A regenera la demo (`make static`). La revisión de `normalize_amount` sigue en pendiente.
+- **Tarea activa:** B-F3.1 de los lotes F3b-02a y F3b-02b. Revisión en `docs/reviews/cards-f3b-02a.md` y `docs/reviews/cards-f3b-02b.md`. Filas en pendiente. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Felipe aprueba o rechaza las filas. Carril A aplica las que se aprueben.
 - **Bloqueos:** ninguno.
+
+### B-F3.1 · lotes F3b-02a y F3b-02b
+- Veinte fichas de 02-sql, tabla de §48, filas pendiente.
+- Propuestas: no atribuir `USING` a T-SQL; no presentar `IS DISTINCT FROM` como comportamiento de Redshift (su documentación lo lista como no admitido); «trunca a NULL» en `JSON_VALUE` pasa a «devuelve NULL»; no llamar «sintaxis estándar» al ejemplo de Spectrum; acotar hash join, `QUALIFY` en el orden general, «sintaxis ISO» y el guardado en UTC de BigQuery a lo que dice cada página.
+- `sql-qualify` no se presenta como estándar ni como reemplazo. Fabric Warehouse queda sin consultas recursivas y sin vistas materializadas, según su lista de limitaciones. El SQL de BigQuery, Redshift y Fabric que no se ejecutó está marcado en las fichas.
 
 ### Demo estática
 - `API_MODE=static` y `BASE_PATH` (obligatorio, no va fijo en el código). `npm run build:static` deja `frontend/out/`. Durante ese build el script pone `dynamicParams = false` en las cuatro rutas dinámicas, sustituye `personalActions.ts` por el stub sin server actions y restaura ambos al terminar.
@@ -98,6 +103,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lotes F3b-02a y F3b-02b (2026-10-07)
+- Revisión de las 20 fichas de 02-sql. Filas en pendiente en `docs/reviews/cards-f3b-02a.md` y `docs/reviews/cards-f3b-02b.md`. No se editó `content/`.
 
 ### B-F1b · Revisión de los MVP de 03, 06 y 12
 - Revisión de los `mvp: true` de los dominios 03, 06 y 12 en `docs/reviews/`. Todas las filas aprobadas, salvo `catchup` (fila 3 de `docs/reviews/blueprint-06.md`), rechazada: sigue `core` porque el §8 lo lista como concepto independiente de proveedor.
