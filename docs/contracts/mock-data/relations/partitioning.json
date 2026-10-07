@@ -77,6 +77,13 @@
           "note": "Particionar por fecha de evento hace que un dato tardío caiga en una partición ya cerrada."
         },
         {
+          "slug": "sql-date-functions",
+          "title": "Fechas, horas y zonas horarias en SQL",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Particionar por fecha exige decidir en qué zona se calcula esa fecha."
+        },
+        {
           "slug": "parquet-format",
           "title": "Formato Parquet",
           "entity_type": "concept",

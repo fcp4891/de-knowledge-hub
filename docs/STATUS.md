@@ -10,17 +10,18 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | F3b-02b (02-sql) | F3b-02c tras la revisión de 02a; `make static` al cerrar 02-sql | — |
-| B · Cursor | B-F3.1 del lote F3b-02a | B-F3.1 de 02b | — |
+| A · Claude Code | — (02a y 02b entregados) | Aplicar B-F3.1 de 02a y 02b; luego F3b-02c y `make static` al cerrar 02-sql | — |
+| B · Cursor | B-F3.1 del lote F3b-02a | B-F3.1 del lote F3b-02b | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
 | A | B | B-F3.1 · Revisar el lote F3b-02a (10 fichas, sin VERIFY) | Abierto |
+| A | B | B-F3.1 · Revisar el lote F3b-02b (10 fichas, sin VERIFY) | Abierto |
 
 ## Criterio de salida de la fase actual (F3b, ADR-009)
 - [x] 01-fundamentals: 28/28 `verified`, aprobado por Felipe en el navegador el 2026-10-06.
-- [ ] 02-sql: 33 conceptos `verified` (hoy 9 `verified` y 10 en `review_required`, lote F3b-02a) y aprobado por Felipe en el navegador.
+- [ ] 02-sql: 33 conceptos `verified` (hoy 9 `verified` y 20 en `review_required`, lotes F3b-02a y F3b-02b; faltan los 4 de 02c) y aprobado por Felipe en el navegador.
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
 
 ## Fases cerradas

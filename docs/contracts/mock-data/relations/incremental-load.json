@@ -98,6 +98,13 @@
           "note": null
         },
         {
+          "slug": "materialization-strategies",
+          "title": "Estrategias de materialización",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "La materialización incremental aplica el patrón de carga incremental a un modelo."
+        },
+        {
           "slug": "etl-vs-elt",
           "title": "ETL vs ELT",
           "entity_type": "concept",

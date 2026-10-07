@@ -113,7 +113,7 @@
         },
         {
           "slug": "cloud-warehouse-optimization",
-          "title": "Optimización específica de warehouses cloud",
+          "title": "Optimización de warehouses en la nube",
           "entity_type": "concept",
           "origin": "blueprint",
           "note": null

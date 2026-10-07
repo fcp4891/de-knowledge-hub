@@ -76,9 +76,9 @@
           "level": "advanced",
           "importance": "low",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "sql-window-functions",
@@ -188,9 +188,9 @@
           "level": "intermediate",
           "importance": "low",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "sql-merge",
@@ -216,9 +216,9 @@
           "level": "basic",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "sql-json-functions",
@@ -230,9 +230,9 @@
           "level": "intermediate",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-07"
         }
       ]
     },
@@ -382,9 +382,9 @@
           "level": "intermediate",
           "importance": "high",
           "mvp": true,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "partition-pruning",
@@ -424,9 +424,9 @@
           "level": "intermediate",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "scan-reduction",
@@ -438,9 +438,9 @@
           "level": "intermediate",
           "importance": "high",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "materialization-strategies",
@@ -452,9 +452,9 @@
           "level": "intermediate",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "join-optimization",
@@ -466,9 +466,9 @@
           "level": "advanced",
           "importance": "high",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-07"
         },
         {
           "slug": "cloud-warehouse-optimization",
@@ -480,9 +480,9 @@
           "level": "advanced",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-07"
         }
       ]
     }
