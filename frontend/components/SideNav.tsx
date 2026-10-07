@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import { SearchDialog } from "@/components/SearchDialog";
 import { listStoredStudy, subscribePersonal } from "@/lib/personalStore";
@@ -47,6 +47,7 @@ export function SideNav({ reviewCount, warning }: { reviewCount: number | null; 
   const menuId = useId();
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const searchOpener = useRef<HTMLElement | null>(null);
   const count = useReviewCount(reviewCount);
 
   useEffect(() => {
@@ -58,12 +59,28 @@ export function SideNav({ reviewCount, warning }: { reviewCount: number | null; 
     const onKey = (event: KeyboardEvent) => {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
+        searchOpener.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
         setSearchOpen(true);
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
+
+  useEffect(() => {
+    if (!menuOpen) {
+      return;
+    }
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || searchOpen) {
+        return;
+      }
+      setMenuOpen(false);
+      document.querySelector<HTMLButtonElement>(".side-menu-toggle")?.focus();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen, searchOpen]);
 
   return (
     <header className="side-nav">
@@ -83,7 +100,14 @@ export function SideNav({ reviewCount, warning }: { reviewCount: number | null; 
         </button>
       </div>
       <div id={menuId} className="side-nav-body" data-open={menuOpen ? "true" : "false"}>
-        <button type="button" className="side-search" onClick={() => setSearchOpen(true)}>
+        <button
+          type="button"
+          className="side-search"
+          onClick={(event) => {
+            searchOpener.current = event.currentTarget;
+            setSearchOpen(true);
+          }}
+        >
           <span>Buscar</span>
           <kbd>Ctrl K</kbd>
         </button>
@@ -113,7 +137,7 @@ export function SideNav({ reviewCount, warning }: { reviewCount: number | null; 
           {warning}
         </p>
       ) : null}
-      <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} returnFocusRef={searchOpener} />
     </header>
   );
 }

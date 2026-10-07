@@ -323,7 +323,7 @@
 }
 
 .reading .code-block button {
-  min-height: 32px;
+  min-height: var(--touch-min);
   border: 1px solid #3a3f49;
   border-radius: 8px;
   background: transparent;
@@ -558,6 +558,12 @@
   .reading-next {
     align-items: flex-start;
     text-align: left;
+  }
+}
+
+@media (max-width: 1179px) {
+  .reading-toc:not([open]) > .reading-toc-nav {
+    display: none !important;
   }
 }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import type { ApiResult, SearchResults } from "@/lib/api/types";
 import { searchLocal } from "@/lib/browserSearch";
@@ -28,12 +28,16 @@ export function SearchDialog({
   open,
   onClose,
   domain,
+  returnFocusRef,
 }: {
   open: boolean;
   onClose: () => void;
   domain?: string;
+  returnFocusRef?: React.RefObject<HTMLElement | null>;
 }) {
   const titleId = useId();
+  const panelRef = useRef<HTMLDivElement>(null);
+  const onCloseRef = useRef(onClose);
   const [query, setQuery] = useState("");
   const [debounced, setDebounced] = useState("");
   const [result, setResult] = useState<ApiResult<SearchResults> | null>(null);
@@ -83,17 +87,44 @@ export function SearchDialog({
   }, [debounced, domain, open]);
 
   useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
+  useEffect(() => {
     if (!open) {
       return;
     }
+    const back = returnFocusRef?.current ?? null;
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        onClose();
+        onCloseRef.current();
       }
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose, open]);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.setTimeout(() => back?.focus(), 0);
+    };
+  }, [open, returnFocusRef]);
+
+  function trapTab(event: React.KeyboardEvent<HTMLDivElement>) {
+    if (event.key !== "Tab" || !panelRef.current) {
+      return;
+    }
+    const focusable = [...panelRef.current.querySelectorAll<HTMLElement>("a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled])")];
+    if (focusable.length === 0) {
+      return;
+    }
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
 
   if (!open) {
     return null;
@@ -104,11 +135,13 @@ export function SearchDialog({
   return (
     <div className="search-backdrop" onClick={onClose}>
       <div
+        ref={panelRef}
         className="search-panel"
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
         onClick={(event) => event.stopPropagation()}
+        onKeyDown={trapTab}
       >
         <h2 id={titleId}>{domain ? "Buscar en este dominio" : "Buscar"}</h2>
         <input

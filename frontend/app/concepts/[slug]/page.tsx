@@ -14,6 +14,9 @@ const OPEN_NUMBERS = new Set([3, 10]);
 
 // El build estático cambia este literal a false: Next solo acepta true o false.
 export const dynamicParams = true;
+// no-store en la API: en hybrid la página se arma en cada pedido.
+// El build estático quita esta línea (output: export no admite force-dynamic).
+export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
   return staticSlugs("concepts.json");

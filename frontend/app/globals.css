@@ -45,6 +45,30 @@ pre {
   outline-offset: 2px;
 }
 
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  z-index: 5;
+  transform: translateY(-150%);
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 a {
   color: var(--accent);
   text-decoration-thickness: 1px;
@@ -621,6 +645,10 @@ details.panel summary + * {
   gap: 0.4rem;
 }
 
+.note-actions button {
+  min-height: var(--touch-min);
+}
+
 .note-actions button:disabled {
   cursor: not-allowed;
   opacity: 0.55;
@@ -649,6 +677,7 @@ details.panel summary + * {
 
 .search-panel input {
   width: 100%;
+  min-height: var(--touch-min);
   margin-bottom: 0.75rem;
 }
 

@@ -26,6 +26,7 @@ const personalActions = path.join(frontendRoot, "lib/personalActions.ts");
 const personalStub = path.join(frontendRoot, "lib/personalActions.static.ts");
 const dynamicMarker = "export const dynamicParams = true;";
 const staticMarker = "export const dynamicParams = false;";
+const dynamicForce = 'export const dynamic = "force-dynamic";';
 const originals = new Map();
 
 for (const relative of dynamicPages) {
@@ -35,8 +36,15 @@ for (const relative of dynamicPages) {
     console.error(`${relative} debe exportar dynamicParams como literal true.`);
     process.exit(1);
   }
+  if (!text.includes(dynamicForce)) {
+    console.error(`${relative} debe exportar dynamic = "force-dynamic".`);
+    process.exit(1);
+  }
   originals.set(file, text);
-  writeFileSync(file, text.replace(dynamicMarker, staticMarker));
+  writeFileSync(
+    file,
+    text.replace(dynamicMarker, staticMarker).replace(`${dynamicForce}\r\n`, "").replace(`${dynamicForce}\n`, ""),
+  );
 }
 originals.set(personalActions, readFileSync(personalActions, "utf8"));
 writeFileSync(personalActions, readFileSync(personalStub, "utf8"));

@@ -285,7 +285,8 @@ export function ConceptReading({
     if (node instanceof HTMLDetailsElement) {
       node.open = true;
     }
-    node.scrollIntoView({ behavior: "smooth", block: "start" });
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+    node.scrollIntoView({ behavior: motion, block: "start" });
     pendingScroll.current = null;
   }, [scrollToken, cloudId]);
 
@@ -471,7 +472,14 @@ export function ConceptReading({
             </li>
           </ol>
         </nav>
-        <div className="reading-progress" aria-label={`Leído ${shown} de ${CARD_SECTION_COUNT}`}>
+        <div
+          className="reading-progress"
+          role="progressbar"
+          aria-valuemin={0}
+          aria-valuemax={CARD_SECTION_COUNT}
+          aria-valuenow={shown}
+          aria-label={`Leído ${shown} de ${CARD_SECTION_COUNT}`}
+        >
           <span>{progressReady ? `Leído ${shown} de ${CARD_SECTION_COUNT}` : "Lectura"}</span>
           <span className="reading-progress-track">
             <span style={{ width: progressReady ? `${(shown / CARD_SECTION_COUNT) * 100}%` : "0%" }} />

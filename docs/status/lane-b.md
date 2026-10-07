@@ -6,9 +6,27 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-07
 
 ## Actual
-- **Tarea activa:** rediseño UI en `b/ui-redesign`. Commit 4 de 5 hecho.
-- **Siguiente:** commit 5, pasada responsive y de accesibilidad, y prueba en Chrome normal (`hybrid` y `static`).
+- **Tarea activa:** ninguna. `b/ui-redesign` cerrada en el commit 5.
+- **Siguiente:** lo que asigne Felipe. Ideas fuera de esta fase siguen en `docs/BACKLOG.md`.
 - **Bloqueos:** ninguno.
+
+### Rediseño UI · commit 5 (cierre)
+- `make` no está en el PATH de Windows. Se creó `.venv` con `py -3.12` (la receta de `make venv`) y se regeneró `frontend/public/data/` con `validate` y `scripts.static.build_static_data` (la receta de `make static-data`): 1020 respuestas. **`public/data/` no se versiona.** No se editó `content/` ni `backend/`.
+- Con esos datos, Schema evolution tiene ficha. Desde Idempotencia, «Siguiente en la ruta» abre «Evolución de esquema».
+- Accesibilidad: enlace «Saltar al contenido», foco visible, trampa de Tab en la búsqueda y retorno del foco al botón que la abrió, Escape cierra el menú móvil, la barra de lectura es `progressbar`, objetivos y botones de nota y de copiar código llegan a 44 px, y el índice cerrado en pantallas estrechas sale del árbol de accesibilidad. `prefers-reduced-motion` deja el scroll en `auto`.
+- En `hybrid`, las fichas y las rutas se renderizan en cada pedido (`dynamic = "force-dynamic"`). Sin eso, `next start` respondía 500: la página se había prerenderizado y el `no-store` de la API la volvía dinámica. El build estático quita esa línea y sigue exportando. `dynamicParams` queda en `true` y `personalActions.ts` sigue con `"use server"`.
+- El `hybrid` no usa `BASE_PATH` (solo el export estático). Se probó en `http://127.0.0.1:3010/`. La búsqueda de ese servidor no llegó a la API: CORS solo admite `http://localhost:3000` y ese puerto lo ocupa el servidor del otro worktree. La API sí responde (`bigquery` devuelve resultados). En estático la búsqueda es local y sí se probó.
+- No se editó `content/` ni el contrato.
+
+Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
+
+- **Inicio.** Elegir «Empiezo desde cero» marca el objetivo, numera el itinerario con el color oscuro de cada capa y el botón dice «Empezar por Fundamentos». Volver a pulsarlo deja el mapa neutro: sin números y sin atenuar. A 1440 el mapa no desborda. A 375 la página no desborda, las capas largas hacen scroll dentro de la fila y los objetivos superan 44 px.
+- **Ruta** (`/explorer/pipelines`). Una ficha pendiente es un `div` y dice «Ficha pendiente». Hay siguiente recomendado. Sin repasos, la píldora no está. Sin scroll horizontal a 1440 ni a 375.
+- **Ficha** (Idempotencia). El índice resalta Resumen. Flecha derecha pasa a AWS y Fin a Azure. El progreso queda en `dekh:reading:idempotency` y sigue al recargar. La ficha siguiente existe. A 375 el índice cerrado no ocupa el árbol y la página no desborda.
+- **Repaso.** La página carga, sin scroll horizontal a 375.
+- **Búsqueda.** En estático, «bigquery» devuelve resultados, Tab no sale del diálogo y Escape lo cierra y devuelve el foco a «Buscar». Ctrl no hizo falta: el botón abre el mismo diálogo. El salto «Saltar al contenido» recibe el primer Tab. A 375, Escape cierra el menú y devuelve el foco a «Menú».
+- **Contraste.** Texto principal por encima de 4.5:1. El objetivo activo, medido en `hybrid`, queda en 12.22:1 (descripción) y 8.73:1 (meta).
+- Lint, `npm run build` y `npm run build:static` con `BASE_PATH=/DES_conocimiento` en verde.
 
 ### Rediseño UI · commit 1 (tokens, fuentes, layout y menú)
 - `docs/design/handoff-ui/` versionado (README, `tokens.css`, `learning-paths.ts` y maquetas). `tokens.css` copiado a `frontend/styles/tokens.css` e importado en el layout raíz.

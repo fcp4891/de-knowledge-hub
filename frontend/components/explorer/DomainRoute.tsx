@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { SearchDialog } from "@/components/SearchDialog";
 import type { Level, StudyStatus } from "@/lib/api/types";
@@ -91,6 +91,7 @@ export function DomainRoute({
   const [sections, setSections] = useState<Record<string, number>>({});
   const [now, setNow] = useState<number | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
+  const searchOpener = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     setNow(Date.now());
@@ -165,7 +166,14 @@ export function DomainRoute({
             </li>
           </ol>
         </nav>
-        <button type="button" className="route-search" onClick={() => setSearchOpen(true)}>
+        <button
+          type="button"
+          className="route-search"
+          onClick={(event) => {
+            searchOpener.current = event.currentTarget;
+            setSearchOpen(true);
+          }}
+        >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
             <circle cx="11" cy="11" r="7" />
             <path d="m20 20-3.5-3.5" />
@@ -287,7 +295,7 @@ export function DomainRoute({
         </aside>
       </div>
 
-      <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} domain={slug} />
+      <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} domain={slug} returnFocusRef={searchOpener} />
     </div>
   );
 }
