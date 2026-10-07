@@ -6,9 +6,13 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-07
 
 ## Actual
-- **Tarea activa:** ninguna. `b/ui-redesign` cerrada en el commit 5 y mergeada a `main` por Carril A. La revisión de NULL y claves (`fixes-null-concat.md`) fue aprobada por Felipe y aplicada por Carril A.
-- **Siguiente:** lo que asigne Felipe; en Carril A, pedido abierto de revisar el cambio mínimo en `change-detection`. Ideas fuera de esta fase siguen en `docs/BACKLOG.md`.
+- **Tarea activa:** Revisión del cambio mínimo de `change-detection` (alternativa JSON) en `docs/reviews/change-detection-json.md`. Filas en pendiente. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Felipe aprueba o rechaza las filas. Después, en espera del lote 03a.
 - **Bloqueos:** ninguno.
+
+### JSON en `change-detection`
+- La §4 y la §14 agregan `TO_JSON_STRING(STRUCT(...))` y `jsonb_build_array`. Filas en pendiente en `docs/reviews/change-detection-json.md`.
+- Propuestas: el ejemplo de BigQuery de la §10 pasa a `FARM_FINGERPRINT(TO_JSON_STRING(STRUCT(...)))`, como `data-reconciliation` y `surrogate-keys`, y el `CONCAT` queda condicionado; la §2 incluye esa serialización; la §6 limita «sin marcador ni separador» a la concatenación; la §20 lista las dos fuentes JSON.
 
 ### Rediseño UI · commit 5 (cierre)
 - `make` no está en el PATH de Windows. Se creó `.venv` con `py -3.12` (la receta de `make venv`) y se regeneró `frontend/public/data/` con `validate` y `scripts.static.build_static_data` (la receta de `make static-data`): 1020 respuestas. **`public/data/` no se versiona.** No se editó `content/` ni `backend/`.
@@ -159,6 +163,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### JSON en `change-detection` (2026-10-07)
+- Revisión de la alternativa `TO_JSON_STRING(STRUCT(...))` / `jsonb_build_array` frente a `data-reconciliation` y `surrogate-keys`. Filas en pendiente en `docs/reviews/change-detection-json.md`. No se editó `content/`.
 
 ### NULL en CONCAT y claves (2026-10-07)
 - Revisión de `grain` §4, `data-reconciliation` §10, el snippet `bigquery-reconciliation`, `surrogate-keys` §10 y `surrogate-key-generation` §4, §8 y §10. Filas en pendiente en `docs/reviews/fixes-null-concat.md`. No se editó `content/`.
