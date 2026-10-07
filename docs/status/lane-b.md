@@ -6,9 +6,13 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-07
 
 ## Actual
-- **Tarea activa:** ninguna. En espera del lote F3b-02c.
-- **Siguiente:** revisar 02c cuando Carril A lo pida.
+- **Tarea activa:** B-F3.1 del lote F3b-02c. Revisión en `docs/reviews/cards-f3b-02c.md`. Filas en pendiente. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Felipe aprueba o rechaza las filas. Carril A aplica las que se aprueben.
 - **Bloqueos:** ninguno.
+
+### B-F3.1 · lote F3b-02c
+- Cuatro patterns de 02-sql, tabla de §48, filas pendiente.
+- Propuestas: en Redshift, `CONCAT` y `||` devuelven `NULL` si un argumento es `NULL`; no juntar PK, UNIQUE y FK de BigQuery, Redshift y Fabric en una sola frase; la unicidad de `IDENTITY` en Fabric no vale si se usa `IDENTITY_INSERT` (hace falta `DBCC CHECKIDENT … RESEED`). Kimball solo en la definición conceptual del tipo 1.
 
 ### B-F3.1 · lotes F3b-02a y F3b-02b
 - Veinte fichas de 02-sql, tabla de §48. Felipe aprobó todas las filas el 2026-10-07, incluidas las propuestas: `USING` solo fuera de T-SQL; `IS DISTINCT FROM` no en Redshift; `JSON_VALUE` devuelve `NULL` por encima de 4000 caracteres en modo lax; «sintaxis documentada» en Spectrum; hash join, `QUALIFY`, «sintaxis ISO» y el UTC de BigQuery acotados a cada motor. No se editó `content/` ni `frontend/`.
@@ -101,6 +105,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-02c (2026-10-07)
+- Revisión de `scd-type-1`, `change-detection`, `sql-quality-checks` y `surrogate-key-generation`. Filas en pendiente en `docs/reviews/cards-f3b-02c.md`. No se editó `content/`.
 
 ### B-F3.1 · lotes F3b-02a y F3b-02b (2026-10-07)
 - Revisión de las 20 fichas de 02-sql. Felipe aprobó todas las filas, incluidas las propuestas de atribución por motor. No se editó `content/`. En espera del lote 02c.
