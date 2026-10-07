@@ -21,7 +21,7 @@ sources:
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/identity
     accessed: 2026-10-07
-    note: "En Fabric Data Warehouse, IDENTITY solo admite bigint; no se puede definir semilla ni incremento, porque el sistema gestiona los valores. Son enteros positivos, únicos mientras exista la tabla y nunca se reutilizan, pero puede haber huecos. No se puede agregar una columna IDENTITY a una tabla existente con ALTER TABLE."
+    note: "En Fabric Data Warehouse, IDENTITY solo admite bigint; no se puede definir semilla ni incremento, porque el sistema gestiona los valores. Son enteros positivos y nunca se reutilizan, pero puede haber huecos. La unicidad está garantizada mientras no se use IDENTITY_INSERT; después de insertar valores explícitos hay que ejecutar DBCC CHECKIDENT con RESEED para que los valores nuevos no colisionen. No se puede agregar una columna IDENTITY a una tabla existente con ALTER TABLE."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-tables-identity
     accessed: 2026-10-07
@@ -104,7 +104,7 @@ Las dimensiones se recargan, se reconstruyen y se versionan (SCD tipo 2). Si la 
 2. **Unicidad no garantizada en todos los casos:**
    - Redshift no verifica la unicidad de valores insertados explícitamente en una identidad por defecto;
    - Synapse no la garantiza con `IDENTITY_INSERT`, cambios de semilla o un `UPDATE` de la columna de distribución;
-   - Fabric sí la garantiza mientras exista la tabla.
+   - Fabric la garantiza mientras no se use `IDENTITY_INSERT`; si se insertan valores explícitos, hay que ejecutar `DBCC CHECKIDENT … RESEED` para que los valores nuevos no colisionen.
 3. **Hash determinista:** `FARM_FINGERPRINT('cliente|' || clave_natural)` en BigQuery da siempre el mismo `INT64`. Conviene incluir un prefijo de entidad y verificar la unicidad (ver `sql-quality-checks`), porque dos claves naturales distintas pueden colisionar.
 4. **UUID aleatorio:** se genera una vez y se guarda. Volver a generarlo en una recarga cambia todas las claves.
 
@@ -195,7 +195,7 @@ La unicidad se verifica con un control (`ASSERT`, aserción de Dataform o test d
 **Fabric Warehouse:**
 
 - `IDENTITY` solo `bigint`, sin semilla ni incremento;
-- valores únicos mientras exista la tabla, con huecos posibles;
+- valores únicos mientras no se use `IDENTITY_INSERT` (después, `DBCC CHECKIDENT … RESEED`), con huecos posibles;
 - no se puede agregar a una tabla existente con `ALTER TABLE`.
 
 **Synapse dedicado:**
@@ -262,3 +262,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`).
 - 2026-10-07: ficha completa (lote F3b-02c, dominio 02-sql).
+- 2026-10-07: revisión B-F3.1 del lote F3b-02c aplicada (docs/reviews/cards-f3b-02c.md): la unicidad de `IDENTITY` en Fabric se acota a su página (no vale con `IDENTITY_INSERT`; después, `DBCC CHECKIDENT … RESEED`), junto a las salvedades de Redshift (`BY DEFAULT`) y Synapse (`IDENTITY_INSERT`, semilla y `UPDATE` de la columna de distribución).

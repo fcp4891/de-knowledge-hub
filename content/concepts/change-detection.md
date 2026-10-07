@@ -29,7 +29,7 @@ sources:
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_CONCAT.html
     accessed: 2026-10-07
-    note: "CONCAT de Redshift concatena dos expresiones (para más, se anidan) y el operador || da el mismo resultado; para concatenar columnas que pueden tener NULL, la documentación indica usar NVL o COALESCE."
+    note: "CONCAT de Redshift concatena dos expresiones (para más, se anidan) y el operador || da el mismo resultado; si una o las dos expresiones son NULL, el resultado de CONCAT y de || es NULL; para concatenar columnas que pueden tener NULL, la documentación indica usar NVL o COALESCE."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/SHA2.html
     accessed: 2026-10-07
@@ -107,7 +107,7 @@ Muchos orígenes (archivos diarios, APIs sin filtro de fecha, réplicas sin log 
    - columna a columna, con `IS DISTINCT FROM` donde el motor lo admite (ver `sql-nulls`);
    - o un hash por fila.
 4. **Armar el hash sin colisiones evitables:**
-   - **`NULL`:** cada motor concatena distinto. BigQuery: `CONCAT` devuelve `NULL` si algún argumento es `NULL`. T-SQL: `CONCAT` convierte `NULL` en cadena vacía. PostgreSQL: `concat` y `concat_ws` ignoran los `NULL`. Redshift indica usar `NVL` o `COALESCE` para columnas con `NULL`. En todos los casos conviene reemplazar `NULL` por un marcador explícito que no pueda aparecer en los datos.
+   - **`NULL`:** cada motor concatena distinto. BigQuery: `CONCAT` devuelve `NULL` si algún argumento es `NULL`. T-SQL: `CONCAT` convierte `NULL` en cadena vacía. PostgreSQL: `concat` y `concat_ws` ignoran los `NULL`. Redshift: `CONCAT` y `||` devuelven `NULL` si una expresión es `NULL`, como en BigQuery, y su documentación indica `NVL` o `COALESCE`. En todos los casos conviene reemplazar `NULL` por un marcador explícito que no pueda aparecer en los datos.
    - **Separador:** sin separador, `'ab' + 'c'` y `'a' + 'bc'` producen el mismo texto.
    - **Orden y tipos:** siempre las mismas columnas, en el mismo orden y con el mismo formato (fechas, decimales).
 5. **Algoritmo:**
@@ -195,7 +195,7 @@ En **BigQuery**:
 
 ## 12. AWS
 
-En **Redshift**, `CONCAT` admite dos expresiones (se anidan para más) y `||` da el mismo resultado. Para columnas con `NULL`, la documentación indica `NVL` o `COALESCE`. `SHA2(cadena, bits)` devuelve el hash en hexadecimal. Redshift no admite `IS DISTINCT FROM` (ver `sql-nulls`), así que la comparación columna a columna se escribe con `IS NULL` explícitos.
+En **Redshift**, `CONCAT` admite dos expresiones (se anidan para más) y `||` da el mismo resultado. Si una o las dos expresiones son `NULL`, el resultado es `NULL`, el mismo efecto que en BigQuery: sin marcador, el hash de la fila se vuelve `NULL`. Para columnas con `NULL`, la documentación indica `NVL` o `COALESCE`. `SHA2(cadena, bits)` devuelve el hash en hexadecimal. Redshift no admite `IS DISTINCT FROM` (ver `sql-nulls`), así que la comparación columna a columna se escribe con `IS NULL` explícitos.
 
 ## 13. Azure
 
@@ -258,3 +258,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`), con la nota "técnicas SQL (hash de fila, comparación de columnas) distintas de CDC basado en log".
 - 2026-10-07: ficha completa (lote F3b-02c, dominio 02-sql).
+- 2026-10-07: revisión B-F3.1 del lote F3b-02c aplicada (docs/reviews/cards-f3b-02c.md): Redshift: `CONCAT` y `||` devuelven `NULL` con un argumento `NULL` (su página), distinto de T-SQL y de `concat`/`concat_ws` de PostgreSQL.

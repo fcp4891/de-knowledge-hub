@@ -121,7 +121,7 @@ Los atributos descriptivos cambian (un cliente corrige su email, un producto cam
 
 - Atributos por los que se analiza en el tiempo: segmento, región o categoría, si las ventas pasadas deben quedar con el valor de su momento. Ahí corresponde tipo 2.
 - Cuando una auditoría exige saber qué valor tenía el atributo en una fecha.
-- Sin deduplicar el staging: el `MERGE` falla o, en motores sin esa validación, el resultado depende del orden.
+- Sin deduplicar el staging: el `MERGE` falla en BigQuery, Redshift, T-SQL y PostgreSQL.
 
 ## 7. Ejemplo sencillo
 
@@ -197,7 +197,7 @@ Con un staging de 3 clientes (uno con email nuevo, uno igual y uno nuevo con ema
 
 ## 15. Errores frecuentes
 
-- Staging con duplicados por clave y `MERGE` que falla o depende del orden.
+- Staging con duplicados por clave y un `MERGE` que falla en la carga.
 - Condición de cambio con `<>`, que pierde los pasos a `NULL`.
 - `UPDATE` sin condición, que reescribe toda la dimensión en cada carga.
 - Usar tipo 1 en atributos por los que se analiza la historia.
@@ -243,3 +243,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`).
 - 2026-10-07: ficha completa (lote F3b-02c, dominio 02-sql).
+- 2026-10-07: revisión B-F3.1 del lote F3b-02c aplicada (docs/reviews/cards-f3b-02c.md): sin la posibilidad de motores sin validación de duplicados; los cuatro motores citados fallan.

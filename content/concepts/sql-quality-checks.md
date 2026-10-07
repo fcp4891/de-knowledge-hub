@@ -71,7 +71,11 @@ Esa forma es la que usan las herramientas:
 - las aserciones manuales de Dataform deben devolver cero filas;
 - `ASSERT` de BigQuery falla si su expresión no es verdadera.
 
-En warehouses cloud, estos controles **no son opcionales**. BigQuery, Redshift y Fabric Warehouse no aplican las claves primarias, únicas ni foráneas, y si los datos no las cumplen, algunas consultas dan resultados incorrectos.
+En warehouses cloud, estos controles **no son opcionales**. Cada motor documenta su caso:
+
+- **BigQuery** no aplica las claves primarias ni foráneas, y las consultas sobre tablas que las violan pueden dar resultados incorrectos;
+- **Redshift** trata la unicidad, la clave primaria y la clave foránea como informativas (sí aplica `NOT NULL`), y advierte resultados incorrectos si no son válidas;
+- **Fabric Warehouse** admite `PRIMARY KEY` y `UNIQUE` solo como `NONCLUSTERED` y `NOT ENFORCED`, y `FOREIGN KEY` solo como `NOT ENFORCED`.
 
 ## 2. Qué es
 
@@ -225,7 +229,7 @@ En **Redshift**, unicidad, clave primaria y clave foránea son informativas: los
 
 ## 16. Trade-offs
 
-Más controles detectan más problemas, a cambio de costo de cómputo y de alertas que hay que atender. Controles bloqueantes protegen a los consumidores a cambio de retrasar la publicación ante cualquier falla. Las restricciones aplicadas por el motor (PostgreSQL) detectan al escribir, pero en warehouses cloud no existen o no se aplican, y el control pasa al pipeline.
+Más controles detectan más problemas, a cambio de costo de cómputo y de alertas que hay que atender. Controles bloqueantes protegen a los consumidores a cambio de retrasar la publicación ante cualquier falla. Las restricciones aplicadas por el motor (PostgreSQL) detectan al escribir. En BigQuery, Redshift y Fabric Warehouse las claves se declaran pero no se aplican, cada uno con las particularidades de la sección 1, y el control pasa al pipeline.
 
 ## 17. Conceptos relacionados
 
@@ -262,3 +266,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`).
 - 2026-10-07: ficha completa (lote F3b-02c, dominio 02-sql).
+- 2026-10-07: revisión B-F3.1 del lote F3b-02c aplicada (docs/reviews/cards-f3b-02c.md): claves no exigidas atribuidas por motor según su página (BigQuery: PK y FK; Redshift: unicidad, PK y FK informativas, NOT NULL aplicado; Fabric: PK y UNIQUE NONCLUSTERED NOT ENFORCED, FK NOT ENFORCED); sin «no existen».
