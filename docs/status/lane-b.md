@@ -6,9 +6,13 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-07
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote F3b-02c. Felipe aprobó todas las filas el 2026-10-07 en `docs/reviews/cards-f3b-02c.md`. No se editó `content/` ni `frontend/`.
-- **Siguiente:** En espera del lote 03a. Carril A aplica las filas aprobadas.
+- **Tarea activa:** Revisión de los cambios mínimos de NULL y claves (`112f862`) en `docs/reviews/fixes-null-concat.md`. Filas en pendiente. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Felipe aprueba o rechaza las filas. Carril A aplica las que se aprueben.
 - **Bloqueos:** ninguno.
+
+### NULL en CONCAT y claves (`112f862`)
+- `grain` §4, `data-reconciliation` §10, snippet `bigquery-reconciliation`, `surrogate-keys` §10 y `surrogate-key-generation` §4, §8 y §10. Filas en pendiente en `docs/reviews/fixes-null-concat.md`.
+- Propuestas: advertir que el marcador `\N` no debe aparecer como valor; advertir que el separador `|` tampoco; en `data-reconciliation`, publicar el caso con `monto` NULL (los dos lados, conteo, suma, huellas y `!=` frente a `IS DISTINCT FROM`); en `grain` §4, `NONCLUSTERED` junto a `NOT ENFORCED` en Fabric; en `surrogate-keys` §10, marcar el SQL de BigQuery como no ejecutado.
 
 ### B-F3.1 · lote F3b-02c
 - Cuatro patterns de 02-sql, tabla de §48. Felipe aprobó todas las filas el 2026-10-07, incluidas las propuestas: `CONCAT` y `||` de Redshift devuelven `NULL` si un argumento es `NULL`; claves no exigidas atribuidas por motor (BigQuery, Redshift y Fabric por separado); salvedades de `IDENTITY` en Redshift, Synapse y Fabric (`IDENTITY_INSERT` y `DBCC CHECKIDENT … RESEED`); Kimball solo en la definición conceptual del tipo 1; en `scd-type-1`, quitar la posibilidad de motores sin validación de duplicados. No se editó `content/` ni `frontend/`.
@@ -104,6 +108,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### NULL en CONCAT y claves (2026-10-07)
+- Revisión de `grain` §4, `data-reconciliation` §10, el snippet `bigquery-reconciliation`, `surrogate-keys` §10 y `surrogate-key-generation` §4, §8 y §10. Filas en pendiente en `docs/reviews/fixes-null-concat.md`. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-02c (2026-10-07)
 - Revisión de `scd-type-1`, `change-detection`, `sql-quality-checks` y `surrogate-key-generation`. Felipe aprobó todas las filas, incluidas las propuestas de `CONCAT` con `NULL`, claves por motor e `IDENTITY`. No se editó `content/`. En espera del lote 03a.
