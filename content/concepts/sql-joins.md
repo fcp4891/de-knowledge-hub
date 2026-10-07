@@ -34,7 +34,7 @@ sources:
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql?view=sql-server-ver17
     accessed: 2026-10-06
-    note: "Aplica a SQL Server, Azure Synapse Analytics y Warehouse en Microsoft Fabric, entre otros. T-SQL ofrece INNER, LEFT OUTER, RIGHT OUTER, FULL OUTER y CROSS JOIN, y además CROSS APPLY y OUTER APPLY: OUTER APPLY produce una fila por cada fila de la izquierda aunque la expresión de la derecha devuelva un conjunto vacío."
+    note: "Aplica a SQL Server, Azure Synapse Analytics y Warehouse en Microsoft Fabric, entre otros. T-SQL ofrece INNER, LEFT OUTER, RIGHT OUTER, FULL OUTER y CROSS JOIN, y además CROSS APPLY y OUTER APPLY; la condición de join es ON search_condition y la página no documenta USING. OUTER APPLY produce una fila por cada fila de la izquierda aunque la expresión de la derecha devuelva un conjunto vacío."
 relations:
   - type: RELATED_TO
     target: sql-subqueries
@@ -49,7 +49,7 @@ relations:
     target: fact-tables
     note: Las consultas analíticas unen hechos con dimensiones.
 created_at: 2026-10-05
-updated_at: 2026-10-06
+updated_at: 2026-10-07
 last_verified: 2026-10-06
 verification_status: review_required
 ---
@@ -80,7 +80,7 @@ Es SQL básico y consolidado, disponible en BigQuery, Redshift, T-SQL (Synapse y
 | Semi-join (`EXISTS`) | Filas de la izquierda que tienen al menos una pareja, sin duplicarlas |
 | Anti-join (`NOT EXISTS`) | Filas de la izquierda sin pareja |
 
-La condición va en `ON` (cualquier expresión) o en `USING (columnas)`, cuando las columnas se llaman igual en ambos lados.
+La condición va en `ON` (cualquier expresión). PostgreSQL, BigQuery y Redshift documentan además `USING (columnas)`, para cuando las columnas se llaman igual en ambos lados; la gramática de join de T-SQL (Synapse y Fabric Warehouse) solo documenta `ON`.
 
 ## 3. Problema que resuelve
 
@@ -138,7 +138,8 @@ flowchart LR
 ## 10. Código
 
 ```sql
--- PostgreSQL (ejecutado). La misma lógica funciona en BigQuery, Redshift y T-SQL.
+-- PostgreSQL (ejecutado). Los resultados de abajo son los de esa prueba; las páginas de los otros motores
+-- documentan los mismos tipos de join, pero no describen esta trampa del LEFT JOIN.
 -- 1) Filtro en ON: conserva a los clientes sin pedidos pagados (conteo 0).
 SELECT c.cliente_id, COUNT(p.pedido_id) AS pagados
 FROM clientes AS c
@@ -245,3 +246,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`).
 - 2026-10-06: ficha completa (lote F3b-02a, dominio 02-sql).
+- 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): §2 limita `USING` a PostgreSQL, BigQuery y Redshift (la gramática de T-SQL solo tiene `ON`); §10 presenta los resultados como de la prueba en PostgreSQL.

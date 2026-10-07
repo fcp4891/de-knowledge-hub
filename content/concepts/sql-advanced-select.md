@@ -27,6 +27,10 @@ sources:
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_GROUP_BY_clause.html
     accessed: 2026-10-06
     note: "Redshift admite las extensiones de agregación GROUPING SETS, ROLLUP y CUBE para hacer el trabajo de varios GROUP BY en una sola sentencia, y GROUP BY ALL."
+  - source: aws-redshift-docs
+    url: https://docs.aws.amazon.com/redshift/latest/dg/r_GROUP_BY_aggregation-extensions.html
+    accessed: 2026-10-07
+    note: "Extensiones de agregación de Redshift: GROUPING SETS, ROLLUP, CUBE y las funciones GROUPING y GROUPING_ID. ROLLUP y CUBE agregan NULL al resultado para indicar las filas de subtotal."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/queries/select-transact-sql?view=sql-server-ver17
     accessed: 2026-10-06
@@ -46,7 +50,7 @@ relations:
     target: sql-window-functions
     note: Las ventanas se evalúan después de GROUP BY y HAVING.
 created_at: 2026-10-05
-updated_at: 2026-10-06
+updated_at: 2026-10-07
 last_verified: 2026-10-06
 verification_status: review_required
 ---
@@ -59,7 +63,7 @@ Un `SELECT` se escribe en un orden y se evalúa en otro. Lógicamente:
 2. `WHERE`;
 3. `GROUP BY` y los agregados;
 4. `HAVING`;
-5. las ventanas y `QUALIFY`;
+5. las ventanas y, en los motores que lo tienen, `QUALIFY`;
 6. las expresiones del `SELECT`;
 7. `DISTINCT`, `ORDER BY` y `LIMIT`.
 
@@ -139,7 +143,7 @@ flowchart LR
 ## 10. Código
 
 ```sql
--- PostgreSQL (ejecutado). ROLLUP, GROUPING y HAVING existen también en BigQuery, Redshift y T-SQL.
+-- PostgreSQL (ejecutado). ROLLUP, GROUPING y HAVING también están documentados en BigQuery y Redshift (GROUPING, en sus extensiones de agregación).
 -- 1) Subtotal por región y total general; GROUPING distingue el total de un NULL real.
 SELECT CASE WHEN GROUPING(c.region) = 1 THEN '(total)'
             ELSE COALESCE(c.region, '(sin región)') END AS region,
@@ -164,7 +168,7 @@ La consulta 1 devuelve `norte` 120.00, `sur` 70.00 y `(total)` 190.00. La 2 fall
 
 ## 12. AWS
 
-**Redshift** documenta `GROUPING SETS`, `ROLLUP` y `CUBE` como extensiones de agregación que hacen el trabajo de varios `GROUP BY` en una sola sentencia, y admite `GROUP BY ALL`.
+**Redshift** documenta `GROUPING SETS`, `ROLLUP` y `CUBE` como extensiones de agregación que hacen el trabajo de varios `GROUP BY` en una sola sentencia, y admite `GROUP BY ALL`. Sus funciones `GROUPING` y `GROUPING_ID` distinguen las filas de subtotal, en las que `ROLLUP` y `CUBE` ponen `NULL`.
 
 ## 13. Azure
 
@@ -176,7 +180,7 @@ La página de `SELECT` lista el orden lógico de procesamiento. Incluye `QUALIFY
 
 - Filtrar filas en `WHERE` y grupos en `HAVING`.
 - Rotular los subtotales con `GROUPING()`, no con `COALESCE`.
-- Preferir la sintaxis ISO (`GROUP BY ROLLUP (...)`) a `WITH ROLLUP`.
+- En T-SQL, no usar `WITH ROLLUP` ni `WITH CUBE`: su documentación los llama sintaxis antigua, no ISO, mantenida por compatibilidad.
 - Limitar `CUBE` a pocas dimensiones.
 - **Seguridad:** en tablas agregadas que se publican, revisar que los grupos pequeños no permitan identificar a personas.
 - **Observabilidad:** comprobar en las cargas que el total general coincide con la suma de los subtotales.
@@ -227,3 +231,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`).
 - 2026-10-06: ficha completa (lote F3b-02a, dominio 02-sql).
+- 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): resumen con `QUALIFY` solo donde el motor lo tiene; «sintaxis antigua, no ISO» como dice T-SQL; fuente nueva *Aggregation extensions* de Redshift para `GROUPING`.

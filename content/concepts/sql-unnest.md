@@ -58,7 +58,7 @@ relations:
     target: sql-joins
     note: Aplanar es un join correlacionado; el tipo de join decide qué pasa con los arrays vacíos.
 created_at: 2026-10-05
-updated_at: 2026-10-06
+updated_at: 2026-10-07
 last_verified: 2026-10-06
 verification_status: review_required
 ---
@@ -222,3 +222,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`).
 - 2026-10-06: ficha completa (lote F3b-02a, dominio 02-sql).
+- 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): sin cambios pedidos.

@@ -63,6 +63,10 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ## Historial
 
+### Revisión B-F3.1 de 02a y 02b aplicada (2026-10-07)
+- Merge de `b/f3b-review-02` (f73f992). Prioridades: `USING` solo en PostgreSQL, BigQuery y Redshift (la gramática de join de T-SQL solo tiene `ON`; `sql-cte` cambia su ejemplo a `ON`); `IS DISTINCT FROM` deja de presentarse como comportamiento de Redshift, que lo lista entre las funciones de PostgreSQL no admitidas, y se documenta en PostgreSQL, BigQuery y Fabric Warehouse con su página (sin Synapse), con una comparación segura alternativa probada en PostgreSQL; `JSON_VALUE` devuelve `NULL` por encima de 4000 caracteres en modo lax, no trunca. Resto de filas aplicadas; fuentes nuevas citadas: *Aggregation extensions* y *Unsupported PostgreSQL functions* (Redshift), *IS [NOT] DISTINCT FROM* (T-SQL) y *Aggregate functions* (BigQuery), todas Nivel 1 con URL verificada.
+- **Búsqueda del mismo error en las demás fichas `verified` y snippets:** sin casos. `USING` aparece en joins de BigQuery (`dag`, `oltp-vs-olap`) y de PostgreSQL (`normalization`), que lo documentan, y como palabra de `MERGE … USING` o `RAISE USING MESSAGE`; `IS DISTINCT FROM` aparece en scripts de BigQuery (`incremental-pipelines`, `bigquery-incremental-merge-watermark`, `bigquery-scd-type-2`), que lo documenta; `JSON_VALUE` no aparece fuera de `sql-json-functions`.
+
 ### F3b-02b (2026-10-07)
 - 10 fichas en `review_required`, sin VERIFY: lenguaje (`sql-date-functions`, `sql-json-functions`, `sql-pivot`, `sql-recursive-cte`) y rendimiento (`query-plans`, `scan-reduction`, `predicate-pushdown`, `join-optimization`, `materialization-strategies`, `cloud-warehouse-optimization`). Esqueletos traídos de `f/sql` con `git checkout f/sql -- <archivos>`.
 - 57 URLs con HTTP 200 y URL final igual a la citada. Sin fuentes nuevas en el registro.

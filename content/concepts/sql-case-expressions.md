@@ -42,7 +42,7 @@ relations:
     target: data-transformation
     note: CASE es la herramienta habitual para normalizar y clasificar valores al transformar.
 created_at: 2026-10-05
-updated_at: 2026-10-06
+updated_at: 2026-10-07
 last_verified: 2026-10-06
 verification_status: review_required
 ---
@@ -135,7 +135,8 @@ flowchart LR
 ## 10. Código
 
 ```sql
--- PostgreSQL (ejecutado). Igual en BigQuery, Redshift y T-SQL.
+-- PostgreSQL (ejecutado). Las dos consultas usan la sintaxis de CASE documentada en BigQuery, Redshift y T-SQL;
+-- solo se ejecutaron en PostgreSQL (T-SQL evalúa antes los agregados de los WHEN, ver §13).
 -- 1) Agregación condicional: dos métricas en una pasada.
 SELECT cliente_id,
        SUM(CASE WHEN estado = 'pagado'  THEN monto ELSE 0 END) AS pagado,
@@ -222,3 +223,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`).
 - 2026-10-06: ficha completa (lote F3b-02a, dominio 02-sql).
+- 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): §10 dice que las consultas usan la sintaxis documentada en los tres motores y que solo se ejecutaron en PostgreSQL.

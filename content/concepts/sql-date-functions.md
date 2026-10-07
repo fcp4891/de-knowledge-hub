@@ -3,7 +3,7 @@ id: concept:sql-date-functions
 slug: sql-date-functions
 type: concept
 title: Fechas, horas y zonas horarias en SQL
-description: "DATE frente a TIMESTAMP (un instante) frente a fecha y hora civil sin zona; cómo cada motor guarda los instantes (UTC) y convierte a una zona horaria, por qué el «día» de un evento depende de la zona, el cambio de horario y las funciones de truncado y conversión en BigQuery, Redshift, Fabric Warehouse y PostgreSQL."
+description: "DATE frente a TIMESTAMP (un instante) frente a fecha y hora civil sin zona; cómo cada motor trata los instantes (UTC por defecto o guardado en UTC) y convierte a una zona horaria, por qué el «día» de un evento depende de la zona, el cambio de horario y las funciones de truncado y conversión en BigQuery, Redshift, Fabric Warehouse y PostgreSQL."
 domain: sql
 subdomain: sql-language
 category: sql
@@ -71,7 +71,7 @@ verification_status: review_required
 
 En SQL conviven tres ideas distintas de "fecha y hora":
 
-- **Instante** (`TIMESTAMP` de BigQuery, `TIMESTAMPTZ` de Redshift y `timestamp with time zone` de PostgreSQL): un punto absoluto en el tiempo, que los motores guardan en UTC.
+- **Instante** (`TIMESTAMP` de BigQuery, `TIMESTAMPTZ` de Redshift y `timestamp with time zone` de PostgreSQL): un punto absoluto en el tiempo. Redshift y PostgreSQL documentan que lo guardan en UTC; BigQuery, que es independiente de la zona y que su zona por defecto es UTC.
 - **Fecha y hora civil sin zona** (`DATETIME` de BigQuery, `TIMESTAMP` de Redshift y PostgreSQL, `datetime2` de T-SQL): lo que muestra un reloj, sin decir dónde.
 - **Fecha** (`DATE`): un día del calendario, que no corresponde a 24 horas fijas.
 
@@ -92,7 +92,7 @@ Los reportes cuentan por día, las tablas se particionan por fecha y los SLA se 
 
 ## 4. Cómo funciona
 
-1. **Al guardar:** los tipos de instante guardan UTC. Redshift convierte a UTC si el valor trae zona. PostgreSQL guarda UTC y descarta la zona original.
+1. **Al guardar:** Redshift convierte a UTC si el valor trae zona y guarda el valor UTC. PostgreSQL guarda UTC y descarta la zona original. BigQuery documenta el `TIMESTAMP` como un instante independiente de la zona, con UTC como zona por defecto.
 2. **Al leer:** PostgreSQL muestra los `timestamptz` en la zona de la sesión. BigQuery usa UTC si la función no recibe zona.
 3. **Al calcular un día:** se convierte el instante a la zona de negocio y luego se toma la fecha, con `DATE(ts, 'America/Santiago')` en BigQuery o `(ts AT TIME ZONE 'America/Santiago')::date` en PostgreSQL.
 4. **Cambio de horario:**
@@ -226,3 +226,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`), con la nota "zonas horarias y DATE vs TIMESTAMP van en esta ficha".
 - 2026-10-07: ficha completa (lote F3b-02b, dominio 02-sql).
+- 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): BigQuery: «zona por defecto UTC», no «se guarda en UTC»; el guardado en UTC queda atribuido a Redshift y PostgreSQL.

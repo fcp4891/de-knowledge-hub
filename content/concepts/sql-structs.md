@@ -54,7 +54,7 @@ relations:
     target: star-schema
     note: BigQuery propone columnas anidadas y repetidas como alternativa a mantener un esquema en estrella; no lo reemplaza en todos los casos.
 created_at: 2026-10-05
-updated_at: 2026-10-06
+updated_at: 2026-10-07
 last_verified: 2026-10-06
 verification_status: review_required
 ---
@@ -160,7 +160,7 @@ Límites: 15 niveles de `RECORD` anidados, incompatibilidad con `UNION`, `INTERS
 
 ## 13. Azure
 
-**Fabric Warehouse** no lista tipos struct para tablas. El equivalente es guardar JSON en `varchar` y leerlo con `OPENJSON … WITH (…)`, que declara las columnas, sus tipos y, si hace falta, las rutas JSON. La validación del esquema ocurre al leer, no al escribir.
+**Fabric Warehouse** no lista tipos struct para tablas. El equivalente es guardar JSON en `varchar` y leerlo con `OPENJSON … WITH (…)`, que declara al leer las columnas, sus tipos y, si hace falta, las rutas JSON.
 
 ## 14. Buenas prácticas
 
@@ -217,3 +217,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`), con la nota "el modelo ARRAY/STRUCT de BigQuery no es el de Redshift ni el de Fabric".
 - 2026-10-06: ficha completa (lote F3b-02a, dominio 02-sql).
+- 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): §13 sin la frase de validación de esquema; describe solo lo que dicen las páginas de tipos de Fabric y de `OPENJSON`.

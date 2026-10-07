@@ -81,7 +81,8 @@ Esta ficha es la visión comparada. El detalle de BigQuery corresponde a `bigque
 
 | Palanca | BigQuery | Redshift | Synapse dedicado | Fabric Warehouse |
 |---|---|---|---|---|
-| Orden físico / clustering | Clustering | Sort key (manual o automática) | Índices columnstore, particiones | Data clustering, V-Order (por defecto) |
+| Orden físico / clustering | Clustering | Sort key (manual o automática) | Grano de partición (semanal o mensual mejor que diario) | Data clustering, V-Order (por defecto) |
+| Memoria por consulta | — | — | Clases de recursos (60 distribuciones fijas) | — |
 | Distribución para joins | No expuesta | Distribution key, `ALL`, `AUTO` | Hash, round-robin, replicada | No expuesta en su guía de rendimiento |
 | Estadísticas | No detallado en esta ficha | `ANALYZE` (ver `query-plans`) | Manuales, por columna | Automáticas al primer acceso |
 | Resultados precalculados | Vistas materializadas, BI Engine | Vistas materializadas | No detallado en esta ficha | No admite vistas materializadas |
@@ -252,3 +253,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`), con la nota "visión comparada; el detalle de BigQuery está en 08-gcp".
 - 2026-10-07: ficha completa (lote F3b-02b, dominio 02-sql).
+- 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): la celda de Synapse dedicado usa las palancas que nombra su página (distribución, estadísticas, grano de partición y clases de recursos), sin presentar columnstore como equivalente de una sort key.

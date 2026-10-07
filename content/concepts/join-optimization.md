@@ -76,8 +76,8 @@ El plan de ejecución (ver `query-plans`) es la forma de saber cuál de esas cos
 
 | Estrategia física | Cuándo conviene | Dónde aparece |
 |---|---|---|
-| Hash join | Tablas grandes, igualdad | PostgreSQL, Redshift y la mayoría de los motores |
-| Merge join | Ambas entradas ordenadas por la clave | PostgreSQL; Redshift con sort key = dist key |
+| Hash join | Tablas grandes, igualdad | PostgreSQL; Redshift lo nombra al recomendar el sort merge join |
+| Merge join | Ambas entradas ordenadas por la clave | PostgreSQL; Redshift (sort merge join) con sort key = dist key |
 | Nested loop | Pocas filas a la izquierda e índice a la derecha | PostgreSQL |
 | Broadcast | Una tabla pequeña: se copia a todos los nodos o slots | BigQuery; `DS_BCAST_INNER` en Redshift |
 | Colocalizado | Ambas tablas distribuidas por la clave del join | `DS_DIST_NONE` en Redshift; tablas hash en Synapse |
@@ -250,3 +250,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`).
 - 2026-10-07: ficha completa (lote F3b-02b, dominio 02-sql).
+- 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): §2 deja hash, merge y nested loop solo en los motores cuyas páginas los nombran; el broadcast, en BigQuery y en `DS_BCAST_INNER` de Redshift.

@@ -42,7 +42,7 @@ relations:
     target: sql-nulls
     note: Una subconsulta escalar sin filas devuelve NULL, e IN con un NULL puede dar NULL.
 created_at: 2026-10-05
-updated_at: 2026-10-06
+updated_at: 2026-10-07
 last_verified: 2026-10-06
 verification_status: review_required
 ---
@@ -123,7 +123,7 @@ flowchart TB
 ## 10. Código
 
 ```sql
--- PostgreSQL (ejecutado). La misma lógica funciona en BigQuery, Redshift y T-SQL.
+-- PostgreSQL (ejecutado). BigQuery y Redshift documentan el mismo comportamiento de las subconsultas escalares.
 -- 1) Escalar no correlacionada: pedidos pagados por sobre el promedio de los pagados.
 SELECT p.pedido_id, p.monto
 FROM pedidos AS p
@@ -214,3 +214,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`).
 - 2026-10-06: ficha completa (lote F3b-02a, dominio 02-sql).
+- 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): §10 deja de atribuir a T-SQL el comportamiento del ejemplo.

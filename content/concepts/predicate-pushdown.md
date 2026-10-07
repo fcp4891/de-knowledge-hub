@@ -74,7 +74,7 @@ No todo filtro se puede empujar. Depende del motor y de la expresión: funciones
 
 | Nivel | Qué se empuja | Ejemplo documentado |
 |---|---|---|
-| Plan de la consulta | Filtros hacia subconsultas, vistas y joins | Optimizadores en general (se ve en el plan) |
+| Plan de la consulta | Filtros hacia subconsultas | Observado en la prueba de PostgreSQL de la sección 10 |
 | Archivos columnares | Filtros contra estadísticas mín./máx. | Page index de Parquet; Athena |
 | Motor externo | Filtros, proyecciones, agregaciones | Redshift Spectrum; `postgres_fdw` |
 | Particiones | Filtros sobre la columna de partición | Poda de particiones (ver `partition-pruning`) |
@@ -150,7 +150,7 @@ SELECT * FROM (SELECT usuario, valor FROM eventos) AS s WHERE s.usuario = 7;
 --    ->  Seq Scan on eventos_2026_10 eventos_2
 --          Filter: (usuario = 7)
 
--- Redshift Spectrum (sintaxis estándar; no ejecutado aquí): filtros y agregación que la capa Spectrum
+-- Redshift Spectrum (sintaxis documentada; no ejecutado aquí): filtros y agregación que la capa Spectrum
 -- puede ejecutar según su documentación (comparación, LIKE, COUNT/SUM, GROUP BY).
 -- SELECT pais, COUNT(*) FROM spectrum.eventos
 -- WHERE fecha = '2026-10-07' AND url LIKE '/checkout%'
@@ -234,3 +234,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`).
 - 2026-10-07: ficha completa (lote F3b-02b, dominio 02-sql).
+- 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): «sintaxis documentada» en el ejemplo de Spectrum; el pushdown a subconsultas se atribuye a la prueba de PostgreSQL, no a «optimizadores en general».

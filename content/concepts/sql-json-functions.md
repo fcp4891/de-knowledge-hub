@@ -193,7 +193,7 @@ Los conversores `LAX_` toleran tipos distintos y el prefijo `SAFE.` devuelve `NU
 - Modo lax o `SAFE.` sin control de nulos: errores del origen que pasan como datos faltantes.
 - Mezclar números y textos en el mismo campo y convertir sin revisar.
 - Usar en BigQuery los extractores heredados en código nuevo.
-- En T-SQL, escalares de más de 4000 caracteres que `JSON_VALUE` trunca a `NULL` en modo lax.
+- En T-SQL, escalares de más de 4000 caracteres, para los que `JSON_VALUE` devuelve `NULL` en modo lax (no los corta).
 
 ## 16. Trade-offs
 
@@ -233,3 +233,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`).
 - 2026-10-07: ficha completa (lote F3b-02b, dominio 02-sql).
+- 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): §15: `JSON_VALUE` devuelve `NULL` por encima de 4000 caracteres en modo lax; no trunca.

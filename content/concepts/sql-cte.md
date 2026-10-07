@@ -43,7 +43,7 @@ relations:
     target: data-transformation
     note: Un modelo de transformación de varios pasos puede escribirse como una cadena de CTE.
 created_at: 2026-10-05
-updated_at: 2026-10-06
+updated_at: 2026-10-07
 last_verified: 2026-10-06
 verification_status: review_required
 ---
@@ -128,7 +128,7 @@ flowchart LR
 ## 10. Código
 
 ```sql
--- PostgreSQL (ejecutado). La misma consulta funciona en BigQuery, Redshift y T-SQL.
+-- PostgreSQL (ejecutado). El join usa ON, que documentan los cuatro motores (T-SQL no documenta USING).
 WITH pagados AS (
   SELECT cliente_id, monto
   FROM pedidos
@@ -141,7 +141,7 @@ por_cliente AS (
 )
 SELECT c.nombre, pc.total, pc.n
 FROM por_cliente AS pc
-JOIN clientes AS c USING (cliente_id)
+JOIN clientes AS c ON c.cliente_id = pc.cliente_id
 ORDER BY pc.total DESC;
 ```
 
@@ -212,3 +212,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`).
 - 2026-10-06: ficha completa (lote F3b-02a, dominio 02-sql).
+- 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): el join del ejemplo de §10 pasa de `USING` a `ON`, que también documenta T-SQL.
