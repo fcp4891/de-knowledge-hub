@@ -42,7 +42,7 @@ relations:
     target: partition-pruning
     note: Ambos reducen datos leídos; el pruning actúa sobre particiones y el clustering sobre bloques.
 created_at: 2026-09-30
-updated_at: 2026-10-01
+updated_at: 2026-10-07
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -153,7 +153,8 @@ Un ordenamiento bien elegido reduce mucho los datos leídos para los filtros pre
 - `partitioning`: la organización complementaria por segmentos.
 - `bigquery-clustering`: la implementación en BigQuery.
 - `partition-pruning`: descarte de particiones; el clustering descarta bloques.
-- Del blueprint, pendientes de ficha: `columnar-storage`, `query-plans`, `bigquery-query-optimization`.
+- Con ficha: `query-plans`.
+- Del blueprint, pendientes de ficha: `columnar-storage`, `bigquery-query-optimization`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -182,3 +183,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-09-30: creación (lote 3 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).
+- 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `query-plans`, que ya tiene ficha.

@@ -50,8 +50,8 @@ relations:
     note: En motores sin QUALIFY se usa una subconsulta o CTE con la ventana y un WHERE afuera.
 created_at: 2026-10-05
 updated_at: 2026-10-07
-last_verified: 2026-10-06
-verification_status: review_required
+last_verified: 2026-10-07
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -225,10 +225,11 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-06. En `review_required` hasta la revisión B-F3.1 del lote F3b-02a.
+2026-10-07. Pasa a `verified`: revisión B-F3.1 del lote F3b-02a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`), con la nota "no es SQL estándar; verificar soporte por motor".
 - 2026-10-06: ficha completa (lote F3b-02a, dominio 02-sql). No se afirma si `QUALIFY` es o no parte del estándar SQL, porque ninguna fuente oficial consultada lo dice; se documenta el soporte de cada motor según su documentación.
 - 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): sin cambios pedidos.
+- 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).

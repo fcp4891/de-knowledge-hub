@@ -44,8 +44,8 @@ relations:
     note: Un modelo de transformación de varios pasos puede escribirse como una cadena de CTE.
 created_at: 2026-10-05
 updated_at: 2026-10-07
-last_verified: 2026-10-06
-verification_status: review_required
+last_verified: 2026-10-07
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -183,7 +183,7 @@ La CTE mejora la lectura sin crear objetos en la base, a cambio de que el motor 
 
 - `sql-subqueries`: la forma anidada de lo mismo.
 - `data-transformation`: modelos de transformación escritos como CTE.
-- Del blueprint, pendiente de ficha: `sql-recursive-cte`.
+- Con ficha: `sql-recursive-cte`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -206,10 +206,12 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-06. En `review_required` hasta la revisión B-F3.1 del lote F3b-02a.
+2026-10-07. Pasa a `verified`: revisión B-F3.1 del lote F3b-02a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`).
 - 2026-10-06: ficha completa (lote F3b-02a, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): el join del ejemplo de §10 pasa de `USING` a `ON`, que también documenta T-SQL.
+- 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `sql-recursive-cte`, que ya tiene ficha.

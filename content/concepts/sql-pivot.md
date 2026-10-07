@@ -52,7 +52,7 @@ relations:
 created_at: 2026-10-05
 updated_at: 2026-10-07
 last_verified: 2026-10-07
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -206,10 +206,11 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-07. En `review_required` hasta la revisión B-F3.1 del lote F3b-02b.
+2026-10-07. Pasa a `verified`: revisión B-F3.1 del lote F3b-02b aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`).
 - 2026-10-07: ficha completa (lote F3b-02b, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): sin cambios pedidos.
+- 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).

@@ -38,7 +38,7 @@ relations:
     target: incremental-load
     note: El modo upsert de la carga incremental usa MERGE.
 created_at: 2026-09-30
-updated_at: 2026-10-06
+updated_at: 2026-10-07
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -158,8 +158,7 @@ Una sentencia atómica y legible frente a varias sentencias coordinadas. A cambi
 
 - `idempotency`: `MERGE` con versión es la escritura idempotente típica.
 - `scd-type-2`, `incremental-load`: patrones que se implementan con `MERGE`.
-- Con ficha: `upsert`, `deduplication`, `sql-window-functions`.
-- Del blueprint, pendiente de ficha: `sql-qualify`.
+- Con ficha: `upsert`, `deduplication`, `sql-window-functions`, `sql-qualify`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -193,3 +192,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).
 - 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`, hallazgo 1) aplicada: §14 Costo según la fuente de BigQuery.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `upsert`, `deduplication`, `sql-window-functions`, que ya tienen ficha.
+- 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `sql-qualify`, que ya tiene ficha.

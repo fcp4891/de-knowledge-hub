@@ -25,12 +25,11 @@
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | B-F3.1 · Revisar el lote F3b-02a (10 fichas, sin VERIFY) | Abierto |
-| A | B | B-F3.1 · Revisar el lote F3b-02b (10 fichas, sin VERIFY) | Abierto |
+| — | — | Ninguno abierto | — |
 
 ## Criterio de salida de la fase actual (F3b, ADR-009)
 - [x] 01-fundamentals: 28/28 `verified`, aprobado por Felipe en el navegador el 2026-10-06.
-- [ ] 02-sql: 33 conceptos `verified` (hoy 9 `verified` y 20 en `review_required`, lotes F3b-02a y F3b-02b; faltan los 4 de 02c) y aprobado por Felipe en el navegador.
+- [ ] 02-sql: 33 conceptos `verified` (hoy 29 `verified`; faltan los 4 de 02c) y aprobado por Felipe en el navegador.
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
 
 ## Fases cerradas

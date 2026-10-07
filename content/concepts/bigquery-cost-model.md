@@ -81,7 +81,7 @@ relations:
     target: row-vs-columnar-formats
     note: El almacenamiento columnar hace que elegir columnas reduzca lo facturado.
 created_at: 2026-10-05
-updated_at: 2026-10-05
+updated_at: 2026-10-07
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -258,7 +258,8 @@ On-demand no requiere planificar y es barato para cargas pequeñas o esporádica
 - `bigquery-partitioning` y `bigquery-clustering`: las palancas de diseño.
 - `partition-pruning`: leer menos particiones.
 - `row-vs-columnar-formats`: por qué elegir columnas reduce lo facturado.
-- Del blueprint, pendientes de ficha: `scan-reduction`, `bigquery-query-optimization`.
+- Con ficha: `scan-reduction`.
+- Del blueprint, pendiente de ficha: `bigquery-query-optimization`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -286,3 +287,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: creación (lote 6 de F3).
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md): compromisos solo en Enterprise y Enterprise Plus, time travel y fail-safe solo cobrados con facturación física, y BigQuery ML incluido en las reservas de esas ediciones. `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `scan-reduction`, que ya tiene ficha.

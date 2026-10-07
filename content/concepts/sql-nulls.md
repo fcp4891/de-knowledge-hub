@@ -66,8 +66,8 @@ relations:
     note: Las reconciliaciones deben comparar con IS DISTINCT FROM para no perder diferencias con nulos.
 created_at: 2026-10-05
 updated_at: 2026-10-07
-last_verified: 2026-10-06
-verification_status: review_required
+last_verified: 2026-10-07
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -241,10 +241,11 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-06. En `review_required` hasta la revisión B-F3.1 del lote F3b-02a.
+2026-10-07. Pasa a `verified`: revisión B-F3.1 del lote F3b-02a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-05: esqueleto creado desde el blueprint (rama `f/sql`).
 - 2026-10-06: ficha completa (lote F3b-02a, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): `IS DISTINCT FROM` ya no se presenta como comportamiento de Redshift (lo lista como no admitido); se documenta en PostgreSQL, BigQuery y Fabric Warehouse con su página, sin extenderlo a Synapse. `SUM` de cero filas atribuido a PostgreSQL y a *Aggregate functions* de BigQuery. Tabla de §2 con el motor que documenta cada fila; §10 agrega la comparación segura con nulos sin `IS DISTINCT FROM`, ejecutada en PostgreSQL.
+- 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).

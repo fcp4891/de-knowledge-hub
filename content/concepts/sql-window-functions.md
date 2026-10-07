@@ -58,7 +58,7 @@ relations:
     target: late-arriving-data
     note: Un marco RANGE por fecha es robusto ante días sin datos; ROWS cuenta filas, no días.
 created_at: 2026-10-05
-updated_at: 2026-10-05
+updated_at: 2026-10-07
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -196,7 +196,7 @@ Las ventanas dan consultas más cortas y legibles que los auto-joins, y suelen s
 - `deduplication`: `ROW_NUMBER` + filtro por clave.
 - `scd-type-2`: vigencias con `LEAD`.
 - `late-arriving-data`: ventanas de calendario y huecos.
-- Del blueprint, pendiente de ficha: `sql-qualify`.
+- Con ficha: `sql-qualify`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -225,3 +225,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: creación (lote 6 de F3).
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `sql-qualify`, que ya tiene ficha.
