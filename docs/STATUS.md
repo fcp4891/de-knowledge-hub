@@ -1,17 +1,26 @@
 # STATUS — Data Engineering Knowledge Hub
 
 **Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 02-sql (01-fundamentals aprobado el 2026-10-06). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
-**Última actualización:** 2026-10-06
+**Última actualización:** 2026-10-07
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**
 > El estado detallado de cada carril está en `docs/status/lane-a.md` y `docs/status/lane-b.md`; cada carril edita solo el suyo.
 > Los pedidos entre carriles se anotan en la sección "Pedidos" del archivo del carril que pide.
 
+## Organización de carpetas (desde el 2026-10-07)
+| Worktree | Quién | Ramas | Alcance |
+|---|---|---|---|
+| `D:\Proyectos_IA\DES_conocimiento-carril-a` | Carril A (Claude Code) | `a/*` | Todo menos `frontend/`. **Único que mergea a `main` y hace push de `main`.** |
+| `D:\Proyectos_IA\DES_conocimiento-ui` | Cursor UI | `b/ui-redesign` | Solo `frontend/` y `docs/design/`. No se mergea a `main` hasta que Felipe avise. |
+| `D:\Proyectos_IA\DES_conocimiento-review` | Cursor revisión | `b/f3b-review-*` | Revisiones de fichas (`docs/reviews/`, `lane-b.md`). |
+| `D:\Proyectos_IA\DES_conocimiento` (raíz) | — | — | No se edita. |
+
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | — (02a y 02b entregados) | Aplicar B-F3.1 de 02a y 02b; luego F3b-02c y `make static` al cerrar 02-sql | — |
-| B · Cursor | B-F3.1 del lote F3b-02a | B-F3.1 del lote F3b-02b | — |
+| A · Claude Code | Aplicar B-F3.1 de 02a y 02b; lote F3b-02c | `make static` al cerrar 02-sql | — |
+| B · Cursor revisión | — (B-F3.1 de 02a y 02b entregada) | B-F3.1 de 02c | — |
+| B · Cursor UI | Rediseño UI en `b/ui-redesign` (commit 1 de 5) | Commit 2: Inicio | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
