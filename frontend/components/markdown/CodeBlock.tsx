@@ -63,9 +63,12 @@ export function CodeBlock({ code, language }: { code: string; language: string }
 
   return (
     <div className="code-block">
-      <button type="button" onClick={() => void copy()}>
-        {copied ? "Copiado" : "Copiar"}
-      </button>
+      <div className="code-block-bar">
+        <span>{language.trim() ? language : "código"}</span>
+        <button type="button" onClick={() => void copy()}>
+          {copied ? "Copiado" : "Copiar"}
+        </button>
+      </div>
       <pre>
         {html ? (
           <code className="hljs" dangerouslySetInnerHTML={{ __html: html }} />

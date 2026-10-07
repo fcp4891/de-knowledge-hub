@@ -92,7 +92,7 @@ export function FavoriteButton({ slug, current }: { slug: string; current: Favor
   );
 }
 
-export function NoteForm({ slug }: { slug: string }) {
+export function NoteForm({ slug, placeholder }: { slug: string; placeholder?: string }) {
   const router = useRouter();
   const [body, setBody] = useState("");
   const [message, setMessage] = useState<string | null>(null);
@@ -117,7 +117,13 @@ export function NoteForm({ slug }: { slug: string }) {
     <form className="personal-form" onSubmit={(event) => void onSubmit(event)}>
       <label>
         Nueva nota
-        <textarea value={body} onChange={(event) => setBody(event.target.value)} rows={4} maxLength={20000} />
+        <textarea
+          value={body}
+          onChange={(event) => setBody(event.target.value)}
+          rows={4}
+          maxLength={20000}
+          placeholder={placeholder}
+        />
       </label>
       <button type="submit">Agregar nota</button>
       {message ? <p className="muted">{message}</p> : null}

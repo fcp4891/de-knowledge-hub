@@ -1,0 +1,69 @@
+/* DE Knowledge Hub — tokens de diseño (rediseño UI, oct 2026)
+   Fuente: maquetas Inicio v2, Ruta de dominio y Ficha en modo lectura.
+   Copiar a frontend/styles/tokens.css e importar en el layout raíz. */
+
+:root {
+  /* Tipografía (Google Fonts: IBM Plex Sans 400-700, Source Serif 4 400/600, JetBrains Mono 400/500) */
+  --font-ui: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-read: 'Source Serif 4', Georgia, serif;
+  --font-code: 'JetBrains Mono', ui-monospace, monospace;
+
+  --text-xs: 12px;
+  --text-sm: 13px;
+  --text-base: 15px;
+  --text-read: 18px;      /* cuerpo de lectura en la ficha */
+  --text-lead: 19px;      /* resumen de la ficha */
+  --text-h3: 19px;
+  --text-h2: 22px;
+  --text-h1: 32px;
+  --text-display: 40px;   /* título de la ficha */
+  --leading-ui: 1.5;
+  --leading-read: 1.65;
+  --measure-read: 70ch;   /* ancho máximo de la columna de lectura */
+
+  /* Neutros */
+  --bg: #F5F6F3;
+  --surface: #FFFFFF;
+  --surface-muted: #EDEFEA;
+  --border: #E2E4DF;
+  --border-strong: #D5D8D1;
+  --ink: #15171C;
+  --ink-2: #24272E;
+  --ink-3: #3F444D;
+  --ink-muted: #565B66;
+  --ink-disabled: #9A9FA8;
+
+  /* Acento */
+  --accent: #0D5F5A;
+  --accent-hover: #0A4743;
+  --accent-soft: #E3F0EE;
+  --accent-on-dark: #DCEFEC;
+
+  /* Estados de contenido */
+  --ok-bg: #DDEFE4;   --ok-ink: #165536;     /* Verificada */
+  --warn-bg: #FBEBD3; --warn-ink: #7A4A00;   /* En revisión / Necesita repaso */
+
+  /* Niveles de objetivo */
+  --lvl-inicial-bg: #DDEFE4;    --lvl-inicial-ink: #165536;
+  --lvl-intermedio-bg: #E4ECF9; --lvl-intermedio-ink: #22468A;
+  --lvl-avanzado-bg: #F3E6F7;   --lvl-avanzado-ink: #5E2A73;
+
+  /* Capas del mapa (color = línea/borde, dark = número sobre blanco, AA) */
+  --layer-frontera: #4E7D2B;    --layer-frontera-dark: #3A5F1F;
+  --layer-flujo: #2F5FB3;       --layer-flujo-dark: #22468A;
+  --layer-operacion: #6B4FB3;   --layer-operacion-dark: #4B3590;
+  --layer-transversal: #B23A48; --layer-transversal-dark: #8A2433;
+  --layer-plataforma: #B85A08;  --layer-plataforma-dark: #8A4306;
+  --layer-cimientos: #0D7C74;   --layer-cimientos-dark: #0A5E58;  --layer-cimientos-bg: #EEF7F5;
+
+  /* Forma y espacio */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+  --touch-min: 44px;
+}
+
+/* Modo oscuro: pendiente de diseñar; no implementar en esta iteración. */

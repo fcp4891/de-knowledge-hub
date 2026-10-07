@@ -6,9 +6,60 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-07
 
 ## Actual
-- **Tarea activa:** Revisión de los cambios mínimos de NULL y claves (`112f862`) en `docs/reviews/fixes-null-concat.md`. Filas en pendiente. No se editó `content/` ni `frontend/`.
-- **Siguiente:** Felipe aprueba o rechaza las filas. Carril A aplica las que se aprueben.
+- **Tarea activa:** ninguna. `b/ui-redesign` cerrada en el commit 5 y mergeada a `main` por Carril A. La revisión de NULL y claves (`fixes-null-concat.md`) fue aprobada por Felipe y aplicada por Carril A.
+- **Siguiente:** lo que asigne Felipe; en Carril A, pedido abierto de revisar el cambio mínimo en `change-detection`. Ideas fuera de esta fase siguen en `docs/BACKLOG.md`.
 - **Bloqueos:** ninguno.
+
+### Rediseño UI · commit 5 (cierre)
+- `make` no está en el PATH de Windows. Se creó `.venv` con `py -3.12` (la receta de `make venv`) y se regeneró `frontend/public/data/` con `validate` y `scripts.static.build_static_data` (la receta de `make static-data`): 1020 respuestas. **`public/data/` no se versiona.** No se editó `content/` ni `backend/`.
+- Con esos datos, Schema evolution tiene ficha. Desde Idempotencia, «Siguiente en la ruta» abre «Evolución de esquema».
+- Accesibilidad: enlace «Saltar al contenido», foco visible, trampa de Tab en la búsqueda y retorno del foco al botón que la abrió, Escape cierra el menú móvil, la barra de lectura es `progressbar`, objetivos y botones de nota y de copiar código llegan a 44 px, y el índice cerrado en pantallas estrechas sale del árbol de accesibilidad. `prefers-reduced-motion` deja el scroll en `auto`.
+- En `hybrid`, las fichas y las rutas se renderizan en cada pedido (`dynamic = "force-dynamic"`). Sin eso, `next start` respondía 500: la página se había prerenderizado y el `no-store` de la API la volvía dinámica. El build estático quita esa línea y sigue exportando. `dynamicParams` queda en `true` y `personalActions.ts` sigue con `"use server"`.
+- El `hybrid` no usa `BASE_PATH` (solo el export estático). Se probó en `http://127.0.0.1:3010/`. La búsqueda de ese servidor no llegó a la API: CORS solo admite `http://localhost:3000` y ese puerto lo ocupa el servidor del otro worktree. La API sí responde (`bigquery` devuelve resultados). En estático la búsqueda es local y sí se probó.
+- No se editó `content/` ni el contrato.
+
+Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
+
+- **Inicio.** Elegir «Empiezo desde cero» marca el objetivo, numera el itinerario con el color oscuro de cada capa y el botón dice «Empezar por Fundamentos». Volver a pulsarlo deja el mapa neutro: sin números y sin atenuar. A 1440 el mapa no desborda. A 375 la página no desborda, las capas largas hacen scroll dentro de la fila y los objetivos superan 44 px.
+- **Ruta** (`/explorer/pipelines`). Una ficha pendiente es un `div` y dice «Ficha pendiente». Hay siguiente recomendado. Sin repasos, la píldora no está. Sin scroll horizontal a 1440 ni a 375.
+- **Ficha** (Idempotencia). El índice resalta Resumen. Flecha derecha pasa a AWS y Fin a Azure. El progreso queda en `dekh:reading:idempotency` y sigue al recargar. La ficha siguiente existe. A 375 el índice cerrado no ocupa el árbol y la página no desborda.
+- **Repaso.** La página carga, sin scroll horizontal a 375.
+- **Búsqueda.** En estático, «bigquery» devuelve resultados, Tab no sale del diálogo y Escape lo cierra y devuelve el foco a «Buscar». Ctrl no hizo falta: el botón abre el mismo diálogo. El salto «Saltar al contenido» recibe el primer Tab. A 375, Escape cierra el menú y devuelve el foco a «Menú».
+- **Contraste.** Texto principal por encima de 4.5:1. El objetivo activo, medido en `hybrid`, queda en 12.22:1 (descripción) y 8.73:1 (meta).
+- Lint, `npm run build` y `npm run build:static` con `BASE_PATH=/DES_conocimiento` en verde.
+
+### Rediseño UI · commit 1 (tokens, fuentes, layout y menú)
+- `docs/design/handoff-ui/` versionado (README, `tokens.css`, `learning-paths.ts` y maquetas). `tokens.css` copiado a `frontend/styles/tokens.css` e importado en el layout raíz.
+- Fuentes IBM Plex Sans, Source Serif 4 y JetBrains Mono con `next/font/google`: se descargan al compilar y se sirven desde `_next/static/media`, sin pedidos a Google en tiempo de ejecución (sirve igual en la demo de cPanel). `--font-ui`, `--font-read` y `--font-code` apuntan a esas fuentes.
+- `SiteHeader` reemplazado por `SideNav`: menú lateral desde 1024 px y barra superior con botón «Menú» (`aria-expanded`) por debajo. Enlaces Inicio · Rutas (`/explorer`) · Repaso · Snippets, con `aria-current`, y Buscar (Ctrl K) que abre la búsqueda existente. **Se quitó la lista de dominios del menú.**
+- Contador de Repaso: en `hybrid`, `total` de `GET /me/study-state?state=needs_review` en el layout; en `static`, desde `localStorage` (`dekh.personal`), actualizado al cambiar. Se oculta si es 0.
+- Página `/repaso`: conceptos en «Necesita repaso», del estudiado hace más tiempo al más reciente, con dominio y «Hace N días» desde `last_studied_at`, y un estado vacío. En `static` la lista se arma en el navegador con el catálogo de conceptos del build.
+- Las vistas existentes siguen con sus estilos: las variables anteriores (`--text`, `--muted`, `--line`) son alias de los tokens nuevos, y `--accent` toma el valor nuevo. Foco visible global.
+- Verificado: lint, `npm run build` y `npm run build:static` con `BASE_PATH=/DES_conocimiento` en verde. En Edge headless, sobre el build estático: menú lateral a 1440 px, barra y menú desplegable a 375 px sin scroll horizontal, y contador y lista de Repaso con un concepto marcado en `localStorage`. Falta probar en Chrome normal (criterio del README; queda para el commit 5).
+
+### Rediseño UI · commit 2 (Inicio)
+- `/` sigue la pantalla 1: fecha, «¿Qué quieres hacer hoy?», tarjeta «Continuar donde quedaste» (el concepto *Revisando* con `last_studied_at` más reciente; en `static`, desde `localStorage`), los 6 objetivos, el itinerario y el mapa. Se quitaron las secciones vacías del inicio anterior.
+- El objetivo se guarda en `localStorage` (`dekh:goal`). Volver a pulsarlo lo deselecciona y el mapa queda neutro: sin números de paso y sin atenuar. Los números del itinerario usan el color `dark` de su capa. El botón dice «Empezar por » más el nombre corto, con espacio, y enlaza a `/explorer/<slug>`.
+- El mapa arma cada estación con sus dos segmentos (sin posiciones absolutas). La grilla es `minmax(92px, 1fr)` y, si no cabe, hace scroll dentro de la fila. «x/y fichas» sale de `concept_count` y de `has_page` en el listado de conceptos. El subdominio de «Continuar» sale del detalle de dominio; el contrato no lo trae en el resumen del concepto.
+- La línea «Ibas en la sección N de 22» se lee de `dekh:reading:<slug>` si ya existe. La escribe la ficha (commit 4), con el número de la mayor sección vista, su título y la fecha. Si no está, esa línea y la barra no aparecen.
+- No se editó `content/` ni el contrato.
+- Verificado: lint, `npm run build` y `npm run build:static` con `BASE_PATH=/DES_conocimiento` en verde. Sobre el export estático, a 1440 px y a 375 px: deseleccionar el objetivo quita números y atenuado; los números del itinerario usan el color oscuro de la capa; el botón es «Empezar por DevOps»; el mapa no desborda la página y las capas largas hacen scroll dentro de la fila. Falta probar en Chrome normal (queda para el commit 5).
+
+### Rediseño UI · commit 3 (ruta de dominio)
+- `/explorer/[slug]` reemplaza el listado con filtros por la ruta de la pantalla 2: migas, «Buscar en este dominio», cabecera y la ruta vertical. Las etapas salen en el orden de los subdominios. Dentro de cada una, los conceptos van de básico a avanzado y, en el mismo nivel, en el orden del blueprint.
+- Un concepto con `has_page: false` no es enlace y dice «Ficha pendiente». El siguiente recomendado es el primer concepto con ficha que no está `understood` ni `applied`. Si todos los que tienen ficha están en uno de esos dos estados, la tarjeta dice «Dominio completo» y, si hay un objetivo activo, enlaza al dominio siguiente de ese objetivo.
+- La píldora «N para repasar» solo aparece si hay conceptos en `needs_review`. «~N min» sale de las palabras de la ficha (palabras / 200); si la ficha no tiene texto, no se muestra.
+- No se editó `content/` ni el contrato.
+- Verificado: lint, los dos builds en verde. En el export estático de Pipelines: el orden de etapas y de Ingesta coincide con el blueprint; las fichas pendientes son `div` y no enlace; con batch comprendido y archivos aplicado, el siguiente es Ingesta streaming; con todas las fichas comprendidas o aplicadas y el objetivo «Empiezo desde cero», sugiere Orquestación. Sin repasos, la píldora no está. Falta probar en Chrome normal (queda para el commit 5).
+
+### Rediseño UI · commit 4 (ficha en modo lectura)
+- `/concepts/[slug]` sigue la pantalla 3: migas, «Leído N de 22», índice agrupado con `CARD_SECTION_GROUPS`, columna de lectura y panel «Tu estudio».
+- El índice no lista secciones sin texto. El resumen queda siempre visible. Las secciones 3 y 10 salen abiertas; el resto, en `<details>`. «Expandir todo / Contraer todo» abre o cierra esos `<details>`. Multicloud es un `tablist` GCP / AWS / Azure: flechas, Inicio y Fin mueven la pestaña y el foco.
+- La mayor sección vista se guarda en `localStorage` (`dekh:reading:<slug>`: `section`, `title`, `at`). No baja si ya había un número más alto. Alimenta la barra de la ficha y la línea de «Continuar donde quedaste».
+- El pie marca `understood` o `needs_review` (en `static`, `localStorage`; en `hybrid`, la server action que ya existía). «Siguiente en la ruta» es el concepto con ficha que sigue en el orden de la pantalla 2. En Idempotencia, el siguiente es Schema evolution.
+- El panel de estudio usa los cinco estados del contrato, la casilla de profundizar y las notas. «Ver todas» abre el grafo que ya había. En la demo, las notas dicen que se guardan en el navegador.
+- No se editó `content/` ni el contrato. El favorito y la lista de snippets salieron de esta ficha; un snippet relacionado sigue en el grafo.
+- Verificado: lint, `npm run build` y `npm run build:static` con `BASE_PATH=/DES_conocimiento` en verde. `dynamicParams` sigue en `true` y `personalActions.ts` sigue con `"use server"`. En el export estático, a 1440 px y a 375 px, Idempotencia no desborda. El índice resalta la sección visible, las pestañas cambian con el teclado, el progreso queda en `dekh:reading:idempotency` y el Inicio muestra «Ibas en la sección N de 22». Falta probar en Chrome normal (queda para el commit 5).
 
 ### NULL en CONCAT y claves (`112f862`)
 - `grain` §4, `data-reconciliation` §10, snippet `bigquery-reconciliation`, `surrogate-keys` §10 y `surrogate-key-generation` §4, §8 y §10. Filas en pendiente en `docs/reviews/fixes-null-concat.md`.
