@@ -6,8 +6,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-07
 
 ## Actual
-- **Tarea activa:** rediseño UI en `b/ui-redesign` (especificación en `docs/design/handoff-ui/README.md`). Plan de 5 commits aprobado, con la página Repaso. Commit 2 de 5 hecho.
-- **Siguiente:** commit 3, ruta de dominio.
+- **Tarea activa:** rediseño UI en `b/ui-redesign` (especificación en `docs/design/handoff-ui/README.md`). Plan de 5 commits aprobado, con la página Repaso. Commit 3 de 5 hecho.
+- **Siguiente:** commit 4, ficha en modo lectura y progreso de lectura.
 - **Bloqueos:** ninguno.
 
 ### Rediseño UI · commit 1 (tokens, fuentes, layout y menú)
@@ -26,6 +26,13 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - La línea «Ibas en la sección N de 22» se lee de `dekh:reading:<slug>` si ya existe. La ficha todavía no la escribe (commit 4); si no está, esa línea y la barra no aparecen.
 - No se editó `content/` ni el contrato.
 - Verificado: lint, `npm run build` y `npm run build:static` con `BASE_PATH=/DES_conocimiento` en verde. Sobre el export estático, a 1440 px y a 375 px: deseleccionar el objetivo quita números y atenuado; los números del itinerario usan el color oscuro de la capa; el botón es «Empezar por DevOps»; el mapa no desborda la página y las capas largas hacen scroll dentro de la fila. Falta probar en Chrome normal (queda para el commit 5).
+
+### Rediseño UI · commit 3 (ruta de dominio)
+- `/explorer/[slug]` reemplaza el listado con filtros por la ruta de la pantalla 2: migas, «Buscar en este dominio», cabecera y la ruta vertical. Las etapas salen en el orden de los subdominios. Dentro de cada una, los conceptos van de básico a avanzado y, en el mismo nivel, en el orden del blueprint.
+- Un concepto con `has_page: false` no es enlace y dice «Ficha pendiente». El siguiente recomendado es el primer concepto con ficha que no está `understood` ni `applied`. Si todos los que tienen ficha están en uno de esos dos estados, la tarjeta dice «Dominio completo» y, si hay un objetivo activo, enlaza al dominio siguiente de ese objetivo.
+- La píldora «N para repasar» solo aparece si hay conceptos en `needs_review`. «~N min» sale de las palabras de la ficha (palabras / 200); si la ficha no tiene texto, no se muestra.
+- No se editó `content/` ni el contrato.
+- Verificado: lint, los dos builds en verde. En el export estático de Pipelines: el orden de etapas y de Ingesta coincide con el blueprint; las fichas pendientes son `div` y no enlace; con batch comprendido y archivos aplicado, el siguiente es Ingesta streaming; con todas las fichas comprendidas o aplicadas y el objetivo «Empiezo desde cero», sugiere Orquestación. Sin repasos, la píldora no está. Falta probar en Chrome normal (queda para el commit 5).
 
 ### Demo estática
 - `API_MODE=static` y `BASE_PATH` (obligatorio, no va fijo en el código). `npm run build:static` deja `frontend/out/`. Durante ese build el script pone `dynamicParams = false` en las cuatro rutas dinámicas, sustituye `personalActions.ts` por el stub sin server actions y restaura ambos al terminar.

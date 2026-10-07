@@ -10,7 +10,29 @@ import { RESULT_LABEL } from "@/lib/labels";
 
 const DEBOUNCE_MS = 250;
 
-export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
+function filterSearchDomain(result: ApiResult<SearchResults>, domain: string): ApiResult<SearchResults> {
+  if (!result.ok) {
+    return result;
+  }
+  const groups = result.data.groups
+    .map((group) => ({
+      ...group,
+      items: group.items.filter((item) => item.domain === domain),
+    }))
+    .filter((group) => group.items.length > 0);
+  const total = groups.reduce((count, group) => count + group.items.length, 0);
+  return { ok: true, data: { ...result.data, groups, total } };
+}
+
+export function SearchDialog({
+  open,
+  onClose,
+  domain,
+}: {
+  open: boolean;
+  onClose: () => void;
+  domain?: string;
+}) {
   const titleId = useId();
   const [query, setQuery] = useState("");
   const [debounced, setDebounced] = useState("");
@@ -30,10 +52,14 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
     }
     const controller = new AbortController();
     setPending(true);
+    const params = new URLSearchParams({ q: debounced });
+    if (domain) {
+      params.set("domain", domain);
+    }
     const request =
       process.env.NEXT_PUBLIC_API_MODE === "static"
-        ? searchLocal(debounced)
-        : fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/search?q=${encodeURIComponent(debounced)}`, {
+        ? searchLocal(debounced).then((payload) => (domain ? filterSearchDomain(payload, domain) : payload))
+        : fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/search?${params.toString()}`, {
             signal: controller.signal,
           }).then(async (response) => {
             if (!response.ok) {
@@ -54,7 +80,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
         setPending(false);
       });
     return () => controller.abort();
-  }, [debounced, open]);
+  }, [debounced, domain, open]);
 
   useEffect(() => {
     if (!open) {
@@ -84,7 +110,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
         aria-labelledby={titleId}
         onClick={(event) => event.stopPropagation()}
       >
-        <h2 id={titleId}>Buscar</h2>
+        <h2 id={titleId}>{domain ? "Buscar en este dominio" : "Buscar"}</h2>
         <input
           autoFocus
           value={query}
