@@ -37,6 +37,8 @@ const STUDY_STATES: StudyStatus[] = [
 ];
 
 const CLOUD_ORDER = ["gcp", "aws", "azure"];
+const TOC_KEY = "dekh:toc";
+const STUDY_KEY = "dekh:study";
 
 export type ReadingSectionModel = {
   number: number;
@@ -186,6 +188,39 @@ export function ConceptReading({
   const [ready, setReady] = useState(!staticMode);
   const [saveError, setSaveError] = useState<string | null>(studyError);
   const [graphOpen, setGraphOpen] = useState(false);
+  const [tocMode, setTocMode] = useState<"auto" | "open" | "closed">("auto");
+  const [studyOpen, setStudyOpen] = useState(true);
+  const [wideReading, setWideReading] = useState(true);
+
+  useEffect(() => {
+    const toc = localStorage.getItem(TOC_KEY);
+    const study = localStorage.getItem(STUDY_KEY);
+    if (toc === "open" || toc === "closed") {
+      setTocMode(toc);
+    }
+    if (study === "closed") {
+      setStudyOpen(false);
+    }
+    const media = window.matchMedia("(min-width: 1180px)");
+    const sync = () => setWideReading(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
+
+  const tocOpen = tocMode === "open" || (tocMode === "auto" && wideReading);
+
+  function toggleToc() {
+    const next = !tocOpen;
+    setTocMode(next ? "open" : "closed");
+    localStorage.setItem(TOC_KEY, next ? "open" : "closed");
+  }
+
+  function toggleStudy() {
+    const next = !studyOpen;
+    setStudyOpen(next);
+    localStorage.setItem(STUDY_KEY, next ? "open" : "closed");
+  }
 
   const activeCloud = clouds.find((section) => section.key === cloudId) ?? clouds[0] ?? null;
   const firstCloud = clouds[0]?.key ?? "";
@@ -472,6 +507,14 @@ export function ConceptReading({
             </li>
           </ol>
         </nav>
+        <div className="reading-toggles">
+          <button type="button" className="reading-toggle" aria-expanded={tocOpen} onClick={toggleToc}>
+            {tocOpen ? "Ocultar índice" : "Mostrar índice"}
+          </button>
+          <button type="button" className="reading-toggle" aria-expanded={studyOpen} onClick={toggleStudy}>
+            {studyOpen ? "Ocultar estudio" : "Mostrar estudio"}
+          </button>
+        </div>
         <div
           className="reading-progress"
           role="progressbar"
@@ -487,10 +530,13 @@ export function ConceptReading({
         </div>
       </div>
 
-      <div className="reading-layout">
-        <details className="reading-toc">
-          <summary className="reading-toc-summary">Índice</summary>
-          <nav className="reading-toc-nav" aria-label="Índice de la ficha">
+      <div
+        className="reading-layout"
+        data-toc={tocMode === "auto" ? undefined : tocMode}
+        data-study={studyOpen ? undefined : "closed"}
+      >
+        <nav className="reading-toc" aria-label="Índice de la ficha">
+          <div className="reading-toc-nav">
             {listed.length === 0 ? <p className="reading-quiet">Sin secciones con contenido.</p> : null}
             {CARD_SECTION_GROUPS.map((group) => {
               const items = group.sections
@@ -528,8 +574,8 @@ export function ConceptReading({
                 </div>
               );
             })}
-          </nav>
-        </details>
+          </div>
+        </nav>
 
         <article ref={articleRef} className="reading-article">
           <div className="reading-measure">

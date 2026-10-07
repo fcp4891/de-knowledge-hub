@@ -263,8 +263,8 @@
 
 @media (min-width: 1024px) {
   .home-itinerary {
-    flex: 0 1 380px;
-    max-width: 380px;
+    flex: 0 1 320px;
+    max-width: 320px;
   }
 
   .home-map {
@@ -543,4 +543,15 @@
 .home-station-name[data-emphasis="dimmed"] {
   font-weight: 500;
   color: var(--ink-disabled);
+}
+
+@media (min-width: 1280px) {
+  .home-stations {
+    min-width: 0;
+    grid-template-columns: repeat(var(--station-count), minmax(0, 1fr));
+  }
+
+  .home-stations-scroll {
+    overflow-x: hidden;
+  }
 }

@@ -6,9 +6,17 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-07
 
 ## Actual
-- **Tarea activa:** ninguna. `b/ui-redesign` cerrada en el commit 5 y mergeada a `main` por Carril A. La revisión de NULL y claves (`fixes-null-concat.md`) fue aprobada por Felipe y aplicada por Carril A.
-- **Siguiente:** lo que asigne Felipe; en Carril A, pedido abierto de revisar el cambio mínimo en `change-detection`. Ideas fuera de esta fase siguen en `docs/BACKLOG.md`.
+- **Tarea activa:** ajustes de UI en `b/ui-polish-1` (desde `main`, sin merge).
+- **Siguiente:** lo que asigne Felipe. Ideas fuera de esta fase siguen en `docs/BACKLOG.md`.
 - **Bloqueos:** ninguno.
+
+### Ajustes UI · paneles, mapa e índice
+- El índice de la ficha salía vacío (un punto y un hueco) porque vivía en un `<details>` cerrado. En Chrome el contenido de un `<details>` cerrado no se pinta, aunque el CSS fuerce `display`, y el marcador del resumen queda como un punto mientras la columna del grid sigue reservando 200–250 px. Ahora el índice es un `<nav>` real. Si se oculta, `display: none` y la columna desaparece.
+- El menú de escritorio se contrae a 64 px (`dekh:nav` en `localStorage`). Cada ícono tiene `aria-label` y `title`. `[` lo alterna fuera de los campos de texto. «Tu estudio» se oculta con un botón (`dekh:study`); la lectura queda centrada y llega a su máximo de 70ch.
+- El itinerario cabe en 320 px. Desde 1280 px las estaciones del mapa se adaptan al ancho y ninguna capa, Transversal incluida, muestra scroll horizontal. El scroll sigue en pantallas más estrechas.
+- Se regeneró `frontend/public/data/` (269 entidades, 1020 respuestas) porque `main` ya traía la revisión de NULL. **No se versiona.** No se editó `content/` ni `backend/`.
+- Verificado en Chrome normal, export estático bajo `/DES_conocimiento/`: a 1440, 1280 y 1024 el itinerario mide 320 px y la página no desborda; a 1440 y 1280 el mapa no hace scroll; a 1024 y 375 las capas largas sí. En Idempotencia el índice mide 250 px y lista secciones; al ocultarlo el artículo pasa de x=538 a x=256. Al ocultar el estudio, el bloque de lectura queda en 630 px, que es el 70ch calculado. El menú colapsa a 64 px, recuerda el estado y `[` lo vuelve a abrir. A 375 el botón de contraer no se muestra y sigue el de «Menú».
+- Lint, `npm run build` y `npm run build:static` con `BASE_PATH=/DES_conocimiento` en verde. `dynamicParams` sigue en `true` y `personalActions.ts` sigue con `"use server"`.
 
 ### Rediseño UI · commit 5 (cierre)
 - `make` no está en el PATH de Windows. Se creó `.venv` con `py -3.12` (la receta de `make venv`) y se regeneró `frontend/public/data/` con `validate` y `scripts.static.build_static_data` (la receta de `make static-data`): 1020 respuestas. **`public/data/` no se versiona.** No se editó `content/` ni `backend/`.

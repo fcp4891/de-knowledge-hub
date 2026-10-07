@@ -59,6 +59,12 @@ export default async function RootLayout({
   return (
     <html lang="es" className={`${plexSans.variable} ${sourceSerif.variable} ${jetbrainsMono.variable}`}>
       <body>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              '(function(){try{if(localStorage.getItem("dekh:nav")==="collapsed")document.documentElement.dataset.nav="collapsed";}catch(e){}})();',
+          }}
+        />
         <a className="skip-link" href="#contenido">
           Saltar al contenido
         </a>
