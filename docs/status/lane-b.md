@@ -6,13 +6,12 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-08
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote F3b-03a. Revisión en `docs/reviews/cards-f3b-03a.md`. Filas en pendiente. No se editó `content/` ni `frontend/`.
-- **Siguiente:** Felipe aprueba o rechaza las filas. Carril A aplica las que se aprueben.
+- **Tarea activa:** B-F3.1 del lote F3b-03a. Felipe aprobó todas las filas el 2026-10-08 en `docs/reviews/cards-f3b-03a.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** En espera del lote 03b. Carril A aplica las propuestas aprobadas.
 - **Bloqueos:** ninguno.
 
 ### B-F3.1 · lote F3b-03a
-- Diez fichas de `python-core`, tabla de §48, filas pendiente.
-- Propuestas: citar la documentación de Python 3.12 (`/3.12/`) en lo ejecutado con 3.12, y dejar la de 3.14 solo para el `SyntaxWarning` del `finally`; en `os.replace`, repetir la frase de la página (si tiene éxito, es atómico, requisito de POSIX; puede fallar entre sistemas de archivos) y quitar «deja de ser atómico»; quitar de `python-context-managers` la frase sobre Cloud Storage; anotar el retorno de `pares` en el §7 de `python-generators`.
+- Diez fichas de `python-core`, tabla de §48. Felipe aprobó todas las filas el 2026-10-08, incluidas las cuatro propuestas: `/3.12/` en lo ejecutado y `/3/` solo para el `SyntaxWarning` del `finally`; `os.replace` atómico si tiene éxito y puede fallar entre sistemas de archivos; sin la frase de Cloud Storage en `python-context-managers`; retorno de `pares` en el §7 de `python-generators`. No se editó `content/` ni `frontend/`.
 
 ### Ajustes UI · paneles, mapa e índice
 - El índice de la ficha salía vacío (un punto y un hueco) porque vivía en un `<details>` cerrado. En Chrome el contenido de un `<details>` cerrado no se pinta, aunque el CSS fuerce `display`, y el marcador del resumen queda como un punto mientras la columna del grid sigue reservando 200–250 px. Ahora el índice es un `<nav>` real. Si se oculta, `display: none` y la columna desaparece.
@@ -173,7 +172,7 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 ## Historial
 
 ### B-F3.1 · lote F3b-03a (2026-10-08)
-- Revisión de las 10 fichas de `python-core`. Filas en pendiente en `docs/reviews/cards-f3b-03a.md`. No se editó `content/`.
+- Revisión de las 10 fichas de `python-core`. Felipe aprobó todas las filas, incluidas las cuatro propuestas. No se editó `content/`. En espera del lote 03b.
 
 ### NULL en CONCAT y claves (2026-10-07)
 - Revisión de `grain` §4, `data-reconciliation` §10, el snippet `bigquery-reconciliation`, `surrogate-keys` §10 y `surrogate-key-generation` §4, §8 y §10. Filas en pendiente en `docs/reviews/fixes-null-concat.md`. No se editó `content/`.
