@@ -1,9 +1,10 @@
-"""Construye la demo estática del frontend y la empaqueta en dist/dekh-static-<fecha>.zip.
+"""Construye la demo estática del frontend y la empaqueta en dist/dekh-static-<fecha>-<hora>.zip.
 
 Ejecuta `npm run build:static` en frontend/ con BASE_PATH (lo usa el build de Carril B, que también
 escribe out/.htaccess) y comprime el contenido de frontend/out/ en la raíz del zip: al usar
 «Extract» en public_html/<carpeta>/ de cPanel, index.html y .htaccess quedan en esa carpeta.
-Re-ejecutar el mismo día reemplaza el zip.
+El nombre lleva la fecha y la hora locales del sistema (AAAA-MM-DD-HHMMSS): re-ejecutar no sobrescribe
+ningún zip anterior, y si el nombre ya existe el empaquetado se detiene.
 
 Requiere frontend/public/data/ (scripts.static.build_static_data) y las dependencias de npm.
 Uso: python -m scripts.static.package_static [--base-path /DES_conocimiento] [--skip-build]
@@ -49,9 +50,15 @@ def check_output(base_path: str) -> None:
         raise SystemExit(f"index.html no usa BASE_PATH={base_path}")
 
 
-def package(day: dt.date) -> Path:
+def zip_name(moment: dt.datetime) -> str:
+    return f"dekh-static-{moment:%Y-%m-%d-%H%M%S}.zip"
+
+
+def package(moment: dt.datetime) -> Path:
     DIST.mkdir(exist_ok=True)
-    target = DIST / f"dekh-static-{day.isoformat()}.zip"
+    target = DIST / zip_name(moment)
+    if target.exists():
+        raise SystemExit(f"Ya existe {target}: no se sobrescribe")
     files = sorted(path for path in OUT.rglob("*") if path.is_file())
     with zipfile.ZipFile(target, "w", compression=zipfile.ZIP_DEFLATED) as zf:
         for path in files:
@@ -71,7 +78,7 @@ def main(argv: list[str] | None = None) -> None:
     if not args.skip_build:
         build_frontend(base_path)
     check_output(base_path)
-    target = package(dt.date.today())
+    target = package(dt.datetime.now())   # hora local del sistema
     print(f"zip: {target} ({target.stat().st_size:,} bytes, BASE_PATH={base_path})")
 
 

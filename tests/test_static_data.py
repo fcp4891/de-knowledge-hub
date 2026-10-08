@@ -9,7 +9,10 @@ from typing import Any
 import pytest
 
 from scripts.static import build_static_data as s
-from scripts.static.package_static import check_base_path
+import datetime as dt
+
+from scripts.static import package_static
+from scripts.static.package_static import check_base_path, zip_name
 
 
 def read(out: Path, relative: str) -> Any:
@@ -79,3 +82,18 @@ def test_base_path_rejects_converted_or_bad_values(value: str) -> None:
 
 def test_base_path_accepts_cpanel_folder() -> None:
     assert check_base_path("/DES_conocimiento") == "/DES_conocimiento"
+
+
+def test_zip_name_uses_local_date_and_time() -> None:
+    assert zip_name(dt.datetime(2026, 10, 8, 19, 5, 7)) == "dekh-static-2026-10-08-190507.zip"
+    assert zip_name(dt.datetime(2026, 10, 8, 19, 5, 7)) != zip_name(dt.datetime(2026, 10, 8, 19, 5, 8))
+
+
+def test_package_refuses_to_overwrite(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(package_static, "DIST", tmp_path)
+    moment = dt.datetime(2026, 10, 8, 19, 5, 7)
+    existing = tmp_path / zip_name(moment)
+    existing.write_bytes(b"anterior")
+    with pytest.raises(SystemExit):
+        package_static.package(moment)
+    assert existing.read_bytes() == b"anterior"
