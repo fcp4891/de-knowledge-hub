@@ -2,18 +2,19 @@
 
 Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
-**Última actualización:** 2026-10-07
+**Última actualización:** 2026-10-08
 
 ## Actual
-- **Tarea activa:** ninguna. 02-sql completo: 33/33 `verified`, pendiente de tu aprobación en el navegador.
+- **Tarea activa:** ninguna. Lote F3b-03a (10 fichas, 03-python) entregado en `review_required`; espera B-F3.1. 02-sql aprobado por Felipe en el navegador (2026-10-08).
 - **Mergeado para Carril B:** `b/static-search-fix` (3b50505), `b/f3b-review-01b` (98f13ef), `b/static-demo` (8f96908) y `b/static-search-tags` (e7bb47c) en `main`, 2026-10-06. `f/sql` (a7c0d74) mergeada en `a/f3b-batch-02a` solo con los 10 esqueletos de 02a; los otros 14 se traen por lote, sin publicar esqueletos vacíos en `main`.
-- **Siguiente:** cuando avises que `b/ui-redesign` está cerrada, mergearla y hacer un solo `make static`. Después de tu aprobación de 02-sql, el plan de 03-python (aprobado, en espera).
+- **Siguiente:** aplicar la revisión B-F3.1 de 03a; después, el lote F3b-03b (11 fichas, con PySpark en la CI y Beam con DirectRunner).
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
 
 ## Pedidos a Carril B
 | Pedido | Estado |
 |---|---|
+| **B-F3.1 · Revisar el lote F3b-03a** (10 fichas, 03-python, `python-core`): `python-data-structures`, `python-comprehensions`, `python-functions`, `python-typing`, `python-classes`, `python-exceptions`, `python-context-managers`, `python-iterators`, `python-generators` y `python-file-handling`. Sin VERIFY. Fuentes nuevas Nivel 1 en el registro: `aws-lambda-docs` y `gcp-cloud-run-docs` (Azure usa `microsoft-learn`). Código: los 20 bloques de Python (§7 y §10) se ejecutaron con Python 3.12.3 y los de §10 pasan `mypy --strict`; los de §7 de `python-typing` y `python-exceptions` terminan con la excepción que muestran a propósito. §11–13: los conceptos del lenguaje dicen «No aplica de forma específica» salvo donde hay fuente oficial: `python-iterators` (versión del runtime: `itertools.batched` exige 3.12; tablas de runtimes de Lambda y Cloud Run; en Azure Functions cambiar la versión no reconstruye dependencias) y `python-file-handling` (Lambda `/tmp` de 512 a 10.240 MB; Cloud Run con sistema de archivos en memoria, sin persistencia ni límite de tamaño; Azure Functions `tmp/` sin persistencia garantizada). URLs de la documentación de Python citadas en su forma final (`builtins/stdtypes.html`, `builtins/exceptions.html`, `builtins/functions.html`; las de `library/` redirigen). Revisar en especial: que la atomicidad de `os.replace` se atribuya solo a POSIX (ejecutado en Windows/NTFS) y que no se afirme nada de Cloud Storage en `python-context-managers`; la diferencia entre el `/tmp` de Lambda y el sistema de archivos en memoria de Cloud Run. Al pasar a `verified` se actualizan las menciones «pendiente de ficha» de `python-typing` (`data-validation-with-pydantic`) y `python-exceptions` (`python-error-handling-and-retries`) | Abierto |
 | **Revisar cambio mínimo en `change-detection`** (`verified`): §4 y §14 agregan la serialización JSON (`TO_JSON_STRING(STRUCT(...))` en BigQuery, `jsonb_build_array` en PostgreSQL) como alternativa sin marcador ni separador, para que coincida con lo aplicado en `data-reconciliation`, `bigquery-reconciliation`, `surrogate-keys` y `surrogate-key-generation`. Registrado en su historial | Abierto |
 | ~~Revisar cambios mínimos en fichas `verified` (NULL y claves)~~: (1) `grain` §4 atribuye por motor las claves primarias no exigidas (BigQuery `NOT ENFORCED`, Redshift informativas, Fabric solo `NOT ENFORCED`). (2) `CONCAT` con NULL, aprobado por Felipe: `data-reconciliation` §10 y el snippet `bigquery-reconciliation` usan el marcador `IFNULL(…, '\\N')` de `change-detection` (literal de BigQuery para `\N`) en la huella (antes una fila con `monto` nulo quedaba fuera de `BIT_XOR`) y comparan el detalle con `IS DISTINCT FROM` en lugar de `!=`; `data-reconciliation` agrega un caso de prueba en PostgreSQL con `monto` NULL (sin marcador: conteo, suma y huella coinciden con filas distintas; con marcador, la huella detecta la diferencia; `!=` no ve el paso de 100 a NULL y `IS DISTINCT FROM` sí); `surrogate-keys` §10 (`cliente_hk`) y `surrogate-key-generation` §4, §8 y §10 usan el mismo marcador. Todo registrado en el historial de cada archivo; el SQL de BigQuery sigue marcado como no ejecutado | Cerrado (`fixes-null-concat.md` aprobada y aplicada) |
 | ~~B-F3.1 · Revisar el lote F3b-02c~~ (4 patterns, 02-sql; completa el dominio): `scd-type-1`, `change-detection`, `sql-quality-checks` y `surrogate-key-generation`. Sin VERIFY y sin fuentes nuevas en el registro (Kimball Nivel 4 solo para la definición conceptual del tipo 1). Mismos criterios que 02a y 02b (T-SQL a Fabric solo si la página aplica; `IS DISTINCT FROM` no se atribuye a Redshift). Revisar en especial: el tratamiento de `NULL` en `CONCAT` por motor (BigQuery devuelve `NULL`, T-SQL lo convierte en cadena vacía, PostgreSQL lo ignora en `concat`/`concat_ws`), la comparación segura sin `IS DISTINCT FROM` para Redshift (probada solo en PostgreSQL) y que BigQuery, Redshift y Fabric no aplican claves primarias, únicas ni foráneas | Cerrado (revisión aplicada; los 4 `verified`; 02-sql 33/33) |
@@ -65,6 +66,12 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Code Library: `/snippets`, `/snippets/{slug}`, `Language`, `Snippet*` y `code_snippet` en `ResultType` (ADR-008, aditivo).
 
 ## Historial
+
+### Lote F3b-03a: 10 fichas de 03-python en revisión (2026-10-08)
+- Merge de `b/ui-polish-1` (a32f783) a `main`, con CI en verde (frontend y validate-and-test). `make static` (`BASE_PATH=/DES_conocimiento`) generó `dist/dekh-static-2026-10-07.zip` (8.207.326 bytes); el nombre lleva la fecha del entorno de `make`, no la del día del build.
+- Felipe aprobó 02-sql en el navegador. Lote F3b-03a creado desde `content/_templates/concept.md` (sin rama de esqueletos): `python-data-structures`, `python-comprehensions`, `python-functions`, `python-typing`, `python-classes`, `python-exceptions`, `python-context-managers`, `python-iterators`, `python-generators` y `python-file-handling`, en `review_required`. Clasificación, nivel e importancia según el blueprint.
+- Registro de fuentes: `aws-lambda-docs` y `gcp-cloud-run-docs` (Nivel 1). 30 URLs citadas: todas 200 y sin redirección.
+- 03-python: 5 de 26 conceptos `verified` y 10 en revisión.
 
 ### Merge de b/ui-redesign y CORS configurable (2026-10-07)
 - `b/ui-redesign` (1f1a37b) mergeada a `main`; conflicto en `lane-b.md` resuelto combinando ambos lados.

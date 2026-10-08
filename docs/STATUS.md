@@ -1,7 +1,7 @@
 # STATUS — Data Engineering Knowledge Hub
 
-**Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 02-sql (01-fundamentals aprobado el 2026-10-06). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
-**Última actualización:** 2026-10-07
+**Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 03-python (01-fundamentals aprobado el 2026-10-06 y 02-sql el 2026-10-08). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
+**Última actualización:** 2026-10-08
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**
 > El estado detallado de cada carril está en `docs/status/lane-a.md` y `docs/status/lane-b.md`; cada carril edita solo el suyo.
@@ -18,18 +18,20 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | — (02-sql 33/33 `verified`) | Merge de `b/ui-redesign` y un solo `make static` cuando Felipe avise; 03-python tras aprobar 02-sql | — |
-| B · Cursor revisión | — (B-F3.1 de 02c entregada) | Revisar los cambios mínimos de `grain` y `CONCAT` con NULL | — |
+| A · Claude Code | — (lote F3b-03a entregado en `review_required`) | Aplicar la revisión de 03a; después el lote F3b-03b | — |
+| B · Cursor revisión | — | B-F3.1 del lote F3b-03a y el cambio mínimo de `change-detection` | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | Revisar cambios mínimos en fichas `verified`: `grain` §4 y `CONCAT` con NULL (`data-reconciliation`, `bigquery-reconciliation`, `surrogate-keys`, `surrogate-key-generation`) | Abierto |
+| A | B | B-F3.1 · Revisar el lote F3b-03a (10 fichas de `python-core`) | Abierto |
+| A | B | Revisar el cambio mínimo en `change-detection` (alternativa JSON en §4 y §14) | Abierto |
 
 ## Criterio de salida de la fase actual (F3b, ADR-009)
 - [x] 01-fundamentals: 28/28 `verified`, aprobado por Felipe en el navegador el 2026-10-06.
-- [ ] 02-sql: 33/33 `verified` desde el 2026-10-07; falta la aprobación de Felipe en el navegador.
+- [x] 02-sql: 33/33 `verified`, aprobado por Felipe en el navegador el 2026-10-08.
+- [ ] 03-python: 5/26 `verified`; lote F3b-03a (10) en revisión; lote F3b-03b (11) pendiente.
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
 
 ## Fases cerradas

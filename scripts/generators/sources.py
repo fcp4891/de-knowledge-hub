@@ -178,6 +178,10 @@ BATCH1 = [
     ('aws-data-engineer-certification', 'AWS Certified Data Engineer - Associate', 'Página oficial de AWS que describe las competencias de la certificación Data Engineer - Associate.',
      'https://aws.amazon.com/certification/certified-data-engineer-associate/', 'official_docs', 1, 'aws', True, "quarterly", []),    ('aws-what-is-data-mart', 'What is a Data Mart? (AWS)', 'Página oficial de AWS que explica qué es un data mart, sus tipos y su relación con el data warehouse y el data lake.',
      'https://aws.amazon.com/what-is/data-mart/', 'official_docs', 1, 'aws', True, "quarterly", []),
+    ('aws-lambda-docs', 'AWS Lambda Developer Guide', 'Guía oficial para desarrolladores de AWS Lambda (runtimes, configuración y almacenamiento efímero).',
+     'https://docs.aws.amazon.com/lambda/latest/dg/welcome.html', 'official_docs', 1, 'aws', True, "quarterly", ['aws-lambda']),
+    ('gcp-cloud-run-docs', 'Cloud Run documentation', 'Documentación oficial de Cloud Run (contrato del contenedor, runtimes y funciones).',
+     'https://docs.cloud.google.com/run/docs', 'official_docs', 1, 'gcp', True, "quarterly", ['gcp-cloud-run']),
 ]
 
 
@@ -190,7 +194,7 @@ def review_frequency(slug: str, source_type: str) -> str:
 
 
 BATCH1_DATE = "2026-09-30"
-LATER_DATES = {slug: "2026-10-01" for slug in ("psycopg-docs", "gcp-iam-docs", "gcp-terraform-docs", "gcp-infrastructure-manager-docs", "aws-s3-docs", "aws-iam-docs", "aws-cloudformation-docs", "aws-eventbridge-scheduler-docs", "pydantic-docs", "dbt-docs", "gcp-cloud-logging-docs", "aws-cloudwatch-logs-docs", "aws-lake-formation-docs", "aws-sns-docs")} | {"pytest-docs": "2026-10-04", "apache-spark-docs": "2026-10-05", "aws-firehose-docs": "2026-10-05", "gilbert-lynch-cap-2002": "2026-10-05", "apache-iceberg-docs": "2026-10-05", "delta-lake-docs": "2026-10-05", "apache-hudi-docs": "2026-10-05", "gcp-spanner-docs": "2026-10-05", "gcp-data-engineer-certification": "2026-10-05", "aws-data-engineer-certification": "2026-10-05", "aws-what-is-data-mart": "2026-10-05"}  # fuentes de BATCH1 agregadas después del 2026-09-30
+LATER_DATES = {slug: "2026-10-01" for slug in ("psycopg-docs", "gcp-iam-docs", "gcp-terraform-docs", "gcp-infrastructure-manager-docs", "aws-s3-docs", "aws-iam-docs", "aws-cloudformation-docs", "aws-eventbridge-scheduler-docs", "pydantic-docs", "dbt-docs", "gcp-cloud-logging-docs", "aws-cloudwatch-logs-docs", "aws-lake-formation-docs", "aws-sns-docs")} | {"pytest-docs": "2026-10-04", "apache-spark-docs": "2026-10-05", "aws-firehose-docs": "2026-10-05", "gilbert-lynch-cap-2002": "2026-10-05", "apache-iceberg-docs": "2026-10-05", "delta-lake-docs": "2026-10-05", "apache-hudi-docs": "2026-10-05", "gcp-spanner-docs": "2026-10-05", "gcp-data-engineer-certification": "2026-10-05", "aws-data-engineer-certification": "2026-10-05", "aws-what-is-data-mart": "2026-10-05", "aws-lambda-docs": "2026-10-08", "gcp-cloud-run-docs": "2026-10-08"}  # fuentes de BATCH1 agregadas después del 2026-09-30
 
 
 def entry(row: tuple[Any, ...], created: str = TODAY) -> dict[str, Any]:

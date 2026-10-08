@@ -1229,3 +1229,41 @@ created_at: '2026-10-05'
 updated_at: '2026-10-05'
 last_verified: '2026-10-05'
 verification_status: verified
+---
+id: source:aws-lambda-docs
+slug: aws-lambda-docs
+type: source
+title: AWS Lambda Developer Guide
+description: Guía oficial para desarrolladores de AWS Lambda (runtimes, configuración y almacenamiento efímero).
+url: https://docs.aws.amazon.com/lambda/latest/dg/welcome.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- aws-lambda
+created_at: '2026-10-08'
+updated_at: '2026-10-08'
+last_verified: '2026-10-08'
+verification_status: verified
+---
+id: source:gcp-cloud-run-docs
+slug: gcp-cloud-run-docs
+type: source
+title: Cloud Run documentation
+description: Documentación oficial de Cloud Run (contrato del contenedor, runtimes y funciones).
+url: https://docs.cloud.google.com/run/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- gcp-cloud-run
+created_at: '2026-10-08'
+updated_at: '2026-10-08'
+last_verified: '2026-10-08'
+verification_status: verified

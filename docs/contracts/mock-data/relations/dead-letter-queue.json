@@ -42,6 +42,13 @@
           "note": "El dead-letter topic limita los intentos de entrega."
         },
         {
+          "slug": "python-exceptions",
+          "title": "Excepciones",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Los registros que fallan la validación se separan con su motivo en lugar de detener el lote."
+        },
+        {
           "slug": "idempotency",
           "title": "Idempotencia",
           "entity_type": "concept",

@@ -210,6 +210,13 @@
           "note": "Con consistencia eventual, reintentar debe ser seguro aunque una lectura vea un estado viejo."
         },
         {
+          "slug": "python-context-managers",
+          "title": "Context managers",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Una escritura atómica deja el destino en la versión anterior o en la nueva, nunca a medias, y re-ejecutar no deja basura."
+        },
+        {
           "slug": "dag",
           "title": "DAG (grafo de tareas de un pipeline)",
           "entity_type": "concept",
