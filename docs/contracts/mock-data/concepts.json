@@ -993,9 +993,9 @@
       "level": "intermediate",
       "importance": "low",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-08"
     },
     {
       "slug": "python-file-handling",
@@ -1021,9 +1021,9 @@
       "level": "advanced",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-08"
     },
     {
       "slug": "python-dataframes",
@@ -1035,9 +1035,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-08"
     },
     {
       "slug": "arrow-columnar-memory",
@@ -1049,9 +1049,9 @@
       "level": "advanced",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-08"
     },
     {
       "slug": "data-validation-with-pydantic",
@@ -1077,9 +1077,9 @@
       "level": "basic",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-08"
     },
     {
       "slug": "data-apis-with-fastapi",
@@ -1091,9 +1091,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-08"
     },
     {
       "slug": "testing-with-pytest",
@@ -1133,9 +1133,9 @@
       "level": "advanced",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-08"
     },
     {
       "slug": "pyspark-dataframes",
@@ -1147,9 +1147,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-08"
     },
     {
       "slug": "python-api-consumption",
@@ -1175,9 +1175,9 @@
       "level": "basic",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-08"
     },
     {
       "slug": "python-database-io",
@@ -1189,9 +1189,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-08"
     },
     {
       "slug": "python-error-handling-and-retries",
@@ -1217,9 +1217,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-08"
     },
     {
       "slug": "conceptual-data-model",

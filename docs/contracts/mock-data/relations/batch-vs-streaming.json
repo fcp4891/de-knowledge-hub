@@ -61,6 +61,13 @@
           "entity_type": "architecture",
           "origin": "blueprint",
           "note": null
+        },
+        {
+          "slug": "beam-programming-model",
+          "title": "Modelo de programación de Apache Beam",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "El mismo pipeline de Beam procesa PCollections acotadas (batch) o no acotadas (streaming)."
         }
       ]
     }

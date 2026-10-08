@@ -4,12 +4,16 @@
 - pytest-ingestion-test: arma ingest.py desde la sección 10 de data-validation-with-pydantic y de
   batch-ingestion, escribe el test del snippet y lo corre con pytest en un directorio temporal.
   Necesita requirements-snippets.txt (`make snippets-deps`; la CI lo instala); si falta, se salta.
+- pyspark-dataframes: ejecuta la sección 10 de la ficha en modo local. Necesita pyspark y Java 17+;
+  sin ellos se salta, salvo con REQUIRE_PYSPARK=1 (la CI), donde falla.
 """
 
 from __future__ import annotations
 
 import json
+import os
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -62,3 +66,24 @@ def test_pytest_ingestion_snippet_passes_against_the_fichas_code(tmp_path: Path)
     result = run_python(["-m", "pytest", "-q", "-p", "no:cacheprovider", "--rootdir", str(tmp_path), "tests"], tmp_path)
     assert result.returncode == 0, result.stdout + result.stderr
     assert "7 passed" in result.stdout  # el snippet promete 7 tests (el parametrizado cuenta 4)
+
+
+def test_pyspark_dataframes_code_runs_in_local_mode(tmp_path: Path) -> None:
+    required = os.environ.get("REQUIRE_PYSPARK") == "1"
+    java = os.environ.get("JAVA_HOME") or shutil.which("java")
+    try:
+        import pyspark  # noqa: F401
+    except ImportError:
+        if required:
+            raise
+        pytest.skip("falta pyspark (make snippets-deps)")
+    if not java:
+        if required:
+            pytest.fail("REQUIRE_PYSPARK=1 pero no hay Java (JAVA_HOME o java en el PATH)")
+        pytest.skip("falta Java 17+ para PySpark")
+    code = section_code(CONTENT / "concepts" / "pyspark-dataframes.md", "## 10. Código")
+    (tmp_path / "pyspark_df.py").write_text(code, encoding="utf-8")
+    result = run_python(["pyspark_df.py"], tmp_path)
+    assert result.returncode == 0, result.stdout[-3000:] + result.stderr[-3000:]
+    assert "'region': 'norte', 'total': 120" in result.stdout
+    assert "BroadcastHashJoin" in result.stdout

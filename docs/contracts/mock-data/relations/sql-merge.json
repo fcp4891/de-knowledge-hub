@@ -98,6 +98,13 @@
           "note": "MERGE con clave y condición de versión es la forma habitual de escribir idempotentemente en un warehouse."
         },
         {
+          "slug": "python-database-io",
+          "title": "Lectura y escritura en bases de datos",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "MERGE es la alternativa estándar al upsert con ON CONFLICT."
+        },
+        {
           "slug": "bigquery-incremental-models",
           "title": "Modelos incrementales en BigQuery",
           "entity_type": "pattern",

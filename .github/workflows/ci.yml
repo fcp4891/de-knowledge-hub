@@ -32,11 +32,18 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
+      # Java para ejecutar el código PySpark de las fichas en modo local (PySpark 4.2 requiere Java 17 o posterior).
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
       - run: make venv BOOTSTRAP_PYTHON=python  # .venv del proyecto, como en local
       - run: make snippets-deps  # para ejecutar pytest-ingestion-test en make test
       - run: make validate
       - run: make build
       - run: make test
+        env:
+          REQUIRE_PYSPARK: "1"  # en la CI el test de PySpark no se salta: falla si falta pyspark o Java
       # Snippets de Terraform (ADR-008): init sin backend y validate, sin credenciales ni recursos reales.
       - uses: hashicorp/setup-terraform@v4
         with:

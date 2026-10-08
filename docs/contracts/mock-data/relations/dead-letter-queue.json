@@ -56,6 +56,20 @@
           "note": "Los reintentos previos a la DLQ exigen consumidores idempotentes."
         },
         {
+          "slug": "beam-programming-model",
+          "title": "Modelo de programación de Apache Beam",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Una salida adicional de rechazos es la dead letter queue dentro del pipeline."
+        },
+        {
+          "slug": "python-file-processing",
+          "title": "Procesamiento de archivos",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Los registros inválidos van a un archivo de rechazos con su motivo."
+        },
+        {
           "slug": "gcp-pubsub",
           "title": "Pub/Sub",
           "entity_type": "cloud_service",

@@ -1267,3 +1267,212 @@ created_at: '2026-10-08'
 updated_at: '2026-10-08'
 last_verified: '2026-10-08'
 verification_status: verified
+---
+id: source:pandas-docs
+slug: pandas-docs
+type: source
+title: pandas documentation
+description: Documentación oficial de pandas (guía de usuario y referencia de la API).
+url: https://pandas.pydata.org/docs/
+source_type: official_docs
+authority_level: 1
+provider: pandas
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- pandas
+created_at: '2026-10-08'
+updated_at: '2026-10-08'
+last_verified: '2026-10-08'
+verification_status: verified
+---
+id: source:polars-docs
+slug: polars-docs
+type: source
+title: Polars user guide
+description: Documentación oficial de Polars (guía de usuario y referencia de la API de Python).
+url: https://docs.pola.rs/
+source_type: official_docs
+authority_level: 1
+provider: polars
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- polars
+created_at: '2026-10-08'
+updated_at: '2026-10-08'
+last_verified: '2026-10-08'
+verification_status: verified
+---
+id: source:apache-arrow-docs
+slug: apache-arrow-docs
+type: source
+title: Apache Arrow documentation
+description: Documentación oficial de Apache Arrow (especificación del formato columnar y PyArrow).
+url: https://arrow.apache.org/docs/
+source_type: official_docs
+authority_level: 1
+provider: apache
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- pyarrow
+created_at: '2026-10-08'
+updated_at: '2026-10-08'
+last_verified: '2026-10-08'
+verification_status: verified
+---
+id: source:apache-beam-docs
+slug: apache-beam-docs
+type: source
+title: Apache Beam documentation
+description: Documentación oficial de Apache Beam (guía de programación, runners y SDK de Python).
+url: https://beam.apache.org/documentation/
+source_type: official_docs
+authority_level: 1
+provider: apache
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- apache-beam
+created_at: '2026-10-08'
+updated_at: '2026-10-08'
+last_verified: '2026-10-08'
+verification_status: verified
+---
+id: source:fastapi-docs
+slug: fastapi-docs
+type: source
+title: FastAPI documentation
+description: Documentación oficial de FastAPI.
+url: https://fastapi.tiangolo.com/
+source_type: official_docs
+authority_level: 1
+provider: fastapi
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- fastapi
+created_at: '2026-10-08'
+updated_at: '2026-10-08'
+last_verified: '2026-10-08'
+verification_status: verified
+---
+id: source:httpx-docs
+slug: httpx-docs
+type: source
+title: HTTPX documentation
+description: Documentación oficial de HTTPX.
+url: https://www.python-httpx.org/
+source_type: official_docs
+authority_level: 1
+provider: encode
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- httpx
+created_at: '2026-10-08'
+updated_at: '2026-10-08'
+last_verified: '2026-10-08'
+verification_status: verified
+---
+id: source:requests-docs
+slug: requests-docs
+type: source
+title: Requests documentation
+description: Documentación oficial de Requests.
+url: https://requests.readthedocs.io/en/latest/
+source_type: official_docs
+authority_level: 1
+provider: psf
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- requests
+created_at: '2026-10-08'
+updated_at: '2026-10-08'
+last_verified: '2026-10-08'
+verification_status: verified
+---
+id: source:gcp-managed-spark-docs
+slug: gcp-managed-spark-docs
+type: source
+title: Managed Service for Apache Spark documentation
+description: Documentación oficial de Managed Service for Apache Spark (antes Dataproc en Compute Engine y Google Cloud Serverless for Apache Spark).
+url: https://docs.cloud.google.com/managed-spark/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- gcp-dataproc
+created_at: '2026-10-08'
+updated_at: '2026-10-08'
+last_verified: '2026-10-08'
+verification_status: verified
+---
+id: source:aws-emr-docs
+slug: aws-emr-docs
+type: source
+title: Amazon EMR documentation
+description: Documentación oficial de Amazon EMR (guía de administración y EMR Serverless).
+url: https://docs.aws.amazon.com/emr/
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- aws-emr
+created_at: '2026-10-08'
+updated_at: '2026-10-08'
+last_verified: '2026-10-08'
+verification_status: verified
+---
+id: source:gcp-cloud-sql-docs
+slug: gcp-cloud-sql-docs
+type: source
+title: Cloud SQL documentation
+description: Documentación oficial de Cloud SQL.
+url: https://docs.cloud.google.com/sql/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- gcp-cloud-sql
+created_at: '2026-10-08'
+updated_at: '2026-10-08'
+last_verified: '2026-10-08'
+verification_status: verified
+---
+id: source:aws-rds-docs
+slug: aws-rds-docs
+type: source
+title: Amazon RDS User Guide
+description: Guía oficial de usuario de Amazon Relational Database Service.
+url: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- aws-rds
+created_at: '2026-10-08'
+updated_at: '2026-10-08'
+last_verified: '2026-10-08'
+verification_status: verified

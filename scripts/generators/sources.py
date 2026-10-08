@@ -182,6 +182,28 @@ BATCH1 = [
      'https://docs.aws.amazon.com/lambda/latest/dg/welcome.html', 'official_docs', 1, 'aws', True, "quarterly", ['aws-lambda']),
     ('gcp-cloud-run-docs', 'Cloud Run documentation', 'Documentación oficial de Cloud Run (contrato del contenedor, runtimes y funciones).',
      'https://docs.cloud.google.com/run/docs', 'official_docs', 1, 'gcp', True, "quarterly", ['gcp-cloud-run']),
+    ('pandas-docs', 'pandas documentation', 'Documentación oficial de pandas (guía de usuario y referencia de la API).',
+     'https://pandas.pydata.org/docs/', 'official_docs', 1, 'pandas', True, "quarterly", ['pandas']),
+    ('polars-docs', 'Polars user guide', 'Documentación oficial de Polars (guía de usuario y referencia de la API de Python).',
+     'https://docs.pola.rs/', 'official_docs', 1, 'polars', True, "quarterly", ['polars']),
+    ('apache-arrow-docs', 'Apache Arrow documentation', 'Documentación oficial de Apache Arrow (especificación del formato columnar y PyArrow).',
+     'https://arrow.apache.org/docs/', 'official_docs', 1, 'apache', True, "quarterly", ['pyarrow']),
+    ('apache-beam-docs', 'Apache Beam documentation', 'Documentación oficial de Apache Beam (guía de programación, runners y SDK de Python).',
+     'https://beam.apache.org/documentation/', 'official_docs', 1, 'apache', True, "quarterly", ['apache-beam']),
+    ('fastapi-docs', 'FastAPI documentation', 'Documentación oficial de FastAPI.',
+     'https://fastapi.tiangolo.com/', 'official_docs', 1, 'fastapi', True, "quarterly", ['fastapi']),
+    ('httpx-docs', 'HTTPX documentation', 'Documentación oficial de HTTPX.',
+     'https://www.python-httpx.org/', 'official_docs', 1, 'encode', True, "quarterly", ['httpx']),
+    ('requests-docs', 'Requests documentation', 'Documentación oficial de Requests.',
+     'https://requests.readthedocs.io/en/latest/', 'official_docs', 1, 'psf', True, "quarterly", ['requests']),
+    ('gcp-managed-spark-docs', 'Managed Service for Apache Spark documentation', 'Documentación oficial de Managed Service for Apache Spark (antes Dataproc en Compute Engine y Google Cloud Serverless for Apache Spark).',
+     'https://docs.cloud.google.com/managed-spark/docs', 'official_docs', 1, 'gcp', True, "quarterly", ['gcp-dataproc']),
+    ('aws-emr-docs', 'Amazon EMR documentation', 'Documentación oficial de Amazon EMR (guía de administración y EMR Serverless).',
+     'https://docs.aws.amazon.com/emr/', 'official_docs', 1, 'aws', True, "quarterly", ['aws-emr']),
+    ('gcp-cloud-sql-docs', 'Cloud SQL documentation', 'Documentación oficial de Cloud SQL.',
+     'https://docs.cloud.google.com/sql/docs', 'official_docs', 1, 'gcp', True, "quarterly", ['gcp-cloud-sql']),
+    ('aws-rds-docs', 'Amazon RDS User Guide', 'Guía oficial de usuario de Amazon Relational Database Service.',
+     'https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html', 'official_docs', 1, 'aws', True, "quarterly", ['aws-rds']),
 ]
 
 
@@ -194,7 +216,7 @@ def review_frequency(slug: str, source_type: str) -> str:
 
 
 BATCH1_DATE = "2026-09-30"
-LATER_DATES = {slug: "2026-10-01" for slug in ("psycopg-docs", "gcp-iam-docs", "gcp-terraform-docs", "gcp-infrastructure-manager-docs", "aws-s3-docs", "aws-iam-docs", "aws-cloudformation-docs", "aws-eventbridge-scheduler-docs", "pydantic-docs", "dbt-docs", "gcp-cloud-logging-docs", "aws-cloudwatch-logs-docs", "aws-lake-formation-docs", "aws-sns-docs")} | {"pytest-docs": "2026-10-04", "apache-spark-docs": "2026-10-05", "aws-firehose-docs": "2026-10-05", "gilbert-lynch-cap-2002": "2026-10-05", "apache-iceberg-docs": "2026-10-05", "delta-lake-docs": "2026-10-05", "apache-hudi-docs": "2026-10-05", "gcp-spanner-docs": "2026-10-05", "gcp-data-engineer-certification": "2026-10-05", "aws-data-engineer-certification": "2026-10-05", "aws-what-is-data-mart": "2026-10-05", "aws-lambda-docs": "2026-10-08", "gcp-cloud-run-docs": "2026-10-08"}  # fuentes de BATCH1 agregadas después del 2026-09-30
+LATER_DATES = {slug: "2026-10-01" for slug in ("psycopg-docs", "gcp-iam-docs", "gcp-terraform-docs", "gcp-infrastructure-manager-docs", "aws-s3-docs", "aws-iam-docs", "aws-cloudformation-docs", "aws-eventbridge-scheduler-docs", "pydantic-docs", "dbt-docs", "gcp-cloud-logging-docs", "aws-cloudwatch-logs-docs", "aws-lake-formation-docs", "aws-sns-docs")} | {"pytest-docs": "2026-10-04", "apache-spark-docs": "2026-10-05", "aws-firehose-docs": "2026-10-05", "gilbert-lynch-cap-2002": "2026-10-05", "apache-iceberg-docs": "2026-10-05", "delta-lake-docs": "2026-10-05", "apache-hudi-docs": "2026-10-05", "gcp-spanner-docs": "2026-10-05", "gcp-data-engineer-certification": "2026-10-05", "aws-data-engineer-certification": "2026-10-05", "aws-what-is-data-mart": "2026-10-05", "aws-lambda-docs": "2026-10-08", "gcp-cloud-run-docs": "2026-10-08", "pandas-docs": "2026-10-08", "polars-docs": "2026-10-08", "apache-arrow-docs": "2026-10-08", "apache-beam-docs": "2026-10-08", "fastapi-docs": "2026-10-08", "httpx-docs": "2026-10-08", "requests-docs": "2026-10-08", "gcp-managed-spark-docs": "2026-10-08", "aws-emr-docs": "2026-10-08", "gcp-cloud-sql-docs": "2026-10-08", "aws-rds-docs": "2026-10-08"}  # fuentes de BATCH1 agregadas después del 2026-09-30
 
 
 def entry(row: tuple[Any, ...], created: str = TODAY) -> dict[str, Any]:
