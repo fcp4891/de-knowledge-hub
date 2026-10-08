@@ -3,12 +3,19 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-07
+**Última actualización:** 2026-10-08
 
 ## Actual
-- **Tarea activa:** ajustes de UI en `b/ui-polish-1` (desde `main`, sin merge).
+- **Tarea activa:** `b/ui-polish-2` (tablas GFM). Sin merge a `main`.
 - **Siguiente:** lo que asigne Felipe. Ideas fuera de esta fase siguen en `docs/BACKLOG.md`.
 - **Bloqueos:** ninguno.
+
+### Tablas Markdown (`b/ui-polish-2`)
+- El parser de `frontend/lib/markdown.ts` (el mismo en hybrid y static) reconoce tablas GFM, listas de tareas, tachado (`~~`) y enlaces automáticos (`https`, `www`, `<url>`, correo). No se añadió `remark-gfm`.
+- La tabla va en `.markdown-table-wrap`: borde `var(--border)`, encabezado en negrita, padding 8px 12px y scroll horizontal si no cabe.
+- En `content/` hay tablas en varias fichas SQL (unnest, subqueries, structs, recursive CTE, quality checks, window functions, surrogate keys) y en «Qué es Data Engineering». No se editó `content/`.
+- Verificado en Chrome normal, export estático bajo `/DES_conocimiento/`: roles en `/concepts/what-is-data-engineering/` (sección 2), ejemplo en `/concepts/sql-window-functions/` y la tabla de 7 columnas de `/concepts/surrogate-key-generation/` a 375 px (scroll dentro del contenedor, padding 8px 12px). Listas de tareas, tachado y autolinks no aparecen en el contenido; el parser los acepta.
+- Lint, `npm run build` y `npm run build:static` en verde. `dynamicParams` sigue en `true` y `personalActions.ts` sigue con `"use server"`.
 
 ### Ajustes UI · paneles, mapa e índice
 - El índice de la ficha salía vacío (un punto y un hueco) porque vivía en un `<details>` cerrado. En Chrome el contenido de un `<details>` cerrado no se pinta, aunque el CSS fuerce `display`, y el marcador del resumen queda como un punto mientras la columna del grid sigue reservando 200–250 px. Ahora el índice es un `<nav>` real. Si se oculta, `display: none` y la columna desaparece.

@@ -1,4 +1,4 @@
-.PHONY: help venv install snippets-deps validate test build dev mocks static static-data db-up db-down migrate compile backup-me restore-me validate-terraform
+.PHONY: help venv install snippets-deps validate test test-frontend build dev mocks static static-data db-up db-down migrate compile backup-me restore-me validate-terraform
 
 # Entorno del proyecto: .venv con Python 3.12 (README, «Entorno de Python»). Nunca el Python global.
 ifeq ($(OS),Windows_NT)
@@ -41,6 +41,10 @@ validate:
 test:
 	$(REQUIRE_VENV)
 	$(PYTHON) -m pytest
+
+# Parser de Markdown del frontend con el runner nativo de Node (24+ elimina los tipos al importar .ts).
+test-frontend:
+	node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test "tests/frontend/*.test.ts"
 
 mocks: validate
 	$(PYTHON) -m scripts.contracts.build_mocks
