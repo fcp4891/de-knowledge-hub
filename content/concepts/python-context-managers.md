@@ -16,25 +16,25 @@ tags: [python, context-managers, with, contextlib]
 related_topics: [python-file-handling, python-exceptions, idempotency]
 sources:
   - source: python-docs
-    url: https://docs.python.org/3/reference/compound_stmts.html
+    url: https://docs.python.org/3.12/reference/compound_stmts.html
     accessed: 2026-10-08
     note: "La sentencia with: with EXPRESSION as TARGET: SUITE es semánticamente equivalente a obtener __enter__ y __exit__ del manager, llamar a enter(), ejecutar el bloque dentro de un try y llamar a exit con la información de la excepción si la hubo (si exit devuelve falso, la excepción se relanza) o con None si no la hubo."
   - source: python-docs
-    url: https://docs.python.org/3/reference/datamodel.html
+    url: https://docs.python.org/3.12/reference/datamodel.html
     accessed: 2026-10-08
     note: "With Statement Context Managers: __enter__ entra al contexto y su valor de retorno se asigna al target del as; __exit__(exc_type, exc_value, traceback) sale del contexto; si devuelve verdadero, la excepción se suprime. Los métodos __exit__ no deberían relanzar la excepción recibida: es responsabilidad de quien llama."
   - source: python-docs
-    url: https://docs.python.org/3/library/contextlib.html
+    url: https://docs.python.org/3.12/library/contextlib.html
     accessed: 2026-10-08
     note: "contextmanager convierte una función generadora con un único yield en un context manager; si ocurre una excepción no manejada en el bloque, se relanza dentro del generador en el punto del yield, así que try/except/finally alrededor del yield permite capturarla o asegurar la limpieza; el objeto que crea es de un solo uso (usarlo dos veces da RuntimeError: generator didn't yield). ExitStack combina context managers y callbacks de limpieza de forma programática; al cerrarse, invoca los callbacks registrados en orden inverso. suppress(FileNotFoundError) equivale a try/except/pass. closing llama a close() al salir."
   - source: python-docs
-    url: https://docs.python.org/3/library/os.html
+    url: https://docs.python.org/3.12/library/os.html
     accessed: 2026-10-08
     note: "os.replace(src, dst): si dst existe y es un archivo, se reemplaza sin aviso si hay permisos; la operación puede fallar si src y dst están en sistemas de archivos distintos; si tiene éxito, el renombrado es atómico (requisito de POSIX)."
   - source: python-docs
-    url: https://docs.python.org/3/library/tempfile.html
+    url: https://docs.python.org/3.12/library/tempfile.html
     accessed: 2026-10-08
-    note: "mkstemp crea el temporal de la forma más segura posible: sin condiciones de carrera en la creación (si la plataforma implementa O_EXCL), legible y escribible solo por el usuario que lo crea. A diferencia de TemporaryFile, quien usa mkstemp() es responsable de cerrar el descriptor (por ejemplo con os.close()) y de borrar el archivo temporal (por ejemplo con os.remove()). mkstemp acepta suffix, prefix y dir."
+    note: "mkstemp crea el temporal de la forma más segura posible: sin condiciones de carrera en la creación (si la plataforma implementa O_EXCL), legible y escribible solo por el usuario que lo crea. A diferencia de TemporaryFile, quien usa mkstemp() es responsable de borrar el archivo temporal cuando termina. mkstemp acepta suffix, prefix y dir."
 relations:
   - type: RELATED_TO
     target: python-file-handling
@@ -51,7 +51,7 @@ relations:
 created_at: 2026-10-08
 updated_at: 2026-10-08
 last_verified: 2026-10-08
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -164,7 +164,7 @@ def escritura_atomica(destino: Path) -> Iterator[TextIO]:
     try:
         with os.fdopen(fd, "w", encoding="utf-8", newline="") as f:
             yield f
-        os.replace(temporal, destino)      # renombrado atómico si src y dst están en el mismo sistema de archivos
+        os.replace(temporal, destino)      # si tiene éxito, el renombrado es atómico (POSIX); puede fallar entre sistemas de archivos
     except BaseException:
         Path(temporal).unlink(missing_ok=True)
         raise
@@ -196,11 +196,11 @@ print(all(not a.closed for a in archivos), [p.read_text(encoding="utf-8").strip(
 # False ['parte 0', 'parte 1', 'parte 2']
 ```
 
-Aquí `except BaseException` es correcto porque **no suprime** nada: borra el temporal y relanza, así que también limpia si el proceso se interrumpe con Ctrl+C. Se ejecutó en Windows (NTFS). La atomicidad que garantiza la documentación de `os.replace` es la de POSIX y requiere que el temporal y el destino estén en el mismo sistema de archivos. Por eso el temporal se crea en `destino.parent`.
+Aquí `except BaseException` es correcto porque **no suprime** nada: borra el temporal y relanza, así que también limpia si el proceso se interrumpe con Ctrl+C. La documentación de `os.replace` dice que, si tiene éxito, el renombrado es una operación atómica (requisito de POSIX), y que puede fallar si origen y destino están en sistemas de archivos distintos. Por eso el temporal se crea en `destino.parent`. El ejemplo se ejecutó en Windows (NTFS); esa ejecución no es la garantía de la documentación.
 
 ## 11. GCP
 
-No aplica de forma específica: `with` y `contextlib` son del lenguaje. La escritura atómica con `os.replace` vale para el sistema de archivos local del proceso. Cloud Storage no es un sistema de archivos local y este patrón no se aplica tal cual (ver `gcs-buckets-and-objects`). Las diferencias del sistema de archivos local por runtime están en `python-file-handling`.
+No aplica de forma específica: `with` y `contextlib` son del lenguaje. La escritura atómica con `os.replace` vale para el sistema de archivos local del proceso. Las diferencias del sistema de archivos local por runtime están en `python-file-handling`.
 
 ## 12. AWS
 
@@ -214,7 +214,7 @@ No aplica de forma específica (ver §11 y `python-file-handling`).
 
 - `with` para todo recurso que se abre; nunca depender de que el recolector de basura cierre archivos o conexiones.
 - En `@contextmanager`, rodear el `yield` con `try`/`finally` (o `except ...: limpiar; raise`) para que la limpieza corra también con excepciones.
-- Temporal en el mismo directorio que el destino para que el renombrado sea atómico.
+- Temporal en el mismo directorio que el destino, para que `os.replace` no falle por estar en sistemas de archivos distintos.
 - `suppress` solo con excepciones específicas.
 - **Seguridad:** `mkstemp` crea el temporal sin condiciones de carrera y legible solo por el usuario que lo crea; no armar nombres de temporales a mano en directorios compartidos, y borrar los temporales que puedan contener datos sensibles también en el camino del error.
 - **Observabilidad:** si el `__exit__` o el bloque de limpieza falla, registrar ese fallo sin ocultar la excepción original; un temporal huérfano o una conexión sin cerrar es una señal de un camino de error sin limpieza.
@@ -225,7 +225,7 @@ No aplica de forma específica (ver §11 y `python-file-handling`).
 - Abrir sin `with` y cerrar solo en el camino feliz.
 - `@contextmanager` sin `try` alrededor del `yield`: si el bloque falla, el código de limpieza después del `yield` no se ejecuta.
 - Reutilizar el objeto de un `@contextmanager` en un segundo `with`: `RuntimeError`.
-- Crear el temporal en `/tmp` y renombrarlo a otro disco o volumen: `os.replace` puede fallar o dejar de ser atómico.
+- Crear el temporal en `/tmp` y renombrarlo a otro disco o volumen: `os.replace` puede fallar si origen y destino están en sistemas de archivos distintos.
 - `__exit__` que devuelve `True` sin querer y suprime todas las excepciones.
 
 ## 16. Trade-offs
@@ -238,7 +238,6 @@ La escritura atómica duplica el espacio en disco durante la escritura (temporal
 - `python-exceptions`: cómo se propagan los errores a través del `with`.
 - `python-generators`: base de `@contextmanager`.
 - `idempotency`: re-ejecutar sin dejar estado intermedio.
-- `gcs-buckets-and-objects`: escritura de objetos en Cloud Storage.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -258,8 +257,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-08. `review_required`: pendiente de revisión B-F3.1 del lote F3b-03a.
+2026-10-08. Pasa a `verified`: revisión B-F3.1 del lote F3b-03a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-08: creación (lote F3b-03a).
+- 2026-10-08: revisión B-F3.1 del lote F3b-03a aplicada (docs/reviews/cards-f3b-03a.md): la documentación de Python se cita en `/3.12/`, la versión con la que se ejecutó el código; `os.replace` con la frase de la documentación (atómico si tiene éxito, requisito de POSIX; puede fallar entre sistemas de archivos), sin «deja de ser atómico»; se quita la frase de Cloud Storage.
+- 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).

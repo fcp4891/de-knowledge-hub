@@ -18,19 +18,19 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | — (lote F3b-03a entregado en `review_required`) | Aplicar la revisión de 03a; después el lote F3b-03b | — |
-| B · Cursor revisión | — | B-F3.1 del lote F3b-03a y el cambio mínimo de `change-detection` | — |
+| A · Claude Code | Lote F3b-03b (11 fichas) | Entregarlo en `review_required` | — |
+| B · Cursor revisión | — | B-F3.1 del lote F3b-03b cuando se entregue | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | B-F3.1 · Revisar el lote F3b-03a (10 fichas de `python-core`) | Abierto |
+| A | B | Parser de Markdown: fila de una sola celda en tablas GFM (test `todo`) | Abierto |
 
 ## Criterio de salida de la fase actual (F3b, ADR-009)
 - [x] 01-fundamentals: 28/28 `verified`, aprobado por Felipe en el navegador el 2026-10-06.
 - [x] 02-sql: 33/33 `verified`, aprobado por Felipe en el navegador el 2026-10-08.
-- [ ] 03-python: 5/26 `verified`; lote F3b-03a (10) en revisión; lote F3b-03b (11) pendiente.
+- [ ] 03-python: 15/26 `verified` (F3b-03a aplicado el 2026-10-08); lote F3b-03b (11) en curso.
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
 
 ## Fases cerradas

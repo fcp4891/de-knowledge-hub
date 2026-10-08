@@ -16,27 +16,27 @@ tags: [python, files, encoding, csv, pathlib]
 related_topics: [file-ingestion, csv-format, python-context-managers]
 sources:
   - source: python-docs
-    url: https://docs.python.org/3/tutorial/inputoutput.html
+    url: https://docs.python.org/3.12/tutorial/inputoutput.html
     accessed: 2026-10-08
     note: "Tutorial, Reading and Writing Files: en modo texto, si no se especifica encoding, el valor por defecto depende de la plataforma; como UTF-8 es el estándar de facto, se recomienda encoding=\"utf-8\" salvo que se necesite otro. Es buena práctica usar with con objetos archivo: el archivo se cierra al terminar el bloque, incluso si se lanza una excepción. Recorrer el objeto archivo para leer líneas es eficiente en memoria, rápido y simple."
   - source: python-docs
-    url: https://docs.python.org/3/builtins/functions.html
+    url: https://docs.python.org/3.12/library/functions.html
     accessed: 2026-10-08
-    note: "open() (la URL library/functions.html redirige aquí): el encoding por defecto depende de la plataforma (lo que devuelva locale.getencoding()); solo se usa en modo texto. errors define cómo se manejan los errores de codificación y decodificación."
+    note: "open(): el encoding por defecto depende de la plataforma (lo que devuelva locale.getencoding()); solo se usa en modo texto. errors define cómo se manejan los errores de codificación y decodificación."
   - source: python-docs
-    url: https://docs.python.org/3/library/io.html
+    url: https://docs.python.org/3.12/library/io.html
     accessed: 2026-10-08
     note: "io.text_encoding y EncodingWarning: una API puede emitir EncodingWarning cuando se llama sin encoding (si sys.flags.warn_default_encoding está activo); para APIs nuevas se recomienda UTF-8 por defecto (encoding=\"utf-8\"). El valor efectivo depende de UTF-8 Mode."
   - source: python-docs
-    url: https://docs.python.org/3/library/csv.html
+    url: https://docs.python.org/3.12/library/csv.html
     accessed: 2026-10-08
     note: "Si csvfile es un objeto archivo, debe abrirse con newline=''. Sin newline='', los saltos de línea dentro de campos entre comillas no se interpretan bien y, en plataformas con fin de línea CRLF, la escritura agrega un CR extra; siempre es seguro especificarlo porque el módulo csv hace su propio manejo de saltos de línea."
   - source: python-docs
-    url: https://docs.python.org/3/library/pathlib.html
+    url: https://docs.python.org/3.12/library/pathlib.html
     accessed: 2026-10-08
-    note: "Path.read_text y Path.write_text abren y cierran el archivo; sus parámetros opcionales tienen el mismo significado que en open() (newline agregado en 3.13). Path.read_bytes, iterdir y glob/rglob."
+    note: "Path.read_text y Path.write_text abren y cierran el archivo; sus parámetros opcionales tienen el mismo significado que en open(). Path.read_bytes, iterdir y glob/rglob."
   - source: python-docs
-    url: https://docs.python.org/3/library/os.html
+    url: https://docs.python.org/3.12/library/os.html
     accessed: 2026-10-08
     note: "os.replace(src, dst): reemplaza dst sin aviso si es un archivo; puede fallar si src y dst están en sistemas de archivos distintos; si tiene éxito, el renombrado es atómico (requisito de POSIX). os.fsync: para un objeto archivo f, hacer primero f.flush() y luego os.fsync(f.fileno()) para que los buffers internos se escriban a disco."
   - source: aws-lambda-docs
@@ -67,7 +67,7 @@ relations:
 created_at: 2026-10-08
 updated_at: 2026-10-08
 last_verified: 2026-10-08
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -109,7 +109,7 @@ Los archivos son la frontera más común de un pipeline: llegan de sistemas de o
 4. **Escritura durable y atómica:**
    1. escribir en un temporal **en el mismo directorio**;
    2. `flush()` y `os.fsync()` para que los datos lleguen a disco;
-   3. `os.replace(temporal, destino)`. Si tiene éxito, el renombrado es atómico en POSIX. Puede fallar entre sistemas de archivos distintos.
+   3. `os.replace(temporal, destino)`. Si tiene éxito, el renombrado es una operación atómica (requisito de POSIX); puede fallar si origen y destino están en sistemas de archivos distintos.
 5. **Disco local en la nube:** es efímero en todas las plataformas de esta ficha. Lo que se escribe ahí es de trabajo, no un resultado.
 
 ## 5. Cuándo utilizarlo
@@ -195,7 +195,7 @@ print(sorted(p.relative_to(base).as_posix() for p in base.rglob("*.csv")))
 # ['entrada/clientes.csv', 'salida/clientes.csv']
 ```
 
-El ejemplo usa un nombre de temporal fijo para que se lea fácil. Si pueden correr dos ejecuciones a la vez, `tempfile.mkstemp(dir=...)` da un nombre único (ver `python-context-managers`). Se ejecutó en Windows (NTFS). La atomicidad que garantiza la documentación de `os.replace` es la de POSIX, con temporal y destino en el mismo sistema de archivos.
+El ejemplo usa un nombre de temporal fijo para que se lea fácil. Si pueden correr dos ejecuciones a la vez, `tempfile.mkstemp(dir=...)` da un nombre único (ver `python-context-managers`). La documentación de `os.replace` dice que, si tiene éxito, el renombrado es una operación atómica (requisito de POSIX), y que puede fallar si origen y destino están en sistemas de archivos distintos. El ejemplo se ejecutó en Windows (NTFS); esa ejecución no es la garantía de la documentación.
 
 ## 11. GCP
 
@@ -231,7 +231,7 @@ En **Azure Functions** con Python, los archivos temporales se guardan en `tmp/`.
 - `open(ruta)` sin `encoding`: funciona en el laptop y corrompe tildes en el servidor, o al revés.
 - CSV escrito sin `newline=""`: un CR extra al final de cada fila en plataformas con fin de línea CRLF, y campos con saltos de línea mal interpretados al leer.
 - Escribir directo sobre el archivo final: si el proceso falla, queda truncado y el siguiente paso lo lee como si estuviera completo.
-- Temporal en otro volumen que el destino: `os.replace` falla o deja de ser atómico.
+- Temporal en otro volumen que el destino: `os.replace` puede fallar si origen y destino están en sistemas de archivos distintos.
 - Usar el disco local de una función como caché entre invocaciones y depender de que el archivo siga ahí.
 - En Cloud Run, descargar archivos grandes al disco local sin contar que consumen memoria.
 
@@ -268,8 +268,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-08. `review_required`: pendiente de revisión B-F3.1 del lote F3b-03a.
+2026-10-08. Pasa a `verified`: revisión B-F3.1 del lote F3b-03a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-08: creación (lote F3b-03a).
+- 2026-10-08: revisión B-F3.1 del lote F3b-03a aplicada (docs/reviews/cards-f3b-03a.md): la documentación de Python se cita en `/3.12/`, la versión con la que se ejecutó el código; `os.replace` con la frase de la documentación (atómico si tiene éxito, requisito de POSIX; puede fallar entre sistemas de archivos), sin «deja de ser atómico».
+- 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).

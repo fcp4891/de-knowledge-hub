@@ -16,15 +16,15 @@ tags: [python, data-structures, collections]
 related_topics: [python-comprehensions, deduplication, python-typing]
 sources:
   - source: python-docs
-    url: https://docs.python.org/3/tutorial/datastructures.html
+    url: https://docs.python.org/3.12/tutorial/datastructures.html
     accessed: 2026-10-08
     note: "Tutorial, capítulo 5: list (como pila y como cola), tuplas, sets y diccionarios. Las claves de un dict pueden ser de cualquier tipo inmutable; una tupla sirve como clave solo si no contiene objetos mutables; las listas no pueden ser claves. list(d) devuelve las claves en orden de inserción."
   - source: python-docs
-    url: https://docs.python.org/3/builtins/stdtypes.html
+    url: https://docs.python.org/3.12/library/stdtypes.html
     accessed: 2026-10-08
-    note: "Built-in Types (la URL library/stdtypes.html redirige aquí). Dictionaries preserve insertion order: actualizar una clave no cambia el orden y las claves agregadas después de borrar van al final. Un set es una colección no ordenada de objetos hashables distintos; usos comunes: pruebas de pertenencia, eliminar duplicados y operaciones de conjuntos. Los elementos de un set, como las claves de un dict, deben ser hashables. copy() hace una copia superficial."
+    note: "Built-in Types. Dictionaries preserve insertion order: actualizar una clave no cambia el orden y las claves agregadas después de borrar van al final. Un set es una colección no ordenada de objetos hashables distintos; usos comunes: pruebas de pertenencia, eliminar duplicados y operaciones de conjuntos. Los elementos de un set, como las claves de un dict, deben ser hashables. copy() hace una copia superficial."
   - source: python-docs
-    url: https://docs.python.org/3/library/collections.html
+    url: https://docs.python.org/3.12/library/collections.html
     accessed: 2026-10-08
     note: "deque: appends y pops desde cualquiera de los dos extremos con rendimiento aproximadamente O(1); las listas tienen costo O(n) en pop(0) e insert(0, v). Con maxlen, al llenarse descarta elementos del extremo opuesto (útil para quedarse con la actividad más reciente). Counter cuenta ocurrencias; defaultdict es una subclase de dict que crea los valores faltantes con default_factory; namedtuple crea tuplas con campos con nombre."
 relations:
@@ -43,7 +43,7 @@ relations:
 created_at: 2026-10-08
 updated_at: 2026-10-08
 last_verified: 2026-10-08
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -228,8 +228,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-08. `review_required`: pendiente de revisión B-F3.1 del lote F3b-03a.
+2026-10-08. Pasa a `verified`: revisión B-F3.1 del lote F3b-03a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-08: creación (lote F3b-03a).
+- 2026-10-08: revisión B-F3.1 del lote F3b-03a aplicada (docs/reviews/cards-f3b-03a.md): la documentación de Python se cita en `/3.12/`, la versión con la que se ejecutó el código.
+- 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).

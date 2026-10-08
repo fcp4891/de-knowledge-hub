@@ -16,23 +16,23 @@ tags: [python, generators, yield, streaming]
 related_topics: [python-iterators, python-file-handling, data-pipeline]
 sources:
   - source: python-docs
-    url: https://docs.python.org/3/tutorial/classes.html
+    url: https://docs.python.org/3.12/tutorial/classes.html
     accessed: 2026-10-08
     note: "Tutorial, secciones Generators y Generator Expressions: todo lo que se hace con generadores se puede hacer con iteradores basados en clases; los generadores son compactos porque __iter__() y __next__() se crean automáticamente y las variables locales y el estado de ejecución se guardan entre llamadas; al terminar, lanzan StopIteration automáticamente."
   - source: python-docs
-    url: https://docs.python.org/3/reference/expressions.html
+    url: https://docs.python.org/3.12/reference/expressions.html
     accessed: 2026-10-08
     note: "Yield expressions y métodos del generador-iterador. send() reanuda el generador enviando un valor (para iniciarlo se envía None). close() lanza GeneratorExit en el punto donde el generador estaba pausado; si el generador está cerrado o deja propagar GeneratorExit, close() vuelve sin más; si el generador entrega otro valor tras GeneratorExit, close() lanza RuntimeError. Si un generador no se reanuda antes de finalizarse (al llegar a cero referencias o ser recolectado), se llama a su close(), lo que permite ejecutar los finally pendientes."
   - source: python-docs
-    url: https://docs.python.org/3/howto/functional.html
+    url: https://docs.python.org/3.12/howto/functional.html
     accessed: 2026-10-08
     note: "Los generadores son funciones que simplifican escribir iteradores: en lugar de calcular un valor y devolverlo, devuelven un iterador que entrega un flujo de valores; la función puede salir y reanudarse en varios puntos (los yield). Las generator expressions calculan los valores a medida que se necesitan, sin materializarlos."
   - source: python-docs
-    url: https://docs.python.org/3/tutorial/inputoutput.html
+    url: https://docs.python.org/3.12/tutorial/inputoutput.html
     accessed: 2026-10-08
     note: "Para leer líneas de un archivo se puede recorrer el objeto archivo: es eficiente en memoria, rápido y produce código simple."
   - source: python-docs
-    url: https://docs.python.org/3/library/itertools.html
+    url: https://docs.python.org/3.12/library/itertools.html
     accessed: 2026-10-08
     note: "batched(iterable, n) agrupa en tuplas de largo n; el último lote puede ser más corto. Agregado en 3.12."
 relations:
@@ -51,7 +51,7 @@ relations:
 created_at: 2026-10-08
 updated_at: 2026-10-08
 last_verified: 2026-10-08
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -96,7 +96,10 @@ La versión ingenua de un paso de pipeline lee todo el archivo en una lista, la 
 ## 7. Ejemplo sencillo
 
 ```python
-def pares(limite: int):
+from collections.abc import Iterator
+
+
+def pares(limite: int) -> Iterator[int]:
     for n in range(limite):
         if n % 2 == 0:
             yield n
@@ -239,8 +242,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-08. `review_required`: pendiente de revisión B-F3.1 del lote F3b-03a.
+2026-10-08. Pasa a `verified`: revisión B-F3.1 del lote F3b-03a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-08: creación (lote F3b-03a).
+- 2026-10-08: revisión B-F3.1 del lote F3b-03a aplicada (docs/reviews/cards-f3b-03a.md): la documentación de Python se cita en `/3.12/`, la versión con la que se ejecutó el código; §7 anota el retorno de `pares` (`-> Iterator[int]`) y pasa `mypy --strict`.
+- 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).

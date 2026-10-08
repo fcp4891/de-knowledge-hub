@@ -16,15 +16,15 @@ tags: [python, classes, dataclasses, oop]
 related_topics: [python-typing, python-data-structures, data-validation-with-pydantic]
 sources:
   - source: python-docs
-    url: https://docs.python.org/3/tutorial/classes.html
+    url: https://docs.python.org/3.12/tutorial/classes.html
     accessed: 2026-10-08
     note: "Tutorial, capítulo 9. Las variables de instancia son propias de cada instancia y las variables de clase se comparten entre todas las instancias. Los datos compartidos pueden tener efectos sorprendentes con objetos mutables como listas y dicts: la lista tricks no debería ser variable de clase porque una sola lista se compartiría entre todas las instancias de Dog. Incluye herencia, variables privadas (name mangling), iteradores y generadores."
   - source: python-docs
-    url: https://docs.python.org/3/library/dataclasses.html
+    url: https://docs.python.org/3.12/library/dataclasses.html
     accessed: 2026-10-08
     note: "dataclass genera __init__, __repr__ y otros métodos a partir de los campos anotados. frozen=True: asignar campos lanza FrozenInstanceError, subclase de AttributeError. Con eq y frozen verdaderos genera __hash__; con eq verdadero y frozen falso, __hash__ queda en None (no hashable). slots=True (3.10) genera __slots__. Mutable default values: Python guarda los valores por defecto en atributos de clase; en una dataclass, un default list lanza ValueError y se usa field(default_factory=list). kw_only (3.10). __post_init__ para procesamiento después del __init__ generado. field(repr=False) excluye el campo del __repr__ generado. replace(obj, **changes) crea un objeto nuevo del mismo tipo con los campos cambiados."
   - source: python-docs
-    url: https://docs.python.org/3/reference/datamodel.html
+    url: https://docs.python.org/3.12/reference/datamodel.html
     accessed: 2026-10-08
     note: "Modelo de datos: __eq__ y demás comparaciones ricas, __hash__, __repr__. __slots__ declara los atributos y evita la creación de __dict__ y __weakref__; el ahorro de espacio respecto de __dict__ puede ser significativo y el acceso a atributos puede ser más rápido."
 relations:
@@ -43,7 +43,7 @@ relations:
 created_at: 2026-10-08
 updated_at: 2026-10-08
 last_verified: 2026-10-08
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -226,8 +226,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-08. `review_required`: pendiente de revisión B-F3.1 del lote F3b-03a.
+2026-10-08. Pasa a `verified`: revisión B-F3.1 del lote F3b-03a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-08: creación (lote F3b-03a).
+- 2026-10-08: revisión B-F3.1 del lote F3b-03a aplicada (docs/reviews/cards-f3b-03a.md): la documentación de Python se cita en `/3.12/`, la versión con la que se ejecutó el código.
+- 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).

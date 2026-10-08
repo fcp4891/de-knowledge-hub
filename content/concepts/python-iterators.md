@@ -16,23 +16,23 @@ tags: [python, iterators, itertools, streaming]
 related_topics: [python-generators, python-comprehensions, batch-ingestion]
 sources:
   - source: python-docs
-    url: https://docs.python.org/3/builtins/stdtypes.html
+    url: https://docs.python.org/3.12/library/stdtypes.html
     accessed: 2026-10-08
-    note: "Iterator Types (la URL library/stdtypes.html redirige aquí). El protocolo de iterador son dos métodos: iterator.__iter__() devuelve el propio iterador (necesario para usar contenedores e iteradores en for e in) e iterator.__next__() devuelve el siguiente elemento o lanza StopIteration si no hay más."
+    note: "Iterator Types. El protocolo de iterador son dos métodos: iterator.__iter__() devuelve el propio iterador (necesario para usar contenedores e iteradores en for e in) e iterator.__next__() devuelve el siguiente elemento o lanza StopIteration si no hay más."
   - source: python-docs
-    url: https://docs.python.org/3/glossary.html
+    url: https://docs.python.org/3.12/glossary.html
     accessed: 2026-10-08
-    note: "Glosario: un iterador que produjo todos sus valores está agotado (exhausted) y los intentos siguientes de obtener un valor lanzan StopIteration. Un contenedor (como una lista) produce un iterador nuevo cada vez que se pasa a iter() o se usa en un for; hacer lo mismo con un iterador devuelve el mismo iterador agotado, que parece un contenedor vacío."
+    note: "Glosario (iterator): cuando no hay más datos, __next__() lanza StopIteration; en ese punto el iterador está agotado (exhausted) y las llamadas siguientes a __next__() vuelven a lanzar StopIteration. Un contenedor (como una lista) produce un iterador nuevo cada vez que se pasa a iter() o se usa en un for; hacer lo mismo con un iterador devuelve el mismo iterador agotado, que parece un contenedor vacío."
   - source: python-docs
-    url: https://docs.python.org/3/builtins/exceptions.html
+    url: https://docs.python.org/3.12/library/exceptions.html
     accessed: 2026-10-08
-    note: "StopIteration (la URL library/exceptions.html redirige aquí): desde 3.7 (PEP 479), un StopIteration lanzado dentro de un generador se transforma en RuntimeError."
+    note: "StopIteration: desde 3.7 (PEP 479), un StopIteration lanzado dentro de un generador se transforma en RuntimeError."
   - source: python-docs
-    url: https://docs.python.org/3/library/itertools.html
+    url: https://docs.python.org/3.12/library/itertools.html
     accessed: 2026-10-08
-    note: "batched(iterable, n, *, strict=False) agrupa en tuplas de largo n; el último lote puede ser más corto (con strict=True lanza ValueError); agregado en 3.12, strict en 3.13. islice funciona como el slicing pero sin valores negativos. chain recorre iterables uno tras otro y chain.from_iterable evalúa su argumento de forma perezosa. groupby genera un grupo nuevo cada vez que cambia la clave, por eso en general el iterable tiene que estar ordenado por la misma clave (distinto del GROUP BY de SQL). tee puede requerir mucho almacenamiento auxiliar y sus iteradores no son thread-safe."
+    note: "batched(iterable, n) agrupa en tuplas de largo n; el último lote puede ser más corto; agregado en 3.12. islice funciona como el slicing pero sin valores negativos. chain recorre iterables uno tras otro y chain.from_iterable evalúa su argumento de forma perezosa. groupby genera un grupo nuevo cada vez que cambia la clave, por eso en general el iterable tiene que estar ordenado por la misma clave (distinto del GROUP BY de SQL). tee puede requerir mucho almacenamiento auxiliar y sus iteradores no son thread-safe."
   - source: python-docs
-    url: https://docs.python.org/3/library/collections.abc.html
+    url: https://docs.python.org/3.12/library/collections.abc.html
     accessed: 2026-10-08
     note: "collections.abc.Iterator: ABC para clases con __iter__() y __next__(). collections.abc.Generator: ABC para generadores."
   - source: aws-lambda-docs
@@ -63,7 +63,7 @@ relations:
 created_at: 2026-10-08
 updated_at: 2026-10-08
 last_verified: 2026-10-08
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -170,7 +170,7 @@ La misma clase se escribe en menos líneas como generador (ver `python-generator
 
 ## 11. GCP
 
-El protocolo es del lenguaje y no cambia por nube. Lo que sí depende de la plataforma es la **versión de Python** del runtime: `itertools.batched` existe desde 3.12 y su parámetro `strict` desde 3.13. En **funciones de Cloud Run**, el runtime se elige al desplegar. La documentación lista `python312` con deprecación el 2028-10-02, además de `python313` y `python314`. Fijar el runtime explícitamente evita que una función despliegue con una versión donde el código no existe.
+El protocolo es del lenguaje y no cambia por nube. Lo que sí depende de la plataforma es la **versión de Python** del runtime: `itertools.batched` existe desde 3.12. En **funciones de Cloud Run**, el runtime se elige al desplegar. La documentación lista `python312` con deprecación el 2028-10-02, además de `python313` y `python314`. Fijar el runtime explícitamente evita que una función despliegue con una versión donde el código no existe.
 
 ## 12. AWS
 
@@ -230,8 +230,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-08. `review_required`: pendiente de revisión B-F3.1 del lote F3b-03a.
+2026-10-08. Pasa a `verified`: revisión B-F3.1 del lote F3b-03a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-08: creación (lote F3b-03a).
+- 2026-10-08: revisión B-F3.1 del lote F3b-03a aplicada (docs/reviews/cards-f3b-03a.md): la documentación de Python se cita en `/3.12/`, la versión con la que se ejecutó el código; se quita `strict` de `batched` (3.13), que no está en la página de 3.12.
+- 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).

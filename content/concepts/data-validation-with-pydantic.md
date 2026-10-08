@@ -73,7 +73,7 @@ relations:
     target: python-error-handling-and-retries
     note: Un error de validación es permanente; reintentarlo no lo arregla.
 created_at: 2026-10-02
-updated_at: 2026-10-06
+updated_at: 2026-10-08
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -228,7 +228,7 @@ Validación expresiva y cercana al código, con errores muy detallados, a cambio
 - `dead-letter-queue`: adónde van los rechazados.
 - `python-error-handling-and-retries`: por qué un error de validación no se reintenta.
 - Con ficha: `data-contracts`.
-- Del blueprint, pendiente de ficha: `python-typing`.
+- `python-typing`: qué verifica un type checker y qué no hace Python en ejecución.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -260,3 +260,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
 - 2026-10-05: §10, cambio mínimo de tipos para pasar `mypy --strict`: `list[dict]` pasa a `list[dict[str, Any]]` (con `from typing import Any`). Sin cambio de comportamiento; pendiente de revisión de Cursor.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `data-contracts`, que ya tiene ficha.
+- 2026-10-08: §17 enlaza `python-typing`, que ya tiene ficha (lote F3b-03a); antes figuraba como pendiente de ficha.

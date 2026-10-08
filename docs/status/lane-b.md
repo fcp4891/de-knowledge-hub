@@ -6,9 +6,12 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-08
 
 ## Actual
-- **Tarea activa:** Revisión del cambio mínimo de `change-detection`. Felipe aprobó todas las filas el 2026-10-08 en `docs/reviews/change-detection-json.md`. No se editó `content/` ni `frontend/`.
-- **Siguiente:** En espera del lote 03a. Carril A aplica la propuesta aprobada.
+- **Tarea activa:** B-F3.1 del lote F3b-03a. Felipe aprobó todas las filas el 2026-10-08 en `docs/reviews/cards-f3b-03a.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** En espera del lote 03b. Carril A aplica las propuestas aprobadas.
 - **Bloqueos:** ninguno.
+
+### B-F3.1 · lote F3b-03a
+- Diez fichas de `python-core`, tabla de §48. Felipe aprobó todas las filas el 2026-10-08, incluidas las cuatro propuestas: `/3.12/` en lo ejecutado y `/3/` solo para el `SyntaxWarning` del `finally`; `os.replace` atómico si tiene éxito y puede fallar entre sistemas de archivos; sin la frase de Cloud Storage en `python-context-managers`; retorno de `pares` en el §7 de `python-generators`. No se editó `content/` ni `frontend/`.
 
 ### JSON en `change-detection`
 - Felipe aprobó todas las filas el 2026-10-08, incluida la propuesta: §10 con `FARM_FINGERPRINT(TO_JSON_STRING(STRUCT(...)))` como vía principal y `CONCAT` con marcador como alternativa; §2 y el comentario de BigQuery coherentes; §6 acotada a la concatenación; §20 con las dos fuentes JSON. No se editó `content/` ni `frontend/`.
@@ -177,6 +180,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-03a (2026-10-08)
+- Revisión de las 10 fichas de `python-core`. Felipe aprobó todas las filas, incluidas las cuatro propuestas. No se editó `content/`. En espera del lote 03b.
 
 ### JSON en `change-detection` (2026-10-07)
 - Revisión de la alternativa `TO_JSON_STRING(STRUCT(...))` / `jsonb_build_array` frente a `data-reconciliation` y `surrogate-keys`. Felipe aprobó todas las filas el 2026-10-08, incluida la propuesta de la §10, la §2, la §6 y la §20. No se editó `content/`. En espera del lote 03a.
