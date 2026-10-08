@@ -6,9 +6,12 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-08
 
 ## Actual
-- **Tarea activa:** `b/ui-polish-2` (tablas GFM). Sin merge a `main`.
-- **Siguiente:** lo que asigne Felipe. Ideas fuera de esta fase siguen en `docs/BACKLOG.md`.
+- **Tarea activa:** Revisión del cambio mínimo de `change-detection`. Felipe aprobó todas las filas el 2026-10-08 en `docs/reviews/change-detection-json.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** En espera del lote 03a. Carril A aplica la propuesta aprobada.
 - **Bloqueos:** ninguno.
+
+### JSON en `change-detection`
+- Felipe aprobó todas las filas el 2026-10-08, incluida la propuesta: §10 con `FARM_FINGERPRINT(TO_JSON_STRING(STRUCT(...)))` como vía principal y `CONCAT` con marcador como alternativa; §2 y el comentario de BigQuery coherentes; §6 acotada a la concatenación; §20 con las dos fuentes JSON. No se editó `content/` ni `frontend/`.
 
 ### Tablas Markdown (`b/ui-polish-2`)
 - El parser de `frontend/lib/markdown.ts` (el mismo en hybrid y static) reconoce tablas GFM, listas de tareas, tachado (`~~`) y enlaces automáticos (`https`, `www`, `<url>`, correo). No se añadió `remark-gfm`.
@@ -174,6 +177,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### JSON en `change-detection` (2026-10-07)
+- Revisión de la alternativa `TO_JSON_STRING(STRUCT(...))` / `jsonb_build_array` frente a `data-reconciliation` y `surrogate-keys`. Felipe aprobó todas las filas el 2026-10-08, incluida la propuesta de la §10, la §2, la §6 y la §20. No se editó `content/`. En espera del lote 03a.
 
 ### NULL en CONCAT y claves (2026-10-07)
 - Revisión de `grain` §4, `data-reconciliation` §10, el snippet `bigquery-reconciliation`, `surrogate-keys` §10 y `surrogate-key-generation` §4, §8 y §10. Filas en pendiente en `docs/reviews/fixes-null-concat.md`. No se editó `content/`.

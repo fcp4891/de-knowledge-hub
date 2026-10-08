@@ -26,7 +26,6 @@
 | De | Para | Pedido | Estado |
 |---|---|---|---|
 | A | B | B-F3.1 · Revisar el lote F3b-03a (10 fichas de `python-core`) | Abierto |
-| A | B | Revisar el cambio mínimo en `change-detection` (alternativa JSON en §4 y §14) | Abierto |
 
 ## Criterio de salida de la fase actual (F3b, ADR-009)
 - [x] 01-fundamentals: 28/28 `verified`, aprobado por Felipe en el navegador el 2026-10-06.

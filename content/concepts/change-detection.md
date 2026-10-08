@@ -71,7 +71,7 @@ relations:
     target: scd-type-2
     note: Saber qué filas cambiaron es la entrada de una carga SCD tipo 2.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-08
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -98,7 +98,7 @@ Por eso dos filas distintas pueden dar el mismo hash.
 | CDC basado en log | Lee el log de la base de origen (ver `change-data-capture`) | El origen lo permite |
 | Columna de modificación | `updated_at > watermark` | El origen la mantiene de forma confiable |
 | Comparación columna a columna | `IS DISTINCT FROM` en cada atributo | Pocas columnas |
-| Hash de fila | Hash de las columnas concatenadas con separador y marcador de `NULL` | Muchas columnas; también sirve para reconciliar |
+| Hash de fila | Hash de las columnas serializadas en JSON (`TO_JSON_STRING(STRUCT(...))`, `jsonb_build_array`) o concatenadas con separador y marcador de `NULL` | Muchas columnas; también sirve para reconciliar |
 | Diferencia de conjuntos | `EXCEPT` entre versiones | Tablas pequeñas o medianas |
 
 Esta ficha trata las tres últimas, que son SQL.
@@ -136,7 +136,7 @@ Muchos orígenes (archivos diarios, APIs sin filtro de fecha, réplicas sin log 
 
 - Cuando el origen ofrece CDC: el log trae también los cambios intermedios entre dos fotos, que la comparación no ve.
 - En tablas enormes cargadas cada pocos minutos: comparar fotos completas es caro; conviene CDC o un `updated_at`.
-- Con hashes sin marcador de `NULL` ni separador.
+- Con hashes de texto concatenado sin marcador de `NULL` ni separador.
 
 ## 7. Ejemplo sencillo
 
@@ -181,8 +181,11 @@ SELECT coalesce(o.id, d.id) AS id,
 FROM o FULL JOIN d ON o.id = d.id
 WHERE o.h IS DISTINCT FROM d.h;
 
--- BigQuery (sintaxis documentada; no ejecutado aquí): CONCAT devuelve NULL con un argumento NULL,
--- así que el marcador es obligatorio.
+-- BigQuery (sintaxis documentada; no ejecutado aquí): la serialización JSON codifica NULL como null
+-- y el texto entre comillas con escape, sin marcador ni separador.
+-- SELECT id, FARM_FINGERPRINT(TO_JSON_STRING(STRUCT(nombre, email))) AS h FROM origen;
+-- Alternativa con CONCAT (devuelve NULL con un argumento NULL, así que el marcador es obligatorio),
+-- solo si el marcador y el separador no pueden aparecer en los datos (§14):
 -- SELECT id, FARM_FINGERPRINT(CONCAT(IFNULL(nombre, '\\N'), '|', IFNULL(email, '\\N'))) AS h FROM origen;
 
 -- T-SQL (sintaxis documentada; no ejecutado aquí): CONCAT convierte NULL en '' y HASHBYTES con SHA2_256.
@@ -191,7 +194,7 @@ WHERE o.h IS DISTINCT FROM d.h;
 
 Con un origen (1 igual, 2 con email que pasó a `NULL`, 3 igual y 5 nuevo) y un destino (1, 2, 3 y 4), la consulta devuelve `2 modificado`, `4 borrado en origen` y `5 nuevo`.
 
-Sin el marcador, `concat_ws('|', 'a', NULL, 'b')` y `concat_ws('|', 'a', 'b', NULL)` producen el mismo hash. Sin separador, `concat('ab', 'c')` y `concat('a', 'bc')` también: las dos colisiones se comprobaron en PostgreSQL. Las versiones de BigQuery y T-SQL siguen la sintaxis de su documentación y no se ejecutaron.
+Sin el marcador, `concat_ws('|', 'a', NULL, 'b')` y `concat_ws('|', 'a', 'b', NULL)` producen el mismo hash. Sin separador, `concat('ab', 'c')` y `concat('a', 'bc')` también: las dos colisiones se comprobaron en PostgreSQL. Las versiones de BigQuery y T-SQL siguen la sintaxis de su documentación y no se ejecutaron. La serialización JSON evita esas dos colisiones: la prueba ejecutada en PostgreSQL de `data-reconciliation` muestra `[null, "x"]` distinto de `["\\N", "x"]` y `["a|b", "c"]` distinto de `["a", "b|c"]`.
 
 ## 11. GCP
 
@@ -252,10 +255,10 @@ Pendiente (F4).
 
 ## 20. Fuentes
 
-- Google Cloud: *Hash functions*, *String functions* y *Query syntax* (BigQuery).
+- Google Cloud: *Hash functions*, *String functions*, *Query syntax* y *JSON functions* (BigQuery).
 - AWS: *CONCAT* y *SHA2* (Amazon Redshift).
 - Microsoft Learn: *CONCAT (Transact-SQL)* y *HASHBYTES (Transact-SQL)*.
-- PostgreSQL: *String Functions and Operators*.
+- PostgreSQL: *String Functions and Operators* y *JSON Functions and Operators*.
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
@@ -270,3 +273,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: revisión B-F3.1 del lote F3b-02c aplicada (docs/reviews/cards-f3b-02c.md): Redshift: `CONCAT` y `||` devuelven `NULL` con un argumento `NULL` (su página), distinto de T-SQL y de `concat`/`concat_ws` de PostgreSQL.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-07: cambio mínimo para que coincida con la revisión de NULL (docs/reviews/fixes-null-concat.md): §4 y §14 agregan la serialización JSON (`TO_JSON_STRING(STRUCT(...))`, `jsonb_build_array`) como alternativa que elimina las ambigüedades del marcador y del separador. Sigue `verified`, pendiente de revisión de Cursor.
+- 2026-10-08: revisión `docs/reviews/change-detection-json.md` aplicada (todas las filas aprobadas): §10 con `FARM_FINGERPRINT(TO_JSON_STRING(STRUCT(nombre, email)))` como vía principal en BigQuery (no ejecutado) y `CONCAT` con marcador como alternativa; §2 incluye la serialización JSON; §6 acotada a la concatenación de texto; §20 nombra las fuentes JSON de BigQuery y PostgreSQL. Sigue `verified`.
