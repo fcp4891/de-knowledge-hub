@@ -12,6 +12,9 @@ export function InlineText({ inlines }: { inlines: Inline[] }) {
     if (part.type === "em") {
       return <em key={key}>{part.value}</em>;
     }
+    if (part.type === "del") {
+      return <del key={key}>{part.value}</del>;
+    }
     if (part.type === "link") {
       return (
         <a key={key} href={part.href}>

@@ -50,13 +50,44 @@ function MarkdownBlock({
       </p>
     );
   }
+  if (block.type === "table") {
+    return (
+      <div className="markdown-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              {block.headers.map((cell, index) => (
+                <th key={index} data-align={block.aligns[index] ?? "left"}>
+                  <InlineText inlines={cell} />
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {block.rows.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {row.map((cell, index) => (
+                  <td key={index} data-align={block.aligns[index] ?? "left"}>
+                    <InlineText inlines={cell} />
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
   if (block.type === "list") {
     const Tag = block.ordered ? "ol" : "ul";
     return (
       <Tag>
         {block.items.map((item, index) => (
-          <li key={index}>
-            <InlineText inlines={item} />
+          <li key={index} className={item.checked === null ? undefined : "task"}>
+            {item.checked === null ? null : (
+              <input type="checkbox" defaultChecked={item.checked} disabled aria-label={item.checked ? "Hecho" : "Pendiente"} />
+            )}
+            <InlineText inlines={item.inlines} />
           </li>
         ))}
       </Tag>

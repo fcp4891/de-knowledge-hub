@@ -3,12 +3,19 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-07
+**Última actualización:** 2026-10-08
 
 ## Actual
-- **Tarea activa:** ninguna. `b/ui-redesign` cerrada en el commit 5 y mergeada a `main` por Carril A. La revisión de NULL y claves (`fixes-null-concat.md`) fue aprobada por Felipe y aplicada por Carril A.
-- **Siguiente:** lo que asigne Felipe; en Carril A, pedido abierto de revisar el cambio mínimo en `change-detection`. Ideas fuera de esta fase siguen en `docs/BACKLOG.md`.
+- **Tarea activa:** `b/ui-polish-2` (tablas GFM). Sin merge a `main`.
+- **Siguiente:** lo que asigne Felipe. Ideas fuera de esta fase siguen en `docs/BACKLOG.md`.
 - **Bloqueos:** ninguno.
+
+### Tablas Markdown (`b/ui-polish-2`)
+- El parser de `frontend/lib/markdown.ts` (el mismo en hybrid y static) reconoce tablas GFM, listas de tareas, tachado (`~~`) y enlaces automáticos (`https`, `www`, `<url>`, correo). No se añadió `remark-gfm`.
+- La tabla va en `.markdown-table-wrap`: borde `var(--border)`, encabezado en negrita, padding 8px 12px y scroll horizontal si no cabe.
+- En `content/` hay tablas en varias fichas SQL (unnest, subqueries, structs, recursive CTE, quality checks, window functions, surrogate keys) y en «Qué es Data Engineering». No se editó `content/`.
+- Verificado en Chrome normal, export estático bajo `/DES_conocimiento/`: roles en `/concepts/what-is-data-engineering/` (sección 2), ejemplo en `/concepts/sql-window-functions/` y la tabla de 7 columnas de `/concepts/surrogate-key-generation/` a 375 px (scroll dentro del contenedor, padding 8px 12px). Listas de tareas, tachado y autolinks no aparecen en el contenido; el parser los acepta.
+- Lint, `npm run build` y `npm run build:static` en verde. `dynamicParams` sigue en `true` y `personalActions.ts` sigue con `"use server"`.
 
 ### Rediseño UI · commit 5 (cierre)
 - `make` no está en el PATH de Windows. Se creó `.venv` con `py -3.12` (la receta de `make venv`) y se regeneró `frontend/public/data/` con `validate` y `scripts.static.build_static_data` (la receta de `make static-data`): 1020 respuestas. **`public/data/` no se versiona.** No se editó `content/` ni `backend/`.
