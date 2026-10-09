@@ -41,7 +41,7 @@ relations:
     target: python-classes
     note: Cuando un dict empieza a representar un registro con campos fijos, una dataclass suele ser más clara.
 created_at: 2026-10-08
-updated_at: 2026-10-08
+updated_at: 2026-10-09
 last_verified: 2026-10-08
 verification_status: verified
 ---
@@ -96,7 +96,7 @@ La estructura correcta resuelve estos casos sin código extra.
 
 - Cuando los datos no caben en memoria: estas estructuras viven en la RAM del proceso. Para volúmenes grandes, procesar en flujo (ver `python-generators`) o usar un motor (SQL, DataFrames).
 - Cuando un `dict` representa un registro con campos fijos y tipos conocidos: una dataclass o un modelo de validación documenta y protege mejor la forma.
-- Para análisis tabular con muchas columnas y operaciones vectorizadas: una biblioteca de DataFrames es más clara y eficiente (pendiente de ficha: `python-dataframes`).
+- Para análisis tabular con muchas columnas y operaciones vectorizadas: una biblioteca de DataFrames es más clara y eficiente (ver `python-dataframes`).
 
 ## 7. Ejemplo sencillo
 
@@ -208,7 +208,7 @@ No aplica de forma específica (ver §11).
 - `python-typing` y `python-classes`: describir y proteger la forma de los registros.
 - `python-generators`: procesar en flujo cuando no cabe en memoria.
 - `deduplication`: el patrón general, más allá de la memoria del proceso.
-- Del blueprint, pendiente de ficha: `python-dataframes`.
+- `python-dataframes`: tablas en memoria con pandas y Polars cuando el análisis es tabular.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -235,3 +235,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: creación (lote F3b-03a).
 - 2026-10-08: revisión B-F3.1 del lote F3b-03a aplicada (docs/reviews/cards-f3b-03a.md): la documentación de Python se cita en `/3.12/`, la versión con la que se ejecutó el código.
 - 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-09: §17 enlaza `python-dataframes`, que ya tiene ficha (lote F3b-03b); antes figuraba como pendiente de ficha.

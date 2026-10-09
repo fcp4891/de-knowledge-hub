@@ -66,7 +66,7 @@ relations:
     target: retries
     note: Qué errores conviene reintentar y con qué espera.
 created_at: 2026-10-01
-updated_at: 2026-10-06
+updated_at: 2026-10-09
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -221,7 +221,7 @@ La biblioteca estándar no agrega dependencias, a cambio de más código propio 
 - `python-error-handling-and-retries`: el manejo de errores alrededor de la llamada.
 - `retries`: qué reintentar y cómo.
 - Con ficha: `data-validation-with-pydantic`, `python-logging`.
-- Del blueprint, pendiente de ficha: `http-clients`.
+- `http-clients`: sesión o cliente reutilizable, timeouts y errores HTTP con Requests y HTTPX.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -252,3 +252,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: creación (lote 4 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `data-validation-with-pydantic`, `python-logging`, que ya tienen ficha.
+- 2026-10-09: §17 enlaza `http-clients`, que ya tiene ficha (lote F3b-03b); antes figuraba como pendiente de ficha.

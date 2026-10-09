@@ -49,7 +49,7 @@ relations:
     target: python-comprehensions
     note: La generator expression es la versión de una línea de un generador simple.
 created_at: 2026-10-08
-updated_at: 2026-10-08
+updated_at: 2026-10-09
 last_verified: 2026-10-08
 verification_status: verified
 ---
@@ -90,7 +90,7 @@ La versión ingenua de un paso de pipeline lee todo el archivo en una lista, la 
 
 - Cuando hay que recorrer los datos más de una vez o acceder por posición: el generador es de una sola pasada.
 - Cuando los datos son pocos y caben de sobra en memoria: una lista es más simple de depurar e inspeccionar.
-- Para paralelizar CPU: un pipeline de generadores corre en un solo hilo, un elemento a la vez (pendiente de ficha: `python-concurrency`).
+- Para paralelizar CPU: un pipeline de generadores corre en un solo hilo, un elemento a la vez (ver `python-concurrency`).
 - Para transformaciones tabulares pesadas (joins, agregaciones grandes): un motor (SQL, DataFrames, Spark) lo hace mejor.
 
 ## 7. Ejemplo sencillo
@@ -222,7 +222,8 @@ Para reanudar un proceso fallido a mitad hace falta guardar un checkpoint (núme
 - `python-file-handling`: abrir archivos con encoding explícito.
 - `python-context-managers`: `@contextmanager` también se escribe con `yield`.
 - `data-pipeline`: el mismo diseño a escala de sistema.
-- Del blueprint, pendiente de ficha: `python-concurrency`, `python-file-processing`.
+- `python-concurrency`: repartir lotes entre hilos o procesos.
+- `python-file-processing`: el caso real de procesar una carpeta de archivos en flujo.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -249,3 +250,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: creación (lote F3b-03a).
 - 2026-10-08: revisión B-F3.1 del lote F3b-03a aplicada (docs/reviews/cards-f3b-03a.md): la documentación de Python se cita en `/3.12/`, la versión con la que se ejecutó el código; §7 anota el retorno de `pares` (`-> Iterator[int]`) y pasa `mypy --strict`.
 - 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-09: §17 enlaza `python-concurrency` y `python-file-processing`, que ya tienen ficha (lote F3b-03b); antes figuraban como pendientes de ficha.

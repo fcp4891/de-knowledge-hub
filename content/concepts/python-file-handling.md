@@ -65,7 +65,7 @@ relations:
     target: python-generators
     note: Recorrer el archivo línea a línea en un generador mantiene la memoria constante.
 created_at: 2026-10-08
-updated_at: 2026-10-08
+updated_at: 2026-10-09
 last_verified: 2026-10-08
 verification_status: verified
 ---
@@ -245,7 +245,7 @@ El disco local es rápido y simple, pero efímero y limitado. Object storage es 
 - `python-generators`: lectura en flujo.
 - `csv-format` y `file-ingestion`: el formato y el patrón de ingesta.
 - `gcs-buckets-and-objects`: object storage como destino durable.
-- Del blueprint, pendiente de ficha: `python-file-processing`.
+- `python-file-processing`: procesar una carpeta de archivos con rechazos y manifiesto.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -275,3 +275,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: creación (lote F3b-03a).
 - 2026-10-08: revisión B-F3.1 del lote F3b-03a aplicada (docs/reviews/cards-f3b-03a.md): la documentación de Python se cita en `/3.12/`, la versión con la que se ejecutó el código; `os.replace` con la frase de la documentación (atómico si tiene éxito, requisito de POSIX; puede fallar entre sistemas de archivos), sin «deja de ser atómico».
 - 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-09: §17 enlaza `python-file-processing`, que ya tiene ficha (lote F3b-03b); antes figuraba como pendiente de ficha.

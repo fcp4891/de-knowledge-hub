@@ -994,8 +994,8 @@
       "importance": "low",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-08"
+      "verification_status": "verified",
+      "last_verified": "2026-10-09"
     },
     {
       "slug": "python-file-handling",
@@ -1022,8 +1022,8 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-08"
+      "verification_status": "verified",
+      "last_verified": "2026-10-09"
     },
     {
       "slug": "python-dataframes",
@@ -1036,8 +1036,8 @@
       "importance": "high",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-08"
+      "verification_status": "verified",
+      "last_verified": "2026-10-09"
     },
     {
       "slug": "arrow-columnar-memory",
@@ -1050,8 +1050,8 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-08"
+      "verification_status": "verified",
+      "last_verified": "2026-10-09"
     },
     {
       "slug": "data-validation-with-pydantic",
@@ -1078,8 +1078,8 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-08"
+      "verification_status": "verified",
+      "last_verified": "2026-10-09"
     },
     {
       "slug": "data-apis-with-fastapi",
@@ -1092,8 +1092,8 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-08"
+      "verification_status": "verified",
+      "last_verified": "2026-10-09"
     },
     {
       "slug": "testing-with-pytest",
@@ -1134,8 +1134,8 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-08"
+      "verification_status": "verified",
+      "last_verified": "2026-10-09"
     },
     {
       "slug": "pyspark-dataframes",
@@ -1148,8 +1148,8 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-08"
+      "verification_status": "verified",
+      "last_verified": "2026-10-09"
     },
     {
       "slug": "python-api-consumption",
@@ -1176,8 +1176,8 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-08"
+      "verification_status": "verified",
+      "last_verified": "2026-10-09"
     },
     {
       "slug": "python-database-io",
@@ -1190,8 +1190,8 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-08"
+      "verification_status": "verified",
+      "last_verified": "2026-10-09"
     },
     {
       "slug": "python-error-handling-and-retries",
@@ -1218,8 +1218,8 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-08"
+      "verification_status": "verified",
+      "last_verified": "2026-10-09"
     },
     {
       "slug": "conceptual-data-model",
