@@ -145,7 +145,8 @@ function parseProse(source: string): Block[] {
 }
 
 function isTableRow(line: string): boolean {
-  return line.includes("|") && splitRow(line).length >= 2;
+  // GFM: una fila con una sola celda (`| 1 |`) sigue dentro de la tabla.
+  return line.includes("|") && splitRow(line).length >= 1;
 }
 
 function isTableSeparator(line: string): boolean {

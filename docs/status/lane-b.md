@@ -3,12 +3,17 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-08
+**Última actualización:** 2026-10-09
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote F3b-03a. Felipe aprobó todas las filas el 2026-10-08 en `docs/reviews/cards-f3b-03a.md`. No se editó `content/` ni `frontend/`.
-- **Siguiente:** En espera del lote 03b. Carril A aplica las propuestas aprobadas.
+- **Tarea activa:** `b/ui-polish-3` (fila de tabla de una sola celda). Sin merge a `main`.
+- **Siguiente:** lo que asigne Felipe.
 - **Bloqueos:** ninguno.
+
+### Fila de una celda (`b/ui-polish-3`)
+- En `frontend/lib/markdown.ts`, `isTableRow` ya no exige dos celdas: `| 1 |` sigue dentro de la tabla, como en GFM. El separador de columnas no cambia (sigue pidiendo al menos dos).
+- Se quitó el `todo` del test en `tests/frontend/markdown.test.ts`. `make test-frontend`: 10/10.
+- No se editó `content/` ni el contrato. Ninguna ficha tiene ese caso.
 
 ### B-F3.1 · lote F3b-03a
 - Diez fichas de `python-core`, tabla de §48. Felipe aprobó todas las filas el 2026-10-08, incluidas las cuatro propuestas: `/3.12/` en lo ejecutado y `/3/` solo para el `SyntaxWarning` del `finally`; `os.replace` atómico si tiene éxito y puede fallar entre sistemas de archivos; sin la frase de Cloud Storage en `python-context-managers`; retorno de `pares` en el §7 de `python-generators`. No se editó `content/` ni `frontend/`.

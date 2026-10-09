@@ -37,9 +37,7 @@ test("fila con menos celdas se completa con celdas vacías", () => {
   assert.deepEqual(table.rows[0][2], []);
 });
 
-// Pendiente de Carril B: en GFM una fila de una sola celda sigue siendo fila de la tabla; hoy isTableRow
-// exige 2 celdas, así que la tabla termina y "| 1 |" queda como párrafo. Ninguna ficha tiene ese caso.
-test("fila de una sola celda sigue dentro de la tabla (GFM)", { todo: "isTableRow exige 2 celdas" }, () => {
+test("fila de una sola celda sigue dentro de la tabla (GFM)", () => {
   const blocks = parseMarkdown("| a | b |\n|---|---|\n| 1 |");
   assert.deepEqual(blocks.map((block) => block.type), ["table"]);
 });
