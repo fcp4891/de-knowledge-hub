@@ -3,12 +3,15 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-08
+**Última actualización:** 2026-10-09
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote F3b-03a. Felipe aprobó todas las filas el 2026-10-08 en `docs/reviews/cards-f3b-03a.md`. No se editó `content/` ni `frontend/`.
-- **Siguiente:** En espera del lote 03b. Carril A aplica las propuestas aprobadas.
+- **Tarea activa:** B-F3.1 del lote F3b-03b. Felipe aprobó todas las filas el 2026-10-09 en `docs/reviews/cards-f3b-03b.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** En espera del dominio 04. Carril A aplica las tres propuestas aprobadas.
 - **Bloqueos:** ninguno.
+
+### B-F3.1 · lote F3b-03b
+- Once fichas de `03-python`, tabla de §48. Felipe aprobó todas las filas el 2026-10-09, incluidas las tres propuestas: mypy explícito en `pyspark-dataframes`; citar la página de comparación para el nombre anterior de Dataproc y quitar «el mismo código de PySpark corre en las dos modalidades»; en `python-concurrency`, publicar solo los 0.5 s medidos en esta máquina. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-03a
 - Diez fichas de `python-core`, tabla de §48. Felipe aprobó todas las filas el 2026-10-08, incluidas las cuatro propuestas: `/3.12/` en lo ejecutado y `/3/` solo para el `SyntaxWarning` del `finally`; `os.replace` atómico si tiene éxito y puede fallar entre sistemas de archivos; sin la frase de Cloud Storage en `python-context-managers`; retorno de `pares` en el §7 de `python-generators`. No se editó `content/` ni `frontend/`.
@@ -180,6 +183,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-03b (2026-10-09)
+- Revisión de las 11 fichas que cierran `03-python`. Felipe aprobó todas las filas, incluidas las tres propuestas. No se editó `content/`. En espera del dominio 04.
 
 ### B-F3.1 · lote F3b-03a (2026-10-08)
 - Revisión de las 10 fichas de `python-core`. Felipe aprobó todas las filas, incluidas las cuatro propuestas. No se editó `content/`. En espera del lote 03b.

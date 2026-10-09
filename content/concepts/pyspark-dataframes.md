@@ -36,9 +36,9 @@ sources:
     accessed: 2026-10-08
     note: "Arquitectura de Spark en clúster: el programa driver coordina, los executors en los nodos ejecutan las tareas, y un cluster manager asigna recursos."
   - source: gcp-managed-spark-docs
-    url: https://docs.cloud.google.com/managed-spark/docs/concepts/clusters-overview
-    accessed: 2026-10-08
-    note: "Managed Service for Apache Spark es el nuevo nombre del producto antes conocido como Dataproc on Compute Engine (despliegue en clústeres) y Google Cloud Serverless for Apache Spark (despliegue serverless)."
+    url: https://docs.cloud.google.com/managed-spark/docs/concepts/serverless-spark-compare
+    accessed: 2026-10-09
+    note: "Compare Managed Service for Apache Spark serverless and cluster deployments: Managed Service for Apache Spark incluye las opciones antes llamadas Dataproc on Compute Engine (despliegue en clúster) y Google Cloud Serverless for Apache Spark (despliegue serverless); la página compara ambos despliegues."
   - source: aws-emr-docs
     url: https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-what-is-emr.html
     accessed: 2026-10-08
@@ -76,7 +76,7 @@ relations:
     target: arrow-columnar-memory
     note: Arrow acelera la conversión entre DataFrames de Spark y de pandas.
 created_at: 2026-10-08
-updated_at: 2026-10-08
+updated_at: 2026-10-09
 last_verified: 2026-10-08
 verification_status: review_required
 ---
@@ -207,11 +207,11 @@ resultado.explain()                                   # plan físico: BroadcastH
 spark.stop()
 ```
 
-Este bloque lo ejecuta la CI en cada push (`tests/test_snippet_code.py`, con Java 17 y `pyspark==4.2.0` de `requirements-snippets.txt`). No se ejecutó en local, porque no hay JDK. El test comprueba el resultado y que el plan contenga `BroadcastHashJoin`.
+Este bloque lo ejecuta la CI en cada push (`tests/test_snippet_code.py`, con Java 17 y `pyspark==4.2.0` de `requirements-snippets.txt`). No se ejecutó en local, porque no hay JDK. El test comprueba el resultado y que el plan contenga `BroadcastHashJoin`. No se pasó por `mypy --strict`.
 
 ## 11. GCP
 
-**Managed Service for Apache Spark** es el nombre actual del producto antes llamado Dataproc on Compute Engine (clústeres) y Google Cloud Serverless for Apache Spark (serverless). El mismo código de PySpark corre en las dos modalidades. La diferencia es si el equipo administra el ciclo de vida del clúster o envía lotes a un entorno serverless.
+**Managed Service for Apache Spark** incluye las opciones antes llamadas Dataproc on Compute Engine (despliegue en clúster) y Google Cloud Serverless for Apache Spark (despliegue serverless), según su página de comparación. La diferencia entre ambos despliegues es si el equipo administra el ciclo de vida del clúster o envía lotes a un entorno serverless.
 
 ## 12. AWS
 
@@ -264,7 +264,7 @@ Pendiente (F4).
 ## 20. Fuentes
 
 - Apache Spark 4.2.0: *Quickstart: DataFrame*, *Installation*, *Performance Tuning*, *Arrow in PySpark* y *Cluster Mode Overview*.
-- Google Cloud: *Managed Service for Apache Spark* (clústeres).
+- Google Cloud: *Compare Managed Service for Apache Spark serverless and cluster deployments*.
 - AWS: *What is Amazon EMR?*, *What is Amazon EMR Serverless?* y *Program AWS Glue ETL scripts in PySpark*.
 - Microsoft Learn: *PySpark on Azure Databricks* y *Apache Spark in Azure Synapse Analytics*.
 
@@ -277,3 +277,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-08: creación (lote F3b-03b).
+- 2026-10-09: revisión B-F3.1 del lote F3b-03b aplicada (docs/reviews/cards-f3b-03b.md): el nombre anterior (Dataproc on Compute Engine y Google Cloud Serverless for Apache Spark) se cita desde la página de comparación, no desde `clusters-overview`; se quita «el mismo código de PySpark corre en las dos modalidades»; §10 dice que no se pasó por `mypy --strict`.

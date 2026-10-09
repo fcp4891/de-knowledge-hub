@@ -65,7 +65,7 @@ relations:
     target: pyspark-dataframes
     note: Cuando una máquina no alcanza, el paralelismo pasa a un motor distribuido.
 created_at: 2026-10-08
-updated_at: 2026-10-08
+updated_at: 2026-10-09
 last_verified: 2026-10-08
 verification_status: review_required
 ---
@@ -208,7 +208,7 @@ if __name__ == "__main__":          # necesario con ProcessPoolExecutor: los pro
 
     inicio = time.perf_counter()
     con_asyncio = asyncio.run(todas(ns))
-    cronometrar("E/S con asyncio, límite 4", inicio)         # ~0.4s (dos tandas de 4)
+    cronometrar("E/S con asyncio, límite 4", inicio)         # dos tandas de 4: 2 × sleep(0.2) como mínimo
 
     inicio = time.perf_counter()
     cpu_secuencial = [hashear(n) for n in ns[:4]]
@@ -298,3 +298,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-08: creación (lote F3b-03b).
+- 2026-10-09: revisión B-F3.1 del lote F3b-03b aplicada (docs/reviews/cards-f3b-03b.md): el comentario del asyncio en §10 ya no publica una cifra (`~0.4s`); la única medición publicada es la de esta máquina (0.5 s).
