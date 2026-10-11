@@ -108,8 +108,8 @@
           "slug": "bigquery-incremental-models",
           "title": "Modelos incrementales en BigQuery",
           "entity_type": "pattern",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "MERGE en general y por motor."
         },
         {
           "slug": "bigquery-scd-type-2",

@@ -143,8 +143,8 @@
           "slug": "bigquery-incremental-models",
           "title": "Modelos incrementales en BigQuery",
           "entity_type": "pattern",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Cargar solo lo nuevo, en general."
         },
         {
           "slug": "partitioning",

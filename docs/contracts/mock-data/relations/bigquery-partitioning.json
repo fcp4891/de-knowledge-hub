@@ -21,6 +21,13 @@
       "label": "related_to",
       "items": [
         {
+          "slug": "bigquery-architecture",
+          "title": "Arquitectura de BigQuery",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Particionar organiza el almacenamiento para leer menos."
+        },
+        {
           "slug": "gcp-bigquery",
           "title": "BigQuery",
           "entity_type": "cloud_service",
@@ -54,6 +61,20 @@
           "entity_type": "concept",
           "origin": "entity",
           "note": "Particionar y filtrar por la partición reduce los bytes procesados en on-demand."
+        },
+        {
+          "slug": "bigquery-incremental-models",
+          "title": "Modelos incrementales en BigQuery",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Las particiones delimitan la ventana y permiten podar."
+        },
+        {
+          "slug": "bigquery-query-optimization",
+          "title": "Optimización de consultas en BigQuery",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Filtrar por la columna de partición poda particiones."
         },
         {
           "slug": "partitioning",

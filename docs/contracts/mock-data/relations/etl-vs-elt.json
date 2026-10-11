@@ -63,6 +63,13 @@
           "note": null
         },
         {
+          "slug": "bigquery-external-tables",
+          "title": "Tablas externas en BigQuery",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Una tabla externa permite cargar y limpiar en una pasada (ELT)."
+        },
+        {
           "slug": "data-transformation",
           "title": "Transformación de datos",
           "entity_type": "concept",

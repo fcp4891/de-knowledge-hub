@@ -58,6 +58,131 @@
       ]
     },
     {
+      "type": "concept",
+      "items": [
+        {
+          "slug": "bigquery-architecture",
+          "title": "Arquitectura de BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "has_page": true,
+          "snippet": "Cómo está hecho BigQuery según su documentación: una capa de almacenamiento administrada y columnar separada de una capa de cómputo que ejecuta las consultas en paralelo con slots, conectadas por la r",
+          "score": 6.3
+        },
+        {
+          "slug": "bigquery-clustering",
+          "title": "Clustering en BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "has_page": true,
+          "snippet": "Ordenamiento de una tabla de BigQuery por hasta cuatro columnas para que las consultas filtradas poden bloques; complementa al particionamiento.",
+          "score": 6.3
+        },
+        {
+          "slug": "bigquery-cost-model",
+          "title": "Modelo de costos de BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "has_page": true,
+          "snippet": "Cómo cobra BigQuery (sin montos): cómputo on-demand por bytes procesados o por capacidad en slots (editions y reservas), almacenamiento activo y long-term con facturación lógica o física, y los contro",
+          "score": 6.3
+        },
+        {
+          "slug": "bigquery-query-optimization",
+          "title": "Optimización de consultas en BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "has_page": true,
+          "snippet": "Cómo hacer que una consulta de BigQuery lea menos y use menos slots, según su guía «Optimize query computation»: columnas necesarias en vez de SELECT *, filtros por partición, joins con la tabla grand",
+          "score": 6.3
+        },
+        {
+          "slug": "bigquery-partitioning",
+          "title": "Particionamiento en BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "has_page": true,
+          "snippet": "Cómo BigQuery divide una tabla en particiones por fecha, por momento de ingesta o por rangos de enteros para leer menos datos y gestionar el ciclo de vida.",
+          "score": 6.3
+        },
+        {
+          "slug": "bigquery-sql-dialect",
+          "title": "SQL en BigQuery (GoogleSQL)",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "has_page": true,
+          "snippet": "El dialecto SQL de BigQuery: GoogleSQL, el recomendado y el de por defecto, frente al legacy SQL que se recomienda migrar. Qué lo distingue según su referencia: nombres con backticks y punto, SELECT *",
+          "score": 6.3
+        },
+        {
+          "slug": "bigquery-external-tables",
+          "title": "Tablas externas en BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "has_page": true,
+          "snippet": "Tablas cuyos datos viven fuera de BigQuery (Cloud Storage, Google Drive, Bigtable) y de las que BigQuery solo guarda la definición y el esquema. Para qué sirven según su documentación (ELT en una pasa",
+          "score": 6.3
+        },
+        {
+          "slug": "bigquery-materialized-views",
+          "title": "Vistas materializadas en BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "has_page": true,
+          "snippet": "Vistas que guardan el resultado precalculado de una consulta y BigQuery mantiene solo: incrementales (SQL limitado, siempre frescas y con smart tuning, que reescribe consultas sobre la tabla base para",
+          "score": 6.3
+        },
+        {
+          "slug": "bigquery-information-schema",
+          "title": "INFORMATION_SCHEMA en BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "has_page": false,
+          "snippet": "INFORMATION_SCHEMA en BigQuery",
+          "score": 6.0
+        },
+        {
+          "slug": "bigquery-monitoring",
+          "title": "Monitoreo de BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "has_page": false,
+          "snippet": "Monitoreo de BigQuery",
+          "score": 6.0
+        },
+        {
+          "slug": "bigquery-policy-tags",
+          "title": "Policy tags en BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "has_page": false,
+          "snippet": "Policy tags en BigQuery",
+          "score": 6.0
+        },
+        {
+          "slug": "bigquery-security",
+          "title": "Seguridad en BigQuery",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "has_page": false,
+          "snippet": "Authorized views, row-level security y ACL de dataset van aquí; bigquery-policy-tags sigue aparte.",
+          "score": 6.0
+        }
+      ]
+    },
+    {
       "type": "source",
       "items": [
         {
@@ -83,121 +208,6 @@
       ]
     },
     {
-      "type": "concept",
-      "items": [
-        {
-          "slug": "bigquery-clustering",
-          "title": "Clustering en BigQuery",
-          "type": "concept",
-          "domain": "gcp",
-          "classification": "modern",
-          "has_page": true,
-          "snippet": "Ordenamiento de una tabla de BigQuery por hasta cuatro columnas para que las consultas filtradas poden bloques; complementa al particionamiento.",
-          "score": 6.3
-        },
-        {
-          "slug": "bigquery-cost-model",
-          "title": "Modelo de costos de BigQuery",
-          "type": "concept",
-          "domain": "gcp",
-          "classification": "modern",
-          "has_page": true,
-          "snippet": "Cómo cobra BigQuery (sin montos): cómputo on-demand por bytes procesados o por capacidad en slots (editions y reservas), almacenamiento activo y long-term con facturación lógica o física, y los contro",
-          "score": 6.3
-        },
-        {
-          "slug": "bigquery-partitioning",
-          "title": "Particionamiento en BigQuery",
-          "type": "concept",
-          "domain": "gcp",
-          "classification": "modern",
-          "has_page": true,
-          "snippet": "Cómo BigQuery divide una tabla en particiones por fecha, por momento de ingesta o por rangos de enteros para leer menos datos y gestionar el ciclo de vida.",
-          "score": 6.3
-        },
-        {
-          "slug": "bigquery-information-schema",
-          "title": "INFORMATION_SCHEMA en BigQuery",
-          "type": "concept",
-          "domain": "gcp",
-          "classification": "modern",
-          "has_page": false,
-          "snippet": "INFORMATION_SCHEMA en BigQuery",
-          "score": 6.0
-        },
-        {
-          "slug": "bigquery-monitoring",
-          "title": "Monitoreo de BigQuery",
-          "type": "concept",
-          "domain": "gcp",
-          "classification": "modern",
-          "has_page": false,
-          "snippet": "Monitoreo de BigQuery",
-          "score": 6.0
-        },
-        {
-          "slug": "bigquery-query-optimization",
-          "title": "Optimización de consultas en BigQuery",
-          "type": "concept",
-          "domain": "gcp",
-          "classification": "modern",
-          "has_page": false,
-          "snippet": "Optimización de consultas en BigQuery",
-          "score": 6.0
-        },
-        {
-          "slug": "bigquery-policy-tags",
-          "title": "Policy tags en BigQuery",
-          "type": "concept",
-          "domain": "gcp",
-          "classification": "modern",
-          "has_page": false,
-          "snippet": "Policy tags en BigQuery",
-          "score": 6.0
-        },
-        {
-          "slug": "bigquery-security",
-          "title": "Seguridad en BigQuery",
-          "type": "concept",
-          "domain": "gcp",
-          "classification": "modern",
-          "has_page": false,
-          "snippet": "Authorized views, row-level security y ACL de dataset van aquí; bigquery-policy-tags sigue aparte.",
-          "score": 6.0
-        },
-        {
-          "slug": "bigquery-sql-dialect",
-          "title": "SQL en BigQuery (GoogleSQL)",
-          "type": "concept",
-          "domain": "gcp",
-          "classification": "modern",
-          "has_page": false,
-          "snippet": "SQL en BigQuery (GoogleSQL)",
-          "score": 6.0
-        },
-        {
-          "slug": "bigquery-external-tables",
-          "title": "Tablas externas en BigQuery",
-          "type": "concept",
-          "domain": "gcp",
-          "classification": "modern",
-          "has_page": false,
-          "snippet": "Tablas externas en BigQuery",
-          "score": 6.0
-        },
-        {
-          "slug": "bigquery-materialized-views",
-          "title": "Vistas materializadas en BigQuery",
-          "type": "concept",
-          "domain": "gcp",
-          "classification": "modern",
-          "has_page": false,
-          "snippet": "Vistas materializadas en BigQuery",
-          "score": 6.0
-        }
-      ]
-    },
-    {
       "type": "pattern",
       "items": [
         {
@@ -206,24 +216,9 @@
           "type": "pattern",
           "domain": "gcp",
           "classification": "modern",
-          "has_page": false,
-          "snippet": "Es el patrón SQL en BigQuery; la implementación de producto es dataform-incremental-tables. No fusionar las fichas.",
-          "score": 6.0
-        }
-      ]
-    },
-    {
-      "type": "cloud_service",
-      "items": [
-        {
-          "slug": "gcp-bigquery",
-          "title": "BigQuery",
-          "type": "cloud_service",
-          "domain": null,
-          "classification": "modern",
           "has_page": true,
-          "snippet": "Data warehouse serverless de Google Cloud con almacenamiento columnar y cómputo separado.",
-          "score": 5.3
+          "snippet": "El patrón SQL para actualizar una tabla de BigQuery con solo lo que cambió: recalcular una ventana de particiones, aplicarla con MERGE (una fila de origen por clave; filtros que permitan podar partici",
+          "score": 6.3
         }
       ]
     }
