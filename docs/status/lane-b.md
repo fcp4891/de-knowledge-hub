@@ -5,9 +5,13 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Fase:** F3 (F2 cerrada el 2026-09-30)
 **Última actualización:** 2026-10-11
 
+## Reglas de revisión
+
+- **Relaciones y contenido de una ficha.** La fila «Relaciones completas» se verifica con un comando (leer el frontmatter con Python, o grep de `related_topics` y `relations`) y el resultado se pega en la revisión. Lo mismo para cualquier afirmación sobre lo que contiene una ficha. No vale una lectura a ojo. En F3b-06a esa fila se marcó a ojo: 6 relaciones figuraban como presentes y no estaban en las fichas; una apuntaba a `secrets-management`, que no existe.
+
 ## Actual
-- **Tarea activa:** B-F3.1 del lote F3b-06a. Felipe aprobó todas las filas el 2026-10-11 en `docs/reviews/cards-f3b-06a.md`. No se editó `content/` ni `frontend/`.
-- **Siguiente:** En espera del dominio 07. Carril A aplica la propuesta: Python 3.11.8 en el paso 2 del ejemplo de `open-source-vs-managed-orchestration`.
+- **Tarea activa:** B-F3.1 del lote F3b-06a, aprobado. Corrección de proceso registrada arriba. No se editó `content/` ni `frontend/`.
+- **Siguiente:** En espera del lote 07a. Carril A aplica la propuesta de 06a: Python 3.11.8 en el paso 2 del ejemplo de `open-source-vs-managed-orchestration`.
 - **Bloqueos:** ninguno.
 
 ### B-F3.1 · lote F3b-06a
@@ -197,6 +201,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### Proceso · verificación de fichas (2026-10-11)
+- En F3b-06a, la fila «Relaciones completas» se marcó a ojo y dio por presentes 6 relaciones que no estaban en las fichas (una, `secrets-management`, no existe). Desde ahora esa fila, y cualquier afirmación sobre lo que contiene una ficha, se verifica con un comando y el resultado se pega en la revisión. En espera del lote 07a.
 
 ### B-F3.1 · lote F3b-06a (2026-10-11)
 - Revisión de las 8 fichas que completan `06-orchestration`. Felipe aprobó todas las filas, incluida la propuesta (Python 3.11.8 en el ejemplo de migración). No se editó `content/`. En espera del dominio 07.
