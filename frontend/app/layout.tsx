@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans, JetBrains_Mono, Source_Serif_4 } from "next/font/google";
+import localFont from "next/font/local";
 
 import { SideNav } from "@/components/SideNav";
 import { listDomains, listStudyStates } from "@/lib/api/client";
@@ -7,25 +7,26 @@ import { listDomains, listStudyStates } from "@/lib/api/client";
 import "../styles/tokens.css";
 import "./globals.css";
 
-const plexSans = IBM_Plex_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+const plexSans = localFont({
+  src: "../fonts/ibm-plex-sans/ibm-plex-sans-latin.woff2",
+  weight: "400 700",
+  display: "swap",
   variable: "--font-plex-sans",
-  display: "swap",
 });
 
-const sourceSerif = Source_Serif_4({
-  subsets: ["latin"],
-  weight: ["400", "600"],
+const sourceSerif = localFont({
+  src: "../fonts/source-serif-4/source-serif-4-latin.woff2",
+  weight: "400 600",
+  display: "swap",
+  adjustFontFallback: "Times New Roman",
   variable: "--font-source-serif",
-  display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-jetbrains-mono",
+const jetbrainsMono = localFont({
+  src: "../fonts/jetbrains-mono/jetbrains-mono-latin.woff2",
+  weight: "400 500",
   display: "swap",
+  variable: "--font-jetbrains-mono",
 });
 
 export const metadata: Metadata = {
