@@ -84,7 +84,7 @@ relations:
     target: sql-merge
     note: MERGE es la alternativa estándar al upsert con ON CONFLICT.
 created_at: 2026-10-08
-updated_at: 2026-10-09
+updated_at: 2026-10-11
 last_verified: 2026-10-09
 verification_status: verified
 ---
@@ -266,7 +266,7 @@ COPY a staging más upsert es rápido e idempotente, a cambio de una tabla extra
 - `idempotency`: re-ejecutar sin cambiar el resultado.
 - `batch-ingestion`: cargas por lote.
 - `python-context-managers`: conexión, transacción y COPY como bloques `with`.
-- Del blueprint, pendiente de ficha: `database-ingestion`.
+- `database-ingestion`: elegir entre carga completa, incremental por watermark o CDC.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -297,3 +297,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: creación (lote F3b-03b).
 - 2026-10-09: revisión B-F3.1 del lote F3b-03b aplicada (docs/reviews/cards-f3b-03b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-11: §17 enlaza `database-ingestion`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.

@@ -54,7 +54,7 @@ relations:
     target: scd-type-2
     note: CDC alimenta historiales SCD2 con cada versión del registro.
 created_at: 2026-09-28
-updated_at: 2026-10-06
+updated_at: 2026-10-11
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -169,7 +169,8 @@ Menor latencia y carga de lectura sobre el origen, a cambio de más complejidad 
 - `sql-merge`: aplica un lote de cambios en el destino.
 - `scd-type-2`: conserva cada versión del registro.
 - Con ficha: `schema-evolution`.
-- Del blueprint, pendientes de ficha: `cdc-architecture`, `database-ingestion`.
+- `database-ingestion`: elegir entre carga completa, incremental por watermark o CDC.
+- Del blueprint, pendiente de ficha: `cdc-architecture`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -202,3 +203,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `schema-evolution`, que ya tiene ficha.
+- 2026-10-11: §17 enlaza `database-ingestion`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.

@@ -51,7 +51,7 @@ relations:
     target: change-data-capture
     note: CDC alimenta la capa raw en un flujo ELT.
 created_at: 2026-09-30
-updated_at: 2026-10-06
+updated_at: 2026-10-11
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -163,7 +163,8 @@ ELT gana en agilidad, trazabilidad y uso del cómputo del warehouse, a cambio de
 - `incremental-load`: cómo hacer incremental la transformación.
 - `change-data-capture`: fuente habitual de la capa raw en ELT.
 - Con ficha: `data-transformation`.
-- Del blueprint, pendientes de ficha: `pipeline-layers`, `medallion-architecture`, `analytics-engineering`.
+- `pipeline-layers`: las capas cruda, validada y de consumo de un pipeline.
+- Del blueprint, pendientes de ficha: `medallion-architecture`, `analytics-engineering`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -195,3 +196,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).
 - 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `data-transformation`, que ya tiene ficha.
+- 2026-10-11: §17 enlaza `pipeline-layers`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.

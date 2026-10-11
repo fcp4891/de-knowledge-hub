@@ -53,7 +53,7 @@ relations:
     target: incremental-load
     note: Un backfill suele reutilizar la carga incremental con un rango explícito.
 created_at: 2026-09-30
-updated_at: 2026-10-06
+updated_at: 2026-10-11
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -173,7 +173,7 @@ Reprocesar por períodos es seguro y controlable, pero lento para rangos largos.
 - `replay`: reproceso de eventos ya capturados.
 - `incremental-load`: la carga que el backfill reutiliza con un rango explícito.
 - Con ficha: `catchup`, `data-reconciliation`.
-- Del blueprint, pendiente de ficha: `failure-recovery`.
+- `failure-recovery`: cómo se combinan reintentos, checkpoints, DLQ, replay y backfill para volver a un estado correcto.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -204,3 +204,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: revisión B-F3.1 aplicada: nombre y fuente de Managed Service for Apache Airflow (ex Cloud Composer).
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `catchup`, `data-reconciliation`, que ya tienen ficha.
+- 2026-10-11: §17 enlaza `failure-recovery`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.

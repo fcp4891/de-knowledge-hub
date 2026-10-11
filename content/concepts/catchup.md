@@ -66,7 +66,7 @@ relations:
     target: idempotency
     note: Catchup ejecuta muchos intervalos pasados; cada ejecución debe poder repetirse sin duplicar.
 created_at: 2026-09-30
-updated_at: 2026-10-06
+updated_at: 2026-10-11
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -210,7 +210,7 @@ Catchup recupera intervalos sin intervención, a cambio de menos control sobre c
 - `dag`: la unidad a la que se aplica catchup.
 - `idempotency`: requisito para recuperar intervalos sin duplicar.
 - Con ficha: `scheduler`, `data-orchestration`.
-- Del blueprint, pendiente de ficha: `pipeline-dependencies`.
+- `pipeline-dependencies`: dependencias entre tareas y dependencias de datos entre flujos.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -242,3 +242,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: revisión B-F3.1 aplicada: §10 muestra la transacción de reemplazo de la partición y es ejecutable (BigQuery con parámetro @dia).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `scheduler`, `data-orchestration`, que ya tienen ficha.
+- 2026-10-11: §17 enlaza `pipeline-dependencies`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.

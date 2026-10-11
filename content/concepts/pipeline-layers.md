@@ -50,7 +50,7 @@ relations:
 created_at: 2026-10-11
 updated_at: 2026-10-11
 last_verified: 2026-10-11
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -263,9 +263,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-11. `review_required`: pendiente de revisión B-F3.1 del lote F3b-05a.
+2026-10-11. Pasa a `verified`: revisión B-F3.1 del lote F3b-05a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-11: creación (lote F3b-05a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-05a aplicada (docs/reviews/cards-f3b-05a.md): AWS recomienda al menos tres capas y, con datos sensibles, un bucket de landing antes de raw; Fabric con sus dos patrones de despliegue (cada capa como lakehouse, o gold como warehouse) y un workspace por lakehouse.
+- 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
