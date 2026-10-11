@@ -6,9 +6,14 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-09
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote F3b-03b. Felipe aprobó todas las filas el 2026-10-09 en `docs/reviews/cards-f3b-03b.md`. No se editó `content/` ni `frontend/`.
-- **Siguiente:** En espera del dominio 04. Carril A aplica las tres propuestas aprobadas.
+- **Tarea activa:** `b/ui-polish-3` (fila de tabla de una sola celda). Sin merge a `main`.
+- **Siguiente:** lo que asigne Felipe.
 - **Bloqueos:** ninguno.
+
+### Fila de una celda (`b/ui-polish-3`)
+- En `frontend/lib/markdown.ts`, `isTableRow` ya no exige dos celdas: `| 1 |` sigue dentro de la tabla, como en GFM. El separador de columnas no cambia (sigue pidiendo al menos dos).
+- Se quitó el `todo` del test en `tests/frontend/markdown.test.ts`. `make test-frontend`: 10/10.
+- No se editó `content/` ni el contrato. Ninguna ficha tiene ese caso.
 
 ### B-F3.1 · lote F3b-03b
 - Once fichas de `03-python`, tabla de §48. Felipe aprobó todas las filas el 2026-10-09, incluidas las tres propuestas: mypy explícito en `pyspark-dataframes`; citar la página de comparación para el nombre anterior de Dataproc y quitar «el mismo código de PySpark corre en las dos modalidades»; en `python-concurrency`, publicar solo los 0.5 s medidos en esta máquina. No se editó `content/` ni `frontend/`.

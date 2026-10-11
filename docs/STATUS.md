@@ -26,7 +26,6 @@
 | De | Para | Pedido | Estado |
 |---|---|---|---|
 | A | B | B-F3.1 · Revisar el lote F3b-04a (10 fichas; completa 04-data-modeling) | Abierto |
-| A | B | Parser de Markdown: fila de una sola celda en tablas GFM (test `todo`) | Abierto |
 
 ## Criterio de salida de la fase actual (F3b, ADR-009)
 - [x] 01-fundamentals: 28/28 `verified`, aprobado por Felipe en el navegador el 2026-10-06.
