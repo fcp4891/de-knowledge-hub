@@ -7,14 +7,15 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ## Reglas de revisión
 
-- **Relaciones y contenido de una ficha.** La fila «Relaciones completas» se verifica con un comando (leer el frontmatter con Python, o grep de `related_topics` y `relations`) y el resultado se pega en la revisión. Lo mismo para cualquier afirmación sobre lo que contiene una ficha. No vale una lectura a ojo. En F3b-06a esa fila se marcó a ojo: 6 relaciones figuraban como presentes y no estaban en las fichas; una apuntaba a `secrets-management`, que no existe.
+- **Relaciones y contenido de una ficha.** La fila «Relaciones completas», y cualquier afirmación sobre lo que contiene una ficha, se verifican con un comando y el resultado se pega en la revisión. No vale una lectura a ojo.
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote F3b-06a, aprobado. Corrección de proceso registrada arriba. No se editó `content/` ni `frontend/`.
-- **Siguiente:** En espera del lote 07a. Carril A aplica la propuesta de 06a: Python 3.11.8 en el paso 2 del ejemplo de `open-source-vs-managed-orchestration`.
-
-
+- **Tarea activa:** B-F3.1 del lote F3b-07a. Felipe aprobó todas las filas el 2026-10-11 en `docs/reviews/cards-f3b-07a.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** En espera del dominio 08. Carril A aplica las dos propuestas: §11 alineado al aviso de Knowledge Catalog, con las bibliotecas cliente; en `data-mesh`, citar Getting started y Teams and interactions, y nombrar hub-and-spoke en el §1.
 - **Bloqueos:** ninguno.
+
+### B-F3.1 · lote F3b-07a
+- Dos fichas de `07-architecture`: `data-mesh` y `data-products`. Felipe aprobó todas las filas el 2026-10-11, incluidas las dos propuestas: §11 alineado al aviso de Knowledge Catalog, con las bibliotecas cliente; en `data-mesh`, citar Getting started y Teams and interactions, y nombrar hub-and-spoke en el §1. No se editó `content/` ni `frontend/`.
 
 ### Fuentes locales (`b/ui-fonts-local`)
 - IBM Plex Sans (400–700), Source Serif 4 (400–600) y JetBrains Mono (400–500) van en `frontend/fonts/` como woff2 latino y se cargan con `next/font/local`. El build ya no llama a Google. `next/font` las publica en `_next/static/media`, con `BASE_PATH` en el export estático.
@@ -208,6 +209,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-07a (2026-10-11)
+- Revisión de `data-mesh` y `data-products`. Felipe aprobó todas las filas, incluidas las dos propuestas (aviso de Knowledge Catalog con bibliotecas cliente; URLs de Getting started y Teams and interactions, y hub-and-spoke en el §1). No se editó `content/`. En espera del dominio 08.
 
 ### Proceso · verificación de fichas (2026-10-11)
 - En F3b-06a, la fila «Relaciones completas» se marcó a ojo y dio por presentes 6 relaciones que no estaban en las fichas (una, `secrets-management`, no existe). Desde ahora esa fila, y cualquier afirmación sobre lo que contiene una ficha, se verifica con un comando y el resultado se pega en la revisión. En espera del lote 07a.
