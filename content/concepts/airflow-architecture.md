@@ -69,7 +69,7 @@ relations:
     target: backfill
     note: Los backfills se registran y ejecutan con los mismos componentes.
 created_at: 2026-10-02
-updated_at: 2026-10-04
+updated_at: 2026-10-11
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -234,7 +234,8 @@ Auto-hospedar da control total (versión, executor, red) a cambio de operar la b
 - `scheduler`: el concepto general, del que el scheduler de Airflow es una implementación.
 - `dag`: lo que el Dag processor serializa.
 - `catchup` y `backfill`: cómo el scheduler crea runs pasados.
-- Del blueprint, pendientes de ficha: `open-source-vs-managed-orchestration`, `airflow-operators-and-hooks`.
+- `open-source-vs-managed-orchestration`: qué cambia entre operar Airflow y usar Managed Service for Apache Airflow, MWAA o el Apache Airflow job de Fabric.
+- `airflow-operators-and-hooks`: operadores, hooks y operadores propios.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -264,3 +265,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-02: creación (lote 5 de F3).
 - 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
+- 2026-10-11: §17 enlaza `open-source-vs-managed-orchestration` y `airflow-operators-and-hooks`, que ya tienen ficha (lote F3b-06a); antes figuraban como pendientes de ficha.

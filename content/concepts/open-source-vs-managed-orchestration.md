@@ -63,7 +63,7 @@ relations:
 created_at: 2026-10-11
 updated_at: 2026-10-11
 last_verified: 2026-10-11
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -149,7 +149,7 @@ Los Dags de este repositorio se prueban con Airflow 3.3.2 y Python 3.12. Antes d
 Un equipo en Google Cloud migra Dags desde un Airflow propio en Kubernetes a Managed Service for Apache Airflow (Gen 3):
 
 1. Elige la imagen con Airflow 3.3.1, no la de por defecto (2.11.1).
-2. Corre en la CI la carga con `DagBag` usando 3.3.1 y Python 3.11.
+2. Corre en la CI la carga con `DagBag` usando 3.3.1 y Python 3.11.8.
 3. Revisa qué opciones de configuración que usaba están bloqueadas.
 4. Instala sus operadores propios como plugins.
 5. Pasa el monitoreo a Cloud Logging y Cloud Monitoring.
@@ -290,8 +290,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-11. `review_required`: pendiente de revisión B-F3.1 del lote F3b-06a.
+2026-10-11. Pasa a `verified`: revisión B-F3.1 del lote F3b-06a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-11: creación (lote F3b-06a).
+- 2026-10-11: revisión B-F3.1 del lote F3b-06a aplicada (docs/reviews/cards-f3b-06a.md): el paso 2 del ejemplo de producción dice Python 3.11.8, como la lista de imágenes de Gen 3.
+- 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).

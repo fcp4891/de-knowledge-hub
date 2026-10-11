@@ -224,7 +224,7 @@ Los eventos dan baja latencia y escalan con el volumen, a cambio de duplicados, 
 - `idempotency` y `dead-letter-queue`: tolerar duplicados y apartar fallas.
 - `pubsub-delivery-semantics`: entrega al menos una vez en Pub/Sub.
 - `pipeline-dependencies`: cuando hay que coordinar varios pasos.
-- Del blueprint (dominio 06), pendiente de ficha: `event-driven-orchestration`.
+- `event-driven-orchestration`: cómo el orquestador inicia una corrida con un evento (Assets con AssetWatcher en Airflow).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -253,3 +253,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-05a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-05a aplicada (docs/reviews/cards-f3b-05a.md): Eventarc distinguido de las notificaciones de Cloud Storage a Pub/Sub, con sus ediciones y los destinos de su página.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-11: §17 enlaza `event-driven-orchestration`, que ya tiene ficha (lote F3b-06a); antes figuraba como pendiente de ficha.
