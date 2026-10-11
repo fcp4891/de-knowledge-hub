@@ -5,10 +5,17 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Fase:** F3 (F2 cerrada el 2026-09-30)
 **Última actualización:** 2026-10-11
 
+## Reglas de revisión
+
+- **Relaciones y contenido de una ficha.** La fila «Relaciones completas», y cualquier afirmación sobre lo que contiene una ficha, se verifican con un comando y el resultado se pega en la revisión. No vale una lectura a ojo.
+
 ## Actual
-- **Tarea activa:** `b/ui-fonts-local` (fuentes en el repo). Sin merge a `main`.
-- **Siguiente:** lo que asigne Felipe.
+- **Tarea activa:** B-F3.1 del lote F3b-07a. Revisión en `docs/reviews/cards-f3b-07a.md`, filas en `pendiente`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Dos propuestas: alinear el §11 al aviso de Knowledge Catalog (API, biblioteca cliente, CLI y nombres de IAM); citar Getting started y Teams and interactions, y nombrar hub-and-spoke en el §1 de `data-mesh`.
 - **Bloqueos:** ninguno.
+
+### B-F3.1 · lote F3b-07a
+- Dos fichas de `07-architecture`: `data-mesh` y `data-products`. Relaciones y frases comprobadas por comando, con el resultado en la revisión. Dehghani queda en lo conceptual. No se editó `content/` ni `frontend/`.
 
 ### Fuentes locales (`b/ui-fonts-local`)
 - IBM Plex Sans (400–700), Source Serif 4 (400–600) y JetBrains Mono (400–500) van en `frontend/fonts/` como woff2 latino y se cargan con `next/font/local`. El build ya no llama a Google. `next/font` las publica en `_next/static/media`, con `BASE_PATH` en el export estático.
@@ -202,6 +209,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-07a (2026-10-11)
+- Revisión de `data-mesh` y `data-products`. Filas en `pendiente`. Relaciones y contenido comprobados por comando. Dos propuestas: el aviso de Knowledge Catalog del 10 de abril de 2026, y las URLs de Getting started y Teams and interactions. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-06a (2026-10-11)
 - Revisión de las 8 fichas que completan `06-orchestration`. Felipe aprobó todas las filas, incluida la propuesta (Python 3.11.8 en el ejemplo de migración). No se editó `content/`. En espera del dominio 07.
