@@ -6,12 +6,12 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-11
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote F3b-05a. Revisión en `docs/reviews/cards-f3b-05a.md`, filas en `pendiente`. No se editó `content/` ni `frontend/`.
-- **Siguiente:** Esperar la aprobación de Felipe. Tres propuestas: «al menos tres» capas en AWS y el landing de datos sensibles; los dos patrones de Fabric; Eventarc distinto de las notificaciones de Cloud Storage.
+- **Tarea activa:** B-F3.1 del lote F3b-05a. Felipe aprobó todas las filas el 2026-10-11 en `docs/reviews/cards-f3b-05a.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** En espera del dominio 06. Carril A aplica las tres propuestas: al menos tres capas y landing en AWS; los dos patrones de Fabric y un workspace por lakehouse; Eventarc distinto de las notificaciones de Cloud Storage.
 - **Bloqueos:** ninguno.
 
 ### B-F3.1 · lote F3b-05a
-- Seis fichas de `05-pipelines`, tabla de §48. Bronze/silver/gold queda en Databricks y Fabric, con la aclaración de Databricks de que no es un requisito. Raw/stage/analytics queda en AWS Prescriptive Guidance. Checkpoints por motor, sin equivalencia. El Dag de `pipeline-dependencies` coincide con `make check-airflow-dag` y cita Airflow 3.3.2. No se editó `content/` ni `frontend/`.
+- Seis fichas de `05-pipelines`, tabla de §48. Felipe aprobó todas las filas el 2026-10-11, incluidas las tres propuestas: al menos tres capas y bucket de landing en AWS; los dos patrones de Fabric y un workspace por lakehouse; Eventarc distinto de las notificaciones de Cloud Storage a Pub/Sub. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-04a
 - Diez fichas de `04-data-modeling`, tabla de §48. Felipe aprobó todas las filas el 2026-10-10, incluida la reclasificación del quickstart de Snowflake a Nivel 3. Para `data-vault`: Data Vault Alliance como N4 canónico solo para lo conceptual (hubs, links, satélites, hash), mismo criterio que Kimball Group; Microsoft Learn (N1) para el uso en plataforma; la guía de Snowflake no sostiene afirmaciones. No se editó `content/` ni `frontend/`.
@@ -196,7 +196,7 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 ## Historial
 
 ### B-F3.1 · lote F3b-05a (2026-10-11)
-- Revisión de las 6 fichas que completan `05-pipelines`. Filas en `pendiente`. Tres propuestas: capas de AWS, patrones de Fabric y Eventarc frente a las notificaciones de Cloud Storage. No se editó `content/`.
+- Revisión de las 6 fichas que completan `05-pipelines`. Felipe aprobó todas las filas, incluidas las tres propuestas (capas de AWS, patrones de Fabric y Eventarc). No se editó `content/`. En espera del dominio 06.
 
 ### B-F3.1 · lote F3b-04a (2026-10-10)
 - Revisión de las 10 fichas que completan `04-data-modeling`. Felipe aprobó todas las filas, incluida la reclasificación del quickstart de Snowflake a Nivel 3 y la fila de Data Vault Alliance (N4 conceptual; Microsoft Learn N1 para la plataforma; la guía no sostiene afirmaciones). No se editó `content/`. En espera del dominio 05.
