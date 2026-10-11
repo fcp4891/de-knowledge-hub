@@ -30,11 +30,19 @@ sources:
   - source: gcp-knowledge-catalog-docs
     url: https://docs.cloud.google.com/knowledge-catalog/docs/data-products-overview
     accessed: 2026-10-11
-    note: "Knowledge Catalog: desde el 10 de abril de 2026, Dataplex Universal Catalog se llama Knowledge Catalog; los nombres de la API, las bibliotecas cliente, la CLI y los roles de IAM no cambian. En Knowledge Catalog, un data product es una colección lógica y curada de assets, empaquetada formalmente para ser descubrible, confiable y accesible."
+    note: "Knowledge Catalog: desde el 10 de abril de 2026, Dataplex Universal Catalog se llama Knowledge Catalog; la API, las bibliotecas cliente, la CLI y los nombres de IAM no cambian. En Knowledge Catalog, un data product es una colección lógica y curada de assets, empaquetada formalmente para ser descubrible, confiable y accesible."
   - source: aws-prescriptive-guidance
     url: https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-data-mesh/introduction.html
     accessed: 2026-10-11
-    note: "AWS Prescriptive Guidance, «Strategies for building a data mesh-based enterprise solution on AWS»: data mesh es un enfoque arquitectónico y organizacional, basado en cuatro principios (propiedad del dominio, dato como producto, plataforma de autoservicio y gobierno federado). Antes de adoptarlo, evaluar si otro patrón encaja mejor, como un data lake centralizado o una arquitectura multicuenta hub-and-spoke (página «Getting started with data mesh»). Equipos: liderazgo ejecutivo, equipos de dominio (dueños de los productos de datos) y equipo de la plataforma de autoservicio, más equipos habilitadores; entre las responsabilidades del liderazgo ejecutivo, formular la visión y patrocinar la estrategia de data mesh; cita la ley de Conway (página «Teams and interactions»)."
+    note: "AWS Prescriptive Guidance, «Strategies for building a data mesh-based enterprise solution on AWS», Introduction: un enfoque arquitectónico y organizacional como data mesh; data mesh se basa en cuatro principios (propiedad del dominio, dato como producto, plataforma de autoservicio y gobierno federado)."
+  - source: aws-prescriptive-guidance
+    url: https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-data-mesh/data-mesh.html
+    accessed: 2026-10-11
+    note: "AWS Prescriptive Guidance, Getting started with data mesh: para evaluar si una arquitectura data mesh conviene, o si encaja mejor otro patrón como un data lake centralizado o una arquitectura multicuenta hub-and-spoke, consultar a ejecutivos de negocio, dueños de las fuentes y responsables de proyectos y programas."
+  - source: aws-prescriptive-guidance
+    url: https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-data-mesh/teams-interactions.html
+    accessed: 2026-10-11
+    note: "AWS Prescriptive Guidance, Teams and interactions: cita la ley de Conway (el diseño de un sistema imita la estructura de comunicación de la organización) y recomienda una estructura de equipos distribuida. Equipos: liderazgo ejecutivo (formular la visión de la estrategia de datos, patrocinar la estrategia de data mesh, definir métricas del programa), equipos de dominio (dueños de los productos de datos) y equipo de la plataforma de autoservicio, más equipos habilitadores."
   - source: aws-prescriptive-guidance
     url: https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-data-mesh/aws-offerings-data-mesh.html
     accessed: 2026-10-11
@@ -59,7 +67,7 @@ relations:
 created_at: 2026-10-11
 updated_at: 2026-10-11
 last_verified: 2026-10-11
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -71,7 +79,7 @@ verification_status: review_required
 3. **Plataforma de autoservicio:** un equipo de plataforma da la infraestructura para que los dominios construyan productos sin ser especialistas.
 4. **Gobierno computacional federado:** reglas globales, decididas entre dominios y plataforma, que la plataforma aplica automáticamente.
 
-**No es un producto que se compra.** Google Cloud, AWS y Microsoft Fabric ofrecen piezas que ayudan a implementarlo, y cada página las describe a su manera. AWS Prescriptive Guidance recomienda evaluar antes si otra arquitectura, como un data lake centralizado, encaja mejor.
+**No es un producto que se compra.** Google Cloud, AWS y Microsoft Fabric ofrecen piezas que ayudan a implementarlo, y cada página las describe a su manera. AWS Prescriptive Guidance recomienda evaluar antes si encaja mejor otra arquitectura, como un data lake centralizado o una arquitectura multicuenta hub-and-spoke.
 
 ## 2. Qué es
 
@@ -231,7 +239,7 @@ Este script en Python 3.12, solo con biblioteca estándar, está ejecutado y pas
 - los dominios exponen productos como tablas, vistas, archivos, temas o streams (en BigQuery, un dataset);
 - hay cuatro funciones: productores, consumidores, gobierno central y plataforma central.
 
-Esa página es de 2024 y menciona Data Catalog. La función de productos de datos vive hoy en **Knowledge Catalog**, que desde el 10 de abril de 2026 es el nombre de Dataplex Universal Catalog, según su página; la API, la CLI y los roles de IAM conservan sus nombres. Ver `data-products`.
+Esa página es de 2024 y menciona Data Catalog. La función de productos de datos vive hoy en **Knowledge Catalog**, que desde el 10 de abril de 2026 es el nombre de Dataplex Universal Catalog, según el aviso de su página; la API, las bibliotecas cliente, la CLI y los nombres de IAM no cambian. Ver `data-products`.
 
 ## 12. AWS
 
@@ -303,15 +311,17 @@ Pendiente (F4).
 
 - Zhamak Dehghani (martinfowler.com): *Data Mesh Principles and Logical Architecture* (2020) y *How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh* (2019), como referencia conceptual (Nivel 4).
 - Google Cloud: *Architecture and functions in a data mesh* (Architecture Center) y *About data products* (Knowledge Catalog).
-- AWS Prescriptive Guidance: *Strategies for building a data mesh-based enterprise solution on AWS* y *AWS offerings for data mesh*.
+- AWS Prescriptive Guidance: *Strategies for building a data mesh-based enterprise solution on AWS* (Introduction, *Getting started with data mesh* y *Teams and interactions*) y *AWS offerings for data mesh*.
 - Microsoft Learn: *Fabric domains*.
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-11. `review_required`: pendiente de revisión B-F3.1 del lote F3b-07a.
+2026-10-11. Pasa a `verified`: revisión B-F3.1 del lote F3b-07a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-11: creación (lote F3b-07a).
+- 2026-10-11: revisión B-F3.1 del lote F3b-07a aplicada (docs/reviews/cards-f3b-07a.md): §11 alineado al aviso de Knowledge Catalog (API, bibliotecas cliente, CLI y nombres de IAM); la fuente de AWS cita por separado Introduction, Getting started with data mesh y Teams and interactions; §1 nombra también hub-and-spoke.
+- 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).

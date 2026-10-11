@@ -26,7 +26,7 @@ sources:
   - source: gcp-knowledge-catalog-docs
     url: https://docs.cloud.google.com/knowledge-catalog/docs/data-products-overview
     accessed: 2026-10-11
-    note: "Knowledge Catalog (desde el 10 de abril de 2026, el nombre de Dataplex Universal Catalog; la API, las bibliotecas, la CLI y los roles de IAM no cambian), About data products: un data product es una colección lógica y curada de assets, empaquetada para ser descubrible, confiable y accesible. Asset: un puntero a un recurso físico, como un dataset, tabla o vista de BigQuery. Access groups: roles como Reader o Analyst mapeados a Google Groups o cuentas de servicio, con un rol de IAM por defecto opcional. Data product owner (o producer) gestiona calidad, acceso y documentación; consumer: persona, equipo o agente de IA. Contract: acuerdo entre dueño y consumidores con términos como la frecuencia de actualización y estándares de calidad. Ejemplo: «Ecommerce Business Data» con dos tablas y una vista sin PII, grupos Reader y Writer, contrato de actualización semanal y documentación con consultas de ejemplo."
+    note: "Knowledge Catalog (desde el 10 de abril de 2026, el nombre de Dataplex Universal Catalog; la API, las bibliotecas cliente, la CLI y los nombres de IAM no cambian), About data products: un data product es una colección lógica y curada de assets, empaquetada para ser descubrible, confiable y accesible. Asset: un puntero a un recurso físico, como un dataset, tabla o vista de BigQuery. Access groups: roles como Reader o Analyst mapeados a Google Groups o cuentas de servicio, con un rol de IAM por defecto opcional. Data product owner (o producer) gestiona calidad, acceso y documentación; consumer: persona, equipo o agente de IA. Contract: acuerdo entre dueño y consumidores con términos como la frecuencia de actualización y estándares de calidad. Ejemplo: «Ecommerce Business Data» con dos tablas y una vista sin PII, grupos Reader y Writer, contrato de actualización semanal y documentación con consultas de ejemplo."
   - source: aws-prescriptive-guidance
     url: https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-data-mesh/aws-offerings-data-mesh.html
     accessed: 2026-10-11
@@ -51,7 +51,7 @@ relations:
 created_at: 2026-10-11
 updated_at: 2026-10-11
 last_verified: 2026-10-11
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -195,7 +195,7 @@ Este script en Python 3.12, solo con biblioteca estándar, está ejecutado y pas
 
 ## 11. GCP
 
-**Knowledge Catalog**, el nombre que lleva Dataplex Universal Catalog desde el 10 de abril de 2026 según su página; la API, la CLI y los roles de IAM conservan sus nombres. En su documentación, un *data product* tiene:
+**Knowledge Catalog**, el nombre que lleva Dataplex Universal Catalog desde el 10 de abril de 2026 según el aviso de su página; la API, las bibliotecas cliente, la CLI y los nombres de IAM no cambian. En su documentación, un *data product* tiene:
 
 - **assets:** punteros a datasets, tablas o vistas de BigQuery;
 - **access groups:** roles como Reader o Analyst, mapeados a Google Groups o cuentas de servicio;
@@ -267,8 +267,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-11. `review_required`: pendiente de revisión B-F3.1 del lote F3b-07a.
+2026-10-11. Pasa a `verified`: revisión B-F3.1 del lote F3b-07a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-11: creación (lote F3b-07a).
+- 2026-10-11: revisión B-F3.1 del lote F3b-07a aplicada (docs/reviews/cards-f3b-07a.md): §11 alineado al aviso de Knowledge Catalog (API, bibliotecas cliente, CLI y nombres de IAM).
+- 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).

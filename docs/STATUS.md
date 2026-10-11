@@ -1,6 +1,6 @@
 # STATUS — Data Engineering Knowledge Hub
 
-**Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 07-architecture, solo conceptos (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08, 03-python el 2026-10-10, 04-data-modeling, 05-pipelines y 06-orchestration el 2026-10-11). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
+**Fase actual:** F3b — Contenido por dominio (ADR-009); conceptos de 07-architecture completos, pendientes de aprobación (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08, 03-python el 2026-10-10, 04-data-modeling, 05-pipelines y 06-orchestration el 2026-10-11). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
 **Última actualización:** 2026-10-11
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**
@@ -18,14 +18,13 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | — (lote F3b-07a entregado en `review_required`) | Aplicar la revisión de 07a; conceptos de 07 2/2 | — |
-| B · Cursor revisión | — | B-F3.1 del lote F3b-07a | — |
+| A · Claude Code | — (conceptos de 07-architecture 2/2 `verified`) | Plan de 08-gcp preparado; ejecutarlo tras aprobar 07 | — |
+| B · Cursor revisión | — | — | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | B-F3.1 · Revisar el lote F3b-07a (2 fichas; conceptos de 07-architecture) | Abierto |
 
 ## Criterio de salida de la fase actual (F3b, ADR-009)
 - [x] 01-fundamentals: 28/28 `verified`, aprobado por Felipe en el navegador el 2026-10-06.
@@ -34,7 +33,7 @@
 - [x] 04-data-modeling: 17/17 `verified`, aprobado por Felipe en el navegador el 2026-10-11.
 - [x] 05-pipelines: 16/16 `verified`, aprobado por Felipe en el navegador el 2026-10-11.
 - [x] 06-orchestration: 12/12 `verified`, aprobado por Felipe en el navegador el 2026-10-11.
-- [ ] 07-architecture: 0/2 conceptos `verified`; lote F3b-07a (2) en revisión. Sus 15 arquitecturas no son de F3b: 6 en F4 (ROADMAP) y 9 en el Backlog.
+- [ ] 07-architecture: 2/2 conceptos `verified` desde el 2026-10-11; falta la aprobación de Felipe en el navegador. Sus 15 arquitecturas no son de F3b: 6 en F4 (ROADMAP) y 9 en el Backlog.
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
 
 ## Fases cerradas

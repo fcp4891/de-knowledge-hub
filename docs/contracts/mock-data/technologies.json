@@ -698,7 +698,7 @@
     },
     {
       "slug": "gcp-dataplex",
-      "title": "Dataplex",
+      "title": "Knowledge Catalog",
       "type": "cloud_service",
       "origin": "gcp",
       "category": "governance-catalog",

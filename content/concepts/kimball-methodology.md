@@ -227,7 +227,8 @@ El modelo dimensional es simple de consultar y entender, a cambio de trabajo de 
 - `conformed-dimensions`: la integración entre procesos y la matriz de bus.
 - `slowly-changing-dimensions` y `surrogate-keys`: historia y claves de las dimensiones.
 - `data-vault` y `one-big-table`: otros enfoques, que no reemplazan al dimensional.
-- Del blueprint (dominio 07), pendiente de ficha: `medallion-architecture` y `data-mesh`.
+- `data-mesh`: dominios dueños de sus datos que los publican como productos.
+- Del blueprint (dominio 07), pendiente de ficha: `medallion-architecture`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -255,3 +256,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-10: creación (lote F3b-04a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-11: §17 enlaza `data-mesh`, que ya tiene ficha (lote F3b-07a); antes figuraba como pendiente de ficha.

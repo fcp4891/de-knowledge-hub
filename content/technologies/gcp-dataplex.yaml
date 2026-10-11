@@ -2,14 +2,22 @@ id: cloud_service:gcp-dataplex
 slug: gcp-dataplex
 type: cloud_service
 stub: true
-title: Dataplex
-description: Servicio de Google Cloud para gobierno, catálogo y gestión de metadata de datos.
+title: Knowledge Catalog
+description: 'Servicio de Google Cloud para catálogo, gobierno y metadata de datos, con data products. Antes, Dataplex Universal Catalog: el 10 de abril de 2026 pasó a llamarse Knowledge Catalog.'
 provider: gcp
 category: governance-catalog
 classification: modern
 mvp: false
 cloud:
 - gcp
+tags: [dataplex, knowledge-catalog, data-catalog, governance]
+note: 'Alias: Dataplex, Dataplex Universal Catalog. El slug se mantiene (gcp-dataplex) porque es estable; según el aviso de su página, la API, las bibliotecas cliente, la CLI y los nombres de IAM no cambiaron con el nuevo nombre.'
+sources:
+  - source: gcp-knowledge-catalog-docs
+    url: https://docs.cloud.google.com/knowledge-catalog/docs/data-products-overview
+    accessed: 2026-10-11
+    note: "Aviso de la página: «As of April 10, 2026, Dataplex Universal Catalog is now called Knowledge Catalog. The API, client library, CLI, and IAM names remain unchanged.»"
 created_at: '2026-09-28'
-updated_at: '2026-09-28'
+updated_at: '2026-10-11'
+last_verified: '2026-10-11'
 verification_status: review_required
