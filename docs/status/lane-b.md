@@ -10,9 +10,12 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Relaciones y contenido de una ficha.** La fila «Relaciones completas», y cualquier afirmación sobre lo que contiene una ficha, se verifican con un comando y el resultado se pega en la revisión. No vale una lectura a ojo.
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote F3b-07a. Felipe aprobó todas las filas el 2026-10-11 en `docs/reviews/cards-f3b-07a.md`. No se editó `content/` ni `frontend/`.
-- **Siguiente:** En espera del dominio 08. Carril A aplica las dos propuestas: §11 alineado al aviso de Knowledge Catalog, con las bibliotecas cliente; en `data-mesh`, citar Getting started y Teams and interactions, y nombrar hub-and-spoke en el §1.
-- **Bloqueos:** ninguno.
+- **Tarea activa:** B-F3.1 del lote F3b-08b. Revisión en `docs/reviews/cards-f3b-08b.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: agregar al frontmatter las relaciones que el §17 ya nombra y tienen ficha; en `bigquery-security`, quitar `bigquery-architecture` o nombrarla en el §17. El lote 08a está en `b/f3b-review-08a`.
+- **Bloqueos:** ninguno. `make validate` no corrió en este worktree (no hay `.venv`).
+
+### B-F3.1 · lote F3b-08b
+- Ocho fichas de gobierno y operación. Fuentes Nivel 1, §14, GoogleSQL «no ejecutado», policy tags vigentes en la API de Data Catalog, y la tabla de clases de Cloud Storage sin precios, comprobados por comando y contra sus páginas. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-07a
 - Dos fichas de `07-architecture`: `data-mesh` y `data-products`. Felipe aprobó todas las filas el 2026-10-11, incluidas las dos propuestas: §11 alineado al aviso de Knowledge Catalog, con las bibliotecas cliente; en `data-mesh`, citar Getting started y Teams and interactions, y nombrar hub-and-spoke en el §1. No se editó `content/` ni `frontend/`.
@@ -209,6 +212,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-08b (2026-10-11)
+- Revisión de las 8 fichas de gobierno y operación. Sin hallazgo alto. El §17 de cuatro fichas nombra relaciones que no están en el frontmatter. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-07a (2026-10-11)
 - Revisión de `data-mesh` y `data-products`. Felipe aprobó todas las filas, incluidas las dos propuestas (aviso de Knowledge Catalog con bibliotecas cliente; URLs de Getting started y Teams and interactions, y hub-and-spoke en el §1). No se editó `content/`. En espera del dominio 08.
