@@ -64,7 +64,7 @@ relations:
     target: slowly-changing-dimensions
     note: Las dimensiones de la estrella cambian con el tiempo y se historizan con SCD.
 created_at: 2026-10-02
-updated_at: 2026-10-06
+updated_at: 2026-10-11
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -195,7 +195,7 @@ Redundancia controlada en dimensiones a cambio de consultas simples y rápidas. 
 - `surrogate-keys`: la unión entre ambas.
 - `slowly-changing-dimensions`: cómo cambian las dimensiones.
 - Con ficha: `grain`.
-- Del blueprint, pendiente de ficha: `snowflake-schema`.
+- `snowflake-schema`: la alternativa con las jerarquías de las dimensiones normalizadas.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -226,3 +226,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `grain`, que ya tiene ficha.
+- 2026-10-11: §17 enlaza `snowflake-schema`, que ya tiene ficha (lote F3b-04a); antes figuraba como pendiente de ficha.

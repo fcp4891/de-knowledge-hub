@@ -235,7 +235,7 @@
           "title": "Data Vault",
           "entity_type": "pattern",
           "origin": "entity",
-          "note": "La carga solo por inserción con verificación de existencia hace que re-ejecutar no duplique."
+          "note": "Cargas que verifican existencia antes de insertar no duplican al re-ejecutarse."
         },
         {
           "slug": "late-arriving-data",

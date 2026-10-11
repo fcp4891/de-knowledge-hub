@@ -21,8 +21,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-10"
+          "verification_status": "verified",
+          "last_verified": "2026-10-11"
         },
         {
           "slug": "logical-data-model",
@@ -35,8 +35,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-10"
+          "verification_status": "verified",
+          "last_verified": "2026-10-11"
         },
         {
           "slug": "physical-data-model",
@@ -49,8 +49,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-10"
+          "verification_status": "verified",
+          "last_verified": "2026-10-11"
         }
       ]
     },
@@ -83,8 +83,8 @@
           "importance": "high",
           "mvp": true,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-10"
+          "verification_status": "verified",
+          "last_verified": "2026-10-11"
         }
       ]
     },
@@ -103,8 +103,8 @@
           "importance": "high",
           "mvp": true,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-10"
+          "verification_status": "verified",
+          "last_verified": "2026-10-11"
         },
         {
           "slug": "star-schema",
@@ -131,8 +131,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-10"
+          "verification_status": "verified",
+          "last_verified": "2026-10-11"
         },
         {
           "slug": "fact-tables",
@@ -215,8 +215,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-10"
+          "verification_status": "verified",
+          "last_verified": "2026-10-11"
         }
       ]
     },
@@ -235,8 +235,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-10"
+          "verification_status": "verified",
+          "last_verified": "2026-10-11"
         },
         {
           "slug": "one-big-table",
@@ -249,8 +249,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-10"
+          "verification_status": "verified",
+          "last_verified": "2026-10-11"
         },
         {
           "slug": "semantic-models",
@@ -263,8 +263,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-10"
+          "verification_status": "verified",
+          "last_verified": "2026-10-11"
         }
       ]
     }

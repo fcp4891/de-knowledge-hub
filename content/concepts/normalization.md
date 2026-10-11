@@ -53,7 +53,7 @@ relations:
     target: surrogate-keys
     note: Las claves que relacionan tablas normalizadas pasan a claves sustitutas en el modelo dimensional.
 created_at: 2026-10-05
-updated_at: 2026-10-05
+updated_at: 2026-10-11
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -203,7 +203,7 @@ Normalizar da integridad, escrituras simples y sin anomalías, a cambio de más 
 - `oltp-vs-olap`: dónde se normaliza y dónde no.
 - `star-schema` y `dimension-tables`: la desnormalización deliberada.
 - `surrogate-keys`: las claves del modelo dimensional.
-- Del blueprint, pendiente de ficha: `denormalization`.
+- `denormalization`: repetir datos a propósito para leer mejor, y lo que cuesta.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -232,3 +232,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: creación (lote 6 de F3).
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-11: §17 enlaza `denormalization`, que ya tiene ficha (lote F3b-04a); antes figuraba como pendiente de ficha.
