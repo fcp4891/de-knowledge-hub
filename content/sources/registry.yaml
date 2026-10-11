@@ -1499,17 +1499,17 @@ id: source:snowflake-developer-guides
 slug: snowflake-developer-guides
 type: source
 title: 'Snowflake Developer Guides'
-description: 'Guías oficiales para desarrolladores publicadas por Snowflake (quickstarts y tutoriales).'
+description: 'Guías para desarrolladores publicadas por Snowflake (quickstarts y tutoriales). Nivel 3 (revisión B-F3.1 de F3b-04a): no es documentación de producto; no sostiene afirmaciones en las fichas.'
 url: https://www.snowflake.com/en/developers/guides/
-source_type: official_docs
-authority_level: 1
+source_type: engineering_blog
+authority_level: 3
 provider: snowflake
 url_verified: true
-review_frequency: quarterly
+review_frequency: monthly
 trust: high
 technologies: []
 created_at: '2026-10-10'
-updated_at: '2026-10-10'
+updated_at: '2026-10-11'
 last_verified: '2026-10-10'
 verification_status: verified
 ---
@@ -1565,4 +1565,22 @@ technologies: []
 created_at: '2026-10-10'
 updated_at: '2026-10-10'
 last_verified: '2026-10-10'
+verification_status: verified
+---
+id: source:data-vault-alliance
+slug: data-vault-alliance
+type: source
+title: 'Data Vault Alliance'
+description: 'Organización del autor del método Data Vault (Dan Linstedt); artículos de ingeniería sobre Data Vault 2.0 firmados por él: referencia conceptual canónica (Nivel 4) para hubs, links, satélites y claves hash; no respalda afirmaciones de producto.'
+url: https://datavaultalliance.com/
+source_type: spec_paper
+authority_level: 4
+provider: data-vault-alliance
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-11'
+updated_at: '2026-10-11'
+last_verified: '2026-10-11'
 verification_status: verified

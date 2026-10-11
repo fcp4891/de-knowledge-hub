@@ -3,7 +3,7 @@ id: pattern:data-vault
 slug: data-vault
 type: pattern
 title: Data Vault
-description: "Data Vault como modelo de integración: hubs con claves de negocio, links con sus relaciones y satélites con los atributos y su historia, cargados solo por inserción con claves hash. Dónde encaja (capa de integración o silver), qué no reemplaza (el modelo dimensional de consumo) y cómo se implementa en Snowflake y en un lakehouse."
+description: "Data Vault como modelo de integración: hubs con claves de negocio, links con sus relaciones y satélites con los atributos y su historia, con claves hash y columnas de sistema calculadas al cargar. Dónde encaja (capa de integración o silver), qué no reemplaza (la capa dimensional de consumo) y un ejemplo de carga idempotente."
 domain: data-modeling
 subdomain: alternative-models
 classification: modern
@@ -14,10 +14,22 @@ technologies: [postgresql, azure-databricks]
 tags: [data-modeling, data-vault, integration, history]
 related_topics: [kimball-methodology, surrogate-key-generation, change-detection]
 sources:
-  - source: snowflake-developer-guides
-    url: https://www.snowflake.com/en/developers/guides/vhol-data-vault/
-    accessed: 2026-10-10
-    note: "Quickstart oficial de Snowflake «Building a Real-Time Data Vault in Snowflake». Dan Linstedt introdujo Data Vault a comienzos de los 2000; fue diseñado para aceptar cargas por lotes y también casi en tiempo real sin cambiar los modelos. Arquitectura del ejemplo: Landing Zone, Raw Vault en la Enterprise Memory Zone y Business Vault (satélites derivados, PITs y Bridges si hace falta por rendimiento) en la Information Delivery Zone, que entrega hechos y dimensiones virtualizados. DDL del Raw Vault: hubs con clave hash, clave de negocio, fecha de carga (ldts) y fuente (rsrc); satélites con clave hash + ldts como clave primaria, hash diff y atributos descriptivos; links con la clave hash de la combinación y las claves hash de los hubs. Las claves hash y el hash diff se derivan con SHA1_BINARY, delimitador '^' y '-1' para claves nulas o datos descriptivos faltantes; DV2.1 no estandariza un algoritmo de hash ni una convención de nombres, pero sus estándares exigen definirlos y aplicarlos de forma consistente. La carga usa multi-table insert: el hub solo inserta si la clave hash no existe y el satélite solo si no existe la combinación clave hash + hash diff. La guía no detalla los estándares de DV2.1 y remite a Data Vault Alliance para formación certificada."
+  - source: data-vault-alliance
+    url: https://datavaultalliance.com/engineering/data-vault-2-0-an-introduction/
+    accessed: 2026-10-11
+    note: "Data Vault Alliance (Nivel 4, conceptual), «Your Data Vault 2.0 Introduction» (firmado por Daniel Linstedt): Data Vault fue inventado por Dan Linstedt; el estándar Data Vault 2.0 toma ideas de Bill Inmon y Ralph Kimball, de la teoría de conjuntos y de los algoritmos de hash. Las claves de negocio se organizan en tablas Hub; los atributos, en tablas Satellite; las relaciones transaccionales, en tablas Link. Tres tipos de tablas abarcan el negocio, con una capa dimensional encima para los consumidores. Guarda registros históricos de todo; cuando llega una fuente nueva, se decide si encaja en Hubs y Satellites existentes o se crean nuevos, sin retrabajo."
+  - source: data-vault-alliance
+    url: https://datavaultalliance.com/engineering/technical-tip-clustered-hash-keys-dont-do-it/
+    accessed: 2026-10-11
+    note: "Data Vault Alliance (Nivel 4, conceptual), «Clustered Hash Keys – Don't Do it!» (Daniel Linstedt): las claves hash son esencialmente una representación hexadecimal de un resultado matemático, calculadas para distribuirse sobre la longitud de bits del hash; por eso son una mala elección para índices clustered; recomienda no poner un cluster sobre una clave hash ni sobre un hash difference."
+  - source: data-vault-alliance
+    url: https://datavaultalliance.com/engineering/effsat-second-level-stage/
+    accessed: 2026-10-11
+    note: "Data Vault Alliance (Nivel 4, conceptual), «Effectivity Sats and Second Level Stages» (Daniel Linstedt): un second level stage es una tabla o archivo de staging con los campos de sistema calculados al cargar (fecha de carga, hash difference, claves hash, fuente del registro). Un effectivity satellite guarda fechas de inicio y fin que indican la vigencia del link al que pertenece."
+  - source: data-vault-alliance
+    url: https://datavaultalliance.com/engineering/data-vault-2-0-suggested-object-naming-conventions/
+    accessed: 2026-10-11
+    note: "Data Vault Alliance (Nivel 4, conceptual), convenciones de nombres sugeridas para Data Vault 2.0: objetos como Business Vault, Point-in-time (PIT) y Bridge; columnas de sistema como Hash Key (HK), Hash Diff (HD), Load-Date Time Stamp (LDTS), Record Source (RSRC) y End-Date Time Stamp (EDTS). Las convenciones de nombres son sugerencias; algunas reglas del texto sí son estándares."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/databricks/sql/get-started/data-warehousing-concepts
     accessed: 2026-10-10
@@ -25,11 +37,11 @@ sources:
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/17/sql-insert.html
     accessed: 2026-10-10
-    note: "PostgreSQL 17: ON CONFLICT especifica una acción alternativa a lanzar el error por violación de una restricción única; DO NOTHING omite la fila."
+    note: "PostgreSQL 17: ON CONFLICT especifica una acción alternativa a lanzar el error por violación de una restricción única; ON CONFLICT DO NOTHING simplemente evita insertar la fila."
 relations:
   - type: RELATED_TO
     target: kimball-methodology
-    note: Alternativa para la capa de integración; no reemplaza el modelo dimensional de consumo, que se suele publicar encima.
+    note: Data Vault integra; la capa dimensional de Kimball se publica encima para el consumo. No la reemplaza.
   - type: RELATED_TO
     target: surrogate-key-generation
     note: Las claves hash de hubs y links son claves sustitutas derivadas de la clave de negocio.
@@ -38,73 +50,64 @@ relations:
     note: El hash diff del satélite detecta si los atributos cambiaron, como una huella de fila.
   - type: RELATED_TO
     target: slowly-changing-dimensions
-    note: El satélite guarda la historia completa de atributos; una dimensión tipo 2 puede derivarse de él.
+    note: El satélite guarda la historia de atributos; una dimensión tipo 2 puede derivarse de él.
   - type: RELATED_TO
     target: idempotency
-    note: La carga solo por inserción con verificación de existencia hace que re-ejecutar no duplique.
+    note: Cargas que verifican existencia antes de insertar no duplican al re-ejecutarse.
 created_at: 2026-10-10
-updated_at: 2026-10-10
-last_verified: 2026-10-10
+updated_at: 2026-10-11
+last_verified: 2026-10-11
 verification_status: review_required
 ---
 
 ## 1. Resumen
 
-Data Vault es un modelo para la **capa de integración** del warehouse. Separa cada concepto en tres tipos de tabla:
+Data Vault es un modelo para la **capa de integración** del warehouse. Lo inventó Dan Linstedt y hoy lo difunde Data Vault Alliance. Separa cada concepto de negocio en tres tipos de tabla:
 
 - **hubs:** las claves de negocio;
-- **links:** las relaciones entre claves;
+- **links:** las relaciones entre ellas;
 - **satélites:** los atributos descriptivos con su historia.
 
-Todo se carga **solo por inserción**, con claves hash derivadas de la clave de negocio, de modo que llegan fuentes nuevas sin rehacer el modelo y se conserva todo el historial. No es un modelo para que el negocio consulte directamente. Sobre él se publican hechos y dimensiones (a menudo estrellas de Kimball), así que no reemplaza al modelo dimensional.
+Una fuente nueva se incorpora agregando hubs, links o satélites, sin rehacer lo existente. No es un modelo para que el negocio consulte directamente: según la propia Data Vault Alliance, encima va una capa dimensional para los consumidores. Por eso no reemplaza al modelo dimensional.
 
 ## 2. Qué es
 
-Según la guía de Snowflake, Dan Linstedt lo introdujo a comienzos de los 2000, pensado para cargas por lotes y casi en tiempo real. Sus estructuras, tal como aparecen en el DDL de esa guía:
+Según Data Vault Alliance (Nivel 4, conceptual):
 
-- **Hub:** clave hash, clave de negocio (`customer_bk`), fecha de carga y fuente. Una fila por clave de negocio, que nunca se actualiza.
-- **Link:** clave hash de la combinación y claves hash de los hubs que relaciona (cliente-pedido).
-- **Satélite:**
-  - clave hash del hub más fecha de carga como clave primaria;
-  - un **hash diff** con la huella de los atributos;
-  - los atributos descriptivos.
-
-  Se inserta una fila nueva cuando el contenido cambia.
-- **Raw Vault y Business Vault:**
-  - el Raw Vault guarda los datos como llegan;
-  - el Business Vault agrega satélites derivados y estructuras de rendimiento (PIT y Bridge);
-  - la entrega a consumidores es con hechos y dimensiones, virtualizados en esa guía.
+- **Hub:** organiza las claves de negocio de un concepto (cliente, pedido).
+- **Satellite:** mantiene los atributos de lo que se quiere saber sobre ese concepto.
+- **Link:** captura la relación transaccional entre claves (un cliente compra un pedido).
+- **Clave hash:** representación hexadecimal de un resultado matemático, distribuida sobre la longitud del hash, que funciona como clave del hub y del link.
+- **Columnas de sistema:**
+  - calculadas al cargar, en un *second level stage*: fecha de carga, hash difference, claves hash y fuente del registro;
+  - las convenciones sugeridas las abrevian HK, HD, LDTS y RSRC.
+- **Otros objetos:** Business Vault, Point-in-time (PIT) y Bridge, entre las convenciones de nombres de Data Vault 2.0.
 
 ## 3. Problema que resuelve
 
-Integrar muchas fuentes que cambian a menudo en un modelo dimensional obliga a rehacer dimensiones y hechos cada vez que llega una fuente o cambia una regla. Data Vault desacopla la integración del consumo:
-
-- una fuente nueva agrega hubs, links o satélites sin modificar los existentes;
-- la carga solo por inserción guarda la historia completa y auditable de qué llegó y cuándo;
-- las reglas de negocio se aplican después, en el Business Vault o en las vistas de entrega.
+Integrar muchas fuentes que cambian a menudo directamente en un modelo dimensional obliga a rehacer dimensiones y hechos cada vez que llega una fuente o cambia una regla. Data Vault desacopla la integración del consumo. Data Vault Alliance dice que una fuente nueva se acomoda en hubs y satélites existentes o en nuevos, sin retrabajo, y que el modelo guarda los registros históricos de todo lo que llega. Las reglas de negocio y la forma de consumo se resuelven en la capa dimensional de encima.
 
 ## 4. Cómo funciona
 
-1. **Staging:** se calculan, por fila de la fuente, la clave hash de cada clave de negocio, la de cada combinación (para links) y el hash diff de los atributos.
-2. **Hubs:** se inserta la clave de negocio si su clave hash no existe. Nunca se actualiza.
-3. **Links:** se inserta la combinación si su clave hash no existe.
-4. **Satélites:** se inserta una fila si el contenido es nuevo. En la guía de Snowflake, si no existe la combinación clave hash + hash diff; en el ejemplo de esta ficha, si difiere del último hash diff.
-5. **Idempotencia:** re-ejecutar el mismo lote no agrega nada, porque todo se verifica por existencia.
-6. **Entrega:** vistas o tablas con el estado actual o histórico, con forma de hechos y dimensiones para el consumo.
+1. **Staging:** por fila de la fuente se calculan la clave hash de cada clave de negocio, la de cada combinación (para links), el hash diff de los atributos, la fecha de carga y la fuente. Es el *second level stage* de Data Vault Alliance.
+2. **Hubs:** una fila por clave de negocio. En el ejemplo de esta ficha se inserta solo si la clave hash no existe.
+3. **Links:** una fila por combinación de claves, con la misma regla.
+4. **Satélites:** cuando cambia el contenido (otro hash diff), se agrega una versión nueva en lugar de modificar la anterior. En el ejemplo, se compara contra la última versión.
+5. **Entrega:** vistas o tablas con forma dimensional para los consumidores.
 
-**Hash:** la guía usa `SHA1_BINARY` con delimitador `^` y `-1` para nulos, y aclara que DV2.1 no fija algoritmo ni convención, pero exige aplicarlos de forma consistente. El ejemplo de esta ficha usa la serialización JSON adoptada en `change-detection` para no depender de un delimitador ni de un marcador de nulo.
+**Hash:** Data Vault Alliance recomienda no usar índices clustered sobre claves hash ni sobre hash diff, porque el hash distribuye los valores. El ejemplo de esta ficha calcula los hash con la serialización JSON adoptada en `change-detection`. Esa es una decisión de esta base de conocimiento, no un requisito del estándar.
 
 ## 5. Cuándo utilizarlo
 
 - Como capa de integración (silver) con muchas fuentes que cambian. Azure Databricks dice que esa capa a menudo sigue un modelo 3NF o Data Vault.
-- Cuando se necesita historia completa y auditable de lo recibido, con fuente y fecha de carga por fila.
-- Con cargas paralelas o casi en tiempo real hacia la misma área del warehouse.
+- Cuando se necesita historia completa de lo recibido, con fuente y fecha de carga por fila.
+- Cuando las fuentes se incorporan de a una y no se quiere rehacer el modelo con cada una.
 
 ## 6. Cuándo no utilizarlo
 
-- Como modelo de consumo directo: muchos joins y tablas que el negocio no reconoce. Se publican estrellas o vistas encima.
-- Con pocas fuentes estables y un equipo pequeño: el número de tablas y la disciplina de estándares pesan más que el beneficio.
-- Sin acordar y documentar el estándar de hash, nombres y nulos: DV2.1 exige que estén definidos y se apliquen de forma consistente.
+- Como modelo de consumo directo: muchos joins y tablas que el negocio no reconoce. Encima va una capa dimensional, como indica Data Vault Alliance.
+- Con pocas fuentes estables y un equipo pequeño: el número de tablas y la disciplina de convenciones pesan más que el beneficio.
+- Sin una convención escrita de hash, nombres y nulos: el modelo depende de que las claves se calculen igual en todas las cargas.
 
 ## 7. Ejemplo sencillo
 
@@ -114,7 +117,7 @@ El cliente `C1` con un pedido `P1`:
 - **Link:** `lnk_cliente_pedido(C1, P1)`.
 - **Satélite:** `sat_cliente(C1, nombre, email)`.
 
-Si cambia el email, el hub y el link no cambian, y el satélite recibe una fila nueva.
+Si cambia el email, el hub y el link no cambian, y el satélite recibe una versión nueva.
 
 ## 8. Ejemplo de producción
 
@@ -122,23 +125,22 @@ Una aseguradora integra pólizas desde tres sistemas heredados y un CRM:
 
 - **Hubs:** Póliza, Cliente y Agente, con la clave de negocio de cada sistema.
 - **Links:** Póliza–Cliente y Póliza–Agente.
-- **Satélites:** uno por sistema de origen, con sus atributos.
+- **Satélites:** uno por sistema de origen.
 
-Cuando se incorpora un cuarto sistema, se agrega un satélite nuevo sin tocar el resto. Sobre el Raw Vault, el equipo publica estrellas por proceso (emisión, siniestros) para el BI, y una vista de cliente actual. Las cargas corren cada 15 minutos y son idempotentes.
+Cuando se incorpora un cuarto sistema, se agrega un satélite nuevo sin tocar el resto. Encima, el equipo publica estrellas por proceso (emisión, siniestros) para el BI y una vista de cliente actual. Las cargas corren cada 15 minutos y son idempotentes.
 
 ## 9. Arquitectura
 
 ```mermaid
 flowchart LR
-  S1[Fuente A] --> ST[Staging<br/>claves hash y hash diff]
+  S1[Fuente A] --> ST[Second level stage<br/>claves hash, hash diff,<br/>fecha de carga, fuente]
   S2[Fuente B] --> ST
   ST --> H[Hubs<br/>claves de negocio]
   ST --> L[Links<br/>relaciones]
   ST --> SA[Satélites<br/>atributos + historia]
-  H --> BV["Business Vault<br/>satélites derivados, PIT, Bridge"]
-  L --> BV
-  SA --> BV
-  BV --> D["Entrega: hechos y dimensiones<br/>(estrellas, vistas)"]
+  H --> D["Capa dimensional<br/>para consumo"]
+  L --> D
+  SA --> D
 ```
 
 ## 10. Código
@@ -213,7 +215,7 @@ Ejecutado en PostgreSQL 17.11 local, en un esquema desechable:
 - La clave hash normaliza mayúsculas y espacios, así que `'c1 '` y `'C1'` dan la misma clave.
 - La vista `cliente_actual` entrega la última versión de cada cliente.
 
-El estándar de hash del ejemplo es una decisión de esta base de conocimiento, no del estándar de Data Vault.
+El cálculo de hash y la regla de inserción del satélite son decisiones del ejemplo, no del estándar.
 
 ## 11. GCP
 
@@ -225,40 +227,41 @@ Esta ficha no cita una fuente de nivel 1–2 de AWS sobre Data Vault: los materi
 
 ## 13. Azure
 
-La documentación de **Azure Databricks** sobre arquitectura de data warehousing ubica la integración de fuentes dispares en la capa **silver**, y dice que esos datos a menudo siguen un modelo 3NF o **Data Vault**. El warehouse resultante es la fuente única de verdad para los data marts. Encaja con el uso de esta ficha: Data Vault para integrar, y marts dimensionales para consumir.
+La documentación de **Azure Databricks** sobre arquitectura de data warehousing ubica la integración de fuentes dispares en la capa **silver**, y dice que esos datos a menudo siguen un modelo 3NF o **Data Vault**. El warehouse resultante es la fuente única de verdad para los data marts. Encaja con el uso de esta ficha: Data Vault para integrar y marts dimensionales para consumir. La página no describe hubs, links ni satélites; eso viene de Data Vault Alliance.
 
 ## 14. Buenas prácticas
 
-- Estándar escrito de hash, delimitación o serialización, tratamiento de nulos y nombres, aplicado igual en todas las cargas.
-- Hubs y links que nunca se actualizan; los cambios van a satélites nuevos.
+- Convención escrita de hash, serialización, tratamiento de nulos y nombres (HK, HD, LDTS, RSRC), aplicada igual en todas las cargas.
+- Hubs y links estables; los cambios de atributos van a versiones nuevas de los satélites.
 - Fecha de carga y fuente en cada fila, para auditar.
-- Capa de entrega (estrellas o vistas) para el consumo; nadie consulta el Raw Vault directamente.
-- **Seguridad:** el Raw Vault guarda todo el historial, incluidos los datos personales que llegaron alguna vez; definir retención y borrado por clave de negocio, que en un modelo solo de inserción requiere un procedimiento explícito.
+- Capa dimensional para el consumo; nadie consulta hubs, links y satélites directamente.
+- Sin índices clustered sobre claves hash ni hash diff, como recomienda Data Vault Alliance.
+- **Seguridad:** el modelo guarda todo el historial, incluidos los datos personales que llegaron alguna vez; definir retención y borrado por clave de negocio con un procedimiento explícito.
 - **Observabilidad:** conteos por carga de hubs, links y versiones de satélite nuevas; un pico de versiones nuevas sin cambios reales suele indicar un hash diff mal definido (por ejemplo, con espacios o mayúsculas sin normalizar).
-- **Costo:** muchas tablas y joins para entregar; las estructuras de rendimiento del Business Vault (PIT, Bridge) y las entregas materializadas compensan el costo de consulta a cambio de almacenamiento.
+- **Costo:** muchas tablas y joins para entregar; las estructuras de entrega materializadas (o PIT y Bridge, entre los objetos de Data Vault 2.0) reducen el costo de consulta a cambio de almacenamiento.
 
 ## 15. Errores frecuentes
 
-- Exponer el Raw Vault a los usuarios de negocio como si fuera el modelo de consumo.
+- Exponer hubs, links y satélites a los usuarios de negocio como si fueran el modelo de consumo.
 - Calcular el hash diff con atributos sin normalizar y crear versiones por cambios de formato.
 - Mezclar algoritmos o convenciones de hash entre cargas.
-- Actualizar hubs o satélites en lugar de insertar, y perder la auditabilidad.
+- Modificar versiones de satélite en lugar de agregar nuevas, y perder la historia.
 - Elegir Data Vault para dos fuentes estables y un mart.
 
 ## 16. Trade-offs
 
-Data Vault da flexibilidad para incorporar fuentes, historia completa y cargas paralelas e idempotentes. A cambio:
+Data Vault da flexibilidad para incorporar fuentes y conserva la historia. A cambio:
 
 - tiene muchas tablas;
 - las consultas de entrega son más complejas;
-- exige disciplina de estándares;
+- exige disciplina de convenciones;
 - necesita una capa adicional para el consumo.
 
 No compite con el modelo dimensional: lo alimenta. Frente a una capa de integración 3NF, separa más las piezas y agrega historia por diseño, a costa de más estructura.
 
 ## 17. Conceptos relacionados
 
-- `kimball-methodology`: el modelo de consumo que suele publicarse encima.
+- `kimball-methodology`: la capa dimensional que suele publicarse encima.
 - `surrogate-key-generation` y `change-detection`: claves hash y hash diff.
 - `slowly-changing-dimensions`: historia en las dimensiones de entrega.
 - `idempotency`: cargas que se pueden repetir.
@@ -267,7 +270,7 @@ No compite con el modelo dimensional: lo alimenta. Frente a una capa de integrac
 ## 18. Preguntas técnicas abiertas
 
 1. ¿Cuántas fuentes y cuántos cambios de fuente al año justificarían Data Vault en tu organización?
-2. ¿Cómo implementarías el borrado de un cliente por requerimiento legal en un modelo solo de inserción?
+2. ¿Cómo implementarías el borrado de un cliente por requerimiento legal en un modelo que conserva toda la historia?
 3. ¿Qué atributos excluirías del hash diff para no crear versiones por cambios irrelevantes?
 
 ## 19. Laboratorio relacionado
@@ -276,18 +279,17 @@ Pendiente (F4).
 
 ## 20. Fuentes
 
-- Snowflake: *Building a Real-Time Data Vault in Snowflake* (Snowflake Developer Guides).
+- Data Vault Alliance: *Your Data Vault 2.0 Introduction*, *Clustered Hash Keys – Don't Do it!*, *Effectivity Sats and Second Level Stages* y *Data Vault 2.0 Suggested Object Naming Conventions* (Nivel 4, conceptual).
 - Microsoft Learn: *Data warehousing architecture* (Azure Databricks).
 - PostgreSQL 17: *INSERT* (ON CONFLICT).
-
-Data Vault 2.0 de Linstedt no se cita: no se encontró una copia legible y verificable del estándar. Lo que esta ficha afirma de él (año de origen y exigencia de consistencia del hash) viene de la guía de Snowflake.
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-10. `review_required`: pendiente de revisión B-F3.1 del lote F3b-04a.
+2026-10-11. `review_required`: pendiente de revisión B-F3.1 del lote F3b-04a.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-10: creación (lote F3b-04a).
+- 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): el quickstart de Snowflake pasa a Nivel 3 y deja de citarse; lo conceptual (hubs, links, satélites, claves hash, columnas de sistema) se apoya en Data Vault Alliance (Nivel 4, páginas firmadas por Daniel Linstedt) y el uso en plataforma en Microsoft Learn (Nivel 1). Se quitan las afirmaciones que solo sostenía la guía de Snowflake (año de origen, regla de inserción del satélite de esa guía, exigencia de consistencia del hash de DV2.1).

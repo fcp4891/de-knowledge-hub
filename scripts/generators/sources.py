@@ -206,14 +206,16 @@ BATCH1 = [
      'https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html', 'official_docs', 1, 'aws', True, "quarterly", ['aws-rds']),
     ('aws-what-is-data-modeling', 'What is Data Modeling? (AWS)', 'Página oficial de AWS que explica qué es el modelado de datos y sus niveles conceptual, lógico y físico.',
      'https://aws.amazon.com/what-is/data-modeling/', 'official_docs', 1, 'aws', True, "quarterly", []),
-    ('snowflake-developer-guides', 'Snowflake Developer Guides', 'Guías oficiales para desarrolladores publicadas por Snowflake (quickstarts y tutoriales).',
-     'https://www.snowflake.com/en/developers/guides/', 'official_docs', 1, 'snowflake', True, "quarterly", []),
+    ('snowflake-developer-guides', 'Snowflake Developer Guides', 'Guías para desarrolladores publicadas por Snowflake (quickstarts y tutoriales). Nivel 3 (revisión B-F3.1 de F3b-04a): no es documentación de producto; no sostiene afirmaciones en las fichas.',
+     'https://www.snowflake.com/en/developers/guides/', 'engineering_blog', 3, 'snowflake', True, "quarterly", []),
     ('gcp-looker-docs', 'Looker documentation', 'Documentación oficial de Looker (Google Cloud), incluido LookML.',
      'https://docs.cloud.google.com/looker/docs', 'official_docs', 1, 'gcp', True, "quarterly", []),
     ('aws-quick-docs', 'Amazon Quick User Guide', 'Guía oficial de usuario de Amazon Quick, que incluye Amazon Quick Sight (antes Amazon QuickSight).',
      'https://docs.aws.amazon.com/quick/latest/userguide/what-is.html', 'official_docs', 1, 'aws', True, "quarterly", []),
     ('chen-er-model-1976', 'The Entity-Relationship Model: Toward a Unified View of Data (Chen, 1976)', 'Artículo que propone el modelo entidad-relación (ACM Transactions on Database Systems 1(1):9-36, 1976), extracto de 5 páginas publicado por el autor (Peter Chen, LSU): referencia conceptual canónica (Nivel 4); no respalda afirmaciones de producto.',
      'https://bit.csc.lsu.edu/~chen/pdf/erd-5-pages.pdf', 'spec_paper', 4, 'chen', True, "quarterly", []),
+    ('data-vault-alliance', 'Data Vault Alliance', 'Organización del autor del método Data Vault (Dan Linstedt); artículos de ingeniería sobre Data Vault 2.0 firmados por él: referencia conceptual canónica (Nivel 4) para hubs, links, satélites y claves hash; no respalda afirmaciones de producto.',
+     'https://datavaultalliance.com/', 'spec_paper', 4, 'data-vault-alliance', True, "quarterly", []),
 ]
 
 
@@ -226,7 +228,7 @@ def review_frequency(slug: str, source_type: str) -> str:
 
 
 BATCH1_DATE = "2026-09-30"
-LATER_DATES = {slug: "2026-10-01" for slug in ("psycopg-docs", "gcp-iam-docs", "gcp-terraform-docs", "gcp-infrastructure-manager-docs", "aws-s3-docs", "aws-iam-docs", "aws-cloudformation-docs", "aws-eventbridge-scheduler-docs", "pydantic-docs", "dbt-docs", "gcp-cloud-logging-docs", "aws-cloudwatch-logs-docs", "aws-lake-formation-docs", "aws-sns-docs")} | {"pytest-docs": "2026-10-04", "apache-spark-docs": "2026-10-05", "aws-firehose-docs": "2026-10-05", "gilbert-lynch-cap-2002": "2026-10-05", "apache-iceberg-docs": "2026-10-05", "delta-lake-docs": "2026-10-05", "apache-hudi-docs": "2026-10-05", "gcp-spanner-docs": "2026-10-05", "gcp-data-engineer-certification": "2026-10-05", "aws-data-engineer-certification": "2026-10-05", "aws-what-is-data-mart": "2026-10-05", "aws-lambda-docs": "2026-10-08", "gcp-cloud-run-docs": "2026-10-08", "pandas-docs": "2026-10-08", "polars-docs": "2026-10-08", "apache-arrow-docs": "2026-10-08", "apache-beam-docs": "2026-10-08", "fastapi-docs": "2026-10-08", "httpx-docs": "2026-10-08", "requests-docs": "2026-10-08", "gcp-managed-spark-docs": "2026-10-08", "aws-emr-docs": "2026-10-08", "gcp-cloud-sql-docs": "2026-10-08", "aws-rds-docs": "2026-10-08", "aws-what-is-data-modeling": "2026-10-10", "snowflake-developer-guides": "2026-10-10", "gcp-looker-docs": "2026-10-10", "aws-quick-docs": "2026-10-10", "chen-er-model-1976": "2026-10-10"}  # fuentes de BATCH1 agregadas después del 2026-09-30
+LATER_DATES = {slug: "2026-10-01" for slug in ("psycopg-docs", "gcp-iam-docs", "gcp-terraform-docs", "gcp-infrastructure-manager-docs", "aws-s3-docs", "aws-iam-docs", "aws-cloudformation-docs", "aws-eventbridge-scheduler-docs", "pydantic-docs", "dbt-docs", "gcp-cloud-logging-docs", "aws-cloudwatch-logs-docs", "aws-lake-formation-docs", "aws-sns-docs")} | {"pytest-docs": "2026-10-04", "apache-spark-docs": "2026-10-05", "aws-firehose-docs": "2026-10-05", "gilbert-lynch-cap-2002": "2026-10-05", "apache-iceberg-docs": "2026-10-05", "delta-lake-docs": "2026-10-05", "apache-hudi-docs": "2026-10-05", "gcp-spanner-docs": "2026-10-05", "gcp-data-engineer-certification": "2026-10-05", "aws-data-engineer-certification": "2026-10-05", "aws-what-is-data-mart": "2026-10-05", "aws-lambda-docs": "2026-10-08", "gcp-cloud-run-docs": "2026-10-08", "pandas-docs": "2026-10-08", "polars-docs": "2026-10-08", "apache-arrow-docs": "2026-10-08", "apache-beam-docs": "2026-10-08", "fastapi-docs": "2026-10-08", "httpx-docs": "2026-10-08", "requests-docs": "2026-10-08", "gcp-managed-spark-docs": "2026-10-08", "aws-emr-docs": "2026-10-08", "gcp-cloud-sql-docs": "2026-10-08", "aws-rds-docs": "2026-10-08", "aws-what-is-data-modeling": "2026-10-10", "snowflake-developer-guides": "2026-10-10", "gcp-looker-docs": "2026-10-10", "aws-quick-docs": "2026-10-10", "chen-er-model-1976": "2026-10-10", "data-vault-alliance": "2026-10-11"}  # fuentes de BATCH1 agregadas después del 2026-09-30
 
 
 def entry(row: tuple[Any, ...], created: str = TODAY) -> dict[str, Any]:

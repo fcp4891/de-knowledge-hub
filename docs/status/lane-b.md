@@ -3,12 +3,15 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-09
+**Última actualización:** 2026-10-10
 
 ## Actual
-- **Tarea activa:** `b/ui-polish-3` (fila de tabla de una sola celda). Sin merge a `main`.
-- **Siguiente:** lo que asigne Felipe.
+- **Tarea activa:** B-F3.1 del lote F3b-04a. Felipe aprobó todas las filas el 2026-10-10 en `docs/reviews/cards-f3b-04a.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** En espera del dominio 05. Carril A aplica la revisión: quickstart de Snowflake a Nivel 3 y sin sostener afirmaciones; Data Vault Alliance como N4 conceptual; Microsoft Learn (N1) para el uso en plataforma.
 - **Bloqueos:** ninguno.
+
+### B-F3.1 · lote F3b-04a
+- Diez fichas de `04-data-modeling`, tabla de §48. Felipe aprobó todas las filas el 2026-10-10, incluida la reclasificación del quickstart de Snowflake a Nivel 3. Para `data-vault`: Data Vault Alliance como N4 canónico solo para lo conceptual (hubs, links, satélites, hash), mismo criterio que Kimball Group; Microsoft Learn (N1) para el uso en plataforma; la guía de Snowflake no sostiene afirmaciones. No se editó `content/` ni `frontend/`.
 
 ### Fila de una celda (`b/ui-polish-3`)
 - En `frontend/lib/markdown.ts`, `isTableRow` ya no exige dos celdas: `| 1 |` sigue dentro de la tabla, como en GFM. El separador de columnas no cambia (sigue pidiendo al menos dos).
@@ -188,6 +191,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-04a (2026-10-10)
+- Revisión de las 10 fichas que completan `04-data-modeling`. Felipe aprobó todas las filas, incluida la reclasificación del quickstart de Snowflake a Nivel 3 y la fila de Data Vault Alliance (N4 conceptual; Microsoft Learn N1 para la plataforma; la guía no sostiene afirmaciones). No se editó `content/`. En espera del dominio 05.
 
 ### B-F3.1 · lote F3b-03b (2026-10-09)
 - Revisión de las 11 fichas que cierran `03-python`. Felipe aprobó todas las filas, incluidas las tres propuestas. No se editó `content/`. En espera del dominio 04.
