@@ -129,16 +129,17 @@ def test_deleted_page_is_removed_with_its_edges(engine: Engine, content: Path) -
 
 def test_deleted_technology_removes_typed_rows_sources_and_edges(engine: Engine, content: Path) -> None:
     compile_content(engine, content, SCHEMAS)
-    assert count(engine, "technologies", "slug = 'dagster'") == 1
-    assert count(engine, "edges", "source_slug = 'dagster'") > 0
-    # dagster no es referenciado por otras entidades ni por el blueprint salvo como related_technologies.
-    blueprint = content / "blueprint" / "06-orchestration.yaml"
-    blueprint.write_text(blueprint.read_text(encoding="utf-8").replace(", dagster, prefect]", ", prefect]"), encoding="utf-8")
-    (content / "technologies" / "dagster.yaml").unlink()
+    assert count(engine, "technologies", "slug = 'pgvector'") == 1
+    assert count(engine, "edges", "source_slug = 'pgvector'") > 0
+    # pgvector no es referenciado por otras entidades ni por el blueprint salvo como related_technologies.
+    # (Antes se usaba dagster, que desde el lote F3b-06a cita orchestration-landscape y la fuente dagster-docs.)
+    blueprint = content / "blueprint" / "21-ai-for-data-engineering.yaml"
+    blueprint.write_text(blueprint.read_text(encoding="utf-8").replace("        related_technologies: [pgvector]\n", ""), encoding="utf-8")
+    (content / "technologies" / "pgvector.yaml").unlink()
     compile_content(engine, content, SCHEMAS)
-    assert count(engine, "entities", "slug = 'dagster'") == 0
-    assert count(engine, "technologies", "slug = 'dagster'") == 0
-    assert count(engine, "edges", "source_slug = 'dagster' or target_slug = 'dagster'") == 0
+    assert count(engine, "entities", "slug = 'pgvector'") == 0
+    assert count(engine, "technologies", "slug = 'pgvector'") == 0
+    assert count(engine, "edges", "source_slug = 'pgvector' or target_slug = 'pgvector'") == 0
 
 
 def test_slug_moved_between_files(engine: Engine, content: Path) -> None:

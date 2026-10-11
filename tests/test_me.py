@@ -226,14 +226,14 @@ def test_compiler_never_touches_personal_state(content: Path) -> None:
 def test_orphaned_state_is_kept_but_hidden(content: Path) -> None:
     with temporary_database() as engine, TestClient(create_app(engine)) as api:
         compile_content(engine, content, SCHEMAS)
-        api.put(f"{ME}/favorites/dagster", json={"favorite": True})
-        api.put(f"{ME}/study-state/dagster", json={"state": "reviewing"})
+        api.put(f"{ME}/favorites/pgvector", json={"favorite": True})
+        api.put(f"{ME}/study-state/pgvector", json={"state": "reviewing"})
         assert api.get(f"{ME}/favorites").json()["total"] == 1
-        blueprint = content / "blueprint" / "06-orchestration.yaml"
-        blueprint.write_text(blueprint.read_text(encoding="utf-8").replace(", dagster, prefect]", ", prefect]"), encoding="utf-8")
-        (content / "technologies" / "dagster.yaml").unlink()
+        blueprint = content / "blueprint" / "21-ai-for-data-engineering.yaml"
+        blueprint.write_text(blueprint.read_text(encoding="utf-8").replace("        related_technologies: [pgvector]\n", ""), encoding="utf-8")
+        (content / "technologies" / "pgvector.yaml").unlink()
         compile_content(engine, content, SCHEMAS)
         assert api.get(f"{ME}/favorites").json()["total"] == 0
         assert api.get(f"{ME}/study-state").json()["total"] == 0
-        assert api.get(f"{ME}/favorites/dagster").status_code == 404
+        assert api.get(f"{ME}/favorites/pgvector").status_code == 404
         assert personal_rows(engine) == (1, 0, 1)
