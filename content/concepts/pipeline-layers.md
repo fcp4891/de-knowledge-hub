@@ -22,7 +22,7 @@ sources:
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/onelake/onelake-medallion-lakehouse-architecture
     accessed: 2026-10-11
-    note: "Microsoft Fabric: la arquitectura medallion es un patrón de diseño para organizar datos en un lakehouse y es el enfoque recomendado para Fabric; se implementa creando lakehouses en OneLake. Tres capas: bronze (datos crudos), silver (enriquecidos) y gold (curados); cada capa indica la calidad de los datos. Recomienda un lakehouse por capa, cada uno en su propio workspace, para tener más control y gobierno por capa; para bronze, guardar los datos en su formato original o en Parquet o Delta Lake."
+    note: "Microsoft Fabric: la arquitectura medallion es un patrón de diseño para organizar datos en un lakehouse y es el enfoque recomendado para Fabric; se implementa creando lakehouses en OneLake. Tres capas: bronze (datos crudos), silver (enriquecidos) y gold (curados); cada capa indica la calidad de los datos. Despliegue: lakehouses (uno por capa), un warehouse o una combinación; la página plantea dos patrones: (1) cada capa como lakehouse, con acceso de negocio por el SQL analytics endpoint, y (2) bronze y silver como lakehouses y gold como data warehouse, con acceso por el endpoint del warehouse. Aunque se pueden crear todos los lakehouses en un solo workspace, recomienda un workspace separado por lakehouse para tener más control y gobierno por capa. Para bronze, guardar los datos en su formato original o en Parquet o Delta Lake."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/databricks/sql/get-started/data-warehousing-concepts
     accessed: 2026-10-11
@@ -30,7 +30,7 @@ sources:
   - source: aws-prescriptive-guidance
     url: https://docs.aws.amazon.com/prescriptive-guidance/latest/defining-bucket-names-data-lakes/data-layer-definitions.html
     accessed: 2026-10-11
-    note: "AWS Prescriptive Guidance, capas de datos recomendadas para un data lake en S3, cada una con su propio bucket: Raw (datos crudos sin procesar, donde se ingieren; mantener el formato original y activar el versionado del bucket), Stage (datos intermedios procesados y optimizados para consumo, por ejemplo CSV convertido a Parquet por un job de AWS Glue que valida y registra la tabla en el Glue Data Catalog) y Analytics (datos agregados para casos de uso concretos, en formato listo para consumo como Parquet). Incluye ejemplos de políticas de ciclo de vida por capa, que deben evaluarse según la organización, la regulación, los patrones de consulta y el costo."
+    note: "AWS Prescriptive Guidance: si no se trabaja con datos sensibles (PII), recomienda al menos tres capas en un data lake de AWS, y más según la complejidad y los casos de uso; con datos sensibles, un bucket de S3 adicional como landing zone, donde se enmascaran los datos antes de pasar a la capa raw. Cada capa en su propio bucket de S3. Capas recomendadas: Raw (datos crudos sin procesar, donde se ingieren; mantener el formato original y activar el versionado del bucket), Stage (datos intermedios procesados y optimizados para consumo, por ejemplo CSV convertido a Parquet por un job de AWS Glue que valida y registra la tabla en el Glue Data Catalog) y Analytics (datos agregados para casos de uso concretos, en formato listo para consumo como Parquet). Incluye ejemplos de políticas de ciclo de vida por capa, que deben evaluarse según la organización, la regulación, los patrones de consulta y el costo."
 relations:
   - type: RELATED_TO
     target: data-pipeline
@@ -98,7 +98,7 @@ Cargar directamente de la fuente a tablas limpias hace que cualquier sorpresa de
    - lo válido va a la capa validada, deduplicado y con upsert;
    - lo inválido va a una tabla de rechazos con su motivo.
 3. La capa de consumo se define **sobre la validada** (vistas o tablas agregadas), nunca sobre la cruda.
-4. Cada capa puede vivir en un esquema, un bucket o un lakehouse distinto, con permisos distintos. Fabric recomienda un lakehouse y un workspace por capa; AWS, un bucket por capa.
+4. Cada capa puede vivir en un esquema, un bucket o un lakehouse distinto, con permisos distintos. Fabric recomienda un workspace separado por lakehouse; AWS, un bucket por capa.
 5. Re-ejecutar cualquier paso con la misma entrada deja el mismo resultado (ver `idempotency`).
 
 ## 5. Cuándo utilizarlo
@@ -203,7 +203,7 @@ Esta ficha no cita una fuente de Google Cloud que defina capas de datos con nomb
 
 ## 12. AWS
 
-**AWS Prescriptive Guidance** recomienda, para un data lake en S3, tres capas, cada una en su propio bucket:
+**AWS Prescriptive Guidance** recomienda, para un data lake en S3, **al menos tres** capas, cada una en su propio bucket, y más según la complejidad y los casos de uso. Si hay datos sensibles (PII), agrega un bucket de **landing** antes de raw, donde los datos se enmascaran antes de pasar a la capa raw. Las tres capas:
 
 - **Raw:** datos sin procesar, con el formato original y el versionado del bucket activado.
 - **Stage:** datos procesados y optimizados. Por ejemplo, un job de AWS Glue que valida, convierte CSV a Parquet y registra la tabla en el Glue Data Catalog.
@@ -213,7 +213,7 @@ La guía propone políticas de ciclo de vida por capa, a evaluar según la organ
 
 ## 13. Azure
 
-**Azure Databricks** llama a la arquitectura **medallion**: bronze, silver y gold, también «multi-hop». La recomienda como buena práctica y aclara que no es un requisito. **Microsoft Fabric** usa los mismos nombres, la recomienda como enfoque de diseño, y sugiere un lakehouse por capa, cada uno en su propio workspace, para gobernar cada capa por separado. Diferencia con AWS: Microsoft organiza las capas como lakehouses y workspaces; AWS, como buckets de S3.
+**Azure Databricks** llama a la arquitectura **medallion**: bronze, silver y gold, también «multi-hop». La recomienda como buena práctica y aclara que no es un requisito. **Microsoft Fabric** usa los mismos nombres y la recomienda como enfoque de diseño. Plantea dos patrones de despliegue: (1) cada capa como lakehouse, o (2) bronze y silver como lakehouses y gold como data warehouse. Recomienda un workspace separado por lakehouse para gobernar cada capa por separado. Diferencia con AWS: Microsoft organiza las capas como lakehouses y workspaces; AWS, como buckets de S3.
 
 ## 14. Buenas prácticas
 
@@ -268,3 +268,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-11: creación (lote F3b-05a).
+- 2026-10-11: revisión B-F3.1 del lote F3b-05a aplicada (docs/reviews/cards-f3b-05a.md): AWS recomienda al menos tres capas y, con datos sensibles, un bucket de landing antes de raw; Fabric con sus dos patrones de despliegue (cada capa como lakehouse, o gold como warehouse) y un workspace por lakehouse.

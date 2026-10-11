@@ -67,7 +67,7 @@ Un pipeline dirigido por eventos arranca **cuando ocurre algo**, como un archivo
   - una base que publica cambios;
   - una aplicación que publica mensajes.
 - **Enrutamiento:**
-  - notificaciones de Cloud Storage a Pub/Sub, o Eventarc;
+  - notificaciones de Cloud Storage a un tema de Pub/Sub, o Eventarc (otro mecanismo, que enruta eventos a destinos);
   - en S3, destinos SNS, SQS, Lambda o EventBridge;
   - Event Grid en Azure.
 - **Manejador:** el código que recibe el evento y ejecuta el paso del pipeline (cargar el archivo, transformar, avisar).
@@ -185,7 +185,7 @@ Las dos se omiten, y cada versión se carga una sola vez. En producción, la tab
 
 ## 11. GCP
 
-**Pub/Sub notifications for Cloud Storage** publica en un tema de Pub/Sub los cambios de los objetos de un bucket. La entrega es al menos una vez, en los dos tramos (Cloud Storage → Pub/Sub → suscriptor), así que puede haber varios mensajes con ids distintos para el mismo evento. Tampoco hay orden garantizado, y la documentación recomienda usar `generation` y `metageneration` como precondiciones. **Eventarc** ofrece el enrutamiento de eventos administrado hacia servicios como Cloud Run.
+**Pub/Sub notifications for Cloud Storage** publica en un tema de Pub/Sub los cambios de los objetos de un bucket. La entrega es al menos una vez, en los dos tramos (Cloud Storage → Pub/Sub → suscriptor), así que puede haber varios mensajes con ids distintos para el mismo evento. Tampoco hay orden garantizado, y la documentación recomienda usar `generation` y `metageneration` como precondiciones. **Eventarc** es otro mecanismo, no el de las notificaciones del bucket a Pub/Sub. Es un servicio administrado y serverless, con ediciones **Advanced** y **Standard**, que enruta eventos de forma asíncrona desde proveedores hacia destinos: servicios de Google Cloud, aplicaciones propias, aplicaciones SaaS y servicios de terceros.
 
 ## 12. AWS
 
@@ -251,3 +251,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-11: creación (lote F3b-05a).
+- 2026-10-11: revisión B-F3.1 del lote F3b-05a aplicada (docs/reviews/cards-f3b-05a.md): Eventarc distinguido de las notificaciones de Cloud Storage a Pub/Sub, con sus ediciones y los destinos de su página.
