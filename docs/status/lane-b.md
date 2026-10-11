@@ -6,9 +6,12 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-11
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote F3b-05a. Felipe aprobó todas las filas el 2026-10-11 en `docs/reviews/cards-f3b-05a.md`. No se editó `content/` ni `frontend/`.
-- **Siguiente:** En espera del dominio 06. Carril A aplica las tres propuestas: al menos tres capas y landing en AWS; los dos patrones de Fabric y un workspace por lakehouse; Eventarc distinto de las notificaciones de Cloud Storage.
+- **Tarea activa:** B-F3.1 del lote F3b-06a. Revisión en `docs/reviews/cards-f3b-06a.md`, filas en `pendiente`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Una propuesta: en el ejemplo de `open-source-vs-managed-orchestration`, escribir Python 3.11.8 y no 3.11.
 - **Bloqueos:** ninguno.
+
+### B-F3.1 · lote F3b-06a
+- Ocho fichas de `06-orchestration`, tabla de §48. Las versiones al 2026-10-11 coinciden con las páginas de cada servicio. «Cloud Composer» queda en la cita de su página. Dagster y Prefect se presentan como herramientas a observar, ejecutadas en local y sin mypy. `FileSensor` se importa de `airflow.providers.standard.sensors.filesystem`. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-05a
 - Seis fichas de `05-pipelines`, tabla de §48. Felipe aprobó todas las filas el 2026-10-11, incluidas las tres propuestas: al menos tres capas y bucket de landing en AWS; los dos patrones de Fabric y un workspace por lakehouse; Eventarc distinto de las notificaciones de Cloud Storage a Pub/Sub. No se editó `content/` ni `frontend/`.
@@ -194,6 +197,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-06a (2026-10-11)
+- Revisión de las 8 fichas que completan `06-orchestration`. Filas en `pendiente`. Una propuesta: Python 3.11.8 en el ejemplo de migración a Managed Service for Apache Airflow. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-05a (2026-10-11)
 - Revisión de las 6 fichas que completan `05-pipelines`. Felipe aprobó todas las filas, incluidas las tres propuestas (capas de AWS, patrones de Fabric y Eventarc). No se editó `content/`. En espera del dominio 06.
