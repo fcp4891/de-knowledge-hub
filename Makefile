@@ -42,14 +42,15 @@ test:
 	$(REQUIRE_VENV)
 	$(PYTHON) -m pytest
 
-# Dag de Airflow de pipeline-dependencies: se carga con DagBag en un venv aparte (.venv-airflow), con
-# apache-airflow fijado y las restricciones oficiales para Python 3.12. Se ejecuta en la CI (Linux).
+# Dags de Airflow de las fichas: se cargan con DagBag en un venv aparte (.venv-airflow), con apache-airflow
+# fijado y las restricciones oficiales para Python 3.12, y se ejecutan las aserciones que cada ficha declara en
+# scripts/snippets/airflow_dag_checks.py. Se ejecuta en la CI (Linux).
 AIRFLOW_VERSION := 3.3.2
 AIRFLOW_PYTHON ?= python3.12
 check-airflow-dag:
 	$(AIRFLOW_PYTHON) -m venv .venv-airflow
 	.venv-airflow/bin/pip install --quiet "apache-airflow==$(AIRFLOW_VERSION)" --constraint https://raw.githubusercontent.com/apache/airflow/constraints-$(AIRFLOW_VERSION)/constraints-3.12.txt
-	.venv-airflow/bin/python scripts/snippets/check_airflow_dag.py content/concepts/pipeline-dependencies.md
+	.venv-airflow/bin/python scripts/snippets/check_airflow_dag.py
 
 # Parser de Markdown del frontend con el runner nativo de Node (24+ elimina los tipos al importar .ts).
 test-frontend:

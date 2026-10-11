@@ -315,6 +315,13 @@
           "note": "MERGE con clave y condición de versión es la forma habitual de escribir idempotentemente en un warehouse."
         },
         {
+          "slug": "airflow-operators-and-hooks",
+          "title": "Operators y hooks de Airflow",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Un operador propio debe dar el mismo resultado al reintentarse."
+        },
+        {
           "slug": "event-driven-pipelines",
           "title": "Pipelines dirigidos por eventos",
           "entity_type": "pattern",
@@ -360,8 +367,8 @@
           "slug": "orchestration-task",
           "title": "Task",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Una tarea reintentable debe dar el mismo resultado en cada ejecución."
         },
         {
           "slug": "testing-with-pytest",

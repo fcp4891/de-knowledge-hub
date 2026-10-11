@@ -1620,3 +1620,59 @@ created_at: '2026-10-11'
 updated_at: '2026-10-11'
 last_verified: '2026-10-11'
 verification_status: verified
+---
+id: source:gcp-workflows-docs
+slug: gcp-workflows-docs
+type: source
+title: Workflows documentation
+description: Documentación oficial de Workflows (Google Cloud).
+url: https://docs.cloud.google.com/workflows/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-11'
+updated_at: '2026-10-11'
+last_verified: '2026-10-11'
+verification_status: verified
+---
+id: source:dagster-docs
+slug: dagster-docs
+type: source
+title: Dagster Docs
+description: Documentación oficial de Dagster (proyecto open source y Dagster+).
+url: https://dagster.io/docs
+source_type: official_docs
+authority_level: 1
+provider: dagster-labs
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- dagster
+created_at: '2026-10-11'
+updated_at: '2026-10-11'
+last_verified: '2026-10-11'
+verification_status: verified
+---
+id: source:prefect-docs
+slug: prefect-docs
+type: source
+title: Prefect Documentation
+description: Documentación oficial de Prefect 3.
+url: https://docs.prefect.io/v3/get-started
+source_type: official_docs
+authority_level: 1
+provider: prefect
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- prefect
+created_at: '2026-10-11'
+updated_at: '2026-10-11'
+last_verified: '2026-10-11'
+verification_status: verified

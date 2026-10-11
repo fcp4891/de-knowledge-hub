@@ -220,6 +220,12 @@ BATCH1 = [
      'https://aws.amazon.com/prescriptive-guidance/', 'official_docs', 1, 'aws', True, "quarterly", []),
     ('gcp-eventarc-docs', 'Eventarc documentation', 'Documentación oficial de Eventarc (Google Cloud).',
      'https://docs.cloud.google.com/eventarc/docs', 'official_docs', 1, 'gcp', True, "quarterly", []),
+    ('gcp-workflows-docs', 'Workflows documentation', 'Documentación oficial de Workflows (Google Cloud).',
+     'https://docs.cloud.google.com/workflows/docs', 'official_docs', 1, 'gcp', True, "quarterly", []),
+    ('dagster-docs', 'Dagster Docs', 'Documentación oficial de Dagster (proyecto open source y Dagster+).',
+     'https://dagster.io/docs', 'official_docs', 1, 'dagster-labs', True, "quarterly", ['dagster']),
+    ('prefect-docs', 'Prefect Documentation', 'Documentación oficial de Prefect 3.',
+     'https://docs.prefect.io/v3/get-started', 'official_docs', 1, 'prefect', True, "quarterly", ['prefect']),
 ]
 
 
@@ -232,7 +238,7 @@ def review_frequency(slug: str, source_type: str) -> str:
 
 
 BATCH1_DATE = "2026-09-30"
-LATER_DATES = {slug: "2026-10-01" for slug in ("psycopg-docs", "gcp-iam-docs", "gcp-terraform-docs", "gcp-infrastructure-manager-docs", "aws-s3-docs", "aws-iam-docs", "aws-cloudformation-docs", "aws-eventbridge-scheduler-docs", "pydantic-docs", "dbt-docs", "gcp-cloud-logging-docs", "aws-cloudwatch-logs-docs", "aws-lake-formation-docs", "aws-sns-docs")} | {"pytest-docs": "2026-10-04", "apache-spark-docs": "2026-10-05", "aws-firehose-docs": "2026-10-05", "gilbert-lynch-cap-2002": "2026-10-05", "apache-iceberg-docs": "2026-10-05", "delta-lake-docs": "2026-10-05", "apache-hudi-docs": "2026-10-05", "gcp-spanner-docs": "2026-10-05", "gcp-data-engineer-certification": "2026-10-05", "aws-data-engineer-certification": "2026-10-05", "aws-what-is-data-mart": "2026-10-05", "aws-lambda-docs": "2026-10-08", "gcp-cloud-run-docs": "2026-10-08", "pandas-docs": "2026-10-08", "polars-docs": "2026-10-08", "apache-arrow-docs": "2026-10-08", "apache-beam-docs": "2026-10-08", "fastapi-docs": "2026-10-08", "httpx-docs": "2026-10-08", "requests-docs": "2026-10-08", "gcp-managed-spark-docs": "2026-10-08", "aws-emr-docs": "2026-10-08", "gcp-cloud-sql-docs": "2026-10-08", "aws-rds-docs": "2026-10-08", "aws-what-is-data-modeling": "2026-10-10", "snowflake-developer-guides": "2026-10-10", "gcp-looker-docs": "2026-10-10", "aws-quick-docs": "2026-10-10", "chen-er-model-1976": "2026-10-10", "data-vault-alliance": "2026-10-11", "aws-prescriptive-guidance": "2026-10-11", "gcp-eventarc-docs": "2026-10-11"}  # fuentes de BATCH1 agregadas después del 2026-09-30
+LATER_DATES = {slug: "2026-10-01" for slug in ("psycopg-docs", "gcp-iam-docs", "gcp-terraform-docs", "gcp-infrastructure-manager-docs", "aws-s3-docs", "aws-iam-docs", "aws-cloudformation-docs", "aws-eventbridge-scheduler-docs", "pydantic-docs", "dbt-docs", "gcp-cloud-logging-docs", "aws-cloudwatch-logs-docs", "aws-lake-formation-docs", "aws-sns-docs")} | {"pytest-docs": "2026-10-04", "apache-spark-docs": "2026-10-05", "aws-firehose-docs": "2026-10-05", "gilbert-lynch-cap-2002": "2026-10-05", "apache-iceberg-docs": "2026-10-05", "delta-lake-docs": "2026-10-05", "apache-hudi-docs": "2026-10-05", "gcp-spanner-docs": "2026-10-05", "gcp-data-engineer-certification": "2026-10-05", "aws-data-engineer-certification": "2026-10-05", "aws-what-is-data-mart": "2026-10-05", "aws-lambda-docs": "2026-10-08", "gcp-cloud-run-docs": "2026-10-08", "pandas-docs": "2026-10-08", "polars-docs": "2026-10-08", "apache-arrow-docs": "2026-10-08", "apache-beam-docs": "2026-10-08", "fastapi-docs": "2026-10-08", "httpx-docs": "2026-10-08", "requests-docs": "2026-10-08", "gcp-managed-spark-docs": "2026-10-08", "aws-emr-docs": "2026-10-08", "gcp-cloud-sql-docs": "2026-10-08", "aws-rds-docs": "2026-10-08", "aws-what-is-data-modeling": "2026-10-10", "snowflake-developer-guides": "2026-10-10", "gcp-looker-docs": "2026-10-10", "aws-quick-docs": "2026-10-10", "chen-er-model-1976": "2026-10-10", "data-vault-alliance": "2026-10-11", "aws-prescriptive-guidance": "2026-10-11", "gcp-eventarc-docs": "2026-10-11", "gcp-workflows-docs": "2026-10-11", "dagster-docs": "2026-10-11", "prefect-docs": "2026-10-11"}  # fuentes de BATCH1 agregadas después del 2026-09-30
 
 
 def entry(row: tuple[Any, ...], created: str = TODAY) -> dict[str, Any]:
