@@ -36,7 +36,7 @@ def main(argv: list[str]) -> None:
 
     from airflow.dag_processing.dagbag import DagBag  # import tardío: AIRFLOW_HOME ya está fijado
 
-    bag = DagBag(dag_folder=str(dags), include_examples=False)
+    bag = DagBag(dag_folder=str(dags))   # los ejemplos ya están desactivados por AIRFLOW__CORE__LOAD_EXAMPLES
     if bag.import_errors:
         raise SystemExit(f"errores de import: {bag.import_errors}")
     ventas = bag.get_dag("ventas_diarias")
