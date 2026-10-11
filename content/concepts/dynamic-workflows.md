@@ -198,7 +198,7 @@ except ValueError as error:
 El primer bloque es un Dag de **Airflow 3.3.2**. La CI lo carga con `DagBag` en cada push (`make check-airflow-dag`, entorno aparte con la versión fijada). La prueba verifica:
 
 - que no haya errores de import;
-- que `procesar` sea una tarea mapeada (`MappedOperator`) que depende de `listar_archivos`;
+- que `procesar` sea una tarea mapeada (en 3.3.2, un `DecoratedMappedOperator`, subclase de `MappedOperator`) que depende de `listar_archivos`;
 - que `resumir` dependa de `procesar`.
 
 Las tareas no se ejecutan, así que la cantidad de copias, que se decide al ejecutar, no se prueba. El Dag no se cargó en local.

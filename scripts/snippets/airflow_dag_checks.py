@@ -48,10 +48,12 @@ def _attrs(dag_id: str, task_id: str, **expected: Any) -> Check:
 
 
 def _class_name(dag_id: str, task_id: str, expected: str) -> Check:
+    """La clase de la tarea o una de sus bases se llama expected (p. ej., DecoratedMappedOperator es un MappedOperator)."""
+
     def check(dags: Dags, _: ModuleType) -> str:
-        found = type(_task(dags, dag_id, task_id)).__name__
-        assert found == expected, (dag_id, task_id, found)
-        return f"{dag_id}.{task_id} es {expected}"
+        found = type(_task(dags, dag_id, task_id))
+        assert expected in {c.__name__ for c in found.__mro__}, (dag_id, task_id, found.__name__)
+        return f"{dag_id}.{task_id} es {expected} ({found.__name__})"
 
     return check
 

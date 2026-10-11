@@ -59,12 +59,23 @@ def main(argv: list[str]) -> None:
     if bag.import_errors:
         raise SystemExit(f"errores de import: {bag.import_errors}")
     # get_dag() consulta la base de metadatos (no existe aquí); los Dags parseados están en bag.dags.
+    failures: list[str] = []   # se ejecutan todas las aserciones y se informan todos los fallos juntos
     for slug in slugs:
         declared = CHECKS[slug]
-        assert declared.dag_ids <= set(bag.dags), (slug, sorted(bag.dags))
+        missing = declared.dag_ids - set(bag.dags)
+        if missing:
+            failures.append(f"{slug}: faltan Dags {sorted(missing)}")
+            continue
         module = load_module(dags / f"{module_name(slug)}.py")
-        results = [check(bag.dags, module) for check in declared.checks]
+        results = []
+        for check in declared.checks:
+            try:
+                results.append(check(bag.dags, module))
+            except AssertionError as error:
+                failures.append(f"{slug}: {error!r}")
         print(f"{slug}: Dags {sorted(declared.dag_ids)} sin errores de import; " + "; ".join(results))
+    if failures:
+        raise SystemExit("aserciones fallidas:\n" + "\n".join(failures))
     print(f"DagBag: {len(bag.dags)} Dags de {len(slugs)} fichas, todas las aserciones en verde")
 
 
