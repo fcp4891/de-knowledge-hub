@@ -2239,9 +2239,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-11"
     },
     {
       "slug": "bigquery-policy-tags",
@@ -2253,9 +2253,9 @@
       "level": "advanced",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-11"
     },
     {
       "slug": "bigquery-information-schema",
@@ -2267,9 +2267,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-11"
     },
     {
       "slug": "bigquery-monitoring",
@@ -2281,9 +2281,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-11"
     },
     {
       "slug": "bigquery-incremental-models",
@@ -2323,9 +2323,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-11"
     },
     {
       "slug": "pubsub-topics-and-subscriptions",
@@ -2455,7 +2455,7 @@
     },
     {
       "slug": "dataplex-governance",
-      "title": "Gobierno de datos con Dataplex",
+      "title": "Gobierno de datos con Knowledge Catalog",
       "kind": "concept",
       "domain": "gcp",
       "subdomain": "governance-and-security",
@@ -2463,9 +2463,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-11"
     },
     {
       "slug": "gcp-iam-for-data",
@@ -2491,9 +2491,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-11"
     },
     {
       "slug": "gcp-cmek-with-kms",
@@ -2505,9 +2505,9 @@
       "level": "advanced",
       "importance": "low",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-11"
     },
     {
       "slug": "vertex-ai-for-data-engineers",

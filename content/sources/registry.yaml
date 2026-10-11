@@ -1732,3 +1732,41 @@ created_at: '2026-10-11'
 updated_at: '2026-10-11'
 last_verified: '2026-10-11'
 verification_status: verified
+---
+id: source:gcp-secret-manager-docs
+slug: gcp-secret-manager-docs
+type: source
+title: Secret Manager documentation
+description: Documentación oficial de Secret Manager (Google Cloud).
+url: https://docs.cloud.google.com/secret-manager/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- gcp-secret-manager
+created_at: '2026-10-11'
+updated_at: '2026-10-11'
+last_verified: '2026-10-11'
+verification_status: verified
+---
+id: source:gcp-cloud-kms-docs
+slug: gcp-cloud-kms-docs
+type: source
+title: Cloud Key Management Service documentation
+description: Documentación oficial de Cloud KMS (Google Cloud).
+url: https://docs.cloud.google.com/kms/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- gcp-cloud-kms
+created_at: '2026-10-11'
+updated_at: '2026-10-11'
+last_verified: '2026-10-11'
+verification_status: verified

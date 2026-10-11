@@ -278,7 +278,7 @@ subdomains:
     title: Gobierno y seguridad
     concepts:
       - slug: dataplex-governance
-        title: Gobierno de datos con Dataplex
+        title: Gobierno de datos con Knowledge Catalog
         kind: concept
         classification: modern
         level: intermediate
@@ -286,7 +286,7 @@ subdomains:
         mvp: false
         related_technologies: [gcp-dataplex]
         related_concepts: [data-catalog, data-lineage]
-        note: Catálogo y linaje siguen en el dominio 17; aquí solo el servicio.
+        note: Catálogo y linaje siguen en el dominio 17; aquí solo el servicio. Dataplex Universal Catalog se llama Knowledge Catalog desde el 10 de abril de 2026 (aviso de su página); el slug se mantiene y el nombre anterior va en aliases de la ficha (ADR-010).
       - slug: gcp-iam-for-data
         title: IAM de GCP para plataformas de datos
         kind: concept
