@@ -39,13 +39,13 @@ def main(argv: list[str]) -> None:
     bag = DagBag(dag_folder=str(dags))   # los ejemplos ya están desactivados por AIRFLOW__CORE__LOAD_EXAMPLES
     if bag.import_errors:
         raise SystemExit(f"errores de import: {bag.import_errors}")
-    ventas = bag.get_dag("ventas_diarias")
-    reporte = bag.get_dag("reporte_ventas")
-    assert ventas is not None and reporte is not None, sorted(bag.dag_ids)
+    # get_dag() consulta la base de metadatos (no existe aquí); los Dags parseados están en bag.dags.
+    assert {"ventas_diarias", "reporte_ventas"} <= set(bag.dags), sorted(bag.dags)
+    ventas = bag.dags["ventas_diarias"]
     validar = ventas.get_task("validar")
     assert validar.upstream_task_ids == {"extraer_pos", "extraer_web"}, validar.upstream_task_ids
     assert ventas.get_task("limpiar_temporales").trigger_rule == "all_done"
-    print(f"DagBag sin errores de import: {sorted(bag.dag_ids)}; validar depende de {sorted(validar.upstream_task_ids)}")
+    print(f"DagBag sin errores de import: {sorted(bag.dags)}; validar depende de {sorted(validar.upstream_task_ids)}")
 
 
 if __name__ == "__main__":
