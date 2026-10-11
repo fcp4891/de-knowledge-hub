@@ -386,3 +386,18 @@ def test_alternative_to_is_symmetric_within_type_groups() -> None:
     rule = load_json("relationships.schema.json")["x-relation-catalog"]["ALTERNATIVE_TO"]
     assert rule["symmetric"] is True
     assert ["technology", "cloud_service"] in rule["type_groups"]
+
+
+# --- aliases (ADR-010) ---------------------------------------------------------
+
+
+def test_aliases_are_a_list_of_unique_strings(content: Path) -> None:
+    write_yaml(content, "technologies/kafka.yaml", technology("kafka", aliases=["Kafka", "Apache Kafka"]))
+    assert run(content).ok
+
+
+def test_aliases_reject_duplicates_and_non_lists(content: Path) -> None:
+    write_yaml(content, "technologies/kafka.yaml", technology("kafka", aliases=["Kafka", "Kafka"]))
+    assert_error(run(content), "[aliases]", "non-unique")
+    write_yaml(content, "technologies/kafka.yaml", technology("kafka", aliases="Kafka"))
+    assert_error(run(content), "[aliases]", "is not of type 'array'")

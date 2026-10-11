@@ -20,6 +20,7 @@
     "performance",
     "cost"
   ],
+  "aliases": [],
   "related_topics": [
     "partitioning",
     "incremental-load",

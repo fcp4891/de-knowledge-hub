@@ -25,6 +25,9 @@
     },
     "category": {
       "$ref": "../enums.schema.json#/$defs/slug"
+    },
+    "aliases": {
+      "$ref": "../base.schema.json#/$defs/aliases"
     }
   },
   "unevaluatedProperties": false

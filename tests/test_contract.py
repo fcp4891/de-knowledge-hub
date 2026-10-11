@@ -197,3 +197,19 @@ def test_concept_lists_its_snippets_as_implemented_by(index: p.ContentIndex) -> 
     implemented_by = next(g for g in groups if g["type"] == "IMPLEMENTS" and g["direction"] == "incoming")
     assert implemented_by["label"] == "implemented_by"
     assert "bigquery-scd-type-2" in [i["slug"] for i in implemented_by["items"]]
+
+
+@pytest.mark.parametrize("query, slug", [("Dataplex", "gcp-dataplex"), ("Cloud Composer", "gcp-cloud-composer"),
+                                         ("Dataproc", "gcp-dataproc")])
+def test_reference_search_finds_entities_by_alias(index: p.ContentIndex, query: str, slug: str) -> None:
+    """ADR-010: un nombre anterior encuentra la entidad con su nombre actual."""
+    results = p.search(index, query)
+    found = {item["slug"] for group in results["groups"] for item in group["items"]}
+    assert slug in found
+
+
+def test_technology_detail_returns_aliases(index: p.ContentIndex) -> None:
+    detail = p.technology_detail(index, "gcp-dataplex")
+    assert detail["title"] == "Knowledge Catalog"
+    assert detail["aliases"] == ["Dataplex", "Dataplex Universal Catalog"]
+    assert p.concept_detail(index, "data-mesh")["aliases"] == []

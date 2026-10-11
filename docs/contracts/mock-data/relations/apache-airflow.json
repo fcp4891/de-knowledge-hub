@@ -120,7 +120,7 @@
         },
         {
           "slug": "gcp-cloud-composer",
-          "title": "Managed Service for Apache Airflow (ex Cloud Composer)",
+          "title": "Managed Service for Apache Airflow",
           "entity_type": "cloud_service",
           "origin": "entity",
           "note": null

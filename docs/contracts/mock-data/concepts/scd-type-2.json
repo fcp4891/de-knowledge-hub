@@ -23,6 +23,7 @@
     "modeling",
     "history"
   ],
+  "aliases": [],
   "related_topics": [
     "sql-merge",
     "change-data-capture",

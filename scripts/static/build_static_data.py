@@ -70,6 +70,7 @@ def search_documents(index: p.ContentIndex) -> list[dict[str, Any]]:
             "has_page": item["has_page"],
             "snippet": item["text"],
             "tags": sorted(index.entities.get(item["slug"], {}).get("tags") or []),
+            "aliases": item["aliases"],   # ADR-010; el navegador los indexa si browserSearch.ts los incluye
         })
     return sorted(documents, key=lambda d: d["id"])
 

@@ -293,3 +293,11 @@ def test_cors_empty_env_falls_back_to_defaults(monkeypatch: pytest.MonkeyPatch) 
 def test_cors_preflight(client: TestClient, origin: str, allowed: bool) -> None:
     response = client.options(PREFIX + "/domains", headers={"Origin": origin, "Access-Control-Request-Method": "GET"})
     assert (response.headers.get("access-control-allow-origin") == origin) is allowed
+
+
+@pytest.mark.parametrize("query, slug", [("Dataplex", "gcp-dataplex"), ("Cloud Composer", "gcp-cloud-composer"),
+                                         ("Dataproc", "gcp-dataproc")])
+def test_search_finds_entities_by_alias(client: TestClient, query: str, slug: str) -> None:
+    """ADR-010: los alias se indexan con el título (peso A) en PostgreSQL."""
+    items = {i["slug"]: i for g in get(client, "/search", q=query).json()["groups"] for i in g["items"]}
+    assert slug in items

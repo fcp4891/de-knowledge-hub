@@ -2,15 +2,25 @@ id: cloud_service:gcp-dataproc
 slug: gcp-dataproc
 type: cloud_service
 stub: true
-title: Dataproc
-description: Servicio administrado de Google Cloud para ejecutar Spark y otros frameworks del ecosistema Hadoop.
+title: Managed Service for Apache Spark
+description: Servicio administrado de Google Cloud para ejecutar Spark, en clúster o serverless (antes Dataproc on Compute Engine y Google Cloud Serverless for Apache Spark).
 provider: gcp
 category: data-processing
 classification: modern
 mvp: false
 cloud:
 - gcp
-note: Agregado para la Cloud Capability Matrix; no referenciado aún en el blueprint.
+aliases:
+- Dataproc
+- Dataproc on Compute Engine
+- Google Cloud Serverless for Apache Spark
+sources:
+  - source: gcp-managed-spark-docs
+    url: https://docs.cloud.google.com/managed-spark/docs/concepts/serverless-spark-compare
+    accessed: 2026-10-11
+    note: "«\"Managed Service for Apache Spark\" is the new name for the product formerly known as \"Dataproc on Compute Engine\" (cluster deployment) and \"Google Cloud Serverless for Apache Spark\" (serverless deployment).»"
+note: 'Agregado para la Cloud Capability Matrix. El slug gcp-dataproc se mantiene por estabilidad; «Dataproc» es el nombre corto con que se lo conocía en este repositorio y los dos nombres anteriores son los de su página (ADR-010).'
 created_at: '2026-09-28'
-updated_at: '2026-09-28'
+updated_at: '2026-10-11'
+last_verified: '2026-10-11'
 verification_status: review_required

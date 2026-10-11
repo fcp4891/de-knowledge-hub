@@ -544,8 +544,9 @@ components:
     ConceptDetail:
       allOf: [{ $ref: "#/components/schemas/Metadata" }]
       type: object
-      required: [kind, importance, mvp, has_page, stub, sections]
+      required: [kind, importance, mvp, has_page, stub, sections, aliases]
       properties:
+        aliases: { type: array, items: { type: string }, description: Nombres anteriores o alternativos (ADR-010); vacía si no hay. }
         kind: { $ref: "#/components/schemas/Kind" }
         importance: { $ref: "#/components/schemas/Importance" }
         mvp: { type: boolean }
@@ -605,8 +606,9 @@ components:
     TechnologyDetail:
       allOf: [{ $ref: "#/components/schemas/Metadata" }]
       type: object
-      required: [origin, category, mvp, stub, capabilities]
+      required: [origin, category, mvp, stub, capabilities, aliases]
       properties:
+        aliases: { type: array, items: { type: string }, description: Nombres anteriores o alternativos (ADR-010); vacía si no hay. }
         origin: { $ref: "#/components/schemas/Origin" }
         category: { type: string }
         mvp: { type: boolean }

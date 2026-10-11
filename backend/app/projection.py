@@ -189,7 +189,7 @@ def concept_detail(index: ContentIndex, slug: str) -> dict[str, Any]:
         "classification": concept["classification"], "level": concept["level"],
         "cloud": page.get("cloud", []),
         "technologies": union(page.get("technologies", []), concept.get("related_technologies", [])),
-        "tags": page.get("tags", []),
+        "tags": page.get("tags", []), "aliases": page.get("aliases", []),
         "related_topics": union(page.get("related_topics", []), concept.get("related_concepts", [])),
         "sources": source_refs(index, page.get("sources", [])),
         "created_at": page.get("created_at"), "updated_at": page.get("updated_at"),
@@ -246,6 +246,7 @@ def technology_detail(index: ContentIndex, slug: str) -> dict[str, Any]:
         "id": tech["id"], "title": tech["title"], "slug": slug, "description": tech["description"], "type": tech["type"],
         "domain": None, "subdomain": None, "classification": tech["classification"], "level": tech.get("level"),
         "cloud": tech.get("cloud", []), "technologies": tech.get("technologies", []), "tags": tech.get("tags", []),
+        "aliases": tech.get("aliases", []),
         "related_topics": tech.get("related_topics", []), "sources": source_refs(index, tech.get("sources", [])),
         "created_at": tech["created_at"], "updated_at": tech["updated_at"],
         "last_verified": tech.get("last_verified"), "verification_status": tech["verification_status"],
@@ -397,20 +398,22 @@ def candidates(index: ContentIndex) -> list[dict[str, Any]]:
             "slug": slug, "title": entry.concept["title"], "type": entry.concept["kind"], "domain": entry.domain["slug"],
             "classification": entry.concept["classification"],
             "text": page.get("description") or entry.concept.get("note") or entry.concept["title"],
-            "has_page": bool(page),
+            "has_page": bool(page), "aliases": page.get("aliases", []),
         })
     for e in index.entities.values():
         if e["type"] in TECHNOLOGY_TYPES or e["type"] in ("source", SNIPPET_TYPE):
             items.append({
                 "slug": e["slug"], "title": e["title"], "type": e["type"], "domain": None,
                 "classification": e.get("classification"), "text": e["description"], "has_page": True,
+                "aliases": e.get("aliases", []),
             })
     return items
 
 
 def score(query: str, item: dict[str, Any]) -> float:
     q = normalize(query)
-    points = 3.0 * (q in normalize(item["title"])) + 2.0 * (q in item["slug"]) + 1.0 * (q in normalize(item["text"]))
+    in_title = q in normalize(item["title"]) or any(q in normalize(a) for a in item.get("aliases", []))  # ADR-010
+    points = 3.0 * in_title + 2.0 * (q in item["slug"]) + 1.0 * (q in normalize(item["text"]))
     if not points:
         return points
     page_bonus = PAGE_BONUS * (item["has_page"] and item["type"] != SNIPPET_TYPE)  # ADR-008

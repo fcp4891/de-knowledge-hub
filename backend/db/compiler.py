@@ -27,7 +27,7 @@ from backend.db import schema as t
 from backend.content import validate as v
 from backend.app.projection import markdown_body, sections
 
-COMPILER_VERSION = "2"  # 2: search_documents (A-F2.3)
+COMPILER_VERSION = "3"  # 2: search_documents (A-F2.3); 3: aliases en la búsqueda (ADR-010)
 TECHNOLOGY_TYPES = {"technology", "cloud_service"}
 SEARCHABLE_TYPES = {"concept", "pattern", "architecture", "technology", "cloud_service", "code_snippet", "source"}
 SEARCH_CONFIGS = {"tsv_es": "es_unaccent", "tsv_en": "en_unaccent"}
@@ -142,9 +142,10 @@ def weighted_tsvector(config: str, parts: list[tuple[str, str]]) -> ColumnElemen
 
 
 def insert_search_document(conn: Connection, file_path: str, origin: str, doc: dict[str, Any]) -> None:
-    """doc: slug, type, title, domain, classification, snippet, tags, summary, body."""
+    """doc: slug, type, title, domain, classification, snippet, tags, summary, body, aliases."""
     # El slug (en inglés) se indexa junto al título (en español): "partitioning" encuentra "Particionamiento".
-    title = f"{doc['title']} {doc['slug'].replace('-', ' ')}"
+    # Los alias (nombres anteriores, ADR-010) también: "Dataplex" encuentra "Knowledge Catalog".
+    title = " ".join([doc["title"], doc["slug"].replace("-", " "), *doc.get("aliases", [])])
     parts = [("A", title), ("B", doc["tags"]), ("C", doc["summary"]), ("D", doc["body"])]
     conn.execute(insert(t.search_documents).values(
         slug=doc["slug"], origin=origin, type=doc["type"], title=doc["title"], domain=doc["domain"],
@@ -158,6 +159,7 @@ def entity_search_document(data: dict[str, Any], body: str | None) -> dict[str, 
         "slug": data["slug"], "type": data["type"], "title": data["title"], "domain": data.get("domain"),
         "classification": data.get("classification"), "snippet": data.get("description") or data["title"],
         "tags": " ".join(data.get("tags", [])), "summary": data.get("description") or "", "body": body or "",
+        "aliases": data.get("aliases", []),
     }
 
 

@@ -22,6 +22,7 @@
     "dml",
     "upsert"
   ],
+  "aliases": [],
   "related_topics": [
     "idempotency",
     "scd-type-2",

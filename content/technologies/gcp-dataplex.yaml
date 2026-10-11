@@ -10,8 +10,11 @@ classification: modern
 mvp: false
 cloud:
 - gcp
-tags: [dataplex, knowledge-catalog, data-catalog, governance]
-note: 'Alias: Dataplex, Dataplex Universal Catalog. El slug se mantiene (gcp-dataplex) porque es estable; según el aviso de su página, la API, las bibliotecas cliente, la CLI y los nombres de IAM no cambiaron con el nuevo nombre.'
+tags: [data-catalog, governance]
+aliases:
+- Dataplex
+- Dataplex Universal Catalog
+note: 'El slug se mantiene (gcp-dataplex) porque es estable; los nombres anteriores van en aliases (ADR-010). Según el aviso de su página, la API, las bibliotecas cliente, la CLI y los nombres de IAM no cambiaron con el nuevo nombre.'
 sources:
   - source: gcp-knowledge-catalog-docs
     url: https://docs.cloud.google.com/knowledge-catalog/docs/data-products-overview

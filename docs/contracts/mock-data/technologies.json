@@ -610,7 +610,7 @@
     },
     {
       "slug": "gcp-cloud-composer",
-      "title": "Managed Service for Apache Airflow (ex Cloud Composer)",
+      "title": "Managed Service for Apache Airflow",
       "type": "cloud_service",
       "origin": "gcp",
       "category": "orchestration",
@@ -709,7 +709,7 @@
     },
     {
       "slug": "gcp-dataproc",
-      "title": "Dataproc",
+      "title": "Managed Service for Apache Spark",
       "type": "cloud_service",
       "origin": "gcp",
       "category": "data-processing",

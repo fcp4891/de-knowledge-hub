@@ -2,8 +2,8 @@ id: cloud_service:gcp-cloud-composer
 slug: gcp-cloud-composer
 type: cloud_service
 stub: true
-title: Managed Service for Apache Airflow (ex Cloud Composer)
-description: Servicio administrado de Apache Airflow en Google Cloud.
+title: Managed Service for Apache Airflow
+description: Servicio administrado de Apache Airflow en Google Cloud (antes Cloud Composer).
 provider: gcp
 category: orchestration
 classification: modern
@@ -11,15 +11,22 @@ mvp: true
 cloud:
 - gcp
 tags:
-- cloud-composer
-- composer
+- orchestration
+- airflow
+aliases:
+- Cloud Composer
+- Composer
 sources:
 - source: gcp-cloud-composer-release-notes
   url: https://docs.cloud.google.com/composer/docs/release-notes
   accessed: '2026-09-29'
   note: 'Anuncio del 15 de abril de 2026: "Cloud Composer is evolving to become Managed Service for Apache Airflow".'
-note: 'Cambio de nombre anunciado el 2026-04-15 en las release notes oficiales (fuente gcp-cloud-composer-release-notes). El slug gcp-cloud-composer se mantiene por estabilidad de URLs y relaciones.'
+- source: gcp-cloud-composer-docs
+  url: https://docs.cloud.google.com/composer/docs/composer-3/composer-overview
+  accessed: '2026-10-11'
+  note: 'Página titulada «Managed Airflow overview | Managed Service for Apache Airflow»: «Cloud Composer is evolving to become Managed Service for Apache Airflow».'
+note: 'Cambio de nombre anunciado el 2026-04-15 en las release notes oficiales. El slug gcp-cloud-composer se mantiene por estabilidad de URLs y relaciones; los nombres anteriores van en aliases (ADR-010).'
 created_at: '2026-09-28'
-updated_at: '2026-09-29'
-last_verified: '2026-09-29'
+updated_at: '2026-10-11'
+last_verified: '2026-10-11'
 verification_status: review_required

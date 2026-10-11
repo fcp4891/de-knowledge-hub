@@ -59,7 +59,7 @@ def test_no_personal_or_search_responses(out: Path) -> None:
 def test_search_index_shape(out: Path) -> None:
     documents = read(out, "search-index.json")["documents"]
     assert len({d["id"] for d in documents}) == len(documents)
-    expected = {"id", "slug", "title", "type", "domain", "classification", "has_page", "snippet", "tags"}
+    expected = {"id", "slug", "title", "type", "domain", "classification", "has_page", "snippet", "tags", "aliases"}
     assert all(set(d) == expected and isinstance(d["tags"], list) for d in documents)
     assert {d["type"] for d in documents} <= s.SEARCH_TYPES  # sin fuentes: no tienen página
     cdc = next(d for d in documents if d["slug"] == "change-data-capture")
@@ -97,3 +97,11 @@ def test_package_refuses_to_overwrite(tmp_path: Path, monkeypatch: pytest.Monkey
     with pytest.raises(SystemExit):
         package_static.package(moment)
     assert existing.read_bytes() == b"anterior"
+
+
+def test_search_index_includes_aliases(out: Path) -> None:
+    """ADR-010: el índice estático lleva los alias; el navegador los indexa si browserSearch.ts los incluye."""
+    documents = {d["slug"]: d for d in read(out, "search-index.json")["documents"]}
+    assert documents["gcp-dataplex"]["aliases"] == ["Dataplex", "Dataplex Universal Catalog"]
+    assert documents["gcp-cloud-composer"]["aliases"] == ["Cloud Composer", "Composer"]
+    assert all(isinstance(d["aliases"], list) for d in documents.values())

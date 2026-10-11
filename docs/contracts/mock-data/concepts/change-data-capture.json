@@ -26,6 +26,7 @@
     "streaming",
     "replication"
   ],
+  "aliases": [],
   "related_topics": [
     "idempotency",
     "sql-merge",

@@ -20,6 +20,9 @@
     },
     "importance": {
       "$ref": "../enums.schema.json#/$defs/importance"
+    },
+    "aliases": {
+      "$ref": "../base.schema.json#/$defs/aliases"
     }
   },
   "unevaluatedProperties": false

@@ -39,6 +39,9 @@
     "note": {
       "description": "Matiz para revisión humana (p. ej. empaquetado del producto).",
       "type": "string"
+    },
+    "aliases": {
+      "$ref": "../base.schema.json#/$defs/aliases"
     }
   },
   "unevaluatedProperties": false

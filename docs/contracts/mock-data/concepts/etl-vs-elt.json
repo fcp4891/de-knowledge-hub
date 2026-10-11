@@ -24,6 +24,7 @@
     "pipelines",
     "architecture"
   ],
+  "aliases": [],
   "related_topics": [
     "incremental-load",
     "change-data-capture",

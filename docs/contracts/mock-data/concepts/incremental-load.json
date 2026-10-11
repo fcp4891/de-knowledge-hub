@@ -23,6 +23,7 @@
     "pipelines",
     "performance"
   ],
+  "aliases": [],
   "related_topics": [
     "sql-merge",
     "idempotency",

@@ -26,6 +26,7 @@
     "streaming",
     "batch"
   ],
+  "aliases": [],
   "related_topics": [
     "change-data-capture",
     "dead-letter-queue",
