@@ -1,7 +1,7 @@
 # STATUS — Data Engineering Knowledge Hub
 
-**Fase actual:** F3b — Contenido por dominio (ADR-009); 03-python completo, pendiente de aprobación (01-fundamentals aprobado el 2026-10-06 y 02-sql el 2026-10-08). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
-**Última actualización:** 2026-10-09
+**Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 04-data-modeling (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08 y 03-python el 2026-10-10). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
+**Última actualización:** 2026-10-10
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**
 > El estado detallado de cada carril está en `docs/status/lane-a.md` y `docs/status/lane-b.md`; cada carril edita solo el suyo.
@@ -18,19 +18,21 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | — (03-python 26/26 `verified`) | Plan de 04-data-modeling preparado; ejecutarlo tras aprobar 03-python | — |
-| B · Cursor revisión | — | — | — |
+| A · Claude Code | — (lote F3b-04a entregado en `review_required`) | Aplicar la revisión de 04a; 04-data-modeling 17/17 | — |
+| B · Cursor revisión | — | B-F3.1 del lote F3b-04a | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
+| A | B | B-F3.1 · Revisar el lote F3b-04a (10 fichas; completa 04-data-modeling) | Abierto |
 | A | B | Parser de Markdown: fila de una sola celda en tablas GFM (test `todo`) | Abierto |
 
 ## Criterio de salida de la fase actual (F3b, ADR-009)
 - [x] 01-fundamentals: 28/28 `verified`, aprobado por Felipe en el navegador el 2026-10-06.
 - [x] 02-sql: 33/33 `verified`, aprobado por Felipe en el navegador el 2026-10-08.
-- [ ] 03-python: 26/26 `verified` desde el 2026-10-09; falta la aprobación de Felipe en el navegador.
+- [x] 03-python: 26/26 `verified`, aprobado por Felipe en el navegador el 2026-10-10.
+- [ ] 04-data-modeling: 7/17 `verified`; lote F3b-04a (10) en revisión.
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
 
 ## Fases cerradas

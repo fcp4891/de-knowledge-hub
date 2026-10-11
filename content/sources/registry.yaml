@@ -1476,3 +1476,93 @@ created_at: '2026-10-08'
 updated_at: '2026-10-08'
 last_verified: '2026-10-08'
 verification_status: verified
+---
+id: source:aws-what-is-data-modeling
+slug: aws-what-is-data-modeling
+type: source
+title: 'What is Data Modeling? (AWS)'
+description: 'Página oficial de AWS que explica qué es el modelado de datos y sus niveles conceptual, lógico y físico.'
+url: https://aws.amazon.com/what-is/data-modeling/
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-10'
+updated_at: '2026-10-10'
+last_verified: '2026-10-10'
+verification_status: verified
+---
+id: source:snowflake-developer-guides
+slug: snowflake-developer-guides
+type: source
+title: 'Snowflake Developer Guides'
+description: 'Guías oficiales para desarrolladores publicadas por Snowflake (quickstarts y tutoriales).'
+url: https://www.snowflake.com/en/developers/guides/
+source_type: official_docs
+authority_level: 1
+provider: snowflake
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-10'
+updated_at: '2026-10-10'
+last_verified: '2026-10-10'
+verification_status: verified
+---
+id: source:gcp-looker-docs
+slug: gcp-looker-docs
+type: source
+title: 'Looker documentation'
+description: 'Documentación oficial de Looker (Google Cloud), incluido LookML.'
+url: https://docs.cloud.google.com/looker/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-10'
+updated_at: '2026-10-10'
+last_verified: '2026-10-10'
+verification_status: verified
+---
+id: source:aws-quick-docs
+slug: aws-quick-docs
+type: source
+title: 'Amazon Quick User Guide'
+description: 'Guía oficial de usuario de Amazon Quick, que incluye Amazon Quick Sight (antes Amazon QuickSight).'
+url: https://docs.aws.amazon.com/quick/latest/userguide/what-is.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-10'
+updated_at: '2026-10-10'
+last_verified: '2026-10-10'
+verification_status: verified
+---
+id: source:chen-er-model-1976
+slug: chen-er-model-1976
+type: source
+title: 'The Entity-Relationship Model: Toward a Unified View of Data (Chen, 1976)'
+description: 'Artículo que propone el modelo entidad-relación (ACM Transactions on Database Systems 1(1):9-36, 1976), extracto de 5 páginas publicado por el autor (Peter Chen, LSU): referencia conceptual canónica (Nivel 4); no respalda afirmaciones de producto.'
+url: https://bit.csc.lsu.edu/~chen/pdf/erd-5-pages.pdf
+source_type: spec_paper
+authority_level: 4
+provider: chen
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-10'
+updated_at: '2026-10-10'
+last_verified: '2026-10-10'
+verification_status: verified

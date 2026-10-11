@@ -231,6 +231,13 @@
           "note": "Un pipeline confiable puede reejecutarse sin duplicar."
         },
         {
+          "slug": "data-vault",
+          "title": "Data Vault",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "La carga solo por inserción con verificación de existencia hace que re-ejecutar no duplique."
+        },
+        {
           "slug": "late-arriving-data",
           "title": "Datos que llegan tarde",
           "entity_type": "concept",

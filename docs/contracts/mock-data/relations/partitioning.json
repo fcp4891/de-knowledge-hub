@@ -92,10 +92,10 @@
         },
         {
           "slug": "physical-data-model",
-          "title": "Modelo físico",
+          "title": "Modelo físico de datos",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Particionar es una de las decisiones físicas principales en tablas grandes."
         },
         {
           "slug": "bigquery-partitioning",
