@@ -64,6 +64,9 @@ relations:
   - type: RELATED_TO
     target: event-driven-orchestration
     note: Varias herramientas se disparan por eventos, cada una con su mecanismo.
+  - type: RELATED_TO
+    target: airflow-architecture
+    note: Lo que hay que operar en Airflow frente a otras herramientas.
 created_at: 2026-10-11
 updated_at: 2026-10-11
 last_verified: 2026-10-11
@@ -301,3 +304,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-06a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-06a aplicada (docs/reviews/cards-f3b-06a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-11: relación `airflow-architecture` agregada en `relations`; §17 ya la enlazaba (cambio mínimo).

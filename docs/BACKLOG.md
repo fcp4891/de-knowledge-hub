@@ -25,3 +25,4 @@ Formato: `- [fase sugerida] idea — origen`
 - ~~[F4] Respaldo del estado personal~~ — hecho en F3 (`make backup-me` / `make restore-me`)
 - [F4] Programar `make backup-me` (tarea programada de Windows o cron) y rotar respaldos antiguos — F3
 - [F3] Resaltar HCL en los bloques de código: highlight.js no trae Terraform, así que esos snippets quedan en texto plano con Copiar — B-F3.2
+- [post-F4] Dominio 07: las 9 arquitecturas que no están entre las 6 de F4, con la plantilla de arquitectura: `modern-data-warehouse-architecture`, `data-lake-architecture`, `lakehouse-architecture`, `lambda-architecture`, `kappa-architecture`, `real-time-analytics-architecture`, `iot-pipeline-architecture`, `ml-feature-pipeline-architecture` y `rag-data-pipeline-architecture` — plan de 07-architecture (2026-10-11)

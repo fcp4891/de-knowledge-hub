@@ -37,6 +37,9 @@ relations:
   - type: RELATED_TO
     target: pipeline-dependencies
     note: El reduce depende de todas las copias mapeadas.
+  - type: RELATED_TO
+    target: batch-ingestion
+    note: Una copia mapeada por archivo o partición de un lote.
 created_at: 2026-10-11
 updated_at: 2026-10-11
 last_verified: 2026-10-11
@@ -244,6 +247,7 @@ El mapeo da paralelismo, reintentos por elemento y un Dag que se adapta a los da
 - `dag` y `orchestration-task`: el grafo y sus instancias.
 - `pipeline-dependencies`: el reduce depende de todas las copias.
 - `retries` e `idempotency`: reintentar una copia sin duplicar.
+- `batch-ingestion`: la ingesta por lotes que suele repartirse en copias mapeadas.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -270,3 +274,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-06a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-06a aplicada (docs/reviews/cards-f3b-06a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-11: relación `batch-ingestion` agregada en `relations` y en §17 (cambio mínimo).

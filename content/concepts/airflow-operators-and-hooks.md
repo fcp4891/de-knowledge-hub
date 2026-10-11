@@ -64,6 +64,9 @@ relations:
   - type: RELATED_TO
     target: idempotency
     note: Un operador propio debe dar el mismo resultado al reintentarse.
+  - type: RELATED_TO
+    target: python-api-consumption
+    note: Un hook encapsula el consumo de una API desde Airflow.
 created_at: 2026-10-11
 updated_at: 2026-10-11
 last_verified: 2026-10-11
@@ -267,6 +270,7 @@ Los operadores de providers ahorran código y siguen buenas prácticas, a cambio
 - `airflow-architecture`: Dag processor y workers.
 - `sensors`: operadores que esperan.
 - `open-source-vs-managed-orchestration`: cómo se instalan plugins y paquetes en cada servicio.
+- `python-api-consumption`: el consumo de APIs en Python que un hook encapsula.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -297,3 +301,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-06a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-06a aplicada (docs/reviews/cards-f3b-06a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-11: relación `python-api-consumption` agregada en `relations` y en §17 (cambio mínimo).

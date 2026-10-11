@@ -173,11 +173,13 @@ Cambio de alcance del 2026-10-05: antes de F4 se completan las fichas de **todos
 
 | Carril A (Claude Code) | Carril B (Cursor) |
 |---|---|
-| 5 arquitecturas completas (batch, streaming, CDC PG→BQ, API→DWH, Medallion) | Vista de arquitectura (diagrama Mermaid, trade-offs, alternativas) |
+| 6 arquitecturas completas (batch, streaming, CDC PG→BQ, API→DWH, Medallion, event-driven) | Vista de arquitectura (diagrama Mermaid, trade-offs, alternativas) |
 | 10 labs (tipos A–E, §25) | Vista de laboratorio + registro de solución personal |
 | Endpoints de arquitecturas y labs | Navegación por problema (§36) |
 
 **Nota (gate F1):** las arquitecturas de F4 pueden referenciar conceptos que no son MVP en el blueprint. Por ejemplo, `medallion-architecture` se mantiene en F4 aunque tenga `mvp: false`.
+
+**Nota (plan de 07-architecture, 2026-10-11):** `event-driven-architecture` (`mvp: true` en el blueprint) pasa a ser la sexta arquitectura de F4, por decisión de Felipe. El dominio 07 tiene 15 arquitecturas (`kind: architecture`); las 9 que no están entre las 6 de F4 no entran en el MVP y van al Backlog. En F3b, el dominio 07 cubre solo sus dos conceptos, `data-mesh` y `data-products`.
 
 **Salida: MVP cerrado.** → **Pausa de uso real: 2–3 semanas.** Solo se corrigen bugs y se completa contenido. Todo lo nuevo va al Backlog.
 

@@ -48,6 +48,9 @@ relations:
   - type: RELATED_TO
     target: scheduler
     note: El scheduler inicia el Dag; el sensor espera dentro de la corrida.
+  - type: RELATED_TO
+    target: file-ingestion
+    note: Un sensor de archivo espera a que llegue el archivo antes de ingerirlo.
 created_at: 2026-10-11
 updated_at: 2026-10-11
 last_verified: 2026-10-11
@@ -258,6 +261,7 @@ Poke da la menor latencia y ocupa un slot todo el tiempo. Reschedule libera el s
 - `event-driven-orchestration`: iniciar el Dag por evento en vez de esperar dentro de él.
 - `airflow-architecture`: el triggerer y los workers.
 - `scheduler`: cuándo empieza la corrida en la que espera el sensor.
+- `file-ingestion`: qué hacer con el archivo una vez que el sensor lo detecta.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -285,3 +289,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-06a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-06a aplicada (docs/reviews/cards-f3b-06a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-11: relación `file-ingestion` agregada en `relations` y en §17 (cambio mínimo).

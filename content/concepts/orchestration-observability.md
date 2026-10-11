@@ -63,6 +63,9 @@ relations:
   - type: RELATED_TO
     target: open-source-vs-managed-orchestration
     note: Qué observabilidad trae cada servicio administrado.
+  - type: RELATED_TO
+    target: failure-recovery
+    note: Las alertas inician la recuperación ante un fallo.
 created_at: 2026-10-11
 updated_at: 2026-10-11
 last_verified: 2026-10-11
@@ -286,6 +289,7 @@ Más señales dan diagnósticos más rápidos, a cambio de costo de almacenamien
 - `dag` y `scheduler`: corridas y retraso de inicio.
 - `python-logging`: logs estructurados y enmascarado.
 - `open-source-vs-managed-orchestration`: qué trae cada servicio.
+- `failure-recovery`: qué hacer después de que la alerta avisa del fallo.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -315,3 +319,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-06a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-06a aplicada (docs/reviews/cards-f3b-06a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-11: relación `failure-recovery` agregada en `relations` y en §17 (cambio mínimo).
