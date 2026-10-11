@@ -6,9 +6,14 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-11
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote F3b-06a. Felipe aprobó todas las filas el 2026-10-11 en `docs/reviews/cards-f3b-06a.md`. No se editó `content/` ni `frontend/`.
-- **Siguiente:** En espera del dominio 07. Carril A aplica la propuesta: Python 3.11.8 en el paso 2 del ejemplo de `open-source-vs-managed-orchestration`.
+- **Tarea activa:** `b/ui-fonts-local` (fuentes en el repo). Sin merge a `main`.
+- **Siguiente:** lo que asigne Felipe.
 - **Bloqueos:** ninguno.
+
+### Fuentes locales (`b/ui-fonts-local`)
+- IBM Plex Sans (400–700), Source Serif 4 (400–600) y JetBrains Mono (400–500) van en `frontend/fonts/` como woff2 latino y se cargan con `next/font/local`. El build ya no llama a Google. `next/font` las publica en `_next/static/media`, con `BASE_PATH` en el export estático.
+- Las tres son OFL 1.1: `frontend/fonts/ibm-plex-sans/OFL.txt` (IBM, nombre reservado «Plex»), `frontend/fonts/source-serif-4/OFL.txt` (Adobe, nombre reservado «Source») y `frontend/fonts/jetbrains-mono/OFL.txt` (JetBrains Mono Project Authors). No se renombró la fuente.
+- Lint y los dos builds en verde con el proxy de red cerrado, así que no dependieron de descargar fuentes.
 
 ### B-F3.1 · lote F3b-06a
 - Ocho fichas de `06-orchestration`, tabla de §48. Felipe aprobó todas las filas el 2026-10-11, incluida la propuesta: Python 3.11.8 en el paso 2 del ejemplo de `open-source-vs-managed-orchestration`. No se editó `content/` ni `frontend/`.
