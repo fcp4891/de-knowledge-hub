@@ -203,6 +203,13 @@
           "note": "Los consumidores de CDC deben aplicar cambios de forma idempotente ante reentregas."
         },
         {
+          "slug": "checkpoints",
+          "title": "Checkpoints",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Retomar desde el último checkpoint reprocesa lo posterior; el destino tiene que tolerarlo."
+        },
+        {
           "slug": "data-consistency",
           "title": "Consistencia de datos",
           "entity_type": "concept",
@@ -308,6 +315,13 @@
           "note": "MERGE con clave y condición de versión es la forma habitual de escribir idempotentemente en un warehouse."
         },
         {
+          "slug": "event-driven-pipelines",
+          "title": "Pipelines dirigidos por eventos",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Con entrega al menos una vez, el manejador tiene que tolerar duplicados."
+        },
+        {
           "slug": "incremental-pipelines",
           "title": "Pipelines incrementales",
           "entity_type": "pattern",
@@ -320,6 +334,13 @@
           "entity_type": "concept",
           "origin": "entity",
           "note": "El manifiesto por huella hace que re-ejecutar no reprocese ni duplique."
+        },
+        {
+          "slug": "failure-recovery",
+          "title": "Recuperación ante fallos",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Toda recuperación supone poder repetir un paso sin duplicar."
         },
         {
           "slug": "replay",

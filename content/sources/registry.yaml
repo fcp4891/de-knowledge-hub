@@ -1584,3 +1584,39 @@ created_at: '2026-10-11'
 updated_at: '2026-10-11'
 last_verified: '2026-10-11'
 verification_status: verified
+---
+id: source:aws-prescriptive-guidance
+slug: aws-prescriptive-guidance
+type: source
+title: 'AWS Prescriptive Guidance'
+description: 'Guías prescriptivas oficiales de AWS (patrones, estrategias y guías de implementación).'
+url: https://aws.amazon.com/prescriptive-guidance/
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-11'
+updated_at: '2026-10-11'
+last_verified: '2026-10-11'
+verification_status: verified
+---
+id: source:gcp-eventarc-docs
+slug: gcp-eventarc-docs
+type: source
+title: 'Eventarc documentation'
+description: 'Documentación oficial de Eventarc (Google Cloud).'
+url: https://docs.cloud.google.com/eventarc/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-11'
+updated_at: '2026-10-11'
+last_verified: '2026-10-11'
+verification_status: verified

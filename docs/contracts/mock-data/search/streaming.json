@@ -1,6 +1,6 @@
 {
   "query": "streaming",
-  "total": 14,
+  "total": 15,
   "groups": [
     {
       "type": "concept",
@@ -54,6 +54,16 @@
           "has_page": true,
           "snippet": "Ingerir eventos de forma continua, a medida que se producen: brokers (Pub/Sub, Kafka, Kinesis, Event Hubs), entrega al menos una vez, tiempo de evento, ventanas y watermarks, escritura a BigQuery o al",
           "score": 5.8
+        },
+        {
+          "slug": "checkpoints",
+          "title": "Checkpoints",
+          "type": "concept",
+          "domain": "pipelines",
+          "classification": "core",
+          "has_page": true,
+          "snippet": "Guardar el progreso de un proceso continuo o largo para retomarlo después de una caída sin empezar de cero. Qué es un checkpoint en cada motor, sin tratarlos como equivalentes (ubicación de checkpoint",
+          "score": 1.8
         },
         {
           "slug": "data-ingestion",

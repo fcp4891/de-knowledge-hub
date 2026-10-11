@@ -63,6 +63,13 @@
           "note": "Una salida adicional de rechazos es la dead letter queue dentro del pipeline."
         },
         {
+          "slug": "event-driven-pipelines",
+          "title": "Pipelines dirigidos por eventos",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Los eventos que fallan repetidamente se apartan a una DLQ."
+        },
+        {
           "slug": "python-file-processing",
           "title": "Procesamiento de archivos",
           "entity_type": "concept",
@@ -75,6 +82,13 @@
           "entity_type": "cloud_service",
           "origin": "blueprint",
           "note": null
+        },
+        {
+          "slug": "failure-recovery",
+          "title": "Recuperación ante fallos",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Los errores permanentes se apartan para revisión en lugar de reintentarse."
         },
         {
           "slug": "replay",

@@ -1469,9 +1469,9 @@
       "level": "basic",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-11"
     },
     {
       "slug": "batch-ingestion",
@@ -1553,9 +1553,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-11"
     },
     {
       "slug": "incremental-pipelines",
@@ -1581,9 +1581,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-11"
     },
     {
       "slug": "pipeline-dependencies",
@@ -1595,9 +1595,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-11"
     },
     {
       "slug": "retries",
@@ -1623,9 +1623,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-11"
     },
     {
       "slug": "dead-letter-queue",
@@ -1679,9 +1679,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-11"
     },
     {
       "slug": "dag",

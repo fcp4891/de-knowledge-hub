@@ -50,7 +50,7 @@
         },
         {
           "slug": "event-driven-pipelines",
-          "title": "Pipelines event-driven",
+          "title": "Pipelines dirigidos por eventos",
           "entity_type": "pattern",
           "origin": "blueprint",
           "note": null

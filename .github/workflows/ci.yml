@@ -49,6 +49,8 @@ jobs:
         with:
           terraform_wrapper: false
       - run: make validate-terraform
+      # Dag de Airflow de la ficha pipeline-dependencies: DagBag sin errores de import (venv aparte, versión fijada).
+      - run: make check-airflow-dag AIRFLOW_PYTHON=python
 
   frontend:
     runs-on: ubuntu-24.04
