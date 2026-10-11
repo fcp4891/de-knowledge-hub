@@ -31,6 +31,10 @@ sources:
     url: https://airflow.apache.org/docs/apache-airflow-providers-standard/1.19.0/sensors/file.html
     accessed: 2026-10-11
     note: "Provider standard 1.19.0 (el que fijan las restricciones de Airflow 3.3.2), FileSensor: detecta archivos en el sistema de archivos local; usa una connection (fs_conn_id, por defecto fs_default); ejemplo con deferrable=True."
+  - source: apache-airflow-docs
+    url: https://airflow.apache.org/docs/apache-airflow-providers-standard/1.19.0/_api/airflow/providers/standard/sensors/filesystem/index.html
+    accessed: 2026-10-11
+    note: "Provider standard 1.19.0, referencia de API: airflow.providers.standard.sensors.filesystem.FileSensor(*, filepath, fs_conn_id='fs_default', recursive=False, deferrable=..., ...), basado en BaseSensorOperator; espera a que un archivo o carpeta aparezca en un sistema de archivos; filepath es relativo a la ruta base de la connection y admite glob; deferrable por defecto toma [operators] default_deferrable (False si no está configurado)."
 relations:
   - type: RELATED_TO
     target: orchestration-task
@@ -142,7 +146,7 @@ flowchart LR
 import datetime
 
 from airflow.providers.standard.operators.empty import EmptyOperator
-from airflow.providers.standard.sensors.file import FileSensor
+from airflow.providers.standard.sensors.filesystem import FileSensor
 from airflow.sdk import DAG
 
 with DAG(
@@ -268,7 +272,7 @@ Pendiente (F4).
 ## 20. Fuentes
 
 - Apache Airflow 3.3.2: *Sensors*, *Deferrable Operators & Triggers* y *Tasks*.
-- Provider standard 1.19.0: *FileSensor*.
+- Provider standard 1.19.0: *FileSensor* (guía y referencia de API).
 
 El detalle de cada fuente está en `sources` del frontmatter.
 

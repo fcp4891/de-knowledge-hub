@@ -149,7 +149,7 @@ stateDiagram-v2
 import datetime
 
 from airflow.providers.standard.operators.bash import BashOperator
-from airflow.providers.standard.sensors.file import FileSensor
+from airflow.providers.standard.sensors.filesystem import FileSensor
 from airflow.sdk import DAG, task
 
 with DAG(
