@@ -6,12 +6,12 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-10
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote F3b-04a. Revisión en `docs/reviews/cards-f3b-04a.md`, filas en `pendiente`. No se editó `content/` ni `frontend/`.
-- **Siguiente:** Esperar la aprobación de Felipe. Propuesta: la guía de Data Vault de Snowflake es Nivel 3; Microsoft Learn no sostiene hubs, links ni satélites; «DV2.1 exige» queda como frase de esa guía.
+- **Tarea activa:** B-F3.1 del lote F3b-04a. Felipe aprobó todas las filas el 2026-10-10 en `docs/reviews/cards-f3b-04a.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** En espera del dominio 05. Carril A aplica la revisión: quickstart de Snowflake a Nivel 3 y sin sostener afirmaciones; Data Vault Alliance como N4 conceptual; Microsoft Learn (N1) para el uso en plataforma.
 - **Bloqueos:** ninguno.
 
 ### B-F3.1 · lote F3b-04a
-- Diez fichas de `04-data-modeling`, tabla de §48. Chen y Kimball quedan en lo conceptual. OBT sale de las buenas prácticas de dbt y no se presenta como reemplazo. Cada significado de modelo semántico está en su herramienta. §11–13 de `physical-data-model` no agregan DDL de BigQuery, Redshift ni Fabric. No se editó `content/` ni `frontend/`.
+- Diez fichas de `04-data-modeling`, tabla de §48. Felipe aprobó todas las filas el 2026-10-10, incluida la reclasificación del quickstart de Snowflake a Nivel 3. Para `data-vault`: Data Vault Alliance como N4 canónico solo para lo conceptual (hubs, links, satélites, hash), mismo criterio que Kimball Group; Microsoft Learn (N1) para el uso en plataforma; la guía de Snowflake no sostiene afirmaciones. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-03b
 - Once fichas de `03-python`, tabla de §48. Felipe aprobó todas las filas el 2026-10-09, incluidas las tres propuestas: mypy explícito en `pyspark-dataframes`; citar la página de comparación para el nombre anterior de Dataproc y quitar «el mismo código de PySpark corre en las dos modalidades»; en `python-concurrency`, publicar solo los 0.5 s medidos en esta máquina. No se editó `content/` ni `frontend/`.
@@ -188,7 +188,7 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 ## Historial
 
 ### B-F3.1 · lote F3b-04a (2026-10-10)
-- Revisión de las 10 fichas que completan `04-data-modeling`. Filas en `pendiente`. Propuesta: la guía de Data Vault de Snowflake pasa a Nivel 3; Microsoft Learn no sostiene la metodología; «DV2.1 exige» no se presenta como estándar oficial. No se editó `content/`.
+- Revisión de las 10 fichas que completan `04-data-modeling`. Felipe aprobó todas las filas, incluida la reclasificación del quickstart de Snowflake a Nivel 3 y la fila de Data Vault Alliance (N4 conceptual; Microsoft Learn N1 para la plataforma; la guía no sostiene afirmaciones). No se editó `content/`. En espera del dominio 05.
 
 ### B-F3.1 · lote F3b-03b (2026-10-09)
 - Revisión de las 11 fichas que cierran `03-python`. Felipe aprobó todas las filas, incluidas las tres propuestas. No se editó `content/`. En espera del dominio 04.
