@@ -1676,3 +1676,59 @@ created_at: '2026-10-11'
 updated_at: '2026-10-11'
 last_verified: '2026-10-11'
 verification_status: verified
+---
+id: source:gcp-architecture-center
+slug: gcp-architecture-center
+type: source
+title: Cloud Architecture Center
+description: Guías y arquitecturas de referencia oficiales de Google Cloud.
+url: https://docs.cloud.google.com/architecture
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-11'
+updated_at: '2026-10-11'
+last_verified: '2026-10-11'
+verification_status: verified
+---
+id: source:gcp-knowledge-catalog-docs
+slug: gcp-knowledge-catalog-docs
+type: source
+title: Knowledge Catalog documentation
+description: Documentación oficial de Knowledge Catalog (antes Dataplex Universal Catalog), Google Cloud.
+url: https://docs.cloud.google.com/knowledge-catalog/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- gcp-dataplex
+created_at: '2026-10-11'
+updated_at: '2026-10-11'
+last_verified: '2026-10-11'
+verification_status: verified
+---
+id: source:dehghani-data-mesh
+slug: dehghani-data-mesh
+type: source
+title: Data mesh (Zhamak Dehghani, martinfowler.com)
+description: 'Artículos de la autora del enfoque data mesh publicados en martinfowler.com (2019 y 2020): referencia conceptual canónica (Nivel
+  4) para sus principios y para el dato como producto; no respalda afirmaciones de producto.'
+url: https://martinfowler.com/articles/data-mesh-principles.html
+source_type: spec_paper
+authority_level: 4
+provider: martinfowler
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-11'
+updated_at: '2026-10-11'
+last_verified: '2026-10-11'
+verification_status: verified
