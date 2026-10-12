@@ -4,12 +4,16 @@
 - pytest-ingestion-test: arma ingest.py desde la sección 10 de data-validation-with-pydantic y de
   batch-ingestion, escribe el test del snippet y lo corre con pytest en un directorio temporal.
   Necesita requirements-snippets.txt (`make snippets-deps`; la CI lo instala); si falta, se salta.
-- pyspark-dataframes: ejecuta la sección 10 de la ficha en modo local. Necesita pyspark y Java 17+;
-  sin ellos se salta, salvo con REQUIRE_PYSPARK=1 (la CI), donde falla.
+- pyspark-dataframes y emr-spark-clusters: ejecutan la sección 10 de la ficha en modo local. Necesitan pyspark y
+  Java 17+; sin ellos se saltan, salvo con REQUIRE_PYSPARK=1 (la CI), donde fallan.
+- s3-data-lake, glue-catalog-and-etl y kinesis-data-streams (ADR-011): importan el código boto3 de la sección 10 y lo
+  ejecutan contra moto, y lo revisan con mypy --strict. Sin moto se saltan, salvo con REQUIRE_AWS_SNIPPETS=1 (la CI).
 """
 
 from __future__ import annotations
 
+import datetime as dt
+import importlib.util
 import json
 import os
 import re
@@ -17,6 +21,8 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from types import ModuleType
+from typing import Any
 
 import pytest
 
@@ -87,3 +93,145 @@ def test_pyspark_dataframes_code_runs_in_local_mode(tmp_path: Path) -> None:
     assert result.returncode == 0, result.stdout[-3000:] + result.stderr[-3000:]
     assert "'region': 'norte', 'total': 120" in result.stdout
     assert "BroadcastHashJoin" in result.stdout
+
+
+def require_pyspark() -> None:
+    """Salta sin pyspark o Java, salvo con REQUIRE_PYSPARK=1 (la CI), donde falla."""
+    required = os.environ.get("REQUIRE_PYSPARK") == "1"
+    try:
+        import pyspark  # noqa: F401
+    except ImportError:
+        if required:
+            raise
+        pytest.skip("falta pyspark (make snippets-deps)")
+    if not (os.environ.get("JAVA_HOME") or shutil.which("java")):
+        if required:
+            pytest.fail("REQUIRE_PYSPARK=1 pero no hay Java (JAVA_HOME o java en el PATH)")
+        pytest.skip("falta Java 17+ para PySpark")
+
+
+EMR_DRIVER = r"""
+import json, sys
+from pathlib import Path
+from pyspark.sql import SparkSession
+import emr_job
+
+base = Path(sys.argv[1])
+src = base / "raw"
+src.mkdir()
+rows = [
+    {"id_pedido": 1, "estado": "creado", "updated_at": "2026-10-01T08:00:00", "dt": "2026-10-01"},
+    {"id_pedido": 1, "estado": "pagado", "updated_at": "2026-10-01T09:00:00", "dt": "2026-10-01"},
+    {"id_pedido": 2, "estado": "creado", "updated_at": "2026-10-01T10:00:00", "dt": "2026-10-01"},
+    {"id_pedido": 3, "estado": "creado", "updated_at": "2026-10-02T10:00:00", "dt": "2026-10-02"},
+]
+(src / "part.jsonl").write_text("\n".join(json.dumps(r) for r in rows), encoding="utf-8")
+spark = SparkSession.builder.master("local[2]").appName("emr-job-test").getOrCreate()
+out = str(base / "curated")
+counts = [emr_job.run(spark, str(src), out, d) for d in ("2026-10-02", "2026-10-01", "2026-10-01")]
+df = spark.read.parquet(out)
+print(json.dumps({
+    "counts": counts,
+    "total": df.count(),
+    "estado_1": df.where("id_pedido = 1").first()["estado"],
+    "dts": sorted(str(r["dt"]) for r in df.select("dt").distinct().collect()),
+}))
+spark.stop()
+"""
+
+
+def test_emr_spark_job_rewrites_only_its_partition(tmp_path: Path) -> None:
+    require_pyspark()
+    (tmp_path / "emr_job.py").write_text(section_code(CONTENT / "concepts" / "emr-spark-clusters.md", "## 10. Código"), encoding="utf-8")
+    (tmp_path / "driver.py").write_text(EMR_DRIVER, encoding="utf-8")
+    result = run_python(["driver.py", str(tmp_path)], tmp_path)
+    assert result.returncode == 0, result.stdout[-3000:] + result.stderr[-3000:]
+    out = json.loads(result.stdout.strip().splitlines()[-1])
+    assert out["counts"] == [1, 2, 2]  # re-ejecutar el 2026-10-01 no duplica
+    assert out["total"] == 3 and out["estado_1"] == "pagado"
+    assert out["dts"] == ["2026-10-01", "2026-10-02"]  # el overwrite dinámico no borró el 2026-10-02
+
+
+AWS_SNIPPETS = {
+    "s3_partitions": "s3-data-lake.md",
+    "glue_catalog": "glue-catalog-and-etl.md",
+    "kinesis_stream": "kinesis-data-streams.md",
+}
+
+
+def require_moto() -> None:
+    try:
+        import moto  # noqa: F401
+    except ImportError:
+        if os.environ.get("REQUIRE_AWS_SNIPPETS") == "1":
+            raise
+        pytest.skip("falta moto (make snippets-deps)")
+
+
+def aws_snippet(name: str, tmp_path: Path) -> ModuleType:
+    """Escribe la sección 10 (primer bloque python) de la ficha y la importa como módulo."""
+    path = tmp_path / f"{name}.py"
+    path.write_text(section_code(CONTENT / "concepts" / AWS_SNIPPETS[name], "## 10. Código"), encoding="utf-8")
+    spec = importlib.util.spec_from_file_location(name, path)
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+@pytest.fixture
+def aws(monkeypatch: pytest.MonkeyPatch) -> Any:
+    require_moto()
+    from moto import mock_aws
+
+    for key, value in {"AWS_DEFAULT_REGION": "us-east-1", "AWS_ACCESS_KEY_ID": "testing", "AWS_SECRET_ACCESS_KEY": "testing"}.items():
+        monkeypatch.setenv(key, value)
+    with mock_aws():
+        import boto3
+
+        yield boto3
+
+
+def test_s3_snippet_writes_hive_partitions_idempotently(aws: Any, tmp_path: Path) -> None:
+    m = aws_snippet("s3_partitions", tmp_path)
+    s3 = aws.client("s3")
+    s3.create_bucket(Bucket="lake")
+    for day in (1, 2, 2):  # el día 2 se reescribe
+        m.write_batch(s3, "lake", "ventas", dt.date(2026, 10, day), [{"id": day}])
+    assert m.list_partitions(s3, "lake", "ventas") == ["dt=2026-10-01", "dt=2026-10-02"]
+    assert m.count_objects(s3, "lake", "raw/ventas/") == 2
+
+
+def test_glue_snippet_registers_table_and_partitions_once(aws: Any, tmp_path: Path) -> None:
+    m = aws_snippet("glue_catalog", tmp_path)
+    glue = aws.client("glue")
+    loc = "s3://lake/curated/ventas_diarias/"
+    for _ in range(2):
+        m.ensure_table(glue, "ventas", "ventas_diarias", loc)
+    assert m.add_partitions(glue, "ventas", "ventas_diarias", loc, ["2026-10-01", "2026-10-02"]) == 2
+    assert m.add_partitions(glue, "ventas", "ventas_diarias", loc, ["2026-10-02", "2026-10-03"]) == 1
+    assert m.partition_values(glue, "ventas", "ventas_diarias") == ["2026-10-01", "2026-10-02", "2026-10-03"]
+
+
+def test_kinesis_snippet_sends_all_events_and_keeps_each_key_in_one_shard(aws: Any, tmp_path: Path) -> None:
+    m = aws_snippet("kinesis_stream", tmp_path)
+    kinesis = aws.client("kinesis")
+    kinesis.create_stream(StreamName="pedidos", ShardCount=2)
+    m.put_events(kinesis, "pedidos", [{"id_pedido": p, "paso": s} for s in range(3) for p in range(5)])
+    shards = m.read_all(kinesis, "pedidos")
+    assert sum(len(r) for r in shards.values()) == 15
+    for pedido in range(5):
+        homes = [sid for sid, rs in shards.items() if any(r["id_pedido"] == pedido for r in rs)]
+        assert len(homes) == 1  # todos los eventos de un pedido, en un solo shard
+    # Sin aserción de orden: PutRecords no lo garantiza (API Reference), y la ficha no lo promete.
+
+
+def test_aws_snippets_pass_mypy_strict(tmp_path: Path) -> None:
+    require_moto()
+    files = []
+    for name, ficha in AWS_SNIPPETS.items():
+        path = tmp_path / f"{name}.py"
+        path.write_text(section_code(CONTENT / "concepts" / ficha, "## 10. Código"), encoding="utf-8")
+        files.append(path.name)
+    result = run_python(["-m", "mypy", "--strict", "--no-incremental", *files], tmp_path)
+    assert result.returncode == 0, result.stdout + result.stderr

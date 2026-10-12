@@ -1789,3 +1789,22 @@ created_at: '2026-10-11'
 updated_at: '2026-10-11'
 last_verified: '2026-10-11'
 verification_status: verified
+---
+id: source:aws-msk-docs
+slug: aws-msk-docs
+type: source
+title: Amazon MSK Developer Guide
+description: Guía oficial para desarrolladores de Amazon Managed Streaming for Apache Kafka (Amazon MSK).
+url: https://docs.aws.amazon.com/msk/latest/developerguide/what-is-msk.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- aws-msk
+created_at: '2026-10-12'
+updated_at: '2026-10-12'
+last_verified: '2026-10-12'
+verification_status: verified

@@ -1,6 +1,6 @@
 # STATUS — Data Engineering Knowledge Hub
 
-**Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 08-gcp (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08, 03-python el 2026-10-10, 04-data-modeling, 05-pipelines, 06-orchestration y los conceptos de 07-architecture el 2026-10-11). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
+**Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 09-aws (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08, 03-python el 2026-10-10, 04-data-modeling, 05-pipelines, 06-orchestration y los conceptos de 07-architecture el 2026-10-11, 08-gcp el 2026-10-12). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
 **Última actualización:** 2026-10-11
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**
@@ -18,8 +18,8 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | — (08-gcp 31/31 `verified`) | Plan de 09-aws propuesto, sin ejecutar | — |
-| B · Cursor revisión | — | — | — |
+| A · Claude Code | Lote F3b-09b (09a entregado) | Entregar 09b; aplicar la revisión de 09a | — |
+| B · Cursor revisión | Revisar el lote F3b-09a (B-F3.1) | — | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
@@ -35,7 +35,8 @@
 - [x] 05-pipelines: 16/16 `verified`, aprobado por Felipe en el navegador el 2026-10-11.
 - [x] 06-orchestration: 12/12 `verified`, aprobado por Felipe en el navegador el 2026-10-11.
 - [x] 07-architecture: 2/2 conceptos `verified`, aprobado por Felipe en el navegador el 2026-10-11 (las 15 arquitecturas: 6 en F4, 9 en el Backlog).
-- [ ] 08-gcp: 31/31 `verified`; pendiente de aprobación en el navegador. Sus 15 arquitecturas no son de F3b: 6 en F4 (ROADMAP) y 9 en el Backlog.
+- [x] 08-gcp: 31/31 `verified`, aprobado por Felipe en el navegador el 2026-10-12. Sus 15 arquitecturas no son de F3b: 6 en F4 (ROADMAP) y 9 en el Backlog.
+- [ ] 09-aws: 0/16 `verified`; lote F3b-09a (8) en revisión y F3b-09b (8) en curso (ADR-011: código de AWS con moto y Terraform).
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
 
 ## Fases cerradas

@@ -238,6 +238,13 @@
           "note": null
         },
         {
+          "slug": "s3-data-lake",
+          "title": "Data lake sobre S3",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Escribir con claves deterministas hace que un reintento reemplace en vez de duplicar."
+        },
+        {
           "slug": "data-pipeline",
           "title": "Data pipeline",
           "entity_type": "concept",
@@ -294,11 +301,25 @@
           "note": null
         },
         {
+          "slug": "glue-catalog-and-etl",
+          "title": "Glue Data Catalog y Glue ETL",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Registrar tablas y particiones sin duplicarlas al re-ejecutar."
+        },
+        {
           "slug": "api-ingestion",
           "title": "Ingesta desde APIs",
           "entity_type": "concept",
           "origin": "entity",
           "note": "Reprocesar una página o un período no debe duplicar registros en el destino."
+        },
+        {
+          "slug": "kinesis-data-streams",
+          "title": "Kinesis Data Streams",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Un reintento de PutRecords puede repetir registros; el consumidor debe tolerarlo."
         },
         {
           "slug": "python-database-io",
@@ -383,6 +404,13 @@
           "entity_type": "pattern",
           "origin": "blueprint",
           "note": null
+        },
+        {
+          "slug": "emr-spark-clusters",
+          "title": "Spark sobre EMR",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "El overwrite dinámico hace que re-ejecutar un día lo reemplace."
         },
         {
           "slug": "orchestration-task",

@@ -112,6 +112,13 @@
           "note": "En ELT, la carga incremental suele resolverse dentro del warehouse."
         },
         {
+          "slug": "glue-catalog-and-etl",
+          "title": "Glue Data Catalog y Glue ETL",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Los job bookmarks procesan solo lo nuevo."
+        },
+        {
           "slug": "idempotency",
           "title": "Idempotencia",
           "entity_type": "concept",

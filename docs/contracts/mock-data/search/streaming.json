@@ -1,6 +1,6 @@
 {
   "query": "streaming",
-  "total": 16,
+  "total": 17,
   "groups": [
     {
       "type": "concept",
@@ -129,6 +129,21 @@
           "has_page": false,
           "snippet": "Es la consulta de baja latencia, no el pipeline de streaming.",
           "score": 1.0
+        }
+      ]
+    },
+    {
+      "type": "source",
+      "items": [
+        {
+          "slug": "aws-msk-docs",
+          "title": "Amazon MSK Developer Guide",
+          "type": "source",
+          "domain": null,
+          "classification": null,
+          "has_page": true,
+          "snippet": "Guía oficial para desarrolladores de Amazon Managed Streaming for Apache Kafka (Amazon MSK).",
+          "score": 1.3
         }
       ]
     },

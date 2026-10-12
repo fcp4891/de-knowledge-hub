@@ -63,6 +63,13 @@
           "note": "Organizar por prefijos de fecha (estilo Hive) permite podar archivos al consultar."
         },
         {
+          "slug": "s3-data-lake",
+          "title": "Data lake sobre S3",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Las particiones estilo Hive son prefijos dt=... en las claves."
+        },
+        {
           "slug": "data-warehouse",
           "title": "Data Warehouse",
           "entity_type": "concept",
@@ -110,6 +117,13 @@
           "entity_type": "concept",
           "origin": "blueprint",
           "note": null
+        },
+        {
+          "slug": "emr-spark-clusters",
+          "title": "Spark sobre EMR",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "El job escribe por partición de fecha."
         }
       ]
     },
