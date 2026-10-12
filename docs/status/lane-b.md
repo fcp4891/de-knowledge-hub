@@ -10,9 +10,12 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Relaciones y contenido de una ficha.** La fila «Relaciones completas», y cualquier afirmación sobre lo que contiene una ficha, se verifican con un comando y el resultado se pega en la revisión. No vale una lectura a ojo.
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote F3b-08a. Revisión en `docs/reviews/cards-f3b-08a.md`. No se editó `content/` ni `frontend/`.
-- **Siguiente:** Esperar la aprobación de Felipe. Propuesta alta: la tabla de ediciones de `bigquery-slots` (on-demand en «Máximo por reserva» es Cuota; el mínimo de 1 minuto va en las tres ediciones). Propuesta media: agregar al frontmatter las relaciones que el §17 ya nombra y tienen ficha. Después, el lote 08b.
+- **Tarea activa:** B-F3.1 del lote F3b-08b. Revisión en `docs/reviews/cards-f3b-08b.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: agregar al frontmatter las relaciones que el §17 ya nombra y tienen ficha; en `bigquery-security`, quitar `bigquery-architecture` o nombrarla en el §17. El lote 08a está en `b/f3b-review-08a`.
 - **Bloqueos:** ninguno. `make validate` no corrió en este worktree (no hay `.venv`).
+
+### B-F3.1 · lote F3b-08b
+- Ocho fichas de gobierno y operación. Fuentes Nivel 1, §14, GoogleSQL «no ejecutado», policy tags vigentes en la API de Data Catalog, y la tabla de clases de Cloud Storage sin precios, comprobados por comando y contra sus páginas. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-08a
 - Ocho fichas de BigQuery. Fuentes Nivel 1, §14, GoogleSQL «no ejecutado» y precios ilustrativos comprobados por comando. La tabla de ediciones no coincide con la página en la celda de on-demand. No se editó `content/` ni `frontend/`.
@@ -212,6 +215,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-08b (2026-10-11)
+- Revisión de las 8 fichas de gobierno y operación. Sin hallazgo alto. El §17 de cuatro fichas nombra relaciones que no están en el frontmatter. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-08a (2026-10-11)
 - Revisión de las 8 fichas de BigQuery. Hallazgo alto: en la tabla de ediciones, on-demand figura como «sin reservas» en la fila del tamaño máximo; la página dice Cuota, y «sin acceso a reservas» es otra fila. El §17 nombra fichas que no están en `relations`. No se editó `content/`.
