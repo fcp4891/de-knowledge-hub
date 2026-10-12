@@ -3,16 +3,19 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-11
+**Última actualización:** 2026-10-12
 
 ## Reglas de revisión
 
 - **Relaciones y contenido de una ficha.** La fila «Relaciones completas», y cualquier afirmación sobre lo que contiene una ficha, se verifican con un comando y el resultado se pega en la revisión. No vale una lectura a ojo.
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote F3b-08b. Revisión en `docs/reviews/cards-f3b-08b.md`. No se editó `content/` ni `frontend/`.
-- **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: agregar al frontmatter las relaciones que el §17 ya nombra y tienen ficha; en `bigquery-security`, quitar `bigquery-architecture` o nombrarla en el §17. El lote 08a está en `b/f3b-review-08a`.
-- **Bloqueos:** ninguno. `make validate` no corrió en este worktree (no hay `.venv`).
+- **Tarea activa:** B-F3.1 del lote F3b-08c. Revisión en `docs/reviews/cards-f3b-08c.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Dos propuestas media: en `composer-environments`, citar las release notes y la fecha 15 de abril de 2026; en `gcp-vertex-ai` y en la ficha, no usar «Vertex AI» a secas como alias de Gemini Enterprise Agent Platform.
+- **Bloqueos:** ninguno. `make` no está en el PATH; `scripts/validate.py` con `.venv` terminó OK (369 entidades).
+
+### B-F3.1 · lote F3b-08c
+- Siete fichas de procesamiento, orquestación y servicios. Fuentes de nivel 1, §14, código con lo ejecutado y lo no ejecutado, y la regla del §17, comprobados por comando. `validate` en verde. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-08b
 - Ocho fichas de gobierno y operación. Fuentes Nivel 1, §14, GoogleSQL «no ejecutado», policy tags vigentes en la API de Data Catalog, y la tabla de clases de Cloud Storage sin precios, comprobados por comando y contra sus páginas. No se editó `content/` ni `frontend/`.
@@ -215,6 +218,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-08c (2026-10-12)
+- Revisión de las 7 fichas de procesamiento, orquestación y servicios. Sin hallazgo alto. Propuestas media: la fecha del 15 de abril de 2026 en `composer-environments`, y el alias «Vertex AI» frente a la fila «Agent Platform». No se editó `content/`.
 
 ### B-F3.1 · lote F3b-08b (2026-10-11)
 - Revisión de las 8 fichas de gobierno y operación. Sin hallazgo alto. El §17 de cuatro fichas nombra relaciones que no están en el frontmatter. No se editó `content/`.
