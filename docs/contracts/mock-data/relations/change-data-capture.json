@@ -73,8 +73,8 @@
           "slug": "cloud-sql-as-source",
           "title": "Cloud SQL como fuente de datos",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Datastream es CDC administrado."
         },
         {
           "slug": "data-pipeline",

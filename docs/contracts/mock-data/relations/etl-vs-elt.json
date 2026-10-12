@@ -49,6 +49,13 @@
           "note": "En el warehouse cloud se carga primero y se transforma dentro (ELT)."
         },
         {
+          "slug": "dataflow-execution-model",
+          "title": "Modelo de ejecución de Dataflow",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Cuándo conviene transformar en SQL."
+        },
+        {
           "slug": "modern-data-warehouse-architecture",
           "title": "Modern Data Warehouse",
           "entity_type": "architecture",
@@ -75,6 +82,13 @@
           "entity_type": "concept",
           "origin": "entity",
           "note": "Dónde ocurre la transformación respecto de la carga."
+        },
+        {
+          "slug": "dataform-workflows",
+          "title": "Workflows SQL con Dataform",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "La transformación en general."
         },
         {
           "slug": "zero-etl-and-federation",

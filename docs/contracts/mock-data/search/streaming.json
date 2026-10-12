@@ -1,6 +1,6 @@
 {
   "query": "streaming",
-  "total": 15,
+  "total": 16,
   "groups": [
     {
       "type": "concept",
@@ -11,9 +11,9 @@
           "type": "concept",
           "domain": "gcp",
           "classification": "modern",
-          "has_page": false,
-          "snippet": "Pipelines streaming en Dataflow",
-          "score": 6.0
+          "has_page": true,
+          "snippet": "Lo propio de un pipeline streaming en Dataflow según su documentación: ventanas (tumbling, hopping, sesión) por el tiempo de cada evento, watermark y datos tardíos, triggers; lectura de Pub/Sub con de",
+          "score": 6.3
         },
         {
           "slug": "spark-structured-streaming",
@@ -84,6 +84,16 @@
           "has_page": true,
           "snippet": "Registros cuyo tiempo de evento pertenece a un período que el pipeline ya procesó o cerró; cómo detectarlos y reincorporarlos en batch y en streaming.",
           "score": 1.8
+        },
+        {
+          "slug": "dataflow-execution-model",
+          "title": "Modelo de ejecución de Dataflow",
+          "type": "concept",
+          "domain": "gcp",
+          "classification": "modern",
+          "has_page": true,
+          "snippet": "Cómo ejecuta Dataflow un pipeline de Apache Beam según su documentación: construcción del grafo en la máquina que lanza el job y código de los DoFn en los workers; optimizaciones del servicio (fusión ",
+          "score": 1.3
         }
       ]
     },

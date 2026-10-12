@@ -63,6 +63,13 @@
           "note": null
         },
         {
+          "slug": "dataflow-execution-model",
+          "title": "Modelo de ejecución de Dataflow",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Dataflow usa el mismo modelo para batch y streaming."
+        },
+        {
           "slug": "beam-programming-model",
           "title": "Modelo de programación de Apache Beam",
           "entity_type": "concept",

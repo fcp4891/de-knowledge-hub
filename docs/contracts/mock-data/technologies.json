@@ -775,7 +775,7 @@
     },
     {
       "slug": "gcp-vertex-ai",
-      "title": "Vertex AI",
+      "title": "Gemini Enterprise Agent Platform",
       "type": "cloud_service",
       "origin": "gcp",
       "category": "ai-platform",

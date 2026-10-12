@@ -57,7 +57,7 @@
         },
         {
           "slug": "composer-environments",
-          "title": "Entornos de Cloud Composer",
+          "title": "Entornos de Managed Service for Apache Airflow",
           "entity_type": "concept",
           "origin": "blueprint",
           "note": null

@@ -222,7 +222,7 @@ subdomains:
     title: Orquestación y transformación
     concepts:
       - slug: composer-environments
-        title: Entornos de Cloud Composer
+        title: Entornos de Managed Service for Apache Airflow
         kind: concept
         classification: modern
         level: intermediate
@@ -230,7 +230,7 @@ subdomains:
         mvp: true
         related_technologies: [gcp-cloud-composer, apache-airflow]
         related_concepts: [open-source-vs-managed-orchestration, airflow-architecture]
-        note: La generación del entorno cambia; verificar al redactar.
+        note: La generación del entorno cambia; verificar al redactar. Cloud Composer pasa a llamarse Managed Service for Apache Airflow (su página); el slug se mantiene y el nombre anterior va en aliases de la ficha (ADR-010).
       - slug: dataform-workflows
         title: Workflows SQL con Dataform
         kind: concept
@@ -316,7 +316,7 @@ subdomains:
     title: IA
     concepts:
       - slug: vertex-ai-for-data-engineers
-        title: Vertex AI para Data Engineers
+        title: Gemini Enterprise Agent Platform para Data Engineers
         kind: concept
         classification: modern
         level: intermediate
@@ -324,4 +324,4 @@ subdomains:
         mvp: false
         related_technologies: [gcp-vertex-ai]
         related_concepts: [ml-feature-pipeline-architecture]
-        note: RAG y agentes están en el dominio 21; aquí solo el servicio.
+        note: RAG y agentes están en el dominio 21; aquí solo el servicio. Vertex AI Platform pasa a llamarse Gemini Enterprise Agent Platform (página de cambios de nombre); el slug se mantiene y el nombre anterior va en aliases (ADR-010).

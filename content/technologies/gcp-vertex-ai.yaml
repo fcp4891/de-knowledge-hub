@@ -2,14 +2,24 @@ id: cloud_service:gcp-vertex-ai
 slug: gcp-vertex-ai
 type: cloud_service
 stub: true
-title: Vertex AI
-description: Plataforma de Google Cloud para desarrollar y operar modelos de ML e IA generativa.
+title: Gemini Enterprise Agent Platform
+description: Plataforma de Google Cloud para desarrollar y operar modelos de ML e IA generativa (antes Vertex AI Platform).
 provider: gcp
 category: ai-platform
 classification: modern
 mvp: false
 cloud:
 - gcp
+aliases:
+- Vertex AI
+- Vertex AI Platform
+sources:
+  - source: gcp-agent-platform-docs
+    url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/vertex-ai-name-changes
+    accessed: 2026-10-11
+    note: "Gemini Enterprise Agent Platform name changes: con la introducción de Gemini Enterprise Agent Platform, algunos productos y funciones de Vertex AI se renombraron; «Vertex AI Platform» pasa a «Gemini Enterprise Agent Platform»."
+note: 'El slug gcp-vertex-ai se mantiene por estabilidad; los nombres anteriores van en aliases (ADR-010).'
 created_at: '2026-09-28'
-updated_at: '2026-09-28'
+updated_at: '2026-10-11'
+last_verified: '2026-10-11'
 verification_status: review_required

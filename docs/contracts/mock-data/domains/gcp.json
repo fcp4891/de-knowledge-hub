@@ -298,9 +298,9 @@
           "level": "advanced",
           "importance": "high",
           "mvp": true,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-11"
         },
         {
           "slug": "dataflow-streaming-pipelines",
@@ -312,9 +312,9 @@
           "level": "advanced",
           "importance": "high",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-11"
         }
       ]
     },
@@ -324,7 +324,7 @@
       "concepts": [
         {
           "slug": "composer-environments",
-          "title": "Entornos de Cloud Composer",
+          "title": "Entornos de Managed Service for Apache Airflow",
           "kind": "concept",
           "domain": "gcp",
           "subdomain": "orchestration-and-transformation",
@@ -332,9 +332,9 @@
           "level": "intermediate",
           "importance": "high",
           "mvp": true,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-11"
         },
         {
           "slug": "dataform-workflows",
@@ -346,9 +346,9 @@
           "level": "intermediate",
           "importance": "high",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-11"
         },
         {
           "slug": "dataform-incremental-tables",
@@ -380,9 +380,9 @@
           "level": "intermediate",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-11"
         },
         {
           "slug": "cloud-sql-as-source",
@@ -394,9 +394,9 @@
           "level": "intermediate",
           "importance": "high",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-11"
         }
       ]
     },
@@ -468,7 +468,7 @@
       "concepts": [
         {
           "slug": "vertex-ai-for-data-engineers",
-          "title": "Vertex AI para Data Engineers",
+          "title": "Gemini Enterprise Agent Platform para Data Engineers",
           "kind": "concept",
           "domain": "gcp",
           "subdomain": "ai",
@@ -476,9 +476,9 @@
           "level": "intermediate",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-11"
         }
       ]
     }
