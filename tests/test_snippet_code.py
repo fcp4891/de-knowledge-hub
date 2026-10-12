@@ -6,8 +6,11 @@
   Necesita requirements-snippets.txt (`make snippets-deps`; la CI lo instala); si falta, se salta.
 - pyspark-dataframes y emr-spark-clusters: ejecutan la sección 10 de la ficha en modo local. Necesitan pyspark y
   Java 17+; sin ellos se saltan, salvo con REQUIRE_PYSPARK=1 (la CI), donde fallan.
-- s3-data-lake, glue-catalog-and-etl y kinesis-data-streams (ADR-011): importan el código boto3 de la sección 10 y lo
-  ejecutan contra moto, y lo revisan con mypy --strict. Sin moto se saltan, salvo con REQUIRE_AWS_SNIPPETS=1 (la CI).
+- s3-data-lake, glue-catalog-and-etl, kinesis-data-streams, lambda-for-data, cloudwatch-for-data-pipelines y
+  sagemaker-for-data-engineers (ADR-011): importan el código boto3 de la sección 10 y lo ejecutan contra moto;
+  rds-as-source y bedrock-for-data-engineers, su código sin llamadas a AWS. Todos pasan mypy --strict. Sin moto se
+  saltan, salvo con REQUIRE_AWS_SNIPPETS=1 (la CI).
+- step-functions-workflows: la definición en ASL de la sección 10 se valida como JSON y por estructura.
 """
 
 from __future__ import annotations
@@ -156,6 +159,11 @@ AWS_SNIPPETS = {
     "s3_partitions": "s3-data-lake.md",
     "glue_catalog": "glue-catalog-and-etl.md",
     "kinesis_stream": "kinesis-data-streams.md",
+    "lambda_handlers": "lambda-for-data.md",
+    "cloudwatch_pipeline": "cloudwatch-for-data-pipelines.md",
+    "sagemaker_ai": "sagemaker-for-data-engineers.md",
+    "bedrock_batch": "bedrock-for-data-engineers.md",
+    "dms_cdc_apply": "rds-as-source.md",
 }
 
 
@@ -235,3 +243,90 @@ def test_aws_snippets_pass_mypy_strict(tmp_path: Path) -> None:
         files.append(path.name)
     result = run_python(["-m", "mypy", "--strict", "--no-incremental", *files], tmp_path)
     assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_lambda_snippet_writes_curated_once_and_reports_sqs_failures(aws: Any, tmp_path: Path) -> None:
+    m = aws_snippet("lambda_handlers", tmp_path)
+    s3 = aws.client("s3")
+    s3.create_bucket(Bucket="lake")
+    s3.put_object(Bucket="lake", Key="raw/ventas/dt=2026-10-01/lote 1.jsonl", Body=b'{"id":1,"monto":10.456}\nno-json\n{"id":2}\n')
+    event = {"Records": [
+        {"s3": {"bucket": {"name": "lake"}, "object": {"key": "raw/ventas/dt%3D2026-10-01/lote+1.jsonl"}}},
+        {"s3": {"bucket": {"name": "lake"}, "object": {"key": "curated/otro.jsonl"}}},  # fuera de raw/: se ignora
+    ]}
+    for _ in range(2):  # S3 puede entregar el evento dos veces
+        written = m.process_s3_event(event, s3)
+    assert written == ["curated/ventas/dt=2026-10-01/lote 1.jsonl"]
+    assert [o["Key"] for o in s3.list_objects_v2(Bucket="lake", Prefix="curated/")["Contents"]] == written
+    assert s3.get_object(Bucket="lake", Key=written[0])["Body"].read() == b'{"id": 1, "monto": 10.46}\n'
+    sqs_event = {"Records": [{"messageId": "a", "body": '{"id": 1, "monto": 2}'}, {"messageId": "b", "body": "x"}]}
+    assert m.sqs_handler(sqs_event, None) == {"batchItemFailures": [{"itemIdentifier": "b"}]}
+
+
+def test_cloudwatch_snippet_publishes_metric_and_alarm_on_missing_data(aws: Any, tmp_path: Path) -> None:
+    m = aws_snippet("cloudwatch_pipeline", tmp_path)
+    cw = aws.client("cloudwatch")
+    m.publish_rows(cw, "ventas_diarias", 1250, dt.datetime(2026, 10, 1, 3, tzinfo=dt.timezone.utc))
+    for _ in range(2):
+        m.ensure_alarm(cw, "ventas_diarias", "arn:aws:sns:us-east-1:123456789012:alertas")
+    alarms = cw.describe_alarms(AlarmNames=["sin-filas-ventas_diarias"])["MetricAlarms"]
+    assert len(alarms) == 1 and alarms[0]["TreatMissingData"] == "breaching" and alarms[0]["Threshold"] == 1
+    metrics = cw.list_metrics(Namespace="Plataforma/Pipelines")["Metrics"]
+    assert metrics[0]["Dimensions"] == [{"Name": "Tabla", "Value": "ventas_diarias"}]
+
+
+def test_sagemaker_snippet_creates_feature_group_and_transform_job(aws: Any, tmp_path: Path) -> None:
+    m = aws_snippet("sagemaker_ai", tmp_path)
+    sm = aws.client("sagemaker")
+    role = "arn:aws:iam::123456789012:role/sm"
+    m.create_customer_features(sm, role, "s3://lake/features/")
+    group = sm.describe_feature_group(FeatureGroupName="clientes-compras")
+    assert (group["RecordIdentifierFeatureName"], group["EventTimeFeatureName"]) == ("id_cliente", "event_time")
+    sm.create_model(ModelName="churn", ExecutionRoleArn=role, PrimaryContainer={"Image": "123456789012.dkr.ecr.us-east-1.amazonaws.com/churn:1"})
+    m.start_batch_scoring(sm, "churn-2026-10-01", "churn", "s3://lake/scoring/in/", "s3://lake/scoring/out/")
+    job = sm.describe_transform_job(TransformJobName="churn-2026-10-01")
+    assert job["TransformOutput"]["S3OutputPath"] == "s3://lake/scoring/out/"
+
+
+def test_bedrock_snippet_builds_jsonl_and_joins_unordered_output(tmp_path: Path) -> None:
+    require_moto()  # el módulo importa los stubs de boto3 solo para tipos; se ejecuta sin AWS
+    m = aws_snippet("bedrock_batch", tmp_path)
+    jsonl = m.build_jsonl({"r2": "Llegó roto", "r1": "Excelente"})
+    lines = [json.loads(line) for line in jsonl.splitlines()]
+    assert [line["recordId"] for line in lines] == ["r1", "r2"]
+    assert lines[0]["modelInput"]["messages"][0]["content"][0]["text"].endswith("Excelente")
+    output = "\n".join(json.dumps({"recordId": rid, "modelOutput": {}}) for rid in ("r2", "r1"))  # otro orden
+    assert list(m.join_outputs(jsonl, output)) == ["r1", "r2"]
+    with pytest.raises(ValueError, match="r1"):
+        m.join_outputs(jsonl, output.splitlines()[0])
+
+
+def test_dms_cdc_snippet_applies_changes_in_file_order_idempotently(tmp_path: Path) -> None:
+    require_moto()
+    m = aws_snippet("dms_cdc_apply", tmp_path)
+    cols = ["id", "nombre", "oficina"]
+    base = {"1": {"id": "1", "nombre": "Bob", "oficina": "New York"}}
+    cdc = {
+        "20261001-1000000000.csv": "U,1,Bob,Dallas\nD,2,Ana,Santiago\n",
+        "20261001-0900000000.csv": "U,1,Bob,Los Angeles\nI,2,Ana,Santiago\n",  # se aplica primero por nombre
+    }
+    once = m.apply_cdc(base, cdc, cols)
+    assert once == {"1": {"id": "1", "nombre": "Bob", "oficina": "Dallas"}}
+    assert m.apply_cdc(once, cdc, cols) == once
+
+
+ASL_FENCE = re.compile(r"^```json\n(.*?)^```", re.S | re.M)
+
+
+def test_step_functions_definition_is_valid_json_with_reachable_states() -> None:
+    text = (CONTENT / "concepts" / "step-functions-workflows.md").read_text(encoding="utf-8")
+    match = ASL_FENCE.search(text, text.index("## 10. Código"))
+    assert match
+    asl = json.loads(match.group(1))
+    states = asl["States"]
+    assert asl["QueryLanguage"] == "JSONata" and asl["StartAt"] in states
+    targets = {s.get("Next") for s in states.values()} | {c["Next"] for s in states.values() for c in s.get("Catch", [])}
+    assert targets - {None} <= set(states)
+    assert any(s.get("End") or s["Type"] in ("Succeed", "Fail") for s in states.values())
+    retry = states["TransformarVentas"]["Retry"][0]
+    assert retry["JitterStrategy"] in ("FULL", "NONE") and retry["MaxAttempts"] >= 1

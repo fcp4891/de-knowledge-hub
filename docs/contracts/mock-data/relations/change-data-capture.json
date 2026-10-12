@@ -171,8 +171,8 @@
           "slug": "rds-as-source",
           "title": "RDS como fuente de datos",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "DMS captura cambios por replicación lógica."
         },
         {
           "slug": "data-reconciliation",

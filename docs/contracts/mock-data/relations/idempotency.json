@@ -322,6 +322,13 @@
           "note": "Un reintento de PutRecords puede repetir registros; el consumidor debe tolerarlo."
         },
         {
+          "slug": "lambda-for-data",
+          "title": "Lambda para cargas de datos",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Los reintentos y los eventos duplicados exigen código idempotente."
+        },
+        {
           "slug": "python-database-io",
           "title": "Lectura y escritura en bases de datos",
           "entity_type": "concept",
@@ -385,6 +392,13 @@
           "note": "El manifiesto por huella hace que re-ejecutar no reprocese ni duplique."
         },
         {
+          "slug": "rds-as-source",
+          "title": "RDS como fuente de datos",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Aplicar el mismo archivo de CDC dos veces deja el mismo estado."
+        },
+        {
           "slug": "failure-recovery",
           "title": "Recuperación ante fallos",
           "entity_type": "concept",
@@ -432,6 +446,13 @@
           "entity_type": "pattern",
           "origin": "entity",
           "note": "Un upsert por clave con condición de versión hace idempotente la carga."
+        },
+        {
+          "slug": "step-functions-workflows",
+          "title": "Workflows con Step Functions",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Express es al menos una vez; Standard reintenta si se declara Retry."
         }
       ]
     }

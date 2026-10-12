@@ -302,7 +302,7 @@
     },
     {
       "slug": "aws-sagemaker",
-      "title": "Amazon SageMaker",
+      "title": "Amazon SageMaker AI",
       "type": "cloud_service",
       "origin": "aws",
       "category": "ai-platform",

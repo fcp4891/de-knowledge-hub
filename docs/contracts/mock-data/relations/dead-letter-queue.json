@@ -56,6 +56,13 @@
           "note": "Los reintentos previos a la DLQ exigen consumidores idempotentes."
         },
         {
+          "slug": "lambda-for-data",
+          "title": "Lambda para cargas de datos",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Destino de los eventos que agotan sus reintentos."
+        },
+        {
           "slug": "beam-programming-model",
           "title": "Modelo de programación de Apache Beam",
           "entity_type": "concept",

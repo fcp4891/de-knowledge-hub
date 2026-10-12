@@ -136,6 +136,15 @@ CHECKS: dict[str, DagChecks] = {
             _attrs("ventas_con_alertas", "cargar", retries=2, execution_timeout=60 * MINUTES),
         ),
     ),
+    "mwaa-managed-airflow": DagChecks(
+        frozenset({"ventas_diarias_mwaa"}),
+        (
+            _upstream("ventas_diarias_mwaa", "transformar", {"extraer"}),
+            _upstream("ventas_diarias_mwaa", "publicar", {"transformar"}),
+            _attrs("ventas_diarias_mwaa", "extraer", retries=2),
+            _attrs("ventas_diarias_mwaa", "transformar", execution_timeout=30 * MINUTES),
+        ),
+    ),
     "airflow-operators-and-hooks": DagChecks(
         frozenset({"exportar_ventas"}),
         (

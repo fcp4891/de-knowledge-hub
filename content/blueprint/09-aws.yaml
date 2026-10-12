@@ -160,7 +160,7 @@ subdomains:
         mvp: false
         related_technologies: [aws-bedrock]
       - slug: sagemaker-for-data-engineers
-        title: SageMaker para Data Engineers
+        title: SageMaker AI para Data Engineers
         kind: concept
         classification: modern
         level: intermediate
@@ -168,4 +168,4 @@ subdomains:
         mvp: false
         related_technologies: [aws-sagemaker]
         related_concepts: [ml-feature-pipeline-architecture]
-        note: Solo cuando corresponda (§11).
+        note: Solo cuando corresponda (§11). Amazon SageMaker pasó a llamarse Amazon SageMaker AI el 3 de diciembre de 2024 (su página); «Amazon SageMaker» es hoy la plataforma unificada que lo incluye. El slug se mantiene (ADR-010).

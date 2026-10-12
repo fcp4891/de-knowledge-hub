@@ -1808,3 +1808,60 @@ created_at: '2026-10-12'
 updated_at: '2026-10-12'
 last_verified: '2026-10-12'
 verification_status: verified
+---
+id: source:aws-cloudwatch-docs
+slug: aws-cloudwatch-docs
+type: source
+title: Amazon CloudWatch User Guide
+description: 'Guía oficial de Amazon CloudWatch: métricas, alarmas y dashboards.'
+url: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- aws-cloudwatch
+created_at: '2026-10-12'
+updated_at: '2026-10-12'
+last_verified: '2026-10-12'
+verification_status: verified
+---
+id: source:aws-bedrock-docs
+slug: aws-bedrock-docs
+type: source
+title: Amazon Bedrock User Guide
+description: Guía oficial de Amazon Bedrock.
+url: https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- aws-bedrock
+created_at: '2026-10-12'
+updated_at: '2026-10-12'
+last_verified: '2026-10-12'
+verification_status: verified
+---
+id: source:aws-sagemaker-docs
+slug: aws-sagemaker-docs
+type: source
+title: Amazon SageMaker AI Developer Guide
+description: Guía oficial de Amazon SageMaker AI (antes Amazon SageMaker).
+url: https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- aws-sagemaker
+created_at: '2026-10-12'
+updated_at: '2026-10-12'
+last_verified: '2026-10-12'
+verification_status: verified

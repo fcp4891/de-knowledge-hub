@@ -175,6 +175,13 @@
           "note": null
         },
         {
+          "slug": "rds-as-source",
+          "title": "RDS como fuente de datos",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Carga completa una vez y después solo los cambios."
+        },
+        {
           "slug": "data-reconciliation",
           "title": "Reconciliación de datos",
           "entity_type": "pattern",

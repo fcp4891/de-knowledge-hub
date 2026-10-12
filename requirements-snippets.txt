@@ -6,6 +6,6 @@ pydantic>=2.7,<3                 # pytest-ingestion-test: validate_page (ya lleg
 pyspark==4.2.0                   # pyspark-dataframes §10 en modo local; requiere Java 17+ (la CI usa actions/setup-java)
 # 09-aws (ADR-011): los snippets con boto3 se ejecutan en los tests contra moto, sin cuenta de AWS ni credenciales.
 boto3>=1.43,<2                         # cliente de AWS que usan los snippets de 09-aws
-moto[s3,glue,kinesis]>=5.2.4,<6        # simula S3, Glue Data Catalog y Kinesis en memoria para ejecutar esos snippets sin costo
-boto3-stubs[s3,glue,kinesis]>=1.43,<2  # tipos de boto3 para revisar esos snippets con mypy --strict
+moto[s3,glue,kinesis,cloudwatch,sagemaker]>=5.2.4,<6  # simula S3, Glue Data Catalog, Kinesis, CloudWatch y SageMaker AI en memoria para ejecutar esos snippets sin costo
+boto3-stubs[s3,glue,kinesis,cloudwatch,sagemaker,bedrock]>=1.43,<2  # tipos de boto3 para revisar esos snippets con mypy --strict
 mypy>=2.4,<3                           # mypy --strict sobre los snippets de boto3 en los tests

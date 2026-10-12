@@ -2631,9 +2631,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-12"
     },
     {
       "slug": "step-functions-workflows",
@@ -2645,9 +2645,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-12"
     },
     {
       "slug": "mwaa-managed-airflow",
@@ -2659,9 +2659,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-12"
     },
     {
       "slug": "rds-as-source",
@@ -2673,9 +2673,9 @@
       "level": "intermediate",
       "importance": "low",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-12"
     },
     {
       "slug": "lake-formation-permissions",
@@ -2701,9 +2701,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-12"
     },
     {
       "slug": "cloudwatch-for-data-pipelines",
@@ -2715,9 +2715,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-12"
     },
     {
       "slug": "bedrock-for-data-engineers",
@@ -2729,13 +2729,13 @@
       "level": "intermediate",
       "importance": "low",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-12"
     },
     {
       "slug": "sagemaker-for-data-engineers",
-      "title": "SageMaker para Data Engineers",
+      "title": "SageMaker AI para Data Engineers",
       "kind": "concept",
       "domain": "aws",
       "subdomain": "ai",
@@ -2743,9 +2743,9 @@
       "level": "intermediate",
       "importance": "low",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-12"
     },
     {
       "slug": "azure-analytics-landscape",
