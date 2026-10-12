@@ -48,10 +48,16 @@ relations:
   - type: RELATED_TO
     target: bigquery-materialized-views
     note: Se pueden crear vistas materializadas sobre tablas BigLake con caché de metadatos.
+  - type: RELATED_TO
+    target: bigquery-security
+    note: IAM, vistas autorizadas y seguridad por fila sobre la tabla.
+  - type: RELATED_TO
+    target: bigquery-policy-tags
+    note: Seguridad por columna y enmascaramiento sobre la tabla.
 created_at: 2026-10-11
 updated_at: 2026-10-11
 last_verified: 2026-10-11
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -244,7 +250,9 @@ BigLake da seguridad fina sobre datos que siguen en el lake, a cambio de operar 
 - `bigquery-external-tables`: la tabla externa sin delegación.
 - `lakehouse` y `data-lake`: el contexto arquitectónico.
 - `bigquery-materialized-views`: vistas materializadas sobre BigLake.
-- Del blueprint, pendientes de ficha: `open-table-formats`, `bigquery-security` y `bigquery-policy-tags` (lote F3b-08b).
+- `bigquery-security`: IAM, vistas autorizadas y seguridad por fila sobre la tabla.
+- `bigquery-policy-tags`: seguridad por columna y enmascaramiento sobre la tabla.
+- Del blueprint, pendiente de ficha: `open-table-formats`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -264,8 +272,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-11. `review_required`: pendiente de revisión B-F3.1 del lote F3b-08a.
+2026-10-11. Pasa a `verified`: revisión B-F3.1 del lote F3b-08a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-11: creación (lote F3b-08a).
+- 2026-10-11: revisión B-F3.1 del lote F3b-08a aplicada (docs/reviews/cards-f3b-08a.md), regla del §17: relations incluye `bigquery-security`, `bigquery-policy-tags`, que el §17 nombra; §17 enlaza las fichas que ya existen.
+- 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).

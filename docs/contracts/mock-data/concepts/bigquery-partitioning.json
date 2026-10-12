@@ -110,7 +110,7 @@
     }
   ],
   "created_at": "2026-09-30",
-  "updated_at": "2026-10-06",
+  "updated_at": "2026-10-11",
   "last_verified": "2026-09-30",
   "verification_status": "verified",
   "kind": "concept",
@@ -220,7 +220,7 @@
       "number": 17,
       "key": "related_concepts",
       "title": "Conceptos relacionados",
-      "markdown": "- `partitioning`: el concepto general.\n- `incremental-load`: la partición facilita cargas incrementales y sobrescrituras idempotentes.\n- Con ficha: `bigquery-clustering`, `partition-pruning`, `bigquery-cost-model`.\n- Del blueprint, pendiente de ficha: `bigquery-query-optimization`."
+      "markdown": "- `partitioning`: el concepto general.\n- `incremental-load`: la partición facilita cargas incrementales y sobrescrituras idempotentes.\n- Con ficha: `bigquery-clustering`, `partition-pruning`, `bigquery-cost-model`.\n- `bigquery-query-optimization`: el plan, las insights y las prácticas de optimización de BigQuery."
     },
     {
       "number": 18,
@@ -250,7 +250,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: VERIFY resuelto: máximo de 10.000 particiones por tabla (página de cuotas).\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `bigquery-clustering`, `partition-pruning`, `bigquery-cost-model`, que ya tienen ficha."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: VERIFY resuelto: máximo de 10.000 particiones por tabla (página de cuotas).\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `bigquery-clustering`, `partition-pruning`, `bigquery-cost-model`, que ya tienen ficha.\n- 2026-10-11: «pendiente de ficha» actualizado: la ficha ya existe (lote F3b-08a); el §17 la enlaza y relations la incluye: relations incluye `bigquery-query-optimization`, que el §17 nombra; §17 enlaza las fichas que ya existen."
     }
   ]
 }

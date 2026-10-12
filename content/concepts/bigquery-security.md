@@ -38,10 +38,19 @@ relations:
   - type: RELATED_TO
     target: bigquery-architecture
     note: El dataset es el contenedor que define permisos.
+  - type: RELATED_TO
+    target: bigquery-policy-tags
+    note: Seguridad por columna y enmascaramiento.
+  - type: RELATED_TO
+    target: data-mart
+    note: Marts como vistas autorizadas.
+  - type: RELATED_TO
+    target: bigquery-monitoring
+    note: Los audit logs de los cambios de acceso.
 created_at: 2026-10-11
 updated_at: 2026-10-11
 last_verified: 2026-10-11
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -250,6 +259,7 @@ Las capas finas (fila, columna) evitan copias y dan a cada usuario solo lo suyo,
 - `bigquery-policy-tags`: seguridad por columna y enmascaramiento.
 - `data-mart`: marts como vistas autorizadas.
 - `bigquery-monitoring`: los audit logs de los cambios de acceso.
+- `bigquery-architecture`: el dataset como contenedor que define permisos.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -269,8 +279,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-11. `review_required`: pendiente de revisión B-F3.1 del lote F3b-08b.
+2026-10-11. Pasa a `verified`: revisión B-F3.1 del lote F3b-08b aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-11: creación (lote F3b-08b).
+- 2026-10-11: revisión B-F3.1 del lote F3b-08b aplicada (docs/reviews/cards-f3b-08b.md), regla del §17: relations incluye `bigquery-policy-tags`, `data-mart`, `bigquery-monitoring`, que el §17 nombra; el §17 nombra `bigquery-architecture`, que ya estaba en relations.
+- 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).

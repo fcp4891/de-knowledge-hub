@@ -55,10 +55,19 @@ relations:
   - type: RELATED_TO
     target: bigquery-architecture
     note: El dialecto con que se consulta el motor.
+  - type: RELATED_TO
+    target: bigquery-query-optimization
+    note: Escribir SQL que lea menos.
+  - type: RELATED_TO
+    target: bigquery-incremental-models
+    note: Consultas de varias sentencias y transacciones.
+  - type: RELATED_TO
+    target: sql-quality-checks
+    note: Medir los `NULL` que deja `SAFE.`.
 created_at: 2026-10-11
 updated_at: 2026-10-11
 last_verified: 2026-10-11
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -227,8 +236,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-11. `review_required`: pendiente de revisión B-F3.1 del lote F3b-08a.
+2026-10-11. Pasa a `verified`: revisión B-F3.1 del lote F3b-08a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-11: creación (lote F3b-08a).
+- 2026-10-11: revisión B-F3.1 del lote F3b-08a aplicada (docs/reviews/cards-f3b-08a.md), regla del §17: relations incluye `bigquery-query-optimization`, `bigquery-incremental-models`, `sql-quality-checks`, que el §17 nombra.
+- 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).

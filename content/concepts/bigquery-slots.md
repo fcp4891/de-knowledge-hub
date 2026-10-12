@@ -22,7 +22,7 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/editions-intro
     accessed: 2026-10-11
-    note: "Understand BigQuery editions: tres ediciones (Standard, Enterprise, Enterprise Plus) con capacidades distintas y un modelo on-demand por TiB; se pueden usar ediciones y on-demand a la vez, por proyecto. Para cambiar la edición de una reserva hay que borrarla y crearla de nuevo. Las ediciones son una propiedad del cómputo, no del almacenamiento. Tabla al 2026-10-11: cobro por slot-hora con mínimo de 1 minuto por defecto (fluid scaling opcional sin mínimo) en las tres ediciones; SLO mensual ≥99,9 % en Standard y ≥99,99 % en Enterprise, Enterprise Plus y on-demand; Standard solo con autoscaling, máximo 1.600 slots por reserva, sin compromisos, sin idle capacity sharing ni target concurrency, asignaciones solo de proyecto; Enterprise y Enterprise Plus con autoscaling más baseline, compromisos de 1 año (20 % de descuento) o 3 años (40 %), asignaciones de proyecto, carpeta u organización; BI Engine desde Enterprise; recuperación ante desastres administrada y controles de cumplimiento con Assured Workloads en Enterprise Plus."
+    note: "Understand BigQuery editions: tres ediciones (Standard, Enterprise, Enterprise Plus) con capacidades distintas y un modelo on-demand por TiB; se pueden usar ediciones y on-demand a la vez, por proyecto. Para cambiar la edición de una reserva hay que borrarla y crearla de nuevo. Las ediciones son una propiedad del cómputo, no del almacenamiento. Tabla al 2026-10-11: cobro por slot-hora con mínimo de 1 minuto por defecto (fluid scaling opcional sin mínimo) en las tres ediciones; SLO mensual ≥99,9 % en Standard y ≥99,99 % en Enterprise, Enterprise Plus y on-demand; Standard solo con autoscaling, máximo 1.600 slots por reserva (cuota en Enterprise, Enterprise Plus y on-demand), 10 reservas por proyecto de administración y hasta 16.000 slots por organización (200 reservas en Enterprise y Enterprise Plus; on-demand sin acceso a reservas), sin compromisos, sin idle capacity sharing ni target concurrency, asignaciones solo de proyecto; Enterprise y Enterprise Plus con autoscaling más baseline, compromisos de 1 año (20 % de descuento) o 3 años (40 %), asignaciones de proyecto, carpeta u organización; BI Engine desde Enterprise; recuperación ante desastres administrada y controles de cumplimiento con Assured Workloads en Enterprise Plus."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reservations-tasks
     accessed: 2026-10-11
@@ -49,10 +49,13 @@ relations:
   - type: RELATED_TO
     target: bigquery-query-optimization
     note: Optimizar una consulta reduce los slots y el tiempo que usa.
+  - type: RELATED_TO
+    target: cloud-warehouse-optimization
+    note: Comparación entre warehouses.
 created_at: 2026-10-11
 updated_at: 2026-10-11
 last_verified: 2026-10-11
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -228,14 +231,15 @@ El script en Python 3.12, solo con biblioteca estándar, está ejecutado y pasa 
 
 ## 11. GCP
 
-**BigQuery.** Diferencias entre ediciones según su página, al 2026-10-11:
+**BigQuery.** Diferencias entre ediciones según la tabla de *Understand BigQuery editions*, consultada el 2026-10-11:
 
 | | Standard | Enterprise | Enterprise Plus | On-demand |
 | --- | --- | --- | --- | --- |
-| Cobro | slot-hora (mínimo 1 minuto por defecto) | slot-hora | slot-hora | por consulta (TiB), con nivel gratuito |
+| Cobro | slot-hora (mínimo 1 minuto por defecto; *fluid scaling* opcional, sin mínimo) | slot-hora (mínimo 1 minuto por defecto; *fluid scaling* opcional, sin mínimo) | slot-hora (mínimo 1 minuto por defecto; *fluid scaling* opcional, sin mínimo) | por consulta (TiB), con nivel gratuito |
 | SLO mensual | ≥99,9 % | ≥99,99 % | ≥99,99 % | ≥99,99 % |
 | Cómputo | autoscaling | autoscaling + baseline | autoscaling + baseline | on-demand |
-| Máximo por reserva | 1.600 slots | cuota | cuota | sin reservas |
+| Máximo por reserva | 1.600 slots | cuota | cuota | cuota |
+| Reservas por proyecto de administración | 10 (hasta 16.000 slots por organización) | 200 | 200 | sin acceso a reservas |
 | Compromisos | no | 1 año (20 %) o 3 años (40 %) | 1 año (20 %) o 3 años (40 %) | no |
 | Idle sharing y target concurrency | no | sí | sí | no |
 | BI Engine | no | sí | sí | sí |
@@ -300,8 +304,11 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-11. `review_required`: pendiente de revisión B-F3.1 del lote F3b-08a.
+2026-10-11. Pasa a `verified`: revisión B-F3.1 del lote F3b-08a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-11: creación (lote F3b-08a).
+- 2026-10-11: revisión B-F3.1 del lote F3b-08a aplicada (docs/reviews/cards-f3b-08a.md): en la tabla de ediciones, on-demand dice cuota en «Máximo por reserva» y «sin acceso a reservas» va en su propia fila (reservas por proyecto de administración); el mínimo de 1 minuto por defecto, con fluid scaling opcional, aplica a las tres ediciones, como en *Understand BigQuery editions* (2026-10-11).
+- 2026-10-11: revisión B-F3.1 del lote F3b-08a aplicada (docs/reviews/cards-f3b-08a.md), regla del §17: relations incluye `cloud-warehouse-optimization`, que el §17 nombra.
+- 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).

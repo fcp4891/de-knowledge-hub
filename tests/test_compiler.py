@@ -82,15 +82,17 @@ def test_only_changed_file_is_recompiled(engine: Engine, content: Path) -> None:
 
 # --- Borrado -----------------------------------------------------------------
 
+# Ficha temporal de un concepto del blueprint que no tiene ficha: ninguna otra entidad puede relacionarse con él
+# (una relación a un slug sin ficha es inválida), así que borrarla no rompe referencias.
 EXTRA_PAGE = """---
-id: concept:data-mart
-slug: data-mart
+id: concept:data-platform-engineering
+slug: data-platform-engineering
 type: concept
 stub: true
-title: Data Mart
+title: Plataforma de datos como producto
 description: Ficha de prueba del compilador.
-domain: fundamentals
-subdomain: storage-paradigms
+domain: modern-data-engineering
+subdomain: modern-practices
 classification: core
 level: basic
 importance: high
@@ -110,21 +112,21 @@ Prueba.
 
 
 def test_deleted_page_is_removed_with_its_edges(engine: Engine, content: Path) -> None:
-    page = content / "concepts" / "data-mart.md"
+    page = content / "concepts" / "data-platform-engineering.md"
     page.write_text(EXTRA_PAGE, encoding="utf-8")
     compile_content(engine, content, SCHEMAS)
-    assert count(engine, "entities", "slug = 'data-mart'") == 1
-    assert count(engine, "concept_pages", "slug = 'data-mart'") == 1
-    assert count(engine, "edges", "source_slug = 'data-mart' and origin = 'entity'") == 1
+    assert count(engine, "entities", "slug = 'data-platform-engineering'") == 1
+    assert count(engine, "concept_pages", "slug = 'data-platform-engineering'") == 1
+    assert count(engine, "edges", "source_slug = 'data-platform-engineering' and origin = 'entity'") == 1
 
     page.unlink()
     stats = compile_content(engine, content, SCHEMAS)
-    assert stats.deleted == ["concepts/data-mart.md"]
-    assert count(engine, "entities", "slug = 'data-mart'") == 0
-    assert count(engine, "concept_pages", "slug = 'data-mart'") == 0
-    assert count(engine, "edges", "(source_slug = 'data-mart' or target_slug = 'data-mart') and origin = 'entity'") == 0
+    assert stats.deleted == ["concepts/data-platform-engineering.md"]
+    assert count(engine, "entities", "slug = 'data-platform-engineering'") == 0
+    assert count(engine, "concept_pages", "slug = 'data-platform-engineering'") == 0
+    assert count(engine, "edges", "(source_slug = 'data-platform-engineering' or target_slug = 'data-platform-engineering') and origin = 'entity'") == 0
     # El concepto sigue en el blueprint: sus aristas de origen blueprint se mantienen.
-    assert count(engine, "concepts", "slug = 'data-mart'") == 1
+    assert count(engine, "concepts", "slug = 'data-platform-engineering'") == 1
 
 
 def test_deleted_technology_removes_typed_rows_sources_and_edges(engine: Engine, content: Path) -> None:

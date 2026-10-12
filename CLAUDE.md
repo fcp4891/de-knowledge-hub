@@ -30,6 +30,7 @@ Trabajas en paralelo con Cursor (Carril B, frontend y revisión).
 - Distingue `core` / `modern` / `emerging`. Emerging nunca se presenta como reemplazo de lo consolidado.
 - Las equivalencias multicloud incluyen diferencias; nunca "son lo mismo".
 - Sin quizzes, sin alternativas A/B/C/D, sin gamificación.
+- §17 y `relations` coinciden: si la ficha nombrada existe, va en `relations`; si no existe, queda como texto «pendiente de ficha», fuera de `relations`; todo lo que está en `relations` se nombra en el §17.
 
 ## Reglas de código
 - Python 3.12, FastAPI, tipado estricto, Pydantic, pytest.

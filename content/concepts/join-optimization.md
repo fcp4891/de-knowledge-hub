@@ -56,8 +56,11 @@ relations:
   - type: RELATED_TO
     target: scan-reduction
     note: Leer menos de cada tabla es la primera optimización de un join.
+  - type: RELATED_TO
+    target: bigquery-query-optimization
+    note: El plan, las insights y las prácticas de optimización de BigQuery.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-11
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -221,7 +224,7 @@ Distribuir por la clave de un join acelera ese join y puede empeorar otros que u
 - `query-plans`: cómo leer estrategia y movimiento.
 - `star-schema`: hechos y dimensiones.
 - `scan-reduction`: leer menos antes de unir.
-- Del blueprint, pendiente de ficha: `bigquery-query-optimization`.
+- `bigquery-query-optimization`: el plan, las insights y las prácticas de optimización de BigQuery.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -252,3 +255,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: ficha completa (lote F3b-02b, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): §2 deja hash, merge y nested loop solo en los motores cuyas páginas los nombran; el broadcast, en BigQuery y en `DS_BCAST_INNER` de Redshift.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-11: «pendiente de ficha» actualizado: la ficha ya existe (lote F3b-08a); el §17 la enlaza y relations la incluye: relations incluye `bigquery-query-optimization`, que el §17 nombra; §17 enlaza las fichas que ya existen.

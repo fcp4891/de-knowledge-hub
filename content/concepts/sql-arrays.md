@@ -57,8 +57,11 @@ relations:
   - type: RELATED_TO
     target: json-format
     note: Los arrays de JSON se cargan como ARRAY, SUPER o texto según el motor.
+  - type: RELATED_TO
+    target: bigquery-sql-dialect
+    note: GoogleSQL, el dialecto de BigQuery.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-11
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -203,7 +206,7 @@ Los arrays conservan la forma de los datos y evitan joins, a cambio de consultas
 - `sql-unnest`: expandir arrays en filas.
 - `sql-structs`: registros y arrays de registros.
 - `json-format`: arrays que llegan como JSON.
-- Del blueprint, pendiente de ficha: `bigquery-sql-dialect`.
+- `bigquery-sql-dialect`: GoogleSQL, el dialecto de BigQuery.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -234,3 +237,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: ficha completa (lote F3b-02a, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): sin cambios pedidos.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-11: «pendiente de ficha» actualizado: la ficha ya existe (lote F3b-08a); el §17 la enlaza y relations la incluye: relations incluye `bigquery-sql-dialect`, que el §17 nombra; §17 enlaza las fichas que ya existen.

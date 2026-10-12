@@ -60,8 +60,11 @@ relations:
   - type: RELATED_TO
     target: query-plans
     note: El plan confirma si una optimización tuvo efecto.
+  - type: RELATED_TO
+    target: bigquery-query-optimization
+    note: El plan, las insights y las prácticas de optimización de BigQuery.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-11
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -225,7 +228,7 @@ Más automatización (Fabric, `AUTO` de Redshift) reduce el trabajo de mantenimi
 - `scan-reduction`, `join-optimization` y `materialization-strategies`: las palancas.
 - `query-plans`: verificar el efecto.
 - `predicate-pushdown`: tablas externas.
-- Del blueprint, pendiente de ficha: `bigquery-query-optimization`.
+- `bigquery-query-optimization`: el plan, las insights y las prácticas de optimización de BigQuery.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -255,3 +258,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: ficha completa (lote F3b-02b, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): la celda de Synapse dedicado usa las palancas que nombra su página (distribución, estadísticas, grano de partición y clases de recursos), sin presentar columnstore como equivalente de una sort key.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-11: «pendiente de ficha» actualizado: la ficha ya existe (lote F3b-08a); el §17 la enlaza y relations la incluye: relations incluye `bigquery-query-optimization`, que el §17 nombra; §17 enlaza las fichas que ya existen.

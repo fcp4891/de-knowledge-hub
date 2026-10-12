@@ -18,15 +18,13 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | — (lotes F3b-08a y 08b entregados en `review_required`) | Aplicar las revisiones de 08a y 08b; 08c espera la de 08a | — |
-| B · Cursor revisión | — | B-F3.1 de los lotes F3b-08a y F3b-08b | — |
+| A · Claude Code | Lote F3b-08c | Entregar 08c; 08-gcp 31/31 tras su revisión | — |
+| B · Cursor revisión | — | — | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | B-F3.1 · Revisar el lote F3b-08a (8 fichas, BigQuery núcleo) | Abierto |
-| A | B | B-F3.1 · Revisar el lote F3b-08b (8 fichas, gobierno y operación) | Abierto |
 | A | B | Alias en el frontend (ADR-010): indexar `aliases` en MiniSearch, regenerar el cliente tipado y decidir si se muestran | Abierto |
 
 ## Criterio de salida de la fase actual (F3b, ADR-009)
@@ -37,7 +35,7 @@
 - [x] 05-pipelines: 16/16 `verified`, aprobado por Felipe en el navegador el 2026-10-11.
 - [x] 06-orchestration: 12/12 `verified`, aprobado por Felipe en el navegador el 2026-10-11.
 - [x] 07-architecture: 2/2 conceptos `verified`, aprobado por Felipe en el navegador el 2026-10-11 (las 15 arquitecturas: 6 en F4, 9 en el Backlog).
-- [ ] 08-gcp: 8/31 `verified`; lotes F3b-08a (8) y F3b-08b (8) en revisión; 08c (7) después de la revisión de 08a. Sus 15 arquitecturas no son de F3b: 6 en F4 (ROADMAP) y 9 en el Backlog.
+- [ ] 08-gcp: 24/31 `verified`; lote F3b-08c (7) en curso. Sus 15 arquitecturas no son de F3b: 6 en F4 (ROADMAP) y 9 en el Backlog.
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
 
 ## Fases cerradas

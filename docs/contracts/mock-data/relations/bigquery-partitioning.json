@@ -74,7 +74,7 @@
           "title": "Optimización de consultas en BigQuery",
           "entity_type": "concept",
           "origin": "entity",
-          "note": "Filtrar por la columna de partición poda particiones."
+          "note": "El plan, las insights y las prácticas de optimización de BigQuery."
         },
         {
           "slug": "partitioning",

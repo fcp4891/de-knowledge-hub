@@ -58,8 +58,11 @@ relations:
   - type: RELATED_TO
     target: incremental-load
     note: Cada ejecución incremental puede reemplazar solo su partición.
+  - type: RELATED_TO
+    target: bigquery-query-optimization
+    note: El plan, las insights y las prácticas de optimización de BigQuery.
 created_at: 2026-09-30
-updated_at: 2026-10-06
+updated_at: 2026-10-11
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -190,7 +193,7 @@ Menos datos leídos y gestión por partición, a cambio de restricciones de dise
 - `partitioning`: el concepto general.
 - `incremental-load`: la partición facilita cargas incrementales y sobrescrituras idempotentes.
 - Con ficha: `bigquery-clustering`, `partition-pruning`, `bigquery-cost-model`.
-- Del blueprint, pendiente de ficha: `bigquery-query-optimization`.
+- `bigquery-query-optimization`: el plan, las insights y las prácticas de optimización de BigQuery.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -222,3 +225,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).
 - 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `bigquery-clustering`, `partition-pruning`, `bigquery-cost-model`, que ya tienen ficha.
+- 2026-10-11: «pendiente de ficha» actualizado: la ficha ya existe (lote F3b-08a); el §17 la enlaza y relations la incluye: relations incluye `bigquery-query-optimization`, que el §17 nombra; §17 enlaza las fichas que ya existen.

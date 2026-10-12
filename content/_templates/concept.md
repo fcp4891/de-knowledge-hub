@@ -99,7 +99,7 @@ verification_status: review_required    # verified | review_required | potential
 
 ## 17. Conceptos relacionados
 
-<!-- ¿Con qué otros conceptos se relaciona? Usar slugs existentes y el tipo de relación del frontmatter. -->
+<!-- ¿Con qué otros conceptos se relaciona? Regla: si la ficha nombrada existe, va también en `relations`; si no existe, se escribe «Del blueprint, pendiente de ficha: `slug`.» y no va en `relations`; todo lo que está en `relations` se nombra aquí. -->
 
 ## 18. Preguntas técnicas abiertas
 
