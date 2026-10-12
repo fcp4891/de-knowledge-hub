@@ -3,16 +3,22 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-11
+**Última actualización:** 2026-10-12
+
+## Actual
+- **Tarea activa:** `b/ui-aliases` (ADR-010), en origin. Sin merge a `main`.
+- **Siguiente:** lo que asigne Felipe.
+- **Bloqueos:** ninguno.
+
+### Alias (`b/ui-aliases`)
+- MiniSearch indexa `aliases` con el mismo boost que `title`. Cliente tipado regenerado: `ConceptDetail` y `TechnologyDetail` traen `aliases`.
+- Si hay alias, bajo el título: «También conocido como: …» (ficha de concepto y página de tecnología).
+- `make test-frontend`: 11/11. En la demo estática, «Dataplex» encuentra Knowledge Catalog y la ficha `gcp-dataplex` muestra los dos alias.
+- No se editó `content/` ni el contrato.
 
 ## Reglas de revisión
 
 - **Relaciones y contenido de una ficha.** La fila «Relaciones completas», y cualquier afirmación sobre lo que contiene una ficha, se verifican con un comando y el resultado se pega en la revisión. No vale una lectura a ojo.
-
-## Actual
-- **Tarea activa:** B-F3.1 del lote F3b-07a. Felipe aprobó todas las filas el 2026-10-11 en `docs/reviews/cards-f3b-07a.md`. No se editó `content/` ni `frontend/`.
-- **Siguiente:** En espera del dominio 08. Carril A aplica las dos propuestas: §11 alineado al aviso de Knowledge Catalog, con las bibliotecas cliente; en `data-mesh`, citar Getting started y Teams and interactions, y nombrar hub-and-spoke en el §1.
-- **Bloqueos:** ninguno.
 
 ### B-F3.1 · lote F3b-07a
 - Dos fichas de `07-architecture`: `data-mesh` y `data-products`. Felipe aprobó todas las filas el 2026-10-11, incluidas las dos propuestas: §11 alineado al aviso de Knowledge Catalog, con las bibliotecas cliente; en `data-mesh`, citar Getting started y Teams and interactions, y nombrar hub-and-spoke en el §1. No se editó `content/` ni `frontend/`.

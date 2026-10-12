@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import type { Classification, Level, VerificationStatus } from "@/lib/api/types";
-import { LEVEL_LABEL, VERIFICATION_LABEL } from "@/lib/labels";
+import { alsoKnownLabel, LEVEL_LABEL, VERIFICATION_LABEL } from "@/lib/labels";
 
 const ALERT_STATUS = new Set<VerificationStatus>(["review_required", "potentially_outdated"]);
 
@@ -15,6 +15,7 @@ export function CardHeader({
   verificationStatus,
   backHref,
   backLabel,
+  aliases = [],
 }: {
   title: string;
   description: string | null;
@@ -25,7 +26,9 @@ export function CardHeader({
   verificationStatus: VerificationStatus | null;
   backHref?: string;
   backLabel?: string;
+  aliases?: readonly string[];
 }) {
+  const known = alsoKnownLabel(aliases);
   return (
     <header className="card-header">
       {backHref ? (
@@ -34,6 +37,7 @@ export function CardHeader({
         </p>
       ) : null}
       <h1>{title}</h1>
+      {known ? <p className="also-known">{known}</p> : null}
       <p className="meta">
         {classification ? (
           <span className={`badge classification-${classification}`}>{classification}</span>

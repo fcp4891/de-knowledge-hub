@@ -12,7 +12,15 @@ export type SearchDocument = {
   has_page: boolean;
   snippet: string;
   tags?: string[] | string;
+  aliases?: string[] | string;
 };
+
+/** Mismo peso para el título y los alias (ADR-010). */
+const SEARCH_OPTIONS = {
+  prefix: true,
+  fuzzy: 0.2,
+  boost: { title: 1, aliases: 1 },
+} as const;
 
 type SearchIndexFile = { documents: SearchDocument[] };
 
@@ -28,6 +36,44 @@ const GROUP_ORDER: ResultType[] = [
 
 let indexPromise: Promise<MiniSearch<SearchDocument>> | undefined;
 
+function fieldText(value: string[] | string | undefined): string {
+  if (Array.isArray(value)) {
+    return value.join(" ");
+  }
+  return value ?? "";
+}
+
+export function indexDocuments(documents: SearchDocument[]): MiniSearch<SearchDocument> {
+  const mini = new MiniSearch<SearchDocument>({
+    fields: ["title", "snippet", "tags", "aliases"],
+    storeFields: ["slug", "title", "type", "domain", "classification", "has_page", "snippet"],
+    idField: "id",
+    extractField: (document, fieldName) => {
+      if (fieldName === "tags") {
+        return fieldText(document.tags);
+      }
+      if (fieldName === "aliases") {
+        return fieldText(document.aliases);
+      }
+      if (fieldName === "title") {
+        return document.title;
+      }
+      if (fieldName === "snippet") {
+        return document.snippet;
+      }
+      return document[fieldName as keyof SearchDocument];
+    },
+  });
+  mini.addAll(documents);
+  return mini;
+}
+
+export function searchDocuments(documents: SearchDocument[], query: string): string[] {
+  return indexDocuments(documents)
+    .search(query, SEARCH_OPTIONS)
+    .map((hit) => hit.title);
+}
+
 function loadIndex(): Promise<MiniSearch<SearchDocument>> {
   indexPromise ??= fetch(`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/data/search-index.json`)
     .then(async (response) => {
@@ -36,37 +82,14 @@ function loadIndex(): Promise<MiniSearch<SearchDocument>> {
       }
       return (await response.json()) as SearchIndexFile;
     })
-    .then((file) => {
-      const mini = new MiniSearch<SearchDocument>({
-        fields: ["title", "snippet", "tags"],
-        storeFields: ["slug", "title", "type", "domain", "classification", "has_page", "snippet"],
-        idField: "id",
-        extractField: (document, fieldName) => {
-          if (fieldName === "tags") {
-            if (Array.isArray(document.tags)) {
-              return document.tags.join(" ");
-            }
-            return document.tags ?? "";
-          }
-          if (fieldName === "title") {
-            return document.title;
-          }
-          if (fieldName === "snippet") {
-            return document.snippet;
-          }
-          return document[fieldName as keyof SearchDocument];
-        },
-      });
-      mini.addAll(file.documents);
-      return mini;
-    });
+    .then((file) => indexDocuments(file.documents));
   return indexPromise;
 }
 
 export async function searchLocal(query: string): Promise<ApiResult<SearchResults>> {
   try {
     const mini = await loadIndex();
-    const hits = mini.search(query, { prefix: true, fuzzy: 0.2 });
+    const hits = mini.search(query, SEARCH_OPTIONS);
     const groups = GROUP_ORDER.map((type) => ({
       type,
       items: hits

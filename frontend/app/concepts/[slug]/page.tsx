@@ -227,6 +227,7 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
     <ConceptReading
       slug={data.slug}
       title={data.title}
+      aliases={data.aliases}
       classification={data.classification}
       level={data.level}
       mvp={data.mvp}
