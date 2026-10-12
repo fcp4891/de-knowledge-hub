@@ -95,7 +95,8 @@ restore-me:
 
 # HCL de snippets y fichas (ADR-008): extrae cada bloque a build/ y lo valida sin credenciales.
 # Los fragmentos marcados con <!-- validate-terraform: excluido — motivo --> se reportan y no se validan.
-# Requiere terraform (la CI lo instala).
+# Requiere terraform (la CI lo instala). Providers fijados en los bloques: hashicorp/google y google-beta ~> 8.0,
+# hashicorp/aws ~> 6.0 (Registry: 6.68.0 del 2026-10-07, consultado el 2026-10-12; ADR-011).
 TF_DIR := build/terraform
 validate-terraform:
 	$(REQUIRE_VENV)

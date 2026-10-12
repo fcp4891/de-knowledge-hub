@@ -38,12 +38,13 @@ jobs:
           distribution: temurin
           java-version: "17"
       - run: make venv BOOTSTRAP_PYTHON=python  # .venv del proyecto, como en local
-      - run: make snippets-deps  # para ejecutar pytest-ingestion-test en make test
+      - run: make snippets-deps  # pytest-ingestion-test, PySpark y snippets de boto3 con moto en make test
       - run: make validate
       - run: make build
       - run: make test
         env:
           REQUIRE_PYSPARK: "1"  # en la CI el test de PySpark no se salta: falla si falta pyspark o Java
+          REQUIRE_AWS_SNIPPETS: "1"  # los snippets de boto3 se ejecutan contra moto (ADR-011): falla si falta moto
       # Snippets de Terraform (ADR-008): init sin backend y validate, sin credenciales ni recursos reales.
       - uses: hashicorp/setup-terraform@v4
         with:
