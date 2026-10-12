@@ -299,8 +299,8 @@
           "importance": "high",
           "mvp": true,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-11"
+          "verification_status": "verified",
+          "last_verified": "2026-10-12"
         },
         {
           "slug": "dataflow-streaming-pipelines",
@@ -313,8 +313,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-11"
+          "verification_status": "verified",
+          "last_verified": "2026-10-12"
         }
       ]
     },
@@ -333,8 +333,8 @@
           "importance": "high",
           "mvp": true,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-11"
+          "verification_status": "verified",
+          "last_verified": "2026-10-12"
         },
         {
           "slug": "dataform-workflows",
@@ -347,8 +347,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-11"
+          "verification_status": "verified",
+          "last_verified": "2026-10-12"
         },
         {
           "slug": "dataform-incremental-tables",
@@ -381,8 +381,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-11"
+          "verification_status": "verified",
+          "last_verified": "2026-10-12"
         },
         {
           "slug": "cloud-sql-as-source",
@@ -395,8 +395,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-11"
+          "verification_status": "verified",
+          "last_verified": "2026-10-12"
         }
       ]
     },
@@ -477,8 +477,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-11"
+          "verification_status": "verified",
+          "last_verified": "2026-10-12"
         }
       ]
     }

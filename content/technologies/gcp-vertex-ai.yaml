@@ -13,13 +13,14 @@ cloud:
 aliases:
 - Vertex AI
 - Vertex AI Platform
+- Agent Platform
 sources:
   - source: gcp-agent-platform-docs
     url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/vertex-ai-name-changes
-    accessed: 2026-10-11
-    note: "Gemini Enterprise Agent Platform name changes: con la introducción de Gemini Enterprise Agent Platform, algunos productos y funciones de Vertex AI se renombraron; «Vertex AI Platform» pasa a «Gemini Enterprise Agent Platform»."
-note: 'El slug gcp-vertex-ai se mantiene por estabilidad; los nombres anteriores van en aliases (ADR-010).'
+    accessed: 2026-10-12
+    note: "Gemini Enterprise Agent Platform name changes: (Last updated 2026-10-09 UTC) con la introducción de Gemini Enterprise Agent Platform, algunos productos y funciones de Vertex AI se renombraron. Para la plataforma, dos filas: «Vertex AI Platform» → «Gemini Enterprise Agent Platform» y «Vertex AI» → «Agent Platform»."
+note: 'El slug gcp-vertex-ai se mantiene por estabilidad. Vertex AI Platform, Vertex AI y Agent Platform van en aliases como nombres de búsqueda (ADR-010); la página de cambios de nombre mapea «Vertex AI» a «Agent Platform», no a la plataforma completa.'
 created_at: '2026-09-28'
-updated_at: '2026-10-11'
-last_verified: '2026-10-11'
+updated_at: '2026-10-12'
+last_verified: '2026-10-12'
 verification_status: review_required

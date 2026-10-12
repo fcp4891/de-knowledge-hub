@@ -13,13 +13,13 @@ importance: medium
 cloud: [gcp]
 technologies: [gcp-vertex-ai, gcp-bigquery]
 tags: [ml, agent-platform, vertex-ai, feature-store, bigquery-ml]
-aliases: [Vertex AI para Data Engineers, Vertex AI]
+aliases: [Vertex AI para Data Engineers, Vertex AI, Vertex AI Platform, Agent Platform]
 related_topics: [bigquery-sql-dialect]
 sources:
   - source: gcp-agent-platform-docs
     url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/vertex-ai-name-changes
-    accessed: 2026-10-11
-    note: "Gemini Enterprise Agent Platform name changes: con la introducción de Gemini Enterprise Agent Platform, algunos productos de Vertex AI se renombraron. Entre otros: Vertex AI Platform → Gemini Enterprise Agent Platform; Vertex AI API → Gemini Enterprise Agent Platform API; Vertex AI Pipelines → Gemini Enterprise Agent Platform Pipelines; Vertex AI Feature Store → Feature Store on Gemini Enterprise Agent Platform; Vertex AI Batch Inference → Gemini Enterprise Agent Platform Batch Inference; Vertex AI Model Registry → Model Registry on Gemini Enterprise Agent Platform; Vertex AI Workbench → Gemini Enterprise Agent Platform Workbench; Vertex AI Vector Search → Vector Search on Gemini Enterprise Agent Platform."
+    accessed: 2026-10-12
+    note: "Gemini Enterprise Agent Platform name changes (Last updated 2026-10-09 UTC): con la introducción de Gemini Enterprise Agent Platform, algunos productos y funciones de Vertex AI se renombraron; la tabla lista los nombres anteriores y los nuevos. Para la plataforma, dos filas: Vertex AI Platform → Gemini Enterprise Agent Platform y Vertex AI → Agent Platform. Entre los productos: Vertex AI API → Gemini Enterprise Agent Platform API; Vertex AI Pipelines → Gemini Enterprise Agent Platform Pipelines; Vertex AI Feature Store → Feature Store on Gemini Enterprise Agent Platform; Vertex AI Batch Inference → Gemini Enterprise Agent Platform Batch Inference; Vertex AI Model Registry → Model Registry on Gemini Enterprise Agent Platform; Vertex AI Workbench → Gemini Enterprise Agent Platform Workbench; Vertex AI Vector Search → Vector Search on Gemini Enterprise Agent Platform."
   - source: gcp-agent-platform-docs
     url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning
     accessed: 2026-10-11
@@ -54,14 +54,14 @@ relations:
     target: bigquery-security
     note: Los controles sobre las tablas de features.
 created_at: 2026-10-11
-updated_at: 2026-10-11
-last_verified: 2026-10-11
-verification_status: review_required
+updated_at: 2026-10-12
+last_verified: 2026-10-12
+verification_status: verified
 ---
 
 ## 1. Resumen
 
-La plataforma de ML de Google Cloud se llama **Gemini Enterprise Agent Platform**. Su página de cambios de nombre dice que **Vertex AI Platform** pasó a llamarse así, junto con sus productos: Vertex AI Pipelines, Feature Store, Batch Inference, Model Registry y otros. Esta ficha usa los nombres nuevos, con «Vertex AI» como alias.
+La plataforma de ML de Google Cloud se llama **Gemini Enterprise Agent Platform**. La página de cambios de nombre (*Last updated* 2026-10-09 UTC) tiene dos filas para la plataforma: **Vertex AI Platform → Gemini Enterprise Agent Platform** y **Vertex AI → Agent Platform**. También renombra sus productos: Vertex AI Pipelines, Feature Store, Batch Inference, Model Registry y otros. Esta ficha usa los nombres nuevos; «Vertex AI» queda solo como alias de búsqueda.
 
 Para un data engineer, la plataforma toca cuatro piezas:
 
@@ -180,7 +180,7 @@ Este bloque es BigQuery ML en GoogleSQL y **no se ejecutó**: requiere un proyec
 
 ## 11. GCP
 
-**Gemini Enterprise Agent Platform**, según su página de cambios de nombre (antes Vertex AI Platform), con **BigQuery ML**. La tecnología conserva el slug `gcp-vertex-ai`, con los nombres anteriores como alias (ADR-010). En las URLs, la documentación de `vertex-ai/docs` redirige a `gemini-enterprise-agent-platform`.
+**Gemini Enterprise Agent Platform**, con **BigQuery ML**. La página de cambios de nombre (*Last updated* 2026-10-09 UTC) tiene dos filas para la plataforma: **Vertex AI Platform → Gemini Enterprise Agent Platform** y **Vertex AI → Agent Platform**. La tecnología conserva el slug `gcp-vertex-ai`; «Vertex AI Platform», «Vertex AI» y «Agent Platform» son alias de búsqueda (ADR-010). En las URLs, la documentación de `vertex-ai/docs` redirige a `gemini-enterprise-agent-platform`.
 
 ## 12. AWS
 
@@ -238,8 +238,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-11. `review_required`: pendiente de revisión B-F3.1 del lote F3b-08c.
+2026-10-12. Pasa a `verified`: revisión B-F3.1 del lote F3b-08c aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-11: creación (lote F3b-08c), con el nombre actual de la plataforma según su página de cambios de nombre y los anteriores como alias (ADR-010).
+- 2026-10-12: revisión B-F3.1 del lote F3b-08c aplicada (docs/reviews/cards-f3b-08c.md): el §1 y el §11 dicen las dos filas de la página de cambios de nombre (Vertex AI Platform → Gemini Enterprise Agent Platform; Vertex AI → Agent Platform); «Vertex AI» queda solo como alias de búsqueda; aliases con Vertex AI Platform y Agent Platform.
+- 2026-10-12: `verification_status: verified` (sin VERIFY pendientes).

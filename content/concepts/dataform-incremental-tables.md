@@ -58,8 +58,11 @@ relations:
   - type: RELATED_TO
     target: schema-evolution
     note: Cambiar columnas de una incremental exige full refresh u onSchemaChange (Preview).
+  - type: RELATED_TO
+    target: dataform-workflows
+    note: El flujo de Dataform en el que corren las tablas incrementales.
 created_at: 2026-10-02
-updated_at: 2026-10-05
+updated_at: 2026-10-12
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -212,7 +215,7 @@ Menos costo y latencia por ejecución, a cambio de más estados posibles (primer
 - `idempotency`: qué hace a la ejecución repetible.
 - `partition-pruning` y `bigquery-partitioning`: cómo no leer de más.
 - `schema-evolution`: cambiar columnas sin perder datos.
-- Del blueprint, pendiente de ficha: `dataform-workflows`.
+- `dataform-workflows`: el flujo de Dataform (compilar, ejecutar y programar) en el que corren estas tablas.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -242,3 +245,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14; `dbt-fabric` (Warehouse) y `dbt-fabricspark` (Lakehouse) con fuente de Microsoft Learn; Preview de `onSchemaChange` citado desde la referencia de Dataform core.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
 - 2026-10-05: se quita la frase sobre la Dataform CLI sustentada en *Create tables*; queda solo el Preview de `onSchemaChange` citado desde la referencia de Dataform core.
+- 2026-10-12: «pendiente de ficha» actualizado: `dataform-workflows` ya tiene ficha (lote F3b-08c); el §17 la enlaza y relations la incluye.

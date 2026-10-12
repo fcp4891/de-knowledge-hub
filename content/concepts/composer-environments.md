@@ -44,6 +44,10 @@ sources:
     url: https://docs.cloud.google.com/composer/docs/composer-3/composer-overview
     accessed: 2026-10-11
     note: "Managed Airflow overview: «Cloud Composer is evolving to become Managed Service for Apache Airflow». Algunas opciones de configuración de Airflow están bloqueadas. Logs de tareas en la interfaz de Airflow y en la carpeta logs del bucket; métricas del entorno en Cloud Monitoring; el clúster aloja componentes que llevan logs a Cloud Logging y métricas a Cloud Monitoring."
+  - source: gcp-cloud-composer-release-notes
+    url: https://docs.cloud.google.com/composer/docs/release-notes
+    accessed: 2026-10-12
+    note: "Managed Service for Apache Airflow release notes: «April 15, 2026 Announcement»: «Cloud Composer is evolving to become Managed Service for Apache Airflow»."
 relations:
   - type: RELATED_TO
     target: open-source-vs-managed-orchestration
@@ -61,9 +65,9 @@ relations:
     target: pipeline-dependencies
     note: La carga de DAGs con `DagBag` en la CI.
 created_at: 2026-10-11
-updated_at: 2026-10-11
-last_verified: 2026-10-11
-verification_status: review_required
+updated_at: 2026-10-12
+last_verified: 2026-10-12
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -218,7 +222,7 @@ Este bloque de Terraform se valida en la CI con `terraform validate`, sin creden
 
 ## 11. GCP
 
-**Managed Service for Apache Airflow.** Su página dice que «Cloud Composer is evolving to become Managed Service for Apache Airflow». Los recursos de la API y de Terraform conservan el nombre `composer`, y la tecnología conserva el slug `gcp-cloud-composer`, con el nombre anterior como alias (ADR-010).
+**Managed Service for Apache Airflow.** Su página *Managed Airflow overview* (consultada el 2026-10-11) dice que «Cloud Composer is evolving to become Managed Service for Apache Airflow». Las *release notes* publican esa frase como anuncio del **15 de abril de 2026** (consultadas el 2026-10-12). Los recursos de la API y de Terraform conservan el nombre `composer`, y la tecnología conserva el slug `gcp-cloud-composer`, con el nombre anterior como alias (ADR-010).
 
 ## 12. AWS
 
@@ -270,14 +274,16 @@ Pendiente (F4).
 
 ## 20. Fuentes
 
-- Google Cloud, Managed Service for Apache Airflow (Gen 3): *Managed Airflow overview*, *Environment architecture*, *Data stored in Cloud Storage*, *About environment scaling*, *Create Managed Service for Apache Airflow environments*, *Upgrade environments* y *version list*.
+- Google Cloud, Managed Service for Apache Airflow (Gen 3): *Managed Airflow overview*, *Environment architecture*, *Data stored in Cloud Storage*, *About environment scaling*, *Create Managed Service for Apache Airflow environments*, *Upgrade environments* y *version list*; *Managed Service for Apache Airflow release notes* (anuncio del 15 de abril de 2026).
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-11. `review_required`: pendiente de revisión B-F3.1 del lote F3b-08c.
+2026-10-12. Pasa a `verified`: revisión B-F3.1 del lote F3b-08c aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-11: creación (lote F3b-08c), con el nombre actual del servicio y el anterior como alias (ADR-010).
+- 2026-10-12: revisión B-F3.1 del lote F3b-08c aplicada (docs/reviews/cards-f3b-08c.md): el §11 cita también las release notes, con el anuncio del 15 de abril de 2026 y su fecha de consulta.
+- 2026-10-12: `verification_status: verified` (sin VERIFY pendientes).
