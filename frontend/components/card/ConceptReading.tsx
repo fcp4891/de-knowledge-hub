@@ -14,7 +14,7 @@ import type {
   VerificationStatus,
 } from "@/lib/api/types";
 import { CARD_SECTION_GROUPS } from "@/lib/learning-paths";
-import { CLOUD_LABEL, LEVEL_LABEL, STUDY_LABEL, VERIFICATION_LABEL } from "@/lib/labels";
+import { alsoKnownLabel, CLOUD_LABEL, LEVEL_LABEL, STUDY_LABEL, VERIFICATION_LABEL } from "@/lib/labels";
 import { saveStudyState } from "@/lib/personalActions";
 import {
   addStoredNote,
@@ -126,6 +126,7 @@ function readingMeta(minutes: number | null, sources: number): string | null {
 export function ConceptReading({
   slug,
   title,
+  aliases,
   classification,
   level,
   mvp,
@@ -147,6 +148,7 @@ export function ConceptReading({
 }: {
   slug: string;
   title: string;
+  aliases: readonly string[];
   classification: Classification | null;
   level: Level | null;
   mvp: boolean;
@@ -484,6 +486,8 @@ export function ConceptReading({
     index += 1;
   }
 
+  const known = alsoKnownLabel(aliases);
+
   return (
     <div className="page reading-page reading">
       <div className="reading-top">
@@ -591,6 +595,7 @@ export function ConceptReading({
                 ) : null}
               </div>
               <h1 className="reading-title">{title}</h1>
+              {known ? <p className="reading-meta">{known}</p> : null}
               {meta ? <p className="reading-meta">{meta}</p> : null}
             </header>
             {blocks}

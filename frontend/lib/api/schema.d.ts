@@ -425,6 +425,8 @@ export interface components {
             markdown: string;
         };
         ConceptDetail: {
+            /** @description Nombres anteriores o alternativos (ADR-010); vacía si no hay. */
+            aliases: string[];
             kind: components["schemas"]["Kind"];
             importance: components["schemas"]["Importance"];
             mvp: boolean;
@@ -469,6 +471,8 @@ export interface components {
             verification_status: components["schemas"]["VerificationStatus"];
         };
         TechnologyDetail: {
+            /** @description Nombres anteriores o alternativos (ADR-010); vacía si no hay. */
+            aliases: string[];
             origin: components["schemas"]["Origin"];
             category: string;
             mvp: boolean;

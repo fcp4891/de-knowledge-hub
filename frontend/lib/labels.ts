@@ -22,6 +22,13 @@ export const RELATION_LABEL: Record<string, string> = {
   runs_on: "Se ejecuta en",
 };
 
+export function alsoKnownLabel(aliases: readonly string[]): string | null {
+  if (aliases.length === 0) {
+    return null;
+  }
+  return `También conocido como: ${aliases.join(", ")}`;
+}
+
 export const RESULT_LABEL: Record<ResultType, string> = {
   concept: "Conceptos",
   pattern: "Patrones",

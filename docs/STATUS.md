@@ -25,7 +25,7 @@
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | Alias en el frontend (ADR-010): indexar `aliases` en MiniSearch, regenerar el cliente tipado y decidir si se muestran | Abierto |
+| A | B | ~~Alias en el frontend (ADR-010)~~: MiniSearch indexa `aliases` y la ficha los muestra (`b/ui-aliases`) | Cerrado (2026-10-12) |
 
 ## Criterio de salida de la fase actual (F3b, ADR-009)
 - [x] 01-fundamentals: 28/28 `verified`, aprobado por Felipe en el navegador el 2026-10-06.

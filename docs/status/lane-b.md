@@ -13,6 +13,15 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Tarea activa:** B-F3.1 del lote F3b-08c. Revisión en `docs/reviews/cards-f3b-08c.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Dos propuestas media: en `composer-environments`, citar las release notes y la fecha 15 de abril de 2026; en `gcp-vertex-ai` y en la ficha, no usar «Vertex AI» a secas como alias de Gemini Enterprise Agent Platform.
 - **Bloqueos:** ninguno. `make` no está en el PATH; `scripts/validate.py` con `.venv` terminó OK (369 entidades).
+- **Tarea activa:** `b/ui-aliases` (ADR-010), en origin. Sin merge a `main`.
+- **Siguiente:** lo que asigne Felipe.
+- **Bloqueos:** ninguno.
+
+### Alias (`b/ui-aliases`)
+- MiniSearch indexa `aliases` con el mismo boost que `title`. Cliente tipado regenerado: `ConceptDetail` y `TechnologyDetail` traen `aliases`.
+- Si hay alias, bajo el título: «También conocido como: …» (ficha de concepto y página de tecnología).
+- `make test-frontend`: 11/11. En la demo estática, «Dataplex» encuentra Knowledge Catalog y la ficha `gcp-dataplex` muestra los dos alias.
+- No se editó `content/` ni el contrato.
 
 ### B-F3.1 · lote F3b-08c
 - Siete fichas de procesamiento, orquestación y servicios. Fuentes de nivel 1, §14, código con lo ejecutado y lo no ejecutado, y la regla del §17, comprobados por comando. `validate` en verde. No se editó `content/` ni `frontend/`.

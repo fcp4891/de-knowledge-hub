@@ -41,6 +41,7 @@ export default async function TechnologyPage({ params }: { params: Promise<{ slu
         mvp={data.mvp}
         lastVerified={data.last_verified}
         verificationStatus={data.verification_status}
+        aliases={data.aliases}
       />
       <p className="meta">
         <span>{data.origin}</span>
