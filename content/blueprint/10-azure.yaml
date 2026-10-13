@@ -140,7 +140,7 @@ subdomains:
     title: IA
     concepts:
       - slug: azure-ai-for-data-engineers
-        title: Servicios de IA de Azure para Data Engineers
+        title: Microsoft Foundry para Data Engineers
         kind: concept
         classification: modern
         level: intermediate
@@ -148,4 +148,4 @@ subdomains:
         mvp: false
         related_technologies: [azure-ai]
         related_concepts: [vertex-ai-for-data-engineers, bedrock-for-data-engineers]
-        note: Nombres y empaquetado de los servicios de IA de Azure cambian con frecuencia; verificar al redactar.
+        note: Nombres y empaquetado de los servicios de IA de Azure cambian con frecuencia; verificar al redactar. La tabla «Evolution of Foundry» de su página dice Azure AI Studio / Azure AI Foundry → Microsoft Foundry y Azure AI Services → Foundry Tools; el slug se mantiene (ADR-010).

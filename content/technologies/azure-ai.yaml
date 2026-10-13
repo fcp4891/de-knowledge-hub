@@ -2,15 +2,26 @@ id: cloud_service:azure-ai
 slug: azure-ai
 type: cloud_service
 stub: true
-title: Servicios de IA de Azure
-description: Servicios de IA de Microsoft en Azure (modelos, APIs cognitivas y herramientas de desarrollo).
+title: Microsoft Foundry
+description: Plataforma de IA de Microsoft en Azure para modelos, agentes y herramientas (antes Azure AI Foundry).
 provider: azure
 category: ai-platform
 classification: modern
 mvp: false
 cloud:
 - azure
-note: Nombres y empaquetado cambian con frecuencia; verificar al redactar la ficha.
+aliases:
+- Azure AI Foundry
+- Azure AI Studio
+- Azure AI Services
+sources:
+  - source: microsoft-foundry-docs
+    url: https://learn.microsoft.com/en-us/azure/foundry/what-is-foundry
+    accessed: 2026-10-13
+    page_title: "What is Microsoft Foundry?"
+    note: "What is Microsoft Foundry?, tabla «Evolution of Foundry» (Previous concepts and their current equivalents): Brand «Azure AI Studio / Azure AI Foundry» → «Microsoft Foundry»; Brand «Azure AI Services» → «Foundry Tools»; Foundry consolida varios servicios y herramientas anteriores de Azure AI en una plataforma unificada."
+note: 'El slug azure-ai se mantiene por estabilidad. Los nombres anteriores van en aliases como nombres de búsqueda (ADR-010): Azure AI Studio y Azure AI Foundry pasan a Microsoft Foundry; Azure AI Services pasa a Foundry Tools, según la misma tabla.'
 created_at: '2026-09-28'
-updated_at: '2026-09-28'
+updated_at: '2026-10-13'
+last_verified: '2026-10-13'
 verification_status: review_required

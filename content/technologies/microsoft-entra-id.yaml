@@ -10,7 +10,17 @@ classification: modern
 mvp: false
 cloud:
 - azure
+aliases:
+- Azure Active Directory
+- Azure AD
+sources:
+  - source: microsoft-entra-docs
+    url: https://learn.microsoft.com/en-us/entra/fundamentals/new-name
+    accessed: 2026-10-13
+    page_title: "New name for Azure Active Directory"
+    note: "New name for Azure Active Directory: «Microsoft renamed Azure Active Directory (Azure AD) to Microsoft Entra ID»; los nombres Azure Active Directory, Azure AD y AAD se reemplazan por Microsoft Entra ID; Microsoft Entra es la familia de productos de identidad y acceso de red, y Entra ID es uno de ellos."
 note: Producto de Microsoft que trasciende Azure; se modela con provider azure (ADR-004).
 created_at: '2026-09-28'
-updated_at: '2026-09-28'
+updated_at: '2026-10-13'
+last_verified: '2026-10-13'
 verification_status: review_required
