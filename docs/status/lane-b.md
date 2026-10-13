@@ -3,19 +3,21 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-12
+**Última actualización:** 2026-10-13
 
 ## Reglas de revisión
 
 - **Relaciones y contenido de una ficha.** La fila «Relaciones completas», y cualquier afirmación sobre lo que contiene una ficha, se verifican con un comando y el resultado se pega en la revisión. No vale una lectura a ojo.
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote F3b-08c. Revisión en `docs/reviews/cards-f3b-08c.md`. No se editó `content/` ni `frontend/`.
-- **Siguiente:** Esperar la aprobación de Felipe. Dos propuestas media: en `composer-environments`, citar las release notes y la fecha 15 de abril de 2026; en `gcp-vertex-ai` y en la ficha, no usar «Vertex AI» a secas como alias de Gemini Enterprise Agent Platform.
-- **Bloqueos:** ninguno. `make` no está en el PATH; `scripts/validate.py` con `.venv` terminó OK (369 entidades).
-- **Tarea activa:** `b/ui-aliases` (ADR-010), en origin. Sin merge a `main`.
-- **Siguiente:** lo que asigne Felipe.
+- **Tarea activa:** `b/ui-page-title` (ADR-012). Sin merge a `main`.
+- **Siguiente:** lo que asigne Felipe. Sigue abierta la revisión F3b-08c.
 - **Bloqueos:** ninguno.
+
+### Título de página en las citas (`b/ui-page-title`)
+- El enlace de cada cita es `page_title`. La línea secundaria, en texto muted, es «título del registro · Nivel N». Si `page_title` es null, el enlace muestra la ruta de la URL. Igual en la §20 de la ficha y en `SourceList`.
+- Cliente tipado regenerado. `make test-frontend`: 13/13. En la demo estática, `bigquery-partitioning` §20 muestra las 5 citas de BigQuery con títulos distintos.
+- No se editó `content/` ni el contrato.
 
 ### Alias (`b/ui-aliases`)
 - MiniSearch indexa `aliases` con el mismo boost que `title`. Cliente tipado regenerado: `ConceptDetail` y `TechnologyDetail` traen `aliases`.

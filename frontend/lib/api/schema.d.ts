@@ -548,6 +548,8 @@ export interface components {
             source_type: components["schemas"]["SourceType"];
             authority_level: number;
             accessed?: components["schemas"]["Date"] | null;
+            /** @description Título de la página citada (ADR-012); null si no se pudo verificar. `title` sigue siendo el de la fuente del registro. */
+            page_title?: string | null;
             note?: string | null;
         };
         Source: {

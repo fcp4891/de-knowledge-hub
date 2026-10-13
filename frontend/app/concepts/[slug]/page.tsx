@@ -4,6 +4,7 @@ import { ConceptReading, type ReadingSectionModel } from "@/components/card/Conc
 import { MarkdownBody } from "@/components/markdown/MarkdownBody";
 import { getConcept, getDomain, getRelations, getStudyState, listNotes } from "@/lib/api/client";
 import type { NoteList, RelationGroups, Section, SourceRef } from "@/lib/api/types";
+import { citationDetail, citationLinkText } from "@/lib/citation";
 import { entityHref } from "@/lib/entityHref";
 import { SHORT_NAMES } from "@/lib/learning-paths";
 import { nextInRoute } from "@/lib/domainRoute";
@@ -47,10 +48,8 @@ function SourceLinks({ sources }: { sources: SourceRef[] }) {
     <ul className="reading-sources">
       {sources.map((source) => (
         <li key={`${source.source}-${source.url}`}>
-          <a href={source.url}>{source.title}</a>
-          <p className="reading-quiet">
-            Nivel {source.authority_level} · {source.source}
-          </p>
+          <a href={source.url}>{citationLinkText(source)}</a>
+          <p className="reading-quiet">{citationDetail(source)}</p>
         </li>
       ))}
     </ul>
