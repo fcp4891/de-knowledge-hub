@@ -16,6 +16,16 @@
           "score": 6.3
         },
         {
+          "slug": "event-hubs-streaming",
+          "title": "Streaming con Event Hubs",
+          "type": "concept",
+          "domain": "azure",
+          "classification": "modern",
+          "has_page": true,
+          "snippet": "Cómo funciona Azure Event Hubs según su documentación: plataforma de streaming administrada con compatibilidad con Apache Kafka, particiones con partition key (hash estático) o asignación round-robin,",
+          "score": 6.3
+        },
+        {
           "slug": "spark-structured-streaming",
           "title": "Spark Structured Streaming",
           "type": "concept",
@@ -23,16 +33,6 @@
           "classification": "modern",
           "has_page": false,
           "snippet": "Spark Structured Streaming",
-          "score": 6.0
-        },
-        {
-          "slug": "event-hubs-streaming",
-          "title": "Streaming con Event Hubs",
-          "type": "concept",
-          "domain": "azure",
-          "classification": "modern",
-          "has_page": false,
-          "snippet": "Streaming con Event Hubs",
           "score": 6.0
         },
         {

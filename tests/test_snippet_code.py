@@ -11,6 +11,8 @@
   rds-as-source y bedrock-for-data-engineers, su código sin llamadas a AWS. Todos pasan mypy --strict. Sin moto se
   saltan, salvo con REQUIRE_AWS_SNIPPETS=1 (la CI).
 - step-functions-workflows: la definición en ASL de la sección 10 se valida como JSON y por estructura.
+- adls-gen2-storage (ADR-013): el código de Blob de la sección 10 se ejecuta contra Azurite (solo Blob; Azurite no
+  soporta ADLS Gen2) y pasa mypy --strict. Sin Azurite en 127.0.0.1:10000 se salta, salvo con REQUIRE_AZURITE=1 (la CI).
 """
 
 from __future__ import annotations
@@ -330,3 +332,48 @@ def test_step_functions_definition_is_valid_json_with_reachable_states() -> None
     assert any(s.get("End") or s["Type"] in ("Succeed", "Fail") for s in states.values())
     retry = states["TransformarVentas"]["Retry"][0]
     assert retry["JitterStrategy"] in ("FULL", "NONE") and retry["MaxAttempts"] >= 1
+
+
+# Cadena de conexión de desarrollo de Azurite, publicada en «Connect to Azurite emulator with Azure SDKs and tools».
+AZURITE = (
+    "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;"
+    "AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;"
+    "BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;"
+)
+
+
+def azurite_container(tmp_path: Path) -> Any:
+    """Un contenedor nuevo en Azurite; salta si no responde, salvo con REQUIRE_AZURITE=1 (la CI)."""
+    required = os.environ.get("REQUIRE_AZURITE") == "1"
+    try:
+        from azure.storage.blob import BlobServiceClient
+    except ImportError:
+        if required:
+            raise
+        pytest.skip("falta azure-storage-blob (make snippets-deps)")
+    service = BlobServiceClient.from_connection_string(AZURITE)
+    try:
+        return service.create_container(f"lake{tmp_path.name.lower().replace('_', '')[-20:]}")
+    except Exception as exc:  # Azurite apagado o inaccesible
+        if required:
+            raise
+        pytest.skip(f"Azurite no responde en 127.0.0.1:10000: {exc.__class__.__name__}")
+
+
+def test_adls_blob_snippet_writes_partitions_idempotently_on_azurite(tmp_path: Path) -> None:
+    path = tmp_path / "adls_blob.py"
+    path.write_text(section_code(CONTENT / "concepts" / "adls-gen2-storage.md", "## 10. Código"), encoding="utf-8")
+    spec = importlib.util.spec_from_file_location("adls_blob", path)
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    container = azurite_container(tmp_path)
+    try:
+        for day in (1, 2, 2):  # el día 2 se reescribe
+            module.write_batch(container, "ventas", dt.date(2026, 10, day), [{"id": day}])
+        assert module.list_partitions(container, "ventas") == ["dt=2026-10-01", "dt=2026-10-02"]
+        assert module.count_blobs(container, "raw/ventas/") == 2
+    finally:
+        container.delete_container()
+    result = run_python(["-m", "mypy", "--strict", "--no-incremental", path.name], tmp_path)
+    assert result.returncode == 0, result.stdout + result.stderr

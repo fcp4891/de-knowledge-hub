@@ -2757,9 +2757,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-13"
     },
     {
       "slug": "adls-gen2-storage",
@@ -2771,9 +2771,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-13"
     },
     {
       "slug": "data-factory-pipelines",
@@ -2785,9 +2785,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-13"
     },
     {
       "slug": "fabric-onelake-and-workloads",
@@ -2799,9 +2799,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-13"
     },
     {
       "slug": "synapse-analytics",
@@ -2813,9 +2813,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-13"
     },
     {
       "slug": "azure-databricks-lakehouse",
@@ -2827,9 +2827,9 @@
       "level": "advanced",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-13"
     },
     {
       "slug": "event-hubs-streaming",
@@ -2841,9 +2841,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-13"
     },
     {
       "slug": "azure-functions-for-data",

@@ -1883,3 +1883,117 @@ created_at: '2026-10-13'
 updated_at: '2026-10-13'
 last_verified: '2026-10-13'
 verification_status: verified
+---
+id: source:azure-storage-docs
+slug: azure-storage-docs
+type: source
+title: Azure Storage documentation
+description: Documentación oficial de Azure Storage (Blob Storage, Data Lake Storage y el emulador Azurite), Microsoft Learn.
+url: https://learn.microsoft.com/en-us/azure/storage/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- azure-adls
+created_at: '2026-10-13'
+updated_at: '2026-10-13'
+last_verified: '2026-10-13'
+verification_status: verified
+---
+id: source:azure-data-factory-docs
+slug: azure-data-factory-docs
+type: source
+title: Azure Data Factory documentation
+description: Documentación oficial de Azure Data Factory, Microsoft Learn.
+url: https://learn.microsoft.com/en-us/azure/data-factory/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- azure-data-factory
+created_at: '2026-10-13'
+updated_at: '2026-10-13'
+last_verified: '2026-10-13'
+verification_status: verified
+---
+id: source:microsoft-fabric-docs
+slug: microsoft-fabric-docs
+type: source
+title: Microsoft Fabric documentation
+description: Documentación oficial de Microsoft Fabric (OneLake y sus cargas de trabajo), Microsoft Learn.
+url: https://learn.microsoft.com/en-us/fabric/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- microsoft-fabric
+created_at: '2026-10-13'
+updated_at: '2026-10-13'
+last_verified: '2026-10-13'
+verification_status: verified
+---
+id: source:azure-synapse-docs
+slug: azure-synapse-docs
+type: source
+title: Azure Synapse Analytics documentation
+description: Documentación oficial de Azure Synapse Analytics, Microsoft Learn.
+url: https://learn.microsoft.com/en-us/azure/synapse-analytics/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- azure-synapse
+created_at: '2026-10-13'
+updated_at: '2026-10-13'
+last_verified: '2026-10-13'
+verification_status: verified
+---
+id: source:azure-databricks-docs
+slug: azure-databricks-docs
+type: source
+title: Azure Databricks documentation
+description: Documentación oficial de Azure Databricks, Microsoft Learn.
+url: https://learn.microsoft.com/en-us/azure/databricks/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- azure-databricks
+created_at: '2026-10-13'
+updated_at: '2026-10-13'
+last_verified: '2026-10-13'
+verification_status: verified
+---
+id: source:azure-event-hubs-docs
+slug: azure-event-hubs-docs
+type: source
+title: Azure Event Hubs documentation
+description: Documentación oficial de Azure Event Hubs, Microsoft Learn.
+url: https://learn.microsoft.com/en-us/azure/event-hubs/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- azure-event-hubs
+created_at: '2026-10-13'
+updated_at: '2026-10-13'
+last_verified: '2026-10-13'
+verification_status: verified

@@ -21,6 +21,13 @@
       "label": "related_to",
       "items": [
         {
+          "slug": "adls-gen2-storage",
+          "title": "Almacenamiento en ADLS Gen2",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Particiones estilo Hive como directorios."
+        },
+        {
           "slug": "backfill",
           "title": "Backfill",
           "entity_type": "concept",

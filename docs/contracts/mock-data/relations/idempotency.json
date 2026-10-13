@@ -154,6 +154,13 @@
           "note": "La atomicidad hace que una carga reintentada no deje estados a medias; la idempotencia, que no duplique."
         },
         {
+          "slug": "adls-gen2-storage",
+          "title": "Almacenamiento en ADLS Gen2",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Nombres deterministas por lote y publicación por renombre de directorio."
+        },
+        {
           "slug": "cdc-architecture",
           "title": "Arquitectura CDC (PostgreSQL → BigQuery)",
           "entity_type": "architecture",
