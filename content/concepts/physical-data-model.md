@@ -18,42 +18,52 @@ sources:
   - source: aws-what-is-data-modeling
     url: https://aws.amazon.com/what-is/data-modeling/
     accessed: 2026-10-10
+    page_title: "What is Data Modeling?"
     note: "El modelo físico mapea el lógico a una tecnología de base de datos concreta con su terminología: tipos de campo y relaciones como los representa el motor, y detalles adicionales como el ajuste de rendimiento. Lo crean los ingenieros de datos antes de la implementación final."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/17/ddl-partitioning.html
     accessed: 2026-10-10
+    page_title: "5.12. Table Partitioning"
     note: "PostgreSQL 17: particionar es dividir una tabla lógicamente grande en piezas físicas más pequeñas; puede mejorar mucho el rendimiento cuando las filas más consultadas están en pocas particiones. Partition pruning es una optimización que descarta particiones que no pueden contener filas de la consulta. Una restricción única o clave primaria sobre una tabla particionada debe incluir todas las columnas de la clave de partición. Crear un índice en la tabla particionada crea automáticamente un índice equivalente en cada partición."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/17/ddl-constraints.html
     accessed: 2026-10-10
+    page_title: "5.5. Constraints"
     note: "PostgreSQL 17 aplica CHECK, NOT NULL, UNIQUE, PRIMARY KEY y FOREIGN KEY: rechaza las filas que las violan."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/partitioned-tables
     accessed: 2026-10-10
+    page_title: "Introduction to partitioned tables"
     note: "Una tabla particionada de BigQuery se divide en segmentos (particiones) que facilitan administrar y consultar; reducir los bytes que lee una consulta mejora el rendimiento y controla el costo."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/clustered-tables
     accessed: 2026-10-10
+    page_title: "Introduction to clustered tables"
     note: "Las tablas con clustering de BigQuery tienen un orden de columnas definido por el usuario que ordena los bloques de almacenamiento según los valores de esas columnas; puede mejorar el rendimiento y reducir el costo de las consultas."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/primary-foreign-keys
     accessed: 2026-10-10
+    page_title: "Use primary and foreign keys"
     note: "BigQuery no aplica las claves primarias y foráneas: al declararlas, hay que asegurar que los datos las cumplan; para unicidad se sugiere una columna de identidad. BigQuery puede usar las restricciones declaradas para optimizar consultas (por ejemplo, eliminar joins)."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_choosing_dist_sort.html
     accessed: 2026-10-10
+    page_title: "Distribution styles"
     note: "Estilos de distribución de Redshift: AUTO, EVEN, KEY o ALL; si no se especifica, usa AUTO, que asigna el estilo según el tamaño de la tabla (por ejemplo, ALL para tablas pequeñas y, al crecer, KEY u otro). Puede convenir definir dimensiones pequeñas como DISTSTYLE ALL."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/t_Sorting_data.html
     accessed: 2026-10-10
+    page_title: "Sort keys"
     note: "Al crear una tabla se pueden definir una o más columnas como sort keys; la información de las sort keys se pasa al planificador; se recomienda SORTKEY AUTO para que la optimización automática de tablas elija la clave."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/t_Defining_constraints.html
     accessed: 2026-10-10
+    page_title: "Table constraints"
     note: "En Redshift, las restricciones únicas, de clave primaria y de clave foránea son solo informativas: no se aplican al cargar datos; aun así, el planificador usa las claves primarias y foráneas como pistas, y conviene declararlas si el ETL u otro proceso asegura su integridad."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/tables
     accessed: 2026-10-10
+    page_title: "Tables in Fabric Data Warehouse"
     note: "Fabric Warehouse: PRIMARY KEY y UNIQUE solo se admiten con NONCLUSTERED y NOT ENFORCED a la vez; FOREIGN KEY solo con NOT ENFORCED."
 relations:
   - type: RELATED_TO
@@ -72,7 +82,7 @@ relations:
     target: sql-quality-checks
     note: Donde las claves no se aplican, la unicidad y la integridad se verifican con pruebas.
 created_at: 2026-10-10
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -266,3 +276,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-10: creación (lote F3b-04a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

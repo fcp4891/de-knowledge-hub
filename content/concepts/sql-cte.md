@@ -18,22 +18,27 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax
     accessed: 2026-10-06
+    page_title: "Query syntax"
     note: "La cláusula WITH contiene una o más CTE, recursivas o no. GoogleSQL solo materializa los resultados de las CTE recursivas: si una CTE no recursiva se referencia en varios lugares, se ejecuta una vez por cada referencia, y la documentación dice que el WITH con CTE no recursivas sirve sobre todo para la legibilidad. WITH RECURSIVE solo va en el nivel superior de la consulta y no se admite en funciones ni en vistas materializadas."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/queries-with.html
     accessed: 2026-10-06
+    page_title: "7.8. WITH Queries (Common Table Expressions)"
     note: "Por defecto, una consulta WITH que se referencia más de una vez se calcula una sola vez; con MATERIALIZED se fuerza ese cálculo separado y con NOT MATERIALIZED se fusiona en la consulta principal, con riesgo de cómputo duplicado. WITH también admite INSERT, UPDATE, DELETE y MERGE."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/sql-select.html
     accessed: 2026-10-06
+    page_title: "PostgreSQL: Documentation: 18: SELECT"
     note: "En el procesamiento de SELECT, primero se calculan las consultas de la lista WITH, que funcionan como tablas temporales para el FROM. Las sentencias de modificación de datos dentro de WITH son una extensión de PostgreSQL que no está en el estándar SQL."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_WITH_clause.html
     accessed: 2026-10-06
+    page_title: "WITH clause"
     note: "En Redshift, cada subconsulta del WITH define una tabla temporal que existe solo durante la consulta. La lista de columnas es opcional en una CTE no recursiva y obligatoria en una recursiva. WITH RECURSIVE no puede ir dentro de una subconsulta."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql?view=sql-server-ver17
     accessed: 2026-10-06
+    page_title: "WITH common_table_expression (Transact-SQL)"
     note: "Aplica a SQL Server, Azure Synapse Analytics y Warehouse en Microsoft Fabric, entre otros. Una CTE es un conjunto de resultados temporal con nombre; se pueden definir varias separadas por coma. Dentro de la definición no se admiten ORDER BY (salvo con TOP u OFFSET/FETCH), INTO ni OPTION; la sentencia anterior a WITH en un lote debe terminar en punto y coma. Los resultados de una CTE no se materializan: cada referencia externa vuelve a ejecutar su consulta, y para varias referencias la página sugiere un objeto temporal. La página remite a un artículo aparte sobre CTE anidadas en Fabric."
 relations:
   - type: RELATED_TO
@@ -43,7 +48,7 @@ relations:
     target: data-transformation
     note: Un modelo de transformación de varios pasos puede escribirse como una cadena de CTE.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -215,3 +220,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): el join del ejemplo de §10 pasa de `USING` a `ON`, que también documenta T-SQL.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `sql-recursive-cte`, que ya tiene ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

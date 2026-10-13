@@ -18,30 +18,37 @@ sources:
   - source: terraform-docs
     url: https://developer.hashicorp.com/terraform/intro
     accessed: 2026-10-01
+    page_title: "What is Terraform?"
     note: "Terraform define y gestiona infraestructura de forma consistente y repetible con archivos de configuración legibles que se versionan, reutilizan y comparten. Los archivos son declarativos: describen el estado final, no los pasos. Flujo: escribir, plan (plan de ejecución con lo que creará, actualizará o destruirá) y apply (tras aprobación). Registra la infraestructura real en un archivo de state, fuente de verdad del entorno."
   - source: terraform-docs
     url: https://developer.hashicorp.com/terraform/language/manage-sensitive-data
     accessed: 2026-10-01
+    page_title: "Manage sensitive data in your configuration"
     note: "Si se agregan valores secretos directamente a la configuración, Terraform los guarda en sus archivos de state y de plan, que contienen atributos y metadatos de los recursos."
   - source: gcp-terraform-docs
     url: https://docs.cloud.google.com/docs/terraform/terraform-overview
     accessed: 2026-10-01
+    page_title: "Overview of Terraform on Google Cloud"
     note: "Terraform es una herramienta de IaC; usa plugins llamados providers para interactuar con nubes y APIs; el provider de Google Cloud aprovisiona y gestiona infraestructura de Google Cloud."
   - source: gcp-infrastructure-manager-docs
     url: https://docs.cloud.google.com/infrastructure-manager/docs/overview
     accessed: 2026-10-01
+    page_title: "Infrastructure Manager overview"
     note: "Infrastructure Manager es un servicio administrado que despliega configuraciones de Terraform (blueprints) desde Cloud Storage, Git o un directorio local; gestiona el ciclo de vida con deployments y revisiones, permite previews antes de aplicar y se integra con Cloud Build; no despliega aplicaciones sobre los recursos."
   - source: aws-cloudformation-docs
     url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html
     accessed: 2026-10-01
+    page_title: "What is CloudFormation?"
     note: "CloudFormation ayuda a modelar y configurar recursos de AWS: se crea un template que describe los recursos y CloudFormation los aprovisiona; el mismo template se reutiliza para crear los recursos de forma consistente y repetible."
   - source: aws-cloudformation-docs
     url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-changesets.html
     accessed: 2026-10-01
+    page_title: "Update CloudFormation stacks using change sets"
     note: "Los change sets muestran antes de aplicar qué recursos se agregarán, modificarán o borrarán, con una comparación antes y después de sus propiedades."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview
     accessed: 2026-10-01
+    page_title: "What is Bicep?"
     note: "Bicep es un lenguaje específico de dominio con sintaxis declarativa para desplegar recursos de Azure; los archivos son idempotentes (desplegar varias veces da los mismos recursos en el mismo estado); sin archivos de state que gestionar: Azure guarda el estado; la operación what-if muestra los cambios antes de desplegar."
 relations:
   - type: RELATED_TO
@@ -54,7 +61,7 @@ relations:
     target: terraform-providers
     note: Los providers conectan Terraform con cada nube.
 created_at: 2026-10-01
-updated_at: 2026-10-01
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -219,3 +226,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-01: creación (lote 4 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

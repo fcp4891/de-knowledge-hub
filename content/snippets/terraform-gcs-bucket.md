@@ -20,22 +20,27 @@ sources:
   - source: terraform-provider-google-docs
     url: https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/storage_bucket.html.markdown
     accessed: 2026-10-01
+    page_title: "google_storage_bucket"
     note: "google_storage_bucket: name (minúsculas, hasta 63 caracteres) y location obligatorios; uniform_bucket_level_access (false por defecto); public_access_prevention inherited o enforced (inherited por defecto); soft_delete_policy.retention_duration_seconds entre 604800 (7 días, por defecto) y 7776000 (90 días); versioning.enabled; lifecycle_rule con action (Delete, SetStorageClass con storage_class) y condition (por ejemplo age en días; con varias condiciones deben cumplirse todas); force_destroy false por defecto: borrar un bucket con objetos falla."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/uniform-bucket-level-access
     accessed: 2026-10-01
+    page_title: "Uniform bucket-level access"
     note: "Con acceso uniforme a nivel de bucket, las ACL se desactivan y solo IAM concede acceso al bucket y sus objetos."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/object-versioning
     accessed: 2026-10-01
+    page_title: "Object Versioning"
     note: "Object Versioning conserva versiones no actuales al reemplazar o borrar; Google recomienda soft delete para protegerse de borrados accidentales o maliciosos."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/storage-classes
     accessed: 2026-10-01
+    page_title: "Storage classes"
     note: "Coldline tiene duración mínima de 90 días y cargos de recuperación."
   - source: terraform-docs
     url: https://developer.hashicorp.com/terraform/language/backend/gcs
     accessed: 2026-10-01
+    page_title: "gcs"
     note: "El backend gcs requiere que el bucket exista antes y recomienda activar Object Versioning para recuperar el state."
 relations:
   - type: IMPLEMENTS
@@ -48,7 +53,7 @@ relations:
     target: terraform-state
     note: El segundo bucket es el backend del state, con versionado.
 created_at: 2026-10-01
-updated_at: 2026-10-04
+updated_at: 2026-10-13
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -179,3 +184,4 @@ El detalle está en `sources` del encabezado.
 
 - 2026-10-01: creación (A-F3.2, lote 4), tras la revisión B-F3.1 del lote 4.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.2 de `docs/reviews/snippets-2.md` aprobada, sin cambios pedidos; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

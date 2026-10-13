@@ -18,14 +18,17 @@ sources:
   - source: python-docs
     url: https://docs.python.org/3.12/tutorial/errors.html
     accessed: 2026-10-08
+    page_title: "8. Errors and Exceptions"
     note: "Tutorial, capítulo 8: manejar y lanzar excepciones, encadenamiento (raise RuntimeError(...) from exc, útil al transformar excepciones), excepciones definidas por el usuario, acciones de limpieza con finally (si el finally ejecuta break, continue o return, las excepciones no se relanzan), ExceptionGroup y except* para lanzar y manejar varias excepciones no relacionadas, y add_note(note), que agrega texto a la lista de notas; el traceback estándar muestra las notas en el orden en que se agregaron."
   - source: python-docs
     url: https://docs.python.org/3/tutorial/errors.html
     accessed: 2026-10-08
+    page_title: "8. Errors and Exceptions"
     note: "Solo para el SyntaxWarning (la ruta /3/ es la documentación de 3.14 el 2026-10-08; la página de 3.12 no lo trae): si el finally ejecuta break, continue o return, las excepciones no se relanzan; se desaconseja y desde 3.14 el compilador emite un SyntaxWarning (PEP 765)."
   - source: python-docs
     url: https://docs.python.org/3.12/library/exceptions.html
     accessed: 2026-10-08
+    page_title: "Built-in Exceptions"
     note: "Built-in Exceptions. Las excepciones definidas por el usuario deben derivar de Exception, no de BaseException. Todas las excepciones integradas que no terminan el sistema derivan de Exception. KeyboardInterrupt hereda de BaseException para no ser capturada por accidente por código que captura Exception. Atributos __context__, __cause__ y __notes__. add_note y __notes__ se agregaron en 3.11. ExceptionGroup y BaseExceptionGroup (3.11) envuelven una secuencia de excepciones y except* las reconoce por tipo; ExceptionGroup deriva de Exception y solo envuelve subclases de Exception."
 relations:
   - type: RELATED_TO
@@ -41,7 +44,7 @@ relations:
     target: python-context-managers
     note: with garantiza la limpieza aunque haya una excepción, igual que try/finally.
 created_at: 2026-10-08
-updated_at: 2026-10-08
+updated_at: 2026-10-13
 last_verified: 2026-10-08
 verification_status: verified
 ---
@@ -236,3 +239,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: creación (lote F3b-03a).
 - 2026-10-08: revisión B-F3.1 del lote F3b-03a aplicada (docs/reviews/cards-f3b-03a.md): la documentación de Python se cita en `/3.12/`, la versión con la que se ejecutó el código; el `SyntaxWarning` del `finally` (3.14) queda con su propia fuente en `/3/`.
 - 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

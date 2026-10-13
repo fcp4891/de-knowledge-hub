@@ -18,30 +18,37 @@ sources:
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/logicaldecoding-explanation.html
     accessed: 2026-09-30
+    page_title: "47.2. Logical Decoding Concepts"
     note: Logical decoding sobre el WAL; los slots emiten cada cambio una vez en operación normal, pueden reenviar cambios tras un crash e impiden eliminar WAL requerido.
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/logical-replication-security.html
     accessed: 2026-09-30
+    page_title: "29.11. Security"
     note: El rol de la conexión de replicación necesita el atributo REPLICATION (o ser superusuario).
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/view-pg-replication-slots.html
     accessed: 2026-09-30
+    page_title: "53.20. pg_replication_slots"
     note: La vista pg_replication_slots expone restart_lsn (WAL más antiguo que el consumidor aún puede necesitar) y confirmed_flush_lsn (hasta dónde confirmó el consumidor).
   - source: debezium-docs
     url: https://debezium.io/documentation/reference/stable/connectors/postgresql.html
     accessed: 2026-09-30
+    page_title: "Debezium connector for PostgreSQL"
     note: El conector de PostgreSQL de Debezium usa logical decoding (pgoutput desde PostgreSQL 10).
   - source: gcp-datastream-docs
     url: https://docs.cloud.google.com/datastream/docs/overview
     accessed: 2026-09-30
+    page_title: "Datastream overview"
     note: Datastream es un servicio serverless de CDC y replicación, sin recursos que aprovisionar ni administrar y que escala automáticamente; admite PostgreSQL como origen y BigQuery como destino.
   - source: aws-dms-docs
     url: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html
     accessed: 2026-09-30
+    page_title: "Creating tasks for ongoing replication using AWS DMS"
     note: DMS lee los logs de transacciones con la API nativa de cada motor; su CDC no es replicación en tiempo real.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server
     accessed: 2026-09-30
+    page_title: "What is change data capture (CDC)?"
     note: CDC de SQL Server lee el log de transacciones y escribe tablas de cambios; aplica a SQL Server, Azure SQL Managed Instance y Azure SQL Database.
 relations:
   - type: RELATED_TO
@@ -54,7 +61,7 @@ relations:
     target: scd-type-2
     note: CDC alimenta historiales SCD2 con cada versión del registro.
 created_at: 2026-09-28
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -204,3 +211,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `schema-evolution`, que ya tiene ficha.
 - 2026-10-11: §17 enlaza `database-ingestion`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

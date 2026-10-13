@@ -17,18 +17,22 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax
     accessed: 2026-10-11
+    page_title: "Data manipulation language (DML) statements in GoogleSQL"
     note: "DML statements in GoogleSQL: MERGE combina INSERT, UPDATE y DELETE en una sentencia y los aplica de forma atómica; hace un JOIN entre destino y origen y ejecuta la cláusula WHEN según el estado de cada fila (WHEN MATCHED, WHEN NOT MATCHED [BY TARGET], WHEN NOT MATCHED BY SOURCE). Las filas insertadas durante el MERGE no participan del matching: se usa el estado de las tablas al empezar la consulta. Si una fila del destino coincide con más de una del origen, la consulta falla con «UPDATE/MERGE must match at most one source row for each target row». Bytes procesados por MERGE: q' (y q' + t' si hay UPDATE o DELETE)."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/using-dml-with-partitioned-tables
     accessed: 2026-10-11
+    page_title: "Update partitioned table data using DML"
     note: "Update partitioned table data using DML: si una search_condition de una cláusula WHEN tiene un filtro, el optimizador intenta podar particiones; el optimizador intenta usar un filtro en la merge_condition para podar, y puede o no empujar el predicado a la lectura según el tipo de join. Usar WHEN NOT MATCHED y WHEN NOT MATCHED BY SOURCE juntos suele producir un full outer join que no se puede podar, salvo con un predicado constante falso en la merge_condition."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/transactions
     accessed: 2026-10-11
+    page_title: "Multi-statement transactions"
     note: "Multi-statement transactions: transacciones de varias sentencias dentro de una consulta (o entre consultas con sesiones), para mutar una o varias tablas (en distintos datasets o proyectos) y confirmar o revertir de forma atómica. Garantizan ACID y aislamiento de snapshot: las lecturas ven un snapshot consistente y los cambios de una sentencia son visibles para las siguientes dentro de la transacción. Las lecturas de fuentes externas no son consistentes dentro de una transacción si la fuente cambia."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language
     accessed: 2026-10-11
+    page_title: "Procedural language"
     note: "Procedural language: consultas de varias sentencias con estado compartido (DECLARE, IF, WHILE)."
 relations:
   - type: RELATED_TO
@@ -62,7 +66,7 @@ relations:
     target: bigquery-materialized-views
     note: Particiones y la alternativa automática.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -245,3 +249,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-08a aplicada (docs/reviews/cards-f3b-08a.md), regla del §17: relations incluye `incremental-pipelines`, `upsert`, `backfill`, `bigquery-materialized-views`, que el §17 nombra.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

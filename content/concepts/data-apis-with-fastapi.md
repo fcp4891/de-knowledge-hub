@@ -18,30 +18,37 @@ sources:
   - source: fastapi-docs
     url: https://fastapi.tiangolo.com/tutorial/query-params-str-validations/
     accessed: 2026-10-08
+    page_title: "Query Parameters and String Validations"
     note: "FastAPI 0.143.0 (la documentación no tiene URL por versión): validaciones de parámetros con Query y Annotated (largo, patrón con expresión regular); los valores que no cumplen devuelven un error de validación."
   - source: fastapi-docs
     url: https://fastapi.tiangolo.com/tutorial/response-model/
     accessed: 2026-10-08
+    page_title: "Response Model - Return Type"
     note: "El tipo de retorno o response_model se usa para validar los datos que devuelve la función (si no son válidos, es un error del código y responde con error de servidor en lugar de datos incorrectos) y para limitar y filtrar la salida a lo declarado, algo que la página destaca como importante para la seguridad."
   - source: fastapi-docs
     url: https://fastapi.tiangolo.com/async/
     accessed: 2026-10-08
+    page_title: "Concurrency and async / await"
     note: "Una path operation declarada con def (no async def) se ejecuta en un threadpool externo que luego se espera, en lugar de llamarse directamente, porque bloquearía el servidor; lo mismo para dependencias con def."
   - source: fastapi-docs
     url: https://fastapi.tiangolo.com/tutorial/testing/
     accessed: 2026-10-08
+    page_title: "Testing"
     note: "TestClient está basado en HTTPX y permite probar la aplicación con pytest sin levantar un servidor."
   - source: fastapi-docs
     url: https://fastapi.tiangolo.com/deployment/docker/
     accessed: 2026-10-08
+    page_title: "FastAPI in Containers - Docker"
     note: "Despliegue en contenedores: imagen con CMD [\"fastapi\", \"run\", ...]; cuando la replicación la maneja el clúster, se recomienda un solo proceso (Uvicorn) por contenedor, sin varios workers."
   - source: gcp-cloud-run-docs
     url: https://docs.cloud.google.com/run/docs/container-contract
     accessed: 2026-10-08
+    page_title: "Container runtime contract"
     note: "El contenedor de ingreso de un servicio de Cloud Run debe escuchar en 0.0.0.0 (no en 127.0.0.1) en el puerto al que se envían las peticiones; por defecto 8080, configurable; Cloud Run inyecta la variable de entorno PORT."
   - source: gcp-cloud-run-docs
     url: https://docs.cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-python-fastapi-service
     accessed: 2026-10-08
+    page_title: "Quickstart: Build and deploy a Python (FastAPI) web app to Cloud Run"
     note: "Quickstart de Cloud Run para construir y desplegar una aplicación Python con FastAPI desde código fuente con un solo comando."
 relations:
   - type: RELATED_TO
@@ -57,7 +64,7 @@ relations:
     target: python-concurrency
     note: def corre en un threadpool y async def en el event loop; mezclar mal bloquea el servidor.
 created_at: 2026-10-08
-updated_at: 2026-10-09
+updated_at: 2026-10-13
 last_verified: 2026-10-09
 verification_status: verified
 ---
@@ -256,3 +263,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: creación (lote F3b-03b).
 - 2026-10-09: revisión B-F3.1 del lote F3b-03b aplicada (docs/reviews/cards-f3b-03b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

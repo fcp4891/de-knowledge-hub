@@ -18,46 +18,57 @@ sources:
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dags.html
     accessed: 2026-09-30
+    page_title: "Dags"
     note: Un Dag encapsula lo necesario para ejecutar un workflow; atributos como schedule (cuándo corre), tasks (unidades discretas de trabajo ejecutadas en workers) y task dependencies (orden y condiciones de ejecución).
   - source: gcp-dataflow-docs
     url: https://docs.cloud.google.com/dataflow/docs/overview
     accessed: 2026-09-30
+    page_title: "Dataflow overview"
     note: Dataflow ofrece procesamiento unificado de stream y batch a escala; sus pipelines leen de una o más fuentes, transforman y escriben en un destino.
   - source: aws-glue-docs
     url: https://docs.aws.amazon.com/glue/latest/dg/what-is-glue.html
     accessed: 2026-09-30
+    page_title: "What is AWS Glue?"
     note: AWS Glue es un servicio serverless de integración de datos para descubrir, preparar, mover e integrar datos de múltiples fuentes.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/introduction
     accessed: 2026-09-30
+    page_title: "What is Azure Data Factory?"
     note: Azure Data Factory es el servicio cloud de ETL e integración de datos para crear workflows que orquestan movimiento y transformación de datos; se compone de pipelines, activities, datasets, linked services, data flows e integration runtimes.
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/tutorial/taskflow.html
     accessed: 2026-09-30
+    page_title: "Pythonic Dags with the TaskFlow API"
     note: TaskFlow en Airflow 3.3.2 importa dag y task desde airflow.sdk; @task(retries=3) configura reintentos; las claves de contexto se reciben como argumentos keyword-only.
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/templates-ref.html
     accessed: 2026-09-30
+    page_title: "Templates reference"
     note: ds es la logical date del Dag run como YYYY-MM-DD; solo está disponible cuando el DagRun tiene logical_date.
   - source: gcp-cloud-composer-docs
     url: https://docs.cloud.google.com/composer/docs/composer-3/composer-overview
     accessed: 2026-09-30
+    page_title: "Managed Airflow overview"
     note: Cloud Composer evoluciona a Managed Service for Apache Airflow (cambio de nombre); Managed Airflow es un servicio totalmente administrado de orquestación de workflows construido sobre Apache Airflow.
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/transactions
     accessed: 2026-09-30
+    page_title: "Multi-statement transactions"
     note: Transacciones de varias sentencias con commit o rollback atómico.
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/parameterized-queries
     accessed: 2026-10-01
+    page_title: "Run parameterized queries"
     note: "Con la biblioteca cliente de Python: bigquery.Client(), QueryJobConfig(query_parameters=[ScalarQueryParameter(nombre, tipo, valor)]) y client.query_and_wait(query, job_config=...); parámetros con nombre usando @nombre."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/multi-statement-queries
     accessed: 2026-10-01
+    page_title: "Work with multi-statement queries"
     note: "Consultas de varias sentencias; su ejemplo usa un parámetro de consulta (@id) dentro de la consulta."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/access-control
     accessed: 2026-10-01
+    page_title: "BigQuery IAM roles and permissions"
     note: "roles/bigquery.jobUser permite ejecutar consultas en el proyecto; roles/bigquery.dataEditor sobre un dataset permite modificar sus tablas."
 relations:
   - type: RELATED_TO
@@ -73,7 +84,7 @@ relations:
     target: retries
     note: Los reintentos acotados son parte del control de fallos del pipeline.
 created_at: 2026-09-30
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -261,3 +272,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: §10 alineada con el snippet ejecutable `airflow-daily-partition-dag`: el código anterior llamaba a funciones no definidas (`extract_orders`, `validate_volume_and_schema`, `replace_partition`).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `dag`, que ya tiene ficha.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `data-contracts`, que ya tiene ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

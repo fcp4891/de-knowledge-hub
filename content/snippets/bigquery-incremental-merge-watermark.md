@@ -22,22 +22,27 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/transactions
     accessed: 2026-10-01
+    page_title: "Multi-statement transactions"
     note: "Transacciones de varias sentencias con commit o rollback atómico; admiten CREATE TEMP TABLE; sin session mode, un error sin manejador hace fallar la consulta y BigQuery revierte la transacción; dentro de una transacción CURRENT_TIMESTAMP devuelve el inicio de la transacción."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language
     accessed: 2026-10-01
+    page_title: "Procedural language"
     note: "DECLARE ... DEFAULT (subconsulta), SET, IF ... END IF, RAISE USING MESSAGE y BEGIN TRANSACTION en scripts de BigQuery."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax
     accessed: 2026-10-01
+    page_title: "Data manipulation language (DML) statements in GoogleSQL"
     note: "Sintaxis de MERGE; error UPDATE/MERGE must match at most one source row for each target row si una fila destino coincide con más de una de origen."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
     accessed: 2026-10-01
+    page_title: "Data definition language (DDL) statements in GoogleSQL"
     note: "CREATE [OR REPLACE] [TEMP | TEMPORARY] TABLE [IF NOT EXISTS]: OR REPLACE reemplaza la tabla si ya existe."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/access-control
     accessed: 2026-10-01
+    page_title: "BigQuery IAM roles and permissions"
     note: "roles/bigquery.jobUser permite ejecutar jobs, incluidas consultas, en el proyecto; roles/bigquery.dataEditor sobre un dataset permite crear, actualizar, leer y borrar sus tablas."
 relations:
   - type: IMPLEMENTS
@@ -53,7 +58,7 @@ relations:
     target: idempotency
     note: Repetir el script con el mismo staging no duplica ni retrocede datos.
 created_at: 2026-10-01
-updated_at: 2026-10-01
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -156,3 +161,4 @@ El detalle está en `sources` del encabezado.
 - 2026-10-01: creación (A-F3.2), desde la sección 10 de `incremental-pipelines` tras la revisión B-F3.1 del lote 2.
 - 2026-10-01: revisión B-F3.2 (snippets-1) aplicada: `CREATE OR REPLACE TEMP TABLE` para que repetir el script en la misma sesión no falle.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

@@ -18,22 +18,27 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax
     accessed: 2026-10-06
+    page_title: "Query syntax"
     note: "QUALIFY filtra los resultados de funciones de ventana; debe haber una función de ventana en QUALIFY o en el SELECT, aunque no hace falta que esté en el SELECT. Solo se conservan las filas cuya condición es TRUE; las que dan NULL o FALSE se descartan. Orden de evaluación típico: FROM, WHERE, GROUP BY y agregación, HAVING, WINDOW, QUALIFY, DISTINCT, ORDER BY, LIMIT."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_QUALIFY_clause.html
     accessed: 2026-10-06
+    page_title: "QUALIFY clause"
     note: "QUALIFY filtra resultados de funciones de ventana sin subconsulta; es parecido a HAVING, pero sobre el resultado de las ventanas, y ambos pueden ir en la misma consulta. Si QUALIFY va directamente después de FROM, la relación del FROM debe tener alias."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/queries/select-qualify-clause-transact-sql?view=fabric&preserve-view=true
     accessed: 2026-10-06
+    page_title: "SELECT - QUALIFY clause (Transact-SQL)"
     note: "Aplica al SQL analytics endpoint y a Warehouse en Microsoft Fabric. QUALIFY filtra por funciones de ventana sin subconsulta ni CTE y no reemplaza a WHERE ni a HAVING. Se evalúa después de WHERE, GROUP BY, HAVING y del cálculo de las ventanas, y antes de ORDER BY, DISTINCT y FOR JSON. Puede referenciar alias de funciones de ventana del SELECT o funciones de ventana escritas dentro de QUALIFY; se admite en subconsultas, CTE, vistas, INSERT … SELECT y CTAS."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/queries/select-transact-sql?view=sql-server-ver17
     accessed: 2026-10-06
+    page_title: "SELECT (Transact-SQL)"
     note: "El orden lógico de procesamiento de SELECT en T-SQL incluye QUALIFY solo en Fabric Data Warehouse."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/sql-select.html
     accessed: 2026-10-06
+    page_title: "PostgreSQL: Documentation: 18: SELECT"
     note: "La sintaxis de SELECT de PostgreSQL documenta WITH, FROM, WHERE, GROUP BY, HAVING, WINDOW, UNION/INTERSECT/EXCEPT, ORDER BY, LIMIT, OFFSET, FETCH y FOR UPDATE, sin cláusula QUALIFY."
 relations:
   - type: RELATED_TO
@@ -49,7 +54,7 @@ relations:
     target: sql-subqueries
     note: En motores sin QUALIFY se usa una subconsulta o CTE con la ventana y un WHERE afuera.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -233,3 +238,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: ficha completa (lote F3b-02a, dominio 02-sql). No se afirma si `QUALIFY` es o no parte del estándar SQL, porque ninguna fuente oficial consultada lo dice; se documenta el soporte de cada motor según su documentación.
 - 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): sin cambios pedidos.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

@@ -18,38 +18,47 @@ sources:
   - source: apache-avro-docs
     url: https://avro.apache.org/docs/1.12.0/specification/
     accessed: 2026-10-06
+    page_title: "Specification"
     note: "Especificación de Avro 1.12.0. Un esquema se representa en JSON. La codificación binaria no incluye nombres de campos ni separadores: el lector depende del esquema con que se escribió. Los object container files llevan el esquema y guardan los objetos en bloques que pueden comprimirse, con marcadores de sincronización que permiten dividir el archivo; codecs opcionales bzip2, snappy, xz y zstandard. Resolución de esquemas: si el escritor tiene un campo que el lector no tiene, se ignora; si el lector tiene un campo con default que el escritor no tiene, se usa el default; si no tiene default, es un error. El default solo se usa al leer y no hace opcional el campo al escribir. La codificación single-object identifica el esquema de cada registro guardado por separado (por ejemplo, en un topic de Kafka)."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro
     accessed: 2026-10-06
+    page_title: "Load Avro data from Cloud Storage"
     note: "Avro es el formato preferido para cargar datos en BigQuery: frente a CSV y JSON delimitado por líneas, carga más rápido, se lee en paralelo aunque los bloques estén comprimidos, no requiere tipado ni serialización y no tiene problemas de codificación. El esquema se toma de los datos autodescriptivos (del archivo alfabéticamente último cuando hay varios). Los tipos lógicos decimal se convierten a NUMERIC, BIGNUMERIC o STRING según precisión, escala y los tipos destino indicados."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/schemas
     accessed: 2026-10-06
+    page_title: "Schema overview"
     note: "Pub/Sub admite esquemas Avro (versión 1.11) y Protocol Buffer asociados a un topic; un mensaje que no cumple el esquema no se publica; Pub/Sub no valida los valores por defecto de Avro."
   - source: aws-glue-docs
     url: https://docs.aws.amazon.com/glue/latest/dg/schema-registry.html
     accessed: 2026-10-06
+    page_title: "AWS Glue Schema registry"
     note: "AWS Glue Schema Registry admite Avro, JSON Schema y Protobuf, con modos de compatibilidad entre versiones (BACKWARD, FORWARD, FULL, NONE, entre otros)."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/copy-parameters-data-format.html
     accessed: 2026-10-06
+    page_title: "Data format parameters"
     note: "COPY de Redshift acepta AVRO [AS] 'avro_option' desde S3, EMR y hosts remotos por SSH, no desde DynamoDB."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/create-table.html
     accessed: 2026-10-06
+    page_title: "CREATE TABLE"
     note: "CREATE EXTERNAL TABLE de Athena admite STORED AS AVRO, entre otros formatos."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/format-avro
     accessed: 2026-10-06
+    page_title: "Avro format in Azure Data Factory and Synapse Analytics"
     note: "Data Factory lee y escribe Avro; avroCompressionCodec para escribir admite none (por defecto), deflate y snappy, y al leer detecta el codec en los metadatos del archivo; la Copy activity no admite Snappy en Avro; no se admiten espacios en nombres de columnas."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/event-hubs/schema-registry-concepts
     accessed: 2026-10-06
+    page_title: "Schema Registry in Azure Event Hubs"
     note: "El registro de esquemas de Event Hubs admite esquemas Avro, JSON schema y Protocol Buffers, organizados en schema groups."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/bq-cli-reference
     accessed: 2026-10-06
+    page_title: "bq command-line tool reference"
     note: "bq load --source_format=AVRO y --replace=true (WRITE_TRUNCATE)."
 relations:
   - type: RELATED_TO
@@ -65,7 +74,7 @@ relations:
     target: compression
     note: Los bloques de los archivos Avro pueden comprimirse con distintos codecs.
 created_at: 2026-10-06
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-06
 verification_status: verified
 ---
@@ -227,3 +236,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: creación (lote F3b-01b, dominio 01-fundamentals).
 - 2026-10-06: revisión B-F3.1 del lote F3b-01b aplicada (docs/reviews/cards-f3b-01b.md), sin cambios pedidos.
 - 2026-10-06: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

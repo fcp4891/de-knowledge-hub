@@ -18,18 +18,22 @@ sources:
   - source: gcp-cloud-run-docs
     url: https://docs.cloud.google.com/run/docs/overview/what-is-cloud-run
     accessed: 2026-10-11
+    page_title: "What is Cloud Run"
     note: "What is Cloud Run: plataforma administrada para ejecutar código, funciones o contenedores; el despliegue desde código fuente construye el contenedor para lenguajes como Python. Cuatro formas de ejecutar: service (responde a solicitudes HTTP en un endpoint estable), job (ejecuta tareas paralelizables a mano o con calendario y corre hasta terminar), worker pool (cargas de fondo siempre activas, como consumidores de Kafka, Pub/Sub o RabbitMQ) e instance (cargas largas que necesitan un entorno único). Todas corren contenedores aislados en el mismo entorno de ejecución."
   - source: gcp-cloud-run-docs
     url: https://docs.cloud.google.com/run/docs/resource-model
     accessed: 2026-10-11
+    page_title: "Deployment options and resource model"
     note: "Deployment options and resource model: comparación de services, jobs, worker pools e instances; los jobs ejecutan tareas en secuencia o en paralelo y corren hasta terminar, hasta 7 días; los worker pools escalan de forma manual o automática por CPU o por backlog de Pub/Sub; las funciones son una forma especializada de despliegue desde código para código de un solo propósito y orientado a eventos (solo en services)."
   - source: gcp-cloud-run-docs
     url: https://docs.cloud.google.com/run/docs/create-jobs
     accessed: 2026-10-11
+    page_title: "Create jobs"
     note: "Create jobs: cada tarea conoce su índice en CLOUD_RUN_TASK_INDEX y la cantidad total en CLOUD_RUN_TASK_COUNT; si se procesan datos en paralelo, el código decide qué subconjunto le toca a cada tarea. Timeout y reintentos por tarea: si una tarea supera sus reintentos, queda fallida, y si alguna falló, la ejecución del job queda fallida después de intentar todas. Por defecto, cada tarea corre como máximo 10 minutos, configurable hasta 168 horas (7 días); con GPU, hasta 1 hora. La ejecución del job no tiene timeout propio: termina cuando terminan sus tareas."
   - source: gcp-cloud-run-docs
     url: https://docs.cloud.google.com/run/docs/configuring/task-timeout
     accessed: 2026-10-11
+    page_title: "Set task timeout for jobs"
     note: "Set task timeout for jobs: con reintentos, el timeout aplica a cada intento de una tarea."
 relations:
   - type: RELATED_TO
@@ -48,7 +52,7 @@ relations:
     target: gcp-secret-manager-usage
     note: Los secretos del contenedor.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-12
 verification_status: verified
 ---
@@ -239,3 +243,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08c).
 - 2026-10-12: revisión B-F3.1 del lote F3b-08c aplicada (docs/reviews/cards-f3b-08c.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-12: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

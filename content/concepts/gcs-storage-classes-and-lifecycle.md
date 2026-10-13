@@ -18,22 +18,27 @@ sources:
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/storage-classes
     accessed: 2026-10-11
+    page_title: "Storage classes"
     note: "Storage classes: la clase es metadata de cada objeto y afecta su disponibilidad y su modelo de precios; un bucket tiene una clase por defecto (Standard si no se indica) que heredan los objetos nuevos; cambiar la clase por defecto no cambia los objetos existentes; un objeto cambia de clase reescribiéndolo o con Object Lifecycle Management; Autoclass lo hace automáticamente. Tabla al 2026-10-11 (duración mínima / cobro de recuperación / disponibilidad típica mensual): Rapid (solo con Rapid Bucket, buckets zonales) sin mínimo, sin recuperación, >99,95 % en zonas; Standard sin mínimo, sin recuperación, >99,99 % en multirregiones y regiones duales, 99,99 % en regiones; Nearline 30 días, con recuperación, 99,95 % / 99,9 %; Coldline 90 días, con recuperación, 99,95 % / 99,9 %; Archive 365 días, con recuperación, 99,95 % / 99,9 %. Todas: sin tamaño mínimo de objeto, baja latencia sin recuperación fuera de línea, durabilidad de 99,999999999 % anual. Nearline conviene para datos que se leen o modifican en promedio una vez al mes o menos."
   - source: gcp-cloud-storage-docs
     url: https://cloud.google.com/storage/pricing
     accessed: 2026-10-11
+    page_title: "Cloud Storage pricing"
     note: "Cloud Storage pricing: precios vigentes por clase y ubicación (esta ficha no los copia). Duración mínima: Nearline 30 días, Coldline 90 y Archive 365; Standard y Rapid, ninguna. Se puede borrar, reemplazar o mover un objeto antes de cumplir la duración mínima, pero se cobra como si hubiera estado guardado esa duración; los cargos de eliminación anticipada también aplican al reescribir objetos, por ejemplo al cambiar su clase. Autoclass tiene un cargo de habilitación y una tarifa de administración."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/lifecycle
     accessed: 2026-10-11
+    page_title: "Object Lifecycle Management"
     note: "Object Lifecycle Management: una configuración del bucket con reglas que aplican a objetos actuales y futuros; cada regla tiene una acción y una o más condiciones, y el objeto debe cumplirlas todas. Acciones: Delete, SetStorageClass y AbortIncompleteMultipartUpload. Si varias reglas SetStorageClass coinciden, gana la clase con menor precio en reposo. Los cambios de configuración pueden tardar hasta 24 horas en aplicarse, y mientras tanto pueden ejecutarse acciones de la configuración anterior. Los cambios de clase hechos por lifecycle no tienen cargos de replicación entre regiones, recuperación ni eliminación anticipada por el cambio, aunque los cargos de eliminación anticipada aplican si un objeto con duración mínima se borra antes de cumplirla. Probar las reglas con datos de desarrollo."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/autoclass
     accessed: 2026-10-11
+    page_title: "Autoclass"
     note: "Autoclass: mueve cada objeto a la clase adecuada según su acceso: a clases más frías si no se accede, y a Standard al leerlo. Con Autoclass, todos los objetos empiezan en Standard y la clase por defecto del bucket es siempre Standard; los cambios manuales de clase se ignoran. Sin acceso por 30 días pasa a Nearline; la clase terminal por defecto es Nearline y opcionalmente Archive (en ese caso, 90 días sin acceso a Coldline y 365 a Archive). Los objetos de menos de 128 KiB no bajan de Standard. Leer los datos de un objeto lo devuelve a Standard; leer o editar sus metadatos no. Cargo de habilitación único y tarifa de administración; sin cargos de recuperación ni de eliminación anticipada salvo los de habilitación; las operaciones se cobran a tarifa Standard."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/managing-lifecycles
     accessed: 2026-10-11
+    page_title: "Manage object lifecycles"
     note: "Manage object lifecycles: la configuración de lifecycle se puede gestionar con Terraform mediante el recurso google_storage_bucket."
 relations:
   - type: RELATED_TO
@@ -46,7 +51,7 @@ relations:
     target: data-lake
     note: Las capas del lake tienen patrones de acceso y retención distintos.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -298,3 +303,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08b).
 - 2026-10-11: revisión B-F3.1 del lote F3b-08b aplicada (docs/reviews/cards-f3b-08b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

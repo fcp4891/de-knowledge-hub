@@ -17,22 +17,27 @@ sources:
   - source: python-docs
     url: https://docs.python.org/3/tutorial/errors.html
     accessed: 2026-09-30
+    page_title: "8. Errors and Exceptions"
     note: "Buena práctica: capturar las excepciones más específicas posibles y dejar propagar las inesperadas; except Exception suele registrar y relanzar. La cláusula else evita capturar por accidente errores de código no protegido; finally se ejecuta siempre; raise ... from exc encadena la causa y from None la oculta; ExceptionGroup agrupa varios errores."
   - source: python-docs
     url: https://docs.python.org/3/builtins/exceptions.html
     accessed: 2026-09-30
+    page_title: "Built-in Exceptions"
     note: "TimeoutError (errno ETIMEDOUT) y ConnectionError (con BrokenPipeError, ConnectionAbortedError, ConnectionRefusedError y ConnectionResetError) son subclases de OSError."
   - source: aws-boto3-docs
     url: https://docs.aws.amazon.com/boto3/latest/guide/retries.html
     accessed: 2026-09-30
+    page_title: "Retries"
     note: "Boto3 tiene tres modos de reintento: legacy (por defecto, 5 intentos máximos incluida la petición inicial), standard (3 intentos por defecto, circuit breaking, reintenta 429, 500, 502, 503, 504 y 509 con backoff exponencial de base 2 hasta 20 segundos) y adaptive (experimental, agrega limitación de tasa del lado del cliente). max_attempts incluye la petición inicial si se define en el archivo de configuración o en AWS_MAX_ATTEMPTS, y la excluye si se define en un objeto Config."
   - source: gcp-python-api-core-docs
     url: https://googleapis.dev/python/google-api-core/latest/retry.html
     accessed: 2026-09-30
+    page_title: "Retry"
     note: "google.api_core.retry.Retry: decorador de reintento exponencial; por defecto reintenta errores transitorios de la API, con initial 1.0, maximum 60.0, multiplier 2.0 y timeout 120.0 segundos; deadline está deprecado a favor de timeout."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/developer/python/sdk/fundamentals/errors
     accessed: 2026-09-30
+    page_title: "Handle errors produced by the Azure SDK for Python"
     note: "La mayoría de los clientes del Azure SDK para Python reintentan errores de conexión y ciertos códigos HTTP con backoff exponencial y jitter; RetryPolicy (retry_total, retry_backoff_factor) lo personaliza. ServiceRequestError: no se pudo enviar la petición; ServiceResponseError: respuesta inesperada; HttpResponseError: respuestas 4xx y 5xx con acceso al status_code."
 relations:
   - type: USES
@@ -45,7 +50,7 @@ relations:
     target: api-ingestion
     note: La ingesta de APIs es el caso más común de este manejo de errores.
 created_at: 2026-09-30
-updated_at: 2026-10-08
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -221,3 +226,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `python-api-consumption`, `python-logging`, que ya tienen ficha.
 - 2026-10-08: §17 enlaza `python-exceptions`, que ya tiene ficha (lote F3b-03a); antes figuraba como pendiente de ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

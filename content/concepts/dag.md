@@ -18,46 +18,57 @@ sources:
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dags.html
     accessed: 2026-09-30
+    page_title: "Dags"
     note: "Un Dag encapsula lo necesario para ejecutar un workflow: schedule, tasks (unidades discretas ejecutadas en workers), dependencias (orden y condiciones), callbacks y otros parámetros. El término viene del grafo dirigido acíclico matemático, pero en Airflow su significado evolucionó y se escribe Dag."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/tasks.html
     accessed: 2026-09-30
+    page_title: "Tasks"
     note: "Una Task es la unidad básica de ejecución, organizada en Dags con dependencias upstream y downstream; hay Operators, Sensors y tareas TaskFlow. Por defecto una Task corre cuando todas sus tareas upstream tuvieron éxito, y trigger rules y branching lo modifican. Cada ejecución de un Dag instancia Task Instances para su data interval; estados como up_for_retry y upstream_failed."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/tutorial/taskflow.html
     accessed: 2026-09-30
+    page_title: "Pythonic Dags with the TaskFlow API"
     note: "TaskFlow en Airflow 3.3.2 importa dag y task desde airflow.sdk; @task(retries=3) configura reintentos; las claves de contexto se reciben como argumentos keyword-only."
   - source: gcp-cloud-composer-docs
     url: https://docs.cloud.google.com/composer/docs/composer-3/composer-overview
     accessed: 2026-09-30
+    page_title: "Managed Airflow overview"
     note: "Cloud Composer evoluciona a Managed Service for Apache Airflow; servicio totalmente administrado de orquestación de workflows construido sobre Apache Airflow."
   - source: aws-mwaa-docs
     url: https://docs.aws.amazon.com/mwaa/latest/userguide/what-is-mwaa.html
     accessed: 2026-09-30
+    page_title: "What Is Amazon Managed Workflows for Apache Airflow?"
     note: "Amazon MWAA ofrece versiones de Apache Airflow y parchea sus imágenes, envía métricas y logs a CloudWatch, controla el acceso con IAM y mantiene compatibilidad con la API de Apache Airflow."
   - source: aws-step-functions-docs
     url: https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html
     accessed: 2026-09-30
+    page_title: "What is Step Functions?"
     note: "Step Functions ejecuta workflows como state machines. Los workflows Standard tienen ejecución exactly-once y duran hasta un año; los Express, ejecución at-least-once y hasta cinco minutos."
   - source: aws-step-functions-docs
     url: https://docs.aws.amazon.com/step-functions/latest/dg/call-https-apis.html
     accessed: 2026-09-30
+    page_title: "Call HTTPS APIs in Step Functions workflows"
     note: "Los estados de Step Functions se definen en ASL (Amazon States Language), por ejemplo el HTTP Task con el recurso http:invoke y su bloque Retry."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/parameterized-queries
     accessed: 2026-10-01
+    page_title: "Run parameterized queries"
     note: "Con la biblioteca cliente de Python: bigquery.Client(), QueryJobConfig(query_parameters=[ScalarQueryParameter(nombre, tipo, valor)]) y client.query_and_wait(query, job_config=...); parámetros con nombre usando @nombre."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/multi-statement-queries
     accessed: 2026-10-01
+    page_title: "Work with multi-statement queries"
     note: "Consultas de varias sentencias; su ejemplo usa un parámetro de consulta (@id) dentro de la consulta."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/transactions
     accessed: 2026-10-01
+    page_title: "Multi-statement transactions"
     note: "Transacciones de varias sentencias con commit o rollback atómico."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/concepts-pipelines-activities
     accessed: 2026-09-30
+    page_title: "Pipelines and activities in Azure Data Factory and Azure Synapse Analytics"
     note: "En Data Factory, un pipeline es una agrupación lógica de activities, definida en JSON (activities, parameters, concurrency); una activity puede depender de otras con condiciones Succeeded, Failed, Skipped y Completed."
 relations:
   - type: RELATED_TO
@@ -70,7 +81,7 @@ relations:
     target: idempotency
     note: Las tareas de un Dag se reintentan y reejecutan; cada una debe ser idempotente.
 created_at: 2026-09-30
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -272,3 +283,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `scheduler`, `data-orchestration`, que ya tienen ficha.
 - 2026-10-11: §17 enlaza `pipeline-dependencies`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

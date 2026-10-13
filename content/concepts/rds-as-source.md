@@ -18,50 +18,62 @@ sources:
   - source: aws-rds-docs
     url: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html
     accessed: 2026-10-12
+    page_title: "What is Amazon Relational Database Service (Amazon RDS)?"
     note: "What is Amazon RDS?: servicio para configurar, operar y escalar bases relacionales en AWS, que administra las tareas comunes de administración; esta guía cubre los motores de RDS distintos de Aurora."
   - source: aws-rds-docs
     url: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html
     accessed: 2026-10-12
+    page_title: "Working with DB instance read replicas"
     note: "Working with DB instance read replicas: una réplica de lectura es una copia de solo lectura que recibe los cambios del primario de forma asíncrona; descarga de lecturas al primario; se cobra como una instancia estándar."
   - source: aws-rds-docs
     url: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL.Concepts.General.FeatureSupport.LogicalReplication.html
     accessed: 2026-10-12
+    page_title: "Performing logical replication for Amazon RDS for PostgreSQL"
     note: "Performing logical replication for RDS for PostgreSQL: se activa con el parámetro estático rds.logical_replication = 1, que también ajusta wal_level, max_wal_senders, max_replication_slots y max_connections; aumenta la generación de WAL, así que se activa solo si se usan slots lógicos; requiere reiniciar la instancia."
   - source: aws-rds-docs
     url: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ExportSnapshot.html
     accessed: 2026-10-12
+    page_title: "Exporting DB snapshot data to Amazon S3 for Amazon RDS"
     note: "Exporting DB snapshot data to Amazon S3: exporta snapshots (manuales, automáticos o de AWS Backup) a S3 en Parquet comprimido y consistente; todo el snapshot o bases, esquemas o tablas elegidos."
   - source: aws-rds-docs
     url: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/zero-etl.html
     accessed: 2026-10-12
+    page_title: "Amazon RDS zero-ETL integrations"
     note: "Amazon RDS zero-ETL integrations: integración administrada de RDS con Amazon Redshift y Amazon SageMaker AI para analítica y ML casi en tiempo real con datos de RDS."
   - source: aws-dms-docs
     url: https://docs.aws.amazon.com/dms/latest/userguide/Welcome.html
     accessed: 2026-10-12
+    page_title: "What is AWS Database Migration Service?"
     note: "What is AWS Database Migration Service?: servicio para migrar bases relacionales, warehouses, NoSQL y otros almacenes, hacia AWS o entre nube y on-premises."
   - source: aws-dms-docs
     url: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html
     accessed: 2026-10-12
+    page_title: "Creating tasks for ongoing replication using AWS DMS"
     note: "Creating tasks for ongoing replication: una tarea de DMS captura los cambios continuos (CDC) durante o después de la carga completa, leyendo los logs de la base con su API nativa; DMS CDC no es replicación en tiempo real."
   - source: aws-dms-docs
     url: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.PostgreSQL.html
     accessed: 2026-10-12
+    page_title: "Using a PostgreSQL database as an AWS DMS source"
     note: "Using a PostgreSQL database as an AWS DMS source: en RDS, rds.logical_replication = 1 en el grupo de parámetros (estático, requiere reinicio). Para carga completa más CDC y solo CDC, DMS usa slots de replicación lógica que retienen WAL hasta decodificarlo, con los plugins test_decoding o pglogical; al reiniciar (no reanudar) la tarea, el slot se recrea."
   - source: aws-dms-docs
     url: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.S3.html
     accessed: 2026-10-12
+    page_title: "Using Amazon S3 as a target for AWS Database Migration Service"
     note: "Using Amazon S3 as a target for AWS DMS: carga completa y CDC se escriben en CSV por defecto, o en Parquet; los archivos de carga completa se nombran con un contador (LOAD00001.csv) y los de CDC con una marca de tiempo (20141029-1134010000.csv), en una carpeta por tabla. Por defecto, el primer campo de cada registro de CDC es I (INSERT), U (UPDATE) o D (DELETE), y el resto es la fila como quedó."
   - source: aws-dms-docs
     url: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CustomizingTasks.TableMapping.SelectionTransformation.Selections.html
     accessed: 2026-10-12
+    page_title: "Selection rules and actions"
     note: "Selection rules and actions: las reglas de selección eligen esquemas y tablas con object-locator (schema-name, table-name) y rule-action include o exclude."
   - source: aws-dms-docs
     url: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Serverless.html
     accessed: 2026-10-12
+    page_title: "Working with AWS DMS Serverless"
     note: "Working with AWS DMS Serverless: aprovisionamiento y escalado automáticos, alta disponibilidad y cobro por uso, sin administrar instancias de replicación; DMS calcula la capacidad necesaria a partir de los metadatos."
   - source: aws-dms-docs
     url: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Serverless.Components.html
     accessed: 2026-10-12
+    page_title: "AWS DMS Serverless components"
     note: "AWS DMS Serverless components: se indican las DMS capacity units (DCU) mínimas y máximas; una DCU son 2 GB de RAM; se cobra cada DCU en uso."
 relations:
   - type: RELATED_TO

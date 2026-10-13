@@ -17,30 +17,37 @@ sources:
   - source: gcp-dataform-docs
     url: https://docs.cloud.google.com/dataform/docs/create-tables
     accessed: 2026-10-02
+    page_title: "Create tables"
     note: "Tablas y vistas se reconstruyen desde cero en cada ejecución; una tabla incremental solo la primera vez, y después inserta o fusiona filas nuevas. when(incremental(), ...) agrega la condición incremental y ${self()} referencia la tabla. uniqueKey fusiona por clave. updatePartitionFilter limita las particiones del destino que examina el MERGE y solo funciona con uniqueKey: sin uniqueKey, Dataform usa estrategia de inserción. Para no escanear toda una tabla particionada de origen, declarar el límite como variable en pre_operations (BigQuery scripting) y usarla como expresión constante. Full refresh (--full-refresh o Run with full refresh) ignora when(incremental()) y recrea con CREATE OR REPLACE; protected: true evita la reconstrucción. onSchemaChange (IGNORE por defecto, FAIL, EXTEND, SYNCHRONIZE) requiere Dataform core 3.0.11 o superior."
   - source: gcp-dataform-docs
     url: https://docs.cloud.google.com/dataform/docs/reference/dataform-core-reference
     accessed: 2026-10-04
+    page_title: "Dataform core reference"
     note: "Referencia de Dataform core: onSchemaChange solo es válido en tablas incrementales y es la acción tras detectar columnas agregadas o quitadas en el SELECT; «This feature is in Preview». protected: true hace que la ejecución ignore la opción de full refresh."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/querying-partitioned-tables
     accessed: 2026-10-02
+    page_title: "Query partitioned tables"
     note: "Para limitar las particiones escaneadas hay que usar una expresión constante en el filtro; una condición que usa valores de la tabla (dinámicos) no limita las particiones escaneadas."
   - source: dbt-docs
     url: https://docs.getdbt.com/docs/build/incremental-models
     accessed: 2026-10-02
+    page_title: "Configure incremental models"
     note: "En dbt, materialized='incremental'; is_incremental() es verdadero si el modelo ya existe como tabla, no se pasa --full-refresh y el modelo es incremental. unique_key permite actualizar filas existentes en vez de solo agregar; incremental_strategy elige la estrategia (por ejemplo merge)."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/tutorial-setup-dbt
     accessed: 2026-10-04
+    page_title: "Tutorial: Set up dbt for Fabric Data Warehouse"
     note: "Microsoft Learn documenta dbt para Fabric Data Warehouse con el adaptador dbt-fabric (pip install dbt-fabric; type: fabric en profiles.yml)."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-factory/dbt-job-overview
     accessed: 2026-10-04
+    page_title: "dbt job in Microsoft Fabric"
     note: "Los dbt jobs de Fabric (preview, se habilitan en la configuración del tenant) soportan dbt-fabric para Fabric Data Warehouse y dbt-fabricspark para Fabric Lakehouse, entre otros adaptadores, en el runtime administrado."
   - source: dbt-docs
     url: https://docs.getdbt.com/docs/supported-data-platforms
     accessed: 2026-10-02
+    page_title: "Supported data platforms"
     note: "La tabla de adaptadores de la página incluye Redshift como Generally available; Microsoft Fabric no figura en esa tabla."
 relations:
   - type: IMPLEMENTS
@@ -62,7 +69,7 @@ relations:
     target: dataform-workflows
     note: El flujo de Dataform en el que corren las tablas incrementales.
 created_at: 2026-10-02
-updated_at: 2026-10-12
+updated_at: 2026-10-13
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -246,3 +253,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
 - 2026-10-05: se quita la frase sobre la Dataform CLI sustentada en *Create tables*; queda solo el Preview de `onSchemaChange` citado desde la referencia de Dataform core.
 - 2026-10-12: «pendiente de ficha» actualizado: `dataform-workflows` ya tiene ficha (lote F3b-08c); el §17 la enlaza y relations la incluye.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

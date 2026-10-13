@@ -18,34 +18,42 @@ sources:
   - source: dbt-docs
     url: https://docs.getdbt.com/docs/build/semantic-models
     accessed: 2026-10-10
+    page_title: "Semantic models"
     note: "dbt (formato de dbt v1.12 y posteriores): los semantic models son la base de la definición de datos en MetricFlow, que impulsa el Semantic Layer; son nodos conectados por entidades en un grafo semántico, configurado con anotaciones YAML sobre los modelos dbt. Cada semantic model corresponde a un modelo del DAG. Entidades a nivel de columna con type primary, foreign, unique o natural (claves de join); dimensiones categóricas o de tiempo; agg_time_dimension como dimensión de tiempo por defecto; métricas simples (type simple, agg, expr) que reemplazan a las measures."
   - source: dbt-docs
     url: https://docs.getdbt.com/docs/use-dbt-semantic-layer/dbt-sl
     accessed: 2026-10-10
+    page_title: "dbt Semantic Layer"
     note: "El dbt Semantic Layer, impulsado por MetricFlow, permite definir métricas sobre los modelos existentes y maneja los joins automáticamente; centralizar las definiciones da acceso consistente a las métricas en herramientas y aplicaciones posteriores."
   - source: dbt-docs
     url: https://docs.getdbt.com/best-practices/how-we-build-our-metrics/semantic-layer-6-terminology
     accessed: 2026-10-10
+    page_title: "Tactical terminology"
     note: "Guía de buenas prácticas de dbt: el Semantic Layer es un motor de desnormalización que combina dinámicamente marts normalizados en todas las formas posibles en respuesta a las consultas."
   - source: gcp-looker-docs
     url: https://docs.cloud.google.com/looker/docs/what-is-lookml
     accessed: 2026-10-10
+    page_title: "Introduction to LookML"
     note: "Looker: LookML es un lenguaje de dependencias (como make), con tipos de datos y sintaxis predefinidos para modelar datos; es independiente de los dialectos SQL y encapsula expresiones SQL; fomenta el estilo DRY. Ejemplo de la página: un archivo de modelo con explore: orders y join: customers (sql_on), y archivos de vista con dimension (primary_key, type, sql), dimension_group de tipo time con timeframes, y measure de tipo count y sum."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/power-bi/connect-data/service-datasets-understand
     accessed: 2026-10-10
+    page_title: "Semantic models in the Power BI service"
     note: "Power BI: los semantic models representan una fuente de datos lista para reportes y visualización; se crean conectando a un modelo externo, subiendo un archivo de Power BI Desktop o un libro de Excel, entre otras formas. Salvo los semantic models de streaming, representan modelos de datos que usan las tecnologías de modelado de Analysis Services. La documentación de Power BI a veces usa «semantic model» y «model» como sinónimos."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/power-bi/guidance/star-schema
     accessed: 2026-10-10
+    page_title: "Understand star schema and the importance for Power BI"
     note: "La guía de Power BI explica el esquema estrella y su importancia para los modelos semánticos de Power BI; en un semantic model de Power BI, una medida tiene una definición distinta pero parecida a la del esquema estrella."
   - source: aws-quick-docs
     url: https://docs.aws.amazon.com/quick/latest/userguide/topics.html
     accessed: 2026-10-10
+    page_title: "Working with Amazon Quick Sight Topics"
     note: "Amazon Quick (incluye Amazon Quick Sight, antes QuickSight): un Topic de Quick Sight es la capa semántica multi-dataset que reúne varios datasets enriquecidos en un modelo de datos unificado; permite definir relaciones (claves de join) entre hasta 12 datasets para que Quick Sight haga joins internos en tiempo de ejecución, agregar instrucciones para el motor de IA y usar el Topic en análisis y en el chat; cada dataset conserva su granularidad, sin prejoin ni desnormalización."
   - source: aws-quick-docs
     url: https://docs.aws.amazon.com/quick/latest/userguide/working-with-datasets.html
     accessed: 2026-10-10
+    page_title: "Working with datasets"
     note: "Los datasets son la base de la analítica de Quick Sight: fuentes de datos preparadas y estructuradas para análisis y tableros, con versionado, uso compartido y seguridad a nivel de fila y de columna."
 relations:
   - type: RELATED_TO
@@ -61,7 +69,7 @@ relations:
     target: data-contracts
     note: Las métricas definidas una vez funcionan como contrato con los consumidores.
 created_at: 2026-10-10
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -287,3 +295,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-10: creación (lote F3b-04a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

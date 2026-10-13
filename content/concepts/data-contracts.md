@@ -18,26 +18,32 @@ sources:
   - source: dbt-docs
     url: https://docs.getdbt.com/docs/mesh/govern/model-contracts
     accessed: 2026-10-06
+    page_title: "Model contracts"
     note: "Con contract: enforced: true, el contrato debe incluir name y data_type de cada columna. Opcionalmente admite constraints como not_null en modelos table o incremental. dbt corre una verificación previa (preflight) de que la consulta devuelve esas columnas con esos tipos e incluye columnas, tipos y restricciones en el DDL. Las restricciones pueden ser definibles y aplicadas, definibles y no aplicadas (solo metadatos, más típico en warehouses cloud) o no definibles; la mayoría de las plataformas solo aplica not_null. No admiten contratos los modelos Python, las vistas materializadas, las materializaciones ephemeral, las materializaciones custom (salvo que su autor lo agregue), los modelos con CTE recursivas en BigQuery, ni los seeds, snapshots y sources; las vistas admiten nombres y tipos, pero no constraints, y los incrementales requieren on_schema_change: append_new_columns o fail. En la pestaña BigQuery de la tabla de soporte por plataforma: not_null se define y se aplica; primary_key y foreign_key se definen y no se aplican (solo metadatos); unique y check no se pueden definir. Las pruebas de calidad no forman parte del contrato. dbt recomienda contratos en los modelos «públicos» de los que dependen otros grupos, proyectos, reportes o tableros. Un cambio incompatible es breaking change y exige subir la versión mayor: quitar una columna, cambiar su data_type o quitar o modificar una restricción."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/schemas
     accessed: 2026-10-06
+    page_title: "Schema overview"
     note: "Un esquema de Pub/Sub crea un contrato entre publicador y suscriptor sobre el formato de los mensajes, y Pub/Sub lo hace cumplir: si un mensaje no se ajusta al esquema asociado al tema, no se publica. Los esquemas se definen en Apache Avro o Protocol Buffer, admiten revisiones (hasta 20 por esquema) y no deben llevar información sensible, como datos personales, en los nombres de campo; sirven como autoridad central de tipos de mensaje entre equipos."
   - source: aws-glue-docs
     url: https://docs.aws.amazon.com/glue/latest/dg/schema-registry.html
     accessed: 2026-10-06
+    page_title: "AWS Glue Schema registry"
     note: "En el AWS Glue Schema Registry, los modos de compatibilidad controlan cómo pueden evolucionar los esquemas y forman el contrato entre las aplicaciones que producen y consumen datos; una versión nueva se acepta solo si cumple el modo. Hay 8 modos: NONE, DISABLED, BACKWARD, BACKWARD_ALL, FORWARD, FORWARD_ALL, FULL y FULL_ALL."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/event-hubs/schema-registry-overview
     accessed: 2026-10-06
+    page_title: "Azure Schema Registry in Event Hubs"
     note: "Azure Schema Registry, una función de Event Hubs, es un repositorio central de esquemas para aplicaciones orientadas a eventos y mensajería, con un marco de gobierno de esquemas reutilizables agrupados en schema groups."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/event-hubs/schema-registry-concepts
     accessed: 2026-10-06
+    page_title: "Schema Registry in Azure Event Hubs"
     note: "Un esquema en el registro de Event Hubs ayuda a gestionar el contrato fuera de los datos del evento. Formatos de esquema: Avro, JSON Schema y Protocol Buffers. El modo de compatibilidad se fija por schema group, y una actualización de esquema debe cumplirlo para crear una versión nueva. La evolución de esquemas solo se admite para Avro. Backward permite borrar campos y agregar campos opcionales; Forward permite agregar campos y borrar campos opcionales; None no verifica compatibilidad."
   - source: apache-avro-docs
     url: https://avro.apache.org/docs/1.12.0/specification/
     accessed: 2026-10-06
+    page_title: "Specification"
     note: "Resolución de esquemas entre escritor y lector: un campo del escritor que el lector no tiene se ignora; un campo del lector con default que el escritor no tiene toma el default; si el campo del lector no tiene default, se señala un error."
 relations:
   - type: RELATED_TO
@@ -53,7 +59,7 @@ relations:
     target: data-pipeline
     note: Los contratos se ubican en las fronteras entre equipos de un pipeline.
 created_at: 2026-10-06
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-06
 verification_status: verified
 ---
@@ -285,3 +291,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: creación (lote F3b-01b, dominio 01-fundamentals).
 - 2026-10-06: revisión B-F3.1 del lote F3b-01b aplicada (docs/reviews/cards-f3b-01b.md): §11 con la tabla de restricciones de BigQuery según dbt, sin el VERIFY; §6 y la nota de dbt con todas las exclusiones (vistas materializadas, materializaciones custom, CTE recursivas en BigQuery y `on_schema_change` en incrementales).
 - 2026-10-06: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

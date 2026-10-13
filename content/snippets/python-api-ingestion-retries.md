@@ -21,22 +21,27 @@ sources:
   - source: python-docs
     url: https://docs.python.org/3/library/urllib.request.html
     accessed: 2026-10-01
+    page_title: "urllib.request — Extensible library for opening URLs"
     note: "urlopen(url, data=None, [timeout, ]*, context=None): timeout en segundos para operaciones bloqueantes; acepta una URL o un objeto Request; para HTTP y HTTPS devuelve un HTTPResponse usable como context manager; lanza URLError ante errores de protocolo."
   - source: python-docs
     url: https://docs.python.org/3/library/urllib.error.html
     accessed: 2026-10-01
+    page_title: "urllib.error — Exception classes raised by urllib.request"
     note: "HTTPError es subclase de URLError; expone code (código de estado HTTP), reason y headers de la respuesta."
   - source: python-docs
     url: https://docs.python.org/3/tutorial/errors.html
     accessed: 2026-10-01
+    page_title: "8. Errors and Exceptions"
     note: "Capturar las excepciones más específicas posibles y dejar propagar las inesperadas; la cláusula except de una subclase debe ir antes que la de su clase base para que se use."
   - source: ietf-rfc
     url: https://www.rfc-editor.org/rfc/rfc6585.html
     accessed: 2026-10-01
+    page_title: "Additional HTTP Status Codes"
     note: "RFC 6585: 429 Too Many Requests indica limitación de tasa; la respuesta puede incluir Retry-After con cuánto esperar."
   - source: ietf-rfc
     url: https://www.rfc-editor.org/rfc/rfc9110.html
     accessed: 2026-10-01
+    page_title: "RFC 9110"
     note: "RFC 9110: GET es un método seguro y, por lo tanto, idempotente; Retry-After indica cuánto esperar antes de la siguiente petición."
 relations:
   - type: IMPLEMENTS
@@ -52,7 +57,7 @@ relations:
     target: python-error-handling-and-retries
     note: Excepciones específicas (HTTPError antes que URLError), transitorias frente a permanentes y reintento acotado.
 created_at: 2026-10-01
-updated_at: 2026-10-01
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -180,3 +185,4 @@ El detalle está en `sources` del encabezado.
 - 2026-10-01: creación (A-F3.2), desde la sección 10 de `api-ingestion` (lote 3, en revisión). Si la revisión B-F3.1 del lote 3 cambia ese código, este snippet se actualiza en el mismo commit.
 - 2026-10-01: enlazado (IMPLEMENTS) a `api-ingestion` y `python-error-handling-and-retries`, verificadas con el lote 3; la revisión no cambió su código.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

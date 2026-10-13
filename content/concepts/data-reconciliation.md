@@ -17,34 +17,42 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/hash_functions
     accessed: 2026-09-30
+    page_title: "Hash functions"
     note: "FARM_FINGERPRINT calcula un INT64 con Fingerprint64 de FarmHash sobre un STRING o BYTES; su salida para una entrada dada no cambia nunca."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions
     accessed: 2026-09-30
+    page_title: "Aggregate functions"
     note: "BIT_XOR([DISTINCT] expression): agregado que aplica un XOR bit a bit sobre la expresión."
   - source: aws-dms-docs
     url: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Validating.html
     accessed: 2026-09-30
+    page_title: "AWS DMS data validation"
     note: "La validación de datos de AWS DMS compara origen y destino, también durante la replicación continua fila a fila; requiere clave primaria o índice único; agrega carga a ambos endpoints y tiempo extra; puede correr en una tarea solo de validación (EnableValidation y ValidationOnly). Estados por tabla: registros no coincidentes, pendientes, suspendidos, sin clave primaria; los fallos se guardan en awsdms_control.awsdms_validation_failures_v1 en el destino."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/copy-activity-data-consistency
     accessed: 2026-09-30
+    page_title: "Data consistency verification in copy activity"
     note: "Verificación de consistencia de la actividad Copy (validateDataConsistency): en archivos binarios compara tamaño, fecha de modificación y checksum; en datos tabulares, la actividad falla si las filas leídas del origen difieren de las copiadas más las incompatibles omitidas; se puede abortar o omitir archivos inconsistentes."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/string_functions
     accessed: 2026-10-07
+    page_title: "String functions"
     note: "CONCAT devuelve NULL si cualquier argumento es NULL."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/operators
     accessed: 2026-10-07
+    page_title: "Operators"
     note: "IS DISTINCT FROM devuelve TRUE si los valores serían distintos para GROUP BY y nunca devuelve NULL."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/json_functions
     accessed: 2026-10-07
+    page_title: "JSON functions"
     note: "TO_JSON_STRING convierte un valor SQL en un STRING con formato JSON. Según la tabla de codificaciones JSON: NULL se codifica como null (sin comillas); STRING como cadena JSON, con escape de comillas, barra invertida y caracteres de control; STRUCT como objeto con sus campos. Ejemplo de la página: TO_JSON_STRING(STRUCT(1 AS id, [10, 20] AS coordinates)) → {\"id\":1,\"coordinates\":[10,20]}."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/functions-json.html
     accessed: 2026-10-07
+    page_title: "9.16. JSON Functions and Operators"
     note: "jsonb_build_array arma un array JSON con sus argumentos, cada uno convertido con to_jsonb; to_jsonb convierte NULL en null y cualquier escalar que no sea número, booleano ni null en una cadena JSON, con el escape necesario."
 relations:
   - type: RELATED_TO
@@ -57,7 +65,7 @@ relations:
     target: change-data-capture
     note: En replicación por CDC, la reconciliación detecta cambios perdidos o aplicados dos veces.
 created_at: 2026-09-30
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -281,3 +289,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendientes de ficha a `sql-quality-checks`, `change-detection`, que ya tienen ficha.
 - 2026-10-07: cambio mínimo (aprobado por Felipe): la huella usa un marcador de NULL (`IFNULL(…, '\\N')`, el de `change-detection`) porque `CONCAT` de BigQuery devuelve NULL con un argumento NULL y `BIT_XOR` omitía esas filas; el detalle por clave compara con `IS DISTINCT FROM` en lugar de `!=`. Sigue `verified`, pendiente de revisión de Cursor. §10 agrega un caso con `monto` NULL probado en PostgreSQL.
 - 2026-10-07: revisión de los cambios mínimos de NULL aplicada (docs/reviews/fixes-null-concat.md, aprobada por Felipe): la huella pasa de `CONCAT` con marcador `'\\N'` a `FARM_FINGERPRINT(TO_JSON_STRING(STRUCT(...)))`, respaldado por la tabla de codificaciones JSON de BigQuery (NULL → `null`; texto entre comillas con escape), que elimina la ambigüedad del marcador y la del separador. Sigue `verified`. §10 publica el caso completo en PostgreSQL (dos lados, conteo, suma, tres huellas y `!=` frente a `IS DISTINCT FROM`) con `jsonb_build_array`, el equivalente documentado.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

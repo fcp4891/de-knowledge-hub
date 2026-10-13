@@ -18,38 +18,47 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/transform-intro
     accessed: 2026-10-05
+    page_title: "Introduction to data transformation"
     note: "BigQuery transforma con DML, con vistas materializadas (los cambios incrementales de las tablas base se agregan automáticamente), con consultas continuas (en Preview) y con pipelines de BigQuery, que usan Dataform y permiten procesos ELT o ETL."
   - source: gcp-dataform-docs
     url: https://docs.cloud.google.com/dataform/docs/overview
     accessed: 2026-10-05
+    page_title: "Dataform overview"
     note: "Dataform gestiona transformaciones SQL en un repositorio: declara fuentes y dependencias, visualiza el árbol de dependencias, reutiliza código con JavaScript, prueba la calidad con tests sobre tablas de origen y salida, versiona y documenta; compila Dataform core a SQL y ejecuta el árbol de dependencias."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions
     accessed: 2026-10-05
+    page_title: "Conversion functions"
     note: "SAFE_CAST es como CAST, pero devuelve NULL en lugar de un error en tiempo de ejecución."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/string_functions
     accessed: 2026-10-06
+    page_title: "String functions"
     note: "REGEXP_CONTAINS(value, regexp) devuelve TRUE si value coincide parcialmente con la expresión; para coincidencia completa se usan ^ y $, con paréntesis alrededor de todo lo que va entre ellos; la sintaxis es la de la biblioteca re2. REPLACE reemplaza todas las apariciones de una subcadena."
   - source: dbt-docs
     url: https://docs.getdbt.com/docs/supported-data-platforms
     accessed: 2026-10-06
+    page_title: "Supported data platforms"
     note: "La tabla de adaptadores incluye Redshift como Generally available."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax
     accessed: 2026-10-05
+    page_title: "Query syntax"
     note: "QUALIFY filtra los resultados de funciones de ventana."
   - source: dbt-docs
     url: https://docs.getdbt.com/docs/build/data-tests
     accessed: 2026-10-05
+    page_title: "Add data tests to your DAG"
     note: "Los data tests de dbt son consultas que buscan registros que fallan, como valores nulos, duplicados o sin correspondencia en otro modelo."
   - source: aws-glue-docs
     url: https://docs.aws.amazon.com/glue/latest/dg/what-is-glue.html
     accessed: 2026-10-05
+    page_title: "What is AWS Glue?"
     note: "AWS Glue transforma, prepara y limpia datos: el editor visual de jobs genera el código de extracción, transformación y carga, y los jobs se invocan programados, bajo demanda o por eventos."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/concepts-data-flow-overview
     accessed: 2026-10-05
+    page_title: "Mapping data flows in Azure Data Factory"
     note: "Los mapping data flows son transformaciones diseñadas visualmente en Data Factory, sin escribir código; se ejecutan como actividades de pipelines sobre clústeres de Apache Spark. Para Fabric, la documentación remite a Dataflow Gen2."
 relations:
   - type: RELATED_TO
@@ -68,7 +77,7 @@ relations:
     target: dataform-incremental-tables
     note: Transformación incremental declarativa en BigQuery.
 created_at: 2026-10-05
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-06
 verification_status: verified
 ---
@@ -256,3 +265,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: creación (lote F3b-01a, dominio 01-fundamentals).
 - 2026-10-06: revisión B-F3.1 del lote F3b-01a aplicada (docs/reviews/cards-f3b-01a.md): el ejemplo valida el formato del monto antes de convertir ('10.50' ya no pasa a 1050) y se probó; dbt en Redshift con fuente.
 - 2026-10-06: `verification_status: verified` (revisión B-F3.1 del lote F3b-01a aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

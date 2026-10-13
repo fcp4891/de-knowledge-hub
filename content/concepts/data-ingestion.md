@@ -18,50 +18,62 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/loading-data
     accessed: 2026-10-05
+    page_title: "Introduction to loading data"
     note: "Formas de llevar datos a BigQuery: carga batch (load jobs desde Cloud Storage o archivos locales; para cargas batch o incrementales recurrentes se recomienda BigQuery Data Transfer Service, que programa transferencias); carga streaming desde mensajería (suscripción de BigQuery en Pub/Sub); CDC (Datastream replica cambios de bases de datos en casi tiempo real); y acceso sin cargar (fuentes externas y consultas federadas)."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/bq-cli-reference
     accessed: 2026-10-05
+    page_title: "bq command-line tool reference"
     note: "bq load --source_format=FORMAT y --replace=true (WRITE_TRUNCATE): reemplaza los datos y el esquema existentes."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/create-bigquery-subscription
     accessed: 2026-10-05
+    page_title: "Create BigQuery subscriptions"
     note: "gcloud pubsub subscriptions create SUBSCRIPTION_ID --topic=TOPIC_ID --bigquery-table=PROJECT_ID.DATASET_ID.TABLE_ID crea una suscripción que escribe en BigQuery."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/federated_query_functions
     accessed: 2026-10-05
+    page_title: "Federated query functions"
     note: "EXTERNAL_QUERY ejecuta una consulta en una base externa y devuelve el resultado como tabla temporal."
   - source: aws-dms-docs
     url: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html
     accessed: 2026-10-05
+    page_title: "Creating tasks for ongoing replication using AWS DMS"
     note: "AWS DMS replica cambios en curso (CDC) desde bases de datos de origen a destinos, además de cargas completas."
   - source: aws-kinesis-docs
     url: https://docs.aws.amazon.com/streams/latest/dev/introduction.html
     accessed: 2026-10-05
+    page_title: "What is Amazon Kinesis Data Streams?"
     note: "Kinesis Data Streams recolecta y procesa grandes streams de registros en tiempo real."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_COPY.html
     accessed: 2026-10-06
+    page_title: "COPY"
     note: "COPY carga en Redshift datos de una fuente (lo más común, S3) en una tabla que ya debe existir, agregándolos a las filas existentes."
   - source: aws-glue-docs
     url: https://docs.aws.amazon.com/glue/latest/dg/what-is-glue.html
     accessed: 2026-10-06
+    page_title: "What is AWS Glue?"
     note: "Los jobs de AWS Glue extraen, transforman y cargan datos; se invocan programados, bajo demanda o por eventos."
   - source: debezium-docs
     url: https://debezium.io/documentation/reference/stable/connectors/postgresql.html
     accessed: 2026-10-06
+    page_title: "Debezium connector for PostgreSQL"
     note: "El conector de PostgreSQL de Debezium captura cambios a nivel de fila usando logical decoding."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about
     accessed: 2026-10-06
+    page_title: "What is Azure Event Hubs?"
     note: "Event Hubs ingiere eventos en un log particionado de solo agregado, con clientes propios o de Kafka."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/mirroring/overview
     accessed: 2026-10-06
+    page_title: "What is Mirroring in Fabric?"
     note: "Mirroring en Fabric replica en casi tiempo real datos y metadatos de bases operacionales a OneLake."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/copy-activity-overview
     accessed: 2026-10-05
+    page_title: "Copy activity in Azure Data Factory and Azure Synapse Analytics"
     note: "La Copy activity de Data Factory lee de una fuente, serializa y comprime, mapea columnas y escribe en el destino, con tolerancia configurable a filas incompatibles."
 relations:
   - type: RELATED_TO
@@ -83,7 +95,7 @@ relations:
     target: data-pipeline
     note: La ingesta es la primera etapa de un pipeline.
 created_at: 2026-10-05
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-06
 verification_status: verified
 ---
@@ -251,3 +263,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: creación (lote F3b-01a, dominio 01-fundamentals).
 - 2026-10-06: revisión B-F3.1 del lote F3b-01a aplicada (docs/reviews/cards-f3b-01a.md): fuentes para COPY de Redshift, Glue, Event Hubs, el mirroring de Fabric y Debezium.
 - 2026-10-06: `verification_status: verified` (revisión B-F3.1 del lote F3b-01a aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

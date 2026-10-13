@@ -18,26 +18,32 @@ sources:
   - source: gcp-datastream-docs
     url: https://docs.cloud.google.com/datastream/docs/overview
     accessed: 2026-10-11
+    page_title: "Datastream overview"
     note: "Datastream overview: servicio serverless de CDC y replicación con latencia mínima, desde bases operacionales hacia BigQuery; también escribe el flujo de cambios en Cloud Storage y se integra con plantillas de Dataflow para otros destinos (Cloud SQL, Spanner). Fuentes: MySQL, Oracle, PostgreSQL (incluido AlloyDB), SQL Server, MongoDB y Spanner, y fuentes de aplicaciones como Salesforce. Puede hacer backfill de datos existentes."
   - source: gcp-datastream-docs
     url: https://docs.cloud.google.com/datastream/docs/configure-cloudsql-psql
     accessed: 2026-10-11
+    page_title: "Configure a Cloud SQL for PostgreSQL database for CDC"
     note: "Configure a Cloud SQL for PostgreSQL database for CDC: activar la marca cloudsql.logical_decoding en on (requiere reiniciar la instancia); dar permiso REPLICATION al usuario que crea el slot; crear una publicación, recomendada solo para las tablas a replicar; crear un slot de replicación lógica con el plugin pgoutput (pg_create_logical_replication_slot), con un nombre único por stream; crear un usuario de Datastream con REPLICATION LOGIN y darle lectura sobre las tablas."
   - source: gcp-datastream-docs
     url: https://docs.cloud.google.com/datastream/docs/destination-bigquery
     accessed: 2026-10-11
+    page_title: "BigQuery destination"
     note: "BigQuery destination: modo merge (con clave primaria en el origen, Datastream agrega campos como UUID y SOURCE_TIMESTAMP; sin clave primaria, también IS_DELETED) o append-only. Los trabajos de merge de CDC en BigQuery usan on-demand si no hay una reserva asignada (BACKGROUND o BACKGROUND_CHANGE_DATA_CAPTURE); se recomienda una reserva para limitar y prever el costo. max_staleness equilibra frescura y costo: un valor menor hace merges más seguidos, más caros y con datos más frescos."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/cloud-sql-federated-queries
     accessed: 2026-10-11
+    page_title: "Cloud SQL federated queries"
     note: "Cloud SQL federated queries: con la función EXTERNAL_QUERY, BigQuery envía una consulta a Cloud SQL por una conexión y une su resultado con tablas de BigQuery en una sola consulta."
   - source: gcp-cloud-sql-docs
     url: https://docs.cloud.google.com/sql/docs/postgres/import-export
     accessed: 2026-10-11
+    page_title: "Best practices for importing and exporting data"
     note: "Best practices for importing and exporting data (Cloud SQL for PostgreSQL): para no afectar a la instancia principal, exportar desde una réplica de lectura (conviene para exportaciones frecuentes y pequeñas) o con serverless export, que crea una instancia temporal aparte y la borra al terminar (conviene para exportaciones grandes y puntuales)."
   - source: gcp-cloud-sql-docs
     url: https://docs.cloud.google.com/sql/docs/postgres/replication
     accessed: 2026-10-11
+    page_title: "About replication in Cloud SQL"
     note: "About replication in Cloud SQL: la instancia principal y las réplicas de lectura residen en Cloud SQL; también se puede replicar desde un servidor externo."
 relations:
   - type: RELATED_TO
@@ -53,7 +59,7 @@ relations:
     target: python-database-io
     note: Leer la base desde Python, para extracciones propias.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-12
 verification_status: verified
 ---
@@ -253,3 +259,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08c).
 - 2026-10-12: revisión B-F3.1 del lote F3b-08c aplicada (docs/reviews/cards-f3b-08c.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-12: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

@@ -18,14 +18,17 @@ sources:
   - source: aws-step-functions-docs
     url: https://docs.aws.amazon.com/step-functions/latest/dg/concepts-error-handling.html
     accessed: 2026-10-11
+    page_title: "Handling errors in Step Functions workflows"
     note: "Step Functions: cuando un estado reporta un error, por defecto falla toda la ejecución de la máquina de estados. Se puede capturar errores, reintentar estados fallidos e implementar manejo de errores: los estados Task, Parallel y Map admiten un campo Retry (retriers con ErrorEquals, IntervalSeconds, MaxAttempts y BackoffRate, que por defecto multiplica el intervalo por 2.0 en cada intento) y un campo Catch con catchers que derivan a estados de respaldo (fallback)."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/replay-overview
     accessed: 2026-10-11
+    page_title: "Replay and purge messages with seek"
     note: "Pub/Sub, snapshots y seek: un snapshot es una vista durable y consistente, en un instante, del estado de confirmación (ack) de una suscripción. Hacer seek a una marca de tiempo marca como confirmados los mensajes recibidos antes de ese instante y como no confirmados los posteriores; permite reprocesar (replay) o purgar mensajes."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/core-concepts/tasks.html
     accessed: 2026-10-11
+    page_title: "Tasks"
     note: "Airflow 3.3.2, estados de una tarea: up_for_retry (falló pero le quedan reintentos y se reprogramará) y upstream_failed (una tarea anterior falló y la regla de disparo la necesitaba). retries define cuántas veces se reintenta una tarea."
 relations:
   - type: RELATED_TO
@@ -50,7 +53,7 @@ relations:
     target: python-error-handling-and-retries
     note: Cómo distinguir en Python errores transitorios de permanentes.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -283,3 +286,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-05a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-05a aplicada (docs/reviews/cards-f3b-05a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

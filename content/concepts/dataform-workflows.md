@@ -18,22 +18,27 @@ sources:
   - source: gcp-dataform-docs
     url: https://docs.cloud.google.com/dataform/docs/overview
     accessed: 2026-10-11
+    page_title: "Dataform overview"
     note: "Dataform overview: servicio para que los analistas desarrollen, prueben, versionen y programen workflows de transformación de datos en BigQuery, en la etapa de transformación de un ELT. Desarrollo colaborativo con Git; gestión de muchas tablas y sus dependencias; declaración de fuentes; visualización del árbol de dependencias; SQL en un repositorio central; reutilización con JavaScript; pruebas de calidad sobre tablas de origen y de salida; documentación de tablas en el código SQL."
   - source: gcp-dataform-docs
     url: https://docs.cloud.google.com/dataform/docs/sql-workflows
     accessed: 2026-10-11
+    page_title: "Overview of workflows"
     note: "Overview of workflows: un workflow se escribe con archivos SQLX y, opcionalmente, JavaScript. Objetos: declaraciones de fuentes de BigQuery; tablas (tipos table, incremental table, view y materialized view); assertions (consultas de calidad que Dataform corre cada vez que actualiza el workflow y que alertan si fallan); operaciones SQL propias, que corre tal cual; includes de JavaScript reutilizables."
   - source: gcp-dataform-docs
     url: https://docs.cloud.google.com/dataform/docs/dependencies
     accessed: 2026-10-11
+    page_title: "Set dependencies"
     note: "Set dependencies: en una relación de dependencia, Dataform ejecuta el dependiente después de la dependencia; las dependencias declaradas forman el árbol que fija el orden. Usar ref() en el SQL declara la dependencia automáticamente; también se declaran con dependencies: [...] en el bloque config. Cuando la acción B depende de la acción A, que tiene assertions, que fallen las assertions de A no impide que Dataform ejecute B; para ejecutar B solo si pasan, hay que declarar esas assertions como dependencias de B."
   - source: gcp-dataform-docs
     url: https://docs.cloud.google.com/dataform/docs/test-data
     accessed: 2026-10-11
+    page_title: "Test data quality"
     note: "Test data quality: una assertion es una consulta que encuentra filas que violan una regla. Assertions en el bloque config de una tabla: nonNull (columnas que no pueden ser nulas), rowConditions (expresiones SQL que cada fila debe cumplir), uniqueKey y uniqueKeys (sin filas con los mismos valores en la columna o columnas). También hay assertions propias en archivos de tipo assertion."
   - source: gcp-dataform-docs
     url: https://docs.cloud.google.com/dataform/docs/schedule-runs
     accessed: 2026-10-11
+    page_title: "Schedule runs"
     note: "Schedule runs: métodos comparados: workflow configurations (corridas de producción por tiempo dentro de Dataform), Workflows con Cloud Scheduler (orquestación serverless liviana con otras APIs; por tiempo o por eventos), Managed Service for Apache Airflow (pipelines complejos con dependencias fuera de BigQuery; por tiempo o por eventos) y triggers de Cloud Build (automatizar releases). Una workflow configuration ejecuta el resultado de compilación de una release configuration, con una cuenta de servicio propia; si una corrida programada no termina antes de la siguiente, la siguiente se salta y se marca con error."
 relations:
   - type: RELATED_TO
@@ -55,7 +60,7 @@ relations:
     target: etl-vs-elt
     note: La transformación en general.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-12
 verification_status: verified
 ---
@@ -260,3 +265,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08c).
 - 2026-10-12: revisión B-F3.1 del lote F3b-08c aplicada (docs/reviews/cards-f3b-08c.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-12: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

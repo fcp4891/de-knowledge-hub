@@ -20,18 +20,22 @@ sources:
   - source: terraform-provider-google-docs
     url: https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/bigquery_table.html.markdown
     accessed: 2026-10-01
+    page_title: "google_bigquery_table"
     note: "google_bigquery_table: dataset_id y table_id; time_partitioning con type (DAY, HOUR, MONTH, YEAR), field (si falta, partición por tiempo de carga) y expiration_ms; require_partition_filter en el nivel superior (el de time_partitioning está deprecado); clustering hasta cuatro columnas en orden de prioridad; schema es un JSON; deletion_protection: con true o sin definir, apply o destroy que borren la tabla fallan."
   - source: terraform-provider-google-docs
     url: https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/bigquery_dataset.html.markdown
     accessed: 2026-10-01
+    page_title: "google_bigquery_dataset"
     note: "google_bigquery_dataset: dataset_id obligatorio (letras, números o guiones bajos, hasta 1.024 caracteres), location opcional; delete_contents_on_destroy en false hace fallar el destroy si el dataset tiene tablas."
   - source: terraform-docs
     url: https://developer.hashicorp.com/terraform/language/providers/requirements
     accessed: 2026-10-01
+    page_title: "Provider Requirements"
     note: "Los providers se declaran en required_providers dentro del bloque terraform, con source y una restricción de versión; terraform init los instala."
   - source: terraform-provider-google-releases
     url: https://github.com/hashicorp/terraform-provider-google/releases
     accessed: 2026-10-01
+    page_title: "Releases: hashicorp/terraform-provider-google"
     note: "Última versión del provider al 2026-10-01: v8.5.0 (29 de septiembre de 2026)."
 relations:
   - type: IMPLEMENTS
@@ -50,7 +54,7 @@ relations:
     target: terraform-providers
     note: Declara hashicorp/google en required_providers con una restricción de versión mayor.
 created_at: 2026-10-01
-updated_at: 2026-10-01
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -162,3 +166,4 @@ El detalle está en `sources` del encabezado.
 - 2026-10-01: creación (A-F3.2).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).
 - 2026-10-01: implementa también `infrastructure-as-code` y `terraform-providers`, verificadas con el lote 4.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

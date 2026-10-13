@@ -18,34 +18,42 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/window-function-calls
     accessed: 2026-10-05
+    page_title: "Window function calls"
     note: "Una función de ventana (función analítica) calcula sobre un grupo de filas y devuelve un resultado por fila, a diferencia de una función de agregación. OVER define la ventana: PARTITION BY, ORDER BY y el marco (ROWS por desplazamiento físico; RANGE por rango lógico sobre una única expresión numérica de ORDER BY; para fechas, UNIX_DATE). Sin ORDER BY ni marco, la ventana es toda la partición; con ORDER BY y sin marco, las funciones de agregación usan RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW. Se evalúan después de la agregación (GROUP BY). QUALIFY filtra por su resultado."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/navigation_functions
     accessed: 2026-10-05
+    page_title: "Navigation functions"
     note: "LAG devuelve el valor de una fila anterior en la ventana (desplazamiento 1 por defecto) y admite un valor por defecto cuando no existe esa fila; LEAD, el de una fila posterior."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/numbering_functions
     accessed: 2026-10-05
+    page_title: "Numbering functions"
     note: "ROW_NUMBER numera las filas de cada partición ordenada; el orden entre empates es no determinista y sin ORDER BY el resultado es no determinista. RANK y DENSE_RANK asignan el mismo número a los empates."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/tutorial-window.html
     accessed: 2026-10-05
+    page_title: "3.5. Window Functions"
     note: "Una función de ventana calcula sobre filas relacionadas con la actual sin agruparlas en una sola fila de salida. Solo se permiten en la lista del SELECT y en ORDER BY, no en WHERE, GROUP BY ni HAVING, porque se ejecutan después de esas cláusulas y después de las agregaciones."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_Window_functions.html
     accessed: 2026-10-05
+    page_title: "Window functions"
     note: "En Redshift, las funciones de ventana son el último conjunto de operaciones de la consulta, salvo el ORDER BY final; joins, WHERE, GROUP BY y HAVING se completan antes. Incluye LAG, LEAD, FIRST_VALUE, LAST_VALUE, RATIO_TO_REPORT, MEDIAN y otras."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_QUALIFY_clause.html
     accessed: 2026-10-05
+    page_title: "QUALIFY clause"
     note: "Redshift admite QUALIFY para filtrar resultados de funciones de ventana; si va directamente después de FROM, la relación necesita alias."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/queries/select-over-clause-transact-sql?view=sql-server-ver17
     accessed: 2026-10-05
+    page_title: "SELECT - OVER clause (Transact-SQL)"
     note: "En T-SQL, si se especifica ORDER BY sin ROWS ni RANGE, el marco por defecto es RANGE UNBOUNDED PRECEDING AND CURRENT ROW, solo para funciones que aceptan marco (no las de ranking)."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/functions/row-number-transact-sql?view=sql-server-ver17
     accessed: 2026-10-05
+    page_title: "ROW_NUMBER (Transact-SQL)"
     note: "ROW_NUMBER() de T-SQL es no determinista."
 relations:
   - type: RELATED_TO
@@ -58,7 +66,7 @@ relations:
     target: late-arriving-data
     note: Un marco RANGE por fecha es robusto ante días sin datos; ROWS cuenta filas, no días.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -226,3 +234,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: creación (lote 6 de F3).
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `sql-qualify`, que ya tiene ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

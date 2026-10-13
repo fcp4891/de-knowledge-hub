@@ -18,30 +18,37 @@ sources:
   - source: terraform-docs
     url: https://developer.hashicorp.com/terraform/language/state
     accessed: 2026-10-01
+    page_title: "State"
     note: "Terraform guarda state del workspace para mapear recursos reales a la configuración, seguir metadatos y mejorar el rendimiento en infraestructuras grandes. Por defecto, en un archivo local terraform.tfstate (y terraform.tfstate.backup); eso limita la colaboración y arriesga perder el state. Se recomienda un backend remoto o HCP Terraform y evitar el control de versiones u otro almacenamiento sin bloqueo ni control de acceso."
   - source: terraform-docs
     url: https://developer.hashicorp.com/terraform/language/state/locking
     accessed: 2026-10-01
+    page_title: "State Locking"
     note: "Si el backend lo soporta, Terraform bloquea el state en toda operación que pueda escribirlo, para que otros no lo corrompan; si el bloqueo falla, no continúa. -lock=false lo desactiva y no se recomienda. No todos los backends soportan bloqueo."
   - source: terraform-docs
     url: https://developer.hashicorp.com/terraform/language/manage-sensitive-data
     accessed: 2026-10-01
+    page_title: "Manage sensitive data in your configuration"
     note: "Los archivos de state y de plan contienen atributos que pueden incluir valores sensibles (contraseñas iniciales, tokens); los secretos agregados a la configuración quedan en ellos. Con un backend remoto, el state se mantiene en memoria solo mientras se usa; el cifrado en reposo depende del backend."
   - source: terraform-docs
     url: https://developer.hashicorp.com/terraform/language/backend/gcs
     accessed: 2026-10-01
+    page_title: "gcs"
     note: "Backend gcs: guarda el state en un bucket de Cloud Storage que debe existir antes; soporta bloqueo de state; se recomienda activar Object Versioning en el bucket para recuperar el state ante borrados o errores. Ejemplo: backend gcs con bucket y prefix."
   - source: terraform-docs
     url: https://developer.hashicorp.com/terraform/language/backend/s3
     accessed: 2026-10-01
+    page_title: "S3"
     note: "Backend s3: el bloqueo es opcional (use_lockfile, false por defecto); el bloqueo con DynamoDB está deprecado; se recomienda activar Bucket Versioning."
   - source: terraform-docs
     url: https://developer.hashicorp.com/terraform/language/backend/azurerm
     accessed: 2026-10-01
+    page_title: "azurerm"
     note: "Backend azurerm: guarda el state como blob en un contenedor de una cuenta de Azure Storage; soporta bloqueo y comprobación de consistencia con capacidades nativas de Blob Storage; recomienda pasar credenciales por variables de entorno."
   - source: gcp-terraform-docs
     url: https://docs.cloud.google.com/docs/terraform/terraform-overview
     accessed: 2026-10-01
+    page_title: "Overview of Terraform on Google Cloud"
     note: "Terraform en Google Cloud: herramienta de IaC con el provider de Google; la documentación incluye guardar el state de Terraform en un bucket de Cloud Storage."
 relations:
   - type: DEPENDS_ON
@@ -54,7 +61,7 @@ relations:
     target: gcs-buckets-and-objects
     note: En Google Cloud, el backend remoto habitual es un bucket con versionado.
 created_at: 2026-10-01
-updated_at: 2026-10-01
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -199,3 +206,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-01: creación (lote 4 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

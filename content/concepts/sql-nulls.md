@@ -18,38 +18,47 @@ sources:
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/functions-comparison.html
     accessed: 2026-10-06
+    page_title: "9.2. Comparison Functions and Operators"
     note: "Una entrada nula se trata como el valor lógico desconocido. IS DISTINCT FROM y IS NOT DISTINCT FROM tratan el nulo como valor comparable y nunca devuelven nulo: NULL IS DISTINCT FROM NULL es falso y 1 IS DISTINCT FROM NULL es verdadero. Se recomienda que las aplicaciones que esperan que expresión = NULL sea verdadero se ajusten al estándar SQL; el parámetro transform_null_equals convierte x = NULL en x IS NULL como último recurso."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/functions-aggregate.html
     accessed: 2026-10-06
+    page_title: "9.21. Aggregate Functions"
     note: "count(*) cuenta filas de entrada; count(expresión) cuenta las filas en que el valor no es nulo; sum calcula sobre los valores no nulos. Salvo count, las funciones de agregación devuelven nulo cuando no se selecciona ninguna fila: sum de cero filas es nulo, no cero, y array_agg devuelve nulo en vez de un array vacío. coalesce sirve para sustituir cero o un array vacío."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/functions-subquery.html
     accessed: 2026-10-06
+    page_title: "9.24. Subquery Expressions"
     note: "NOT IN es verdadero solo si todas las filas de la subconsulta son distintas; si no hay iguales y al menos una fila es nula, el resultado de IN es nulo, no falso, según las reglas normales de SQL para combinar nulos."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/operators
     accessed: 2026-10-06
+    page_title: "Operators"
     note: "IN devuelve TRUE si encuentra un valor igual, FALSE si lo excluye y NULL en otro caso; NOT IN devuelve FALSE si encuentra un valor igual, TRUE si lo excluye y NULL en otro caso. IS DISTINCT FROM devuelve TRUE si los valores serían distintos para GROUP BY, nunca devuelve NULL y considera distinto un NULL de un valor no NULL."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions
     accessed: 2026-10-07
+    page_title: "Aggregate functions"
     note: "SUM devuelve la suma de los valores no NULL del grupo; si el grupo está vacío o el argumento es NULL en todas las filas, devuelve NULL."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_unsupported-postgresql-functions.html
     accessed: 2026-10-07
+    page_title: "Unsupported PostgreSQL functions"
     note: "Redshift lista IS DISTINCT FROM entre las funciones de PostgreSQL no admitidas."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/queries/is-distinct-from-transact-sql?view=sql-server-ver17
     accessed: 2026-10-07
+    page_title: "IS [NOT] DISTINCT FROM (Transact-SQL)"
     note: "Aplica a SQL Server 2022, Azure SQL, el SQL analytics endpoint y Warehouse en Microsoft Fabric (no menciona Synapse). IS [NOT] DISTINCT FROM compara dos expresiones y garantiza un resultado verdadero o falso aunque uno o ambos operandos sean NULL; se usa en WHERE y HAVING."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_Nulls.html
     accessed: 2026-10-06
+    page_title: "Nulls"
     note: "Un nulo representa un valor faltante, desconocido o no aplicable; no equivale a cero ni a la cadena vacía. Toda expresión aritmética con un nulo da nulo, y todos los operadores devuelven nulo con un argumento nulo. Para probar nulos se usan IS NULL e IS NOT NULL; un nulo no es igual ni distinto de ningún valor, ni de otro nulo."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/language-elements/null-and-unknown-transact-sql?view=sql-server-ver17
     accessed: 2026-10-06
+    page_title: "NULL and UNKNOWN (Transact-SQL)"
     note: "Aplica a SQL Server, Azure Synapse Analytics y Warehouse en Microsoft Fabric, entre otros. NULL indica un valor desconocido, distinto de vacío o cero. Ningún par de nulos es igual: la comparación entre nulos, o entre un nulo y otro valor, devuelve UNKNOWN. Para probar nulos se usa IS NULL o IS NOT NULL."
 relations:
   - type: RELATED_TO
@@ -65,7 +74,7 @@ relations:
     target: data-reconciliation
     note: Las reconciliaciones deben comparar con IS DISTINCT FROM para no perder diferencias con nulos.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -250,3 +259,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): `IS DISTINCT FROM` ya no se presenta como comportamiento de Redshift (lo lista como no admitido); se documenta en PostgreSQL, BigQuery y Fabric Warehouse con su página, sin extenderlo a Synapse. `SUM` de cero filas atribuido a PostgreSQL y a *Aggregate functions* de BigQuery. Tabla de §2 con el motor que documenta cada fila; §10 agrega la comparación segura con nulos sin `IS DISTINCT FROM`, ejecutada en PostgreSQL.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `change-detection`, que ya tiene ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

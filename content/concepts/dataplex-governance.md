@@ -19,22 +19,27 @@ sources:
   - source: gcp-knowledge-catalog-docs
     url: https://docs.cloud.google.com/knowledge-catalog/docs/introduction
     accessed: 2026-10-11
+    page_title: "Knowledge Catalog overview"
     note: "Knowledge Catalog overview: unifica metadatos técnicos y semántica de negocio de datos estructurados y no estructurados con capacidades de Gemini; el grafo de contexto resultante sirve para descubrir assets, verificar calidad y dar contexto a aplicaciones de IA generativa. Roles: context engineers (data engineers: agregar metadatos, trazar transformaciones con linaje, flujos de enriquecimiento), data stewards (revisar descripciones generadas por IA, glosarios, aspects propios) y desarrolladores de IA (servidores MCP o APIs de contexto). «Dataplex Universal Catalog has evolved to Knowledge Catalog»."
   - source: gcp-knowledge-catalog-docs
     url: https://docs.cloud.google.com/knowledge-catalog/docs/data-products-overview
     accessed: 2026-10-11
+    page_title: "About data products"
     note: "Aviso de la página: «As of April 10, 2026, Dataplex Universal Catalog is now called Knowledge Catalog. The API, client library, CLI, and IAM names remain unchanged.»"
   - source: gcp-knowledge-catalog-docs
     url: https://docs.cloud.google.com/knowledge-catalog/docs/auto-data-quality-overview
     accessed: 2026-10-11
+    page_title: "Auto data quality overview"
     note: "Auto data quality overview: Knowledge Catalog (antes Dataplex Universal Catalog) permite definir y medir la calidad de tablas de BigQuery e Iceberg REST Catalog, automatizar los escaneos, validar contra reglas y registrar alertas; reglas y despliegues como código. El escaneo de calidad es un data scan que valida contra reglas incorporadas o propias; un data scan es un job de Knowledge Catalog que toma muestras de BigQuery y de Cloud Storage (a través de tablas externas de BigQuery). Cada escaneo de calidad corre sobre una sola tabla de BigQuery, con recursos de un tenant project de Google: no hay infraestructura que montar. Monitoreo, diagnóstico y alertas con Cloud Logging integrados. El perfilado puede generar reglas."
   - source: gcp-knowledge-catalog-docs
     url: https://docs.cloud.google.com/knowledge-catalog/docs/data-profiling-overview
     accessed: 2026-10-11
+    page_title: "About data profiling"
     note: "About data profiling: el perfilado recomienda reglas de calidad; un escaneo de perfil analiza una tabla de BigQuery, Google Cloud Lakehouse Iceberg REST Catalog, SAP BDC Delta Lake o Hive y genera estadísticas."
   - source: gcp-knowledge-catalog-docs
     url: https://docs.cloud.google.com/knowledge-catalog/docs/about-data-lineage
     accessed: 2026-10-11
+    page_title: "About data lineage"
     note: "About data lineage: mapa del ciclo de vida de los datos (origen, destinos y transformaciones), visible en la consola para assets de Knowledge Catalog, BigQuery (incluidas tablas externas de Iceberg REST Catalog) y Vertex AI; linaje multirregión; también por la Data Lineage API."
 relations:
   - type: RELATED_TO
@@ -50,7 +55,7 @@ relations:
     target: bigquery-policy-tags
     note: Los policy tags siguen en la API de Data Catalog.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -266,3 +271,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08b), con el nombre actual del servicio y los anteriores como alias (ADR-010).
 - 2026-10-11: revisión B-F3.1 del lote F3b-08b aplicada (docs/reviews/cards-f3b-08b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

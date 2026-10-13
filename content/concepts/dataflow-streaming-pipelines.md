@@ -18,26 +18,32 @@ sources:
   - source: gcp-dataflow-docs
     url: https://docs.cloud.google.com/dataflow/docs/concepts/streaming-pipelines
     accessed: 2026-10-11
+    page_title: "Streaming pipelines"
     note: "Streaming pipelines: las funciones de ventana dividen colecciones no acotadas por el timestamp de cada elemento; ventanas tumbling (fixed en Beam), hopping (sliding en Beam, pueden solaparse) y de sesión. El watermark es el umbral que indica cuándo Dataflow espera que hayan llegado todos los datos de una ventana; si pasó el final de la ventana y llegan datos con timestamp dentro de ella, son datos tardíos. Los datos no llegan garantizados en orden ni a intervalos predecibles; la fuente determina el watermark; Beam permite aceptar datos tardíos. Los triggers deciden cuándo emitir resultados; por defecto, cuando el watermark pasa el final de la ventana."
   - source: gcp-dataflow-docs
     url: https://docs.cloud.google.com/dataflow/docs/guides/streaming-modes
     accessed: 2026-10-11
+    page_title: "Set the pipeline streaming mode"
     note: "Set the pipeline streaming mode: at-least-once puede bajar mucho el costo y la latencia. Exactly-once para resultados exactos y semántica predecible: agregaciones (count, sum, mean) y casos críticos (fraude, amenazas de red, inventario). At-least-once si la carga tolera duplicados: deduplicación aguas abajo (por ejemplo, al escribir en BigQuery o una base SQL) o pipelines solo de map sin agregaciones (logs, CDC, ETL)."
   - source: gcp-dataflow-docs
     url: https://docs.cloud.google.com/dataflow/docs/concepts/streaming-with-cloud-pubsub
     accessed: 2026-10-11
+    page_title: "Read from Pub/Sub to Dataflow"
     note: "Read from Pub/Sub to Dataflow: el conector de Pub/Sub deduplica para procesar exactly-once; Pub/Sub entrega al menos una vez y reintenta si no recibe el ack a tiempo (o antes). Pub/Sub asigna un ID único a cada mensaje; si los datos traen un campo único (por ejemplo, un ID de transacción), el conector puede deduplicar por el valor de un atributo del mensaje en lugar del ID de Pub/Sub, siempre que el publicador lo mantenga igual en los reintentos."
   - source: gcp-dataflow-docs
     url: https://docs.cloud.google.com/dataflow/docs/guides/updating-a-pipeline
     accessed: 2026-10-11
+    page_title: "Update an existing pipeline"
     note: "Update an existing pipeline: motivos (mejorar el código, corregir errores, cambios de formato, parches de seguridad, cambiar la cantidad de workers). Actualización en vuelo: en jobs con Streaming Engine, cambiar min-num-workers y max-num-workers sin detener el job ni cambiar su ID. Job de reemplazo: para código nuevo u opciones no soportadas en vuelo, un job nuevo que reemplaza al anterior; antes conviene validar su grafo. Dataflow hace un chequeo de compatibilidad para transferir el estado intermedio y los datos en buffer."
   - source: gcp-dataflow-docs
     url: https://docs.cloud.google.com/dataflow/docs/guides/stopping-a-pipeline
     accessed: 2026-10-11
+    page_title: "Stop a running Dataflow pipeline"
     note: "Stop a running Dataflow pipeline: cancel detiene el procesamiento, incluidos los datos en buffer (batch y streaming); drain, solo en streaming, termina de procesar lo que está en buffer y deja de ingerir datos nuevos; force cancel, solo si el cancel normal quedó trabado. Un job cancelado no se puede reiniciar. Antes de detener un pipeline streaming, conviene crear un snapshot del job."
   - source: apache-beam-docs
     url: https://beam.apache.org/documentation/programming-guide/
     accessed: 2026-10-11
+    page_title: "Apache Beam Programming Guide"
     note: "Beam Programming Guide, watermarks y datos tardíos: con la configuración de ventanas y el trigger por defecto, el trigger emite exactamente una vez y los datos tardíos se descartan, porque la configuración de ventanas por defecto tiene allowed lateness 0. Para procesar datos que llegan después de que el watermark pasa el final de la ventana, se configura allowed lateness al definir la ventana."
 relations:
   - type: RELATED_TO
@@ -56,7 +62,7 @@ relations:
     target: streaming-ingestion
     note: La ingesta continua que estos pipelines procesan.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-12
 verification_status: verified
 ---
@@ -254,3 +260,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08c).
 - 2026-10-12: revisión B-F3.1 del lote F3b-08c aplicada (docs/reviews/cards-f3b-08c.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-12: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

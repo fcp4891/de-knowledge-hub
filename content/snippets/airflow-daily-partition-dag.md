@@ -21,30 +21,37 @@ sources:
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/tutorial/taskflow.html
     accessed: 2026-10-01
+    page_title: "Pythonic Dags with the TaskFlow API"
     note: "TaskFlow en Airflow 3.3.2 importa dag y task desde airflow.sdk; @task(retries=3) configura reintentos; las claves de contexto se reciben como argumentos keyword-only; pasar el resultado de una tarea a otra crea la dependencia."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/templates-ref.html
     accessed: 2026-10-01
+    page_title: "Templates reference"
     note: "ds es la logical date del Dag run como YYYY-MM-DD; solo está disponible cuando el DagRun tiene logical_date."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/task-sdk/stable/api.html
     accessed: 2026-10-01
+    page_title: "airflow.sdk API Reference"
     note: "catchup: hacer catchup del scheduler o solo correr el último intervalo; False por defecto."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/parameterized-queries
     accessed: 2026-10-01
+    page_title: "Run parameterized queries"
     note: "Con la biblioteca cliente de Python: bigquery.Client(), QueryJobConfig(query_parameters=[ScalarQueryParameter(nombre, tipo, valor)]) y client.query_and_wait(query, job_config=...); parámetros con nombre usando @nombre; un parámetro no puede ser NULL ni reemplazar identificadores o nombres de tabla."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/multi-statement-queries
     accessed: 2026-10-01
+    page_title: "Work with multi-statement queries"
     note: "Consultas de varias sentencias; su propio ejemplo usa un parámetro de consulta (@id) dentro de la consulta; cada sentencia corre como un job hijo."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/transactions
     accessed: 2026-10-01
+    page_title: "Multi-statement transactions"
     note: "Transacciones de varias sentencias con commit o rollback atómico."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/access-control
     accessed: 2026-10-01
+    page_title: "BigQuery IAM roles and permissions"
     note: "roles/bigquery.jobUser permite ejecutar consultas en el proyecto; roles/bigquery.dataEditor sobre un dataset permite modificar sus tablas."
 relations:
   - type: IMPLEMENTS
@@ -66,7 +73,7 @@ relations:
     target: catchup
     note: Con catchup activado, cada intervalo recuperado reemplaza su partición sin duplicar.
 created_at: 2026-10-01
-updated_at: 2026-10-01
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -173,3 +180,4 @@ El detalle está en `sources` del encabezado.
 - 2026-10-01: creación (A-F3.2), desde la sección 10 de `data-pipeline` tras la revisión B-F3.1 del lote 2.
 - 2026-10-01: enlazado a `dag` (IMPLEMENTS) y `catchup`, verificadas con el lote 3.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

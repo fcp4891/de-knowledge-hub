@@ -18,10 +18,12 @@ sources:
   - source: python-docs
     url: https://docs.python.org/3.12/library/typing.html
     accessed: 2026-10-08
+    page_title: "typing — Support for type hints"
     note: "El runtime de Python no hace cumplir las anotaciones de tipo de funciones y variables; las usan herramientas de terceros como type checkers, IDEs y linters. Optional puede escribirse X | None desde 3.10. Literal (3.8). NewType crea tipos distintos de bajo costo: el type checker lo trata como un tipo distinto, pero en ejecución devuelve su argumento sin cambios. TypedDict: en ejecución sus instancias son simplemente dicts; declara un tipo de dict con un conjunto de claves y tipos esperados. Protocol permite subtipado estructural. Any es un tipo sin restricciones. cast devuelve el valor sin cambios: para el type checker indica el tipo, pero en ejecución no se verifica nada."
   - source: python-docs
     url: https://docs.python.org/3.12/library/dataclasses.html
     accessed: 2026-10-08
+    page_title: "dataclasses — Data Classes"
     note: "dataclass genera métodos especiales como __init__ y __repr__ a partir de los campos declarados con anotaciones de tipo (PEP 526)."
 relations:
   - type: RELATED_TO
@@ -37,7 +39,7 @@ relations:
     target: python-functions
     note: Las anotaciones de parámetros y retorno son la parte verificable de la firma.
 created_at: 2026-10-08
-updated_at: 2026-10-08
+updated_at: 2026-10-13
 last_verified: 2026-10-08
 verification_status: verified
 ---
@@ -238,3 +240,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: creación (lote F3b-03a).
 - 2026-10-08: revisión B-F3.1 del lote F3b-03a aplicada (docs/reviews/cards-f3b-03a.md): la documentación de Python se cita en `/3.12/`, la versión con la que se ejecutó el código.
 - 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

@@ -18,18 +18,22 @@ sources:
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/sql-cluster.html
     accessed: 2026-09-30
+    page_title: "PostgreSQL: Documentation: 18: CLUSTER"
     note: "CLUSTER reordena físicamente la tabla según un índice. Es una operación única: las filas nuevas o actualizadas después no se guardan en ese orden; se puede volver a ejecutar, y un fillfactor menor a 100 ayuda a conservar el orden. Toma un bloqueo ACCESS EXCLUSIVE que impide lecturas y escrituras mientras corre."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/clustered-tables
     accessed: 2026-09-30
+    page_title: "Introduction to clustered tables"
     note: "BigQuery ordena por hasta cuatro columnas de clustering y organiza bloques; con filtros sobre esas columnas poda bloques (block pruning). El orden de las columnas importa. Reclustering automático en segundo plano, sin efecto en la capacidad de consulta."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/t_Sorting_data.html
     accessed: 2026-09-30
+    page_title: "Sort keys"
     note: "Redshift guarda datos en bloques de 1 MB con mínimo y máximo por bloque; con sort keys, los predicados de rango saltan bloques. Tipos COMPOUND (por defecto) e INTERLEAVED (hasta ocho columnas)."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/performance-tuning-ordered-cci
     accessed: 2026-09-30
+    page_title: "Performance tuning with ordered clustered columnstore index in Azure Synapse Analytics"
     note: "En dedicated SQL pool, un clustered columnstore index ordenado ordena los datos por la clave antes de comprimirlos en segmentos; reduce el solapamiento de segmentos y permite segment elimination."
 relations:
   - type: RELATED_TO
@@ -45,7 +49,7 @@ relations:
     target: bigquery-query-optimization
     note: El plan, las insights y las prácticas de optimización de BigQuery.
 created_at: 2026-09-30
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -189,3 +193,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `query-plans`, que ya tiene ficha.
 - 2026-10-11: «pendiente de ficha» actualizado: la ficha ya existe (lote F3b-08a); el §17 la enlaza y relations la incluye: relations incluye `bigquery-query-optimization`, que el §17 nombra; §17 enlaza las fichas que ya existen.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

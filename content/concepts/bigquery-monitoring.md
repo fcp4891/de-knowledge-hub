@@ -18,14 +18,17 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/monitoring
     accessed: 2026-10-11
+    page_title: "Introduction to BigQuery monitoring"
     note: "Introduction to BigQuery monitoring: las fuentes difieren en frecuencia de muestreo o agregación; INFORMATION_SCHEMA puede tener más granularidad que las métricas de Cloud Monitoring, así que los gráficos pueden diferir. Métricas: jobs en curso, bytes escaneados por consulta y distribución de tiempos de consulta; las de una consulta solo aparecen si termina bien y pueden tardar hasta siete minutos; las consultas fallidas no se reportan. Cloud Monitoring muestra las métricas, permite gráficos y alertas; cada métrica tiene un tipo de recurso (bigquery_dataset, bigquery_project o global) y etiquetas. Ejemplos en PromQL: {\"bigquery.googleapis.com/query/count\", monitored_resource=\"global\", priority=\"interactive\"} y avg_over_time({\"bigquery.googleapis.com/job/num_in_flight\", monitored_resource=\"bigquery_project\", job_type=\"load\"}[10m]). Logs: BigQuery crea entradas para acciones como crear o borrar una tabla, comprar slots o ejecutar una carga; en los audit logs, el contenido está en protoPayload. Tableros operativos y gráficos de recursos con el uso de slots, la capacidad y la concurrencia de jobs."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/introduction-audit-workloads
     accessed: 2026-10-11
+    page_title: "Introduction to audit logs in BigQuery"
     note: "Introduction to audit logs in BigQuery: los proyectos tienen audit logs de sus recursos directos; carpetas, organizaciones y cuentas de facturación tienen los suyos. Los audit logs responden «quién hizo qué, dónde y cuándo» y son la fuente definitiva de actividad por usuario y patrones de acceso: la principal para auditoría y seguridad. INFORMATION_SCHEMA es otra fuente, con metadatos casi en tiempo real de jobs, datasets y tablas, para usar junto con métricas y logs."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/admin-resource-charts
     accessed: 2026-10-11
+    page_title: "Monitor health and resource utilization"
     note: "Monitor health and resource utilization: los gráficos de recursos de BigQuery ayudan a seguir el uso pasado de recursos para planificar y diagnosticar; hay una consulta de ejemplo que replica el gráfico de uso de slots con INFORMATION_SCHEMA."
 relations:
   - type: RELATED_TO
@@ -44,7 +47,7 @@ relations:
     target: orchestration-observability
     note: El monitoreo de los pipelines que cargan BigQuery.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -243,3 +246,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08b).
 - 2026-10-11: revisión B-F3.1 del lote F3b-08b aplicada (docs/reviews/cards-f3b-08b.md), regla del §17: relations incluye `orchestration-observability`, que el §17 nombra.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

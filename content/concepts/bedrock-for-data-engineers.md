@@ -18,34 +18,42 @@ sources:
   - source: aws-bedrock-docs
     url: https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html
     accessed: 2026-10-12
+    page_title: "Overview"
     note: "Overview - Amazon Bedrock: servicio administrado con acceso seguro a modelos fundacionales de varias empresas de IA para construir y escalar aplicaciones de IA generativa; para aplicaciones nuevas se recomienda el endpoint bedrock-runtime."
   - source: aws-bedrock-docs
     url: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference.html
     accessed: 2026-10-12
+    page_title: "Process multiple prompts with batch inference"
     note: "Process multiple prompts with batch inference: se envían muchos prompts en una solicitud y las respuestas se generan de forma asíncrona en un bucket de S3; la entrada usa el formato de InvokeModel o de Converse; cada registro del JSONL se procesa de forma independiente, sin interacción de varios turnos."
   - source: aws-bedrock-docs
     url: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-data.html
     accessed: 2026-10-12
+    page_title: "Format and upload your batch inference data"
     note: "Format and upload your batch inference data: cada línea del JSONL tiene recordId y modelInput; el formato de modelInput depende del tipo de invocación (InvokeModel por defecto, o Converse). Si falta recordId, Bedrock lo agrega en la salida. El orden de los registros en la salida no está garantizado."
   - source: aws-bedrock-docs
     url: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-create.html
     accessed: 2026-10-12
+    page_title: "Create a batch inference job"
     note: "Create a batch inference job: CreateModelInvocationJob con jobName, roleArn (rol de servicio), modelId, inputDataConfig (ubicación en S3; procesa todos los JSONL de esa ubicación) y outputDataConfig; modelInvocationType indica el formato de la entrada."
   - source: aws-bedrock-docs
     url: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelInvocationJob.html
     accessed: 2026-10-12
+    page_title: "CreateModelInvocationJob"
     note: "CreateModelInvocationJob (API Reference): modelInvocationType acepta InvokeModel o Converse; inputDataConfig.s3InputDataConfig.s3Uri y outputDataConfig.s3OutputDataConfig.s3Uri."
   - source: aws-bedrock-docs
     url: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html
     accessed: 2026-10-12
+    page_title: "Converse"
     note: "Converse (API Reference): interfaz común para modelos que admiten mensajes; cuerpo con messages (role y content con text), system e inferenceConfig (maxTokens, temperature). Bedrock no guarda el texto que se envía como contenido."
   - source: aws-bedrock-docs
     url: https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html
     accessed: 2026-10-12
+    page_title: "Retrieve data and generate AI responses with Amazon Bedrock Knowledge Bases"
     note: "Amazon Bedrock Knowledge Bases: una knowledge base busca en datos propios la información relevante para una consulta y la usa para mejorar las respuestas generadas."
   - source: aws-bedrock-docs
     url: https://aws.amazon.com/bedrock/pricing/
     accessed: 2026-10-12
+    page_title: "Amazon Bedrock pricing"
     note: "Amazon Bedrock pricing: precios por modelo según tokens de entrada y salida, con precios propios para inferencia por lotes. Los montos no se copian."
 relations:
   - type: RELATED_TO

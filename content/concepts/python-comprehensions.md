@@ -18,14 +18,17 @@ sources:
   - source: python-docs
     url: https://docs.python.org/3.12/tutorial/datastructures.html
     accessed: 2026-10-08
+    page_title: "5. Data Structures"
     note: "Las list comprehensions son una forma concisa de crear listas: aplicar una operación a cada elemento de otra secuencia o iterable, o quedarse con los que cumplen una condición. También existen set comprehensions y dict comprehensions (claves y valores desde expresiones arbitrarias). Incluye comprehensions anidadas."
   - source: python-docs
     url: https://docs.python.org/3.12/reference/expressions.html
     accessed: 2026-10-08
+    page_title: "6. Expressions"
     note: "Displays de listas, sets y dicts, y generator expressions. Salvo la expresión iterable del for más a la izquierda, la comprehension se ejecuta en un ámbito anidado implícito, así los nombres asignados en el target no se filtran al ámbito que la contiene; el iterable del primer for se evalúa directamente en el ámbito exterior."
   - source: python-docs
     url: https://docs.python.org/3.12/howto/functional.html
     accessed: 2026-10-08
+    page_title: "Functional Programming HOWTO"
     note: "Functional Programming HOWTO: una generator expression devuelve un iterador que calcula los valores a medida que se necesitan, sin materializarlos todos a la vez; por eso las list comprehensions no sirven con iteradores infinitos o con volúmenes muy grandes, y en esos casos son preferibles las generator expressions. Las generator expressions van entre paréntesis y las list comprehensions entre corchetes."
 relations:
   - type: RELATED_TO
@@ -38,7 +41,7 @@ relations:
     target: data-transformation
     note: Mapear y filtrar registros es la transformación más básica de un pipeline en Python.
 created_at: 2026-10-08
-updated_at: 2026-10-08
+updated_at: 2026-10-13
 last_verified: 2026-10-08
 verification_status: verified
 ---
@@ -202,3 +205,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: creación (lote F3b-03a).
 - 2026-10-08: revisión B-F3.1 del lote F3b-03a aplicada (docs/reviews/cards-f3b-03a.md): la documentación de Python se cita en `/3.12/`, la versión con la que se ejecutó el código.
 - 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

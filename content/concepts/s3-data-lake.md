@@ -18,34 +18,42 @@ sources:
   - source: aws-s3-docs
     url: https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html
     accessed: 2026-10-12
+    page_title: "What is Amazon S3?"
     note: "What is Amazon S3?: consistencia fuerte de lectura después de escritura para PUT y DELETE de objetos en todas las regiones, incluidas las sobrescrituras. Tipos de bucket: general purpose (el tipo original, recomendado para la mayoría de los casos; nombres únicos en el namespace global de la partición), directory (baja latencia; jerarquía de directorios, sin límite de prefijos), table (datos tabulares en formato Apache Iceberg, optimizado para analítica) y vector."
   - source: aws-s3-docs
     url: https://docs.aws.amazon.com/AmazonS3/latest/userguide/optimizing-performance.html
     accessed: 2026-10-12
+    page_title: "Best practices design patterns: optimizing Amazon S3 performance"
     note: "Optimizing Amazon S3 performance: al menos 3.500 solicitudes PUT/COPY/POST/DELETE o 5.500 GET/HEAD por segundo por prefijo particionado; sin límite de prefijos por bucket; leer en paralelo desde 10 prefijos escala a 55.000 lecturas por segundo."
   - source: aws-s3-docs
     url: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html
     accessed: 2026-10-12
+    page_title: "Blocking public access to your Amazon S3 storage"
     note: "Blocking public access: por defecto, los buckets, access points y objetos nuevos no permiten acceso público; S3 Block Public Access prevalece sobre políticas y permisos que lo habiliten."
   - source: aws-s3-docs
     url: https://docs.aws.amazon.com/AmazonS3/latest/userguide/default-bucket-encryption.html
     accessed: 2026-10-12
+    page_title: "Configuring default encryption"
     note: "Configuring default encryption: SSE-S3 es el cifrado base de todo bucket; desde el 5 de enero de 2023, toda carga nueva se cifra automáticamente sin costo adicional."
   - source: aws-s3-docs
     url: https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html
     accessed: 2026-10-12
+    page_title: "Understanding and managing Amazon S3 storage classes"
     note: "Understanding and managing Amazon S3 storage classes: tabla comparativa (consultada el 2026-10-12) con duración mínima de almacenamiento: STANDARD e INTELLIGENT_TIERING sin mínimo; STANDARD_IA y ONEZONE_IA 30 días; GLACIER_IR y GLACIER 90 días; DEEP_ARCHIVE 180 días. ONEZONE_IA y EXPRESS_ONEZONE guardan en una sola zona de disponibilidad. GLACIER y DEEP_ARCHIVE exigen restaurar el objeto antes de leerlo; las clases IA y Glacier cobran recuperación por GB."
   - source: aws-s3-docs
     url: https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html
     accessed: 2026-10-12
+    page_title: "Managing the lifecycle of objects"
     note: "Managing the lifecycle of objects: acciones de transición (mover a otra clase, por ejemplo a Standard-IA a los 30 días) y de expiración (S3 borra los objetos vencidos); expirar en una clase con duración mínima puede tener costo."
   - source: aws-s3-docs
     url: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables.html
     accessed: 2026-10-12
+    page_title: "Working with Amazon S3 Tables and table buckets"
     note: "Working with Amazon S3 Tables and table buckets: almacenamiento optimizado para analítica, con tablas en formato Apache Iceberg y mantenimiento automático (compactación, gestión de snapshots y borrado de archivos sin referencia)."
   - source: aws-s3-docs
     url: https://aws.amazon.com/s3/pricing/
     accessed: 2026-10-12
+    page_title: "Amazon S3"
     note: "Amazon S3 pricing: se paga el almacenamiento según tamaño, tiempo y clase, además de solicitudes, recuperación y transferencia. Los montos no se copian."
 relations:
   - type: RELATED_TO

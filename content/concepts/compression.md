@@ -18,42 +18,52 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/batch-loading-data
     accessed: 2026-10-06
+    page_title: "Batch load data"
     note: "En Avro, Parquet y ORC, BigQuery carga archivos cuyos datos internos están comprimidos con un codec admitido, pero no archivos de esos formatos comprimidos enteros (por ejemplo, con gzip). Avro es el formato preferido para cargar datos comprimidos o no, porque se lee en paralelo aunque los bloques estén comprimidos; Parquet, por su codificación por columna, suele lograr mejor tasa de compresión y archivos más chicos, y también se carga en paralelo."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv
     accessed: 2026-10-06
+    page_title: "Load CSV data from Cloud Storage"
     note: "Con CSV comprimido en gzip, BigQuery no puede leer en paralelo y la carga es más lenta que sin comprimir; no se mezclan archivos comprimidos y sin comprimir en un job; gzip hasta 4 GB por archivo."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet
     accessed: 2026-10-06
+    page_title: "Load Parquet data from Cloud Storage"
     note: "Codecs de Parquet que admite BigQuery: GZip, LZO_1C, LZO_1X, LZ4_RAW, Snappy y ZSTD."
   - source: apache-parquet-docs
     url: https://parquet.apache.org/docs/file-format/data-pages/compression/
     accessed: 2026-10-06
+    page_title: "Compression"
     note: "Codecs de Parquet: UNCOMPRESSED, SNAPPY, GZIP, LZO, BROTLI, LZ4 (obsoleto; se aconseja pasar al LZ4_RAW, interoperable), ZSTD y LZ4_RAW; se comprimen las páginas de datos."
   - source: apache-avro-docs
     url: https://avro.apache.org/docs/1.12.0/specification/
     accessed: 2026-10-06
+    page_title: "Specification"
     note: "Los object container files de Avro guardan los objetos en bloques que pueden comprimirse; codecs opcionales bzip2, snappy, xz y zstandard; los marcadores de sincronización entre bloques permiten dividir los archivos para procesarlos en paralelo."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/compression-formats.html
     accessed: 2026-10-06
+    page_title: "Use compression in Athena"
     note: "Athena lee tablas con archivos comprimidos con distintos codecs (por ejemplo, Parquet con Snappy y con GZIP en la misma tabla). Snappy prioriza la velocidad de compresión y descompresión sobre la tasa máxima; ZSTD es rápido y da tasas altas. Formatos: BZIP2, DEFLATE (solo Avro), GZIP (por defecto al escribir Parquet y texto en tablas Hive), LZ4, LZO, SNAPPY y ZSTD (por defecto en tablas Iceberg, nivel 3 al escribir); no admite tar.gz ni escribir Parquet con LZ4 o LZO."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/t_Compressing_data_on_disk.html
     accessed: 2026-10-06
+    page_title: "Column compression to reduce the size of stored data"
     note: "En Redshift la compresión es por columna: reduce el almacenamiento y lo que se lee de disco, lo que mejora las consultas. ENCODE AUTO es el valor por defecto de las tablas y gestiona la codificación de todas las columnas; si se especifica la codificación de alguna columna, la tabla deja de estar en ENCODE AUTO."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/copy-parameters-file-compression.html
     accessed: 2026-10-06
+    page_title: "File compression parameters"
     note: "COPY de Redshift lee archivos comprimidos con BZIP2, GZIP, LZOP o ZSTD (este último solo desde S3) y los descomprime al cargar."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/format-delimited-text
     accessed: 2026-10-06
+    page_title: "Delimited text format in Azure Data Factory and Azure Synapse Analytics"
     note: "compressionCodec del texto delimitado en Data Factory: bzip2, gzip, deflate, ZipDeflate, TarGzip, Tar, snappy o lz4 (sin comprimir por defecto); la Copy activity no admite snappy ni lz4."
   - source: python-docs
     url: https://docs.python.org/3/library/gzip.html
     accessed: 2026-10-06
+    page_title: "gzip — Support for gzip files"
     note: "gzip.compress devuelve los datos comprimidos (compresslevel 9 por defecto, mtime 0 para salida reproducible) y gzip.decompress los descomprime."
 relations:
   - type: RELATED_TO
@@ -72,7 +82,7 @@ relations:
     target: row-vs-columnar-formats
     note: Los formatos columnares comprimen mejor porque cada bloque tiene un solo tipo de dato.
 created_at: 2026-10-06
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-06
 verification_status: verified
 ---
@@ -236,3 +246,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: creación (lote F3b-01b, dominio 01-fundamentals).
 - 2026-10-06: revisión B-F3.1 del lote F3b-01b aplicada (docs/reviews/cards-f3b-01b.md): §11 nombra `LZO_1C` y `LZO_1X`, como la documentación de BigQuery.
 - 2026-10-06: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

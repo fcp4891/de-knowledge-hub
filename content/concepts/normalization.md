@@ -18,26 +18,32 @@ sources:
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/previous-versions/troubleshoot/microsoft-365/microsoft-365-apps/access/database-normalization-description
     accessed: 2026-10-05
+    page_title: "Description of the database normalization basics"
     note: "La normalización organiza los datos en tablas y relaciones según reglas que protegen los datos y eliminan la redundancia y la dependencia inconsistente; los datos redundantes desperdician espacio y complican el mantenimiento (un cambio debe hacerse igual en todos los lugares). Primera forma normal: eliminar grupos repetidos, una tabla por conjunto de datos relacionados con clave primaria. Segunda: tablas separadas para valores que aplican a varios registros, relacionadas por clave foránea; los registros dependen solo de la clave primaria. Tercera: eliminar campos que no dependen de la clave. En la práctica, muchas tablas pequeñas pueden degradar el rendimiento; la cuarta y quinta formas normales existen pero rara vez se usan en el diseño práctico."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/architecture/data-guide/relational-data/online-transaction-processing
     accessed: 2026-10-05
+    page_title: "Online transaction processing (OLTP)"
     note: "Los datos transaccionales (OLTP) suelen estar muy normalizados, con esquema aplicado en la escritura y alta integridad."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/dimensional-modeling-dimension-tables
     accessed: 2026-10-05
+    page_title: "Dimensional modeling in Microsoft Fabric Warehouse: Dimension tables"
     note: "Las tablas de dimensión casi siempre deben desnormalizarse: la normalización reduce datos repetidos; la desnormalización los precalcula y repite a propósito para simplificar y acelerar las consultas."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/dimension-table-structure/
     accessed: 2026-10-05
+    page_title: "Dimension Table Structure"
     note: "Las dimensiones suelen ser anchas, planas y desnormalizadas, con muchos atributos de texto de baja cardinalidad."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/best-practices-performance-nested
     accessed: 2026-10-05
+    page_title: "Use nested and repeated fields"
     note: "La desnormalización agrega columnas a una tabla para reducir o eliminar joins; en BigQuery se recomienda hacerla con campos anidados y repetidos. No siempre mejora: los star schemas suelen estar ya optimizados para analítica."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_best-practices-best-dist-key.html
     accessed: 2026-10-05
+    page_title: "Choose the best distribution style"
     note: "En Redshift, las tablas que se unen se distribuyen por sus columnas comunes para colocar los joins; las dimensiones que no pueden colocarse junto al hecho pueden usar distribución ALL, que multiplica el almacenamiento."
 relations:
   - type: RELATED_TO
@@ -53,7 +59,7 @@ relations:
     target: surrogate-keys
     note: Las claves que relacionan tablas normalizadas pasan a claves sustitutas en el modelo dimensional.
 created_at: 2026-10-05
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -233,3 +239,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: creación (lote 6 de F3).
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-11: §17 enlaza `denormalization`, que ya tiene ficha (lote F3b-04a); antes figuraba como pendiente de ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

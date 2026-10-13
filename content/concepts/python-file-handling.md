@@ -18,38 +18,47 @@ sources:
   - source: python-docs
     url: https://docs.python.org/3.12/tutorial/inputoutput.html
     accessed: 2026-10-08
+    page_title: "7. Input and Output"
     note: "Tutorial, Reading and Writing Files: en modo texto, si no se especifica encoding, el valor por defecto depende de la plataforma; como UTF-8 es el estándar de facto, se recomienda encoding=\"utf-8\" salvo que se necesite otro. Es buena práctica usar with con objetos archivo: el archivo se cierra al terminar el bloque, incluso si se lanza una excepción. Recorrer el objeto archivo para leer líneas es eficiente en memoria, rápido y simple."
   - source: python-docs
     url: https://docs.python.org/3.12/library/functions.html
     accessed: 2026-10-08
+    page_title: "Built-in Functions"
     note: "open(): el encoding por defecto depende de la plataforma (lo que devuelva locale.getencoding()); solo se usa en modo texto. errors define cómo se manejan los errores de codificación y decodificación."
   - source: python-docs
     url: https://docs.python.org/3.12/library/io.html
     accessed: 2026-10-08
+    page_title: "io — Core tools for working with streams"
     note: "io.text_encoding y EncodingWarning: una API puede emitir EncodingWarning cuando se llama sin encoding (si sys.flags.warn_default_encoding está activo); para APIs nuevas se recomienda UTF-8 por defecto (encoding=\"utf-8\"). El valor efectivo depende de UTF-8 Mode."
   - source: python-docs
     url: https://docs.python.org/3.12/library/csv.html
     accessed: 2026-10-08
+    page_title: "csv — CSV File Reading and Writing"
     note: "Si csvfile es un objeto archivo, debe abrirse con newline=''. Sin newline='', los saltos de línea dentro de campos entre comillas no se interpretan bien y, en plataformas con fin de línea CRLF, la escritura agrega un CR extra; siempre es seguro especificarlo porque el módulo csv hace su propio manejo de saltos de línea."
   - source: python-docs
     url: https://docs.python.org/3.12/library/pathlib.html
     accessed: 2026-10-08
+    page_title: "pathlib — Object-oriented filesystem paths"
     note: "Path.read_text y Path.write_text abren y cierran el archivo; sus parámetros opcionales tienen el mismo significado que en open(). Path.read_bytes, iterdir y glob/rglob."
   - source: python-docs
     url: https://docs.python.org/3.12/library/os.html
     accessed: 2026-10-08
+    page_title: "os — Miscellaneous operating system interfaces"
     note: "os.replace(src, dst): reemplaza dst sin aviso si es un archivo; puede fallar si src y dst están en sistemas de archivos distintos; si tiene éxito, el renombrado es atómico (requisito de POSIX). os.fsync: para un objeto archivo f, hacer primero f.flush() y luego os.fsync(f.fileno()) para que los buffers internos se escriban a disco."
   - source: aws-lambda-docs
     url: https://docs.aws.amazon.com/lambda/latest/dg/configuration-ephemeral-storage.html
     accessed: 2026-10-08
+    page_title: "Configure ephemeral storage for Lambda Event Functions"
     note: "Lambda ofrece almacenamiento efímero en /tmp, configurable entre 512 MB y 10,240 MB en incrementos de 1 MB. Casos de uso: descargar objetos de S3 a /tmp para procesarlos y manejar objetos más grandes sin procesarlos en memoria."
   - source: gcp-cloud-run-docs
     url: https://docs.cloud.google.com/run/docs/container-contract
     accessed: 2026-10-08
+    page_title: "Container runtime contract"
     note: "Container runtime contract, File system access: el sistema de archivos de cada contenedor es escribible, pero es un sistema de archivos en memoria (escribir usa la memoria de la instancia), los datos no persisten cuando la instancia se detiene y no se le puede fijar un límite de tamaño, así que se puede agotar la memoria de la instancia y hacerla fallar; para evitarlo, usar un volumen en memoria dedicado con límite de tamaño."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-python
     accessed: 2026-10-08
+    page_title: "Azure Functions developer reference guide for Python apps"
     note: "Python developer reference for Azure Functions: los archivos temporales se guardan en tmp/ y no está garantizado que persistan entre invocaciones ni entre instancias al escalar; tampoco el estado de las variables globales."
 relations:
   - type: RELATED_TO
@@ -65,7 +74,7 @@ relations:
     target: python-generators
     note: Recorrer el archivo línea a línea en un generador mantiene la memoria constante.
 created_at: 2026-10-08
-updated_at: 2026-10-09
+updated_at: 2026-10-13
 last_verified: 2026-10-08
 verification_status: verified
 ---
@@ -276,3 +285,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: revisión B-F3.1 del lote F3b-03a aplicada (docs/reviews/cards-f3b-03a.md): la documentación de Python se cita en `/3.12/`, la versión con la que se ejecutó el código; `os.replace` con la frase de la documentación (atómico si tiene éxito, requisito de POSIX; puede fallar entre sistemas de archivos), sin «deja de ser atómico».
 - 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-09: §17 enlaza `python-file-processing`, que ya tiene ficha (lote F3b-03b); antes figuraba como pendiente de ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

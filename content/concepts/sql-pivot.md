@@ -18,26 +18,32 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax
     accessed: 2026-10-07
+    page_title: "Query syntax"
     note: "El operador PIVOT rota filas a columnas usando agregación y forma parte del FROM. Cada valor del IN debe ser una constante: no se admiten variables ni parámetros de consulta. El nombre de cada columna resultante se arma con el prefijo opcional y el nombre o la representación del valor. BigQuery también tiene UNPIVOT."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/best-practices-performance-compute
     accessed: 2026-10-07
+    page_title: "Optimize query computation"
     note: "Buena práctica de BigQuery: en lugar de self-joins, usar una función de ventana o el operador PIVOT; un self-join puede elevar al cuadrado el número de filas de salida."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_FROM_clause-pivot-unpivot-examples.html
     accessed: 2026-10-07
+    page_title: "PIVOT and UNPIVOT examples"
     note: "Redshift admite PIVOT y UNPIVOT en el FROM. Los valores del IN de PIVOT no pueden ser referencias a columnas ni subconsultas; para valores constantes sin alias, el nombre de columna por defecto es la constante. UNPIVOT no se aplica a JOIN, CTE recursivas, PIVOT, UNPIVOT ni expresiones SUPER desanidadas; las columnas del IN de UNPIVOT deben tener un tipo común."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/queries/from-using-pivot-and-unpivot?view=sql-server-ver17
     accessed: 2026-10-07
+    page_title: "FROM - Using PIVOT and UNPIVOT"
     note: "Aplica a Azure Synapse Analytics y Warehouse en Microsoft Fabric, entre otros. PIVOT convierte los valores únicos de una columna en varias columnas y agrega lo necesario; UNPIVOT hace la operación opuesta. UNPIVOT no es la inversa exacta de PIVOT: PIVOT agrega y fusiona filas, y los NULL de la entrada de UNPIVOT desaparecen en la salida. El uso repetido de PIVOT/UNPIVOT en una sentencia puede afectar el rendimiento."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/tablefunc.html
     accessed: 2026-10-07
+    page_title: "F.43. tablefunc — functions that return tables ( crosstab and others)"
     note: "PostgreSQL ofrece crosstab en el módulo tablefunc para producir resultados «pivotados», con los datos a lo ancho de la página en vez de hacia abajo."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/sql-select.html
     accessed: 2026-10-07
+    page_title: "PostgreSQL: Documentation: 18: SELECT"
     note: "La sintaxis de SELECT de PostgreSQL no incluye un operador PIVOT."
 relations:
   - type: RELATED_TO
@@ -50,7 +56,7 @@ relations:
     target: sql-nulls
     note: Las combinaciones sin datos quedan en NULL, y UNPIVOT descarta los NULL.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -214,3 +220,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: ficha completa (lote F3b-02b, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): sin cambios pedidos.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

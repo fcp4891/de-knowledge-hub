@@ -18,34 +18,42 @@ sources:
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/transaction-iso.html
     accessed: 2026-10-05
+    page_title: "13.2. Transaction Isolation"
     note: "Read Committed (nivel por defecto): cada SELECT ve solo lo confirmado antes de que empezara la consulta, así que dos SELECT de la misma transacción pueden ver datos distintos si otra transacción confirma en el medio. Repeatable Read: solo ve lo confirmado antes de que empezara la transacción, nunca cambios confirmados por otras transacciones durante su ejecución."
   - source: psycopg-docs
     url: https://www.psycopg.org/psycopg3/docs/api/connections.html
     accessed: 2026-10-05
+    page_title: "Connection classes"
     note: "Connection.isolation_level fija el nivel de aislamiento de las nuevas transacciones de la conexión (None usa el valor por defecto del servidor)."
   - source: psycopg-docs
     url: https://www.psycopg.org/psycopg3/docs/basic/transactions.html
     accessed: 2026-10-05
+    page_title: "Transactions management"
     note: "Con autocommit=True cada sentencia se confirma sola; los bloques with conn.transaction() gestionan transacciones donde hacen falta."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/consistency
     accessed: 2026-10-05
+    page_title: "Cloud Storage consistency"
     note: "En Cloud Storage, las lecturas tras escrituras, borrados y actualizaciones de metadatos de objetos, y los listados de buckets y objetos, son fuertemente consistentes; los objetos públicos en caché pueden no serlo. Son eventualmente consistentes otorgar o revocar acceso y recrear buckets borrados: suele tardar alrededor de un minuto, a veces más."
   - source: aws-s3-docs
     url: https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html
     accessed: 2026-10-05
+    page_title: "What is Amazon S3?"
     note: "Amazon S3 ofrece consistencia fuerte de lectura tras escritura para PUT y DELETE de objetos en todas las regiones, incluidos los PUT que sobrescriben; las lecturas de ACL, tags y metadatos de objetos también son fuertemente consistentes."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/transactions
     accessed: 2026-10-05
+    page_title: "Multi-statement transactions"
     note: "Las transacciones de BigQuery usan aislamiento por snapshot: todas las lecturas ven un snapshot consistente de las tablas referenciadas."
   - source: gcp-spanner-docs
     url: https://docs.cloud.google.com/spanner/docs/true-time-external-consistency
     accessed: 2026-10-05
+    page_title: "Spanner: TrueTime and external consistency"
     note: "Por defecto, Spanner ofrece consistencia externa, más estricta que la serializabilidad; la linealizabilidad es un caso especial de consistencia externa en el que cada transacción tiene una sola lectura o escritura sobre un solo objeto."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/cosmos-db/consistency-levels
     accessed: 2026-10-05
+    page_title: "Consistency levels in Azure Cosmos DB"
     note: "Azure Cosmos DB ofrece cinco niveles, de más fuerte a más débil: Strong (linealizable: las lecturas devuelven la última versión confirmada), Bounded staleness, Session, Consistent prefix y Eventual (una réplica puede devolver datos atrasados o más viejos que una lectura anterior). Cada nivel equilibra disponibilidad y rendimiento; la documentación remite al teorema PACELC para el equilibrio entre consistencia, disponibilidad, latencia y throughput. El nivel por defecto se configura en la cuenta y se puede sobrescribir por solicitud, solo para lecturas desde el SDK. La consistencia fuerte aumenta la latencia de escritura y reduce la disponibilidad ante fallos."
 relations:
   - type: RELATED_TO
@@ -61,7 +69,7 @@ relations:
     target: gcs-buckets-and-objects
     note: Qué operaciones de Cloud Storage son fuerte o eventualmente consistentes.
 created_at: 2026-10-05
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-06
 verification_status: verified
 ---
@@ -262,3 +270,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: creación (lote F3b-01a, dominio 01-fundamentals).
 - 2026-10-06: `verification_status: verified` (revisión B-F3.1 del lote F3b-01a aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

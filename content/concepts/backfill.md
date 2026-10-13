@@ -18,26 +18,32 @@ sources:
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/backfill.html
     accessed: 2026-09-30
+    page_title: "Backfill"
     note: "Un backfill crea ejecuciones en un rango según el schedule del Dag; no tiene sentido sin schedule temporal. Reproceso configurable (none, failed, completed), max_active_runs propio y ejecución en orden inverso. Ejemplo oficial de CLI (Airflow 3.3.2): airflow backfill create --dag-id --from-date --to-date --reprocess-behavior --max-active-runs --run-backwards."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dag-run.html
     accessed: 2026-09-30
+    page_title: "Dag Runs"
     note: Cada ejecución tiene un data interval; con catchup=True el scheduler crea ejecuciones para los intervalos no ejecutados; catchup está desactivado por defecto.
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/transactions
     accessed: 2026-09-30
+    page_title: "Multi-statement transactions"
     note: Transacciones de varias sentencias con commit o rollback atómico.
   - source: aws-glue-docs
     url: https://docs.aws.amazon.com/glue/latest/dg/monitor-continuations.html
     accessed: 2026-09-30
+    page_title: "Tracking processed data using job bookmarks"
     note: Los job bookmarks guardan qué datos ya procesó un job ETL para evitar reprocesarlos; en S3 se basan en la fecha de modificación de los objetos.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/how-to-create-tumbling-window-trigger
     accessed: 2026-09-30
+    page_title: "Create a trigger that runs a pipeline on a tumbling window"
     note: En un tumbling window trigger de Data Factory, startTime y endTime pueden estar en el pasado; cada ventana dispara una ejecución.
   - source: gcp-cloud-composer-docs
     url: https://docs.cloud.google.com/composer/docs/composer-3/composer-overview
     accessed: 2026-09-30
+    page_title: "Managed Airflow overview"
     note: Cloud Composer evoluciona a Managed Service for Apache Airflow (cambio de nombre); Managed Airflow es un servicio totalmente administrado de orquestación de workflows construido sobre Apache Airflow.
 relations:
   - type: DEPENDS_ON
@@ -53,7 +59,7 @@ relations:
     target: incremental-load
     note: Un backfill suele reutilizar la carga incremental con un rango explícito.
 created_at: 2026-09-30
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -205,3 +211,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `catchup`, `data-reconciliation`, que ya tienen ficha.
 - 2026-10-11: §17 enlaza `failure-recovery`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

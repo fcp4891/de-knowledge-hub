@@ -18,26 +18,32 @@ sources:
   - source: gcp-dataflow-docs
     url: https://docs.cloud.google.com/dataflow/docs/concepts/beam-programming-model
     accessed: 2026-09-30
+    page_title: "Programming model for Apache Beam"
     note: Apache Beam es un modelo unificado para pipelines batch y streaming; windowing sobre colecciones no acotadas según el timestamp de cada elemento (event time).
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/subscription-overview
     accessed: 2026-09-30
+    page_title: "Subscription overview"
     note: Entrega at-least-once por defecto y sin garantías de orden.
   - source: aws-kinesis-docs
     url: https://docs.aws.amazon.com/streams/latest/dev/introduction.html
     accessed: 2026-09-30
+    page_title: "What is Amazon Kinesis Data Streams?"
     note: Kinesis Data Streams recolecta y procesa grandes streams de registros en tiempo real.
   - source: aws-kinesis-docs
     url: https://docs.aws.amazon.com/streams/latest/dev/how-do-i-size-a-stream.html
     accessed: 2026-09-30
+    page_title: "Choose the right mode to stream in"
     note: Kinesis Data Streams ofrece los modos On-demand Standard, On-demand Advantage y Provisioned, y permite cambiar entre ellos.
   - source: aws-kinesis-docs
     url: https://docs.aws.amazon.com/streams/latest/dev/kinesis-extended-retention.html
     accessed: 2026-09-30
+    page_title: "Change the data retention period"
     note: Retención de 24 horas por defecto, ampliable hasta 8760 horas (365 días).
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about
     accessed: 2026-09-30
+    page_title: "What is Azure Event Hubs?"
     note: Event Hubs es una plataforma de streaming con particiones ordenadas para escalar el throughput y compatibilidad con Apache Kafka que permite ejecutar cargas de Kafka existentes sin cambios de código.
 relations:
   - type: RELATED_TO
@@ -50,7 +56,7 @@ relations:
     target: idempotency
     note: La entrega at-least-once exige procesar de forma idempotente.
 created_at: 2026-09-30
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -192,3 +198,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: VERIFY resuelto: modos de capacidad y retención de Kinesis Data Streams.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `late-arriving-data`, que ya tiene ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

@@ -18,14 +18,17 @@ sources:
   - source: python-docs
     url: https://docs.python.org/3.12/tutorial/datastructures.html
     accessed: 2026-10-08
+    page_title: "5. Data Structures"
     note: "Tutorial, capítulo 5: list (como pila y como cola), tuplas, sets y diccionarios. Las claves de un dict pueden ser de cualquier tipo inmutable; una tupla sirve como clave solo si no contiene objetos mutables; las listas no pueden ser claves. list(d) devuelve las claves en orden de inserción."
   - source: python-docs
     url: https://docs.python.org/3.12/library/stdtypes.html
     accessed: 2026-10-08
+    page_title: "Built-in Types"
     note: "Built-in Types. Dictionaries preserve insertion order: actualizar una clave no cambia el orden y las claves agregadas después de borrar van al final. Un set es una colección no ordenada de objetos hashables distintos; usos comunes: pruebas de pertenencia, eliminar duplicados y operaciones de conjuntos. Los elementos de un set, como las claves de un dict, deben ser hashables. copy() hace una copia superficial."
   - source: python-docs
     url: https://docs.python.org/3.12/library/collections.html
     accessed: 2026-10-08
+    page_title: "collections — Container datatypes"
     note: "deque: appends y pops desde cualquiera de los dos extremos con rendimiento aproximadamente O(1); las listas tienen costo O(n) en pop(0) e insert(0, v). Con maxlen, al llenarse descarta elementos del extremo opuesto (útil para quedarse con la actividad más reciente). Counter cuenta ocurrencias; defaultdict es una subclase de dict que crea los valores faltantes con default_factory; namedtuple crea tuplas con campos con nombre."
 relations:
   - type: RELATED_TO
@@ -41,7 +44,7 @@ relations:
     target: python-classes
     note: Cuando un dict empieza a representar un registro con campos fijos, una dataclass suele ser más clara.
 created_at: 2026-10-08
-updated_at: 2026-10-09
+updated_at: 2026-10-13
 last_verified: 2026-10-08
 verification_status: verified
 ---
@@ -236,3 +239,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: revisión B-F3.1 del lote F3b-03a aplicada (docs/reviews/cards-f3b-03a.md): la documentación de Python se cita en `/3.12/`, la versión con la que se ejecutó el código.
 - 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-09: §17 enlaza `python-dataframes`, que ya tiene ficha (lote F3b-03b); antes figuraba como pendiente de ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

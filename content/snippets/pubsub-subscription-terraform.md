@@ -20,38 +20,47 @@ sources:
   - source: terraform-provider-google-docs
     url: https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/pubsub_subscription.html.markdown
     accessed: 2026-10-04
+    page_title: "google_pubsub_subscription"
     note: "google_pubsub_subscription: ack_deadline_seconds, message_retention_duration (600s a 2678400s), expiration_policy.ttl (\"\" = nunca expira), filter (no modificable después de crear), dead_letter_policy (max_delivery_attempts entre 5 y 100; el agente de servicio de Pub/Sub necesita permiso para publicar en el topic de dead letter y para confirmar en la suscripción; los mensajes publicados en un topic sin suscripciones se pierden) y retry_policy (minimum_backoff y maximum_backoff entre 0 y 600 s)."
   - source: terraform-provider-google-docs
     url: https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/pubsub_topic_iam.html.markdown
     accessed: 2026-10-04
+    page_title: "IAM policy for Cloud Pub/Sub Topic"
     note: "google_pubsub_topic_iam_member es no autoritativo: agrega un miembro a un rol y conserva los demás miembros del rol en el topic. Argumentos topic, role y member."
   - source: terraform-provider-google-docs
     url: https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/pubsub_subscription_iam.html.markdown
     accessed: 2026-10-04
+    page_title: "IAM policy for Pubsub Subscription"
     note: "google_pubsub_subscription_iam_member es no autoritativo: agrega un miembro a un rol y conserva los demás. Argumentos subscription (nombre o id), role y member."
   - source: terraform-provider-google-docs
     url: https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/d/project.html.markdown
     accessed: 2026-10-04
+    page_title: "google_project"
     note: "El data source google_project expone number, el identificador numérico del proyecto; sin project_id usa el proyecto del provider."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/dead-letter-topics
     accessed: 2026-10-04
+    page_title: "Dead-letter topics"
     note: "El agente de servicio service-NÚMERO_DE_PROYECTO@gcp-sa-pubsub.iam.gserviceaccount.com necesita roles/pubsub.publisher en el topic de dead letter (para reenviar los mensajes no entregables) y roles/pubsub.subscriber en la suscripción de origen (para confirmarlos)."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/access-control
     accessed: 2026-10-05
+    page_title: "Access control with Identity and Access Management"
     note: "Pub/Sub Subscriber (roles/pubsub.subscriber) da acceso a consumir mensajes de una suscripción; se puede conceder a nivel de suscripción, topic o snapshot. Pub/Sub Publisher (roles/pubsub.publisher) da acceso a publicar en un topic."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/subscription-overview
     accessed: 2026-10-04
+    page_title: "Subscription overview"
     note: "Solo los mensajes publicados después de crear la suscripción están disponibles para ella."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/subscription-properties
     accessed: 2026-10-04
+    page_title: "Subscription properties"
     note: "El filtro no se puede cambiar ni quitar después de aplicarlo; retener mensajes sin confirmar más de 24 horas tiene cargo adicional."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/subscription-message-filter
     accessed: 2026-10-04
+    page_title: "Filter messages from a subscription"
     note: "Sintaxis de filtros por atributos, como attributes.name = \"com\"."
 relations:
   - type: IMPLEMENTS
@@ -64,7 +73,7 @@ relations:
     target: infrastructure-as-code
     note: Recursos y permisos declarados y versionados en Terraform.
 created_at: 2026-10-04
-updated_at: 2026-10-05
+updated_at: 2026-10-13
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -215,3 +224,4 @@ El detalle está en `sources` del encabezado.
 
 - 2026-10-04: creación (propuesta aprobada tras el lote 5), desde la sección 10 de `pubsub-topics-and-subscriptions` con los permisos del agente de servicio.
 - 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`) aplicada: fuente de *Access control* para el rol de los consumidores. `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

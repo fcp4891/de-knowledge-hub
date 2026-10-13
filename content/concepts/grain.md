@@ -18,38 +18,47 @@ sources:
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/grain/
     accessed: 2026-10-05
+    page_title: "Grain"
     note: "El grano establece exactamente qué representa una fila de la tabla de hechos; su declaración es un contrato vinculante del diseño y debe hacerse antes de elegir dimensiones o hechos, que deben ser coherentes con él. El grano atómico es el nivel más bajo al que un proceso captura datos; se recomienda empezar por él porque resiste consultas imprevistas, y los granos resumidos sirven para rendimiento."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/four-4-step-design-process/
     accessed: 2026-10-05
+    page_title: "Four-Step Dimensional Design Process"
     note: "Las cuatro decisiones del diseño dimensional: proceso de negocio, grano, dimensiones y hechos."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/periodic-snapshot-fact-table/
     accessed: 2026-10-05
+    page_title: "Periodic Snapshot Fact Tables"
     note: "En un snapshot periódico, el grano es el período (día, semana, mes), no la transacción individual."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/dimensional-modeling-fact-tables
     accessed: 2026-10-05
+    page_title: "Dimensional modeling in Microsoft Fabric Warehouse: Fact tables"
     note: "Las claves de dimensión determinan la dimensionalidad de los hechos y sus valores determinan la granularidad: por ejemplo, una clave de fecha de pedido fija la granularidad a nivel de fecha."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/primary-foreign-keys
     accessed: 2026-10-05
+    page_title: "Use primary and foreign keys"
     note: "BigQuery no hace cumplir las claves primarias y foráneas: quien las declara debe asegurar que los datos las cumplan; puede usarlas para optimizar consultas."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/t_Defining_constraints.html
     accessed: 2026-10-05
+    page_title: "Table constraints"
     note: "En Redshift, las restricciones de unicidad, clave primaria y clave foránea son informativas y no se hacen cumplir al cargar: un insert que las viola puede tener éxito. El planificador las usa como pistas: si los datos no las cumplen, algunas consultas pueden dar resultados incorrectos (por ejemplo, SELECT DISTINCT puede devolver duplicados), así que no deben declararse si se duda de su validez."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/table-constraints
     accessed: 2026-10-05
+    page_title: "Primary keys, foreign keys, and unique keys in Warehouse in Microsoft Fabric"
     note: "En Fabric Warehouse, PRIMARY KEY y UNIQUE solo se admiten como NONCLUSTERED y NOT ENFORCED, y FOREIGN KEY solo como NOT ENFORCED; se agregan con ALTER TABLE, no dentro de CREATE TABLE."
   - source: gcp-dataform-docs
     url: https://docs.cloud.google.com/dataform/docs/test-data
     accessed: 2026-10-05
+    page_title: "Test data quality"
     note: "Aserciones de Dataform en el config de una tabla: uniqueKeys falla si hay más de una fila con los mismos valores en todas las columnas indicadas; nonNull, si alguna de las columnas es nula."
   - source: dbt-docs
     url: https://docs.getdbt.com/docs/build/data-tests
     accessed: 2026-10-05
+    page_title: "Add data tests to your DAG"
     note: "Los data tests de dbt buscan registros que fallan; los genéricos comprueban, entre otros, valores únicos y no nulos."
 relations:
   - type: RELATED_TO
@@ -65,7 +74,7 @@ relations:
     target: deduplication
     note: Las filas duplicadas en el grano se eliminan deduplicando por las columnas del grano.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -225,3 +234,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-07: §4: las claves primarias no exigidas se atribuyen por motor con el término de cada página (BigQuery `NOT ENFORCED`, Redshift informativas, Fabric solo `NOT ENFORCED`), en lugar de una afirmación conjunta (criterio de la revisión de F3b-02c). Cambio mínimo en ficha `verified`, pendiente de revisión de Cursor.
 - 2026-10-07: revisión de los cambios mínimos aplicada (docs/reviews/fixes-null-concat.md, aprobada por Felipe): §4 dice «`NONCLUSTERED` y `NOT ENFORCED`» para Fabric, como la §13. Sigue `verified`.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

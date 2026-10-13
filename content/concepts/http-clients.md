@@ -18,26 +18,32 @@ sources:
   - source: requests-docs
     url: https://requests.readthedocs.io/en/latest/user/quickstart/
     accessed: 2026-10-08
+    page_title: "Quickstart"
     note: "Requests 2.34.2 (la documentación de Read the Docs no publica URL por versión para esta release): si no se especifica timeout, las peticiones no expiran; casi todo el código de producción debería usar el parámetro timeout en casi todas las peticiones, o el programa puede quedar colgado indefinidamente. Ante problemas de red (DNS, conexión rechazada) lanza ConnectionError; Response.raise_for_status() lanza HTTPError para respuestas 4xx o 5xx."
   - source: requests-docs
     url: https://requests.readthedocs.io/en/latest/user/advanced/
     accessed: 2026-10-08
+    page_title: "Advanced Usage"
     note: "Session conserva parámetros y cookies entre peticiones y usa el pool de conexiones de urllib3, así que las peticiones al mismo host reutilizan la conexión TCP. Timeouts: el de conexión es el tiempo para establecer la conexión, y la documentación sugiere un valor algo mayor que un múltiplo de 3 (la ventana de retransmisión de TCP); el de lectura es el tiempo entre bytes enviados por el servidor; un valor único se aplica a ambos y una tupla los separa, por ejemplo (3.05, 27). Requests verifica los certificados SSL de HTTPS por defecto, como un navegador."
   - source: httpx-docs
     url: https://www.python-httpx.org/advanced/timeouts/
     accessed: 2026-10-08
+    page_title: "Timeouts"
     note: "HTTPX 0.28.1 (la documentación no tiene URL por versión): aplica timeouts en todas partes por defecto y lanza TimeoutException tras 5 segundos de inactividad de red; se pueden fijar por petición o en el cliente, y ajustar por separado connect, read, write y pool."
   - source: httpx-docs
     url: https://www.python-httpx.org/advanced/clients/
     accessed: 2026-10-08
+    page_title: "Clients"
     note: "Con la API de nivel superior (httpx.get), HTTPX abre una conexión nueva por petición; un Client usa pool de conexiones y reutiliza la conexión TCP con el mismo host, además de permitir configuración común para todas las peticiones (cabeceras, base_url)."
   - source: httpx-docs
     url: https://www.python-httpx.org/advanced/transports/
     accessed: 2026-10-08
+    page_title: "Transports"
     note: "httpx.MockTransport recibe una función que mapea peticiones a respuestas predefinidas, sin hacer peticiones de red; útil en pruebas."
   - source: httpx-docs
     url: https://www.python-httpx.org/async/
     accessed: 2026-10-08
+    page_title: "Async Support"
     note: "HTTPX ofrece un cliente asíncrono (AsyncClient) con la misma API para usar con async/await."
 relations:
   - type: RELATED_TO
@@ -56,7 +62,7 @@ relations:
     target: testing-with-pytest
     note: MockTransport permite probar el código de cliente sin red.
 created_at: 2026-10-08
-updated_at: 2026-10-09
+updated_at: 2026-10-13
 last_verified: 2026-10-09
 verification_status: verified
 ---
@@ -287,3 +293,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: creación (lote F3b-03b).
 - 2026-10-09: revisión B-F3.1 del lote F3b-03b aplicada (docs/reviews/cards-f3b-03b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

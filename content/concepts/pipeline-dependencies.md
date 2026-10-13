@@ -18,26 +18,32 @@ sources:
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/core-concepts/dags.html
     accessed: 2026-10-11
+    page_title: "Dags"
     note: "Airflow 3.3.2, Dags: las dependencias se declaran con >> y << (o set_upstream y set_downstream), también sobre listas de tareas. Por defecto, Airflow espera a que todas las tareas inmediatamente anteriores terminen con éxito antes de ejecutar una tarea; trigger_rule cambia ese comportamiento: all_success (por defecto), all_failed, all_done (todas terminaron su ejecución), one_failed, one_success, none_failed, entre otras. default_args aplica argumentos a todos los operadores del Dag. Ejemplos con from airflow.sdk import DAG, TriggerRule y EmptyOperator de airflow.providers.standard."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/core-concepts/tasks.html
     accessed: 2026-10-11
+    page_title: "Tasks"
     note: "Airflow 3.3.2, Tasks: las tareas se organizan en Dags con dependencias upstream y downstream que expresan el orden de ejecución. Estados de una tarea, entre ellos upstream_failed (una tarea anterior falló y la regla de disparo la necesitaba) y up_for_retry (falló pero le quedan reintentos). retries y retry_delay configuran los reintentos."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/authoring-and-scheduling/asset-scheduling.html
     accessed: 2026-10-11
+    page_title: "Asset-Aware Scheduling"
     note: "Airflow 3.3.2, Asset-Aware Scheduling: una tarea declara outlets=[Asset(...)] y otro Dag usa schedule=[Asset(...)] para ejecutarse cuando ese Asset se actualiza; son dependencias de datos entre Dags. Airflow marca un Asset como actualizado solo si la tarea termina con éxito; si falla o se salta, no hay actualización y el Dag consumidor no se programa."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/best-practices.html
     accessed: 2026-10-11
+    page_title: "Best Practices"
     note: "Airflow 3.3.2, buenas prácticas: los Dags se prueban cargándolos con DagBag (airflow.dag_processing.dagbag) y verificando que import_errors esté vacío y que el Dag exista con las tareas esperadas."
   - source: python-docs
     url: https://docs.python.org/3.12/library/graphlib.html
     accessed: 2026-10-11
+    page_title: "graphlib — Functionality to operate with graph-like structures"
     note: "graphlib.TopologicalSorter ordena los nodos de un grafo según sus dependencias; static_order() devuelve un orden válido y, si hay un ciclo, lanza CycleError."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/concepts-pipelines-activities
     accessed: 2026-10-11
+    page_title: "Pipelines and activities in Azure Data Factory and Azure Synapse Analytics"
     note: "Azure Data Factory: la propiedad dependsOn de una actividad define las dependencias entre actividades y cómo las siguientes dependen de las anteriores (Activity dependency)."
 relations:
   - type: RELATED_TO
@@ -56,7 +62,7 @@ relations:
     target: failure-recovery
     note: La propagación de fallos (upstream_failed) define qué hay que relanzar al recuperar.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -284,3 +290,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-05a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-05a aplicada (docs/reviews/cards-f3b-05a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

@@ -18,38 +18,47 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/data-types
     accessed: 2026-10-07
+    page_title: "Data types"
     note: "DATE es una fecha del calendario gregoriano independiente de la zona horaria; no representa un periodo fijo de 24 horas, porque cada zona lo interpreta como un periodo distinto, que puede ser más corto o más largo en los cambios de horario. DATETIME es una fecha y hora «como en un reloj», independiente de la zona. TIMESTAMP representa un instante absoluto, independiente de zonas y del horario de verano, con precisión de microsegundos. Si no se indica zona, se usa la zona por defecto, UTC."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/date_functions
     accessed: 2026-10-07
+    page_title: "Date functions"
     note: "DATE(timestamp_expression, time_zone_expression) extrae la fecha de un TIMESTAMP en la zona indicada; sin zona se usa UTC. DATE_TRUNC trunca DATE, DATETIME o TIMESTAMP a una granularidad. CURRENT_DATE se fija al inicio de la sentencia: todas sus invocaciones en una consulta dan el mismo valor."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/timestamp_functions
     accessed: 2026-10-07
+    page_title: "Timestamp functions"
     note: "TIMESTAMP_TRUNC(timestamp, granularidad[, zona]) trunca un TIMESTAMP; el argumento de zona permite usar otra zona que la por defecto, UTC. TIMESTAMP(datetime[, zona]) convierte una fecha y hora civil en un instante, usando UTC si no se indica zona."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_Datetime_types.html
     accessed: 2026-10-07
+    page_title: "Datetime types"
     note: "TIMESTAMP es alias de TIMESTAMP WITHOUT TIME ZONE; TIMESTAMPTZ guarda el instante: si el valor de entrada trae zona, Redshift lo convierte a UTC y guarda el valor UTC. Ambos con hasta seis dígitos de fracción de segundo."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/CONVERT_TIMEZONE.html
     accessed: 2026-10-07
+    page_title: "CONVERT_TIMEZONE function"
     note: "CONVERT_TIMEZONE([zona_origen,] zona_destino, timestamp) convierte entre zonas; la zona de origen por defecto es UTC. Con un nombre de zona (no una abreviatura), ajusta automáticamente el horario de verano vigente en esa fecha."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/queries/at-time-zone-transact-sql?view=sql-server-ver17
     accessed: 2026-10-07
+    page_title: "AT TIME ZONE (Transact-SQL)"
     note: "Aplica a Azure Synapse Analytics y Warehouse en Microsoft Fabric, entre otros. AT TIME ZONE convierte un valor de fecha y hora a datetimeoffset en la zona de destino. En los intervalos afectados por el cambio de horario, las horas que no existen (el hueco al adelantar el reloj) se convierten con el desfase posterior al cambio."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/data-types
     accessed: 2026-10-07
+    page_title: "Data types in Fabric Data Warehouse"
     note: "En tablas de Fabric Data Warehouse, la precisión de datetime2 y time se limita a 6 dígitos de fracción de segundo. datetimeoffset no se admite en tablas: la alternativa es datetime2, y datetimeoffset puede usarse para convertir datos con CAST y AT TIME ZONE."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/datatype-datetime.html
     accessed: 2026-10-07
+    page_title: "8.5. Date/Time Types"
     note: "timestamp equivale a timestamp without time zone, como exige el estándar SQL. En timestamp with time zone el valor se guarda internamente en UTC y no se conserva la zona original; al mostrarse, se convierte a la zona de la sesión (TimeZone). Para verlo en otra zona se cambia TimeZone o se usa AT TIME ZONE."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/functions-datetime.html
     accessed: 2026-10-07
+    page_title: "9.9. Date/Time Functions and Operators"
     note: "AT TIME ZONE convierte timestamp without time zone a with time zone y viceversa. date_trunc trunca a una unidad; date_bin trunca a un intervalo arbitrario."
 relations:
   - type: RELATED_TO
@@ -62,7 +71,7 @@ relations:
     target: sql-advanced-select
     note: Agrupar por día con DATE_TRUNC o DATE(ts, zona) es la agregación temporal más común.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -228,3 +237,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: ficha completa (lote F3b-02b, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): BigQuery: «zona por defecto UTC», no «se guarda en UTC»; el guardado en UTC queda atribuido a Redshift y PostgreSQL.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

@@ -18,34 +18,42 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/best-practices-performance-compute
     accessed: 2026-10-07
+    page_title: "Optimize query computation"
     note: "Prácticas de cómputo de BigQuery: leer solo las columnas necesarias, usar tablas particionadas, agregar antes de unir, poner primero la tabla más grande en los joins y claves INT64; usar vistas materializadas, que guardan resultados precalculados y leen solo los cambios cuando pueden; y BI Engine, que acelera consultas con un motor vectorizado y caché de los datos más usados."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/information-schema-jobs
     accessed: 2026-10-07
+    page_title: "JOBS view"
     note: "INFORMATION_SCHEMA.JOBS (o JOBS_BY_PROJECT) tiene metadatos casi en tiempo real de los jobs del proyecto en una región, con historia de 180 días: query, user_email, job_type, statement_type, creation_time (columna de partición), total_bytes_processed, total_slot_ms. Para resumir costos hay que excluir statement_type SCRIPT, que suma los valores de sus jobs hijos."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/t_Creating_tables.html
     accessed: 2026-10-07
+    page_title: "Automatic table optimization"
     note: "Con la optimización automática de tablas, Redshift determina si una sort key o una distribution key mejoraría las consultas y modifica la tabla sin intervención del administrador; las tablas con estilo de distribución AUTO pueden pasar a KEY."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_best-practices-best-dist-key.html
     accessed: 2026-10-07
+    page_title: "Choose the best distribution style"
     note: "Para joins frecuentes, distribuir la tabla de hechos y la dimensión más grande por la clave del join; ALL para dimensiones que no se pueden colocalizar; AUTO deja la elección a Redshift."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/t_Compressing_data_on_disk.html
     accessed: 2026-10-07
+    page_title: "Column compression to reduce the size of stored data"
     note: "La compresión es por columna y ENCODE AUTO es el valor por defecto de las tablas: Redshift gestiona la codificación de todas sus columnas."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/synapse-analytics/sql/best-practices-dedicated-sql-pool
     accessed: 2026-10-07
+    page_title: "Best practices for dedicated SQL pools in Azure Synapse Analytics"
     note: "En el pool SQL dedicado de Synapse: elegir la distribución para minimizar el movimiento de datos; mantener estadísticas en las columnas usadas en joins, WHERE y GROUP BY; preferir particiones semanales o mensuales a diarias; las clases de recursos asignan memoria por distribución (hay siempre 60 distribuciones), y consultas como joins grandes o cargas a tablas columnstore se benefician de más memoria."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/guidelines-warehouse-performance
     accessed: 2026-10-07
+    page_title: "Performance guidelines in Fabric Data Warehouse"
     note: "En Fabric Data Warehouse, el sistema genera automáticamente las estadísticas necesarias cuando una consulta accede a datos por primera vez, pausa nodos tras inactividad y agrega nodos al escalar; la caché en memoria y en disco es transparente y automática. V-Order está activado por defecto y el data clustering se define en CREATE TABLE o CTAS. La primera consulta sobre datos no cacheados puede ser más lenta (cold start), visible en data_scanned_remote_storage_mb de queryinsights.exec_requests_history. Usa solo aislamiento snapshot."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/query-insights
     accessed: 2026-10-07
+    page_title: "Query Insights in Fabric Data Warehouse"
     note: "queryinsights.exec_requests_history registra cada consulta completada; un ejemplo documentado obtiene las 100 consultas con más tiempo de CPU asignado (allocated_cpu_time_ms). También hay vistas de consultas de larga duración y frecuentes."
 relations:
   - type: RELATED_TO
@@ -64,7 +72,7 @@ relations:
     target: bigquery-query-optimization
     note: El plan, las insights y las prácticas de optimización de BigQuery.
 created_at: 2026-10-05
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -259,3 +267,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): la celda de Synapse dedicado usa las palancas que nombra su página (distribución, estadísticas, grano de partición y clases de recursos), sin presentar columnstore como equivalente de una sort key.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-11: «pendiente de ficha» actualizado: la ficha ya existe (lote F3b-08a); el §17 la enlaza y relations la incluye: relations incluye `bigquery-query-optimization`, que el §17 nombra; §17 enlaza las fichas que ya existen.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

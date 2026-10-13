@@ -18,30 +18,37 @@ sources:
   - source: terraform-docs
     url: https://developer.hashicorp.com/terraform/language/providers
     accessed: 2026-10-01
+    page_title: "Providers"
     note: "Terraform usa plugins llamados providers para interactuar con nubes, SaaS y otras APIs. Cada provider agrega tipos de recurso o data sources; sin providers, Terraform no gestiona infraestructura. Se distribuyen aparte de Terraform, con su propio ritmo de versiones; el Terraform Registry es el directorio principal. Algunos requieren configuración (región, endpoints)."
   - source: terraform-docs
     url: https://developer.hashicorp.com/terraform/language/providers/requirements
     accessed: 2026-10-01
+    page_title: "Provider Requirements"
     note: "Los providers se declaran en required_providers dentro del bloque terraform, con source (dirección global del provider, por ejemplo hashicorp/aws) y una restricción de versión; un bloque provider los configura; terraform init los instala."
   - source: terraform-docs
     url: https://developer.hashicorp.com/terraform/language/files/dependency-lock
     accessed: 2026-10-01
+    page_title: "Dependency Lock File"
     note: "terraform init crea o actualiza .terraform.lock.hcl con las versiones elegidas; conviene incluirlo en el control de versiones para revisar los cambios de dependencias; una vez fijada, Terraform reutiliza esa versión aunque haya una más nueva, salvo con terraform init -upgrade. El lock guarda checksums de cada paquete y la instalación falla si no coinciden (confianza en el primer uso); su ejemplo usa registry.terraform.io/hashicorp/azurerm."
   - source: gcp-terraform-docs
     url: https://docs.cloud.google.com/docs/terraform/terraform-overview
     accessed: 2026-10-01
+    page_title: "Overview of Terraform on Google Cloud"
     note: "El provider de Terraform para Google Cloud aprovisiona y gestiona infraestructura de Google Cloud."
   - source: aws-cloudformation-docs
     url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html
     accessed: 2026-10-01
+    page_title: "What is CloudFormation?"
     note: "CloudFormation usa templates que describen recursos de AWS y los aprovisiona."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview
     accessed: 2026-10-01
+    page_title: "What is Bicep?"
     note: "Bicep soporta de inmediato todos los tipos de recurso y versiones de API de Azure, preview y GA, sin esperar actualizaciones de herramientas; no hay archivos de state que gestionar."
   - source: terraform-provider-google-releases
     url: https://github.com/hashicorp/terraform-provider-google/releases
     accessed: 2026-10-01
+    page_title: "Releases: hashicorp/terraform-provider-google"
     note: "Última versión del provider de Google al 2026-10-01: v8.5.0 (29 de septiembre de 2026)."
 relations:
   - type: DEPENDS_ON
@@ -51,7 +58,7 @@ relations:
     target: terraform-plan-apply
     note: Un cambio de versión del provider puede cambiar el plan; se revisa como cualquier cambio.
 created_at: 2026-10-01
-updated_at: 2026-10-01
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -200,3 +207,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-01: creación (lote 4 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

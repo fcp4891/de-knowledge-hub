@@ -21,30 +21,37 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/hash_functions
     accessed: 2026-10-01
+    page_title: "Hash functions"
     note: "FARM_FINGERPRINT calcula un INT64 con Fingerprint64 de FarmHash sobre un STRING o BYTES; su salida para una entrada dada no cambia nunca."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions
     accessed: 2026-10-01
+    page_title: "Aggregate functions"
     note: "BIT_XOR([DISTINCT] expression): agregado que aplica un XOR bit a bit sobre la expresión."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/parameterized-queries
     accessed: 2026-10-01
+    page_title: "Run parameterized queries"
     note: "Parámetros con nombre usando @nombre; un parámetro no puede ser NULL ni reemplazar identificadores o nombres de tabla."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/access-control
     accessed: 2026-10-01
+    page_title: "BigQuery IAM roles and permissions"
     note: "roles/bigquery.jobUser permite ejecutar consultas en el proyecto; roles/bigquery.dataViewer sobre un dataset permite listar sus tablas y consultarlas."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/string_functions
     accessed: 2026-10-07
+    page_title: "String functions"
     note: "CONCAT devuelve NULL si cualquier argumento es NULL."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/operators
     accessed: 2026-10-07
+    page_title: "Operators"
     note: "IS DISTINCT FROM devuelve TRUE si los valores serían distintos para GROUP BY y nunca devuelve NULL."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/json_functions
     accessed: 2026-10-07
+    page_title: "JSON functions"
     note: "TO_JSON_STRING convierte un valor SQL en un STRING con formato JSON. Según la tabla de codificaciones JSON: NULL se codifica como null (sin comillas); STRING como cadena JSON, con escape de comillas, barra invertida y caracteres de control; STRUCT como objeto con sus campos. Ejemplo de la página: TO_JSON_STRING(STRUCT(1 AS id, [10, 20] AS coordinates)) → {\"id\":1,\"coordinates\":[10,20]}."
 relations:
   - type: IMPLEMENTS
@@ -57,7 +64,7 @@ relations:
     target: backfill
     note: Reconciliación de cada período reprocesado.
 created_at: 2026-10-01
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -148,3 +155,4 @@ El detalle está en `sources` del encabezado.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).
 - 2026-10-07: cambio mínimo (aprobado por Felipe): la huella usa un marcador de NULL (`IFNULL(…, '\\N')`, el de `change-detection`) porque `CONCAT` de BigQuery devuelve NULL con un argumento NULL y `BIT_XOR` omitía esas filas; el detalle por clave compara con `IS DISTINCT FROM` en lugar de `!=`. Sigue `verified`, pendiente de revisión de Cursor.
 - 2026-10-07: revisión de los cambios mínimos de NULL aplicada (docs/reviews/fixes-null-concat.md, aprobada por Felipe): la huella pasa de `CONCAT` con marcador `'\\N'` a `FARM_FINGERPRINT(TO_JSON_STRING(STRUCT(...)))`, respaldado por la tabla de codificaciones JSON de BigQuery (NULL → `null`; texto entre comillas con escape), que elimina la ambigüedad del marcador y la del separador. Sigue `verified`.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

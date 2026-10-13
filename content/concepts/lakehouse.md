@@ -18,38 +18,47 @@ sources:
   - source: apache-iceberg-docs
     url: https://iceberg.apache.org/docs/latest/
     accessed: 2026-10-05
+    page_title: "Documentation"
     note: "Apache Iceberg es un formato de tabla abierto para datasets analíticos enormes; agrega tablas a motores como Spark, Trino, PrestoDB, Flink, Hive e Impala. Evolución de esquema (agregar, borrar, actualizar o renombrar sin efectos secundarios), particionamiento oculto, evolución del layout de particiones, time travel sobre snapshots y rollback de versión; el planeamiento de lectura usa estadísticas de partición y columna; se diseñó para resolver problemas de corrección en object stores con consistencia eventual."
   - source: delta-lake-docs
     url: https://docs.delta.io/index.html
     accessed: 2026-10-05
+    page_title: "Welcome to the Delta Lake documentation"
     note: "Delta Lake agrega transacciones ACID con aislamiento serializable sobre data lakes existentes (S3, ADLS, GCS, HDFS), manejo escalable de metadatos, unificación de batch y streaming en la misma tabla, aplicación de esquema para evitar registros erróneos, time travel por versiones, y upserts y deletes."
   - source: apache-hudi-docs
     url: https://hudi.apache.org/docs/overview/
     accessed: 2026-10-05
+    page_title: "Overview"
     note: "Apache Hudi introdujo los 'transactional data lakes', hoy conocidos como data lakehouse; formato de tabla abierto orientado a escrituras de alto rendimiento en pipelines incrementales; aporta tablas, transacciones, upserts y deletes eficientes, índices, servicios de ingesta, clustering y compactación y control de concurrencia, con los datos en formatos de archivo abiertos."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/biglake-iceberg-tables-in-bigquery
     accessed: 2026-10-05
+    page_title: "Apache Iceberg managed tables"
     note: "Las tablas Iceberg administradas de BigQuery guardan los datos en formatos abiertos en Cloud Storage: se crean con WITH CONNECTION y OPTIONS (file_format = 'PARQUET', table_format = 'ICEBERG', storage_uri = '...'); admiten optimización automática del almacenamiento, time travel, seguridad por columna y enmascaramiento, transacciones de varias sentencias, particionado y escritura con la Storage Write API. Admiten DML (UPDATE, DELETE, MERGE), con un solo DML de mutación concurrente por tabla (los demás se encolan); los archivos de datos se eliminan al vencer la ventana de time travel."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/biglake-intro
     accessed: 2026-10-05
+    page_title: "Introduction to BigLake tables"
     note: "Las tablas BigLake consultan datos en almacenes externos con delegación de acceso mediante una conexión con cuenta de servicio, con seguridad por fila y columna."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg.html
     accessed: 2026-10-05
+    page_title: "Query Apache Iceberg tables"
     note: "Athena permite lecturas, time travel, escrituras y DDL sobre tablas Apache Iceberg; Iceberg es un formato de tabla abierto que gestiona colecciones grandes de archivos como tablas, con insert, update y delete a nivel de registro, y evolución de esquema y de particiones."
   - source: aws-lake-formation-docs
     url: https://docs.aws.amazon.com/lake-formation/latest/dg/what-is-lake-formation.html
     accessed: 2026-10-06
+    page_title: "What is AWS Lake Formation?"
     note: "Lake Formation centraliza los controles de acceso del data lake, con políticas a nivel de base de datos, tabla, columna, fila y celda, que respetan Redshift Spectrum, Athena, Glue ETL y EMR."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-overview
     accessed: 2026-10-05
+    page_title: "What is a lakehouse in Microsoft Fabric?"
     note: "Un lakehouse de Fabric organiza los datos en Tables (tablas Delta administradas) y Files (datos no estructurados o no Delta); registra automáticamente las tablas Delta y las expone a varias experiencias: SQL analytics endpoint (T-SQL de solo lectura), Eventhouse endpoint (KQL) y notebooks de Spark."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/data-warehousing
     accessed: 2026-10-05
+    page_title: "What is Fabric Data Warehouse?"
     note: "Fabric Data Warehouse guarda sus datos en tablas Delta (Parquet con log de transacciones) y está pensado para esquemas estrella, data marts corporativos y modelos semánticos gobernados; el SQL analytics endpoint consulta las tablas Delta del lakehouse."
 relations:
   - type: EXTENDS
@@ -68,7 +77,7 @@ relations:
     target: acid
     note: La capa de tabla aporta transacciones sobre almacenamiento de objetos.
 created_at: 2026-10-05
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-06
 verification_status: verified
 ---
@@ -254,3 +263,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: creación (lote F3b-01a, dominio 01-fundamentals).
 - 2026-10-06: revisión B-F3.1 del lote F3b-01a aplicada (docs/reviews/cards-f3b-01a.md): Lake Formation citado con su fuente.
 - 2026-10-06: `verification_status: verified` (revisión B-F3.1 del lote F3b-01a aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

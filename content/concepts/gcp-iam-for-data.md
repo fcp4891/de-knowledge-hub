@@ -18,62 +18,77 @@ sources:
   - source: gcp-iam-docs
     url: https://docs.cloud.google.com/iam/docs/overview
     accessed: 2026-10-01
+    page_title: "IAM overview"
     note: "IAM controla quién puede hacer qué sobre qué recursos. Se concede un rol (colección de permisos de la forma servicio.recurso.verbo) a un principal sobre un recurso mediante una allow policy; no se conceden permisos sueltos. Tipos de rol: predefinidos (gestionados por Google), personalizados (más mantenimiento y con límite de cantidad) y básicos (muy amplios, no recomendados en producción). Los recursos se organizan en jerarquía y los hijos heredan las políticas de sus padres. Principales humanos (cuentas, grupos, identidades federadas) y de cargas de trabajo (cuentas de servicio, identidades federadas de workload)."
   - source: gcp-iam-docs
     url: https://docs.cloud.google.com/iam/docs/roles-overview
     accessed: 2026-10-01
+    page_title: "Roles overview"
     note: "Tres tipos de rol: básicos (acceso amplio), predefinidos (acceso granular por servicio, gestionados por Google Cloud) y personalizados (lista de permisos definida por el usuario)."
   - source: gcp-iam-docs
     url: https://docs.cloud.google.com/iam/docs/service-account-overview
     accessed: 2026-10-01
+    page_title: "Service accounts overview"
     note: "Una cuenta de servicio es una cuenta para aplicaciones o cargas de trabajo, identificada por un email; la forma más común de autenticarse como ella es adjuntarla al recurso que ejecuta la aplicación; al autenticarse, la aplicación accede a todo lo que la cuenta tiene permitido."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/access-control
     accessed: 2026-10-01
+    page_title: "BigQuery IAM roles and permissions"
     note: "roles/bigquery.jobUser permite ejecutar jobs, incluidas consultas, y solo se concede en proyectos, carpetas u organizaciones; roles/bigquery.dataEditor sobre un dataset permite crear, actualizar, leer y borrar sus tablas; roles/bigquery.dataViewer sobre un dataset permite listar sus tablas y consultarlas."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/row-level-security-intro
     accessed: 2026-10-01
+    page_title: "Introduction to BigQuery row-level security"
     note: "La seguridad a nivel de fila filtra datos y permite acceder a filas concretas de una tabla según condiciones del usuario; puede no estar disponible en algunas ediciones."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/column-level-security-intro
     accessed: 2026-10-01
+    page_title: "Introduction to column-level access control"
     note: "El control de acceso a nivel de columna da acceso granular a columnas sensibles con policy tags o data governance tags."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/introduction-audit-workloads
     accessed: 2026-10-01
+    page_title: "Introduction to audit logs in BigQuery"
     note: "Los audit logs de BigQuery registran la actividad administrativa y de acceso a datos: quién realizó acciones como crear tablas o ejecutar jobs."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/access-control/iam-roles
     accessed: 2026-10-01
+    page_title: "IAM roles for Cloud Storage"
     note: "roles/storage.objectViewer: ver y listar objetos (sin ACL); roles/storage.objectCreator: crear objetos, sin ver, borrar ni sobrescribir; roles/storage.objectAdmin: control total de objetos. El recurso más bajo donde se conceden es el bucket."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/uniform-bucket-level-access
     accessed: 2026-10-01
+    page_title: "Uniform bucket-level access"
     note: "Con acceso uniforme a nivel de bucket, las ACL se desactivan y solo IAM concede acceso al bucket y sus objetos."
   - source: gcp-iam-docs
     url: https://docs.cloud.google.com/sdk/gcloud/reference/projects/add-iam-policy-binding
     accessed: 2026-10-01
+    page_title: "gcloud projects add-iam-policy-binding"
     note: "gcloud projects add-iam-policy-binding PROJECT_ID --member=PRINCIPAL --role=ROLE [--condition=...] agrega una concesión (miembro, rol y condición opcional) a la política IAM del proyecto."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/sdk/gcloud/reference/storage/buckets/add-iam-policy-binding
     accessed: 2026-10-01
+    page_title: "gcloud storage buckets add-iam-policy-binding"
     note: "gcloud storage buckets add-iam-policy-binding URL --member=PRINCIPAL --role=ROLE [--condition=...] agrega una concesión a la política IAM de un bucket."
   - source: aws-iam-docs
     url: https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html
     accessed: 2026-10-01
+    page_title: "What is IAM?"
     note: "AWS IAM controla de forma segura el acceso a recursos de AWS: quién está autenticado y quién está autorizado; los cambios de usuarios, grupos, roles o políticas tardan en replicarse."
   - source: aws-iam-docs
     url: https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html
     accessed: 2026-10-01
+    page_title: "Security best practices in IAM"
     note: "Mínimo privilegio: conceder solo los permisos necesarios, definiendo acciones sobre recursos concretos bajo condiciones concretas; personas federadas con credenciales temporales."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/role-based-access-control/overview
     accessed: 2026-10-01
+    page_title: "What is Azure role-based access control (Azure RBAC)?"
     note: "Azure RBAC: una asignación de rol une un principal de seguridad (usuario, grupo, service principal o managed identity), una definición de rol y un ámbito; existen deny assignments que bloquean el acceso aunque haya una asignación de rol."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/role-based-access-control/scope-overview
     accessed: 2026-10-01
+    page_title: "Understand scope for Azure RBAC"
     note: "Ámbitos en cuatro niveles con relación padre-hijo: grupo de administración, suscripción, grupo de recursos y recurso."
 relations:
   - type: RELATED_TO
@@ -83,7 +98,7 @@ relations:
     target: infrastructure-as-code
     note: Las concesiones de IAM se declaran y revisan como código.
 created_at: 2026-10-01
-updated_at: 2026-10-01
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -231,3 +246,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-01: creación (lote 4 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

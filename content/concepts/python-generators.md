@@ -18,22 +18,27 @@ sources:
   - source: python-docs
     url: https://docs.python.org/3.12/tutorial/classes.html
     accessed: 2026-10-08
+    page_title: "9. Classes"
     note: "Tutorial, secciones Generators y Generator Expressions: todo lo que se hace con generadores se puede hacer con iteradores basados en clases; los generadores son compactos porque __iter__() y __next__() se crean automáticamente y las variables locales y el estado de ejecución se guardan entre llamadas; al terminar, lanzan StopIteration automáticamente."
   - source: python-docs
     url: https://docs.python.org/3.12/reference/expressions.html
     accessed: 2026-10-08
+    page_title: "6. Expressions"
     note: "Yield expressions y métodos del generador-iterador. send() reanuda el generador enviando un valor (para iniciarlo se envía None). close() lanza GeneratorExit en el punto donde el generador estaba pausado; si el generador está cerrado o deja propagar GeneratorExit, close() vuelve sin más; si el generador entrega otro valor tras GeneratorExit, close() lanza RuntimeError. Si un generador no se reanuda antes de finalizarse (al llegar a cero referencias o ser recolectado), se llama a su close(), lo que permite ejecutar los finally pendientes."
   - source: python-docs
     url: https://docs.python.org/3.12/howto/functional.html
     accessed: 2026-10-08
+    page_title: "Functional Programming HOWTO"
     note: "Los generadores son funciones que simplifican escribir iteradores: en lugar de calcular un valor y devolverlo, devuelven un iterador que entrega un flujo de valores; la función puede salir y reanudarse en varios puntos (los yield). Las generator expressions calculan los valores a medida que se necesitan, sin materializarlos."
   - source: python-docs
     url: https://docs.python.org/3.12/tutorial/inputoutput.html
     accessed: 2026-10-08
+    page_title: "7. Input and Output"
     note: "Para leer líneas de un archivo se puede recorrer el objeto archivo: es eficiente en memoria, rápido y produce código simple."
   - source: python-docs
     url: https://docs.python.org/3.12/library/itertools.html
     accessed: 2026-10-08
+    page_title: "itertools — Functions creating iterators for efficient looping"
     note: "batched(iterable, n) agrupa en tuplas de largo n; el último lote puede ser más corto. Agregado en 3.12."
 relations:
   - type: DEPENDS_ON
@@ -49,7 +54,7 @@ relations:
     target: python-comprehensions
     note: La generator expression es la versión de una línea de un generador simple.
 created_at: 2026-10-08
-updated_at: 2026-10-09
+updated_at: 2026-10-13
 last_verified: 2026-10-08
 verification_status: verified
 ---
@@ -251,3 +256,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: revisión B-F3.1 del lote F3b-03a aplicada (docs/reviews/cards-f3b-03a.md): la documentación de Python se cita en `/3.12/`, la versión con la que se ejecutó el código; §7 anota el retorno de `pares` (`-> Iterator[int]`) y pasa `mypy --strict`.
 - 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-09: §17 enlaza `python-concurrency` y `python-file-processing`, que ya tienen ficha (lote F3b-03b); antes figuraban como pendientes de ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

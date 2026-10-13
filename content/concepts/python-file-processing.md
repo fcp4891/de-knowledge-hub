@@ -18,34 +18,42 @@ sources:
   - source: python-docs
     url: https://docs.python.org/3.12/library/gzip.html
     accessed: 2026-10-08
+    page_title: "gzip — Support for gzip files"
     note: "gzip.open abre un archivo comprimido con gzip en modo binario o texto (rt/wt, con encoding) y devuelve un objeto archivo; filename puede ser un nombre o un objeto archivo existente. GzipFile(fileobj=...) acepta un archivo, un io.BytesIO o cualquier objeto que simule un archivo."
   - source: python-docs
     url: https://docs.python.org/3.12/library/json.html
     accessed: 2026-10-08
+    page_title: "json — JSON encoder and decoder"
     note: "json.loads lanza JSONDecodeError (subclase de ValueError) cuando el documento no es JSON válido; msg contiene el mensaje de error."
   - source: python-docs
     url: https://docs.python.org/3.12/library/os.html
     accessed: 2026-10-08
+    page_title: "os — Miscellaneous operating system interfaces"
     note: "os.replace(src, dst): si dst existe y es un archivo, se reemplaza sin aviso si hay permisos; puede fallar si src y dst están en sistemas de archivos distintos; si tiene éxito, el renombrado es atómico (requisito de POSIX)."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/streaming-reads
     accessed: 2026-10-08
+    page_title: "Streaming reads"
     note: "Streaming reads de Cloud Storage: no conviene usarlos si se necesita validar el checksum antes de procesar, porque suelen usar la cabecera HTTP Range y Cloud Storage no devuelve checksums para una porción arbitraria del objeto. Requiere permiso de lectura de objetos (por ejemplo, el rol Storage Object Viewer)."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/python/docs/reference/storage/latest/google.cloud.storage.blob.Blob
     accessed: 2026-10-08
+    page_title: "Class Blob (3.16.0)"
     note: "Biblioteca cliente de Python de Cloud Storage: Blob.open() crea un manejador para E/S tipo archivo sobre el blob y se puede usar como administrador de contexto, como open(); al leer sin generation fijada se usa la generación más reciente."
   - source: aws-boto3-docs
     url: https://docs.aws.amazon.com/boto3/latest/reference/services/s3/client/get_object.html
     accessed: 2026-10-08
+    page_title: "get_object"
     note: "S3.Client.get_object devuelve un dict cuyo Body es un StreamingBody con los datos del objeto."
   - source: aws-boto3-docs
     url: https://docs.aws.amazon.com/botocore/latest/reference/response.html
     accessed: 2026-10-08
+    page_title: "Response Reference"
     note: "StreamingBody: iter_chunks(chunk_size) e iter_lines(chunk_size) devuelven iteradores sobre el stream crudo; close() cierra la respuesta HTTP subyacente."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blob-download-python
     accessed: 2026-10-08
+    page_title: "Download a blob with Python"
     note: "Azure Blob Storage con Python: BlobClient.download_blob devuelve un StorageStreamDownloader; la biblioteca divide la descarga en partes (chunks), cada una con su propia petición; chunks() permite iterar por partes sin cargar todo en memoria; readall() con encoding devuelve texto."
 relations:
   - type: RELATED_TO
@@ -64,7 +72,7 @@ relations:
     target: python-generators
     note: Los registros se leen en flujo con un generador.
 created_at: 2026-10-08
-updated_at: 2026-10-09
+updated_at: 2026-10-13
 last_verified: 2026-10-09
 verification_status: verified
 ---
@@ -322,3 +330,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: creación (lote F3b-03b).
 - 2026-10-09: revisión B-F3.1 del lote F3b-03b aplicada (docs/reviews/cards-f3b-03b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

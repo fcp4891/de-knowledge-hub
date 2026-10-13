@@ -19,30 +19,37 @@ sources:
   - source: aws-sagemaker-docs
     url: https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html
     accessed: 2026-10-12
+    page_title: "What is Amazon SageMaker AI?"
     note: "What is Amazon SageMaker AI?: servicio administrado de ML para construir, entrenar y desplegar modelos. «Amazon SageMaker AI rename»: el 3 de diciembre de 2024, Amazon SageMaker pasó a llamarse Amazon SageMaker AI; el cambio no aplica a las funciones existentes de SageMaker, y los namespaces de la API, la CLI, las políticas administradas, los endpoints y los recursos de CloudFormation siguen con «sagemaker». «Amazon SageMaker and Amazon SageMaker AI»: ese día salió la nueva generación de Amazon SageMaker, una plataforma unificada de datos, analítica e IA que incluye Amazon SageMaker AI (antes Amazon SageMaker), Amazon SageMaker Lakehouse y Amazon SageMaker Data and AI Governance, entre otras capacidades."
   - source: aws-sagemaker-docs
     url: https://docs.aws.amazon.com/sagemaker/latest/dg/doc-history.html
     accessed: 2026-10-12
+    page_title: "Document History for Amazon SageMaker AI"
     note: "Document History for Amazon SageMaker AI: fila del 3 de diciembre de 2024, «Amazon SageMaker renamed to Amazon SageMaker AI»."
   - source: aws-sagemaker-docs
     url: https://docs.aws.amazon.com/sagemaker/latest/dg/feature-store.html
     accessed: 2026-10-12
+    page_title: "Create, store, and share features with Feature Store"
     note: "Create, store, and share features with Feature Store: el store online guarda solo los últimos registros, para predicciones en tiempo real con lecturas de milisegundos; el offline guarda todo el historial, para exploración, entrenamiento y predicciones por lotes."
   - source: aws-sagemaker-docs
     url: https://docs.aws.amazon.com/sagemaker/latest/dg/feature-store-concepts.html
     accessed: 2026-10-12
+    page_title: "Feature Store concepts"
     note: "Feature Store concepts: el record identifier name es la feature que identifica cada registro; el event time es el momento del evento, obligatorio en todos los registros; el store online solo tiene el registro del último event time y el offline todos; el store offline guarda el historial en un bucket de S3."
   - source: aws-sagemaker-docs
     url: https://docs.aws.amazon.com/sagemaker/latest/dg/batch-transform.html
     accessed: 2026-10-12
+    page_title: "Batch transform for inference with Amazon SageMaker AI"
     note: "Batch transform for inference with Amazon SageMaker AI: para preprocesar datasets, obtener inferencias de datasets grandes, inferir sin un endpoint persistente y asociar registros de entrada con sus inferencias; procesa archivos de S3 dentro de los límites indicados."
   - source: aws-sagemaker-docs
     url: https://docs.aws.amazon.com/sagemaker/latest/dg/pipelines.html
     accessed: 2026-10-12
+    page_title: "Pipelines"
     note: "Pipelines: servicio de orquestación de workflows para automatizar el desarrollo de ML, con infraestructura serverless que SageMaker AI aprovisiona y apaga según la carga."
   - source: aws-sagemaker-docs
     url: https://aws.amazon.com/sagemaker/ai/
     accessed: 2026-10-12
+    page_title: "Your Models. Any Scale. Full Control."
     note: "Amazon SageMaker AI (página del producto): personalizar, entrenar y desplegar modelos; precios en su sección de precios. Los montos no se copian."
 relations:
   - type: RELATED_TO

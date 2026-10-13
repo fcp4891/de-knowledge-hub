@@ -18,38 +18,47 @@ sources:
   - source: gcp-workflows-docs
     url: https://docs.cloud.google.com/workflows/docs/overview
     accessed: 2026-10-11
+    page_title: "Workflows overview"
     note: "Workflows: plataforma de orquestación totalmente administrada que ejecuta servicios en el orden definido en un workflow (Cloud Run, servicios de Google Cloud como BigQuery y cualquier API HTTP). Serverless, escala según demanda y no cobra mientras está inactivo; un workflow no tiene código ni dependencias de bibliotecas, así que no requiere parches de seguridad. Puede mantener estado, reintentar, hacer polling o esperar hasta un año. La definición se escribe en YAML o JSON con la sintaxis de Workflows; una ejecución es una corrida de esa definición; un workflow sin ejecuciones no genera cargos."
   - source: gcp-workflows-docs
     url: https://docs.cloud.google.com/workflows/docs/choose-orchestration
     accessed: 2026-10-11
+    page_title: "Choose Workflows or Managed Airflow for service orchestration"
     note: "Choose Workflows or Managed Airflow: la diferencia principal es la arquitectura que cada uno soporta. Workflows orquesta servicios basados en HTTP en un workflow durable y con estado, con baja latencia, muchas ejecuciones y totalmente serverless: encadenar microservicios, automatizar infraestructura, integrar sistemas. Managed Airflow está diseñado para workflows orientados a datos (ETL/ELT), construido sobre Apache Airflow, con la lógica en Python como Dags; es mejor para batch que tolera algunos segundos entre tareas. Tabla: sintaxis YAML/JSON frente a Python; flujo imperativo frente a Dag declarativo con resolución automática de dependencias; 512 KB para variables frente a 48 KB para XCom; latencia de milisegundos frente a segundos; no open source frente a sí (Apache Airflow); serverless frente a aprovisionado; facturación por paso ejecutado frente a capacidad aprovisionada; sin funciones de procesamiento de datos frente a backfills y re-ejecución de Dags."
   - source: aws-step-functions-docs
     url: https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html
     accessed: 2026-10-11
+    page_title: "What is Step Functions?"
     note: "What is Step Functions?: workflows, también llamados state machines, para aplicaciones distribuidas, automatización de procesos, orquestación de microservicios y pipelines de datos y de ML. Cada paso es un state; un Task state representa trabajo que hace otro servicio; las ejecuciones son instancias de workflows. Puede llamar a servicios como Lambda o controlar AWS Glue para ETL. Dos tipos: Standard (ejecución exactamente una vez, hasta un año, historial y depuración visual, precio por transición de estado) y Express (al menos una vez, hasta cinco minutos, para altas tasas de eventos como streaming e IoT, precio por cantidad y duración de ejecuciones)."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/introduction
     accessed: 2026-10-11
+    page_title: "What is Azure Data Factory?"
     note: "Azure Data Factory: servicio cloud administrado para proyectos híbridos de ETL, ELT e integración de datos, que orquesta y operacionaliza procesos; conectividad amplia, data flows personalizables y Custom Event Triggers. La página indica que Data Factory en Microsoft Fabric es la siguiente generación de Azure Data Factory y recomienda empezar por Fabric si se es nuevo en integración de datos."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-factory/apache-airflow-jobs-concepts
     accessed: 2026-10-11
+    page_title: "What is an Apache Airflow job?"
     note: "Apache Airflow job en Fabric: para quien prefiere escribir código y Dags en Python; si se prefiere no escribir código, los pipelines ofrecen una forma sin código de orquestar datos."
   - source: dagster-docs
     url: https://dagster.io/docs/getting-started/concepts
     accessed: 2026-10-11
+    page_title: "Concepts"
     note: "Dagster Docs (versión vigente 1.13.26), Concepts: abstracciones para construir y orquestar pipelines con un enfoque modular y declarativo. Un asset representa una unidad lógica de datos (una tabla, un dataset o un modelo de ML); los assets dependen de otros y forman el linaje; es la abstracción central y se define con @dg.asset. Un job es la principal forma de ejecución; una schedule automatiza jobs o assets en un intervalo; un sensor los dispara cuando ocurre un evento (un archivo subido, una notificación). Las ops, unidades de cómputo, han sido en gran parte reemplazadas por assets."
   - source: dagster-docs
     url: https://dagster.io/docs/api/dagster/execution
     accessed: 2026-10-11
+    page_title: "Execution"
     note: "Dagster API, execution: materialize ejecuta en un proceso, con un solo hilo, una corrida que materializa los assets dados; materialize_to_memory hace lo mismo guardando los resultados en memoria."
   - source: prefect-docs
     url: https://docs.prefect.io/v3/get-started
     accessed: 2026-10-11
+    page_title: "Introduction"
     note: "Prefect 3, Introduction: motor de orquestación open source que convierte funciones de Python en pipelines de datos; workflows en Python puro, sin DSL ni archivos de configuración complejos. Seguimiento de estado y manejo de fallos; disparo por horarios, eventos externos o API; tareas dinámicas en tiempo de ejecución; ejecución local o en contenedores, Kubernetes o servicios cloud; conexión a Prefect Cloud o a un servidor propio."
   - source: prefect-docs
     url: https://docs.prefect.io/v3/concepts/flows
     accessed: 2026-10-11
+    page_title: "Flows"
     note: "Prefect 3, Flows: los flows son funciones de Python decoradas con @flow; aceptan entradas, hacen trabajo y pueden devolver un resultado; Prefect registra automáticamente cada estado. Los flows sirven para composición, despliegue e interacción con el servidor; las tasks (@task) son rápidas, cacheables, reintentables y con semántica transaccional."
 relations:
   - type: RELATED_TO
@@ -68,7 +77,7 @@ relations:
     target: airflow-architecture
     note: Lo que hay que operar en Airflow frente a otras herramientas.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -305,3 +314,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-06a aplicada (docs/reviews/cards-f3b-06a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-11: relación `airflow-architecture` agregada en `relations`; §17 ya la enlazaba (cambio mínimo).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

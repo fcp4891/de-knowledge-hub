@@ -18,38 +18,47 @@ sources:
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/architecture/data-guide/relational-data/online-analytical-processing
     accessed: 2026-10-05
+    page_title: "Online analytical processing"
     note: "Los sistemas OLAP organizan grandes bases de datos de negocio para cálculos complejos y análisis de tendencias sin afectar a los sistemas transaccionales; están optimizados para muchas lecturas y pocas escrituras, se modelan y limpian para el análisis y suelen conservar historia para series de tiempo. La capa semántica se ubica tradicionalmente sobre un data warehouse."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/introduction
     accessed: 2026-10-05
+    page_title: "BigQuery overview"
     note: "BigQuery es una plataforma de datos totalmente administrada con arquitectura serverless; separa las capas de cómputo y almacenamiento, de modo que cada una asigna recursos sin afectar a la otra; consulta terabytes en segundos y petabytes en minutos y admite formatos de tabla abiertos (Iceberg, Delta, Hudi)."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/storage_overview
     accessed: 2026-10-05
+    page_title: "Overview of BigQuery storage"
     note: "BigQuery guarda los datos de tabla en formato columnar (cada columna por separado), optimizado para cargas analíticas que agregan muchas filas leyendo pocas columnas."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
     accessed: 2026-10-05
+    page_title: "Data definition language (DDL) statements in GoogleSQL"
     note: "CREATE SCHEMA [IF NOT EXISTS] crea un dataset; opciones location, description, labels, default_table_expiration_days (expiración por defecto de las tablas, en días) y storage_billing_model."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/best-practices-costs
     accessed: 2026-10-05
+    page_title: "Estimate and control costs"
     note: "En on-demand, el ajuste de máximo de bytes facturados limita el costo de una consulta: si la estimación lo supera, la consulta falla sin cargo."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/mgmt/welcome.html
     accessed: 2026-10-05
+    page_title: "What is Amazon Redshift?"
     note: "Amazon Redshift es un servicio de data warehouse totalmente administrado a escala de petabytes; Redshift Serverless permite analizar datos sin configurar un data warehouse aprovisionado."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-serverless.html
     accessed: 2026-10-05
+    page_title: "Amazon Redshift Serverless"
     note: "Redshift Serverless aprovisiona y escala automáticamente la capacidad del data warehouse; se paga solo por la capacidad usada."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_columnar_storage_disk_mem_mgmnt.html
     accessed: 2026-10-05
+    page_title: "Columnar storage"
     note: "Redshift guarda las tablas en almacenamiento columnar, que reduce mucho la E/S de disco de las consultas analíticas; el almacenamiento por filas es óptimo para OLTP."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/data-warehousing
     accessed: 2026-10-05
+    page_title: "What is Fabric Data Warehouse?"
     note: "Fabric Data Warehouse es un warehouse relacional sobre una base de data lake; casos ideales: esquemas estrella o snowflake, data marts corporativos y modelos semánticos gobernados. Sus datos se guardan en tablas Delta (archivos Parquet con un log de transacciones basado en archivos); separa almacenamiento y cómputo; admite transacciones ACID multi-tabla y se desarrolla con T-SQL. No es un warehouse empresarial tradicional sino un lake warehouse con dos ítems: Warehouse y SQL analytics endpoint."
 relations:
   - type: RELATED_TO
@@ -65,7 +74,7 @@ relations:
     target: partitioning
     note: Las tablas grandes del warehouse se particionan por fecha para leer menos.
 created_at: 2026-10-05
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -217,3 +226,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: creación (lote 6 de F3).
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `data-mart`, `lakehouse`, que ya tienen ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

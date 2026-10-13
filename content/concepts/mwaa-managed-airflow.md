@@ -18,30 +18,37 @@ sources:
   - source: aws-mwaa-docs
     url: https://docs.aws.amazon.com/mwaa/latest/userguide/what-is-mwaa.html
     accessed: 2026-10-12
+    page_title: "What Is Amazon Managed Workflows for Apache Airflow?"
     note: "What Is Amazon Managed Workflows for Apache Airflow?: servicio administrado de Apache Airflow para crear workflows con Airflow y Python sin administrar la infraestructura; escala solo. Arquitectura: el scheduler y los workers son contenedores de AWS Fargate conectados a subredes privadas de la VPC del entorno; cada entorno tiene su metabase de Airflow administrada por AWS, accesible por un endpoint privado; CloudWatch, S3, SQS y KMS son servicios aparte que deben ser accesibles desde schedulers y workers."
   - source: aws-mwaa-docs
     url: https://docs.aws.amazon.com/mwaa/latest/userguide/airflow-versions.html
     accessed: 2026-10-12
+    page_title: "Apache Airflow versions on Amazon Managed Workflows for Apache Airflow"
     note: "Apache Airflow versions on Amazon MWAA: MWAA arma imágenes con cada versión de Airflow; el entorno usa la versión indicada hasta que se actualiza, y sin indicar versión se crea con la última soportada. Tabla consultada el 2026-10-12: v3.3.1 (disponible en MWAA el 1 de septiembre de 2026, Python 3.12), v3.2.1, v2.11.2 y anteriores. Desde Airflow 2.7.2, requirements.txt debe incluir --constraint; si falta, MWAA agrega uno. MWAA no admite el modo multi-team."
   - source: aws-mwaa-docs
     url: https://docs.aws.amazon.com/mwaa/latest/userguide/configuring-dag-folder.html
     accessed: 2026-10-12
+    page_title: "Adding or updating DAGs"
     note: "Adding or updating DAGs: los Dags se suben a la carpeta dags/ del bucket de S3 del entorno; MWAA sincroniza los archivos a los componentes cada 30 segundos, conservando la jerarquía; el tiempo hasta que aparece un Dag nuevo depende de scheduler.dag_dir_list_interval."
   - source: aws-mwaa-docs
     url: https://docs.aws.amazon.com/mwaa/latest/userguide/working-dags-dependencies.html
     accessed: 2026-10-12
+    page_title: "Installing Python dependencies"
     note: "Installing Python dependencies: requirements.txt con --constraint apuntando al archivo de constraints de la versión de Airflow y de Python; si un paquete no es compatible, la instalación falla para no dejar librerías incompatibles."
   - source: aws-mwaa-docs
     url: https://docs.aws.amazon.com/mwaa/latest/userguide/environment-class.html
     accessed: 2026-10-12
+    page_title: "Configuring the Amazon MWAA environment class"
     note: "Configuring the Amazon MWAA environment class: mw1.small (hasta 50 Dags, 5 tareas concurrentes por defecto), mw1.medium (hasta 250 Dags, 10 tareas), mw1.large (hasta 1.000 Dags, 20 tareas), mw1.xlarge (hasta 2.000 Dags, 40 tareas), con vCPU y memoria por componente."
   - source: aws-mwaa-docs
     url: https://docs.aws.amazon.com/mwaa/latest/mwaa-serverless-userguide/what-is-mwaa-serverless.html
     accessed: 2026-10-12
+    page_title: "What is Amazon MWAA Serverless?"
     note: "What is Amazon MWAA Serverless?: opción de despliegue de MWAA sin entornos que administrar; aprovisiona recursos para ejecuciones programadas y a pedido, y cobra por el tiempo de cómputo de las tareas. Cada workflow corre con su propio rol de ejecución y worker, opcionalmente en la VPC del cliente; los workflows se definen en archivos YAML; tiene versionado de workflows. Usa Apache Airflow v3 con Python 3.12."
   - source: aws-mwaa-docs
     url: https://aws.amazon.com/managed-workflows-for-apache-airflow/pricing/
     accessed: 2026-10-12
+    page_title: "Amazon Managed Workflows for Apache Airflow pricing"
     note: "Amazon MWAA pricing: en MWAA Serverless se paga por tarea según su duración, con un mínimo de 1 minuto; en un entorno provisionado se paga por hora de entorno según su tamaño (facturado por segundo), más los workers adicionales del autoescalado. Los montos no se copian."
 relations:
   - type: RELATED_TO

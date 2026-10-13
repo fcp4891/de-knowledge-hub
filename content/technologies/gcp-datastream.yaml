@@ -15,6 +15,7 @@ sources:
   - source: gcp-datastream-docs
     url: https://cloud.google.com/datastream/docs/overview
     accessed: 2026-09-28
+    page_title: "Datastream overview"
 relations:
   - type: IMPLEMENTS
     target: change-data-capture

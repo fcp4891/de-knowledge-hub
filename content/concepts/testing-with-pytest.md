@@ -18,46 +18,57 @@ sources:
   - source: pytest-docs
     url: https://docs.pytest.org/en/stable/how-to/assert.html
     accessed: 2026-10-05
+    page_title: "How to write and report assertions in tests"
     note: "pytest permite usar el assert estándar de Python y muestra la introspección de la expresión al fallar. pytest.raises() como context manager comprueba que se lanza una excepción."
   - source: pytest-docs
     url: https://docs.pytest.org/en/stable/how-to/fixtures.html
     accessed: 2026-10-05
+    page_title: "How to use fixtures"
     note: "Los fixtures definen pasos de preparación reutilizables que los tests piden por nombre; con yield, el código posterior es la limpieza (teardown)."
   - source: pytest-docs
     url: https://docs.pytest.org/en/stable/how-to/tmp_path.html
     accessed: 2026-10-05
+    page_title: "How to use temporary directories and files in tests"
     note: "El fixture tmp_path da un directorio temporal único por función de test, como pathlib.Path."
   - source: pytest-docs
     url: https://docs.pytest.org/en/stable/how-to/parametrize.html
     accessed: 2026-10-05
+    page_title: "How to parametrize fixtures and test functions"
     note: "@pytest.mark.parametrize ejecuta la misma función de test con varios juegos de argumentos."
   - source: pytest-docs
     url: https://docs.pytest.org/en/stable/how-to/monkeypatch.html
     accessed: 2026-10-05
+    page_title: "How to monkeypatch/mock modules and environments"
     note: "monkeypatch.setattr reemplaza una función o atributo durante el test (por ejemplo, una llamada a una API); los cambios se deshacen al terminar."
   - source: pytest-docs
     url: https://docs.pytest.org/en/stable/explanation/goodpractices.html
     accessed: 2026-10-05
+    page_title: "Good Integration Practices"
     note: "pytest busca archivos test_*.py o *_test.py y recoge las funciones con prefijo test."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/emulator
     accessed: 2026-10-05
+    page_title: "Testing apps locally with the emulator"
     note: "El emulador de Pub/Sub permite probar aplicaciones localmente; la aplicación se conecta con la variable PUBSUB_EMULATOR_HOST; requiere las Cloud Client Libraries y no admite la consola ni los comandos gcloud pubsub."
   - source: gcp-dataform-docs
     url: https://docs.cloud.google.com/dataform/docs/test-data
     accessed: 2026-10-05
+    page_title: "Test data quality"
     note: "Dataform prueba la calidad de los datos con aserciones en el config de una tabla (nonNull, rowConditions, uniqueKey, uniqueKeys) y con tests unitarios (type: test) que reemplazan las dependencias por datos de entrada propios."
   - source: dbt-docs
     url: https://docs.getdbt.com/docs/build/data-tests
     accessed: 2026-10-05
+    page_title: "Add data tests to your DAG"
     note: "Los data tests de dbt son consultas que buscan registros que fallan; los genéricos comprueban, por ejemplo, valores no nulos, únicos, relaciones con otro modelo o valores aceptados."
   - source: aws-glue-docs
     url: https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-libraries.html
     accessed: 2026-10-05
+    page_title: "Developing and testing AWS Glue job scripts locally"
     note: "La imagen Docker de AWS Glue permite desarrollar y probar scripts de jobs de Glue for Spark en local o remoto sin incurrir en costos de AWS Glue; también se puede instalar localmente la biblioteca ETL de Glue."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-python
     accessed: 2026-10-05
+    page_title: "Azure Functions developer reference guide for Python apps"
     note: "En Azure Functions con Python, los tests unitarios se escriben con pytest; para la mayoría de los bindings se crea un objeto de entrada simulado con las clases del paquete azure.functions."
 relations:
   - type: RELATED_TO
@@ -76,7 +87,7 @@ relations:
     target: idempotency
     note: Un test que ejecuta dos veces la misma operación fija la idempotencia.
 created_at: 2026-10-05
-updated_at: 2026-10-05
+updated_at: 2026-10-13
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -275,3 +286,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-06: §10, `normalize_amount` valida el formato con una expresión regular antes de quitar los puntos (aprobado por Felipe): `'10.50'`, `'1.2.3'` y `'12.34'` ya no se convierten en 1050, 123 y 1234. Es la expresión de `data-transformation` sin el grupo decimal, porque la función devuelve pesos enteros. El test de negativos pasa a un test parametrizado de formatos inválidos con esos tres casos más `-5`, `N/D` y vacío. Pendiente de revisión de Cursor.
 - 2026-10-06: revisión B-F3.1 de la corrección de `normalize_amount` aplicada (docs/reviews/cards-pytest-fix.md), sin cambios pedidos. Sigue `verified`.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

@@ -18,34 +18,42 @@ sources:
   - source: python-docs
     url: https://docs.python.org/3.12/library/stdtypes.html
     accessed: 2026-10-08
+    page_title: "Built-in Types"
     note: "Iterator Types. El protocolo de iterador son dos métodos: iterator.__iter__() devuelve el propio iterador (necesario para usar contenedores e iteradores en for e in) e iterator.__next__() devuelve el siguiente elemento o lanza StopIteration si no hay más."
   - source: python-docs
     url: https://docs.python.org/3.12/glossary.html
     accessed: 2026-10-08
+    page_title: "Glossary"
     note: "Glosario (iterator): cuando no hay más datos, __next__() lanza StopIteration; en ese punto el iterador está agotado (exhausted) y las llamadas siguientes a __next__() vuelven a lanzar StopIteration. Un contenedor (como una lista) produce un iterador nuevo cada vez que se pasa a iter() o se usa en un for; hacer lo mismo con un iterador devuelve el mismo iterador agotado, que parece un contenedor vacío."
   - source: python-docs
     url: https://docs.python.org/3.12/library/exceptions.html
     accessed: 2026-10-08
+    page_title: "Built-in Exceptions"
     note: "StopIteration: desde 3.7 (PEP 479), un StopIteration lanzado dentro de un generador se transforma en RuntimeError."
   - source: python-docs
     url: https://docs.python.org/3.12/library/itertools.html
     accessed: 2026-10-08
+    page_title: "itertools — Functions creating iterators for efficient looping"
     note: "batched(iterable, n) agrupa en tuplas de largo n; el último lote puede ser más corto; agregado en 3.12. islice funciona como el slicing pero sin valores negativos. chain recorre iterables uno tras otro y chain.from_iterable evalúa su argumento de forma perezosa. groupby genera un grupo nuevo cada vez que cambia la clave, por eso en general el iterable tiene que estar ordenado por la misma clave (distinto del GROUP BY de SQL). tee puede requerir mucho almacenamiento auxiliar y sus iteradores no son thread-safe."
   - source: python-docs
     url: https://docs.python.org/3.12/library/collections.abc.html
     accessed: 2026-10-08
+    page_title: "collections.abc — Abstract Base Classes for Containers"
     note: "collections.abc.Iterator: ABC para clases con __iter__() y __next__(). collections.abc.Generator: ABC para generadores."
   - source: aws-lambda-docs
     url: https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html
     accessed: 2026-10-08
+    page_title: "Lambda Event Function runtimes"
     note: "La tabla de runtimes soportados incluye Python 3.12 (identificador python3.12, Amazon Linux 2023) con fecha de deprecación proyectada 31 de octubre de 2028. Las fechas son proyecciones según la política de deprecación de runtimes."
   - source: gcp-cloud-run-docs
     url: https://docs.cloud.google.com/run/docs/runtimes/python
     accessed: 2026-10-08
+    page_title: "The Python runtime"
     note: "Runtimes de Python soportados para funciones de Cloud Run: Python 3.12 (python312) con deprecación 2028-10-02 y baja 2029-04-02; también figuran python313 y python314. El runtime se elige al desplegar la función."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-python
     accessed: 2026-10-08
+    page_title: "Azure Functions developer reference guide for Python apps"
     note: "Python developer reference for Azure Functions: cambiar la versión de Python de la function app no reconstruye automáticamente los artefactos de despliegue ni las dependencias; hay que reconstruir y volver a desplegar."
 relations:
   - type: RELATED_TO
@@ -61,7 +69,7 @@ relations:
     target: python-api-consumption
     note: La paginación de una API se modela bien como un iterador que pide la página siguiente solo cuando hace falta.
 created_at: 2026-10-08
-updated_at: 2026-10-08
+updated_at: 2026-10-13
 last_verified: 2026-10-08
 verification_status: verified
 ---
@@ -237,3 +245,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: creación (lote F3b-03a).
 - 2026-10-08: revisión B-F3.1 del lote F3b-03a aplicada (docs/reviews/cards-f3b-03a.md): la documentación de Python se cita en `/3.12/`, la versión con la que se ejecutó el código; se quita `strict` de `batched` (3.13), que no está en la página de 3.12.
 - 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

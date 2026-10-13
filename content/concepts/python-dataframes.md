@@ -18,34 +18,42 @@ sources:
   - source: pandas-docs
     url: https://pandas.pydata.org/pandas-docs/version/3.0/user_guide/copy_on_write.html
     accessed: 2026-10-08
+    page_title: "Copy-on-Write (CoW)"
     note: "pandas 3.0: Copy-on-Write es el modo por defecto. Con CoW no es posible actualizar más de un objeto con una sentencia: indexar o llamar métodos no tiene efectos secundarios, y las copias se retrasan lo más posible. La asignación encadenada (chained assignment) ya no funciona nunca; se usa loc. Acceder al array subyacente devuelve una vista de solo lectura."
   - source: pandas-docs
     url: https://pandas.pydata.org/pandas-docs/version/3.0/whatsnew/v3.0.0.html
     accessed: 2026-10-08
+    page_title: "What’s new in 3.0.0 (January 21, 2026)"
     note: "pandas 3.0 habilita por defecto un tipo de dato dedicado para texto (str), respaldado por PyArrow si está instalado o, si no, por arrays object de NumPy; las columnas de texto se infieren como str en lugar de object; str solo admite cadenas o valores faltantes, y el valor faltante es NaN."
   - source: pandas-docs
     url: https://pandas.pydata.org/pandas-docs/version/3.0/user_guide/scale.html
     accessed: 2026-10-08
+    page_title: "Scaling to large datasets"
     note: "Escalar a datos grandes: cargar menos datos (usecols en read_csv limita las columnas que se leen a memoria), usar tipos de datos eficientes y procesar por partes (chunksize en read_csv); algunas operaciones, como groupby, son mucho más difíciles de hacer por partes."
   - source: polars-docs
     url: https://docs.pola.rs/user-guide/concepts/lazy-api/
     accessed: 2026-10-08
+    page_title: "Lazy API"
     note: "Polars user guide (Polars 2.0.0 instalado; la guía no tiene URL por versión): en la API lazy el planificador optimiza la consulta antes de ejecutarla, con predicate pushdown (filtrar lo antes posible al leer) y projection pushdown (leer solo las columnas necesarias); explain() muestra el plan optimizado."
   - source: polars-docs
     url: https://docs.pola.rs/user-guide/concepts/streaming/
     accessed: 2026-10-08
+    page_title: "Streaming"
     note: "El motor streaming de Polars ejecuta la consulta en lotes y permite procesar datos que no caben en memoria; se activa con engine=\"streaming\" en collect."
   - source: polars-docs
     url: https://docs.pola.rs/user-guide/migration/pandas/
     accessed: 2026-10-08
+    page_title: "Coming from Pandas"
     note: "Diferencias que señala Polars frente a pandas: Polars no tiene índice ni multi-índice; Polars usa el formato de memoria de Apache Arrow (la página dice que pandas usa arrays de NumPy); Polars tiene más soporte para operaciones en paralelo."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/storage
     accessed: 2026-10-08
+    page_title: "Use the BigQuery Storage Read API to read table data"
     note: "BigQuery Storage Read API: alternativa a exportar tablas para leer datos estructurados; los datos de una sesión se serializan en Apache Avro o Apache Arrow."
   - source: aws-lambda-docs
     url: https://docs.aws.amazon.com/lambda/latest/dg/configuration-memory.html
     accessed: 2026-10-08
+    page_title: "Configure Lambda Event Function memory"
     note: "Lambda asigna CPU en proporción a la memoria configurada; la memoria se configura entre 128 MB y 10,240 MB en incrementos de 1 MB; con 1,769 MB una función tiene el equivalente a una vCPU."
 relations:
   - type: RELATED_TO
@@ -64,7 +72,7 @@ relations:
     target: deduplication
     note: drop_duplicates (pandas) y unique (Polars) con keep="last" implementan "gana la última versión".
 created_at: 2026-10-08
-updated_at: 2026-10-09
+updated_at: 2026-10-13
 last_verified: 2026-10-09
 verification_status: verified
 ---
@@ -264,3 +272,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: creación (lote F3b-03b).
 - 2026-10-09: revisión B-F3.1 del lote F3b-03b aplicada (docs/reviews/cards-f3b-03b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

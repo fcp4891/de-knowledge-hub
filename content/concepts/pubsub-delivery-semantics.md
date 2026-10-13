@@ -18,66 +18,82 @@ sources:
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/subscription-overview
     accessed: 2026-09-30
+    page_title: "Subscription overview"
     note: Por defecto, Pub/Sub entrega al menos una vez (at-least-once) y sin garantías de orden en todos los tipos de suscripción.
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/exactly-once-delivery
     accessed: 2026-09-30
+    page_title: "Exactly-once delivery"
     note: Exactly-once delivery solo en suscripciones pull (no push ni export), dentro de una región y basado en el message ID de Pub/Sub; los suscriptores deben conectarse en la misma región; con exactly-once no se reciben entregas duplicadas.
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/ordering
     accessed: 2026-09-30
+    page_title: "Order messages"
     note: El orden se define por ordering key (hasta 1 KB); hay que publicar en la misma región y habilitar el orden en la suscripción; mensajes sin clave no se ordenan; la reentrega de un mensaje provoca la reentrega de todos los posteriores de esa clave, incluso los ya confirmados.
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/subscription-retry-policy
     accessed: 2026-09-30
+    page_title: "Subscription retry policy"
     note: Reentrega inmediata por defecto o backoff exponencial configurable entre 0 y 600 segundos.
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/dead-letter-topics
     accessed: 2026-09-30
+    page_title: "Dead-letter topics"
     note: Dead-letter topic con 5 a 100 intentos de entrega (5 por defecto); el conteo es aproximado porque el reenvío es best-effort.
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/publish-receive-messages-client-library
     accessed: 2026-10-01
+    page_title: "Publish and receive messages in Pub/Sub by using a client library"
     note: "Quickstart en Python: pubsub_v1.SubscriberClient(), subscriber.subscription_path(project_id, subscription_id), subscriber.subscribe(subscription_path, callback=callback) devuelve un future; dentro de with subscriber, future.result(timeout=...) y, ante TimeoutError, future.cancel() y future.result()."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/python/docs/reference/pubsub/latest/google.cloud.pubsub_v1.subscriber.message.Message
     accessed: 2026-10-01
+    page_title: "Class Message (2.42.0)"
     note: "Message: message_id, data (bytes), attributes y publish_time. ack() confirma; conviene no confirmar hasta terminar de procesar y, como los acks son best effort, el procesamiento debe ser idempotente. nack() rechaza el mensaje para que se reentregue, de inmediato o con demora, a este u otro suscriptor."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/python/docs/reference/pubsub/latest/google.cloud.pubsub_v1.types.FlowControl
     accessed: 2026-10-01
+    page_title: "Class FlowControl (2.42.0)"
     note: "FlowControl(max_bytes=104857600, max_messages=1000, max_lease_duration=3600, ...): controla el ritmo con el que se obtienen mensajes en una suscripción asíncrona."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/python/docs/reference/pubsub/latest/google.cloud.pubsub_v1.subscriber.client.Client
     accessed: 2026-10-01
+    page_title: "Class Client (2.42.0)"
     note: "Client.subscribe(subscription, callback, flow_control=..., scheduler=..., ...)."
   - source: psycopg-docs
     url: https://www.psycopg.org/psycopg3/docs/api/connections.html
     accessed: 2026-10-01
+    page_title: "Connection classes"
     note: "Connection.connect(conninfo, autocommit=False, ...) con una URL postgresql:// o pares clave=valor; Connection.execute(query, params) con marcadores %s."
   - source: psycopg-docs
     url: https://www.psycopg.org/psycopg3/docs/advanced/async.html
     accessed: 2026-10-01
+    page_title: "Concurrent operations"
     note: "En una misma conexión la ejecución de consultas se serializa (la conexión coordina el acceso de los cursores); varios hilos pueden compartirla; para mucha concurrencia conviene un pool de conexiones."
   - source: psycopg-docs
     url: https://www.psycopg.org/psycopg3/docs/api/errors.html
     accessed: 2026-10-01
+    page_title: "errors – Package exceptions"
     note: "psycopg.Error es la clase base de todas las excepciones que lanza psycopg."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/sql-insert.html
     accessed: 2026-10-01
+    page_title: "PostgreSQL: Documentation: 18: INSERT"
     note: "ON CONFLICT DO UPDATE garantiza un resultado atómico INSERT o UPDATE incluso con alta concurrencia; la fila propuesta se lee con excluded; admite una condición WHERE."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/access-control
     accessed: 2026-10-01
+    page_title: "Access control with Identity and Access Management"
     note: "roles/pubsub.subscriber permite consumir mensajes de una suscripción."
   - source: aws-sqs-docs
     url: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html
     accessed: 2026-09-30
+    page_title: "Amazon SQS visibility timeout"
     note: En SQS, un mensaje no borrado antes del visibility timeout vuelve a ser visible.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-features
     accessed: 2026-09-30
+    page_title: "Event Hubs features and terminology"
     note: En Event Hubs, los consumidores leen por offset dentro de particiones ordenadas y guardan su posición con checkpointing.
 relations:
   - type: RELATED_TO
@@ -93,7 +109,7 @@ relations:
     target: replay
     note: Seek permite reentregar mensajes desde un snapshot o un timestamp.
 created_at: 2026-09-30
-updated_at: 2026-10-01
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -290,3 +306,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: creación (lote 2 de F3).
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
 - 2026-10-01: §10 reemplazada por un consumidor real de Pub/Sub (google-cloud-pubsub, streaming pull) con upsert idempotente en PostgreSQL (psycopg 3) y requisitos exactos; antes era un esquema que llamaba a `parse` y `upsert_customer` sin definirlas.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

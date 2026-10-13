@@ -20,34 +20,42 @@ sources:
   - source: pytest-docs
     url: https://docs.pytest.org/en/stable/how-to/assert.html
     accessed: 2026-10-04
+    page_title: "How to write and report assertions in tests"
     note: "pytest permite usar el assert estándar de Python y muestra la introspección de la expresión cuando falla."
   - source: pytest-docs
     url: https://docs.pytest.org/en/stable/how-to/parametrize.html
     accessed: 2026-10-04
+    page_title: "How to parametrize fixtures and test functions"
     note: "@pytest.mark.parametrize ejecuta la misma función de test con varios juegos de argumentos, uno por caso."
   - source: pytest-docs
     url: https://docs.pytest.org/en/stable/explanation/goodpractices.html
     accessed: 2026-10-04
+    page_title: "Good Integration Practices"
     note: "pytest busca archivos test_*.py o *_test.py y recoge las funciones con prefijo test."
   - source: pytest-docs
     url: https://docs.pytest.org/en/stable/how-to/monkeypatch.html
     accessed: 2026-10-05
+    page_title: "How to monkeypatch/mock modules and environments"
     note: "monkeypatch.setattr reemplaza una función o atributo durante el test (por ejemplo, una llamada a una API que no se quiere hacer); los cambios se deshacen al terminar el test o el fixture."
   - source: python-docs
     url: https://docs.python.org/3/library/typing.html
     accessed: 2026-10-05
+    page_title: "typing — Support for type hints"
     note: "typing.Protocol: subtipado estructural; una clase con los métodos del protocolo lo cumple sin heredar de él."
   - source: pydantic-docs
     url: https://pydantic.dev/docs/validation/latest/errors/errors/
     accessed: 2026-10-04
+    page_title: "Error Handling"
     note: "Cada error de ValidationError tiene loc, msg, type (identificador para máquinas), input, ctx y url."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet
     accessed: 2026-10-04
+    page_title: "Load Parquet data from Cloud Storage"
     note: "LoadJobConfig(source_format=bigquery.SourceFormat.PARQUET, write_disposition=bigquery.WriteDisposition.WRITE_TRUNCATE) y client.load_table_from_uri(uri, table_id, job_config=job_config)."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/load-data-partitioned-tables
     accessed: 2026-10-04
+    page_title: "Load data into partitioned tables"
     note: "Un decorador de partición (tabla$AAAAMMDD) dirige la carga a esa partición; para sobrescribirla en lugar de agregar, la carga debe reemplazar (bq load --replace=true)."
 relations:
   - type: IMPLEMENTS
@@ -63,7 +71,7 @@ relations:
     target: idempotency
     note: El test de repetición fija la propiedad que hace seguros los reintentos y los backfills.
 created_at: 2026-10-04
-updated_at: 2026-10-05
+updated_at: 2026-10-13
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -202,3 +210,4 @@ El detalle está en `sources` del encabezado.
 - 2026-10-04: creación (propuesta aprobada tras el lote 5), sobre el código de las secciones 10 de `data-validation-with-pydantic` y `batch-ingestion`.
 - 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`) aplicada: fuente de `monkeypatch` y cliente tipado con `Protocol`. `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-05: implementa también `testing-with-pytest`, verificada en el lote 6.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

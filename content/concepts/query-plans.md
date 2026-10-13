@@ -18,38 +18,47 @@ sources:
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/using-explain.html
     accessed: 2026-10-07
+    page_title: "14.1. Using EXPLAIN"
     note: "EXPLAIN muestra el plan con costos estimados: costo de inicio y costo total, en unidades arbitrarias, y filas estimadas por nodo. Con ANALYZE, EXPLAIN ejecuta realmente la consulta y muestra filas y tiempos reales junto a las estimaciones; lo más importante es si las filas estimadas se acercan a las reales. Los tiempos de EXPLAIN ANALYZE no incluyen la transmisión por red y la medición agrega sobrecarga. BUFFERS agrega detalle de E/S."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_EXPLAIN.html
     accessed: 2026-10-07
+    page_title: "EXPLAIN"
     note: "EXPLAIN muestra el plan de ejecución de una sentencia sin ejecutarla; VERBOSE muestra el plan completo. Admite SELECT, INSERT, CREATE TABLE AS, UPDATE y DELETE."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c-the-query-plan.html
     accessed: 2026-10-07
+    page_title: "Creating and interpreting a query plan"
     note: "El costo de EXPLAIN es un valor relativo, útil para comparar operaciones dentro de un plan: costo de la primera fila y costo total, acumulado con los nodos hijos. Las filas estimadas se basan en las estadísticas que genera ANALYZE."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_data_redistribution.html
     accessed: 2026-10-07
+    page_title: "Evaluating the query plan"
     note: "Etiquetas de movimiento de datos en joins: DS_DIST_NONE y DS_DIST_ALL_NONE son buenas (joins colocalizados, sin redistribución); DS_DIST_INNER redistribuye la tabla interna; DS_BCAST_INNER copia la tabla interna completa a todos los nodos; DS_DIST_BOTH redistribuye ambas tablas."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/query-plan-explanation
     accessed: 2026-10-07
+    page_title: "Query plan and timeline"
     note: "Cada job de consulta incluye un plan de diagnóstico y su línea de tiempo, similar a EXPLAIN de otros sistemas, disponible por la API (jobs.get) y en la pestaña Execution graph de la consola. El plan es un grafo de etapas (stages) compuestas por pasos (steps) que se ejecutan en paralelo y se comunican mediante shuffle; muestra el slot-time por etapa. En consultas largas, las estadísticas se actualizan periódicamente; los dry runs y los resultados en caché no incluyen este diagnóstico."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/query-insights
     accessed: 2026-10-07
+    page_title: "Get query performance insights"
     note: "Las query insights de BigQuery señalan problemas como contención de slots, uso excesivo de shuffle y sesgo de particiones (partition skew), marcados en la etapa correspondiente del grafo de ejecución. JOIN y GROUP BY tienden a usar más shuffle; reducir los datos procesados reduce ese uso."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/best-practices-costs
     accessed: 2026-10-07
+    page_title: "Estimate and control costs"
     note: "En on-demand, las consultas se facturan por bytes leídos, y un dry run permite estimarlos antes de ejecutar."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/statements/set-showplan-xml-transact-sql?view=sql-server-ver17
     accessed: 2026-10-07
+    page_title: "SET SHOWPLAN_XML (Transact-SQL)"
     note: "Aplica a Azure Synapse Analytics (solo pool SQL dedicado) y Warehouse en Microsoft Fabric, entre otros. Con SET SHOWPLAN_XML ON, las sentencias no se ejecutan: se devuelve un documento XML con el plan, costos estimados, número de filas, operadores, orden de los joins y otros detalles."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/query-insights
     accessed: 2026-10-07
+    page_title: "Query Insights in Fabric Data Warehouse"
     note: "Fabric Data Warehouse ofrece vistas de query insights: queryinsights.exec_requests_history (cada consulta completada), exec_sessions_history, long_running_queries, frequently_run_queries y sql_pool_insights."
 relations:
   - type: RELATED_TO
@@ -62,7 +71,7 @@ relations:
     target: clustering
     note: El efecto del clustering se ve en los datos leídos por la etapa de lectura.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -243,3 +252,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: ficha completa (lote F3b-02b, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): sin cambios pedidos.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

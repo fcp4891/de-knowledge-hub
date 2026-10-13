@@ -18,6 +18,7 @@ sources:
   - source: gcp-managed-spark-docs
     url: https://docs.cloud.google.com/managed-spark/docs/concepts/serverless-spark-compare
     accessed: 2026-10-11
+    page_title: "Compare Managed Service for Apache Spark serverless and cluster deployments"
     note: "«\"Managed Service for Apache Spark\" is the new name for the product formerly known as \"Dataproc on Compute Engine\" (cluster deployment) and \"Google Cloud Serverless for Apache Spark\" (serverless deployment).»"
 note: 'Agregado para la Cloud Capability Matrix. El slug gcp-dataproc se mantiene por estabilidad; «Dataproc» es el nombre corto con que se lo conocía en este repositorio y los dos nombres anteriores son los de su página (ADR-010).'
 created_at: '2026-09-28'

@@ -18,30 +18,37 @@ sources:
   - source: terraform-docs
     url: https://developer.hashicorp.com/terraform/cli/commands/plan
     accessed: 2026-10-01
+    page_title: "terraform plan command"
     note: "terraform plan lee el estado actual de los objetos remotos, compara la configuración con el state previo y propone cambios; no los ejecuta. -out=FILE guarda el plan para pasarlo luego a apply, flujo pensado para automatización. -detailed-exitcode: 0 sin cambios, 1 error, 2 con cambios. Modos -destroy y -refresh-only (actualiza el state a cambios hechos fuera de Terraform)."
   - source: terraform-docs
     url: https://developer.hashicorp.com/terraform/cli/commands/apply
     accessed: 2026-10-01
+    page_title: "terraform apply command"
     note: "Sin plan guardado, apply genera un plan nuevo y pide aprobación; -auto-approve aplica sin pedirla (se recomienda que nadie cambie la infraestructura por fuera de Terraform). Con un plan guardado, apply ejecuta sus operaciones sin pedir confirmación; terraform show permite inspeccionarlo."
   - source: terraform-docs
     url: https://developer.hashicorp.com/terraform/language/manage-sensitive-data
     accessed: 2026-10-01
+    page_title: "Manage sensitive data in your configuration"
     note: "Los archivos de plan, como el state, contienen atributos de los recursos y pueden incluir valores sensibles."
   - source: aws-cloudformation-docs
     url: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-changesets.html
     accessed: 2026-10-01
+    page_title: "Update CloudFormation stacks using change sets"
     note: "Un change set muestra qué recursos se agregarán, modificarán o borrarán y una comparación antes y después de sus propiedades; se pueden crear varios y ejecutar el elegido."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/deploy-what-if
     accessed: 2026-10-01
+    page_title: "Bicep What-If: Preview Changes Before Deployment"
     note: "Bicep what-if previsualiza los cambios antes de desplegar (az deployment group what-if y equivalentes por suscripción, grupo de administración y tenant); requiere los mismos permisos que el despliegue."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview
     accessed: 2026-10-01
+    page_title: "What is Bicep?"
     note: "La operación what-if muestra qué recursos se crearán, actualizarán o borrarán; comprueba el estado actual del entorno y evita gestionar un state: Azure guarda el estado."
   - source: gcp-infrastructure-manager-docs
     url: https://docs.cloud.google.com/infrastructure-manager/docs/overview
     accessed: 2026-10-01
+    page_title: "Infrastructure Manager overview"
     note: "Infrastructure Manager permite crear previews de despliegue para ver cómo los cambios afectan la infraestructura antes de aplicarlos."
 relations:
   - type: DEPENDS_ON
@@ -51,7 +58,7 @@ relations:
     target: infrastructure-as-code
     note: Revisar antes de aplicar es el control central de IaC.
 created_at: 2026-10-01
-updated_at: 2026-10-01
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -201,3 +208,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-01: creación (lote 4 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

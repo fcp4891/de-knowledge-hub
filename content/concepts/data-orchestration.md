@@ -18,30 +18,37 @@ sources:
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dags.html
     accessed: 2026-10-05
+    page_title: "Dags"
     note: "Un Dag encapsula lo necesario para ejecutar un workflow: schedule, tareas, dependencias (orden y condiciones), callbacks y otros parámetros."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/tutorial/taskflow.html
     accessed: 2026-10-05
+    page_title: "Pythonic Dags with the TaskFlow API"
     note: "TaskFlow en Airflow 3 importa dag y task desde airflow.sdk; @task(retries=N) configura reintentos; pasar el resultado de una tarea a otra crea la dependencia."
   - source: gcp-cloud-composer-docs
     url: https://docs.cloud.google.com/composer/docs/composer-3/composer-overview
     accessed: 2026-10-05
+    page_title: "Managed Airflow overview"
     note: "Managed Airflow (Cloud Composer) es un servicio de orquestación de workflows totalmente administrado, basado en Apache Airflow y Python, para crear, programar, monitorear y gestionar pipelines que abarcan nubes y centros de datos propios."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/dts-introduction
     accessed: 2026-10-05
+    page_title: "Introduction to the BigQuery Data Transfer Service"
     note: "BigQuery Data Transfer Service carga datos de forma programada y también ejecuta consultas programadas y copias de datasets."
   - source: aws-mwaa-docs
     url: https://docs.aws.amazon.com/mwaa/latest/userguide/what-is-mwaa.html
     accessed: 2026-10-05
+    page_title: "What Is Amazon Managed Workflows for Apache Airflow?"
     note: "Amazon MWAA ejecuta Apache Airflow administrado, con scheduler y workers en contenedores de Fargate."
   - source: aws-step-functions-docs
     url: https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html
     accessed: 2026-10-05
+    page_title: "What is Step Functions?"
     note: "Step Functions se basa en máquinas de estados y tareas: los workflows son series de pasos dirigidos por eventos, cada paso es un estado (por ejemplo, un Task que invoca otro servicio de AWS) y cada ejecución es una instancia del workflow; sirve también para pipelines de datos y ML."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/concepts-pipelines-activities
     accessed: 2026-10-05
+    page_title: "Pipelines and activities in Azure Data Factory and Azure Synapse Analytics"
     note: "En Data Factory, un pipeline es un agrupamiento lógico de actividades que juntas realizan una tarea; se despliega y programa el pipeline como unidad; los triggers (programados o manuales) lo inician, con relación de muchos a muchos entre triggers y pipelines."
 relations:
   - type: RELATED_TO
@@ -63,7 +70,7 @@ relations:
     target: data-pipeline
     note: El orquestador ejecuta las etapas del pipeline.
 created_at: 2026-10-05
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-06
 verification_status: verified
 ---
@@ -264,3 +271,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: creación (lote F3b-01a, dominio 01-fundamentals).
 - 2026-10-06: `verification_status: verified` (revisión B-F3.1 del lote F3b-01a aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

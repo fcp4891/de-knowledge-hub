@@ -18,14 +18,17 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax
     accessed: 2026-09-30
+    page_title: "Data manipulation language (DML) statements in GoogleSQL"
     note: "Sintaxis de MERGE (incluye WHEN NOT MATCHED BY SOURCE) y el error si un destino coincide con más de una fila de origen. Bytes procesados en on-demand: un MERGE solo con INSERT cobra q (lo que lee la sentencia); con UPDATE o DELETE, q + t (tamaño de la tabla destino; en tablas particionadas, de las particiones afectadas)."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html
     accessed: 2026-09-30
+    page_title: "MERGE"
     note: MERGE de Redshift; falla (Found multiple matches to update the same tuple) si varias filas de origen coinciden con una fila del destino; solo en modo simplificado REMOVE DUPLICATES, cuando varias filas del destino coinciden con la misma fila de origen, elimina los duplicados del destino y conserva una; las duplicadas del destino que no coinciden con ninguna fila de origen no se tocan.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/statements/merge-transact-sql
     accessed: 2026-09-30
+    page_title: "MERGE (Transact-SQL)"
     note: MERGE de T-SQL aplica a SQL Server, Azure SQL Database, Azure SQL Managed Instance, Azure Synapse Analytics (solo dedicated SQL pool), SQL database en Fabric y Warehouse en Fabric; error si varias filas de origen coinciden con una del destino.
 relations:
   - type: RELATED_TO
@@ -38,7 +41,7 @@ relations:
     target: incremental-load
     note: El modo upsert de la carga incremental usa MERGE.
 created_at: 2026-09-30
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -193,3 +196,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`, hallazgo 1) aplicada: §14 Costo según la fuente de BigQuery.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `upsert`, `deduplication`, `sql-window-functions`, que ya tienen ficha.
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `sql-qualify`, que ya tiene ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

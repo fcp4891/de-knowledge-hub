@@ -18,18 +18,22 @@ sources:
   - source: python-docs
     url: https://docs.python.org/3.12/glossary.html
     accessed: 2026-10-08
+    page_title: "Glossary"
     note: "Glosario, decorator: una función que devuelve otra función, aplicada normalmente como transformación con la sintaxis @wrapper; la sintaxis de decorador es azúcar sintáctica: @staticmethod sobre def f equivale a f = staticmethod(f)."
   - source: python-docs
     url: https://docs.python.org/3.12/reference/compound_stmts.html
     accessed: 2026-10-08
+    page_title: "8. Compound statements"
     note: "Definición de funciones: una función puede estar envuelta por una o más expresiones de decorador; se evalúan al definir la función, en el ámbito que la contiene; el resultado debe ser un invocable que recibe la función como único argumento, y lo que devuelve queda ligado al nombre de la función. Varios decoradores se aplican anidados."
   - source: python-docs
     url: https://docs.python.org/3.12/library/functools.html
     accessed: 2026-10-08
+    page_title: "functools — Higher-order functions and operations on callable objects"
     note: "wraps: sin este decorador, la función decorada se llamaría como la envoltura y perdería su docstring. cache: caché sin límite (memoize), equivalente a lru_cache(maxsize=None). Como el caché usa un diccionario, los argumentos deben ser hashables. La función original queda en __wrapped__. cache_info() devuelve hits, misses, maxsize y currsize; cache_clear() vacía el caché. El caché guarda referencias a argumentos y resultados hasta que salen del caché o se vacía; si se cachea un método, self forma parte de la clave."
   - source: python-docs
     url: https://docs.python.org/3.12/library/typing.html
     accessed: 2026-10-08
+    page_title: "typing — Support for type hints"
     note: "ParamSpec: variable de especificación de parámetros, para anotar funciones de orden superior que conservan la firma de la función que reciben (P.args y P.kwargs)."
 relations:
   - type: RELATED_TO
@@ -45,7 +49,7 @@ relations:
     target: python-typing
     note: ParamSpec permite que el decorador conserve la firma para mypy.
 created_at: 2026-10-08
-updated_at: 2026-10-09
+updated_at: 2026-10-13
 last_verified: 2026-10-09
 verification_status: verified
 ---
@@ -272,3 +276,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: creación (lote F3b-03b).
 - 2026-10-09: revisión B-F3.1 del lote F3b-03b aplicada (docs/reviews/cards-f3b-03b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

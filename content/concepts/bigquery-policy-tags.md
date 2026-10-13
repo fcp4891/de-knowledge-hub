@@ -18,10 +18,12 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/column-level-security-intro
     accessed: 2026-10-11
+    page_title: "Introduction to column-level access control"
     note: "Introduction to column-level access control: acceso fino a columnas sensibles con policy tags (basados en Data Catalog) o con data governance tags (basados en tags de Resource Manager); las políticas verifican el acceso en tiempo de consulta. Flujo: definir una taxonomía y sus policy tags; asignarlos a columnas con anotaciones de esquema; aplicar el control de acceso de la taxonomía; gestionar el acceso a los tags con IAM. El rol Fine-Grained Reader (datacatalog.categoryFineGrainedReader, en el policy tag) da acceso al contenido de las columnas restringidas. Los nombres de taxonomía son únicos en la organización. No se pueden copiar tablas entre regiones si tienen policy tags. Requiere BigQuery y Data Catalog (precios de ambos). Opcional: enmascaramiento dinámico."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/column-data-masking-intro
     accessed: 2026-10-11
+    page_title: "Introduction to data masking"
     note: "Introduction to data masking: construido sobre el control de acceso por columna; permite un rango de acceso por grupo, de completo a ninguno (por ejemplo, contabilidad completo, analistas enmascarado, ventas sin acceso). La API datacatalog.googleapis.com debe seguir habilitada para policy tags y taxonomías; aunque la búsqueda y la catalogación de Data Catalog están obsoletas y migran a Knowledge Catalog, la funcionalidad de la API para policy tags no lo está. La regla se aplica en tiempo de consulta según el rol del usuario y tiene precedencia sobre otras operaciones. Reglas: rutina propia (UDF), máscara de año en fechas, valor por defecto según el tipo, máscara de email, primeros o últimos cuatro caracteres, hash SHA-256 (sirve para joins), anular. Buena práctica: asignar BigQuery Masked Reader a nivel de política de datos, no de proyecto. Quien no tiene Fine-Grained Reader ni Masked Reader recibe un error de acceso denegado al consultar la columna."
 relations:
   - type: RELATED_TO
@@ -34,7 +36,7 @@ relations:
     target: dataplex-governance
     note: Knowledge Catalog es el catálogo de Google Cloud; los policy tags siguen en la API de Data Catalog.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -280,3 +282,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08b).
 - 2026-10-11: revisión B-F3.1 del lote F3b-08b aplicada (docs/reviews/cards-f3b-08b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

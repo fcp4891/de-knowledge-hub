@@ -18,62 +18,77 @@ sources:
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/buckets
     accessed: 2026-10-01
+    page_title: "About Cloud Storage buckets"
     note: "Los buckets son los contenedores básicos de los objetos; no se anidan; no hay límite de buckets por proyecto, pero sí de ritmo de creación y borrado. Cada bucket tiene un nombre globalmente único y una ubicación; el nombre no se puede cambiar (hay que crear otro y mover). El precio depende de la ubicación y de las clases de almacenamiento. Nombres: minúsculas, números, guiones, guiones bajos y puntos; 3 a 63 caracteres."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/objects
     accessed: 2026-10-01
+    page_title: "About Cloud Storage objects"
     note: "Los objetos son las piezas de datos; no hay límite de objetos por bucket. Tienen datos (opacos para Cloud Storage) y metadatos; el nombre y el número de generación identifican al objeto en el bucket. El acceso se controla con ACL por objeto o con IAM sobre el bucket o una managed folder."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/storage-classes
     accessed: 2026-10-01
+    page_title: "Storage classes"
     note: "Clases: Standard (sin duración mínima), Nearline (30 días), Coldline (90 días) y Archive (365 días), estas con cargos de recuperación; todas con durabilidad anual de 99,999999999 %, sin tamaño mínimo de objeto y baja latencia."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/uniform-bucket-level-access
     accessed: 2026-10-01
+    page_title: "Uniform bucket-level access"
     note: "Con acceso uniforme a nivel de bucket, las ACL se desactivan y solo los permisos de IAM a nivel de bucket dan acceso al bucket y a sus objetos. IAM y ACL funcionan en paralelo: basta con que uno conceda el acceso."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/object-versioning
     accessed: 2026-10-01
+    page_title: "Object Versioning"
     note: "Object Versioning conserva una versión no actual cada vez que se reemplaza o borra un objeto vivo; las versiones no actuales se identifican por su generación. Google recomienda soft delete en lugar de Object Versioning para protegerse de borrados accidentales o maliciosos; Object Versioning no protege de borrar el bucket."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/lifecycle
     accessed: 2026-10-01
+    page_title: "Object Lifecycle Management"
     note: "Object Lifecycle Management aplica reglas configuradas en el bucket a objetos actuales y futuros: por ejemplo, pasar a Coldline los objetos de más de 365 días, borrar objetos anteriores a una fecha o conservar solo las 3 versiones más recientes."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/consistency
     accessed: 2026-10-01
+    page_title: "Cloud Storage consistency"
     note: "Consistencia global fuerte para lectura tras escritura, tras actualizar metadatos y tras borrar, y para el listado de objetos y buckets; tras una escritura exitosa, el objeto está disponible de inmediato, también en dual-region y multi-region."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/pubsub-notifications
     accessed: 2026-10-01
+    page_title: "Pub/Sub notifications for Cloud Storage"
     note: "Las notificaciones de Pub/Sub envían a un tópico información sobre cambios en los objetos; OBJECT_FINALIZE se envía cuando se crea un objeto o una nueva generación. No hay SLA de tiempo de entrega: suelen llegar en segundos, pero pueden demorarse bastante más."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/sdk/gcloud/reference/storage/buckets/create
     accessed: 2026-10-01
+    page_title: "gcloud storage buckets create"
     note: "gcloud storage buckets create admite --location, --uniform-bucket-level-access, --[no-]public-access-prevention, --soft-delete-duration y --lifecycle-file, entre otras opciones."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/sdk/gcloud/reference/storage/buckets/notifications/create
     accessed: 2026-10-01
+    page_title: "gcloud storage buckets notifications create"
     note: "gcloud storage buckets notifications create URL crea una configuración de notificaciones hacia un tópico de Pub/Sub, con --topic, --event-types (por ejemplo OBJECT_FINALIZE,OBJECT_DELETE) y --object-prefix."
   - source: aws-s3-docs
     url: https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html
     accessed: 2026-10-01
+    page_title: "What is Amazon S3?"
     note: "Amazon S3 es un servicio de almacenamiento de objetos con varias clases (Standard, Standard-IA, One Zone-IA, Glacier); ofrece consistencia fuerte de lectura tras escritura para PUT y DELETE en todas las regiones."
   - source: aws-s3-docs
     url: https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventNotifications.html
     accessed: 2026-10-01
+    page_title: "Amazon S3 Event Notifications"
     note: "Las notificaciones de eventos de S3 están diseñadas para entregarse al menos una vez; normalmente en segundos, a veces en un minuto o más."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction
     accessed: 2026-10-01
+    page_title: "Introduction to Azure Blob Storage"
     note: "Blob Storage se organiza en cuenta de almacenamiento (espacio de nombres único), contenedores (similares a directorios) y blobs; una cuenta admite contenedores ilimitados y un contenedor, blobs ilimitados."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blob-event-overview
     accessed: 2026-10-01
+    page_title: "Reacting to Blob storage events"
     note: "Los eventos de Blob Storage se publican en Event Grid con entrega al menos una vez; puede haber duplicados por reintentos."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-namespace
     accessed: 2026-10-01
+    page_title: "Azure Data Lake Storage hierarchical namespace"
     note: "El hierarchical namespace de Data Lake Storage escala de forma lineal y permite manipular directorios de forma atómica."
 relations:
   - type: RELATED_TO
@@ -89,7 +104,7 @@ relations:
     target: file-ingestion
     note: La ingesta de archivos parte de objetos que llegan a un bucket.
 created_at: 2026-10-01
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -237,3 +252,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: creación (lote 4 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `data-lake`, `pubsub-topics-and-subscriptions`, que ya tienen ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

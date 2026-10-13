@@ -18,38 +18,47 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/batch-loading-data
     accessed: 2026-10-01
+    page_title: "Batch load data"
     note: "BigQuery carga datos por lotes desde Cloud Storage o archivos locales en Avro, CSV, JSON delimitado por líneas, ORC, Parquet y exportaciones de Datastore y Firestore; BigQuery Data Transfer Service programa cargas recurrentes desde Cloud Storage. Cargar requiere bigquery.jobs.create y permisos sobre la tabla y el bucket. Por defecto, los load jobs usan un pool compartido de slots sin capacidad garantizada."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv
     accessed: 2026-10-01
+    page_title: "Load CSV data from Cloud Storage"
     note: "Disposición de escritura: WRITE_EMPTY (solo si la tabla está vacía), WRITE_APPEND (por defecto; con bq load, sin --replace) y WRITE_TRUNCATE (--replace, borra los datos existentes antes de escribir). --allow_jagged_rows acepta filas CSV sin columnas finales opcionales; si no, se tratan como registros inválidos y demasiados inválidos hacen fallar la carga."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet
     accessed: 2026-10-01
+    page_title: "Load Parquet data from Cloud Storage"
     note: "LOAD DATA OVERWRITE ... FROM FILES(format = 'PARQUET', uris = [...]) reemplaza la tabla; el esquema se toma de los archivos Parquet autodescriptivos."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/pubsub-notifications
     accessed: 2026-10-01
+    page_title: "Pub/Sub notifications for Cloud Storage"
     note: "Las notificaciones de Pub/Sub para Cloud Storage informan cambios en objetos; OBJECT_FINALIZE se envía cuando se crea un objeto o una nueva generación; no hay SLA de tiempo de entrega."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_COPY.html
     accessed: 2026-10-01
+    page_title: "COPY"
     note: "COPY carga datos en una tabla desde archivos; el origen más común es un bucket de S3; se puede indicar un archivo manifest con algunos orígenes."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/loading-data-files-using-manifest.html
     accessed: 2026-10-01
+    page_title: "Using a manifest to specify data files"
     note: "Un manifest JSON lista explícitamente los archivos a cargar (URL completa, no prefijo) para que COPY cargue todos los requeridos y solo esos; mandatory exige que el archivo exista."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/how-to-create-event-trigger
     accessed: 2026-10-01
+    page_title: "Create a trigger that runs a pipeline in response to a storage event"
     note: "Un storage event trigger de Data Factory responde a Blob created y/o Blob deleted, filtrados por blobPathBeginsWith y blobPathEndsWith, y puede ignorar blobs de cero bytes; usa Event Grid."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blob-event-overview
     accessed: 2026-10-01
+    page_title: "Reacting to Blob storage events"
     note: "Los eventos de Blob Storage garantizan entrega al menos una vez; puede haber duplicados por reintentos."
   - source: aws-s3-docs
     url: https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventNotifications.html
     accessed: 2026-10-01
+    page_title: "Amazon S3 Event Notifications"
     note: "Las notificaciones de eventos de S3 están diseñadas para entregarse al menos una vez."
 relations:
   - type: RELATED_TO
@@ -65,7 +74,7 @@ relations:
     target: idempotency
     note: Una carga que se repite o un evento duplicado no deben duplicar filas.
 created_at: 2026-10-01
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -225,3 +234,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `batch-ingestion`, `data-lake`, que ya tienen ficha.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `csv-format`, que ya tiene ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

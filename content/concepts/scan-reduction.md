@@ -18,38 +18,47 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/best-practices-performance-compute
     accessed: 2026-10-07
+    page_title: "Optimize query computation"
     note: "Buenas prácticas: consultar solo las columnas necesarias en lugar de SELECT *; aplicar LIMIT a un SELECT * no reduce los datos leídos y se factura la lectura de todos los bytes de la tabla; para explorar, usar las opciones de vista previa. Usar tablas particionadas y consultar la partición relevante, o materializar resultados en una tabla de destino. En consultas con GROUP BY y JOIN, agregar antes para reducir los datos procesados."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/best-practices-costs
     accessed: 2026-10-07
+    page_title: "Estimate and control costs"
     note: "En tablas no clusterizadas, una cláusula LIMIT no reduce el costo de cómputo. Para ver filas se usan las vistas previas (bq head, tabledata.list) en lugar de consultas."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/querying-partitioned-tables
     accessed: 2026-10-07
+    page_title: "Query partitioned tables"
     note: "Para limitar las particiones escaneadas, se filtra la columna de partición con una expresión constante; una comparación con un valor dinámico (por ejemplo, el resultado de una subconsulta) no poda particiones. La opción «Require partition filter» hace fallar las consultas sin filtro de partición."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
     accessed: 2026-10-07
+    page_title: "Data definition language (DDL) statements in GoogleSQL"
     note: "La opción de tabla require_partition_filter (BOOL, por defecto false) indica si las consultas deben incluir un filtro sobre la columna de partición; solo se puede fijar en tablas particionadas y se modifica con ALTER TABLE SET OPTIONS."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_best-practices-sort-key.html
     accessed: 2026-10-07
+    page_title: "Choose the best sort key"
     note: "Si los datos recientes son los más consultados, conviene que la columna de tiempo sea la primera de la sort key: las consultas pueden saltar bloques enteros fuera del rango. Con filtros frecuentes por rango o igualdad sobre una columna, esa columna como sort key permite saltar bloques de datos."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_designing-queries-best-practices.html
     accessed: 2026-10-07
+    page_title: "Amazon Redshift best practices for designing queries"
     note: "Usar predicados para restringir el conjunto de datos tanto como sea posible y evitar funciones en los predicados, que pueden encarecer la consulta al requerir procesar muchas filas en pasos intermedios."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c-spectrum-external-performance.html
     accessed: 2026-10-07
+    page_title: "Amazon Redshift Spectrum query performance"
     note: "Con Redshift Spectrum: usar Parquet, que por ser columnar permite eliminar las columnas innecesarias del escaneo (un archivo de texto se escanea completo); particionar por los predicados más comunes y filtrar por las columnas de partición; archivos de más de 64 MB."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/guidelines-warehouse-performance
     accessed: 2026-10-07
+    page_title: "Performance guidelines in Fabric Data Warehouse"
     note: "En Fabric Data Warehouse, filtrar antes de los joins reduce el conjunto de datos temprano. El data clustering, definido en CREATE TABLE o CTAS, guarda juntas las filas con valores similares en las columnas de clustering, lo que permite saltar archivos y escanear menos. V-Order, activado por defecto, aplica ordenamiento y compresión a los archivos al escribir. En tablas del lakehouse, muchos archivos pequeños agregan sobrecarga por leer metadatos; OPTIMIZE los combina."
   - source: apache-parquet-docs
     url: https://parquet.apache.org/docs/file-format/pageindex/
     accessed: 2026-10-07
+    page_title: "Page Index"
     note: "El page index de Parquet (ColumnIndex y OffsetIndex) guarda valores mínimos y máximos por página para que un lector salte páginas al escanear con predicados selectivos; se guarda aparte, cerca del footer, para que las lecturas sin predicados no paguen su costo."
 relations:
   - type: RELATED_TO
@@ -65,7 +74,7 @@ relations:
     target: row-vs-columnar-formats
     note: En formatos columnares, cada columna que no se selecciona no se lee.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -251,3 +260,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: ficha completa (lote F3b-02b, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): sin cambios pedidos.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

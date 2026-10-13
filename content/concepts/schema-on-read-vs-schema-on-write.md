@@ -18,34 +18,42 @@ sources:
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/creating-tables.html
     accessed: 2026-10-05
+    page_title: "Create tables in Athena"
     note: "Athena guarda el esquema en el Glue Data Catalog y lo usa para leer los datos al consultar: es un enfoque schema-on-read, que proyecta un esquema sobre los datos al ejecutar la consulta y evita cargarlos o transformarlos. Al borrar una tabla en Athena solo se borra la metadata; los datos siguen en S3."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/create-table.html
     accessed: 2026-10-05
+    page_title: "CREATE TABLE"
     note: "CREATE EXTERNAL TABLE [IF NOT EXISTS] tabla (columnas) [PARTITIONED BY ...] [STORED AS formato] [LOCATION 's3://...']; formatos como TEXTFILE (por defecto), ORC, PARQUET, AVRO, ION; salvo en Iceberg, se usa siempre EXTERNAL."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/architecture/data-guide/relational-data/online-transaction-processing
     accessed: 2026-10-05
+    page_title: "Online transaction processing (OLTP)"
     note: "Los datos transaccionales suelen tener esquema en escritura (schema on write), aplicado, con alta integridad y consistencia fuerte."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/schemas
     accessed: 2026-10-05
+    page_title: "Specify a schema"
     note: "BigQuery permite especificar el esquema de una tabla al cargar datos o al crear una tabla vacía, o usar autodetección en los formatos compatibles; en Avro, Parquet, ORC y exportaciones de Datastore y Firestore, el esquema se toma de los datos autodescriptivos."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/bq-cli-reference
     accessed: 2026-10-05
+    page_title: "bq command-line tool reference"
     note: "bq load --schema define las columnas (archivo JSON o lista CAMPO:TIPO); --max_bad_records fija cuántos registros inválidos se toleran antes de que falle todo el job (0 por defecto), para CSV, JSON y otros formatos."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/external-data-sources
     accessed: 2026-10-05
+    page_title: "Introduction to external data sources"
     note: "Una fuente de datos externa se consulta directamente desde BigQuery aunque los datos no estén en su almacenamiento, por ejemplo archivos en Cloud Storage."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_COPY.html
     accessed: 2026-10-06
+    page_title: "COPY"
     note: "La tabla destino de COPY debe existir en la base; COPY agrega los datos de entrada a las filas existentes."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-overview
     accessed: 2026-10-05
+    page_title: "What is a lakehouse in Microsoft Fabric?"
     note: "Un lakehouse de Fabric separa Tables (tablas Delta registradas, con columnas y tipos extraídos al registrarlas) y Files (datos no estructurados o no Delta)."
 relations:
   - type: RELATED_TO
@@ -64,7 +72,7 @@ relations:
     target: oltp-vs-olap
     note: OLTP es schema-on-write con integridad aplicada.
 created_at: 2026-10-05
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-06
 verification_status: verified
 ---
@@ -241,3 +249,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: creación (lote F3b-01a, dominio 01-fundamentals).
 - 2026-10-06: revisión B-F3.1 del lote F3b-01a aplicada (docs/reviews/cards-f3b-01a.md): COPY de Redshift con fuente.
 - 2026-10-06: `verification_status: verified` (revisión B-F3.1 del lote F3b-01a aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

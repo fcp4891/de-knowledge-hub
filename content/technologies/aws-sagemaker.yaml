@@ -16,6 +16,7 @@ sources:
   - source: aws-sagemaker-docs
     url: https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html
     accessed: 2026-10-12
+    page_title: "What is Amazon SageMaker AI?"
     note: "What is Amazon SageMaker AI?: el 3 de diciembre de 2024, Amazon SageMaker pasó a llamarse Amazon SageMaker AI. Ese día salió la nueva generación de Amazon SageMaker, una plataforma unificada de datos, analítica e IA que incluye Amazon SageMaker AI (antes Amazon SageMaker)."
 note: 'El slug aws-sagemaker se mantiene por estabilidad. «Amazon SageMaker» va en aliases como nombre de búsqueda (ADR-010): fue el nombre de este servicio y hoy también nombra la plataforma unificada que lo incluye.'
 created_at: '2026-09-28'

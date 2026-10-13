@@ -18,14 +18,17 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/clustered-tables
     accessed: 2026-09-30
+    page_title: "Introduction to clustered tables"
     note: BigQuery ordena los datos por las columnas de clustering y los organiza en bloques; con filtros sobre esas columnas poda bloques (block pruning). Hasta cuatro columnas de clustering; el orden importa (filtrar por la primera y la segunda está optimizado, por la segunda y tercera sin la primera no); en STRING usa solo los primeros 1.024 caracteres. Reclustering automático en segundo plano sin efecto en la capacidad de consulta; en tablas particionadas el clustering se mantiene dentro de cada partición. El costo de una consulta sobre tabla con clustering solo se conoce tras ejecutarla; preferir partición si se necesita estimación estricta previa o si las particiones promedian al menos 10 GB.
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/t_Sorting_data.html
     accessed: 2026-09-30
+    page_title: "Sort keys"
     note: Redshift guarda los datos en bloques de 1 MB con valores mínimo y máximo en metadatos; con sort keys, los predicados de rango saltan bloques. Tipos COMPOUND (por defecto, recomendado con INSERT, UPDATE o DELETE frecuentes) e INTERLEAVED (hasta ocho columnas).
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/performance-tuning-ordered-cci
     accessed: 2026-09-30
+    page_title: "Performance tuning with ordered clustered columnstore index in Azure Synapse Analytics"
     note: En dedicated SQL pool, un clustered columnstore index ordenado ordena los datos por la clave antes de comprimirlos en segmentos; reduce el solapamiento de segmentos y permite segment elimination.
 relations:
   - type: RELATED_TO
@@ -38,7 +41,7 @@ relations:
     target: partitioning
     note: Clustering es una forma de organización física complementaria a la partición.
 created_at: 2026-09-30
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -196,3 +199,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: creación (lote 2 de F3).
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `clustering`, que ya tiene ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

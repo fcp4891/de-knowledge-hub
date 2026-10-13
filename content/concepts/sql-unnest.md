@@ -18,34 +18,42 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/arrays
     accessed: 2026-10-06
+    page_title: "Work with arrays"
     note: "Para convertir un ARRAY en filas (aplanar) se usa UNNEST, que devuelve una fila por elemento. UNNEST destruye el orden de los elementos; WITH OFFSET agrega la posición de cada elemento para restaurarlo con ORDER BY. Aplanar con INNER JOIN excluye las filas con arrays vacíos o NULL; para incluirlas se usa LEFT JOIN."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax
     accessed: 2026-10-06
+    page_title: "Query syntax"
     note: "UNNEST con NULL: los arrays NULL y vacíos producen cero filas, y un array con elementos NULL produce filas con NULL. Un UNNEST con un array_path correlacionado debe ir a la derecha de un CROSS JOIN, LEFT JOIN o INNER JOIN. La columna de WITH OFFSET tiene el alias implícito offset."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/query-super.html
     accessed: 2026-10-06
+    page_title: "Querying semi-structured data"
     note: "Para desanidar arrays SUPER, Redshift ofrece dos formas en el FROM: la sintaxis de PartiQL y la operación UNNEST; ambas producen el mismo resultado."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/flattening-arrays.html
     accessed: 2026-10-06
+    page_title: "Flatten nested arrays"
     note: "En Athena, la función flatten une arrays anidados en un solo array, y para expandir un array en filas se usa CROSS JOIN con UNNEST. En el ejemplo de la documentación, un CROSS JOIN UNNEST con un array vacío no devuelve filas."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql?view=sql-server-ver17
     accessed: 2026-10-06
+    page_title: "OPENJSON (Transact-SQL)"
     note: "Aplica a Azure Synapse Analytics y Warehouse en Microsoft Fabric, entre otros. OPENJSON es una función de tabla que recorre los elementos de un array o las propiedades de un objeto JSON y devuelve una fila por cada uno; con el esquema por defecto devuelve key (nombre de la propiedad o índice del elemento), value y type. Por defecto usa el modo de ruta lax."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/functions-array.html
     accessed: 2026-10-06
+    page_title: "9.19. Array Functions and Operators"
     note: "unnest(anyarray) expande un array en un conjunto de filas, leyendo los elementos en orden de almacenamiento; unnest con varios arrays los expande en paralelo."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/operators
     accessed: 2026-10-06
+    page_title: "Operators"
     note: "El operador IN admite IN UNNEST(array_expression) para comprobar si un valor está en un array; devuelve FALSE si el conjunto está vacío."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/arrays.html
     accessed: 2026-10-06
+    page_title: "8.15. Arrays"
     note: "Para buscar un valor en un array, valor = ANY (array) devuelve las filas en que algún elemento es igual; = ALL exige que todos lo sean."
 relations:
   - type: RELATED_TO
@@ -58,7 +66,7 @@ relations:
     target: sql-joins
     note: Aplanar es un join correlacionado; el tipo de join decide qué pasa con los arrays vacíos.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -224,3 +232,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: ficha completa (lote F3b-02a, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): sin cambios pedidos.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

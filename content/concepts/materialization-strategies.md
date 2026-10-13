@@ -18,26 +18,32 @@ sources:
   - source: dbt-docs
     url: https://docs.getdbt.com/docs/build/materializations
     accessed: 2026-10-07
+    page_title: "Materializations"
     note: "Materializaciones de dbt: view (se recrea como vista en cada ejecución; no guarda datos y siempre ve los registros más recientes, pero las vistas con transformaciones pesadas o apiladas son lentas de consultar; se aconseja empezar con vistas), table (se reconstruye con CREATE TABLE AS en cada ejecución; rápida de consultar, lenta de reconstruir y no incorpora registros nuevos hasta la siguiente ejecución; recomendada para modelos consultados por herramientas de BI y transformaciones lentas usadas por muchos modelos), incremental (inserta o actualiza solo lo nuevo desde la última ejecución; reduce el tiempo de construcción pero requiere configuración extra; mejor para datos tipo evento y cuando las ejecuciones se vuelven lentas, no para empezar), ephemeral (no se construye en la base: su código se inserta como CTE en los modelos que lo usan) y materialized view (en adaptadores que lo admiten, con refresco automático configurable; funciona como un modelo incremental sin necesidad de ejecutar dbt para refrescar)."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/views-intro
     accessed: 2026-10-07
+    page_title: "Introduction to logical views"
     note: "Una vista lógica es una tabla virtual definida por una consulta; no se materializa por defecto, así que su consulta se ejecuta cada vez que se consulta la vista, y se factura según los datos de las tablas que referencia."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/materialized-views-intro
     accessed: 2026-10-07
+    page_title: "Introduction to materialized views"
     note: "Las vistas materializadas de BigQuery son tablas precalculadas que guardan periódicamente el resultado de una consulta para consultas frecuentes y predecibles. Siempre que puede, BigQuery lee solo los cambios desde el último refresco. Solo las vistas materializadas incrementales aprovechan el smart tuning; por defecto solo se pueden crear sobre consultas incrementales (allow_non_incremental_definition permite las demás). Usan una sintaxis SQL restringida y max_staleness debe estar entre 30 minutos y 3 días."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-overview.html
     accessed: 2026-10-07
+    page_title: "Materialized views in Amazon Redshift"
     note: "Una vista materializada de Redshift guarda un resultado precalculado, útil para consultas predecibles y repetidas como las de tableros. Se refresca con REFRESH MATERIALIZED VIEW, que aplica los cambios de las tablas base, o con la opción de refresco automático. La reescritura automática de consultas requiere que la vista esté al día."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/tsql-surface-area
     accessed: 2026-10-07
+    page_title: "T-SQL surface area in Fabric Data Warehouse"
     note: "Fabric Data Warehouse lista las vistas materializadas entre los comandos que no admite actualmente."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/rules-materializedviews.html
     accessed: 2026-10-07
+    page_title: "39.3. Materialized Views"
     note: "Las vistas materializadas de PostgreSQL guardan el resultado en forma de tabla y no se pueden actualizar directamente; se refrescan con REFRESH MATERIALIZED VIEW. Son más rápidas que consultar las tablas base, pero sus datos no siempre están al día."
 relations:
   - type: RELATED_TO
@@ -53,7 +59,7 @@ relations:
     target: sql-cte
     note: Un modelo efímero de dbt se convierte en una CTE dentro de sus modelos dependientes.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -237,3 +243,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: ficha completa (lote F3b-02b, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): sin cambios pedidos.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

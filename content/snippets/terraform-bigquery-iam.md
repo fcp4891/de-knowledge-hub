@@ -21,26 +21,32 @@ sources:
   - source: terraform-provider-google-docs
     url: https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/google_project_iam.html.markdown
     accessed: 2026-10-01
+    page_title: "IAM policy for projects"
     note: "google_project_iam_policy es autoritativo (reemplaza la política); google_project_iam_binding es autoritativo por rol; google_project_iam_member es no autoritativo: agrega un miembro a un rol y conserva los demás. policy no se puede combinar con binding ni member; binding y member se combinan solo si no conceden el mismo rol. Argumentos: project, role, member."
   - source: terraform-provider-google-docs
     url: https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/bigquery_dataset_iam.html.markdown
     accessed: 2026-10-01
+    page_title: "IAM policy for BigQuery Dataset"
     note: "google_bigquery_dataset_iam_member es no autoritativo (dataset_id, role, member). Estos recursos no se pueden usar junto con google_bigquery_dataset_access ni con el campo access de google_bigquery_dataset; usarlos elimina los permisos de authorized views del dataset; requieren los roles completos (roles/bigquery.dataEditor), no los legados OWNER, WRITER o READER."
   - source: terraform-provider-google-docs
     url: https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/storage_bucket_iam.html.markdown
     accessed: 2026-10-01
+    page_title: "IAM policy for Cloud Storage Bucket"
     note: "google_storage_bucket_iam_member es no autoritativo (bucket, role, member): agrega un miembro a un rol y conserva los demás; google_storage_bucket_iam_policy no se combina con binding ni member."
   - source: terraform-provider-google-docs
     url: https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/google_service_account.html.markdown
     accessed: 2026-10-01
+    page_title: "google_service_account"
     note: "google_service_account: account_id obligatorio (6 a 30 caracteres, RFC1035; cambiarlo crea otra cuenta), display_name y description opcionales; exporta email y member con la forma serviceAccount:{email}."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/access-control
     accessed: 2026-10-01
+    page_title: "BigQuery IAM roles and permissions"
     note: "roles/bigquery.jobUser permite ejecutar consultas y solo se concede en proyectos, carpetas u organizaciones; roles/bigquery.dataEditor sobre un dataset permite modificar sus tablas."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/access-control/iam-roles
     accessed: 2026-10-01
+    page_title: "IAM roles for Cloud Storage"
     note: "roles/storage.objectViewer permite ver y listar objetos; se concede como mínimo sobre el bucket."
 relations:
   - type: IMPLEMENTS
@@ -50,7 +56,7 @@ relations:
     target: infrastructure-as-code
     note: Concesiones declaradas como código, aditivas.
 created_at: 2026-10-01
-updated_at: 2026-10-04
+updated_at: 2026-10-13
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -162,3 +168,4 @@ El detalle está en `sources` del encabezado.
 
 - 2026-10-01: creación (A-F3.2, lote 4), tras la revisión B-F3.1 del lote 4.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.2 de `docs/reviews/snippets-2.md` aprobada, sin cambios pedidos; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

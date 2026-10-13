@@ -18,22 +18,27 @@ sources:
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/conformed-dimension/
     accessed: 2026-10-10
+    page_title: "Conformed Dimensions"
     note: "Kimball (Nivel 4, conceptual): las tablas de dimensión se conforman cuando los atributos de dimensiones separadas tienen los mismos nombres de columna y el mismo contenido de dominio; así la información de tablas de hechos distintas se combina en un reporte usando los atributos conformados como encabezados de fila (drill-across). Es la esencia de la integración en un DW/BI empresarial. Se definen una vez con los representantes de gobierno de datos y se reutilizan; dan consistencia y reducen costos futuros de desarrollo."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/enterprise-data-warehouse-bus-matrix/
     accessed: 2026-10-10
+    page_title: "Enterprise Data Warehouse Bus Matrix"
     note: "Kimball (Nivel 4, conceptual): la matriz de bus es la herramienta esencial para diseñar y comunicar la arquitectura de bus; filas = procesos de negocio, columnas = dimensiones, y las celdas marcan qué dimensión usa cada proceso. Recorrer las columnas muestra dónde una dimensión debe conformarse entre procesos. También sirve para priorizar con el negocio, implementando una fila a la vez; la versión detallada expande cada proceso en tablas de hechos con su grano y sus hechos."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/drilling-across/
     accessed: 2026-10-10
+    page_title: "Drilling Across"
     note: "Kimball (Nivel 4, conceptual): drill-across es hacer consultas separadas a dos o más tablas de hechos con encabezados de fila formados por atributos conformados idénticos, y alinear los resultados mediante un sort-merge sobre esos atributos; las herramientas de BI lo llaman stitch o multipass query."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/shrunken-rollup-dimension/
     accessed: 2026-10-10
+    page_title: "Shrunken Rollup Dimensions"
     note: "Kimball (Nivel 4, conceptual): las dimensiones reducidas (shrunken) son dimensiones conformadas que son un subconjunto de filas o columnas de una dimensión base; se necesitan para tablas de hechos agregadas y para procesos con un grano más grueso (por ejemplo, un pronóstico por mes y marca en lugar de fecha y producto)."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/dimensional-modeling-dimension-tables
     accessed: 2026-10-10
+    page_title: "Dimensional modeling in Microsoft Fabric Warehouse: Dimension tables"
     note: "Fabric Data Warehouse: algunas dimensiones son conformadas; se relacionan con varias tablas de hechos y las comparten varias estrellas del modelo, dan consistencia y reducen el desarrollo y mantenimiento. La dimensión de fecha es una dimensión conformada habitual, porque casi toda actividad se registra por fecha; debe incluir los atributos que necesitan todas las tablas de hechos (ejemplo: Sales e Inventory relacionadas con la misma dimensión Date)."
 relations:
   - type: RELATED_TO
@@ -52,7 +57,7 @@ relations:
     target: data-reconciliation
     note: Los totales cruzados solo cuadran si las dimensiones están conformadas.
 created_at: 2026-10-10
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -242,3 +247,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-10: creación (lote F3b-04a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

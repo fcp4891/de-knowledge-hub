@@ -18,34 +18,42 @@ sources:
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/core-concepts/overview.html
     accessed: 2026-10-11
+    page_title: "Architecture Overview"
     note: "Airflow 3.3.2, Architecture Overview: todos los componentes son aplicaciones Python que se despliegan con distintos mecanismos y admiten paquetes extra (operadores, sensores o plugins propios). Puede correr en una máquina (scheduler, Dag processor y API server) o distribuido, con componentes en distintas máquinas y perímetros de seguridad, escalados con varias instancias. Separar el Dag processor del scheduler evita que el scheduler acceda a los Dag bundles y ejecute código del autor. Roles del modelo de seguridad, entre ellos el Deployment Manager, que instala, configura y administra el despliegue."
   - source: gcp-cloud-composer-docs
     url: https://docs.cloud.google.com/composer/docs/composer-3/composer-overview
     accessed: 2026-10-11
+    page_title: "Managed Airflow overview"
     note: "Página titulada «Managed Airflow overview | Managed Service for Apache Airflow». Dice: «Cloud Composer is evolving to become Managed Service for Apache Airflow». Managed Airflow es un servicio de orquestación totalmente administrado, construido sobre el proyecto open source Apache Airflow, sin sobrecarga de instalación ni administración. Los entornos son despliegues de Airflow autocontenidos basados en Google Kubernetes Engine; componentes: clúster GKE (schedulers, triggerers y workers), web server, base de Airflow y bucket de Cloud Storage del entorno (DAGs, logs, plugins y datos). Se administran por consola, gcloud, Cloud Composer API o Terraform. Algunas opciones de configuración de Airflow están bloqueadas. Gen 3, Gen 2 y Legacy Gen 1."
   - source: gcp-cloud-composer-docs
     url: https://docs.cloud.google.com/composer/docs/composer-versioning-overview
     accessed: 2026-10-11
+    page_title: "Managed Service for Apache Airflow versioning overview"
     note: "Comparación de versiones de Managed Airflow: imagen composer-3-airflow-x.y.z-build.t en Gen 3; Gen 3 admite Airflow 2 y Airflow 3, con Python 3.11.8. En Gen 3 el clúster del entorno no se despliega en el proyecto del cliente; los workers escalan automáticamente según la demanda, con límites inferior y superior configurables, y se ajusta la cantidad de schedulers, triggerers y DAG processors. En Gen 2, clúster GKE Autopilot; en Legacy Gen 1, se ajusta la cantidad de nodos."
   - source: gcp-cloud-composer-docs
     url: https://docs.cloud.google.com/composer/docs/composer-versions
     accessed: 2026-10-11
+    page_title: "Managed Service for Apache Airflow version list"
     note: "Managed Service for Apache Airflow version list, imágenes de Gen 3: composer-3-airflow-3.3.1-build.3 (Python 3.11.8, publicada el 25 de septiembre de 2026, soporte hasta el 25 de septiembre de 2027, Latest build); composer-3-airflow-3.2.2-build.7 (Latest build); composer-3-airflow-2.11.1-build.20 (Latest build, Default build). La última versión de una publicación en curso puede no estar aún disponible en todas las regiones."
   - source: aws-mwaa-docs
     url: https://docs.aws.amazon.com/mwaa/latest/userguide/what-is-mwaa.html
     accessed: 2026-10-11
+    page_title: "What Is Amazon Managed Workflows for Apache Airflow?"
     note: "Amazon MWAA, «a managed service for Apache Airflow»: se elige una versión de Airflow al crear el entorno y MWAA lo configura con la misma interfaz y el mismo código open source; escala automáticamente los workers entre un mínimo y un máximo; autenticación y autorización con IAM; workers y schedulers corren en la VPC de MWAA y los datos se cifran con KMS; modos de acceso público o privado al webserver; AWS actualiza y parchea las imágenes de las versiones; logs y métricas en CloudWatch."
   - source: aws-mwaa-docs
     url: https://docs.aws.amazon.com/mwaa/latest/userguide/airflow-versions.html
     accessed: 2026-10-11
+    page_title: "Apache Airflow versions on Amazon Managed Workflows for Apache Airflow"
     note: "Versiones de Apache Airflow en Amazon MWAA: v3.3.1 (publicada por Airflow el 12 de agosto de 2026, disponible en MWAA el 1 de septiembre de 2026, Python 3.12), v3.2.1, v2.11.2, v2.11.0 y v3.0.6 (Python 3.12), y v2.10.3 y anteriores (Python 3.11). Si el archivo de requisitos no indica restricciones, MWAA especifica unas compatibles con la versión de Airflow. MWAA no soporta el modo multi-team."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-factory/apache-airflow-jobs-concepts
     accessed: 2026-10-11
+    page_title: "What is an Apache Airflow job?"
     note: "Apache Airflow job en Microsoft Fabric: impulsado por Apache Airflow; siguiente generación de Workflow Orchestration Manager de Azure Data Factory; un servicio administrado para crear y ejecutar Dags en Python sin ocuparse de la configuración. Redes privadas y virtuales aún no soportadas. Tabla frente a Workflow Orchestration Manager: Git sync y Key Vault, sí/sí; logs y métricas de diagnóstico, no/sí; autoscale, sí/parcial; alta disponibilidad, sí/no; operadores diferibles, sí/no. Versión de Airflow soportada 2.10.5, Python 3.12; no se puede cambiar la versión de Airflow de un job existente: hay que crear uno nuevo."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/previous-versions/azure/data-factory/concepts-workflow-orchestration-manager
     accessed: 2026-10-11
+    page_title: "What is Workflow Orchestration Manager?"
     note: "Desde el 1 de enero de 2026 no se pueden crear nuevas instancias de Airflow con Workflow Orchestration Manager de Azure Data Factory; Microsoft recomienda migrar esas cargas a Apache Airflow jobs en Microsoft Fabric."
 relations:
   - type: RELATED_TO
@@ -61,7 +69,7 @@ relations:
     target: airflow-operators-and-hooks
     note: Cómo se instalan plugins y paquetes en cada servicio.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -297,3 +305,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-06a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-06a aplicada (docs/reviews/cards-f3b-06a.md): el paso 2 del ejemplo de producción dice Python 3.11.8, como la lista de imágenes de Gen 3.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

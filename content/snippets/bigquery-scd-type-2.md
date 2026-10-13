@@ -21,18 +21,22 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/transactions
     accessed: 2026-10-01
+    page_title: "Multi-statement transactions"
     note: "Transacciones de varias sentencias con commit o rollback atómico."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax
     accessed: 2026-10-01
+    page_title: "Data manipulation language (DML) statements in GoogleSQL"
     note: "UPDATE ... FROM e INSERT ... SELECT; una fila destino que coincide con más de una de origen produce un error."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/utility-functions
     accessed: 2026-10-01
+    page_title: "Utility functions"
     note: "GENERATE_UUID() devuelve un UUID aleatorio como STRING."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/access-control
     accessed: 2026-10-01
+    page_title: "BigQuery IAM roles and permissions"
     note: "roles/bigquery.jobUser permite ejecutar consultas en el proyecto; roles/bigquery.dataEditor sobre un dataset permite modificar sus tablas."
 relations:
   - type: IMPLEMENTS
@@ -45,7 +49,7 @@ relations:
     target: idempotency
     note: Repetir la transacción con los mismos cambios no crea versiones nuevas.
 created_at: 2026-10-01
-updated_at: 2026-10-01
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -127,3 +131,4 @@ El detalle está en `sources` del encabezado.
 
 - 2026-10-01: creación (A-F3.2), desde la sección 10 de `scd-type-2` tras la revisión B-F3.1 del lote 1.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

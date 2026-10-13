@@ -18,18 +18,22 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/external-data-sources
     accessed: 2026-10-11
+    page_title: "Introduction to external data sources"
     note: "Introduction to external data sources: una fuente externa se consulta desde BigQuery aunque los datos no estén en su almacenamiento (otra base de Google Cloud, archivos en Cloud Storage u otro producto cloud). Casos de uso: ELT, cargar y limpiar en una pasada con CREATE TABLE ... AS SELECT; unir tablas de BigQuery con datos que cambian seguido sin recargarlos. Las tablas de fuente externa guardan metadatos y esquema en BigQuery; los datos están en la fuente. Tabla comparativa: BigLake (delegación de acceso con cuenta de servicio; S3 y Azure Storage vía Omni; Cloud Storage), object tables (filas = metadatos de archivos), tablas externas (sin delegación de acceso; Cloud Storage, Google Drive y Bigtable; varias URIs solo en Cloud Storage) y consultas federadas (Spanner y Cloud SQL; Cloud SQL con un usuario de la base)."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/external-tables
     accessed: 2026-10-11
+    page_title: "Introduction to external tables"
     note: "Introduction to external tables: BigQuery no garantiza consistencia si los datos cambian mientras corre la consulta; el rendimiento puede ser menor que con una tabla estándar y depende del almacenamiento (Cloud Storage es más rápido que Google Drive); si la velocidad importa, cargar los datos en BigQuery. Son de solo lectura (sin DML); no se exportan, no se copian, no se usan en consultas con comodines; sin clustering y con particionado limitado (datos particionados externamente). Las consultas a fuentes externas que no son Cloud Storage no se cachean; se cobra cada consulta aunque se repita: para consultas repetidas sobre datos que cambian poco, escribir el resultado en una tabla permanente. Hasta 16 consultas concurrentes contra una tabla externa de Bigtable."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/external-data-cloud-storage
     accessed: 2026-10-11
+    page_title: "Create Cloud Storage external tables"
     note: "Create Cloud Storage external tables: con la sentencia DDL CREATE EXTERNAL TABLE ... OPTIONS (format, uris). Para datos con particionado de estilo Hive, WITH PARTITION COLUMNS y las opciones hive_partition_uri_prefix y require_hive_partition_filter; la clave de partición no se cambia después de crear la tabla."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/storage_overview
     accessed: 2026-10-11
+    page_title: "Overview of BigQuery storage"
     note: "Overview of BigQuery storage: de una tabla externa solo se guardan los metadatos en BigQuery; BigQuery no cobra almacenamiento por ella, aunque el almacén externo puede cobrarlo."
 relations:
   - type: RELATED_TO
@@ -48,7 +52,7 @@ relations:
     target: bigquery-architecture
     note: Qué guarda BigQuery de una tabla externa.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -272,3 +276,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-08a aplicada (docs/reviews/cards-f3b-08a.md), regla del §17: relations incluye `bigquery-architecture`, que el §17 nombra.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

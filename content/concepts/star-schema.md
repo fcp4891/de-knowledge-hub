@@ -17,38 +17,47 @@ sources:
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/star-schema-olap-cube/
     accessed: 2026-10-02
+    page_title: "Star Schemas and OLAP Cubes"
     note: "Los modelos dimensionales separan los datos en mediciones y su contexto descriptivo (quién, qué, dónde, cuándo, por qué y cómo). Implementados en bases relacionales se llaman star schemas: tablas de hechos unidas a sus dimensiones por relaciones de clave primaria y foránea; en bases multidimensionales, cubos OLAP."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/four-4-step-design-process/
     accessed: 2026-10-02
+    page_title: "Four-Step Dimensional Design Process"
     note: "Las cuatro decisiones del diseño dimensional: elegir el proceso de negocio, declarar el grano, identificar las dimensiones e identificar los hechos."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/dimension-table-structure/
     accessed: 2026-10-02
+    page_title: "Dimension Table Structure"
     note: "Las dimensiones son anchas, planas y desnormalizadas, con una única clave primaria que va como clave foránea en los hechos."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/conformed-dimension/
     accessed: 2026-10-02
+    page_title: "Conformed Dimensions"
     note: "Las dimensiones conformadas (mismos nombres de columna y contenidos) permiten combinar hechos de varias estrellas en un reporte (drill-across)."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/dimensional-modeling-overview
     accessed: 2026-10-02
+    page_title: "Dimensional modeling in Fabric Data Warehouse"
     note: "Un diseño en estrella está optimizado para cargas de consulta analítica (filtrar, agrupar, ordenar y resumir) y por eso se considera un prerrequisito para modelos semánticos empresariales de Power BI."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/best-practices-performance-nested
     accessed: 2026-10-02
+    page_title: "Use nested and repeated fields"
     note: "La desnormalización con campos anidados y repetidos puede mejorar el rendimiento en BigQuery, pero no siempre: los star schemas suelen estar ya optimizados para analítica y desnormalizar más puede no cambiar significativamente el rendimiento."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/primary-foreign-keys
     accessed: 2026-10-02
+    page_title: "Use primary and foreign keys"
     note: "BigQuery no aplica PK/FK (NOT ENFORCED) pero puede usarlas para optimizar consultas, como eliminar inner joins."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_best-practices-best-dist-key.html
     accessed: 2026-10-02
+    page_title: "Choose the best distribution style"
     note: "Distribuir el hecho y una dimensión por su columna común; las dimensiones que no se pueden colocar junto al hecho pueden usar distribución ALL, que multiplica el almacenamiento y aumenta tiempos de carga y mantenimiento."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_choosing_dist_sort.html
     accessed: 2026-10-02
+    page_title: "Distribution styles"
     note: "Estilos de distribución AUTO, EVEN, KEY y ALL; sin especificar, Redshift usa AUTO, que asigna ALL a tablas pequeñas al inicio."
 relations:
   - type: DEPENDS_ON
@@ -64,7 +73,7 @@ relations:
     target: slowly-changing-dimensions
     note: Las dimensiones de la estrella cambian con el tiempo y se historizan con SCD.
 created_at: 2026-10-02
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -227,3 +236,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `grain`, que ya tiene ficha.
 - 2026-10-11: §17 enlaza `snowflake-schema`, que ya tiene ficha (lote F3b-04a); antes figuraba como pendiente de ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

@@ -18,54 +18,67 @@ sources:
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/
     accessed: 2026-09-30
+    page_title: "Dimensional Modeling Techniques"
     note: "Catálogo de técnicas de SCD: tipo 0 (conservar el original), 1 (sobrescribir), 2 (agregar fila), 3 (agregar atributo), 4 (minidimensión), 5 (minidimensión y outrigger tipo 1), 6 (atributos tipo 1 en una dimensión tipo 2) y 7 (tipos 1 y 2 duales)."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/type-0/
     accessed: 2026-09-30
+    page_title: "Type 0: Retain Original"
     note: "Tipo 0: el valor nunca cambia y los hechos se agrupan siempre por el original; aplica a atributos marcados como originales y a la mayoría de los de la dimensión fecha."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/type-1/
     accessed: 2026-09-30
+    page_title: "Type 1: Overwrite"
     note: "Tipo 1: sobrescribe el valor, refleja siempre el más reciente y destruye la historia; hay que recalcular agregados y cubos afectados."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/type-2/
     accessed: 2026-09-30
+    page_title: "Type 2: Add New Row"
     note: "Tipo 2: agrega una fila con nueva clave sustituta, usada por los hechos desde el cambio; exige generalizar la clave primaria más allá de la clave natural y agregar al menos fecha efectiva, fecha de expiración e indicador de fila vigente."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/type-3/
     accessed: 2026-09-30
+    page_title: "Type 3: Add New Attribute"
     note: "Tipo 3: agrega un atributo para conservar el valor anterior (realidad alternativa) y sobrescribe el principal; se usa relativamente poco."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/type-4-mini-dimension/
     accessed: 2026-09-30
+    page_title: "Type 4: Add Mini-Dimension"
     note: "Tipo 4: separa en una minidimensión con clave propia un grupo de atributos que cambian rápido; los hechos guardan las claves de la dimensión base y de la minidimensión."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/type-6/
     accessed: 2026-09-30
+    page_title: "Type 6: Add Type 1 Attributes to Type 2 Dimension"
     note: "Tipo 6: sobre una dimensión tipo 2, agrega versiones tipo 1 (actuales) de los mismos atributos, sobrescritas en todas las filas de la clave durable, para agrupar por el valor histórico o por el actual."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/dimensional-modeling-dimension-tables
     accessed: 2026-09-30
+    page_title: "Dimensional modeling in Microsoft Fabric Warehouse: Dimension tables"
     note: "En Fabric Warehouse, los tipos más comunes son 1 (sobrescribir), 2 (nuevo miembro versionado en el tiempo) y 3 (historia limitada con atributos); una dimensión puede combinar tipos 1 y 2; el tipo 3 se usa poco, en parte porque es difícil de usar en un modelo semántico. Ejemplo de columnas de tipo 2: RecValidFromKey, RecValidToKey, RecReason, RecIsCurrent."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax
     accessed: 2026-09-30
+    page_title: "Data manipulation language (DML) statements in GoogleSQL"
     note: "Sintaxis de MERGE; error si una fila destino coincide con más de una fila de origen."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html
     accessed: 2026-09-30
+    page_title: "MERGE"
     note: "MERGE de Redshift; falla si varias filas de origen coinciden con una fila del destino."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_CREATE_TABLE_NEW.html
     accessed: 2026-09-30
+    page_title: "CREATE TABLE"
     note: "Columna IDENTITY con valores únicos autogenerados; en cargas paralelas Redshift salta valores: únicos, pero no en el orden de los archivos de origen."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/utility-functions
     accessed: 2026-09-30
+    page_title: "Utility functions"
     note: "GENERATE_UUID() devuelve un UUID aleatorio como STRING."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/transactions
     accessed: 2026-09-30
+    page_title: "Multi-statement transactions"
     note: "Transacciones de varias sentencias con commit o rollback atómico; dentro de una transacción, CURRENT_TIMESTAMP devuelve el instante de inicio de la transacción."
 relations:
   - type: RELATED_TO
@@ -81,7 +94,7 @@ relations:
     target: sql-merge
     note: Los tipos 1 y 2 se aplican con MERGE o sentencias equivalentes.
 created_at: 2026-09-30
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -265,3 +278,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `dimension-tables`, `fact-tables`, que ya tienen ficha.
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `scd-type-1`, que ya tiene ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

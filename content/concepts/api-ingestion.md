@@ -18,34 +18,42 @@ sources:
   - source: ietf-rfc
     url: https://www.rfc-editor.org/rfc/rfc6585.html
     accessed: 2026-09-30
+    page_title: "Additional HTTP Status Codes"
     note: "RFC 6585: el código 429 Too Many Requests indica que el usuario envió demasiadas peticiones en un tiempo dado (rate limiting); la respuesta puede incluir Retry-After con cuánto esperar antes de una nueva petición."
   - source: ietf-rfc
     url: https://www.rfc-editor.org/rfc/rfc9110.html
     accessed: 2026-09-30
+    page_title: "RFC 9110"
     note: "RFC 9110 (semántica HTTP): un método es idempotente si el efecto de varias peticiones idénticas es el mismo que el de una; PUT, DELETE y los métodos seguros lo son. Retry-After indica cuánto esperar antes de la siguiente petición; con 503, cuánto se espera que el servicio no esté disponible."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/connector-rest
     accessed: 2026-09-30
+    page_title: "Copy and transform data from and to a REST endpoint by using Azure Data Factory"
     note: "Conector REST de Data Factory: paginationRules (por ejemplo AbsoluteUrl tomado de $.paging.next), condición de fin (EndCondition) y MaxRequestNumber (vacío es sin límite); requestInterval entre páginas, 00:00:01 por defecto; httpRequestTimeout, 00:01:40 por defecto, es el tiempo para obtener respuesta; solo admite respuestas JSON."
   - source: aws-step-functions-docs
     url: https://docs.aws.amazon.com/step-functions/latest/dg/call-https-apis.html
     accessed: 2026-09-30
+    page_title: "Call HTTPS APIs in Step Functions workflows"
     note: "HTTP Task (recurso http:invoke) de Step Functions: exige una conexión de EventBridge (Basic, OAuth o API Key) cuyo secreto EventBridge guarda cifrado en Secrets Manager; las peticiones vencen a los 60 segundos; el ejemplo oficial reintenta 429, 502, 503 y 504 con BackoffRate 2, IntervalSeconds 1, MaxAttempts 3 y JitterStrategy FULL."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow-providers-http/stable/operators.html
     accessed: 2026-09-30
+    page_title: "HTTP Operators"
     note: "HttpOperator del provider HTTP de Airflow: pagination_function recibe la respuesta y devuelve los parámetros de la siguiente petición, y el operador repite llamadas hasta que la función no devuelve nada; response_check valida la respuesta."
   - source: python-docs
     url: https://docs.python.org/3/library/urllib.request.html
     accessed: 2026-09-30
+    page_title: "urllib.request — Extensible library for opening URLs"
     note: "urlopen(url, data=None, [timeout, ]*, context=None): timeout en segundos para operaciones bloqueantes; para HTTP y HTTPS devuelve un HTTPResponse usable como context manager; lanza URLError ante errores de protocolo."
   - source: python-docs
     url: https://docs.python.org/3/library/urllib.error.html
     accessed: 2026-09-30
+    page_title: "urllib.error — Exception classes raised by urllib.request"
     note: "HTTPError es subclase de URLError; expone code (código de estado HTTP), reason y headers de la respuesta."
   - source: gcp-cloud-composer-docs
     url: https://docs.cloud.google.com/composer/docs/composer-3/composer-overview
     accessed: 2026-09-30
+    page_title: "Managed Airflow overview"
     note: "Cloud Composer evoluciona a Managed Service for Apache Airflow; servicio totalmente administrado de orquestación construido sobre Apache Airflow."
 relations:
   - type: DEPENDS_ON
@@ -61,7 +69,7 @@ relations:
     target: idempotency
     note: Reprocesar una página o un período no debe duplicar registros en el destino.
 created_at: 2026-09-30
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -260,3 +268,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `python-api-consumption`, `batch-ingestion`, que ya tienen ficha.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `data-contracts`, que ya tiene ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

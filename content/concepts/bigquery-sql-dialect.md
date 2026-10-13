@@ -18,26 +18,32 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/introduction-sql
     accessed: 2026-10-11
+    page_title: "Introduction to SQL in BigQuery"
     note: "Introduction to SQL in BigQuery: BigQuery soporta el dialecto GoogleSQL, recomendado para todos los proyectos nuevos; hay un dialecto legacy SQL con algunas restricciones, y se recomienda migrar de legacy SQL a GoogleSQL. GoogleSQL es el dialecto por defecto (en la consola y en SQL); se puede fijar con los prefijos #standardSQL o #legacySQL al inicio de la consulta, separados por un salto de línea. Extensiones procedurales para ejecutar varias sentencias en una solicitud, con variables y control de flujo. DDL para datasets, tablas, clones, snapshots, vistas, funciones, índices, reservas y políticas de acceso por fila."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/migrating-from-legacy-sql
     accessed: 2026-10-11
+    page_title: "Migrating to GoogleSQL"
     note: "Migrating to GoogleSQL: GoogleSQL es el dialecto preferido; se recomienda migrar, aunque no es obligatorio para algunas consultas existentes en legacy SQL. GoogleSQL cumple el estándar SQL 2011, con extensiones para datos anidados y repetidos. Ventajas: WITH y funciones SQL, subconsultas en SELECT y WHERE, subconsultas correlacionadas, tipos ARRAY y STRUCT, INSERT, UPDATE y DELETE, COUNT(DISTINCT) exacto. Diferencias: en legacy SQL se escapa con corchetes [] y el proyecto se separa con dos puntos; en GoogleSQL, con backticks y solo puntos. Un campo REPEATED de legacy SQL equivale a un ARRAY en GoogleSQL."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax
     accessed: 2026-10-11
+    page_title: "Query syntax"
     note: "Query syntax: SELECT * EXCEPT excluye columnas por nombre; SELECT * REPLACE reemplaza el valor de columnas por una expresión sin cambiar nombres ni orden. La misma página documenta QUALIFY."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/functions-reference
     accessed: 2026-10-11
+    page_title: "Function calls"
     note: "Function calls: con el prefijo SAFE., una función devuelve NULL en vez de un error, solo para errores debidos al valor de sus entradas (por ejemplo, fuera de rango); no evita errores al evaluar los argumentos ni errores internos. Los operadores como + o = no admiten SAFE.; para la división, SAFE_DIVIDE. CAST y EXTRACT no admiten SAFE.; para evitar errores al convertir, SAFE_CAST. Si un operando es NULL, el resultado es NULL; la zona horaria por defecto es UTC."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/pipe-syntax
     accessed: 2026-10-11
+    page_title: "Pipe query syntax"
     note: "Pipe query syntax: extensión de GoogleSQL más simple y concisa que la sintaxis estándar, con las mismas operaciones. Cada operador es |> nombre argumentos; se puede agregar al final de cualquier consulta válida y mezclar con la sintaxis estándar; una consulta puede empezar con FROM."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language
     accessed: 2026-10-11
+    page_title: "Procedural language"
     note: "Procedural language: ejecutar varias sentencias en una consulta (multi-statement query), con estado compartido, para automatizar tareas como crear o borrar tablas, e implementar lógica con IF y WHILE."
 relations:
   - type: RELATED_TO
@@ -65,7 +71,7 @@ relations:
     target: sql-quality-checks
     note: Medir los `NULL` que deja `SAFE.`.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -243,3 +249,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-08a aplicada (docs/reviews/cards-f3b-08a.md), regla del §17: relations incluye `bigquery-query-optimization`, `bigquery-incremental-models`, `sql-quality-checks`, que el §17 nombra.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

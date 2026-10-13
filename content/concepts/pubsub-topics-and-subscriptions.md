@@ -18,50 +18,62 @@ sources:
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/subscription-overview
     accessed: 2026-10-02
+    page_title: "Subscription overview"
     note: "Para recibir mensajes de un topic hay que crear una suscripción; solo los mensajes publicados después de crearla están disponibles. Un topic puede tener varias suscripciones; una suscripción pertenece a un solo topic. Tipos: pull, push y export (BigQuery, Bigtable en Preview, Cloud Storage); el tipo se puede cambiar después de crearla. Por defecto, entrega at-least-once sin garantía de orden."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/subscription-properties
     accessed: 2026-10-02
+    page_title: "Subscription properties"
     note: "Retención de mensajes: 7 días por defecto, mínimo 10 minutos, máximo 31 días; retener mensajes sin confirmar más de 24 horas tiene cargo adicional. Expiración: 31 días por defecto, mínimo 1 día, o nunca. Ack deadline: 10 s por defecto, mínimo 10 s, máximo 600 s. El filtro usa atributos, no el cuerpo; los mensajes que no coinciden se confirman automáticamente y el filtro no se puede cambiar ni quitar después."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/dead-letter-topics
     accessed: 2026-10-02
+    page_title: "Dead-letter topics"
     note: "Topic de dead letter para mensajes que superan el máximo de intentos de entrega."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/subscriber
     accessed: 2026-10-02
+    page_title: "Choose a subscription type"
     note: "En una suscripción pull, varios suscriptores pueden hacer pull de la misma suscripción y cada uno recibe un subconjunto de los mensajes; las suscripciones de export balancean la carga automáticamente."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/subscription-message-filter
     accessed: 2026-10-02
+    page_title: "Filter messages from a subscription"
     note: "Sintaxis de filtros por atributos: attributes.name = \"com\", attributes:name, hasPrefix(attributes.name, \"co\")."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/subscription-retry-policy
     accessed: 2026-10-02
+    page_title: "Subscription retry policy"
     note: "Políticas de reintento: reentrega inmediata o backoff exponencial; por defecto, reentrega inmediata."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/access-control
     accessed: 2026-10-02
+    page_title: "Access control with Identity and Access Management"
     note: "Ejemplos de políticas IAM a nivel de recurso: roles/pubsub.publisher sobre un topic y roles/pubsub.subscriber sobre una suscripción."
   - source: terraform-provider-google-docs
     url: https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/pubsub_subscription.html.markdown
     accessed: 2026-10-02
+    page_title: "google_pubsub_subscription"
     note: "google_pubsub_subscription: ack_deadline_seconds, message_retention_duration (600s a 2678400s), expiration_policy.ttl (\"\" = nunca expira), filter (no modificable después de crear), dead_letter_policy (max_delivery_attempts entre 5 y 100; el agente de servicio de Pub/Sub necesita permiso para publicar en el topic de dead letter y para confirmar en la suscripción; los mensajes publicados en un topic sin suscripciones se pierden) y retry_policy (minimum_backoff y maximum_backoff entre 0 y 600 s)."
   - source: terraform-provider-google-docs
     url: https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/pubsub_topic.html.markdown
     accessed: 2026-10-02
+    page_title: "google_pubsub_topic"
     note: "google_pubsub_topic: name y message_retention_duration opcional a nivel de topic."
   - source: aws-sns-docs
     url: https://docs.aws.amazon.com/sns/latest/dg/sns-sqs-as-subscriber.html
     accessed: 2026-10-02
+    page_title: "Fanout Amazon SNS notifications to Amazon SQS queues for asynchronous processing"
     note: "Fanout de SNS a SQS: al suscribir una cola SQS a un topic SNS, cada publicación envía un mensaje a la cola; los mensajes persisten en SQS para procesarse después."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-queues-topics-subscriptions
     accessed: 2026-10-02
+    page_title: "Service Bus queues, topics, and subscriptions"
     note: "En Service Bus, cada mensaje publicado en un topic queda disponible para cada suscripción registrada; las suscripciones pueden definir reglas con condiciones de filtro."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about
     accessed: 2026-10-02
+    page_title: "What is Azure Event Hubs?"
     note: "En Event Hubs, un consumer group es una vista lógica del event hub que permite que varias aplicaciones lean el mismo stream de forma independiente, cada una con su propia posición."
 relations:
   - type: RELATED_TO
@@ -77,7 +89,7 @@ relations:
     target: infrastructure-as-code
     note: Topics y suscripciones se declaran en Terraform, como en la sección 10.
 created_at: 2026-10-02
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -296,3 +308,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `streaming-ingestion`, que ya tiene ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

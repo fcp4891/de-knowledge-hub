@@ -17,22 +17,27 @@ sources:
   - source: gcp-dataform-docs
     url: https://docs.cloud.google.com/dataform/docs/create-tables
     accessed: 2026-09-30
+    page_title: "Create tables"
     note: Tablas incrementales en Dataform; se construyen desde cero la primera vez y luego insertan o fusionan filas nuevas; uniqueKey fusiona filas con la misma clave.
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/partitioned-tables
     accessed: 2026-09-30
+    page_title: "Introduction to partitioned tables"
     note: Escritura en particiones específicas sin afectar a las demás.
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/partitions.html
     accessed: 2026-09-30
+    page_title: "Partition your data"
     note: Particiones en S3 para restringir los datos escaneados.
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html
     accessed: 2026-09-30
+    page_title: "MERGE"
     note: MERGE de Redshift para aplicar cambios desde una tabla de origen.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-tables-partition
     accessed: 2026-09-30
+    page_title: "Partitioning tables in dedicated SQL pool"
     note: Partition switching para reemplazar una sección de la tabla.
 relations:
   - type: USES
@@ -48,7 +53,7 @@ relations:
     target: bigquery-partitioning
     note: En BigQuery, cada ejecución puede escribir solo la partición de su período.
 created_at: 2026-09-30
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -196,3 +201,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `incremental-pipelines`, `data-reconciliation`, `dataform-incremental-tables`, que ya tienen ficha.
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `change-detection`, que ya tiene ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

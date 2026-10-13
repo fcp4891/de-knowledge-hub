@@ -18,42 +18,52 @@ sources:
   - source: python-docs
     url: https://docs.python.org/3/library/urllib.request.html
     accessed: 2026-10-01
+    page_title: "urllib.request — Extensible library for opening URLs"
     note: "Request(url, data=None, headers={}, ..., method=None): headers es un diccionario, tratado como llamadas a add_header(). urlopen(url, data=None, [timeout, ]*, context=None): timeout en segundos para operaciones bloqueantes como la conexión; si no se indica, usa el timeout global por defecto; devuelve un HTTPResponse usable como context manager y lanza URLError ante errores de protocolo."
   - source: python-docs
     url: https://docs.python.org/3/library/urllib.error.html
     accessed: 2026-10-01
+    page_title: "urllib.error — Exception classes raised by urllib.request"
     note: "HTTPError es subclase de URLError y expone code, reason y headers de la respuesta."
   - source: python-docs
     url: https://docs.python.org/3/library/urllib.parse.html
     accessed: 2026-10-01
+    page_title: "urllib.parse — Parse URLs into components"
     note: "urlencode(query, ...) convierte un mapeo o una secuencia de pares en una cadena codificada para la query string."
   - source: python-docs
     url: https://docs.python.org/3/library/json.html
     accessed: 2026-10-01
+    page_title: "json — JSON encoder and decoder"
     note: "json.JSONDecodeError (msg, doc, pos) es subclase de ValueError y se lanza cuando el documento no es JSON válido."
   - source: gcp-python-api-core-docs
     url: https://googleapis.dev/python/google-api-core/latest/retry.html
     accessed: 2026-10-01
+    page_title: "Retry"
     note: "google.api_core.retry.Retry, base de las bibliotecas cliente de Google Cloud para Python, reintenta por defecto errores transitorios de la API con backoff exponencial."
   - source: aws-boto3-docs
     url: https://docs.aws.amazon.com/boto3/latest/guide/retries.html
     accessed: 2026-10-01
+    page_title: "Retries"
     note: "Boto3 reintenta según el modo configurado (legacy por defecto, standard o adaptive)."
   - source: aws-step-functions-docs
     url: https://docs.aws.amazon.com/step-functions/latest/dg/call-https-apis.html
     accessed: 2026-10-01
+    page_title: "Call HTTPS APIs in Step Functions workflows"
     note: "El HTTP Task de Step Functions llama APIs HTTPS con credenciales en una conexión de EventBridge, cuyo secreto se guarda cifrado en Secrets Manager."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/developer/python/sdk/fundamentals/errors
     accessed: 2026-10-01
+    page_title: "Handle errors produced by the Azure SDK for Python"
     note: "La mayoría de los clientes del Azure SDK para Python reintentan errores de conexión y ciertos códigos HTTP con backoff exponencial y jitter."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/connector-rest
     accessed: 2026-10-01
+    page_title: "Copy and transform data from and to a REST endpoint by using Azure Data Factory"
     note: "El conector REST de Data Factory tiene paginación declarativa (paginationRules)."
   - source: ietf-rfc
     url: https://www.rfc-editor.org/rfc/rfc9110.html
     accessed: 2026-10-01
+    page_title: "RFC 9110"
     note: "RFC 9110: GET, HEAD, OPTIONS y TRACE son métodos seguros; PUT, DELETE y los seguros son idempotentes; Retry-After indica cuánto esperar antes de la siguiente petición."
 relations:
   - type: RELATED_TO
@@ -66,7 +76,7 @@ relations:
     target: retries
     note: Qué errores conviene reintentar y con qué espera.
 created_at: 2026-10-01
-updated_at: 2026-10-09
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -253,3 +263,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `data-validation-with-pydantic`, `python-logging`, que ya tienen ficha.
 - 2026-10-09: §17 enlaza `http-clients`, que ya tiene ficha (lote F3b-03b); antes figuraba como pendiente de ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

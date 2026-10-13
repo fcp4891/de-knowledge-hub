@@ -18,30 +18,37 @@ sources:
   - source: aws-iam-docs
     url: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html
     accessed: 2026-10-12
+    page_title: "IAM roles"
     note: "IAM roles: identidad con permisos que puede asumir quien la necesite (usuarios, aplicaciones o servicios); no tiene credenciales de largo plazo, y al asumirla se obtienen credenciales de seguridad temporales para la sesión."
   - source: aws-iam-docs
     url: https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html
     accessed: 2026-10-12
+    page_title: "Policies and permissions in AWS Identity and Access Management"
     note: "Policies and permissions in IAM: políticas de identidad (adjuntas a usuarios, grupos o roles) y de recurso (adjuntas a recursos como un bucket), en JSON."
   - source: aws-iam-docs
     url: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic_policy-eval-denyallow.html
     accessed: 2026-10-12
+    page_title: "How AWS enforcement code logic evaluates requests to allow or deny access"
     note: "How AWS enforcement code logic evaluates requests: por defecto, todas las solicitudes se deniegan de forma implícita, salvo el usuario root de la cuenta; eso se llama denegación implícita."
   - source: aws-iam-docs
     url: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html
     accessed: 2026-10-12
+    page_title: "Policy evaluation logic"
     note: "Policy evaluation logic: en la misma cuenta, los permisos efectivos son la unión de las políticas de identidad y de recurso; un Deny explícito en cualquiera de ellas prevalece sobre el Allow. Con un permissions boundary, el resultado es la intersección."
   - source: aws-iam-docs
     url: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html
     accessed: 2026-10-12
+    page_title: "IAM JSON policy elements: Condition"
     note: "IAM JSON policy elements: Condition: condiciones que deben cumplirse para que la política aplique, con operadores (StringEquals, StringLike y otros) y claves de contexto."
   - source: aws-iam-docs
     url: https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html
     accessed: 2026-10-12
+    page_title: "Security best practices in IAM"
     note: "Security best practices in IAM: federación con credenciales temporales para personas; roles con credenciales temporales para cargas de trabajo; MFA; mínimo privilegio partiendo de políticas administradas; IAM Access Analyzer para generar y validar políticas; revisar y quitar usuarios, roles, permisos y credenciales sin uso; condiciones para acotar; verificar accesos públicos y entre cuentas; permissions boundaries para delegar."
   - source: aws-iam-docs
     url: https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html
     accessed: 2026-10-12
+    page_title: "Using AWS Identity and Access Management Access Analyzer"
     note: "Using IAM Access Analyzer: analizadores de acceso externo (recursos compartidos con entidades externas), de acceso interno y de acceso sin uso."
 relations:
   - type: RELATED_TO

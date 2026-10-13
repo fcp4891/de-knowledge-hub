@@ -18,18 +18,22 @@ sources:
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/replay-overview
     accessed: 2026-09-30
+    page_title: "Replay and purge messages with seek"
     note: Seek lleva una suscripción a un snapshot o a un timestamp; para volver a entregar mensajes ya confirmados hay que retener mensajes en el tópico o configurar la suscripción para retener los confirmados. Un snapshot dura 7 días menos la antigüedad del mensaje sin confirmar más antiguo.
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/replay-message
     accessed: 2026-09-30
+    page_title: "Replay a message in Pub/Sub by seeking to a snapshot or timestamp"
     note: Comandos oficiales gcloud pubsub snapshots create SNAPSHOT --subscription=SUB y gcloud pubsub subscriptions seek SUB --snapshot=SNAPSHOT; los mensajes retenidos en el snapshot se entregan al menos una vez.
   - source: aws-kinesis-docs
     url: https://docs.aws.amazon.com/streams/latest/dev/kinesis-extended-retention.html
     accessed: 2026-09-30
+    page_title: "Change the data retention period"
     note: Kinesis Data Streams retiene registros 24 horas por defecto, ampliable hasta 8760 horas (365 días).
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-features
     accessed: 2026-09-30
+    page_title: "Event Hubs features and terminology"
     note: Retención por tier (Standard hasta 7 días, Premium y Dedicated hasta 90 días; 1 hora por defecto); los eventos no se borran explícitamente; los consumidores leen desde un offset, un timestamp o el inicio o fin del stream; el checkpointing guarda el offset.
 relations:
   - type: DEPENDS_ON
@@ -45,7 +49,7 @@ relations:
     target: pubsub-delivery-semantics
     note: En Pub/Sub, el replay se hace con seek a un snapshot o timestamp.
 created_at: 2026-09-30
-updated_at: 2026-09-30
+updated_at: 2026-10-13
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -186,3 +190,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-09-30: creación (lote 2 de F3).
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

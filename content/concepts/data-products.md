@@ -18,22 +18,27 @@ sources:
   - source: dehghani-data-mesh
     url: https://martinfowler.com/articles/data-monolith-to-mesh.html
     accessed: 2026-10-11
+    page_title: "How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh"
     note: "Zhamak Dehghani, «How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh» (martinfowler.com, 2019). Referencia conceptual (Nivel 4). Características del dato del dominio como producto: descubrible (registro o catálogo con dueño, origen, linaje, ejemplos), direccionable (dirección única según una convención global), confiable y veraz (el dueño garantiza la calidad en el origen), con semántica y sintaxis autodescriptivas (esquema y ejemplos), interoperable y gobernado por estándares globales (formatos de campos, metadatos comunes, convenciones de direcciones), y seguro, con control de acceso global aplicado a cada producto (políticas definidas de forma central y aplicadas al acceder). El data product owner decide la visión y la hoja de ruta, mide la satisfacción de los consumidores y es responsable del ciclo de vida: cuándo cambiar, revisar y retirar datos y esquemas."
   - source: dehghani-data-mesh
     url: https://martinfowler.com/articles/data-mesh-principles.html
     accessed: 2026-10-11
+    page_title: "Data Mesh Principles and Logical Architecture"
     note: "Zhamak Dehghani, «Data Mesh Principles and Logical Architecture» (martinfowler.com, 2020). Referencia conceptual (Nivel 4). Los datos analíticos de los dominios se tratan como producto y sus consumidores, como clientes. El data product owner es responsable de medidas objetivas: calidad, menor tiempo hasta el consumo y satisfacción de los usuarios (por ejemplo, net promoter score). El producto de datos compone código, datos e infraestructura al nivel del bounded context de un dominio, a diferencia de los paradigmas donde los pipelines se gestionan aparte de los datos que producen."
   - source: gcp-knowledge-catalog-docs
     url: https://docs.cloud.google.com/knowledge-catalog/docs/data-products-overview
     accessed: 2026-10-11
+    page_title: "About data products"
     note: "Knowledge Catalog (desde el 10 de abril de 2026, el nombre de Dataplex Universal Catalog; la API, las bibliotecas cliente, la CLI y los nombres de IAM no cambian), About data products: un data product es una colección lógica y curada de assets, empaquetada para ser descubrible, confiable y accesible. Asset: un puntero a un recurso físico, como un dataset, tabla o vista de BigQuery. Access groups: roles como Reader o Analyst mapeados a Google Groups o cuentas de servicio, con un rol de IAM por defecto opcional. Data product owner (o producer) gestiona calidad, acceso y documentación; consumer: persona, equipo o agente de IA. Contract: acuerdo entre dueño y consumidores con términos como la frecuencia de actualización y estándares de calidad. Ejemplo: «Ecommerce Business Data» con dos tablas y una vista sin PII, grupos Reader y Writer, contrato de actualización semanal y documentación con consultas de ejemplo."
   - source: aws-prescriptive-guidance
     url: https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-data-mesh/aws-offerings-data-mesh.html
     accessed: 2026-10-11
+    page_title: "AWS offerings for data mesh"
     note: "AWS offerings for data mesh, opción Amazon DataZone: servicio de gestión de datos para catalogar, descubrir, compartir y gobernar datos en AWS, on premises y fuentes de terceros. En la arquitectura de referencia, los productores publican data products en el catálogo de negocio del portal de DataZone (alojado en la cuenta central de gobierno); los consumidores buscan y filtran productos, piden acceso, y el dueño de los datos lo revisa y aprueba con un flujo integrado."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/purview/unified-catalog-data-products
     accessed: 2026-10-11
+    page_title: "Data products in Unified Catalog"
     note: "Microsoft Purview, Data Products in Unified Catalog (última actualización 2025-10-06): un data product es un concepto de negocio con nombre, descripción, dueños y una lista de assets asociados (tablas, archivos, reportes de Power BI), agrupados bajo un caso de uso. Un governance domain puede tener muchos data products, pero cada uno lo administra un solo governance domain y se puede descubrir desde muchos. Cada data product tiene una política de acceso que define cómo se pide acceso, los términos de uso y quién aprueba; el usuario pide acceso desde el producto."
 relations:
   - type: RELATED_TO
@@ -49,7 +54,7 @@ relations:
     target: semantic-models
     note: Otra capa que da significado de negocio a los datos para consumirlos.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -274,3 +279,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-07a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-07a aplicada (docs/reviews/cards-f3b-07a.md): §11 alineado al aviso de Knowledge Catalog (API, bibliotecas cliente, CLI y nombres de IAM).
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

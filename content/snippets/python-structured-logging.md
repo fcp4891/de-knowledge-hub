@@ -20,14 +20,17 @@ sources:
   - source: python-docs
     url: https://docs.python.org/3/library/logging.html
     accessed: 2026-10-04
+    page_title: "logging — Logging facility for Python"
     note: "Los filtros pueden modificar los LogRecord en el lugar; los filtros de un handler se consultan antes de que el handler emita el evento, mientras que los de un logger no se aplican a eventos de loggers descendientes. basicConfig con handlers y force=True quita y cierra los handlers existentes del root antes de configurar. getLogger(__name__) es la construcción recomendada. Las claves de extra no deben chocar con los atributos de LogRecord."
   - source: python-docs
     url: https://docs.python.org/3/howto/logging-cookbook.html
     accessed: 2026-10-04
+    page_title: "Logging Cookbook"
     note: "Un Filter definido por el usuario puede agregar información de contexto a los LogRecord (atributos adicionales que luego usa el formatter); ejemplo de logging estructurado serializado en JSON. Desde Python 3.7, contextvars da almacenamiento local al contexto, útil tanto con hilos como con asyncio."
   - source: gcp-cloud-logging-docs
     url: https://docs.cloud.google.com/logging/docs/structured-logging
     accessed: 2026-10-04
+    page_title: "Structured logging"
     note: "Un payload JSON guardado en jsonPayload es un log estructurado, consultable por rutas JSON; en GKE, App Engine flexible y Cloud Run functions, un agente integrado envía stdout y stderr a Cloud Logging."
 relations:
   - type: IMPLEMENTS
@@ -37,7 +40,7 @@ relations:
     target: data-pipeline
     note: El run_id correlaciona todos los eventos de una ejecución del pipeline.
 created_at: 2026-10-04
-updated_at: 2026-10-05
+updated_at: 2026-10-13
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -164,3 +167,4 @@ El detalle está en `sources` del encabezado.
 
 - 2026-10-04: creación (propuesta aprobada tras el lote 5), desde la sección 10 de `python-logging` con `run_id` y redacción.
 - 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`) aplicada: `setattr` para `run_id`. `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

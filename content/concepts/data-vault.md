@@ -17,26 +17,32 @@ sources:
   - source: data-vault-alliance
     url: https://datavaultalliance.com/engineering/data-vault-2-0-an-introduction/
     accessed: 2026-10-11
+    page_title: "Your Data Vault 2.0 Introduction"
     note: "Data Vault Alliance (Nivel 4, conceptual), «Your Data Vault 2.0 Introduction» (firmado por Daniel Linstedt): Data Vault fue inventado por Dan Linstedt; el estándar Data Vault 2.0 toma ideas de Bill Inmon y Ralph Kimball, de la teoría de conjuntos y de los algoritmos de hash. Las claves de negocio se organizan en tablas Hub; los atributos, en tablas Satellite; las relaciones transaccionales, en tablas Link. Tres tipos de tablas abarcan el negocio, con una capa dimensional encima para los consumidores. Guarda registros históricos de todo; cuando llega una fuente nueva, se decide si encaja en Hubs y Satellites existentes o se crean nuevos, sin retrabajo."
   - source: data-vault-alliance
     url: https://datavaultalliance.com/engineering/technical-tip-clustered-hash-keys-dont-do-it/
     accessed: 2026-10-11
+    page_title: "Technical Tip: Clustered Hash Keys – Don’t Do it!"
     note: "Data Vault Alliance (Nivel 4, conceptual), «Clustered Hash Keys – Don't Do it!» (Daniel Linstedt): las claves hash son esencialmente una representación hexadecimal de un resultado matemático, calculadas para distribuirse sobre la longitud de bits del hash; por eso son una mala elección para índices clustered; recomienda no poner un cluster sobre una clave hash ni sobre un hash difference."
   - source: data-vault-alliance
     url: https://datavaultalliance.com/engineering/effsat-second-level-stage/
     accessed: 2026-10-11
+    page_title: "Effectivity Sats and Second Level Stages"
     note: "Data Vault Alliance (Nivel 4, conceptual), «Effectivity Sats and Second Level Stages» (Daniel Linstedt): un second level stage es una tabla o archivo de staging con los campos de sistema calculados al cargar (fecha de carga, hash difference, claves hash, fuente del registro). Un effectivity satellite guarda fechas de inicio y fin que indican la vigencia del link al que pertenece."
   - source: data-vault-alliance
     url: https://datavaultalliance.com/engineering/data-vault-2-0-suggested-object-naming-conventions/
     accessed: 2026-10-11
+    page_title: "Data Vault 2.0 Suggested Object Naming Conventions"
     note: "Data Vault Alliance (Nivel 4, conceptual), convenciones de nombres sugeridas para Data Vault 2.0: objetos como Business Vault, Point-in-time (PIT) y Bridge; columnas de sistema como Hash Key (HK), Hash Diff (HD), Load-Date Time Stamp (LDTS), Record Source (RSRC) y End-Date Time Stamp (EDTS). Las convenciones de nombres son sugerencias; algunas reglas del texto sí son estándares."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/databricks/sql/get-started/data-warehousing-concepts
     accessed: 2026-10-10
+    page_title: "Data warehousing architecture"
     note: "Arquitectura de data warehousing en Azure Databricks: la capa silver es donde se integran datos de fuentes dispares para construir un data warehouse alineado con los procesos de negocio; a menudo esos datos siguen un modelo en tercera forma normal (3NF) o Data Vault. Declarar claves primarias y foráneas ayuda a entender las relaciones en Unity Catalog. El warehouse debe ser la fuente única de verdad para los data marts."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/17/sql-insert.html
     accessed: 2026-10-10
+    page_title: "PostgreSQL: Documentation: 17: INSERT"
     note: "PostgreSQL 17: ON CONFLICT especifica una acción alternativa a lanzar el error por violación de una restricción única; ON CONFLICT DO NOTHING simplemente evita insertar la fila."
 relations:
   - type: RELATED_TO
@@ -55,7 +61,7 @@ relations:
     target: idempotency
     note: Cargas que verifican existencia antes de insertar no duplican al re-ejecutarse.
 created_at: 2026-10-10
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -294,3 +300,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-10: creación (lote F3b-04a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): el quickstart de Snowflake pasa a Nivel 3 y deja de citarse; lo conceptual (hubs, links, satélites, claves hash, columnas de sistema) se apoya en Data Vault Alliance (Nivel 4, páginas firmadas por Daniel Linstedt) y el uso en plataforma en Microsoft Learn (Nivel 1). Se quitan las afirmaciones que solo sostenía la guía de Snowflake (año de origen, regla de inserción del satélite de esa guía, exigencia de consistencia del hash de DV2.1).
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

@@ -18,18 +18,22 @@ sources:
   - source: gcp-dataflow-docs
     url: https://docs.cloud.google.com/dataflow/docs/concepts/streaming-pipelines
     accessed: 2026-09-30
+    page_title: "Streaming pipelines"
     note: Un watermark es el umbral en el que Dataflow espera que hayan llegado todos los datos de una ventana; si el watermark ya pasó el fin de la ventana y llega un dato con timestamp dentro de ella, es late data. Los datos no llegan garantizadamente en orden; la fuente determina el watermark; el SDK de Beam permite aceptar late data; por defecto los resultados se emiten cuando el watermark pasa el fin de la ventana, y los triggers lo modifican.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/stream-analytics/stream-analytics-time-handling
     accessed: 2026-09-30
+    page_title: "Understand time handling in Azure Stream Analytics"
     note: Stream Analytics distingue arrival time (por defecto) y application time (TIMESTAMP BY). El watermark es el mayor event time visto menos la tolerancia out-of-order; los eventos fuera de la tolerancia o por debajo del watermark se pueden descartar (drop) o ajustar (adjust); hay que balancear oportunidad y tolerancia.
   - source: aws-managed-flink-docs
     url: https://docs.aws.amazon.com/managed-flink/latest/java/how-time.html
     accessed: 2026-09-30
+    page_title: "Track events in Managed Service for Apache Flink using the DataStream API"
     note: Managed Service for Apache Flink rastrea processing time, event time (cuándo ocurrió el evento en el dispositivo productor) e ingestion time; la generación de watermarks remite a la documentación de Apache Flink.
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/transactions
     accessed: 2026-09-30
+    page_title: "Multi-statement transactions"
     note: Transacciones de varias sentencias con commit o rollback atómico.
 relations:
   - type: RELATED_TO
@@ -45,7 +49,7 @@ relations:
     target: idempotency
     note: Reprocesar un período para incluir datos tardíos debe ser idempotente.
 created_at: 2026-09-30
-updated_at: 2026-09-30
+updated_at: 2026-10-13
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -198,3 +202,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-09-30: creación (lote 2 de F3).
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

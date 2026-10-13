@@ -18,38 +18,47 @@ sources:
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/architecture/data-guide/relational-data/online-transaction-processing
     accessed: 2026-10-05
+    page_title: "Online transaction processing (OLTP)"
     note: "OLTP registra las interacciones de negocio a medida que ocurren (pagos, pedidos, inventario); las transacciones deben ser atómicas y consistentes. Rasgos típicos: muy normalizado, esquema en escritura, consistencia fuerte con garantías ACID, alta integridad, actualizable, carga de muchas escrituras y lecturas moderadas, índices primarios y secundarios, de MB a pocos TB. La mayoría de las cargas no son puramente OLTP: la mezcla con un componente analítico se llama HTAP."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/architecture/data-guide/relational-data/online-analytical-processing
     accessed: 2026-10-05
+    page_title: "Online analytical processing"
     note: "OLAP organiza grandes bases de datos de negocio para cálculos complejos y análisis de tendencias sin afectar a los sistemas transaccionales. Las bases OLTP están optimizadas para entradas de registros individuales y no para análisis; las OLAP, para muchas lecturas y pocas escrituras, modeladas y limpias para el análisis, y suelen conservar historia para series de tiempo."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_columnar_storage_disk_mem_mgmnt.html
     accessed: 2026-10-05
+    page_title: "Columnar storage"
     note: "En OLTP la mayoría de las transacciones leen y escriben registros completos, de a uno o pocos, por lo que el almacenamiento por filas es óptimo para OLTP; el columnar reduce la E/S de las consultas analíticas."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/cloud-sql-federated-queries
     accessed: 2026-10-05
+    page_title: "Cloud SQL federated queries"
     note: "La federación con Cloud SQL permite que BigQuery consulte en tiempo real datos de Cloud SQL (MySQL y PostgreSQL) sin copiarlos ni moverlos; para replicar datos a BigQuery se puede usar Datastream o Cloud Data Fusion."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/federated_query_functions
     accessed: 2026-10-05
+    page_title: "Federated query functions"
     note: "EXTERNAL_QUERY('connection_id', '''consulta''') ejecuta la consulta en la base externa, en su dialecto, y devuelve el resultado como tabla temporal; no respeta el ORDER BY de la consulta externa."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/mgmt/zero-etl-using.html
     accessed: 2026-10-05
+    page_title: "Zero-ETL integrations"
     note: "Zero-ETL integration es una solución administrada que pone datos transaccionales y operacionales a disposición de Redshift desde varias fuentes (entre ellas Aurora, RDS y DynamoDB), sin mantener un pipeline ETL: AWS automatiza la replicación."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/mirroring/overview
     accessed: 2026-10-05
+    page_title: "What is Mirroring in Fabric?"
     note: "Mirroring en Fabric replica en casi tiempo real datos y metadatos de bases operacionales hacia OneLake, con analítica integrada; entre las fuentes están Azure SQL Database, Azure SQL Managed Instance y Azure Database for PostgreSQL."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/relational-databases/indexes/columnstore-indexes-overview?view=sql-server-ver17
     accessed: 2026-10-05
+    page_title: "Columnstore indexes: overview"
     note: "Un índice columnstore no agrupado sobre una tabla rowstore permite analítica operacional en tiempo real: la carga OLTP usa el índice agrupado y la analítica corre a la vez sobre el columnstore."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/tutorial-transactions.html
     accessed: 2026-10-05
+    page_title: "3.4. Transactions"
     note: "Una transacción agrupa varios pasos en una operación de todo o nada; en PostgreSQL se delimita con BEGIN y COMMIT."
 relations:
   - type: RELATED_TO
@@ -68,7 +77,7 @@ relations:
     target: acid
     note: OLTP exige transacciones ACID en cada operación de negocio.
 created_at: 2026-10-05
-updated_at: 2026-10-05
+updated_at: 2026-10-13
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -240,3 +249,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: creación (lote 6 de F3).
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

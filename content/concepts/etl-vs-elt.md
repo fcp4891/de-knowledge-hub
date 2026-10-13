@@ -18,30 +18,37 @@ sources:
   - source: gcp-datastream-docs
     url: https://docs.cloud.google.com/datastream/docs/overview
     accessed: 2026-09-30
+    page_title: "Datastream overview"
     note: Datastream se presenta como base de pipelines ELT de baja latencia hacia BigQuery.
   - source: gcp-dataform-docs
     url: https://docs.cloud.google.com/dataform/docs/create-tables
     accessed: 2026-09-30
+    page_title: "Create tables"
     note: Dataform compila SQLX y crea las tablas en BigQuery (transformación dentro del warehouse).
   - source: gcp-dataflow-docs
     url: https://docs.cloud.google.com/dataflow/docs/concepts/beam-programming-model
     accessed: 2026-09-30
+    page_title: "Programming model for Apache Beam"
     note: Apache Beam, modelo unificado para pipelines batch y streaming, ejecutado en Dataflow.
   - source: aws-glue-docs
     url: https://docs.aws.amazon.com/glue/latest/dg/what-is-glue.html
     accessed: 2026-09-30
+    page_title: "What is AWS Glue?"
     note: AWS Glue es un servicio serverless de integración de datos; permite crear, ejecutar y monitorear pipelines ETL que cargan datos en data lakes.
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html
     accessed: 2026-09-30
+    page_title: "MERGE"
     note: Redshift ejecuta DML como MERGE, lo que permite transformar con SQL dentro del warehouse.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/introduction
     accessed: 2026-09-30
+    page_title: "What is Azure Data Factory?"
     note: Microsoft presenta Data Factory en Microsoft Fabric como la siguiente generación de Azure Data Factory; recomienda empezar por Fabric y permite migrar cargas de ADF.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-factory/data-factory-overview
     accessed: 2026-09-30
+    page_title: "What is Data Factory in Microsoft Fabric?"
     note: Data Factory en Microsoft Fabric integra y transforma datos dentro de Fabric.
 relations:
   - type: RELATED_TO
@@ -51,7 +58,7 @@ relations:
     target: change-data-capture
     note: CDC alimenta la capa raw en un flujo ELT.
 created_at: 2026-09-30
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -197,3 +204,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `data-transformation`, que ya tiene ficha.
 - 2026-10-11: §17 enlaza `pipeline-layers`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

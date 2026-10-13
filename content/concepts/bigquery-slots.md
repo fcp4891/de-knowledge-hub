@@ -18,26 +18,32 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/slots
     accessed: 2026-10-11
+    page_title: "Understand slots"
     note: "Understand slots: un slot es una unidad virtual de cómputo para ejecutar consultas SQL, código Python u otros jobs. BigQuery decide cuántos slots usa cada consulta según los datos, la complejidad y los slots disponibles; no se puede cambiar a mano. Dos modelos de cobro: on-demand (por defecto; por TiB procesado por consulta; límite de slots concurrentes por proyecto con ráfagas transitorias) y capacidad (se paga la capacidad de slots asignada en el tiempo, con reservas: baseline siempre asignado o autoscaling cuando se necesita). Fair scheduling: reparte los slots por igual entre proyectos con consultas activas en una reserva y luego entre los jobs de un proyecto; la equidad es eventual. Autoscaling: no requiere compromisos; se fija un máximo; escala casi al instante, siempre en múltiplos de 50, redondeando hacia arriba; se cobran los slots escalados, no los usados. Slots ociosos (solo en capacidad, no los autoescalados): por defecto, las consultas de una reserva pueden usar los slots ociosos de otras del mismo proyecto de administración. Para evitar costos on-demand inesperados, administrar las reservas con la jerarquía de recursos, de modo que los proyectos nuevos o sin asignar no usen on-demand por defecto."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/editions-intro
     accessed: 2026-10-11
+    page_title: "Understand BigQuery editions"
     note: "Understand BigQuery editions: tres ediciones (Standard, Enterprise, Enterprise Plus) con capacidades distintas y un modelo on-demand por TiB; se pueden usar ediciones y on-demand a la vez, por proyecto. Para cambiar la edición de una reserva hay que borrarla y crearla de nuevo. Las ediciones son una propiedad del cómputo, no del almacenamiento. Tabla al 2026-10-11: cobro por slot-hora con mínimo de 1 minuto por defecto (fluid scaling opcional sin mínimo) en las tres ediciones; SLO mensual ≥99,9 % en Standard y ≥99,99 % en Enterprise, Enterprise Plus y on-demand; Standard solo con autoscaling, máximo 1.600 slots por reserva (cuota en Enterprise, Enterprise Plus y on-demand), 10 reservas por proyecto de administración y hasta 16.000 slots por organización (200 reservas en Enterprise y Enterprise Plus; on-demand sin acceso a reservas), sin compromisos, sin idle capacity sharing ni target concurrency, asignaciones solo de proyecto; Enterprise y Enterprise Plus con autoscaling más baseline, compromisos de 1 año (20 % de descuento) o 3 años (40 %), asignaciones de proyecto, carpeta u organización; BI Engine desde Enterprise; recuperación ante desastres administrada y controles de cumplimiento con Assured Workloads en Enterprise Plus."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reservations-tasks
     accessed: 2026-10-11
+    page_title: "Manage workload reservations"
     note: "Manage workload reservations: ejemplo de Terraform con google_bigquery_reservation (slot_capacity, edition, ignore_idle_slots, concurrency y un bloque autoscale con max_slots: la reserva puede llegar a slot_capacity + max_slots)."
   - source: gcp-bigquery-docs
     url: https://cloud.google.com/bigquery/pricing
     accessed: 2026-10-11
+    page_title: "BigQuery pricing"
     note: "BigQuery pricing: precios vigentes de cómputo on-demand y por edición, por región. Cambian con el tiempo: esta ficha no copia montos; se consultan ahí."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/query-plan-explanation
     accessed: 2026-10-11
+    page_title: "Query plan and timeline"
     note: "Query plan and timeline: un slot es una representación abstracta de varias facetas de la ejecución, incluidos cómputo, memoria y E/S; los slots ejecutan en paralelo las unidades de trabajo de cada etapa."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/query-insights
     accessed: 2026-10-11
+    page_title: "Get query performance insights"
     note: "Get query performance insights: la insight de slot contention aparece cuando una consulta tiene muchas tareas listas para ejecutarse y no hay slots disponibles para todas."
 relations:
   - type: RELATED_TO
@@ -53,7 +59,7 @@ relations:
     target: cloud-warehouse-optimization
     note: Comparación entre warehouses.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -312,3 +318,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-08a aplicada (docs/reviews/cards-f3b-08a.md): en la tabla de ediciones, on-demand dice cuota en «Máximo por reserva» y «sin acceso a reservas» va en su propia fila (reservas por proyecto de administración); el mínimo de 1 minuto por defecto, con fluid scaling opcional, aplica a las tres ediciones, como en *Understand BigQuery editions* (2026-10-11).
 - 2026-10-11: revisión B-F3.1 del lote F3b-08a aplicada (docs/reviews/cards-f3b-08a.md), regla del §17: relations incluye `cloud-warehouse-optimization`, que el §17 nombra.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

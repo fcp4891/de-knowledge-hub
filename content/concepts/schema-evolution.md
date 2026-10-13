@@ -18,26 +18,32 @@ sources:
   - source: apache-avro-docs
     url: https://avro.apache.org/docs/1.12.0/specification/
     accessed: 2026-09-30
+    page_title: "Specification"
     note: "Resolución de esquemas en Avro: los datos se leen con el esquema del escritor y el del lector; un campo del escritor que no está en el lector se ignora; si el lector tiene un campo con valor por defecto que el escritor no tiene, se usa el default; si no tiene default, es un error. Los aliases permiten mapear nombres del escritor a los del lector."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/managing-table-schemas
     accessed: 2026-09-30
+    page_title: "Modifying table schemas"
     note: "En BigQuery se pueden agregar columnas (vacías, o al sobrescribir o agregar datos con un load o query job); las columnas nuevas deben ser NULLABLE o REPEATED, no REQUIRED; al agregar datos con columnas nuevas se usa --schema_update_option=ALLOW_FIELD_ADDITION; hay ALTER TABLE RENAME COLUMN; cambiar el tipo de una columna no se admite desde la consola, bq ni la API."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
     accessed: 2026-09-30
+    page_title: "Data definition language (DDL) statements in GoogleSQL"
     note: "ALTER TABLE table_name ADD COLUMN [IF NOT EXISTS] column: con IF NOT EXISTS, si la columna ya existe la sentencia no tiene efecto."
   - source: aws-glue-docs
     url: https://docs.aws.amazon.com/glue/latest/dg/schema-registry.html
     accessed: 2026-09-30
+    page_title: "AWS Glue Schema registry"
     note: "AWS Glue Schema Registry admite Avro, JSON y Protobuf con modos de compatibilidad BACKWARD (recomendado; los consumidores leen la versión actual y la anterior; permite borrar campos o agregar opcionales), BACKWARD_ALL, FORWARD (agregar campos o borrar opcionales), FORWARD_ALL, FULL, FULL_ALL, NONE y DISABLED."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/event-hubs/schema-registry-concepts
     accessed: 2026-09-30
+    page_title: "Schema Registry in Azure Event Hubs"
     note: "Schema Registry de Event Hubs: la evolución de esquemas solo se admite para Avro; admite estos modos: backward (el consumidor con el esquema nuevo procesa mensajes con el viejo: borrar campos, agregar opcionales), forward (el consumidor con el esquema viejo lee mensajes nuevos: agregar campos, borrar opcionales) y none (sin comprobaciones de compatibilidad)."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/columnar-storage.html
     accessed: 2026-09-30
+    page_title: "Use columnar storage formats"
     note: "Parquet y ORC admiten evolución de esquema: agregar, quitar o modificar columnas con el tiempo."
 relations:
   - type: RELATED_TO
@@ -50,7 +56,7 @@ relations:
     target: data-pipeline
     note: Cada etapa del pipeline es productora y consumidora de un esquema.
 created_at: 2026-09-30
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -207,3 +213,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: creación (lote 3 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `avro-format`, `data-contracts`, que ya tienen ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

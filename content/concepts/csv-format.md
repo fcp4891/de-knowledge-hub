@@ -18,22 +18,27 @@ sources:
   - source: ietf-rfc
     url: https://www.rfc-editor.org/rfc/rfc4180.html
     accessed: 2026-10-06
+    page_title: "Common Format and MIME Type for Comma-Separated Values (CSV) Files"
     note: "RFC 4180 (informativa) documenta el formato CSV y registra el tipo text/csv: registros separados por CRLF, encabezado opcional, campos separados por comas, cada línea con el mismo número de campos, los espacios forman parte del campo; los campos con saltos de línea, comillas dobles o comas deben ir entre comillas dobles, y una comilla dentro del campo se escapa duplicándola."
   - source: python-docs
     url: https://docs.python.org/3/library/csv.html
     accessed: 2026-10-06
+    page_title: "csv — CSV file reading and writing"
     note: "Por la falta de una especificación estricta, distintas aplicaciones producen CSV sutilmente distintos; los dialectos definen esos parámetros. Hay que abrir los archivos con newline='', o los saltos de línea dentro de campos entre comillas no se interpretan bien. strict=True lanza Error ante CSV mal formado. line_num cuenta líneas leídas, que no equivalen a registros porque un registro puede ocupar varias líneas."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv
     accessed: 2026-10-06
+    page_title: "Load CSV data from Cloud Storage"
     note: "Al cargar CSV en BigQuery: no admite datos anidados ni repetidos; conviene quitar el BOM; con gzip no se lee en paralelo y es más lento, no se mezclan comprimidos y sin comprimir, y cada gzip llega hasta 4 GB; la autodetección no detecta el encabezado si todas las columnas son strings. Opciones: --skip_leading_rows (0 por defecto), --quote (comilla doble por defecto), --allow_quoted_newlines (falso por defecto), --allow_jagged_rows (acepta filas a las que les faltan columnas finales opcionales, como nulos), --field_delimiter y --max_bad_records."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/copy-parameters-data-format.html
     accessed: 2026-10-06
+    page_title: "Data format parameters"
     note: "COPY de Redshift con CSV [QUOTE AS 'caracter']: los campos entre comillas pueden contener delimitadores, saltos de línea y retornos de carro; la comilla por defecto es la doble, y una comilla dentro del campo se escapa con otra comilla; con CSV el delimitador por defecto es la coma."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/format-delimited-text
     accessed: 2026-10-06
+    page_title: "Delimited text format in Azure Data Factory and Azure Synapse Analytics"
     note: "Formato de texto delimitado de Data Factory: columnDelimiter (coma por defecto), quoteChar (comilla doble por defecto), escapeChar (barra invertida por defecto), firstRowAsHeader, encodingName (UTF-8 por defecto, entre muchas codificaciones) y compressionCodec (bzip2, gzip, deflate, ZipDeflate, TarGzip, Tar, snappy, lz4; la Copy activity no admite snappy ni lz4); mapping data flow no admite UTF-8 con BOM."
 relations:
   - type: RELATED_TO
@@ -49,7 +54,7 @@ relations:
     target: schema-on-read-vs-schema-on-write
     note: CSV no lleva tipos; el esquema se impone al cargar o al leer.
 created_at: 2026-10-06
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-06
 verification_status: verified
 ---
@@ -241,3 +246,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: creación (lote F3b-01b, dominio 01-fundamentals).
 - 2026-10-06: revisión B-F3.1 del lote F3b-01b aplicada (docs/reviews/cards-f3b-01b.md), sin cambios pedidos.
 - 2026-10-06: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

@@ -18,26 +18,32 @@ sources:
   - source: ietf-rfc
     url: https://www.rfc-editor.org/rfc/rfc8259.html
     accessed: 2026-10-06
+    page_title: "The JavaScript Object Notation (JSON) Data Interchange Format"
     note: "RFC 8259 (Standards Track): JSON es un formato de intercambio de texto, liviano e independiente del lenguaje. Los nombres dentro de un objeto DEBERÍAN (SHOULD) ser únicos; si no lo son, el comportamiento de quien recibe el objeto es impredecible. Una implementación puede limitar el rango y la precisión de los números. El texto JSON intercambiado por red debe ir en UTF-8."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/loading-data-cloud-storage-json
     accessed: 2026-10-06
+    page_title: "Load JSON data from Cloud Storage"
     note: "BigQuery carga JSON delimitado por líneas (ndJSON, igual a JSON Lines): cada objeto en una línea. Con gzip no puede leer en paralelo y la carga es más lenta que sin comprimir; no se mezclan archivos comprimidos y sin comprimir en un mismo job; gzip hasta 4 GB por archivo. --autodetect activa la autodetección de esquema para CSV y JSON."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/json-data
     accessed: 2026-10-06
+    page_title: "Work with JSON data in GoogleSQL"
     note: "BigQuery tiene el tipo de dato JSON para datos semiestructurados sin esquema fijo (enfoque schema-on-read), a diferencia de STRUCT, que exige un esquema fijo; las políticas de acceso por fila no se aplican a columnas JSON."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/copy-parameters-data-format.html
     accessed: 2026-10-06
+    page_title: "Data format parameters"
     note: "COPY de Redshift acepta JSON [AS] 'json_option' desde S3, EMR y SSH, no desde DynamoDB; valores 'auto' (por defecto), 'auto ignorecase', un archivo jsonpaths o 'noshred'. Por defecto empareja las columnas de la tabla destino con las claves del JSON y no divide las estructuras anidadas en varias columnas."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/format-json
     accessed: 2026-10-06
+    page_title: "JSON format in Azure Data Factory and Azure Synapse Analytics"
     note: "Data Factory reconoce dos patrones de archivo JSON: setOfObjects (JSON Lines, por defecto al escribir) y arrayOfObjects; admite compresión bzip2, gzip, deflate, ZipDeflate, TarGzip, Tar, snappy o lz4 (la Copy activity no admite snappy ni lz4)."
   - source: python-docs
     url: https://docs.python.org/3/library/json.html
     accessed: 2026-10-06
+    page_title: "json — JSON encoder and decoder"
     note: "Por defecto, json no lanza error ante nombres repetidos en un objeto: conserva solo el último par; object_pairs_hook recibe la lista ordenada de pares y permite otra política. JSONDecodeError es subclase de ValueError."
 relations:
   - type: ALTERNATIVE_TO
@@ -56,7 +62,7 @@ relations:
     target: compression
     note: Los archivos JSON se comprimen bien, con efectos en la carga.
 created_at: 2026-10-06
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-06
 verification_status: verified
 ---
@@ -244,3 +250,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: creación (lote F3b-01b, dominio 01-fundamentals).
 - 2026-10-06: revisión B-F3.1 del lote F3b-01b aplicada (docs/reviews/cards-f3b-01b.md), sin cambios pedidos.
 - 2026-10-06: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

@@ -17,18 +17,22 @@ sources:
   - source: dbt-docs
     url: https://docs.getdbt.com/best-practices/how-we-build-our-metrics/semantic-layer-6-terminology
     accessed: 2026-10-10
+    page_title: "Tactical terminology"
     note: "Guía de buenas prácticas de dbt (documentación oficial, sin URL por versión): desnormalizado es guardar los mismos datos en varios lugares para acceder sin joins; el sistema de modelado más desnormalizado es OBT (One Big Table), que intenta reunir en una gran tabla cada columna interesante de un concepto (por ejemplo, clientes) para que el analista solo tenga que hacer SELECT. La misma guía describe el Semantic Layer como un motor de desnormalización que combina dinámicamente marts normalizados."
   - source: dbt-docs
     url: https://docs.getdbt.com/best-practices/how-we-structure/4-marts
     accessed: 2026-10-10
+    page_title: "Marts: Business-defined entities"
     note: "Guía de dbt sobre marts: sin Semantic Layer recomienda desnormalizar mucho, con marts anchos y desnormalizados que den todo lo que alguien necesita sobre un concepto, porque en el modern data stack el almacenamiento es barato y el cómputo caro; construir los mismos datos en varios lugares es más eficiente que volver a unirlos. Con Semantic Layer, en cambio, recomienda mantenerse lo más normalizado posible para dar flexibilidad a MetricFlow. Advierte contra demasiados joins en un mismo mart."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/best-practices-performance-nested
     accessed: 2026-10-10
+    page_title: "Use nested and repeated fields"
     note: "BigQuery recomienda desnormalizar con campos anidados y repetidos; aplanar por completo una relación uno a muchos puede obligar a agrupar con shuffle (por ejemplo, por order_id), lo que es menos eficaz que anidar."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/databricks/transform/data-modeling
     accessed: 2026-10-10
+    page_title: "Data modeling"
     note: "Azure Databricks: tener más campos en una sola tabla permite al optimizador saltar grandes cantidades de datos usando estadísticas de archivo; recomienda evitar modelos muy normalizados (3NF) en un lakehouse."
 relations:
   - type: RELATED_TO
@@ -44,7 +48,7 @@ relations:
     target: semantic-models
     note: Con una capa semántica que resuelve relaciones, la OBT deja de ser necesaria para el consumo.
 created_at: 2026-10-10
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -211,3 +215,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-10: creación (lote F3b-04a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

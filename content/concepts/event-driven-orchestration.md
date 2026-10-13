@@ -18,26 +18,32 @@ sources:
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/authoring-and-scheduling/event-scheduling.html
     accessed: 2026-10-11
+    page_title: "Event-driven scheduling"
     note: "Airflow 3.3.2, Event-driven scheduling (agregado en 3.0): permite disparar Dags por eventos externos en vez de horarios. Con assets se configura que un Dag empiece cuando ocurre un evento; la clase AssetWatcher vigila una fuente externa, como una cola de mensajes, y actualiza el asset cuando hay un evento relevante; el parámetro watchers de Asset admite varios. Ver el provider common.messaging. Solo los triggers que heredan de BaseEventTrigger son compatibles: otros podrían programar el Dag de forma inesperada. Evitar la programación infinita: un trigger que espera a que un recurso llegue a un estado (un archivo que existe, un job en success, una fila presente) sigue cumpliéndose después y dispararía el Dag en cada revisión (ejemplo: S3KeyTrigger). Casos de uso: ingesta cuando llegan datos, ML con datasets nuevos, IoT y analítica en tiempo real, microservicios."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/authoring-and-scheduling/asset-scheduling.html
     accessed: 2026-10-11
+    page_title: "Asset-Aware Scheduling"
     note: "Airflow 3.3.2, Asset-Aware Scheduling: un Dag con schedule=[Asset(...)] se ejecuta cuando el Asset se actualiza; una tarea con outlets lo marca actualizado solo si termina con éxito."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow-providers-standard/1.19.0/_api/airflow/providers/standard/triggers/file/index.html
     accessed: 2026-10-11
+    page_title: "airflow.providers.standard.triggers.file"
     note: "Provider standard 1.19.0 (el que fijan las restricciones de Airflow 3.3.2): FileDeleteTrigger(filepath, poke_interval=5.0), con base airflow.triggers.base.BaseEventTrigger; se dispara exactamente una vez al encontrar el archivo pedido y luego lo borra."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow-providers-common-messaging/2.1.0/index.html
     accessed: 2026-10-11
+    page_title: "apache-airflow-providers-common-messaging"
     note: "Provider common.messaging 2.1.0 (el que fijan las restricciones de Airflow 3.3.2): se instala aparte (pip install apache-airflow-providers-common-messaging), requiere Airflow 3.0.1 o posterior y tiene extras para amazon y apache.kafka."
   - source: gcp-workflows-docs
     url: https://docs.cloud.google.com/workflows/docs/overview
     accessed: 2026-10-11
+    page_title: "Workflows overview"
     note: "Workflows: plataforma de orquestación totalmente administrada que ejecuta servicios en el orden definido en un workflow; la orquestación de servicios puede ser event-driven (por ejemplo, enviar archivos recién subidos a Vision AI). La documentación incluye disparar un workflow con un evento o un mensaje de Pub/Sub."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/introduction
     accessed: 2026-10-11
+    page_title: "What is Azure Data Factory?"
     note: "Azure Data Factory: servicio administrado para proyectos híbridos de ETL, ELT e integración de datos; entre sus funciones, Custom Event Triggers para ejecutar una acción automáticamente cuando ocurre un evento. La página recomienda Data Factory en Microsoft Fabric como su siguiente generación."
 relations:
   - type: RELATED_TO
@@ -56,7 +62,7 @@ relations:
     target: airflow-architecture
     note: Los triggers de los watchers corren en el triggerer.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -271,3 +277,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-06a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-06a aplicada (docs/reviews/cards-f3b-06a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

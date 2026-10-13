@@ -18,6 +18,7 @@ sources:
   - source: aws-what-is-data-modeling
     url: https://aws.amazon.com/what-is/data-modeling/
     accessed: 2026-10-10
+    page_title: "What is Data Modeling?"
     note: "El modelo lógico mapea las clases de datos del conceptual a estructuras técnicas y da más detalle: tipos de datos de los atributos, relaciones entre entidades y atributos clave. Lo crean arquitectos de datos y analistas siguiendo un sistema formal de modelado; algunos equipos ágiles saltan del conceptual al físico. Es útil para diseñar data warehouses y sistemas de reportes. Es independiente de la tecnología y se puede implementar en cualquier lenguaje de base de datos; las decisiones tecnológicas suelen tomarse después de tenerlo. Ejemplo del concesionario: campos de texto y número, formato de email, largo máximo de 100 caracteres, fecha de venta como fecha y monto como decimal."
   - source: chen-er-model-1976
     url: https://bit.csc.lsu.edu/~chen/pdf/erd-5-pages.pdf
@@ -26,6 +27,7 @@ sources:
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/17/ddl-constraints.html
     accessed: 2026-10-10
+    page_title: "5.5. Constraints"
     note: "PostgreSQL 17, restricciones: CHECK exige que el valor cumpla una expresión booleana; NOT NULL impide el valor nulo; UNIQUE asegura que una columna o grupo de columnas sea único entre las filas; PRIMARY KEY indica que una columna o grupo identifica las filas y exige valores únicos y no nulos; FOREIGN KEY exige que los valores coincidan con los de alguna fila de otra tabla (integridad referencial)."
 relations:
   - type: RELATED_TO
@@ -44,7 +46,7 @@ relations:
     target: grain
     note: La clave primaria de cada entidad declara qué representa una fila.
 created_at: 2026-10-10
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -263,3 +265,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-10: creación (lote F3b-04a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

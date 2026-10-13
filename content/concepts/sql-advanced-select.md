@@ -18,26 +18,32 @@ sources:
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/sql-select.html
     accessed: 2026-10-06
+    page_title: "PostgreSQL: Documentation: 18: SELECT"
     note: "Procesamiento general de SELECT: se calculan las consultas WITH; luego los elementos de FROM; WHERE elimina filas; GROUP BY (o las funciones de agregación) agrupa y calcula los agregados; HAVING elimina grupos; después se calculan las expresiones de salida del SELECT (que, aunque se calculan en ese paso, pueden referenciarse por nombre o posición en GROUP BY), luego DISTINCT, ORDER BY y LIMIT. Si hay GROUPING SETS, ROLLUP o CUBE, el GROUP BY define varios conjuntos de agrupación independientes, con un efecto equivalente a un UNION ALL entre consultas agrupadas por cada conjunto."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax
     accessed: 2026-10-06
+    page_title: "Query syntax"
     note: "GROUP BY admite elementos agrupables, ALL, GROUPING SETS, ROLLUP, CUBE y () (total general). En los subtotales, las columnas agregadas por encima producen un NULL de relleno; la función GROUPING permite filtrar por elemento agrupable. GROUPING SETS admite hasta 4096 elementos agrupables. GROUP BY ALL infiere las claves de agrupación de los elementos del SELECT y excluye las expresiones con funciones de agregación o de ventana. HAVING filtra los resultados de GROUP BY o de la agregación, que debe estar presente; descarta las filas cuya condición es NULL o FALSE. Con QUALIFY, el orden de evaluación típico es FROM, WHERE, GROUP BY y agregación, HAVING, WINDOW, QUALIFY, DISTINCT, ORDER BY, LIMIT, y no siempre coincide con el orden de escritura."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_GROUP_BY_clause.html
     accessed: 2026-10-06
+    page_title: "GROUP BY clause"
     note: "Redshift admite las extensiones de agregación GROUPING SETS, ROLLUP y CUBE para hacer el trabajo de varios GROUP BY en una sola sentencia, y GROUP BY ALL."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_GROUP_BY_aggregation-extensions.html
     accessed: 2026-10-07
+    page_title: "Aggregation extensions"
     note: "Extensiones de agregación de Redshift: GROUPING SETS, ROLLUP, CUBE y las funciones GROUPING y GROUPING_ID. ROLLUP y CUBE agregan NULL al resultado para indicar las filas de subtotal."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/queries/select-transact-sql?view=sql-server-ver17
     accessed: 2026-10-06
+    page_title: "SELECT (Transact-SQL)"
     note: "Aplica a SQL Server, Azure Synapse Analytics y Warehouse en Microsoft Fabric, entre otros. Orden lógico de procesamiento (o de enlace) de SELECT: FROM, ON, JOIN, WHERE, GROUP BY, WITH CUBE o WITH ROLLUP, HAVING, QUALIFY (solo en Fabric Data Warehouse), SELECT, DISTINCT, ORDER BY, TOP. Como SELECT es el paso 8, sus alias no pueden usarse en cláusulas anteriores, pero sí en ORDER BY. La ejecución física la decide el procesador y puede variar."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/queries/select-group-by-transact-sql?view=sql-server-ver17
     accessed: 2026-10-06
+    page_title: "SELECT - GROUP BY clause (Transact-SQL)"
     note: "T-SQL admite GROUP BY ROLLUP, CUBE y GROUPING SETS; GROUP BY () es el grupo vacío, que produce el total general. WITH CUBE y WITH ROLLUP son la sintaxis antigua, no ISO, mantenida solo por compatibilidad."
 relations:
   - type: RELATED_TO
@@ -50,7 +56,7 @@ relations:
     target: sql-window-functions
     note: Las ventanas se evalúan después de GROUP BY y HAVING.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -233,3 +239,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: ficha completa (lote F3b-02a, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): resumen con `QUALIFY` solo donde el motor lo tiene; «sintaxis antigua, no ISO» como dice T-SQL; fuente nueva *Aggregation extensions* de Redshift para `GROUPING`.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

@@ -18,10 +18,12 @@ sources:
   - source: gcp-cloud-kms-docs
     url: https://docs.cloud.google.com/kms/docs/cmek
     accessed: 2026-10-11
+    page_title: "Customer-managed encryption keys (CMEK)"
     note: "Customer-managed encryption keys (CMEK): por defecto, los datos de Google Cloud se cifran en reposo con claves de Google (Google-owned y Google-managed). Con CMEK, creadas a mano o con Autokey en servicios compatibles, se busca: ser dueño de las claves; controlar ubicación, nivel de protección, creación, acceso, rotación, uso y destrucción; generar el material en Cloud KMS o importarlo; fijar dónde deben usarse; borrar selectivamente datos destruyendo la clave (crypto-shredding); límites criptográficos por cliente; registrar el acceso administrativo y a los datos de las claves; y cumplir regulaciones. Los servicios integrados con CMEK acceden a la clave con un agente de servicio, de modo que cifrar y descifrar es transparente para el usuario. Pasos: crear o elegir un key ring, crear la clave, elegir su nivel de protección. Versiones de clave ilimitadas."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/customer-managed-encryption
     accessed: 2026-10-11
+    page_title: "Customer-managed Cloud KMS keys"
     note: "Customer-managed Cloud KMS keys (BigQuery): por defecto, BigQuery cifra en reposo con cifrado de sobre (claves de datos cifradas con claves de cifrado de claves de Google). Con CMEK, las claves de cifrado de claves se controlan en Cloud KMS. La cuenta de servicio de BigQuery tiene la forma bq-NÚMERO_DE_PROYECTO@bigquery-encryption.iam.gserviceaccount.com y necesita roles/cloudkms.cryptoKeyEncrypterDecrypter en la clave. El key ring debe estar en una ubicación que coincida con el dataset (un dataset multirregional, con un key ring multirregional: US con us, EU con europe). Se puede fijar una clave por defecto del dataset que aplica a las tablas nuevas, salvo que se indique otra. Una clave es accesible si está habilitada y la cuenta de servicio de BigQuery tiene permiso de cifrar y descifrar. Quitar el acceso de BigQuery a la clave tarda hasta una hora en propagarse; si BigQuery pierde acceso, la experiencia empeora mucho y puede haber pérdida de datos: los datos de las tablas protegidas dejan de ser accesibles (consultas, copias, exportaciones). Con Autokey no hace falta aprovisionar key rings, claves ni cuentas de servicio por adelantado."
 relations:
   - type: RELATED_TO
@@ -34,7 +36,7 @@ relations:
     target: bigquery-security
     note: CMEK protege el almacenamiento; el acceso a los datos lo siguen dando IAM y las políticas.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -235,3 +237,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08b).
 - 2026-10-11: revisión B-F3.1 del lote F3b-08b aplicada (docs/reviews/cards-f3b-08b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

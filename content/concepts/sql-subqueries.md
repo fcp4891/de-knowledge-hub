@@ -18,18 +18,22 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/subqueries
     accessed: 2026-10-06
+    page_title: "Subqueries"
     note: "BigQuery distingue subconsultas de expresión (escalares, ARRAY, EXISTS e IN; devuelven un solo valor y pueden ser correlacionadas) y de tabla (solo en FROM). Una subconsulta escalar debe seleccionar una sola columna; si devuelve cero filas el resultado es NULL y si devuelve más de una fila la consulta falla con un error en tiempo de ejecución. Una subconsulta ARRAY nunca devuelve un ARRAY NULL: con cero filas devuelve un array vacío. Una subconsulta correlacionada referencia una columna externa, y la correlación impide reutilizar su resultado."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_scalar_subqueries.html
     accessed: 2026-10-06
+    page_title: "Scalar subqueries"
     note: "En Redshift, una subconsulta escalar devuelve exactamente un valor (una fila, una columna). Si devuelve cero filas el valor es nulo; si devuelve más de una fila, Redshift devuelve un error. No es válida, entre otros casos, como valor por defecto ni en GROUP BY y HAVING."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/functions-subquery.html
     accessed: 2026-10-06
+    page_title: "9.24. Subquery Expressions"
     note: "IN es verdadero si alguna fila de la subconsulta es igual, falso si ninguna lo es, y nulo si la expresión izquierda es nula o si no hay iguales y alguna fila de la subconsulta es nula. Para EXISTS e IN no conviene suponer que la subconsulta se evalúa completa."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/relational-databases/performance/subqueries?view=sql-server-ver17
     accessed: 2026-10-06
+    page_title: "Subqueries (SQL Server)"
     note: "Aplica a SQL Server, Azure SQL, Azure Synapse Analytics y SQL database en Fabric (la página no menciona Warehouse en Fabric). Muchas sentencias con subconsultas pueden escribirse como joins; en Transact-SQL normalmente no hay diferencia de rendimiento entre una subconsulta y su versión equivalente sin ella, aunque en algunos casos en que se comprueba existencia un join rinde mejor."
 relations:
   - type: RELATED_TO
@@ -42,7 +46,7 @@ relations:
     target: sql-nulls
     note: Una subconsulta escalar sin filas devuelve NULL, e IN con un NULL puede dar NULL.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -216,3 +220,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: ficha completa (lote F3b-02a, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): §10 deja de atribuir a T-SQL el comportamiento del ejemplo.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

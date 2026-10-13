@@ -18,38 +18,47 @@ sources:
   - source: dehghani-data-mesh
     url: https://martinfowler.com/articles/data-mesh-principles.html
     accessed: 2026-10-11
+    page_title: "Data Mesh Principles and Logical Architecture"
     note: "Zhamak Dehghani, «Data Mesh Principles and Logical Architecture» (martinfowler.com, 3 de diciembre de 2020). Referencia conceptual (Nivel 4). Data mesh se basa en cuatro principios, pensados como colectivamente necesarios y suficientes: propiedad y arquitectura de datos descentralizadas y orientadas a dominios; el dato como producto; infraestructura de datos de autoservicio como plataforma; y gobierno computacional federado. En su núcleo, data mesh descentraliza y distribuye la responsabilidad hacia las personas más cercanas a los datos, y sigue las costuras de las unidades organizacionales (los dominios de negocio) como eje de descomposición. El producto de datos es el quantum arquitectónico: compone código, datos e infraestructura al nivel del bounded context de un dominio. El gobierno federado es un modelo de decisión liderado por la federación de dueños de productos de datos de los dominios y de la plataforma, con autonomía local y reglas globales aplicadas a todos los productos, ejecutadas automáticamente por la plataforma; busca un equilibrio entre centralizar y descentralizar."
   - source: dehghani-data-mesh
     url: https://martinfowler.com/articles/data-monolith-to-mesh.html
     accessed: 2026-10-11
+    page_title: "How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh"
     note: "Zhamak Dehghani, «How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh» (martinfowler.com, publicado por entregas en mayo de 2019). Referencia conceptual (Nivel 4). Modos de falla de la plataforma centralizada: centralizada y monolítica, pipeline acoplado y propiedad aislada e hiperespecializada. La plataforma de autoservicio no debe incluir conceptos de dominio ni lógica de negocio, y ofrece, entre otras capacidades, almacenamiento políglota, cifrado, versionado y esquema de productos, desidentificación, control de acceso y logging unificados. Los dominios necesitan un data product owner y data engineers."
   - source: gcp-architecture-center
     url: https://docs.cloud.google.com/architecture/data-mesh
     accessed: 2026-10-11
+    page_title: "Architecture and functions in a data mesh"
     note: "Google Cloud, «Architecture and functions in a data mesh» (última actualización 2024-09-03): un data mesh es un marco arquitectónico y organizacional que trata los datos como producto; los desarrollan los equipos que mejor los conocen, siguiendo estándares de gobierno de toda la organización. Servicios centrales para crear y administrar productos, políticas organizacionales, control de acceso con grupos de IAM y el catálogo y descubrimiento. Los dominios exponen subconjuntos de sus datos mediante interfaces de consumo (tabla, vista, archivo estructurado, tema o stream; en BigQuery, un dataset; en Cloud Storage, una carpeta o bucket). Cuatro funciones: equipos productores de dominio, equipos consumidores de dominio, equipo central de gobierno y equipo central de la plataforma de autoservicio; opcionalmente, un centro de excelencia. Un mismo dominio suele ser productor y consumidor. La implementación de referencia (data-mesh-demo, Terraform) no está pensada para producción."
   - source: gcp-knowledge-catalog-docs
     url: https://docs.cloud.google.com/knowledge-catalog/docs/data-products-overview
     accessed: 2026-10-11
+    page_title: "About data products"
     note: "Knowledge Catalog: desde el 10 de abril de 2026, Dataplex Universal Catalog se llama Knowledge Catalog; la API, las bibliotecas cliente, la CLI y los nombres de IAM no cambian. En Knowledge Catalog, un data product es una colección lógica y curada de assets, empaquetada formalmente para ser descubrible, confiable y accesible."
   - source: aws-prescriptive-guidance
     url: https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-data-mesh/introduction.html
     accessed: 2026-10-11
+    page_title: "Strategies for building a data mesh-based enterprise solution on AWS"
     note: "AWS Prescriptive Guidance, «Strategies for building a data mesh-based enterprise solution on AWS», Introduction: un enfoque arquitectónico y organizacional como data mesh; data mesh se basa en cuatro principios (propiedad del dominio, dato como producto, plataforma de autoservicio y gobierno federado)."
   - source: aws-prescriptive-guidance
     url: https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-data-mesh/data-mesh.html
     accessed: 2026-10-11
+    page_title: "Getting started with data mesh"
     note: "AWS Prescriptive Guidance, Getting started with data mesh: para evaluar si una arquitectura data mesh conviene, o si encaja mejor otro patrón como un data lake centralizado o una arquitectura multicuenta hub-and-spoke, consultar a ejecutivos de negocio, dueños de las fuentes y responsables de proyectos y programas."
   - source: aws-prescriptive-guidance
     url: https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-data-mesh/teams-interactions.html
     accessed: 2026-10-11
+    page_title: "Teams and interactions"
     note: "AWS Prescriptive Guidance, Teams and interactions: cita la ley de Conway (el diseño de un sistema imita la estructura de comunicación de la organización) y recomienda una estructura de equipos distribuida. Equipos: liderazgo ejecutivo (formular la visión de la estrategia de datos, patrocinar la estrategia de data mesh, definir métricas del programa), equipos de dominio (dueños de los productos de datos) y equipo de la plataforma de autoservicio, más equipos habilitadores."
   - source: aws-prescriptive-guidance
     url: https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-data-mesh/aws-offerings-data-mesh.html
     accessed: 2026-10-11
+    page_title: "AWS offerings for data mesh"
     note: "AWS offerings for data mesh: tres opciones adoptadas por clientes: Amazon DataZone (servicio administrado para catalogar, descubrir, compartir y gobernar datos; los productores publican productos en un catálogo de negocio y los consumidores piden acceso con un flujo de aprobación), frameworks open source como data.all, y AWS Lake Formation. Usan, entre otros, Athena, Glue Data Catalog, IAM, KMS, Lake Formation, Redshift, AWS RAM y S3; los servicios pueden variar según los requisitos."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/governance/domains
     accessed: 2026-10-11
+    page_title: "Fabric domains"
     note: "Microsoft Fabric, Domains: data mesh es una arquitectura de datos descentralizada que organiza los datos por dominios de negocio. Hoy, la arquitectura de data mesh de Fabric soporta principalmente organizar los datos en dominios (y subdominios), que los consumidores filtren y encuentren contenido por dominio en el OneLake catalog, y gobierno federado: delegar a nivel de dominio algunas configuraciones del tenant. Los workspaces se asocian a dominios; la asignación de dominio no cambia la visibilidad ni el acceso, que dependen de roles de workspace y permisos de los ítems."
 relations:
   - type: RELATED_TO
@@ -65,7 +74,7 @@ relations:
     target: data-warehouse
     note: Un dominio puede publicar sus productos sobre un warehouse; data mesh cambia la propiedad, no el almacenamiento.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -325,3 +334,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-07a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-07a aplicada (docs/reviews/cards-f3b-07a.md): §11 alineado al aviso de Knowledge Catalog (API, bibliotecas cliente, CLI y nombres de IAM); la fuente de AWS cita por separado Introduction, Getting started with data mesh y Teams and interactions; §1 nombra también hub-and-spoke.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

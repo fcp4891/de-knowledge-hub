@@ -18,22 +18,27 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax
     accessed: 2026-10-07
+    page_title: "Query syntax"
     note: "Una CTE recursiva tiene un término base (primera iteración), un operador UNION y un término recursivo, que es el único que puede referenciar a la propia CTE. Con UNION ALL, cada fila producida en la iteración N pasa al resultado y es la entrada de la iteración N+1; la iteración termina cuando una iteración no produce filas. WITH RECURSIVE solo va en el nivel superior de la consulta, no se admite en funciones ni en vistas materializadas, y GoogleSQL materializa los resultados de las CTE recursivas."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_WITH_clause.html
     accessed: 2026-10-07
+    page_title: "WITH clause"
     note: "En Redshift, recursive_query es un UNION ALL de dos SELECT: el miembro inicial (semilla), sin referencia a la CTE, y el miembro recursivo, que la referencia en su FROM y lleva una condición WHERE que termina la recursión. La lista de columnas es obligatoria en una CTE recursiva; el miembro recursivo no admite ORDER BY ni LIMIT, y WITH RECURSIVE no puede ir dentro de una subconsulta."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/queries-with.html
     accessed: 2026-10-07
+    page_title: "7.8. WITH Queries (Common Table Expressions)"
     note: "Una consulta WITH recursiva es un término no recursivo, UNION o UNION ALL y un término recursivo. Aunque se llame recursiva, se evalúa de forma iterativa con una tabla de trabajo hasta que queda vacía; con UNION (no UNION ALL) se descartan filas duplicadas. La cláusula CYCLE detecta ciclos y SEARCH define orden en profundidad o en anchura; para probar consultas que podrían no terminar, se sugiere poner un LIMIT en la consulta externa."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql?view=sql-server-ver17
     accessed: 2026-10-07
+    page_title: "WITH common_table_expression (Transact-SQL)"
     note: "En T-SQL, una CTE recursiva tiene al menos un miembro ancla y un miembro recursivo. Una CTE recursiva mal escrita puede causar un bucle infinito; para evitarlo se limita la recursión con la opción MAXRECURSION, cuyo valor por defecto del servidor es 100 (0 significa sin límite)."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/tsql-surface-area
     accessed: 2026-10-07
+    page_title: "T-SQL surface area in Fabric Data Warehouse"
     note: "Entre los comandos que Fabric Data Warehouse no admite actualmente están las consultas recursivas (Recursive queries) y las vistas materializadas."
 relations:
   - type: RELATED_TO
@@ -46,7 +51,7 @@ relations:
     target: dimension-tables
     note: Las jerarquías de dimensiones (categorías, organigramas) se recorren con recursión o se aplanan al cargar.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -228,3 +233,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: ficha completa (lote F3b-02b, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): sin cambios pedidos.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

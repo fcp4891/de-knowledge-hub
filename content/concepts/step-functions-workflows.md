@@ -18,38 +18,47 @@ sources:
   - source: aws-step-functions-docs
     url: https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html
     accessed: 2026-10-12
+    page_title: "What is Step Functions?"
     note: "What is Step Functions?: workflows (máquinas de estado) para aplicaciones distribuidas, automatización y pipelines de datos y ML; cada paso es un estado; un estado Task representa trabajo que hace otro servicio de AWS; las instancias en ejecución son ejecuciones."
   - source: aws-step-functions-docs
     url: https://docs.aws.amazon.com/step-functions/latest/dg/choosing-workflow-type.html
     accessed: 2026-10-12
+    page_title: "Choosing workflow type in Step Functions"
     note: "Choosing workflow type: ambos tipos pueden iniciarse por eventos, como solicitudes HTTP de API Gateway o más de 140 fuentes de eventos de Amazon EventBridge. Standard (por defecto) para workflows largos (hasta un año), durables y auditables, con historial de ejecución por 90 días y modelo exactamente una vez salvo que se declare Retry; se cobran por transiciones de estado. Express para alto volumen y eventos, hasta cinco minutos, con modelo al menos una vez (para acciones idempotentes); se cobran por ejecuciones, duración y memoria. El tipo no se puede cambiar después de crear la máquina de estado."
   - source: aws-step-functions-docs
     url: https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html
     accessed: 2026-10-12
+    page_title: "Using Amazon States Language to define Step Functions workflows"
     note: "Using Amazon States Language to define Step Functions workflows: ejemplo con \"QueryLanguage\": \"JSONata\", StartAt y States."
   - source: aws-step-functions-docs
     url: https://docs.aws.amazon.com/step-functions/latest/dg/concepts-error-handling.html
     accessed: 2026-10-12
+    page_title: "Handling errors in Step Functions workflows"
     note: "Handling errors in Step Functions workflows: por defecto, un error en un estado hace fallar toda la ejecución. Retry con ErrorEquals (obligatorio), IntervalSeconds (1 por defecto), MaxAttempts (3 por defecto), BackoffRate (2,0 por defecto) y JitterStrategy (FULL o NONE, por defecto NONE). Catch lleva a un estado de respaldo. States.ALL coincide con cualquier error conocido; States.TaskFailed coincide con cualquier error conocido salvo States.Timeout."
   - source: aws-step-functions-docs
     url: https://docs.aws.amazon.com/step-functions/latest/dg/integrate-services.html
     accessed: 2026-10-12
+    page_title: "Integrating services with Step Functions"
     note: "Integrating services with Step Functions: tres patrones de integración: Request a Response (por defecto), Run a Job (.sync, espera a que el job termine) y Wait for Callback (.waitForTaskToken)."
   - source: aws-step-functions-docs
     url: https://docs.aws.amazon.com/step-functions/latest/dg/connect-glue.html
     accessed: 2026-10-12
+    page_title: "Start an AWS Glue job with Step Functions"
     note: "Start an AWS Glue job with Step Functions: admite Run a Job (.sync); ejemplo con Resource arn:aws:states:::glue:startJobRun.sync y Arguments con JobName."
   - source: aws-step-functions-docs
     url: https://docs.aws.amazon.com/step-functions/latest/dg/connect-athena.html
     accessed: 2026-10-12
+    page_title: "Run Athena queries with Step Functions"
     note: "Run Athena queries with Step Functions: ejemplo con arn:aws:states:::athena:startQueryExecution.sync, QueryString y WorkGroup; la entrada o el resultado de una tarea tienen un máximo de 256 KiB."
   - source: aws-step-functions-docs
     url: https://docs.aws.amazon.com/step-functions/latest/dg/state-map-distributed.html
     accessed: 2026-10-12
+    page_title: "Using Map state in Distributed mode for large-scale parallel workloads in Step Functions"
     note: "Using Map state in Distributed mode: procesa en paralelo datos de gran escala en Amazon S3 (un archivo JSON o CSV grande, o muchos objetos) en ejecuciones hijas, cada una con su historial; si no se indica, corre 10.000 ejecuciones hijas en paralelo."
   - source: aws-step-functions-docs
     url: https://aws.amazon.com/step-functions/pricing/
     accessed: 2026-10-12
+    page_title: "AWS Step Functions Pricing"
     note: "AWS Step Functions pricing: Standard se cobra por transiciones de estado, contando cada paso ejecutado, reintentos incluidos; Express por solicitudes y duración. Los montos no se copian."
 relations:
   - type: RELATED_TO

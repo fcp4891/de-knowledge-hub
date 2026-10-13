@@ -18,14 +18,17 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/materialized-views-intro
     accessed: 2026-10-11
+    page_title: "Introduction to materialized views"
     note: "Introduction to materialized views: tablas precalculadas que mejoran el rendimiento y bajan el costo de consultas frecuentes y predecibles; combinan los datos precalculados con los cambios recientes de las tablas base para dar resultados frescos sin pipelines manuales. Sin mantenimiento (BigQuery agrega los cambios incrementales en segundo plano), frescas (si un cambio invalida la vista, lee de las tablas base) y con smart tuning (si una parte de una consulta contra la tabla base se resuelve con la vista, BigQuery la reescribe para usarla). Dos tipos: incrementales (sintaxis limitada; reducen el costo de consultas frecuentes; smart tuning; siempre frescas) y no incrementales (la mayoría de las consultas; cada refresco ejecuta la consulta completa; sin smart tuning ni frescura garantizada), con allow_non_incremental_definition = true. Vistas materializadas autorizadas para compartir un subconjunto. Limitaciones: solo GoogleSQL; SQL restringido; no se puede cambiar la consulta después de crearla; no admiten DML, COPY, EXPORT ni LOAD directos; no se anidan; no consultan tablas externas; operadores intensivos en CPU (UNPIVOT, UNNEST pesados) pueden fallar el refresco en on-demand. Sobre tablas BigLake con caché de metadatos sí se pueden crear."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/materialized-views-manage
     accessed: 2026-10-11
+    page_title: "Manage materialized views"
     note: "Manage materialized views: el refresco automático lo ejecuta la cuenta bigquery-adminbot@system.gserviceaccount.com y aparece en el historial de jobs. Por defecto, los datos se refrescan entre 5 y 30 minutos después de un cambio en la tabla base. enable_refresh activa o desactiva el refresco; refresh_interval_minutes (refresh_interval_ms en la API y en bq) fija un tope de frecuencia: por defecto, no más de una vez cada 30 minutos; el mínimo es de 1 minuto."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/materialized-views-create
     accessed: 2026-10-11
+    page_title: "Create materialized views"
     note: "Create materialized views: CREATE MATERIALIZED VIEW proyecto.dataset.vista AS (consulta); ejemplo de agregación con SUM y GROUP BY. En Terraform, el recurso google_bigquery_table con un bloque materialized_view (query, enable_refresh, refresh_interval_ms, allow_non_incremental_definition)."
 relations:
   - type: RELATED_TO
@@ -41,7 +44,7 @@ relations:
     target: bigquery-biglake-tables
     note: Vistas materializadas sobre datos en Cloud Storage.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -244,3 +247,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-08a aplicada (docs/reviews/cards-f3b-08a.md), regla del §17: relations incluye `bigquery-biglake-tables`, que el §17 nombra.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

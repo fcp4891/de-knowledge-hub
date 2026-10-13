@@ -18,46 +18,57 @@ sources:
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/fact-table-structure/
     accessed: 2026-10-02
+    page_title: "Fact Table Structure"
     note: "Una tabla de hechos contiene las medidas numéricas de un evento de medición operacional; en el grano más bajo, una fila corresponde a un evento. Siempre contiene claves foráneas a cada dimensión asociada, más claves de dimensiones degeneradas y fechas opcionales. Su diseño se basa en la actividad física, no en los reportes."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/grain/
     accessed: 2026-10-02
+    page_title: "Grain"
     note: "El grano establece qué representa exactamente una fila; su declaración es un contrato vinculante del diseño y se declara antes de elegir dimensiones o hechos. El grano atómico es el nivel más bajo al que el proceso captura datos; se recomienda empezar por él."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/transaction-fact-table/
     accessed: 2026-10-02
+    page_title: "Transaction Fact Tables"
     note: "Una fila de un hecho transaccional corresponde a un evento de medición en un punto del espacio y el tiempo; las filas existen solo si hubo medición (pueden ser densas o dispersas)."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/periodic-snapshot-fact-table/
     accessed: 2026-10-02
+    page_title: "Periodic Snapshot Fact Tables"
     note: "Una fila de snapshot periódico resume los eventos de un período estándar (día, semana, mes); el grano es el período. Son uniformemente densas: si no hubo actividad se inserta una fila con cero o nulo."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/accumulating-snapshot-fact-table/
     accessed: 2026-10-02
+    page_title: "Accumulating Snapshot Fact Tables"
     note: "Un snapshot acumulativo resume los hitos de un proceso con inicio, pasos intermedios y fin definidos (por ejemplo, el cumplimiento de un pedido); tiene una clave de fecha por hito y la fila se actualiza a medida que avanza el proceso, algo único entre los tres tipos. Suele incluir medidas de demora y contadores de hitos."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/factless-fact-table/
     accessed: 2026-10-02
+    page_title: "Factless Fact Tables"
     note: "Una tabla factless registra eventos sin medida numérica (un alumno asiste a una clase); también sirve para analizar lo que no ocurrió restando la actividad a una tabla de cobertura."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/additive-semi-additive-non-additive-fact/
     accessed: 2026-10-02
+    page_title: "Additive, Semi-Additive, and Non-Additive Facts"
     note: "Medidas aditivas (se suman por cualquier dimensión), semiaditivas (por algunas; los saldos no se suman en el tiempo) y no aditivas (ratios); para las no aditivas, guardar sus componentes aditivos y calcular el ratio al final."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/dimensional-modeling-fact-tables
     accessed: 2026-10-02
+    page_title: "Dimensional modeling in Microsoft Fabric Warehouse: Fact tables"
     note: "En Fabric Warehouse hay tres tipos de tablas de hechos (transaccional, snapshot periódico y snapshot acumulativo). Las claves de dimensión determinan la dimensionalidad, y sus valores, la granularidad de los hechos."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_best-practices-best-dist-key.html
     accessed: 2026-10-02
+    page_title: "Choose the best distribution style"
     note: "Redshift recomienda distribuir la tabla de hechos y una dimensión por sus columnas comunes; la tabla de hechos tiene una sola clave de distribución. Con AUTO, Redshift elige el estilo."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/primary-foreign-keys
     accessed: 2026-10-02
+    page_title: "Use primary and foreign keys"
     note: "BigQuery no aplica las restricciones de clave primaria y foránea (NOT ENFORCED); quien las declara debe asegurar que los datos las cumplan. BigQuery puede usarlas para optimizar consultas, por ejemplo eliminar inner joins."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
     accessed: 2026-10-02
+    page_title: "Data definition language (DDL) statements in GoogleSQL"
     note: "Sintaxis de CREATE TABLE con restricciones: PRIMARY KEY (columnas) NOT ENFORCED y FOREIGN KEY (columnas) REFERENCES tabla (columnas) NOT ENFORCED, junto a PARTITION BY y CLUSTER BY."
 relations:
   - type: DEPENDS_ON
@@ -70,7 +81,7 @@ relations:
     target: star-schema
     note: El hecho es el centro del esquema estrella.
 created_at: 2026-10-02
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -252,3 +263,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `grain`, que ya tiene ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

@@ -18,42 +18,52 @@ sources:
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/dimension-table-structure/
     accessed: 2026-10-01
+    page_title: "Dimension Table Structure"
     note: "Toda tabla de dimensión tiene una única columna de clave primaria, que va como clave foránea en las tablas de hechos asociadas. Las dimensiones suelen ser anchas, planas y desnormalizadas, con muchos atributos de texto de baja cardinalidad; los atributos más útiles son descripciones verbosas, y son el blanco principal de filtros y agrupaciones."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/conformed-dimension/
     accessed: 2026-10-01
+    page_title: "Conformed Dimensions"
     note: "Las dimensiones están conformadas cuando sus atributos tienen los mismos nombres de columna y contenidos de dominio; permiten combinar hechos de distintas tablas en un mismo reporte (drill-across). Se definen una vez con gobierno de datos y se reutilizan."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/role-playing-dimension/
     accessed: 2026-10-01
+    page_title: "Role-Playing Dimensions"
     note: "Una dimensión física referenciada varias veces en una tabla de hechos, con un rol lógico distinto cada vez (por ejemplo, varias fechas); cada clave foránea apunta a una vista separada de la dimensión, con nombres de columna propios."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/junk-dimension/
     accessed: 2026-10-01
+    page_title: "Junk Dimensions"
     note: "Una junk dimension combina banderas e indicadores de baja cardinalidad en una sola dimensión; solo contiene las combinaciones que aparecen en los datos, no el producto cartesiano."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/degenerate-dimension/
     accessed: 2026-10-01
+    page_title: "Degenerate Dimensions"
     note: "Una dimensión degenerada no tiene contenido aparte de su clave (por ejemplo, el número de factura en hechos a nivel de línea); va en la tabla de hechos sin tabla de dimensión asociada."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/multivalued-dimension-bridge-table/
     accessed: 2026-10-01
+    page_title: "Multivalued Dimensions and Bridge Tables"
     note: "Cuando una dimensión es multivaluada respecto del grano del hecho (por ejemplo, varios diagnósticos), se une al hecho mediante una clave de grupo y una bridge table con una fila por valor del grupo; la bridge puede necesitar basarse en dimensiones tipo 2."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
     accessed: 2026-10-01
+    page_title: "Data definition language (DDL) statements in GoogleSQL"
     note: "CREATE TABLE IF NOT EXISTS no hace nada (SKIP) si la tabla existe; CREATE [OR REPLACE] VIEW [IF NOT EXISTS] crea o reemplaza una vista."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax
     accessed: 2026-10-01
+    page_title: "Data manipulation language (DML) statements in GoogleSQL"
     note: "MERGE con WHEN NOT MATCHED THEN INSERT inserta solo las filas de origen sin coincidencia en el destino."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_CREATE_TABLE_NEW.html
     accessed: 2026-10-01
+    page_title: "CREATE TABLE"
     note: "Columna IDENTITY(seed, step) con valores únicos autogenerados; en cargas paralelas Redshift salta valores: únicos pero no consecutivos ni en el orden de los archivos."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/dimensional-modeling-dimension-tables
     accessed: 2026-10-01
+    page_title: "Dimensional modeling in Microsoft Fabric Warehouse: Dimension tables"
     note: "En Fabric Warehouse, una dimensión de ejemplo tiene clave sustituta, claves naturales, atributos, claves foráneas a otras dimensiones, columnas de historia SCD tipo 2 y columnas de auditoría. Miembros especiales con claves reservadas: 0 faltante, -1 desconocido (fallo de lookup al cargar hechos), -2 no aplica, -3 error. Las dimensiones casi siempre se desnormalizan. Describe role-playing, junk y degenerate dimensions."
 relations:
   - type: RELATED_TO
@@ -66,7 +76,7 @@ relations:
     target: scd-type-2
     note: Las columnas de historia de una dimensión tipo 2.
 created_at: 2026-10-01
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -239,3 +249,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: creación (lote 4 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `fact-tables`, `star-schema`, `grain`, que ya tienen ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

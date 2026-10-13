@@ -18,30 +18,37 @@ sources:
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/tutorial-transactions.html
     accessed: 2026-10-05
+    page_title: "3.4. Transactions"
     note: "Una transacción agrupa varios pasos en una operación de todo o nada; los estados intermedios no son visibles para otras transacciones y, si algo falla, ninguno de los pasos afecta la base. Una vez confirmada, queda registrada de forma permanente y no se pierde aunque haya una caída poco después. En PostgreSQL se delimita con BEGIN y COMMIT, o se descarta con ROLLBACK; sin BEGIN, cada sentencia es su propia transacción."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/transaction-iso.html
     accessed: 2026-10-05
+    page_title: "13.2. Transaction Isolation"
     note: "Se pueden pedir los cuatro niveles estándar de aislamiento, pero PostgreSQL implementa tres; Read Committed es el nivel por defecto: cada SELECT ve solo lo confirmado antes de que empezara la consulta. Serializable evita las anomalías de lectura sucia, no repetible, fantasma y de serialización."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/transactions
     accessed: 2026-10-05
+    page_title: "Multi-statement transactions"
     note: "Las transacciones de varias sentencias de BigQuery garantizan ACID y aislamiento por snapshot: las lecturas ven un snapshot consistente y los cambios son visibles para las sentencias siguientes de la misma transacción. Si una transacción modifica filas de una tabla, otras transacciones o DML que modifican la misma tabla no corren en paralelo: las transacciones en conflicto se cancelan y el DML fuera de transacción se encola. Si ocurre un error sin manejador de excepciones, la consulta falla y BigQuery revierte la transacción; se recomienda un manejador con ROLLBACK TRANSACTION."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language
     accessed: 2026-10-05
+    page_title: "Procedural language"
     note: "Bloques BEGIN ... EXCEPTION WHEN ERROR THEN ... END; @@error.message tiene el mensaje del error. RAISE sin USING MESSAGE, dentro de una cláusula EXCEPTION, vuelve a lanzar la excepción capturada y conserva el stack trace original."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_serial_isolation.html
     accessed: 2026-10-05
+    page_title: "Isolation levels in Amazon Redshift"
     note: "Redshift ofrece dos niveles de aislamiento serializables: SNAPSHOT (por defecto al crear clústeres aprovisionados y workgroups serverless, procesa más volumen en menos tiempo) y SERIALIZABLE (más lento, con restricciones más estrictas sobre operaciones concurrentes)."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/transactions
     accessed: 2026-10-05
+    page_title: "Transactions in Fabric Data Warehouse"
     note: "Fabric Data Warehouse admite transacciones que cumplen ACID: si una sentencia falla, toda la transacción se revierte. Aplica aislamiento por snapshot a todas las transacciones y usa bloqueo a nivel de tabla, aunque la consulta toque una sola fila."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/architecture/data-guide/relational-data/online-transaction-processing
     accessed: 2026-10-05
+    page_title: "Online transaction processing (OLTP)"
     note: "Las transacciones de OLTP deben ser atómicas y consistentes: la atomicidad implica que toda la transacción tiene éxito o falla como una unidad."
 relations:
   - type: RELATED_TO
@@ -57,7 +64,7 @@ relations:
     target: scd-type-2
     note: Cerrar la versión vigente e insertar la nueva van en la misma transacción.
 created_at: 2026-10-05
-updated_at: 2026-10-05
+updated_at: 2026-10-13
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -238,3 +245,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: creación (lote 6 de F3).
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

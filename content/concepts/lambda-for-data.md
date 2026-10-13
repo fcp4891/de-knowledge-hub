@@ -18,42 +18,52 @@ sources:
   - source: aws-lambda-docs
     url: https://docs.aws.amazon.com/lambda/latest/dg/welcome.html
     accessed: 2026-10-12
+    page_title: "What is AWS Lambda?"
     note: "What is AWS Lambda?: servicio de cómputo serverless; Lambda administra la infraestructura, la capacidad, el escalado y los parches. Dos primitivas: funciones (un handler conectado a un trigger como API Gateway, S3, SQS o EventBridge; cada invocación corre de forma independiente, sin estado compartido) y Lambda MicroVMs (entornos aislados con vida total de hasta 8 horas)."
   - source: aws-lambda-docs
     url: https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html
     accessed: 2026-10-12
+    page_title: "Lambda quotas"
     note: "Lambda quotas: timeout de función de 900 segundos (15 minutos), salvo funciones con Lambda Managed Instances en invocaciones asíncronas o por event source mapping (hasta 5.400 segundos); memoria de 128 MB a 10.240 MB, con CPU proporcional; /tmp de 512 MB a 10.240 MB; payload de 6 MB en invocación síncrona y 1 MB en asíncrona; 1.000 ejecuciones concurrentes por defecto."
   - source: aws-lambda-docs
     url: https://docs.aws.amazon.com/lambda/latest/dg/invocation-retries.html
     accessed: 2026-10-12
+    page_title: "Understanding retry behavior in Lambda Event Functions"
     note: "Understanding retry behavior in Lambda: en invocación asíncrona, Lambda reintenta dos veces los errores de la función, y se puede configurar una dead-letter queue; los event source mappings que leen de streams reintentan el lote completo y los errores repetidos bloquean el shard hasta resolverse o expirar los registros (vigilar Iterator Age); para colas, el tiempo entre reintentos y el destino de los fallidos los fijan el visibility timeout y la redrive policy de la cola."
   - source: aws-lambda-docs
     url: https://docs.aws.amazon.com/lambda/latest/dg/with-s3.html
     accessed: 2026-10-12
+    page_title: "Process Amazon S3 event notifications with Lambda"
     note: "Process Amazon S3 event notifications with Lambda: S3 invoca la función de forma asíncrona con un evento que describe el objeto. Advertencia: si la función usa el mismo bucket que la dispara, puede entrar en un bucle."
   - source: aws-lambda-docs
     url: https://docs.aws.amazon.com/lambda/latest/dg/with-s3-example.html
     accessed: 2026-10-12
+    page_title: "Tutorial: Using an Amazon S3 trigger to invoke a Lambda Event Function"
     note: "Tutorial: Using an Amazon S3 trigger: el handler de Python toma el bucket y la clave del evento y decodifica la clave con urllib.parse.unquote_plus antes de leer el objeto."
   - source: aws-lambda-docs
     url: https://docs.aws.amazon.com/lambda/latest/dg/invocation-recursion.html
     accessed: 2026-10-12
+    page_title: "Use Lambda recursive loop detection to prevent infinite loops"
     note: "Use Lambda recursive loop detection: Lambda detecta bucles en los que una función escribe en el mismo servicio que la invoca, por ejemplo con Amazon S3, Amazon SNS o buses de EventBridge, y también entre funciones."
   - source: aws-lambda-docs
     url: https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html
     accessed: 2026-10-12
+    page_title: "Using Lambda to process records from Amazon Kinesis Data Streams"
     note: "Using Lambda to process records from Kinesis Data Streams: procesa los registros de cada shard en orden y deja de procesar el shard si la función devuelve un error."
   - source: aws-lambda-docs
     url: https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-errorhandling.html
     accessed: 2026-10-12
+    page_title: "Handling errors for an SQS event source in Lambda"
     note: "Handling errors for an SQS event source: con ReportBatchItemFailures en FunctionResponseTypes, la función devuelve un éxito parcial; la respuesta batchItemFailures lista los mensajes fallidos con su messageId como itemIdentifier, y evita reintentos innecesarios."
   - source: aws-lambda-docs
     url: https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html
     accessed: 2026-10-12
+    page_title: "Best practices for working with AWS Lambda Event Functions"
     note: "Best practices for working with AWS Lambda functions: escribir código idempotente, para que los eventos duplicados se traten igual, y validar los eventos."
   - source: aws-lambda-docs
     url: https://aws.amazon.com/lambda/pricing/
     accessed: 2026-10-12
+    page_title: "AWS Lambda pricing"
     note: "AWS Lambda pricing: se cobran solicitudes y duración según la memoria asignada. Los montos no se copian."
 relations:
   - type: RELATED_TO

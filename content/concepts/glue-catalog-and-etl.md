@@ -18,38 +18,47 @@ sources:
   - source: aws-glue-docs
     url: https://docs.aws.amazon.com/glue/latest/dg/what-is-glue.html
     accessed: 2026-10-12
+    page_title: "What is AWS Glue?"
     note: "What is AWS Glue?: servicio serverless de integración de datos para descubrir, preparar, mover e integrar datos de varias fuentes; se conecta a más de 70 fuentes y gestiona los datos en un catálogo centralizado; crea, ejecuta y monitorea pipelines ETL."
   - source: aws-glue-docs
     url: https://docs.aws.amazon.com/glue/latest/dg/components-overview.html
     accessed: 2026-10-12
+    page_title: "AWS Glue components"
     note: "AWS Glue components: el Data Catalog guarda los metadatos de fuentes, transformaciones y destinos, y reemplaza directamente al Apache Hive Metastore. El sistema de jobs ofrece infraestructura administrada para definir, programar y ejecutar ETL. Glue genera scripts de Scala o PySpark con extensiones de Glue a partir de los metadatos del catálogo."
   - source: aws-glue-docs
     url: https://docs.aws.amazon.com/glue/latest/dg/add-crawler.html
     accessed: 2026-10-12
+    page_title: "Using crawlers to populate the Data Catalog"
     note: "Using crawlers to populate the Data Catalog: un crawler llena el catálogo con bases y tablas, y es el método principal de la mayoría de los usuarios; usa clasificadores para inferir formato y esquema (los personalizados corren en el orden indicado y gana el primero que reconoce la estructura)."
   - source: aws-glue-docs
     url: https://docs.aws.amazon.com/glue/latest/dg/monitor-continuations.html
     accessed: 2026-10-12
+    page_title: "Tracking processed data using job bookmarks"
     note: "Tracking processed data using job bookmarks: Glue guarda el estado de cada corrida de un job (el bookmark) para no reprocesar datos viejos; el estado se identifica por el transformation context de cada fuente, transformación y destino, y se guarda de forma atómica al llamar a job.commit."
   - source: aws-glue-docs
     url: https://docs.aws.amazon.com/glue/latest/dg/programming-etl-connect-bookmarks.html
     accessed: 2026-10-12
+    page_title: "Using job bookmarks"
     note: "Using job bookmarks: llamar a job.init al inicio y a job.commit al final; sin ellos, los bookmarks no funcionan. transformation_ctx identifica el estado de cada operador. Incluye un script de ejemplo con GlueContext, create_dynamic_frame.from_catalog, ApplyMapping y write_dynamic_frame.from_options."
   - source: aws-glue-docs
     url: https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html
     accessed: 2026-10-12
+    page_title: "Using job parameters in AWS Glue jobs"
     note: "Using job parameters in AWS Glue jobs: --job-bookmark-option admite job-bookmark-enable (procesa lo nuevo desde el último checkpoint), job-bookmark-disable (todo el dataset) y job-bookmark-pause."
   - source: aws-glue-docs
     url: https://docs.aws.amazon.com/glue/latest/dg/add-job.html
     accessed: 2026-10-12
+    page_title: "Configuring job properties for Spark jobs in AWS Glue"
     note: "Configuring job properties for Spark jobs: la versión de Glue fija Spark y Python (6.0: Spark 4.1.1 y Python 3.13; 5.1: Spark 3.5.6 y Python 3.11; 5.0: Spark 3.5.4 y Python 3.11). Los workers se miden en DPU: una DPU son 4 vCPU y 16 GB de memoria; G.1X equivale a 1 DPU, G.025X a 0,25 DPU (solo streaming desde Glue 3.0)."
   - source: aws-glue-docs
     url: https://docs.aws.amazon.com/glue/latest/dg/release-notes.html
     accessed: 2026-10-12
+    page_title: "AWS Glue versions"
     note: "AWS Glue versions: Glue 5.1 (Spark 3.5.6, Python 3.11, Java 17) es la versión por defecto de los jobs creados sin indicar versión."
   - source: aws-glue-docs
     url: https://aws.amazon.com/glue/pricing/
     accessed: 2026-10-12
+    page_title: "AWS Glue pricing"
     note: "AWS Glue pricing: los jobs ETL se cobran por hora según las DPU usadas, en incrementos de 1 segundo; los jobs de Spark requieren al menos 2 DPU y por defecto Glue asigna 10. También se cobran el almacenamiento y las solicitudes del Data Catalog y los crawlers. Los montos no se copian."
 relations:
   - type: RELATED_TO

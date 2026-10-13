@@ -18,14 +18,17 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/querying-partitioned-tables
     accessed: 2026-09-30
+    page_title: "Query partitioned tables"
     note: Partition pruning elimina particiones innecesarias del escaneo y no cuentan en los bytes escaneados. Para podar hay que filtrar por la columna de partición con una expresión constante; un filtro que usa valores de la tabla (dinámico) no limita las particiones. Aislar la columna a un lado del operador o envolverla solo en funciones soportadas; dry run para verificarlo; una vista con filtro relativo a CURRENT_TIMESTAMP poda. En tablas por ingestión se usa _PARTITIONTIME o _PARTITIONDATE. Opción Require partition filter.
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/partitions.html
     accessed: 2026-09-30
+    page_title: "Partition your data"
     note: Particionar restringe la cantidad de datos escaneados por consulta, mejora rendimiento y reduce costo; se puede particionar por cualquier clave, habitualmente por tiempo. Tras crear la tabla hay que cargar las particiones (MSCK REPAIR TABLE para estilo Hive, ALTER TABLE ADD PARTITION para las demás); partition projection es otra opción.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-tables-partition
     accessed: 2026-09-30
+    page_title: "Partitioning tables in dedicated SQL pool"
     note: En dedicated SQL pool, filtrar por la columna de partición limita el escaneo a las particiones que califican; con clustered columnstore el beneficio es menor; demasiadas particiones pueden empeorar el rendimiento (mínimo recomendado de 1 millón de filas por distribución y partición; cada tabla ya se divide en 60 distribuciones).
 relations:
   - type: DEPENDS_ON
@@ -38,7 +41,7 @@ relations:
     target: bigquery-clustering
     note: El clustering poda bloques dentro de cada partición; se combina con el partition pruning.
 created_at: 2026-09-30
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -190,3 +193,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: creación (lote 2 de F3).
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendientes de ficha a `query-plans`, `predicate-pushdown`, que ya tienen ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

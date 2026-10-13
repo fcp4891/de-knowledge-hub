@@ -18,34 +18,42 @@ sources:
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/subscription-overview
     accessed: 2026-09-30
+    page_title: "Subscription overview"
     note: Por defecto Pub/Sub entrega al menos una vez (at-least-once), sin garantías de orden.
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/exactly-once-delivery
     accessed: 2026-09-30
+    page_title: "Exactly-once delivery"
     note: Exactly-once solo en suscripciones pull (no push ni export) y solo dentro de una región.
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax
     accessed: 2026-09-30
+    page_title: "Data manipulation language (DML) statements in GoogleSQL"
     note: MERGE exige que cada fila del destino coincida con a lo sumo una fila de origen.
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/transactions
     accessed: 2026-09-30
+    page_title: "Multi-statement transactions"
     note: Las transacciones de varias sentencias confirman o revierten atómicamente las mutaciones (inserts, deletes) sobre una o más tablas.
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html
     accessed: 2026-09-30
+    page_title: "MERGE"
     note: MERGE de Redshift; falla (Found multiple matches to update the same tuple) si varias filas de origen coinciden con una fila del destino; solo en modo simplificado REMOVE DUPLICATES, cuando varias filas del destino coinciden con la misma fila de origen, elimina los duplicados del destino y conserva una; las duplicadas del destino que no coinciden con ninguna fila de origen no se tocan.
   - source: aws-sqs-docs
     url: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html
     accessed: 2026-09-30
+    page_title: "Using dead-letter queues in Amazon SQS"
     note: Un mensaje puede recibirse varias veces (hasta maxReceiveCount) antes de pasar a la DLQ.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dead-letter-queues
     accessed: 2026-09-30
+    page_title: "Overview of Service Bus dead-letter queues"
     note: Service Bus reentrega hasta el max delivery count antes de mover el mensaje a la DLQ.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/statements/merge-transact-sql
     accessed: 2026-09-30
+    page_title: "MERGE (Transact-SQL)"
     note: El MERGE de T-SQL da error si varias filas de origen coinciden con una del destino.
 relations:
   - type: RELATED_TO
@@ -58,7 +66,7 @@ relations:
     target: dead-letter-queue
     note: Los reintentos previos a la DLQ exigen consumidores idempotentes.
 created_at: 2026-09-28
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -210,3 +218,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: revisión B-F3.1 del lote 2 aplicada: en `REMOVE DUPLICATES`, los duplicados del destino sin coincidencia con el origen no se tocan.
 - 2026-09-30: `verification_status: verified` (revisión de cb77a2f (B-F3.1 del lote 2) aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `retries`, `backfill`, `replay`, que ya tienen ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

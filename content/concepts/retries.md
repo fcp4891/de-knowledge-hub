@@ -17,18 +17,22 @@ sources:
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/subscription-retry-policy
     accessed: 2026-09-30
+    page_title: "Subscription retry policy"
     note: Dos políticas de reintento en Pub/Sub, reentrega inmediata (por defecto) y backoff exponencial; con backoff, cada fallo consecutivo agrega espera entre un mínimo y un máximo configurables dentro de 0 a 600 segundos.
   - source: aws-sqs-docs
     url: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html
     accessed: 2026-09-30
+    page_title: "Amazon SQS visibility timeout"
     note: Si el consumidor no borra el mensaje antes de que venza el visibility timeout (30 segundos por defecto), el mensaje vuelve a ser visible y otro consumidor puede recibirlo.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dead-letter-queues
     accessed: 2026-09-30
+    page_title: "Overview of Service Bus dead-letter queues"
     note: En peek-lock, cada abandono o vencimiento del bloqueo incrementa el delivery count; al superar el max delivery count (10 por defecto) el mensaje pasa a la DLQ con motivo MaxDeliveryCountExceeded.
   - source: aws-sqs-docs
     url: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html
     accessed: 2026-09-30
+    page_title: "Using dead-letter queues in Amazon SQS"
     note: La redrive policy define maxReceiveCount, el número de veces que un consumidor puede recibir un mensaje antes de que pase a la dead-letter queue.
 relations:
   - type: DEPENDS_ON
@@ -41,7 +45,7 @@ relations:
     target: pubsub-delivery-semantics
     note: La política de reintento de Pub/Sub forma parte de su semántica de entrega.
 created_at: 2026-09-30
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -201,3 +205,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `python-error-handling-and-retries`, que ya tiene ficha.
 - 2026-10-11: §17 enlaza `failure-recovery`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

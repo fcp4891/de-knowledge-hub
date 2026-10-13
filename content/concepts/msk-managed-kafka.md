@@ -18,26 +18,32 @@ sources:
   - source: aws-msk-docs
     url: https://docs.aws.amazon.com/msk/latest/developerguide/what-is-msk.html
     accessed: 2026-10-12
+    page_title: "Welcome to the Amazon MSK Developer Guide"
     note: "Welcome to the Amazon MSK Developer Guide: servicio administrado para construir y ejecutar aplicaciones que usan Apache Kafka; MSK da las operaciones del plano de control (crear, actualizar, borrar clústeres) y deja usar las operaciones del plano de datos de Kafka (producir y consumir). Ejecuta versiones de código abierto de Kafka, así que las aplicaciones, herramientas y plugins existentes funcionan sin cambiar el código."
   - source: aws-msk-docs
     url: https://docs.aws.amazon.com/msk/latest/developerguide/serverless.html
     accessed: 2026-10-12
+    page_title: "What is MSK Serverless?"
     note: "What is MSK Serverless?: tipo de clúster que ejecuta Kafka sin administrar ni escalar la capacidad; aprovisiona y escala solo y gestiona las particiones de los topics; cobra por throughput. Compatible con clientes de Kafka. Exige control de acceso con IAM en todos los clústeres y no admite ACLs de Kafka. Disponible en un conjunto de regiones listado en la página."
   - source: aws-msk-docs
     url: https://docs.aws.amazon.com/msk/latest/developerguide/broker-instance-types.html
     accessed: 2026-10-12
+    page_title: "Amazon MSK broker types"
     note: "Amazon MSK broker types: los brokers Standard dan la mayor flexibilidad de configuración (almacenamiento EBS administrado por el cliente, tiered storage, throughput de almacenamiento aprovisionado); los Express dan más elasticidad, throughput y resiliencia, con almacenamiento totalmente administrado por MSK, instancias M7g y Kafka desde 3.6. Ambos admiten IAM, SASL/SCRAM, mTLS y ACLs de Kafka. Un clúster provisionado no se puede cambiar de Standard a Express: hay que crear otro."
   - source: aws-msk-docs
     url: https://docs.aws.amazon.com/msk/latest/developerguide/supported-kafka-versions.html
     accessed: 2026-10-12
+    page_title: "Supported Apache Kafka versions"
     note: "Supported Apache Kafka versions: lista 4.2.x, 4.1.x, 4.0.x, 3.9.x (Recommended), 3.8.x y anteriores. 3.9 es la última versión con ZooKeeper y KRaft, con soporte extendido de MSK por al menos dos años desde su lanzamiento; Kafka 4.0 exige Java 17 y deja de lado la gestión de metadatos con ZooKeeper."
   - source: aws-msk-docs
     url: https://docs.aws.amazon.com/msk/latest/developerguide/msk-connect.html
     accessed: 2026-10-12
+    page_title: "Understand MSK Connect"
     note: "Understand MSK Connect: funcionalidad de MSK para mover datos desde y hacia clústeres de Kafka con conectores de Kafka Connect (versiones 2.7.1 o 3.7.x), administrados, hacia o desde almacenes como Amazon S3 y Amazon OpenSearch."
   - source: aws-msk-docs
     url: https://aws.amazon.com/msk/pricing/
     accessed: 2026-10-12
+    page_title: "Amazon MSK pricing"
     note: "Amazon MSK pricing: precios de clústeres provisionados (por broker y almacenamiento), de MSK Serverless y de MSK Connect. Los montos no se copian."
 relations:
   - type: RELATED_TO

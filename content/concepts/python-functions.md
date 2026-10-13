@@ -18,14 +18,17 @@ sources:
   - source: python-docs
     url: https://docs.python.org/3.12/tutorial/controlflow.html
     accessed: 2026-10-08
+    page_title: "4. More Control Flow Tools"
     note: "Tutorial, definición de funciones: valores por defecto, argumentos por nombre, parámetros especiales (posicionales solamente, solo por nombre), listas arbitrarias de argumentos, lambdas, docstrings y anotaciones. Advertencia importante: el valor por defecto se evalúa una sola vez, lo que importa cuando es un objeto mutable como una lista o un dict; el ejemplo f(a, L=[]) acumula argumentos entre llamadas."
   - source: python-docs
     url: https://docs.python.org/3.12/reference/compound_stmts.html
     accessed: 2026-10-08
+    page_title: "8. Compound statements"
     note: "Definición de funciones: los valores por defecto se evalúan de izquierda a derecha cuando se ejecuta la definición, una sola vez, y el mismo valor precalculado se usa en cada llamada. Los parámetros después de * o *identifier son solo por nombre; los anteriores a / son solo posicionales (desde 3.8)."
   - source: python-docs
     url: https://docs.python.org/3.12/library/functools.html
     accessed: 2026-10-08
+    page_title: "functools — Higher-order functions and operations on callable objects"
     note: "functools: partial (fija argumentos de una función), lru_cache/cache (memoización) y wraps (para decoradores)."
 relations:
   - type: RELATED_TO
@@ -41,7 +44,7 @@ relations:
     target: python-exceptions
     note: Una función de validación comunica el fallo con una excepción, no con un valor especial.
 created_at: 2026-10-08
-updated_at: 2026-10-09
+updated_at: 2026-10-13
 last_verified: 2026-10-08
 verification_status: verified
 ---
@@ -222,3 +225,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: revisión B-F3.1 del lote F3b-03a aplicada (docs/reviews/cards-f3b-03a.md): la documentación de Python se cita en `/3.12/`, la versión con la que se ejecutó el código.
 - 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-09: §17 enlaza `python-decorators`, que ya tiene ficha (lote F3b-03b); antes figuraba como pendiente de ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

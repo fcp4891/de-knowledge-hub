@@ -19,42 +19,52 @@ sources:
   - source: aws-kinesis-docs
     url: https://docs.aws.amazon.com/streams/latest/dev/key-concepts.html
     accessed: 2026-10-12
+    page_title: "Amazon Kinesis Data Streams Terminology and concepts"
     note: "Terminology and concepts: un stream es un conjunto de shards; cada shard admite hasta 5 transacciones de lectura por segundo, hasta 2 MB/s de lectura, y hasta 1.000 registros y 1 MB/s de escritura (incluidas las partition keys). Un registro tiene número de secuencia, partition key y un blob inmutable de hasta 1 MB. La partition key (hasta 256 caracteres Unicode) se pasa por MD5 a un entero de 128 bits que elige el shard. La retención por defecto es de 24 horas, ampliable hasta 8.760 horas (365 días). La Kinesis Client Library asigna un procesador por shard y guarda metadatos en tablas de DynamoDB."
   - source: aws-kinesis-docs
     url: https://docs.aws.amazon.com/streams/latest/dev/how-do-i-size-a-stream.html
     accessed: 2026-10-12
+    page_title: "Choose the right mode to stream in"
     note: "Choose the right mode to stream in: tres modos. On-demand Standard escala solo, sin planificar capacidad. On-demand Advantage es una configuración de cuenta por región para todos los streams on-demand: permite calentar la capacidad de escritura y cambia la estructura de precios (sin cargo fijo por stream). Provisioned exige indicar la cantidad de shards, ajustable con UpdateShardCount; para tráfico predecible y control fino del reparto entre shards."
   - source: aws-kinesis-docs
     url: https://docs.aws.amazon.com/streams/latest/dev/enhanced-consumers.html
     accessed: 2026-10-12
+    page_title: "Develop enhanced fan-out consumers with dedicated throughput"
     note: "Develop enhanced fan-out consumers: cada consumidor con enhanced fan-out recibe hasta 2 MB/s por shard, dedicados, por push (SubscribeToShard), sin competir con los demás; los consumidores compartidos se reparten 2 MB/s por shard. Hasta 20 consumidores con enhanced fan-out por stream en On-demand Standard y Provisioned; hasta 50 en On-demand Advantage."
   - source: aws-kinesis-docs
     url: https://docs.aws.amazon.com/kinesis/latest/APIReference/API_PutRecords.html
     accessed: 2026-10-12
+    page_title: "PutRecords"
     note: "PutRecords (API Reference): la respuesta trae un registro por cada uno enviado, con ShardId y SequenceNumber si se procesó, o ErrorCode (ProvisionedThroughputExceededException o InternalFailure) si no, y FailedRecordCount. Un fallo no detiene el procesamiento de los demás, por eso PutRecords no garantiza el orden; para leer en el orden de escritura, usar PutRecord y escribir al mismo shard. Un registro escrito no se puede modificar ni cambiar de orden."
   - source: aws-kinesis-docs
     url: https://docs.aws.amazon.com/kinesis/latest/APIReference/API_GetShardIterator.html
     accessed: 2026-10-12
+    page_title: "GetShardIterator"
     note: "GetShardIterator (API Reference): TRIM_HORIZON apunta al registro más antiguo no recortado del shard y LATEST a lo más reciente."
   - source: aws-kinesis-docs
     url: https://docs.aws.amazon.com/streams/latest/dev/kinesis-record-processor-duplicates.html
     accessed: 2026-10-12
+    page_title: "Handle duplicate records"
     note: "Handle duplicate records: un registro puede llegar más de una vez por reintentos del productor (por ejemplo, un timeout antes del acuse) o del consumidor (procesadores que se reinician al reasignar shards); la aplicación debe prever procesar un registro varias veces."
   - source: aws-firehose-docs
     url: https://docs.aws.amazon.com/firehose/latest/dev/what-is-this-service.html
     accessed: 2026-10-12
+    page_title: "What is Amazon Data Firehose?"
     note: "What is Amazon Data Firehose?: servicio administrado que entrega datos de streaming a destinos como Amazon S3, Amazon Redshift, OpenSearch, tablas Apache Iceberg y endpoints HTTP, sin escribir aplicaciones; puede transformar antes de entregar, leer de un Kinesis data stream existente y acumula datos por tamaño (MB) o intervalo (segundos) antes de entregar. Hacia Redshift, entrega primero a S3 y luego ejecuta COPY."
   - source: aws-firehose-docs
     url: https://docs.aws.amazon.com/firehose/latest/dev/history.html
     accessed: 2026-10-12
+    page_title: "Document history"
     note: "Document history: fila del 9 de febrero de 2024, «Amazon Kinesis Data Firehose is now known as Amazon Data Firehose»: «Amazon Kinesis Data Firehose has rebranded to Amazon Data Firehose»."
   - source: aws-managed-flink-docs
     url: https://docs.aws.amazon.com/managed-flink/latest/java/what-is.html
     accessed: 2026-10-12
+    page_title: "What is Amazon Managed Service for Apache Flink?"
     note: "What is Amazon Managed Service for Apache Flink?: procesa y analiza datos de streaming con Java, Scala, Python o SQL sobre Apache Flink; el servicio administra la infraestructura, el escalado y los checkpoints y snapshots."
   - source: aws-kinesis-docs
     url: https://aws.amazon.com/kinesis/data-streams/pricing/
     accessed: 2026-10-12
+    page_title: "Amazon Kinesis Data Streams pricing"
     note: "Amazon Kinesis Data Streams pricing: precios por modo de capacidad, por datos escritos y leídos, retención extendida y enhanced fan-out. Los montos no se copian."
 relations:
   - type: RELATED_TO

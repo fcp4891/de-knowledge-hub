@@ -18,38 +18,47 @@ sources:
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/core-concepts/operators.html
     accessed: 2026-10-11
+    page_title: "Operators"
     note: "Airflow 3.3.2, Operators: un Operator es una plantilla de una Task predefinida que se declara dentro de un Dag. Del núcleo: BashOperator (ejecuta un comando bash) y PythonOperator (llama a una función de Python); el decorador @task es el equivalente TaskFlow de PythonOperator, sin renderizar plantillas Jinja en sus argumentos. Los providers de la comunidad agregan muchos más, como EmailOperator, HttpOperator, SQLExecuteQueryOperator, DockerOperator o SlackAPIOperator. En el código de Airflow, Task y Operator se usan casi como sinónimos."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/authoring-and-scheduling/connections.html
     accessed: 2026-10-11
+    page_title: "Connections & Hooks"
     note: "Airflow 3.3.2, Connections & Hooks: una Connection guarda credenciales y parámetros (usuario, contraseña, host) para hablar con un sistema externo, con un nombre único, el conn_id; se administra por la UI o la CLI y admite backends de almacenamiento. Un Hook es una interfaz de alto nivel con una plataforma externa, para no escribir código de bajo nivel contra su API; suelen ser las piezas con que se construyen los operadores, toman credenciales de las Connections y muchos tienen un conn_id por defecto (PostgresHook busca postgres_default). Los providers pueden definir tipos de Connection propios."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/howto/custom-operator.html
     accessed: 2026-10-11
+    page_title: "Creating a custom Operator"
     note: "Airflow 3.3.2, Creating a custom Operator: se extiende la clase base pública del SDK, BaseOperator, y se sobrescriben el constructor (parámetros propios del operador) y execute (lo que corre al ejecutarse; recibe el contexto). No hacer operaciones costosas en __init__: los operadores se instancian una vez por ciclo del scheduler por cada tarea que los usa. Si el operador habla con un servicio externo, conviene implementar esa comunicación como Hook para reutilizarla; el estado temporal (por ejemplo, un id de job para on_kill) va en el operador, no en el hook. Crear el hook solo en execute (o en métodos llamados desde execute): el constructor se llama cada vez que Airflow parsea un Dag, y crear ahí el hook abriría muchas conexiones innecesarias. template_fields lista los atributos que Jinja renderiza; template_ext permite leer plantillas desde archivos. El valor que devuelve execute queda en XCom."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/task-sdk/1.3.2/api.html
     accessed: 2026-10-11
+    page_title: "airflow.sdk API Reference"
     note: "Task SDK 1.3.2 (el de Airflow 3.3.2): airflow.sdk.BaseHook es la clase base abstracta de los hooks, pensados como interfaz con sistemas externos; get_conn() es abstracto (devuelve la conexión del hook) y get_connection(conn_id) es un classmethod que devuelve la Connection por su id."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow-providers-common-sql/2.1.1/operators.html
     accessed: 2026-10-11
+    page_title: "SQL Operators"
     note: "Provider common.sql 2.1.1 (el que fijan las restricciones de Airflow 3.3.2), SQLExecuteQueryOperator: ejecuta SQL contra distintas bases; sql acepta un string, una lista de strings o una plantilla en archivo; autocommit (por defecto False), parameters, handler, split_statements y return_last. También existe el decorador @task.sql."
   - source: gcp-cloud-composer-docs
     url: https://docs.cloud.google.com/composer/docs/composer-3/composer-overview
     accessed: 2026-10-11
+    page_title: "Managed Airflow overview"
     note: "Managed Service for Apache Airflow (Gen 3): se pueden instalar plugins de Airflow propios, como operadores, hooks, sensores o interfaces internas, y dependencias de Python desde PyPI o un repositorio privado (incluido Artifact Registry). Algunas opciones de configuración de Airflow están bloqueadas."
   - source: gcp-workflows-docs
     url: https://docs.cloud.google.com/workflows/docs/choose-orchestration
     accessed: 2026-10-11
+    page_title: "Choose Workflows or Managed Airflow for service orchestration"
     note: "Choose Workflows or Managed Airflow: con Managed Airflow se pueden usar operadores existentes para comunicarse con varios servicios; hay más de 150 operadores solo para Google Cloud."
   - source: aws-mwaa-docs
     url: https://docs.aws.amazon.com/mwaa/latest/userguide/what-is-mwaa.html
     accessed: 2026-10-11
+    page_title: "What Is Amazon Managed Workflows for Apache Airflow?"
     note: "Amazon MWAA: soporta integraciones open source con servicios como Amazon Athena, AWS Batch, CloudWatch, DynamoDB, DataSync, EMR, Fargate y EKS. Los workers de Airflow asumen las políticas de IAM para acceder a servicios de AWS."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-factory/apache-airflow-jobs-concepts
     accessed: 2026-10-11
+    page_title: "What is an Apache Airflow job?"
     note: "Apache Airflow job en Microsoft Fabric: en su tabla de funciones, instalar un paquete privado como requisito figura como Sí, y usar Azure Key Vault como backend, también."
 relations:
   - type: RELATED_TO
@@ -68,7 +77,7 @@ relations:
     target: python-api-consumption
     note: Un hook encapsula el consumo de una API desde Airflow.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -302,3 +311,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-06a aplicada (docs/reviews/cards-f3b-06a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-11: relación `python-api-consumption` agregada en `relations` y en §17 (cambio mínimo).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

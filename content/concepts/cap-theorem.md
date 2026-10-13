@@ -22,10 +22,12 @@ sources:
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/cosmos-db/consistency-levels
     accessed: 2026-10-05
+    page_title: "Consistency levels in Azure Cosmos DB"
     note: "Cosmos DB ofrece cinco niveles de consistencia (Strong, Bounded staleness, Session, Consistent prefix, Eventual), cada uno con un equilibrio distinto de disponibilidad y rendimiento; la documentación cita el teorema PACELC (consistencia frente a disponibilidad y latencia) y señala que la consistencia fuerte aumenta la latencia de escritura y reduce la disponibilidad ante fallos."
   - source: gcp-spanner-docs
     url: https://docs.cloud.google.com/spanner/docs/true-time-external-consistency
     accessed: 2026-10-05
+    page_title: "Spanner: TrueTime and external consistency"
     note: "Spanner ofrece por defecto consistencia externa, más estricta que la serializabilidad; la documentación remite a 'Spanner, TrueTime, and the CAP Theorem' para la relación con CAP."
 relations:
   - type: RELATED_TO
@@ -35,7 +37,7 @@ relations:
     target: acid
     note: La C de CAP (atomicidad de las operaciones) no es la C de ACID (reglas de integridad).
 created_at: 2026-10-05
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-06
 verification_status: verified
 ---
@@ -225,3 +227,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: creación (lote F3b-01a, dominio 01-fundamentals).
 - 2026-10-06: revisión B-F3.1 del lote F3b-01a aplicada (docs/reviews/cards-f3b-01a.md): disponibilidad según Gilbert y Lynch (toda solicitud recibida por un nodo que no ha fallado), enunciado del Teorema 1 y fuente cambiada a la copia legible del autor.
 - 2026-10-06: `verification_status: verified` (revisión B-F3.1 del lote F3b-01a aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

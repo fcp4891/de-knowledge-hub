@@ -18,42 +18,52 @@ sources:
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dag-run.html
     accessed: 2026-09-30
+    page_title: "Dag Runs"
     note: "Un Dag con start_date, end_date opcional y schedule no basado en assets define intervalos que el scheduler convierte en Dag runs. Por defecto (scheduler.catchup_by_default=False) al activar un Dag solo se crea el run del último intervalo; con catchup=True el scheduler crea un run por cada intervalo no ejecutado desde el último (o limpiado). Si el Dag no está escrito para su intervalo (usa ahora), conviene dejar catchup apagado."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/configurations-ref.html
     accessed: 2026-09-30
+    page_title: "Configuration Reference"
     note: "[scheduler] catchup_by_default: booleano, False por defecto, variable AIRFLOW__SCHEDULER__CATCHUP_BY_DEFAULT; con False el scheduler no hace catchup, pero los backfills por línea de comandos siguen funcionando, y cada Dag puede fijarlo con catchup."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/backfill.html
     accessed: 2026-09-30
+    page_title: "Backfill"
     note: "Un backfill crea ejecuciones en un rango explícito según el schedule del Dag, con reproceso configurable (none, failed, completed) y max_active_runs propio."
   - source: gcp-cloud-composer-docs
     url: https://docs.cloud.google.com/composer/docs/composer-3/override-airflow-configurations
     accessed: 2026-09-30
+    page_title: "Override Airflow configuration options"
     note: "En Managed Service for Apache Airflow se pueden sobrescribir opciones de configuración de Airflow al crear el entorno o después; algunas opciones están bloqueadas y no se pueden sobrescribir."
   - source: aws-mwaa-docs
     url: https://docs.aws.amazon.com/mwaa/latest/userguide/configuring-env-variables.html
     accessed: 2026-09-30
+    page_title: "Using Apache Airflow configuration options on Amazon MWAA"
     note: "Amazon MWAA aplica las opciones de configuración de Airflow indicadas en la consola como variables de entorno del contenedor; si airflow.cfg tiene una opción con el mismo nombre, prevalece la de la consola."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/parameterized-queries
     accessed: 2026-10-01
+    page_title: "Run parameterized queries"
     note: "Con la biblioteca cliente de Python: bigquery.Client(), QueryJobConfig(query_parameters=[ScalarQueryParameter(nombre, tipo, valor)]) y client.query_and_wait(query, job_config=...); parámetros con nombre usando @nombre."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/multi-statement-queries
     accessed: 2026-10-01
+    page_title: "Work with multi-statement queries"
     note: "Consultas de varias sentencias; su ejemplo usa un parámetro de consulta (@id) dentro de la consulta."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/transactions
     accessed: 2026-10-01
+    page_title: "Multi-statement transactions"
     note: "Transacciones de varias sentencias con commit o rollback atómico."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/how-to-create-tumbling-window-trigger
     accessed: 2026-09-30
+    page_title: "Create a trigger that runs a pipeline on a tumbling window"
     note: "En un tumbling window trigger de Data Factory, startTime y endTime pueden estar en el pasado; cada ventana dispara una ejecución."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/task-sdk/stable/api.html
     accessed: 2026-09-30
+    page_title: "airflow.sdk API Reference"
     note: "API del Task SDK (airflow.sdk): el Dag acepta max_active_runs, el máximo de Dag runs activos; por encima de ese número en estado running, el scheduler no crea nuevos runs activos."
 relations:
   - type: RELATED_TO
@@ -66,7 +76,7 @@ relations:
     target: idempotency
     note: Catchup ejecuta muchos intervalos pasados; cada ejecución debe poder repetirse sin duplicar.
 created_at: 2026-09-30
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -243,3 +253,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `scheduler`, `data-orchestration`, que ya tienen ficha.
 - 2026-10-11: §17 enlaza `pipeline-dependencies`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

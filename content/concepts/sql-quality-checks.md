@@ -17,30 +17,37 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/debugging-statements
     accessed: 2026-10-07
+    page_title: "Debugging statements"
     note: "ASSERT expresión [AS descripción] termina sin resultado si la expresión es TRUE y genera un error si es FALSE o NULL; la descripción aparece en el mensaje. Se factura como el SELECT de la expresión, y su resultado nunca se cachea."
   - source: gcp-dataform-docs
     url: https://docs.cloud.google.com/dataform/docs/test-data
     accessed: 2026-10-07
+    page_title: "Test data quality"
     note: "Dataform admite aserciones integradas en el bloque config de tablas, tablas incrementales, vistas y vistas materializadas: uniqueKey y uniqueKeys (sin filas repetidas en esas columnas), nonNull (columnas nunca nulas) y rowConditions (expresiones SQL que toda fila debe cumplir). Las aserciones manuales son consultas en un archivo SQLX que deben devolver cero filas; si devuelven filas, la aserción falla."
   - source: dbt-docs
     url: https://docs.getdbt.com/docs/build/data-tests
     accessed: 2026-10-07
+    page_title: "Add data tests to your DAG"
     note: "Los data tests de dbt son consultas SELECT que buscan los registros que fallan, es decir, los que contradicen la afirmación. dbt incluye cuatro tests genéricos: unique, not_null, accepted_values y relationships. La severidad de un test puede configurarse como warn o error. Las entradas de los tests (values, to, field) van bajo arguments, disponible desde dbt 1.10.5."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/t_Defining_constraints.html
     accessed: 2026-10-07
+    page_title: "Table constraints"
     note: "En Redshift, las restricciones de unicidad, clave primaria y clave foránea son solo informativas y no se aplican al cargar: un INSERT que las viola puede tener éxito. El planificador las usa, y si no son válidas una consulta puede dar resultados incorrectos (por ejemplo, un SELECT DISTINCT con duplicados). Redshift sí aplica NOT NULL."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/table-constraints
     accessed: 2026-10-07
+    page_title: "Primary keys, foreign keys, and unique keys in Warehouse in Microsoft Fabric"
     note: "Aplica al SQL analytics endpoint y a Warehouse en Microsoft Fabric. PRIMARY KEY y UNIQUE solo se admiten como NONCLUSTERED y NOT ENFORCED; FOREIGN KEY, como NOT ENFORCED. No se admiten restricciones DEFAULT."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/primary-foreign-keys
     accessed: 2026-10-07
+    page_title: "Use primary and foreign keys"
     note: "BigQuery no aplica las claves primarias ni foráneas: hay que asegurar que los datos las cumplan. Puede usarlas para optimizar consultas, y las consultas sobre tablas con restricciones violadas pueden dar resultados incorrectos."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/ddl-constraints.html
     accessed: 2026-10-07
+    page_title: "5.5. Constraints"
     note: "PostgreSQL aplica las restricciones CHECK, NOT NULL, UNIQUE, PRIMARY KEY y FOREIGN KEY al escribir. El tratamiento de NULL en restricciones UNIQUE es, según el estándar SQL, dependiente de la implementación."
 relations:
   - type: RELATED_TO
@@ -56,7 +63,7 @@ relations:
     target: sql-joins
     note: La integridad referencial se verifica con un anti-join.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -268,3 +275,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: ficha completa (lote F3b-02c, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02c aplicada (docs/reviews/cards-f3b-02c.md): claves no exigidas atribuidas por motor según su página (BigQuery: PK y FK; Redshift: unicidad, PK y FK informativas, NOT NULL aplicado; Fabric: PK y UNIQUE NONCLUSTERED NOT ENFORCED, FK NOT ENFORCED); sin «no existen».
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

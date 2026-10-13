@@ -18,46 +18,57 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/batch-loading-data
     accessed: 2026-10-02
+    page_title: "Batch load data"
     note: "El resultado de un load job de BigQuery es atómico: se insertan todos los registros o ninguno. Al cargar todo en un solo job, se recomienda crear la tabla con WRITE_TRUNCATE, importante al reintentar porque el cliente puede no distinguir un job fallido de una falla al comunicar el éxito; con los datos ya en Cloud Storage, reintentar con backoff exponencial basta. Se recomienda que un batch nocturno no alcance la cuota por defecto de 1500 cargas por tabla por día, incluidos reintentos; esa cuota alcanza para una carga cada 5 minutos con margen para un reintento. Por defecto, los load jobs usan un pool compartido de slots sin capacidad ni throughput garantizados."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/load-data-partitioned-tables
     accessed: 2026-10-02
+    page_title: "Load data into partitioned tables"
     note: "Se puede cargar en una partición concreta con un decorador (tabla$AAAAMMDD); en tablas particionadas por columna, el decorador debe coincidir con los valores cargados o hay error. Para sobrescribir la partición en lugar de agregar, bq load --replace=true."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/partitioned-tables
     accessed: 2026-10-02
+    page_title: "Introduction to partitioned tables"
     note: "Formato del decorador de partición: diaria yyyymmdd (my_table$20210712), por hora yyyymmddhh, mensual yyyymm, anual yyyy."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/dts-introduction
     accessed: 2026-10-02
+    page_title: "Introduction to the BigQuery Data Transfer Service"
     note: "BigQuery Data Transfer Service carga datos en BigQuery de forma programada y permite backfills para recuperar huecos; no sirve para sacar datos de BigQuery."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/python/docs/reference/bigquery/latest/google.cloud.bigquery.client.Client
     accessed: 2026-10-02
+    page_title: "Class Client (3.46.1)"
     note: "Client.load_table_from_uri(source_uris, destination, job_config=...) inicia un load job desde Cloud Storage y devuelve un LoadJob."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet
     accessed: 2026-10-02
+    page_title: "Load Parquet data from Cloud Storage"
     note: "Ejemplo en Python: LoadJobConfig(source_format=bigquery.SourceFormat.PARQUET, write_disposition=bigquery.WriteDisposition.WRITE_TRUNCATE), client.load_table_from_uri(uri, table_id, job_config=job_config) y load_job.result() para esperar."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/python/docs/reference/bigquery/latest/google.cloud.bigquery.job.LoadJob
     accessed: 2026-10-02
+    page_title: "Class LoadJob (3.46.1)"
     note: "LoadJob.output_rows: cantidad de filas guardadas en la tabla destino (None hasta que lo informa el servidor). La biblioteca incluye anotaciones de tipos (py.typed)."
   - source: python-docs
     url: https://docs.python.org/3/library/typing.html
     accessed: 2026-10-05
+    page_title: "typing — Support for type hints"
     note: "typing.Protocol define clases de protocolo para subtipado estructural (duck typing estático): una clase que tiene los métodos del protocolo lo cumple sin heredar de él."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_COPY.html
     accessed: 2026-10-02
+    page_title: "COPY"
     note: "COPY carga datos en una tabla existente y agrega las filas a las ya existentes; la fuente más común es S3, y algunas fuentes admiten un manifest."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/loading-data-files-using-manifest.html
     accessed: 2026-10-02
+    page_title: "Using a manifest to specify data files"
     note: "Un manifest JSON lista exactamente los archivos a cargar (URL completa, no prefijo), lo que asegura que COPY cargue todos los requeridos y solo esos."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/copy-activity-overview
     accessed: 2026-10-02
+    page_title: "Copy activity in Azure Data Factory and Azure Synapse Analytics"
     note: "La Copy activity lee de una fuente, serializa o deserializa, comprime y mapea columnas, y escribe en el destino; permite configurar la tolerancia a filas incompatibles."
 relations:
   - type: RELATED_TO
@@ -79,7 +90,7 @@ relations:
     target: incremental-load
     note: Cada lote trae solo lo nuevo o lo cambiado de su ventana.
 created_at: 2026-10-02
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -267,3 +278,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
 - 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`, hallazgo 6) aplicada: el cliente de `load_day` se tipa con un `Protocol` (`LoadClient`).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `data-ingestion`, que ya tiene ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

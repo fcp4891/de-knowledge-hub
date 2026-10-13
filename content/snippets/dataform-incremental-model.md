@@ -20,10 +20,12 @@ sources:
   - source: gcp-dataform-docs
     url: https://docs.cloud.google.com/dataform/docs/create-tables
     accessed: 2026-10-01
+    page_title: "Create tables"
     note: "Los archivos SQLX de tablas van en definitions/. Una tabla incremental (type incremental) se construye desde cero la primera vez y luego inserta o fusiona filas nuevas; when(incremental(), ...) agrega la condición solo en las ejecuciones incrementales y ${self()} referencia la propia tabla; uniqueKey fusiona filas con la misma clave. Al compilar, Dataform agrega sentencias como CREATE, REPLACE, INSERT o MERGE."
   - source: gcp-dataform-docs
     url: https://docs.cloud.google.com/dataform/docs/declare-source
     accessed: 2026-10-01
+    page_title: "Declare a data source"
     note: "Una fuente se declara con config { type: declaration, database, schema, name }: proyecto, dataset y nombre de la tabla o vista."
 relations:
   - type: IMPLEMENTS
@@ -33,7 +35,7 @@ relations:
     target: idempotency
     note: Con uniqueKey, releer el margen o repetir la ejecución no duplica filas.
 created_at: 2026-10-01
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -116,3 +118,4 @@ El detalle está en `sources` del encabezado.
 - 2026-10-01: creación (A-F3.2), desde la sección 10 de `incremental-load` tras la revisión B-F3.1 del lote 1.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `dataform-incremental-tables`, que ya tiene ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

@@ -18,30 +18,37 @@ sources:
   - source: aws-what-is-data-mart
     url: https://aws.amazon.com/what-is/data-mart/
     accessed: 2026-10-05
+    page_title: "What is a Data Mart?"
     note: "Un data mart contiene información específica de una unidad de negocio: una parte pequeña y seleccionada de los datos que la empresa guarda en un sistema mayor (warehouse o lake), a menudo resumida. Tipos: dependiente (se alimenta de un warehouse central; simplifica el uso pero hereda su punto único de falla), independiente (toma datos de sus fuentes sin warehouse; fácil de crear, difícil de gestionar) e híbrido (combina warehouse y fuentes externas)."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/kimball-data-warehouse-bus-architecture/
     accessed: 2026-10-05
+    page_title: "Enterprise Data Warehouse Bus Architecture"
     note: "La arquitectura de bus de Kimball permite un desarrollo incremental del DW/BI: divide la planificación en los procesos de negocio centrales y sus dimensiones conformadas, que se gestionan una vez y se reutilizan en varias tablas de hechos, para dar atributos consistentes y permitir combinar procesos (drill across)."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/data-warehousing
     accessed: 2026-10-05
+    page_title: "What is Fabric Data Warehouse?"
     note: "Entre los casos ideales de Fabric Data Warehouse están los esquemas estrella o snowflake, los data marts corporativos curados y los modelos semánticos gobernados."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/authorized-views
     accessed: 2026-10-05
+    page_title: "Authorized views"
     note: "Una vista autorizada comparte un subconjunto de los datos de un dataset con usuarios y grupos: pueden ver y consultar los datos compartidos, pero no acceder directamente al dataset de origen. Pasos: crear el dataset de la vista, crear la vista que restringe columnas, dar a los usuarios permiso para ejecutar jobs y acceso al dataset de la vista, y autorizar la vista sobre el dataset de origen. Alternativas: políticas por fila o columna, tablas separadas o autorizar el dataset completo."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/datashare-overview.html
     accessed: 2026-10-05
+    page_title: "Data sharing in Amazon Redshift"
     note: "Data sharing de Redshift comparte acceso a datos vivos entre clústeres, workgroups, cuentas y regiones sin mover ni copiar los datos: los consumidores ven la información más reciente apenas se actualiza."
   - source: terraform-provider-google-docs
     url: https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/bigquery_dataset_access.html.markdown
     accessed: 2026-10-05
+    page_title: "google_bigquery_dataset_access"
     note: "google_bigquery_dataset_access concede acceso a un dataset para una sola entidad, por ejemplo una vista (bloque view con project_id, dataset_id y table_id); si se usa junto a google_bigquery_dataset, ese recurso no debe definir bloques access, o debe ignorar sus cambios, para que no se pisen."
   - source: terraform-provider-google-docs
     url: https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/bigquery_table_iam.html.markdown
     accessed: 2026-10-05
+    page_title: "IAM policy for BigQuery Table"
     note: "google_bigquery_table_iam_member es no autoritativo: agrega un miembro a un rol sobre una tabla o vista y conserva los demás; no se combina con google_bigquery_table_iam_policy."
 relations:
   - type: DEPENDS_ON
@@ -57,7 +64,7 @@ relations:
     target: data-lake
     note: Un mart también puede derivarse del lake.
 created_at: 2026-10-05
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-06
 verification_status: verified
 ---
@@ -265,3 +272,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: creación (lote F3b-01a, dominio 01-fundamentals).
 - 2026-10-06: `verification_status: verified` (revisión B-F3.1 del lote F3b-01a aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

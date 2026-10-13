@@ -18,54 +18,67 @@ sources:
   - source: gcp-bigquery-docs
     url: https://cloud.google.com/bigquery/pricing
     accessed: 2026-10-05
+    page_title: "BigQuery pricing"
     note: "Dos componentes: cómputo (consultas, UDF, scripts y ciertos DML y DDL) y almacenamiento; otras operaciones se cobran aparte (Omni, BigQuery ML, BI Engine, lecturas y escrituras streaming). Cómputo on-demand: se cobran los bytes procesados por cada consulta, con un primer tramo mensual gratuito; no se cobran consultas con error ni las servidas desde caché; redondeo al MB con mínimo de 10 MB por tabla referenciada y por consulta; cancelar una consulta puede cobrar hasta su costo completo. Cómputo por capacidad: slots (CPU virtuales) en el tiempo, mediante reservas, con pago por uso con autoscaling; ediciones Standard, Enterprise y Enterprise Plus; los compromisos opcionales de uno y tres años con descuento existen solo en Enterprise y Enterprise Plus; con reservas de Enterprise o Enterprise Plus, el uso de BigQuery ML queda incluido en el uso de las ediciones; no aplica a almacenamiento, BI Engine, inserciones streaming ni Storage API. Almacenamiento activo y long-term: pasa a long-term la tabla o partición sin modificar durante 90 días consecutivos. Time travel y fail-safe no se cobran con facturación lógica y sí con facturación física. Los precios cambian y dependen de la región."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/slots
     accessed: 2026-10-05
+    page_title: "Understand slots"
     note: "Un slot es una unidad de cómputo virtual que BigQuery usa para ejecutar consultas y otros jobs; BigQuery determina automáticamente cuántos slots usa cada consulta."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reservations-intro
     accessed: 2026-10-05
+    page_title: "Introduction to workload management"
     note: "La gestión de cargas con reservas asigna capacidad en slots a proyectos o carpetas."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/datasets-intro
     accessed: 2026-10-05
+    page_title: "Introduction to datasets"
     note: "Dos modelos de facturación de almacenamiento por dataset: lógico (sin comprimir) y físico (comprimido); cambiarlo solo cambia la medición, sin migrar datos. Time travel y fail-safe retienen datos borrados o modificados por un tiempo."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
     accessed: 2026-10-05
+    page_title: "Data definition language (DDL) statements in GoogleSQL"
     note: "La opción de dataset storage_billing_model admite PHYSICAL o LOGICAL; LOGICAL es el valor por defecto."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/best-practices-costs
     accessed: 2026-10-05
+    page_title: "Estimate and control costs"
     note: "En on-demand, las consultas se facturan por bytes leídos: previsualizar con el validador o un dry run. El ajuste de máximo de bytes facturados hace fallar sin cargo la consulta cuya estimación lo supere (en tablas clusterizadas la estimación es una cota superior y puede fallar aunque el costo real fuera menor). En tablas no clusterizadas, LIMIT no reduce el costo de cómputo."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/custom-quotas
     accessed: 2026-10-05
+    page_title: "Create custom query quotas"
     note: "Las cuotas personalizadas limitan los datos procesados por día a nivel de proyecto o de usuario; se reinician a medianoche hora del Pacífico y son proactivas: no se puede correr una consulta de 11 TB con una cuota de 10 TB."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/bq-cli-reference
     accessed: 2026-10-05
+    page_title: "bq command-line tool reference"
     note: "bq query --dry_run valida sin ejecutar; --maximum_bytes_billed fija el límite de bytes facturados de la consulta."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/information-schema-jobs
     accessed: 2026-10-05
+    page_title: "JOBS view"
     note: "INFORMATION_SCHEMA.JOBS (sinónimo de JOBS_BY_PROJECT) tiene metadatos casi en tiempo real de los jobs del proyecto; requiere calificador de región (por ejemplo region-us); está particionada por creation_time y clusterizada por project_id y user_email. total_bytes_billed: bytes facturados con on-demand (informativo con capacidad); cache_hit; job_type."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-billing.html
     accessed: 2026-10-05
+    page_title: "Billing for Amazon Redshift Serverless"
     note: "Redshift Serverless: capacidad on-demand (pago por uso) o reservas con descuento por una cantidad fija durante un período; el almacenamiento se cobra aparte por GB-mes; cargo mínimo de 60 segundos de uso, medido por segundo."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/what-is.html
     accessed: 2026-10-05
+    page_title: "What is Amazon Athena?"
     note: "Athena es serverless: no hay infraestructura que administrar y se paga solo por las consultas que se ejecutan."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/synapse-analytics/sql/on-demand-workspace-overview
     accessed: 2026-10-05
+    page_title: "Serverless SQL pool in Azure Synapse Analytics"
     note: "El serverless SQL pool de Synapse no cobra por recursos reservados: solo por los datos procesados por las consultas (pago por uso)."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/enterprise/licenses
     accessed: 2026-10-05
+    page_title: "Understand Microsoft Fabric licenses and capacity"
     note: "Fabric se compra por capacidad (SKU); las capacity units (CU) miden la potencia de cómputo de cada SKU; la capacidad permite usar todas las funciones de Fabric licenciadas por capacidad."
 relations:
   - type: RELATED_TO
@@ -84,7 +97,7 @@ relations:
     target: bigquery-query-optimization
     note: El plan, las insights y las prácticas de optimización de BigQuery.
 created_at: 2026-10-05
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -292,3 +305,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md): compromisos solo en Enterprise y Enterprise Plus, time travel y fail-safe solo cobrados con facturación física, y BigQuery ML incluido en las reservas de esas ediciones. `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `scan-reduction`, que ya tiene ficha.
 - 2026-10-11: «pendiente de ficha» actualizado: la ficha ya existe (lote F3b-08a); el §17 la enlaza y relations la incluye: relations incluye `bigquery-query-optimization`, que el §17 nombra; §17 enlaza las fichas que ya existen.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

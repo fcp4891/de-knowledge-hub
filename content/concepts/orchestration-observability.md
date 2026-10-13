@@ -18,34 +18,42 @@ sources:
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/administration-and-deployment/logging-monitoring/index.html
     accessed: 2026-10-11
+    page_title: "Logging & Monitoring"
     note: "Airflow 3.3.2, Logging & Monitoring: como los pipelines suelen correr sin supervisión manual, la observabilidad es crítica. Airflow soporta varios mecanismos de logging y emite métricas para sistemas externos; incluye health check del propio Airflow y notificación de errores en tiempo real con Sentry. Secciones: logging de tareas, métricas, trazas, callbacks y health check."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/administration-and-deployment/logging-monitoring/metrics.html
     accessed: 2026-10-11
+    page_title: "Metrics Configuration"
     note: "Airflow 3.3.2, Metrics: Airflow puede enviar métricas a StatsD (pip install 'apache-airflow[statsd]', [metrics] statsd_on = True) o a OpenTelemetry (apache-airflow[otel], [metrics] otel_on = True, con un OpenTelemetry Collector). StatsD no tiene concepto de recurso: con varios procesos del mismo componente (schedulers en alta disponibilidad) las series se pisan; OpenTelemetry los distingue. Métricas: ti_failures y ti_successes (con dag_id y task_id), dag_processing.import_errors (errores al parsear Dag files), dagrun.duration.success y dagrun.duration.failed (ms hasta el estado final), dagrun.schedule_delay (ms entre el inicio programado y el real)."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/administration-and-deployment/logging-monitoring/callbacks.html
     accessed: 2026-10-11
+    page_title: "Callbacks"
     note: "Airflow 3.3.2, Callbacks: actuar ante cambios de estado de un Dag o tarea (por ejemplo, alertar cuando una tarea falla). Se definen a nivel de Dag, en default_args (para cada tarea) o en una tarea. Solo se invocan cuando el cambio de estado lo produce la ejecución en un worker, no cambios hechos desde la CLI o la UI. Errores en callbacks aparecen en los logs del dag processor, no en los de la tarea. Cinco tipos: on_success_callback y on_failure_callback (Dag o tarea), on_retry_callback, on_execute_callback y on_skipped_callback (tarea). Se puede pasar una lista de funciones."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/core-concepts/tasks.html
     accessed: 2026-10-11
+    page_title: "Tasks"
     note: "Airflow 3.3.2, Tasks, Timeouts: execution_timeout fija el tiempo máximo de cada ejecución de una tarea; al superarlo, AirflowTaskTimeout."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/task-sdk/1.3.2/api.html
     accessed: 2026-10-11
+    page_title: "airflow.sdk API Reference"
     note: "Task SDK 1.3.2 (el de Airflow 3.3.2), DAG: dagrun_timeout es la duración que se permite a una corrida antes de que venza o falle; las instancias que estén corriendo al vencer se marcan como skipped. on_success_callback y on_failure_callback aceptan una función o una lista. La función de SLA se eliminó en Airflow 3.0; su reemplazo son las DeadlineAlert (parámetro deadline), desde 3.1."
   - source: gcp-cloud-composer-docs
     url: https://docs.cloud.google.com/composer/docs/composer-3/composer-overview
     accessed: 2026-10-11
+    page_title: "Managed Airflow overview"
     note: "Managed Service for Apache Airflow (Gen 3), Managed Airflow overview: el clúster del entorno aloja componentes como Airflow Monitoring, que recogen logs para guardarlos en Cloud Logging y métricas para subirlas a Cloud Monitoring. Los logs de cada tarea se ven en la interfaz de Airflow y en la carpeta logs del bucket del entorno; hay logs de Cloud Monitoring y métricas del entorno."
   - source: aws-mwaa-docs
     url: https://docs.aws.amazon.com/mwaa/latest/userguide/what-is-mwaa.html
     accessed: 2026-10-11
+    page_title: "What Is Amazon Managed Workflows for Apache Airflow?"
     note: "Amazon MWAA, Workflow monitoring: logs y métricas de Apache Airflow en Amazon CloudWatch para identificar retrasos de tareas o errores; MWAA envía automáticamente las métricas del entorno y, si se habilitan, los logs de Apache Airflow a CloudWatch."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-factory/apache-airflow-jobs-concepts
     accessed: 2026-10-11
+    page_title: "What is an Apache Airflow job?"
     note: "Apache Airflow job en Microsoft Fabric: en la tabla de funciones frente a Workflow Orchestration Manager de Azure Data Factory, «Diagnostic logs and metrics» figura como No para el Apache Airflow job y Sí para Workflow Orchestration Manager."
 relations:
   - type: RELATED_TO
@@ -67,7 +75,7 @@ relations:
     target: failure-recovery
     note: Las alertas inician la recuperación ante un fallo.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -320,3 +328,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-06a aplicada (docs/reviews/cards-f3b-06a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-11: relación `failure-recovery` agregada en `relations` y en §17 (cambio mínimo).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

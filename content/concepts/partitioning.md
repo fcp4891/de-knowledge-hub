@@ -18,18 +18,22 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/partitioned-tables
     accessed: 2026-09-30
+    page_title: "Introduction to partitioned tables"
     note: Tipos de partición en BigQuery, pruning y gestión por partición.
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/transactions
     accessed: 2026-09-30
+    page_title: "Multi-statement transactions"
     note: Transacciones de varias sentencias con commit o rollback atómico.
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/partitions.html
     accessed: 2026-09-30
+    page_title: "Partition your data"
     note: Athena particiona datos en S3 por cualquier clave (estilo Hive u otro) para limitar los datos escaneados.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-tables-partition
     accessed: 2026-09-30
+    page_title: "Partitioning tables in dedicated SQL pool"
     note: Particiones en Synapse dedicated SQL pool; cada tabla ya está repartida en 60 distribuciones; demasiadas particiones perjudican el rendimiento; partition switching.
 relations:
   - type: RELATED_TO
@@ -39,7 +43,7 @@ relations:
     target: incremental-load
     note: La carga por período reemplaza segmentos completos.
 created_at: 2026-09-30
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -175,3 +179,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).
 - 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`, hallazgo 2) aplicada: §14 Costo ajustado a sus fuentes.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `partition-pruning`, `clustering`, `parquet-format`, que ya tienen ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

@@ -18,54 +18,67 @@ sources:
   - source: psycopg-docs
     url: https://www.psycopg.org/psycopg3/docs/basic/params.html
     accessed: 2026-10-08
+    page_title: "Passing parameters to SQL queries"
     note: "psycopg 3 (documentación sin URL por versión; ejecutado con 3.3.6): pasar valores como parámetros (%s, %(name)s) y no formatear la consulta como cadena; el formateo de cadenas falla con valores como O'Reilly y, con datos de fuentes no confiables, abre la puerta a la inyección SQL. Psycopg convierte objetos de Python a valores SQL."
   - source: psycopg-docs
     url: https://www.psycopg.org/psycopg3/docs/basic/copy.html
     accessed: 2026-10-08
+    page_title: "Using COPY TO and COPY FROM"
     note: "COPY es una de las formas más eficientes de cargar datos en la base; Cursor.copy() con COPY ... FROM STDIN y write_row() dentro de un bloque with; la operación termina al salir del bloque; la conexión sigue el comportamiento transaccional normal."
   - source: psycopg-docs
     url: https://www.psycopg.org/psycopg3/docs/basic/usage.html
     accessed: 2026-10-08
+    page_title: "Basic module usage"
     note: "Al salir del bloque with de la conexión, si hay una transacción abierta se confirma; si se lanzó una excepción en el bloque, se revierte; en ambos casos la conexión se cierra."
   - source: psycopg-docs
     url: https://www.psycopg.org/psycopg3/docs/basic/transactions.html
     accessed: 2026-10-08
+    page_title: "Transactions management"
     note: "conn.transaction() abre un bloque de transacción: al salir se confirma, o se revierte si se lanzó una excepción dentro del bloque."
   - source: psycopg-docs
     url: https://www.psycopg.org/psycopg3/docs/advanced/cursors.html
     accessed: 2026-10-08
+    page_title: "Cursor types"
     note: "Los cursores del lado del servidor permiten recuperar por partes conjuntos de resultados grandes, aunque pueden rendir menos en el uso cotidiano; con un cursor de servidor, la consulta no se procesa necesariamente completa y el servidor produce resultados a medida que se piden."
   - source: psycopg-docs
     url: https://www.psycopg.org/psycopg3/docs/api/cursors.html
     accessed: 2026-10-08
+    page_title: "Cursor classes"
     note: "ServerCursor.itersize: número de registros que se piden por vez al iterar el cursor (100 por defecto), para reducir los viajes al servidor. rowcount: número de registros afectados por la operación que produjo el resultado actual."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/17/sql-copy.html
     accessed: 2026-10-08
+    page_title: "PostgreSQL: Documentation: 17: COPY"
     note: "PostgreSQL 17 (ejecutado contra 17.11): COPY mueve datos entre tablas y archivos; COPY FROM agrega los datos a lo que ya hay en la tabla."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/17/sql-insert.html
     accessed: 2026-10-08
+    page_title: "PostgreSQL: Documentation: 17: INSERT"
     note: "ON CONFLICT especifica una acción alternativa a lanzar el error por violación de una restricción única o de exclusión."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/17/sql-createtable.html
     accessed: 2026-10-08
+    page_title: "PostgreSQL: Documentation: 17: CREATE TABLE"
     note: "TEMPORARY: la tabla se crea como temporal y se elimina automáticamente al final de la sesión (o de la transacción, según ON COMMIT)."
   - source: gcp-cloud-sql-docs
     url: https://docs.cloud.google.com/sql/docs/postgres/connect-connectors
     accessed: 2026-10-08
+    page_title: "Connect using Cloud SQL Language Connectors"
     note: "Los Cloud SQL Connectors son bibliotecas que dan cifrado y autorización basada en IAM al conectar con una instancia de Cloud SQL; no crean una ruta de red si no existe. Otras formas de conectar son un cliente de base de datos o el Cloud SQL Auth Proxy; con connector enforcement, Cloud SQL rechaza las conexiones directas y solo acepta el Auth Proxy o los Language Connectors. El Cloud SQL Python Connector admite para PostgreSQL los drivers pg8000 y asyncpg, y se autentica con Application Default Credentials."
   - source: aws-rds-docs
     url: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html
     accessed: 2026-10-08
+    page_title: "IAM database authentication for MariaDB, MySQL, and PostgreSQL"
     note: "Con la autenticación IAM de RDS no se usa contraseña sino un token de autenticación que RDS genera a pedido con AWS Signature Version 4; cada token dura 15 minutos."
   - source: aws-rds-docs
     url: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.Connecting.Python.html
     accessed: 2026-10-08
+    page_title: "Connecting to your DB instance using IAM authentication and the AWS SDK for Python (Boto3)"
     note: "Ejemplo de conexión con Python: el cliente rds de Boto3 genera el token con generate_db_auth_token(DBHostname, Port, DBUsername, Region) y el token se pasa como contraseña."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/postgresql/connectivity/connect-python
     accessed: 2026-10-08
+    page_title: "Quickstart: Use Python to connect and query data in Azure Database for PostgreSQL flexible server"
     note: "Azure Database for PostgreSQL con Python y psycopg: dos métodos, autenticación de Microsoft Entra (sin contraseña, con azure-identity y DefaultAzureCredential) y autenticación de PostgreSQL; el ejemplo advierte que los tokens de Microsoft Entra ID tienen vida limitada (24 horas por defecto) y que el código de ejemplo no es apto para producción tal cual."
 relations:
   - type: RELATED_TO
@@ -84,7 +97,7 @@ relations:
     target: sql-merge
     note: MERGE es la alternativa estándar al upsert con ON CONFLICT.
 created_at: 2026-10-08
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-09
 verification_status: verified
 ---
@@ -298,3 +311,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-09: revisión B-F3.1 del lote F3b-03b aplicada (docs/reviews/cards-f3b-03b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-11: §17 enlaza `database-ingestion`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

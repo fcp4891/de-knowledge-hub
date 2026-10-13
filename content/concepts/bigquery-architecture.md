@@ -18,26 +18,32 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/introduction
     accessed: 2026-10-11
+    page_title: "BigQuery overview"
     note: "BigQuery overview: plataforma de datos totalmente administrada; arquitectura serverless sin gestión de infraestructura; soporta formatos de tabla abiertos como Apache Iceberg, Delta y Apache Hudi. Su arquitectura tiene dos partes: una capa de almacenamiento que ingiere, almacena y optimiza datos, y una capa de cómputo que da capacidades de análisis; operan de forma independiente gracias a la red de Google de escala petabit. La separación permite que cada capa asigne recursos sin afectar el rendimiento o la disponibilidad de la otra y desplegar mejoras de forma independiente; no hace falta aprovisionar ni escalar recursos a mano. Las funciones de gobierno (búsqueda semántica, linaje) las provee Knowledge Catalog. Interfaces: consola, herramienta bq, bibliotecas cliente (Python, Java, JavaScript, Go), API REST y RPC."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/storage_overview
     accessed: 2026-10-11
+    page_title: "Overview of BigQuery storage"
     note: "Overview of BigQuery storage: la separación de almacenamiento y cómputo permite escalarlos de forma independiente. Al ejecutar una consulta, el motor reparte el trabajo en paralelo entre workers, que leen las tablas, procesan la consulta y reúnen los resultados; ejecuta en memoria y usa una red petabit. Almacenamiento administrado (sin aprovisionar; se paga lo usado; cómputo y almacenamiento se facturan por separado), durable (diseñado para 99.999999999 % de durabilidad anual, réplicas en varias zonas), cifrado antes de escribir a disco (con clave de Google o propia) y con codificación eficiente (Capacitor, formato columnar). Tipos: tablas estándar, clones (solo guardan el delta), snapshots (copias de solo lectura a un punto del tiempo), vistas materializadas, resultados en caché (tablas temporales sin costo) y tablas externas (solo los metadatos en BigQuery). Los datasets son contenedores lógicos que afectan permisos, cuotas y facturación. BigQuery guarda los datos en formato columnar, cada columna por separado: lee solo las columnas que usa la consulta y comprime mejor (por ejemplo, run-length encoding). Facturación lógica (sin comprimir, por defecto) o física (comprimida), configurada por dataset; el cambio de modelo no mueve datos. Time travel y fail-safe."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/query-overview
     accessed: 2026-10-11
+    page_title: "Overview of BigQuery analytics"
     note: "Overview of BigQuery analytics: la forma principal de analizar es una consulta SQL; GoogleSQL cumple SQL:2011 con extensiones. Tipos de jobs de consulta: interactivos (por defecto, empiezan lo antes posible), batch (menor prioridad; se encolan si el proyecto o la reserva usa todos sus recursos) y continuos."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/slots
     accessed: 2026-10-11
+    page_title: "Understand slots"
     note: "Understand slots: un slot es una unidad virtual de cómputo que BigQuery usa para ejecutar consultas SQL, código Python u otros jobs; BigQuery decide cuántos slots usa cada consulta según los datos, la complejidad y los slots disponibles; no se puede fijar a mano."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/best-practices-performance-compute
     accessed: 2026-10-11
+    page_title: "Optimize query computation"
     note: "Optimize query computation: BigQuery no indexa claves primarias (por eso un join por una columna más ancha tarda más en comparar)."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/cached-results
     accessed: 2026-10-11
+    page_title: "Use cached query results"
     note: "Use cached query results: BigQuery escribe todos los resultados en una tabla, de destino o temporal en caché; si se repite exactamente la misma consulta, devuelve la caché si existe; sin costo de almacenamiento; cerca de 24 horas, con excepciones."
 relations:
   - type: RELATED_TO
@@ -71,7 +77,7 @@ relations:
     target: bigquery-biglake-tables
     note: Otros tipos de tabla.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -249,3 +255,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-08a aplicada (docs/reviews/cards-f3b-08a.md), regla del §17: relations incluye `oltp-vs-olap`, `bigquery-clustering`, `bigquery-materialized-views`, `bigquery-external-tables`, `bigquery-biglake-tables`, que el §17 nombra.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

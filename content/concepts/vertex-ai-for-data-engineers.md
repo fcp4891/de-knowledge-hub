@@ -19,26 +19,32 @@ sources:
   - source: gcp-agent-platform-docs
     url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/vertex-ai-name-changes
     accessed: 2026-10-12
+    page_title: "Gemini Enterprise Agent Platform name changes"
     note: "Gemini Enterprise Agent Platform name changes (Last updated 2026-10-09 UTC): con la introducción de Gemini Enterprise Agent Platform, algunos productos y funciones de Vertex AI se renombraron; la tabla lista los nombres anteriores y los nuevos. Para la plataforma, dos filas: Vertex AI Platform → Gemini Enterprise Agent Platform y Vertex AI → Agent Platform. Entre los productos: Vertex AI API → Gemini Enterprise Agent Platform API; Vertex AI Pipelines → Gemini Enterprise Agent Platform Pipelines; Vertex AI Feature Store → Feature Store on Gemini Enterprise Agent Platform; Vertex AI Batch Inference → Gemini Enterprise Agent Platform Batch Inference; Vertex AI Model Registry → Model Registry on Gemini Enterprise Agent Platform; Vertex AI Workbench → Gemini Enterprise Agent Platform Workbench; Vertex AI Vector Search → Vector Search on Gemini Enterprise Agent Platform."
   - source: gcp-agent-platform-docs
     url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning
     accessed: 2026-10-11
+    page_title: "Introduction to machine learning on Gemini Enterprise Agent Platform"
     note: "Introduction to machine learning on Gemini Enterprise Agent Platform: herramientas para construir, entrenar y administrar modelos de ML (AutoML o modelos propios con TensorFlow, PyTorch, scikit-learn o XGBoost). Datasets administrados (obligatorios para AutoML, opcionales para entrenamiento propio), entrenamiento administrado y serverless, y Model Registry para versiones, evaluación y despliegue."
   - source: gcp-agent-platform-docs
     url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning/featurestore/latest/overview
     accessed: 2026-10-11
+    page_title: "About Feature Store on Gemini Enterprise Agent Platform"
     note: "About Feature Store on Gemini Enterprise Agent Platform: feature store administrado que gestiona los datos de features en una tabla o vista de BigQuery y los sirve online directamente desde esa fuente; actúa como capa de metadatos sobre BigQuery y sirve los últimos valores con baja latencia. Usa feature views para conectar las fuentes con clústeres de serving online. Admite gestión de embeddings con búsqueda por similitud."
   - source: gcp-agent-platform-docs
     url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning/pipelines/introduction
     accessed: 2026-10-11
+    page_title: "Introduction to Gemini Enterprise Agent Platform Pipelines"
     note: "Introduction to Gemini Enterprise Agent Platform Pipelines: automatizar, monitorear y gobernar sistemas de ML de forma serverless con pipelines de ML definidos con Kubeflow Pipelines o TensorFlow Extended (TFX); ML Metadata registra el linaje de los artefactos."
   - source: gcp-agent-platform-docs
     url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning/predictions/get-batch-predictions
     accessed: 2026-10-11
+    page_title: "Get batch inferences from a custom trained model"
     note: "Get batch inferences from a custom trained model: una solicitud de inferencia por lotes indica una fuente de entrada y una ubicación de salida, en Cloud Storage o BigQuery; la entrada y la salida deben estar en la misma región o multirregión para minimizar el tiempo."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/bqml-introduction
     accessed: 2026-10-11
+    page_title: "Introduction to ML in BigQuery"
     note: "Introduction to ML in BigQuery: BigQuery ML crea y ejecuta modelos de ML con GoogleSQL o la consola; los modelos se guardan en datasets de BigQuery, como tablas y vistas. También accede a modelos de Gemini Enterprise Agent Platform y a APIs de Cloud AI; los modelos remotos referencian modelos desplegados en Agent Platform por su endpoint, y su CREATE MODEL no procesa bytes ni tiene costo de BigQuery."
 relations:
   - type: RELATED_TO
@@ -54,7 +60,7 @@ relations:
     target: bigquery-security
     note: Los controles sobre las tablas de features.
 created_at: 2026-10-11
-updated_at: 2026-10-12
+updated_at: 2026-10-13
 last_verified: 2026-10-12
 verification_status: verified
 ---
@@ -245,3 +251,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08c), con el nombre actual de la plataforma según su página de cambios de nombre y los anteriores como alias (ADR-010).
 - 2026-10-12: revisión B-F3.1 del lote F3b-08c aplicada (docs/reviews/cards-f3b-08c.md): el §1 y el §11 dicen las dos filas de la página de cambios de nombre (Vertex AI Platform → Gemini Enterprise Agent Platform; Vertex AI → Agent Platform); «Vertex AI» queda solo como alias de búsqueda; aliases con Vertex AI Platform y Agent Platform.
 - 2026-10-12: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

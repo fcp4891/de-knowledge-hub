@@ -18,18 +18,22 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/information-schema-intro
     accessed: 2026-10-11
+    page_title: "Introduction to INFORMATION_SCHEMA"
     note: "Introduction to INFORMATION_SCHEMA: vistas de solo lectura, definidas por el sistema, con metadatos de los objetos de BigQuery (datasets, jobs, control de acceso y otros); se consultan con GoogleSQL indicando un alcance y una vista (por ejemplo, myDataset.INFORMATION_SCHEMA.TABLES). Incluye vistas de acceso (OBJECT_PRIVILEGES), datasets (SCHEMATA), jobs (JOBS_BY_PROJECT, JOBS_BY_USER, JOBS_BY_FOLDER, JOBS_BY_ORGANIZATION), jobs por intervalo (JOBS_TIMELINE_*), recomendaciones e insights, reservas, tablas (TABLES, COLUMNS, PARTITIONS, TABLE_STORAGE) y vistas. Los calificadores de región (region-us, region-europe-north1) restringen a esa ubicación y no son jerárquicos: la multirregión US no incluye las regiones us-*. Precio: en on-demand, las consultas a INFORMATION_SCHEMA cobran un mínimo de 10 MB aunque procesen menos; en capacidad, consumen slots comprados."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/information-schema-jobs
     accessed: 2026-10-11
+    page_title: "JOBS view"
     note: "JOBS view: metadatos casi en tiempo real de todos los jobs del proyecto actual; JOBS y JOBS_BY_PROJECT son sinónimos. Roles: BigQuery User y BigQuery Resource Viewer en el proyecto. Está particionada por creation_time (hora UTC) y agrupada por project_id y user_email. Muestra los jobs en curso y el historial de los últimos 180 días. Columnas como total_bytes_billed (bytes facturados en on-demand), total_slot_ms (milisegundos de slot del job mientras estuvo en RUNNING, incluidos reintentos), job_type, state, user_email y query (texto SQL de la consulta)."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/information-schema-table-storage
     accessed: 2026-10-11
+    page_title: "TABLE_STORAGE view"
     note: "TABLE_STORAGE view: almacenamiento por tabla o vista materializada, con columnas como total_rows (filas) y total_logical_bytes (bytes lógicos, sin comprimir)."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/introduction-audit-workloads
     accessed: 2026-10-11
+    page_title: "Introduction to audit logs in BigQuery"
     note: "Introduction to audit logs in BigQuery: los audit logs son la fuente definitiva para preguntas de auditoría y seguridad (quién hizo qué, dónde y cuándo); las vistas INFORMATION_SCHEMA son otra fuente, con metadatos de jobs, datasets, tablas y otras entidades, para usar junto con métricas y logs."
 relations:
   - type: RELATED_TO
@@ -45,7 +49,7 @@ relations:
     target: bigquery-query-optimization
     note: Qué hacer con las consultas más caras.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -220,3 +224,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08b).
 - 2026-10-11: revisión B-F3.1 del lote F3b-08b aplicada (docs/reviews/cards-f3b-08b.md), regla del §17: relations incluye `bigquery-query-optimization`, que el §17 nombra.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

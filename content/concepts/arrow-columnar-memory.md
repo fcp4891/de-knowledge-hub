@@ -18,34 +18,42 @@ sources:
   - source: apache-arrow-docs
     url: https://arrow.apache.org/docs/format/Columnar.html
     accessed: 2026-10-08
+    page_title: "Arrow Columnar Format"
     note: "Especificación del formato columnar (estable desde 1.0.0): estructura de datos en memoria independiente del lenguaje, serialización de metadatos y protocolo de transporte. Características: datos adyacentes para lecturas secuenciales (scans), acceso aleatorio O(1), apto para SIMD y vectorización, y reubicable sin «pointer swizzling», lo que permite acceso sin copia en memoria compartida. Cada array tiene un bitmap de validez con al menos un bit por posición que indica si el valor es nulo. Relleno recomendado de 64 bytes para alinear con registros SIMD."
   - source: apache-arrow-docs
     url: https://arrow.apache.org/docs/python/data.html
     accessed: 2026-10-08
+    page_title: "Data Types and In-Memory Data Model"
     note: "PyArrow (25.0.1; la documentación actual no tiene URL por versión para la última release): tipos de datos (enteros, string, temporales, tipos anidados list/map/struct/union) y el tipo diccionario, un tipo categórico codificado; arrays, record batches, tablas y esquemas."
   - source: apache-arrow-docs
     url: https://arrow.apache.org/docs/python/pandas.html
     accessed: 2026-10-08
+    page_title: "Pandas Integration"
     note: "Como la representación interna de pandas suele diferir del formato columnar de Arrow, las conversiones sin copia (sin reservar memoria ni calcular) solo son posibles en casos limitados; en el peor caso, to_pandas deja dos versiones de los datos en memoria. Las columnas enteras con nulos pasan a float con NaN; types_mapper permite pedir tipos nullable de pandas (Int64). Las columnas categóricas de pandas se convierten en arrays diccionario de Arrow."
   - source: apache-arrow-docs
     url: https://arrow.apache.org/docs/python/parquet.html
     accessed: 2026-10-08
+    page_title: "Reading and Writing the Apache Parquet Format"
     note: "Leer un subconjunto de columnas de un Parquet puede ser mucho más rápido que leer todo el archivo, por el layout columnar. Un archivo Parquet tiene row groups; read_table los lee todos y los concatena. PyArrow comprime con Snappy por defecto y admite Brotli, Gzip, ZSTD, LZ4 o sin compresión."
   - source: apache-arrow-docs
     url: https://arrow.apache.org/docs/python/ipc.html
     accessed: 2026-10-08
+    page_title: "Streaming, Serialization, and IPC"
     note: "Formatos IPC de streaming y de archivo (random access) para record batches; el de archivo es útil con memory maps. Si la fuente admite lecturas sin copia (memory map, BufferReader), los batches leídos también son sin copia y no reservan memoria nueva."
   - source: polars-docs
     url: https://docs.pola.rs/user-guide/migration/pandas/
     accessed: 2026-10-08
+    page_title: "Coming from Pandas"
     note: "Polars usa el formato de memoria de Apache Arrow para representar los datos."
   - source: apache-spark-docs
     url: https://spark.apache.org/docs/4.2.0/api/python/tutorial/sql/arrow_pandas.html
     accessed: 2026-10-08
+    page_title: "Apache Arrow in PySpark"
     note: "Spark usa Arrow para acelerar la conversión entre DataFrames de Spark y de pandas (spark.sql.execution.arrow.pyspark.enabled, habilitado por defecto)."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/storage
     accessed: 2026-10-08
+    page_title: "Use the BigQuery Storage Read API to read table data"
     note: "BigQuery Storage Read API: los datos de una sesión se serializan en Apache Avro o Apache Arrow; el esquema de referencia llega en la respuesta inicial de ReadSession."
 relations:
   - type: RELATED_TO
@@ -61,7 +69,7 @@ relations:
     target: pyspark-dataframes
     note: Spark usa Arrow para convertir con pandas.
 created_at: 2026-10-08
-updated_at: 2026-10-09
+updated_at: 2026-10-13
 last_verified: 2026-10-09
 verification_status: verified
 ---
@@ -249,3 +257,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: creación (lote F3b-03b).
 - 2026-10-09: revisión B-F3.1 del lote F3b-03b aplicada (docs/reviews/cards-f3b-03b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

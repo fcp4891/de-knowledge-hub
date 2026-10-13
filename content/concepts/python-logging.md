@@ -18,26 +18,32 @@ sources:
   - source: python-docs
     url: https://docs.python.org/3/library/logging.html
     accessed: 2026-10-02
+    page_title: "logging — Logging facility for Python"
     note: "logging.getLogger(__name__) es la construcción recomendada (un logger por módulo). Logger.exception registra en nivel ERROR con la información de la excepción y solo debe llamarse desde un manejador de excepciones. Argumentos exc_info, stack_info, stacklevel y extra; las claves de extra no deben chocar con los atributos de LogRecord. basicConfig no hace nada si el root ya tiene handlers, salvo force=True; handlers recibe handlers ya creados. Formatter.format usa formatException para la excepción. makeLogRecord crea un LogRecord."
   - source: python-docs
     url: https://docs.python.org/3/howto/logging.html
     accessed: 2026-10-02
+    page_title: "Logging HOWTO"
     note: "El nivel por defecto es WARNING: sin configuración, solo se registran eventos de ese nivel o superior. En bibliotecas se recomienda no agregar handlers distintos de NullHandler: configurar handlers es prerrogativa de la aplicación. El formateo de los argumentos del mensaje se difiere hasta que es inevitable; isEnabledFor evita calcular argumentos costosos."
   - source: python-docs
     url: https://docs.python.org/3/howto/logging-cookbook.html
     accessed: 2026-10-02
+    page_title: "Logging Cookbook"
     note: "Ejemplo de logging estructurado: serializar el evento en JSON para que sea procesable por máquinas (StructuredMessage)."
   - source: gcp-cloud-logging-docs
     url: https://docs.cloud.google.com/logging/docs/structured-logging
     accessed: 2026-10-02
+    page_title: "Structured logging"
     note: "Un log cuyo payload es un objeto JSON guardado en jsonPayload es un log estructurado: se puede consultar por rutas JSON e indexar campos. Para escribirlos con un agente, la aplicación escribe objetos JSON serializados; GKE, App Engine flexible y Cloud Run functions tienen un agente integrado que envía stdout y stderr a Cloud Logging."
   - source: aws-cloudwatch-logs-docs
     url: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_AnalyzeLogData-discoverable-fields.html
     accessed: 2026-10-02
+    page_title: "Supported logs and discovered fields"
     note: "CloudWatch Logs Insights descubre campos de logs en JSON y se accede a ellos con notación de punto; en logs de Lambda descubre solo el primer fragmento JSON de cada evento."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/azure-monitor/logs/data-platform-logs
     accessed: 2026-10-02
+    page_title: "Azure Monitor Logs overview"
     note: "Azure Monitor Logs guarda los datos en tablas de un Log Analytics workspace y se consulta con KQL; los planes de tabla difieren en capacidades de consulta y costo."
 relations:
   - type: RELATED_TO
@@ -50,7 +56,7 @@ relations:
     target: data-pipeline
     note: Los logs con identificador de ejecución y de lote permiten seguir un pipeline de punta a punta.
 created_at: 2026-10-02
-updated_at: 2026-10-04
+updated_at: 2026-10-13
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -254,3 +260,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-02: creación (lote 5 de F3).
 - 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

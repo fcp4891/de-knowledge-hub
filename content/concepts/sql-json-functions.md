@@ -18,34 +18,42 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/json_functions
     accessed: 2026-10-07
+    page_title: "JSON functions"
     note: "Extractores estándar: JSON_VALUE (escalar a STRING), JSON_QUERY (valor JSON), JSON_VALUE_ARRAY y JSON_QUERY_ARRAY. JSON_EXTRACT, JSON_EXTRACT_SCALAR y otros son extractores heredados: siguen admitidos, pero se recomienda usar los estándar, y JSON_EXTRACT figura como obsoleto. Los conversores LAX_ (LAX_INT64, LAX_FLOAT64, LAX_BOOL, LAX_STRING) convierten de forma flexible; PARSE_JSON convierte un STRING a JSON. Funciones como BOOL o FLOAT64 dan error si el valor no es del tipo; con el prefijo SAFE. devuelven NULL."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/json-data
     accessed: 2026-10-07
+    page_title: "Work with JSON data in GoogleSQL"
     note: "El tipo JSON de BigQuery permite acceder a campos con el operador de punto y a elementos con subíndices. Los valores JSON no se usan directamente en GROUP BY ni ORDER BY: hay que extraerlos con JSON_VALUE, que devuelve NULL si la ruta no apunta a un escalar. El tipo JSON tiene un límite de anidación de 500, y las políticas de acceso por fila no se aplican a columnas JSON."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions
     accessed: 2026-10-07
+    page_title: "Conversion functions"
     note: "CAST puede hacer fallar la consulta si la conversión no es posible; SAFE_CAST reemplaza esos errores de tiempo de ejecución por NULL."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/json-functions.html
     accessed: 2026-10-07
+    page_title: "JSON functions"
     note: "Redshift admite funciones JSON sobre columnas CHAR y VARCHAR, pero recomienda usar SUPER para procesar datos en formato JSON: SUPER usa una representación ya parseada y sin esquema que consulta datos jerárquicos de forma eficiente."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/JSON_PARSE.html
     accessed: 2026-10-07
+    page_title: "JSON_PARSE function"
     note: "JSON_PARSE parsea datos JSON y los convierte a la representación SUPER; es la función para insertar en columnas SUPER con INSERT o UPDATE."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/functions/json-value-transact-sql?view=sql-server-ver17
     accessed: 2026-10-07
+    page_title: "JSON_VALUE (Transact-SQL)"
     note: "Aplica a Azure Synapse Analytics y Warehouse en Microsoft Fabric, entre otros. JSON_VALUE extrae un escalar de un texto JSON; sin RETURNING devuelve nvarchar(4000). Si el valor supera 4000 caracteres, en modo lax devuelve NULL y en modo strict da error; para valores mayores se usa OPENJSON. En modo lax, una ruta que no apunta a un escalar o que no existe devuelve NULL; en strict, error. Para objetos o arrays se usa JSON_QUERY. La cláusula RETURNING aplica a SQL Server 2025 y posteriores."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/data-types
     accessed: 2026-10-07
+    page_title: "Data types in Fabric Data Warehouse"
     note: "Fabric Data Warehouse no admite el tipo json en tablas; la alternativa es varchar, con hasta 16 MB en varchar(max)."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/functions-json.html
     accessed: 2026-10-07
+    page_title: "9.16. JSON Functions and Operators"
     note: "Operadores -> (devuelve json/jsonb) y ->> (devuelve text) para extraer campos de objetos y elementos de arrays; jsonb_path_query devuelve los elementos que selecciona una expresión jsonpath. En modo lax, los métodos de jsonpath aplicados a un array se ejecutan para cada elemento."
 relations:
   - type: RELATED_TO
@@ -61,7 +69,7 @@ relations:
     target: sql-structs
     note: Un JSON con forma estable puede pasar a STRUCT tipado en la capa curada.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -235,3 +243,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: ficha completa (lote F3b-02b, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): §15: `JSON_VALUE` devuelve `NULL` por encima de 4000 caracteres en modo lax; no trunca.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

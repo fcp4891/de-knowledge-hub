@@ -17,14 +17,17 @@ sources:
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/dead-letter-topics
     accessed: 2026-09-30
+    page_title: "Dead-letter topics"
     note: Dead-letter topics; intentos de entrega entre 5 (mínimo y por defecto) y 100 (máximo); conteo aproximado y best-effort; el mensaje se reenvía envuelto con atributos de la suscripción de origen; Pub/Sub solo cuenta intentos si el dead-letter topic está bien configurado y con los permisos IAM correctos.
   - source: aws-sqs-docs
     url: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html
     accessed: 2026-09-30
+    page_title: "Using dead-letter queues in Amazon SQS"
     note: Redrive policy con maxReceiveCount; redrive de la DLQ para devolver mensajes; en colas estándar la expiración se basa en el timestamp de encolado original.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dead-letter-queues
     accessed: 2026-09-30
+    page_title: "Overview of Service Bus dead-letter queues"
     note: Cada cola y suscripción de Service Bus tiene una subcola DLQ que no se crea ni borra por separado; MaxDeliveryCountExceeded; mensajes expirados también pueden ir a la DLQ.
 relations:
   - type: RELATED_TO
@@ -34,7 +37,7 @@ relations:
     target: batch-vs-streaming
     note: La DLQ es típica de los pipelines streaming.
 created_at: 2026-09-30
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -178,3 +181,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).
 - 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `retries`, `replay`, `pubsub-delivery-semantics`, que ya tienen ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

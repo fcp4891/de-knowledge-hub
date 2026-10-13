@@ -18,6 +18,7 @@ sources:
   - source: aws-what-is-data-modeling
     url: https://aws.amazon.com/what-is/data-modeling/
     accessed: 2026-10-10
+    page_title: "What is Data Modeling?"
     note: "AWS describe tres tipos de modelo de datos. El modelo conceptual da una vista general: qué datos contiene el sistema, sus atributos y restricciones, las reglas de negocio, cómo organizarlos y los requisitos de seguridad e integridad. Lo crean los stakeholders de negocio y los analistas; es una representación diagramática simple que no sigue reglas formales de modelado y sirve para que personas técnicas y no técnicas acuerden propósito, alcance y diseño. Ejemplo de un concesionario: entidades Sucursales, Autos, Clientes, Ventas y Vendedores, con reglas como «todo auto pertenece a una sucursal» y «toda venta tiene al menos un vendedor y un cliente». Hace de puente entre las reglas de negocio y el sistema de base de datos; también se le llama modelo de dominio."
   - source: chen-er-model-1976
     url: https://bit.csc.lsu.edu/~chen/pdf/erd-5-pages.pdf
@@ -37,7 +38,7 @@ relations:
     target: kimball-methodology
     note: Elegir el proceso de negocio y sus entidades es el primer paso del diseño dimensional.
 created_at: 2026-10-10
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -191,3 +192,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-10: creación (lote F3b-04a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

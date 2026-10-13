@@ -18,22 +18,27 @@ sources:
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/four-4-step-design-process/
     accessed: 2026-10-10
+    page_title: "Four-Step Dimensional Design Process"
     note: "Kimball (Nivel 4, conceptual): las cuatro decisiones del diseño de un modelo dimensional son elegir el proceso de negocio, declarar el grano, identificar las dimensiones e identificar los hechos; se toman considerando las necesidades del negocio y la realidad de los datos de origen en sesiones colaborativas, y después el equipo define nombres de tablas y columnas, valores de ejemplo y reglas de negocio, con participación de representantes de gobierno de datos."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/kimball-data-warehouse-bus-architecture/
     accessed: 2026-10-10
+    page_title: "Enterprise Data Warehouse Bus Architecture"
     note: "Kimball (Nivel 4, conceptual): la arquitectura de bus del data warehouse empresarial, independiente de la tecnología, permite un desarrollo incremental del DW/BI centrado en los procesos de negocio y sus dimensiones conformadas, que se administran una vez en el ETL y se reutilizan en varias tablas de hechos; la matriz de bus es la herramienta de diseño que da la visión estratégica de arriba hacia abajo mientras la entrega ágil avanza de abajo hacia arriba, un proceso de negocio por vez."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/star-schema-olap-cube/
     accessed: 2026-10-10
+    page_title: "Star Schemas and OLAP Cubes"
     note: "Kimball (Nivel 4, conceptual): los modelos dimensionales implementados en bases relacionales se llaman esquemas estrella."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/dimensional-modeling-overview
     accessed: 2026-10-10
+    page_title: "Dimensional modeling in Fabric Data Warehouse"
     note: "Dimensional modeling in Fabric Data Warehouse: primer artículo de una serie de guía práctica para Warehouse en Microsoft Fabric; cita como referencia The Data Warehouse Toolkit (3.a ed., 2013) de Ralph Kimball y otros. El esquema estrella es una técnica de diseño de modelado dimensional adoptada por los data warehouses relacionales y es el enfoque recomendado al crear un Fabric Warehouse; se compone de tablas de hechos y de dimensiones."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/power-bi/guidance/star-schema
     accessed: 2026-10-10
+    page_title: "Understand star schema and the importance for Power BI"
     note: "La guía de Power BI explica el esquema estrella (hechos y dimensiones, medidas, dimensiones role-playing, junk y degeneradas, tablas de hechos sin hechos) y su importancia para los modelos semánticos de Power BI."
 relations:
   - type: RELATED_TO
@@ -55,7 +60,7 @@ relations:
     target: data-vault
     note: Data Vault es otra metodología de integración; no reemplaza el modelo dimensional de consumo.
 created_at: 2026-10-10
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -257,3 +262,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-11: §17 enlaza `data-mesh`, que ya tiene ficha (lote F3b-07a); antes figuraba como pendiente de ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

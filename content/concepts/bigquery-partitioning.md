@@ -18,38 +18,47 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/partitioned-tables
     accessed: 2026-09-30
+    page_title: "Introduction to partitioned tables"
     note: Tipos de partición (columna de tiempo, ingesta, rango de enteros), particiones __NULL__ y __UNPARTITIONED__ (valores anteriores a 1960-01-01 o posteriores a 2159-12-31), pruning, expiración de particiones, combinación con clustering.
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax
     accessed: 2026-09-30
+    page_title: "Data manipulation language (DML) statements in GoogleSQL"
     note: Bytes procesados por MERGE con UPDATE o DELETE (origen más destino).
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
     accessed: 2026-09-30
+    page_title: "Data definition language (DDL) statements in GoogleSQL"
     note: partition_expression admite DATE(<timestamp_column>) con particiones diarias y RANGE_BUCKET para rangos de enteros.
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/creating-partitioned-tables
     accessed: 2026-09-30
+    page_title: "Create partitioned tables"
     note: Ejemplos oficiales de CREATE TABLE con RANGE_BUCKET(customer_id, GENERATE_ARRAY(0, 100, 10)), partition_expiration_days y require_partition_filter.
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/quotas
     accessed: 2026-09-30
+    page_title: "Quotas and limits"
     note: Cada tabla particionada admite hasta 10.000 particiones; si se supera, la documentación sugiere usar clustering además o en lugar de la partición.
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/partitions.html
     accessed: 2026-09-30
+    page_title: "Partition your data"
     note: Athena particiona por cualquier clave (estilo Hive u otro) para limitar los datos escaneados.
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/t_Sorting_data.html
     accessed: 2026-09-30
+    page_title: "Sort keys"
     note: Redshift optimiza con sort keys.
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/t_Distributing_data.html
     accessed: 2026-09-30
+    page_title: "Data distribution for query optimization"
     note: Redshift reparte las filas entre los nodos según el estilo de distribución de la tabla.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-tables-partition
     accessed: 2026-09-30
+    page_title: "Partitioning tables in dedicated SQL pool"
     note: Synapse dedicated SQL pool, 60 distribuciones, al menos 1 millón de filas por distribución y partición en columnstore.
 relations:
   - type: EXTENDS
@@ -62,7 +71,7 @@ relations:
     target: bigquery-query-optimization
     note: El plan, las insights y las prácticas de optimización de BigQuery.
 created_at: 2026-09-30
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -226,3 +235,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `bigquery-clustering`, `partition-pruning`, `bigquery-cost-model`, que ya tienen ficha.
 - 2026-10-11: «pendiente de ficha» actualizado: la ficha ya existe (lote F3b-08a); el §17 la enlaza y relations la incluye: relations incluye `bigquery-query-optimization`, que el §17 nombra; §17 enlaza las fichas que ya existen.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

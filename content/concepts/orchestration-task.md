@@ -18,18 +18,22 @@ sources:
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/core-concepts/tasks.html
     accessed: 2026-10-11
+    page_title: "Tasks"
     note: "Airflow 3.3.2, Tasks: una Task es la unidad básica de ejecución; se organiza en Dags con dependencias upstream y downstream. Tres tipos: Operators (plantillas predefinidas), Sensors (subclase de Operators que espera un evento externo) y funciones decoradas con @task (TaskFlow); internamente todas son subclases de BaseOperator. Cada corrida crea Task Instances con estado: none, scheduled, queued, running, success, restarting, failed, skipped, upstream_failed, up_for_retry, up_for_reschedule, deferred, awaiting_input y removed; idealmente none → scheduled → queued → running → success. execution_timeout fija el tiempo máximo de cada ejecución (AirflowTaskTimeout). AirflowSkipException marca la tarea como skipped y AirflowFailException como failed sin usar los reintentos restantes."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/best-practices.html
     accessed: 2026-10-11
+    page_title: "Best Practices"
     note: "Airflow 3.3.2, Best Practices: tratar las tareas como transacciones de una base de datos y nunca producir resultados incompletos. Airflow puede reintentar una tarea que falla, así que debe producir el mismo resultado en cada re-ejecución: no usar INSERT en un re-run (puede duplicar filas), usar UPSERT; leer y escribir en una partición específica (por ejemplo, data_interval_start); no usar now() para cálculos críticos dentro de una tarea."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/core-concepts/taskflow.html
     accessed: 2026-10-11
+    page_title: "TaskFlow"
     note: "Airflow 3.3.2, TaskFlow: el decorador @task convierte una función de Python en tarea; TaskFlow pasa entradas y salidas entre tareas con XComs y calcula las dependencias. Las variables de contexto se reciben como argumentos con nombre o en **kwargs."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/core-concepts/xcoms.html
     accessed: 2026-10-11
+    page_title: "XComs"
     note: "Airflow 3.3.2, XComs: mecanismo para que las tareas se comuniquen, porque por defecto están aisladas y pueden correr en máquinas distintas. Pensadas para cantidades pequeñas de datos; no para pasar valores grandes como dataframes."
 relations:
   - type: RELATED_TO
@@ -48,7 +52,7 @@ relations:
     target: sensors
     note: Un sensor es un tipo de tarea que solo espera.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -292,3 +296,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-06a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-06a aplicada (docs/reviews/cards-f3b-06a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

@@ -18,18 +18,22 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/control-access-to-resources-iam
     accessed: 2026-10-11
+    page_title: "Control access to resources with IAM"
     note: "Control access to resources with IAM: se ven, otorgan y revocan controles de acceso para datasets y para los recursos dentro de ellos: tablas, vistas y rutinas; los modelos no admiten roles de IAM individuales. El acceso se da con políticas de permiso (allow policies) adjuntas a los recursos, una por recurso; controla el recurso y sus descendientes que la heredan. Las rutinas dentro de datasets externos o vinculados no admiten controles de acceso."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/authorized-views
     accessed: 2026-10-11
+    page_title: "Authorized views"
     note: "Authorized views: una vista autorizada (o vista materializada autorizada) comparte un subconjunto de datos de un dataset de origen sin dar acceso a ese dataset. Pasos: dataset de origen; dataset para la vista; vista que restringe las columnas; dar a los analistas permiso para ejecutar jobs y acceso al dataset de la vista; autorizar la vista en el dataset de origen. También se pueden compartir todas las vistas de un dataset (authorized datasets). El dataset de origen y el de la vista deben estar en la misma ubicación. Al borrar una vista autorizada, puede tardar hasta 24 horas en salir de la lista y sigue contando contra el límite de vistas autorizadas. Ejemplo de Terraform con google_bigquery_dataset_access."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/row-level-security-intro
     accessed: 2026-10-11
+    page_title: "Introduction to BigQuery row-level security"
     note: "Introduction to BigQuery row-level security: filtra y da acceso a filas según condiciones del usuario, con políticas de acceso por fila (row access policies) sobre una tabla; una tabla puede tener varias y conviven con la seguridad por columna (policy tags) y los controles de proyecto, dataset y tabla. Las políticas actúan como filtros: los usuarios o grupos fuera de la lista permitida no ven filas; quien tenía acceso completo debe agregarse a un filtro TRUE para conservarlo. Las crean usuarios con BigQuery Admin o BigQuery DataOwner. Ejemplo: CREATE ROW ACCESS POLICY ... GRANT TO (...) FILTER USING (Email = SESSION_USER()). Limitaciones de rendimiento: BI Engine y las vistas materializadas no se aceleran sobre tablas con políticas de fila; la seguridad por fila no participa de la poda de particiones."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/introduction-audit-workloads
     accessed: 2026-10-11
+    page_title: "Introduction to audit logs in BigQuery"
     note: "Introduction to audit logs in BigQuery: los audit logs responden «quién hizo qué, dónde y cuándo» en los recursos de Google Cloud y son la fuente definitiva de actividad por usuario y patrones de acceso: la principal para preguntas de auditoría o seguridad."
 relations:
   - type: RELATED_TO
@@ -48,7 +52,7 @@ relations:
     target: bigquery-monitoring
     note: Los audit logs de los cambios de acceso.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -286,3 +290,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08b).
 - 2026-10-11: revisión B-F3.1 del lote F3b-08b aplicada (docs/reviews/cards-f3b-08b.md), regla del §17: relations incluye `bigquery-policy-tags`, `data-mart`, `bigquery-monitoring`, que el §17 nombra; el §17 nombra `bigquery-architecture`, que ya estaba en relations.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

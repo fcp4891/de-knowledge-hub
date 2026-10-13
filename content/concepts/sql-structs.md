@@ -18,30 +18,37 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/data-types
     accessed: 2026-10-06
+    page_title: "Data types"
     note: "STRUCT es un contenedor de campos ordenados, cada uno con tipo (obligatorio) y nombre (opcional); sus campos pueden ser de tipos arbitrariamente complejos. La igualdad entre structs se compara campo a campo en el orden de los campos, ignorando los nombres; no se admiten comparaciones de menor o mayor. Para evitar un array de arrays se intercala un STRUCT."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/nested-repeated
     accessed: 2026-10-06
+    page_title: "Specify nested and repeated columns in table schemas"
     note: "Una columna RECORD se lee como STRUCT y una columna en modo REPEATED como ARRAY; un RECORD repetido es un array de STRUCT. BigQuery rinde mejor con datos desnormalizados: en vez de mantener un esquema en estrella o copo de nieve, recomienda columnas anidadas y repetidas, que mantienen relaciones sin el impacto de rendimiento de un esquema normalizado. Un esquema no puede tener más de 15 niveles de RECORD anidados, y RECORD es incompatible con UNION, INTERSECT, EXCEPT DISTINCT y SELECT DISTINCT."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax
     accessed: 2026-10-06
+    page_title: "Query syntax"
     note: "En GROUP BY no se admiten valores STRUCT anónimos."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/query-super.html
     accessed: 2026-10-06
+    page_title: "Querying semi-structured data"
     note: "En Redshift, las estructuras dentro de una columna SUPER se navegan con notación de punto y de corchetes (PartiQL), y los arrays anidados se recorren en el FROM."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql?view=sql-server-ver17
     accessed: 2026-10-06
+    page_title: "OPENJSON (Transact-SQL)"
     note: "Aplica a Warehouse en Microsoft Fabric, entre otros. Con with_clause, OPENJSON devuelve las columnas y tipos indicados, asociando por nombre las claves del JSON (distinguiendo mayúsculas y minúsculas) o mediante rutas JSON explícitas."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/data-types
     accessed: 2026-10-06
+    page_title: "Data types in Fabric Data Warehouse"
     note: "La lista de tipos soportados para tablas de Fabric Data Warehouse no incluye tipos struct ni de registro; para json la alternativa es varchar."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/rowtypes.html
     accessed: 2026-10-06
+    page_title: "8.16. Composite Types"
     note: "Un tipo compuesto representa la estructura de una fila o registro: una lista de nombres de campo con sus tipos. Las restricciones de la definición de una tabla no se aplican a los valores del tipo compuesto fuera de ella. Un valor compuesto se escribe con un constructor de fila, y un campo se lee con la notación (valor).campo."
 relations:
   - type: RELATED_TO
@@ -57,7 +64,7 @@ relations:
     target: bigquery-sql-dialect
     note: GoogleSQL, el dialecto de BigQuery.
 created_at: 2026-10-05
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -223,3 +230,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): §13 sin la frase de validación de esquema; describe solo lo que dicen las páginas de tipos de Fabric y de `OPENJSON`.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-11: «pendiente de ficha» actualizado: la ficha ya existe (lote F3b-08a); el §17 la enlaza y relations la incluye: relations incluye `bigquery-sql-dialect`, que el §17 nombra; §17 enlaza las fichas que ya existen.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

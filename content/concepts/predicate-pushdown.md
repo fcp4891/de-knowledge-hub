@@ -18,26 +18,32 @@ sources:
   - source: apache-parquet-docs
     url: https://parquet.apache.org/docs/file-format/pageindex/
     accessed: 2026-10-07
+    page_title: "Page Index"
     note: "El page index de Parquet guarda valores mínimos y máximos por página (ColumnIndex) y la ubicación de cada página (OffsetIndex), para que un lector salte páginas al escanear con predicados selectivos. Al saltar páginas de una columna, deben saltarse las filas correspondientes de las demás; las lecturas sin predicados selectivos no pagan el costo de leer el índice."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/performance-tuning-data-optimization-techniques.html
     accessed: 2026-10-07
+    page_title: "Optimize data"
     note: "Los metadatos de los archivos columnares pueden contener los valores mínimo y máximo de cada página; si el valor buscado está fuera de ese rango, la página se salta. Ordenar los datos dentro de los archivos por la columna filtrada (por ejemplo, created_at) permite a Athena saltar las partes innecesarias. Los archivos columnares muy pequeños anulan el beneficio; Parquet se organiza en row groups (128 MB por defecto) y ORC en stripes (64 MB)."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c-spectrum-external-performance.html
     accessed: 2026-10-07
+    page_title: "Amazon Redshift Spectrum query performance"
     note: "Redshift Spectrum mejora cuando el procesamiento se empuja a la capa Spectrum: se pueden empujar cláusulas GROUP BY, condiciones de comparación y de patrón (como LIKE), agregaciones (COUNT, SUM, AVG, MIN, MAX) y funciones de texto; DISTINCT y ORDER BY no se empujan. Con Parquet, Spectrum elimina las columnas innecesarias del escaneo."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/postgres-fdw.html
     accessed: 2026-10-07
+    page_title: "F.38. postgres_fdw — access data stored in external PostgreSQL servers"
     note: "postgres_fdw optimiza las consultas remotas para reducir los datos transferidos: envía las cláusulas WHERE al servidor remoto y no trae columnas innecesarias. Solo envía cláusulas que usan tipos, operadores y funciones integrados (o de extensiones declaradas en el servidor foráneo) e inmutables. Si los tipos o collations no coinciden, el servidor remoto puede interpretar las condiciones de otra forma y producir anomalías semánticas."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/metadata-caching-external-tables
     accessed: 2026-10-07
+    page_title: "Use metadata caching for external data sources"
     note: "En tablas externas y BigLake, listar millones de archivos del origen puede tardar minutos; con caché de metadatos, las consultas evitan listar archivos y pueden particionar y podar archivos más rápido."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/guidelines-warehouse-performance
     accessed: 2026-10-07
+    page_title: "Performance guidelines in Fabric Data Warehouse"
     note: "En Fabric Data Warehouse, filtrar antes de los joins reduce los datos temprano; las columnas usadas en WHERE se benefician de que el predicado se aplique en una etapa temprana de la ejecución."
 relations:
   - type: RELATED_TO
@@ -53,7 +59,7 @@ relations:
     target: query-plans
     note: El plan muestra en qué nodo se aplica cada filtro.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -236,3 +242,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: ficha completa (lote F3b-02b, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): «sintaxis documentada» en el ejemplo de Spectrum; el pushdown a subconsultas se atribuye a la prueba de PostgreSQL, no a «optimizadores en general».
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

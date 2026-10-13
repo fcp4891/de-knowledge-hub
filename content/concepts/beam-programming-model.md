@@ -18,26 +18,32 @@ sources:
   - source: apache-beam-docs
     url: https://beam.apache.org/documentation/programming-guide/
     accessed: 2026-10-08
+    page_title: "Apache Beam Programming Guide"
     note: "Beam Programming Guide (sin URL por versión; SDK 2.77.0 instalado): Pipeline encapsula toda la tarea de procesamiento; PCollection representa un conjunto de datos distribuido, acotado (fuente fija) o no acotado (fuente que se actualiza continuamente); PTransform es una operación que toma PCollections y produce otras. Una PCollection es inmutable: una transformación produce una nueva y no modifica la original; no es seguro modificar los valores que recibe un DoFn. ParDo es la transformación de procesamiento paralelo genérico (como la fase Map); GroupByKey es una reducción paralela sobre pares clave/valor (como el Shuffle); Combine combina elementos o valores por clave. Salidas adicionales con tags desde un DoFn. Windowing subdivide una PCollection según la marca de tiempo de cada elemento; GroupByKey y Combine trabajan implícitamente por ventana; ventanas fijas, deslizantes, de sesión y la ventana global."
   - source: apache-beam-docs
     url: https://beam.apache.org/documentation/runners/direct/
     accessed: 2026-10-08
+    page_title: "Using the Direct Runner"
     note: "El Direct Runner ejecuta pipelines en la máquina local y está diseñado para validar que el pipeline respeta el modelo de Beam tanto como sea posible, con verificaciones adicionales en lugar de eficiencia; usarlo para pruebas y desarrollo ayuda a que el pipeline sea robusto entre runners."
   - source: apache-beam-docs
     url: https://beam.apache.org/documentation/runners/dataflow/
     accessed: 2026-10-08
+    page_title: "Using the Google Cloud Dataflow Runner"
     note: "El Dataflow Runner usa el servicio administrado Cloud Dataflow: sube el código y las dependencias a un bucket de Cloud Storage y crea un job; ofrece servicio totalmente administrado, autoescalado de workers durante la vida del job y rebalanceo dinámico de trabajo."
   - source: apache-beam-docs
     url: https://beam.apache.org/releases/pydoc/2.77.0/
     accessed: 2026-10-08
+    page_title: "Apache Beam SDK for Python "
     note: "Referencia del SDK de Python de Apache Beam 2.77.0 (apache_beam.testing.util.assert_that y equal_to; apache_beam.transforms.window.FixedWindows y TimestampedValue)."
   - source: gcp-dataflow-docs
     url: https://docs.cloud.google.com/dataflow/docs/guides/setting-pipeline-options
     accessed: 2026-10-08
+    page_title: "Set Dataflow pipeline options"
     note: "Opciones del pipeline para ejecutar en Dataflow: --runner=DataflowRunner, proyecto, región y ubicación temporal en Cloud Storage."
   - source: aws-managed-flink-docs
     url: https://docs.aws.amazon.com/managed-flink/latest/java/how-creating-apps-beam.html
     accessed: 2026-10-08
+    page_title: "Use Apache Beam with Managed Service for Apache Flink applications"
     note: "Guía para desarrolladores (Java) de Managed Service for Apache Flink: las aplicaciones que usan Apache Beam ejecutan los pipelines con el runner de Apache Flink y tienen las mismas capacidades de Beam que ese runner; las métricas de Beam no se ven en la consola del servicio; Beam se soporta con Flink 1.8 o posterior."
 relations:
   - type: RELATED_TO
@@ -56,7 +62,7 @@ relations:
     target: testing-with-pytest
     note: DirectRunner y assert_that permiten probar el pipeline en local.
 created_at: 2026-10-08
-updated_at: 2026-10-09
+updated_at: 2026-10-13
 last_verified: 2026-10-09
 verification_status: verified
 ---
@@ -272,3 +278,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: creación (lote F3b-03b).
 - 2026-10-09: revisión B-F3.1 del lote F3b-03b aplicada (docs/reviews/cards-f3b-03b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

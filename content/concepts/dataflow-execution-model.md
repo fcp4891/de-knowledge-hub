@@ -18,34 +18,42 @@ sources:
   - source: gcp-dataflow-docs
     url: https://docs.cloud.google.com/dataflow/docs/overview
     accessed: 2026-10-11
+    page_title: "Dataflow overview"
     note: "Dataflow overview: servicio de Google Cloud de procesamiento unificado batch y streaming a escala; el mismo modelo de programación para ambos. Por defecto, procesamiento exactly-once de cada registro; para pipelines streaming que toleran duplicados, el modo at-least-once reduce costo y latencia. Casos: movimiento de datos, ETL hacia BigQuery, soporte de dashboards, ML en tiempo real, procesamiento de logs o sensores."
   - source: gcp-dataflow-docs
     url: https://docs.cloud.google.com/dataflow/docs/pipeline-lifecycle
     accessed: 2026-10-11
+    page_title: "Pipeline lifecycle"
     note: "Pipeline lifecycle: al ejecutar, Dataflow crea un grafo de ejecución a partir del código que construye el Pipeline (graph construction time); Beam ejecuta localmente el código del punto de entrada (el nivel superior de un script de Python) y convierte las llamadas a fuentes, sinks y transforms en nodos; el código de los DoFn corre en los workers. Durante la construcción, Beam valida que los recursos (buckets, tablas, temas) existan y sean accesibles. Fusión: el servicio puede fusionar pasos para no materializar cada PCollection intermedia; respeta las dependencias de datos, pero el resto puede ejecutarse en cualquier orden; si la fusión limita el paralelismo, Redistribute (arbitrarily o byKey) da una pista para redistribuir. Combine: el servicio hace combinación parcial local antes de agrupar (GroupByKey, CoGroupByKey, Combine) y se recomienda no hacerla a mano; en batch favorece la eficiencia y en streaming la latencia, y puede no combinar parcialmente."
   - source: gcp-dataflow-docs
     url: https://docs.cloud.google.com/dataflow/docs/shuffle-for-batch
     accessed: 2026-10-11
+    page_title: "Dataflow shuffle for batch jobs"
     note: "Dataflow shuffle for batch jobs: por defecto, el shuffle sale de las VMs de los workers y pasa al backend del servicio; es la operación base de GroupByKey, CoGroupByKey y Combine; ventajas: ejecución más rápida en la mayoría de los jobs, menos CPU, memoria y disco en las VMs, y mejor autoscaling porque las VMs no guardan datos de shuffle. Los jobs streaming usan otro mecanismo, el streaming shuffle."
   - source: gcp-dataflow-docs
     url: https://docs.cloud.google.com/dataflow/docs/streaming-engine
     accessed: 2026-10-11
+    page_title: "Use Streaming Engine for streaming jobs"
     note: "Use Streaming Engine for streaming jobs: mueve la ejecución del pipeline fuera de las VMs de los workers al backend del servicio; sin él, el runner ejecuta los pasos streaming en las VMs. Habilitado por defecto en pipelines streaming con el SDK de Python 2.21.0 o posterior y Python 3, y con el SDK de Go 2.33.0 o posterior. Reduce CPU, memoria y disco en las VMs."
   - source: gcp-dataflow-docs
     url: https://docs.cloud.google.com/dataflow/docs/horizontal-autoscaling
     accessed: 2026-10-11
+    page_title: "Horizontal Autoscaling"
     note: "Horizontal Autoscaling: Dataflow elige la cantidad de workers y agrega o quita según la utilización promedio de CPU y el paralelismo del pipeline (estimación de hilos necesarios). Habilitado por defecto en batch: estima el trabajo total de cada etapa según el tamaño de entrada y el throughput, y lo reevalúa cada 30 segundos. También en streaming."
   - source: gcp-dataflow-docs
     url: https://docs.cloud.google.com/dataflow/docs/portable-runner
     accessed: 2026-10-11
+    page_title: "Use the Dataflow Portable Runner"
     note: "Use the Dataflow Portable Runner: «Portable Runner was previously called Runner v2». El runner estándar basado en JVM se llama Non-Portable Runner en batch o Streaming Java Runner en streaming. El runner de Dataflow sube el código y las dependencias a un bucket de Cloud Storage y crea un job que corre en recursos administrados. Para Java batch con el SDK 2.54.0 o posterior, el Portable Runner está habilitado por defecto; es obligatorio para pipelines multilenguaje, contenedores propios y pipelines de change streams de Spanner o Bigtable."
   - source: gcp-dataflow-docs
     url: https://docs.cloud.google.com/dataflow/docs/concepts/exactly-once
     accessed: 2026-10-11
+    page_title: "Exactly-once in Dataflow"
     note: "Exactly-once in Dataflow: los pipelines batch siempre usan exactly-once; los streaming por defecto, con at-least-once opcional. Para cada registro, Dataflow garantiza que se procesa y no se pierde, y que los resultados que quedan dentro del pipeline se reflejan como mucho una vez: los registros se procesan al menos una vez y los resultados se confirman exactamente una vez. La deduplicación tiene costo. Los efectos secundarios fuera del pipeline (por ejemplo, llamadas a un servicio remoto) pueden ocurrir varias veces, e incluso causar pérdida de datos si una transform borra su entrada antes de confirmar el resultado."
   - source: apache-beam-docs
     url: https://beam.apache.org/documentation/programming-guide/
     accessed: 2026-10-11
+    page_title: "Apache Beam Programming Guide"
     note: "Beam Programming Guide: el modelo de programación (Pipeline, PCollection, PTransform, DoFn) que Dataflow ejecuta."
 relations:
   - type: RELATED_TO
@@ -64,7 +72,7 @@ relations:
     target: etl-vs-elt
     note: Cuándo conviene transformar en SQL.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-12
 verification_status: verified
 ---
@@ -264,3 +272,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08c).
 - 2026-10-12: revisión B-F3.1 del lote F3b-08c aplicada (docs/reviews/cards-f3b-08c.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-12: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

@@ -18,18 +18,22 @@ sources:
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/databricks/lakehouse/medallion
     accessed: 2026-10-11
+    page_title: "What is the medallion lakehouse architecture?"
     note: "Azure Databricks: la arquitectura medallion es un patrón de diseño para organizar los datos de forma lógica, mejorando de manera incremental su estructura y calidad a medida que pasan por las capas Bronze, Silver y Gold; también se la llama multi-hop. Seguirla es una buena práctica recomendada, pero no un requisito. Bronze: datos crudos sin validar, en su formato original, que se agregan de forma incremental; pensada para alimentar silver, no para analistas; fuente única de verdad que permite reprocesar y auditar; recomienda guardar la mayoría de los campos como string, VARIANT o binario para protegerse de cambios de esquema, y agregar metadatos de procedencia (por ejemplo, el nombre del archivo). Silver: limpieza y validación; no recomienda escribir en silver directamente desde la ingesta, porque los cambios de esquema o registros corruptos de la fuente provocan fallas. Gold: vistas muy refinadas para analítica, tableros, ML y aplicaciones, a menudo agregadas y alineadas con funciones del negocio."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/onelake/onelake-medallion-lakehouse-architecture
     accessed: 2026-10-11
+    page_title: "Understand medallion architecture for Fabric with OneLake"
     note: "Microsoft Fabric: la arquitectura medallion es un patrón de diseño para organizar datos en un lakehouse y es el enfoque recomendado para Fabric; se implementa creando lakehouses en OneLake. Tres capas: bronze (datos crudos), silver (enriquecidos) y gold (curados); cada capa indica la calidad de los datos. Despliegue: lakehouses (uno por capa), un warehouse o una combinación; la página plantea dos patrones: (1) cada capa como lakehouse, con acceso de negocio por el SQL analytics endpoint, y (2) bronze y silver como lakehouses y gold como data warehouse, con acceso por el endpoint del warehouse. Aunque se pueden crear todos los lakehouses en un solo workspace, recomienda un workspace separado por lakehouse para tener más control y gobierno por capa. Para bronze, guardar los datos en su formato original o en Parquet o Delta Lake."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/databricks/sql/get-started/data-warehousing-concepts
     accessed: 2026-10-11
+    page_title: "Data warehousing architecture"
     note: "Azure Databricks: la capa silver es donde se integran datos de fuentes dispares para construir un data warehouse alineado con los procesos de negocio, a menudo con un modelo 3NF o Data Vault; el warehouse es la fuente única de verdad para los data marts."
   - source: aws-prescriptive-guidance
     url: https://docs.aws.amazon.com/prescriptive-guidance/latest/defining-bucket-names-data-lakes/data-layer-definitions.html
     accessed: 2026-10-11
+    page_title: "Recommended data layers"
     note: "AWS Prescriptive Guidance: si no se trabaja con datos sensibles (PII), recomienda al menos tres capas en un data lake de AWS, y más según la complejidad y los casos de uso; con datos sensibles, un bucket de S3 adicional como landing zone, donde se enmascaran los datos antes de pasar a la capa raw. Cada capa en su propio bucket de S3. Capas recomendadas: Raw (datos crudos sin procesar, donde se ingieren; mantener el formato original y activar el versionado del bucket), Stage (datos intermedios procesados y optimizados para consumo, por ejemplo CSV convertido a Parquet por un job de AWS Glue que valida y registra la tabla en el Glue Data Catalog) y Analytics (datos agregados para casos de uso concretos, en formato listo para consumo como Parquet). Incluye ejemplos de políticas de ciclo de vida por capa, que deben evaluarse según la organización, la regulación, los patrones de consulta y el costo."
 relations:
   - type: RELATED_TO
@@ -48,7 +52,7 @@ relations:
     target: data-vault
     note: Azure Databricks menciona 3NF o Data Vault como modelos habituales de la capa silver.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -270,3 +274,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-05a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-05a aplicada (docs/reviews/cards-f3b-05a.md): AWS recomienda al menos tres capas y, con datos sensibles, un bucket de landing antes de raw; Fabric con sus dos patrones de despliegue (cada capa como lakehouse, o gold como warehouse) y un workspace por lakehouse.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

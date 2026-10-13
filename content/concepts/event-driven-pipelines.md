@@ -17,22 +17,27 @@ sources:
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/pubsub-notifications
     accessed: 2026-10-11
+    page_title: "Pub/Sub notifications for Cloud Storage"
     note: "Pub/Sub notifications for Cloud Storage: envía a un tema de Pub/Sub información sobre cambios en los objetos de un bucket (por ejemplo, creados y borrados); cada notificación describe el evento y el objeto. Cloud Storage garantiza entrega al menos una vez a Pub/Sub, y Pub/Sub también entrega al menos una vez, así que se pueden recibir varios mensajes, con ids distintos, para el mismo evento. Las notificaciones no se publican necesariamente en el orden en que Pub/Sub las recibe; si se modifica el objeto a partir de una notificación, se recomienda usar los números generation y metageneration como precondiciones."
   - source: gcp-eventarc-docs
     url: https://docs.cloud.google.com/eventarc/docs/overview
     accessed: 2026-10-11
+    page_title: "Eventarc overview"
     note: "Eventarc permite construir arquitecturas dirigidas por eventos sin administrar la infraestructura; ediciones Advanced y Standard, ambas serverless y administradas, enrutan mensajes de forma asíncrona desde fuentes hacia destinos (servicios de Google Cloud, aplicaciones propias, SaaS y terceros) que reaccionan a cambios de estado llamados eventos."
   - source: aws-s3-docs
     url: https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventNotifications.html
     accessed: 2026-10-11
+    page_title: "Amazon S3 Event Notifications"
     note: "Amazon S3 Event Notifications: se configura qué eventos publica el bucket (objeto creado, borrado, restaurado, replicación, entre otros) y a qué destinos: temas de SNS, colas de SQS, funciones de Lambda y Amazon EventBridge. Las notificaciones están diseñadas para entregarse al menos una vez; normalmente llegan en segundos, pero a veces tardan un minuto o más."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/event-grid/overview
     accessed: 2026-10-11
+    page_title: "What is Azure Event Grid?"
     note: "Azure Event Grid es un servicio de publicación y suscripción administrado y escalable; usa MQTT y HTTP, permite entrega push o pull, admite la especificación CloudEvents 1.0 y sirve para construir pipelines de datos e integraciones dirigidas por eventos."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blob-event-overview
     accessed: 2026-10-11
+    page_title: "Reacting to Blob storage events"
     note: "Eventos de Blob Storage: Event Grid garantiza entrega al menos una vez a los suscriptores, pero por reintentos entre nodos o la disponibilidad de las suscripciones pueden llegar mensajes duplicados."
 relations:
   - type: RELATED_TO
@@ -51,7 +56,7 @@ relations:
     target: dead-letter-queue
     note: Los eventos que fallan repetidamente se apartan a una DLQ.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -254,3 +259,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-05a aplicada (docs/reviews/cards-f3b-05a.md): Eventarc distinguido de las notificaciones de Cloud Storage a Pub/Sub, con sus ediciones y los destinos de su página.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-11: §17 enlaza `event-driven-orchestration`, que ya tiene ficha (lote F3b-06a); antes figuraba como pendiente de ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

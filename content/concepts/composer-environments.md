@@ -19,34 +19,42 @@ sources:
   - source: gcp-cloud-composer-docs
     url: https://docs.cloud.google.com/composer/docs/composer-3/environment-architecture
     accessed: 2026-10-11
+    page_title: "Environment architecture"
     note: "Environment architecture (Gen 3): al crear un entorno, Managed Airflow reparte sus recursos entre el proyecto del cliente (donde se crean los entornos; puede haber varios) y un tenant project administrado por Google, propio de cada entorno, que da control de acceso unificado y una capa adicional de seguridad. La base de metadatos de Airflow es una instancia de Cloud SQL en el tenant project, accesible solo para la cuenta de servicio del entorno. Los schedulers parsean los DAGs, programan las corridas y encolan tareas para los workers."
   - source: gcp-cloud-composer-docs
     url: https://docs.cloud.google.com/composer/docs/composer-3/cloud-storage
     accessed: 2026-10-11
+    page_title: "Data stored in Cloud Storage"
     note: "Data stored in Cloud Storage: el bucket del entorno se sincroniza con los componentes de Airflow mediante Cloud Storage FUSE, en una sola dirección (del bucket a Airflow). Carpetas: dags (/home/airflow/gcs/dags), plugins (operadores, hooks, sensores propios), data (datos que producen y usan las tareas) y logs (logs de tareas, también en la UI y en la consola). Borrar el entorno no borra el bucket."
   - source: gcp-cloud-composer-docs
     url: https://docs.cloud.google.com/composer/docs/composer-3/environment-scaling
     accessed: 2026-10-11
+    page_title: "About environment scaling"
     note: "About environment scaling: el autoscaling usa tres autoscalers de GKE (Horizontal Pod Autoscaler, Cluster Autoscaler y Node auto-provisioning) que Managed Airflow configura en el clúster del entorno; se fijan la cantidad mínima y máxima de workers, y el número se ajusta con la métrica Scaling Factor Target (workers actuales, tareas de Celery en cola sin asignar, workers ociosos y celery.worker_concurrency). Se ajustan CPU, memoria y disco de schedulers, triggerers, web server y workers (escalado vertical). El tamaño del entorno controla la infraestructura administrada, incluida la base de Airflow: uno más grande para muchos DAGs y tareas."
   - source: gcp-cloud-composer-docs
     url: https://docs.cloud.google.com/composer/docs/composer-3/create-environments
     accessed: 2026-10-11
+    page_title: "Create Managed Service for Apache Airflow environments"
     note: "Create Managed Service for Apache Airflow environments: hay que indicar una imagen de Managed Airflow (Gen 3); por defecto, la Cloud Composer API usa la imagen de Gen 2, y el cambio del valor por defecto a Gen 3 se está desplegando gradualmente. Ejemplo de Terraform con google_composer_environment y provider google-beta (software_config.image_version, node_config.service_account). Modo de alta resiliencia (--enable-high-resilience) con dos schedulers. Todos los parámetros de escala y rendimiento se pueden cambiar después de crear el entorno."
   - source: gcp-cloud-composer-docs
     url: https://docs.cloud.google.com/composer/docs/composer-3/upgrade-environments
     accessed: 2026-10-11
+    page_title: "Upgrade environments"
     note: "Upgrade environments: en Gen 3, Managed Airflow actualiza automáticamente los componentes de infraestructura, que no cambian cómo funciona Airflow ni cómo corren los DAGs; no actualiza automáticamente la versión y el build de Airflow ni sus componentes cercanos: se actualizan a mano. Se puede usar la misma versión y build durante meses; al acercarse el fin de soporte, la consola muestra un aviso. Al actualizar, se re-despliegan los componentes de Airflow con la versión elegida y se mantienen los paquetes PyPI y las opciones de configuración."
   - source: gcp-cloud-composer-docs
     url: https://docs.cloud.google.com/composer/docs/composer-versions
     accessed: 2026-10-11
+    page_title: "Managed Service for Apache Airflow version list"
     note: "Managed Service for Apache Airflow version list (Gen 3), al 2026-10-11: composer-3-airflow-3.3.1-build.3 (Python 3.11.8, Latest build) y composer-3-airflow-2.11.1-build.20 (Latest build, Default build)."
   - source: gcp-cloud-composer-docs
     url: https://docs.cloud.google.com/composer/docs/composer-3/composer-overview
     accessed: 2026-10-11
+    page_title: "Managed Airflow overview"
     note: "Managed Airflow overview: «Cloud Composer is evolving to become Managed Service for Apache Airflow». Algunas opciones de configuración de Airflow están bloqueadas. Logs de tareas en la interfaz de Airflow y en la carpeta logs del bucket; métricas del entorno en Cloud Monitoring; el clúster aloja componentes que llevan logs a Cloud Logging y métricas a Cloud Monitoring."
   - source: gcp-cloud-composer-release-notes
     url: https://docs.cloud.google.com/composer/docs/release-notes
     accessed: 2026-10-12
+    page_title: "Managed Service for Apache Airflow release notes"
     note: "Managed Service for Apache Airflow release notes: «April 15, 2026 Announcement»: «Cloud Composer is evolving to become Managed Service for Apache Airflow»."
 relations:
   - type: RELATED_TO
@@ -65,7 +73,7 @@ relations:
     target: pipeline-dependencies
     note: La carga de DAGs con `DagBag` en la CI.
 created_at: 2026-10-11
-updated_at: 2026-10-12
+updated_at: 2026-10-13
 last_verified: 2026-10-12
 verification_status: verified
 ---
@@ -287,3 +295,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08c), con el nombre actual del servicio y el anterior como alias (ADR-010).
 - 2026-10-12: revisión B-F3.1 del lote F3b-08c aplicada (docs/reviews/cards-f3b-08c.md): el §11 cita también las release notes, con el anuncio del 15 de abril de 2026 y su fecha de consulta.
 - 2026-10-12: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

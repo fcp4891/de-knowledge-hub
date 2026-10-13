@@ -18,18 +18,22 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/conditional_expressions
     accessed: 2026-10-06
+    page_title: "Conditional expressions"
     note: "CASE evalúa cada WHEN en orden y devuelve el resultado del primero cuya condición es TRUE; los WHEN restantes y el ELSE no se evalúan. Si todas las condiciones son FALSE o NULL devuelve el ELSE, y sin ELSE devuelve NULL. CASE expr compara la expresión con cada WHEN por igualdad. COALESCE devuelve el primer valor no NULL; IFNULL(expr, null_result) es sinónimo de COALESCE con dos argumentos; NULLIF devuelve NULL si los dos valores son iguales; IF(expr, verdadero, otro) no evalúa la rama que no corresponde. La documentación advierte que la evaluación diferida puede aprovecharse para manejo de errores o rendimiento."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/functions-conditional.html
     accessed: 2026-10-06
+    page_title: "9.18. Conditional Expressions"
     note: "CASE puede usarse donde sea válida una expresión; si la condición es verdadera, el resto del CASE no se procesa. Sin embargo, el principio de que CASE evalúa solo las subexpresiones necesarias no es absoluto: una subexpresión constante como 1/0 suele fallar en la planificación aunque esté en una rama que nunca se ejecuta. COALESCE devuelve el primer argumento no nulo; NULLIF devuelve nulo si sus argumentos son iguales."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/language-elements/case-transact-sql?view=sql-server-ver17
     accessed: 2026-10-06
+    page_title: "CASE (Transact-SQL)"
     note: "Aplica a SQL Server, Azure Synapse Analytics y Warehouse en Microsoft Fabric, entre otros. CASE tiene forma simple y buscada, evalúa sus condiciones en orden y se detiene en la primera que se cumple. Las expresiones agregadas dentro de un WHEN se evalúan primero, antes del CASE, y pueden producir errores (por ejemplo, división por cero) aunque su rama no se use. Si todas las expresiones de resultado son la constante NULL, se produce el error 8133."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_CASE_function.html
     accessed: 2026-10-06
+    page_title: "CASE conditional expression"
     note: "Redshift admite CASE simple (compara un valor con cada WHEN) y buscado (evalúa condiciones), con ejemplos de cada forma."
 relations:
   - type: RELATED_TO
@@ -42,7 +46,7 @@ relations:
     target: data-transformation
     note: CASE es la herramienta habitual para normalizar y clasificar valores al transformar.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -225,3 +229,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: ficha completa (lote F3b-02a, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): §10 dice que las consultas usan la sintaxis documentada en los tres motores y que solo se ejecutaron en PostgreSQL.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

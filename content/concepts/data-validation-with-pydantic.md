@@ -18,46 +18,57 @@ sources:
   - source: pydantic-docs
     url: https://pydantic.dev/docs/validation/latest/get-started/
     accessed: 2026-10-02
+    page_title: "Pydantic Validation"
     note: "La lógica central de validación de Pydantic está escrita en Rust; los modelos pueden emitir JSON Schema; puede funcionar en modo estricto (sin conversión) o laxo (intenta convertir al tipo correcto)."
   - source: pydantic-docs
     url: https://pydantic.dev/docs/validation/latest/concepts/models/
     accessed: 2026-10-02
+    page_title: "Models"
     note: "BaseModel; model_validate() valida un objeto y model_validate_json() valida datos JSON. Por defecto los datos extra se ignoran; extra='forbid' los prohíbe y extra='allow' los guarda en __pydantic_extra__. La validación puede copiar y convertir datos."
   - source: pydantic-docs
     url: https://pydantic.dev/docs/validation/latest/concepts/strict_mode/
     accessed: 2026-10-02
+    page_title: "Strict Mode"
     note: "En modo laxo, {'x': '123'} se convierte a int 123; con strict=True, el mismo dato falla con int_type. También se puede activar en el modelo con ConfigDict(strict=True) y relajar por campo con Field(strict=False)."
   - source: pydantic-docs
     url: https://pydantic.dev/docs/validation/latest/concepts/fields/
     accessed: 2026-10-02
+    page_title: "Fields"
     note: "Field() agrega restricciones por tipo (por ejemplo gt, max_length, max_digits y decimal_places)."
   - source: pydantic-docs
     url: https://pydantic.dev/docs/validation/latest/api/pydantic/standard_library_types/
     accessed: 2026-10-02
+    page_title: "Standard Library Types"
     note: "Restricciones de strings (pattern, min_length, max_length) y de números (ge, gt, le, lt, multiple_of)."
   - source: pydantic-docs
     url: https://pydantic.dev/docs/validation/latest/errors/errors/
     accessed: 2026-10-02
+    page_title: "Error Handling"
     note: "ValidationError reúne todos los errores; cada uno tiene loc (ubicación), msg, type (identificador para máquinas), input, ctx y url."
   - source: pydantic-docs
     url: https://pydantic.dev/docs/validation/latest/api/pydantic-core/pydantic_core/
     accessed: 2026-10-02
+    page_title: "pydantic_core"
     note: "ValidationError.errors(include_url=True, include_context=True, include_input=True) devuelve la lista de errores; error_count() devuelve cuántos son."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/schemas
     accessed: 2026-10-02
+    page_title: "Schema overview"
     note: "Un schema de Pub/Sub (Avro o Protocol Buffer) asociado a un topic impone el formato del campo data: un mensaje que no cumple el schema no se publica. Pub/Sub no valida los valores por defecto de Avro."
   - source: aws-glue-docs
     url: https://docs.aws.amazon.com/glue/latest/dg/schema-registry.html
     accessed: 2026-10-02
+    page_title: "AWS Glue Schema registry"
     note: "AWS Glue Schema Registry se integra con Apache Kafka, Amazon MSK, Kinesis Data Streams, Managed Service for Apache Flink y Lambda; admite Avro, JSON Schema (Draft-04, 06 y 07, validado con la biblioteca Everit) y Protobuf, con modos de compatibilidad (BACKWARD, FORWARD, FULL, NONE, etc.)."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/event-hubs/schema-registry-overview
     accessed: 2026-10-02
+    page_title: "Azure Schema Registry in Event Hubs"
     note: "Azure Schema Registry es una característica de Event Hubs que da un repositorio central de schemas; productores y consumidores serializan y validan la integridad de los datos con el mismo schema."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/event-hubs/schema-registry-concepts
     accessed: 2026-10-02
+    page_title: "Schema Registry in Azure Event Hubs"
     note: "Formatos de schema del registro de Event Hubs: Avro, JSON schema y Protocol Buffers; los schemas se organizan en schema groups."
 relations:
   - type: RELATED_TO
@@ -73,7 +84,7 @@ relations:
     target: python-error-handling-and-retries
     note: Un error de validación es permanente; reintentarlo no lo arregla.
 created_at: 2026-10-02
-updated_at: 2026-10-08
+updated_at: 2026-10-13
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -261,3 +272,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: §10, cambio mínimo de tipos para pasar `mypy --strict`: `list[dict]` pasa a `list[dict[str, Any]]` (con `from typing import Any`). Sin cambio de comportamiento; pendiente de revisión de Cursor.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `data-contracts`, que ya tiene ficha.
 - 2026-10-08: §17 enlaza `python-typing`, que ya tiene ficha (lote F3b-03a); antes figuraba como pendiente de ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

@@ -17,26 +17,32 @@ sources:
   - source: python-docs
     url: https://docs.python.org/3.12/library/argparse.html
     accessed: 2026-10-08
+    page_title: "argparse — Parser for command-line options, arguments and subcommands"
     note: "argparse define los argumentos de la línea de comandos; type puede ser cualquier invocable que convierta la cadena (por ejemplo, date.fromisoformat) y required obliga a pasarlo; parse_args acepta una lista de argumentos, lo que permite probar main() sin la línea de comandos real."
   - source: python-docs
     url: https://docs.python.org/3.12/library/os.html
     accessed: 2026-10-08
+    page_title: "os — Miscellaneous operating system interfaces"
     note: "os.environ es un mapeo con las variables de entorno del proceso. os.replace: si tiene éxito, el renombrado es atómico (requisito de POSIX); puede fallar entre sistemas de archivos distintos."
   - source: python-docs
     url: https://docs.python.org/3.12/library/logging.html
     accessed: 2026-10-08
+    page_title: "logging — Logging facility for Python"
     note: "logging.basicConfig configura el logger raíz con un handler y un formato; getLogger devuelve un logger por nombre."
   - source: gcp-cloud-run-docs
     url: https://docs.cloud.google.com/run/docs/container-contract
     accessed: 2026-10-08
+    page_title: "Container runtime contract"
     note: "Cloud Run jobs: el contenedor debe terminar con código 0 si el job completó bien y con un código distinto de 0 si falló; como los jobs no sirven peticiones, no deberían escuchar en un puerto ni levantar un servidor web. Variables de entorno de cada tarea: CLOUD_RUN_TASK_INDEX (índice desde 0; con paralelismo mayor que 1 las tareas pueden no seguir el orden), CLOUD_RUN_TASK_ATTEMPT (veces que se reintentó la tarea, desde 0) y CLOUD_RUN_TASK_COUNT (número de tareas definido en --tasks)."
   - source: aws-lambda-docs
     url: https://docs.aws.amazon.com/lambda/latest/dg/python-handler.html
     accessed: 2026-10-08
+    page_title: "Define Lambda Event Function handler in Python"
     note: "El handler de Lambda es el método que procesa los eventos (por ejemplo lambda_handler(event, context)); la función corre hasta que el handler responde, sale o vence el timeout. La inicialización fuera del handler (clientes del SDK, logger) aprovecha la reutilización del entorno de ejecución."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-python
     accessed: 2026-10-08
+    page_title: "Azure Functions developer reference guide for Python apps"
     note: "Modelo de programación v2 de Azure Functions para Python (recomendado para apps nuevas): triggers y bindings con decoradores en el código; cada función es un método global y sin estado en function_app.py o en un blueprint. El estado de variables globales y los archivos temporales en tmp/ no tienen persistencia garantizada entre invocaciones."
 relations:
   - type: IMPLEMENTS
@@ -58,7 +64,7 @@ relations:
     target: python-file-processing
     note: Un caso concreto de este patrón sobre una carpeta de archivos.
 created_at: 2026-10-08
-updated_at: 2026-10-09
+updated_at: 2026-10-13
 last_verified: 2026-10-09
 verification_status: verified
 ---
@@ -327,3 +333,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: creación (lote F3b-03b).
 - 2026-10-09: revisión B-F3.1 del lote F3b-03b aplicada (docs/reviews/cards-f3b-03b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

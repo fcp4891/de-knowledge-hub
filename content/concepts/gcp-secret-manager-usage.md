@@ -18,10 +18,12 @@ sources:
   - source: gcp-secret-manager-docs
     url: https://docs.cloud.google.com/secret-manager/docs/overview
     accessed: 2026-10-11
+    page_title: "Secret Manager overview"
     note: "Secret Manager overview: servicio para guardar y gestionar datos sensibles como API keys, usuarios, contraseñas y certificados; esta es la documentación del servicio global por defecto (hay un servicio regional aparte). Un secreto es un recurso global con metadatos (etiquetas, anotaciones, permisos) y versiones; una versión guarda el dato y se identifica por un ID o una marca de tiempo. Las versiones permiten despliegues graduales, rollback a una versión buena, historial de cambios (quién y cuándo) y auditoría; se pueden fijar versiones a cargas, agregar alias, deshabilitar o destruir versiones. Cifrado por defecto en tránsito (TLS) y en reposo (AES-256), o con CMEK. Roles y condiciones de IAM granulares; replicación entre regiones para alta disponibilidad."
   - source: gcp-secret-manager-docs
     url: https://docs.cloud.google.com/secret-manager/docs/best-practices
     accessed: 2026-10-11
+    page_title: "Secret Manager best practices"
     note: "Secret Manager best practices: el acceso a la API se protege con IAM; mínimo privilegio; separar aplicaciones y entornos (staging, producción) en proyectos distintos; con secretos de muchos servicios en un proyecto, bindings de IAM a nivel de secreto o IAM Conditions. Credenciales con Application Default Credentials. Referenciar los secretos por número de versión en lugar del alias latest, y desplegar los cambios de versión con el proceso de releases. Rotar periódicamente para limitar el impacto de una filtración y para que quien ya no debe acceder no siga usando un secreto conocido. Evitar pasar secretos por el sistema de archivos o por variables de entorno."
 relations:
   - type: RELATED_TO
@@ -40,7 +42,7 @@ relations:
     target: terraform-state
     note: Por qué el valor no va en el estado.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -228,3 +230,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08b).
 - 2026-10-11: revisión B-F3.1 del lote F3b-08b aplicada (docs/reviews/cards-f3b-08b.md), regla del §17: relations incluye `infrastructure-as-code`, `terraform-state`, que el §17 nombra.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

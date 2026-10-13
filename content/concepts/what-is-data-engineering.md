@@ -18,22 +18,27 @@ sources:
   - source: gcp-data-engineer-certification
     url: https://cloud.google.com/learn/certification/data-engineer
     accessed: 2026-10-05
+    page_title: "Professional Data Engineer"
     note: "Google Cloud describe al Professional Data Engineer como quien habilita decisiones basadas en datos recolectando, transformando, almacenando y entregando datos para distintas aplicaciones; diseña y construye infraestructura de datos robusta, optimizando rendimiento y seguridad; evalúa y elige soluciones según necesidades de negocio y regulatorias, y administra plataformas de datos."
   - source: aws-data-engineer-certification
     url: https://aws.amazon.com/certification/certified-data-engineer-associate/
     accessed: 2026-10-05
+    page_title: "AWS Certified Data Engineer - Associate"
     note: "AWS describe las competencias de un data engineer: ingerir y transformar datos, orquestar pipelines aplicando conceptos de programación, diseñar modelos de datos, gestionar ciclos de vida de los datos y asegurar la calidad de los datos."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-engineering/data-engineering-overview
     accessed: 2026-10-05
+    page_title: "What is Microsoft Fabric Data Engineering?"
     note: "Fabric Data Engineering permite diseñar, construir y mantener infraestructuras y sistemas que permiten a las organizaciones recolectar, almacenar, procesar y analizar grandes volúmenes de datos, procurando que los datos sean accesibles, estén bien organizados y tengan alta calidad."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/credentials/certifications/fabric-data-engineer-associate/
     accessed: 2026-10-05
+    page_title: "Microsoft Certified: Fabric Data Engineer Associate"
     note: "Un Fabric Data Engineer debe dominar patrones de carga de datos, arquitecturas de datos y procesos de orquestación."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/bq-cli-reference
     accessed: 2026-10-05
+    page_title: "bq command-line tool reference"
     note: "bq load --source_format=FORMAT (CSV, NEWLINE_DELIMITED_JSON, AVRO, PARQUET, ORC...) y --replace=true (equivale a WRITE_TRUNCATE); bq query --use_legacy_sql=false --destination_table escribe el resultado en una tabla."
 relations:
   - type: RELATED_TO
@@ -52,7 +57,7 @@ relations:
     target: data-orchestration
     note: Una de las responsabilidades centrales.
 created_at: 2026-10-05
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-06
 verification_status: verified
 ---
@@ -223,3 +228,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: creación (lote F3b-01a, dominio 01-fundamentals).
 - 2026-10-06: revisión B-F3.1 del lote F3b-01a aplicada (docs/reviews/cards-f3b-01a.md): cada responsabilidad se atribuye solo a la fuente que la menciona; §11 sin productos que la certificación no respalda.
 - 2026-10-06: `verification_status: verified` (revisión B-F3.1 del lote F3b-01a aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

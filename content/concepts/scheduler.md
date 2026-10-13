@@ -18,30 +18,37 @@ sources:
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/administration-and-deployment/scheduler.html
     accessed: 2026-10-01
+    page_title: "Scheduler"
     note: "El scheduler de Airflow monitorea tareas y Dags y dispara las task instances cuando sus dependencias están completas; recoge los resultados del parsing de Dags y revisa qué tareas activas puede disparar, una vez por minuto por defecto; corre como servicio persistente (airflow scheduler) y usa el Executor configurado. El primer Dag run sale del start_date mínimo y los siguientes del timetable. Con cron o timedelta, no dispara hasta que termina el período que cubre: un @daily corre después de que termina el día. Airflow admite más de un scheduler a la vez, por rendimiento y resiliencia, apoyado en la base de metadatos."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/authoring-and-scheduling/cron.html
     accessed: 2026-10-01
+    page_title: "Cron & Time Intervals"
     note: "schedule acepta una expresión cron, un datetime.timedelta o un preset: None (solo ejecuciones externas), @once, @continuous, @hourly, @daily y otros."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dag-run.html
     accessed: 2026-10-01
+    page_title: "Dag Runs"
     note: "Cada Dag run tiene un data interval; con catchup desactivado (por defecto) el scheduler crea solo el run del último intervalo al activar un Dag."
   - source: gcp-cloud-composer-docs
     url: https://docs.cloud.google.com/composer/docs/composer-3/environment-architecture
     accessed: 2026-10-01
+    page_title: "Environment architecture"
     note: "En Managed Service for Apache Airflow, los schedulers parsean los archivos de Dags, programan los Dag runs según el intervalo y encolan tareas para los workers; los triggerers monitorean las tareas diferidas."
   - source: aws-mwaa-docs
     url: https://docs.aws.amazon.com/mwaa/latest/userguide/what-is-mwaa.html
     accessed: 2026-10-01
+    page_title: "What Is Amazon Managed Workflows for Apache Airflow?"
     note: "Amazon MWAA ofrece Airflow administrado; usa contenedores en ECS sobre Fargate para escalar los workers y reducir caídas del scheduler; envía métricas y logs a CloudWatch."
   - source: aws-eventbridge-scheduler-docs
     url: https://docs.aws.amazon.com/scheduler/latest/UserGuide/what-is-scheduler.html
     accessed: 2026-10-01
+    page_title: "What is Amazon EventBridge Scheduler?"
     note: "EventBridge Scheduler es un scheduler serverless que invoca más de 270 servicios de AWS; admite expresiones cron y rate para patrones recurrentes o invocaciones únicas, ventanas de entrega flexibles, límites de reintento y retención máxima de disparos fallidos."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/concepts-pipeline-execution-triggers
     accessed: 2026-10-01
+    page_title: "Pipeline execution and triggers in Azure Data Factory or Azure Synapse Analytics"
     note: "Data Factory tiene tres tipos de trigger: schedule (calendario de reloj), tumbling window (intervalo periódico con estado) y event-based (responde a un evento). Pipelines y triggers tienen relación muchos a muchos, salvo el tumbling window."
 relations:
   - type: RELATED_TO
@@ -54,7 +61,7 @@ relations:
     target: backfill
     note: El backfill crea ejecuciones de intervalos pasados por fuera del ritmo normal del scheduler.
 created_at: 2026-10-01
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -233,3 +240,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `data-orchestration`, `airflow-architecture`, que ya tienen ficha.
 - 2026-10-11: §17 enlaza `pipeline-dependencies`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

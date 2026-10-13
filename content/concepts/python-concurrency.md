@@ -18,38 +18,47 @@ sources:
   - source: python-docs
     url: https://docs.python.org/3.12/glossary.html
     accessed: 2026-10-08
+    page_title: "Glossary"
     note: "Glosario, global interpreter lock: mecanismo de CPython que asegura que solo un hilo ejecute bytecode de Python a la vez; simplifica la implementación a costa de gran parte del paralelismo de las máquinas multiprocesador. Algunos módulos de extensión liberan el GIL en tareas de cálculo intensivo como compresión o hashing, y el GIL siempre se libera al hacer E/S."
   - source: python-docs
     url: https://docs.python.org/3.12/library/threading.html
     accessed: 2026-10-08
+    page_title: "threading — Thread-based parallelism"
     note: "Detalle de CPython: por el GIL, solo un hilo ejecuta código Python a la vez; para aprovechar máquinas multinúcleo se recomienda multiprocessing o concurrent.futures.ProcessPoolExecutor; threading sigue siendo apropiado para ejecutar varias tareas de E/S a la vez."
   - source: python-docs
     url: https://docs.python.org/3.12/library/concurrent.futures.html
     accessed: 2026-10-08
+    page_title: "concurrent.futures — Launching parallel tasks"
     note: "ProcessPoolExecutor usa multiprocessing, lo que le permite esquivar el GIL, pero solo puede ejecutar y devolver objetos picklables; el módulo __main__ debe poder importarse desde los procesos hijos. ThreadPoolExecutor: desde 3.8, max_workers por defecto es min(32, os.cpu_count() + 4)."
   - source: python-docs
     url: https://docs.python.org/3.12/library/multiprocessing.html
     accessed: 2026-10-08
+    page_title: "multiprocessing — Process-based parallelism"
     note: "Los ejemplos de multiprocessing protegen el punto de entrada con if __name__ == '__main__'; concurrent.futures.ProcessPoolExecutor ofrece una interfaz de más alto nivel."
   - source: python-docs
     url: https://docs.python.org/3.12/library/asyncio-task.html
     accessed: 2026-10-08
+    page_title: "Coroutines and Tasks"
     note: "TaskGroup (3.11): administrador de contexto asíncrono que agrupa tareas y las espera todas al salir; la primera vez que una tarea falla con una excepción distinta de CancelledError, las demás se cancelan. asyncio.to_thread ejecuta una función en otro hilo de forma asíncrona."
   - source: python-docs
     url: https://docs.python.org/3.12/library/asyncio-dev.html
     accessed: 2026-10-08
+    page_title: "Developing with asyncio"
     note: "El código bloqueante (de CPU) no debe llamarse directamente desde asyncio: si una función calcula durante 1 segundo, todas las tareas y operaciones de E/S concurrentes se retrasan 1 segundo; se puede usar un executor (loop.run_in_executor) con hilos o procesos."
   - source: aws-lambda-docs
     url: https://docs.aws.amazon.com/lambda/latest/dg/configuration-memory.html
     accessed: 2026-10-08
+    page_title: "Configure Lambda Event Function memory"
     note: "Lambda asigna CPU en proporción a la memoria configurada (128 MB a 10,240 MB); con 1,769 MB una función tiene el equivalente a una vCPU."
   - source: gcp-cloud-run-docs
     url: https://docs.cloud.google.com/run/docs/configuring/services/cpu
     accessed: 2026-10-08
+    page_title: "Configure CPU limits for services"
     note: "Por defecto cada instancia de un servicio de Cloud Run está limitada a 1 vCPU; se puede cambiar a otros valores, cada uno con un requisito de memoria (por ejemplo, 2 vCPU hasta 8 GiB, 4 vCPU de 2 a 16 GiB)."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/azure-functions/python-scale-performance-reference
     accessed: 2026-10-08
+    page_title: "Improve throughput performance of Python apps in Azure Functions"
     note: "Azure Functions con Python: por defecto cada instancia del host tiene un solo proceso worker de lenguaje; FUNCTIONS_WORKER_PROCESS_COUNT lo sube hasta 10, y para apps de CPU se recomienda igualarlo o superarlo al número de núcleos. Las funciones sin async se ejecutan en un ThreadPoolExecutor cuyo tamaño define PYTHON_THREADPOOL_THREAD_COUNT; las corrutinas corren en el event loop del worker, y para aprovecharlas la biblioteca de E/S también tiene que ser asíncrona."
 relations:
   - type: RELATED_TO
@@ -65,7 +74,7 @@ relations:
     target: pyspark-dataframes
     note: Cuando una máquina no alcanza, el paralelismo pasa a un motor distribuido.
 created_at: 2026-10-08
-updated_at: 2026-10-09
+updated_at: 2026-10-13
 last_verified: 2026-10-09
 verification_status: verified
 ---
@@ -300,3 +309,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: creación (lote F3b-03b).
 - 2026-10-09: revisión B-F3.1 del lote F3b-03b aplicada (docs/reviews/cards-f3b-03b.md): el comentario del asyncio en §10 ya no publica una cifra (`~0.4s`); la única medición publicada es la de esta máquina (0.5 s).
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

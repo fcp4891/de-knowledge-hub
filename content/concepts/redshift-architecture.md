@@ -18,54 +18,67 @@ sources:
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_high_level_system_architecture.html
     accessed: 2026-10-12
+    page_title: "Data warehouse system architecture"
     note: "Data warehouse system architecture: el nodo líder recibe las consultas, arma el plan de ejecución, compila el código y lo distribuye a los nodos de cómputo, que ejecutan y devuelven resultados intermedios para la agregación final. Cada nodo de cómputo se divide en slices; los datos de una tabla se reparten entre slices según la clave de distribución. Redshift Managed Storage (RMS) guarda los datos en un nivel separado, sobre Amazon S3, y permite escalar y pagar cómputo y almacenamiento por separado."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html
     accessed: 2026-10-12
+    page_title: "Amazon Redshift provisioned clusters"
     note: "Amazon Redshift provisioned clusters: el tipo de nodo determina CPU, RAM y almacenamiento; se recomienda RG o RA3. Con almacenamiento administrado, se elige la cantidad de nodos por rendimiento y se paga el almacenamiento usado. Los nodos RG son de instancias Graviton e incluyen un motor de consulta del data lake que corre en el propio clúster; los RA3 usan Redshift Spectrum para esas consultas."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-workgroup-namespace.html
     accessed: 2026-10-12
+    page_title: "Workgroups and namespaces"
     note: "Workgroups and namespaces: el namespace agrupa los objetos de almacenamiento (esquemas, tablas, usuarios, claves de KMS); el workgroup agrupa los recursos de cómputo (RPU, subredes, security groups) y los límites de uso."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-capacity.html
     accessed: 2026-10-12
+    page_title: "Compute capacity for Amazon Redshift Serverless"
     note: "Compute capacity for Amazon Redshift Serverless: la capacidad se mide en Redshift Processing Units (RPU); una RPU da 16 GB de memoria. La capacidad base por defecto es de 128 RPU, ajustable de 4 a 512 RPU (4, o múltiplos de 8 desde 8); en algunas regiones, hasta 1024."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_choosing_dist_sort.html
     accessed: 2026-10-12
+    page_title: "Distribution styles"
     note: "Distribution styles: AUTO asigna el estilo según el tamaño (ALL en tablas chicas, luego KEY o EVEN al crecer, en segundo plano); EVEN reparte en round-robin, apropiado si la tabla no participa en joins; KEY ubica en el mismo slice las filas con el mismo valor, y distribuir dos tablas por la clave del join las colocaliza; ALL copia la tabla completa a cada nodo."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/t_Sorting_data.html
     accessed: 2026-10-12
+    page_title: "Sort keys"
     note: "Sort keys: los datos se guardan ordenados por la sort key y cada bloque guarda su mínimo y máximo, así un predicado de rango salta bloques enteros. Compound es más eficiente cuando el predicado usa un prefijo de las columnas en orden; interleaved da el mismo peso a cada columna. Con AUTO, Redshift elige la clave con la optimización automática de tablas."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_CREATE_TABLE_NEW.html
     accessed: 2026-10-12
+    page_title: "CREATE TABLE"
     note: "CREATE TABLE: atributos DISTSTYLE, DISTKEY y [COMPOUND | INTERLEAVED] SORTKEY, SORTKEY AUTO; tablas temporales y LIKE parent_table."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_best-practices-use-multiple-files.html
     accessed: 2026-10-12
+    page_title: "Loading data files"
     note: "Loading data files: con varios archivos o archivos divisibles, Redshift carga en paralelo entre los slices; con un archivo que no se puede dividir, la carga es serial y mucho más lenta. Para CSV o JSON comprimidos con GZIP, se recomienda dividir en archivos de 1 MB a 1 GB después de comprimir."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/copy-parameters-data-format.html
     accessed: 2026-10-12
+    page_title: "Data format parameters"
     note: "Data format parameters: COPY desde Amazon S3 admite, además de los formatos de texto, los formatos columnares ORC y PARQUET (FORMAT AS PARQUET), con algunas restricciones."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/copy-parameters-authorization.html
     accessed: 2026-10-12
+    page_title: "Authorization parameters"
     note: "Authorization parameters: COPY necesita autorización para leer de S3 y otros servicios; se da con un rol de IAM asociado al clúster (IAM_ROLE con el ARN del rol, default o SESSION)."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html
     accessed: 2026-10-12
+    page_title: "MERGE"
     note: "MERGE: combina de forma condicional filas de una tabla de origen en una tabla destino (WHEN MATCHED THEN UPDATE o DELETE; WHEN NOT MATCHED THEN INSERT), lo que antes exigía INSERT, UPDATE y DELETE por separado."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c-using-spectrum.html
     accessed: 2026-10-12
+    page_title: "Amazon Redshift Spectrum"
     note: "Amazon Redshift Spectrum: consulta datos estructurados y semiestructurados de archivos en Amazon S3 sin cargarlos a tablas de Redshift; varios clústeres pueden consultar el mismo dataset sin copiarlo."
   - source: aws-redshift-docs
     url: https://aws.amazon.com/redshift/pricing/
     accessed: 2026-10-12
+    page_title: "Amazon Redshift pricing"
     note: "Amazon Redshift pricing: precios de clústeres provisionados por tipo de nodo, de Serverless por capacidad usada, de almacenamiento administrado y de Spectrum. Los montos no se copian."
 relations:
   - type: RELATED_TO

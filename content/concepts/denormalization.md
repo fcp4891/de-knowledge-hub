@@ -18,22 +18,27 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/best-practices-performance-nested
     accessed: 2026-10-10
+    page_title: "Use nested and repeated fields"
     note: "Desnormalizar es agregar columnas a una sola tabla para reducir o eliminar joins; es una estrategia común para mejorar la lectura de datos antes normalizados. En BigQuery, la forma recomendada de desnormalizar es con campos anidados y repetidos, sobre todo en relaciones jerárquicas consultadas juntas (padre-hijo). El ahorro de almacenamiento de normalizar pesa menos en sistemas modernos y el costo extra de almacenamiento compensa la ganancia de rendimiento; los joins requieren coordinación (comunicación) y desnormalizar localiza los datos en slots para ejecutar en paralelo. Aplanar por completo puede obligar a agrupar (por ejemplo por order_id) con shuffle, lo que es menos eficaz que los campos anidados y repetidos."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/databricks/transform/data-modeling
     accessed: 2026-10-10
+    page_title: "Data modeling"
     note: "Azure Databricks recomienda no usar un modelo muy normalizado como la tercera forma normal (3NF) al diseñar un lakehouse; modelos como estrella o copo de nieve rinden bien porque hay menos joins y menos claves que mantener sincronizadas, y tener más campos en una sola tabla permite al optimizador saltar grandes cantidades de datos con estadísticas de archivo."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/power-bi/guidance/star-schema
     accessed: 2026-10-10
+    page_title: "Understand star schema and the importance for Power BI"
     note: "Power BI: la normalización guarda los datos reduciendo la repetición. Ante una dimensión copo de nieve, se puede imitar esa estructura o combinar las tablas en una sola tabla de modelo desnormalizada; en general los beneficios de una sola tabla superan a los de varias, según el volumen y la usabilidad."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/denormalized-flattened-dimension/
     accessed: 2026-10-10
+    page_title: "Denormalized Flattened Dimensions"
     note: "Kimball (Nivel 4, conceptual): los diseñadores dimensionales deben resistir la tendencia a normalizar heredada de las bases operacionales y desnormalizar las jerarquías muchos a uno de profundidad fija en atributos de una fila de dimensión aplanada; la desnormalización sirve a los objetivos de simplicidad y velocidad del modelado dimensional."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/17/sql-creatematerializedview.html
     accessed: 2026-10-10
+    page_title: "PostgreSQL: Documentation: 17: CREATE MATERIALIZED VIEW"
     note: "PostgreSQL 17: CREATE MATERIALIZED VIEW ejecuta la consulta y llena la vista al crearla, y se puede refrescar después con REFRESH MATERIALIZED VIEW; es parecido a CREATE TABLE AS pero recuerda la consulta para refrescarla a demanda."
 relations:
   - type: RELATED_TO
@@ -55,7 +60,7 @@ relations:
     target: oltp-vs-olap
     note: Normalizar es la norma en OLTP; desnormalizar, en OLAP.
 created_at: 2026-10-10
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -238,3 +243,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-10: creación (lote F3b-04a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

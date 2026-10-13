@@ -18,22 +18,27 @@ sources:
   - source: python-docs
     url: https://docs.python.org/3.12/reference/compound_stmts.html
     accessed: 2026-10-08
+    page_title: "8. Compound statements"
     note: "La sentencia with: with EXPRESSION as TARGET: SUITE es semánticamente equivalente a obtener __enter__ y __exit__ del manager, llamar a enter(), ejecutar el bloque dentro de un try y llamar a exit con la información de la excepción si la hubo (si exit devuelve falso, la excepción se relanza) o con None si no la hubo."
   - source: python-docs
     url: https://docs.python.org/3.12/reference/datamodel.html
     accessed: 2026-10-08
+    page_title: "3. Data model"
     note: "With Statement Context Managers: __enter__ entra al contexto y su valor de retorno se asigna al target del as; __exit__(exc_type, exc_value, traceback) sale del contexto; si devuelve verdadero, la excepción se suprime. Los métodos __exit__ no deberían relanzar la excepción recibida: es responsabilidad de quien llama."
   - source: python-docs
     url: https://docs.python.org/3.12/library/contextlib.html
     accessed: 2026-10-08
+    page_title: "contextlib — Utilities for with -statement contexts"
     note: "contextmanager convierte una función generadora con un único yield en un context manager; si ocurre una excepción no manejada en el bloque, se relanza dentro del generador en el punto del yield, así que try/except/finally alrededor del yield permite capturarla o asegurar la limpieza; el objeto que crea es de un solo uso (usarlo dos veces da RuntimeError: generator didn't yield). ExitStack combina context managers y callbacks de limpieza de forma programática; al cerrarse, invoca los callbacks registrados en orden inverso. suppress(FileNotFoundError) equivale a try/except/pass. closing llama a close() al salir."
   - source: python-docs
     url: https://docs.python.org/3.12/library/os.html
     accessed: 2026-10-08
+    page_title: "os — Miscellaneous operating system interfaces"
     note: "os.replace(src, dst): si dst existe y es un archivo, se reemplaza sin aviso si hay permisos; la operación puede fallar si src y dst están en sistemas de archivos distintos; si tiene éxito, el renombrado es atómico (requisito de POSIX)."
   - source: python-docs
     url: https://docs.python.org/3.12/library/tempfile.html
     accessed: 2026-10-08
+    page_title: "tempfile — Generate temporary files and directories"
     note: "mkstemp crea el temporal de la forma más segura posible: sin condiciones de carrera en la creación (si la plataforma implementa O_EXCL), legible y escribible solo por el usuario que lo crea. A diferencia de TemporaryFile, quien usa mkstemp() es responsable de borrar el archivo temporal cuando termina. mkstemp acepta suffix, prefix y dir."
 relations:
   - type: RELATED_TO
@@ -49,7 +54,7 @@ relations:
     target: python-generators
     note: contextlib.contextmanager se escribe como una función generadora con un yield.
 created_at: 2026-10-08
-updated_at: 2026-10-08
+updated_at: 2026-10-13
 last_verified: 2026-10-08
 verification_status: verified
 ---
@@ -264,3 +269,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: creación (lote F3b-03a).
 - 2026-10-08: revisión B-F3.1 del lote F3b-03a aplicada (docs/reviews/cards-f3b-03a.md): la documentación de Python se cita en `/3.12/`, la versión con la que se ejecutó el código; `os.replace` con la frase de la documentación (atómico si tiene éxito, requisito de POSIX; puede fallar entre sistemas de archivos), sin «deja de ser atómico»; se quita la frase de Cloud Storage.
 - 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

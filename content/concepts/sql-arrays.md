@@ -18,34 +18,42 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/data-types
     accessed: 2026-10-06
+    page_title: "Data types"
     note: "ARRAY es una lista ordenada de cero o más elementos del mismo tipo, que no puede ser otro array: las consultas que producirían un array de arrays dan error, y hay que intercalar un STRUCT con SELECT AS STRUCT. BigQuery da error si el resultado de una consulta tiene un array con elementos NULL, aunque ese array puede usarse dentro de la consulta. ARRAY no es un tipo comparable."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/arrays
     accessed: 2026-10-06
+    page_title: "Work with arrays"
     note: "Los arrays se construyen con literales, con subconsultas mediante la función ARRAY o agregando con ARRAY_AGG; se combinan con ARRAY_CONCAT y se convierten a texto con ARRAY_TO_STRING."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/operators
     accessed: 2026-10-06
+    page_title: "Operators"
     note: "Acceso por posición: OFFSET(i) y SAFE_OFFSET(i) cuentan desde cero; ORDINAL(i) y SAFE_ORDINAL(i), desde uno. OFFSET y ORDINAL dan error fuera de rango; las variantes SAFE_ devuelven NULL."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/subqueries
     accessed: 2026-10-06
+    page_title: "Subqueries"
     note: "Una subconsulta ARRAY devuelve un array vacío si no hay filas; nunca devuelve un ARRAY NULL."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_SUPER_type.html
     accessed: 2026-10-06
+    page_title: "SUPER type"
     note: "SUPER es un conjunto de valores de array y estructura sin esquema que abarca todos los tipos escalares de Redshift y puede contener arrays, estructuras anidadas y otros valores complejos; admite hasta 16 MB por objeto. Redshift usa PartiQL para navegar arrays y estructuras, y tipado dinámico, sin declarar tipos antes de consultar. La compresión por defecto de SUPER es ZSTD."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/data-types
     accessed: 2026-10-06
+    page_title: "Data types in Fabric Data Warehouse"
     note: "Tipos soportados para tablas de Fabric Data Warehouse: numéricos exactos y aproximados, fecha y hora, char, varchar (hasta 16 MB en varchar(max)), varbinary y uniqueidentifier; para json la alternativa es varchar. Algunos tipos no soportados en tablas pueden usarse en variables, parámetros o en memoria."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/arrays.html
     accessed: 2026-10-06
+    page_title: "8.15. Arrays"
     note: "Por defecto PostgreSQL numera los arrays desde uno. Un subíndice fuera de rango devuelve NULL, sin error. valor = ANY (array) busca un elemento."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/functions-aggregate.html
     accessed: 2026-10-06
+    page_title: "9.21. Aggregate Functions"
     note: "array_agg devuelve NULL, no un array vacío, cuando no hay filas de entrada; coalesce permite sustituir un array vacío."
 relations:
   - type: RELATED_TO
@@ -61,7 +69,7 @@ relations:
     target: bigquery-sql-dialect
     note: GoogleSQL, el dialecto de BigQuery.
 created_at: 2026-10-05
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -238,3 +246,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): sin cambios pedidos.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-11: «pendiente de ficha» actualizado: la ficha ya existe (lote F3b-08a); el §17 la enlaza y relations la incluye: relations incluye `bigquery-sql-dialect`, que el §17 nombra; §17 enlaza las fichas que ya existen.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

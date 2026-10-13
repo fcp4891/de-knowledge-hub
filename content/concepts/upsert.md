@@ -17,18 +17,22 @@ sources:
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/sql-insert.html
     accessed: 2026-09-30
+    page_title: "PostgreSQL: Documentation: 18: INSERT"
     note: ON CONFLICT DO UPDATE garantiza un resultado atómico INSERT o UPDATE incluso con alta concurrencia (UPSERT); se apoya en un índice o restricción única o de exclusión (conflict_target); la fila propuesta se lee con la tabla especial excluded; el comando no puede afectar la misma fila más de una vez (error de cardinalidad), así que las filas propuestas no deben duplicarse en la clave; requiere privilegios INSERT y UPDATE.
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax
     accessed: 2026-09-30
+    page_title: "Data manipulation language (DML) statements in GoogleSQL"
     note: Sintaxis de MERGE; si una fila destino coincide con más de una fila de origen, error UPDATE/MERGE must match at most one source row for each target row.
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html
     accessed: 2026-09-30
+    page_title: "MERGE"
     note: MERGE de Redshift; falla (Found multiple matches to update the same tuple) si varias filas de origen coinciden con una fila del destino; solo en modo simplificado REMOVE DUPLICATES, cuando varias filas del destino coinciden con la misma fila de origen, elimina los duplicados del destino y conserva una; las duplicadas del destino sin coincidencia en el origen no se tocan. Requiere permisos UPDATE, DELETE e INSERT según las operaciones.
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/statements/merge-transact-sql
     accessed: 2026-09-30
+    page_title: "MERGE (Transact-SQL)"
     note: MERGE de T-SQL aplica a SQL Server, Azure SQL Database, Azure SQL Managed Instance, Azure Synapse Analytics (solo dedicated SQL pool), SQL database en Fabric y Warehouse en Fabric; error si varias filas de origen coinciden con una del destino.
 relations:
   - type: USES
@@ -44,7 +48,7 @@ relations:
     target: scd-type-2
     note: "SCD2 no sobrescribe: cierra la versión vigente e inserta una nueva, en lugar de un upsert simple."
 created_at: 2026-09-30
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -202,3 +206,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: revisión B-F3.1 aplicada: en `REMOVE DUPLICATES`, los duplicados del destino sin coincidencia con el origen no se tocan.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `deduplication`, que ya tiene ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

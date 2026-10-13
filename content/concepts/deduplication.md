@@ -17,26 +17,32 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/numbering_functions
     accessed: 2026-10-02
+    page_title: "Numbering functions"
     note: "ROW_NUMBER devuelve el ordinal secuencial (desde 1) de cada fila en su partición ordenada; el orden dentro de un grupo de pares (empates) es no determinista, y sin ORDER BY el resultado es no determinista."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax
     accessed: 2026-10-02
+    page_title: "Query syntax"
     note: "QUALIFY filtra los resultados de funciones de ventana; debe haber una función de ventana en QUALIFY o en el SELECT; solo quedan las filas cuya expresión es TRUE. Se evalúa después de WINDOW y antes de DISTINCT, ORDER BY y LIMIT."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax
     accessed: 2026-10-02
+    page_title: "Data manipulation language (DML) statements in GoogleSQL"
     note: "MERGE falla (UPDATE/MERGE must match at most one source row for each target row) si una fila del destino coincide con más de una fila de origen."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_QUALIFY_clause.html
     accessed: 2026-10-02
+    page_title: "QUALIFY clause"
     note: "Redshift admite QUALIFY para filtrar resultados de funciones de ventana; si QUALIFY va directamente después de FROM, la relación del FROM debe tener alias."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html
     accessed: 2026-10-02
+    page_title: "MERGE"
     note: "MERGE de Redshift falla si varias filas de origen coinciden con una fila del destino."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/functions/row-number-transact-sql?view=sql-server-ver17
     accessed: 2026-10-02
+    page_title: "ROW_NUMBER (Transact-SQL)"
     note: "ROW_NUMBER() de T-SQL es no determinista; si las columnas del ORDER BY no son únicas, el orden entre empates no está garantizado."
 relations:
   - type: RELATED_TO
@@ -55,7 +61,7 @@ relations:
     target: sql-window-functions
     note: El patrón se apoya en ROW_NUMBER sobre una partición por clave.
 created_at: 2026-10-02
-updated_at: 2026-10-05
+updated_at: 2026-10-13
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -218,3 +224,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
 - 2026-10-05: `sql-window-functions` deja de figurar como pendiente: ahora es relación (ficha verificada en el lote 6).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

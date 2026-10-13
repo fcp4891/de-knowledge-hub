@@ -18,42 +18,52 @@ sources:
   - source: aws-emr-docs
     url: https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-overview.html
     accessed: 2026-10-12
+    page_title: "Understanding how to create and work with Amazon EMR clusters"
     note: "Understanding how to create and work with Amazon EMR clusters: un clúster es un conjunto de instancias de EC2; cada instancia es un nodo con un rol (tipo de nodo) y EMR instala en cada tipo los componentes que le corresponden en una aplicación distribuida como Hadoop."
   - source: aws-emr-docs
     url: https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-master-core-task-nodes.html
     accessed: 2026-10-12
+    page_title: "Understand node types in Amazon EMR: primary, core, and task nodes"
     note: "Understand node types: el nodo primario administra el clúster (YARN ResourceManager, HDFS NameNode); desde EMR 5.23.0 puede haber tres primarios para alta disponibilidad. Los nodos core guardan datos en HDFS y ejecutan tareas (por ejemplo, ejecutores de Spark); hay un solo grupo o flota core. Los nodos task agregan cómputo sin guardar datos en HDFS (hasta 48 grupos task con instance groups) y permiten mezclar On-Demand y Spot."
   - source: aws-emr-docs
     url: https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-instances-guidelines.html
     accessed: 2026-10-12
+    page_title: "Configuring Amazon EMR cluster instance types and best practices for Spot instances"
     note: "Instance types and best practices for Spot instances: primario, core y task pueden ser Spot, con implicaciones distintas por rol; la opción de compra no cambia con el clúster en marcha. Desde EMR 5.19.0, con etiquetas de nodo de YARN, los application masters corren solo en nodos core para que los jobs no fallen si se pierden nodos task en Spot."
   - source: aws-emr-docs
     url: https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-file-systems.html
     accessed: 2026-10-12
+    page_title: "Working with storage and file systems with Amazon EMR"
     note: "Working with storage and file systems: HDFS en los nodos es efímero y se pierde al terminar el clúster; S3A es el conector de código abierto que lee y escribe en S3 con s3://, s3a:// y s3n://; antes de EMR 7.10.0, EMR usaba EMRFS para s3:// y s3n://."
   - source: aws-emr-docs
     url: https://docs.aws.amazon.com/emr/latest/EMR-Serverless-UserGuide/emr-serverless.html
     accessed: 2026-10-12
+    page_title: "What is Amazon EMR Serverless?"
     note: "What is Amazon EMR Serverless?: opción de despliegue de EMR sin clústeres que configurar, optimizar ni operar, para frameworks como Spark y Hive; escala los recursos según el job. La capacidad preinicializada mantiene workers listos (un pool caliente) y se configura con initial-capacity."
   - source: aws-emr-docs
     url: https://docs.aws.amazon.com/emr/latest/EMR-on-EKS-DevelopmentGuide/emr-eks.html
     accessed: 2026-10-12
+    page_title: "What is Amazon EMR on EKS?"
     note: "What is Amazon EMR on EKS?: opción de despliegue de EMR que ejecuta frameworks de big data de código abierto sobre Amazon EKS."
   - source: aws-emr-docs
     url: https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-release-components.html
     accessed: 2026-10-12
+    page_title: "About Amazon EMR Releases"
     note: "About Amazon EMR Releases: cada release fija el conjunto de aplicaciones y sus versiones; la última release listada es emr-7.14.0."
   - source: aws-emr-docs
     url: https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-7140-release.html
     accessed: 2026-10-12
+    page_title: "Amazon EMR release 7.14.0"
     note: "Amazon EMR release 7.14.0: incluye Spark 3.5.8-amzn-0, Hadoop 3.4.2, Iceberg 1.10.1, Delta 3.3.2 y Hudi 1.0.2, entre otras aplicaciones."
   - source: apache-spark-docs
     url: https://spark.apache.org/docs/latest/configuration.html
     accessed: 2026-10-12
+    page_title: "Spark Configuration"
     note: "Spark Configuration (4.2.0), spark.sql.sources.partitionOverwriteMode: en modo static (por defecto), INSERT OVERWRITE borra antes todas las particiones que coinciden; en modo dynamic, solo sobrescribe las particiones que reciben datos. También se puede fijar como opción de escritura con la clave partitionOverwriteMode, que tiene prioridad."
   - source: aws-emr-docs
     url: https://aws.amazon.com/emr/pricing/
     accessed: 2026-10-12
+    page_title: "Amazon EMR Pricing"
     note: "Amazon EMR pricing: precios por opción de despliegue (EC2, EKS, Serverless) que se suman a los de las instancias o recursos usados. Los montos no se copian."
 relations:
   - type: USES

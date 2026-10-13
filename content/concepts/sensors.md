@@ -18,22 +18,27 @@ sources:
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/core-concepts/sensors.html
     accessed: 2026-10-11
+    page_title: "Sensors"
     note: "Airflow 3.3.2, Sensors: tipo especial de Operator diseñado para esperar a que algo ocurra (por tiempo, un archivo o un evento externo); al ocurrir, termina con éxito y deja correr a las siguientes; si no ocurre dentro del timeout, falla. Modos: poke (por defecto; ocupa un slot de worker todo el tiempo) y reschedule (ocupa el slot solo al revisar y duerme entre revisiones); el trade-off es la latencia: revisar cada segundo, poke; cada minuto, reschedule. Parámetros de BaseSensorOperator: poke_interval (segundos entre revisiones), timeout (tiempo máximo, medido desde el primer intento, no por revisión), mode, soft_fail (al vencer el timeout, SKIPPED en vez de FAILED), exponential_backoff y max_wait. Ejemplo con BashSensor(mode='reschedule'). Para archivos, FileSensor del provider standard, que admite modo diferible."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/authoring-and-scheduling/deferring.html
     accessed: 2026-10-11
+    page_title: "Deferrable Operators & Triggers"
     note: "Airflow 3.3.2, Deferrable Operators & Triggers: los operadores y sensores estándar ocupan un slot de worker todo el tiempo que corren, aunque estén inactivos (con 100 slots y 100 Dags esperando en un sensor, no corre nada más). El modo reschedule resuelve parte, pero solo permite reanudar por tiempo. Un operador diferible se suspende y libera el worker: la ejecución pasa al triggerer, donde corre el trigger, y al terminar le avisa al operador para reanudar. Durante la espera diferida la tarea no ocupa slot de worker y, por defecto, tampoco slots de pool. Los triggers son código Python asíncrono pequeño que convive en el componente triggerer."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/core-concepts/tasks.html
     accessed: 2026-10-11
+    page_title: "Tasks"
     note: "Airflow 3.3.2, Tasks, Timeouts: execution_timeout limita cada ejecución, también en sensores (AirflowTaskTimeout, con reintentos). El timeout del sensor solo importa en modo reschedule y limita el tiempo total para tener éxito: al vencer, AirflowSensorTimeout y el sensor falla sin reintentar. Estado up_for_reschedule: un sensor en modo reschedule."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow-providers-standard/1.19.0/sensors/file.html
     accessed: 2026-10-11
+    page_title: "FileSensor"
     note: "Provider standard 1.19.0 (el que fijan las restricciones de Airflow 3.3.2), FileSensor: detecta archivos en el sistema de archivos local; usa una connection (fs_conn_id, por defecto fs_default); ejemplo con deferrable=True."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow-providers-standard/1.19.0/_api/airflow/providers/standard/sensors/filesystem/index.html
     accessed: 2026-10-11
+    page_title: "airflow.providers.standard.sensors.filesystem"
     note: "Provider standard 1.19.0, referencia de API: airflow.providers.standard.sensors.filesystem.FileSensor(*, filepath, fs_conn_id='fs_default', recursive=False, deferrable=..., ...), basado en BaseSensorOperator; espera a que un archivo o carpeta aparezca en un sistema de archivos; filepath es relativo a la ruta base de la connection y admite glob; deferrable por defecto toma [operators] default_deferrable (False si no está configurado)."
 relations:
   - type: RELATED_TO
@@ -52,7 +57,7 @@ relations:
     target: file-ingestion
     note: Un sensor de archivo espera a que llegue el archivo antes de ingerirlo.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -290,3 +295,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-06a aplicada (docs/reviews/cards-f3b-06a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-11: relación `file-ingestion` agregada en `relations` y en §17 (cambio mínimo).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

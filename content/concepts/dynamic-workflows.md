@@ -18,14 +18,17 @@ sources:
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/authoring-and-scheduling/dynamic-task-mapping.html
     accessed: 2026-10-11
+    page_title: "Dynamic Task Mapping"
     note: "Airflow 3.3.2, Dynamic Task Mapping: permite crear una cantidad de tareas en tiempo de ejecución según los datos actuales, sin que el autor sepa de antemano cuántas hacen falta. Es parecido a un bucle for, pero en vez de que el Dag file obtenga los datos, el scheduler lo hace según la salida de una tarea anterior; a diferencia de un for ejecutado al parsear, la creación se difiere a la ejecución. Justo antes de ejecutar la tarea mapeada, el scheduler crea n copias, una por entrada; una tarea puede operar sobre la salida reunida de la tarea mapeada (map and reduce). expand() mapea; partial() fija argumentos iguales para todas las copias; expand con varios parámetros hace un producto cruzado. [core] max_map_length es el máximo de tareas que expand puede crear (por defecto 1024): si la tarea fuente devuelve una lista más larga, esa tarea falla. max_active_tis_per_dag limita cuántas copias corren a la vez."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/core-concepts/taskflow.html
     accessed: 2026-10-11
+    page_title: "TaskFlow"
     note: "Airflow 3.3.2, TaskFlow: llamar a una función @task en el Dag file no la ejecuta: devuelve un objeto que representa la XCom del resultado (XComArg), que se usa como entrada de tareas siguientes y declara la dependencia."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/3.3.2/best-practices.html
     accessed: 2026-10-11
+    page_title: "Best Practices"
     note: "Airflow 3.3.2, Best Practices, Top level Python Code: evitar en el nivel superior del Dag file el código que no hace falta para crear operadores y relaciones: el scheduler ejecuta el código fuera de execute cada min_file_process_interval segundos, y su velocidad de parseo afecta el rendimiento y la escala."
 relations:
   - type: RELATED_TO
@@ -41,7 +44,7 @@ relations:
     target: batch-ingestion
     note: Una copia mapeada por archivo o partición de un lote.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -275,3 +278,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-06a aplicada (docs/reviews/cards-f3b-06a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-11: relación `batch-ingestion` agregada en `relations` y en §17 (cambio mínimo).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

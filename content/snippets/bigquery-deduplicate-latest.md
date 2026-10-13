@@ -20,14 +20,17 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax
     accessed: 2026-10-01
+    page_title: "Data manipulation language (DML) statements in GoogleSQL"
     note: "Sintaxis de MERGE; si una fila destino coincide con más de una fila de origen, error UPDATE/MERGE must match at most one source row for each target row."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/access-control
     accessed: 2026-10-01
+    page_title: "BigQuery IAM roles and permissions"
     note: "roles/bigquery.jobUser permite ejecutar consultas en el proyecto; roles/bigquery.dataEditor sobre un dataset permite modificar sus tablas."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax
     accessed: 2026-10-01
+    page_title: "Query syntax"
     note: "QUALIFY filtra los resultados de funciones de ventana; solo se incluyen las filas cuya expresión es TRUE; se evalúa después de WHERE, GROUP BY, HAVING y WINDOW."
 relations:
   - type: IMPLEMENTS
@@ -46,7 +49,7 @@ relations:
     target: idempotency
     note: Aplicar el mismo lote dos veces deja la tabla igual.
 created_at: 2026-10-01
-updated_at: 2026-10-05
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -122,3 +125,4 @@ El detalle está en `sources` del encabezado.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).
 - 2026-10-04: implementa también `deduplication`, verificada en el lote 5.
 - 2026-10-05: implementa también `sql-window-functions`, verificada en el lote 6.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

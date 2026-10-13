@@ -18,30 +18,37 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/best-practices-performance-compute
     accessed: 2026-10-07
+    page_title: "Optimize query computation"
     note: "El optimizador de GoogleSQL decide qué tabla va a cada lado del join, pero como buena práctica se pone primero la tabla con más filas, luego la de menos y después el resto en orden decreciente. Con una tabla grande a la izquierda y una pequeña a la derecha se crea un broadcast join, que envía toda la tabla pequeña a cada slot que procesa la grande. Usar INT64 en lugar de STRING en las claves de join; BigQuery no indexa claves primarias. Declarar claves primarias y foráneas cuando los datos las cumplen permite al motor optimizar planes, pero BigQuery no verifica la integridad y los resultados pueden ser incorrectos si no se cumplen. Agregar antes de unir; evitar self-joins (usar ventanas o PIVOT) y joins que generan más filas que las de entrada."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_best-practices-best-dist-key.html
     accessed: 2026-10-07
+    page_title: "Choose the best distribution style"
     note: "Distribuir la tabla de hechos y una dimensión por la columna del join (clave primaria de la dimensión y clave foránea en los hechos) colocaliza el join. Se elige la dimensión más grande según el tamaño del conjunto filtrado, y una columna de alta cardinalidad. Las dimensiones que no se pueden colocalizar pueden usar distribución ALL, a cambio de más almacenamiento y cargas más lentas. AUTO deja que Redshift elija."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_data_redistribution.html
     accessed: 2026-10-07
+    page_title: "Evaluating the query plan"
     note: "Etiquetas del plan: DS_DIST_NONE y DS_DIST_ALL_NONE indican joins colocalizados sin redistribución; DS_DIST_INNER redistribuye la tabla interna; DS_BCAST_INNER copia la tabla interna completa a todos los nodos; DS_DIST_BOTH redistribuye ambas."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_best-practices-sort-key.html
     accessed: 2026-10-07
+    page_title: "Choose the best sort key"
     note: "Si una tabla se une con frecuencia, usar la columna del join como sort key y como distribution key permite al optimizador elegir un sort merge join en lugar de un hash join más lento, saltando la fase de ordenamiento."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-tables-distribute
     accessed: 2026-10-07
+    page_title: "Guidance for designing distributed tables using dedicated SQL pool in Azure Synapse Analytics"
     note: "En el pool SQL dedicado de Synapse, las tablas se distribuyen por hash o round-robin entre 60 distribuciones, o se replican; las distribuidas por hash sirven para tablas de hechos grandes. Para que un join no requiera movimiento de datos: ambas tablas distribuidas por hash por una de las columnas del join, con el mismo tipo de dato, unidas con igualdad y sin CROSS JOIN. El movimiento de datos se ve en el plan."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/guidelines-warehouse-performance
     accessed: 2026-10-07
+    page_title: "Performance guidelines in Fabric Data Warehouse"
     note: "En Fabric Data Warehouse, filtrar antes de unir; mantener el mismo tipo de dato en las columnas que se comparan en WHERE o en JOIN … ON (o tipos compatibles con conversión implícita) y evitar conversiones explícitas. Las estadísticas se generan automáticamente cuando una consulta accede por primera vez a los datos."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/planner-optimizer.html
     accessed: 2026-10-07
+    page_title: "51.5. Planner/Optimizer"
     note: "Estrategias de join de PostgreSQL: nested loop (recorre la relación derecha por cada fila de la izquierda; buena si la derecha se lee con índice), merge join (ambas ordenadas por la clave) y hash join (la derecha se carga en una tabla hash y se recorre la izquierda)."
 relations:
   - type: RELATED_TO
@@ -60,7 +67,7 @@ relations:
     target: bigquery-query-optimization
     note: El plan, las insights y las prácticas de optimización de BigQuery.
 created_at: 2026-10-05
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -256,3 +263,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): §2 deja hash, merge y nested loop solo en los motores cuyas páginas los nombran; el broadcast, en BigQuery y en `DS_BCAST_INNER` de Redshift.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-11: «pendiente de ficha» actualizado: la ficha ya existe (lote F3b-08a); el §17 la enlaza y relations la incluye: relations incluye `bigquery-query-optimization`, que el §17 nombra; §17 enlaza las fichas que ya existen.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

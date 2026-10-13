@@ -17,18 +17,22 @@ sources:
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/snowflake-dimension/
     accessed: 2026-10-10
+    page_title: "Snowflaked Dimensions"
     note: "Kimball (Nivel 4, conceptual): al normalizar una relación jerárquica de una dimensión, los atributos de baja cardinalidad pasan a tablas secundarias conectadas por una clave de atributo; repetido en todas las jerarquías, forma una estructura multinivel llamada copo de nieve. Aunque representa la jerarquía con precisión, recomienda evitarlo porque es difícil de entender y navegar para el negocio y puede afectar el rendimiento de las consultas; una dimensión aplanada y desnormalizada contiene exactamente la misma información."
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/outrigger-dimension/
     accessed: 2026-10-10
+    page_title: "Outrigger Dimensions"
     note: "Kimball (Nivel 4, conceptual): una dimensión puede referenciar otra dimensión (outrigger), por ejemplo la fecha de apertura de una cuenta; se permiten pero con moderación; en la mayoría de los casos la correlación entre dimensiones debería bajar a la tabla de hechos como dos claves foráneas."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/power-bi/guidance/star-schema
     accessed: 2026-10-10
+    page_title: "Understand star schema and the importance for Power BI"
     note: "Power BI: una dimensión copo de nieve es un conjunto de tablas normalizadas para una entidad (ejemplo de Adventure Works: DimProductCategory, DimProductSubcategory y DimProduct). En Power BI Desktop se puede imitar el copo de nieve o combinar las tablas en una sola tabla de modelo desnormalizada; en general conviene la tabla única. Imitar el copo de nieve carga más tablas (menos eficiente en almacenamiento y rendimiento), agrega columnas para las relaciones, alarga las cadenas de propagación de filtros, presenta más tablas a los autores de reportes y no permite jerarquías con columnas de más de una tabla."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/databricks/transform/data-modeling
     accessed: 2026-10-10
+    page_title: "Data modeling"
     note: "Azure Databricks recomienda no usar un modelo muy normalizado (3NF) en un lakehouse; modelos como estrella o copo de nieve rinden bien en Azure Databricks porque hay menos joins en las consultas habituales y menos claves que mantener sincronizadas."
 relations:
   - type: ALTERNATIVE_TO
@@ -44,7 +48,7 @@ relations:
     target: dimension-tables
     note: El copo de nieve cambia la estructura de las tablas de dimensión, no la de los hechos.
 created_at: 2026-10-10
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -216,3 +220,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-10: creación (lote F3b-04a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

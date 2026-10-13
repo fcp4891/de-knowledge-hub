@@ -18,22 +18,27 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/biglake-intro
     accessed: 2026-10-11
+    page_title: "Introduction to BigLake tables"
     note: "Introduction to BigLake tables: consultan datos estructurados en almacenes externos con delegación de acceso, que separa el acceso a la tabla del acceso al almacén: una conexión externa asociada a una cuenta de servicio se conecta al almacén, y a los usuarios solo se les da acceso a la tabla. Permite seguridad fina a nivel de tabla, incluida por fila y por columna, y enmascaramiento dinámico en tablas sobre Cloud Storage. Almacenes: Cloud Storage, y Amazon S3 y Blob Storage vía BigQuery Omni (estas dos, solo permanentes). Se puede crear una tabla sobre varias fuentes con el mismo esquema y actualizar una tabla externa a BigLake. Caché de metadatos (nombres de archivo, particiones, metadatos físicos como cantidad de filas) opcional por tabla, mantenida por trabajos de refresco; con caché, los cambios en los archivos no se ven hasta el siguiente refresco. No se usa caché de metadatos con tablas externas de Iceberg: BigQuery ya usa los metadatos de los manifiestos de Iceberg."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/external-data-sources
     accessed: 2026-10-11
+    page_title: "Introduction to external data sources"
     note: "Introduction to external data sources, tabla comparativa: BigLake usa delegación de acceso con una cuenta de servicio; las tablas externas, no. BigLake funciona con Cloud Storage, Amazon S3 y Azure Storage; las tablas externas, con Cloud Storage, Google Drive y Bigtable."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/create-cloud-storage-table-biglake
     accessed: 2026-10-11
+    page_title: "Create Cloud Storage BigLake tables"
     note: "Create Cloud Storage BigLake tables: en SQL, CREATE EXTERNAL TABLE ... WITH CONNECTION ... OPTIONS (format, uris, max_staleness, metadata_cache_mode). En Terraform, google_bigquery_connection con cloud_resource {}, un permiso roles/storage.objectViewer para la cuenta de servicio de la conexión (cloud_resource[0].service_account_id) y google_bigquery_table con external_data_configuration (source_format, connection_id, source_uris, metadata_cache_mode = AUTOMATIC) y max_staleness. metadata_cache_mode MANUAL para refrescar la caché con un calendario propio."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/biglake-iceberg-tables-in-bigquery
     accessed: 2026-10-11
+    page_title: "Apache Iceberg managed tables"
     note: "Apache Iceberg managed tables: «Apache Iceberg managed tables (formerly BigLake tables for Apache Iceberg in BigQuery)». Base para lakehouses de formato abierto en Google Cloud: la misma experiencia administrada que las tablas estándar, pero con los datos en buckets del cliente, en formato Iceberg, para interoperar con motores open source y de terceros sobre una sola copia. Admiten DML, streaming con la Storage Write API, exportación de snapshots Iceberg V2 para otros motores, evolución de esquema, optimización automática del almacenamiento, time travel, seguridad por columna y enmascaramiento, transacciones de varias sentencias y particionado."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/materialized-views-intro
     accessed: 2026-10-11
+    page_title: "Introduction to materialized views"
     note: "Introduction to materialized views: se pueden crear vistas materializadas sobre tablas BigLake con caché de metadatos (Cloud Storage y Amazon S3); se guardan en el almacenamiento administrado de BigQuery."
 relations:
   - type: RELATED_TO
@@ -55,7 +60,7 @@ relations:
     target: bigquery-policy-tags
     note: Seguridad por columna y enmascaramiento sobre la tabla.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -279,3 +284,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-08a aplicada (docs/reviews/cards-f3b-08a.md), regla del §17: relations incluye `bigquery-security`, `bigquery-policy-tags`, que el §17 nombra; §17 enlaza las fichas que ya existen.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

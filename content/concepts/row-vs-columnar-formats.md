@@ -18,46 +18,57 @@ sources:
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_columnar_storage_disk_mem_mgmnt.html
     accessed: 2026-10-05
+    page_title: "Columnar storage"
     note: "En el almacenamiento por filas, cada bloque guarda los valores consecutivos de las columnas de un registro completo; en OLTP la mayoría de las transacciones leen y escriben registros completos, de a uno o pocos, así que el almacenamiento por filas es óptimo para OLTP. En el columnar, cada bloque guarda valores de una sola columna de muchas filas: una consulta que usa 5 de 100 columnas lee cerca del 5 % de los datos, y como cada bloque tiene un solo tipo de dato se puede comprimir con un esquema elegido para ese tipo."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/storage_overview
     accessed: 2026-10-05
+    page_title: "Overview of BigQuery storage"
     note: "BigQuery guarda los datos de tabla en formato columnar, cada columna por separado; esto es eficiente para escanear columnas individuales sobre todo el conjunto y para consultas analíticas que leen pocas columnas de muchas filas."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/best-practices-costs
     accessed: 2026-10-05
+    page_title: "Estimate and control costs"
     note: "En on-demand, las consultas se facturan por bytes leídos; un dry run estima esos bytes antes de ejecutar. En tablas no clusterizadas, LIMIT no reduce el costo de cómputo."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/bq-cli-reference
     accessed: 2026-10-05
+    page_title: "bq command-line tool reference"
     note: "bq query --dry_run valida la consulta sin ejecutarla; --use_legacy_sql=false usa GoogleSQL."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/columnar-storage.html
     accessed: 2026-10-05
+    page_title: "Use columnar storage formats"
     note: "Parquet y ORC son columnares: compresión por columna con un algoritmo según el tipo de dato, predicate pushdown que usa estadísticas por bloque (mín./máx.) para leer o saltar bloques, y división de la lectura entre varios lectores. Ambos admiten evolución de esquema; ORC suele generar archivos más chicos; Parquet está optimizado para Apache Arrow. Se puede convertir a Parquet u ORC con CTAS de Athena o con Glue."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
     accessed: 2026-10-05
+    page_title: "Data definition language (DDL) statements in GoogleSQL"
     note: "CREATE EXTERNAL TABLE crea una tabla sobre datos fuera del almacenamiento de BigQuery; por ejemplo, con format = 'PARQUET' y uris en Cloud Storage."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/partitions.html
     accessed: 2026-10-05
+    page_title: "Partition your data"
     note: "Particionar los datos restringe lo que escanea cada consulta de Athena, mejorando el rendimiento y reduciendo el costo."
   - source: apache-parquet-docs
     url: https://parquet.apache.org/docs/overview/
     accessed: 2026-10-05
+    page_title: "Overview"
     note: "Apache Parquet es un formato de archivo de datos abierto y orientado a columnas, diseñado para almacenamiento y lectura eficientes, con esquemas de compresión y codificación."
   - source: apache-avro-docs
     url: https://avro.apache.org/docs/1.12.0/specification/
     accessed: 2026-10-05
+    page_title: "Specification"
     note: "Los Object Container Files de Avro tienen un esquema, y todos los objetos (registros completos) del archivo se escriben según ese esquema con codificación binaria, en bloques que pueden comprimirse."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/relational-databases/indexes/columnstore-indexes-overview?view=sql-server-ver17
     accessed: 2026-10-05
+    page_title: "Columnstore indexes: overview"
     note: "Por defecto, una tabla de SQL Server usa rowstore; un índice columnstore agrupado guarda la tabla entera por columnas (rowgroups comprimidos columna a columna). Los índices columnstore son el formato preferido para data warehousing y analítica; un columnstore no agrupado sobre una tabla rowstore permite analítica operacional en tiempo real."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/data-warehousing
     accessed: 2026-10-05
+    page_title: "What is Fabric Data Warehouse?"
     note: "Los datos de Fabric Data Warehouse, como todos los de Fabric, se guardan en tablas Delta: archivos Parquet con un log de transacciones basado en archivos."
 relations:
   - type: RELATED_TO
@@ -76,7 +87,7 @@ relations:
     target: oltp-vs-olap
     note: OLTP guarda por filas; OLAP, por columnas.
 created_at: 2026-10-05
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -240,3 +251,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: creación (lote 6 de F3).
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `avro-format`, que ya tiene ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

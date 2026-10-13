@@ -18,22 +18,27 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/best-practices-performance-compute
     accessed: 2026-10-11
+    page_title: "Optimize query computation"
     note: "Optimize query computation: evitar SELECT *, leer solo las columnas necesarias (proyectar de más agrega E/S y materialización); LIMIT sobre SELECT * no reduce los datos leídos ni lo facturado; SELECT * EXCEPT para excluir columnas; usar tablas particionadas. Evitar transformar repetidamente los mismos datos (por ejemplo, regex o recortes en cada consulta): materializar el resultado en una tabla de destino. Joins: empezar por la tabla más grande y seguir por tamaño decreciente; con una tabla grande a la izquierda y una chica a la derecha se crea un broadcast join (los datos de la chica se envían a cada slot que procesa la grande); el optimizador de GoogleSQL decide qué tabla va a cada lado. Usar INT64 en vez de STRING en joins: BigQuery no indexa claves primarias y las columnas más anchas tardan más en compararse."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/query-plan-explanation
     accessed: 2026-10-11
+    page_title: "Query plan and timeline"
     note: "Query plan and timeline: los jobs de consulta incluyen información de plan y tiempos, similar a EXPLAIN, disponible en la API (jobs.get) y actualizada como mucho cada 30 segundos en consultas largas; las consultas en dry run o servidas desde la caché no la incluyen. BigQuery convierte el SQL en un grafo de ejecución de etapas, compuestas por pasos; las etapas se ejecutan en paralelo y se comunican por shuffle, una arquitectura distribuida en memoria. El costo de cómputo de una consulta se expresa en totalSlotMs."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/query-insights
     accessed: 2026-10-11
+    page_title: "Get query performance insights"
     note: "Get query performance insights: el grafo de ejecución muestra el plan y los detalles de rendimiento de consultas en curso o terminadas. Insights: slot contention (muchas tareas listas y no hay slots suficientes), insufficient shuffle quota, data input scale change (la consulta lee al menos 50 % más datos de una tabla que la última vez) y partition skew (datos desparejos entre particiones por valores muy frecuentes en claves de join o agrupación; un solo slot procesa una partición entera)."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/cached-results
     accessed: 2026-10-11
+    page_title: "Use cached query results"
     note: "Use cached query results: si se repite la misma consulta, BigQuery devuelve la tabla en caché si existe, sin costo de almacenamiento, por unas 24 horas y con el mejor esfuerzo. No se usa la caché si hay tabla de destino, si cambiaron las tablas o vistas referenciadas, si hubo inserciones por streaming recientes, si la consulta usa funciones no deterministas (CURRENT_TIMESTAMP, CURRENT_DATE, SESSION_USER), con tablas comodín o con fuentes externas."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/best-practices-costs
     accessed: 2026-10-11
+    page_title: "Estimate and control costs"
     note: "Estimate and control costs: hacer un dry run de las consultas para estimar los bytes (en la API, dryRun = true); la estimación es una cota superior y puede superar lo facturado. Si la tabla de destino tiene seguridad a nivel de fila, el dry run siempre devuelve 0 bytes."
 relations:
   - type: RELATED_TO
@@ -64,7 +69,7 @@ relations:
     target: bigquery-materialized-views
     note: Agregaciones precalculadas.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -258,3 +263,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-08a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-08a aplicada (docs/reviews/cards-f3b-08a.md), regla del §17: relations incluye `bigquery-cost-model`, `bigquery-clustering`, `bigquery-materialized-views`, que el §17 nombra.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

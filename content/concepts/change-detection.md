@@ -17,42 +17,52 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/hash_functions
     accessed: 2026-10-07
+    page_title: "Hash functions"
     note: "FARM_FINGERPRINT calcula un INT64 con signo (FarmHash Fingerprint64) y siempre devuelve el mismo resultado para la misma entrada. MD5 (16 bytes), SHA1, SHA256 (32 bytes) y SHA512 devuelven BYTES; la documentación advierte que MD5 ya no se considera seguro."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/string_functions
     accessed: 2026-10-07
+    page_title: "String functions"
     note: "CONCAT devuelve NULL si cualquier argumento es NULL; el operador || también concatena."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax
     accessed: 2026-10-07
+    page_title: "Query syntax"
     note: "EXCEPT DISTINCT devuelve las filas de la consulta izquierda que no están en la derecha."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_CONCAT.html
     accessed: 2026-10-07
+    page_title: "CONCAT function"
     note: "CONCAT de Redshift concatena dos expresiones (para más, se anidan) y el operador || da el mismo resultado; si una o las dos expresiones son NULL, el resultado de CONCAT y de || es NULL; para concatenar columnas que pueden tener NULL, la documentación indica usar NVL o COALESCE."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/SHA2.html
     accessed: 2026-10-07
+    page_title: "SHA2 function"
     note: "SHA2(cadena, bits) devuelve la representación hexadecimal del hash SHA-2 con la cantidad de bits indicada."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/functions/concat-transact-sql?view=sql-server-ver17
     accessed: 2026-10-07
+    page_title: "CONCAT (Transact-SQL)"
     note: "Aplica a Azure Synapse Analytics y Warehouse en Microsoft Fabric, entre otros. CONCAT de T-SQL convierte implícitamente los NULL en cadenas vacías; si todos los argumentos son NULL, devuelve una cadena vacía."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/functions/hashbytes-transact-sql?view=sql-server-ver17
     accessed: 2026-10-07
+    page_title: "HASHBYTES (Transact-SQL)"
     note: "Aplica a Azure Synapse Analytics y Warehouse en Microsoft Fabric, entre otros. HASHBYTES devuelve el hash MD2, MD4, MD5, SHA, SHA1 o SHA2 de la entrada; MD2, MD4, MD5, SHA y SHA1 están obsoletos desde SQL Server 2016 y se recomienda SHA2_256 o SHA2_512."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/functions-string.html
     accessed: 2026-10-07
+    page_title: "9.4. String Functions and Operators"
     note: "concat y concat_ws ignoran los argumentos NULL; md5(text) devuelve el hash MD5 en hexadecimal."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/json_functions
     accessed: 2026-10-07
+    page_title: "JSON functions"
     note: "TO_JSON_STRING convierte un valor SQL en un STRING con formato JSON. Según la tabla de codificaciones JSON: NULL se codifica como null (sin comillas); STRING como cadena JSON, con escape de comillas, barra invertida y caracteres de control; STRUCT como objeto con sus campos. Ejemplo de la página: TO_JSON_STRING(STRUCT(1 AS id, [10, 20] AS coordinates)) → {\"id\":1,\"coordinates\":[10,20]}."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/functions-json.html
     accessed: 2026-10-07
+    page_title: "9.16. JSON Functions and Operators"
     note: "jsonb_build_array arma un array JSON con sus argumentos, cada uno convertido con to_jsonb; to_jsonb convierte NULL en null y cualquier escalar que no sea número, booleano ni null en una cadena JSON, con el escape necesario."
 relations:
   - type: RELATED_TO
@@ -71,7 +81,7 @@ relations:
     target: scd-type-2
     note: Saber qué filas cambiaron es la entrada de una carga SCD tipo 2.
 created_at: 2026-10-05
-updated_at: 2026-10-08
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -274,3 +284,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-07: cambio mínimo para que coincida con la revisión de NULL (docs/reviews/fixes-null-concat.md): §4 y §14 agregan la serialización JSON (`TO_JSON_STRING(STRUCT(...))`, `jsonb_build_array`) como alternativa que elimina las ambigüedades del marcador y del separador. Sigue `verified`, pendiente de revisión de Cursor.
 - 2026-10-08: revisión `docs/reviews/change-detection-json.md` aplicada (todas las filas aprobadas): §10 con `FARM_FINGERPRINT(TO_JSON_STRING(STRUCT(nombre, email)))` como vía principal en BigQuery (no ejecutado) y `CONCAT` con marcador como alternativa; §2 incluye la serialización JSON; §6 acotada a la concatenación de texto; §20 nombra las fuentes JSON de BigQuery y PostgreSQL. Sigue `verified`.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

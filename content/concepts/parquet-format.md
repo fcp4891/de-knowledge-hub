@@ -18,30 +18,37 @@ sources:
   - source: apache-parquet-docs
     url: https://parquet.apache.org/docs/overview/
     accessed: 2026-09-30
+    page_title: "Overview"
     note: "Apache Parquet es un formato de archivo de datos open source y orientado a columnas, diseñado para almacenar y recuperar datos de forma eficiente, con esquemas de compresión y codificación de alto rendimiento."
   - source: apache-parquet-docs
     url: https://parquet.apache.org/docs/concepts/
     accessed: 2026-09-30
+    page_title: "Concepts"
     note: "Un archivo tiene uno o más row groups (partición horizontal lógica de filas); cada row group tiene exactamente un column chunk por columna, contiguo en el archivo; cada column chunk tiene una o más páginas, unidad indivisible de compresión y codificación."
   - source: apache-parquet-docs
     url: https://parquet.apache.org/docs/file-format/
     accessed: 2026-09-30
+    page_title: "File Format"
     note: "El archivo empieza y termina con el número mágico PAR1; los metadatos del archivo (con la ubicación de cada column chunk) se escriben después de los datos para permitir escribir en una sola pasada, y los lectores leen primero esos metadatos."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet
     accessed: 2026-09-30
+    page_title: "Load Parquet data from Cloud Storage"
     note: "Al cargar Parquet, BigQuery toma el esquema de los datos autodescriptivos, del archivo alfabéticamente último; recomienda row groups de al menos 16 MiB porque los más chicos aumentan la E/S y enlentecen cargas y consultas. LOAD DATA OVERWRITE ... FROM FILES(format = 'PARQUET', uris = [...]); bq load agrega por defecto y --replace sobrescribe."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/columnar-storage.html
     accessed: 2026-09-30
+    page_title: "Use columnar storage formats"
     note: "Parquet y ORC comprimen por columna; el predicate pushdown usa estadísticas por bloque (mínimo y máximo) para leer o saltar bloques; la división de archivos permite paralelizar la lectura; ambos admiten evolución de esquema; CTAS convierte datos a Parquet u ORC en un paso."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/synapse-analytics/sql/query-parquet-files
     accessed: 2026-09-30
+    page_title: "Query Parquet files using serverless SQL pool in Azure Synapse Analytics"
     note: "El serverless SQL pool de Synapse consulta archivos Parquet con OPENROWSET(... FORMAT = 'PARQUET'); se pueden indicar solo las columnas de interés con WITH; un external data source con la carpeta raíz permite usar rutas relativas."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/partitions.html
     accessed: 2026-09-30
+    page_title: "Partition your data"
     note: "Athena consulta datos en S3; particionar por carpetas restringe los datos escaneados por consulta."
 relations:
   - type: RELATED_TO
@@ -54,7 +61,7 @@ relations:
     target: schema-evolution
     note: Agregar columnas a un conjunto de archivos Parquet es un caso típico de evolución de esquema.
 created_at: 2026-09-30
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-01
 verification_status: verified
 ---
@@ -211,3 +218,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 3 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `row-vs-columnar-formats`, que ya tiene ficha.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `avro-format`, `compression`, que ya tienen ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

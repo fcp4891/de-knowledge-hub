@@ -18,42 +18,52 @@ sources:
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/what-is.html
     accessed: 2026-10-12
+    page_title: "What is Amazon Athena?"
     note: "What is Amazon Athena?: servicio de consultas interactivas para analizar datos directamente en Amazon S3 con SQL estándar, sin infraestructura; también ejecuta aplicaciones de Apache Spark sin planificar ni administrar recursos."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/partitions.html
     accessed: 2026-10-12
+    page_title: "Partition your data"
     note: "Partition your data: particionar limita los datos que escanea cada consulta, mejora el rendimiento y baja el costo; es común particionar por tiempo. MSCK REPAIR TABLE funciona solo con particiones estilo Hive; para particiones sin ese estilo (por ejemplo data/2021/01/26/) se usa ALTER TABLE ADD PARTITION."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/partition-projection.html
     accessed: 2026-10-12
+    page_title: "Use partition projection with Amazon Athena"
     note: "Use partition projection with Amazon Athena: Athena calcula los valores y ubicaciones de las particiones con propiedades de la tabla en AWS Glue, en lugar de consultar el Data Catalog; normalmente hace una llamada GetPartitions antes de podar, que con muchas particiones afecta el rendimiento. La poda de particiones se aplica a toda tabla con columnas de partición, también con projection."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/partition-projection-setting-up.html
     accessed: 2026-10-12
+    page_title: "Set up partition projection"
     note: "Set up partition projection: propiedades projection.enabled y, por columna, el tipo y su configuración; storage.location.template con un marcador por cada columna de partición, terminado en barra."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/partition-projection-supported-types.html
     accessed: 2026-10-12
+    page_title: "Supported types for partition projection"
     note: "Supported types for partition projection: tipo date con projection.<columna>.range (mínimo y máximo, admite NOW), format, interval e interval.unit; si las fechas son de precisión de un día, interval es opcional y vale 1 día."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/columnar-storage.html
     accessed: 2026-10-12
+    page_title: "Use columnar storage formats"
     note: "Use columnar storage formats: Apache Parquet y ORC comprimen por columna y permiten predicate pushdown; están optimizados para recuperar datos rápido en las aplicaciones analíticas de AWS."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/ctas.html
     accessed: 2026-10-12
+    page_title: "Create a table from query results (CTAS)"
     note: "Create a table from query results (CTAS): crea una tabla nueva a partir del resultado de un SELECT, y sirve para transformar los resultados a formatos como Parquet y ORC o migrar tablas a formatos como Apache Iceberg."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/workgroups-manage-queries-control-costs.html
     accessed: 2026-10-12
+    page_title: "Use workgroups to control query access and costs"
     note: "Use workgroups to control query access and costs: los workgroups separan cargas, controlan el acceso de equipos, imponen configuración y registran métricas; hay controles de uso de datos por consulta y por workgroup: Athena cancela la consulta que supera el umbral o dispara una alarma de SNS cuando un workgroup lo supera."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg.html
     accessed: 2026-10-12
+    page_title: "Query Apache Iceberg tables"
     note: "Query Apache Iceberg tables: Athena hace lecturas, time travel, escrituras y DDL sobre tablas Apache Iceberg."
   - source: aws-athena-docs
     url: https://aws.amazon.com/athena/pricing/
     accessed: 2026-10-12
+    page_title: "Amazon Athena pricing"
     note: "Amazon Athena pricing: en el cobro por consulta se paga por los bytes escaneados, redondeados al megabyte, con un mínimo de 10 MB por consulta; las sentencias DDL y las consultas fallidas no se cobran; las canceladas se cobran por lo escaneado. Comprimir, particionar y usar formatos columnares reduce lo escaneado. Hay otra modalidad con capacidad aprovisionada. Los montos no se copian."
 relations:
   - type: RELATED_TO

@@ -18,46 +18,57 @@ sources:
   - source: apache-spark-docs
     url: https://spark.apache.org/docs/4.2.0/api/python/getting_started/quickstart_df.html
     accessed: 2026-10-08
+    page_title: "Quickstart: DataFrame"
     note: "Quickstart de DataFrames (PySpark 4.2.0): los DataFrames de PySpark se evalúan de forma perezosa; Spark no calcula la transformación de inmediato sino que planifica cómo calcularla, y el cálculo empieza cuando se llama a una acción como collect(). Seleccionar una columna no dispara el cálculo: devuelve un Column."
   - source: apache-spark-docs
     url: https://spark.apache.org/docs/4.2.0/api/python/getting_started/install.html
     accessed: 2026-10-08
+    page_title: "Installation"
     note: "Instalación de PySpark 4.2.0: requiere Java 17 o posterior con JAVA_HOME configurado."
   - source: apache-spark-docs
     url: https://spark.apache.org/docs/4.2.0/sql-performance-tuning.html
     accessed: 2026-10-08
+    page_title: "Performance Tuning"
     note: "spark.sql.shuffle.partitions (por defecto 200): particiones al hacer shuffle en joins y agregaciones. spark.sql.autoBroadcastJoinThreshold (por defecto 10 MB): tamaño máximo de una tabla que se envía a todos los workers en un join; -1 lo desactiva. Hints de join BROADCAST, MERGE, SHUFFLE_HASH y SHUFFLE_REPLICATE_NL, con BROADCAST como prioritario. spark.sql.adaptive.enabled (por defecto true): Adaptive Query Execution re-optimiza el plan durante la ejecución con estadísticas reales."
   - source: apache-spark-docs
     url: https://spark.apache.org/docs/4.2.0/api/python/tutorial/sql/arrow_pandas.html
     accessed: 2026-10-08
+    page_title: "Apache Arrow in PySpark"
     note: "toPandas() reúne todos los registros del DataFrame en el programa driver y debe usarse sobre un subconjunto pequeño. Arrow acelera la conversión entre Spark y pandas (spark.sql.execution.arrow.pyspark.enabled, habilitado por defecto) y puede volver a la implementación sin Arrow si hay un error antes del cálculo."
   - source: apache-spark-docs
     url: https://spark.apache.org/docs/4.2.0/cluster-overview.html
     accessed: 2026-10-08
+    page_title: "Cluster Mode Overview"
     note: "Arquitectura de Spark en clúster: el programa driver coordina, los executors en los nodos ejecutan las tareas, y un cluster manager asigna recursos."
   - source: gcp-managed-spark-docs
     url: https://docs.cloud.google.com/managed-spark/docs/concepts/serverless-spark-compare
     accessed: 2026-10-09
+    page_title: "Compare Managed Service for Apache Spark serverless and cluster deployments"
     note: "Compare Managed Service for Apache Spark serverless and cluster deployments: Managed Service for Apache Spark incluye las opciones antes llamadas Dataproc on Compute Engine (despliegue en clúster) y Google Cloud Serverless for Apache Spark (despliegue serverless); la página compara ambos despliegues."
   - source: aws-emr-docs
     url: https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-what-is-emr.html
     accessed: 2026-10-08
+    page_title: "What is Amazon EMR?"
     note: "Amazon EMR (antes Amazon Elastic MapReduce) es una plataforma de clústeres administrada para ejecutar frameworks de big data como Apache Spark, y permite mover datos desde y hacia otros almacenes de AWS como Amazon S3."
   - source: aws-emr-docs
     url: https://docs.aws.amazon.com/emr/latest/EMR-Serverless-UserGuide/emr-serverless.html
     accessed: 2026-10-08
+    page_title: "What is Amazon EMR Serverless?"
     note: "Amazon EMR Serverless es una opción de despliegue de Amazon EMR con un entorno de ejecución serverless para aplicaciones de frameworks como Apache Spark y Apache Hive, con gestión automática de capacidad."
   - source: aws-glue-docs
     url: https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python.html
     accessed: 2026-10-08
+    page_title: "Program AWS Glue ETL scripts in PySpark"
     note: "AWS Glue soporta una extensión del dialecto Python de PySpark para escribir jobs de ETL, con extensiones propias como GlueContext y DynamicFrame y transformaciones como ApplyMapping o DropNullFields."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/databricks/pyspark/
     accessed: 2026-10-08
+    page_title: "PySpark on Azure Databricks"
     note: "Azure Databricks está construido sobre Apache Spark; PySpark es la interfaz de Python para Spark, y los DataFrames son los objetos principales."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/synapse-analytics/spark/apache-spark-overview
     accessed: 2026-10-08
+    page_title: "What is Apache Spark in Azure Synapse Analytics?"
     note: "Apache Spark en Azure Synapse Analytics es una de las implementaciones de Apache Spark de Microsoft en la nube; permite crear y configurar un pool de Apache Spark serverless."
 relations:
   - type: RELATED_TO
@@ -76,7 +87,7 @@ relations:
     target: arrow-columnar-memory
     note: Arrow acelera la conversión entre DataFrames de Spark y de pandas.
 created_at: 2026-10-08
-updated_at: 2026-10-09
+updated_at: 2026-10-13
 last_verified: 2026-10-09
 verification_status: verified
 ---
@@ -279,3 +290,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: creación (lote F3b-03b).
 - 2026-10-09: revisión B-F3.1 del lote F3b-03b aplicada (docs/reviews/cards-f3b-03b.md): el nombre anterior (Dataproc on Compute Engine y Google Cloud Serverless for Apache Spark) se cita desde la página de comparación, no desde `clusters-overview`; se quita «el mismo código de PySpark corre en las dos modalidades»; §10 dice que no se pasó por `mypy --strict`.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

@@ -18,34 +18,42 @@ sources:
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/architecture/databases/guide/big-data-architectures
     accessed: 2026-10-05
+    page_title: "Big data architectures"
     note: "Componentes lógicos de una arquitectura de big data: fuentes de datos (bases de aplicaciones, archivos, fuentes en tiempo real), almacenamiento (a menudo un data lake), procesamiento batch, ingesta de mensajes en tiempo real y procesamiento de streams, almacén analítico, análisis y reporting, y orquestación."
   - source: aws-data-engineer-certification
     url: https://aws.amazon.com/certification/certified-data-engineer-associate/
     accessed: 2026-10-05
+    page_title: "AWS Certified Data Engineer - Associate"
     note: "AWS incluye gestionar los ciclos de vida de los datos entre las competencias de un data engineer, junto con ingerir, transformar, orquestar, modelar y asegurar la calidad."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/lifecycle
     accessed: 2026-10-05
+    page_title: "Object Lifecycle Management"
     note: "Object Lifecycle Management: reglas con acciones SetStorageClass y Delete; si varias reglas aplican, Delete tiene precedencia sobre SetStorageClass."
   - source: terraform-provider-google-docs
     url: https://github.com/hashicorp/terraform-provider-google/blob/main/website/docs/r/storage_bucket.html.markdown
     accessed: 2026-10-05
+    page_title: "google_storage_bucket"
     note: "google_storage_bucket admite bloques lifecycle_rule con action (Delete, o SetStorageClass con storage_class) y condition (por ejemplo, age en días)."
   - source: aws-s3-docs
     url: https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html
     accessed: 2026-10-05
+    page_title: "Managing the lifecycle of objects"
     note: "Una configuración de ciclo de vida de S3 es un conjunto de reglas con dos tipos de acciones: de transición (pasar objetos a otra clase de almacenamiento, por ejemplo a S3 Standard-IA o a Glacier tras cierta cantidad de días) y de expiración (borrar objetos)."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/storage/blobs/lifecycle-management-overview
     accessed: 2026-10-05
+    page_title: "Azure Blob Storage lifecycle management overview"
     note: "Las políticas de ciclo de vida de Azure Blob Storage mueven blobs entre niveles o los borran; la acción de borrado no funciona en contenedores inmutables, y las políticas no rehidratan blobs desde el nivel de archivo."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
     accessed: 2026-10-05
+    page_title: "Data definition language (DDL) statements in GoogleSQL"
     note: "La opción de dataset default_table_expiration_days fija la expiración por defecto, en días, de las tablas del dataset; se puede sobrescribir al crear cada tabla."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/datasets-intro
     accessed: 2026-10-05
+    page_title: "Introduction to datasets"
     note: "Time travel y fail-safe retienen por un tiempo los datos borrados o modificados de un dataset, para poder recuperarlos."
 relations:
   - type: RELATED_TO
@@ -64,7 +72,7 @@ relations:
     target: gcs-buckets-and-objects
     note: Las reglas de ciclo de vida se definen por bucket.
 created_at: 2026-10-05
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-06
 verification_status: verified
 ---
@@ -262,3 +270,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: creación (lote F3b-01a, dominio 01-fundamentals).
 - 2026-10-06: `verification_status: verified` (revisión B-F3.1 del lote F3b-01a aplicada; sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

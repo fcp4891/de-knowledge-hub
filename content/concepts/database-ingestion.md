@@ -18,18 +18,22 @@ sources:
   - source: aws-dms-docs
     url: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.Creating.html
     accessed: 2026-10-11
+    page_title: "Creating a task"
     note: "Tipos de migración de una tarea de AWS DMS: migrar los datos existentes (Full Load en la API), que crea las tablas en el destino y las llena en paralelo; y capturar cambios durante la migración (full-load-and-cdc en la API), donde, al terminar la carga inicial, el proceso de CDC aplica en el destino los cambios capturados, como unidades de transacciones confirmadas."
   - source: gcp-datastream-docs
     url: https://docs.cloud.google.com/datastream/docs/overview
     accessed: 2026-10-11
+    page_title: "Datastream overview"
     note: "Datastream es un servicio serverless de captura de cambios (CDC) y replicación que sincroniza datos de bases operacionales con baja latencia; replica a BigQuery, puede escribir el flujo de cambios en Cloud Storage y se integra con plantillas de Dataflow. Transfiere datos de CDC y de backfill desde el origen al destino, y permite administrar el backfill de los objetos de un stream."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/data-factory/tutorial-incremental-copy-overview
     accessed: 2026-10-11
+    page_title: "Incrementally load data from a source data store to a destination data store"
     note: "Azure Data Factory, copia incremental: con un watermark se define en la base de origen una columna con la marca de tiempo de última actualización o una clave incremental; la carga delta copia los cambios entre el watermark anterior y el nuevo. La misma página describe otras opciones: Change Tracking de SQL Server y Azure SQL Database, y copiar solo archivos nuevos o cambiados por LastModifiedDate."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/17/logical-replication.html
     accessed: 2026-10-11
+    page_title: "Chapter 29. Logical Replication"
     note: "PostgreSQL 17: la replicación lógica replica objetos de datos y sus cambios según su identidad de replicación (normalmente la clave primaria), a diferencia de la replicación física, que copia bloques byte a byte."
 relations:
   - type: RELATED_TO
@@ -51,7 +55,7 @@ relations:
     target: upsert
     note: El incremental aplica las filas cambiadas con un upsert.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -272,3 +276,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-05a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-05a aplicada (docs/reviews/cards-f3b-05a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

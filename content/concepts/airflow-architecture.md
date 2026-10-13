@@ -18,42 +18,52 @@ sources:
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/overview.html
     accessed: 2026-10-02
+    page_title: "Architecture Overview"
     note: "Componentes requeridos: scheduler (dispara workflows y envía tareas al executor, que es una propiedad de configuración del scheduler y corre en su proceso), Dag processor (parsea los Dag files de un Dag bundle y los serializa en la base de metadatos), Dag bundle (por defecto una carpeta local), API server (REST API y UI; las tareas que usan el task SDK le reportan su estado sin acceso directo a la base) y base de metadatos (normalmente PostgreSQL o MySQL). Opcionales: workers, triggerer (tareas diferidas en un event loop asyncio) y plugins. Separar el Dag processor del scheduler evita que el scheduler acceda a los Dag bundles y ejecute código de los autores."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/executor/index.html
     accessed: 2026-10-02
+    page_title: "Executor"
     note: "Airflow viene configurado con LocalExecutor por defecto, que corre las tareas en el proceso del scheduler y puede afectar su rendimiento; sirve para instalaciones de una máquina, y los executors remotos (pool de workers) para instalaciones multi-máquina o en la nube."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/howto/set-up-database.html
     accessed: 2026-10-02
+    page_title: "Set up a Database Backend"
     note: "Por defecto Airflow usa SQLite, pensado solo para desarrollo; en producción, PostgreSQL o MySQL. La URL va en [database] sql_alchemy_conn o en AIRFLOW__DATABASE__SQL_ALCHEMY_CONN, con el esquema postgresql:// en SQLAlchemy 1.4+."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/cli-and-env-variables-ref.html
     accessed: 2026-10-02
+    page_title: "Command Line Interface and Environment Variables Reference"
     note: "Subcomandos airflow api-server, scheduler, dag-processor, triggerer, standalone (Airflow todo en uno), db migrate y db clean (purga registros antiguos de la base de metadatos); AIRFLOW__{SECTION}__{KEY} fija opciones con prioridad sobre airflow.cfg."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/installation/upgrading_to_airflow3.html
     accessed: 2026-10-02
+    page_title: "Upgrading to Airflow 3"
     note: "En Airflow 3, el API server es el único punto de acceso a la base de metadatos para tareas y workers; sirve la REST API, una API interna para la UI y una API para que los workers ejecuten tareas mediante el task SDK. En Airflow 2 el número de conexiones a la base era excesivo y generaba problemas de escala. Las opciones de webserver pasan a apiServer en el chart."
   - source: apache-airflow-docs
     url: https://airflow.apache.org/docs/apache-airflow/stable/best-practices.html
     accessed: 2026-10-02
+    page_title: "Best Practices"
     note: "Evitar código de nivel superior innecesario en los Dag files: afecta la velocidad de parseo y el rendimiento; las llamadas costosas deben ejecutarse dentro de las tareas."
   - source: gcp-cloud-composer-docs
     url: https://docs.cloud.google.com/composer/docs/composer-3/environment-architecture
     accessed: 2026-10-02
+    page_title: "Environment architecture"
     note: "Gen 3: los recursos se reparten entre el proyecto del cliente y un tenant project administrado por Google. El bucket del entorno (DAGs, plugins, dependencias y logs) está en el proyecto del cliente. La base de Airflow es una instancia de Cloud SQL en el tenant project, accesible solo para la cuenta de servicio del entorno. Los DAG processors corren como componentes separados y la cantidad de workers cambia según las tareas en cola. Todos los recursos de Airflow corren en el tenant project."
   - source: aws-mwaa-docs
     url: https://docs.aws.amazon.com/mwaa/latest/userguide/what-is-mwaa.html
     accessed: 2026-10-02
+    page_title: "What Is Amazon Managed Workflows for Apache Airflow?"
     note: "En MWAA, scheduler y workers corren en contenedores de Fargate; la base de metadatos la administra AWS y se accede por un VPC endpoint privado. CloudWatch, S3, SQS y KMS son externos al servicio y deben ser accesibles desde schedulers y workers. Varios schedulers solo con Airflow v2 o posterior."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/previous-versions/azure/data-factory/concepts-workflow-orchestration-manager
     accessed: 2026-10-02
+    page_title: "What is Workflow Orchestration Manager?"
     note: "Desde el 1 de enero de 2026 no se pueden crear nuevas instancias de Airflow con Workflow Orchestration Manager de Azure Data Factory; Microsoft recomienda migrar a Apache Airflow jobs en Microsoft Fabric."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-factory/apache-airflow-jobs-concepts
     accessed: 2026-10-02
+    page_title: "What is an Apache Airflow job?"
     note: "Apache Airflow job es la siguiente generación de Workflow Orchestration Manager; versión de Airflow soportada 2.10.5 y Python 3.12; cambiar la versión de Airflow de un job existente no está soportado; redes privadas y virtuales aún no soportadas."
 relations:
   - type: RELATED_TO
@@ -69,7 +79,7 @@ relations:
     target: backfill
     note: Los backfills se registran y ejecutan con los mismos componentes.
 created_at: 2026-10-02
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -266,3 +276,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
 - 2026-10-11: §17 enlaza `open-source-vs-managed-orchestration` y `airflow-operators-and-hooks`, que ya tienen ficha (lote F3b-06a); antes figuraban como pendientes de ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

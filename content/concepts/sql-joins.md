@@ -18,22 +18,27 @@ sources:
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/queries-table-expressions.html
     accessed: 2026-10-06
+    page_title: "7.2. Table Expressions"
     note: "Tipos de join: CROSS JOIN (producto cartesiano) y los calificados INNER, LEFT, RIGHT y FULL [OUTER], con la condición en ON, USING o NATURAL; INNER es el valor por defecto. LEFT OUTER JOIN agrega, por cada fila de T1 sin coincidencia en T2, una fila con nulos en las columnas de T2. Una restricción en ON se procesa antes del join y una en WHERE después: no importa en joins internos, pero importa mucho en los externos. LATERAL permite que una subconsulta en FROM referencie columnas de los elementos FROM anteriores."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/functions-subquery.html
     accessed: 2026-10-06
+    page_title: "9.24. Subquery Expressions"
     note: "EXISTS es verdadero si la subconsulta devuelve al menos una fila. NOT IN es nulo, no verdadero, si no hay valores iguales y al menos una fila de la subconsulta es nula, según las reglas habituales de SQL para combinar nulos."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax
     accessed: 2026-10-06
+    page_title: "Query syntax"
     note: "BigQuery admite [INNER] JOIN, FULL [OUTER] JOIN, LEFT [OUTER] JOIN, RIGHT [OUTER] JOIN y CROSS JOIN, con condición ON o USING; CROSS JOIN no admite ON ni USING. Un CROSS JOIN puede escribirse con coma (comma cross join), que no puede ir entre paréntesis. Un join es correlacionado cuando el elemento de la derecha referencia columnas del de la izquierda, como al aplanar arrays con UNNEST."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_FROM_clause30.html
     accessed: 2026-10-06
+    page_title: "FROM clause"
     note: "Redshift admite [INNER] JOIN, LEFT, RIGHT y FULL [OUTER] JOIN y CROSS JOIN; los joins calificados se expresan con NATURAL, ON, USING o una condición en WHERE. Las columnas del join deben tener tipos comparables. NATURAL y USING conservan una sola columna de cada par; ON conserva ambas."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql?view=sql-server-ver17
     accessed: 2026-10-06
+    page_title: "FROM clause plus JOIN, APPLY, PIVOT (Transact-SQL)"
     note: "Aplica a SQL Server, Azure Synapse Analytics y Warehouse en Microsoft Fabric, entre otros. T-SQL ofrece INNER, LEFT OUTER, RIGHT OUTER, FULL OUTER y CROSS JOIN, y además CROSS APPLY y OUTER APPLY; la condición de join es ON search_condition y la página no documenta USING. OUTER APPLY produce una fila por cada fila de la izquierda aunque la expresión de la derecha devuelva un conjunto vacío."
 relations:
   - type: RELATED_TO
@@ -49,7 +54,7 @@ relations:
     target: fact-tables
     note: Las consultas analíticas unen hechos con dimensiones.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -249,3 +254,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): §2 limita `USING` a PostgreSQL, BigQuery y Redshift (la gramática de T-SQL solo tiene `ON`); §10 presenta los resultados como de la prueba en PostgreSQL.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `join-optimization`, que ya tiene ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

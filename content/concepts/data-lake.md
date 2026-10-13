@@ -18,46 +18,57 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/external-data-sources
     accessed: 2026-10-02
+    page_title: "Introduction to external data sources"
     note: "Una fuente de datos externa se consulta directamente desde BigQuery aunque los datos no estén en el almacenamiento de BigQuery, por ejemplo archivos en Cloud Storage o datos en otra nube."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/biglake-intro
     accessed: 2026-10-02
+    page_title: "Introduction to BigLake tables"
     note: "Las tablas BigLake consultan datos estructurados en almacenes externos con delegación de acceso: una conexión externa asociada a una cuenta de servicio lee el almacén, y a los usuarios solo se les da acceso a la tabla, lo que permite seguridad a nivel de fila y columna (y data masking en tablas sobre Cloud Storage). Almacenes: Cloud Storage, y Amazon S3 y Blob Storage mediante BigQuery Omni."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
     accessed: 2026-10-02
+    page_title: "Data definition language (DDL) statements in GoogleSQL"
     note: "CREATE EXTERNAL TABLE con WITH CONNECTION y WITH PARTITION COLUMNS; opciones uris, format = 'PARQUET', hive_partition_uri_prefix y require_hive_partition_filter (obliga a filtrar por partición). Con WITH PARTITION COLUMNS sin lista, las columnas de partición se detectan del layout Hive (campo=valor)."
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/storage/docs/lifecycle
     accessed: 2026-10-02
+    page_title: "Object Lifecycle Management"
     note: "Object Lifecycle Management: reglas con acciones SetStorageClass (cambiar a una clase más barata) y Delete; Delete tiene precedencia sobre SetStorageClass."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/subscription-overview
     accessed: 2026-10-02
+    page_title: "Subscription overview"
     note: "Las suscripciones de export de Cloud Storage escriben los mensajes directamente en un bucket."
   - source: aws-s3-docs
     url: https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html
     accessed: 2026-10-02
+    page_title: "What is Amazon S3?"
     note: "Amazon S3 almacena cualquier cantidad de datos para casos como data lakes, backup, archivo y analítica de big data."
   - source: aws-lake-formation-docs
     url: https://docs.aws.amazon.com/lake-formation/latest/dg/what-is-lake-formation.html
     accessed: 2026-10-02
+    page_title: "What is AWS Lake Formation?"
     note: "Lake Formation es un lugar único para administrar controles de acceso del data lake, con políticas a nivel de base de datos, tabla, columna, fila y celda, aplicadas en Redshift Spectrum, Athena, Glue ETL y EMR; el Data Catalog es un repositorio central de metadatos."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/partitions.html
     accessed: 2026-10-02
+    page_title: "Partition your data"
     note: "Particionar los datos restringe lo que escanea cada consulta, mejorando rendimiento y costo; es común particionar por tiempo en varios niveles. Para particiones estilo Hive se usa MSCK REPAIR TABLE; para otras, ALTER TABLE ADD PARTITION."
   - source: aws-athena-docs
     url: https://docs.aws.amazon.com/athena/latest/ug/what-is.html
     accessed: 2026-10-02
+    page_title: "What is Amazon Athena?"
     note: "Athena consulta con SQL estándar datos almacenados directamente en Amazon S3, sin infraestructura que administrar, pagando por consulta."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-introduction
     accessed: 2026-10-02
+    page_title: "Introduction to Azure Data Lake Storage"
     note: "Azure Data Lake Storage es un conjunto de capacidades para analítica de big data construido sobre Azure Blob Storage, que se activan con el espacio de nombres jerárquico: acceso compatible con Hadoop (driver ABFS), directorios jerárquicos y un modelo de seguridad más granular."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-namespace
     accessed: 2026-10-02
+    page_title: "Azure Data Lake Storage hierarchical namespace"
     note: "El espacio de nombres jerárquico organiza los objetos en directorios y subdirectorios, con semántica de sistema de archivos; la manipulación atómica de directorios puede mejorar la latencia de muchas cargas. Una vez activado no se puede volver a un espacio plano; algunas cargas como backups o imágenes no se benefician."
 relations:
   - type: RELATED_TO
@@ -76,7 +87,7 @@ relations:
     target: etl-vs-elt
     note: El lake es la zona de aterrizaje típica del enfoque ELT.
 created_at: 2026-10-02
-updated_at: 2026-10-06
+updated_at: 2026-10-13
 last_verified: 2026-10-04
 verification_status: verified
 ---
@@ -246,3 +257,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `data-warehouse`, `lakehouse`, que ya tienen ficha.
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

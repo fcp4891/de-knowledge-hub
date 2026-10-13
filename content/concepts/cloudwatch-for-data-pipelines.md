@@ -18,38 +18,47 @@ sources:
   - source: aws-cloudwatch-docs
     url: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html
     accessed: 2026-10-12
+    page_title: "What is Amazon CloudWatch?"
     note: "What is Amazon CloudWatch?: monitorea en tiempo real los recursos de AWS y las aplicaciones que corren en AWS, con métricas, alarmas, dashboards y logs."
   - source: aws-cloudwatch-docs
     url: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/publishingMetrics.html
     accessed: 2026-10-12
+    page_title: "Publish custom metrics (PutMetricData / EMF)"
     note: "Publish custom metrics (PutMetricData / EMF): métricas propias con la API PutMetricData o la CLI, organizadas por namespace, nombre y dimensiones; para implementaciones nuevas se recomienda publicar métricas propias con OpenTelemetry. Las métricas de alta resolución se guardan con resolución de 1 segundo."
   - source: aws-cloudwatch-docs
     url: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format.html
     accessed: 2026-10-12
+    page_title: "Embedding metrics within logs"
     note: "Embedding metrics within logs: el formato de métricas embebidas genera métricas a partir de logs escritos en CloudWatch Logs; CloudWatch extrae las métricas para graficarlas y alarmar, y los eventos de log asociados se consultan con Logs Insights."
   - source: aws-cloudwatch-docs
     url: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Alarms.html
     accessed: 2026-10-12
+    page_title: "Using Amazon CloudWatch alarms"
     note: "Using Amazon CloudWatch alarms: una alarma de métrica vigila una métrica o una expresión y ejecuta acciones según el umbral durante varios períodos (por ejemplo, notificar a un topic de SNS); solo actúa cuando cambia de estado. Estados OK, ALARM e INSUFFICIENT_DATA. Una alarma compuesta combina estados de otras alarmas para reducir ruido. El período de evaluación máximo es de siete días para períodos de al menos una hora."
   - source: aws-cloudwatch-docs
     url: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/alarm-evaluation.html
     accessed: 2026-10-12
+    page_title: "Alarm evaluation"
     note: "Alarm evaluation: Evaluation Periods es la cantidad de períodos recientes a evaluar; Datapoints to Alarm, cuántos de ellos deben incumplir (no necesariamente seguidos) para pasar a ALARM."
   - source: aws-cloudwatch-docs
     url: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/alarms-and-missing-data.html
     accessed: 2026-10-12
+    page_title: "Configuring how CloudWatch alarms treat missing data"
     note: "Configuring how CloudWatch alarms treat missing data: notBreaching (los faltantes son buenos), breaching (son malos), ignore (mantiene el estado) y missing (si faltan todos los puntos del rango, pasa a INSUFFICIENT_DATA); la elección depende del tipo de métrica y del propósito de la alarma."
   - source: aws-cloudwatch-logs-docs
     url: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html
     accessed: 2026-10-12
+    page_title: "What is Amazon CloudWatch Logs?"
     note: "What is Amazon CloudWatch Logs?: por defecto, los logs se guardan indefinidamente; la retención se ajusta por grupo de logs, de un día a diez años; la protección contra borrado bloquea borrar grupos y streams."
   - source: aws-cloudwatch-logs-docs
     url: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AnalyzingLogData.html
     accessed: 2026-10-12
+    page_title: "Analyzing log data with CloudWatch Logs Insights"
     note: "Analyzing log data with CloudWatch Logs Insights: buscar y analizar logs de forma interactiva con consultas."
   - source: aws-cloudwatch-docs
     url: https://aws.amazon.com/cloudwatch/pricing/
     accessed: 2026-10-12
+    page_title: "Amazon CloudWatch Pricing"
     note: "Amazon CloudWatch pricing: se cobran métricas propias, solicitudes a la API, alarmas, dashboards y la ingesta, el almacenamiento y las consultas de logs, con una capa gratuita. Los montos no se copian."
 relations:
   - type: RELATED_TO

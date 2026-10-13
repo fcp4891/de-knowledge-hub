@@ -18,34 +18,42 @@ sources:
   - source: aws-lake-formation-docs
     url: https://docs.aws.amazon.com/lake-formation/latest/dg/what-is-lake-formation.html
     accessed: 2026-10-12
+    page_title: "What is AWS Lake Formation?"
     note: "What is AWS Lake Formation?: gobierno, seguridad y compartición centralizados de datos para analítica y ML; control de acceso fino sobre los datos del lake en S3 y sus metadatos en el Glue Data Catalog. Tiene su propio modelo de permisos, que complementa el de IAM."
   - source: aws-lake-formation-docs
     url: https://docs.aws.amazon.com/lake-formation/latest/dg/how-it-works.html
     accessed: 2026-10-12
+    page_title: "AWS Lake Formation: How it works"
     note: "AWS Lake Formation: How it works: el principal envía una consulta o un script ETL a un motor integrado, como Amazon Athena, AWS Glue, Amazon EMR o Amazon Redshift Spectrum; el Data Catalog le indica al motor si la tabla está administrada por Lake Formation; si los datos están registrados, el motor pide acceso y Lake Formation, si el usuario está autorizado, entrega acceso temporal al motor integrado."
   - source: aws-lake-formation-docs
     url: https://docs.aws.amazon.com/lake-formation/latest/dg/register-data-lake.html
     accessed: 2026-10-12
+    page_title: "Adding an Amazon S3 location to your data lake"
     note: "Adding an Amazon S3 location to your data lake: se registra la ubicación de S3 (data lake location) y desde ahí se usan permisos de Lake Formation para los objetos del catálogo que apuntan a ella y para los datos; también se puede registrar en modo de acceso híbrido."
   - source: aws-lake-formation-docs
     url: https://docs.aws.amazon.com/lake-formation/latest/dg/change-settings.html
     accessed: 2026-10-12
+    page_title: "Changing the default settings for your data lake"
     note: "Changing the default settings for your data lake: por compatibilidad con AWS Glue, el punto de partida da el permiso Super al grupo IAMAllowedPrincipals sobre los recursos existentes del catálogo y activa «Use only IAM access control» para los nuevos; así el acceso lo controlan solo las políticas de IAM y los permisos de Lake Formation no tienen efecto. Para gobernar con Lake Formation hay que cambiar esa configuración."
   - source: aws-lake-formation-docs
     url: https://docs.aws.amazon.com/lake-formation/latest/dg/hybrid-access-mode.html
     accessed: 2026-10-12
+    page_title: "Hybrid access mode"
     note: "Hybrid access mode: dos caminos de permisos para los mismos objetos del catálogo; los principales elegidos usan permisos de Lake Formation (opt-in) y los demás siguen accediendo por IAM."
   - source: aws-lake-formation-docs
     url: https://docs.aws.amazon.com/lake-formation/latest/dg/data-filtering.html
     accessed: 2026-10-12
+    page_title: "Data filtering and cell-level security in Lake Formation"
     note: "Data filtering and cell-level security in Lake Formation: al dar permisos sobre una tabla se pueden incluir filtros de datos; seguridad a nivel de columna, de fila y de celda, también sobre columnas anidadas."
   - source: aws-lake-formation-docs
     url: https://docs.aws.amazon.com/lake-formation/latest/dg/tag-based-access-control.html
     accessed: 2026-10-12
+    page_title: "Lake Formation tag-based access control"
     note: "Lake Formation tag-based access control: LF-TBAC define permisos por atributos llamados LF-Tags, que se asignan a recursos del Data Catalog; se da acceso a principales por valores de tag, y la operación se permite cuando el valor concedido coincide con el del recurso. Es el método recomendado cuando hay muchos recursos y la gestión por recurso se vuelve engorrosa."
   - source: aws-lake-formation-docs
     url: https://docs.aws.amazon.com/lake-formation/latest/dg/granting-catalog-permissions.html
     accessed: 2026-10-12
+    page_title: "Granting permissions on Data Catalog resources"
     note: "Granting permissions on Data Catalog resources: los permisos de Lake Formation se dan sobre bases, tablas y vistas del catálogo, por recurso nombrado o por LF-Tags."
 relations:
   - type: RELATED_TO

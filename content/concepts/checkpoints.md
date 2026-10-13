@@ -18,18 +18,22 @@ sources:
   - source: apache-spark-docs
     url: https://spark.apache.org/docs/4.2.0/streaming/apis-on-dataframes-and-datasets.html
     accessed: 2026-10-11
+    page_title: "Structured Streaming Programming Guide"
     note: "Spark 4.2.0, Structured Streaming: ante una falla o un apagado intencional se puede recuperar el progreso y el estado de la consulta y continuar donde quedó, usando checkpointing y write-ahead logs. Con una ubicación de checkpoint (opción checkpointLocation del DataStreamWriter, en un sistema de archivos compatible con HDFS), la consulta guarda la información de progreso (rango de offsets procesado en cada trigger) y los agregados en curso. Hay límites a qué cambios se permiten en una consulta entre reinicios desde la misma ubicación de checkpoint; algunos cambios no están permitidos y la consulta reiniciada puede fallar con errores impredecibles."
   - source: aws-managed-flink-docs
     url: https://docs.aws.amazon.com/managed-flink/latest/java/how-fault.html
     accessed: 2026-10-11
+    page_title: "Implement fault tolerance in Managed Service for Apache Flink"
     note: "Managed Service for Apache Flink: el checkpointing es el método de tolerancia a fallos; un checkpoint es un respaldo actualizado de una aplicación en ejecución, usado para recuperarse de inmediato de una interrupción inesperada o un failover. Un snapshot es un respaldo del estado creado y administrado manualmente, que permite restaurar la aplicación a un estado anterior. Con checkpointing activado, el servicio crea y carga respaldos ante reinicios inesperados, lo que da a la aplicación la misma semántica que una ejecución sin fallas; con checkpoints y snapshots configurados, ofrece procesamiento exactly-once durante actualizaciones, escalado o mantenimiento."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/event-hubs/event-processor-balance-partition-load
     accessed: 2026-10-11
+    page_title: "Partition load balancing for event processing"
     note: "Event Hubs: el checkpointing es el proceso por el que un event processor marca o confirma la posición del último evento procesado con éxito en una partición; suele hacerse en la función que procesa los eventos, por partición y dentro de un consumer group. Si un procesador se desconecta, otra instancia retoma la partición desde el último checkpoint confirmado, pasando ese offset al event hub. Los procesadores registran la propiedad de las particiones en un checkpoint store, que usan para balancear la carga."
   - source: python-docs
     url: https://docs.python.org/3.12/library/os.html
     accessed: 2026-10-11
+    page_title: "os — Miscellaneous operating system interfaces"
     note: "os.replace(src, dst): si dst existe y es un archivo, se reemplaza sin aviso; puede fallar si src y dst están en sistemas de archivos distintos; si tiene éxito, el renombrado es atómico (requisito de POSIX)."
 relations:
   - type: RELATED_TO
@@ -48,7 +52,7 @@ relations:
     target: python-file-handling
     note: Un checkpoint en archivo se escribe de forma atómica.
 created_at: 2026-10-11
-updated_at: 2026-10-11
+updated_at: 2026-10-13
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -265,3 +269,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: creación (lote F3b-05a).
 - 2026-10-11: revisión B-F3.1 del lote F3b-05a aplicada (docs/reviews/cards-f3b-05a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

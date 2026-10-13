@@ -18,42 +18,52 @@ sources:
   - source: apache-kafka-docs
     url: https://kafka.apache.org/intro/
     accessed: 2026-10-05
+    page_title: "Introduction"
     note: "Kafka es una plataforma de event streaming que permite publicar y suscribirse a streams de eventos, almacenarlos de forma durable el tiempo que se quiera y procesarlos a medida que ocurren o en forma retrospectiva, de manera distribuida y tolerante a fallos."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/subscription-overview
     accessed: 2026-10-05
+    page_title: "Subscription overview"
     note: "Por defecto, Pub/Sub entrega al menos una vez y sin garantía de orden en todos los tipos de suscripción; existen suscripciones pull, push y de export (BigQuery, Cloud Storage y Bigtable en Preview)."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/create-bigquery-subscription
     accessed: 2026-10-05
+    page_title: "Create BigQuery subscriptions"
     note: "gcloud pubsub subscriptions create SUBSCRIPTION_ID --topic=TOPIC_ID --bigquery-table=PROJECT_ID.DATASET_ID.TABLE_ID crea una suscripción de BigQuery; --bigquery-service-account-email usa una cuenta de servicio propia. El dataset y la tabla deben existir; si el topic no tiene schema, la tabla necesita una columna data. Crearla requiere roles/pubsub.editor en el proyecto."
   - source: gcp-dataflow-docs
     url: https://docs.cloud.google.com/dataflow/docs/concepts/streaming-pipelines
     accessed: 2026-10-05
+    page_title: "Streaming pipelines"
     note: "En streaming, las colecciones son ilimitadas; se agregan con ventanas, watermarks y triggers. Un watermark es el umbral que indica cuándo Dataflow espera que hayan llegado todos los datos de una ventana; lo que llega con timestamp dentro de una ventana ya pasada por el watermark es dato tardío."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/write-api-grpc
     accessed: 2026-10-05
+    page_title: "Introduction to the Storage Write API (gRPC)"
     note: "Storage Write API (gRPC): el default stream está pensado para datos que llegan continuamente, los datos quedan disponibles de inmediato para consulta y la semántica es at-least-once; los streams creados por la aplicación dan escritura exactly-once mediante offsets y propiedades ACID adicionales."
   - source: apache-spark-docs
     url: https://spark.apache.org/docs/latest/streaming/index.html
     accessed: 2026-10-05
+    page_title: "Structured Streaming Programming Guide"
     note: "Por defecto, Structured Streaming procesa los streams con un motor de micro-batch (una serie de pequeños jobs batch), con latencias de extremo a extremo desde unos 100 ms y tolerancia a fallos exactly-once; el modo Continuous Processing baja a cerca de 1 ms con garantías at-least-once."
   - source: aws-kinesis-docs
     url: https://docs.aws.amazon.com/streams/latest/dev/introduction.html
     accessed: 2026-10-05
+    page_title: "What is Amazon Kinesis Data Streams?"
     note: "Kinesis Data Streams recolecta y procesa grandes streams de registros de datos en tiempo real; las aplicaciones leen los registros del stream."
   - source: aws-kinesis-docs
     url: https://docs.aws.amazon.com/streams/latest/dev/kinesis-extended-retention.html
     accessed: 2026-10-05
+    page_title: "Change the data retention period"
     note: "Un data stream de Kinesis guarda los registros en shards de forma temporal: 24 horas por defecto, hasta 8760 horas (365 días); una retención mayor a 24 horas tiene cargo adicional."
   - source: aws-firehose-docs
     url: https://docs.aws.amazon.com/firehose/latest/dev/what-is-this-service.html
     accessed: 2026-10-05
+    page_title: "What is Amazon Data Firehose?"
     note: "Amazon Data Firehose acumula los datos hasta un tamaño o intervalo de buffer antes de entregarlos; para Redshift, entrega primero a S3 y luego ejecuta COPY."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about
     accessed: 2026-10-05
+    page_title: "What is Azure Event Hubs?"
     note: "Event Hubs es un log distribuido de solo agregado con particiones para escalar el throughput; acepta clientes de Kafka; guarda los eventos con retención configurable (1 a 90 días según el tier); Capture escribe los eventos a almacenamiento de largo plazo; los consumidores leen por consumer group y registran su offset con checkpointing."
 relations:
   - type: RELATED_TO
@@ -75,7 +85,7 @@ relations:
     target: deduplication
     note: Los duplicados de la entrega at-least-once se eliminan aguas abajo.
 created_at: 2026-10-05
-updated_at: 2026-10-05
+updated_at: 2026-10-13
 last_verified: 2026-10-05
 verification_status: verified
 ---
@@ -241,3 +251,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-05: creación (lote 6 de F3).
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

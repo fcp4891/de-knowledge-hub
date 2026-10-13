@@ -17,38 +17,47 @@ sources:
   - source: kimball-group-techniques
     url: https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/type-1/
     accessed: 2026-10-07
+    page_title: "Type 1: Overwrite"
     note: "Referencia conceptual (Nivel 4). En el tipo 1, el valor anterior del atributo se sobrescribe con el nuevo: el atributo refleja siempre la asignación más reciente y la técnica destruye la historia. Es fácil de implementar y no crea filas nuevas, pero hay que recalcular las tablas de hechos agregadas y los cubos afectados por el cambio."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/dimensional-modeling-dimension-tables
     accessed: 2026-10-07
+    page_title: "Dimensional modeling in Microsoft Fabric Warehouse: Dimension tables"
     note: "Aplica al SQL analytics endpoint y a Warehouse en Microsoft Fabric. Los cambios SCD tipo 1 sobrescriben la fila de la dimensión porque no hace falta seguir los cambios; también sirven para corregir errores. Es un tipo común, recomendado para la mayoría de los atributos que cambian, como nombre o email del cliente. Una dimensión puede admitir a la vez cambios tipo 1 y tipo 2."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax
     accessed: 2026-10-07
+    page_title: "Data manipulation language (DML) statements in GoogleSQL"
     note: "MERGE con WHEN MATCHED (UPDATE o DELETE), WHEN NOT MATCHED (INSERT) y WHEN NOT MATCHED BY SOURCE. Si una fila del destino coincide con más de una fila de origen, la sentencia falla con el error de tiempo de ejecución «UPDATE/MERGE must match at most one source row for each target row»."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/r_MERGE.html
     accessed: 2026-10-07
+    page_title: "MERGE"
     note: "MERGE de Redshift ejecuta WHEN MATCHED (UPDATE o DELETE) y WHEN NOT MATCHED (INSERT). Si varias filas de origen coinciden con la misma fila del destino, falla con «Found multiple matches to update the same tuple». El modo simplificado REMOVE DUPLICATES exige que origen y destino tengan las mismas columnas, tipos compatibles y el mismo orden, y rinde mejor que WHEN MATCHED y WHEN NOT MATCHED."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/statements/merge-transact-sql?view=sql-server-ver17
     accessed: 2026-10-07
+    page_title: "MERGE (Transact-SQL)"
     note: "Aplica a Azure Synapse Analytics (solo pool SQL dedicado) y Warehouse en Microsoft Fabric, entre otros. MERGE inserta, actualiza o borra en un destino según un join con el origen; no puede actualizar la misma fila más de una vez ni actualizar y borrar la misma fila. El punto y coma final es obligatorio."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/sql/t-sql/queries/is-distinct-from-transact-sql?view=sql-server-ver17
     accessed: 2026-10-07
+    page_title: "IS [NOT] DISTINCT FROM (Transact-SQL)"
     note: "IS [NOT] DISTINCT FROM aplica a Warehouse en Fabric (no menciona Synapse) y garantiza un resultado verdadero o falso aunque haya NULL."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/operators
     accessed: 2026-10-07
+    page_title: "Operators"
     note: "IS DISTINCT FROM devuelve TRUE si los valores serían distintos para GROUP BY y nunca devuelve NULL."
   - source: aws-redshift-docs
     url: https://docs.aws.amazon.com/redshift/latest/dg/c_unsupported-postgresql-functions.html
     accessed: 2026-10-07
+    page_title: "Unsupported PostgreSQL functions"
     note: "Redshift lista IS DISTINCT FROM entre las funciones de PostgreSQL no admitidas."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/current/sql-merge.html
     accessed: 2026-10-07
+    page_title: "PostgreSQL: Documentation: 18: MERGE"
     note: "MERGE con WHEN MATCHED, WHEN NOT MATCHED [BY TARGET] y WHEN NOT MATCHED BY SOURCE. Con ejecuciones concurrentes se aplican las reglas de aislamiento habituales, y la página sugiere INSERT … ON CONFLICT como alternativa."
 relations:
   - type: RELATED_TO
@@ -67,7 +76,7 @@ relations:
     target: deduplication
     note: El staging debe traer una fila por clave antes del MERGE.
 created_at: 2026-10-05
-updated_at: 2026-10-07
+updated_at: 2026-10-13
 last_verified: 2026-10-07
 verification_status: verified
 ---
@@ -245,3 +254,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: ficha completa (lote F3b-02c, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02c aplicada (docs/reviews/cards-f3b-02c.md): sin la posibilidad de motores sin validación de duplicados; los cuatro motores citados fallan.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
