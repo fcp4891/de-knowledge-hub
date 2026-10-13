@@ -60,6 +60,26 @@ sources:
     accessed: 2026-10-12
     page_title: "Amazon CloudWatch Pricing"
     note: "Amazon CloudWatch pricing: se cobran métricas propias, solicitudes a la API, alarmas, dashboards y la ingesta, el almacenamiento y las consultas de logs, con una capa gratuita. Los montos no se copian."
+  - source: gcp-cloud-monitoring-docs
+    url: https://docs.cloud.google.com/monitoring/custom-metrics
+    accessed: 2026-10-13
+    page_title: "User-defined metrics overview"
+    note: "User-defined metrics overview (Cloud Monitoring): métricas que no define Google Cloud; se pueden crear con la API de Cloud Monitoring, salvo las basadas en logs, pero se recomienda OpenTelemetry."
+  - source: gcp-cloud-monitoring-docs
+    url: https://docs.cloud.google.com/monitoring/alerts
+    accessed: 2026-10-13
+    page_title: "Alerting overview"
+    note: "Alerting overview: una política de alertas puede vigilar series de tiempo de Monitoring o logs de Cloud Logging; las condiciones de ausencia de métrica se cumplen cuando una serie no tiene datos durante la ventana de reevaluación, de 24 horas como máximo."
+  - source: gcp-cloud-logging-docs
+    url: https://docs.cloud.google.com/logging/docs/buckets
+    accessed: 2026-10-13
+    page_title: "Configure log buckets"
+    note: "Configure log buckets: los logs se guardan en buckets con retención configurable y bloqueo para cumplimiento; se analizan con Observability Analytics (SQL) o con datasets vinculados de BigQuery, de solo lectura."
+  - source: gcp-cloud-logging-docs
+    url: https://docs.cloud.google.com/logging/docs/logs-based-metrics
+    accessed: 2026-10-13
+    page_title: "Log-based metrics overview"
+    note: "Log-based metrics overview: métricas de Cloud Monitoring derivadas del contenido de las entradas de log, por ejemplo para contarlas."
 relations:
   - type: RELATED_TO
     target: orchestration-observability
@@ -80,9 +100,9 @@ relations:
     target: data-reconciliation
     note: Las filas cargadas son una señal para reconciliar.
 created_at: 2026-10-12
-updated_at: 2026-10-12
-last_verified: 2026-10-12
-verification_status: review_required
+updated_at: 2026-10-13
+last_verified: 2026-10-13
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -214,7 +234,14 @@ El script en Python 3.12 con boto3 se **ejecuta en la CI contra moto**, que simu
 
 ## 11. GCP
 
-No aplica de forma específica: esta ficha describe CloudWatch. En GCP, el monitoreo se trata en `bigquery-monitoring` y `orchestration-observability`, con otras herramientas; no son equivalentes.
+No aplica de forma específica: esta ficha describe CloudWatch. En GCP, lo más cercano es Cloud Monitoring con Cloud Logging; `bigquery-monitoring` y `orchestration-observability` tratan el monitoreo de BigQuery y de la orquestación. Las diferencias, según sus páginas:
+
+| | CloudWatch | Cloud Monitoring y Cloud Logging |
+|---|---|---|
+| Métricas propias | `PutMetricData`, métricas embebidas en logs (EMF) u OpenTelemetry, recomendado para implementaciones nuevas | API de Cloud Monitoring u OpenTelemetry, recomendado; además, métricas basadas en el contenido de los logs |
+| Datos faltantes | Cada alarma decide: `missing`, `breaching`, `notBreaching` o `ignore` | Condición de ausencia de métrica, con una ventana de hasta 24 horas |
+| Qué vigila la alerta | Una métrica o una expresión de métricas | Series de tiempo de Monitoring o logs de Cloud Logging |
+| Logs | Grupos con retención de un día a diez años, o indefinida; consultas con Logs Insights | Buckets con retención configurable; consultas con Observability Analytics (SQL) o datasets vinculados de BigQuery |
 
 ## 12. AWS
 
@@ -271,8 +298,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-12. `review_required`: pendiente de revisión B-F3.1 del lote F3b-09b.
+2026-10-13. Pasa a `verified`: revisión B-F3.1 del lote F3b-09b aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-12: creación (lote F3b-09b).
+- 2026-10-13: revisión B-F3.1 del lote F3b-09b aplicada (docs/reviews/cards-f3b-09b.md): el §11 compara con Cloud Monitoring y Cloud Logging (métricas propias, datos faltantes, qué vigila la alerta y logs), con fuente de cada lado; fuente nueva `gcp-cloud-monitoring-docs`.
+- 2026-10-13: `verification_status: verified` (sin VERIFY pendientes).

@@ -60,6 +60,26 @@ sources:
     accessed: 2026-10-12
     page_title: "AWS Step Functions Pricing"
     note: "AWS Step Functions pricing: Standard se cobra por transiciones de estado, contando cada paso ejecutado, reintentos incluidos; Express por solicitudes y duración. Los montos no se copian."
+  - source: gcp-workflows-docs
+    url: https://docs.cloud.google.com/workflows/docs/overview
+    accessed: 2026-10-13
+    page_title: "Workflows overview"
+    note: "Workflows overview: plataforma de orquestación administrada y serverless que ejecuta servicios en el orden que define un workflow; el workflow se define en YAML o JSON."
+  - source: gcp-workflows-docs
+    url: https://docs.cloud.google.com/workflows/docs/reference/syntax/retrying
+    accessed: 2026-10-13
+    page_title: "Retry steps"
+    note: "Retry steps: try/retry con predicate, max_retries y backoff (initial_delay, max_delay, multiplier); reintentar un paso cuenta como otra ejecución de paso para el precio."
+  - source: gcp-workflows-docs
+    url: https://docs.cloud.google.com/workflows/docs/reference/googleapis
+    accessed: 2026-10-13
+    page_title: "Connectors reference"
+    note: "Connectors reference: una llamada a un conector usa call y args, y admite timeout y política de sondeo en connector_params para operaciones de larga duración."
+  - source: gcp-workflows-docs
+    url: https://cloud.google.com/workflows/pricing
+    accessed: 2026-10-13
+    page_title: "Workflows pricing"
+    note: "Workflows pricing: se cobra por pasos ejecutados; cuentan los pasos exitosos, los fallidos y cada intento de un paso reintentado. Los montos no se copian."
 relations:
   - type: RELATED_TO
     target: orchestration-landscape
@@ -92,9 +112,9 @@ relations:
     target: aws-iam-for-data
     note: La máquina de estado corre con su rol de IAM.
 created_at: 2026-10-12
-updated_at: 2026-10-12
-last_verified: 2026-10-12
-verification_status: review_required
+updated_at: 2026-10-13
+last_verified: 2026-10-13
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -222,7 +242,14 @@ La definición se **valida en la CI** como JSON y por estructura: `StartAt` exis
 
 ## 11. GCP
 
-No aplica de forma específica: esta ficha describe Step Functions. En GCP, la orquestación administrada se trata en `composer-environments` y `orchestration-landscape`, con otros modelos; no son equivalentes.
+No aplica de forma específica: esta ficha describe Step Functions. Lo más cercano en GCP es Workflows; Composer, el Airflow administrado (ver `composer-environments`), se compara con MWAA. Las diferencias con Workflows, según sus páginas:
+
+| | Step Functions | Workflows |
+|---|---|---|
+| Definición | Amazon States Language en JSON, con JSONata o JSONPath | Su propia sintaxis, en YAML o JSON |
+| Esperar un job largo | Patrón Run a Job (`.sync`) en la integración | Conectores, con timeout y política de sondeo (`connector_params`) |
+| Reintentos | `Retry` por estado: `IntervalSeconds`, `MaxAttempts`, `BackoffRate`, `JitterStrategy` | `try`/`retry`: `max_retries` y `backoff` (`initial_delay`, `max_delay`, `multiplier`) |
+| Tipos y cobro | Standard (por transición de estado) y Express (por solicitud y duración) | Un tipo; se cobra por paso ejecutado, y cada reintento cuenta como un paso |
 
 ## 12. AWS
 
@@ -280,8 +307,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-12. `review_required`: pendiente de revisión B-F3.1 del lote F3b-09b.
+2026-10-13. Pasa a `verified`: revisión B-F3.1 del lote F3b-09b aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-12: creación (lote F3b-09b).
+- 2026-10-13: revisión B-F3.1 del lote F3b-09b aplicada (docs/reviews/cards-f3b-09b.md): el §11 compara con Workflows (definición, espera de jobs largos, reintentos, tipos y cobro), con fuente de cada lado.
+- 2026-10-13: `verification_status: verified` (sin VERIFY pendientes).

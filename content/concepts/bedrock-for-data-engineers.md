@@ -55,6 +55,16 @@ sources:
     accessed: 2026-10-12
     page_title: "Amazon Bedrock pricing"
     note: "Amazon Bedrock pricing: precios por modelo según tokens de entrada y salida, con precios propios para inferencia por lotes. Los montos no se copian."
+  - source: gcp-agent-platform-docs
+    url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/capabilities/batch-inference
+    accessed: 2026-10-13
+    page_title: "Batch inference with Gemini"
+    note: "Batch inference with Gemini: inferencia asíncrona y de alto volumen con Gemini (antes batch prediction), para grandes conjuntos de prompts sin respuesta inmediata, con descuento frente a la inferencia en tiempo real."
+  - source: gcp-agent-platform-docs
+    url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/capabilities/batch-inference/new-job-from-bigquery
+    accessed: 2026-10-13
+    page_title: "Batch inference for BigQuery"
+    note: "Batch inference for BigQuery: la entrada es una tabla de BigQuery (bq://proyecto.dataset.tabla) en la misma región que el job, sin datasets multirregión; la salida va a una tabla de BigQuery o a JSONL en Cloud Storage."
 relations:
   - type: RELATED_TO
     target: vertex-ai-for-data-engineers
@@ -72,9 +82,9 @@ relations:
     target: sagemaker-for-data-engineers
     note: SageMaker AI para modelos propios; Bedrock para modelos fundacionales administrados.
 created_at: 2026-10-12
-updated_at: 2026-10-12
-last_verified: 2026-10-12
-verification_status: review_required
+updated_at: 2026-10-13
+last_verified: 2026-10-13
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -200,7 +210,15 @@ def submit_job(bedrock: BedrockClient, job: str, model_id: str, role_arn: str, i
 
 ## 11. GCP
 
-No aplica de forma específica: esta ficha describe Bedrock. En GCP, la plataforma de IA se trata en `vertex-ai-for-data-engineers`, con otro modelo; no son lo mismo.
+No aplica de forma específica: esta ficha describe Bedrock. En GCP, la plataforma es Gemini Enterprise Agent Platform (ver `vertex-ai-for-data-engineers`). Las diferencias de la inferencia por lotes, según sus páginas:
+
+| | Bedrock | Agent Platform (Gemini) |
+|---|---|---|
+| Entrada | JSONL en S3: una línea por registro con `recordId` y `modelInput` | Una tabla de BigQuery en la misma región del job (sin multirregión), o archivos en Cloud Storage |
+| Salida | JSONL en S3, sin orden garantizado; se une por `recordId` | Una tabla de BigQuery o JSONL en Cloud Storage |
+| Modelos | Modelos fundacionales de varias empresas, con formato InvokeModel o Converse | La página citada describe la inferencia por lotes con Gemini |
+
+Para un data engineer, la diferencia práctica es dónde viven los datos: con Bedrock, el pipeline arma y lee archivos en S3; con Agent Platform, puede leer y escribir tablas de BigQuery.
 
 ## 12. AWS
 
@@ -257,8 +275,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-12. `review_required`: pendiente de revisión B-F3.1 del lote F3b-09b.
+2026-10-13. Pasa a `verified`: revisión B-F3.1 del lote F3b-09b aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-12: creación (lote F3b-09b).
+- 2026-10-13: revisión B-F3.1 del lote F3b-09b aplicada (docs/reviews/cards-f3b-09b.md): el §11 compara la inferencia por lotes con la de Gemini en Agent Platform (entrada, salida y modelos), con fuente de cada lado.
+- 2026-10-13: `verification_status: verified` (sin VERIFY pendientes).

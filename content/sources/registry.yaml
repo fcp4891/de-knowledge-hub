@@ -1865,3 +1865,21 @@ created_at: '2026-10-12'
 updated_at: '2026-10-12'
 last_verified: '2026-10-12'
 verification_status: verified
+---
+id: source:gcp-cloud-monitoring-docs
+slug: gcp-cloud-monitoring-docs
+type: source
+title: Cloud Monitoring documentation
+description: Documentación oficial de Cloud Monitoring, Google Cloud.
+url: https://docs.cloud.google.com/monitoring/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-13'
+updated_at: '2026-10-13'
+last_verified: '2026-10-13'
+verification_status: verified

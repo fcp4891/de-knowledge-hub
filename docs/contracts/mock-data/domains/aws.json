@@ -21,8 +21,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-12"
+          "verification_status": "verified",
+          "last_verified": "2026-10-13"
         },
         {
           "slug": "redshift-architecture",
@@ -35,8 +35,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-12"
+          "verification_status": "verified",
+          "last_verified": "2026-10-13"
         },
         {
           "slug": "athena-serverless-queries",
@@ -49,8 +49,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-12"
+          "verification_status": "verified",
+          "last_verified": "2026-10-13"
         },
         {
           "slug": "glue-catalog-and-etl",
@@ -63,8 +63,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-12"
+          "verification_status": "verified",
+          "last_verified": "2026-10-13"
         }
       ]
     },
@@ -83,8 +83,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-12"
+          "verification_status": "verified",
+          "last_verified": "2026-10-13"
         },
         {
           "slug": "kinesis-data-streams",
@@ -97,8 +97,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-12"
+          "verification_status": "verified",
+          "last_verified": "2026-10-13"
         },
         {
           "slug": "msk-managed-kafka",
@@ -111,8 +111,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-12"
+          "verification_status": "verified",
+          "last_verified": "2026-10-13"
         }
       ]
     },
@@ -131,8 +131,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-12"
+          "verification_status": "verified",
+          "last_verified": "2026-10-13"
         },
         {
           "slug": "step-functions-workflows",
@@ -145,8 +145,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-12"
+          "verification_status": "verified",
+          "last_verified": "2026-10-13"
         },
         {
           "slug": "mwaa-managed-airflow",
@@ -159,8 +159,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-12"
+          "verification_status": "verified",
+          "last_verified": "2026-10-13"
         },
         {
           "slug": "rds-as-source",
@@ -173,8 +173,8 @@
           "importance": "low",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-12"
+          "verification_status": "verified",
+          "last_verified": "2026-10-13"
         }
       ]
     },
@@ -193,8 +193,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-12"
+          "verification_status": "verified",
+          "last_verified": "2026-10-13"
         },
         {
           "slug": "aws-iam-for-data",
@@ -207,8 +207,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-12"
+          "verification_status": "verified",
+          "last_verified": "2026-10-13"
         },
         {
           "slug": "cloudwatch-for-data-pipelines",
@@ -221,8 +221,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-12"
+          "verification_status": "verified",
+          "last_verified": "2026-10-13"
         }
       ]
     },
@@ -241,8 +241,8 @@
           "importance": "low",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-12"
+          "verification_status": "verified",
+          "last_verified": "2026-10-13"
         },
         {
           "slug": "sagemaker-for-data-engineers",
@@ -255,8 +255,8 @@
           "importance": "low",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-12"
+          "verification_status": "verified",
+          "last_verified": "2026-10-13"
         }
       ]
     }

@@ -18,8 +18,8 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | — (lotes F3b-09a y 09b entregados en `review_required`) | Aplicar las revisiones de 09a y 09b | — |
-| B · Cursor revisión | Revisar el lote F3b-09a (B-F3.1) | Revisar el lote F3b-09b (B-F3.1) | — |
+| A · Claude Code | — (09-aws 16/16 `verified`) | Plan de 10-azure propuesto, sin ejecutar | — |
+| B · Cursor revisión | — | — | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
@@ -37,7 +37,7 @@
 - [x] 06-orchestration: 12/12 `verified`, aprobado por Felipe en el navegador el 2026-10-11.
 - [x] 07-architecture: 2/2 conceptos `verified`, aprobado por Felipe en el navegador el 2026-10-11 (las 15 arquitecturas: 6 en F4, 9 en el Backlog).
 - [x] 08-gcp: 31/31 `verified`, aprobado por Felipe en el navegador el 2026-10-12. Sus 15 arquitecturas no son de F3b: 6 en F4 (ROADMAP) y 9 en el Backlog.
-- [ ] 09-aws: 0/16 `verified`; lotes F3b-09a (8) y F3b-09b (8) en revisión (ADR-011: código de AWS con moto y Terraform).
+- [ ] 09-aws: 16/16 `verified`; pendiente de aprobación en el navegador.
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
 
 ## Fases cerradas

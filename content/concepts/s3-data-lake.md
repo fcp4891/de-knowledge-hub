@@ -37,9 +37,9 @@ sources:
     note: "Configuring default encryption: SSE-S3 es el cifrado base de todo bucket; desde el 5 de enero de 2023, toda carga nueva se cifra automáticamente sin costo adicional."
   - source: aws-s3-docs
     url: https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html
-    accessed: 2026-10-12
+    accessed: 2026-10-13
     page_title: "Understanding and managing Amazon S3 storage classes"
-    note: "Understanding and managing Amazon S3 storage classes: tabla comparativa (consultada el 2026-10-12) con duración mínima de almacenamiento: STANDARD e INTELLIGENT_TIERING sin mínimo; STANDARD_IA y ONEZONE_IA 30 días; GLACIER_IR y GLACIER 90 días; DEEP_ARCHIVE 180 días. ONEZONE_IA y EXPRESS_ONEZONE guardan en una sola zona de disponibilidad. GLACIER y DEEP_ARCHIVE exigen restaurar el objeto antes de leerlo; las clases IA y Glacier cobran recuperación por GB."
+    note: "Understanding and managing Amazon S3 storage classes: tabla comparativa (consultada el 2026-10-13) con duración mínima de almacenamiento: STANDARD e INTELLIGENT_TIERING sin mínimo; STANDARD_IA y ONEZONE_IA 30 días; GLACIER_IR y GLACIER 90 días; DEEP_ARCHIVE 180 días. ONEZONE_IA y EXPRESS_ONEZONE guardan en una sola zona de disponibilidad. GLACIER y DEEP_ARCHIVE exigen restaurar el objeto antes de leerlo; las clases IA y Glacier cobran recuperación por GB."
   - source: aws-s3-docs
     url: https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html
     accessed: 2026-10-12
@@ -87,9 +87,9 @@ relations:
     target: lake-formation-permissions
     note: Lake Formation gobierna el acceso a las ubicaciones registradas.
 created_at: 2026-10-12
-updated_at: 2026-10-12
-last_verified: 2026-10-12
-verification_status: review_required
+updated_at: 2026-10-13
+last_verified: 2026-10-13
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -108,7 +108,7 @@ Las clases de almacenamiento y las reglas de lifecycle bajan el costo de lo que 
 - **Bucket de propósito general:** el tipo original, recomendado para la mayoría de los casos; el nombre es único en toda la partición de AWS. Hay otros tipos: **directory** (baja latencia y residencia de datos, organizados en directorios), **table** (S3 Tables, tablas Apache Iceberg con mantenimiento automático) y **vector**.
 - **Objeto y clave:** S3 es plano; los «directorios» son prefijos de la clave. Un listado con `Delimiter="/"` devuelve los prefijos como `CommonPrefixes`.
 - **Zonas del lake:** convenciones de prefijo (`raw/`, `curated/`, `tmp/`), no un concepto de S3.
-- **Clases de almacenamiento:** según su tabla al 2026-10-12, con duración mínima:
+- **Clases de almacenamiento:** según su tabla al 2026-10-13, con duración mínima:
 
 | Clase | Duración mínima | Observaciones |
 |---|---|---|
@@ -116,9 +116,12 @@ Las clases de almacenamiento y las reglas de lifecycle bajan el costo de lo que 
 | `INTELLIGENT_TIERING` | ninguna | mueve objetos según su acceso; cobra monitoreo por objeto |
 | `STANDARD_IA` | 30 días | cobro de recuperación por GB |
 | `ONEZONE_IA` | 30 días | una sola zona de disponibilidad |
+| `EXPRESS_ONEZONE` | ninguna | S3 Express One Zone: acceso de milisegundos de un dígito, en una sola zona de disponibilidad que se elige |
 | `GLACIER_IR` | 90 días | acceso en milisegundos |
 | `GLACIER` | 90 días | hay que restaurar antes de leer |
 | `DEEP_ARCHIVE` | 180 días | hay que restaurar antes de leer |
+
+La tabla de la página también lista Reduced Redundancy, marcada como no recomendada; aquí no se incluye.
 
 - **Lifecycle:** reglas por prefijo o filtro con acciones de **transición** (a otra clase) y de **expiración** (S3 borra el objeto).
 
@@ -332,7 +335,7 @@ No aplica de forma específica: esta ficha describe S3. El equivalente es Cloud 
 
 ## 12. AWS
 
-**Amazon S3.** Los tipos de bucket, la consistencia, el rendimiento por prefijo, el bloqueo de acceso público, el cifrado por defecto, las clases (tabla consultada el 2026-10-12) y el lifecycle son los de sus páginas. Los precios por clase, solicitud y recuperación se consultan en la página de precios.
+**Amazon S3.** Los tipos de bucket, la consistencia, el rendimiento por prefijo, el bloqueo de acceso público, el cifrado por defecto, las clases (tabla consultada el 2026-10-13) y el lifecycle son los de sus páginas. Los precios por clase, solicitud y recuperación se consultan en la página de precios.
 
 ## 13. Azure
 
@@ -386,8 +389,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-12. `review_required`: pendiente de revisión B-F3.1 del lote F3b-09a.
+2026-10-13. Pasa a `verified`: revisión B-F3.1 del lote F3b-09a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-12: creación (lote F3b-09a).
+- 2026-10-13: revisión B-F3.1 del lote F3b-09a aplicada (docs/reviews/cards-f3b-09a.md): la tabla de clases agrega S3 Express One Zone y dice que omite Reduced Redundancy (no recomendada), citada de la página de storage classes al 2026-10-13.
+- 2026-10-13: `verification_status: verified` (sin VERIFY pendientes).

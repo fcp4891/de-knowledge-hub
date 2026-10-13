@@ -51,6 +51,16 @@ sources:
     accessed: 2026-10-12
     page_title: "Your Models. Any Scale. Full Control."
     note: "Amazon SageMaker AI (página del producto): personalizar, entrenar y desplegar modelos; precios en su sección de precios. Los montos no se copian."
+  - source: gcp-agent-platform-docs
+    url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning/featurestore/latest/overview
+    accessed: 2026-10-13
+    page_title: "About Feature Store on Gemini Enterprise Agent Platform"
+    note: "About Feature Store on Gemini Enterprise Agent Platform: gestiona los datos de features en una tabla o vista de BigQuery y los sirve online directamente desde esa fuente; actúa como capa de metadatos sobre BigQuery."
+  - source: gcp-agent-platform-docs
+    url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning/predictions/get-batch-predictions
+    accessed: 2026-10-13
+    page_title: "Get batch inferences from a custom trained model"
+    note: "Get batch inferences from a custom trained model: la solicitud indica una fuente de entrada y una ubicación de salida en Cloud Storage o BigQuery, en la misma región o multirregión."
 relations:
   - type: RELATED_TO
     target: vertex-ai-for-data-engineers
@@ -65,9 +75,9 @@ relations:
     target: late-arriving-data
     note: El event time ordena los registros de features que llegan tarde.
 created_at: 2026-10-12
-updated_at: 2026-10-12
-last_verified: 2026-10-12
-verification_status: review_required
+updated_at: 2026-10-13
+last_verified: 2026-10-13
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -199,7 +209,14 @@ El script en Python 3.12 con boto3 se **ejecuta en la CI contra moto**, que simu
 
 ## 11. GCP
 
-No aplica de forma específica: esta ficha describe SageMaker AI. En GCP, la plataforma de IA se trata en `vertex-ai-for-data-engineers`, con otro modelo; no son lo mismo.
+No aplica de forma específica: esta ficha describe SageMaker AI. En GCP, la plataforma es Gemini Enterprise Agent Platform (ver `vertex-ai-for-data-engineers`). Las diferencias, según sus páginas:
+
+| | SageMaker AI | Agent Platform |
+|---|---|---|
+| Feature store | Feature group con store online (último valor) y offline propio, en S3 | Gestiona las features en una tabla o vista de BigQuery y sirve online desde esa fuente, como capa de metadatos |
+| Inferencia por lotes de modelos propios | Batch transform: lee un prefijo de S3 y escribe en S3 | Entrada y salida en Cloud Storage o BigQuery, en la misma región |
+
+La diferencia práctica: en SageMaker AI, el pipeline de features escribe en el feature group y el historial queda en S3; en Agent Platform, las features son tablas de BigQuery que el pipeline ya mantiene.
 
 ## 12. AWS
 
@@ -256,8 +273,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-12. `review_required`: pendiente de revisión B-F3.1 del lote F3b-09b.
+2026-10-13. Pasa a `verified`: revisión B-F3.1 del lote F3b-09b aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-12: creación (lote F3b-09b), con el nombre actual del servicio según su página y «Amazon SageMaker» como alias de búsqueda de la tecnología.
+- 2026-10-13: revisión B-F3.1 del lote F3b-09b aplicada (docs/reviews/cards-f3b-09b.md): el §11 compara con Agent Platform (feature store e inferencia por lotes de modelos propios), con fuente de cada lado.
+- 2026-10-13: `verification_status: verified` (sin VERIFY pendientes).

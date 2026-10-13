@@ -55,6 +55,21 @@ sources:
     accessed: 2026-10-12
     page_title: "Granting permissions on Data Catalog resources"
     note: "Granting permissions on Data Catalog resources: los permisos de Lake Formation se dan sobre bases, tablas y vistas del catálogo, por recurso nombrado o por LF-Tags."
+  - source: gcp-knowledge-catalog-docs
+    url: https://docs.cloud.google.com/knowledge-catalog/docs/iam-and-access-control
+    accessed: 2026-10-13
+    page_title: "Manage access with IAM"
+    note: "Manage access with IAM (Knowledge Catalog): IAM controla el acceso a los recursos de Knowledge Catalog al nivel de recurso de Google Cloud, por ejemplo grupos de entradas y entradas, otorgando roles a principales."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/column-level-security-intro
+    accessed: 2026-10-13
+    page_title: "Introduction to column-level access control"
+    note: "Introduction to column-level access control: policy tags (basados en Data Catalog) o data governance tags clasifican columnas, y las políticas verifican el acceso en tiempo de consulta; para leer columnas protegidas hace falta el rol Fine-Grained Reader, que se aplica por policy tag."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/row-level-security-intro
+    accessed: 2026-10-13
+    page_title: "Introduction to BigQuery row-level security"
+    note: "Introduction to BigQuery row-level security: filtra y da acceso a filas de una tabla según condiciones del usuario; BigQuery controla el acceso por proyecto, dataset y tabla, y por columna con policy tags."
 relations:
   - type: RELATED_TO
     target: dataplex-governance
@@ -69,12 +84,15 @@ relations:
     target: s3-data-lake
     note: Las ubicaciones de S3 se registran en Lake Formation.
   - type: RELATED_TO
+    target: aws-iam-for-data
+    note: Lake Formation complementa el modelo de permisos de IAM.
+  - type: RELATED_TO
     target: athena-serverless-queries
     note: Athena es un motor que recibe credenciales temporales de Lake Formation.
 created_at: 2026-10-12
-updated_at: 2026-10-12
-last_verified: 2026-10-12
-verification_status: review_required
+updated_at: 2026-10-13
+last_verified: 2026-10-13
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -231,7 +249,15 @@ El bloque de Terraform se valida en la CI con `terraform validate`, sin credenci
 
 ## 11. GCP
 
-No aplica de forma específica: esta ficha describe Lake Formation. En GCP, el gobierno del lake y la seguridad por columna se tratan en `dataplex-governance` y `bigquery-policy-tags`; son mecanismos distintos, no equivalentes.
+No aplica de forma específica: esta ficha describe Lake Formation. En GCP, el gobierno del catálogo es Knowledge Catalog (ver `dataplex-governance`) y la seguridad fina de las tablas está en BigQuery (ver `bigquery-policy-tags` y `bigquery-security`). Las diferencias, según sus páginas:
+
+| | Lake Formation | Knowledge Catalog | BigQuery (policy tags y filas) |
+|---|---|---|---|
+| Modelo de permisos | Permisos propios que complementan a IAM; LF-Tags | IAM: roles a principales sobre recursos de Google Cloud | IAM más el rol Fine-Grained Reader por policy tag y políticas de acceso por fila |
+| Granularidad | Base, tabla, columna, fila y celda (filtros de datos) | Recursos del catálogo, como grupos de entradas y entradas | Proyecto, dataset y tabla; columna con policy tags; fila con políticas de acceso por fila |
+| Dónde se aplica | En los motores integrados (Athena, Glue, EMR, Redshift Spectrum), que reciben credenciales temporales para leer las ubicaciones de S3 registradas | Sobre los recursos del propio catálogo | En BigQuery, al consultar |
+
+No son equivalentes: Lake Formation gobierna el acceso a los datos de S3 para varios motores; en GCP, el control fino de los datos lo aplica BigQuery al consultar, y Knowledge Catalog gobierna sus recursos con IAM.
 
 ## 12. AWS
 
@@ -268,7 +294,7 @@ Lake Formation da control fino y uniforme sobre el lake, a cambio de un modelo m
 - `s3-data-lake`: las ubicaciones registradas.
 - `athena-serverless-queries`: un motor que recibe credenciales temporales.
 - `dataplex-governance` y `bigquery-policy-tags`: gobierno y seguridad por columna en GCP.
-- Del blueprint, pendiente de ficha: `aws-iam-for-data` (lote F3b-09b).
+- `aws-iam-for-data`: el modelo de IAM que Lake Formation complementa.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -288,8 +314,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-12. `review_required`: pendiente de revisión B-F3.1 del lote F3b-09a.
+2026-10-13. Pasa a `verified`: revisión B-F3.1 del lote F3b-09a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-12: creación (lote F3b-09a).
+- 2026-10-13: revisión B-F3.1 del lote F3b-09a aplicada (docs/reviews/cards-f3b-09a.md): el §11 dice en qué difiere de Knowledge Catalog y de los policy tags y la seguridad por fila de BigQuery (modelo de permisos, granularidad y dónde se aplica), con fuente de cada lado; el §17 enlaza `aws-iam-for-data`, que ya tiene ficha, y relations la incluye.
+- 2026-10-13: `verification_status: verified` (sin VERIFY pendientes).
