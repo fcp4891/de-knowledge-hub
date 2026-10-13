@@ -9,3 +9,5 @@ boto3>=1.43,<2                         # cliente de AWS que usan los snippets de
 moto[s3,glue,kinesis,cloudwatch,sagemaker]>=5.2.4,<6  # simula S3, Glue Data Catalog, Kinesis, CloudWatch y SageMaker AI en memoria para ejecutar esos snippets sin costo
 boto3-stubs[s3,glue,kinesis,cloudwatch,sagemaker,bedrock]>=1.43,<2  # tipos de boto3 para revisar esos snippets con mypy --strict
 mypy>=2.4,<3                           # mypy --strict sobre los snippets de boto3 en los tests
+# 10-azure (ADR-013): los snippets de Blob se ejecutan en los tests contra Azurite, el emulador de Azure Storage.
+azure-storage-blob>=12.31,<13          # SDK de Blob que usan los snippets de 10-azure; trae sus tipos para mypy --strict
