@@ -25,7 +25,7 @@
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
 |---|---|---|---|
-| A | B | Título de página en las citas (ADR-012): `page_title` como link principal, «registro · Nivel N» debajo, ruta de la URL si falta | Abierto |
+| A | B | ~~Título de página en las citas (ADR-012)~~: `page_title` como link, «registro · Nivel N» debajo (`b/ui-page-title`) | Cerrado (2026-10-13) |
 | A | B | ~~Alias en el frontend (ADR-010)~~: MiniSearch indexa `aliases` y la ficha los muestra (`b/ui-aliases`) | Cerrado (2026-10-12) |
 
 ## Criterio de salida de la fase actual (F3b, ADR-009)
