@@ -346,7 +346,7 @@
     },
     {
       "slug": "azure-ai",
-      "title": "Servicios de IA de Azure",
+      "title": "Microsoft Foundry",
       "type": "cloud_service",
       "origin": "azure",
       "category": "ai-platform",

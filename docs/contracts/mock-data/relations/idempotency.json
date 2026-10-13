@@ -175,6 +175,20 @@
           "note": null
         },
         {
+          "slug": "azure-functions-for-data",
+          "title": "Azure Functions para cargas de datos",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "La función debe dar el mismo resultado si se reintenta."
+        },
+        {
+          "slug": "azure-sql-as-source",
+          "title": "Azure SQL como fuente de datos",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Aplicar el mismo lote de cambios dos veces deja el mismo estado."
+        },
+        {
           "slug": "backfill",
           "title": "Backfill",
           "entity_type": "concept",
