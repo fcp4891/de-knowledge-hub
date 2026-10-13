@@ -1997,3 +1997,155 @@ created_at: '2026-10-13'
 updated_at: '2026-10-13'
 last_verified: '2026-10-13'
 verification_status: verified
+---
+id: source:azure-functions-docs
+slug: azure-functions-docs
+type: source
+title: Azure Functions documentation
+description: Documentación oficial de Azure Functions, Microsoft Learn.
+url: https://learn.microsoft.com/en-us/azure/azure-functions/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- azure-functions
+created_at: '2026-10-13'
+updated_at: '2026-10-13'
+last_verified: '2026-10-13'
+verification_status: verified
+---
+id: source:azure-container-apps-docs
+slug: azure-container-apps-docs
+type: source
+title: Azure Container Apps documentation
+description: Documentación oficial de Azure Container Apps, Microsoft Learn.
+url: https://learn.microsoft.com/en-us/azure/container-apps/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- azure-container-apps
+created_at: '2026-10-13'
+updated_at: '2026-10-13'
+last_verified: '2026-10-13'
+verification_status: verified
+---
+id: source:azure-sql-docs
+slug: azure-sql-docs
+type: source
+title: Azure SQL and SQL Server documentation
+description: Documentación oficial de Azure SQL Database y de SQL Server, Microsoft Learn.
+url: https://learn.microsoft.com/en-us/azure/azure-sql/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- azure-sql
+created_at: '2026-10-13'
+updated_at: '2026-10-13'
+last_verified: '2026-10-13'
+verification_status: verified
+---
+id: source:microsoft-purview-docs
+slug: microsoft-purview-docs
+type: source
+title: Microsoft Purview documentation
+description: Documentación oficial de Microsoft Purview, Microsoft Learn.
+url: https://learn.microsoft.com/en-us/purview/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- microsoft-purview
+created_at: '2026-10-13'
+updated_at: '2026-10-13'
+last_verified: '2026-10-13'
+verification_status: verified
+---
+id: source:microsoft-entra-docs
+slug: microsoft-entra-docs
+type: source
+title: Microsoft Entra documentation
+description: Documentación oficial de Microsoft Entra (antes Azure Active Directory) y de Azure RBAC, Microsoft Learn.
+url: https://learn.microsoft.com/en-us/entra/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- microsoft-entra-id
+created_at: '2026-10-13'
+updated_at: '2026-10-13'
+last_verified: '2026-10-13'
+verification_status: verified
+---
+id: source:azure-key-vault-docs
+slug: azure-key-vault-docs
+type: source
+title: Azure Key Vault documentation
+description: Documentación oficial de Azure Key Vault, Microsoft Learn.
+url: https://learn.microsoft.com/en-us/azure/key-vault/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- azure-key-vault
+created_at: '2026-10-13'
+updated_at: '2026-10-13'
+last_verified: '2026-10-13'
+verification_status: verified
+---
+id: source:microsoft-foundry-docs
+slug: microsoft-foundry-docs
+type: source
+title: Microsoft Foundry documentation
+description: Documentación oficial de Microsoft Foundry (antes Azure AI Foundry) y Foundry Tools, Microsoft Learn.
+url: https://learn.microsoft.com/en-us/azure/foundry/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- azure-ai
+created_at: '2026-10-13'
+updated_at: '2026-10-13'
+last_verified: '2026-10-13'
+verification_status: verified
+---
+id: source:aws-secrets-manager-docs
+slug: aws-secrets-manager-docs
+type: source
+title: AWS Secrets Manager User Guide
+description: Guía oficial de AWS Secrets Manager.
+url: https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- aws-secrets-manager
+created_at: '2026-10-13'
+updated_at: '2026-10-13'
+last_verified: '2026-10-13'
+verification_status: verified
