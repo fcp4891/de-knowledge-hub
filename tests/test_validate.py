@@ -401,3 +401,37 @@ def test_aliases_reject_duplicates_and_non_lists(content: Path) -> None:
     assert_error(run(content), "[aliases]", "non-unique")
     write_yaml(content, "technologies/kafka.yaml", technology("kafka", aliases="Kafka"))
     assert_error(run(content), "[aliases]", "is not of type 'array'")
+
+
+# --- Citas: page_title (ADR-012) ------------------------------------------------
+
+
+def test_duplicate_citation_url_or_page_title_is_a_warning_not_an_error(content: Path) -> None:
+    write_yaml(content, "sources/r.yaml", source("docs-a"), source("docs-b"))
+    refs = [
+        {"source": "docs-a", "url": "https://example.org/a", "page_title": "Partitioned tables"},
+        {"source": "docs-a", "url": "https://example.org/a", "page_title": "Otra"},
+        {"source": "docs-b", "url": "https://example.org/b", "page_title": "Partitioned tables"},
+        {"source": "docs-b", "url": "https://example.org/c"},
+    ]
+    write_md(content, "concepts/p.md", concept("p", sources=refs))
+    report = run(content)
+    assert report.ok, report.errors
+    joined = "\n".join(report.warnings)
+    assert "[sources.1.url] repite el de sources.0: 'https://example.org/a'" in joined
+    assert "[sources.2.page_title] repite el de sources.0: 'Partitioned tables'" in joined
+    assert len(report.warnings) == 2
+
+
+def test_page_title_must_not_be_empty(content: Path) -> None:
+    write_yaml(content, "sources/r.yaml", source("docs-a"))
+    write_md(content, "concepts/p.md", concept("p", sources=[{"source": "docs-a", "url": "https://example.org/a", "page_title": ""}]))
+    assert_error(run(content), "page_title")
+
+
+def test_bigquery_citations_are_distinguishable_by_page_title() -> None:
+    mock = json.loads((ROOT / "docs/contracts/mock-data/concepts/bigquery-partitioning.json").read_text(encoding="utf-8"))
+    bq = [s for s in mock["sources"] if s["source"] == "gcp-bigquery-docs"]
+    assert len(bq) >= 5 and len({s["title"] for s in bq}) == 1  # mismo registro
+    assert all(s["page_title"] for s in bq) and len({s["page_title"] for s in bq}) == len(bq)
+

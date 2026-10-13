@@ -27,7 +27,7 @@ from backend.db import schema as t
 from backend.content import validate as v
 from backend.app.projection import markdown_body, sections
 
-COMPILER_VERSION = "3"  # 2: search_documents (A-F2.3); 3: aliases en la búsqueda (ADR-010)
+COMPILER_VERSION = "4"  # 2: search_documents (A-F2.3); 3: aliases en la búsqueda (ADR-010); 4: page_title (ADR-012)
 TECHNOLOGY_TYPES = {"technology", "cloud_service"}
 SEARCHABLE_TYPES = {"concept", "pattern", "architecture", "technology", "cloud_service", "code_snippet", "source"}
 SEARCH_CONFIGS = {"tsv_es": "es_unaccent", "tsv_en": "en_unaccent"}
@@ -98,7 +98,7 @@ def insert_entity(conn: Connection, file_path: str, position: int, data: dict[st
     for i, ref in enumerate(data.get("sources", [])):
         conn.execute(insert(t.entity_sources).values(
             entity_slug=data["slug"], position=i, source_slug=ref["source"], url=ref.get("url"),
-            accessed=to_date(ref.get("accessed")), note=ref.get("note"),
+            accessed=to_date(ref.get("accessed")), page_title=ref.get("page_title"), note=ref.get("note"),
         ))
     for i, relation in enumerate(data.get("relations", [])):
         insert_edge(conn, file_path, i, data["slug"], relation["type"], relation["target"], "entity", relation.get("note"))

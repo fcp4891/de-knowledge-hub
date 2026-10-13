@@ -77,6 +77,7 @@ class BlueprintIndex:
 @dataclass
 class Report:
     errors: list[str] = field(default_factory=list)
+    warnings: list[str] = field(default_factory=list)
     documents: int = 0
     blueprint_rows: list[BlueprintRow] = field(default_factory=list)
     technologies: list[dict[str, Any]] = field(default_factory=list)
@@ -84,6 +85,9 @@ class Report:
 
     def add(self, location: str, message: str) -> None:
         self.errors.append(f"{location}: {message}")
+
+    def warn(self, location: str, message: str) -> None:
+        self.warnings.append(f"{location}: {message}")
 
     @property
     def ok(self) -> bool:
@@ -241,6 +245,20 @@ def check_sources(doc: Document, by_slug: dict[str, Document], report: Report) -
             report.add(doc.location, f"[sources.{i}.source] fuente inexistente: '{ref['source']}'")
         elif target.data["type"] != "source":
             report.add(doc.location, f"[sources.{i}.source] '{ref['source']}' es {target.data['type']}, no source")
+
+
+def check_duplicate_citations(doc: Document, report: Report) -> None:
+    """Aviso (no error): dos citas de la misma entidad con la misma URL o el mismo page_title no se distinguen (ADR-012)."""
+    for key in ("url", "page_title"):
+        seen: dict[str, int] = {}
+        for i, ref in enumerate(doc.data.get("sources", [])):
+            value = ref.get(key)
+            if not value:
+                continue
+            if value in seen:
+                report.warn(doc.location, f"[sources.{i}.{key}] repite el de sources.{seen[value]}: '{value}'")
+            else:
+                seen[value] = i
 
 
 def check_relations(
@@ -584,6 +602,7 @@ def validate(content_dir: Path, schemas_dir: Path) -> Report:
     for doc in valid_docs:
         check_slug_lists(doc, by_slug, report)
         check_sources(doc, by_slug, report)
+        check_duplicate_citations(doc, report)
         check_relations(doc, by_slug, catalog, report)
         check_source_level(doc, report)
     check_mvp_source_coverage(valid_docs, report)
@@ -633,6 +652,8 @@ def main(argv: list[str] | None = None) -> int:
     report = validate(args.content, args.schemas)
     for error in report.errors:
         print(f"ERROR {error}")
+    for warning in report.warnings:
+        print(f"AVISO {warning}")
     if args.report:
         print_blueprint_report(report)
     if report.ok:

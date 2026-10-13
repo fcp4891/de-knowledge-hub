@@ -34,6 +34,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-10-01",
+      "page_title": "Multi-statement transactions",
       "note": "Transacciones de varias sentencias con commit o rollback atómico; admiten CREATE TEMP TABLE; sin session mode, un error sin manejador hace fallar la consulta y BigQuery revierte la transacción; dentro de una transacción CURRENT_TIMESTAMP devuelve el inicio de la transacción."
     },
     {
@@ -43,6 +44,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-10-01",
+      "page_title": "Procedural language",
       "note": "DECLARE ... DEFAULT (subconsulta), SET, IF ... END IF, RAISE USING MESSAGE y BEGIN TRANSACTION en scripts de BigQuery."
     },
     {
@@ -52,6 +54,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-10-01",
+      "page_title": "Data manipulation language (DML) statements in GoogleSQL",
       "note": "Sintaxis de MERGE; error UPDATE/MERGE must match at most one source row for each target row si una fila destino coincide con más de una de origen."
     },
     {
@@ -61,6 +64,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-10-01",
+      "page_title": "Data definition language (DDL) statements in GoogleSQL",
       "note": "CREATE [OR REPLACE] [TEMP | TEMPORARY] TABLE [IF NOT EXISTS]: OR REPLACE reemplaza la tabla si ya existe."
     },
     {
@@ -70,11 +74,12 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-10-01",
+      "page_title": "BigQuery IAM roles and permissions",
       "note": "roles/bigquery.jobUser permite ejecutar jobs, incluidas consultas, en el proyecto; roles/bigquery.dataEditor sobre un dataset permite crear, actualizar, leer y borrar sus tablas."
     }
   ],
   "created_at": "2026-10-01",
-  "updated_at": "2026-10-01",
+  "updated_at": "2026-10-13",
   "last_verified": "2026-10-01",
   "verification_status": "verified",
   "language": "sql",
@@ -149,7 +154,7 @@
       "number": 10,
       "key": "change_history",
       "title": "Historial de cambios",
-      "markdown": "- 2026-10-01: creación (A-F3.2), desde la sección 10 de `incremental-pipelines` tras la revisión B-F3.1 del lote 2.\n- 2026-10-01: revisión B-F3.2 (snippets-1) aplicada: `CREATE OR REPLACE TEMP TABLE` para que repetir el script en la misma sesión no falle.\n- 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes)."
+      "markdown": "- 2026-10-01: creación (A-F3.2), desde la sección 10 de `incremental-pipelines` tras la revisión B-F3.1 del lote 2.\n- 2026-10-01: revisión B-F3.2 (snippets-1) aplicada: `CREATE OR REPLACE TEMP TABLE` para que repetir el script en la misma sesión no falle.\n- 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).\n- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido."
     }
   ]
 }

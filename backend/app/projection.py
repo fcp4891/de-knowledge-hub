@@ -167,7 +167,7 @@ def source_refs(index: ContentIndex, refs: list[dict[str, Any]]) -> list[dict[st
         resolved.append({
             "source": source["slug"], "title": source["title"], "url": ref.get("url", source["url"]),
             "source_type": source["source_type"], "authority_level": source["authority_level"],
-            "accessed": ref.get("accessed"), "note": ref.get("note"),
+            "accessed": ref.get("accessed"), "page_title": ref.get("page_title"), "note": ref.get("note"),
         })
     return resolved
 

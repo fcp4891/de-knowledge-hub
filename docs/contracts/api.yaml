@@ -702,6 +702,7 @@ components:
         source_type: { $ref: "#/components/schemas/SourceType" }
         authority_level: { type: integer, minimum: 1, maximum: 5 }
         accessed: { oneOf: [{ $ref: "#/components/schemas/Date" }, { type: "null" }] }
+        page_title: { type: [string, "null"], description: "Título de la página citada (ADR-012); null si no se pudo verificar. `title` sigue siendo el de la fuente del registro." }
         note: { type: [string, "null"] }
       additionalProperties: false
     Source:

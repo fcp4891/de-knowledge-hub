@@ -107,6 +107,12 @@
           "pattern": "^https://"
         },
         "accessed": { "$ref": "enums.schema.json#/$defs/date" },
+        "page_title": {
+          "description": "Título de la página citada, tal como lo muestra la página (su encabezado principal). Distingue citas de una misma fuente (ADR-012).",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
         "note": { "type": "string" }
       },
       "additionalProperties": false

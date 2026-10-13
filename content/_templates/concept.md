@@ -20,6 +20,7 @@ sources: []                             # obligatorio, con al menos una, si veri
 # - source: slug-de-fuente
 #   url: https://ejemplo.documentacion/pagina
 #   accessed: 2026-09-28
+#   page_title: título de la página citada, tal como lo muestra (ADR-012); se omite si no se pudo verificar
 #   note: qué afirmación respalda esta página
 relations: []                           # solo aristas salientes; la inversa se deriva del catálogo
 # - type: RELATED_TO

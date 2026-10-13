@@ -38,6 +38,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Introduction to partitioned tables",
       "note": "Tipos de partición en BigQuery, pruning y gestión por partición."
     },
     {
@@ -47,6 +48,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Multi-statement transactions",
       "note": "Transacciones de varias sentencias con commit o rollback atómico."
     },
     {
@@ -56,6 +58,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Partition your data",
       "note": "Athena particiona datos en S3 por cualquier clave (estilo Hive u otro) para limitar los datos escaneados."
     },
     {
@@ -65,11 +68,12 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Partitioning tables in dedicated SQL pool",
       "note": "Particiones en Synapse dedicated SQL pool; cada tabla ya está repartida en 60 distribuciones; demasiadas particiones perjudican el rendimiento; partition switching."
     }
   ],
   "created_at": "2026-09-30",
-  "updated_at": "2026-10-06",
+  "updated_at": "2026-10-13",
   "last_verified": "2026-10-05",
   "verification_status": "verified",
   "kind": "concept",
@@ -209,7 +213,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).\n- 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`, hallazgo 2) aplicada: §14 Costo ajustado a sus fuentes.\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `partition-pruning`, `clustering`, `parquet-format`, que ya tienen ficha."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).\n- 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`, hallazgo 2) aplicada: §14 Costo ajustado a sus fuentes.\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `partition-pruning`, `clustering`, `parquet-format`, que ya tienen ficha.\n- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido."
     }
   ]
 }

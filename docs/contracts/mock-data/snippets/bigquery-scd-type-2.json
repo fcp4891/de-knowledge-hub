@@ -33,6 +33,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-10-01",
+      "page_title": "Multi-statement transactions",
       "note": "Transacciones de varias sentencias con commit o rollback atómico."
     },
     {
@@ -42,6 +43,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-10-01",
+      "page_title": "Data manipulation language (DML) statements in GoogleSQL",
       "note": "UPDATE ... FROM e INSERT ... SELECT; una fila destino que coincide con más de una de origen produce un error."
     },
     {
@@ -51,6 +53,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-10-01",
+      "page_title": "Utility functions",
       "note": "GENERATE_UUID() devuelve un UUID aleatorio como STRING."
     },
     {
@@ -60,11 +63,12 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-10-01",
+      "page_title": "BigQuery IAM roles and permissions",
       "note": "roles/bigquery.jobUser permite ejecutar consultas en el proyecto; roles/bigquery.dataEditor sobre un dataset permite modificar sus tablas."
     }
   ],
   "created_at": "2026-10-01",
-  "updated_at": "2026-10-01",
+  "updated_at": "2026-10-13",
   "last_verified": "2026-10-01",
   "verification_status": "verified",
   "language": "sql",
@@ -137,7 +141,7 @@
       "number": 10,
       "key": "change_history",
       "title": "Historial de cambios",
-      "markdown": "- 2026-10-01: creación (A-F3.2), desde la sección 10 de `scd-type-2` tras la revisión B-F3.1 del lote 1.\n- 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes)."
+      "markdown": "- 2026-10-01: creación (A-F3.2), desde la sección 10 de `scd-type-2` tras la revisión B-F3.1 del lote 1.\n- 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).\n- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido."
     }
   ]
 }

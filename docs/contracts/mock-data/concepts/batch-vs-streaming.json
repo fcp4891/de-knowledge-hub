@@ -41,6 +41,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Programming model for Apache Beam",
       "note": "Apache Beam es un modelo unificado para pipelines batch y streaming; windowing sobre colecciones no acotadas según el timestamp de cada elemento (event time)."
     },
     {
@@ -50,6 +51,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Subscription overview",
       "note": "Entrega at-least-once por defecto y sin garantías de orden."
     },
     {
@@ -59,6 +61,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "What is Amazon Kinesis Data Streams?",
       "note": "Kinesis Data Streams recolecta y procesa grandes streams de registros en tiempo real."
     },
     {
@@ -68,6 +71,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Choose the right mode to stream in",
       "note": "Kinesis Data Streams ofrece los modos On-demand Standard, On-demand Advantage y Provisioned, y permite cambiar entre ellos."
     },
     {
@@ -77,6 +81,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Change the data retention period",
       "note": "Retención de 24 horas por defecto, ampliable hasta 8760 horas (365 días)."
     },
     {
@@ -86,11 +91,12 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "What is Azure Event Hubs?",
       "note": "Event Hubs es una plataforma de streaming con particiones ordenadas para escalar el throughput y compatibilidad con Apache Kafka que permite ejecutar cargas de Kafka existentes sin cambios de código."
     }
   ],
   "created_at": "2026-09-30",
-  "updated_at": "2026-10-06",
+  "updated_at": "2026-10-13",
   "last_verified": "2026-09-30",
   "verification_status": "verified",
   "kind": "concept",
@@ -230,7 +236,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: VERIFY resuelto: modos de capacidad y retención de Kinesis Data Streams.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `late-arriving-data`, que ya tiene ficha."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: VERIFY resuelto: modos de capacidad y retención de Kinesis Data Streams.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `late-arriving-data`, que ya tiene ficha.\n- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido."
     }
   ]
 }

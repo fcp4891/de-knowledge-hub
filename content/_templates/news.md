@@ -26,6 +26,7 @@ sources: []                             # la fuente de la noticia; tipo de fuent
 # - source: slug-de-fuente
 #   url: https://ejemplo.documentacion/anuncio
 #   accessed: 2026-09-28
+#   page_title: título de la página citada, tal como lo muestra (ADR-012); se omite si no se pudo verificar
 relations: []
 # - type: AFFECTS
 #   target: slug-de-tecnologia-o-concepto

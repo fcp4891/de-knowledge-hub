@@ -111,6 +111,7 @@ entity_sources = Table(
     Column("source_slug", String(100), nullable=False, index=True),
     Column("url", Text),
     Column("accessed", Date),
+    Column("page_title", Text),
     Column("note", Text),
 )
 

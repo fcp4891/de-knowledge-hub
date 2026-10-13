@@ -36,6 +36,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-10-01",
+      "page_title": "google_bigquery_table",
       "note": "google_bigquery_table: dataset_id y table_id; time_partitioning con type (DAY, HOUR, MONTH, YEAR), field (si falta, partición por tiempo de carga) y expiration_ms; require_partition_filter en el nivel superior (el de time_partitioning está deprecado); clustering hasta cuatro columnas en orden de prioridad; schema es un JSON; deletion_protection: con true o sin definir, apply o destroy que borren la tabla fallan."
     },
     {
@@ -45,6 +46,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-10-01",
+      "page_title": "google_bigquery_dataset",
       "note": "google_bigquery_dataset: dataset_id obligatorio (letras, números o guiones bajos, hasta 1.024 caracteres), location opcional; delete_contents_on_destroy en false hace fallar el destroy si el dataset tiene tablas."
     },
     {
@@ -54,6 +56,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-10-01",
+      "page_title": "Provider Requirements",
       "note": "Los providers se declaran en required_providers dentro del bloque terraform, con source y una restricción de versión; terraform init los instala."
     },
     {
@@ -63,11 +66,12 @@
       "source_type": "release_notes",
       "authority_level": 2,
       "accessed": "2026-10-01",
+      "page_title": "Releases: hashicorp/terraform-provider-google",
       "note": "Última versión del provider al 2026-10-01: v8.5.0 (29 de septiembre de 2026)."
     }
   ],
   "created_at": "2026-10-01",
-  "updated_at": "2026-10-01",
+  "updated_at": "2026-10-13",
   "last_verified": "2026-10-01",
   "verification_status": "verified",
   "language": "terraform",
@@ -141,7 +145,7 @@
       "number": 10,
       "key": "change_history",
       "title": "Historial de cambios",
-      "markdown": "- 2026-10-01: creación (A-F3.2).\n- 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).\n- 2026-10-01: implementa también `infrastructure-as-code` y `terraform-providers`, verificadas con el lote 4."
+      "markdown": "- 2026-10-01: creación (A-F3.2).\n- 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).\n- 2026-10-01: implementa también `infrastructure-as-code` y `terraform-providers`, verificadas con el lote 4.\n- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido."
     }
   ]
 }

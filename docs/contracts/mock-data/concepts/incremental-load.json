@@ -38,6 +38,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Create tables",
       "note": "Tablas incrementales en Dataform; se construyen desde cero la primera vez y luego insertan o fusionan filas nuevas; uniqueKey fusiona filas con la misma clave."
     },
     {
@@ -47,6 +48,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Introduction to partitioned tables",
       "note": "Escritura en particiones específicas sin afectar a las demás."
     },
     {
@@ -56,6 +58,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Partition your data",
       "note": "Particiones en S3 para restringir los datos escaneados."
     },
     {
@@ -65,6 +68,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "MERGE",
       "note": "MERGE de Redshift para aplicar cambios desde una tabla de origen."
     },
     {
@@ -74,11 +78,12 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Partitioning tables in dedicated SQL pool",
       "note": "Partition switching para reemplazar una sección de la tabla."
     }
   ],
   "created_at": "2026-09-30",
-  "updated_at": "2026-10-07",
+  "updated_at": "2026-10-13",
   "last_verified": "2026-09-30",
   "verification_status": "verified",
   "kind": "pattern",
@@ -218,7 +223,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `incremental-pipelines`, `data-reconciliation`, `dataform-incremental-tables`, que ya tienen ficha.\n- 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `change-detection`, que ya tiene ficha."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `incremental-pipelines`, `data-reconciliation`, `dataform-incremental-tables`, que ya tienen ficha.\n- 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `change-detection`, que ya tiene ficha.\n- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido."
     }
   ]
 }

@@ -34,6 +34,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Introduction to partitioned tables",
       "note": "Tipos de partición (columna de tiempo, ingesta, rango de enteros), particiones __NULL__ y __UNPARTITIONED__ (valores anteriores a 1960-01-01 o posteriores a 2159-12-31), pruning, expiración de particiones, combinación con clustering."
     },
     {
@@ -43,6 +44,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Data manipulation language (DML) statements in GoogleSQL",
       "note": "Bytes procesados por MERGE con UPDATE o DELETE (origen más destino)."
     },
     {
@@ -52,6 +54,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Data definition language (DDL) statements in GoogleSQL",
       "note": "partition_expression admite DATE(<timestamp_column>) con particiones diarias y RANGE_BUCKET para rangos de enteros."
     },
     {
@@ -61,6 +64,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Create partitioned tables",
       "note": "Ejemplos oficiales de CREATE TABLE con RANGE_BUCKET(customer_id, GENERATE_ARRAY(0, 100, 10)), partition_expiration_days y require_partition_filter."
     },
     {
@@ -70,6 +74,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Quotas and limits",
       "note": "Cada tabla particionada admite hasta 10.000 particiones; si se supera, la documentación sugiere usar clustering además o en lugar de la partición."
     },
     {
@@ -79,6 +84,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Partition your data",
       "note": "Athena particiona por cualquier clave (estilo Hive u otro) para limitar los datos escaneados."
     },
     {
@@ -88,6 +94,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Sort keys",
       "note": "Redshift optimiza con sort keys."
     },
     {
@@ -97,6 +104,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Data distribution for query optimization",
       "note": "Redshift reparte las filas entre los nodos según el estilo de distribución de la tabla."
     },
     {
@@ -106,11 +114,12 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Partitioning tables in dedicated SQL pool",
       "note": "Synapse dedicated SQL pool, 60 distribuciones, al menos 1 millón de filas por distribución y partición en columnstore."
     }
   ],
   "created_at": "2026-09-30",
-  "updated_at": "2026-10-11",
+  "updated_at": "2026-10-13",
   "last_verified": "2026-09-30",
   "verification_status": "verified",
   "kind": "concept",
@@ -250,7 +259,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: VERIFY resuelto: máximo de 10.000 particiones por tabla (página de cuotas).\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `bigquery-clustering`, `partition-pruning`, `bigquery-cost-model`, que ya tienen ficha.\n- 2026-10-11: «pendiente de ficha» actualizado: la ficha ya existe (lote F3b-08a); el §17 la enlaza y relations la incluye: relations incluye `bigquery-query-optimization`, que el §17 nombra; §17 enlaza las fichas que ya existen."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: VERIFY resuelto: máximo de 10.000 particiones por tabla (página de cuotas).\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `bigquery-clustering`, `partition-pruning`, `bigquery-cost-model`, que ya tienen ficha.\n- 2026-10-11: «pendiente de ficha» actualizado: la ficha ya existe (lote F3b-08a); el §17 la enlaza y relations la incluye: relations incluye `bigquery-query-optimization`, que el §17 nombra; §17 enlaza las fichas que ya existen.\n- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido."
     }
   ]
 }

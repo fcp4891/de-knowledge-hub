@@ -36,6 +36,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Dead-letter topics",
       "note": "Dead-letter topics; intentos de entrega entre 5 (mínimo y por defecto) y 100 (máximo); conteo aproximado y best-effort; el mensaje se reenvía envuelto con atributos de la suscripción de origen; Pub/Sub solo cuenta intentos si el dead-letter topic está bien configurado y con los permisos IAM correctos."
     },
     {
@@ -45,6 +46,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Using dead-letter queues in Amazon SQS",
       "note": "Redrive policy con maxReceiveCount; redrive de la DLQ para devolver mensajes; en colas estándar la expiración se basa en el timestamp de encolado original."
     },
     {
@@ -54,11 +56,12 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Overview of Service Bus dead-letter queues",
       "note": "Cada cola y suscripción de Service Bus tiene una subcola DLQ que no se crea ni borra por separado; MaxDeliveryCountExceeded; mensajes expirados también pueden ir a la DLQ."
     }
   ],
   "created_at": "2026-09-30",
-  "updated_at": "2026-10-06",
+  "updated_at": "2026-10-13",
   "last_verified": "2026-09-30",
   "verification_status": "verified",
   "kind": "pattern",
@@ -198,7 +201,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `retries`, `replay`, `pubsub-delivery-semantics`, que ya tienen ficha."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `retries`, `replay`, `pubsub-delivery-semantics`, que ya tienen ficha.\n- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido."
     }
   ]
 }

@@ -35,6 +35,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-10-01",
+      "page_title": "Data manipulation language (DML) statements in GoogleSQL",
       "note": "Sintaxis de MERGE; si una fila destino coincide con más de una fila de origen, error UPDATE/MERGE must match at most one source row for each target row."
     },
     {
@@ -44,6 +45,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-10-01",
+      "page_title": "BigQuery IAM roles and permissions",
       "note": "roles/bigquery.jobUser permite ejecutar consultas en el proyecto; roles/bigquery.dataEditor sobre un dataset permite modificar sus tablas."
     },
     {
@@ -53,11 +55,12 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-10-01",
+      "page_title": "Query syntax",
       "note": "QUALIFY filtra los resultados de funciones de ventana; solo se incluyen las filas cuya expresión es TRUE; se evalúa después de WHERE, GROUP BY, HAVING y WINDOW."
     }
   ],
   "created_at": "2026-10-01",
-  "updated_at": "2026-10-05",
+  "updated_at": "2026-10-13",
   "last_verified": "2026-10-01",
   "verification_status": "verified",
   "language": "sql",
@@ -131,7 +134,7 @@
       "number": 10,
       "key": "change_history",
       "title": "Historial de cambios",
-      "markdown": "- 2026-10-01: creación (A-F3.2), desde el bloque de BigQuery de la sección 10 de `upsert` tras la revisión B-F3.1 del lote 2.\n- 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).\n- 2026-10-04: implementa también `deduplication`, verificada en el lote 5.\n- 2026-10-05: implementa también `sql-window-functions`, verificada en el lote 6."
+      "markdown": "- 2026-10-01: creación (A-F3.2), desde el bloque de BigQuery de la sección 10 de `upsert` tras la revisión B-F3.1 del lote 2.\n- 2026-10-01: `verification_status: verified` (revisión B-F3.2 de snippets aprobada y aplicada; sin VERIFY pendientes).\n- 2026-10-04: implementa también `deduplication`, verificada en el lote 5.\n- 2026-10-05: implementa también `sql-window-functions`, verificada en el lote 6.\n- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido."
     }
   ]
 }

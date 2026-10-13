@@ -38,6 +38,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Subscription overview",
       "note": "Por defecto Pub/Sub entrega al menos una vez (at-least-once), sin garantías de orden."
     },
     {
@@ -47,6 +48,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Exactly-once delivery",
       "note": "Exactly-once solo en suscripciones pull (no push ni export) y solo dentro de una región."
     },
     {
@@ -56,6 +58,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Data manipulation language (DML) statements in GoogleSQL",
       "note": "MERGE exige que cada fila del destino coincida con a lo sumo una fila de origen."
     },
     {
@@ -65,6 +68,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Multi-statement transactions",
       "note": "Las transacciones de varias sentencias confirman o revierten atómicamente las mutaciones (inserts, deletes) sobre una o más tablas."
     },
     {
@@ -74,6 +78,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "MERGE",
       "note": "MERGE de Redshift; falla (Found multiple matches to update the same tuple) si varias filas de origen coinciden con una fila del destino; solo en modo simplificado REMOVE DUPLICATES, cuando varias filas del destino coinciden con la misma fila de origen, elimina los duplicados del destino y conserva una; las duplicadas del destino que no coinciden con ninguna fila de origen no se tocan."
     },
     {
@@ -83,6 +88,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Using dead-letter queues in Amazon SQS",
       "note": "Un mensaje puede recibirse varias veces (hasta maxReceiveCount) antes de pasar a la DLQ."
     },
     {
@@ -92,6 +98,7 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "Overview of Service Bus dead-letter queues",
       "note": "Service Bus reentrega hasta el max delivery count antes de mover el mensaje a la DLQ."
     },
     {
@@ -101,11 +108,12 @@
       "source_type": "official_docs",
       "authority_level": 1,
       "accessed": "2026-09-30",
+      "page_title": "MERGE (Transact-SQL)",
       "note": "El MERGE de T-SQL da error si varias filas de origen coinciden con una del destino."
     }
   ],
   "created_at": "2026-09-28",
-  "updated_at": "2026-10-06",
+  "updated_at": "2026-10-13",
   "last_verified": "2026-09-30",
   "verification_status": "verified",
   "kind": "concept",
@@ -245,7 +253,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-28: creada como stub en F0.\n- 2026-09-30: ficha completa (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: corregido el comportamiento de `MERGE` en Redshift ante duplicados (detectado al preparar el lote 2): falla con varias filas de origen por fila destino; la eliminación de duplicados del destino es solo del modo `REMOVE DUPLICATES`.\n- 2026-09-30: revisión B-F3.1 del lote 2 aplicada: en `REMOVE DUPLICATES`, los duplicados del destino sin coincidencia con el origen no se tocan.\n- 2026-09-30: `verification_status: verified` (revisión de cb77a2f (B-F3.1 del lote 2) aplicada; sin VERIFY pendientes).\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `retries`, `backfill`, `replay`, que ya tienen ficha."
+      "markdown": "- 2026-09-28: creada como stub en F0.\n- 2026-09-30: ficha completa (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: corregido el comportamiento de `MERGE` en Redshift ante duplicados (detectado al preparar el lote 2): falla con varias filas de origen por fila destino; la eliminación de duplicados del destino es solo del modo `REMOVE DUPLICATES`.\n- 2026-09-30: revisión B-F3.1 del lote 2 aplicada: en `REMOVE DUPLICATES`, los duplicados del destino sin coincidencia con el origen no se tocan.\n- 2026-09-30: `verification_status: verified` (revisión de cb77a2f (B-F3.1 del lote 2) aplicada; sin VERIFY pendientes).\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `retries`, `backfill`, `replay`, que ya tienen ficha.\n- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido."
     }
   ]
 }
