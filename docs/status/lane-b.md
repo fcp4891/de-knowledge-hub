@@ -3,16 +3,16 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-12
+**Última actualización:** 2026-10-13
 
 ## Reglas de revisión
 
 - **Relaciones y contenido de una ficha.** La fila «Relaciones completas», y cualquier afirmación sobre lo que contiene una ficha, se verifican con un comando y el resultado se pega en la revisión. No vale una lectura a ojo.
 
 ## Actual
-- **Tarea activa:** B-F3.1 del lote F3b-08c. Revisión en `docs/reviews/cards-f3b-08c.md`. No se editó `content/` ni `frontend/`.
-- **Siguiente:** Esperar la aprobación de Felipe. Dos propuestas media: en `composer-environments`, citar las release notes y la fecha 15 de abril de 2026; en `gcp-vertex-ai` y en la ficha, no usar «Vertex AI» a secas como alias de Gemini Enterprise Agent Platform.
-- **Bloqueos:** ninguno. `make` no está en el PATH; `scripts/validate.py` con `.venv` terminó OK (369 entidades).
+- **Tarea activa:** B-F3.1 del lote F3b-09a. Revisión en `docs/reviews/cards-f3b-09a.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: en `lake-formation-permissions`, decir en qué difiere de Knowledge Catalog y de los policy tags. Propuesta baja: la tabla de clases de S3 no incluye Express One Zone. El lote 09b va en otra rama.
+- **Bloqueos:** ninguno. `make` no está en el PATH; `scripts/validate.py` con `.venv` terminó OK (378 entidades).
 - **Tarea activa:** `b/ui-aliases` (ADR-010), en origin. Sin merge a `main`.
 - **Siguiente:** lo que asigne Felipe.
 - **Bloqueos:** ninguno.
@@ -22,6 +22,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Si hay alias, bajo el título: «También conocido como: …» (ficha de concepto y página de tecnología).
 - `make test-frontend`: 11/11. En la demo estática, «Dataplex» encuentra Knowledge Catalog y la ficha `gcp-dataplex` muestra los dos alias.
 - No se editó `content/` ni el contrato.
+
+### B-F3.1 · lote F3b-09a
+- Ocho fichas de almacenamiento, analítica y streaming en AWS. Fuentes de nivel 1, §14, Firehose del 9 de febrero de 2024, PutRecords sin orden garantizado y el código de moto en la CI, comprobados por comando y contra sus páginas. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-08c
 - Siete fichas de procesamiento, orquestación y servicios. Fuentes de nivel 1, §14, código con lo ejecutado y lo no ejecutado, y la regla del §17, comprobados por comando. `validate` en verde. No se editó `content/` ni `frontend/`.
@@ -227,6 +230,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-09a (2026-10-13)
+- Revisión de las 8 fichas de almacenamiento, analítica y streaming. Sin hallazgo alto. Propuesta media: el §11 de `lake-formation-permissions` no dice la diferencia con GCP. Propuesta baja: Express One Zone falta en la tabla de clases de S3. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-08c (2026-10-12)
 - Revisión de las 7 fichas de procesamiento, orquestación y servicios. Sin hallazgo alto. Propuestas media: la fecha del 15 de abril de 2026 en `composer-environments`, y el alias «Vertex AI» frente a la fila «Agent Platform». No se editó `content/`.
