@@ -18,7 +18,14 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Bloqueos:** ninguno. `make` no está en el PATH; `scripts/validate.py` con `.venv` terminó OK (389 entidades).
 - **Tarea activa:** `b/ui-aliases` (ADR-010), en origin. Sin merge a `main`.
 - **Siguiente:** lo que asigne Felipe.
+- **Tarea activa:** `b/ui-page-title` (ADR-012). Sin merge a `main`.
+- **Siguiente:** lo que asigne Felipe. Sigue abierta la revisión F3b-08c.
 - **Bloqueos:** ninguno.
+
+### Título de página en las citas (`b/ui-page-title`)
+- El enlace de cada cita es `page_title`. La línea secundaria, en texto muted, es «título del registro · Nivel N». Si `page_title` es null, el enlace muestra la ruta de la URL. Igual en la §20 de la ficha y en `SourceList`.
+- Cliente tipado regenerado. `make test-frontend`: 13/13. En la demo estática, `bigquery-partitioning` §20 muestra las 5 citas de BigQuery con títulos distintos.
+- No se editó `content/` ni el contrato.
 
 ### Alias (`b/ui-aliases`)
 - MiniSearch indexa `aliases` con el mismo boost que `title`. Cliente tipado regenerado: `ConceptDetail` y `TechnologyDetail` traen `aliases`.
