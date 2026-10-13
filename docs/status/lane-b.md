@@ -13,6 +13,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Tarea activa:** B-F3.1 del lote F3b-09a. Revisión en `docs/reviews/cards-f3b-09a.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: en `lake-formation-permissions`, decir en qué difiere de Knowledge Catalog y de los policy tags. Propuesta baja: la tabla de clases de S3 no incluye Express One Zone. El lote 09b va en otra rama.
 - **Bloqueos:** ninguno. `make` no está en el PATH; `scripts/validate.py` con `.venv` terminó OK (378 entidades).
+- **Tarea activa:** B-F3.1 del lote F3b-09b. Revisión en `docs/reviews/cards-f3b-09b.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: en `step-functions-workflows`, `cloudwatch-for-data-pipelines`, `bedrock-for-data-engineers` y `sagemaker-for-data-engineers`, decir en qué difieren de GCP. El lote 09a está en `b/f3b-review-09a`.
+- **Bloqueos:** ninguno. `make` no está en el PATH; `scripts/validate.py` con `.venv` terminó OK (389 entidades).
 - **Tarea activa:** `b/ui-aliases` (ADR-010), en origin. Sin merge a `main`.
 - **Siguiente:** lo que asigne Felipe.
 - **Bloqueos:** ninguno.
@@ -25,6 +28,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ### B-F3.1 · lote F3b-09a
 - Ocho fichas de almacenamiento, analítica y streaming en AWS. Fuentes de nivel 1, §14, Firehose del 9 de febrero de 2024, PutRecords sin orden garantizado y el código de moto en la CI, comprobados por comando y contra sus páginas. No se editó `content/` ni `frontend/`.
+
+### B-F3.1 · lote F3b-09b
+- Ocho fichas de orquestación, cómputo, gobierno, operación e IA en AWS. Fuentes de nivel 1, §14, SageMaker AI del 3 de diciembre de 2024, MWAA 3.3.1 frente a la CI en 3.3.2, y el código de moto en la CI, comprobados por comando y contra sus páginas. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-08c
 - Siete fichas de procesamiento, orquestación y servicios. Fuentes de nivel 1, §14, código con lo ejecutado y lo no ejecutado, y la regla del §17, comprobados por comando. `validate` en verde. No se editó `content/` ni `frontend/`.
@@ -233,6 +239,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 
 ### B-F3.1 · lote F3b-09a (2026-10-13)
 - Revisión de las 8 fichas de almacenamiento, analítica y streaming. Sin hallazgo alto. Propuesta media: el §11 de `lake-formation-permissions` no dice la diferencia con GCP. Propuesta baja: Express One Zone falta en la tabla de clases de S3. No se editó `content/`.
+
+### B-F3.1 · lote F3b-09b (2026-10-13)
+- Revisión de las 8 fichas de orquestación, cómputo, gobierno, operación e IA. Sin hallazgo alto. Propuesta media: cuatro §11 no dicen la diferencia con GCP. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-08c (2026-10-12)
 - Revisión de las 7 fichas de procesamiento, orquestación y servicios. Sin hallazgo alto. Propuestas media: la fecha del 15 de abril de 2026 en `composer-environments`, y el alias «Vertex AI» frente a la fila «Agent Platform». No se editó `content/`.
