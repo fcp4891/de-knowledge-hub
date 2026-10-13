@@ -377,3 +377,59 @@ def test_adls_blob_snippet_writes_partitions_idempotently_on_azurite(tmp_path: P
         container.delete_container()
     result = run_python(["-m", "mypy", "--strict", "--no-incremental", path.name], tmp_path)
     assert result.returncode == 0, result.stdout + result.stderr
+
+
+# Snippets de Azure que no llaman a Azure (solo biblioteca estándar): se ejecutan siempre.
+AZURE_STDLIB_SNIPPETS = {
+    "azure_sql_cdc_apply": "azure-sql-as-source.md",
+    "foundry_batch": "azure-ai-for-data-engineers.md",
+}
+
+
+def azure_snippet(name: str, tmp_path: Path) -> ModuleType:
+    path = tmp_path / f"{name}.py"
+    path.write_text(section_code(CONTENT / "concepts" / AZURE_STDLIB_SNIPPETS[name], "## 10. Código"), encoding="utf-8")
+    spec = importlib.util.spec_from_file_location(name, path)
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_azure_sql_cdc_snippet_applies_in_lsn_order_idempotently(tmp_path: Path) -> None:
+    m = azure_snippet("azure_sql_cdc_apply", tmp_path)
+    base = {1: {"id": 1, "estado": "creado"}}
+    lote = [
+        {"__$start_lsn": b"\x02", "__$operation": 3, "id": 1, "estado": "creado"},  # imagen previa: se ignora
+        {"__$start_lsn": b"\x02", "__$operation": 4, "id": 1, "estado": "pagado"},
+        {"__$start_lsn": b"\x03", "__$operation": 1, "id": 2, "estado": "creado"},
+        {"__$start_lsn": b"\x01", "__$operation": 2, "id": 2, "estado": "creado"},  # se aplica primero por LSN
+    ]
+    once = m.apply_cdc(base, lote)
+    assert once == {1: {"id": 1, "estado": "pagado"}}
+    assert m.apply_cdc(once, lote) == once
+    assert base == {1: {"id": 1, "estado": "creado"}}  # no muta el estado de entrada
+    with pytest.raises(ValueError, match="9"):
+        m.apply_cdc(base, [{"__$start_lsn": b"\x01", "__$operation": 9, "id": 1}])
+
+
+def test_foundry_batch_snippet_builds_jsonl_and_joins_unordered_output(tmp_path: Path) -> None:
+    m = azure_snippet("foundry_batch", tmp_path)
+    jsonl = m.build_batch({"r2": "Llegó roto", "r1": "Excelente"}, "gpt-batch")
+    lines = [json.loads(line) for line in jsonl.splitlines()]
+    assert [line["custom_id"] for line in lines] == ["r1", "r2"]
+    assert lines[0]["body"]["model"] == "gpt-batch" and lines[0]["body"]["input"].endswith("Excelente")
+    output = "\n".join(json.dumps({"custom_id": cid, "response": {}}) for cid in ("r2", "r1"))  # otro orden
+    assert list(m.join_responses(jsonl, output)) == ["r1", "r2"]
+    with pytest.raises(ValueError, match="r1"):
+        m.join_responses(jsonl, output.splitlines()[0])
+
+
+def test_azure_stdlib_snippets_pass_mypy_strict(tmp_path: Path) -> None:
+    files = []
+    for name, ficha in AZURE_STDLIB_SNIPPETS.items():
+        path = tmp_path / f"{name}.py"
+        path.write_text(section_code(CONTENT / "concepts" / ficha, "## 10. Código"), encoding="utf-8")
+        files.append(path.name)
+    result = run_python(["-m", "mypy", "--strict", "--no-incremental", *files], tmp_path)
+    assert result.returncode == 0, result.stdout + result.stderr
