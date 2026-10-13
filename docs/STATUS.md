@@ -18,8 +18,8 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | Lote F3b-10b (10a entregado) | Entregar 10b; aplicar la revisión de 10a | — |
-| B · Cursor revisión | Revisar el lote F3b-10a (B-F3.1) | — | — |
+| A · Claude Code | 10a y 10b entregados | Aplicar las revisiones de 10a y 10b | — |
+| B · Cursor revisión | Revisar los lotes F3b-10a y F3b-10b (B-F3.1) | — | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
@@ -38,7 +38,7 @@
 - [x] 07-architecture: 2/2 conceptos `verified`, aprobado por Felipe en el navegador el 2026-10-11 (las 15 arquitecturas: 6 en F4, 9 en el Backlog).
 - [x] 08-gcp: 31/31 `verified`, aprobado por Felipe en el navegador el 2026-10-12. Sus 15 arquitecturas no son de F3b: 6 en F4 (ROADMAP) y 9 en el Backlog.
 - [x] 09-aws: 16/16 `verified`, aprobado por Felipe en el navegador el 2026-10-13.
-- [ ] 10-azure: 0/14 `verified`; lote F3b-10a (7) en revisión y F3b-10b (7) en curso (ADR-013: azurerm y Azurite para Blob).
+- [ ] 10-azure: 0/14 `verified`; lotes F3b-10a (7) y F3b-10b (7) en revisión (ADR-013: azurerm y Azurite para Blob).
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
 
 ## Fases cerradas
