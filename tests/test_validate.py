@@ -410,16 +410,17 @@ def test_duplicate_citation_url_or_page_title_is_a_warning_not_an_error(content:
     write_yaml(content, "sources/r.yaml", source("docs-a"), source("docs-b"))
     refs = [
         {"source": "docs-a", "url": "https://example.org/a", "page_title": "Partitioned tables"},
-        {"source": "docs-a", "url": "https://example.org/a", "page_title": "Otra"},
-        {"source": "docs-b", "url": "https://example.org/b", "page_title": "Partitioned tables"},
-        {"source": "docs-b", "url": "https://example.org/c"},
+        {"source": "docs-b", "url": "https://example.org/a", "page_title": "Otra"},  # URL repetida: aviso siempre
+        {"source": "docs-b", "url": "https://example.org/b", "page_title": "Partitioned tables"},  # otra fuente: sin aviso
+        {"source": "docs-a", "url": "https://example.org/c", "page_title": "Partitioned tables"},  # misma fuente: aviso
+        {"source": "docs-b", "url": "https://example.org/d"},
     ]
     write_md(content, "concepts/p.md", concept("p", sources=refs))
     report = run(content)
     assert report.ok, report.errors
     joined = "\n".join(report.warnings)
     assert "[sources.1.url] repite el de sources.0: 'https://example.org/a'" in joined
-    assert "[sources.2.page_title] repite el de sources.0: 'Partitioned tables'" in joined
+    assert "[sources.3.page_title] repite el de sources.0 con la misma fuente 'docs-a': 'Partitioned tables'" in joined
     assert len(report.warnings) == 2
 
 

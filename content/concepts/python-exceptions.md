@@ -21,11 +21,6 @@ sources:
     page_title: "8. Errors and Exceptions"
     note: "Tutorial, capítulo 8: manejar y lanzar excepciones, encadenamiento (raise RuntimeError(...) from exc, útil al transformar excepciones), excepciones definidas por el usuario, acciones de limpieza con finally (si el finally ejecuta break, continue o return, las excepciones no se relanzan), ExceptionGroup y except* para lanzar y manejar varias excepciones no relacionadas, y add_note(note), que agrega texto a la lista de notas; el traceback estándar muestra las notas en el orden en que se agregaron."
   - source: python-docs
-    url: https://docs.python.org/3/tutorial/errors.html
-    accessed: 2026-10-08
-    page_title: "8. Errors and Exceptions"
-    note: "Solo para el SyntaxWarning (la ruta /3/ es la documentación de 3.14 el 2026-10-08; la página de 3.12 no lo trae): si el finally ejecuta break, continue o return, las excepciones no se relanzan; se desaconseja y desde 3.14 el compilador emite un SyntaxWarning (PEP 765)."
-  - source: python-docs
     url: https://docs.python.org/3.12/library/exceptions.html
     accessed: 2026-10-08
     page_title: "Built-in Exceptions"
@@ -77,7 +72,7 @@ En un pipeline, "falló" no basta: hay que saber qué registro, de qué archivo,
 2. **Encadenamiento:** dentro de un `except`, `raise Nueva(...) from error` guarda la original en `__cause__`, y el traceback muestra ambas. Sin `from`, la original queda en `__context__`.
 3. **Notas:** `error.add_note("línea 42")` agrega texto a `__notes__`. El traceback lo muestra después del mensaje.
 4. **Grupos:** `raise ExceptionGroup("msg", [e1, e2])` lanza varias juntas. `except* TipoA` maneja las del tipo A y deja que el resto siga propagándose.
-5. **finally:** se ejecuta siempre, haya excepción o no. Si el `finally` ejecuta `return`, `break` o `continue`, la excepción en curso no se relanza; la documentación lo desaconseja y desde 3.14 el compilador emite un `SyntaxWarning`.
+5. **finally:** se ejecuta siempre, haya excepción o no. Si el `finally` ejecuta `return`, `break` o `continue`, la excepción en curso no se relanza.
 6. **BaseException:** `KeyboardInterrupt` hereda de `BaseException` justamente para que `except Exception` no la capture. Capturar `BaseException`, o usar un `except:` desnudo, impide detener el proceso.
 
 ## 5. Cuándo utilizarlo
@@ -240,3 +235,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: revisión B-F3.1 del lote F3b-03a aplicada (docs/reviews/cards-f3b-03a.md): la documentación de Python se cita en `/3.12/`, la versión con la que se ejecutó el código; el `SyntaxWarning` del `finally` (3.14) queda con su propia fuente en `/3/`.
 - 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-13: se quita la cita a la URL genérica `/3/` (regla de URLs versionadas) y, con ella, la frase sobre el `SyntaxWarning` de 3.14, que solo esa cita sustentaba; el comportamiento de `finally` queda citado de `/3.12/`.

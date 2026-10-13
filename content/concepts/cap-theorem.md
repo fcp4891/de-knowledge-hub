@@ -18,6 +18,7 @@ sources:
   - source: gilbert-lynch-cap-2002
     url: https://www.comp.nus.edu.sg/~gilbert/pubs/BrewersConjecture-SigAct.pdf
     accessed: 2026-10-05
+    page_title: "Brewer’s Conjecture and the Feasibility of Consistent, Available, Partition-Tolerant Web Services"
     note: "Gilbert y Lynch (SIGACT News 33(2):48-51, 2002), copia del autor. Disponibilidad: toda solicitud recibida por un nodo que no ha fallado debe tener respuesta (el algoritmo debe terminar, sin cota de tiempo). Tolerancia a particiones: la red puede perder arbitrariamente muchos mensajes entre nodos. Teorema 1: en el modelo de red asíncrona es imposible implementar un objeto de lectura y escritura que garantice disponibilidad y consistencia atómica en todas las ejecuciones justas, incluidas aquellas en que se pierden mensajes. Teorema 2: lo mismo en el modelo parcialmente síncrono. El año 2000 de la conjetura de Brewer proviene de 'Perspectives on the CAP Theorem' (Gilbert y Lynch, 2012)."
   - source: microsoft-learn
     url: https://learn.microsoft.com/en-us/azure/cosmos-db/consistency-levels
@@ -228,3 +229,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: revisión B-F3.1 del lote F3b-01a aplicada (docs/reviews/cards-f3b-01a.md): disponibilidad según Gilbert y Lynch (toda solicitud recibida por un nodo que no ha fallado), enunciado del Teorema 1 y fuente cambiada a la copia legible del autor.
 - 2026-10-06: `verification_status: verified` (revisión B-F3.1 del lote F3b-01a aplicada; sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-13: `page_title` del PDF citado, con el título del paper tal como aparece en su primera página (ADR-012).

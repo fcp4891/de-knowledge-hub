@@ -23,6 +23,7 @@ sources:
   - source: chen-er-model-1976
     url: https://bit.csc.lsu.edu/~chen/pdf/erd-5-pages.pdf
     accessed: 2026-10-10
+    page_title: "The Entity-Relationship Model—Toward a Unified View of Data"
     note: "Chen (1976) propone el modelo entidad-relación, que incorpora información semántica del mundo real, y una técnica de diagramas para diseñar bases de datos. Una entidad es una «cosa» que se puede identificar de forma distinta (una persona, una empresa, un evento); una relación es una asociación entre entidades; el rol de una entidad en una relación es la función que cumple en ella. Que algo sea entidad o relación (por ejemplo, un matrimonio) es una decisión de diseño. Distingue niveles de vista de los datos, desde la información sobre entidades y relaciones hasta las estructuras de datos. Referencia conceptual (Nivel 4)."
 relations:
   - type: RELATED_TO
@@ -193,3 +194,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-13: `page_title` del PDF citado, con el título del paper tal como aparece en su primera página (ADR-012).

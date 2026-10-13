@@ -23,6 +23,7 @@ sources:
   - source: chen-er-model-1976
     url: https://bit.csc.lsu.edu/~chen/pdf/erd-5-pages.pdf
     accessed: 2026-10-10
+    page_title: "The Entity-Relationship Model—Toward a Unified View of Data"
     note: "El modelo entidad-relación puede servir de base para una vista unificada de los datos, y el artículo presenta formas de derivar las vistas del modelo relacional, de red y de conjuntos de entidades a partir de él. Un conjunto de relaciones es una relación matemática entre n entidades, cada una tomada de un conjunto de entidades. Referencia conceptual (Nivel 4)."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/17/ddl-constraints.html
@@ -266,3 +267,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-13: `page_title` del PDF citado, con el título del paper tal como aparece en su primera página (ADR-012).

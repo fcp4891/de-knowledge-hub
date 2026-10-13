@@ -248,17 +248,22 @@ def check_sources(doc: Document, by_slug: dict[str, Document], report: Report) -
 
 
 def check_duplicate_citations(doc: Document, report: Report) -> None:
-    """Aviso (no error): dos citas de la misma entidad con la misma URL o el mismo page_title no se distinguen (ADR-012)."""
-    for key in ("url", "page_title"):
-        seen: dict[str, int] = {}
-        for i, ref in enumerate(doc.data.get("sources", [])):
-            value = ref.get(key)
-            if not value:
-                continue
-            if value in seen:
-                report.warn(doc.location, f"[sources.{i}.{key}] repite el de sources.{seen[value]}: '{value}'")
+    """Aviso (no error), ADR-012: dos citas con la misma URL, o con el mismo page_title y la misma fuente del
+    registro, no se distinguen. El mismo título en fuentes distintas se distingue por la línea del registro."""
+    urls: dict[str, int] = {}
+    titles: dict[tuple[str, str], int] = {}
+    for i, ref in enumerate(doc.data.get("sources", [])):
+        if url := ref.get("url"):
+            if url in urls:
+                report.warn(doc.location, f"[sources.{i}.url] repite el de sources.{urls[url]}: '{url}'")
             else:
-                seen[value] = i
+                urls[url] = i
+        if title := ref.get("page_title"):
+            key = (ref["source"], title)
+            if key in titles:
+                report.warn(doc.location, f"[sources.{i}.page_title] repite el de sources.{titles[key]} con la misma fuente '{ref['source']}': '{title}'")
+            else:
+                titles[key] = i
 
 
 def check_relations(
