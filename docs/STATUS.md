@@ -18,8 +18,8 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | Lote F3b-11b (11a entregado) | Entregar 11b; aplicar la revisión de 11a | — |
-| B · Cursor revisión | Revisar el lote F3b-11a (B-F3.1) | — | — |
+| A · Claude Code | 11a y 11b entregados | Aplicar las revisiones de 11a y 11b | — |
+| B · Cursor revisión | Revisar los lotes F3b-11a y F3b-11b (B-F3.1) | — | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
@@ -39,7 +39,7 @@
 - [x] 08-gcp: 31/31 `verified`, aprobado por Felipe en el navegador el 2026-10-12. Sus 15 arquitecturas no son de F3b: 6 en F4 (ROADMAP) y 9 en el Backlog.
 - [x] 09-aws: 16/16 `verified`, aprobado por Felipe en el navegador el 2026-10-13.
 - [x] 10-azure: 14/14 `verified`, aprobado por Felipe en el navegador el 2026-10-14.
-- [ ] 11-devops: 0/13 `verified`; lote F3b-11a (7) en revisión y F3b-11b (6) en curso (ADR-014: actionlint y Git en pytest).
+- [ ] 11-devops: 0/13 `verified`; lotes F3b-11a (7) y F3b-11b (6) en revisión (ADR-014: actionlint y Git en pytest).
 - [x] Lote F3b-rel: la regla del §17 es error de `make validate` (2026-10-14; `docs/reviews/f3b-rel.md`).
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
 
