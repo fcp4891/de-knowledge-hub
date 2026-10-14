@@ -165,6 +165,8 @@ Cambio de alcance del 2026-10-05: antes de F4 se completan las fichas de **todos
 
 **Alcance:** conceptos y patrones. Las arquitecturas (`kind: architecture`) quedan en F4.
 
+**Orden de dominios desde 12 (decisión de Felipe, 2026-10-14):** se cierra por capas del mapa: 12 → 13 → 14 → 20 → 15 → 16 → 17 → 18 → 19 → 21 → 22 → 23. Los dominios 01 a 11 siguieron el orden del blueprint.
+
 **Salida:** todos los dominios aprobados, o decisión explícita de pasar a F4 con los restantes en el backlog. **Gate humano por dominio.**
 
 ---

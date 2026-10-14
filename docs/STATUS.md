@@ -1,6 +1,6 @@
 # STATUS — Data Engineering Knowledge Hub
 
-**Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 11-devops (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08, 03-python el 2026-10-10, 04-data-modeling, 05-pipelines, 06-orchestration y los conceptos de 07-architecture el 2026-10-11, 08-gcp el 2026-10-12, 09-aws el 2026-10-13, 10-azure el 2026-10-14). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
+**Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 12-infrastructure-as-code (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08, 03-python el 2026-10-10, 04-data-modeling, 05-pipelines, 06-orchestration y los conceptos de 07-architecture el 2026-10-11, 08-gcp el 2026-10-12, 09-aws el 2026-10-13, 10-azure y 11-devops el 2026-10-14). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
 **Última actualización:** 2026-10-11
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**
@@ -18,8 +18,8 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | 11-devops 13/13 `verified` | Plan de 12-infrastructure-as-code (propuesto) | — |
-| B · Cursor revisión | — | Lo que asigne Felipe | — |
+| A · Claude Code | Lote F3b-12b (12a entregado) | Entregar 12b y el plan de 13 | — |
+| B · Cursor revisión | Revisar el lote F3b-12a (B-F3.1) | — | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
@@ -39,7 +39,9 @@
 - [x] 08-gcp: 31/31 `verified`, aprobado por Felipe en el navegador el 2026-10-12. Sus 15 arquitecturas no son de F3b: 6 en F4 (ROADMAP) y 9 en el Backlog.
 - [x] 09-aws: 16/16 `verified`, aprobado por Felipe en el navegador el 2026-10-13.
 - [x] 10-azure: 14/14 `verified`, aprobado por Felipe en el navegador el 2026-10-14.
-- [ ] 11-devops: 13/13 `verified` (2026-10-14), pendiente de aprobación en el navegador (ADR-014: actionlint y Git en pytest).
+- [x] 11-devops: 13/13 `verified`, aprobado por Felipe en el navegador el 2026-10-14.
+- [ ] 12-infrastructure-as-code: 4/12 `verified` (las del MVP); lote F3b-12a (4) en revisión y F3b-12b (4) en curso (ADR-015: Terraform sin nube en la CI, cfn-lint y Bicep).
+- Orden de dominios desde 12 (2026-10-14): 12 → 13 → 14 → 20 → 15 → 16 → 17 → 18 → 19 → 21 → 22 → 23.
 - [x] Lote F3b-rel: la regla del §17 es error de `make validate` (2026-10-14; `docs/reviews/f3b-rel.md`).
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
 
