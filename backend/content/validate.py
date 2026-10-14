@@ -362,7 +362,14 @@ def check_topics_in_relations(docs: list[Document], report: Report) -> None:
 
 INLINE_SLUG = re.compile(r"`([a-z0-9]+(?:-[a-z0-9]+)*)`")
 FENCE = re.compile(r"^```.*?^```", re.S | re.M)
+PENDING = re.compile(r"pendientes? de ficha")
 RELATED_SECTION = 17
+HISTORY_SECTION = 22  # el historial describe cambios, no relaciones temáticas
+# Menciones incidentales fuera del §17 que no son relaciones (docs/reviews/f3b-rel.md).
+INCIDENTAL_MENTIONS = frozenset({
+    ("pipeline-dependencies", "retries"),  # `retries` es el parámetro de Airflow, no la ficha
+    ("dag", "api-ingestion"),  # remite a un ejemplo de reintentos en Step Functions
+})
 
 
 def named_fichas(text: str, fichas: set[str], own: str) -> set[str]:
@@ -373,8 +380,8 @@ def named_fichas(text: str, fichas: set[str], own: str) -> set[str]:
 def check_related_section(content_dir: Path, docs: list[Document], report: Report) -> None:
     """Regla del §17: la ficha nombrada que existe va en relations; la que no existe queda como
     «pendiente de ficha»; todo lo de relations se nombra en el §17. Un slug de ficha existente
-    nombrado en otra sección y fuera de relations también se informa (revisión de 10a). Por ahora todo
-    es aviso: las fichas anteriores a la regla se corrigen en su propio lote."""
+    nombrado en otra sección (salvo el historial y los bloques de código) también debe estar en
+    relations, salvo las menciones incidentales listadas (revisión de 10a, lote F3b-rel)."""
     fichas = {doc.data["slug"] for doc in docs if doc.data["type"] in page_sections.PAGE_TYPES}
     for doc in docs:
         if doc.data["type"] not in page_sections.PAGE_TYPES or doc.path.suffix != ".md" or doc.data.get("stub"):
@@ -382,17 +389,22 @@ def check_related_section(content_dir: Path, docs: list[Document], report: Repor
         own = doc.data["slug"]
         targets = {r["target"] for r in doc.data.get("relations", [])}
         body = FENCE.sub("", page_sections.body_of((content_dir.parent / doc.path).read_text(encoding="utf-8")))
-        related = "".join(c for n, _, c in page_sections.sections(body) if n == RELATED_SECTION)
-        pending = "\n".join(line for line in related.splitlines() if "pendiente" in line)
-        linked = "\n".join(line for line in related.splitlines() if "pendiente" not in line)
+        parts = page_sections.sections(body)
+        if not any(n == RELATED_SECTION for n, _, _ in parts):
+            continue  # sin §17 (la estructura la valida check_page_sections)
+        related ="".join(c for n, _, c in parts if n == RELATED_SECTION)
+        other = "".join(c for n, _, c in parts if n not in (RELATED_SECTION, HISTORY_SECTION))
+        pending = "\n".join(line for line in related.splitlines() if PENDING.search(line))
+        linked = "\n".join(line for line in related.splitlines() if not PENDING.search(line))
         for slug in sorted(named_fichas(pending, fichas, own)):
-            report.warn(doc.location, f"[§17] '{slug}' ya tiene ficha: no es «pendiente de ficha»")
+            report.add(doc.location, f"[§17] '{slug}' ya tiene ficha: no es «pendiente de ficha»")
         for slug in sorted(named_fichas(linked, fichas, own) - targets):
-            report.warn(doc.location, f"[§17] '{slug}' se nombra en el §17 y no está en relations")
+            report.add(doc.location, f"[§17] '{slug}' se nombra en el §17 y no está en relations")
         for slug in sorted(targets - set(INLINE_SLUG.findall(related))):
-            report.warn(doc.location, f"[§17] '{slug}' está en relations y el §17 no lo nombra")
-        for slug in sorted(named_fichas(body, fichas, own) - targets - named_fichas(related, fichas, own)):
-            report.warn(doc.location, f"[§17] '{slug}' tiene ficha, se nombra en el cuerpo y no está en relations")
+            report.add(doc.location, f"[§17] '{slug}' está en relations y el §17 no lo nombra")
+        in_body = named_fichas(other, fichas, own) - targets - named_fichas(related, fichas, own)
+        for slug in sorted(s for s in in_body if (own, s) not in INCIDENTAL_MENTIONS):
+            report.add(doc.location, f"[§17] '{slug}' tiene ficha, se nombra en el cuerpo y no está en relations")
 
 
 def check_page_sections(content_dir: Path, docs: list[Document], report: Report) -> None:

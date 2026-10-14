@@ -438,10 +438,14 @@ def test_bigquery_citations_are_distinguishable_by_page_title() -> None:
 
 
 
-# --- Regla del §17 (revisión de 10a) ----------------------------------------------
+# --- Regla del §17 (revisión de 10a, lote F3b-rel) ----------------------------------
 
 
-def test_related_section_rule_reports_every_mismatch_as_warning(content: Path) -> None:
+def section17_errors(report: v.Report) -> list[str]:
+    return sorted(e.split("[§17] ", 1)[1] for e in report.errors if "[§17]" in e)
+
+
+def test_related_section_rule_reports_every_mismatch_as_error(content: Path) -> None:
     for slug in ("b", "c", "d", "e"):
         write_md(content, f"concepts/{slug}.md", concept(slug))
     body = (
@@ -451,10 +455,7 @@ def test_related_section_rule_reports_every_mismatch_as_warning(content: Path) -
     )
     relations = [{"type": "RELATED_TO", "target": "b"}, {"type": "RELATED_TO", "target": "e"}]
     write_md(content, "concepts/a.md", concept("a", relations=relations), body=body)
-    report = run(content)
-    assert report.ok, report.errors
-    found = sorted(w.split("[§17] ", 1)[1] for w in report.warnings if "[§17]" in w)
-    assert found == [
+    assert section17_errors(run(content)) == [
         "'c' tiene ficha, se nombra en el cuerpo y no está en relations",
         "'d' se nombra en el §17 y no está en relations",
         "'e' ya tiene ficha: no es «pendiente de ficha»",
@@ -465,11 +466,29 @@ def test_related_section_rule_is_quiet_when_aligned(content: Path) -> None:
     write_md(content, "concepts/b.md", concept("b"))
     body = "## 12. AWS\n\nVer `b`.\n\n## 17. Conceptos relacionados\n\n- `b`: relacionada.\n- pendiente de ficha: `rag`.\n"
     write_md(content, "concepts/a.md", concept("a", relations=[{"type": "RELATED_TO", "target": "b"}]), body=body)
-    assert not [w for w in run(content).warnings if "[§17]" in w]
+    report = run(content)
+    assert report.ok, report.errors
 
 
-def test_relation_not_named_in_related_section_is_reported(content: Path) -> None:
+def test_relation_not_named_in_related_section_is_an_error(content: Path) -> None:
     write_md(content, "concepts/b.md", concept("b"))
     write_md(content, "concepts/a.md", concept("a", relations=[{"type": "RELATED_TO", "target": "b"}]),
              body="## 17. Conceptos relacionados\n\n- nada.\n")
-    assert any("'b' está en relations y el §17 no lo nombra" in w for w in run(content).warnings)
+    assert section17_errors(run(content)) == ["'b' está en relations y el §17 no lo nombra"]
+
+
+def test_history_and_words_like_dependiente_are_not_relations(content: Path) -> None:
+    write_md(content, "concepts/b.md", concept("b"))
+    write_md(content, "concepts/c.md", concept("c"))
+    body = (
+        "## 17. Conceptos relacionados\n\n- `b`: la fuente de un mart dependiente.\n\n"
+        "## 22. Historial de cambios importantes\n\n- 2026-10-01: usa la expresión de `c`.\n"
+    )
+    write_md(content, "concepts/a.md", concept("a", relations=[{"type": "RELATED_TO", "target": "b"}]), body=body)
+    report = run(content)
+    assert report.ok, report.errors
+
+
+def test_incidental_mentions_are_listed_explicitly() -> None:
+    assert ("pipeline-dependencies", "retries") in v.INCIDENTAL_MENTIONS
+    assert ("dag", "api-ingestion") in v.INCIDENTAL_MENTIONS
