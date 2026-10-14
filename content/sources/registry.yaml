@@ -2371,3 +2371,151 @@ created_at: '2026-10-14'
 updated_at: '2026-10-14'
 last_verified: '2026-10-14'
 verification_status: verified
+---
+id: source:gcp-cloud-deploy-docs
+slug: gcp-cloud-deploy-docs
+type: source
+title: Cloud Deploy documentation
+description: Documentación oficial de Cloud Deploy (Google Cloud).
+url: https://docs.cloud.google.com/deploy/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified
+---
+id: source:aws-codedeploy-docs
+slug: aws-codedeploy-docs
+type: source
+title: AWS CodeDeploy User Guide
+description: Guía oficial de AWS CodeDeploy.
+url: https://docs.aws.amazon.com/codedeploy/latest/userguide/welcome.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified
+---
+id: source:opengitops-principles
+slug: opengitops-principles
+type: source
+title: 'OpenGitOps: GitOps Principles v1.0.0'
+description: 'Principios de GitOps del proyecto OpenGitOps (CNCF): referencia conceptual canónica (Nivel 4) para la definición de GitOps; no respalda
+  afirmaciones de producto.'
+url: https://opengitops.dev/
+source_type: spec_paper
+authority_level: 4
+provider: opengitops
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified
+---
+id: source:argo-cd-docs
+slug: argo-cd-docs
+type: source
+title: Argo CD documentation
+description: Documentación oficial de Argo CD (CD declarativo con GitOps para Kubernetes).
+url: https://argo-cd.readthedocs.io/en/release-3.5/
+source_type: official_docs
+authority_level: 1
+provider: argoproj
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified
+---
+id: source:flux-docs
+slug: flux-docs
+type: source
+title: Flux documentation
+description: Documentación oficial de Flux (GitOps para Kubernetes, CNCF).
+url: https://v2-9.docs.fluxcd.io/flux/
+source_type: official_docs
+authority_level: 1
+provider: fluxcd
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified
+---
+id: source:gcp-gke-docs
+slug: gcp-gke-docs
+type: source
+title: Google Kubernetes Engine documentation
+description: Documentación oficial de GKE, incluido Config Sync (Google Cloud).
+url: https://docs.cloud.google.com/kubernetes-engine/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- gcp-gke
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified
+---
+id: source:aws-eks-docs
+slug: aws-eks-docs
+type: source
+title: Amazon EKS User Guide
+description: Guía oficial de Amazon EKS.
+url: https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- aws-eks
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified
+---
+id: source:azure-arc-docs
+slug: azure-arc-docs
+type: source
+title: Azure Arc-enabled Kubernetes documentation
+description: Documentación oficial de Kubernetes habilitado para Azure Arc, incluido GitOps con Flux v2 en AKS y Arc, Microsoft Learn.
+url: https://learn.microsoft.com/en-us/azure/azure-arc/kubernetes/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- azure-aks
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified
