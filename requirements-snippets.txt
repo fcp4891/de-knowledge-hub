@@ -11,5 +11,5 @@ boto3-stubs[s3,glue,kinesis,cloudwatch,sagemaker,bedrock]>=1.43,<2  # tipos de b
 mypy>=2.4,<3                           # mypy --strict sobre los snippets de boto3 en los tests
 # 10-azure (ADR-013): los snippets de Blob se ejecutan en los tests contra Azurite, el emulador de Azure Storage.
 azure-storage-blob>=12.31,<13          # SDK de Blob que usan los snippets de 10-azure; trae sus tipos para mypy --strict
-# 12-iac (ADR-015): cfn-lint revisa plantillas de CloudFormation. No las despliega.
-cfn-lint==1.57.2                       # PyPI, subido el 2026-10-06; consultado el 2026-10-14
+# 12-infrastructure-as-code (ADR-015): las plantillas de CloudFormation de las fichas se revisan con cfn-lint (make validate-cfn).
+cfn-lint==1.57.2                       # linter de plantillas de CloudFormation (aws-cloudformation/cfn-lint), versión fija; PyPI 2026-10-06
