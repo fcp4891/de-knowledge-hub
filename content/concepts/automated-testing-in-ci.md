@@ -76,10 +76,13 @@ relations:
   - type: RELATED_TO
     target: idempotency
     note: El test de idempotencia del ejemplo corre en cada cambio.
+  - type: RELATED_TO
+    target: ci-cd-for-data
+    note: Tests de datos sobre los modelos del pull request.
 created_at: 2026-10-14
 updated_at: 2026-10-14
 last_verified: 2026-10-14
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -281,6 +284,7 @@ Más combinaciones en la matrix dan más cobertura de versiones a cambio de minu
 - `pull-requests`: donde sus resultados son checks.
 - `build-artifacts`: el reporte como artifact.
 - `idempotency`: lo que comprueba uno de los tests del ejemplo.
+- `ci-cd-for-data`: tests de datos sobre los modelos del pull request.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -302,8 +306,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-14. `review_required`: pendiente de revisión B-F3.1 del lote F3b-11a.
+2026-10-14. Pasa a `verified`: revisión B-F3.1 del lote F3b-11a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-14: creación (lote F3b-11a).
+- 2026-10-14: revisión B-F3.1 del lote F3b-11a aplicada (docs/reviews/cards-f3b-11a.md): relations y §17 incluyen `ci-cd-for-data` (lote 11b), que no se nombraron al crear 11a para no tocarla al crear 11b.
+- 2026-10-14: `verification_status: verified` (sin VERIFY pendientes).

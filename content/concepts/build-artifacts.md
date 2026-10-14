@@ -68,10 +68,16 @@ relations:
   - type: RELATED_TO
     target: idempotency
     note: Construir dos veces el mismo código da el mismo archivo.
+  - type: RELATED_TO
+    target: deployment-strategies
+    note: Se despliega el mismo artifact con la estrategia elegida.
+  - type: RELATED_TO
+    target: rollback
+    note: Volver atrás es redesplegar el artifact anterior.
 created_at: 2026-10-14
 updated_at: 2026-10-14
 last_verified: 2026-10-14
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -268,6 +274,8 @@ Pasar artifacts entre jobs asegura que se despliega lo que se probó, a cambio d
 - `git-tags-and-releases`: la versión que se publica.
 - `automated-testing-in-ci`: el reporte de tests como artifact.
 - `idempotency`: el mismo código da el mismo paquete.
+- `deployment-strategies`: cómo se despliega el artifact.
+- `rollback`: volver atrás redesplegando el artifact anterior.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -289,8 +297,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-14. `review_required`: pendiente de revisión B-F3.1 del lote F3b-11a.
+2026-10-14. Pasa a `verified`: revisión B-F3.1 del lote F3b-11a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-14: creación (lote F3b-11a).
+- 2026-10-14: revisión B-F3.1 del lote F3b-11a aplicada (docs/reviews/cards-f3b-11a.md): relations y §17 incluyen `deployment-strategies`, `rollback` (lote 11b), que no se nombraron al crear 11a para no tocarla al crear 11b.
+- 2026-10-14: `verification_status: verified` (sin VERIFY pendientes).

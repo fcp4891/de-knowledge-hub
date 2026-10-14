@@ -65,10 +65,13 @@ relations:
   - type: RELATED_TO
     target: ci-cd-pipelines
     note: El pipeline corre en cada push y pull request de las ramas.
+  - type: RELATED_TO
+    target: environment-promotion
+    note: Promover el mismo artifact, frente a una rama por entorno.
 created_at: 2026-10-14
 updated_at: 2026-10-14
 last_verified: 2026-10-14
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -230,6 +233,7 @@ Las ramas de larga vida dan aislamiento por versión o por entorno a cambio de m
 - `pull-requests`: cómo se integra cada rama.
 - `git-tags-and-releases`: las versiones sobre main o sobre una rama de release.
 - `ci-cd-pipelines`: el pipeline que corre en cada push y pull request.
+- `environment-promotion`: promover el mismo artifact, frente a una rama por entorno.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -251,8 +255,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-14. `review_required`: pendiente de revisión B-F3.1 del lote F3b-11a.
+2026-10-14. Pasa a `verified`: revisión B-F3.1 del lote F3b-11a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-14: creación (lote F3b-11a).
+- 2026-10-14: revisión B-F3.1 del lote F3b-11a aplicada (docs/reviews/cards-f3b-11a.md): relations y §17 incluyen `environment-promotion` (lote 11b), que no se nombraron al crear 11a para no tocarla al crear 11b.
+- 2026-10-14: `verification_status: verified` (sin VERIFY pendientes).

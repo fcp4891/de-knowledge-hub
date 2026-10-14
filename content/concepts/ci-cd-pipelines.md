@@ -96,10 +96,22 @@ relations:
   - type: RELATED_TO
     target: infrastructure-as-code
     note: El Terraform se valida y aplica desde el pipeline.
+  - type: RELATED_TO
+    target: deployment-strategies
+    note: Cómo despliega la etapa de CD.
+  - type: RELATED_TO
+    target: environment-promotion
+    note: Los entornos por los que pasa el despliegue.
+  - type: RELATED_TO
+    target: ci-cd-secrets
+    note: Las credenciales del pipeline.
+  - type: RELATED_TO
+    target: ci-cd-for-data
+    note: El pipeline aplicado a modelos de datos.
 created_at: 2026-10-14
 updated_at: 2026-10-14
 last_verified: 2026-10-14
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -294,6 +306,10 @@ Más jobs en paralelo acortan el tiempo de respuesta a cambio de más minutos fa
 - `pull-requests`: donde aparecen sus resultados.
 - `git-tags-and-releases`: el pipeline de release.
 - `infrastructure-as-code`: el Terraform que valida y aplica.
+- `deployment-strategies`: cómo despliega la etapa de CD.
+- `environment-promotion`: los entornos por los que pasa el despliegue.
+- `ci-cd-secrets`: las credenciales del pipeline.
+- `ci-cd-for-data`: el pipeline aplicado a modelos de datos.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -317,8 +333,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-14. `review_required`: pendiente de revisión B-F3.1 del lote F3b-11a.
+2026-10-14. Pasa a `verified`: revisión B-F3.1 del lote F3b-11a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-14: creación (lote F3b-11a).
+- 2026-10-14: revisión B-F3.1 del lote F3b-11a aplicada (docs/reviews/cards-f3b-11a.md): relations y §17 incluyen `deployment-strategies`, `environment-promotion`, `ci-cd-secrets`, `ci-cd-for-data` (lote 11b), que no se nombraron al crear 11a para no tocarla al crear 11b.
+- 2026-10-14: `verification_status: verified` (sin VERIFY pendientes).
