@@ -539,3 +539,67 @@ def test_package_snippet_builds_reproducible_zip_and_verifies_hash(tmp_path: Pat
     assert not m.verify(tmp_path / "b" / "pipeline.zip")
     result = run_python(["-m", "mypy", "--strict", "--no-incremental", path.name], tmp_path)
     assert result.returncode == 0, result.stdout + result.stderr
+
+
+DEVOPS_STDLIB_SNIPPETS = {
+    "canary_decision": "deployment-strategies.md",
+    "model_ci": "ci-cd-for-data.md",
+    "gitops_reconcile": "gitops.md",
+}
+
+
+def devops_snippet(name: str, tmp_path: Path) -> ModuleType:
+    path = tmp_path / f"{name}.py"
+    path.write_text(section_code(CONTENT / "concepts" / DEVOPS_STDLIB_SNIPPETS[name], "## 10. Código"), encoding="utf-8")
+    spec = importlib.util.spec_from_file_location(name, path)
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[name] = module  # dataclasses necesita el módulo registrado
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_canary_snippet_waits_promotes_or_rolls_back(tmp_path: Path) -> None:
+    m = devops_snippet("canary_decision", tmp_path)
+    stable = m.Window(requests=10_000, errors=100)  # 1 %
+    assert m.decide(m.Window(requests=100, errors=1), stable) is m.Decision.WAIT
+    assert m.decide(m.Window(requests=1_000, errors=11), stable) is m.Decision.PROMOTE  # 1,1 %
+    assert m.decide(m.Window(requests=1_000, errors=20), stable) is m.Decision.ROLLBACK  # 2 % > 1,5 × 1 %
+    assert m.decide(m.Window(requests=50, errors=10), stable) is m.Decision.ROLLBACK  # 20 %: no espera
+
+
+def test_revert_snippet_undoes_merge_with_new_commit_and_keeps_tag(tmp_path: Path) -> None:
+    out, repo = run_git_snippet("rollback.md", tmp_path)
+    assert "umbral = 100" in out
+    assert git(repo, "log", "-1", "--format=%s") == 'Revert "merge feature/umbral"'
+    assert git(repo, "rev-parse", "v1.1.0^{commit}") == git(repo, "rev-parse", "HEAD~1")  # la tag no se movió
+    assert (repo / "config.py").read_text(encoding="utf-8").strip() == "umbral = 100"
+
+
+def test_model_ci_snippet_reports_failing_data_tests(tmp_path: Path) -> None:
+    m = devops_snippet("model_ci", tmp_path)
+    good = [(1, 10, "creado", 5.0, "2026-10-01"), (1, 10, "pagado", 5.0, "2026-10-02"), (2, 11, "creado", 3.0, "2026-10-01")]
+    assert m.run_ci(good) == []  # el pedido 1 queda una vez, con su última versión
+    bad = good + [(3, None, "devuelto", 1.0, "2026-10-01")]
+    assert m.run_ci(bad) == ["not_null_cliente_id", "accepted_values_estado"]
+
+
+def test_reconcile_snippet_converges_and_prunes_only_when_asked(tmp_path: Path) -> None:
+    m = devops_snippet("gitops_reconcile", tmp_path)
+    desired = {"job": {"image": "v2"}, "cron": {"schedule": "0 5 * * *"}}
+    actual = {"job": {"image": "v1"}, "viejo": {"image": "v0"}}
+    assert m.plan(desired, actual) == [("create", "cron"), ("update", "job")]
+    converged = m.apply(desired, actual, m.plan(desired, actual, prune=True))
+    assert converged == desired
+    assert m.plan(desired, converged, prune=True) == []  # reconciliar otra vez no hace nada
+    assert "viejo" in m.apply(desired, actual, m.plan(desired, actual))  # sin prune no se borra
+
+
+def test_devops_stdlib_snippets_pass_mypy_strict(tmp_path: Path) -> None:
+    files = []
+    for name, ficha in DEVOPS_STDLIB_SNIPPETS.items():
+        path = tmp_path / f"{name}.py"
+        path.write_text(section_code(CONTENT / "concepts" / ficha, "## 10. Código"), encoding="utf-8")
+        files.append(path.name)
+    result = run_python(["-m", "mypy", "--strict", "--no-incremental", *files], tmp_path)
+    assert result.returncode == 0, result.stdout + result.stderr
