@@ -24,7 +24,7 @@ sources:
     url: https://docs.cloud.google.com/deploy/docs/deployment-strategies/canary
     accessed: 2026-10-14
     page_title: "Use a canary deployment strategy"
-    note: "Use a canary deployment strategy: «a progressive rollout of an application that splits traffic between an already-deployed version and a new version, rolling it out to a subset of users before rolling out fully»; soporta GKE y Cloud Run (servicios y worker pools, no jobs); en Cloud Run, el propio Cloud Run reparte el tráfico según los porcentajes; el canary automatizado recibe una serie de porcentajes."
+    note: "Use a canary deployment strategy: «a progressive rollout of an application that splits traffic between an already-deployed version and a new version, rolling it out to a subset of users before rolling out fully»; soporta GKE y «Cloud Run (services and worker pools—not jobs)», según la página; en Cloud Run, el propio Cloud Run reparte el tráfico según los porcentajes; el canary automatizado recibe una serie de porcentajes."
   - source: gcp-cloud-run-docs
     url: https://docs.cloud.google.com/run/docs/rollouts-rollbacks-traffic-migration
     accessed: 2026-10-14
@@ -72,7 +72,7 @@ relations:
 created_at: 2026-10-14
 updated_at: 2026-10-14
 last_verified: 2026-10-14
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -84,7 +84,7 @@ Una estrategia de despliegue decide cómo llega una versión nueva a producción
 - **rolling:** se actualizan las instancias de a grupos;
 - **blue/green:** la versión nueva se instala aparte y el tráfico se redirige a ella.
 
-Para datos importa un límite: el canary reparte **tráfico**. Cloud Deploy lo soporta en Cloud Run para servicios y worker pools, **no para jobs**. Un job de carga batch no tiene tráfico que repartir.
+Para datos importa un límite: el canary reparte **tráfico**. Según *Use a canary deployment strategy* (consultada el 2026-10-14), en Cloud Run lo soporta para «services and worker pools—not jobs»: **no para jobs**. Un job de carga batch no tiene tráfico que repartir.
 
 ## 2. Qué es
 
@@ -232,7 +232,7 @@ En GCP, **Cloud Deploy** y el reparto de tráfico de **Cloud Run**. Las diferenc
 | | Cloud Deploy | Cloud Run (sin Cloud Deploy) |
 |---|---|---|
 | Estrategias | Estándar y canary (automatizado con porcentajes) | Reparto manual de tráfico entre revisiones |
-| Alcance | GKE y Cloud Run: servicios y worker pools, no jobs | Revisiones de un servicio |
+| Alcance | GKE y «Cloud Run (services and worker pools—not jobs)» | Revisiones de un servicio |
 | Volver atrás | Todas las estrategias soportan rollback | Tráfico a una revisión anterior |
 
 ## 12. AWS
@@ -299,8 +299,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-14. `review_required`: pendiente de revisión B-F3.1 del lote F3b-11b.
+2026-10-14. Pasa a `verified`: revisión B-F3.1 del lote F3b-11b aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-14: creación (lote F3b-11b).
+- 2026-10-14: revisión B-F3.1 del lote F3b-11b aplicada (docs/reviews/cards-f3b-11b.md): el límite del canary en Cloud Run cita la frase literal «services and worker pools—not jobs» de *Use a canary deployment strategy* (consultada el 2026-10-14).
+- 2026-10-14: `verification_status: verified` (sin VERIFY pendientes).
