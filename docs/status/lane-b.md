@@ -10,6 +10,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Relaciones y contenido de una ficha.** La fila «Relaciones completas», y cualquier afirmación sobre lo que contiene una ficha, se verifican con un comando y el resultado se pega en la revisión. No vale una lectura a ojo.
 
 ## Actual
+- **Tarea activa:** B-F3.1 del lote F3b-rel. Revisión en `docs/reviews/f3b-rel-sample.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. Los lotes 11a y 11b van en otras ramas.
+- **Bloqueos:** ninguno. `make` no está en el PATH; `scripts/validate.py` con `.venv` terminó OK (451 entidades).
 - **Tarea activa:** B-F3.1 del lote F3b-10a. Revisión en `docs/reviews/cards-f3b-10a.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: el panorama nombra once fichas fuera de `relations`; Azurite no cita el namespace ni el endpoint `dfs`; `athena-serverless-queries` y `bigquery-slots` faltan en `relations`. El lote 10b va en otra rama.
 - **Tarea activa:** B-F3.1 del lote F3b-10b. Revisión en `docs/reviews/cards-f3b-10b.md`. No se editó `content/` ni `frontend/`.
@@ -34,6 +37,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Si hay alias, bajo el título: «También conocido como: …» (ficha de concepto y página de tecnología).
 - `make test-frontend`: 11/11. En la demo estática, «Dataplex» encuentra Knowledge Catalog y la ficha `gcp-dataplex` muestra los dos alias.
 - No se editó `content/` ni el contrato.
+
+### B-F3.1 · lote F3b-rel
+- Muestra de 10 fichas del ajuste del §17. El diff de `b9a8ed6` solo toca `relations`, el §17 y una línea de historial. Las relaciones nuevas y las exclusiones coinciden con el texto. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-10a
 - Siete fichas de analítica en Azure. Fuentes de nivel 1, §14, citas de Fabric y Synapse sin deprecación, Blob contra Azurite en la CI, y la regla del §17, comprobados por comando y contra sus páginas. No se editó `content/` ni `frontend/`.
@@ -250,6 +256,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-rel (2026-10-14)
+- Revisión de una muestra de 10 fichas del ajuste del §17. Sin hallazgos. Las 95 fichas solo cambian `relations`, el §17 y el historial. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-10a (2026-10-14)
 - Revisión de las 7 fichas de analítica en Azure. Sin hallazgo alto. Propuestas media: once fichas nombradas fuera de `relations` en el panorama, el comentario de Azurite sobre namespace y `dfs`, y las relaciones de Athena y de slots. No se editó `content/`.
