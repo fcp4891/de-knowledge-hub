@@ -433,3 +433,109 @@ def test_azure_stdlib_snippets_pass_mypy_strict(tmp_path: Path) -> None:
         files.append(path.name)
     result = run_python(["-m", "mypy", "--strict", "--no-incremental", *files], tmp_path)
     assert result.returncode == 0, result.stdout + result.stderr
+
+
+# --- 11-devops: Git sobre un repositorio temporal (ADR-014) y Python sin servicios externos -------------------------
+
+BASH_FENCE = re.compile(r"^```bash\n(.*?)^```", re.S | re.M)
+
+
+def bash_code(ficha: str) -> str:
+    """Primer bloque ```bash de la sección 10 de la ficha."""
+    text = (CONTENT / "concepts" / ficha).read_text(encoding="utf-8")
+    match = BASH_FENCE.search(text, text.index("## 10. Código"))
+    assert match, f"{ficha}: sin bloque bash en la sección 10"
+    return match.group(1)
+
+
+def bash_executable() -> str:
+    """bash de Git for Windows en Windows (el de System32 es WSL); el del sistema en Linux."""
+    if os.name == "nt":
+        git = shutil.which("git")
+        for parent in Path(git).resolve().parents if git else []:
+            if (parent / "bin" / "bash.exe").is_file():
+                return str(parent / "bin" / "bash.exe")
+        pytest.skip("falta el bash de Git for Windows")
+    found = shutil.which("bash")
+    assert found, "falta bash"
+    return found
+
+
+def run_git_snippet(ficha: str, tmp_path: Path) -> tuple[str, Path]:
+    """Corre el script en tmp_path con identidad y configuración de Git propias del test; devuelve stdout y el repo."""
+    script = tmp_path / "snippet.sh"
+    script.write_text(bash_code(ficha), encoding="utf-8", newline="\n")
+    env = {**os.environ, "GIT_CONFIG_NOSYSTEM": "1", "GIT_CONFIG_GLOBAL": os.devnull, "HOME": str(tmp_path),
+           "GIT_AUTHOR_NAME": "Test", "GIT_AUTHOR_EMAIL": "test@example.org",
+           "GIT_COMMITTER_NAME": "Test", "GIT_COMMITTER_EMAIL": "test@example.org"}
+    result = subprocess.run([bash_executable(), script.name], cwd=tmp_path, env=env, capture_output=True, text=True,
+                            encoding="utf-8", timeout=120)
+    assert result.returncode == 0, result.stdout + result.stderr
+    return result.stdout, tmp_path / "repo"
+
+
+def git(repo: Path, *args: str) -> str:
+    env = {**os.environ, "GIT_CONFIG_NOSYSTEM": "1", "GIT_CONFIG_GLOBAL": os.devnull}
+    return subprocess.run(["git", *args], cwd=repo, env=env, capture_output=True, text=True, encoding="utf-8",
+                          check=True).stdout.strip()
+
+
+def test_branching_snippet_merges_topic_branch_with_merge_commit_and_deletes_it(tmp_path: Path) -> None:
+    _, repo = run_git_snippet("git-branching-strategies.md", tmp_path)
+    assert git(repo, "branch", "--format=%(refname:short)") == "main"
+    merges = git(repo, "log", "--merges", "--format=%s").splitlines()
+    assert merges == ["merge feature/validar-nulos"]
+    assert len(git(repo, "log", "-1", "--format=%P", "HEAD~1").split()) == 2  # el merge commit tiene dos padres
+    assert git(repo, "log", "-1", "--format=%s") == "timeout de la API"  # el fix entró por fast-forward
+
+
+def test_merge_methods_snippet_squashes_one_branch_and_rebases_the_other(tmp_path: Path) -> None:
+    _, repo = run_git_snippet("pull-requests.md", tmp_path)
+    assert git(repo, "log", "--format=%s", "main").splitlines() == [
+        "pr-rebase: paso 2", "pr-rebase: paso 1", "pr-squash (#1)", "dag base"]
+    assert git(repo, "log", "--merges", "--format=%s", "main") == ""
+
+
+def test_change_size_snippet_measures_lines_against_main(tmp_path: Path) -> None:
+    out, _ = run_git_snippet("code-review.md", tmp_path)
+    assert "líneas cambiadas: 4" in out
+
+
+def test_tags_snippet_describes_only_annotated_tags_by_default(tmp_path: Path) -> None:
+    out, repo = run_git_snippet("git-tags-and-releases.md", tmp_path)
+    kinds, described, with_tags = out.splitlines()[0:2], out.splitlines()[2], out.splitlines()[3]
+    assert kinds == ["tag", "commit"]
+    assert re.fullmatch(r"v1\.0\.0-2-g[0-9a-f]+", described)
+    assert re.fullmatch(r"probado-local-1-g[0-9a-f]+", with_tags)
+    assert git(repo, "tag", "-l", "v1.0.0", "--format=%(contents:subject)") == "Versión 1.0.0 del job de ventas"
+
+
+def test_dedupe_snippet_tests_pass_with_pytest_and_mypy(tmp_path: Path) -> None:
+    path = tmp_path / "test_dedupe.py"
+    path.write_text(section_code(CONTENT / "concepts" / "automated-testing-in-ci.md", "## 10. Código"), encoding="utf-8")
+    result = run_python(["-m", "pytest", "-q", "-p", "no:cacheprovider", path.name], tmp_path)
+    assert result.returncode == 0 and "4 passed" in result.stdout, result.stdout + result.stderr
+    result = run_python(["-m", "mypy", "--strict", "--no-incremental", path.name], tmp_path)
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_package_snippet_builds_reproducible_zip_and_verifies_hash(tmp_path: Path) -> None:
+    path = tmp_path / "package_snippet.py"
+    path.write_text(section_code(CONTENT / "concepts" / "build-artifacts.md", "## 10. Código"), encoding="utf-8")
+    spec = importlib.util.spec_from_file_location("package_snippet", path)
+    assert spec and spec.loader
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    src = tmp_path / "src"
+    (src / "sql").mkdir(parents=True)
+    (src / "job.py").write_text("print('job')\n", encoding="utf-8")
+    (src / "sql" / "ventas.sql").write_text("select 1\n", encoding="utf-8")
+    first = m.build(src, tmp_path / "a" / "pipeline.zip")
+    os.utime(src / "job.py", (1_900_000_000, 1_900_000_000))  # otra fecha de modificación: mismo hash
+    second = m.build(src, tmp_path / "b" / "pipeline.zip")
+    assert first == second
+    assert m.verify(tmp_path / "a" / "pipeline.zip")
+    (tmp_path / "b" / "pipeline.zip").write_bytes(b"alterado")
+    assert not m.verify(tmp_path / "b" / "pipeline.zip")
+    result = run_python(["-m", "mypy", "--strict", "--no-incremental", path.name], tmp_path)
+    assert result.returncode == 0, result.stdout + result.stderr
