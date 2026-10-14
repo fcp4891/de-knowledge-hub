@@ -336,6 +336,13 @@
           "note": null
         },
         {
+          "slug": "gitops",
+          "title": "GitOps",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Reconciliar dos veces el mismo estado no cambia nada."
+        },
+        {
           "slug": "glue-catalog-and-etl",
           "title": "Glue Data Catalog y Glue ETL",
           "entity_type": "concept",
@@ -453,6 +460,13 @@
           "entity_type": "pattern",
           "origin": "entity",
           "note": "Retries."
+        },
+        {
+          "slug": "rollback",
+          "title": "Rollback",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Reprocesar después del rollback no debe duplicar."
         },
         {
           "slug": "emr-spark-clusters",
