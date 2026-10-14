@@ -60,6 +60,9 @@ relations:
   - type: RELATED_TO
     target: gcs-buckets-and-objects
     note: En Google Cloud, el backend remoto habitual es un bucket con versionado.
+  - type: RELATED_TO
+    target: terraform-remote-state
+    note: El state en un backend compartido y los datos entre configuraciones.
 created_at: 2026-10-01
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -179,7 +182,8 @@ Un state por entorno o por componente limita el impacto de un error y acelera lo
 - `infrastructure-as-code`: el marco.
 - `terraform-plan-apply`: el plan lee el state.
 - `gcs-buckets-and-objects`: el bucket que guarda el state en Google Cloud.
-- Del blueprint, pendientes de ficha: `terraform-drift`, `terraform-security`, `terraform-remote-state`.
+- `terraform-remote-state`: el state en un backend compartido y los datos entre configuraciones.
+- Del blueprint, pendientes de ficha: `terraform-drift` y `terraform-security`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -207,3 +211,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: creación (lote 4 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: regla del §17 (lote F3b-12a): el §17 enlaza `terraform-remote-state`, que ya tiene ficha, y relations la incluye; antes figuraba como pendiente de ficha.

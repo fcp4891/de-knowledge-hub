@@ -57,6 +57,9 @@ relations:
   - type: RELATED_TO
     target: terraform-plan-apply
     note: Un cambio de versión del provider puede cambiar el plan; se revisa como cualquier cambio.
+  - type: RELATED_TO
+    target: terraform-modules
+    note: Los módulos hijos declaran los providers que necesitan.
 created_at: 2026-10-01
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -178,7 +181,8 @@ Restricciones estrictas y lock versionado dan reproducibilidad, a cambio de actu
 
 - `infrastructure-as-code`: el marco.
 - `terraform-plan-apply`: donde se ve el efecto de un cambio de versión.
-- Del blueprint, pendientes de ficha: `terraform-modules`, `terraform-security`.
+- `terraform-modules`: los módulos hijos declaran los providers que necesitan.
+- Del blueprint, pendiente de ficha: `terraform-security`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -208,3 +212,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: creación (lote 4 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: regla del §17 (lote F3b-12a): el §17 enlaza `terraform-modules`, que ya tiene ficha, y relations la incluye; antes figuraba como pendiente de ficha.

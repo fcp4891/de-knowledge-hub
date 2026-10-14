@@ -71,7 +71,7 @@
         },
         {
           "slug": "terraform-remote-state",
-          "title": "Remote state",
+          "title": "Remote state en Terraform",
           "entity_type": "concept",
           "origin": "blueprint",
           "note": null
