@@ -436,3 +436,40 @@ def test_bigquery_citations_are_distinguishable_by_page_title() -> None:
     assert len(bq) >= 5 and len({s["title"] for s in bq}) == 1  # mismo registro
     assert all(s["page_title"] for s in bq) and len({s["page_title"] for s in bq}) == len(bq)
 
+
+
+# --- Regla del §17 (revisión de 10a) ----------------------------------------------
+
+
+def test_related_section_rule_reports_every_mismatch_as_warning(content: Path) -> None:
+    for slug in ("b", "c", "d", "e"):
+        write_md(content, f"concepts/{slug}.md", concept(slug))
+    body = (
+        "## 11. GCP\n\nVer `c` y `a`.\n\n```python\nx = '`d`'  # dentro de un bloque de código: no cuenta\n```\n\n"
+        "## 17. Conceptos relacionados\n\n- `b`: en relations.\n- `d`: falta en relations.\n"
+        "- pendiente de ficha: `e`, `rag`.\n\n## 18. Preguntas técnicas abiertas\n"
+    )
+    relations = [{"type": "RELATED_TO", "target": "b"}, {"type": "RELATED_TO", "target": "e"}]
+    write_md(content, "concepts/a.md", concept("a", relations=relations), body=body)
+    report = run(content)
+    assert report.ok, report.errors
+    found = sorted(w.split("[§17] ", 1)[1] for w in report.warnings if "[§17]" in w)
+    assert found == [
+        "'c' tiene ficha, se nombra en el cuerpo y no está en relations",
+        "'d' se nombra en el §17 y no está en relations",
+        "'e' ya tiene ficha: no es «pendiente de ficha»",
+    ]
+
+
+def test_related_section_rule_is_quiet_when_aligned(content: Path) -> None:
+    write_md(content, "concepts/b.md", concept("b"))
+    body = "## 12. AWS\n\nVer `b`.\n\n## 17. Conceptos relacionados\n\n- `b`: relacionada.\n- pendiente de ficha: `rag`.\n"
+    write_md(content, "concepts/a.md", concept("a", relations=[{"type": "RELATED_TO", "target": "b"}]), body=body)
+    assert not [w for w in run(content).warnings if "[§17]" in w]
+
+
+def test_relation_not_named_in_related_section_is_reported(content: Path) -> None:
+    write_md(content, "concepts/b.md", concept("b"))
+    write_md(content, "concepts/a.md", concept("a", relations=[{"type": "RELATED_TO", "target": "b"}]),
+             body="## 17. Conceptos relacionados\n\n- nada.\n")
+    assert any("'b' está en relations y el §17 no lo nombra" in w for w in run(content).warnings)

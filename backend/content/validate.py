@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
+import re
 import sys
 from collections.abc import Iterator
 from dataclasses import dataclass, field
@@ -359,6 +360,41 @@ def check_topics_in_relations(docs: list[Document], report: Report) -> None:
                 report.add(doc.location, f"[related_topics] '{slug}' no está en relations: el grafo no lo verá")
 
 
+INLINE_SLUG = re.compile(r"`([a-z0-9]+(?:-[a-z0-9]+)*)`")
+FENCE = re.compile(r"^```.*?^```", re.S | re.M)
+RELATED_SECTION = 17
+
+
+def named_fichas(text: str, fichas: set[str], own: str) -> set[str]:
+    """Slugs entre backticks que son fichas (concept o pattern) existentes, sin la propia."""
+    return {slug for slug in INLINE_SLUG.findall(text) if slug in fichas and slug != own}
+
+
+def check_related_section(content_dir: Path, docs: list[Document], report: Report) -> None:
+    """Regla del §17: la ficha nombrada que existe va en relations; la que no existe queda como
+    «pendiente de ficha»; todo lo de relations se nombra en el §17. Un slug de ficha existente
+    nombrado en otra sección y fuera de relations también se informa (revisión de 10a). Por ahora todo
+    es aviso: las fichas anteriores a la regla se corrigen en su propio lote."""
+    fichas = {doc.data["slug"] for doc in docs if doc.data["type"] in page_sections.PAGE_TYPES}
+    for doc in docs:
+        if doc.data["type"] not in page_sections.PAGE_TYPES or doc.path.suffix != ".md" or doc.data.get("stub"):
+            continue
+        own = doc.data["slug"]
+        targets = {r["target"] for r in doc.data.get("relations", [])}
+        body = FENCE.sub("", page_sections.body_of((content_dir.parent / doc.path).read_text(encoding="utf-8")))
+        related = "".join(c for n, _, c in page_sections.sections(body) if n == RELATED_SECTION)
+        pending = "\n".join(line for line in related.splitlines() if "pendiente" in line)
+        linked = "\n".join(line for line in related.splitlines() if "pendiente" not in line)
+        for slug in sorted(named_fichas(pending, fichas, own)):
+            report.warn(doc.location, f"[§17] '{slug}' ya tiene ficha: no es «pendiente de ficha»")
+        for slug in sorted(named_fichas(linked, fichas, own) - targets):
+            report.warn(doc.location, f"[§17] '{slug}' se nombra en el §17 y no está en relations")
+        for slug in sorted(targets - set(INLINE_SLUG.findall(related))):
+            report.warn(doc.location, f"[§17] '{slug}' está en relations y el §17 no lo nombra")
+        for slug in sorted(named_fichas(body, fichas, own) - targets - named_fichas(related, fichas, own)):
+            report.warn(doc.location, f"[§17] '{slug}' tiene ficha, se nombra en el cuerpo y no está en relations")
+
+
 def check_page_sections(content_dir: Path, docs: list[Document], report: Report) -> None:
     """Fichas (22 secciones, §22) y snippets (10 secciones, §23) no stub: las secciones de su plantilla.
     En las fichas, además, las viñetas Seguridad, Observabilidad y Costo en la §14."""
@@ -613,6 +649,7 @@ def validate(content_dir: Path, schemas_dir: Path) -> Report:
     check_mvp_source_coverage(valid_docs, report)
     check_page_sections(content_dir, valid_docs, report)
     check_topics_in_relations(valid_docs, report)
+    check_related_section(content_dir, valid_docs, report)
     check_page_source_levels(valid_docs, by_slug, report)
     check_snippets(valid_docs, by_slug, report)
     index = validate_blueprints(content_dir, schemas_dir, by_slug, valid_docs, report)
