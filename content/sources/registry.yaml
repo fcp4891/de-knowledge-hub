@@ -2149,3 +2149,225 @@ created_at: '2026-10-13'
 updated_at: '2026-10-13'
 last_verified: '2026-10-13'
 verification_status: verified
+---
+id: source:git-scm-docs
+slug: git-scm-docs
+type: source
+title: Git documentation (git-scm.com)
+description: 'Documentación oficial de Git: referencia de comandos y el libro Pro Git publicado en git-scm.com.'
+url: https://git-scm.com/doc
+source_type: official_docs
+authority_level: 1
+provider: git
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- git
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified
+---
+id: source:github-docs
+slug: github-docs
+type: source
+title: GitHub Docs
+description: 'Documentación oficial de GitHub: pull requests, ramas protegidas, releases y GitHub Actions.'
+url: https://docs.github.com/en
+source_type: official_docs
+authority_level: 1
+provider: github
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- github-actions
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified
+---
+id: source:gitlab-docs
+slug: gitlab-docs
+type: source
+title: GitLab Docs
+description: 'Documentación oficial de GitLab: merge requests, ramas protegidas, releases y GitLab CI/CD.'
+url: https://docs.gitlab.com/
+source_type: official_docs
+authority_level: 1
+provider: gitlab
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- gitlab-ci
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified
+---
+id: source:google-eng-practices
+slug: google-eng-practices
+type: source
+title: 'Google Engineering Practices: code review (google.github.io/eng-practices)'
+description: 'Guía de code review que Google publica en google.github.io/eng-practices: referencia conceptual (Nivel 4) para el estándar de una
+  revisión, qué mirar, cambios pequeños y velocidad; no respalda la mecánica de pull requests ni afirmaciones de producto.'
+url: https://google.github.io/eng-practices/review/
+source_type: spec_paper
+authority_level: 4
+provider: google
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified
+---
+id: source:azure-devops-docs
+slug: azure-devops-docs
+type: source
+title: Azure DevOps documentation
+description: Documentación oficial de Azure DevOps (Azure Repos y Azure Pipelines), Microsoft Learn.
+url: https://learn.microsoft.com/en-us/azure/devops/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- azure-devops
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified
+---
+id: source:gcp-cloud-build-docs
+slug: gcp-cloud-build-docs
+type: source
+title: Cloud Build documentation
+description: Documentación oficial de Cloud Build (Google Cloud).
+url: https://docs.cloud.google.com/build/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified
+---
+id: source:gcp-artifact-registry-docs
+slug: gcp-artifact-registry-docs
+type: source
+title: Artifact Registry documentation
+description: Documentación oficial de Artifact Registry (Google Cloud).
+url: https://docs.cloud.google.com/artifact-registry/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- gcp-artifact-registry
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified
+---
+id: source:gcp-secure-source-manager-docs
+slug: gcp-secure-source-manager-docs
+type: source
+title: Secure Source Manager documentation
+description: Documentación oficial de Secure Source Manager (Google Cloud).
+url: https://docs.cloud.google.com/secure-source-manager/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified
+---
+id: source:aws-codecommit-docs
+slug: aws-codecommit-docs
+type: source
+title: AWS CodeCommit User Guide
+description: Guía oficial de AWS CodeCommit.
+url: https://docs.aws.amazon.com/codecommit/latest/userguide/welcome.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified
+---
+id: source:aws-codebuild-docs
+slug: aws-codebuild-docs
+type: source
+title: AWS CodeBuild User Guide
+description: Guía oficial de AWS CodeBuild.
+url: https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified
+---
+id: source:aws-codepipeline-docs
+slug: aws-codepipeline-docs
+type: source
+title: AWS CodePipeline User Guide
+description: Guía oficial de AWS CodePipeline.
+url: https://docs.aws.amazon.com/codepipeline/latest/userguide/welcome.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified
+---
+id: source:aws-codeartifact-docs
+slug: aws-codeartifact-docs
+type: source
+title: AWS CodeArtifact User Guide
+description: Guía oficial de AWS CodeArtifact.
+url: https://docs.aws.amazon.com/codeartifact/latest/ug/welcome.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified
