@@ -203,6 +203,13 @@
           "note": "La entrega at-least-once exige procesar de forma idempotente."
         },
         {
+          "slug": "build-artifacts",
+          "title": "Build y artefactos",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Construir dos veces el mismo código da el mismo archivo."
+        },
+        {
           "slug": "pipeline-layers",
           "title": "Capas de un pipeline",
           "entity_type": "concept",
@@ -460,6 +467,13 @@
           "entity_type": "concept",
           "origin": "entity",
           "note": "Una tarea reintentable debe dar el mismo resultado en cada ejecución."
+        },
+        {
+          "slug": "automated-testing-in-ci",
+          "title": "Testing automatizado en CI",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "El test de idempotencia del ejemplo corre en cada cambio."
         },
         {
           "slug": "testing-with-pytest",

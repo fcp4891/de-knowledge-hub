@@ -60,6 +60,9 @@ relations:
   - type: RELATED_TO
     target: terraform-providers
     note: Los providers conectan Terraform con cada nube.
+  - type: RELATED_TO
+    target: ci-cd-pipelines
+    note: El pipeline que valida y aplica el código de infraestructura.
 created_at: 2026-10-01
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -197,7 +200,8 @@ IaC da reproducibilidad, revisión y auditoría, a cambio de una curva de aprend
 - `terraform-state`: cómo Terraform sabe qué gestiona.
 - `terraform-plan-apply`: el flujo de revisar y aplicar.
 - `terraform-providers`: la conexión con cada nube.
-- Del blueprint, pendientes de ficha: `ci-cd-pipelines`, `terraform-drift`, `terraform-security`.
+- `ci-cd-pipelines`: el pipeline que valida y aplica el código de infraestructura.
+- Del blueprint, pendientes de ficha: `terraform-drift` y `terraform-security`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -227,3 +231,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: creación (lote 4 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: regla del §17 (lote F3b-11a): el §17 enlaza `ci-cd-pipelines`, que ya tiene ficha, y relations la incluye; antes figuraba como pendiente de ficha.

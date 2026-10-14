@@ -57,6 +57,9 @@ relations:
   - type: RELATED_TO
     target: infrastructure-as-code
     note: Revisar antes de aplicar es el control central de IaC.
+  - type: RELATED_TO
+    target: ci-cd-pipelines
+    note: El pipeline donde corren plan y apply.
 created_at: 2026-10-01
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -179,7 +182,8 @@ El flujo de dos pasos con aprobación agrega fricción y tiempo a cada cambio, a
 
 - `terraform-state`: lo que el plan compara.
 - `infrastructure-as-code`: el marco.
-- Del blueprint, pendientes de ficha: `ci-cd-pipelines`, `terraform-drift`.
+- `ci-cd-pipelines`: el pipeline donde corren plan y apply.
+- Del blueprint, pendiente de ficha: `terraform-drift`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -209,3 +213,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: creación (lote 4 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: regla del §17 (lote F3b-11a): el §17 enlaza `ci-cd-pipelines`, que ya tiene ficha, y relations la incluye; antes figuraba como pendiente de ficha.
