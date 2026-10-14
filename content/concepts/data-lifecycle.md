@@ -71,6 +71,9 @@ relations:
   - type: RELATED_TO
     target: gcs-buckets-and-objects
     note: Las reglas de ciclo de vida se definen por bucket.
+  - type: RELATED_TO
+    target: data-warehouse
+    note: "La expiración de la zona de staging en BigQuery (§10)."
 created_at: 2026-10-05
 updated_at: 2026-10-13
 last_verified: 2026-10-06
@@ -242,6 +245,7 @@ Retener más permite reprocesar y auditar, a cambio de costo y riesgo. Retener m
 - `data-ingestion` y `data-transformation`: dos etapas del ciclo.
 - `data-lake`: las zonas y su retención.
 - `gcs-buckets-and-objects`: dónde se aplican las reglas en GCP.
+- `data-warehouse`: la expiración de la zona de staging en BigQuery (§10).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -271,3 +275,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: creación (lote F3b-01a, dominio 01-fundamentals).
 - 2026-10-06: `verification_status: verified` (revisión B-F3.1 del lote F3b-01a aplicada; sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `data-warehouse`; el §17 nombra `data-warehouse`, que el cuerpo ya citaba.

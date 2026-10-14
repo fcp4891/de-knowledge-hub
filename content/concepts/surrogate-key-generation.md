@@ -87,6 +87,9 @@ relations:
   - type: RELATED_TO
     target: sql-quality-checks
     note: La unicidad de la clave se verifica con un control, sobre todo con hashes.
+  - type: RELATED_TO
+    target: change-detection
+    note: "Funciones hash por motor."
 created_at: 2026-10-05
 updated_at: 2026-10-13
 last_verified: 2026-10-07
@@ -291,3 +294,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: cambio mínimo (aprobado por Felipe): los hashes de clave natural de §4, §8 y §10 usan el marcador de NULL de `change-detection`, porque `CONCAT` (BigQuery) y `||` (PostgreSQL) devuelven NULL con un argumento NULL. Pendiente de revisión de Cursor junto con el lote F3b-02c.
 - 2026-10-07: revisión de los cambios mínimos de NULL aplicada (docs/reviews/fixes-null-concat.md, aprobada por Felipe): §4, §8 y §10 usan `TO_JSON_STRING(STRUCT(...))` en BigQuery y `jsonb_build_array` en PostgreSQL en lugar de concatenar con marcador; el ejemplo ejecutado incluye una clave natural nula. Sigue `verified`.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `change-detection`.

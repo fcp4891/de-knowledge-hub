@@ -96,6 +96,9 @@ relations:
   - type: RELATED_TO
     target: bigquery-query-optimization
     note: El plan, las insights y las prácticas de optimización de BigQuery.
+  - type: RELATED_TO
+    target: scan-reduction
+    note: "Reducción de datos escaneados."
 created_at: 2026-10-05
 updated_at: 2026-10-13
 last_verified: 2026-10-05
@@ -306,3 +309,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `scan-reduction`, que ya tiene ficha.
 - 2026-10-11: «pendiente de ficha» actualizado: la ficha ya existe (lote F3b-08a); el §17 la enlaza y relations la incluye: relations incluye `bigquery-query-optimization`, que el §17 nombra; §17 enlaza las fichas que ya existen.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `scan-reduction`.

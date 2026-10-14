@@ -40,6 +40,18 @@ relations:
   - type: RELATED_TO
     target: incremental-load
     note: El modo upsert de la carga incremental usa MERGE.
+  - type: RELATED_TO
+    target: deduplication
+    note: "Deduplicación."
+  - type: RELATED_TO
+    target: sql-qualify
+    note: "QUALIFY."
+  - type: RELATED_TO
+    target: sql-window-functions
+    note: "Funciones de ventana."
+  - type: RELATED_TO
+    target: upsert
+    note: "Upsert."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-10-05
@@ -197,3 +209,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `upsert`, `deduplication`, `sql-window-functions`, que ya tienen ficha.
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `sql-qualify`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `deduplication`, `sql-qualify`, `sql-window-functions`, `upsert`.

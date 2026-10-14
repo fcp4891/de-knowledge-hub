@@ -70,6 +70,15 @@ relations:
   - type: RELATED_TO
     target: bigquery-query-optimization
     note: El plan, las insights y las prácticas de optimización de BigQuery.
+  - type: RELATED_TO
+    target: bigquery-clustering
+    note: "Clustering en BigQuery."
+  - type: RELATED_TO
+    target: bigquery-cost-model
+    note: "Modelo de costos de BigQuery."
+  - type: RELATED_TO
+    target: partition-pruning
+    note: "Partition pruning."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -236,3 +245,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `bigquery-clustering`, `partition-pruning`, `bigquery-cost-model`, que ya tienen ficha.
 - 2026-10-11: «pendiente de ficha» actualizado: la ficha ya existe (lote F3b-08a); el §17 la enlaza y relations la incluye: relations incluye `bigquery-query-optimization`, que el §17 nombra; §17 enlaza las fichas que ya existen.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `bigquery-clustering`, `bigquery-cost-model`, `partition-pruning`.

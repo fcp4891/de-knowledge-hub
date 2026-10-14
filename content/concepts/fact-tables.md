@@ -80,6 +80,9 @@ relations:
   - type: RELATED_TO
     target: star-schema
     note: El hecho es el centro del esquema estrella.
+  - type: RELATED_TO
+    target: grain
+    note: "Grano."
 created_at: 2026-10-02
 updated_at: 2026-10-13
 last_verified: 2026-10-04
@@ -264,3 +267,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `grain`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `grain`.

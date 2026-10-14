@@ -68,6 +68,9 @@ relations:
   - type: RELATED_TO
     target: sql-structs
     note: Un JSON con forma estable puede pasar a STRUCT tipado en la capa curada.
+  - type: RELATED_TO
+    target: sql-arrays
+    note: "Navegar SUPER con PartiQL en Redshift (§12)."
 created_at: 2026-10-05
 updated_at: 2026-10-13
 last_verified: 2026-10-07
@@ -213,6 +216,7 @@ Guardar JSON da flexibilidad ante cambios del origen, a cambio de tipar en cada 
 - `schema-on-read-vs-schema-on-write`: tipar al leer o al escribir.
 - `sql-unnest`: expandir arrays JSON.
 - `sql-structs`: pasar de JSON a estructuras tipadas.
+- `sql-arrays`: navegar SUPER con PartiQL en Redshift (§12).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -244,3 +248,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): §15: `JSON_VALUE` devuelve `NULL` por encima de 4000 caracteres en modo lax; no trunca.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `sql-arrays`; el §17 nombra `sql-arrays`, que el cuerpo ya citaba.

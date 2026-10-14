@@ -36,6 +36,15 @@ relations:
   - type: RELATED_TO
     target: batch-vs-streaming
     note: La DLQ es típica de los pipelines streaming.
+  - type: RELATED_TO
+    target: pubsub-delivery-semantics
+    note: "Entrega, orden y reintentos en Pub/Sub."
+  - type: RELATED_TO
+    target: replay
+    note: "Replay."
+  - type: RELATED_TO
+    target: retries
+    note: "Retries."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -182,3 +191,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `retries`, `replay`, `pubsub-delivery-semantics`, que ya tienen ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `pubsub-delivery-semantics`, `replay`, `retries`.

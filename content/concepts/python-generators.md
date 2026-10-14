@@ -53,6 +53,15 @@ relations:
   - type: RELATED_TO
     target: python-comprehensions
     note: La generator expression es la versión de una línea de un generador simple.
+  - type: RELATED_TO
+    target: python-concurrency
+    note: "Repartir lotes entre hilos o procesos."
+  - type: RELATED_TO
+    target: python-context-managers
+    note: "`@contextmanager` también se escribe con `yield`."
+  - type: RELATED_TO
+    target: python-file-processing
+    note: "El caso real de procesar una carpeta de archivos en flujo."
 created_at: 2026-10-08
 updated_at: 2026-10-13
 last_verified: 2026-10-08
@@ -229,6 +238,7 @@ Para reanudar un proceso fallido a mitad hace falta guardar un checkpoint (núme
 - `data-pipeline`: el mismo diseño a escala de sistema.
 - `python-concurrency`: repartir lotes entre hilos o procesos.
 - `python-file-processing`: el caso real de procesar una carpeta de archivos en flujo.
+- `python-comprehensions`: la generator expression es la versión de una línea de un generador simple.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -257,3 +267,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-09: §17 enlaza `python-concurrency` y `python-file-processing`, que ya tienen ficha (lote F3b-03b); antes figuraban como pendientes de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `python-concurrency`, `python-context-managers`, `python-file-processing`; el §17 nombra `python-comprehensions`.

@@ -56,6 +56,9 @@ relations:
   - type: RELATED_TO
     target: file-ingestion
     note: Un sensor de archivo espera a que llegue el archivo antes de ingerirlo.
+  - type: RELATED_TO
+    target: open-source-vs-managed-orchestration
+    note: "Los sensores en un Airflow administrado (§11)."
 created_at: 2026-10-11
 updated_at: 2026-10-13
 last_verified: 2026-10-11
@@ -267,6 +270,7 @@ Poke da la menor latencia y ocupa un slot todo el tiempo. Reschedule libera el s
 - `airflow-architecture`: el triggerer y los workers.
 - `scheduler`: cuándo empieza la corrida en la que espera el sensor.
 - `file-ingestion`: qué hacer con el archivo una vez que el sensor lo detecta.
+- `open-source-vs-managed-orchestration`: los sensores en un Airflow administrado (§11).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -296,3 +300,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-11: relación `file-ingestion` agregada en `relations` y en §17 (cambio mínimo).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `open-source-vs-managed-orchestration`; el §17 nombra `open-source-vs-managed-orchestration`, que el cuerpo ya citaba.

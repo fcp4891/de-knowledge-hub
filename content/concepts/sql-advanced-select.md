@@ -55,6 +55,9 @@ relations:
   - type: RELATED_TO
     target: sql-window-functions
     note: Las ventanas se evalúan después de GROUP BY y HAVING.
+  - type: RELATED_TO
+    target: sql-qualify
+    note: "Filtro sobre funciones de ventana, evaluado después de ellas."
 created_at: 2026-10-05
 updated_at: 2026-10-13
 last_verified: 2026-10-07
@@ -240,3 +243,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): resumen con `QUALIFY` solo donde el motor lo tiene; «sintaxis antigua, no ISO» como dice T-SQL; fuente nueva *Aggregation extensions* de Redshift para `GROUPING`.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `sql-qualify`.

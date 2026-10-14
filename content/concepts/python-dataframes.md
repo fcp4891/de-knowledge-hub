@@ -71,6 +71,15 @@ relations:
   - type: RELATED_TO
     target: deduplication
     note: drop_duplicates (pandas) y unique (Polars) con keep="last" implementan "gana la última versión".
+  - type: RELATED_TO
+    target: python-file-processing
+    note: "Procesar carpetas de archivos antes o en lugar de un DataFrame."
+  - type: RELATED_TO
+    target: row-vs-columnar-formats
+    note: "Por qué los formatos columnares encajan con DataFrames."
+  - type: RELATED_TO
+    target: python-file-handling
+    note: "Los límites del sistema de archivos local por plataforma (§13)."
 created_at: 2026-10-08
 updated_at: 2026-10-13
 last_verified: 2026-10-09
@@ -243,6 +252,7 @@ pandas tiene el ecosistema más grande y una API conocida, y ejecuta cada paso a
 - `python-data-structures`: la alternativa sin dependencias.
 - `python-file-processing`: procesar carpetas de archivos antes o en lugar de un DataFrame.
 - `row-vs-columnar-formats`: por qué los formatos columnares encajan con DataFrames.
+- `python-file-handling`: los límites del sistema de archivos local por plataforma (§13).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -273,3 +283,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-09: revisión B-F3.1 del lote F3b-03b aplicada (docs/reviews/cards-f3b-03b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `python-file-processing`, `row-vs-columnar-formats`, `python-file-handling`; el §17 nombra `python-file-handling`, que el cuerpo ya citaba.

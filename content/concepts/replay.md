@@ -48,6 +48,12 @@ relations:
   - type: RELATED_TO
     target: pubsub-delivery-semantics
     note: En Pub/Sub, el replay se hace con seek a un snapshot o timestamp.
+  - type: RELATED_TO
+    target: checkpoints
+    note: "La posición desde la que se reanuda o se vuelve atrás."
+  - type: RELATED_TO
+    target: failure-recovery
+    note: "Cómo se combinan reintentos, checkpoints, DLQ, replay y backfill para volver a un estado correcto."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -162,7 +168,9 @@ Más retención da más margen de recuperación, a cambio de costo de almacenami
 - `backfill`: alternativa cuando los eventos ya no están retenidos.
 - `dead-letter-queue`: su redrive es un replay acotado.
 - `pubsub-delivery-semantics`: seek, retención y reentrega en Pub/Sub.
-- Del blueprint, pendientes de ficha: `offsets`, `checkpoints`, `failure-recovery`.
+- `checkpoints`: la posición desde la que se reanuda o se vuelve atrás.
+- `failure-recovery`: cómo se combinan reintentos, checkpoints, DLQ, replay y backfill para volver a un estado correcto.
+- Del blueprint, pendiente de ficha: `offsets`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -191,3 +199,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: creación (lote 2 de F3).
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `checkpoints`, `failure-recovery`; el §17 enlaza `checkpoints`, `failure-recovery`, que ya tienen ficha.

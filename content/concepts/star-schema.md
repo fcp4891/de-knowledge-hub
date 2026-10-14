@@ -72,6 +72,12 @@ relations:
   - type: RELATED_TO
     target: slowly-changing-dimensions
     note: Las dimensiones de la estrella cambian con el tiempo y se historizan con SCD.
+  - type: RELATED_TO
+    target: grain
+    note: "Grano."
+  - type: RELATED_TO
+    target: snowflake-schema
+    note: "La alternativa con las jerarquías de las dimensiones normalizadas."
 created_at: 2026-10-02
 updated_at: 2026-10-13
 last_verified: 2026-10-04
@@ -237,3 +243,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `grain`, que ya tiene ficha.
 - 2026-10-11: §17 enlaza `snowflake-schema`, que ya tiene ficha (lote F3b-04a); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `grain`, `snowflake-schema`.

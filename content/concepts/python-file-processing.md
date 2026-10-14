@@ -71,6 +71,12 @@ relations:
   - type: RELATED_TO
     target: python-generators
     note: Los registros se leen en flujo con un generador.
+  - type: RELATED_TO
+    target: beam-programming-model
+    note: "El mismo diseño en un motor distribuido (§6)."
+  - type: RELATED_TO
+    target: pyspark-dataframes
+    note: "El mismo diseño en un motor distribuido (§6)."
 created_at: 2026-10-08
 updated_at: 2026-10-13
 last_verified: 2026-10-09
@@ -301,6 +307,7 @@ Calcular la huella obliga a leer cada archivo dos veces: una para la huella y ot
 - `idempotency`: re-ejecutar sin duplicar.
 - `dead-letter-queue`: la salida de rechazos.
 - `python-generators`: lectura en flujo.
+- `beam-programming-model` y `pyspark-dataframes`: el mismo diseño en un motor distribuido (§6).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -331,3 +338,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-09: revisión B-F3.1 del lote F3b-03b aplicada (docs/reviews/cards-f3b-03b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `beam-programming-model`, `pyspark-dataframes`; el §17 nombra `beam-programming-model`, `pyspark-dataframes`, que el cuerpo ya citaba.

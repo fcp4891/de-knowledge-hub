@@ -86,6 +86,9 @@ relations:
   - type: RELATED_TO
     target: oltp-vs-olap
     note: OLTP guarda por filas; OLAP, por columnas.
+  - type: RELATED_TO
+    target: avro-format
+    note: "Formato Avro."
 created_at: 2026-10-05
 updated_at: 2026-10-13
 last_verified: 2026-10-05
@@ -252,3 +255,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `avro-format`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `avro-format`.

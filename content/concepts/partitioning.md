@@ -42,6 +42,15 @@ relations:
   - type: RELATED_TO
     target: incremental-load
     note: La carga por período reemplaza segmentos completos.
+  - type: RELATED_TO
+    target: clustering
+    note: "Clustering (ordenamiento físico de datos)."
+  - type: RELATED_TO
+    target: parquet-format
+    note: "Formato Parquet."
+  - type: RELATED_TO
+    target: partition-pruning
+    note: "Partition pruning."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-10-05
@@ -180,3 +189,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`, hallazgo 2) aplicada: §14 Costo ajustado a sus fuentes.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `partition-pruning`, `clustering`, `parquet-format`, que ya tienen ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `clustering`, `parquet-format`, `partition-pruning`.

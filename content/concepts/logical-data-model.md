@@ -46,6 +46,9 @@ relations:
   - type: RELATED_TO
     target: grain
     note: La clave primaria de cada entidad declara qué representa una fila.
+  - type: RELATED_TO
+    target: kimball-methodology
+    note: "El modelo lógico dimensional (§4)."
 created_at: 2026-10-10
 updated_at: 2026-10-13
 last_verified: 2026-10-11
@@ -238,6 +241,7 @@ Un modelo lógico explícito cuesta tiempo de diseño y disciplina para mantener
 - `normalization`: organizar entidades sin redundancia.
 - `surrogate-keys`: claves naturales o sustitutas.
 - `grain`: qué representa una fila.
+- `kimball-methodology`: el modelo lógico dimensional (§4).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -268,3 +272,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-13: `page_title` del PDF citado, con el título del paper tal como aparece en su primera página (ADR-012).
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `kimball-methodology`; el §17 nombra `kimball-methodology`, que el cuerpo ya citaba.

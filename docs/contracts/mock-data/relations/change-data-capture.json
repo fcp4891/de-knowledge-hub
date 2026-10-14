@@ -116,7 +116,7 @@
           "title": "Evolución de esquema",
           "entity_type": "concept",
           "origin": "entity",
-          "note": "Un cambio de esquema en la base de origen llega por CDC y debe propagarse sin romper el pipeline."
+          "note": "Evolución de esquema."
         },
         {
           "slug": "idempotency",
@@ -137,7 +137,14 @@
           "title": "Ingesta desde bases de datos",
           "entity_type": "concept",
           "origin": "entity",
-          "note": "CDC basado en log es una de las tres opciones; su funcionamiento está en esa ficha."
+          "note": "Elegir entre carga completa, incremental por watermark o CDC."
+        },
+        {
+          "slug": "python-database-io",
+          "title": "Lectura y escritura en bases de datos",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Extraer cambios continuos con CDC basado en log (§6)."
         },
         {
           "slug": "sql-merge",
@@ -145,6 +152,13 @@
           "entity_type": "concept",
           "origin": "entity",
           "note": "MERGE es la forma habitual de aplicar un lote de cambios en el destino."
+        },
+        {
+          "slug": "bigquery-incremental-models",
+          "title": "Modelos incrementales en BigQuery",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "La alternativa cuando los cambios tocan cualquier fecha histórica (§6)."
         },
         {
           "slug": "oltp-vs-olap",

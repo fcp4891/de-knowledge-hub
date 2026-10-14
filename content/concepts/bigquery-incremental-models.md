@@ -65,6 +65,9 @@ relations:
   - type: RELATED_TO
     target: bigquery-materialized-views
     note: Particiones y la alternativa automática.
+  - type: RELATED_TO
+    target: change-data-capture
+    note: "La alternativa cuando los cambios tocan cualquier fecha histórica (§6)."
 created_at: 2026-10-11
 updated_at: 2026-10-13
 last_verified: 2026-10-11
@@ -223,6 +226,7 @@ El modelo incremental procesa poco y escala con el tiempo, a cambio de lógica m
 - `dataform-incremental-tables`: la implementación de producto.
 - `idempotency`, `late-arriving-data` y `backfill`: reintentar, datos tardíos y reprocesar.
 - `bigquery-partitioning` y `bigquery-materialized-views`: particiones y la alternativa automática.
+- `change-data-capture`: la alternativa cuando los cambios tocan cualquier fecha histórica (§6).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -250,3 +254,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-08a aplicada (docs/reviews/cards-f3b-08a.md), regla del §17: relations incluye `incremental-pipelines`, `upsert`, `backfill`, `bigquery-materialized-views`, que el §17 nombra.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `change-data-capture`; el §17 nombra `change-data-capture`, que el cuerpo ya citaba.

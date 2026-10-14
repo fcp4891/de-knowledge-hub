@@ -73,6 +73,15 @@ relations:
   - type: DEPENDS_ON
     target: idempotency
     note: Una carga que se repite o un evento duplicado no deben duplicar filas.
+  - type: RELATED_TO
+    target: batch-ingestion
+    note: "Ingesta batch."
+  - type: RELATED_TO
+    target: csv-format
+    note: "Formato CSV."
+  - type: RELATED_TO
+    target: data-lake
+    note: "Data Lake."
 created_at: 2026-10-01
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -235,3 +244,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `batch-ingestion`, `data-lake`, que ya tienen ficha.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `csv-format`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `batch-ingestion`, `csv-format`, `data-lake`.

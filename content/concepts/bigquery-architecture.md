@@ -76,6 +76,12 @@ relations:
   - type: RELATED_TO
     target: bigquery-biglake-tables
     note: Otros tipos de tabla.
+  - type: RELATED_TO
+    target: bigquery-query-optimization
+    note: "El plan de cada consulta y la caché de resultados (§4 y §14)."
+  - type: RELATED_TO
+    target: cloud-warehouse-optimization
+    note: "La comparación con otros warehouses (§12)."
 created_at: 2026-10-11
 updated_at: 2026-10-13
 last_verified: 2026-10-11
@@ -229,6 +235,8 @@ La separación de capas da escala independiente y cero administración de infrae
 - `bigquery-slots` y `bigquery-cost-model`: cómputo y costo.
 - `bigquery-partitioning` y `bigquery-clustering`: leer menos.
 - `bigquery-materialized-views`, `bigquery-external-tables` y `bigquery-biglake-tables`: otros tipos de tabla.
+- `bigquery-query-optimization`: el plan de cada consulta y la caché de resultados (§4 y §14).
+- `cloud-warehouse-optimization`: la comparación con otros warehouses (§12).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -256,3 +264,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-08a aplicada (docs/reviews/cards-f3b-08a.md), regla del §17: relations incluye `oltp-vs-olap`, `bigquery-clustering`, `bigquery-materialized-views`, `bigquery-external-tables`, `bigquery-biglake-tables`, que el §17 nombra.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `bigquery-query-optimization`, `cloud-warehouse-optimization`; el §17 nombra `bigquery-query-optimization`, `cloud-warehouse-optimization`, que el cuerpo ya citaba.

@@ -57,6 +57,12 @@ relations:
   - type: RELATED_TO
     target: change-data-capture
     note: CDC alimenta la capa raw en un flujo ELT.
+  - type: RELATED_TO
+    target: data-transformation
+    note: "Transformación de datos."
+  - type: RELATED_TO
+    target: pipeline-layers
+    note: "Las capas cruda, validada y de consumo de un pipeline."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -205,3 +211,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `data-transformation`, que ya tiene ficha.
 - 2026-10-11: §17 enlaza `pipeline-layers`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `data-transformation`, `pipeline-layers`.

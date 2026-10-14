@@ -63,6 +63,12 @@ relations:
   - type: RELATED_TO
     target: python-file-processing
     note: Un caso concreto de este patrón sobre una carpeta de archivos.
+  - type: RELATED_TO
+    target: python-database-io
+    note: "Casos concretos de extracción y carga."
+  - type: RELATED_TO
+    target: data-apis-with-fastapi
+    note: "Servicios que atienden peticiones (§6)."
 created_at: 2026-10-08
 updated_at: 2026-10-13
 last_verified: 2026-10-09
@@ -304,6 +310,7 @@ La estructura agrega archivos y algo de ceremonia a un job que podría ser un sc
 - `python-logging`: logging configurado en el punto de entrada.
 - `idempotency`: reemplazar la partición.
 - `python-file-processing` y `python-database-io`: casos concretos de extracción y carga.
+- `data-apis-with-fastapi`: servicios que atienden peticiones (§6).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -334,3 +341,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-09: revisión B-F3.1 del lote F3b-03b aplicada (docs/reviews/cards-f3b-03b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `python-database-io`, `data-apis-with-fastapi`; el §17 nombra `data-apis-with-fastapi`, que el cuerpo ya citaba.

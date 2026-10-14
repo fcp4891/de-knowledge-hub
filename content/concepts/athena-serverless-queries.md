@@ -90,6 +90,9 @@ relations:
   - type: RELATED_TO
     target: redshift-architecture
     note: El warehouse, para consultas recurrentes sobre datos cargados.
+  - type: RELATED_TO
+    target: lake-formation-permissions
+    note: "El acceso a las tablas y a S3 con Lake Formation (§14)."
 created_at: 2026-10-12
 updated_at: 2026-10-12
 last_verified: 2026-10-13
@@ -239,6 +242,7 @@ Athena no tiene nada que administrar y cobra por lo que lee, a cambio de que el 
 - `s3-data-lake`: los datos que consulta.
 - `bigquery-external-tables`: lo más cercano en GCP.
 - `redshift-architecture`: el warehouse.
+- `lake-formation-permissions`: el acceso a las tablas y a S3 con Lake Formation (§14).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -265,3 +269,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-12: creación (lote F3b-09a).
 - 2026-10-13: revisión B-F3.1 del lote F3b-09a aplicada (docs/reviews/cards-f3b-09a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-13: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `lake-formation-permissions`; el §17 nombra `lake-formation-permissions`, que el cuerpo ya citaba.

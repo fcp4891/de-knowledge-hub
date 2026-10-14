@@ -55,6 +55,9 @@ relations:
   - type: RELATED_TO
     target: idempotency
     note: La entrega at-least-once exige procesar de forma idempotente.
+  - type: RELATED_TO
+    target: late-arriving-data
+    note: "Datos que llegan tarde."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -199,3 +202,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `late-arriving-data`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `late-arriving-data`.

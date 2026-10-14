@@ -91,6 +91,13 @@
           "note": "Los tipos 1 y 2 se aplican con MERGE o sentencias equivalentes."
         },
         {
+          "slug": "sql-window-functions",
+          "title": "Funciones de ventana",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Funciones de ventana."
+        },
+        {
           "slug": "idempotency",
           "title": "Idempotencia",
           "entity_type": "concept",
@@ -110,6 +117,13 @@
           "entity_type": "pattern",
           "origin": "entity",
           "note": "MERGE en general y por motor."
+        },
+        {
+          "slug": "sql-qualify",
+          "title": "QUALIFY",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "QUALIFY."
         },
         {
           "slug": "bigquery-scd-type-2",
@@ -136,8 +150,8 @@
           "slug": "upsert",
           "title": "Upsert",
           "entity_type": "pattern",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Upsert."
         }
       ]
     }

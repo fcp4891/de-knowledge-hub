@@ -53,6 +53,12 @@ relations:
   - type: RELATED_TO
     target: fact-tables
     note: Las consultas analíticas unen hechos con dimensiones.
+  - type: RELATED_TO
+    target: join-optimization
+    note: "Optimización de joins."
+  - type: RELATED_TO
+    target: sql-structs
+    note: "Columnas anidadas en lugar de joins (§16)."
 created_at: 2026-10-05
 updated_at: 2026-10-13
 last_verified: 2026-10-07
@@ -223,6 +229,7 @@ El join explícito es claro y portable. Para pertenencia, `EXISTS` evita duplica
 - `sql-unnest`: joins correlacionados con arrays.
 - `fact-tables`: joins de hechos con dimensiones.
 - Con ficha: `join-optimization`.
+- `sql-structs`: columnas anidadas en lugar de joins (§16).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -255,3 +262,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `join-optimization`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `join-optimization`, `sql-structs`; el §17 nombra `sql-structs`, que el cuerpo ya citaba.

@@ -58,6 +58,9 @@ relations:
   - type: RELATED_TO
     target: surrogate-keys
     note: Las claves que relacionan tablas normalizadas pasan a claves sustitutas en el modelo dimensional.
+  - type: RELATED_TO
+    target: denormalization
+    note: "Repetir datos a propósito para leer mejor, y lo que cuesta."
 created_at: 2026-10-05
 updated_at: 2026-10-13
 last_verified: 2026-10-05
@@ -240,3 +243,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-11: §17 enlaza `denormalization`, que ya tiene ficha (lote F3b-04a); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `denormalization`.

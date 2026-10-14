@@ -78,6 +78,12 @@ relations:
   - type: RELATED_TO
     target: backfill
     note: Los backfills se registran y ejecutan con los mismos componentes.
+  - type: RELATED_TO
+    target: airflow-operators-and-hooks
+    note: "Operadores, hooks y operadores propios."
+  - type: RELATED_TO
+    target: open-source-vs-managed-orchestration
+    note: "Qué cambia entre operar Airflow y usar Managed Service for Apache Airflow, MWAA o el Apache Airflow job de Fabric."
 created_at: 2026-10-02
 updated_at: 2026-10-13
 last_verified: 2026-10-04
@@ -277,3 +283,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
 - 2026-10-11: §17 enlaza `open-source-vs-managed-orchestration` y `airflow-operators-and-hooks`, que ya tienen ficha (lote F3b-06a); antes figuraban como pendientes de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `airflow-operators-and-hooks`, `open-source-vs-managed-orchestration`.

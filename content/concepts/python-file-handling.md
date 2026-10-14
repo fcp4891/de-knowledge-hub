@@ -73,6 +73,15 @@ relations:
   - type: RELATED_TO
     target: python-generators
     note: Recorrer el archivo línea a línea en un generador mantiene la memoria constante.
+  - type: RELATED_TO
+    target: gcs-buckets-and-objects
+    note: "Object storage como destino durable."
+  - type: RELATED_TO
+    target: python-file-processing
+    note: "Procesar una carpeta de archivos con rechazos y manifiesto."
+  - type: RELATED_TO
+    target: parquet-format
+    note: "Leer archivos columnares con la biblioteca del formato (§6)."
 created_at: 2026-10-08
 updated_at: 2026-10-13
 last_verified: 2026-10-08
@@ -255,6 +264,7 @@ El disco local es rápido y simple, pero efímero y limitado. Object storage es 
 - `csv-format` y `file-ingestion`: el formato y el patrón de ingesta.
 - `gcs-buckets-and-objects`: object storage como destino durable.
 - `python-file-processing`: procesar una carpeta de archivos con rechazos y manifiesto.
+- `parquet-format`: leer archivos columnares con la biblioteca del formato (§6).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -286,3 +296,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-09: §17 enlaza `python-file-processing`, que ya tiene ficha (lote F3b-03b); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `gcs-buckets-and-objects`, `python-file-processing`, `parquet-format`; el §17 nombra `parquet-format`, que el cuerpo ya citaba.

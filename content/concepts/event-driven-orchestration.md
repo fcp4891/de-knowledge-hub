@@ -61,6 +61,15 @@ relations:
   - type: RELATED_TO
     target: airflow-architecture
     note: Los triggers de los watchers corren en el triggerer.
+  - type: RELATED_TO
+    target: catchup
+    note: "El horario como alternativa y lo que se pierde sin él."
+  - type: RELATED_TO
+    target: dag
+    note: "El horario como alternativa y lo que se pierde sin él."
+  - type: RELATED_TO
+    target: orchestration-landscape
+    note: "Workflows frente a Managed Airflow (§11)."
 created_at: 2026-10-11
 updated_at: 2026-10-13
 last_verified: 2026-10-11
@@ -248,6 +257,7 @@ El evento da baja latencia y corridas solo cuando hay datos. A cambio, cada corr
 - `sensors`: esperar dentro de una corrida.
 - `pipeline-dependencies`: Assets entre Dags.
 - `airflow-architecture`: el triggerer.
+- `orchestration-landscape`: Workflows frente a Managed Airflow (§11).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -278,3 +288,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-06a aplicada (docs/reviews/cards-f3b-06a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `catchup`, `dag`, `orchestration-landscape`; el §17 nombra `orchestration-landscape`, que el cuerpo ya citaba.

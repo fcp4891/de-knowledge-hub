@@ -93,6 +93,15 @@ relations:
   - type: RELATED_TO
     target: sql-merge
     note: Los tipos 1 y 2 se aplican con MERGE o sentencias equivalentes.
+  - type: RELATED_TO
+    target: dimension-tables
+    note: "Tablas de dimensión."
+  - type: RELATED_TO
+    target: fact-tables
+    note: "Tablas de hechos."
+  - type: RELATED_TO
+    target: scd-type-1
+    note: "SCD Type 1."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -279,3 +288,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `dimension-tables`, `fact-tables`, que ya tienen ficha.
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `scd-type-1`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `dimension-tables`, `fact-tables`, `scd-type-1`.

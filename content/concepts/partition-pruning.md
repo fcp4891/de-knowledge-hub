@@ -40,6 +40,12 @@ relations:
   - type: RELATED_TO
     target: bigquery-clustering
     note: El clustering poda bloques dentro de cada partición; se combina con el partition pruning.
+  - type: RELATED_TO
+    target: predicate-pushdown
+    note: "Predicate pushdown."
+  - type: RELATED_TO
+    target: query-plans
+    note: "Planes de ejecución."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -194,3 +200,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendientes de ficha a `query-plans`, `predicate-pushdown`, que ya tienen ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `predicate-pushdown`, `query-plans`.

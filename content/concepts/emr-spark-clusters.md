@@ -84,6 +84,9 @@ relations:
   - type: RELATED_TO
     target: dataflow-execution-model
     note: En GCP, Dataflow es otro modelo (Beam), no un Spark administrado.
+  - type: RELATED_TO
+    target: lake-formation-permissions
+    note: "El acceso a las tablas con Lake Formation (§14)."
 created_at: 2026-10-12
 updated_at: 2026-10-12
 last_verified: 2026-10-13
@@ -285,6 +288,7 @@ EMR sobre EC2 da el mayor control (instancias, Spot, configuración), a cambio d
 - `s3-data-lake`: el almacenamiento persistente.
 - `glue-catalog-and-etl`: Spark serverless con menos control.
 - `dataflow-execution-model`: otro modelo de ejecución, en GCP.
+- `lake-formation-permissions`: el acceso a las tablas con Lake Formation (§14).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -313,3 +317,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-12: creación (lote F3b-09a).
 - 2026-10-13: revisión B-F3.1 del lote F3b-09a aplicada (docs/reviews/cards-f3b-09a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-13: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `lake-formation-permissions`; el §17 nombra `lake-formation-permissions`, que el cuerpo ya citaba.

@@ -58,6 +58,15 @@ relations:
   - type: RELATED_TO
     target: incremental-load
     note: Un backfill suele reutilizar la carga incremental con un rango explícito.
+  - type: RELATED_TO
+    target: catchup
+    note: "Catchup."
+  - type: RELATED_TO
+    target: data-reconciliation
+    note: "Reconciliación de datos."
+  - type: RELATED_TO
+    target: failure-recovery
+    note: "Cómo se combinan reintentos, checkpoints, DLQ, replay y backfill para volver a un estado correcto."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -212,3 +221,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `catchup`, `data-reconciliation`, que ya tienen ficha.
 - 2026-10-11: §17 enlaza `failure-recovery`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `catchup`, `data-reconciliation`, `failure-recovery`.

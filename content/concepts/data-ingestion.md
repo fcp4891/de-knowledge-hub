@@ -94,6 +94,12 @@ relations:
   - type: RELATED_TO
     target: data-pipeline
     note: La ingesta es la primera etapa de un pipeline.
+  - type: RELATED_TO
+    target: data-lake
+    note: "La ingesta federada sobre el lake, sin copiar (§2)."
+  - type: RELATED_TO
+    target: oltp-vs-olap
+    note: "La ingesta federada sobre la base transaccional, sin copiar (§2)."
 created_at: 2026-10-05
 updated_at: 2026-10-13
 last_verified: 2026-10-06
@@ -234,6 +240,8 @@ Batch es simple y barato, pero no es fresco. Streaming es fresco, pero más comp
 - `batch-ingestion`, `streaming-ingestion`, `file-ingestion` y `api-ingestion`: cada modo en detalle.
 - `change-data-capture`: ingesta de cambios.
 - `data-pipeline`: el sistema del que la ingesta es la primera etapa.
+- `data-lake`: la ingesta federada sobre el lake, sin copiar (§2).
+- `oltp-vs-olap`: la ingesta federada sobre la base transaccional, sin copiar (§2).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -264,3 +272,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: revisión B-F3.1 del lote F3b-01a aplicada (docs/reviews/cards-f3b-01a.md): fuentes para COPY de Redshift, Glue, Event Hubs, el mirroring de Fabric y Debezium.
 - 2026-10-06: `verification_status: verified` (revisión B-F3.1 del lote F3b-01a aplicada; sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `data-lake`, `oltp-vs-olap`; el §17 nombra `data-lake`, `oltp-vs-olap`, que el cuerpo ya citaba.

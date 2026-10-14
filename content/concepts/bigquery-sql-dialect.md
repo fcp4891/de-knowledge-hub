@@ -70,6 +70,9 @@ relations:
   - type: RELATED_TO
     target: sql-quality-checks
     note: Medir los `NULL` que deja `SAFE.`.
+  - type: RELATED_TO
+    target: bigquery-security
+    note: "Proteger una columna con permisos o políticas, no omitiéndola (§14)."
 created_at: 2026-10-11
 updated_at: 2026-10-13
 last_verified: 2026-10-11
@@ -222,6 +225,7 @@ Las extensiones de GoogleSQL hacen las consultas más cortas y robustas. A cambi
 - `bigquery-query-optimization`: escribir SQL que lea menos.
 - `bigquery-incremental-models`: consultas de varias sentencias y transacciones.
 - `sql-quality-checks`: medir los `NULL` que deja `SAFE.`.
+- `bigquery-security`: proteger una columna con permisos o políticas, no omitiéndola (§14).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -250,3 +254,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-08a aplicada (docs/reviews/cards-f3b-08a.md), regla del §17: relations incluye `bigquery-query-optimization`, `bigquery-incremental-models`, `sql-quality-checks`, que el §17 nombra.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `bigquery-security`; el §17 nombra `bigquery-security`, que el cuerpo ya citaba.

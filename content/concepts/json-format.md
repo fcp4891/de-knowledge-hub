@@ -61,6 +61,9 @@ relations:
   - type: RELATED_TO
     target: compression
     note: Los archivos JSON se comprimen bien, con efectos en la carga.
+  - type: RELATED_TO
+    target: python-logging
+    note: "Logs estructurados en JSON (§5)."
 created_at: 2026-10-06
 updated_at: 2026-10-13
 last_verified: 2026-10-06
@@ -220,6 +223,7 @@ Legible, flexible y universal, a cambio de tamaño, falta de esquema obligatorio
 - `schema-on-read-vs-schema-on-write`: cómo se trata un formato sin esquema.
 - `api-ingestion`: la fuente más común de JSON.
 - `compression`: comprimir JSON y sus efectos en la carga.
+- `python-logging`: logs estructurados en JSON (§5).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -251,3 +255,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: revisión B-F3.1 del lote F3b-01b aplicada (docs/reviews/cards-f3b-01b.md), sin cambios pedidos.
 - 2026-10-06: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `python-logging`; el §17 nombra `python-logging`, que el cuerpo ya citaba.

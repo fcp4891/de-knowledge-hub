@@ -14,6 +14,13 @@
           "note": null
         },
         {
+          "slug": "pipeline-layers",
+          "title": "Capas de un pipeline",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Las capas cruda, validada y de consumo de un pipeline."
+        },
+        {
           "slug": "incremental-load",
           "title": "Carga incremental",
           "entity_type": "pattern",

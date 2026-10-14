@@ -47,6 +47,9 @@ relations:
   - type: RELATED_TO
     target: data-transformation
     note: Un modelo de transformación de varios pasos puede escribirse como una cadena de CTE.
+  - type: RELATED_TO
+    target: sql-recursive-cte
+    note: "CTE recursivas."
 created_at: 2026-10-05
 updated_at: 2026-10-13
 last_verified: 2026-10-07
@@ -221,3 +224,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `sql-recursive-cte`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `sql-recursive-cte`.

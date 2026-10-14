@@ -73,6 +73,21 @@ relations:
   - type: RELATED_TO
     target: row-vs-columnar-formats
     note: En formatos columnares, cada columna que no se selecciona no se lee.
+  - type: RELATED_TO
+    target: query-plans
+    note: "Cómo verificar lo que se leyó."
+  - type: RELATED_TO
+    target: bigquery-clustering
+    note: "El detalle de BigQuery (§11)."
+  - type: RELATED_TO
+    target: bigquery-cost-model
+    note: "El detalle de BigQuery (§11)."
+  - type: RELATED_TO
+    target: bigquery-partitioning
+    note: "El detalle de BigQuery (§11)."
+  - type: RELATED_TO
+    target: materialization-strategies
+    note: "Tablas resumen y vistas materializadas (§16)."
 created_at: 2026-10-05
 updated_at: 2026-10-13
 last_verified: 2026-10-07
@@ -230,6 +245,8 @@ El diseño físico (particiones, orden y clustering) reduce el escaneo de muchas
 - `predicate-pushdown`: llevar el filtro hasta la lectura.
 - `row-vs-columnar-formats`: por qué seleccionar columnas importa.
 - `query-plans`: cómo verificar lo que se leyó.
+- `bigquery-clustering`, `bigquery-cost-model` y `bigquery-partitioning`: el detalle de BigQuery (§11).
+- `materialization-strategies`: tablas resumen y vistas materializadas (§16).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -261,3 +278,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): sin cambios pedidos.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `query-plans`, `bigquery-clustering`, `bigquery-cost-model`, `bigquery-partitioning`, `materialization-strategies`; el §17 nombra `bigquery-clustering`, `bigquery-cost-model`, `bigquery-partitioning`, `materialization-strategies`, que el cuerpo ya citaba.

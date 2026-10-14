@@ -75,6 +75,15 @@ relations:
   - type: RELATED_TO
     target: retries
     note: Qué errores conviene reintentar y con qué espera.
+  - type: RELATED_TO
+    target: data-validation-with-pydantic
+    note: "Validación de datos con Pydantic."
+  - type: RELATED_TO
+    target: http-clients
+    note: "Sesión o cliente reutilizable, timeouts y errores HTTP con Requests y HTTPX."
+  - type: RELATED_TO
+    target: python-logging
+    note: "Logging."
 created_at: 2026-10-01
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -264,3 +273,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `data-validation-with-pydantic`, `python-logging`, que ya tienen ficha.
 - 2026-10-09: §17 enlaza `http-clients`, que ya tiene ficha (lote F3b-03b); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `data-validation-with-pydantic`, `http-clients`, `python-logging`.

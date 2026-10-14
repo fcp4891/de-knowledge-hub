@@ -71,6 +71,12 @@ relations:
   - type: RELATED_TO
     target: bigquery-query-optimization
     note: El plan, las insights y las prácticas de optimización de BigQuery.
+  - type: RELATED_TO
+    target: predicate-pushdown
+    note: "Tablas externas."
+  - type: RELATED_TO
+    target: bigquery-cost-model
+    note: "El modelo de precios de BigQuery (§14)."
 created_at: 2026-10-05
 updated_at: 2026-10-13
 last_verified: 2026-10-07
@@ -237,6 +243,7 @@ Más automatización (Fabric, `AUTO` de Redshift) reduce el trabajo de mantenimi
 - `query-plans`: verificar el efecto.
 - `predicate-pushdown`: tablas externas.
 - `bigquery-query-optimization`: el plan, las insights y las prácticas de optimización de BigQuery.
+- `bigquery-cost-model`: el modelo de precios de BigQuery (§14).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -268,3 +275,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-11: «pendiente de ficha» actualizado: la ficha ya existe (lote F3b-08a); el §17 la enlaza y relations la incluye: relations incluye `bigquery-query-optimization`, que el §17 nombra; §17 enlaza las fichas que ya existen.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `predicate-pushdown`, `bigquery-cost-model`; el §17 nombra `bigquery-cost-model`, que el cuerpo ya citaba.

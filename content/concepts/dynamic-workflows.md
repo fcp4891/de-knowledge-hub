@@ -43,6 +43,18 @@ relations:
   - type: RELATED_TO
     target: batch-ingestion
     note: Una copia mapeada por archivo o partición de un lote.
+  - type: RELATED_TO
+    target: idempotency
+    note: "Reintentar una copia sin duplicar."
+  - type: RELATED_TO
+    target: retries
+    note: "Reintentar una copia sin duplicar."
+  - type: RELATED_TO
+    target: open-source-vs-managed-orchestration
+    note: "La versión de Airflow de cada servicio (§11)."
+  - type: RELATED_TO
+    target: pyspark-dataframes
+    note: "Delegar millones de elementos pequeños a un motor (§6)."
 created_at: 2026-10-11
 updated_at: 2026-10-13
 last_verified: 2026-10-11
@@ -251,6 +263,8 @@ El mapeo da paralelismo, reintentos por elemento y un Dag que se adapta a los da
 - `pipeline-dependencies`: el reduce depende de todas las copias.
 - `retries` e `idempotency`: reintentar una copia sin duplicar.
 - `batch-ingestion`: la ingesta por lotes que suele repartirse en copias mapeadas.
+- `open-source-vs-managed-orchestration`: la versión de Airflow de cada servicio (§11).
+- `pyspark-dataframes`: delegar millones de elementos pequeños a un motor (§6).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -279,3 +293,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-11: relación `batch-ingestion` agregada en `relations` y en §17 (cambio mínimo).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `idempotency`, `retries`, `open-source-vs-managed-orchestration`, `pyspark-dataframes`; el §17 nombra `open-source-vs-managed-orchestration`, `pyspark-dataframes`, que el cuerpo ya citaba.

@@ -47,6 +47,12 @@ relations:
   - type: RELATED_TO
     target: dimension-tables
     note: El copo de nieve cambia la estructura de las tablas de dimensión, no la de los hechos.
+  - type: RELATED_TO
+    target: kimball-methodology
+    note: "El contexto del diseño dimensional."
+  - type: RELATED_TO
+    target: physical-data-model
+    note: "La distribución de dimensiones pequeñas en Redshift (§12)."
 created_at: 2026-10-10
 updated_at: 2026-10-13
 last_verified: 2026-10-11
@@ -193,6 +199,7 @@ El copo de nieve evita repetir atributos de la jerarquía y la representa con pr
 - `dimension-tables`: dónde ocurre la normalización.
 - `normalization` y `denormalization`: las dos direcciones.
 - `kimball-methodology`: el contexto del diseño dimensional.
+- `physical-data-model`: la distribución de dimensiones pequeñas en Redshift (§12).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -221,3 +228,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `kimball-methodology`, `physical-data-model`; el §17 nombra `physical-data-model`, que el cuerpo ya citaba.

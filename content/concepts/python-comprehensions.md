@@ -40,6 +40,9 @@ relations:
   - type: RELATED_TO
     target: data-transformation
     note: Mapear y filtrar registros es la transformación más básica de un pipeline en Python.
+  - type: RELATED_TO
+    target: python-iterators
+    note: "La versión perezosa y su protocolo."
 created_at: 2026-10-08
 updated_at: 2026-10-13
 last_verified: 2026-10-08
@@ -206,3 +209,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: revisión B-F3.1 del lote F3b-03a aplicada (docs/reviews/cards-f3b-03a.md): la documentación de Python se cita en `/3.12/`, la versión con la que se ejecutó el código.
 - 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `python-iterators`.

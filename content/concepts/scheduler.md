@@ -60,6 +60,15 @@ relations:
   - type: RELATED_TO
     target: backfill
     note: El backfill crea ejecuciones de intervalos pasados por fuera del ritmo normal del scheduler.
+  - type: RELATED_TO
+    target: airflow-architecture
+    note: "Arquitectura de Apache Airflow."
+  - type: RELATED_TO
+    target: data-orchestration
+    note: "Orquestación de datos."
+  - type: RELATED_TO
+    target: pipeline-dependencies
+    note: "Dependencias entre tareas y dependencias de datos entre flujos."
 created_at: 2026-10-01
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -241,3 +250,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `data-orchestration`, `airflow-architecture`, que ya tienen ficha.
 - 2026-10-11: §17 enlaza `pipeline-dependencies`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `airflow-architecture`, `data-orchestration`, `pipeline-dependencies`.

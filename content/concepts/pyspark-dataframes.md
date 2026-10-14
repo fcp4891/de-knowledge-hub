@@ -86,6 +86,12 @@ relations:
   - type: RELATED_TO
     target: arrow-columnar-memory
     note: Arrow acelera la conversión entre DataFrames de Spark y de pandas.
+  - type: RELATED_TO
+    target: parquet-format
+    note: "Cómo se organiza la entrada y la salida."
+  - type: RELATED_TO
+    target: partitioning
+    note: "Cómo se organiza la entrada y la salida."
 created_at: 2026-10-08
 updated_at: 2026-10-13
 last_verified: 2026-10-09
@@ -291,3 +297,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-09: revisión B-F3.1 del lote F3b-03b aplicada (docs/reviews/cards-f3b-03b.md): el nombre anterior (Dataproc on Compute Engine y Google Cloud Serverless for Apache Spark) se cita desde la página de comparación, no desde `clusters-overview`; se quita «el mismo código de PySpark corre en las dos modalidades»; §10 dice que no se pasó por `mypy --strict`.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `parquet-format`, `partitioning`.

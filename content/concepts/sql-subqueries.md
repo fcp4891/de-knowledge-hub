@@ -45,6 +45,9 @@ relations:
   - type: RELATED_TO
     target: sql-nulls
     note: Una subconsulta escalar sin filas devuelve NULL, e IN con un NULL puede dar NULL.
+  - type: RELATED_TO
+    target: sql-window-functions
+    note: "Alternativa para \"el último de cada grupo\"."
 created_at: 2026-10-05
 updated_at: 2026-10-13
 last_verified: 2026-10-07
@@ -221,3 +224,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: revisión B-F3.1 del lote F3b-02a aplicada (docs/reviews/cards-f3b-02a.md): §10 deja de atribuir a T-SQL el comportamiento del ejemplo.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `sql-window-functions`.

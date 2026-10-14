@@ -81,6 +81,12 @@ relations:
   - type: RELATED_TO
     target: sql-quality-checks
     note: Donde las claves no se aplican, la unicidad y la integridad se verifican con pruebas.
+  - type: RELATED_TO
+    target: bigquery-clustering
+    note: "El detalle en BigQuery."
+  - type: RELATED_TO
+    target: bigquery-partitioning
+    note: "El detalle en BigQuery."
 created_at: 2026-10-10
 updated_at: 2026-10-13
 last_verified: 2026-10-11
@@ -277,3 +283,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `bigquery-clustering`, `bigquery-partitioning`.

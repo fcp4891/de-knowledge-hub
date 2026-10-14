@@ -73,6 +73,9 @@ relations:
   - type: RELATED_TO
     target: data-reconciliation
     note: Las reconciliaciones deben comparar con IS DISTINCT FROM para no perder diferencias con nulos.
+  - type: RELATED_TO
+    target: change-detection
+    note: "Detección de cambios en SQL."
 created_at: 2026-10-05
 updated_at: 2026-10-13
 last_verified: 2026-10-07
@@ -260,3 +263,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `change-detection`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `change-detection`.

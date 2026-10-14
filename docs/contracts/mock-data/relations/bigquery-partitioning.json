@@ -63,6 +63,13 @@
           "note": "Particionar y filtrar por la partición reduce los bytes procesados en on-demand."
         },
         {
+          "slug": "physical-data-model",
+          "title": "Modelo físico de datos",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "El detalle en BigQuery."
+        },
+        {
           "slug": "bigquery-incremental-models",
           "title": "Modelos incrementales en BigQuery",
           "entity_type": "pattern",
@@ -88,7 +95,14 @@
           "title": "Partition pruning",
           "entity_type": "concept",
           "origin": "entity",
-          "note": "En BigQuery, el pruning depende del tipo de partición y de cómo se escribe el filtro."
+          "note": "Partition pruning."
+        },
+        {
+          "slug": "scan-reduction",
+          "title": "Reducción de datos escaneados",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "El detalle de BigQuery (§11)."
         },
         {
           "slug": "dataform-incremental-tables",

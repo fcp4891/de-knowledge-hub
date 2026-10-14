@@ -73,6 +73,12 @@ relations:
   - type: RELATED_TO
     target: partitioning
     note: Las tablas grandes del warehouse se particionan por fecha para leer menos.
+  - type: RELATED_TO
+    target: data-mart
+    note: "Data Mart."
+  - type: RELATED_TO
+    target: lakehouse
+    note: "Lakehouse."
 created_at: 2026-10-05
 updated_at: 2026-10-13
 last_verified: 2026-10-05
@@ -227,3 +233,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `data-mart`, `lakehouse`, que ya tienen ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `data-mart`, `lakehouse`.

@@ -68,6 +68,15 @@ relations:
   - type: RELATED_TO
     target: idempotency
     note: Reprocesar una página o un período no debe duplicar registros en el destino.
+  - type: RELATED_TO
+    target: batch-ingestion
+    note: "Ingesta batch."
+  - type: RELATED_TO
+    target: data-contracts
+    note: "Contratos de datos."
+  - type: RELATED_TO
+    target: python-api-consumption
+    note: "Consumo de APIs desde Python."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -269,3 +278,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `python-api-consumption`, `batch-ingestion`, que ya tienen ficha.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `data-contracts`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `batch-ingestion`, `data-contracts`, `python-api-consumption`.

@@ -192,8 +192,8 @@
           "slug": "backfill",
           "title": "Backfill",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Backfill."
         },
         {
           "slug": "batch-vs-streaming",
@@ -201,6 +201,13 @@
           "entity_type": "concept",
           "origin": "entity",
           "note": "La entrega at-least-once exige procesar de forma idempotente."
+        },
+        {
+          "slug": "pipeline-layers",
+          "title": "Capas de un pipeline",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Reprocesar desde la capa cruda sin duplicar."
         },
         {
           "slug": "incremental-load",
@@ -430,15 +437,15 @@
           "slug": "replay",
           "title": "Replay",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Replay."
         },
         {
           "slug": "retries",
           "title": "Retries",
           "entity_type": "pattern",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Retries."
         },
         {
           "slug": "emr-spark-clusters",
@@ -474,6 +481,13 @@
           "entity_type": "concept",
           "origin": "entity",
           "note": "Express es al menos una vez; Standard reintenta si se declara Retry."
+        },
+        {
+          "slug": "dynamic-workflows",
+          "title": "Workflows dinámicos",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Reintentar una copia sin duplicar."
         }
       ]
     }

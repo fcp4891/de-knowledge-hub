@@ -72,6 +72,9 @@ relations:
   - type: RELATED_TO
     target: backfill
     note: Un pipeline incremental bien diseñado hace backfill reejecutando intervalos.
+  - type: RELATED_TO
+    target: checkpoints
+    note: "Guardar hasta dónde se procesó para reanudar sin repetir."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -237,7 +240,8 @@ El estado por intervalo es simple y repetible, pero requiere que el origen se pu
 - `idempotency`: requisito para repetir intervalos.
 - `change-data-capture`: fuente de deltas completos, incluidos borrados.
 - `backfill`: reejecutar intervalos históricos.
-- Del blueprint, pendientes de ficha: `watermarks`, `checkpoints`, `full-refresh`.
+- `checkpoints`: guardar hasta dónde se procesó para reanudar sin repetir.
+- Del blueprint, pendientes de ficha: `watermarks` y `full-refresh`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -269,3 +273,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
 - 2026-10-01: §10 alineada con el snippet `bigquery-incremental-merge-watermark`: `CREATE OR REPLACE TEMP TABLE` (revisión B-F3.2 de snippets).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `checkpoints`; el §17 enlaza `checkpoints`, que ya tienen ficha.

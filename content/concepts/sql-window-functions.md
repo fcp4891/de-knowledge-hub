@@ -65,6 +65,9 @@ relations:
   - type: RELATED_TO
     target: late-arriving-data
     note: Un marco RANGE por fecha es robusto ante días sin datos; ROWS cuenta filas, no días.
+  - type: RELATED_TO
+    target: sql-qualify
+    note: "QUALIFY."
 created_at: 2026-10-05
 updated_at: 2026-10-13
 last_verified: 2026-10-05
@@ -235,3 +238,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `sql-qualify`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `sql-qualify`.

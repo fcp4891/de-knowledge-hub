@@ -240,6 +240,7 @@ El checkpoint acota la pérdida y el reproceso tras una caída, a cambio de escr
 - `streaming-ingestion`: dónde los checkpoints son imprescindibles.
 - `idempotency`: por qué el destino debe tolerar el reproceso.
 - `replay`: volver atrás a propósito.
+- `python-file-handling`: un checkpoint en archivo se escribe de forma atómica.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -270,3 +271,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-05a aplicada (docs/reviews/cards-f3b-05a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): el §17 nombra `python-file-handling`.

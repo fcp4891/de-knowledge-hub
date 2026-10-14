@@ -60,6 +60,15 @@ relations:
   - type: RELATED_TO
     target: schema-evolution
     note: Agregar columnas a un conjunto de archivos Parquet es un caso típico de evolución de esquema.
+  - type: RELATED_TO
+    target: avro-format
+    note: "Formato Avro."
+  - type: RELATED_TO
+    target: compression
+    note: "Compresión."
+  - type: RELATED_TO
+    target: row-vs-columnar-formats
+    note: "Formatos por filas y por columnas."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -219,3 +228,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `row-vs-columnar-formats`, que ya tiene ficha.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `avro-format`, `compression`, que ya tienen ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `avro-format`, `compression`, `row-vs-columnar-formats`.

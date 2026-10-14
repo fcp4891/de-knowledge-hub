@@ -65,6 +65,15 @@ relations:
   - type: RELATED_TO
     target: dead-letter-queue
     note: Los reintentos previos a la DLQ exigen consumidores idempotentes.
+  - type: RELATED_TO
+    target: backfill
+    note: "Backfill."
+  - type: RELATED_TO
+    target: replay
+    note: "Replay."
+  - type: RELATED_TO
+    target: retries
+    note: "Retries."
 created_at: 2026-09-28
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -219,3 +228,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: `verification_status: verified` (revisión de cb77a2f (B-F3.1 del lote 2) aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `retries`, `backfill`, `replay`, que ya tienen ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `backfill`, `replay`, `retries`.

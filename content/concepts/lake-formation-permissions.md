@@ -89,6 +89,9 @@ relations:
   - type: RELATED_TO
     target: athena-serverless-queries
     note: Athena es un motor que recibe credenciales temporales de Lake Formation.
+  - type: RELATED_TO
+    target: bigquery-security
+    note: "La seguridad fina de las tablas en BigQuery (§11)."
 created_at: 2026-10-12
 updated_at: 2026-10-13
 last_verified: 2026-10-13
@@ -295,6 +298,7 @@ Lake Formation da control fino y uniforme sobre el lake, a cambio de un modelo m
 - `athena-serverless-queries`: un motor que recibe credenciales temporales.
 - `dataplex-governance` y `bigquery-policy-tags`: gobierno y seguridad por columna en GCP.
 - `aws-iam-for-data`: el modelo de IAM que Lake Formation complementa.
+- `bigquery-security`: la seguridad fina de las tablas en BigQuery (§11).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -321,3 +325,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-12: creación (lote F3b-09a).
 - 2026-10-13: revisión B-F3.1 del lote F3b-09a aplicada (docs/reviews/cards-f3b-09a.md): el §11 dice en qué difiere de Knowledge Catalog y de los policy tags y la seguridad por fila de BigQuery (modelo de permisos, granularidad y dónde se aplica), con fuente de cada lado; el §17 enlaza `aws-iam-for-data`, que ya tiene ficha, y relations la incluye.
 - 2026-10-13: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `bigquery-security`; el §17 nombra `bigquery-security`, que el cuerpo ya citaba.

@@ -83,6 +83,12 @@ relations:
   - type: RELATED_TO
     target: python-error-handling-and-retries
     note: Un error de validación es permanente; reintentarlo no lo arregla.
+  - type: RELATED_TO
+    target: data-contracts
+    note: "Contratos de datos."
+  - type: RELATED_TO
+    target: python-typing
+    note: "Qué verifica un type checker y qué no hace Python en ejecución."
 created_at: 2026-10-02
 updated_at: 2026-10-13
 last_verified: 2026-10-04
@@ -273,3 +279,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `data-contracts`, que ya tiene ficha.
 - 2026-10-08: §17 enlaza `python-typing`, que ya tiene ficha (lote F3b-03a); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `data-contracts`, `python-typing`.

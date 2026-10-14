@@ -43,6 +43,12 @@ relations:
   - type: RELATED_TO
     target: python-exceptions
     note: Una función de validación comunica el fallo con una excepción, no con un valor especial.
+  - type: RELATED_TO
+    target: python-decorators
+    note: "Funciones que envuelven funciones (medir, reintentar, cachear)."
+  - type: RELATED_TO
+    target: python-classes
+    note: "El estado entre llamadas, explícito en una clase (§6)."
 created_at: 2026-10-08
 updated_at: 2026-10-13
 last_verified: 2026-10-08
@@ -198,6 +204,7 @@ Las funciones puras son fáciles de probar y de componer, a cambio de pasar expl
 - `testing-with-pytest`: probar cada función.
 - `data-transformation`: transformaciones como composición de funciones.
 - `python-decorators`: funciones que envuelven funciones (medir, reintentar, cachear).
+- `python-classes`: el estado entre llamadas, explícito en una clase (§6).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -226,3 +233,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-09: §17 enlaza `python-decorators`, que ya tiene ficha (lote F3b-03b); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `python-decorators`, `python-classes`; el §17 nombra `python-classes`, que el cuerpo ya citaba.

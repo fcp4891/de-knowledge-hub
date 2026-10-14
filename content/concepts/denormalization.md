@@ -59,6 +59,9 @@ relations:
   - type: RELATED_TO
     target: oltp-vs-olap
     note: Normalizar es la norma en OLTP; desnormalizar, en OLAP.
+  - type: RELATED_TO
+    target: physical-data-model
+    note: "La distribución de tablas en Redshift (§12)."
 created_at: 2026-10-10
 updated_at: 2026-10-13
 last_verified: 2026-10-11
@@ -214,6 +217,7 @@ Lecturas más simples y rápidas, a cambio de redundancia, almacenamiento, refre
 - `one-big-table`: la desnormalización completa.
 - `materialization-strategies`: cómo se mantienen las copias.
 - `oltp-vs-olap`: por qué cada mundo elige distinto.
+- `physical-data-model`: la distribución de tablas en Redshift (§12).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -244,3 +248,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `physical-data-model`; el §17 nombra `physical-data-model`, que el cuerpo ya citaba.

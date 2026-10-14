@@ -70,6 +70,9 @@ relations:
   - type: RELATED_TO
     target: sql-advanced-select
     note: Agrupar por día con DATE_TRUNC o DATE(ts, zona) es la agregación temporal más común.
+  - type: RELATED_TO
+    target: partition-pruning
+    note: "Particionar por fecha."
 created_at: 2026-10-05
 updated_at: 2026-10-13
 last_verified: 2026-10-07
@@ -238,3 +241,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: revisión B-F3.1 del lote F3b-02b aplicada (docs/reviews/cards-f3b-02b.md): BigQuery: «zona por defecto UTC», no «se guarda en UTC»; el guardado en UTC queda atribuido a Redshift y PostgreSQL.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `partition-pruning`.

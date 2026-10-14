@@ -44,6 +44,12 @@ relations:
   - type: RELATED_TO
     target: pubsub-delivery-semantics
     note: La política de reintento de Pub/Sub forma parte de su semántica de entrega.
+  - type: RELATED_TO
+    target: failure-recovery
+    note: "Cómo se combinan reintentos, checkpoints, DLQ, replay y backfill para volver a un estado correcto."
+  - type: RELATED_TO
+    target: python-error-handling-and-retries
+    note: "Manejo de errores y reintentos en Python."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -206,3 +212,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `python-error-handling-and-retries`, que ya tiene ficha.
 - 2026-10-11: §17 enlaza `failure-recovery`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `failure-recovery`, `python-error-handling-and-retries`.

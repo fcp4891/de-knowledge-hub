@@ -83,6 +83,12 @@ relations:
   - type: RELATED_TO
     target: retries
     note: Los reintentos acotados son parte del control de fallos del pipeline.
+  - type: RELATED_TO
+    target: dag
+    note: "DAG (grafo de tareas de un pipeline)."
+  - type: RELATED_TO
+    target: data-contracts
+    note: "Contratos de datos."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -273,3 +279,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `dag`, que ya tiene ficha.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `data-contracts`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `dag`, `data-contracts`.

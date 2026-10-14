@@ -60,7 +60,7 @@
           "title": "Claves sustitutas (surrogate keys)",
           "entity_type": "concept",
           "origin": "entity",
-          "note": "Cada fila nueva del tipo 2 recibe una clave sustituta nueva."
+          "note": "Claves sustitutas (surrogate keys)."
         },
         {
           "slug": "change-detection",
@@ -74,7 +74,7 @@
           "title": "Dimensiones lentamente cambiantes (SCD)",
           "entity_type": "concept",
           "origin": "entity",
-          "note": "El tipo más usado tiene su propia ficha con el SQL."
+          "note": "Dimensiones lentamente cambiantes (SCD)."
         },
         {
           "slug": "sql-window-functions",

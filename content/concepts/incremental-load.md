@@ -52,6 +52,18 @@ relations:
   - type: RELATED_TO
     target: bigquery-partitioning
     note: En BigQuery, cada ejecución puede escribir solo la partición de su período.
+  - type: RELATED_TO
+    target: change-detection
+    note: "Detección de cambios en SQL."
+  - type: RELATED_TO
+    target: data-reconciliation
+    note: "Reconciliación de datos."
+  - type: RELATED_TO
+    target: dataform-incremental-tables
+    note: "Tablas incrementales en Dataform."
+  - type: RELATED_TO
+    target: incremental-pipelines
+    note: "Pipelines incrementales."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -202,3 +214,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `incremental-pipelines`, `data-reconciliation`, `dataform-incremental-tables`, que ya tienen ficha.
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `change-detection`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `change-detection`, `data-reconciliation`, `dataform-incremental-tables`, `incremental-pipelines`.

@@ -96,6 +96,12 @@ relations:
   - type: RELATED_TO
     target: sql-merge
     note: MERGE es la alternativa estándar al upsert con ON CONFLICT.
+  - type: RELATED_TO
+    target: database-ingestion
+    note: "Elegir entre carga completa, incremental por watermark o CDC."
+  - type: RELATED_TO
+    target: change-data-capture
+    note: "Extraer cambios continuos con CDC basado en log (§6)."
 created_at: 2026-10-08
 updated_at: 2026-10-13
 last_verified: 2026-10-09
@@ -280,6 +286,7 @@ COPY a staging más upsert es rápido e idempotente, a cambio de una tabla extra
 - `batch-ingestion`: cargas por lote.
 - `python-context-managers`: conexión, transacción y COPY como bloques `with`.
 - `database-ingestion`: elegir entre carga completa, incremental por watermark o CDC.
+- `change-data-capture`: extraer cambios continuos con CDC basado en log (§6).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -312,3 +319,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-11: §17 enlaza `database-ingestion`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `database-ingestion`, `change-data-capture`; el §17 nombra `change-data-capture`, que el cuerpo ya citaba.

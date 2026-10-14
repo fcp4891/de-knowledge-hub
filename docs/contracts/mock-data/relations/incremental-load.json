@@ -171,8 +171,8 @@
           "slug": "incremental-pipelines",
           "title": "Pipelines incrementales",
           "entity_type": "pattern",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Pipelines incrementales."
         },
         {
           "slug": "rds-as-source",
@@ -206,8 +206,8 @@
           "slug": "dataform-incremental-tables",
           "title": "Tablas incrementales en Dataform",
           "entity_type": "pattern",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Tablas incrementales en Dataform."
         },
         {
           "slug": "upsert",

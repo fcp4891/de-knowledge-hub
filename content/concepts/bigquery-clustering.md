@@ -40,6 +40,9 @@ relations:
   - type: RELATED_TO
     target: partitioning
     note: Clustering es una forma de organización física complementaria a la partición.
+  - type: RELATED_TO
+    target: clustering
+    note: "Clustering (ordenamiento físico de datos)."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -200,3 +203,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `clustering`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `clustering`.

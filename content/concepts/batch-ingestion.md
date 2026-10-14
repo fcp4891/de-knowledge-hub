@@ -89,6 +89,9 @@ relations:
   - type: RELATED_TO
     target: incremental-load
     note: Cada lote trae solo lo nuevo o lo cambiado de su ventana.
+  - type: RELATED_TO
+    target: data-ingestion
+    note: "Ingesta de datos."
 created_at: 2026-10-02
 updated_at: 2026-10-13
 last_verified: 2026-10-04
@@ -279,3 +282,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: revisión B-F3.2 (`docs/reviews/snippets-3.md`, hallazgo 6) aplicada: el cliente de `load_day` se tipa con un `Protocol` (`LoadClient`).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `data-ingestion`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `data-ingestion`.

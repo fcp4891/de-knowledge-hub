@@ -39,6 +39,18 @@ relations:
   - type: RELATED_TO
     target: incremental-load
     note: La carga SCD2 es una carga incremental.
+  - type: RELATED_TO
+    target: dimension-tables
+    note: "Tablas de dimensión."
+  - type: RELATED_TO
+    target: scd-type-1
+    note: "SCD Type 1."
+  - type: RELATED_TO
+    target: slowly-changing-dimensions
+    note: "Dimensiones lentamente cambiantes (SCD)."
+  - type: RELATED_TO
+    target: surrogate-keys
+    note: "Claves sustitutas (surrogate keys)."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -200,3 +212,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `slowly-changing-dimensions`, `surrogate-keys`, `dimension-tables`, que ya tienen ficha.
 - 2026-10-07: la sección de conceptos relacionados ya no lista como pendiente de ficha a `scd-type-1`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `dimension-tables`, `scd-type-1`, `slowly-changing-dimensions`, `surrogate-keys`.

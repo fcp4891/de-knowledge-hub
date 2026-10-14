@@ -76,6 +76,12 @@ relations:
   - type: RELATED_TO
     target: airflow-architecture
     note: Lo que hay que operar en Airflow frente a otras herramientas.
+  - type: RELATED_TO
+    target: catchup
+    note: "La programación por intervalos y la re-ejecución en Airflow (§2)."
+  - type: RELATED_TO
+    target: pipeline-dependencies
+    note: "El mismo flujo en Airflow (§10)."
 created_at: 2026-10-11
 updated_at: 2026-10-13
 last_verified: 2026-10-11
@@ -283,6 +289,8 @@ Los orquestadores de servicios dan baja latencia y cobro por uso, pero no traen 
 - `data-orchestration` y `dag`: el concepto general y el modelo de Airflow.
 - `event-driven-orchestration`: disparar flujos por eventos.
 - `airflow-architecture`: qué hay que operar en Airflow.
+- `catchup`: la programación por intervalos y la re-ejecución en Airflow (§2).
+- `pipeline-dependencies`: el mismo flujo en Airflow (§10).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -315,3 +323,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-11: relación `airflow-architecture` agregada en `relations`; §17 ya la enlazaba (cambio mínimo).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `catchup`, `pipeline-dependencies`; el §17 nombra `catchup`, `pipeline-dependencies`, que el cuerpo ya citaba.

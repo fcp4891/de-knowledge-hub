@@ -201,7 +201,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `retries`, `replay`, `pubsub-delivery-semantics`, que ya tienen ficha.\n- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-04: §14 con las viñetas Seguridad, Observabilidad y Costo (regla nueva de `validate`).\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `retries`, `replay`, `pubsub-delivery-semantics`, que ya tienen ficha.\n- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.\n- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `pubsub-delivery-semantics`, `replay`, `retries`."
     }
   ]
 }

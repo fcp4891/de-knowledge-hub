@@ -49,6 +49,15 @@ relations:
   - type: RELATED_TO
     target: api-ingestion
     note: La ingesta de APIs es el caso más común de este manejo de errores.
+  - type: RELATED_TO
+    target: python-api-consumption
+    note: "Consumo de APIs desde Python."
+  - type: RELATED_TO
+    target: python-exceptions
+    note: "Jerarquía, encadenamiento y grupos de excepciones."
+  - type: RELATED_TO
+    target: python-logging
+    note: "Logging."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -227,3 +236,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `python-api-consumption`, `python-logging`, que ya tienen ficha.
 - 2026-10-08: §17 enlaza `python-exceptions`, que ya tiene ficha (lote F3b-03a); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `python-api-consumption`, `python-exceptions`, `python-logging`.

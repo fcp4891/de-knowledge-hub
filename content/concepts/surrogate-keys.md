@@ -62,6 +62,12 @@ relations:
   - type: RELATED_TO
     target: scd-type-2
     note: Cada fila nueva del tipo 2 recibe una clave sustituta nueva.
+  - type: RELATED_TO
+    target: dimension-tables
+    note: "Tablas de dimensión."
+  - type: RELATED_TO
+    target: surrogate-key-generation
+    note: "Generación de surrogate keys."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -223,3 +229,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: cambio mínimo (aprobado por Felipe): `cliente_hk` usa el marcador de NULL de `change-detection` (`IFNULL(…, '\\N')`), porque `CONCAT` de BigQuery devuelve NULL con un argumento NULL y la clave quedaba NULL. Una clave natural nula sigue debiendo rechazarse con un control de no nulos (ver `sql-quality-checks`). Sigue `verified`, pendiente de revisión de Cursor.
 - 2026-10-07: revisión de los cambios mínimos de NULL aplicada (docs/reviews/fixes-null-concat.md, aprobada por Felipe): `cliente_hk` pasa de `CONCAT` con marcador a `FARM_FINGERPRINT(TO_JSON_STRING(STRUCT(...)))`, respaldado por las codificaciones JSON de BigQuery, que elimina las ambigüedades del marcador y del separador; el bloque queda marcado como sintaxis documentada, no ejecutado. Sigue `verified`.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `dimension-tables`, `surrogate-key-generation`.

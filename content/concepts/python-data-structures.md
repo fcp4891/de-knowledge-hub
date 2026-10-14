@@ -43,6 +43,12 @@ relations:
   - type: RELATED_TO
     target: python-classes
     note: Cuando un dict empieza a representar un registro con campos fijos, una dataclass suele ser más clara.
+  - type: RELATED_TO
+    target: python-dataframes
+    note: "Tablas en memoria con pandas y Polars cuando el análisis es tabular."
+  - type: RELATED_TO
+    target: python-generators
+    note: "Procesar en flujo cuando no cabe en memoria."
 created_at: 2026-10-08
 updated_at: 2026-10-13
 last_verified: 2026-10-08
@@ -240,3 +246,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-09: §17 enlaza `python-dataframes`, que ya tiene ficha (lote F3b-03b); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `python-dataframes`, `python-generators`.

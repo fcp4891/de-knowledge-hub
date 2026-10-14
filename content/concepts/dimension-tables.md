@@ -75,6 +75,15 @@ relations:
   - type: RELATED_TO
     target: scd-type-2
     note: Las columnas de historia de una dimensión tipo 2.
+  - type: RELATED_TO
+    target: fact-tables
+    note: "Tablas de hechos."
+  - type: RELATED_TO
+    target: grain
+    note: "Grano."
+  - type: RELATED_TO
+    target: star-schema
+    note: "Star Schema."
 created_at: 2026-10-01
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -250,3 +259,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `fact-tables`, `star-schema`, `grain`, que ya tienen ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `fact-tables`, `grain`, `star-schema`.

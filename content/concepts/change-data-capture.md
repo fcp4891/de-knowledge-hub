@@ -60,6 +60,12 @@ relations:
   - type: RELATED_TO
     target: scd-type-2
     note: CDC alimenta historiales SCD2 con cada versión del registro.
+  - type: RELATED_TO
+    target: database-ingestion
+    note: "Elegir entre carga completa, incremental por watermark o CDC."
+  - type: RELATED_TO
+    target: schema-evolution
+    note: "Evolución de esquema."
 created_at: 2026-09-28
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -212,3 +218,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `schema-evolution`, que ya tiene ficha.
 - 2026-10-11: §17 enlaza `database-ingestion`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `database-ingestion`, `schema-evolution`.

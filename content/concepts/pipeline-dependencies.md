@@ -61,6 +61,9 @@ relations:
   - type: RELATED_TO
     target: failure-recovery
     note: La propagación de fallos (upstream_failed) define qué hay que relanzar al recuperar.
+  - type: RELATED_TO
+    target: airflow-architecture
+    note: "Cómo ejecuta Airflow los Dags."
 created_at: 2026-10-11
 updated_at: 2026-10-13
 last_verified: 2026-10-11
@@ -291,3 +294,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-05a aplicada (docs/reviews/cards-f3b-05a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `airflow-architecture`.

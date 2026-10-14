@@ -25,7 +25,7 @@
           "title": "Datos que llegan tarde",
           "entity_type": "concept",
           "origin": "entity",
-          "note": "El tratamiento difiere entre batch (reprocesar períodos) y streaming (watermarks y triggers)."
+          "note": "Datos que llegan tarde."
         },
         {
           "slug": "dead-letter-queue",

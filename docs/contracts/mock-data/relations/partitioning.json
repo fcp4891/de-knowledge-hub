@@ -84,6 +84,13 @@
           "note": "Las tablas grandes del warehouse se particionan por fecha para leer menos."
         },
         {
+          "slug": "pyspark-dataframes",
+          "title": "DataFrames en PySpark",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Cómo se organiza la entrada y la salida."
+        },
+        {
           "slug": "late-arriving-data",
           "title": "Datos que llegan tarde",
           "entity_type": "concept",
@@ -122,8 +129,8 @@
           "slug": "partition-pruning",
           "title": "Partition pruning",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Partition pruning."
         },
         {
           "slug": "emr-spark-clusters",

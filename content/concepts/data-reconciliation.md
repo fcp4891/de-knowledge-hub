@@ -64,6 +64,12 @@ relations:
   - type: RELATED_TO
     target: change-data-capture
     note: En replicación por CDC, la reconciliación detecta cambios perdidos o aplicados dos veces.
+  - type: RELATED_TO
+    target: change-detection
+    note: "Detección de cambios en SQL."
+  - type: RELATED_TO
+    target: sql-quality-checks
+    note: "Controles de calidad en SQL."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -290,3 +296,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: cambio mínimo (aprobado por Felipe): la huella usa un marcador de NULL (`IFNULL(…, '\\N')`, el de `change-detection`) porque `CONCAT` de BigQuery devuelve NULL con un argumento NULL y `BIT_XOR` omitía esas filas; el detalle por clave compara con `IS DISTINCT FROM` en lugar de `!=`. Sigue `verified`, pendiente de revisión de Cursor. §10 agrega un caso con `monto` NULL probado en PostgreSQL.
 - 2026-10-07: revisión de los cambios mínimos de NULL aplicada (docs/reviews/fixes-null-concat.md, aprobada por Felipe): la huella pasa de `CONCAT` con marcador `'\\N'` a `FARM_FINGERPRINT(TO_JSON_STRING(STRUCT(...)))`, respaldado por la tabla de codificaciones JSON de BigQuery (NULL → `null`; texto entre comillas con escape), que elimina la ambigüedad del marcador y la del separador. Sigue `verified`. §10 publica el caso completo en PostgreSQL (dos lados, conteo, suma, tres huellas y `!=` frente a `IS DISTINCT FROM`) con `jsonb_build_array`, el equivalente documentado.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `change-detection`, `sql-quality-checks`.
