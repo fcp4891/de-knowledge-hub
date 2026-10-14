@@ -1,4 +1,4 @@
-.PHONY: help venv install snippets-deps validate test test-frontend check-airflow-dag build dev mocks static static-data db-up db-down migrate compile backup-me restore-me validate-terraform
+.PHONY: help venv install snippets-deps validate test test-frontend check-airflow-dag build dev mocks static static-data db-up db-down migrate compile backup-me restore-me validate-terraform validate-actions
 
 # Entorno del proyecto: .venv con Python 3.12 (README, «Entorno de Python»). Nunca el Python global.
 ifeq ($(OS),Windows_NT)
@@ -18,7 +18,7 @@ REQUIRE_VENV =
 endif
 
 help:
-	@echo Objetivos: venv install snippets-deps validate test mocks static static-data db-up db-down migrate compile build dev backup-me restore-me validate-terraform
+	@echo Objetivos: venv install snippets-deps validate test mocks static static-data db-up db-down migrate compile build dev backup-me restore-me validate-terraform validate-actions
 
 venv:
 	$(BOOTSTRAP_PYTHON) -m venv .venv
@@ -112,6 +112,17 @@ validate-terraform:
 		terraform -chdir=$$dir validate -no-color || exit 1; \
 		rm -rf $$dir/.terraform; \
 	done
+
+# Workflows de GitHub Actions de las fichas (ADR-014): bloques ```yaml que empiezan con «# GitHub Actions», revisados
+# con actionlint sin ejecutarlos. La CI descarga actionlint 1.7.12 con su checksum; en local, ACTIONLINT=<ruta>.
+# Sin shellcheck ni pyflakes: el resultado no depende de lo que tenga instalado el runner.
+GHA_DIR := build/github-actions
+ACTIONLINT ?= actionlint
+validate-actions:
+	$(REQUIRE_VENV)
+	$(PYTHON) -m scripts.snippets.extract --language github-actions --out $(GHA_DIR)
+	files=$$(find $(GHA_DIR) -name workflow.yml | sort); \
+	if [ -z "$$files" ]; then echo "sin workflows"; else $(ACTIONLINT) -shellcheck= -pyflakes= $$files && echo "actionlint: $$(echo $$files | wc -w) workflow(s) sin errores"; fi
 
 dev:
 	$(REQUIRE_VENV)

@@ -13,7 +13,11 @@ línea inmediatamente anterior a la apertura del bloque, el marcador:
 
 Los excluidos se reportan con su motivo. Idempotente: borra y reescribe el directorio de salida.
 
+Para GitHub Actions (ADR-014), solo los bloques ```yaml cuya primera línea empieza con `# GitHub Actions`, a
+<out>/concepts/<slug>[-N]/workflow.yml, que la CI revisa con actionlint. El resto del YAML no se extrae.
+
 Uso: python -m scripts.snippets.extract --language terraform --out build/terraform
+     python -m scripts.snippets.extract --language github-actions --out build/github-actions
 """
 
 from __future__ import annotations
@@ -27,10 +31,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 SNIPPETS = ROOT / "content" / "snippets"
 CONCEPTS = ROOT / "content" / "concepts"
-FENCES = {"terraform": ("hcl", "main.tf")}  # lenguaje -> (etiqueta del bloque, archivo)
+FENCES = {"terraform": ("hcl", "main.tf"), "github-actions": ("yaml", "workflow.yml")}  # lenguaje -> (etiqueta, archivo)
+FIRST_LINE = {"github-actions": re.compile(r"^# GitHub Actions")}  # lenguajes que comparten etiqueta con otros
 FENCE = re.compile(r"^```(\w+)\n(.*?)^```", re.S | re.M)
 LANGUAGE = re.compile(r"^language: (\w+)$", re.M)
-EXCLUDED = re.compile(r"<!--\s*validate-terraform:\s*excluido\s*[—-]\s*(.+?)\s*-->\s*$")
+EXCLUDED = re.compile(r"<!--\s*validate-(?:terraform|actions):\s*excluido\s*[—-]\s*(.+?)\s*-->\s*$")
 
 
 @dataclass(frozen=True)
@@ -50,7 +55,7 @@ def extract(language: str, out: Path, snippets_dir: Path = SNIPPETS) -> list[Pat
         match = LANGUAGE.search(text)
         if match is None or match.group(1) != language:
             continue
-        blocks = [code for tag, code in FENCE.findall(text) if tag == fence]
+        blocks = [code for tag, code in FENCE.findall(text) if tag == fence and belongs(language, code)]
         if len(blocks) != 1:
             raise SystemExit(f"{path.name}: se esperaba un bloque ```{fence}, hay {len(blocks)}")
         target = out / path.stem / filename
@@ -58,6 +63,12 @@ def extract(language: str, out: Path, snippets_dir: Path = SNIPPETS) -> list[Pat
         target.write_text(blocks[0], encoding="utf-8", newline="\n")
         written.append(target)
     return written
+
+
+def belongs(language: str, code: str) -> bool:
+    """Si el bloque es del lenguaje: para los que comparten etiqueta (yaml), por su primera línea."""
+    marker = FIRST_LINE.get(language)
+    return marker is None or bool(marker.match(code))
 
 
 def preceding_line(text: str, position: int) -> str:
@@ -74,7 +85,7 @@ def extract_concepts(language: str, out: Path, concepts_dir: Path = CONCEPTS) ->
     excluded: list[Excluded] = []
     for path in sorted(concepts_dir.glob("*.md")):
         text = path.read_text(encoding="utf-8")
-        blocks = [m for m in FENCE.finditer(text) if m.group(1) == fence]
+        blocks = [m for m in FENCE.finditer(text) if m.group(1) == fence and belongs(language, m.group(2))]
         for number, match in enumerate(blocks, start=1):
             name = path.stem if len(blocks) == 1 else f"{path.stem}-{number}"
             marker = EXCLUDED.search(preceding_line(text, match.start()))

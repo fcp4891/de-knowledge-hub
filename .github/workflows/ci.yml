@@ -53,6 +53,12 @@ jobs:
         with:
           terraform_wrapper: false
       - run: make validate-terraform
+      # Workflows de GitHub Actions de las fichas (ADR-014): actionlint 1.7.12 con su SHA-256, sin ejecutarlos.
+      - run: |
+          curl -sSfL -o actionlint.tar.gz https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz
+          echo "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8  actionlint.tar.gz" | sha256sum -c -
+          tar -xzf actionlint.tar.gz actionlint
+      - run: make validate-actions ACTIONLINT=./actionlint
       # Dags de Airflow de las fichas: DagBag sin errores de import y aserciones de cada ficha (venv aparte, versión fijada).
       - run: make check-airflow-dag AIRFLOW_PYTHON=python
 

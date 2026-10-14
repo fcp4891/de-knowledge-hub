@@ -134,3 +134,29 @@ def test_repository_concepts_with_hcl_are_extracted(tmp_path: Path) -> None:
     written, _ = extract.extract_concepts("terraform", tmp_path / "out")
     assert {p.parent.name for p in written} >= {"infrastructure-as-code", "terraform-providers", "terraform-state"}
     assert all(p.read_text(encoding="utf-8").strip() for p in written)
+
+
+def test_extract_github_actions_takes_only_marked_yaml_blocks(tmp_path: Path) -> None:
+    from scripts.snippets import extract
+
+    concepts = tmp_path / "concepts"
+    concepts.mkdir()
+    workflow = "# GitHub Actions (ejemplo)\nname: ci\non: push\njobs: {}\n"
+    gitlab = "# GitLab CI (no ejecutado)\nstages: [test]\n"
+    (concepts / "a.md").write_text(f"## 10. Código\n\n```yaml\n{workflow}```\n\n```yaml\n{gitlab}```\n", encoding="utf-8")
+    (concepts / "b.md").write_text(
+        f"## 10. Código\n\n<!-- validate-actions: excluido — fragmento de un job -->\n```yaml\n{workflow}```\n",
+        encoding="utf-8",
+    )
+    written, excluded = extract.extract_concepts("github-actions", tmp_path / "out", concepts)
+    assert [(p.parent.name, p.name) for p in written] == [("a", "workflow.yml")]
+    assert written[0].read_text(encoding="utf-8") == workflow
+    assert [(e.path.name, e.reason) for e in excluded] == [("b.md", "fragmento de un job")]
+
+
+def test_repository_concepts_with_workflows_are_extracted(tmp_path: Path) -> None:
+    from scripts.snippets import extract
+
+    written, _ = extract.extract_concepts("github-actions", tmp_path / "out")
+    assert {p.parent.name for p in written} >= {"ci-cd-pipelines", "automated-testing-in-ci", "build-artifacts"}
+    assert all(p.read_text(encoding="utf-8").startswith("# GitHub Actions") for p in written)
