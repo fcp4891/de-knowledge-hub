@@ -5,9 +5,9 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-10-14
 
 ## Actual
-- **Tarea activa:** 10-azure 14/14 `verified` (revisiones de 10a y 10b aplicadas), en espera de la aprobación en el navegador. Chequeo reforzado del §17 en `make validate` (avisos).
+- **Tarea activa:** lote F3b-11a (11-devops). 10-azure aprobado en el navegador el 2026-10-14 (Felipe confirmó también 09-aws, aprobado el 2026-10-13). Lote de limpieza F3b-rel en `main`: el chequeo del §17 es error de `make validate`.
 - **Mergeado para Carril B:** `b/static-search-fix` (3b50505), `b/f3b-review-01b` (98f13ef), `b/static-demo` (8f96908) y `b/static-search-tags` (e7bb47c) en `main`, 2026-10-06. `f/sql` (a7c0d74) mergeada en `a/f3b-batch-02a` solo con los 10 esqueletos de 02a; los otros 14 se traen por lote, sin publicar esqueletos vacíos en `main`.
-- **Siguiente:** plan de 11-devops (propuesto, sin ejecutar); corregir los avisos del §17 en su propio lote cuando se apruebe.
+- **Siguiente:** entregar 11a; escribir 11b mientras Cursor revisa 11a.
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
 
@@ -82,6 +82,12 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - `page_title` en cada cita: esquema (`schemas/base.schema.json`), `SourceRef.page_title` en el contrato, `entity_sources.page_title` (migración 0004, `COMPILER_VERSION` 4) (ADR-012, aditivo).
 
 ## Historial
+
+### Lote F3b-rel: regla del §17 en 95 fichas y chequeo como error (2026-10-14)
+- 10-azure aprobado por Felipe en el navegador el 2026-10-14; confirmó también 09-aws (aprobado el 2026-10-13).
+- 193 correcciones en 95 fichas de 01 a 09 (145 A, 3 B, 3 C, 42 D), solo en `relations`, el §17 y una línea del historial; ningún cambio de `verification_status`. Tabla por dominio y caso, y lista de lo que no se agregó, en `docs/reviews/f3b-rel.md`.
+- No se agregaron 8 de los 201 avisos: 3 falsos positivos de «pendiente» («pendientes», «dependiente»), 2 menciones incidentales (`INCIDENTAL_MENTIONS`) y 3 menciones solo en el §22. No se quitó ninguna relación.
+- `check_related_section` pasa a error: busca «pendiente(s) de ficha», ignora el §22 y los bloques de código, y salta fichas sin §17.
 
 ### F3b-10a y F3b-10b verified: 10-azure 14/14 (2026-10-14)
 - Merge de `b/f3b-review-10a` (cec02cb) y `b/f3b-review-10b` (83f7f50): informes `docs/reviews/cards-f3b-10a.md` y `cards-f3b-10b.md`; en `lane-b.md` se combinaron los dos lados del conflicto. Sin hallazgos altos.

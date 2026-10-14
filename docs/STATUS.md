@@ -1,6 +1,6 @@
 # STATUS — Data Engineering Knowledge Hub
 
-**Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 10-azure (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08, 03-python el 2026-10-10, 04-data-modeling, 05-pipelines, 06-orchestration y los conceptos de 07-architecture el 2026-10-11, 08-gcp el 2026-10-12, 09-aws el 2026-10-13). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
+**Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 11-devops (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08, 03-python el 2026-10-10, 04-data-modeling, 05-pipelines, 06-orchestration y los conceptos de 07-architecture el 2026-10-11, 08-gcp el 2026-10-12, 09-aws el 2026-10-13, 10-azure el 2026-10-14). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
 **Última actualización:** 2026-10-11
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**
@@ -18,7 +18,7 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | 10-azure 14/14 `verified`; chequeo del §17 reforzado | Plan de 11-devops (propuesto) | — |
+| A · Claude Code | Lote F3b-11a (F3b-rel en `main`) | Entregar 11a; escribir 11b | — |
 | B · Cursor revisión | — | Lo que asigne Felipe | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
@@ -38,7 +38,9 @@
 - [x] 07-architecture: 2/2 conceptos `verified`, aprobado por Felipe en el navegador el 2026-10-11 (las 15 arquitecturas: 6 en F4, 9 en el Backlog).
 - [x] 08-gcp: 31/31 `verified`, aprobado por Felipe en el navegador el 2026-10-12. Sus 15 arquitecturas no son de F3b: 6 en F4 (ROADMAP) y 9 en el Backlog.
 - [x] 09-aws: 16/16 `verified`, aprobado por Felipe en el navegador el 2026-10-13.
-- [ ] 10-azure: 14/14 `verified` (2026-10-14), pendiente de aprobación en el navegador (ADR-013: azurerm y Azurite para Blob).
+- [x] 10-azure: 14/14 `verified`, aprobado por Felipe en el navegador el 2026-10-14.
+- [ ] 11-devops: 0/13 `verified`; lote F3b-11a (7) en curso, 11b (6) después.
+- [x] Lote F3b-rel: la regla del §17 es error de `make validate` (2026-10-14; `docs/reviews/f3b-rel.md`).
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
 
 ## Fases cerradas
