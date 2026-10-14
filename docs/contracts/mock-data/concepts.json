@@ -2758,8 +2758,8 @@
       "importance": "high",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-13"
+      "verification_status": "verified",
+      "last_verified": "2026-10-14"
     },
     {
       "slug": "adls-gen2-storage",
@@ -2772,8 +2772,8 @@
       "importance": "high",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-13"
+      "verification_status": "verified",
+      "last_verified": "2026-10-14"
     },
     {
       "slug": "data-factory-pipelines",
@@ -2786,8 +2786,8 @@
       "importance": "high",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-13"
+      "verification_status": "verified",
+      "last_verified": "2026-10-14"
     },
     {
       "slug": "fabric-onelake-and-workloads",
@@ -2800,8 +2800,8 @@
       "importance": "high",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-13"
+      "verification_status": "verified",
+      "last_verified": "2026-10-14"
     },
     {
       "slug": "synapse-analytics",
@@ -2814,8 +2814,8 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-13"
+      "verification_status": "verified",
+      "last_verified": "2026-10-14"
     },
     {
       "slug": "azure-databricks-lakehouse",
@@ -2828,8 +2828,8 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-13"
+      "verification_status": "verified",
+      "last_verified": "2026-10-14"
     },
     {
       "slug": "event-hubs-streaming",
@@ -2842,8 +2842,8 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-13"
+      "verification_status": "verified",
+      "last_verified": "2026-10-14"
     },
     {
       "slug": "azure-functions-for-data",
@@ -2856,8 +2856,8 @@
       "importance": "low",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-13"
+      "verification_status": "verified",
+      "last_verified": "2026-10-14"
     },
     {
       "slug": "container-apps-for-data",
@@ -2870,8 +2870,8 @@
       "importance": "low",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-13"
+      "verification_status": "verified",
+      "last_verified": "2026-10-14"
     },
     {
       "slug": "azure-sql-as-source",
@@ -2884,8 +2884,8 @@
       "importance": "low",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-13"
+      "verification_status": "verified",
+      "last_verified": "2026-10-14"
     },
     {
       "slug": "purview-governance",
@@ -2898,8 +2898,8 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-13"
+      "verification_status": "verified",
+      "last_verified": "2026-10-14"
     },
     {
       "slug": "entra-id-for-data",
@@ -2912,8 +2912,8 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-13"
+      "verification_status": "verified",
+      "last_verified": "2026-10-14"
     },
     {
       "slug": "key-vault-secrets",
@@ -2926,8 +2926,8 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-13"
+      "verification_status": "verified",
+      "last_verified": "2026-10-14"
     },
     {
       "slug": "azure-ai-for-data-engineers",
@@ -2940,8 +2940,8 @@
       "importance": "low",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
-      "last_verified": "2026-10-13"
+      "verification_status": "verified",
+      "last_verified": "2026-10-14"
     },
     {
       "slug": "git-branching-strategies",

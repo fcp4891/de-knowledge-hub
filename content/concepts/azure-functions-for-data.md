@@ -50,6 +50,11 @@ sources:
     accessed: 2026-10-13
     page_title: "Best practices for reliable Azure Functions"
     note: "Best practices for reliable Azure Functions: evitar funciones de larga duración, escribir funciones sin estado y defensivas, y usar un patrón de reintento al acceder a recursos en la nube."
+  - source: azure-functions-docs
+    url: https://azure.microsoft.com/en-us/pricing/details/functions/
+    accessed: 2026-10-14
+    page_title: "Azure Functions pricing"
+    note: "Azure Functions pricing: en Flex Consumption, las instancias On-Demand se cobran por la memoria aprovisionada mientras ejecutan funciones y por el número de ejecuciones; las Always Ready, además, por la memoria de base mientras están inactivas. Los montos no se copian."
   - source: aws-lambda-docs
     url: https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html
     accessed: 2026-10-12
@@ -92,9 +97,9 @@ relations:
     target: adls-gen2-storage
     note: El blob que dispara la función y el que escribe.
 created_at: 2026-10-13
-updated_at: 2026-10-13
-last_verified: 2026-10-13
-verification_status: review_required
+updated_at: 2026-10-14
+last_verified: 2026-10-14
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -294,7 +299,7 @@ No aplica de forma específica. Lo más cercano es Lambda (ver `lambda-for-data`
 - Revisar la cola de mensajes venenosos.
 - **Seguridad:** identidad administrada para la function app y conexiones sin claves; acceso solo a los contenedores que usa.
 - **Observabilidad:** seguir ejecuciones fallidas, duración y mensajes venenosos; un aumento indica datos de entrada inválidos.
-- **Costo:** depende del plan de hosting; en Flex Consumption, de las ejecuciones y del tiempo y la memoria. Los montos se consultan en la página de precios de Azure Functions.
+- **Costo:** depende del plan de hosting. Según *Azure Functions pricing* (consultada el 2026-10-14), en Flex Consumption las instancias bajo demanda se cobran por la memoria aprovisionada mientras ejecutan funciones y por el número de ejecuciones; las instancias siempre listas suman la memoria de base mientras están inactivas. Los montos no se copian.
 
 ## 15. Errores frecuentes
 
@@ -325,15 +330,17 @@ Pendiente (F4).
 
 ## 20. Fuentes
 
-- Microsoft Learn, Azure Functions: *What is Azure Functions?*, *Azure Functions hosting options*, *Azure Functions triggers and bindings*, *Azure Blob storage trigger for Azure Functions*, *Azure Functions error handling and retries*, *Azure Functions developer reference guide for Python apps* y *Best practices for reliable Azure Functions*.
+- Microsoft Learn, Azure Functions: *What is Azure Functions?*, *Azure Functions hosting options*, *Azure Functions triggers and bindings*, *Azure Blob storage trigger for Azure Functions*, *Azure Functions error handling and retries*, *Azure Functions developer reference guide for Python apps* y *Best practices for reliable Azure Functions*; *Azure Functions pricing*.
 - AWS, Lambda: *Lambda quotas*, *Understanding retry behavior in Lambda* y *Process Amazon S3 event notifications with Lambda*. Google Cloud, Cloud Run: *What is Cloud Run* y *Deployment options and resource model*.
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-13. `review_required`: pendiente de revisión B-F3.1 del lote F3b-10b.
+2026-10-14. Pasa a `verified`: revisión B-F3.1 del lote F3b-10b aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-13: creación (lote F3b-10b).
+- 2026-10-14: revisión B-F3.1 del lote F3b-10b aplicada (docs/reviews/cards-f3b-10b.md): el costo de Flex Consumption cita *Azure Functions pricing* (2026-10-14), sin montos.
+- 2026-10-14: `verification_status: verified` (sin VERIFY pendientes).

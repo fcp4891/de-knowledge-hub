@@ -38,9 +38,9 @@ sources:
     note: "Understand scope for Azure RBAC: cuatro niveles de alcance con relación padre-hijo (grupo de administración, suscripción, grupo de recursos y recurso); un rol se puede asignar en cualquiera, y el nivel define qué tan amplio aplica."
   - source: gcp-iam-docs
     url: https://docs.cloud.google.com/iam/docs/overview
-    accessed: 2026-10-01
+    accessed: 2026-10-14
     page_title: "IAM overview"
-    note: "IAM controla quién puede hacer qué sobre qué recursos. Se concede un rol (colección de permisos de la forma servicio.recurso.verbo) a un principal sobre un recurso mediante una allow policy; no se conceden permisos sueltos. Tipos de rol: predefinidos (gestionados por Google), personalizados (más mantenimiento y con límite de cantidad) y básicos (muy amplios, no recomendados en producción). Los recursos se organizan en jerarquía y los hijos heredan las políticas de sus padres. Principales humanos (cuentas, grupos, identidades federadas) y de cargas de trabajo (cuentas de servicio, identidades federadas de workload)."
+    note: "IAM controla quién puede hacer qué sobre qué recursos. Se concede un rol (colección de permisos de la forma servicio.recurso.verbo) a un principal sobre un recurso mediante una allow policy; no se conceden permisos sueltos. Tipos de rol: predefinidos (gestionados por Google), personalizados (más mantenimiento y con límite de cantidad) y básicos (muy amplios, no recomendados en producción). Los recursos se organizan en jerarquía y los hijos heredan las políticas de sus padres. Principales humanos (cuentas, grupos, identidades federadas) y de cargas de trabajo (cuentas de servicio, identidades federadas de workload). Además de las allow policies, «Deny policies prevent principals from using certain permissions, even if they're granted a role with the permission»."
   - source: gcp-iam-docs
     url: https://docs.cloud.google.com/iam/docs/service-account-overview
     accessed: 2026-10-01
@@ -73,9 +73,9 @@ relations:
     target: infrastructure-as-code
     note: Identidades y asignaciones de rol como código.
 created_at: 2026-10-13
-updated_at: 2026-10-13
-last_verified: 2026-10-13
-verification_status: review_required
+updated_at: 2026-10-14
+last_verified: 2026-10-14
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -202,7 +202,7 @@ No aplica de forma específica: esta ficha describe Entra ID y Azure RBAC. En GC
 |---|---|---|
 | Identidad de cargas de trabajo | Identidad administrada (del sistema o del usuario) | Cuenta de servicio, identificada por un email y adjunta al recurso |
 | Concesión | Asignación de rol: principal + definición de rol + alcance | Rol concedido a un principal sobre un recurso, en una política de permisos |
-| Bloqueo explícito | Deny assignments | Las páginas citadas de IAM no lo tratan |
+| Bloqueo explícito | Deny assignments | Deny policies: impiden usar ciertos permisos aunque el principal tenga un rol que los conceda (*IAM overview*) |
 
 ## 12. AWS
 
@@ -264,8 +264,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-13. `review_required`: pendiente de revisión B-F3.1 del lote F3b-10b.
+2026-10-14. Pasa a `verified`: revisión B-F3.1 del lote F3b-10b aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-13: creación (lote F3b-10b), con el nombre actual del servicio según su página de cambio de nombre.
+- 2026-10-14: revisión B-F3.1 del lote F3b-10b aplicada (docs/reviews/cards-f3b-10b.md): la celda de bloqueo explícito del §11 dice las deny policies de IAM, citadas de *IAM overview*.
+- 2026-10-14: `verification_status: verified` (sin VERIFY pendientes).

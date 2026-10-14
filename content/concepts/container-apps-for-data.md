@@ -30,6 +30,11 @@ sources:
     accessed: 2026-10-13
     page_title: "Set scaling rules in Azure Container Apps"
     note: "Set scaling rules in Azure Container Apps: las apps escalan con KEDA (Kubernetes Event-driven Autoscaling), con reglas por solicitudes HTTP, mensajes en colas, CPU y memoria, y orígenes de eventos como Azure Service Bus, Azure Event Hubs, Apache Kafka y Redis."
+  - source: azure-container-apps-docs
+    url: https://azure.microsoft.com/en-us/pricing/details/container-apps/
+    accessed: 2026-10-14
+    page_title: "Azure Container Apps pricing"
+    note: "Azure Container Apps pricing: en el plan de consumo, cada ejecución de un job se cobra a la tarifa activa desde que empieza hasta que termina, y no hay cargos de uso cuando el job no tiene ejecuciones; a los jobs no se les cobran solicitudes. Una app con réplicas mínimas paga una tarifa reducida en reposo. Los montos no se copian."
   - source: gcp-cloud-run-docs
     url: https://docs.cloud.google.com/run/docs/create-jobs
     accessed: 2026-10-11
@@ -67,9 +72,9 @@ relations:
     target: retries
     note: Reintentos por réplica.
 created_at: 2026-10-13
-updated_at: 2026-10-13
-last_verified: 2026-10-13
-verification_status: review_required
+updated_at: 2026-10-14
+last_verified: 2026-10-14
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -241,7 +246,7 @@ No aplica de forma específica. Lo más cercano en las fichas de AWS es Lambda (
 - Imagen versionada (no `latest`) para saber qué corrió cada día.
 - **Seguridad:** identidad administrada para el registro de contenedores y el lake; secretos fuera de la imagen.
 - **Observabilidad:** logs del entorno por ejecución y alertas por ejecuciones fallidas.
-- **Costo:** un job solo usa cómputo mientras sus réplicas corren; una app corre de forma continua. Los montos se consultan en la página de precios de Container Apps.
+- **Costo:** según *Azure Container Apps pricing* (consultada el 2026-10-14), en el plan de consumo cada ejecución de un job se cobra a la tarifa activa desde que empieza hasta que termina, sin cargos cuando no hay ejecuciones; una app con réplicas mínimas paga una tarifa reducida en reposo. Los montos no se copian.
 
 ## 15. Errores frecuentes
 
@@ -272,15 +277,17 @@ Pendiente (F4).
 
 ## 20. Fuentes
 
-- Microsoft Learn, Azure Container Apps: *Azure Container Apps overview*, *Jobs in Azure Container Apps* y *Set scaling rules in Azure Container Apps*.
+- Microsoft Learn, Azure Container Apps: *Azure Container Apps overview*, *Jobs in Azure Container Apps* y *Set scaling rules in Azure Container Apps*; *Azure Container Apps pricing*.
 - Google Cloud, Cloud Run: *Create jobs* y *Deployment options and resource model*. AWS: *Lambda quotas* y *What is AWS Lambda?*.
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-13. `review_required`: pendiente de revisión B-F3.1 del lote F3b-10b.
+2026-10-14. Pasa a `verified`: revisión B-F3.1 del lote F3b-10b aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-13: creación (lote F3b-10b).
+- 2026-10-14: revisión B-F3.1 del lote F3b-10b aplicada (docs/reviews/cards-f3b-10b.md): el costo de los jobs cita *Azure Container Apps pricing* (2026-10-14), sin montos.
+- 2026-10-14: `verification_status: verified` (sin VERIFY pendientes).

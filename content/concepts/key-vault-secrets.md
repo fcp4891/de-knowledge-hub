@@ -32,9 +32,9 @@ sources:
     note: "Azure Key Vault: soft-delete overview: se recomienda forzar el soft-delete con Azure Policy; no se puede reutilizar el nombre de un vault borrado hasta que vence el período de retención. Purge protection es opcional, no está activada por defecto y solo se activa con soft-delete activado."
   - source: azure-key-vault-docs
     url: https://learn.microsoft.com/en-us/azure/app-service/app-service-key-vault-references
-    accessed: 2026-10-13
+    accessed: 2026-10-14
     page_title: "Use Key Vault references as app settings in Azure App Service, Azure Functions, and Azure Logic Apps (Standard)"
-    note: "Use Key Vault references as app settings in Azure App Service, Azure Functions, and Azure Logic Apps (Standard): una referencia tiene la forma @Microsoft.KeyVault({referenceString}), con SecretUri=<URI del secreto> (opcionalmente con versión)."
+    note: "Use Key Vault references as app settings in Azure App Service, Azure Functions, and Azure Logic Apps (Standard): una referencia tiene la forma @Microsoft.KeyVault({referenceString}), con SecretUri=<URI del secreto> (opcionalmente con versión). «Understand rotation»: si la referencia no fija la versión, la app usa la última versión del vault; cuando hay versiones nuevas, «such as with rotation», la app empieza a usar la última «within 24 hours»."
   - source: gcp-secret-manager-docs
     url: https://docs.cloud.google.com/secret-manager/docs/overview
     accessed: 2026-10-11
@@ -74,9 +74,9 @@ relations:
     target: infrastructure-as-code
     note: El vault y sus permisos como código; los valores de los secretos, no.
 created_at: 2026-10-13
-updated_at: 2026-10-13
-last_verified: 2026-10-13
-verification_status: review_required
+updated_at: 2026-10-14
+last_verified: 2026-10-14
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -227,7 +227,7 @@ No aplica de forma específica. En AWS es Secrets Manager. Las diferencias, seg�
 | | Key Vault | Secrets Manager |
 |---|---|---|
 | Recuperar lo borrado | Soft-delete durante el período de retención; purge protection opcional, no activada por defecto | Ventana de recuperación de al menos siete días |
-| Rotación | Las páginas citadas de Key Vault no la tratan para secretos | Rotación automática |
+| Rotación | Con una referencia sin versión, la app toma la última versión del secreto y, tras una rotación, la usa dentro de 24 horas (*Use Key Vault references…*); la rotación automática del secreto no está en las páginas citadas | Rotación automática |
 | Leer desde la configuración de una app | Referencias `@Microsoft.KeyVault(...)` en App Service y Functions | Las páginas citadas no lo tratan |
 
 ## 13. Azure
@@ -281,8 +281,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-13. `review_required`: pendiente de revisión B-F3.1 del lote F3b-10b.
+2026-10-14. Pasa a `verified`: revisión B-F3.1 del lote F3b-10b aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-13: creación (lote F3b-10b).
+- 2026-10-14: revisión B-F3.1 del lote F3b-10b aplicada (docs/reviews/cards-f3b-10b.md): la celda de rotación del §12 dice lo que dice «Understand rotation» de *Use Key Vault references…*; la rotación automática del secreto sigue sin página citada.
+- 2026-10-14: `verification_status: verified` (sin VERIFY pendientes).
