@@ -12,6 +12,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 ## Actual
 - **Tarea activa:** B-F3.1 del lote F3b-10a. Revisión en `docs/reviews/cards-f3b-10a.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: el panorama nombra once fichas fuera de `relations`; Azurite no cita el namespace ni el endpoint `dfs`; `athena-serverless-queries` y `bigquery-slots` faltan en `relations`. El lote 10b va en otra rama.
+- **Tarea activa:** B-F3.1 del lote F3b-10b. Revisión en `docs/reviews/cards-f3b-10b.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: las deny policies de IAM en `entra-id-for-data`, la rotación de secretos en `key-vault-secrets`, y el costo de Functions y de Container Apps sin página de precios. El lote 10a está en `b/f3b-review-10a`.
 - **Bloqueos:** ninguno. `make` no está en el PATH; `scripts/validate.py` con `.venv` terminó OK (418 entidades).
 - **Tarea activa:** B-F3.1 del lote F3b-09b. Revisión en `docs/reviews/cards-f3b-09b.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: en `step-functions-workflows`, `cloudwatch-for-data-pipelines`, `bedrock-for-data-engineers` y `sagemaker-for-data-engineers`, decir en qué difieren de GCP. El lote 09a está en `b/f3b-review-09a`.
@@ -35,6 +37,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ### B-F3.1 · lote F3b-10a
 - Siete fichas de analítica en Azure. Fuentes de nivel 1, §14, citas de Fabric y Synapse sin deprecación, Blob contra Azurite en la CI, y la regla del §17, comprobados por comando y contra sus páginas. No se editó `content/` ni `frontend/`.
+### B-F3.1 · lote F3b-10b
+- Siete fichas de cómputo, gobierno e IA en Azure. Fuentes de nivel 1, §14, alias de Entra ID y de Microsoft Foundry, CDC y Batch API en la CI, y la regla del §17, comprobados por comando y contra sus páginas. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-09a
 - Ocho fichas de almacenamiento, analítica y streaming en AWS. Fuentes de nivel 1, §14, Firehose del 9 de febrero de 2024, PutRecords sin orden garantizado y el código de moto en la CI, comprobados por comando y contra sus páginas. No se editó `content/` ni `frontend/`.
@@ -249,6 +253,8 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 
 ### B-F3.1 · lote F3b-10a (2026-10-14)
 - Revisión de las 7 fichas de analítica en Azure. Sin hallazgo alto. Propuestas media: once fichas nombradas fuera de `relations` en el panorama, el comentario de Azurite sobre namespace y `dfs`, y las relaciones de Athena y de slots. No se editó `content/`.
+### B-F3.1 · lote F3b-10b (2026-10-14)
+- Revisión de las 7 fichas de cómputo, gobierno e IA en Azure. Sin hallazgo alto. Propuestas media: deny policies de IAM, rotación de secretos en las referencias de Key Vault, y el costo de Functions y de Container Apps sin página de precios. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-09a (2026-10-13)
 - Revisión de las 8 fichas de almacenamiento, analítica y streaming. Sin hallazgo alto. Propuesta media: el §11 de `lake-formation-permissions` no dice la diferencia con GCP. Propuesta baja: Express One Zone falta en la tabla de clases de S3. No se editó `content/`.
