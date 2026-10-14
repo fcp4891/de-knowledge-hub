@@ -1,4 +1,4 @@
-.PHONY: help venv install snippets-deps validate test test-frontend check-airflow-dag build dev mocks static static-data db-up db-down migrate compile backup-me restore-me validate-terraform validate-actions
+.PHONY: help venv install snippets-deps validate test test-frontend check-airflow-dag build dev mocks static static-data db-up db-down migrate compile backup-me restore-me validate-terraform validate-actions validate-cfn validate-bicep test-terraform validate-cfn validate-bicep
 
 # Entorno del proyecto: .venv con Python 3.12 (README, «Entorno de Python»). Nunca el Python global.
 ifeq ($(OS),Windows_NT)
@@ -18,7 +18,7 @@ REQUIRE_VENV =
 endif
 
 help:
-	@echo Objetivos: venv install snippets-deps validate test mocks static static-data db-up db-down migrate compile build dev backup-me restore-me validate-terraform validate-actions
+	@echo Objetivos: venv install snippets-deps validate test mocks static static-data db-up db-down migrate compile build dev backup-me restore-me validate-terraform test-terraform validate-actions validate-cfn validate-bicep validate-cfn validate-bicep
 
 venv:
 	$(BOOTSTRAP_PYTHON) -m venv .venv
@@ -98,6 +98,8 @@ restore-me:
 # Requiere terraform (la CI lo instala). Providers fijados en los bloques: hashicorp/google y google-beta ~> 8.0,
 # hashicorp/aws ~> 6.0 (Registry: 6.68.0 del 2026-10-07, consultado el 2026-10-12; ADR-011),
 # hashicorp/azurerm ~> 5.0 (Registry: 5.9.0 del 2026-10-08, consultado el 2026-10-13; ADR-013).
+# Terraform 1.16.6 fijado en la CI (ADR-015). Los bloques que se ejecutan con apply en los tests (providers sin nube) y
+# las raíces que dependen de un módulo se excluyen de aquí con el marcador.
 TF_DIR := build/terraform
 # Caché de providers compartida y borrado de .terraform tras validar: cada provider se descarga una vez y no queda una
 # copia por configuración (con azurerm y aws, las copias llenaban el disco del runner de la CI).
@@ -123,6 +125,53 @@ validate-actions:
 	$(PYTHON) -m scripts.snippets.extract --language github-actions --out $(GHA_DIR)
 	files=$$(find $(GHA_DIR) -name workflow.yml | sort); \
 	if [ -z "$$files" ]; then echo "sin workflows"; else $(ACTIONLINT) -shellcheck= -pyflakes= $$files && echo "actionlint: $$(echo $$files | wc -w) workflow(s) sin errores"; fi
+
+# Terraform real sin nube (ADR-015): init, plan y apply con hashicorp/local, random y terraform_data.
+# REQUIRE_TERRAFORM=1 (la CI) hace fallar el test si falta el binario o no es 1.16.6.
+test-terraform:
+	$(REQUIRE_VENV)
+	$(PYTHON) -m pytest tests/test_terraform_local.py -q
+
+# Plantillas de CloudFormation (ADR-015): cfn-lint 1.57.2, sin desplegarlas. Incluye el ejemplo de tests/fixtures/iac.
+CFN_DIR := build/cloudformation
+validate-cfn:
+	$(REQUIRE_VENV)
+	$(PYTHON) -m scripts.snippets.extract --language cloudformation --out $(CFN_DIR)
+	mkdir -p $(CFN_DIR)
+	files=$$(find $(CFN_DIR) tests/fixtures/iac \( -name '*.yaml' -o -name '*.yml' \) | sort); \
+	if [ -z "$$files" ]; then echo "sin plantillas"; exit 1; fi; \
+	$(PYTHON) -m cfnlint $$files && echo "cfn-lint: $$(echo $$files | wc -w) plantilla(s) sin errores"
+
+# Bicep (ADR-015): bicep build del binario fijado en la CI. No despliega. Incluye el ejemplo de tests/fixtures/iac.
+BICEP ?= bicep
+BICEP_DIR := build/bicep
+validate-bicep:
+	$(REQUIRE_VENV)
+	$(PYTHON) -m scripts.snippets.extract --language bicep --out $(BICEP_DIR)
+	mkdir -p $(BICEP_DIR)/fixtures
+	cp tests/fixtures/iac/marker.bicep $(BICEP_DIR)/fixtures/marker.bicep
+	files=$$(find $(BICEP_DIR) -name '*.bicep' | sort); \
+	for f in $$files; do $(BICEP) build "$$f" || exit 1; done; \
+	echo "bicep build: $$(echo $$files | wc -w) archivo(s)"
+
+# Plantillas de CloudFormation de las fichas (ADR-015): bloques ```yaml que empiezan con «# CloudFormation», revisados con
+# cfn-lint (versión fija en requirements-snippets.txt; make snippets-deps). No se despliegan.
+CFN_DIR := build/cloudformation
+validate-cfn:
+	$(REQUIRE_VENV)
+	$(PYTHON) -m scripts.snippets.extract --language cloudformation --out $(CFN_DIR)
+	files=$$(find $(CFN_DIR) -name template.yaml | sort); \
+	if [ -z "$$files" ]; then echo "sin plantillas"; else $(PYTHON) -c "from cfnlint.runner import main; main()" $$files && echo "cfn-lint: $$(echo $$files | wc -w) plantilla(s) sin errores"; fi
+
+# Archivos Bicep de las fichas (ADR-015): bloques ```bicep compilados a ARM JSON con `bicep build` (sin Azure). La CI
+# descarga Bicep 0.48.1 con su SHA-256; en local, BICEP=<ruta>. No se despliegan.
+BICEP_DIR := build/bicep
+BICEP ?= bicep
+validate-bicep:
+	$(REQUIRE_VENV)
+	$(PYTHON) -m scripts.snippets.extract --language bicep --out $(BICEP_DIR)
+	files=$$(find $(BICEP_DIR) -name main.bicep | sort); \
+	if [ -z "$$files" ]; then echo "sin archivos bicep"; else for f in $$files; do $(BICEP) build $$f --stdout > /dev/null || exit 1; done; echo "bicep build: $$(echo $$files | wc -w) archivo(s) sin errores"; fi
 
 dev:
 	$(REQUIRE_VENV)

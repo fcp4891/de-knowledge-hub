@@ -160,3 +160,19 @@ def test_repository_concepts_with_workflows_are_extracted(tmp_path: Path) -> Non
     written, _ = extract.extract_concepts("github-actions", tmp_path / "out")
     assert {p.parent.name for p in written} >= {"ci-cd-pipelines", "automated-testing-in-ci", "build-artifacts"}
     assert all(p.read_text(encoding="utf-8").startswith("# GitHub Actions") for p in written)
+
+
+def test_extract_cloudformation_and_bicep_blocks(tmp_path: Path) -> None:
+    from scripts.snippets import extract
+
+    concepts = tmp_path / "concepts"
+    concepts.mkdir()
+    cfn = '# CloudFormation (ejemplo)\nAWSTemplateFormatVersion: "2010-09-09"\nResources: {}\n'
+    other = "# GitHub Actions (ejemplo)\nname: ci\n"
+    bicep = "param environment string\n"
+    (concepts / "a.md").write_text(f"## 10. Código\n\n```yaml\n{cfn}```\n\n```yaml\n{other}```\n\n```bicep\n{bicep}```\n",
+                                   encoding="utf-8")
+    cfn_written, _ = extract.extract_concepts("cloudformation", tmp_path / "cfn", concepts)
+    bicep_written, _ = extract.extract_concepts("bicep", tmp_path / "bicep", concepts)
+    assert [(p.parent.name, p.name, p.read_text(encoding="utf-8")) for p in cfn_written] == [("a", "template.yaml", cfn)]
+    assert [(p.parent.name, p.name, p.read_text(encoding="utf-8")) for p in bicep_written] == [("a", "main.bicep", bicep)]

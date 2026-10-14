@@ -43,15 +43,18 @@ jobs:
       - run: make build
       # Azurite solo con el servicio Blob (ADR-013): docker run porque services: no acepta argumentos.
       - run: docker run -d -p 10000:10000 mcr.microsoft.com/azure-storage/azurite azurite-blob --blobHost 0.0.0.0 --blobPort 10000 --skipApiVersionCheck
+      # Terraform 1.16.6 fijado (ADR-015): antes de make test, que ejecuta init/plan/apply con providers sin nube.
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: "1.16.6"
+          terraform_wrapper: false
       - run: make test
         env:
           REQUIRE_PYSPARK: "1"  # en la CI el test de PySpark no se salta: falla si falta pyspark o Java
           REQUIRE_AWS_SNIPPETS: "1"  # los snippets de boto3 se ejecutan contra moto (ADR-011): falla si falta moto
           REQUIRE_AZURITE: "1"  # los snippets de Blob se ejecutan contra Azurite (ADR-013): falla si no responde
+          REQUIRE_TERRAFORM: "1"  # los bloques de Terraform con providers sin nube se aplican (ADR-015): falla sin terraform
       # Snippets de Terraform (ADR-008): init sin backend y validate, sin credenciales ni recursos reales.
-      - uses: hashicorp/setup-terraform@v4
-        with:
-          terraform_wrapper: false
       - run: make validate-terraform
       # Workflows de GitHub Actions de las fichas (ADR-014): actionlint 1.7.12 con su SHA-256, sin ejecutarlos.
       - run: |
@@ -59,6 +62,13 @@ jobs:
           echo "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8  actionlint.tar.gz" | sha256sum -c -
           tar -xzf actionlint.tar.gz actionlint
       - run: make validate-actions ACTIONLINT=./actionlint
+      # Plantillas de CloudFormation (cfn-lint, en el .venv) y Bicep 0.48.1 con su SHA-256 (ADR-015), sin desplegar.
+      - run: make validate-cfn
+      - run: |
+          curl -sSfL -o bicep https://github.com/Azure/bicep/releases/download/v0.48.1/bicep-linux-x64
+          echo "b09ec25a9d376c1f8e33ede6ed22b587f915ad68488d5db77a6f9541748c7f6e  bicep" | sha256sum -c -
+          chmod +x bicep
+      - run: make validate-bicep BICEP=./bicep
       # Dags de Airflow de las fichas: DagBag sin errores de import y aserciones de cada ficha (venv aparte, versión fijada).
       - run: make check-airflow-dag AIRFLOW_PYTHON=python
 

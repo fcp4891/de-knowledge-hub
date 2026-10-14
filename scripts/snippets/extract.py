@@ -16,8 +16,13 @@ Los excluidos se reportan con su motivo. Idempotente: borra y reescribe el direc
 Para GitHub Actions (ADR-014), solo los bloques ```yaml cuya primera línea empieza con `# GitHub Actions`, a
 <out>/concepts/<slug>[-N]/workflow.yml, que la CI revisa con actionlint. El resto del YAML no se extrae.
 
+Para CloudFormation y Bicep (ADR-015): bloques ```yaml cuya primera línea empieza con `# CloudFormation`, a
+template.yaml, y bloques ```bicep a main.bicep. cfn-lint y `bicep build` los revisan; no se despliegan.
+
 Uso: python -m scripts.snippets.extract --language terraform --out build/terraform
      python -m scripts.snippets.extract --language github-actions --out build/github-actions
+     python -m scripts.snippets.extract --language cloudformation --out build/cloudformation
+     python -m scripts.snippets.extract --language bicep --out build/bicep
 """
 
 from __future__ import annotations
@@ -31,11 +36,19 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 SNIPPETS = ROOT / "content" / "snippets"
 CONCEPTS = ROOT / "content" / "concepts"
-FENCES = {"terraform": ("hcl", "main.tf"), "github-actions": ("yaml", "workflow.yml")}  # lenguaje -> (etiqueta, archivo)
-FIRST_LINE = {"github-actions": re.compile(r"^# GitHub Actions")}  # lenguajes que comparten etiqueta con otros
+FENCES = {  # lenguaje -> (etiqueta del bloque, archivo)
+    "terraform": ("hcl", "main.tf"),
+    "github-actions": ("yaml", "workflow.yml"),
+    "cloudformation": ("yaml", "template.yaml"),
+    "bicep": ("bicep", "main.bicep"),
+}
+FIRST_LINE = {  # lenguajes que comparten etiqueta con otros: se reconocen por la primera línea del bloque
+    "github-actions": re.compile(r"^# GitHub Actions"),
+    "cloudformation": re.compile(r"^# CloudFormation"),
+}
 FENCE = re.compile(r"^```(\w+)\n(.*?)^```", re.S | re.M)
 LANGUAGE = re.compile(r"^language: (\w+)$", re.M)
-EXCLUDED = re.compile(r"<!--\s*validate-(?:terraform|actions):\s*excluido\s*[—-]\s*(.+?)\s*-->\s*$")
+EXCLUDED = re.compile(r"<!--\s*validate-(?:terraform|actions|cfn|bicep):\s*excluido\s*[—-]\s*(.+?)\s*-->\s*$")
 
 
 @dataclass(frozen=True)
