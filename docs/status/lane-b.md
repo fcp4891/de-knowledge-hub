@@ -14,6 +14,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. Los lotes 11a y 11b van en otras ramas.
 - **Tarea activa:** B-F3.1 del lote F3b-11a. Revisión en `docs/reviews/cards-f3b-11a.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. El lote 11b va en otra rama.
+- **Tarea activa:** B-F3.1 del lote F3b-11b. Revisión en `docs/reviews/cards-f3b-11b.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: citar «services and worker pools—not jobs» en `deployment-strategies`. El lote 11a está en `b/f3b-review-11a`.
 - **Bloqueos:** ninguno. `make` no está en el PATH; `scripts/validate.py` con `.venv` terminó OK (451 entidades).
 - **Tarea activa:** B-F3.1 del lote F3b-10a. Revisión en `docs/reviews/cards-f3b-10a.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: el panorama nombra once fichas fuera de `relations`; Azurite no cita el namespace ni el endpoint `dfs`; `athena-serverless-queries` y `bigquery-slots` faltan en `relations`. El lote 10b va en otra rama.
@@ -44,6 +46,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Muestra de 10 fichas del ajuste del §17. El diff de `b9a8ed6` solo toca `relations`, el §17 y una línea de historial. Las relaciones nuevas y las exclusiones coinciden con el texto. No se editó `content/` ni `frontend/`.
 ### B-F3.1 · lote F3b-11a
 - Siete fichas de Git y CI. Fuentes de nivel 1, la guía de Google solo en lo conceptual, Git y pytest en la CI, workflows con actionlint y sin ejecutar, y CodeCommit sin cambio de estado, comprobados por comando y contra sus páginas. No se editó `content/` ni `frontend/`.
+### B-F3.1 · lote F3b-11b
+- Seis fichas de entrega. El canary de Cloud Deploy, la redacción de secretos, el SHA de la acción de auth, Argo CD 3.5 y Flux 2.9, comprobados contra sus páginas. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-10a
 - Siete fichas de analítica en Azure. Fuentes de nivel 1, §14, citas de Fabric y Synapse sin deprecación, Blob contra Azurite en la CI, y la regla del §17, comprobados por comando y contra sus páginas. No se editó `content/` ni `frontend/`.
@@ -265,6 +269,8 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - Revisión de una muestra de 10 fichas del ajuste del §17. Sin hallazgos. Las 95 fichas solo cambian `relations`, el §17 y el historial. No se editó `content/`.
 ### B-F3.1 · lote F3b-11a (2026-10-14)
 - Revisión de las 7 fichas de Git y CI. Sin hallazgos. La guía de Google queda en lo conceptual, el código corre en la CI y CodeCommit no registra un cambio de estado. No se editó `content/`.
+### B-F3.1 · lote F3b-11b (2026-10-14)
+- Revisión de las 6 fichas de entrega. Sin hallazgo alto. Propuesta media: citar la frase de Cloud Deploy sobre jobs. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-10a (2026-10-14)
 - Revisión de las 7 fichas de analítica en Azure. Sin hallazgo alto. Propuestas media: once fichas nombradas fuera de `relations` en el panorama, el comentario de Azurite sobre namespace y `dfs`, y las relaciones de Athena y de slots. No se editó `content/`.
