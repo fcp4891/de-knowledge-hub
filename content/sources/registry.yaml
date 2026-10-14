@@ -2519,3 +2519,22 @@ created_at: '2026-10-14'
 updated_at: '2026-10-14'
 last_verified: '2026-10-14'
 verification_status: verified
+---
+id: source:azure-bicep-docs
+slug: azure-bicep-docs
+type: source
+title: Bicep documentation
+description: Documentación oficial de Bicep (lenguaje declarativo para desplegar recursos de Azure), Microsoft Learn.
+url: https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- azure-bicep
+created_at: '2026-10-14'
+updated_at: '2026-10-14'
+last_verified: '2026-10-14'
+verification_status: verified

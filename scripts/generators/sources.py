@@ -313,6 +313,8 @@ BATCH1 = [
      'https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html', 'official_docs', 1, 'aws', True, "quarterly", ['aws-eks']),
     ('azure-arc-docs', 'Azure Arc-enabled Kubernetes documentation', 'Documentación oficial de Kubernetes habilitado para Azure Arc, incluido GitOps con Flux v2 en AKS y Arc, Microsoft Learn.',
      'https://learn.microsoft.com/en-us/azure/azure-arc/kubernetes/', 'official_docs', 1, 'azure', True, "quarterly", ['azure-aks']),
+    ('azure-bicep-docs', 'Bicep documentation', 'Documentación oficial de Bicep (Azure Resource Manager), Microsoft Learn.',
+     'https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview', 'official_docs', 1, 'azure', True, "quarterly", ['azure-bicep']),
 ]
 
 
