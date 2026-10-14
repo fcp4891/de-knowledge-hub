@@ -84,10 +84,43 @@ relations:
   - type: RELATED_TO
     target: orchestration-landscape
     note: El panorama general de orquestadores.
+  - type: RELATED_TO
+    target: composer-environments
+    note: Composer, frente a Data Factory (§11).
+  - type: RELATED_TO
+    target: dataform-workflows
+    note: Dataform, frente a Data Factory (§11).
+  - type: RELATED_TO
+    target: bigquery-architecture
+    note: BigQuery, frente a Synapse dedicado y Fabric Data Warehouse (§11).
+  - type: RELATED_TO
+    target: bigquery-biglake-tables
+    note: BigLake, frente a Databricks, Synapse Spark y Fabric (§11).
+  - type: RELATED_TO
+    target: dataflow-execution-model
+    note: Dataflow, frente a Databricks, Synapse Spark y Fabric (§11).
+  - type: RELATED_TO
+    target: glue-catalog-and-etl
+    note: Glue, frente a Data Factory (§12).
+  - type: RELATED_TO
+    target: step-functions-workflows
+    note: Step Functions, frente a Data Factory (§12).
+  - type: RELATED_TO
+    target: mwaa-managed-airflow
+    note: MWAA, frente a Data Factory (§12).
+  - type: RELATED_TO
+    target: redshift-architecture
+    note: Redshift, frente a Synapse dedicado y Fabric Data Warehouse (§12).
+  - type: RELATED_TO
+    target: emr-spark-clusters
+    note: EMR, frente a Databricks, Synapse Spark y Fabric (§12).
+  - type: RELATED_TO
+    target: lake-formation-permissions
+    note: Lake Formation, frente a Databricks, Synapse Spark y Fabric (§12).
 created_at: 2026-10-13
-updated_at: 2026-10-13
-last_verified: 2026-10-13
-verification_status: review_required
+updated_at: 2026-10-14
+last_verified: 2026-10-14
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -220,6 +253,8 @@ Fabric concentra almacenamiento, ingesta, warehouse y reportes en un SaaS con ca
 - `data-factory-pipelines`, `synapse-analytics`, `fabric-onelake-and-workloads` y `azure-databricks-lakehouse`: cada servicio.
 - `adls-gen2-storage`: el almacenamiento común.
 - `orchestration-landscape`: el panorama general de orquestadores.
+- `composer-environments`, `dataform-workflows`, `bigquery-architecture`, `bigquery-biglake-tables` y `dataflow-execution-model`: las piezas de GCP de la tabla del §11.
+- `glue-catalog-and-etl`, `step-functions-workflows`, `mwaa-managed-airflow`, `redshift-architecture`, `emr-spark-clusters` y `lake-formation-permissions`: las piezas de AWS de la tabla del §12.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -239,8 +274,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-13. `review_required`: pendiente de revisión B-F3.1 del lote F3b-10a.
+2026-10-14. Pasa a `verified`: revisión B-F3.1 del lote F3b-10a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-13: creación (lote F3b-10a).
+- 2026-10-14: revisión B-F3.1 del lote F3b-10a aplicada (docs/reviews/cards-f3b-10a.md): relations y §17 incluyen las once fichas de GCP y AWS que nombran el §11 y el §12.
+- 2026-10-14: `verification_status: verified` (sin VERIFY pendientes).

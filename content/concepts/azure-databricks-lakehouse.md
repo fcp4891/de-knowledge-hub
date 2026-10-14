@@ -105,8 +105,8 @@ relations:
     note: Databricks frente a Fabric, Synapse y Data Factory.
 created_at: 2026-10-13
 updated_at: 2026-10-13
-last_verified: 2026-10-13
-verification_status: review_required
+last_verified: 2026-10-14
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -317,8 +317,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-13. `review_required`: pendiente de revisión B-F3.1 del lote F3b-10a.
+2026-10-14. Pasa a `verified`: revisión B-F3.1 del lote F3b-10a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-13: creación (lote F3b-10a).
+- 2026-10-14: revisión B-F3.1 del lote F3b-10a aplicada (docs/reviews/cards-f3b-10a.md): filas aprobadas sin cambios en esta ficha.
+- 2026-10-14: `verification_status: verified` (sin VERIFY pendientes).

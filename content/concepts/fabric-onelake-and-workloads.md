@@ -97,10 +97,13 @@ relations:
   - type: RELATED_TO
     target: synapse-analytics
     note: Las páginas de Synapse recomiendan empezar con Fabric Data Warehouse.
+  - type: RELATED_TO
+    target: athena-serverless-queries
+    note: Athena sobre S3, lo más cercano en AWS junto a S3 Tables (§12).
 created_at: 2026-10-13
-updated_at: 2026-10-13
-last_verified: 2026-10-13
-verification_status: review_required
+updated_at: 2026-10-14
+last_verified: 2026-10-14
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -243,7 +246,7 @@ Fabric da un lake único con formatos abiertos y experiencias integradas sin adm
 
 - `lakehouse`: el patrón.
 - `adls-gen2-storage`: el almacenamiento debajo de OneLake.
-- `bigquery-biglake-tables` y `s3-data-lake`: lo más cercano en GCP y AWS.
+- `bigquery-biglake-tables`, `s3-data-lake` y `athena-serverless-queries`: lo más cercano en GCP y AWS.
 - `azure-analytics-landscape`, `data-factory-pipelines` y `synapse-analytics`: Fabric en el mapa de Azure.
 
 ## 18. Preguntas técnicas abiertas
@@ -265,8 +268,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-13. `review_required`: pendiente de revisión B-F3.1 del lote F3b-10a.
+2026-10-14. Pasa a `verified`: revisión B-F3.1 del lote F3b-10a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-13: creación (lote F3b-10a).
+- 2026-10-14: revisión B-F3.1 del lote F3b-10a aplicada (docs/reviews/cards-f3b-10a.md): relations y §17 incluyen `athena-serverless-queries`, que nombra el §12.
+- 2026-10-14: `verification_status: verified` (sin VERIFY pendientes).

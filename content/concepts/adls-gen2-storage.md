@@ -98,9 +98,9 @@ relations:
     target: azure-databricks-lakehouse
     note: El lakehouse de Databricks lee y escribe en ADLS.
 created_at: 2026-10-13
-updated_at: 2026-10-13
-last_verified: 2026-10-13
-verification_status: review_required
+updated_at: 2026-10-14
+last_verified: 2026-10-14
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -185,7 +185,7 @@ flowchart LR
 # Python 3.12 y azure-storage-blob (ejecutado en la CI contra Azurite, el emulador de Blob Storage; no se corrió
 # contra Azure). Escribe un lote en una partición estilo Hive (dt=AAAA-MM-DD/) con la API de Blob y lista las
 # particiones con un delimitador. Reescribir el mismo lote reemplaza el blob: re-ejecutar no duplica.
-# Azurite no soporta ADLS Gen2 (namespace jerárquico ni endpoint dfs): esta parte usa solo la API de Blob.
+# Azurite no soporta Azure Data Lake Storage Gen2 (Use the Azurite emulator): esta parte usa solo la API de Blob.
 from __future__ import annotations
 
 import datetime as dt
@@ -317,9 +317,9 @@ resource "azurerm_storage_management_policy" "lake" {
 }
 ```
 
-El primer script, en Python 3.12 con `azure-storage-blob`, se **ejecuta en la CI contra Azurite** (ADR-013) y pasa `mypy --strict`. **No se corrió contra Azure.** Usa solo la API de Blob: según *Use the Azurite emulator for local Azure Storage development*, Azurite no soporta ADLS Gen2, así que el namespace jerárquico y el endpoint `dfs` no se prueban. El test escribe tres lotes (el segundo día dos veces) y comprueba que quedan dos particiones y dos blobs.
+El primer script, en Python 3.12 con `azure-storage-blob`, se **ejecuta en la CI contra Azurite** (ADR-013) y pasa `mypy --strict`. **No se corrió contra Azure.** Usa solo la API de Blob: según *Use the Azurite emulator for local Azure Storage development*, Azurite «doesn't support Azure Files or Azure Data Lake Storage Gen2». El test escribe tres lotes (el segundo día dos veces) y comprueba que quedan dos particiones y dos blobs.
 
-El segundo script, con `azure-storage-file-datalake`, **no se ejecutó**: el renombre de directorio necesita el namespace jerárquico, que Azurite no emula, y no se corrió contra Azure.
+El segundo script, con `azure-storage-file-datalake`, **no se ejecutó**: usa ADLS Gen2, que Azurite no soporta según esa página, y no se corrió contra Azure.
 
 El bloque de Terraform se valida en la CI con `terraform validate`, sin credenciales (`make validate-terraform`), y **no se aplicó**.
 
@@ -395,8 +395,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-13. `review_required`: pendiente de revisión B-F3.1 del lote F3b-10a.
+2026-10-14. Pasa a `verified`: revisión B-F3.1 del lote F3b-10a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-13: creación (lote F3b-10a).
+- 2026-10-14: revisión B-F3.1 del lote F3b-10a aplicada (docs/reviews/cards-f3b-10a.md): el comentario y el texto del §10 dicen solo lo que dice la página de Azurite (no soporta ADLS Gen2), sin atribuirle el namespace jerárquico ni el endpoint `dfs`.
+- 2026-10-14: `verification_status: verified` (sin VERIFY pendientes).
