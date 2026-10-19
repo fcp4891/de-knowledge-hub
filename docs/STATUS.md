@@ -1,7 +1,7 @@
 # STATUS — Data Engineering Knowledge Hub
 
-**Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 12-infrastructure-as-code (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08, 03-python el 2026-10-10, 04-data-modeling, 05-pipelines, 06-orchestration y los conceptos de 07-architecture el 2026-10-11, 08-gcp el 2026-10-12, 09-aws el 2026-10-13, 10-azure y 11-devops el 2026-10-14). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
-**Última actualización:** 2026-10-11
+**Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 13-containers (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08, 03-python el 2026-10-10, 04-data-modeling, 05-pipelines, 06-orchestration y los conceptos de 07-architecture el 2026-10-11, 08-gcp el 2026-10-12, 09-aws el 2026-10-13, 10-azure y 11-devops el 2026-10-14, 12-infrastructure-as-code el 2026-10-19). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
+**Última actualización:** 2026-10-19
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**
 > El estado detallado de cada carril está en `docs/status/lane-a.md` y `docs/status/lane-b.md`; cada carril edita solo el suyo.
@@ -18,8 +18,8 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | 12-infrastructure-as-code 12/12 `verified` | 13a tras aprobar 12 | — |
-| B · Cursor revisión | — | Lo que asigne Felipe | — |
+| A · Claude Code | 13-containers: F3b-13a (5) en revisión | F3b-13b (4) | — |
+| B · Cursor revisión | — | Revisar F3b-13a (B-F3.1, `lane-a.md`) | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
@@ -40,8 +40,8 @@
 - [x] 09-aws: 16/16 `verified`, aprobado por Felipe en el navegador el 2026-10-13.
 - [x] 10-azure: 14/14 `verified`, aprobado por Felipe en el navegador el 2026-10-14.
 - [x] 11-devops: 13/13 `verified`, aprobado por Felipe en el navegador el 2026-10-14.
-- [ ] 12-infrastructure-as-code: 12/12 `verified` (2026-10-19), pendiente de aprobación en el navegador (ADR-015: Terraform sin nube en la CI, cfn-lint y Bicep).
-- [ ] 13-containers: plan aprobado (13a de 5 y 13b de 4; Docker real en la CI, hadolint y kubeconform); empieza al aprobarse 12.
+- [x] 12-infrastructure-as-code: 12/12 `verified`, aprobado por Felipe en el navegador el 2026-10-19 (ADR-015: Terraform sin nube en la CI, cfn-lint y Bicep).
+- [ ] 13-containers: 13a (5) en revisión; 13b (4) en escritura (ADR-016: Docker real en la CI con digests, hadolint, kubeconform y registry:2 local).
 - Orden de dominios desde 12 (2026-10-14): 12 → 13 → 14 → 20 → 15 → 16 → 17 → 18 → 19 → 21 → 22 → 23.
 - [x] Lote F3b-rel: la regla del §17 es error de `make validate` (2026-10-14; `docs/reviews/f3b-rel.md`).
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
