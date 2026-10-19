@@ -176,3 +176,19 @@ def test_extract_cloudformation_and_bicep_blocks(tmp_path: Path) -> None:
     bicep_written, _ = extract.extract_concepts("bicep", tmp_path / "bicep", concepts)
     assert [(p.parent.name, p.name, p.read_text(encoding="utf-8")) for p in cfn_written] == [("a", "template.yaml", cfn)]
     assert [(p.parent.name, p.name, p.read_text(encoding="utf-8")) for p in bicep_written] == [("a", "main.bicep", bicep)]
+
+
+def test_extract_dockerfile_and_kubernetes_blocks(tmp_path: Path) -> None:
+    from scripts.snippets import extract
+
+    concepts = tmp_path / "concepts"
+    concepts.mkdir()
+    dockerfile = "FROM alpine:3.22\n"
+    k8s = "# Kubernetes (ejemplo)\napiVersion: v1\nkind: Namespace\nmetadata:\n  name: dekh\n"
+    other = "# CloudFormation (ejemplo)\nResources: {}\n"
+    (concepts / "a.md").write_text(f"## 10. Código\n\n```dockerfile\n{dockerfile}```\n\n```yaml\n{k8s}```\n\n```yaml\n{other}```\n",
+                                   encoding="utf-8")
+    docker_written, _ = extract.extract_concepts("dockerfile", tmp_path / "dockerfile", concepts)
+    k8s_written, _ = extract.extract_concepts("kubernetes", tmp_path / "k8s", concepts)
+    assert [(p.parent.name, p.name, p.read_text(encoding="utf-8")) for p in docker_written] == [("a", "Dockerfile", dockerfile)]
+    assert [(p.parent.name, p.name, p.read_text(encoding="utf-8")) for p in k8s_written] == [("a", "manifest.yaml", k8s)]
