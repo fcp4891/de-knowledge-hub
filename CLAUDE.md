@@ -37,5 +37,11 @@ Trabajas en paralelo con Cursor (Carril B, frontend y revisión).
 - Funciones pequeñas, sin dependencias nuevas sin justificarlas en el commit.
 - Idempotencia en compiladores y pipelines: re-ejecutar no duplica nada.
 
+## Eficiencia
+- En local, corre solo los tests de lo que cambió; la suite completa corre en la CI.
+- Verifica solo las URLs nuevas o modificadas.
+- Espera el CI una sola vez, en `main`.
+- Las entregas llevan solo tablas y decisiones pendientes.
+
 ## Idioma
 Contenido y documentación en español; identificadores, slugs y código en inglés.
