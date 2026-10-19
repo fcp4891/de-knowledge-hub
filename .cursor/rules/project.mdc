@@ -14,6 +14,9 @@ Trabajas en paralelo con Claude Code (Carril A: contenido, schemas, backend, pip
 - **No toques** `backend/`, `schemas/`, `pipelines/`, `scripts/`.
 - Consumes la API solo según `docs/contracts/api.yaml`. Si el contrato no alcanza, anota la necesidad en `docs/status/lane-b.md` (sección "Pedidos a Carril A"); no lo modifiques.
 
+## Worktrees y ramas
+Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
+
 ## Principios de UX
 - Utilidad sobre gamificación: sin puntos, badges, porcentajes de dominio ni quizzes.
 - Profundidad progresiva: Resumen → Concepto → Funcionamiento → Implementación → Código → Arquitectura → Buenas prácticas → Problemas reales → Fuentes. El usuario se detiene donde quiera.
