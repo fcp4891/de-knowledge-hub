@@ -14,6 +14,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** B-F3.1 del lote F3b-12a. Revisión en `docs/reviews/cards-f3b-12a.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. El lote 12b va en otra rama.
+- **Bloqueos:** ninguno. `make` no está en el PATH; `scripts/validate.py` con `.venv` terminó OK (460 entidades).
 - **Tarea activa:** `b/rules-lanes`. Regla de worktree y ramas para los agentes de Cursor. Sin merge a `main`.
 - **Siguiente:** lo que asigne Felipe.
 - **Bloqueos:** ninguno.
@@ -48,6 +51,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Si hay alias, bajo el título: «También conocido como: …» (ficha de concepto y página de tecnología).
 - `make test-frontend`: 11/11. En la demo estática, «Dataplex» encuentra Knowledge Catalog y la ficha `gcp-dataplex` muestra los dos alias.
 - No se editó `content/` ni el contrato.
+
+### B-F3.1 · lote F3b-12a
+- Cuatro fichas de Terraform en uso. El apply sin nube, cfn-lint, `bicep build` y las frases de sensitive, workspaces y Bicep, comprobados contra los tests y las páginas. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-rel
 - Muestra de 10 fichas del ajuste del §17. El diff de `b9a8ed6` solo toca `relations`, el §17 y una línea de historial. Las relaciones nuevas y las exclusiones coinciden con el texto. No se editó `content/` ni `frontend/`.
@@ -271,6 +277,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-12a (2026-10-19)
+- Revisión de las 4 fichas de Terraform en uso. Sin hallazgos. El test guarda el secreto en el state y la CLI lo oculta. Las fichas verificadas solo agregan los enlaces previstos. No se editó `content/`.
 
 ### Worktrees y ramas (2026-10-19)
 - Regla para agentes de Cursor, incluidos Background Agents: solo el worktree DES_conocimiento-ui o DES_conocimiento-review, y ramas `b/*`. No escriben en `content/`, no abren DES_conocimiento-carril-a ni la raíz DES_conocimiento, y no hacen push a ramas `a/*`.
