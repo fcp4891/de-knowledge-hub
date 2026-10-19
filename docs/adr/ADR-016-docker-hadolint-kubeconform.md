@@ -23,8 +23,13 @@
 
 ## Actualización (13b, 2026-10-19)
 
-- kubeconform valida contra los esquemas de Kubernetes 1.37.0 (`K8S_VERSION ?= 1.37.0` en el Makefile), la versión vigente según *Releases* de kubernetes.io (1.37.1, del 2026-09-15). Los esquemas se descargan de `yannh/kubernetes-json-schema` en cada corrida.
+- kubeconform valida contra los esquemas de Kubernetes 1.37.0 (`K8S_VERSION ?= 1.37.0` en el Makefile), la versión vigente según *Releases* de kubernetes.io (1.37.1, del 2026-09-15). Los esquemas se descargan de `yannh/kubernetes-json-schema` en cada corrida, fijados a un commit (ver abajo).
 - `docker compose up` corre en `tests/test_docker_snippets.py` con el bloque ```` ```yaml ```` que empieza con `# Docker Compose`.
+
+## Actualización (esquemas fijados, 2026-10-19)
+
+- `make validate-k8s` pasa `-schema-location` con la URL del commit `93153a1458e24e93f386c50f9980d584fcba574b` de `yannh/kubernetes-json-schema` (2026-10-17, «Adding new schemas»), el último de `master` al 2026-10-19, en lugar de `master`. La ruta sigue la plantilla por defecto de kubeconform (`{{.NormalizedKubernetesVersion}}-standalone{{.StrictSuffix}}/{{.ResourceKind}}{{.KindSuffix}}.json`); `v1.37.0-standalone-strict` existe en ese commit.
+- Actualizar los esquemas es cambiar el commit en `K8S_SCHEMAS` (Makefile) y en este ADR.
 
 ## Consecuencias
 

@@ -160,11 +160,13 @@ validate-dockerfile:
 K8S_DIR := build/kubernetes
 KUBECONFORM ?= kubeconform
 K8S_VERSION ?= 1.37.0
+# Esquemas fijados a un commit de yannh/kubernetes-json-schema (ADR-016), no a master.
+K8S_SCHEMAS ?= https://raw.githubusercontent.com/yannh/kubernetes-json-schema/93153a1458e24e93f386c50f9980d584fcba574b/{{.NormalizedKubernetesVersion}}-standalone{{.StrictSuffix}}/{{.ResourceKind}}{{.KindSuffix}}.json
 validate-k8s:
 	$(REQUIRE_VENV)
 	$(PYTHON) -m scripts.snippets.extract --language kubernetes --out $(K8S_DIR)
 	files=$$(find $(K8S_DIR) -name manifest.yaml 2>/dev/null | sort); \
-	if [ -z "$$files" ]; then echo "sin manifiestos"; else $(KUBECONFORM) -strict -summary -kubernetes-version $(K8S_VERSION) $$files; fi
+	if [ -z "$$files" ]; then echo "sin manifiestos"; else $(KUBECONFORM) -strict -summary -kubernetes-version $(K8S_VERSION) -schema-location '$(K8S_SCHEMAS)' $$files; fi
 
 dev:
 	$(REQUIRE_VENV)

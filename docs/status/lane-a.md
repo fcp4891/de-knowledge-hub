@@ -90,6 +90,9 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ## Historial
 
+### kubeconform con esquemas fijados (2026-10-19)
+- `make validate-k8s` usa `-schema-location` con el commit `93153a1` (2026-10-17) de `yannh/kubernetes-json-schema`, no `master` (`K8S_SCHEMAS` en el Makefile; ADR-016). Fichas de 13a y 13b sin cambios.
+
 ### Lote F3b-13b: 4 fichas de 13-containers en revisión (2026-10-19)
 - Fuentes nuevas: `kubernetes-docs`, `aws-ecr-docs`, `azure-container-registry-docs` y `azure-aks-docs`.
 - kubeconform contra los esquemas de Kubernetes 1.37.0 (`K8S_VERSION` en el Makefile; actualización en ADR-016); tests de `docker compose up` y de un tag mutable en `registry:2`.
