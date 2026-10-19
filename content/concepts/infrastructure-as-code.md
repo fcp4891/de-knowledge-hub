@@ -63,6 +63,12 @@ relations:
   - type: RELATED_TO
     target: ci-cd-pipelines
     note: El pipeline que valida y aplica el código de infraestructura.
+  - type: RELATED_TO
+    target: terraform-drift
+    note: Cambios hechos fuera de Terraform y cómo detectarlos.
+  - type: RELATED_TO
+    target: terraform-security
+    note: Secretos en el state, ephemeral y permisos de quien aplica.
 created_at: 2026-10-01
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -201,7 +207,8 @@ IaC da reproducibilidad, revisión y auditoría, a cambio de una curva de aprend
 - `terraform-plan-apply`: el flujo de revisar y aplicar.
 - `terraform-providers`: la conexión con cada nube.
 - `ci-cd-pipelines`: el pipeline que valida y aplica el código de infraestructura.
-- Del blueprint, pendientes de ficha: `terraform-drift` y `terraform-security`.
+- `terraform-drift`: cambios hechos fuera de Terraform y cómo detectarlos.
+- `terraform-security`: secretos en el state, ephemeral y permisos de quien aplica.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -232,3 +239,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: regla del §17 (lote F3b-11a): el §17 enlaza `ci-cd-pipelines`, que ya tiene ficha, y relations la incluye; antes figuraba como pendiente de ficha.
+- 2026-10-19: regla del §17 (lote F3b-12b): el §17 enlaza `terraform-drift` y `terraform-security`, que ya tienen ficha, y relations las incluye; antes figuraban como pendiente de ficha.

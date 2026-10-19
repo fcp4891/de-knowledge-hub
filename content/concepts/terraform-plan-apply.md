@@ -60,6 +60,9 @@ relations:
   - type: RELATED_TO
     target: ci-cd-pipelines
     note: El pipeline donde corren plan y apply.
+  - type: RELATED_TO
+    target: terraform-drift
+    note: El plan como detector de cambios hechos fuera de Terraform.
 created_at: 2026-10-01
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -183,7 +186,7 @@ El flujo de dos pasos con aprobación agrega fricción y tiempo a cada cambio, a
 - `terraform-state`: lo que el plan compara.
 - `infrastructure-as-code`: el marco.
 - `ci-cd-pipelines`: el pipeline donde corren plan y apply.
-- Del blueprint, pendiente de ficha: `terraform-drift`.
+- `terraform-drift`: el plan como detector de cambios hechos fuera de Terraform.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -214,3 +217,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: regla del §17 (lote F3b-11a): el §17 enlaza `ci-cd-pipelines`, que ya tiene ficha, y relations la incluye; antes figuraba como pendiente de ficha.
+- 2026-10-19: regla del §17 (lote F3b-12b): el §17 enlaza `terraform-drift`, que ya tiene ficha, y relations la incluye; antes figuraba como pendiente de ficha.

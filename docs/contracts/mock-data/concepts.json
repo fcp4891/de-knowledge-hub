@@ -3247,9 +3247,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-19"
     },
     {
       "slug": "terraform-security",
@@ -3261,9 +3261,9 @@
       "level": "advanced",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-19"
     },
     {
       "slug": "cloudformation-basics",
@@ -3275,9 +3275,9 @@
       "level": "intermediate",
       "importance": "low",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-19"
     },
     {
       "slug": "bicep-basics",
@@ -3289,9 +3289,9 @@
       "level": "intermediate",
       "importance": "low",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-19"
     },
     {
       "slug": "container-images",

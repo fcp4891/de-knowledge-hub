@@ -63,6 +63,12 @@ relations:
   - type: RELATED_TO
     target: terraform-remote-state
     note: El state en un backend compartido y los datos entre configuraciones.
+  - type: RELATED_TO
+    target: terraform-drift
+    note: La diferencia entre el state y lo real.
+  - type: RELATED_TO
+    target: terraform-security
+    note: Los secretos que quedan en el state y cómo evitarlo.
 created_at: 2026-10-01
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -183,7 +189,8 @@ Un state por entorno o por componente limita el impacto de un error y acelera lo
 - `terraform-plan-apply`: el plan lee el state.
 - `gcs-buckets-and-objects`: el bucket que guarda el state en Google Cloud.
 - `terraform-remote-state`: el state en un backend compartido y los datos entre configuraciones.
-- Del blueprint, pendientes de ficha: `terraform-drift` y `terraform-security`.
+- `terraform-drift`: la diferencia entre el state y lo real.
+- `terraform-security`: los secretos que quedan en el state y cómo evitarlo.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -212,3 +219,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: regla del §17 (lote F3b-12a): el §17 enlaza `terraform-remote-state`, que ya tiene ficha, y relations la incluye; antes figuraba como pendiente de ficha.
+- 2026-10-19: regla del §17 (lote F3b-12b): el §17 enlaza `terraform-drift` y `terraform-security`, que ya tienen ficha, y relations las incluye; antes figuraban como pendiente de ficha.

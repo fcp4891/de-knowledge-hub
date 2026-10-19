@@ -60,6 +60,9 @@ relations:
   - type: RELATED_TO
     target: terraform-modules
     note: Los módulos hijos declaran los providers que necesitan.
+  - type: RELATED_TO
+    target: terraform-security
+    note: El lock file y los checksums de cada provider.
 created_at: 2026-10-01
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -182,7 +185,7 @@ Restricciones estrictas y lock versionado dan reproducibilidad, a cambio de actu
 - `infrastructure-as-code`: el marco.
 - `terraform-plan-apply`: donde se ve el efecto de un cambio de versión.
 - `terraform-modules`: los módulos hijos declaran los providers que necesitan.
-- Del blueprint, pendiente de ficha: `terraform-security`.
+- `terraform-security`: el lock file y los checksums de cada provider.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -213,3 +216,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: regla del §17 (lote F3b-12a): el §17 enlaza `terraform-modules`, que ya tiene ficha, y relations la incluye; antes figuraba como pendiente de ficha.
+- 2026-10-19: regla del §17 (lote F3b-12b): el §17 enlaza `terraform-security`, que ya tiene ficha, y relations la incluye; antes figuraba como pendiente de ficha.
