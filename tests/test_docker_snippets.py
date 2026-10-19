@@ -1,9 +1,9 @@
 """Ejemplos de 13-containers ejecutados con Docker real (ADR-016).
 
 Los bloques ```bash de la sección 10 de cada ficha corren con el bash del sistema (Git for Windows en Windows) y el
-Docker del host. Las imágenes van fijadas por digest en las fichas. El ejemplo de imágenes publica en un registry:2
-local que el test levanta en el puerto 5055. Cada test borra lo que crea. Sin Docker los tests se saltan, salvo con
-REQUIRE_DOCKER=1 (la CI).
+Docker del host (y `docker compose up` en el entorno de Compose). Las imágenes van fijadas por digest en las fichas.
+Los ejemplos de imágenes y de registries publican en un registry:2 local que el test levanta en el puerto 5055. Cada
+test borra lo que crea. Sin Docker los tests se saltan, salvo con REQUIRE_DOCKER=1 (la CI).
 """
 
 from __future__ import annotations
@@ -159,3 +159,28 @@ def test_user_defined_network_resolves_names_and_default_bridge_does_not(docker_
     assert "red propia: datos-api responde" in out
     assert "bridge por defecto: el nombre no resuelve" in out
     assert docker("network", "inspect", "dekh-net").returncode != 0  # el trap del script borró la red
+
+
+def test_compose_waits_for_healthy_api_and_profiles_keep_debug_off(docker_ready: None, bash: str,
+                                                                   tmp_path: Path) -> None:
+    (compose,) = [b for b in blocks("docker-compose-environments", "yaml") if b.startswith("# Docker Compose")]
+    (code,) = blocks("docker-compose-environments", "bash")
+    (tmp_path / "compose.yaml").write_text(compose, encoding="utf-8", newline="\n")
+    try:
+        out = run_snippet(bash, code, tmp_path)
+    finally:
+        subprocess.run(["docker", "compose", "down", "--remove-orphans"], cwd=tmp_path, capture_output=True)
+    assert "servicios activos: datos-api job" in out
+    assert "con el perfil debug: datos-api debug job" in out
+    assert "job: la API respondió en http://datos-api:8000/" in out
+
+
+def test_mutable_tag_moves_and_old_digest_still_pulls(registry: str, bash: str, tmp_path: Path) -> None:
+    (code,) = blocks("container-registries", "bash")
+    try:
+        out = run_snippet(bash, code, tmp_path, {"REGISTRY": registry})
+    finally:
+        docker("image", "rm", "-f", f"{registry}/dekh/ingesta:1.0")
+    assert "el tag 1.0 se movió a otro digest" in out
+    assert "1.0 trae hoy: build-2" in out
+    assert "el digest anterior trae: build-1" in out

@@ -90,9 +90,9 @@
           "level": "basic",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-19"
         },
         {
           "slug": "container-registries",
@@ -104,9 +104,9 @@
           "level": "basic",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-19"
         }
       ]
     },
@@ -124,9 +124,9 @@
           "level": "intermediate",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-19"
         },
         {
           "slug": "container-platforms-by-cloud",
@@ -138,9 +138,9 @@
           "level": "intermediate",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-19"
         }
       ]
     }
