@@ -18,8 +18,8 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | 13-containers: F3b-13a (5) y F3b-13b (4) en revisión | Aplicar revisiones de 13 | — |
-| B · Cursor revisión | — | Revisar F3b-13a y F3b-13b (B-F3.1, `lane-a.md`) | — |
+| A · Claude Code | 13-containers 9/9 `verified` | 14-streaming tras aprobar 13 | — |
+| B · Cursor revisión | — | Lo que asigne Felipe | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
@@ -41,7 +41,7 @@
 - [x] 10-azure: 14/14 `verified`, aprobado por Felipe en el navegador el 2026-10-14.
 - [x] 11-devops: 13/13 `verified`, aprobado por Felipe en el navegador el 2026-10-14.
 - [x] 12-infrastructure-as-code: 12/12 `verified`, aprobado por Felipe en el navegador el 2026-10-19 (ADR-015: Terraform sin nube en la CI, cfn-lint y Bicep).
-- [ ] 13-containers: 13a (5) y 13b (4) en revisión (ADR-016: Docker real en la CI con digests, hadolint, kubeconform contra Kubernetes 1.37.0 y registry:2 local).
+- [ ] 13-containers: 9/9 `verified` (2026-10-19), pendiente de aprobación en el navegador (ADR-016: Docker real en la CI con digests, hadolint, kubeconform contra Kubernetes 1.37.1 con esquemas fijados y registry:2 local).
 - Orden de dominios desde 12 (2026-10-14): 12 → 13 → 14 → 20 → 15 → 16 → 17 → 18 → 19 → 21 → 22 → 23.
 - [x] Lote F3b-rel: la regla del §17 es error de `make validate` (2026-10-14; `docs/reviews/f3b-rel.md`).
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
