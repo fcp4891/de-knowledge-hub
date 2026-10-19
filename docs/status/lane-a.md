@@ -7,7 +7,8 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 ## Actual
 - **Tarea activa:** 12a y 12b (12-infrastructure-as-code) entregados; en espera de la revisión B-F3.1 de ambos. 11-devops aprobado en el navegador el 2026-10-14. Orden de dominios desde aquí: 12 → 13 → 14 → 20 → 15 → 16 → 17 → 18 → 19 → 21 → 22 → 23. 10-azure aprobado en el navegador el 2026-10-14 (Felipe confirmó también 09-aws, aprobado el 2026-10-13). Lote de limpieza F3b-rel en `main`: el chequeo del §17 es error de `make validate`.
 - **Mergeado para Carril B:** `b/static-search-fix` (3b50505), `b/f3b-review-01b` (98f13ef), `b/static-demo` (8f96908) y `b/static-search-tags` (e7bb47c) en `main`, 2026-10-06. `f/sql` (a7c0d74) mergeada en `a/f3b-batch-02a` solo con los 10 esqueletos de 02a; los otros 14 se traen por lote, sin publicar esqueletos vacíos en `main`.
-- **Siguiente:** aplicar las revisiones de 12a y 12b; plan de 13-containers propuesto, sin ejecutar.
+- **Siguiente:** aplicar las revisiones de 12a y 12b. 13a no empieza hasta que 12 esté aprobado en el navegador.
+- **Plan de 13-containers (aprobado por Felipe el 2026-10-19, sin ejecutar):** 13a (5): `containers`, `container-images`, `dockerfile`, `container-volumes` y `container-networking`; 13b (4, se escribe mientras Cursor revisa 13a): `docker-compose-environments`, `container-registries`, `kubernetes-fundamentals` y `container-platforms-by-cloud`. Decisiones: Docker real en la CI (`docker build`, `docker run` y `docker compose up` en pytest), con imágenes base fijadas por digest y un ADR; hadolint y kubeconform con versión y SHA-256 fijos, sin `kind`; `registry:2` local para push y pull, y Artifact Registry, ECR y ACR «no ejecutado»; fuentes, una por producto: nuevas `docker-docs`, `kubernetes-docs`, `aws-ecr-docs`, `aws-ecs-docs`, `azure-container-registry-docs` y `azure-aks-docs`; existentes `gcp-artifact-registry-docs`, `gcp-cloud-run-docs`, `gcp-gke-docs`, `aws-eks-docs` y `azure-container-apps-docs`; OCI Image Spec como Nivel 4, solo para qué es una imagen. `container-platforms-by-cloud` compara serverless de contenedores con Kubernetes administrado sin presentarlos como equivalentes, en tabla con fuente de cada lado y precios con fecha y sin montos.
 - **Bloqueos:** —
 - **Worktree:** Carril A trabaja en `D:/Proyectos_IA/DES_conocimiento-carril-a` (ROADMAP §2). El directorio principal queda para Carril B.
 
@@ -86,6 +87,11 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - `page_title` en cada cita: esquema (`schemas/base.schema.json`), `SourceRef.page_title` en el contrato, `entity_sources.page_title` (migración 0004, `COMPILER_VERSION` 4) (ADR-012, aditivo).
 
 ## Historial
+
+### Reglas de carriles y eficiencia; plan de 13 (2026-10-19)
+- Merge de `b/rules-lanes` (61375e3): los agentes de Cursor solo trabajan en sus worktrees y en ramas `b/*`.
+- CLAUDE.md: sección «Eficiencia» (tests locales solo de lo que cambió, URLs solo nuevas o modificadas, CI esperado una vez en `main`, entregas con tablas y decisiones pendientes).
+- Plan de 13-containers aprobado y registrado en «Actual»; 13a espera la aprobación de 12 en el navegador.
 
 ### Incidente en el worktree de Carril A y lote F3b-12b (2026-10-19)
 - Incidente: el 2026-10-14, el agente de Cursor (diseño), abierto en la raíz, editó y commiteó en este worktree (`64aa25f` y `e25feeb` en `a/f3b-12a`, `aa953ba` en una `a/f3b-12b` nueva) con otro reparto de 12a y 12b.
