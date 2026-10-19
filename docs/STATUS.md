@@ -18,8 +18,8 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | Lote F3b-12b (12a entregado) | Entregar 12b y el plan de 13 | — |
-| B · Cursor revisión | Revisar el lote F3b-12a (B-F3.1) | — | — |
+| A · Claude Code | 12a y 12b entregados | Aplicar las revisiones de 12a y 12b; plan de 13 propuesto | — |
+| B · Cursor revisión | Revisar los lotes F3b-12a y F3b-12b (B-F3.1) | — | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
@@ -40,7 +40,7 @@
 - [x] 09-aws: 16/16 `verified`, aprobado por Felipe en el navegador el 2026-10-13.
 - [x] 10-azure: 14/14 `verified`, aprobado por Felipe en el navegador el 2026-10-14.
 - [x] 11-devops: 13/13 `verified`, aprobado por Felipe en el navegador el 2026-10-14.
-- [ ] 12-infrastructure-as-code: 4/12 `verified` (las del MVP); lote F3b-12a (4) en revisión y F3b-12b (4) en curso (ADR-015: Terraform sin nube en la CI, cfn-lint y Bicep).
+- [ ] 12-infrastructure-as-code: 4/12 `verified` (las del MVP); lotes F3b-12a (4) y F3b-12b (4) en revisión (ADR-015: Terraform sin nube en la CI, cfn-lint y Bicep).
 - Orden de dominios desde 12 (2026-10-14): 12 → 13 → 14 → 20 → 15 → 16 → 17 → 18 → 19 → 21 → 22 → 23.
 - [x] Lote F3b-rel: la regla del §17 es error de `make validate` (2026-10-14; `docs/reviews/f3b-rel.md`).
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
