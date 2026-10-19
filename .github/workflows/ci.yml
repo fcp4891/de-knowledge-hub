@@ -54,6 +54,7 @@ jobs:
           REQUIRE_AWS_SNIPPETS: "1"  # los snippets de boto3 se ejecutan contra moto (ADR-011): falla si falta moto
           REQUIRE_AZURITE: "1"  # los snippets de Blob se ejecutan contra Azurite (ADR-013): falla si no responde
           REQUIRE_TERRAFORM: "1"  # los bloques de Terraform con providers sin nube se aplican (ADR-015): falla sin terraform
+          REQUIRE_DOCKER: "1"  # los ejemplos de 13-containers se ejecutan con Docker real (ADR-016)
       # Snippets de Terraform (ADR-008): init sin backend y validate, sin credenciales ni recursos reales.
       - run: make validate-terraform
       # Workflows de GitHub Actions de las fichas (ADR-014): actionlint 1.7.12 con su SHA-256, sin ejecutarlos.
@@ -69,6 +70,16 @@ jobs:
           echo "b09ec25a9d376c1f8e33ede6ed22b587f915ad68488d5db77a6f9541748c7f6e  bicep" | sha256sum -c -
           chmod +x bicep
       - run: make validate-bicep BICEP=./bicep
+      # Dockerfiles (hadolint 2.15.1) y manifiestos de Kubernetes (kubeconform 0.8.0, sin clúster), con SHA-256 (ADR-016).
+      - run: |
+          curl -sSfL -o hadolint https://github.com/hadolint/hadolint/releases/download/v2.15.1/hadolint-linux-x86_64
+          echo "c7187db94eeeeca956519a6af171adc31453941a1e777961f6e680f697c8c507  hadolint" | sha256sum -c -
+          chmod +x hadolint
+          curl -sSfL -o kubeconform.tar.gz https://github.com/yannh/kubeconform/releases/download/v0.8.0/kubeconform-linux-amd64.tar.gz
+          echo "9bc2bffbf71f261128533edaf912153948b7ff238f9a531ae6d34466ec287883  kubeconform.tar.gz" | sha256sum -c -
+          tar -xzf kubeconform.tar.gz kubeconform
+      - run: make validate-dockerfile HADOLINT=./hadolint
+      - run: make validate-k8s KUBECONFORM=./kubeconform
       # Dags de Airflow de las fichas: DagBag sin errores de import y aserciones de cada ficha (venv aparte, versión fijada).
       - run: make check-airflow-dag AIRFLOW_PYTHON=python
 

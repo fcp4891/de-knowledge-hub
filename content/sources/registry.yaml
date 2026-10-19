@@ -2538,3 +2538,61 @@ created_at: '2026-10-14'
 updated_at: '2026-10-14'
 last_verified: '2026-10-14'
 verification_status: verified
+---
+id: source:docker-docs
+slug: docker-docs
+type: source
+title: Docker Docs
+description: Documentación oficial de Docker (Docker Engine, Docker Build, Dockerfile, almacenamiento y redes).
+url: https://docs.docker.com/
+source_type: official_docs
+authority_level: 1
+provider: docker
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- docker
+created_at: '2026-10-19'
+updated_at: '2026-10-19'
+last_verified: '2026-10-19'
+verification_status: verified
+---
+id: source:opencontainers-image-spec
+slug: opencontainers-image-spec
+type: source
+title: OCI Image Format Specification v1.1.1
+description: 'Especificación del formato de imagen de la Open Container Initiative: referencia canónica (Nivel 4) solo para definir qué es una
+  imagen; no respalda afirmaciones de producto.'
+url: https://github.com/opencontainers/image-spec/blob/v1.1.1/spec.md
+source_type: spec_paper
+authority_level: 4
+provider: opencontainers
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-19'
+updated_at: '2026-10-19'
+last_verified: '2026-10-19'
+verification_status: verified
+---
+id: source:aws-ecs-docs
+slug: aws-ecs-docs
+type: source
+title: Amazon ECS Developer Guide
+description: Guía oficial de Amazon ECS, incluido AWS Fargate.
+url: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- aws-ecs
+- aws-fargate
+created_at: '2026-10-19'
+updated_at: '2026-10-19'
+last_verified: '2026-10-19'
+verification_status: verified

@@ -19,10 +19,15 @@ Para GitHub Actions (ADR-014), solo los bloques ```yaml cuya primera línea empi
 Para CloudFormation y Bicep (ADR-015): bloques ```yaml cuya primera línea empieza con `# CloudFormation`, a
 template.yaml, y bloques ```bicep a main.bicep. cfn-lint y `bicep build` los revisan; no se despliegan.
 
+Para contenedores (ADR-016), los bloques ```dockerfile a Dockerfile (hadolint) y los ```yaml que empiezan con
+`# Kubernetes` a manifest.yaml (kubeconform).
+
 Uso: python -m scripts.snippets.extract --language terraform --out build/terraform
      python -m scripts.snippets.extract --language github-actions --out build/github-actions
      python -m scripts.snippets.extract --language cloudformation --out build/cloudformation
      python -m scripts.snippets.extract --language bicep --out build/bicep
+     python -m scripts.snippets.extract --language dockerfile --out build/dockerfile
+     python -m scripts.snippets.extract --language kubernetes --out build/kubernetes
 """
 
 from __future__ import annotations
@@ -41,14 +46,17 @@ FENCES = {  # lenguaje -> (etiqueta del bloque, archivo)
     "github-actions": ("yaml", "workflow.yml"),
     "cloudformation": ("yaml", "template.yaml"),
     "bicep": ("bicep", "main.bicep"),
+    "dockerfile": ("dockerfile", "Dockerfile"),
+    "kubernetes": ("yaml", "manifest.yaml"),
 }
 FIRST_LINE = {  # lenguajes que comparten etiqueta con otros: se reconocen por la primera línea del bloque
     "github-actions": re.compile(r"^# GitHub Actions"),
     "cloudformation": re.compile(r"^# CloudFormation"),
+    "kubernetes": re.compile(r"^# Kubernetes"),
 }
 FENCE = re.compile(r"^```(\w+)\n(.*?)^```", re.S | re.M)
 LANGUAGE = re.compile(r"^language: (\w+)$", re.M)
-EXCLUDED = re.compile(r"<!--\s*validate-(?:terraform|actions|cfn|bicep):\s*excluido\s*[—-]\s*(.+?)\s*-->\s*$")
+EXCLUDED = re.compile(r"<!--\s*validate-(?:terraform|actions|cfn|bicep|dockerfile|k8s):\s*excluido\s*[—-]\s*(.+?)\s*-->\s*$")
 
 
 @dataclass(frozen=True)

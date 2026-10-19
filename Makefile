@@ -1,4 +1,4 @@
-.PHONY: help venv install snippets-deps validate test test-frontend check-airflow-dag build dev mocks static static-data db-up db-down migrate compile backup-me restore-me validate-terraform validate-actions validate-cfn validate-bicep validate-cfn validate-bicep
+.PHONY: help venv install snippets-deps validate test test-frontend check-airflow-dag build dev mocks static static-data db-up db-down migrate compile backup-me restore-me validate-terraform validate-actions validate-cfn validate-bicep validate-cfn validate-bicep validate-dockerfile validate-k8s
 
 # Entorno del proyecto: .venv con Python 3.12 (README, «Entorno de Python»). Nunca el Python global.
 ifeq ($(OS),Windows_NT)
@@ -18,7 +18,7 @@ REQUIRE_VENV =
 endif
 
 help:
-	@echo Objetivos: venv install snippets-deps validate test mocks static static-data db-up db-down migrate compile build dev backup-me restore-me validate-terraform validate-actions validate-cfn validate-bicep validate-cfn validate-bicep
+	@echo Objetivos: venv install snippets-deps validate test mocks static static-data db-up db-down migrate compile build dev backup-me restore-me validate-terraform validate-actions validate-cfn validate-bicep validate-cfn validate-bicep validate-dockerfile validate-k8s
 
 venv:
 	$(BOOTSTRAP_PYTHON) -m venv .venv
@@ -144,6 +144,26 @@ validate-bicep:
 	$(PYTHON) -m scripts.snippets.extract --language bicep --out $(BICEP_DIR)
 	files=$$(find $(BICEP_DIR) -name main.bicep | sort); \
 	if [ -z "$$files" ]; then echo "sin archivos bicep"; else for f in $$files; do $(BICEP) build $$f --stdout > /dev/null || exit 1; done; echo "bicep build: $$(echo $$files | wc -w) archivo(s) sin errores"; fi
+
+# Dockerfiles de las fichas (ADR-016): bloques ```dockerfile revisados con hadolint 2.15.1 (la CI lo descarga con su
+# SHA-256; en local, HADOLINT=<ruta>). Los tests de Docker los construyen y ejecutan.
+DOCKERFILE_DIR := build/dockerfile
+HADOLINT ?= hadolint
+validate-dockerfile:
+	$(REQUIRE_VENV)
+	$(PYTHON) -m scripts.snippets.extract --language dockerfile --out $(DOCKERFILE_DIR)
+	files=$$(find $(DOCKERFILE_DIR) -name Dockerfile 2>/dev/null | sort); \
+	if [ -z "$$files" ]; then echo "sin Dockerfiles"; else $(HADOLINT) $$files && echo "hadolint: $$(echo $$files | wc -w) Dockerfile(s) sin errores"; fi
+
+# Manifiestos de Kubernetes de las fichas (ADR-016): bloques ```yaml que empiezan con «# Kubernetes», validados con
+# kubeconform 0.8.0 contra los esquemas de la API, sin clúster (sin kind). En local, KUBECONFORM=<ruta>.
+K8S_DIR := build/kubernetes
+KUBECONFORM ?= kubeconform
+validate-k8s:
+	$(REQUIRE_VENV)
+	$(PYTHON) -m scripts.snippets.extract --language kubernetes --out $(K8S_DIR)
+	files=$$(find $(K8S_DIR) -name manifest.yaml 2>/dev/null | sort); \
+	if [ -z "$$files" ]; then echo "sin manifiestos"; else $(KUBECONFORM) -strict -summary $$files; fi
 
 dev:
 	$(REQUIRE_VENV)
