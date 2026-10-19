@@ -123,3 +123,34 @@ def test_workspaces_keep_separate_state_and_size_per_environment(tf, tmp_path: P
     assert states == ["terraform.tfstate.d/dev/terraform.tfstate", "terraform.tfstate.d/prod/terraform.tfstate"]
     assert json.loads((tmp_path / "out" / "dev.json").read_text(encoding="utf-8")) == {"name": "spark-dev", "workers": 1}
     assert json.loads((tmp_path / "out" / "prod.json").read_text(encoding="utf-8")) == {"name": "spark-prod", "workers": 4}
+
+
+def test_plan_detects_drift_and_apply_restores_the_configuration(tf, tmp_path: Path) -> None:  # type: ignore[no-untyped-def]
+    (main,) = hcl_blocks("terraform-drift")
+    write(tmp_path / "main.tf", main)
+    tf(tmp_path, "init", "-input=false")
+    tf(tmp_path, "apply", "-auto-approve", "-input=false")
+    config = tmp_path / "out" / "pipeline.json"
+    assert json.loads(config.read_text(encoding="utf-8")) == {"batch_size": 500, "retries": 3}
+    config.write_text('{"batch_size":5000,"retries":3}', encoding="utf-8")  # cambio «a mano», fuera de Terraform
+    plan = tf(tmp_path, "plan", "-detailed-exitcode", "-input=false", ok=False)
+    assert plan.returncode == 2, plan.stdout + plan.stderr  # 2: hay cambios que proponer
+    refresh = tf(tmp_path, "plan", "-refresh-only", "-detailed-exitcode", "-input=false", ok=False)
+    assert refresh.returncode == 2 and "Objects have changed outside of Terraform" in refresh.stdout
+    tf(tmp_path, "apply", "-auto-approve", "-input=false")  # vuelve a la configuración del código
+    assert json.loads(config.read_text(encoding="utf-8"))["batch_size"] == 500
+    assert tf(tmp_path, "plan", "-detailed-exitcode", "-input=false", ok=False).returncode == 0
+
+
+def test_ephemeral_values_stay_out_of_state_and_cannot_be_persisted(tf, tmp_path: Path) -> None:  # type: ignore[no-untyped-def]
+    local, _aws = hcl_blocks("terraform-security")
+    write(tmp_path / "main.tf", local)
+    secrets = {"TF_VAR_api_token": "token-sensible-123", "TF_VAR_bootstrap_password": "clave-efimera-456"}
+    tf(tmp_path, "init", "-input=false")
+    tf(tmp_path, "apply", "-auto-approve", "-input=false", env=secrets)
+    state = (tmp_path / "terraform.tfstate").read_text(encoding="utf-8")
+    assert "token-sensible-123" in state  # sensitive: oculto en la CLI, pero en el state
+    assert "clave-efimera-456" not in state  # ephemeral: nunca en el state
+    write(tmp_path / "persist.tf", 'resource "terraform_data" "leak" {\n  input = var.bootstrap_password\n}\n')
+    rejected = tf(tmp_path, "plan", "-input=false", ok=False, env=secrets)
+    assert rejected.returncode != 0 and "Invalid use of ephemeral value" in rejected.stderr
