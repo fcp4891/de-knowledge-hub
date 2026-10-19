@@ -259,6 +259,13 @@
           "note": "Con consistencia eventual, reintentar debe ser seguro aunque una lectura vea un estado viejo."
         },
         {
+          "slug": "containers",
+          "title": "Contenedores",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Un contenedor efímero se puede reintentar si el job es idempotente."
+        },
+        {
           "slug": "python-context-managers",
           "title": "Context managers",
           "entity_type": "concept",
@@ -502,6 +509,13 @@
           "entity_type": "pattern",
           "origin": "entity",
           "note": "Un upsert por clave con condición de versión hace idempotente la carga."
+        },
+        {
+          "slug": "container-volumes",
+          "title": "Volúmenes y montajes",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "La segunda corrida sabe qué procesó la primera."
         },
         {
           "slug": "step-functions-workflows",
