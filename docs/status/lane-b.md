@@ -17,6 +17,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Tarea activa:** B-F3.1 del lote F3b-12a. Revisión en `docs/reviews/cards-f3b-12a.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. El lote 12b va en otra rama.
 - **Bloqueos:** ninguno. `make` no está en el PATH; `scripts/validate.py` con `.venv` terminó OK (460 entidades).
+- **Tarea activa:** B-F3.1 del lote F3b-12b. Revisión en `docs/reviews/cards-f3b-12b.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. El lote 12a está en `b/f3b-review-12a`.
+- **Bloqueos:** ninguno. `make` no está en el PATH; `scripts/validate.py` con `.venv` terminó OK (460 entidades). Terraform no está en el PATH local; el apply sin nube se comprobó en el código del test.
 - **Tarea activa:** `b/rules-lanes`. Regla de worktree y ramas para los agentes de Cursor. Sin merge a `main`.
 - **Siguiente:** lo que asigne Felipe.
 - **Bloqueos:** ninguno.
@@ -54,6 +57,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ### B-F3.1 · lote F3b-12a
 - Cuatro fichas de Terraform en uso. El apply sin nube, cfn-lint, `bicep build` y las frases de sensitive, workspaces y Bicep, comprobados contra los tests y las páginas. No se editó `content/` ni `frontend/`.
+### B-F3.1 · lote F3b-12b
+- Cuatro fichas: drift, secretos, CloudFormation y Bicep. El test aplica el drift con `-detailed-exitcode` y deja el secreto `sensitive` en el state y el `ephemeral` fuera. El bloque de AWS queda validado y sin aplicar. cfn-lint y `bicep build` no despliegan. Las cuatro fichas verificadas solo agregan los enlaces previstos. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-rel
 - Muestra de 10 fichas del ajuste del §17. El diff de `b9a8ed6` solo toca `relations`, el §17 y una línea de historial. Las relaciones nuevas y las exclusiones coinciden con el texto. No se editó `content/` ni `frontend/`.
@@ -280,6 +285,8 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 
 ### B-F3.1 · lote F3b-12a (2026-10-19)
 - Revisión de las 4 fichas de Terraform en uso. Sin hallazgos. El test guarda el secreto en el state y la CLI lo oculta. Las fichas verificadas solo agregan los enlaces previstos. No se editó `content/`.
+### B-F3.1 · lote F3b-12b (2026-10-19)
+- Revisión de drift, secretos, CloudFormation y Bicep. Sin hallazgos. El apply sin nube y las herramientas sin despliegue coinciden con las fichas, y el diff de las verificadas solo enlaza. No se editó `content/`.
 
 ### Worktrees y ramas (2026-10-19)
 - Regla para agentes de Cursor, incluidos Background Agents: solo el worktree DES_conocimiento-ui o DES_conocimiento-review, y ramas `b/*`. No escriben en `content/`, no abren DES_conocimiento-carril-a ni la raíz DES_conocimiento, y no hacen push a ramas `a/*`.
