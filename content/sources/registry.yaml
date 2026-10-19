@@ -2596,3 +2596,79 @@ created_at: '2026-10-19'
 updated_at: '2026-10-19'
 last_verified: '2026-10-19'
 verification_status: verified
+---
+id: source:kubernetes-docs
+slug: kubernetes-docs
+type: source
+title: Kubernetes Documentation
+description: Documentación oficial de Kubernetes (kubernetes.io; al 2026-10-19 corresponde a la versión 1.37).
+url: https://kubernetes.io/docs/home/
+source_type: official_docs
+authority_level: 1
+provider: kubernetes
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- kubernetes
+created_at: '2026-10-19'
+updated_at: '2026-10-19'
+last_verified: '2026-10-19'
+verification_status: verified
+---
+id: source:aws-ecr-docs
+slug: aws-ecr-docs
+type: source
+title: Amazon ECR User Guide
+description: Guía oficial de Amazon Elastic Container Registry.
+url: https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- aws-ecr
+created_at: '2026-10-19'
+updated_at: '2026-10-19'
+last_verified: '2026-10-19'
+verification_status: verified
+---
+id: source:azure-container-registry-docs
+slug: azure-container-registry-docs
+type: source
+title: Azure Container Registry documentation
+description: Documentación oficial de Azure Container Registry, Microsoft Learn.
+url: https://learn.microsoft.com/en-us/azure/container-registry/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- azure-container-registry
+created_at: '2026-10-19'
+updated_at: '2026-10-19'
+last_verified: '2026-10-19'
+verification_status: verified
+---
+id: source:azure-aks-docs
+slug: azure-aks-docs
+type: source
+title: Azure Kubernetes Service (AKS) documentation
+description: Documentación oficial de Azure Kubernetes Service, Microsoft Learn.
+url: https://learn.microsoft.com/en-us/azure/aks/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- azure-aks
+created_at: '2026-10-19'
+updated_at: '2026-10-19'
+last_verified: '2026-10-19'
+verification_status: verified

@@ -159,11 +159,12 @@ validate-dockerfile:
 # kubeconform 0.8.0 contra los esquemas de la API, sin clúster (sin kind). En local, KUBECONFORM=<ruta>.
 K8S_DIR := build/kubernetes
 KUBECONFORM ?= kubeconform
+K8S_VERSION ?= 1.37.0
 validate-k8s:
 	$(REQUIRE_VENV)
 	$(PYTHON) -m scripts.snippets.extract --language kubernetes --out $(K8S_DIR)
 	files=$$(find $(K8S_DIR) -name manifest.yaml 2>/dev/null | sort); \
-	if [ -z "$$files" ]; then echo "sin manifiestos"; else $(KUBECONFORM) -strict -summary $$files; fi
+	if [ -z "$$files" ]; then echo "sin manifiestos"; else $(KUBECONFORM) -strict -summary -kubernetes-version $(K8S_VERSION) $$files; fi
 
 dev:
 	$(REQUIRE_VENV)

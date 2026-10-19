@@ -21,6 +21,11 @@
 5. **kubeconform, binario fijado, sin kind.** v0.8.0 (2026-06-04); la CI descarga `kubeconform-linux-amd64.tar.gz` y verifica su SHA-256 (`9bc2bffbf71f261128533edaf912153948b7ff238f9a531ae6d34466ec287883`). `make validate-k8s KUBECONFORM=./kubeconform` extrae los bloques ```` ```yaml ```` que empiezan con `# Kubernetes` y los valida contra los esquemas de la API, sin clúster. No se usa `kind`.
 6. **Lo que dice la ficha.** «Ejecutado en la CI con Docker real», «revisado con hadolint», «validado con kubeconform, no aplicado a un clúster» o «no ejecutado» (servicios de nube).
 
+## Actualización (13b, 2026-10-19)
+
+- kubeconform valida contra los esquemas de Kubernetes 1.37.0 (`K8S_VERSION ?= 1.37.0` en el Makefile), la versión vigente según *Releases* de kubernetes.io (1.37.1, del 2026-09-15). Los esquemas se descargan de `yannh/kubernetes-json-schema` en cada corrida.
+- `docker compose up` corre en `tests/test_docker_snippets.py` con el bloque ```` ```yaml ```` que empieza con `# Docker Compose`.
+
 ## Consecuencias
 
 - Dependencias nuevas solo de la CI (dos binarios); Docker ya estaba. Los tests de Docker suman tiempo a `make test` por la descarga de imágenes.
