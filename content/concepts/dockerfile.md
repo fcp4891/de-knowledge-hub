@@ -74,7 +74,7 @@ relations:
 created_at: 2026-10-19
 updated_at: 2026-10-19
 last_verified: 2026-10-19
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -83,7 +83,7 @@ Un Dockerfile es la receta de una imagen: cada instrucción agrega una capa. Par
 
 - **base fijada por digest**, porque los tags son mutables;
 - **multi-stage**, para que la imagen final lleve solo lo que el job necesita y una etapa previa pueda verificar el código;
-- **orden pensado para la caché**: lo que cambia poco, primero, porque «Once a layer changes, then all downstream layers need to be rebuilt»;
+- **orden pensado para la caché**: lo que cambia poco, primero, porque «Once a layer changes, then all downstream layers need to be rebuilt as well»;
 - **`USER` sin root** cuando el proceso no necesita privilegios;
 - **`ENTRYPOINT` en forma exec**, para que el job sea el PID 1 y reciba SIGTERM.
 
@@ -293,8 +293,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-19. `review_required`: pendiente de revisión B-F3.1 del lote F3b-13a.
+2026-10-19. Pasa a `verified`: revisión B-F3.1 del lote F3b-13a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-19: creación (lote F3b-13a).
+- 2026-10-19: revisión B-F3.1 del lote F3b-13a aplicada (docs/reviews/cards-f3b-13a.md): la cita de *Docker build cache* termina en «as well», como en la página.
+- 2026-10-19: `verification_status: verified` (sin VERIFY pendientes).

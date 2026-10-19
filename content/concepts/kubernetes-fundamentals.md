@@ -3,7 +3,7 @@ id: concept:kubernetes-fundamentals
 slug: kubernetes-fundamentals
 type: concept
 title: Fundamentos de Kubernetes
-description: "Qué es Kubernetes y qué objetos usa un equipo de datos según kubernetes.io (versión 1.37): Pods, Deployments con estado deseado, Jobs que reintentan hasta completar, CronJobs con concurrencyPolicy, Services, ConfigMaps y Secrets (sin cifrar por defecto en etcd), y requests y limits de CPU y memoria. Manifiestos validados con kubeconform contra Kubernetes 1.37.0, sin clúster. GKE, EKS y AKS: qué administra cada uno, con sus diferencias."
+description: "Qué es Kubernetes y qué objetos usa un equipo de datos según kubernetes.io (versión 1.37): Pods, Deployments con estado deseado, Jobs que reintentan hasta completar, CronJobs con concurrencyPolicy, Services, ConfigMaps y Secrets (sin cifrar por defecto en etcd), y requests y limits de CPU y memoria. Manifiestos validados con kubeconform contra Kubernetes 1.37.1, sin clúster. GKE, EKS y AKS: qué administra cada uno, con sus diferencias."
 domain: containers
 subdomain: container-platforms
 category: containers
@@ -75,6 +75,11 @@ sources:
     accessed: 2026-10-19
     page_title: "Declarative Management of Kubernetes Objects Using Configuration Files"
     note: "Declarative Management of Kubernetes Objects Using Configuration Files: kubectl apply -f <directorio> crea los objetos de los archivos que no existen y actualiza los que sí, guardando la configuración aplicada en una anotación."
+  - source: kubernetes-docs
+    url: https://kubernetes.io/releases/
+    accessed: 2026-10-19
+    page_title: "Releases"
+    note: "Releases: la versión más reciente es 1.37, con el parche 1.37.1 publicado el 2026-09-15."
   - source: gcp-gke-docs
     url: https://docs.cloud.google.com/kubernetes-engine/docs/concepts/kubernetes-engine-overview
     accessed: 2026-10-19
@@ -122,7 +127,7 @@ relations:
 created_at: 2026-10-19
 updated_at: 2026-10-19
 last_verified: 2026-10-19
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -202,7 +207,7 @@ flowchart LR
 ## 10. Código
 
 ```yaml
-# Kubernetes (validado con kubeconform contra los esquemas de Kubernetes 1.37.0; no aplicado a un clúster; ADR-016):
+# Kubernetes (validado con kubeconform contra los esquemas de Kubernetes 1.37.1; no aplicado a un clúster; ADR-016):
 # un job diario de ingesta con su configuración, y una API de datos con un Service delante.
 apiVersion: v1
 kind: ConfigMap
@@ -278,7 +283,7 @@ spec:
       targetPort: 8000
 ```
 
-Los manifiestos se **validan en la CI con kubeconform 0.8.0 contra los esquemas de Kubernetes 1.37.0** (`make validate-k8s`, ADR-016) y **no se aplicaron a un clúster**: no hay clúster en la CI. El registry `registry.example.org` y el Secret `ingesta-db` son ilustrativos.
+Los manifiestos se **validan en la CI con kubeconform 0.8.0 contra los esquemas de Kubernetes 1.37.1** (`make validate-k8s`, ADR-016), el parche vigente según *Releases*, y **no se aplicaron a un clúster**: no hay clúster en la CI. El registry `registry.example.org` y el Secret `ingesta-db` son ilustrativos.
 
 ## 11. GCP
 
@@ -350,7 +355,7 @@ Pendiente (F4).
 
 ## 20. Fuentes
 
-- Kubernetes (documentación 1.37): *Overview*, *Kubernetes Components*, *Pods*, *Deployments*, *Jobs*, *CronJob*, *Service*, *ConfigMaps*, *Secrets*, *Resource Management for Pods and Containers*, *Namespaces* y *Declarative Management of Kubernetes Objects Using Configuration Files*.
+- Kubernetes (documentación 1.37): *Overview*, *Kubernetes Components*, *Pods*, *Deployments*, *Jobs*, *CronJob*, *Service*, *ConfigMaps*, *Secrets*, *Resource Management for Pods and Containers*, *Namespaces*, *Declarative Management of Kubernetes Objects Using Configuration Files* y *Releases*.
 - Google Cloud: *GKE overview* y *GKE Autopilot overview*.
 - AWS: *What is Amazon EKS?* y *Simplify compute management with AWS Fargate*.
 - Microsoft Learn: *What is Azure Kubernetes Service (AKS)?*.
@@ -359,8 +364,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-19. `review_required`: pendiente de revisión B-F3.1 del lote F3b-13b.
+2026-10-19. Pasa a `verified`: revisión B-F3.1 del lote F3b-13b aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-19: creación (lote F3b-13b).
+- 2026-10-19: revisión B-F3.1 del lote F3b-13b aplicada (docs/reviews/cards-f3b-13b.md): los manifiestos se validan contra los esquemas de Kubernetes 1.37.1, el parche vigente según *Releases* (fuente agregada).
+- 2026-10-19: `verification_status: verified` (sin VERIFY pendientes).

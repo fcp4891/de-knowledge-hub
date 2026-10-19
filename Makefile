@@ -159,7 +159,7 @@ validate-dockerfile:
 # kubeconform 0.8.0 contra los esquemas de la API, sin clúster (sin kind). En local, KUBECONFORM=<ruta>.
 K8S_DIR := build/kubernetes
 KUBECONFORM ?= kubeconform
-K8S_VERSION ?= 1.37.0
+K8S_VERSION ?= 1.37.1
 # Esquemas fijados a un commit de yannh/kubernetes-json-schema (ADR-016), no a master.
 K8S_SCHEMAS ?= https://raw.githubusercontent.com/yannh/kubernetes-json-schema/93153a1458e24e93f386c50f9980d584fcba574b/{{.NormalizedKubernetesVersion}}-standalone{{.StrictSuffix}}/{{.ResourceKind}}{{.KindSuffix}}.json
 validate-k8s:

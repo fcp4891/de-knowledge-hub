@@ -29,7 +29,7 @@ sources:
     url: https://cloud.google.com/run/pricing
     accessed: 2026-10-19
     page_title: "Cloud Run pricing"
-    note: "Cloud Run pricing (consultada el 2026-10-19): se cobran los recursos usados, redondeados a los 100 ms; facturación por solicitud o por instancia. Los montos no se copian."
+    note: "Cloud Run pricing (consultada el 2026-10-19): se cobran los recursos usados, redondeados hacia arriba al tramo de 100 ms («rounded up to the nearest 100 millisecond»); facturación por solicitud o por instancia. Los montos no se copian."
   - source: gcp-gke-docs
     url: https://docs.cloud.google.com/kubernetes-engine/docs/concepts/kubernetes-engine-overview
     accessed: 2026-10-19
@@ -54,7 +54,7 @@ sources:
     url: https://docs.aws.amazon.com/cli/latest/reference/ecs/run-task.html
     accessed: 2026-10-19
     page_title: "run-task"
-    note: "run-task (AWS CLI 2.38.1 Command Reference): inicia una tarea con la task definition indicada; --cluster (por defecto, el cluster default), --launch-type (EC2, FARGATE, EXTERNAL, MANAGED_INSTANCES) y --network-configuration, obligatoria con el modo awsvpc, con la forma awsvpcConfiguration={subnets=[…],securityGroups=[…],assignPublicIp=…}."
+    note: "run-task (AWS CLI Command Reference): inicia una tarea con la task definition indicada; --cluster (por defecto, el cluster default), --launch-type (EC2, FARGATE, EXTERNAL, MANAGED_INSTANCES) y --network-configuration, obligatoria con el modo awsvpc, con la forma awsvpcConfiguration={subnets=[…],securityGroups=[…],assignPublicIp=…}."
   - source: aws-ecs-docs
     url: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/tasks-scheduled-eventbridge-scheduler.html
     accessed: 2026-10-19
@@ -64,7 +64,7 @@ sources:
     url: https://aws.amazon.com/fargate/pricing/
     accessed: 2026-10-19
     page_title: "AWS Fargate Pricing"
-    note: "AWS Fargate Pricing (consultada el 2026-10-19): vCPU, memoria, sistema operativo, arquitectura y almacenamiento, desde que empieza la descarga de la imagen hasta que termina la tarea, redondeado al segundo. Los montos no se copian."
+    note: "AWS Fargate Pricing (consultada el 2026-10-19): se cobran vCPU, memoria, sistema operativo, arquitectura y almacenamiento; «Pricing is calculated per second with a 1-minute minimum», y la duración va desde que empieza la descarga de la imagen hasta que termina la tarea, «rounded up to the nearest second». Los montos no se copian."
   - source: aws-eks-docs
     url: https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html
     accessed: 2026-10-19
@@ -122,7 +122,7 @@ relations:
 created_at: 2026-10-19
 updated_at: 2026-10-19
 last_verified: 2026-10-19
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -194,7 +194,7 @@ flowchart TB
 
 ```bash
 # Bash (no ejecutado: no hay cuentas de nube en la CI): la misma imagen, por digest, como job en las tres plataformas
-# serverless de contenedores. Las formas siguen «Create jobs» (Cloud Run), «run-task» (AWS CLI 2.38.1) y
+# serverless de contenedores. Las formas siguen «Create jobs» (Cloud Run), «run-task» (AWS CLI) y
 # «Jobs in Azure Container Apps». Proyecto, cuenta, subred y registries son ilustrativos.
 set -euo pipefail
 DIGEST="sha256:5291449c3df73caf6ed85e649dec1b9e818b39a5d8c871e97afc13e9cd5e8fa8"
@@ -215,7 +215,7 @@ az containerapp job create --name ingesta-ventas --resource-group dekh-datos --e
   --image "dekhregistry.azurecr.io/jobs/ingesta@$DIGEST" --cpu "0.5" --memory "1.0Gi"
 ```
 
-Los comandos **no se ejecutaron**: no hay cuentas de nube en la CI. Sus formas siguen *Create jobs* (Cloud Run), *run-task* (AWS CLI 2.38.1 Command Reference) y *Jobs in Azure Container Apps*. Para Kubernetes administrado, los manifiestos de `kubernetes-fundamentals` se validan con kubeconform y se aplicarían igual en GKE, EKS o AKS.
+Los comandos **no se ejecutaron**: no hay cuentas de nube en la CI. Sus formas siguen *Create jobs* (Cloud Run), *run-task* (AWS CLI Command Reference) y *Jobs in Azure Container Apps*. Para Kubernetes administrado, los manifiestos de `kubernetes-fundamentals` se validan con kubeconform y se aplicarían igual en GKE, EKS o AKS.
 
 ## 11. GCP
 
@@ -226,7 +226,7 @@ En GCP, **Cloud Run** frente a **GKE**, según *What is Cloud Run*, *Create jobs
 | Qué es | Plataforma totalmente administrada para correr código o contenedores | Implementación administrada de Kubernetes |
 | Job | `gcloud run jobs create`, con `--max-retries` y `--task-timeout` | Job o CronJob de Kubernetes |
 | Qué opera el equipo | La imagen y la configuración del job o servicio | Los manifiestos; en Standard, también los nodos |
-| Cobro (consultado el 2026-10-19) | Recursos usados, redondeados a los 100 ms | Tarifa de administración por clúster y por hora en todos los modos, más el cómputo (en Autopilot, lo que piden los Pods) |
+| Cobro (consultado el 2026-10-19) | Recursos usados, redondeados hacia arriba al tramo de 100 ms | Tarifa de administración por clúster y por hora en todos los modos, más el cómputo (en Autopilot, lo que piden los Pods) |
 
 ## 12. AWS
 
@@ -237,7 +237,7 @@ En AWS, **ECS con Fargate** frente a **EKS**, según *What is Amazon Elastic Con
 | Qué es | Orquestador propio de AWS, totalmente administrado; Fargate sin servidores | Kubernetes con el control plane administrado por AWS |
 | Job | `aws ecs run-task`; programado con EventBridge Scheduler | Job o CronJob de Kubernetes |
 | Qué opera el equipo | Task definitions y red (subred por tarea) | Los manifiestos; en EKS standard, también los nodos |
-| Cobro (consultado el 2026-10-19) | vCPU, memoria, sistema operativo, arquitectura y almacenamiento, por segundo | Por hora por clúster (mayor en soporte extendido), más los worker nodes; Auto Mode suma un cargo por instancia |
+| Cobro (consultado el 2026-10-19) | vCPU, memoria, sistema operativo, arquitectura y almacenamiento, por segundo con un mínimo de 1 minuto, redondeado hacia arriba | Por hora por clúster (mayor en soporte extendido), más los worker nodes; Auto Mode suma un cargo por instancia |
 
 ## 13. Azure
 
@@ -292,15 +292,17 @@ Pendiente (F4).
 ## 20. Fuentes
 
 - Google Cloud: *What is Cloud Run*, *Create jobs*, *Cloud Run pricing*, *GKE overview* y *Google Kubernetes Engine pricing*.
-- AWS: *What is Amazon Elastic Container Service?*, *Architect for AWS Fargate for Amazon ECS*, *run-task* (AWS CLI 2.38.1), *Using Amazon EventBridge Scheduler to schedule Amazon ECS tasks*, *AWS Fargate Pricing*, *What is Amazon EKS?* y *Amazon EKS pricing*.
+- AWS: *What is Amazon Elastic Container Service?*, *Architect for AWS Fargate for Amazon ECS*, *run-task* (AWS CLI), *Using Amazon EventBridge Scheduler to schedule Amazon ECS tasks*, *AWS Fargate Pricing*, *What is Amazon EKS?* y *Amazon EKS pricing*.
 - Microsoft Learn: *Comparing Container Apps with other Azure container options*, *Jobs in Azure Container Apps*, *Azure Container Apps pricing*, *What is Azure Kubernetes Service (AKS)?* y *Azure Kubernetes Service (AKS) pricing*.
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-19. `review_required`: pendiente de revisión B-F3.1 del lote F3b-13b.
+2026-10-19. Pasa a `verified`: revisión B-F3.1 del lote F3b-13b aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-19: creación (lote F3b-13b).
+- 2026-10-19: revisión B-F3.1 del lote F3b-13b aplicada (docs/reviews/cards-f3b-13b.md): Fargate cita «per second with a 1-minute minimum» y «rounded up to the nearest second»; Cloud Run redondea hacia arriba al tramo de 100 ms; *run-task* sin número de versión de la AWS CLI.
+- 2026-10-19: `verification_status: verified` (sin VERIFY pendientes).

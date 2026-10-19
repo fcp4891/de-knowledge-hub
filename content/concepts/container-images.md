@@ -54,7 +54,7 @@ sources:
     url: https://aws.amazon.com/fargate/pricing/
     accessed: 2026-10-19
     page_title: "AWS Fargate Pricing"
-    note: "AWS Fargate Pricing (consultada el 2026-10-19): el cobro corre desde que empieza la descarga de la imagen hasta que termina la tarea. Los montos no se copian."
+    note: "AWS Fargate Pricing (consultada el 2026-10-19): se cobran vCPU, memoria, sistema operativo, arquitectura y almacenamiento; «Pricing is calculated per second with a 1-minute minimum», y la duración va desde que empieza la descarga de la imagen hasta que termina la tarea, «rounded up to the nearest second». Los montos no se copian."
   - source: azure-container-apps-docs
     url: https://learn.microsoft.com/en-us/azure/container-apps/containers
     accessed: 2026-10-19
@@ -79,7 +79,7 @@ relations:
 created_at: 2026-10-19
 updated_at: 2026-10-19
 last_verified: 2026-10-19
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -188,7 +188,7 @@ En AWS, **ECS con Fargate** toma la imagen de la task definition. Según *Amazon
 | | Docker local | ECS con Fargate |
 |---|---|---|
 | Dónde se indica la imagen | `docker run <imagen>` | La task definition, por contenedor, junto con el sistema operativo |
-| Efecto del tamaño | Tiempo de descarga | Además, el cobro empieza con la descarga de la imagen (consultado el 2026-10-19) |
+| Efecto del tamaño | Tiempo de descarga | Además, el cobro empieza con la descarga de la imagen y es por segundo, con un mínimo de 1 minuto, redondeado hacia arriba (consultado el 2026-10-19) |
 
 ## 13. Azure
 
@@ -207,7 +207,7 @@ En Azure, **Container Apps** baja la imagen de cualquier registry. Según *Conta
 - Imágenes chicas: solo lo que el job necesita para correr (ver `dockerfile`).
 - **Seguridad:** fijar por digest protege de un tag que se mueve; nunca meter secretos en una capa, porque quedan en la imagen.
 - **Observabilidad:** una etiqueta (`LABEL`) con el título y la versión, como en el ejemplo, y el digest de lo desplegado en los logs del despliegue.
-- **Costo:** en Fargate el cobro empieza con la descarga de la imagen (consultado el 2026-10-19), así que una imagen más chica acorta el tiempo cobrado.
+- **Costo:** en Fargate el cobro empieza con la descarga de la imagen y es por segundo, con un mínimo de 1 minuto (consultado el 2026-10-19), así que una imagen más chica acorta el tiempo cobrado.
 
 ## 15. Errores frecuentes
 
@@ -250,8 +250,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-19. `review_required`: pendiente de revisión B-F3.1 del lote F3b-13a.
+2026-10-19. Pasa a `verified`: revisión B-F3.1 del lote F3b-13a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-19: creación (lote F3b-13a).
+- 2026-10-19: revisión B-F3.1 del lote F3b-13a aplicada (docs/reviews/cards-f3b-13a.md): Fargate cita «per second with a 1-minute minimum» y «rounded up to the nearest second» (*AWS Fargate Pricing*, consultada el 2026-10-19).
+- 2026-10-19: `verification_status: verified` (sin VERIFY pendientes).

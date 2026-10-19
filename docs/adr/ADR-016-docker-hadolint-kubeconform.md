@@ -31,6 +31,10 @@
 - `make validate-k8s` pasa `-schema-location` con la URL del commit `93153a1458e24e93f386c50f9980d584fcba574b` de `yannh/kubernetes-json-schema` (2026-10-17, «Adding new schemas»), el último de `master` al 2026-10-19, en lugar de `master`. La ruta sigue la plantilla por defecto de kubeconform (`{{.NormalizedKubernetesVersion}}-standalone{{.StrictSuffix}}/{{.ResourceKind}}{{.KindSuffix}}.json`); `v1.37.0-standalone-strict` existe en ese commit.
 - Actualizar los esquemas es cambiar el commit en `K8S_SCHEMAS` (Makefile) y en este ADR.
 
+## Actualización (revisión de 13, 2026-10-19)
+
+- `K8S_VERSION ?= 1.37.1`: el commit `93153a1` tiene `v1.37.1-standalone-strict`, así que kubeconform valida contra el parche vigente según *Releases* (1.37.1, del 2026-09-15) en lugar de 1.37.0.
+
 ## Consecuencias
 
 - Dependencias nuevas solo de la CI (dos binarios); Docker ya estaba. Los tests de Docker suman tiempo a `make test` por la descarga de imágenes.
