@@ -16,6 +16,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 ## Actual
 - **Tarea activa:** B-F3.1 del lote F3b-13a. Revisión en `docs/reviews/cards-f3b-13a.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas: el mínimo de 1 minuto de Fargate (media); el redondeo hacia arriba de Cloud Run y la cita completa de la caché de Docker (baja). El lote 13b va en otra rama.
+- **Tarea activa:** B-F3.1 del lote F3b-13b. Revisión en `docs/reviews/cards-f3b-13b.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: 1.37.1 frente a los esquemas 1.37.0, AWS CLI 2.38.2 y el mínimo de 1 minuto de Fargate. Propuesta baja: el redondeo hacia arriba de Cloud Run. El lote 13a está en `b/f3b-review-13a`.
 - **Bloqueos:** ninguno. `make` no está en el PATH; `scripts/validate.py` con `.venv` terminó OK (476 entidades).
 - **Tarea activa:** B-F3.1 del lote F3b-12a. Revisión en `docs/reviews/cards-f3b-12a.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. El lote 12b va en otra rama.
@@ -60,6 +62,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ### B-F3.1 · lote F3b-13a
 - Cinco fichas de contenedores. Los textos que la ficha dice ejecutados están en `tests/test_docker_snippets.py`. OCI queda en la definición de imagen. Propuestas: mínimo de 1 minuto en Fargate, redondeo hacia arriba en Cloud Run y la cita de la caché con «as well». No se editó `content/` ni `frontend/`.
+### B-F3.1 · lote F3b-13b
+- Cuatro fichas de Compose, registries, Kubernetes y plataformas. Compose y el tag mutable están en el test de Docker. Los manifiestos dicen validados con kubeconform y no aplicados. Serverless y Kubernetes administrado quedan separados. Propuestas: el parche 1.37.1, AWS CLI 2.38.2, el mínimo de Fargate y el redondeo de Cloud Run. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-12a
 - Cuatro fichas de Terraform en uso. El apply sin nube, cfn-lint, `bicep build` y las frases de sensitive, workspaces y Bicep, comprobados contra los tests y las páginas. No se editó `content/` ni `frontend/`.
@@ -291,6 +295,8 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 
 ### B-F3.1 · lote F3b-13a (2026-10-19)
 - Revisión de las 5 fichas de fundamentos de contenedores. Una propuesta media (mínimo de 1 minuto de Fargate) y dos bajas (redondeo de Cloud Run y cita de la caché). El Docker de la CI coincide con los tests. No se editó `content/`.
+### B-F3.1 · lote F3b-13b (2026-10-19)
+- Revisión de Compose, registries, Kubernetes y plataformas. Tres propuestas media (versión 1.37.1, AWS CLI 2.38.2, mínimo de Fargate) y una baja (redondeo de Cloud Run). No se editó `content/`.
 
 ### B-F3.1 · lote F3b-12a (2026-10-19)
 - Revisión de las 4 fichas de Terraform en uso. Sin hallazgos. El test guarda el secreto en el state y la CLI lo oculta. Las fichas verificadas solo agregan los enlaces previstos. No se editó `content/`.
