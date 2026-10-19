@@ -138,6 +138,13 @@
           "entity_type": "concept",
           "origin": "entity",
           "note": "El job escribe por partición de fecha."
+        },
+        {
+          "slug": "topics-and-partitions",
+          "title": "Topics y particiones",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "La misma idea de repartir por clave, aplicada al almacenamiento."
         }
       ]
     },

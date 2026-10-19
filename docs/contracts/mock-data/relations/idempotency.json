@@ -171,8 +171,8 @@
           "slug": "delivery-semantics",
           "title": "At-most-once y at-least-once",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Con at-least-once, el destino debe ser idempotente."
         },
         {
           "slug": "azure-functions-for-data",

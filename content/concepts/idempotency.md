@@ -74,6 +74,9 @@ relations:
   - type: RELATED_TO
     target: retries
     note: "Retries."
+  - type: RELATED_TO
+    target: delivery-semantics
+    note: "At-least-once necesita un destino idempotente."
 created_at: 2026-09-28
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -194,7 +197,7 @@ La idempotencia cuesta: más almacenamiento (staging, identificadores), `MERGE` 
 - `change-data-capture`: el CDC reenvía cambios; el destino debe tolerarlo.
 - `dead-letter-queue`: complemento de los reintentos para mensajes que nunca se procesan.
 - Con ficha: `retries`, `backfill`, `replay`.
-- Del blueprint, pendiente de ficha: `delivery-semantics`.
+- `delivery-semantics`: at-least-once, que obliga a un destino idempotente.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -229,3 +232,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `retries`, `backfill`, `replay`, que ya tienen ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `backfill`, `replay`, `retries`.
+- 2026-10-19: lote F3b-14a (regla del §17): relations y el §17 enlazan `delivery-semantics`, que ya tiene ficha; antes figuraba como pendiente de ficha.

@@ -108,6 +108,12 @@ relations:
   - type: RELATED_TO
     target: replay
     note: Seek permite reentregar mensajes desde un snapshot o un timestamp.
+  - type: RELATED_TO
+    target: delivery-semantics
+    note: "At-most-once y at-least-once en general."
+  - type: RELATED_TO
+    target: event-ordering
+    note: "El orden por clave en otros brokers."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -275,7 +281,9 @@ At-least-once es simple y de menor latencia, pero exige idempotencia. Exactly-on
 - `dead-letter-queue`: el límite de intentos.
 - `retries`: la política de reentrega.
 - `replay`: seek a un snapshot o a un timestamp.
-- Del blueprint, pendientes de ficha: `delivery-semantics`, `exactly-once-semantics`, `event-ordering`.
+- `delivery-semantics`: at-most-once y at-least-once, más allá de Pub/Sub.
+- `event-ordering`: el orden por clave en Kafka, Kinesis y Event Hubs.
+- Del blueprint, pendiente de ficha: `exactly-once-semantics`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -307,3 +315,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
 - 2026-10-01: §10 reemplazada por un consumidor real de Pub/Sub (google-cloud-pubsub, streaming pull) con upsert idempotente en PostgreSQL (psycopg 3) y requisitos exactos; antes era un esquema que llamaba a `parse` y `upsert_customer` sin definirlas.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-19: lote F3b-14a (regla del §17): relations y el §17 enlazan `delivery-semantics`, `event-ordering`, que ya tienen ficha; antes figuraban como pendientes de ficha.

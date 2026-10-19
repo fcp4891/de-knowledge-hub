@@ -45,6 +45,9 @@ relations:
   - type: RELATED_TO
     target: retries
     note: "Retries."
+  - type: RELATED_TO
+    target: delivery-semantics
+    note: "At-least-once: lo que no se puede procesar va aparte."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -159,7 +162,7 @@ Resiliencia y trazabilidad del flujo, a cambio de un proceso operativo más (mon
 - `idempotency`: requisito de los reintentos y del redrive.
 - `batch-vs-streaming`: la DLQ es típica del streaming.
 - Con ficha: `retries`, `replay`, `pubsub-delivery-semantics`.
-- Del blueprint, pendiente de ficha: `delivery-semantics`.
+- `delivery-semantics`: at-least-once y qué hacer con lo que no se puede procesar.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -192,3 +195,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendientes de ficha a `retries`, `replay`, `pubsub-delivery-semantics`, que ya tienen ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `pubsub-delivery-semantics`, `replay`, `retries`.
+- 2026-10-19: lote F3b-14a (regla del §17): relations y el §17 enlazan `delivery-semantics`, que ya tiene ficha; antes figuraba como pendiente de ficha.

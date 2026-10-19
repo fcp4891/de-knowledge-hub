@@ -28,6 +28,13 @@
           "note": null
         },
         {
+          "slug": "delivery-semantics",
+          "title": "At-most-once y at-least-once",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "At-least-once: lo que no se puede procesar va aparte."
+        },
+        {
           "slug": "batch-vs-streaming",
           "title": "Batch vs streaming",
           "entity_type": "concept",
