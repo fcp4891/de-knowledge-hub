@@ -50,6 +50,9 @@ relations:
   - type: RELATED_TO
     target: python-error-handling-and-retries
     note: "Manejo de errores y reintentos en Python."
+  - type: RELATED_TO
+    target: exactly-once-semantics
+    note: "Exactly-once por componente: broker, procesador y sink."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -181,7 +184,7 @@ Más intentos y esperas más largas aumentan la probabilidad de éxito, a cambio
 - `pubsub-delivery-semantics`: reentrega y política de reintento en Pub/Sub.
 - Con ficha: `python-error-handling-and-retries`.
 - `failure-recovery`: cómo se combinan reintentos, checkpoints, DLQ, replay y backfill para volver a un estado correcto.
-- Del blueprint, pendiente de ficha: `exactly-once-semantics`.
+- `exactly-once-semantics`: exactly-once por componente, con su alcance.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -213,3 +216,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: §17 enlaza `failure-recovery`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `failure-recovery`, `python-error-handling-and-retries`.
+- 2026-10-19: lote F3b-14b (regla del §17): relations y el §17 enlazan `exactly-once-semantics`, que ya tiene ficha; antes figuraba como pendiente de ficha.

@@ -12,7 +12,7 @@ from backend.content import validate as v
 from scripts.generators import sources, technologies
 
 ROOT = Path(__file__).resolve().parent.parent
-F0_STUBS = ("debezium", "apache-kafka", "gcp-datastream")
+F0_STUBS = ("debezium", "apache-kafka", "gcp-datastream", "apache-flink")  # escritos a mano (F0 y apache-flink de F3b-14b)
 
 
 @pytest.fixture

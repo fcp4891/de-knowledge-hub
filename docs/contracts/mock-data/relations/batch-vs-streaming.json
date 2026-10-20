@@ -75,6 +75,27 @@
           "entity_type": "concept",
           "origin": "entity",
           "note": "El mismo pipeline de Beam procesa PCollections acotadas (batch) o no acotadas (streaming)."
+        },
+        {
+          "slug": "event-time-vs-processing-time",
+          "title": "Tiempo de evento y tiempo de procesamiento",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Tiempo de evento frente a tiempo de procesamiento."
+        },
+        {
+          "slug": "windowing",
+          "title": "Ventanas",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Ventanas tumbling, sliding y de sesión."
+        },
+        {
+          "slug": "watermarks",
+          "title": "Watermarks",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Cuándo se cierra una ventana en tiempo de evento."
         }
       ]
     }

@@ -58,6 +58,15 @@ relations:
   - type: RELATED_TO
     target: late-arriving-data
     note: "Datos que llegan tarde."
+  - type: RELATED_TO
+    target: event-time-vs-processing-time
+    note: "Tiempo de evento frente a tiempo de procesamiento."
+  - type: RELATED_TO
+    target: windowing
+    note: "Ventanas tumbling, sliding y de sesión."
+  - type: RELATED_TO
+    target: watermarks
+    note: "Cuándo se cierra una ventana en tiempo de evento."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -170,7 +179,10 @@ El batch es más barato, más simple de operar y de reprocesar, pero tiene más 
 - `change-data-capture`: convierte una base en un flujo.
 - `dead-letter-queue`, `idempotency`: requisitos del streaming confiable.
 - Con ficha: `late-arriving-data`.
-- Del blueprint, pendientes de ficha: `event-time-vs-processing-time`, `windowing`, `watermarks`, `lambda-architecture`, `kappa-architecture`.
+- `event-time-vs-processing-time`: tiempo de evento y tiempo de procesamiento.
+- `windowing`: ventanas tumbling, sliding y de sesión.
+- `watermarks`: cuándo se da por cerrada una ventana en tiempo de evento.
+- Del blueprint, pendientes de ficha: `lambda-architecture`, `kappa-architecture`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -203,3 +215,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `late-arriving-data`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `late-arriving-data`.
+- 2026-10-19: lote F3b-14b (regla del §17): relations y el §17 enlazan `event-time-vs-processing-time`, `windowing`, `watermarks`, que ya tienen ficha; antes figuraban como pendientes de ficha.

@@ -1,5 +1,5 @@
 {
-  "total": 92,
+  "total": 93,
   "limit": 500,
   "offset": 0,
   "items": [
@@ -17,6 +17,17 @@
     {
       "slug": "apache-beam",
       "title": "Apache Beam",
+      "type": "technology",
+      "origin": "open-source",
+      "category": "data-processing",
+      "classification": "modern",
+      "mvp": false,
+      "stub": true,
+      "verification_status": "review_required"
+    },
+    {
+      "slug": "apache-flink",
+      "title": "Apache Flink",
       "type": "technology",
       "origin": "open-source",
       "category": "data-processing",

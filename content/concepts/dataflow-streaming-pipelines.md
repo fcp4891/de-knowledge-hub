@@ -61,6 +61,9 @@ relations:
   - type: RELATED_TO
     target: streaming-ingestion
     note: La ingesta continua que estos pipelines procesan.
+  - type: RELATED_TO
+    target: watermarks
+    note: "Cuándo se cierra una ventana en tiempo de evento."
 created_at: 2026-10-11
 updated_at: 2026-10-13
 last_verified: 2026-10-12
@@ -232,7 +235,8 @@ Las ventanas por tiempo de evento dan resultados correctos aunque los datos lleg
 - `pubsub-delivery-semantics`: la entrega de Pub/Sub.
 - `checkpoints`: el estado y la recuperación en streaming.
 - `late-arriving-data` y `streaming-ingestion`: datos tardíos e ingesta continua.
-- Del blueprint, pendientes de ficha: `watermarks` y `streaming-pipeline-architecture` (arquitectura de F4).
+- `watermarks`: cuándo se da por cerrada una ventana en tiempo de evento.
+- Del blueprint, pendiente de ficha: `streaming-pipeline-architecture` (arquitectura de F4).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -261,3 +265,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-12: revisión B-F3.1 del lote F3b-08c aplicada (docs/reviews/cards-f3b-08c.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-12: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-19: lote F3b-14b (regla del §17): relations y el §17 enlazan `watermarks`, que ya tiene ficha; antes figuraba como pendiente de ficha.

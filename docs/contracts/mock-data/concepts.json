@@ -3527,9 +3527,9 @@
       "level": "advanced",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-19"
     },
     {
       "slug": "event-time-vs-processing-time",
@@ -3541,9 +3541,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-19"
     },
     {
       "slug": "watermarks",
@@ -3555,9 +3555,9 @@
       "level": "advanced",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-19"
     },
     {
       "slug": "windowing",
@@ -3569,9 +3569,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-19"
     },
     {
       "slug": "stateful-stream-processing",
@@ -3583,9 +3583,9 @@
       "level": "advanced",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-19"
     },
     {
       "slug": "backpressure",
@@ -3597,9 +3597,9 @@
       "level": "advanced",
       "importance": "low",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-19"
     },
     {
       "slug": "spark-structured-streaming",
@@ -3611,9 +3611,9 @@
       "level": "advanced",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-19"
     },
     {
       "slug": "data-quality-dimensions",

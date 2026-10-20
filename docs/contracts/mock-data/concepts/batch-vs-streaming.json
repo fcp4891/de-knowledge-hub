@@ -206,7 +206,7 @@
       "number": 17,
       "key": "related_concepts",
       "title": "Conceptos relacionados",
-      "markdown": "- `change-data-capture`: convierte una base en un flujo.\n- `dead-letter-queue`, `idempotency`: requisitos del streaming confiable.\n- Con ficha: `late-arriving-data`.\n- Del blueprint, pendientes de ficha: `event-time-vs-processing-time`, `windowing`, `watermarks`, `lambda-architecture`, `kappa-architecture`."
+      "markdown": "- `change-data-capture`: convierte una base en un flujo.\n- `dead-letter-queue`, `idempotency`: requisitos del streaming confiable.\n- Con ficha: `late-arriving-data`.\n- `event-time-vs-processing-time`: tiempo de evento y tiempo de procesamiento.\n- `windowing`: ventanas tumbling, sliding y de sesión.\n- `watermarks`: cuándo se da por cerrada una ventana en tiempo de evento.\n- Del blueprint, pendientes de ficha: `lambda-architecture`, `kappa-architecture`."
     },
     {
       "number": 18,
@@ -236,7 +236,7 @@
       "number": 22,
       "key": "change_history",
       "title": "Historial de cambios importantes",
-      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: VERIFY resuelto: modos de capacidad y retención de Kinesis Data Streams.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `late-arriving-data`, que ya tiene ficha.\n- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.\n- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `late-arriving-data`."
+      "markdown": "- 2026-09-30: creación (lote 1 de F3).\n- 2026-09-30: revisión B-F3.1 aplicada (docs/reviews/cards-lote1.md): relaciones completas, seguridad, observabilidad y costo, notas de fuentes y ejemplos corregidos.\n- 2026-09-30: VERIFY resuelto: modos de capacidad y retención de Kinesis Data Streams.\n- 2026-09-30: `verification_status: verified` (revisión B-F3.1 aprobada y aplicada; VERIFY resueltos).\n- 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `late-arriving-data`, que ya tiene ficha.\n- 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.\n- 2026-10-14: lote F3b-rel (regla del §17): relations incluye `late-arriving-data`.\n- 2026-10-19: lote F3b-14b (regla del §17): relations y el §17 enlazan `event-time-vs-processing-time`, `windowing`, `watermarks`, que ya tienen ficha; antes figuraban como pendientes de ficha."
     }
   ]
 }

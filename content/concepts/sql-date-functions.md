@@ -73,6 +73,9 @@ relations:
   - type: RELATED_TO
     target: partition-pruning
     note: "Particionar por fecha."
+  - type: RELATED_TO
+    target: event-time-vs-processing-time
+    note: "Tiempo de evento frente a tiempo de procesamiento."
 created_at: 2026-10-05
 updated_at: 2026-10-13
 last_verified: 2026-10-07
@@ -209,7 +212,7 @@ Guardar solo UTC simplifica la integración entre sistemas, a cambio de converti
 - `late-arriving-data`: eventos que llegan después del día al que pertenecen.
 - `partitioning` y `partition-pruning`: particionar por fecha.
 - `sql-advanced-select`: agregaciones por día.
-- Del blueprint, pendiente de ficha: `event-time-vs-processing-time`.
+- `event-time-vs-processing-time`: tiempo de evento y tiempo de procesamiento.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -242,3 +245,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `partition-pruning`.
+- 2026-10-19: lote F3b-14b (regla del §17): relations y el §17 enlazan `event-time-vs-processing-time`, que ya tiene ficha; antes figuraba como pendiente de ficha.

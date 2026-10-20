@@ -87,6 +87,9 @@ relations:
   - type: RELATED_TO
     target: delivery-semantics
     note: "La semántica de entrega de la ingesta."
+  - type: RELATED_TO
+    target: event-time-vs-processing-time
+    note: "Tiempo de evento frente a tiempo de procesamiento."
 created_at: 2026-10-05
 updated_at: 2026-10-13
 last_verified: 2026-10-05
@@ -226,7 +229,7 @@ Frescura de segundos y carga repartida, a cambio de operar componentes siempre e
 - `late-arriving-data`: qué hacer con lo tardío.
 - `deduplication`: cómo eliminar los duplicados de la entrega at-least-once.
 - `delivery-semantics`: at-most-once y at-least-once en la ingesta.
-- Del blueprint, pendiente de ficha: `event-time-vs-processing-time`.
+- `event-time-vs-processing-time`: tiempo de evento y tiempo de procesamiento.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -257,3 +260,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-05: revisión B-F3.1 del lote 6 aplicada (docs/reviews/cards-lote6.md), sin cambios pedidos. `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-19: lote F3b-14a (regla del §17): relations y el §17 enlazan `delivery-semantics`, que ya tiene ficha; antes figuraba como pendiente de ficha.
+- 2026-10-19: lote F3b-14b (regla del §17): relations y el §17 enlazan `event-time-vs-processing-time`, que ya tiene ficha; antes figuraba como pendiente de ficha.

@@ -1,6 +1,6 @@
 {
   "query": "streaming",
-  "total": 17,
+  "total": 20,
   "groups": [
     {
       "type": "concept",
@@ -16,6 +16,16 @@
           "score": 6.3
         },
         {
+          "slug": "spark-structured-streaming",
+          "title": "Spark Structured Streaming",
+          "type": "concept",
+          "domain": "streaming",
+          "classification": "modern",
+          "has_page": true,
+          "snippet": "Cómo trabaja Spark Structured Streaming según la guía de Spark 4.2.0: una consulta sobre una tabla que crece, en micro-batches (desde unos 100 ms) o en modo continuo (desde 1 ms, at-least-once); modos",
+          "score": 6.3
+        },
+        {
           "slug": "event-hubs-streaming",
           "title": "Streaming con Event Hubs",
           "type": "concept",
@@ -24,16 +34,6 @@
           "has_page": true,
           "snippet": "Cómo funciona Azure Event Hubs según su documentación: plataforma de streaming administrada con compatibilidad con Apache Kafka, particiones con partition key (hash estático) o asignación round-robin,",
           "score": 6.3
-        },
-        {
-          "slug": "spark-structured-streaming",
-          "title": "Spark Structured Streaming",
-          "type": "concept",
-          "domain": "streaming",
-          "classification": "modern",
-          "has_page": false,
-          "snippet": "Spark Structured Streaming",
-          "score": 6.0
         },
         {
           "slug": "batch-vs-streaming",
@@ -54,6 +54,16 @@
           "has_page": true,
           "snippet": "Ingerir eventos de forma continua, a medida que se producen: brokers (Pub/Sub, Kafka, Kinesis, Event Hubs), entrega al menos una vez, tiempo de evento, ventanas y watermarks, escritura a BigQuery o al",
           "score": 5.8
+        },
+        {
+          "slug": "backpressure",
+          "title": "Backpressure",
+          "type": "concept",
+          "domain": "streaming",
+          "classification": "core",
+          "has_page": true,
+          "snippet": "Qué es la backpressure según Flink 2.3: un operador produce más rápido de lo que el siguiente consume y la presión se propaga hacia la fuente; Flink la mide por subtarea (OK, LOW, HIGH). En Spark Stru",
+          "score": 1.8
         },
         {
           "slug": "checkpoints",
@@ -83,6 +93,36 @@
           "classification": "core",
           "has_page": true,
           "snippet": "Registros cuyo tiempo de evento pertenece a un período que el pipeline ya procesó o cerró; cómo detectarlos y reincorporarlos en batch y en streaming.",
+          "score": 1.8
+        },
+        {
+          "slug": "stateful-stream-processing",
+          "title": "Procesamiento con estado",
+          "type": "concept",
+          "domain": "streaming",
+          "classification": "core",
+          "has_page": true,
+          "snippet": "Qué es el estado en streaming según Flink 2.3: operaciones que recuerdan información entre eventos (ventanas, agregados, patrones), guardada por clave y protegida con checkpoints, que junto con releer",
+          "score": 1.8
+        },
+        {
+          "slug": "windowing",
+          "title": "Ventanas",
+          "type": "concept",
+          "domain": "streaming",
+          "classification": "core",
+          "has_page": true,
+          "snippet": "Cómo se agrupa un stream en ventanas de tiempo según Spark 4.2.0 y Flink 2.3: tumbling (tamaño fijo, sin solaparse, cada evento en una), sliding (tamaño fijo con un paso menor, cada evento en varias) ",
+          "score": 1.8
+        },
+        {
+          "slug": "watermarks",
+          "title": "Watermarks",
+          "type": "concept",
+          "domain": "streaming",
+          "classification": "core",
+          "has_page": true,
+          "snippet": "Qué es una watermark en streaming según Spark 4.2.0 y Flink 2.3: la marca de cuánto avanzó el tiempo de evento, que en Spark es el máximo tiempo visto menos un umbral. Hasta ella se aceptan datos tard",
           "score": 1.8
         },
         {
@@ -118,16 +158,6 @@
           "classification": "modern",
           "has_page": false,
           "snippet": "Variante de streaming, no una arquitectura de estudio prioritario.",
-          "score": 1.0
-        },
-        {
-          "slug": "real-time-analytics-architecture",
-          "title": "Real-time analytics",
-          "type": "architecture",
-          "domain": "architecture",
-          "classification": "modern",
-          "has_page": false,
-          "snippet": "Es la consulta de baja latencia, no el pipeline de streaming.",
           "score": 1.0
         }
       ]

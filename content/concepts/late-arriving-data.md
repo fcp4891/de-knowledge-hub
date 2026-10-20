@@ -48,6 +48,15 @@ relations:
   - type: DEPENDS_ON
     target: idempotency
     note: Reprocesar un período para incluir datos tardíos debe ser idempotente.
+  - type: RELATED_TO
+    target: event-time-vs-processing-time
+    note: "Tiempo de evento frente a tiempo de procesamiento."
+  - type: RELATED_TO
+    target: watermarks
+    note: "Cuándo se cierra una ventana en tiempo de evento."
+  - type: RELATED_TO
+    target: windowing
+    note: "Ventanas tumbling, sliding y de sesión."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -174,7 +183,9 @@ Esperar más aumenta la completitud y retrasa los resultados. Aceptar correccion
 - `backfill`: reproceso de períodos afectados.
 - `partitioning`: la partición por fecha de evento define dónde cae el dato tardío.
 - `idempotency`: requisito para reprocesar sin duplicar.
-- Del blueprint, pendientes de ficha: `event-time-vs-processing-time`, `watermarks`, `windowing`.
+- `event-time-vs-processing-time`: tiempo de evento y tiempo de procesamiento.
+- `watermarks`: cuándo se da por cerrada una ventana en tiempo de evento.
+- `windowing`: ventanas tumbling, sliding y de sesión.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -203,3 +214,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-09-30: creación (lote 2 de F3).
 - 2026-09-30: `verification_status: verified` (revisión B-F3.1 del lote 2 aplicada; sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-19: lote F3b-14b (regla del §17): relations y el §17 enlazan `event-time-vs-processing-time`, `watermarks`, `windowing`, que ya tienen ficha; antes figuraban como pendientes de ficha.

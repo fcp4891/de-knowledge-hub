@@ -339,8 +339,8 @@
           "slug": "exactly-once-semantics",
           "title": "Exactly-once y sus matices",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Un sink idempotente es la pieza que cierra la garantía."
         },
         {
           "slug": "gitops",

@@ -75,6 +75,9 @@ relations:
   - type: RELATED_TO
     target: checkpoints
     note: "Guardar hasta dónde se procesó para reanudar sin repetir."
+  - type: RELATED_TO
+    target: watermarks
+    note: "Otra idea con el mismo nombre: la watermark de streaming, no la marca de progreso de esta ficha."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -241,7 +244,8 @@ El estado por intervalo es simple y repetible, pero requiere que el origen se pu
 - `change-data-capture`: fuente de deltas completos, incluidos borrados.
 - `backfill`: reejecutar intervalos históricos.
 - `checkpoints`: guardar hasta dónde se procesó para reanudar sin repetir.
-- Del blueprint, pendientes de ficha: `watermarks` y `full-refresh`.
+- `watermarks`: la watermark de streaming, distinta de la marca de progreso de una carga incremental.
+- Del blueprint, pendiente de ficha: `full-refresh`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -274,3 +278,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: §10 alineada con el snippet `bigquery-incremental-merge-watermark`: `CREATE OR REPLACE TEMP TABLE` (revisión B-F3.2 de snippets).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `checkpoints`; el §17 enlaza `checkpoints`, que ya tienen ficha.
+- 2026-10-19: lote F3b-14b (regla del §17): relations y el §17 enlazan `watermarks`, que ya tiene ficha; antes figuraba como pendiente de ficha.
