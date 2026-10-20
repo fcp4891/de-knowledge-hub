@@ -38,7 +38,7 @@ sources:
   - source: gcp-cloud-storage-docs
     url: https://docs.cloud.google.com/python/docs/reference/storage/latest/google.cloud.storage.blob.Blob
     accessed: 2026-10-08
-    page_title: "Class Blob (3.16.0)"
+    page_title: "Class Blob"
     note: "Biblioteca cliente de Python de Cloud Storage: Blob.open() crea un manejador para E/S tipo archivo sobre el blob y se puede usar como administrador de contexto, como open(); al leer sin generation fijada se usa la generación más reciente."
   - source: aws-boto3-docs
     url: https://docs.aws.amazon.com/boto3/latest/reference/services/s3/client/get_object.html
@@ -339,3 +339,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `beam-programming-model`, `pyspark-dataframes`; el §17 nombra `beam-programming-model`, `pyspark-dataframes`, que el cuerpo ya citaba.
+- 2026-10-20: `page_title` sin la versión de parche del SDK (*Class Blob*), según la regla de CLAUDE.md de no citar versiones de parche de SDKs ni CLIs; sin cambios de contenido.

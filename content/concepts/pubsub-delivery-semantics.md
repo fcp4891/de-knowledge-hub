@@ -48,17 +48,17 @@ sources:
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/python/docs/reference/pubsub/latest/google.cloud.pubsub_v1.subscriber.message.Message
     accessed: 2026-10-01
-    page_title: "Class Message (2.42.0)"
+    page_title: "Class Message"
     note: "Message: message_id, data (bytes), attributes y publish_time. ack() confirma; conviene no confirmar hasta terminar de procesar y, como los acks son best effort, el procesamiento debe ser idempotente. nack() rechaza el mensaje para que se reentregue, de inmediato o con demora, a este u otro suscriptor."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/python/docs/reference/pubsub/latest/google.cloud.pubsub_v1.types.FlowControl
     accessed: 2026-10-01
-    page_title: "Class FlowControl (2.42.0)"
+    page_title: "Class FlowControl"
     note: "FlowControl(max_bytes=104857600, max_messages=1000, max_lease_duration=3600, ...): controla el ritmo con el que se obtienen mensajes en una suscripción asíncrona."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/python/docs/reference/pubsub/latest/google.cloud.pubsub_v1.subscriber.client.Client
     accessed: 2026-10-01
-    page_title: "Class Client (2.42.0)"
+    page_title: "Class Client"
     note: "Client.subscribe(subscription, callback, flow_control=..., scheduler=..., ...)."
   - source: psycopg-docs
     url: https://www.psycopg.org/psycopg3/docs/api/connections.html
@@ -320,3 +320,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-19: lote F3b-14a (regla del §17): relations y el §17 enlazan `delivery-semantics`, `event-ordering`, que ya tienen ficha; antes figuraban como pendientes de ficha.
 - 2026-10-19: lote F3b-14b (regla del §17): relations y el §17 enlazan `exactly-once-semantics`, que ya tiene ficha; antes figuraba como pendiente de ficha.
+- 2026-10-20: `page_title` sin la versión de parche del SDK (*Class Message*, *Class FlowControl*, *Class Client*), según la regla de CLAUDE.md de no citar versiones de parche de SDKs ni CLIs; sin cambios de contenido.

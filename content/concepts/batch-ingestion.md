@@ -38,7 +38,7 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/python/docs/reference/bigquery/latest/google.cloud.bigquery.client.Client
     accessed: 2026-10-02
-    page_title: "Class Client (3.46.1)"
+    page_title: "Class Client"
     note: "Client.load_table_from_uri(source_uris, destination, job_config=...) inicia un load job desde Cloud Storage y devuelve un LoadJob."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet
@@ -48,7 +48,7 @@ sources:
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/python/docs/reference/bigquery/latest/google.cloud.bigquery.job.LoadJob
     accessed: 2026-10-02
-    page_title: "Class LoadJob (3.46.1)"
+    page_title: "Class LoadJob"
     note: "LoadJob.output_rows: cantidad de filas guardadas en la tabla destino (None hasta que lo informa el servidor). La biblioteca incluye anotaciones de tipos (py.typed)."
   - source: python-docs
     url: https://docs.python.org/3/library/typing.html
@@ -283,3 +283,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `data-ingestion`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `data-ingestion`.
+- 2026-10-20: `page_title` sin la versión de parche del SDK (*Class Client*, *Class LoadJob*), según la regla de CLAUDE.md de no citar versiones de parche de SDKs ni CLIs; sin cambios de contenido.

@@ -232,14 +232,14 @@ def test_search_flags_pages(client: TestClient) -> None:
     assert plat["data-platform-engineering"]["has_page"] is False   # concepto del blueprint sin ficha (dominio 22)
     parti = {i["slug"]: i for g in get(client, "/search", q="particion").json()["groups"] for i in g["items"]}
     assert parti["partitioning"]["has_page"] is True and parti["topics-and-partitions"]["has_page"] is True  # F3b-14a
-    kafka = {i["slug"]: i for g in get(client, "/search", q="kafka").json()["groups"] for i in g["items"]}
-    assert kafka["kafka-architecture"]["has_page"] is False         # arquitectura del Backlog, sin ficha
+    lam = {i["slug"]: i for g in get(client, "/search", q="lambda").json()["groups"] for i in g["items"]}
+    assert lam["lambda-architecture"]["has_page"] is False          # arquitectura de 07-architecture, sin ficha
 
 
 def test_page_bonus_breaks_ties_in_favor_of_pages(client: TestClient) -> None:
-    items = {i["slug"]: i["score"] for g in get(client, "/search", q="kafka").json()["groups"] for i in g["items"]}
-    # Misma coincidencia en el título ("Apache Kafka" y "Arquitectura Kafka"); gana el que tiene ficha, por PAGE_BONUS.
-    assert items["apache-kafka"] > items["kafka-architecture"]
+    items = {i["slug"]: i["score"] for g in get(client, "/search", q="lambda").json()["groups"] for i in g["items"]}
+    # Misma coincidencia en el título ("AWS Lambda" y "Lambda Architecture"); gana el que tiene ficha, por PAGE_BONUS.
+    assert items["aws-lambda"] > items["lambda-architecture"]
 
 
 def test_search_finds_snippets(client: TestClient) -> None:
