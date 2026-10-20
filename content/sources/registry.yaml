@@ -2709,3 +2709,58 @@ created_at: '2026-10-20'
 updated_at: '2026-10-20'
 last_verified: '2026-10-20'
 verification_status: verified
+---
+id: source:uk-government-data-quality-framework
+slug: uk-government-data-quality-framework
+type: source
+title: The Government Data Quality Framework (GOV.UK, 2020)
+description: 'Marco de calidad de datos del gobierno del Reino Unido (publicado el 3 de diciembre de 2020), que adopta las seis dimensiones de
+  DAMA UK: referencia conceptual canónica (Nivel 4) para definir dimensiones de calidad; no respalda afirmaciones de producto.'
+url: https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework
+source_type: spec_paper
+authority_level: 4
+provider: uk-government
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-20'
+updated_at: '2026-10-20'
+last_verified: '2026-10-20'
+verification_status: verified
+---
+id: source:json-schema-spec
+slug: json-schema-spec
+type: source
+title: JSON Schema Specification (Draft 2020-12)
+description: Especificación oficial de JSON Schema, versión 2020-12 (núcleo y vocabulario de validación), json-schema.org.
+url: https://json-schema.org/draft/2020-12
+source_type: official_docs
+authority_level: 1
+provider: json-schema-org
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-20'
+updated_at: '2026-10-20'
+last_verified: '2026-10-20'
+verification_status: verified
+---
+id: source:python-jsonschema-docs
+slug: python-jsonschema-docs
+type: source
+title: jsonschema (Python) documentation
+description: Documentación oficial de jsonschema, la implementación de JSON Schema para Python.
+url: https://python-jsonschema.readthedocs.io/en/stable/
+source_type: official_docs
+authority_level: 1
+provider: python-jsonschema
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-20'
+updated_at: '2026-10-20'
+last_verified: '2026-10-20'
+verification_status: verified
