@@ -2874,3 +2874,58 @@ created_at: '2026-10-20'
 updated_at: '2026-10-20'
 last_verified: '2026-10-20'
 verification_status: verified
+---
+id: source:google-sre-book
+slug: google-sre-book
+type: source
+title: Site Reliability Engineering (Google, 2016)
+description: 'Libro de Google sobre Site Reliability Engineering, publicado en sre.google: referencia conceptual canónica (Nivel 4) solo para
+  SLI, SLO, SLA, error budget y postmortems; no respalda afirmaciones de producto.'
+url: https://sre.google/sre-book/table-of-contents/
+source_type: spec_paper
+authority_level: 4
+provider: google-sre
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-20'
+updated_at: '2026-10-20'
+last_verified: '2026-10-20'
+verification_status: verified
+---
+id: source:aws-incident-manager-docs
+slug: aws-incident-manager-docs
+type: source
+title: AWS Systems Manager Incident Manager User Guide
+description: Guía oficial de Incident Manager, una herramienta de AWS Systems Manager.
+url: https://docs.aws.amazon.com/incident-manager/latest/userguide/what-is-incident-manager.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-20'
+updated_at: '2026-10-20'
+last_verified: '2026-10-20'
+verification_status: verified
+---
+id: source:microsoft-online-services-sla
+slug: microsoft-online-services-sla
+type: source
+title: Service Level Agreements (SLA) for Online Services
+description: Acuerdos de nivel de servicio de Microsoft para sus servicios en línea, incluido Azure.
+url: https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-20'
+updated_at: '2026-10-20'
+last_verified: '2026-10-20'
+verification_status: verified
