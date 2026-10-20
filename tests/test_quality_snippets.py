@@ -88,7 +88,7 @@ def test_great_expectations_decides_with_the_most_severe_failure(tmp_path: Path)
 
 def test_write_audit_on_iceberg_branch_never_touches_main(tmp_path: Path) -> None:
     require_iceberg()
-    out = run_python_block("write-audit-publish", tmp_path, args=(str(tmp_path / "work"),))
+    out = run_python_block("write-audit-publish", tmp_path, marker="PyIceberg 0.12 y PyArrow", args=(str(tmp_path / "work"),))
     for line in ("audit-1: auditoría pasa; filas en la rama: 3; filas en main: 2",
                  "audit-2: auditoría falla; filas en la rama: 3; filas en main: 2",
                  "ramas: ['audit-1', 'main']", "montos en main: [10.0, 25.0]"):
