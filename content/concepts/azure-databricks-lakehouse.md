@@ -57,9 +57,9 @@ sources:
     note: "Understanding how to create and work with Amazon EMR clusters: un clúster es un conjunto de instancias de EC2; cada instancia es un nodo con un rol (tipo de nodo) y EMR instala en cada tipo los componentes que le corresponden en una aplicación distribuida como Hadoop."
   - source: aws-emr-docs
     url: https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-7140-release.html
-    accessed: 2026-10-12
+    accessed: 2026-10-20
     page_title: "Amazon EMR release 7.14.0"
-    note: "Amazon EMR release 7.14.0: incluye Spark 3.5.8-amzn-0, Hadoop 3.4.2, Iceberg 1.10.1, Delta 3.3.2 y Hudi 1.0.2, entre otras aplicaciones."
+    note: "Amazon EMR release 7.14.0 (consultada el 2026-10-20), columna emr-7.14.0 de la tabla de versiones de aplicaciones: AWS SDK for Java 2.44.5, 1.12.797; Python 3.9, 3.11; Scala 2.12.18; AmazonCloudWatchAgent 1.300032.2-amzn-0; Delta 3.3.2-amzn-3; Flink 1.20.0-amzn-8; Ganglia -; HBase 2.6.4-amzn-2; HCatalog 3.1.3-amzn-24; Hadoop 3.4.2-amzn-2; Hive 3.1.3-amzn-24; Hudi 1.0.2-amzn-3; Hue 4.11.0; Iceberg 1.10.1-amzn-1; JupyterEnterpriseGateway 2.6.0; JupyterHub 1.5.0; Livy 0.8.0-incubating; MXNet -; Mahout -; Oozie 5.2.1; Phoenix 5.3.0; Pig 0.17.0; Presto 0.287-amzn-8; Spark 3.5.8-amzn-0; Sqoop -; TensorFlow 2.19.0; Tez 0.10.2-amzn-22; Trino (PrestoSQL) 479-amzn-2; Zeppelin 0.11.1; ZooKeeper 3.9.3-amzn-7."
   - source: aws-lake-formation-docs
     url: https://docs.aws.amazon.com/lake-formation/latest/dg/what-is-lake-formation.html
     accessed: 2026-10-02
@@ -324,3 +324,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-13: creación (lote F3b-10a).
 - 2026-10-14: revisión B-F3.1 del lote F3b-10a aplicada (docs/reviews/cards-f3b-10a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-14: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-20: lote F3b-15a: la nota de *Amazon EMR release 7.14.0* cita la columna emr-7.14.0 completa, con los sufijos de la tabla (consultada el 2026-10-20); antes recortaba la lista.
