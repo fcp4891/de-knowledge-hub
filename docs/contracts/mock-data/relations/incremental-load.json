@@ -112,6 +112,13 @@
           "note": "En ELT, la carga incremental suele resolverse dentro del warehouse."
         },
         {
+          "slug": "data-freshness",
+          "title": "Freshness",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Una carga incremental atrasada deja la tabla vieja."
+        },
+        {
           "slug": "glue-catalog-and-etl",
           "title": "Glue Data Catalog y Glue ETL",
           "entity_type": "concept",

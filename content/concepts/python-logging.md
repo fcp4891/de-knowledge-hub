@@ -55,6 +55,9 @@ relations:
   - type: RELATED_TO
     target: data-pipeline
     note: Los logs con identificador de ejecución y de lote permiten seguir un pipeline de punta a punta.
+  - type: RELATED_TO
+    target: observability-logs
+    note: Los logs como señal de observabilidad.
 created_at: 2026-10-02
 updated_at: 2026-10-13
 last_verified: 2026-10-04
@@ -230,7 +233,7 @@ Los logs estructurados cuestan un poco más de código y de bytes, a cambio de c
 - `python-error-handling-and-retries`: qué registrar en cada reintento y error.
 - `python-api-consumption`: logging de la ingesta desde APIs.
 - `data-pipeline`: correlación de eventos de una ejecución.
-- Del blueprint, pendiente de ficha: `observability-logs`.
+- `observability-logs`: los logs como señal de observabilidad, con trace_id.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -261,3 +264,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-20: lote F3b-16a (regla del §17): relations y el §17 enlazan `observability-logs`, que ya tiene ficha; antes figuraba como pendiente de ficha.
