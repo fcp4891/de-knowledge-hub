@@ -2691,3 +2691,21 @@ created_at: '2026-10-19'
 updated_at: '2026-10-19'
 last_verified: '2026-10-19'
 verification_status: verified
+---
+id: source:azure-postgresql-docs
+slug: azure-postgresql-docs
+type: source
+title: Azure Database for PostgreSQL documentation
+description: Documentación oficial de Azure Database for PostgreSQL, Microsoft Learn.
+url: https://learn.microsoft.com/en-us/azure/postgresql/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-20'
+updated_at: '2026-10-20'
+last_verified: '2026-10-20'
+verification_status: verified
