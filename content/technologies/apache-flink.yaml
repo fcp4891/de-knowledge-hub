@@ -1,0 +1,22 @@
+id: technology:apache-flink
+slug: apache-flink
+type: technology
+stub: true
+title: Apache Flink
+description: Motor open source de procesamiento de streams con estado, tiempo de evento y checkpoints para tolerancia a fallos.
+vendor: open-source
+category: data-processing
+classification: modern
+mvp: false
+level: advanced
+cloud: [agnostic]
+tags: [streaming, stateful, checkpoints]
+sources:
+  - source: apache-flink-docs
+    url: https://nightlies.apache.org/flink/flink-docs-release-2.3/docs/concepts/stateful-stream-processing/
+    accessed: 2026-10-19
+    page_title: "Stateful Stream Processing"
+created_at: 2026-10-19
+updated_at: 2026-10-19
+last_verified: 2026-10-19
+verification_status: review_required

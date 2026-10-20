@@ -3,7 +3,7 @@
 Crea content/technologies/<slug>.yaml como stubs `review_required`. Es idempotente: nunca
 sobrescribe un archivo existente. content/ es la fuente de verdad; los archivos pudieron
 editarse después de generarse, así que este script solo sirve para crear tecnologías nuevas.
-No incluye los stubs de F0 (debezium, apache-kafka, gcp-datastream), escritos a mano.
+No incluye los stubs de F0 (debezium, apache-kafka, gcp-datastream) ni apache-flink (F3b-14b), escritos a mano.
 
 Uso: python -m scripts.generators.technologies [--out DIR]
 """
