@@ -13,3 +13,7 @@ mypy>=2.4,<3                           # mypy --strict sobre los snippets de bot
 azure-storage-blob>=12.31,<13          # SDK de Blob que usan los snippets de 10-azure; trae sus tipos para mypy --strict
 # 12-infrastructure-as-code (ADR-015): las plantillas de CloudFormation de las fichas se revisan con cfn-lint (make validate-cfn).
 cfn-lint==1.57.2                       # linter de plantillas de CloudFormation (aws-cloudformation/cfn-lint), versión fija; PyPI 2026-10-06
+# 20-open-data-stack (ADR-018): dbt Core contra el postgres:17 de la CI y PyIceberg con catálogo SQLite.
+dbt-core==1.12.6                       # dbt Core (v1), versión fija; PyPI 2026-10-14
+dbt-postgres==1.11.0                   # adaptador de dbt para PostgreSQL, versión fija; PyPI 2026-07-16
+pyiceberg[sql-sqlite,pyarrow,pyiceberg-core]==0.12.0  # tablas Iceberg con catálogo SQL en SQLite; pyiceberg-core para escribir tablas particionadas; PyPI 2026-09-01
