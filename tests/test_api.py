@@ -183,7 +183,7 @@ def top(body: dict[str, Any]) -> str:
     [
         ("idempotencia", "idempotency"),     # español, título en español
         ("idempotency", "idempotency"),      # inglés, vía slug indexado
-        ("particion", "partitioning"),       # sin tilde encuentra "Particionamiento"
+        ("particionamiento", "partitioning"),  # título en español "Particionamiento"
         ("partitioning", "partitioning"),    # inglés
         ("data lake", "data-lake"),          # coincidencia exacta gana a "Arquitectura Data Lake"
         ("bigquery", "gcp-bigquery"),
@@ -191,6 +191,12 @@ def top(body: dict[str, Any]) -> str:
 )
 def test_search_ranking(client: TestClient, query: str, expected_top: str) -> None:
     assert top(get(client, "/search", q=query).json()) == expected_top
+
+
+def test_search_ignores_accents(client: TestClient) -> None:
+    # "particion" y "partición" dan el mismo resultado; desde 14a, "Topics y particiones" compite con "Particionamiento".
+    assert slugs(get(client, "/search", q="particion").json()) == slugs(get(client, "/search", q="partición").json())
+    assert {"partitioning", "topics-and-partitions"} <= set(slugs(get(client, "/search", q="particion").json()))
 
 
 def test_search_ignores_substring_inside_words(client: TestClient) -> None:
@@ -225,13 +231,15 @@ def test_search_flags_pages(client: TestClient) -> None:
     plat = {i["slug"]: i for g in get(client, "/search", q="plataforma de datos").json()["groups"] for i in g["items"]}
     assert plat["data-platform-engineering"]["has_page"] is False   # concepto del blueprint sin ficha (dominio 22)
     parti = {i["slug"]: i for g in get(client, "/search", q="particion").json()["groups"] for i in g["items"]}
-    assert parti["partitioning"]["has_page"] is True and parti["topics-and-partitions"]["has_page"] is False
+    assert parti["partitioning"]["has_page"] is True and parti["topics-and-partitions"]["has_page"] is True  # F3b-14a
+    kafka = {i["slug"]: i for g in get(client, "/search", q="kafka").json()["groups"] for i in g["items"]}
+    assert kafka["kafka-architecture"]["has_page"] is False         # arquitectura del Backlog, sin ficha
 
 
 def test_page_bonus_breaks_ties_in_favor_of_pages(client: TestClient) -> None:
-    items = {i["slug"]: i["score"] for g in get(client, "/search", q="particion").json()["groups"] for i in g["items"]}
-    # Mismo texto de coincidencia; antes empataban. Ahora gana el que tiene ficha.
-    assert items["partitioning"] > items["topics-and-partitions"]
+    items = {i["slug"]: i["score"] for g in get(client, "/search", q="kafka").json()["groups"] for i in g["items"]}
+    # Misma coincidencia en el título ("Apache Kafka" y "Arquitectura Kafka"); gana el que tiene ficha, por PAGE_BONUS.
+    assert items["apache-kafka"] > items["kafka-architecture"]
 
 
 def test_search_finds_snippets(client: TestClient) -> None:
