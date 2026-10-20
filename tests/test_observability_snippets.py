@@ -4,6 +4,7 @@
 - observability-logs, observability-metrics y observability-traces: OpenTelemetry SDK con exporters en memoria,
   sin collector (ADR-020).
 - data-freshness y schema-change-detection: psycopg contra una base temporal en el PostgreSQL de la CI.
+- pipeline-health, data-sla, data-slo, alerting, incident-response y root-cause-analysis: solo biblioteca estándar.
 """
 
 from __future__ import annotations
@@ -85,5 +86,31 @@ def test_schema_change_detects_added_removed_and_modified(pg_env: dict[str, str]
     for line in ("sin cambios contra sí misma: True", "agregada canal text",
                  "cambió monto: ('numeric', 'YES') -> ('bigint', 'YES')",
                  "cambió tienda: ('text', 'YES') -> ('text', 'NO')", "quitada cupon"):
+        assert line in out, out
+    assert_mypy_strict(tmp_path)
+
+
+RELIABILITY = {
+    "pipeline-health": ["ventas_diarias: amarillo (última corrida 98 min vs mediana 30)",
+                        "clientes: rojo (éxito 43%; sin éxito hace 79 h)", "inventario: verde"],
+    "data-sla": ["SLO interno (antes de 07:45 en el 95 %): 86.4% -> no cumple",
+                 "SLA (antes de 08:00 en el 90 %): 90.9% -> cumple", "sin consecuencia del SLA; el SLO avisó antes"],
+    "data-slo": ["SLI: 0.9931 (SLO 0.99) -> cumple", "error budget: 7.2 horas malas permitidas; consumidas 5; quedan 2.2",
+                 "burn rate 30 días: 0.69", "burn rate últimas 24 h: 8.33"],
+    "alerting": ["min 310: ABRE alerta (burn 5 min 100, 60 min 17)", "min 395: cierra alerta",
+                 "alertas abiertas en total: 1"],
+    "incident-response": ["severidad: SEV2", "tiempo hasta detectar: 35 min", "tiempo hasta reconocer: 7 min",
+                          "tiempo hasta mitigar: 55 min", "tiempo hasta resolver: 210 min",
+                          "consumidores avisados antes de mitigar: True"],
+    "root-cause-analysis": ["errores: 3 en etapas {'transform': 1, 'load': 1, 'publish': 1}",
+                            "primer error: transform a las 06:02: monto sin decimales: margen 0",
+                            "cambio previo (20 min antes de la corrida): schema cambió: monto numeric -> bigint en raw_pedidos"],
+}
+
+
+@pytest.mark.parametrize("ficha", sorted(RELIABILITY))
+def test_reliability_examples_print_their_measurements(ficha: str, tmp_path: Path) -> None:
+    out = run_python_block(ficha, tmp_path, UTF8)
+    for line in RELIABILITY[ficha]:
         assert line in out, out
     assert_mypy_strict(tmp_path)
