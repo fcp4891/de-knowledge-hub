@@ -161,6 +161,7 @@ flowchart LR
 # de 1 hora por tiempo de evento con watermark de 15 minutos y escribe en Parquet con checkpoint. Una segunda corrida
 # con archivos nuevos retoma desde el checkpoint.
 import json
+import os
 import sys
 import tempfile
 from pathlib import Path
@@ -176,6 +177,8 @@ src.mkdir(parents=True, exist_ok=True)
 def land(name: str, orders: list[tuple[str, str, float | None]]) -> None:
     rows = [json.dumps({"tienda": t, "event_time": f"2026-10-19 {h}:00", "monto": m}) for t, h, m in orders]
     (src / name).write_text("\n".join(rows), encoding="utf-8")
+    stamp = 1_800_000_000 + len(list(src.iterdir()))   # la fuente procesa por fecha de modificación
+    os.utime(src / name, (stamp, stamp))
 
 
 spark = (SparkSession.builder.master("local[2]").config("spark.sql.shuffle.partitions", "2")
@@ -292,3 +295,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-19: creación (lote F3b-14b).
+- 2026-10-19: §10: el ejemplo fija la fecha de modificación de cada archivo, porque la fuente procesa en ese orden y la watermark depende de él.

@@ -116,7 +116,7 @@ Un conteo por ventanas de 10 minutos sin watermark tiene que guardar todas las v
 
 ## 7. Ejemplo sencillo
 
-Ventanas de 10 minutos y watermark de 10 minutos, en tres micro-batches. El primero trae eventos de 10:01, 10:04 y 10:12: la watermark queda en 10:02. El segundo trae uno de 10:07, que entra en la ventana de las 10:00 porque esa ventana sigue abierta, y uno de 10:26. El tercero trae uno de 10:03 cuando la watermark ya está en 10:16, y se descarta. La ventana de las 10:00 se cierra con 3 eventos.
+Ventanas de 10 minutos y watermark de 10 minutos, en cuatro micro-batches. El primero trae eventos de 10:01, 10:04 y 10:12: la watermark queda en 10:02. El segundo trae uno de 10:07, que entra en la ventana de las 10:00 porque llega dentro del umbral, y uno de 10:26, que lleva la watermark a 10:16. La ventana de las 10:00 se emite con 3 eventos. El cuarto micro-batch trae un evento de 10:02 cuando esa ventana ya se emitió: no aparece en ningún resultado.
 
 ## 8. Ejemplo de producción
 
@@ -132,59 +132,65 @@ Ventas por hora con datos de tiendas:
 ```mermaid
 flowchart LR
   B1["batch 1: máx 10:12<br/>watermark 10:02"] --> B2["batch 2: 10:07 entra<br/>máx 10:26 → watermark 10:16"]
-  B2 --> C["ventana 10:00 cerrada<br/>con 3 eventos"]
-  B2 --> B3["batch 3: 10:03 llega tarde<br/>(descartado)"]
+  B2 --> C["ventana 10:00 emitida<br/>con 3 eventos"]
+  C --> B4["batch 4: 10:02 llega<br/>después de emitida la ventana"]
 ```
 
 ## 10. Código
 
 ```python
 # Python 3.12 y PySpark 4.2.0 en modo local (ejecutado en la CI con Java 17): conteo por ventanas de 10 minutos por
-# tiempo de evento, con watermark de 10 minutos. Cada archivo es un micro-batch (maxFilesPerTrigger=1). Un evento que
-# llega con más atraso que la watermark se descarta; en modo append, una ventana se emite cuando la watermark la pasa.
+# tiempo de evento, con watermark de 10 minutos y modo append. Cada archivo es un micro-batch (maxFilesPerTrigger=1),
+# en el orden de su fecha de modificación. Un evento tardío dentro del umbral se cuenta; una ventana se emite una sola
+# vez, cuando la watermark la pasa; un evento que llega después de emitida su ventana no cambia ese resultado.
 import json
+import os
 import sys
 import tempfile
 from pathlib import Path
 
-from pyspark.sql import SparkSession
+from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql import functions as F
 
-BATCHES = [   # (archivo, eventos con su tiempo de evento)
-    ("1.json", ["10:01", "10:04", "10:12"]),
-    ("2.json", ["10:07", "10:26"]),            # 10:07 llega tarde, pero dentro de la watermark (10:02)
-    ("3.json", ["10:03", "10:31"]),            # 10:03 llega con la watermark en 10:16: se descarta
+BATCHES = [   # eventos de cada archivo, por su tiempo de evento
+    ["10:01", "10:04", "10:12"],
+    ["10:07", "10:26"],            # 10:07 llega tarde, pero dentro del umbral
+    ["10:31"],
+    ["10:02", "10:45"],            # 10:02 llega cuando la ventana de las 10:00 ya se emitió
 ]
 
 base = Path(sys.argv[1] if len(sys.argv) > 1 else tempfile.mkdtemp())
 src = base / "eventos"
 src.mkdir(parents=True, exist_ok=True)
-for name, times in BATCHES:
-    rows = [json.dumps({"id": f"{name}-{t}", "event_time": f"2026-10-19 {t}:00"}) for t in times]
-    (src / name).write_text("\n".join(rows), encoding="utf-8")
+for i, times in enumerate(BATCHES):
+    path = src / f"{i}.json"
+    path.write_text("\n".join(json.dumps({"event_time": f"2026-10-19 {t}:00"}) for t in times), encoding="utf-8")
+    os.utime(path, (1_800_000_000 + i, 1_800_000_000 + i))   # la fuente procesa por fecha de modificación
 
 spark = (SparkSession.builder.master("local[2]").config("spark.sql.shuffle.partitions", "2")
          .config("spark.ui.showConsoleProgress", "false").getOrCreate())
 spark.sparkContext.setLogLevel("ERROR")
-events = (spark.readStream.schema("id STRING, event_time TIMESTAMP").option("maxFilesPerTrigger", 1).json(str(src))
+events = (spark.readStream.schema("event_time TIMESTAMP").option("maxFilesPerTrigger", 1).json(str(src))
           .withWatermark("event_time", "10 minutes"))
 counts = events.groupBy(F.window("event_time", "10 minutes")).count()
 
-emitted: list[tuple[int, str, int]] = []
+emitted: list[tuple[str, int]] = []
 
-def collect(batch, batch_id: int) -> None:   # noqa: ANN001 - DataFrame de PySpark
+
+def collect(batch: DataFrame, _batch_id: int) -> None:
     for row in batch.orderBy("window").collect():
-        emitted.append((batch_id, row["window"]["start"].strftime("%H:%M"), row["count"]))
+        emitted.append((row["window"]["start"].strftime("%H:%M"), row["count"]))
+
 
 query = (counts.writeStream.outputMode("append").foreachBatch(collect)
          .option("checkpointLocation", str(base / "checkpoint")).trigger(availableNow=True).start())
 query.awaitTermination()
-for batch_id, start, n in emitted:
-    print(f"batch {batch_id}: ventana {start} cerrada con {n} eventos")
+for start, n in emitted:
+    print(f"ventana {start} emitida con {n} eventos")
 spark.stop()
 ```
 
-El script se **ejecuta en la CI con PySpark 4.2.0 en modo local y Java 17**; cada archivo es un micro-batch (`maxFilesPerTrigger=1`). Imprime que la ventana de las 10:00 se cierra con 3 eventos (entra el de 10:07, no el de 10:03) y que la de las 10:10 se cierra con 1. La del 10:20 no se emite porque la watermark (10:21) no llegó a su fin. Que el evento de 10:03 se descarte es lo que pasa en esta corrida: Spark solo garantiza no descartar lo que está dentro del umbral. El número de cada batch depende del motor y el test no lo fija.
+El script se **ejecuta en la CI con PySpark 4.2.0 en modo local y Java 17**; cada archivo es un micro-batch (`maxFilesPerTrigger=1`), en el orden de su fecha de modificación, que el script fija porque la fuente de archivos procesa en ese orden. Imprime `ventana 10:00 emitida con 3 eventos` (entra el de 10:07), `ventana 10:10 emitida con 1 eventos` y `ventana 10:20 emitida con 1 eventos`; cada ventana se emite una sola vez. El evento de 10:02 del último archivo no cambia la ventana ya emitida. Spark solo garantiza no descartar lo que está dentro del umbral: un evento más atrasado que llega antes de que su ventana se emita todavía puede contarse, así que el ejemplo no lo usa como prueba de descarte.
 
 ## 11. GCP
 
@@ -269,3 +275,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-19: creación (lote F3b-14b).
+- 2026-10-19: §7, §9 y §10: el ejemplo fija el orden de los archivos (la fuente procesa por fecha de modificación) y el evento tardío llega después de emitida su ventana; con el orden de la CI, un evento más atrasado que el umbral se había contado, como permite Spark.

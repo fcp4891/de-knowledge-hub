@@ -7,7 +7,6 @@ se saltan, salvo con REQUIRE_PYSPARK=1 (la CI). El código de Flink de las ficha
 
 from __future__ import annotations
 
-import re
 import subprocess
 import sys
 from pathlib import Path
@@ -39,11 +38,13 @@ def test_tumbling_windows_hold_each_event_once_and_sliding_windows_twice(tmp_pat
     assert "sliding: [09:55, 10:05) 2, [10:00, 10:10) 3, [10:05, 10:15) 2, [10:10, 10:20) 2, [10:15, 10:25) 1" in out
 
 
-def test_watermark_keeps_late_event_within_threshold_and_drops_older_one(tmp_path: Path) -> None:
+def test_watermark_counts_late_event_within_threshold_and_emits_each_window_once(tmp_path: Path) -> None:
     out = run_spark_snippet("watermarks", tmp_path)
-    assert re.search(r"^batch \d+: ventana 10:00 cerrada con 3 eventos$", out, re.M), out   # 10:07 entra; 10:03 no
-    assert re.search(r"^batch \d+: ventana 10:10 cerrada con 1 eventos$", out, re.M), out
-    assert "ventana 10:20" not in out   # la watermark (10:21) todavía no pasó el fin de esa ventana
+    assert out.splitlines() == [   # 10:07 entra (dentro del umbral); 10:02 llega después de emitida su ventana
+        "ventana 10:00 emitida con 3 eventos",
+        "ventana 10:10 emitida con 1 eventos",
+        "ventana 10:20 emitida con 1 eventos",
+    ], out
 
 
 def test_state_survives_a_restart_with_the_same_checkpoint(tmp_path: Path) -> None:
