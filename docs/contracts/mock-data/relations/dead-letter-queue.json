@@ -98,6 +98,13 @@
           "note": null
         },
         {
+          "slug": "quality-gate",
+          "title": "Quality gate",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "La cuarentena de los lotes y registros rechazados."
+        },
+        {
           "slug": "failure-recovery",
           "title": "Recuperación ante fallos",
           "entity_type": "concept",
@@ -131,6 +138,20 @@
           "entity_type": "concept",
           "origin": "entity",
           "note": "Los registros rechazados, con sus errores, van a una tabla o cola de rechazados en lugar de detener el lote."
+        },
+        {
+          "slug": "schema-validation",
+          "title": "Validación de schemas",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Adónde van los registros que no cumplen el schema."
+        },
+        {
+          "slug": "custom-data-validators",
+          "title": "Validadores propios",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Adónde van los registros rechazados."
         }
       ]
     }

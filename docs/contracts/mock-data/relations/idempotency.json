@@ -441,6 +441,13 @@
           "note": "El manifiesto por huella hace que re-ejecutar no reprocese ni duplique."
         },
         {
+          "slug": "quality-gate",
+          "title": "Quality gate",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Re-ejecutar el lote bloqueado no duplica lo publicado."
+        },
+        {
           "slug": "rds-as-source",
           "title": "RDS como fuente de datos",
           "entity_type": "concept",

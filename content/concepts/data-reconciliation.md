@@ -70,6 +70,9 @@ relations:
   - type: RELATED_TO
     target: sql-quality-checks
     note: "Controles de calidad en SQL."
+  - type: RELATED_TO
+    target: data-quality-dimensions
+    note: Completitud y exactitud, dos de las dimensiones que mide.
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -264,7 +267,7 @@ Los conteos y sumas son baratos, pero no detectan cambios que se compensan. Los 
 - `backfill`: cada período reprocesado se reconcilia.
 - `change-data-capture`: la replicación por CDC se valida contra el origen.
 - Con ficha: `sql-quality-checks`, `change-detection`.
-- Del blueprint, pendiente de ficha: `data-quality-dimensions`.
+- `data-quality-dimensions`: la reconciliación mide completitud y exactitud contra el origen.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -297,3 +300,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: revisión de los cambios mínimos de NULL aplicada (docs/reviews/fixes-null-concat.md, aprobada por Felipe): la huella pasa de `CONCAT` con marcador `'\\N'` a `FARM_FINGERPRINT(TO_JSON_STRING(STRUCT(...)))`, respaldado por la tabla de codificaciones JSON de BigQuery (NULL → `null`; texto entre comillas con escape), que elimina la ambigüedad del marcador y la del separador. Sigue `verified`. §10 publica el caso completo en PostgreSQL (dos lados, conteo, suma, tres huellas y `!=` frente a `IS DISTINCT FROM`) con `jsonb_build_array`, el equivalente documentado.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `change-detection`, `sql-quality-checks`.
+- 2026-10-20: lote F3b-15a (regla del §17): relations y el §17 enlazan `data-quality-dimensions`, que ya tiene ficha; antes figuraba como pendiente de ficha.
