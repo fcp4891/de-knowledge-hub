@@ -16,6 +16,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 ## Actual
 - **Tarea activa:** B-F3.1 del lote F3b-14a. Revisión en `docs/reviews/cards-f3b-14a.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: *Class Message* está en 2.43.0 y Pub/Sub no cobra transferencia entre zonas. El lote 14b va en otra rama.
+- **Tarea activa:** B-F3.1 del lote F3b-14b. Revisión en `docs/reviews/cards-f3b-14b.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. El lote 14a está en `b/f3b-review-14a`.
 - **Bloqueos:** ninguno. `make` no está en el PATH; `scripts/validate.py` con `.venv` terminó OK (492 entidades).
 - **Tarea activa:** B-F3.1 del lote F3b-13a. Revisión en `docs/reviews/cards-f3b-13a.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas: el mínimo de 1 minuto de Fargate (media); el redondeo hacia arriba de Cloud Run y la cita completa de la caché de Docker (baja). El lote 13b va en otra rama.
@@ -65,6 +67,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ### B-F3.1 · lote F3b-14a
 - Siete fichas de streaming. Seis bloques corren contra Kafka 4.3.1 en Docker; `delivery-semantics` es una simulación en Python y así lo dice. Propuestas media: el `page_title` de *Class Message* (2.43.0) y la transferencia de Pub/Sub, que no cobra entre zonas. No se editó `content/` ni `frontend/`.
+### B-F3.1 · lote F3b-14b
+- Siete fichas de tiempo, estado y motores. Los bloques PySpark están en el test; PyFlink dice no ejecutado. Exactly-once queda por componente y la watermark de Spark no promete descartar lo tardío. Flink va en la URL de la 2.3. Las fichas verified solo enlazan. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-13a
 - Cinco fichas de contenedores. Los textos que la ficha dice ejecutados están en `tests/test_docker_snippets.py`. OCI queda en la definición de imagen. Propuestas: mínimo de 1 minuto en Fargate, redondeo hacia arriba en Cloud Run y la cita de la caché con «as well». No se editó `content/` ni `frontend/`.
@@ -301,6 +305,8 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 
 ### B-F3.1 · lote F3b-14a (2026-10-20)
 - Revisión de las 7 fichas de fundamentos y semánticas de entrega. Dos propuestas media: *Class Message* 2.43.0 y la transferencia de Pub/Sub entre zonas. Kafka en la CI y la simulación coinciden con los tests. Las fichas verified solo enlazan. No se editó `content/`.
+### B-F3.1 · lote F3b-14b (2026-10-20)
+- Revisión de las 7 fichas de tiempo, estado y motores. Sin hallazgos. PySpark, PyFlink, exactly-once, watermarks y los estados de backpressure coinciden con los tests y las páginas. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-13a (2026-10-19)
 - Revisión de las 5 fichas de fundamentos de contenedores. Una propuesta media (mínimo de 1 minuto de Fargate) y dos bajas (redondeo de Cloud Run y cita de la caché). El Docker de la CI coincide con los tests. No se editó `content/`.
