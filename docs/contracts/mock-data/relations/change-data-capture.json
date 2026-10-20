@@ -178,8 +178,8 @@
           "slug": "postgresql-for-data-engineers",
           "title": "PostgreSQL para Data Engineers",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "La decodificación lógica es la base del CDC en PostgreSQL."
         },
         {
           "slug": "rds-as-source",

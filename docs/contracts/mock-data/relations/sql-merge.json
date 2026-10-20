@@ -119,6 +119,13 @@
           "note": "MERGE en general y por motor."
         },
         {
+          "slug": "postgresql-for-data-engineers",
+          "title": "PostgreSQL para Data Engineers",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "MERGE en SQL."
+        },
+        {
           "slug": "sql-qualify",
           "title": "QUALIFY",
           "entity_type": "concept",

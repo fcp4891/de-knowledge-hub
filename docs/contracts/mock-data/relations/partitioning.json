@@ -112,6 +112,13 @@
           "note": "Los archivos Parquet se organizan en carpetas por partición en los lakes."
         },
         {
+          "slug": "spark-execution-model",
+          "title": "Modelo de ejecución de Spark",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Las particiones definen el paralelismo."
+        },
+        {
           "slug": "physical-data-model",
           "title": "Modelo físico de datos",
           "entity_type": "concept",
@@ -131,6 +138,13 @@
           "entity_type": "concept",
           "origin": "entity",
           "note": "Partition pruning."
+        },
+        {
+          "slug": "postgresql-for-data-engineers",
+          "title": "PostgreSQL para Data Engineers",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Particionado en general."
         },
         {
           "slug": "emr-spark-clusters",
