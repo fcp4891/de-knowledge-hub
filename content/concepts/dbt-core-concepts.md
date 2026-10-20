@@ -86,6 +86,9 @@ relations:
   - type: RELATED_TO
     target: sql-quality-checks
     note: Los data tests como controles de calidad.
+  - type: RELATED_TO
+    target: dbt-tests
+    note: Los data tests en detalle.
 created_at: 2026-10-20
 updated_at: 2026-10-20
 last_verified: 2026-10-20
@@ -303,7 +306,7 @@ dbt trae disciplina de ingeniería (versiones, grafo, tests) al SQL del warehous
 - `dataform-workflows`: Dataform en GCP.
 - `postgresql-for-data-engineers`: el warehouse del ejemplo.
 - `sql-quality-checks`: los tests como controles de calidad.
-- Del blueprint, pendiente de ficha: `dbt-tests`.
+- `dbt-tests`: los data tests de dbt, con severidad y store_failures.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -331,3 +334,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-20: creación (lote F3b-20b).
 - 2026-10-20: revisión B-F3.1 del lote F3b-20b aplicada (docs/reviews/cards-f3b-20b.md): el §11 nombra también las páginas de dbt del lado dbt.
 - 2026-10-20: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-20: lote F3b-15b (regla del §17): relations y el §17 enlazan `dbt-tests`, que ya tiene ficha; antes figuraba como pendiente de ficha.

@@ -537,6 +537,13 @@
           "entity_type": "concept",
           "origin": "entity",
           "note": "Reintentar una copia sin duplicar."
+        },
+        {
+          "slug": "write-audit-publish",
+          "title": "Write-Audit-Publish",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Descartar y repetir un lote no deja rastro en main."
         }
       ]
     }
