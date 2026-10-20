@@ -118,10 +118,13 @@ relations:
   - type: RELATED_TO
     target: stateful-stream-processing
     note: Flink, el motor de streams con estado.
+  - type: RELATED_TO
+    target: dbt-core-concepts
+    note: dbt, la transformación del stack.
 created_at: 2026-10-20
 updated_at: 2026-10-20
 last_verified: 2026-10-20
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -295,6 +298,7 @@ Las piezas abiertas dan portabilidad y conocimiento que sirve en cualquier lado,
 - `kubernetes-fundamentals`: ejecución en Kubernetes.
 - `docker-compose-environments`: el stack en una máquina.
 - `stateful-stream-processing`: Flink y el estado.
+- `dbt-core-concepts`: dbt, la transformación.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -317,8 +321,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-20. `review_required`: pendiente de revisión B-F3.1 del lote F3b-20a.
+2026-10-20. Pasa a `verified`: revisión B-F3.1 del lote F3b-20a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-20: creación (lote F3b-20a).
+- 2026-10-20: revisión B-F3.1 del lote F3b-20a aplicada (docs/reviews/cards-f3b-20a.md): relations y el §17 enlazan `dbt-core-concepts`.
+- 2026-10-20: `verification_status: verified` (sin VERIFY pendientes).

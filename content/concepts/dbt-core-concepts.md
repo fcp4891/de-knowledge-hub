@@ -89,7 +89,7 @@ relations:
 created_at: 2026-10-20
 updated_at: 2026-10-20
 last_verified: 2026-10-20
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -251,7 +251,7 @@ El script se **ejecuta en la CI con dbt Core 1.12 y dbt-postgres 1.11 contra el 
 
 ## 11. GCP
 
-En GCP, **Dataform** cumple un papel parecido para BigQuery, y no es lo mismo que dbt. Según *Dataform overview*, *Set dependencies* y *Test data quality* (no ejecutado):
+En GCP, **Dataform** cumple un papel parecido para BigQuery, y no es lo mismo que dbt. Según *Supported data platforms*, *About ref function* y *Add data tests to your DAG* (dbt), y *Dataform overview*, *Set dependencies* y *Test data quality* (Dataform) (no ejecutado):
 
 | | dbt | Dataform |
 |---|---|---|
@@ -324,8 +324,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-20. `review_required`: pendiente de revisión B-F3.1 del lote F3b-20b.
+2026-10-20. Pasa a `verified`: revisión B-F3.1 del lote F3b-20b aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-20: creación (lote F3b-20b).
+- 2026-10-20: revisión B-F3.1 del lote F3b-20b aplicada (docs/reviews/cards-f3b-20b.md): el §11 nombra también las páginas de dbt del lado dbt.
+- 2026-10-20: `verification_status: verified` (sin VERIFY pendientes).

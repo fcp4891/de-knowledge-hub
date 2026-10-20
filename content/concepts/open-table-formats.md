@@ -100,7 +100,7 @@ relations:
 created_at: 2026-10-20
 updated_at: 2026-10-20
 last_verified: 2026-10-20
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -298,8 +298,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-20. `review_required`: pendiente de revisión B-F3.1 del lote F3b-20b.
+2026-10-20. Pasa a `verified`: revisión B-F3.1 del lote F3b-20b aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-20: creación (lote F3b-20b).
+- 2026-10-20: revisión B-F3.1 del lote F3b-20b aplicada (docs/reviews/cards-f3b-20b.md): sin hallazgos en esta ficha; sin cambios.
+- 2026-10-20: `verification_status: verified` (sin VERIFY pendientes).

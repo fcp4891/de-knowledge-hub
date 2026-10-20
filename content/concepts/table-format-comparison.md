@@ -19,7 +19,7 @@ sources:
     url: https://iceberg.apache.org/spec/
     accessed: 2026-10-20
     page_title: "Iceberg Table Spec"
-    note: "Spec (Iceberg): la especificación de la tabla tiene versiones de formato: 1 (tablas analíticas), 2 (borrados a nivel de fila), 3 (tipos y capacidades extendidos) y 4 (estructura de metadatos); la versión 2 agrega archivos de borrado que marcan filas borradas en archivos de datos existentes, sin reescribirlos; un apéndice describe las lecturas en un punto del tiempo (time travel)."
+    note: "Spec (Iceberg): la especificación de la tabla tiene versiones de formato: 1 (tablas analíticas), 2 (borrados a nivel de fila), 3 (tipos y capacidades extendidos) y 4 (estructura de metadatos); la versión 2 agrega archivos de borrado que marcan filas borradas en archivos de datos existentes, sin reescribirlos; un apéndice describe las lecturas en un punto del tiempo (time travel); el mantenimiento expira los snapshots fuera de los que se retienen, y un archivo se puede borrar cuando el snapshot que lo quitó se recolecta y ya no está vivo en ningún otro."
   - source: apache-iceberg-docs
     url: https://iceberg.apache.org/docs/latest/partitioning/
     accessed: 2026-10-20
@@ -44,7 +44,7 @@ sources:
     url: https://docs.delta.io/delta-batch/
     accessed: 2026-10-20
     page_title: "Table batch reads and writes"
-    note: "Table batch reads and writes (Delta Lake): time travel con versionAsOf (número de versión) o timestampAsOf (fecha u hora)."
+    note: "Table batch reads and writes (Delta Lake): time travel con versionAsOf (número de versión) o timestampAsOf (fecha u hora). La tabla se particiona con PARTITIONED BY o partitionBy; una columna generada puede derivar la fecha del timestamp para particionar; Delta usa la partición y las estadísticas para leer lo mínimo; en un append, partitionBy debe coincidir con la partición existente; al sobrescribir, overwriteSchema=true reemplaza el esquema y la partición de la tabla."
   - source: delta-lake-docs
     url: https://docs.delta.io/delta-utility/
     accessed: 2026-10-20
@@ -84,7 +84,7 @@ sources:
     url: https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg.html
     accessed: 2026-10-12
     page_title: "Query Apache Iceberg tables"
-    note: "Query Apache Iceberg tables: Athena hace lecturas, time travel, escrituras y DDL sobre tablas Apache Iceberg."
+    note: "Query Apache Iceberg tables (consultada el 2026-10-20): Athena hace lecturas, time travel, escrituras y DDL sobre tablas Apache Iceberg. La página nombra también Apache Hudi y Linux Foundation Delta Lake: Lake Formation puede administrar permisos de lectura sobre Iceberg, Hudi y Delta Lake, pero no los de operaciones como VACUUM, MERGE, UPDATE u OPTIMIZE; ALTER TABLE con read_restored_glacier_objects da error en tablas Iceberg y Delta Lake, y en Hudi no da error pero los objetos de Glacier no se saltan."
   - source: aws-s3-docs
     url: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables.html
     accessed: 2026-10-12
@@ -94,12 +94,22 @@ sources:
     url: https://learn.microsoft.com/en-us/azure/databricks/delta/
     accessed: 2026-10-13
     page_title: "What is Delta Lake in Azure Databricks?"
-    note: "What is Delta Lake in Azure Databricks?: Delta Lake es la capa de almacenamiento optimizada que da la base a las tablas de un lakehouse en Databricks; software de código abierto que extiende archivos Parquet con un log de transacciones basado en archivos para transacciones ACID y metadatos escalables; compatible con las API de Spark e integrado con Structured Streaming."
+    note: "What is Delta Lake in Azure Databricks?: Delta Lake es la capa de almacenamiento optimizada que da la base a las tablas de un lakehouse en Databricks; software de código abierto que extiende archivos Parquet con un log de transacciones basado en archivos para transacciones ACID y metadatos escalables; compatible con las API de Spark e integrado con Structured Streaming; la página ofrece clonar en forma incremental tablas Parquet o Apache Iceberg a Delta Lake, convertirlas una vez a Delta Lake, y seguir cambios por fila entre versiones de una tabla Delta Lake o Apache Iceberg v3 con change data feed (consultada el 2026-10-20)."
   - source: microsoft-fabric-docs
     url: https://learn.microsoft.com/en-us/fabric/fundamentals/delta-lake-interoperability
     accessed: 2026-10-13
     page_title: "Delta Lake table format interoperability"
     note: "Delta Lake table format interoperability: Delta Lake es el formato estándar para analítica, con transacciones ACID; todas las experiencias de Fabric generan y consumen tablas Delta, y una tabla producida por un motor (por ejemplo, Fabric Data Warehouse o Spark) la consume otro (por ejemplo, Power BI)."
+  - source: apache-iceberg-docs
+    url: https://iceberg.apache.org/docs/latest/
+    accessed: 2026-10-20
+    page_title: "Documentation"
+    note: "Documentation (Iceberg, introducción, documentación Java 1.12.0): Iceberg agrega tablas a motores como Spark, Trino, PrestoDB, Flink, Hive e Impala."
+  - source: apache-hudi-docs
+    url: https://hudi.apache.org/docs/overview/
+    accessed: 2026-10-20
+    page_title: "Overview"
+    note: "Overview (Hudi): las optimizaciones de Hudi aceleran consultas y pipelines con motores populares como Apache Spark, Flink, Presto, Trino y Hive."
 relations:
   - type: DEPENDS_ON
     target: open-table-formats
@@ -122,7 +132,7 @@ relations:
 created_at: 2026-10-20
 updated_at: 2026-10-20
 last_verified: 2026-10-20
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -152,12 +162,12 @@ Un equipo elige un formato de tabla por popularidad y después descubre que su w
 | | Iceberg | Delta Lake | Hudi |
 |---|---|---|---|
 | Metadatos | Snapshots y metadatos según una especificación con versiones de formato (*Iceberg Table Spec*) | Log de transacciones junto a los archivos (*What is Delta Lake in Azure Databricks?*) | Timeline de acciones en instantes de tiempo (*Timeline*) |
-| Particionado | Oculto: Iceberg calcula la partición y poda sin filtros extra (*Partitioning*) | Las páginas citadas no lo describen | Una columna de partición (`partitionpath.field`) en la escritura (*Spark Quick Start*) |
-| Cambiar la partición | En el lugar; los datos viejos conservan su especificación (*Evolution*) | Las páginas citadas no lo describen | Las páginas citadas no lo describen |
+| Particionado | Oculto: Iceberg calcula la partición y poda sin filtros extra (*Partitioning*) | Columnas de partición explícitas (`PARTITIONED BY`, `partitionBy`), que pueden ser columnas generadas, con poda por partición y estadísticas (*Table batch reads and writes*) | Una columna de partición (`partitionpath.field`) en la escritura (*Spark Quick Start*) |
+| Cambiar la partición | En el lugar; los datos viejos conservan su especificación (*Evolution*) | Al sobrescribir la tabla con `overwriteSchema=true`, que reemplaza esquema y partición (*Table batch reads and writes*) | Las páginas citadas no lo describen |
 | Actualizar o borrar filas | Archivos de borrado sin reescribir los datos (versión 2 del spec) | Reescribe los archivos afectados, con concurrencia optimista (*Concurrency control*) | Copy-on-write (archivos base nuevos) o merge-on-read (logs y compactación) (*Table & Query Types*) |
 | Concurrencia | Optimista: intercambio atómico del metadato (*Reliability*) | Optimista: leer, escribir, validar y confirmar (*Concurrency control*) | Las páginas citadas mencionan un lock provider en el quick start, sin detallar el modelo |
 | Time travel | Por snapshot; el spec define las lecturas en un punto del tiempo (*Iceberg Table Spec*) | `versionAsOf` o `timestampAsOf` (*Table batch reads and writes*) | `as.of.instant` (*Spark Quick Start*) |
-| Archivos viejos | Las páginas citadas de Iceberg no lo describen; en S3 Tables, el borrado de archivos sin referencia es automático | `vacuum`, no automático, retención de 7 días por defecto (*Table utility commands*) | Compactación periódica en merge-on-read (*Table & Query Types*) |
+| Archivos viejos | Se expiran snapshots y se borran los archivos que ya no usa ninguno (*Iceberg Table Spec*); en S3 Tables, automático | `vacuum`, no automático, retención de 7 días por defecto (*Table utility commands*) | Compactación periódica en merge-on-read (*Table & Query Types*) |
 
 ## 5. Cuándo utilizarlo
 
@@ -193,9 +203,9 @@ flowchart TB
   F --> I["Iceberg<br/>snapshots + spec versionada"]
   F --> D["Delta Lake<br/>log de transacciones"]
   F --> H["Hudi<br/>timeline; CoW o MoR"]
-  I --> E1["BigQuery · Athena · S3 Tables · Spark · Flink"]
+  I --> E1["BigQuery · Athena · S3 Tables · Spark · Trino · Flink"]
   D --> E2["Databricks · Fabric · Spark"]
-  H --> E3["Spark · Flink"]
+  H --> E3["Spark · Flink · Presto · Trino · Hive"]
 ```
 
 ## 10. Código
@@ -286,7 +296,7 @@ En AWS, **S3 Tables** y **Athena** trabajan con **Iceberg**. Según *Working wit
 | | Iceberg | Delta Lake | Hudi |
 |---|---|---|---|
 | S3 Tables | Tablas Iceberg con mantenimiento automático | Las páginas citadas no lo tratan | Las páginas citadas no lo tratan |
-| Athena | Lectura, escritura, time travel y DDL | Las páginas citadas no lo tratan | Las páginas citadas no lo tratan |
+| Athena | Lectura, escritura, time travel y DDL | Lake Formation administra permisos de lectura, no los de `VACUUM`, `MERGE`, `UPDATE` u `OPTIMIZE`; `read_restored_glacier_objects` da error | Igual con Lake Formation; `read_restored_glacier_objects` no da error, pero los objetos de Glacier no se saltan |
 
 ## 13. Azure
 
@@ -294,7 +304,7 @@ En Azure, **Databricks** y **Fabric** trabajan con **Delta Lake**. Según *What 
 
 | | Iceberg | Delta Lake | Hudi |
 |---|---|---|---|
-| Azure Databricks | Las páginas citadas no lo tratan | La capa de almacenamiento de las tablas | Las páginas citadas no lo tratan |
+| Azure Databricks | Clonar en forma incremental o convertir tablas Iceberg a Delta, y seguir cambios por fila de tablas Iceberg v3 | La capa de almacenamiento de las tablas | Las páginas citadas no lo tratan |
 | Microsoft Fabric | Las páginas citadas no lo tratan | El formato que generan y consumen todas las experiencias | Las páginas citadas no lo tratan |
 
 ## 14. Buenas prácticas
@@ -338,9 +348,9 @@ Pendiente (F4).
 
 ## 20. Fuentes
 
-- Apache Iceberg: *Iceberg Table Spec*, *Partitioning*, *Evolution* y *Reliability*.
+- Apache Iceberg: *Documentation* (introducción), *Iceberg Table Spec*, *Partitioning*, *Evolution* y *Reliability*.
 - Delta Lake: *Concurrency control*, *Table batch reads and writes*, *Table utility commands*, *Quick Start* y *Releases*.
-- Apache Hudi: *Table & Query Types*, *Timeline* y *Spark Quick Start*.
+- Apache Hudi: *Overview*, *Table & Query Types*, *Timeline* y *Spark Quick Start*.
 - Google Cloud: *Apache Iceberg managed tables*.
 - AWS: *Query Apache Iceberg tables* y *Working with Amazon S3 Tables and table buckets*.
 - Microsoft Learn: *What is Delta Lake in Azure Databricks?* y *Delta Lake table format interoperability*.
@@ -349,8 +359,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-20. `review_required`: pendiente de revisión B-F3.1 del lote F3b-20b.
+2026-10-20. Pasa a `verified`: revisión B-F3.1 del lote F3b-20b aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-20: creación (lote F3b-20b).
+- 2026-10-20: revisión B-F3.1 del lote F3b-20b aplicada (docs/reviews/cards-f3b-20b.md): las celdas de Athena (Delta y Hudi), Azure Databricks (Iceberg), particionado y cambio de partición de Delta, y archivos viejos de Iceberg citan lo que dicen sus páginas; Trino, Flink, Presto y Hive con su fuente (*Documentation* de Iceberg y *Overview* de Hudi); las demás celdas «no lo tratan» se confirmaron en la página el 2026-10-20.
+- 2026-10-20: `verification_status: verified` (sin VERIFY pendientes).
