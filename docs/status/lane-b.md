@@ -3,7 +3,7 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-19
+**Última actualización:** 2026-10-20
 
 ## Reglas de revisión
 
@@ -14,6 +14,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** B-F3.1 del lote F3b-14a. Revisión en `docs/reviews/cards-f3b-14a.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: *Class Message* está en 2.43.0 y Pub/Sub no cobra transferencia entre zonas. El lote 14b va en otra rama.
+- **Bloqueos:** ninguno. `make` no está en el PATH; `scripts/validate.py` con `.venv` terminó OK (492 entidades).
 - **Tarea activa:** B-F3.1 del lote F3b-13a. Revisión en `docs/reviews/cards-f3b-13a.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas: el mínimo de 1 minuto de Fargate (media); el redondeo hacia arriba de Cloud Run y la cita completa de la caché de Docker (baja). El lote 13b va en otra rama.
 - **Tarea activa:** B-F3.1 del lote F3b-13b. Revisión en `docs/reviews/cards-f3b-13b.md`. No se editó `content/` ni `frontend/`.
@@ -59,6 +62,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Si hay alias, bajo el título: «También conocido como: …» (ficha de concepto y página de tecnología).
 - `make test-frontend`: 11/11. En la demo estática, «Dataplex» encuentra Knowledge Catalog y la ficha `gcp-dataplex` muestra los dos alias.
 - No se editó `content/` ni el contrato.
+
+### B-F3.1 · lote F3b-14a
+- Siete fichas de streaming. Seis bloques corren contra Kafka 4.3.1 en Docker; `delivery-semantics` es una simulación en Python y así lo dice. Propuestas media: el `page_title` de *Class Message* (2.43.0) y la transferencia de Pub/Sub, que no cobra entre zonas. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-13a
 - Cinco fichas de contenedores. Los textos que la ficha dice ejecutados están en `tests/test_docker_snippets.py`. OCI queda en la definición de imagen. Propuestas: mínimo de 1 minuto en Fargate, redondeo hacia arriba en Cloud Run y la cita de la caché con «as well». No se editó `content/` ni `frontend/`.
@@ -292,6 +298,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-14a (2026-10-20)
+- Revisión de las 7 fichas de fundamentos y semánticas de entrega. Dos propuestas media: *Class Message* 2.43.0 y la transferencia de Pub/Sub entre zonas. Kafka en la CI y la simulación coinciden con los tests. Las fichas verified solo enlazan. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-13a (2026-10-19)
 - Revisión de las 5 fichas de fundamentos de contenedores. Una propuesta media (mínimo de 1 minuto de Fargate) y dos bajas (redondeo de Cloud Run y cita de la caché). El Docker de la CI coincide con los tests. No se editó `content/`.
