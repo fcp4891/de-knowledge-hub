@@ -2783,3 +2783,94 @@ created_at: '2026-10-20'
 updated_at: '2026-10-20'
 last_verified: '2026-10-20'
 verification_status: verified
+---
+id: source:opentelemetry-docs
+slug: opentelemetry-docs
+type: source
+title: OpenTelemetry documentation
+description: Documentación oficial de OpenTelemetry (conceptos, señales y lenguajes), opentelemetry.io.
+url: https://opentelemetry.io/docs/
+source_type: official_docs
+authority_level: 1
+provider: opentelemetry
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-20'
+updated_at: '2026-10-20'
+last_verified: '2026-10-20'
+verification_status: verified
+---
+id: source:opentelemetry-python-docs
+slug: opentelemetry-python-docs
+type: source
+title: OpenTelemetry Python documentation
+description: Documentación oficial de la API y el SDK de OpenTelemetry para Python.
+url: https://opentelemetry-python.readthedocs.io/en/stable/
+source_type: official_docs
+authority_level: 1
+provider: opentelemetry
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-20'
+updated_at: '2026-10-20'
+last_verified: '2026-10-20'
+verification_status: verified
+---
+id: source:gcp-cloud-trace-docs
+slug: gcp-cloud-trace-docs
+type: source
+title: Cloud Trace documentation
+description: Documentación oficial de Cloud Trace, Google Cloud.
+url: https://docs.cloud.google.com/trace/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-20'
+updated_at: '2026-10-20'
+last_verified: '2026-10-20'
+verification_status: verified
+---
+id: source:aws-xray-docs
+slug: aws-xray-docs
+type: source
+title: AWS X-Ray Developer Guide
+description: Guía oficial para desarrolladores de AWS X-Ray.
+url: https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-20'
+updated_at: '2026-10-20'
+last_verified: '2026-10-20'
+verification_status: verified
+---
+id: source:azure-monitor-docs
+slug: azure-monitor-docs
+type: source
+title: Azure Monitor documentation
+description: Documentación oficial de Azure Monitor (métricas, logs, Application Insights y alertas), Microsoft Learn.
+url: https://learn.microsoft.com/en-us/azure/azure-monitor/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- azure-monitor
+created_at: '2026-10-20'
+updated_at: '2026-10-20'
+last_verified: '2026-10-20'
+verification_status: verified
