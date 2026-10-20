@@ -59,6 +59,9 @@ relations:
   - type: RELATED_TO
     target: bigquery-policy-tags
     note: Seguridad por columna y enmascaramiento sobre la tabla.
+  - type: RELATED_TO
+    target: open-table-formats
+    note: "Iceberg es uno de los formatos de tabla abiertos."
 created_at: 2026-10-11
 updated_at: 2026-10-13
 last_verified: 2026-10-11
@@ -257,7 +260,7 @@ BigLake da seguridad fina sobre datos que siguen en el lake, a cambio de operar 
 - `bigquery-materialized-views`: vistas materializadas sobre BigLake.
 - `bigquery-security`: IAM, vistas autorizadas y seguridad por fila sobre la tabla.
 - `bigquery-policy-tags`: seguridad por columna y enmascaramiento sobre la tabla.
-- Del blueprint, pendiente de ficha: `open-table-formats`.
+- `open-table-formats`: qué es un formato de tabla abierto, como Iceberg.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -285,3 +288,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-08a aplicada (docs/reviews/cards-f3b-08a.md), regla del §17: relations incluye `bigquery-security`, `bigquery-policy-tags`, que el §17 nombra; §17 enlaza las fichas que ya existen.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-20: lote F3b-20b (regla del §17): relations y el §17 enlazan `open-table-formats`, que ya tiene ficha; antes figuraba como pendiente de ficha.

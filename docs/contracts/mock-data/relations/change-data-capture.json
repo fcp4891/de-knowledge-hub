@@ -77,6 +77,13 @@
           "note": "Datastream es CDC administrado."
         },
         {
+          "slug": "table-format-comparison",
+          "title": "Comparación entre Iceberg, Delta Lake y Hudi",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Upserts y borrados de CDC sobre el lake."
+        },
+        {
           "slug": "data-pipeline",
           "title": "Data pipeline",
           "entity_type": "concept",

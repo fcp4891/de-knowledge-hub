@@ -63,6 +63,13 @@
           "note": "Clustering es una forma de organización física complementaria a la partición."
         },
         {
+          "slug": "table-format-comparison",
+          "title": "Comparación entre Iceberg, Delta Lake y Hudi",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Particionado oculto frente a columnas de partición."
+        },
+        {
           "slug": "data-lake",
           "title": "Data Lake",
           "entity_type": "concept",
