@@ -38,8 +38,8 @@ sources:
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/python/docs/reference/pubsub/latest/google.cloud.pubsub_v1.subscriber.message.Message
     accessed: 2026-10-01
-    page_title: "Class Message (2.42.0)"
-    note: "Message: message_id, data (bytes), attributes y publish_time. ack() confirma; conviene no confirmar hasta terminar de procesar y, como los acks son best effort, el procesamiento debe ser idempotente. nack() rechaza el mensaje para que se reentregue, de inmediato o con demora, a este u otro suscriptor."
+    page_title: "Class Message"
+    note: "Class Message (referencia del cliente de Python de Pub/Sub; el h1 lleva la versión del cliente, que cambia con cada release y no se cita): message_id, data (bytes), attributes y publish_time. ack() confirma; conviene no confirmar hasta terminar de procesar y, como los acks son best effort, el procesamiento debe ser idempotente. nack() rechaza el mensaje para que se reentregue, de inmediato o con demora, a este u otro suscriptor."
   - source: aws-kinesis-docs
     url: https://docs.aws.amazon.com/streams/latest/dev/kinesis-record-processor-duplicates.html
     accessed: 2026-10-12
@@ -73,9 +73,9 @@ relations:
     target: producers-and-consumers
     note: Quién confirma y quién reintenta.
 created_at: 2026-10-19
-updated_at: 2026-10-19
-last_verified: 2026-10-19
-verification_status: review_required
+updated_at: 2026-10-20
+last_verified: 2026-10-20
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -206,7 +206,7 @@ El script es una **simulación en Python de biblioteca estándar, sin broker**, 
 
 ## 11. GCP
 
-En GCP, **Pub/Sub** entrega al menos una vez por defecto. Según *Subscription overview* y *Class Message (2.42.0)* (no ejecutado):
+En GCP, **Pub/Sub** entrega al menos una vez por defecto. Según *Subscription overview* y *Class Message* (no ejecutado):
 
 | | Kafka | Pub/Sub |
 |---|---|---|
@@ -274,7 +274,7 @@ Pendiente (F4).
 ## 20. Fuentes
 
 - Apache Kafka 4.3: *Design*, *Producer Configs* y *Consumer and Share Consumer Configs*.
-- Google Cloud: *Subscription overview* y *Class Message (2.42.0)*.
+- Google Cloud: *Subscription overview* y *Class Message*.
 - AWS: *Handle duplicate records*.
 - Microsoft Learn: *Event Hubs features and terminology*.
 
@@ -282,8 +282,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-19. `review_required`: pendiente de revisión B-F3.1 del lote F3b-14a.
+2026-10-20. Pasa a `verified`: revisión B-F3.1 del lote F3b-14a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-19: creación (lote F3b-14a).
+- 2026-10-20: revisión B-F3.1 del lote F3b-14a aplicada (docs/reviews/cards-f3b-14a.md): la cita de la referencia de Pub/Sub dice *Class Message*, sin la versión del cliente.
+- 2026-10-20: `verification_status: verified` (sin VERIFY pendientes).

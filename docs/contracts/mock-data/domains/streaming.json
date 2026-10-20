@@ -21,8 +21,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-19"
+          "verification_status": "verified",
+          "last_verified": "2026-10-20"
         },
         {
           "slug": "producers-and-consumers",
@@ -35,8 +35,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-19"
+          "verification_status": "verified",
+          "last_verified": "2026-10-20"
         },
         {
           "slug": "message-brokers",
@@ -49,8 +49,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-19"
+          "verification_status": "verified",
+          "last_verified": "2026-10-20"
         },
         {
           "slug": "topics-and-partitions",
@@ -63,8 +63,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-19"
+          "verification_status": "verified",
+          "last_verified": "2026-10-20"
         },
         {
           "slug": "offsets",
@@ -77,8 +77,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-19"
+          "verification_status": "verified",
+          "last_verified": "2026-10-20"
         },
         {
           "slug": "event-ordering",
@@ -91,8 +91,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-19"
+          "verification_status": "verified",
+          "last_verified": "2026-10-20"
         }
       ]
     },
@@ -111,8 +111,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-19"
+          "verification_status": "verified",
+          "last_verified": "2026-10-20"
         },
         {
           "slug": "exactly-once-semantics",
@@ -125,8 +125,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-19"
+          "verification_status": "verified",
+          "last_verified": "2026-10-20"
         }
       ]
     },
@@ -145,8 +145,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-19"
+          "verification_status": "verified",
+          "last_verified": "2026-10-20"
         },
         {
           "slug": "watermarks",
@@ -159,8 +159,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-19"
+          "verification_status": "verified",
+          "last_verified": "2026-10-20"
         },
         {
           "slug": "windowing",
@@ -173,8 +173,8 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-19"
+          "verification_status": "verified",
+          "last_verified": "2026-10-20"
         },
         {
           "slug": "stateful-stream-processing",
@@ -187,8 +187,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-19"
+          "verification_status": "verified",
+          "last_verified": "2026-10-20"
         },
         {
           "slug": "backpressure",
@@ -201,8 +201,8 @@
           "importance": "low",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-19"
+          "verification_status": "verified",
+          "last_verified": "2026-10-20"
         }
       ]
     },
@@ -221,8 +221,8 @@
           "importance": "medium",
           "mvp": false,
           "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-19"
+          "verification_status": "verified",
+          "last_verified": "2026-10-20"
         }
       ]
     }

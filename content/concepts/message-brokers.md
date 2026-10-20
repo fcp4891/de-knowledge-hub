@@ -42,9 +42,9 @@ sources:
     note: "Retención de mensajes: 7 días por defecto, mínimo 10 minutos, máximo 31 días; retener mensajes sin confirmar más de 24 horas tiene cargo adicional. Expiración: 31 días por defecto, mínimo 1 día, o nunca. Ack deadline: 10 s por defecto, mínimo 10 s, máximo 600 s. El filtro usa atributos, no el cuerpo; los mensajes que no coinciden se confirman automáticamente y el filtro no se puede cambiar ni quitar después."
   - source: gcp-pubsub-docs
     url: https://cloud.google.com/pubsub/pricing
-    accessed: 2026-10-19
+    accessed: 2026-10-20
     page_title: "Pub/Sub pricing"
-    note: "Pub/Sub pricing (consultada el 2026-10-19): tres componentes, throughput de publicación y entrega, transferencia de datos que cruza zonas o regiones y almacenamiento de mensajes retenidos; se cobra por uso (bytes publicados, entregados o guardados). Los montos no se copian."
+    note: "Pub/Sub pricing (consultada el 2026-10-20): se cobran el throughput de publicación y entrega, la transferencia de datos entre regiones y el almacenamiento de mensajes retenidos, por uso (bytes publicados, entregados o guardados); «There are no zone data transfer fees for Pub/Sub usage». Los montos no se copian."
   - source: aws-kinesis-docs
     url: https://docs.aws.amazon.com/streams/latest/dev/how-do-i-size-a-stream.html
     accessed: 2026-10-12
@@ -100,9 +100,9 @@ relations:
     target: pubsub-topics-and-subscriptions
     note: El broker de GCP.
 created_at: 2026-10-19
-updated_at: 2026-10-19
-last_verified: 2026-10-19
-verification_status: review_required
+updated_at: 2026-10-20
+last_verified: 2026-10-20
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -203,7 +203,7 @@ En GCP, **Pub/Sub** es el broker administrado. Las diferencias con Kafka, según
 |---|---|---|
 | Qué se opera | Brokers y su replicación, o un servicio administrado | Nada: topics y suscripciones |
 | Retención | `retention.ms` por topic | Por suscripción: 7 días por defecto, de 10 minutos a 31 días |
-| Cobro (consultado el 2026-10-19) | La infraestructura | Throughput de publicación y entrega, transferencia entre zonas o regiones y almacenamiento de mensajes retenidos |
+| Cobro (consultado el 2026-10-20) | La infraestructura | Throughput de publicación y entrega, transferencia entre regiones (no entre zonas) y almacenamiento de mensajes retenidos |
 
 ## 12. AWS
 
@@ -232,7 +232,7 @@ En Azure, **Event Hubs** es el broker administrado, con un endpoint de Kafka. Se
 - Un broker administrado salvo que haya una razón para operar Kafka.
 - **Seguridad:** autenticación de clientes y permisos por topic; cifrado en tránsito.
 - **Observabilidad:** particiones con réplicas atrasadas, espacio en disco y lag de los consumidores.
-- **Costo:** la retención es almacenamiento y la replicación lo multiplica; en los servicios administrados se paga además el throughput o la capacidad (consultado el 2026-10-19 en Pub/Sub; ver las fechas de cada tabla).
+- **Costo:** la retención es almacenamiento y la replicación lo multiplica; en los servicios administrados se paga además el throughput o la capacidad (consultado el 2026-10-20 en Pub/Sub; ver las fechas de cada tabla).
 
 ## 15. Errores frecuentes
 
@@ -275,8 +275,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-19. `review_required`: pendiente de revisión B-F3.1 del lote F3b-14a.
+2026-10-20. Pasa a `verified`: revisión B-F3.1 del lote F3b-14a aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-19: creación (lote F3b-14a).
+- 2026-10-20: revisión B-F3.1 del lote F3b-14a aplicada (docs/reviews/cards-f3b-14a.md): Pub/Sub cobra la transferencia entre regiones, no entre zonas («There are no zone data transfer fees for Pub/Sub usage»), según *Pub/Sub pricing* (consultada el 2026-10-20).
+- 2026-10-20: `verification_status: verified` (sin VERIFY pendientes).
