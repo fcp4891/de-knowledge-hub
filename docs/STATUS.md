@@ -1,6 +1,6 @@
 # STATUS — Data Engineering Knowledge Hub
 
-**Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 20-open-data-stack (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08, 03-python el 2026-10-10, 04-data-modeling, 05-pipelines, 06-orchestration y los conceptos de 07-architecture el 2026-10-11, 08-gcp el 2026-10-12, 09-aws el 2026-10-13, 10-azure y 11-devops el 2026-10-14, 12-infrastructure-as-code y 13-containers el 2026-10-19, 14-streaming el 2026-10-20). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
+**Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 15-data-quality (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08, 03-python el 2026-10-10, 04-data-modeling, 05-pipelines, 06-orchestration y los conceptos de 07-architecture el 2026-10-11, 08-gcp el 2026-10-12, 09-aws el 2026-10-13, 10-azure y 11-devops el 2026-10-14, 12-infrastructure-as-code y 13-containers el 2026-10-19, 14-streaming y 20-open-data-stack el 2026-10-20). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
 **Última actualización:** 2026-10-20
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**
@@ -18,8 +18,8 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | 20-open-data-stack: 7/7 verified, pendiente de aprobación en el navegador | Plan de 15-data-quality | — |
-| B · Cursor revisión | — | Lo que asigne Felipe | — |
+| A · Claude Code | 15-data-quality: F3b-15a (4) en revisión | F3b-15b (4) | — |
+| B · Cursor revisión | — | Revisar F3b-15a (B-F3.1, `lane-a.md`) | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
@@ -43,7 +43,8 @@
 - [x] 12-infrastructure-as-code: 12/12 `verified`, aprobado por Felipe en el navegador el 2026-10-19 (ADR-015: Terraform sin nube en la CI, cfn-lint y Bicep).
 - [x] 13-containers: 9/9 `verified`, aprobado por Felipe en el navegador el 2026-10-19 (ADR-016: Docker real en la CI con digests, hadolint, kubeconform contra Kubernetes 1.37.1 con esquemas fijados y registry:2 local).
 - [x] 14-streaming: 14/14 `verified`, aprobado por Felipe en el navegador el 2026-10-20 (ADR-017: Kafka 4.3.1 en KRaft en Docker, por digest; PySpark 4.2.0 en la CI; Flink 2.3 citado y no ejecutado).
-- [ ] 20-open-data-stack: 7/7 verified, pendiente de aprobación en el navegador (ADR-018: dbt Core y PyIceberg en la CI; Delta y Hudi sin ejecutar).
+- [x] 20-open-data-stack: 7/7 `verified`, aprobado por Felipe en el navegador el 2026-10-20 (ADR-018: dbt Core y PyIceberg en la CI; Delta y Hudi sin ejecutar).
+- [ ] 15-data-quality: 15a (4) en revisión; 15b (4) en escritura (ADR-019 para Great Expectations en 15b).
 - Orden de dominios desde 12 (2026-10-14): 12 → 13 → 14 → 20 → 15 → 16 → 17 → 18 → 19 → 21 → 22 → 23.
 - [x] Lote F3b-rel: la regla del §17 es error de `make validate` (2026-10-14; `docs/reviews/f3b-rel.md`).
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
