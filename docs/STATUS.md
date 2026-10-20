@@ -18,8 +18,8 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | 15-data-quality: F3b-15a (4) en revisión | F3b-15b (4) | — |
-| B · Cursor revisión | — | Revisar F3b-15a (B-F3.1, `lane-a.md`) | — |
+| A · Claude Code | 15-data-quality: F3b-15a (4) y F3b-15b (4) en revisión | Aplicar revisiones de 15 | — |
+| B · Cursor revisión | — | Revisar F3b-15a y F3b-15b (B-F3.1, `lane-a.md`) | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
@@ -44,7 +44,7 @@
 - [x] 13-containers: 9/9 `verified`, aprobado por Felipe en el navegador el 2026-10-19 (ADR-016: Docker real en la CI con digests, hadolint, kubeconform contra Kubernetes 1.37.1 con esquemas fijados y registry:2 local).
 - [x] 14-streaming: 14/14 `verified`, aprobado por Felipe en el navegador el 2026-10-20 (ADR-017: Kafka 4.3.1 en KRaft en Docker, por digest; PySpark 4.2.0 en la CI; Flink 2.3 citado y no ejecutado).
 - [x] 20-open-data-stack: 7/7 `verified`, aprobado por Felipe en el navegador el 2026-10-20 (ADR-018: dbt Core y PyIceberg en la CI; Delta y Hudi sin ejecutar).
-- [ ] 15-data-quality: 15a (4) en revisión; 15b (4) en escritura (ADR-019 para Great Expectations en 15b).
+- [ ] 15-data-quality: 15a (4) y 15b (4) en revisión (ADR-019: Great Expectations 1.24.0 en la CI; Dataform y el Publish de WAP sin ejecutar).
 - Orden de dominios desde 12 (2026-10-14): 12 → 13 → 14 → 20 → 15 → 16 → 17 → 18 → 19 → 21 → 22 → 23.
 - [x] Lote F3b-rel: la regla del §17 es error de `make validate` (2026-10-14; `docs/reviews/f3b-rel.md`).
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
