@@ -2764,3 +2764,22 @@ created_at: '2026-10-20'
 updated_at: '2026-10-20'
 last_verified: '2026-10-20'
 verification_status: verified
+---
+id: source:great-expectations-docs
+slug: great-expectations-docs
+type: source
+title: Great Expectations (GX Core) documentation
+description: Documentación oficial de GX Core, la biblioteca de Python de Great Expectations; la versión 1.x no publica URLs versionadas (ADR-019).
+url: https://docs.greatexpectations.io/docs/core/introduction/
+source_type: official_docs
+authority_level: 1
+provider: great-expectations
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- great-expectations
+created_at: '2026-10-20'
+updated_at: '2026-10-20'
+last_verified: '2026-10-20'
+verification_status: verified
