@@ -14,6 +14,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** B-F3.1 del lote F3b-20a. Revisión en `docs/reviews/cards-f3b-20a.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: sufijos de EMR en `spark-execution-model` y el enlace a `dbt-core-concepts` en el panorama. El lote 20b va en otra rama.
 - **Tarea activa:** B-F3.1 del lote F3b-14a. Revisión en `docs/reviews/cards-f3b-14a.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: *Class Message* está en 2.43.0 y Pub/Sub no cobra transferencia entre zonas. El lote 14b va en otra rama.
 - **Tarea activa:** B-F3.1 del lote F3b-14b. Revisión en `docs/reviews/cards-f3b-14b.md`. No se editó `content/` ni `frontend/`.
@@ -64,6 +66,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Si hay alias, bajo el título: «También conocido como: …» (ficha de concepto y página de tecnología).
 - `make test-frontend`: 11/11. En la demo estática, «Dataplex» encuentra Knowledge Catalog y la ficha `gcp-dataplex` muestra los dos alias.
 - No se editó `content/` ni el contrato.
+
+### B-F3.1 · lote F3b-20a
+- Cuatro fichas del open data stack. Pub/Sub no se presenta como Kafka. `min.insync.replicas` se cita y no se ejecuta; la compactación sí. La decodificación lógica queda sin ejecutar porque la CI corre con `wal_level=replica`. Spark en EMR es 3.5.8-amzn-0. Propuestas media: los sufijos de Hadoop, Iceberg, Delta y Hudi, y enlazar `dbt-core-concepts`. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-14a
 - Siete fichas de streaming. Seis bloques corren contra Kafka 4.3.1 en Docker; `delivery-semantics` es una simulación en Python y así lo dice. Propuestas media: el `page_title` de *Class Message* (2.43.0) y la transferencia de Pub/Sub, que no cobra entre zonas. No se editó `content/` ni `frontend/`.
@@ -302,6 +307,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-20a (2026-10-20)
+- Revisión de las 4 fichas del open data stack. Dos propuestas media: citar los sufijos de EMR y enlazar `dbt-core-concepts`. Kafka, PostgreSQL y los seis `page_title` coinciden con los tests y el diff. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-14a (2026-10-20)
 - Revisión de las 7 fichas de fundamentos y semánticas de entrega. Dos propuestas media: *Class Message* 2.43.0 y la transferencia de Pub/Sub entre zonas. Kafka en la CI y la simulación coinciden con los tests. Las fichas verified solo enlazan. No se editó `content/`.
