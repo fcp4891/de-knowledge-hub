@@ -3074,3 +3074,75 @@ created_at: '2026-10-21'
 updated_at: '2026-10-21'
 last_verified: '2026-10-21'
 verification_status: verified
+---
+id: source:nist-csrc
+slug: nist-csrc
+type: source
+title: NIST Computer Security Resource Center (CSRC) publications
+description: 'Publicaciones del NIST (CSRC), p. ej. SP 800-188 e IR 8053 sobre desidentificación: referencia conceptual canónica (Nivel 4).'
+url: https://csrc.nist.gov/publications
+source_type: spec_paper
+authority_level: 4
+provider: nist
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-21'
+updated_at: '2026-10-21'
+last_verified: '2026-10-21'
+verification_status: verified
+---
+id: source:aws-databrew-docs
+slug: aws-databrew-docs
+type: source
+title: AWS Glue DataBrew Developer Guide
+description: Guía oficial de AWS Glue DataBrew.
+url: https://docs.aws.amazon.com/databrew/latest/dg/what-is.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-21'
+updated_at: '2026-10-21'
+last_verified: '2026-10-21'
+verification_status: verified
+---
+id: source:aws-clean-rooms-docs
+slug: aws-clean-rooms-docs
+type: source
+title: AWS Clean Rooms User Guide
+description: Guía oficial de AWS Clean Rooms.
+url: https://docs.aws.amazon.com/clean-rooms/latest/userguide/what-is.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-21'
+updated_at: '2026-10-21'
+last_verified: '2026-10-21'
+verification_status: verified
+---
+id: source:azure-confidential-computing-docs
+slug: azure-confidential-computing-docs
+type: source
+title: Azure confidential computing documentation
+description: Documentación oficial de Azure confidential computing.
+url: https://learn.microsoft.com/en-us/azure/confidential-computing/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-21'
+updated_at: '2026-10-21'
+last_verified: '2026-10-21'
+verification_status: verified
