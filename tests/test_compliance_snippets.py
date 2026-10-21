@@ -2,8 +2,10 @@
 
 - chile-data-protection y pii-identification: solo biblioteca estándar.
 - processing-activities-inventory: openlineage-python con transporte a archivo, sin backend (ADR-021).
-- data-minimization-by-layer: psycopg contra una base temporal en el PostgreSQL de la CI; el rol lleva como sufijo el
-  nombre de la base temporal y se borra al terminar.
+- data-minimization-by-layer y data-subject-requests: psycopg contra una base temporal en el PostgreSQL de la CI; el rol
+  lleva como sufijo el nombre de la base temporal y se borra al terminar.
+- chilean-identifier-pseudonymization: biblioteca estándar.
+- erasure-across-copies: PyIceberg con catálogo SQL en SQLite (ADR-018) y cryptography (ADR-022).
 """
 
 from __future__ import annotations
@@ -37,7 +39,26 @@ STDLIB = {
         "tramo_ingreso: sensible (situación socioeconómica)",
         "rut_sin_guion: sin datos personales detectados (nada calza)",
         "rut_dv_cambiado: sin datos personales detectados (nada calza)"],
+    "chilean-identifier-pseudonymization": [
+        "variantes del mismo RUT, mismo seudónimo: True", "sin normalizar, seudónimos distintos: 3",
+        "DV inválido: RUT no válido: '11111111-0'", "hash simple revertido probando 1.000.000 RUT del tramo: True",
+        "con HMAC y sin la clave, el mismo ataque no sirve: True"],
 }
+DSR = [
+    "acceso: {'clientes': (1, 'venta y despacho'), 'optin': (1, 'envío de ofertas'), 'pedidos': (2, 'venta y despacho')}",
+    "portabilidad: JSON de 3 tablas", "rectificación: ('ana@nuevo.invalid',)",
+    "bloqueo: el pipeline procesa 1 de 2 clientes; los datos siguen guardados",
+    "supresión: {'clientes': 1, 'optin': 1} | se conserva: pedidos (obligación legal)",
+    "verificación: {'clientes': 0, 'optin': 0, 'pedidos': 2}", "log de evidencia íntegro: True (6 registros)",
+    "tras alterar un registro, íntegro: False", "plazo de respuesta: 2027-01-01; con prórroga: 2027-01-31",
+]
+ERASURE = [
+    "tabla actual tiene a la titular: False", "snapshot anterior (time travel) todavía la tiene: True",
+    "snapshots que quedan: 1 | el anterior expiró: True",
+    "tras expirar, archivos Parquet que todavía contienen el correo: 1",
+    "archivos sin referencia borrados: 1; con el correo: 0",
+    "respaldo: ['ilegible (clave destruida)', 'luis@example.org']",
+]
 MINIMIZATION = [
     "bronze: ['rut', 'nombre', 'email', 'comuna', 'edad', 'monto']; valores con RUT o correo en claro: 10",
     "silver: ['cliente_key', 'comuna', 'tramo_edad', 'monto']; valores con RUT o correo en claro: 0",
@@ -70,5 +91,23 @@ def test_processing_inventory_from_openlineage_and_catalog(tmp_path: Path) -> No
 def test_minimization_by_layer_in_postgres(pg_env: dict[str, str], tmp_path: Path) -> None:  # noqa: F811
     out = run_python_block("data-minimization-by-layer", tmp_path, {**pg_env, **UTF8})
     for line in MINIMIZATION:
+        assert line in out, out
+    assert_mypy_strict(tmp_path)
+
+
+def test_data_subject_requests_in_postgres(pg_env: dict[str, str], tmp_path: Path) -> None:  # noqa: F811
+    out = run_python_block("data-subject-requests", tmp_path, {**pg_env, **UTF8})
+    for line in DSR:
+        assert line in out, out
+    assert_mypy_strict(tmp_path)
+
+
+def test_erasure_across_copies_with_pyiceberg_and_crypto_shredding(tmp_path: Path) -> None:
+    pytest.importorskip("pyiceberg", reason="falta pyiceberg (make snippets-deps)")
+    pytest.importorskip("cryptography")
+    work = tmp_path / "work"
+    work.mkdir()
+    out = run_python_block("erasure-across-copies", tmp_path, UTF8, args=(str(work),))
+    for line in ERASURE:
         assert line in out, out
     assert_mypy_strict(tmp_path)
