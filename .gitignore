@@ -9,6 +9,7 @@ venv/
 node_modules/
 build/
 dist/
+*.zip
 .venv-airflow/
 # Briefs de Felipe: solo locales (guion, no fuente), fuera del repo y del zip
 docs/briefs/

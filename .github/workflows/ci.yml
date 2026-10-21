@@ -10,6 +10,9 @@ concurrency:               # un push nuevo a la misma ref cancela el run anterio
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:               # repositorio público: el GITHUB_TOKEN solo lee; ningún job escribe
+  contents: read
+
 # Versiones de acciones con runtime node24 (Node 20 está obsoleto en los runners).
 # Imagen de Ubuntu fijada: ubuntu-latest cambiará de versión mayor sin aviso en el workflow.
 

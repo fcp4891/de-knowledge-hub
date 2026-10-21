@@ -1,0 +1,9 @@
+# Falsos positivos revisados en la auditoría del 2026-10-21 (antes de publicar el repositorio).
+# tests/test_terraform_local.py: valores de prueba de TF_VAR_* que el test busca en el state de Terraform.
+# tests/test_snippet_code.py: cadena de conexión pública del emulador Azurite (devstoreaccount1), documentada por Microsoft.
+# Historial (gitleaks git):
+2e8035ff12fcbd85b0c3a797078c042cc69210eb:tests/test_terraform_local.py:generic-api-key:148
+72cb82221176d1c790d99c2b9cd7cb9649843a2b:tests/test_snippet_code.py:generic-api-key:340
+# Árbol de trabajo (gitleaks dir . desde la raíz); si la línea cambia, actualizar el número:
+tests/test_terraform_local.py:generic-api-key:148
+tests/test_snippet_code.py:generic-api-key:340
