@@ -14,6 +14,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** B-F3.1 del lote F3b-16b. Revisión en `docs/reviews/cards-f3b-16b.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. El lote 16a está en `b/f3b-review-16a`.
 - **Tarea activa:** B-F3.1 del lote F3b-15a. Revisión en `docs/reviews/cards-f3b-15a.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuesta baja: la fecha del §12 en `spark-structured-streaming`. El lote 15b va en otra rama.
 - **Tarea activa:** B-F3.1 del lote F3b-15b. Revisión en `docs/reviews/cards-f3b-15b.md`. No se editó `content/` ni `frontend/`.
@@ -72,6 +74,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Si hay alias, bajo el título: «También conocido como: …» (ficha de concepto y página de tecnología).
 - `make test-frontend`: 11/11. En la demo estática, «Dataplex» encuentra Knowledge Catalog y la ficha `gcp-dataplex` muestra los dos alias.
 - No se editó `content/` ni el contrato.
+
+### B-F3.1 · lote F3b-16b
+- Seis fichas de salud, SLA, SLO, alertas e incidentes. Airflow 3.3.2 cita el reemplazo del SLA. La aritmética del SLO cierra. Incident Manager y el título de Microsoft coinciden con sus páginas. El libro de SRE no respalda productos. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-15a
 - Cuatro fichas de calidad. Las seis dimensiones de DAMA UK salen del marco de GOV.UK. Knowledge Catalog, Glue y Purview quedan en tablas con su página. Los textos ejecutados están en el test. La nota de EMR 7.14.0 cita la columna completa. Propuesta baja: la fecha del §12 en `spark-structured-streaming`. No se editó `content/` ni `frontend/`.
@@ -320,6 +325,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-16b (2026-10-20)
+- Revisión de las 6 fichas de confiabilidad. Sin hallazgos. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-15a (2026-10-20)
 - Revisión de las 4 fichas de dimensiones, schema, validadores y gate. Sin hallazgos de contenido. Propuesta baja: la fecha del §12 junto a la nota de EMR. No se editó `content/`.
