@@ -2,7 +2,7 @@
 
 - data-catalog, metadata-management y data-retention: psycopg contra una base temporal en el PostgreSQL de la CI.
 - data-lineage: openlineage-python con transporte a archivo, sin backend (ADR-021).
-- data-lifecycle-management: solo biblioteca estándar.
+- data-lifecycle-management, data-ownership, data-stewardship, data-domains y data-classification: solo biblioteca estándar.
 """
 
 from __future__ import annotations
@@ -74,5 +74,29 @@ def test_lifecycle_policy_assigns_an_action_per_class_and_age(tmp_path: Path) ->
                  "raw/pedidos/2025-09-01.json (414 días): borrar",
                  "auditoria/accesos/2024-01.log (993 días): mantener",
                  "tmp/sin-clase.csv (292 días): SIN CLASE: revisar"):
+        assert line in out, out
+    assert_mypy_strict(tmp_path)
+
+
+ORGANIZATION = {
+    "data-ownership": ["ventas.pedidos: ok", "ventas.devoluciones: sin dueño de negocio; sin respaldo",
+                       "marketing.campanias: dueño 'marketing' no es un equipo registrado",
+                       "tmp.cargas_manuales: el equipo técnico figura como dueño de negocio; sin respaldo",
+                       "datasets con problemas: 4/5"],
+    "data-stewardship": ["ana · termino · cliente activo: 81 días -> VENCIDO: escalar al dueño",
+                         "luis · calidad · montos negativos en pedidos: 8 días -> VENCIDO: escalar al dueño",
+                         "ana · calidad · clientes duplicados: 2 días -> en plazo",
+                         "pendientes por steward: {'ana': 3, 'luis': 1}"],
+    "data-domains": ["margen_diario [finanzas] lee ventas.pedidos: ok (producto publicado por ventas)",
+                     "atribucion [marketing] lee ventas.stg_pedidos: NO: tabla interna de ventas; pedir que la publique"],
+    "data-classification": ["contacto: email (75%)", "fono: telefono_cl (67%)", "medio_pago: tarjeta (67%)",
+                            "comentario: sin etiqueta", "codigo_pedido: sin etiqueta"],
+}
+
+
+@pytest.mark.parametrize("ficha", sorted(ORGANIZATION))
+def test_organization_examples_print_their_checks(ficha: str, tmp_path: Path) -> None:
+    out = run_python_block(ficha, tmp_path, UTF8)
+    for line in ORGANIZATION[ficha]:
         assert line in out, out
     assert_mypy_strict(tmp_path)
