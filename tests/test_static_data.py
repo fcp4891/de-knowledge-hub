@@ -74,14 +74,14 @@ def test_rebuild_is_idempotent(out: Path, tmp_path: Path) -> None:
     assert first == second
 
 
-@pytest.mark.parametrize("value", ["C:/Program Files/Git/DES_conocimiento", "DES_conocimiento", "/", "/x/"])
+@pytest.mark.parametrize("value", ["C:/Program Files/Git/aprendizaje-continuo", "aprendizaje-continuo", "/", "/x/"])
 def test_base_path_rejects_converted_or_bad_values(value: str) -> None:
     with pytest.raises(SystemExit):
         check_base_path(value)
 
 
 def test_base_path_accepts_cpanel_folder() -> None:
-    assert check_base_path("/DES_conocimiento") == "/DES_conocimiento"
+    assert check_base_path("/aprendizaje-continuo") == "/aprendizaje-continuo"
 
 
 def test_zip_name_uses_local_date_and_time() -> None:

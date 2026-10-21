@@ -57,7 +57,7 @@ Sin ellas, `make test` salta ese test (aparece como *skipped*). La CI las instal
 | `make validate-terraform` | Extrae el HCL de snippets y fichas y lo valida con `terraform validate` (requiere Terraform; la CI lo ejecuta). Un bloque precedido por `<!-- validate-terraform: excluido — motivo -->` se reporta y no se valida |
 | `make backup-me` / `make restore-me` | Respaldo y restauración del estado personal (`me_*`) |
 | `make static-data` | Genera `frontend/public/data/`: un JSON por respuesta de la API para todo el contenido, más `index.json` y `search-index.json` (no se versiona) |
-| `make static` | `static-data`, build estático del frontend con `BASE_PATH` (por defecto `/DES_conocimiento`) y zip en `dist/dekh-static-<fecha>-<hora>.zip` (hora local; no sobrescribe) |
+| `make static` | `static-data`, build estático del frontend con `BASE_PATH` (por defecto `/aprendizaje-continuo`) y zip en `dist/dekh-static-<fecha>-<hora>.zip` (hora local; no sobrescribe) |
 
 Flujo típico: `make venv`, `make db-up`, `make build`, `make dev`.
 
@@ -66,13 +66,13 @@ Flujo típico: `make venv`, `make db-up`, `make build`, `make dev`.
 La demo es el sitio sin API ni base de datos: todo el contenido va en JSON dentro del zip, la búsqueda corre en el navegador y el estado de estudio, las notas y los favoritos se guardan en el `localStorage` del navegador de cada visitante.
 
 1. **Generar el zip.** Requiere `.venv` y `npm ci` en `frontend/`. Ejecuta `make static`. Para otra carpeta del hosting, usa `make static BASE_PATH=/otra_carpeta`. El resultado queda en `dist/dekh-static-<AAAA-MM-DD-HHMMSS>.zip` (fecha y hora locales del sistema; cada ejecución crea un zip nuevo), con `index.html`, `.htaccess` y `data/` en la raíz del zip.
-2. **Crear la carpeta.** En cPanel, abre **Administrador de archivos**, entra en `public_html` y crea la carpeta `DES_conocimiento`. El nombre debe coincidir con `BASE_PATH`, incluidas las mayúsculas.
-3. **Subir el zip.** Entra en `public_html/DES_conocimiento`, usa **Cargar** y sube el zip.
-4. **Extraer.** Selecciona el zip y usa **Extract** con destino `/public_html/DES_conocimiento`. Después borra el zip.
-5. **Comprobar el `.htaccess`.** En **Configuración**, activa «Mostrar archivos ocultos» y comprueba que `.htaccess` está en `public_html/DES_conocimiento`. Lo genera el build del frontend: no lo edites a mano.
-6. **Abrir** https://voltakchile.cl/DES_conocimiento/.
+2. **Crear la carpeta.** En cPanel, abre **Administrador de archivos**, entra en `public_html` y crea la carpeta `aprendizaje-continuo`. El nombre debe coincidir con `BASE_PATH`, incluidas las mayúsculas.
+3. **Subir el zip.** Entra en `public_html/aprendizaje-continuo`, usa **Cargar** y sube el zip.
+4. **Extraer.** Selecciona el zip y usa **Extract** con destino `/public_html/aprendizaje-continuo`. Después borra el zip.
+5. **Comprobar el `.htaccess`.** En **Configuración**, activa «Mostrar archivos ocultos» y comprueba que `.htaccess` está en `public_html/aprendizaje-continuo`. Lo genera el build del frontend: no lo edites a mano.
+6. **Abrir** https://felipe-a-cespedes-perez.cl/aprendizaje-continuo/.
 
-Para actualizar la demo, borra el contenido de `public_html/DES_conocimiento` y repite los pasos 3 y 4 con el zip nuevo. Los datos guardados por cada visitante en su navegador se conservan.
+Para actualizar la demo, borra el contenido de `public_html/aprendizaje-continuo` y repite los pasos 3 y 4 con el zip nuevo. Los datos guardados por cada visitante en su navegador se conservan.
 
 ## Licencia
 

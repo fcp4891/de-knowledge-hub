@@ -60,8 +60,9 @@ mocks: validate
 	$(PYTHON) -m scripts.contracts.build_mocks
 
 # Demo estática (cPanel): JSON de todo el contenido en frontend/public/data/, build de Next.js con
-# BASE_PATH y zip en dist/. Git Bash no debe convertir "/DES_conocimiento" en una ruta de Windows.
-BASE_PATH ?= /DES_conocimiento
+# BASE_PATH y zip en dist/. Git Bash no debe convertir "/aprendizaje-continuo" en una ruta de Windows.
+# Hosting: https://felipe-a-cespedes-perez.cl/aprendizaje-continuo/ (otra carpeta: make static BASE_PATH=/otra).
+BASE_PATH ?= /aprendizaje-continuo
 static-data: validate
 	$(PYTHON) -m scripts.static.build_static_data
 

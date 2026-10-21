@@ -7,7 +7,7 @@ import { syncStaticData } from "./sync-static-data.mjs";
 import { writeHtaccess } from "./write-htaccess.mjs";
 
 const frontendRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const basePath = process.env.BASE_PATH ?? "/DES_conocimiento";
+const basePath = process.env.BASE_PATH ?? "/aprendizaje-continuo";
 
 if (!basePath.startsWith("/")) {
   console.error("BASE_PATH debe empezar por /.");

@@ -1,7 +1,8 @@
 # STATUS — Data Engineering Knowledge Hub
 
 **Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 18-security (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08, 03-python el 2026-10-10, 04-data-modeling, 05-pipelines, 06-orchestration y los conceptos de 07-architecture el 2026-10-11, 08-gcp el 2026-10-12, 09-aws el 2026-10-13, 10-azure y 11-devops el 2026-10-14, 12-infrastructure-as-code y 13-containers el 2026-10-19, 14-streaming, 20-open-data-stack, 15-data-quality y 16-observability el 2026-10-20, 17-governance el 2026-10-21). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
-**Última actualización:** 2026-10-20
+**Última actualización:** 2026-10-21
+**Demo estática:** https://felipe-a-cespedes-perez.cl/aprendizaje-continuo/ (`make static`, `BASE_PATH` por defecto `/aprendizaje-continuo`).
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**
 > El estado detallado de cada carril está en `docs/status/lane-a.md` y `docs/status/lane-b.md`; cada carril edita solo el suyo.

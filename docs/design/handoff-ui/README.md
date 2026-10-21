@@ -193,5 +193,5 @@ Migas de pan (Inicio / NN Dominio / Subdominio / Concepto) y, a la derecha, "Le�
 - [ ] Mapa: no se desalinea entre 375 px y 1440 px, y las capas largas hacen scroll horizontal.
 - [ ] Ruta: los conceptos sin ficha no son enlace y el "Siguiente recomendado" cumple su regla.
 - [ ] Ficha: el índice resalta la sección actual, las pestañas multicloud funcionan con teclado y el progreso persiste al recargar.
-- [ ] Probado en Chrome normal (no en el navegador de Cursor) en `hybrid` y en `static` bajo `/DES_conocimiento/`.
+- [ ] Probado en Chrome normal (no en el navegador de Cursor) en `hybrid` y en `static` bajo `/aprendizaje-continuo/`.
 - [ ] `docs/status/lane-b.md` actualizado, con los pedidos a Carril A si faltan campos.

@@ -7,7 +7,7 @@ El nombre lleva la fecha y la hora locales del sistema (AAAA-MM-DD-HHMMSS): re-e
 ningún zip anterior, y si el nombre ya existe el empaquetado se detiene.
 
 Requiere frontend/public/data/ (scripts.static.build_static_data) y las dependencias de npm.
-Uso: python -m scripts.static.package_static [--base-path /DES_conocimiento] [--skip-build]
+Uso: python -m scripts.static.package_static [--base-path /aprendizaje-continuo] [--skip-build]
 """
 
 from __future__ import annotations
@@ -31,7 +31,7 @@ REQUIRED = ["index.html", "404.html", ".htaccess", "data/index.json", "data/sear
 def check_base_path(base_path: str) -> str:
     # Git Bash convierte "/x" en "C:/Program Files/Git/x" si no se desactiva (el Makefile lo hace).
     if not re.fullmatch(r"/[A-Za-z0-9_\-/]*[A-Za-z0-9_\-]", base_path):
-        raise SystemExit(f"BASE_PATH inválido: {base_path!r} (debe ser como /DES_conocimiento)")
+        raise SystemExit(f"BASE_PATH inválido: {base_path!r} (debe ser como /aprendizaje-continuo)")
     return base_path
 
 
@@ -71,7 +71,7 @@ def package(moment: dt.datetime) -> Path:
 
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description="Construye y empaqueta la demo estática.")
-    parser.add_argument("--base-path", default=os.environ.get("BASE_PATH", "/DES_conocimiento"))
+    parser.add_argument("--base-path", default=os.environ.get("BASE_PATH", "/aprendizaje-continuo"))
     parser.add_argument("--skip-build", action="store_true", help="solo empaqueta frontend/out/ existente")
     args = parser.parse_args(argv)
     base_path = check_base_path(args.base_path)

@@ -4,6 +4,7 @@
 Plataforma personal de estudio y actualización continua para Data Engineering.
 Plan completo: `docs/plan-maestro.md`. Hoja de ruta: `docs/ROADMAP.md`.
 **El activo central es el modelo de conocimiento, no el frontend ni la IA.**
+Demo estática: https://felipe-a-cespedes-perez.cl/aprendizaje-continuo/ (`make static`; `BASE_PATH` por defecto `/aprendizaje-continuo`, se sobrescribe con `make static BASE_PATH=/otra`).
 
 ## Tu rol: Carril A
 Trabajas en paralelo con Cursor (Carril B, frontend y revisión).
