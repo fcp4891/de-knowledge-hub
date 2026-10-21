@@ -14,6 +14,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** B-F3.1 del lote F3b-18b. Revisión en `docs/reviews/cards-f3b-18b.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: citar «Avoid passing secrets to your application through the file system or through the environment variables». Propuesta baja: la rotación automática de AWS KMS es opcional.
 - **Tarea activa:** B-F3.1 del lote F3b-18a. Revisión en `docs/reviews/cards-f3b-18a.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: `GRANT ALL` en PostgreSQL 17 también concede `MAINTAIN`, y el conteo de 21 no lo incluye.
 - **Tarea activa:** B-F3.1 del lote F3b-17a. Revisión en `docs/reviews/cards-f3b-17a.md`. No se editó `content/` ni `frontend/`.
@@ -82,6 +84,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Si hay alias, bajo el título: «También conocido como: …» (ficha de concepto y página de tecnología).
 - `make test-frontend`: 11/11. En la demo estática, «Dataplex» encuentra Knowledge Catalog y la ficha `gcp-dataplex` muestra los dos alias.
 - No se editó `content/` ni el contrato.
+
+### B-F3.1 · lote F3b-18b
+- Cinco fichas de cifrado y secretos. AES-GCM, el TLS y los plazos de destrucción coinciden con sus páginas. Propuesta media: Secret Manager dice «Avoid passing secrets». Propuesta baja: la rotación anual de AWS KMS es el período por defecto, una vez activada. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-18a
 - Ocho fichas de control de acceso. RLS, Azure ABAC y el enmascaramiento coinciden con sus páginas. La cuenta 21 / 3 / 18 es la del test. Propuesta media: `MAINTAIN` queda fuera de ese conteo. `gcp-iam-for-data` solo enlaza. No se editó `content/` ni `frontend/`.
@@ -343,6 +348,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-18b (2026-10-21)
+- Revisión de las 5 fichas de cifrado y secretos. Propuesta media: la frase «Avoid passing secrets» de Secret Manager. Propuesta baja: la rotación automática de AWS KMS. No se editó `content/`. El CI no se esperó.
 
 ### B-F3.1 · lote F3b-18a (2026-10-21)
 - Revisión de las 8 fichas de control de acceso. Propuesta media: `MAINTAIN` en `least-privilege`. No se editó `content/`. El CI no se esperó.
