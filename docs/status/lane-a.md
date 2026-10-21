@@ -110,6 +110,14 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ## Historial
 
+### Repo público, auditoría, licencias, hosting y CI de 18 (2026-10-21)
+- Repo público (GitHub Actions gratis). Re-ejecutados, uno a la vez, en verde: 39633665384 (18a), 39658404097 (18b) y 39662678196 (18c).
+- Auditoría antes de publicar: gitleaks v8.24.3 (Docker) sobre los 410 commits y el árbol, sin secretos reales; dos falsos positivos en `.gitleaksignore`. `*.zip` en `.gitignore`; `permissions: contents: read` en la CI.
+- Datos de ejemplo: dominios reservados (`example.com`, `.invalid`); RUT con dígito verificador inválido; teléfonos marcados como ficticios. Cambio mínimo con historial en 9 fichas.
+- Licencias: `LICENSE` (Apache-2.0, código), `LICENSE-CONTENT` (CC BY-NC 4.0, `content/` y `docs/`) y `NOTICE` (títulos y citas de terceros son de sus dueños); campos en `pyproject.toml` y `frontend/package.json`.
+- `make validate` rechaza en `page_title` caracteres de uso privado (U+F0C1) y espacios en los extremos; quitado el icono de `beam-programming-model`, `observability-metrics` y `observability-traces`.
+- Hosting definitivo: https://felipe-a-cespedes-perez.cl/aprendizaje-continuo/; `BASE_PATH` por defecto `/aprendizaje-continuo`.
+
 ### Revisión de 18b aplicada (2026-10-21)
 - `cards-f3b-18b.md` mergeado. MEDIA en `secrets-management`: se cita «Avoid passing secrets to your application through the file system or through the environment variables» en el cuerpo y en la tabla, con la excepción de *Secret Manager best practices* para integraciones serverless. BAJA en `key-management`: en AWS KMS la rotación automática es opcional en las claves del cliente y, activada, el período por defecto es de 365 días.
 - `page_title` de cryptography sin el espacio final del icono de enlace permanente en las fichas de 18b. El mismo icono (U+F0C1) sigue en `beam-programming-model`, `observability-metrics` y `observability-traces` (verified); no se tocaron.
