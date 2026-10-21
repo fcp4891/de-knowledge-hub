@@ -3,7 +3,7 @@ id: concept:secrets-management
 slug: secrets-management
 type: concept
 title: Gestión de secretos
-description: "Un secreto (contraseña, token, API key) se guarda en un gestor de secretos, llega al proceso en tiempo de ejecución y nunca queda en el código, en el repositorio ni en los logs. El proceso falla al arrancar si falta, lo oculta en repr y en logs, y la CI busca secretos escritos. Ejemplo ejecutado en la CI con la biblioteca estándar. Secret Manager (que desaconseja variables de entorno), AWS Secrets Manager (rotación) y Azure Key Vault, con sus diferencias."
+description: "Un secreto (contraseña, token, API key) se guarda en un gestor de secretos, llega al proceso en tiempo de ejecución y nunca queda en el código, en el repositorio ni en los logs. El proceso falla al arrancar si falta, lo oculta en repr y en logs, y la CI busca secretos escritos. Ejemplo ejecutado en la CI con la biblioteca estándar. Secret Manager (que pide evitar variables de entorno y archivos), AWS Secrets Manager (rotación) y Azure Key Vault, con sus diferencias."
 domain: security
 subdomain: encryption-and-secrets
 category: security
@@ -29,7 +29,7 @@ sources:
     url: https://docs.cloud.google.com/secret-manager/docs/best-practices
     accessed: 2026-10-11
     page_title: "Secret Manager best practices"
-    note: "Secret Manager best practices: el acceso a la API se protege con IAM; mínimo privilegio; separar aplicaciones y entornos (staging, producción) en proyectos distintos; con secretos de muchos servicios en un proyecto, bindings de IAM a nivel de secreto o IAM Conditions. Credenciales con Application Default Credentials. Referenciar los secretos por número de versión en lugar del alias latest, y desplegar los cambios de versión con el proceso de releases. Rotar periódicamente para limitar el impacto de una filtración y para que quien ya no debe acceder no siga usando un secreto conocido. Evitar pasar secretos por el sistema de archivos o por variables de entorno."
+    note: "Secret Manager best practices: el acceso a la API se protege con IAM; mínimo privilegio; separar aplicaciones y entornos (staging, producción) en proyectos distintos; con secretos de muchos servicios en un proyecto, bindings de IAM a nivel de secreto o IAM Conditions. Credenciales con Application Default Credentials. Referenciar los secretos por número de versión en lugar del alias latest, y desplegar los cambios de versión con el proceso de releases. Rotar periódicamente para limitar el impacto de una filtración y para que quien ya no debe acceder no siga usando un secreto conocido. Coding practices: «Avoid passing secrets to your application through the file system or through the environment variables»; en el sistema de archivos, una vulnerabilidad como directory traversal puede dar acceso al secreto, y en variables de entorno, un endpoint de depuración o una dependencia que registra el entorno puede filtrarlo. Recomienda usar la API de Secret Manager con sus bibliotecas cliente, aunque «for some product integrations such as serverless integrations, you may pass secrets through the file system or through environment variables»."
   - source: aws-secrets-manager-docs
     url: https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html
     accessed: 2026-10-13
@@ -86,7 +86,7 @@ Un **secreto** (contraseña, token, API key) se guarda en un **gestor de secreto
 ## 2. Qué es
 
 - **Gestor de secretos:** guarda, controla el acceso, versiona y rota secretos.
-- **Entrega:** el proceso lee el valor del gestor por su API, o la plataforma lo inyecta como variable de entorno o archivo montado. La guía de Secret Manager recomienda evitar estas dos últimas vías (*Secret Manager best practices*).
+- **Entrega:** el proceso lee el valor del gestor por su API, o la plataforma lo inyecta como variable de entorno o archivo montado. La guía de Secret Manager dice «Avoid passing secrets to your application through the file system or through the environment variables», salvo en algunas integraciones de productos, como las serverless (*Secret Manager best practices*).
 - **Redacción:** reemplazar el valor por `****` donde pueda aparecer.
 - **Escaneo:** buscar patrones de secretos en el código antes de que lleguen al repositorio.
 
@@ -212,7 +212,7 @@ print("archivos con secretos escritos:", [n for n, texto in archivos.items() if 
 sys.stdout.flush()
 ```
 
-El script se **ejecuta en la CI** y pasa `mypy --strict`. Imprime `repr del secreto: Secreto(****)`, el log redactado `conectando con password=****`, el error por la variable que falta y `archivos con secretos escritos: ['viejo.py']`. El secreto de prueba se genera con el módulo `secrets` (*secrets*), no con `random`. El ejemplo lo lee de una variable de entorno para no depender de un gestor real; en producción, la guía de Secret Manager prefiere leerlo por la API.
+El script se **ejecuta en la CI** y pasa `mypy --strict`. Imprime `repr del secreto: Secreto(****)`, el log redactado `conectando con password=****`, el error por la variable que falta y `archivos con secretos escritos: ['viejo.py']`. El secreto de prueba se genera con el módulo `secrets` (*secrets*), no con `random`. El ejemplo lo lee de una variable de entorno para no depender de un gestor real; en producción, la guía de Secret Manager dice «Avoid passing secrets to your application through the file system or through the environment variables» y recomienda la API; la excepción son algunas integraciones de productos, como las serverless (*Secret Manager best practices*).
 
 ## 11. GCP
 
@@ -221,7 +221,7 @@ En GCP, **Secret Manager**. Según *secrets*, *Secret Manager overview* y *Secre
 | | Código (este ejemplo) | Secret Manager |
 |---|---|---|
 | Dónde vive | Variable de entorno | Secretos con versiones; se referencian por número de versión, no por el alias `latest` |
-| Entrega | Variable de entorno | La guía recomienda evitar variables de entorno y el sistema de archivos |
+| Entrega | Variable de entorno | «Avoid passing secrets to your application through the file system or through the environment variables»; usar la API con las bibliotecas cliente. Excepción: algunas integraciones de productos, como las serverless, pueden pasarlos por archivos o variables de entorno |
 | Acceso | La cuenta del proceso | IAM con mínimo privilegio; separar aplicaciones y entornos en proyectos distintos |
 
 ## 12. AWS
@@ -295,3 +295,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-21: creación (lote F3b-18b).
+- 2026-10-21: revisión B-F3.1 (`cards-f3b-18b.md`): la indicación de Secret Manager sobre archivos y variables de entorno se cita textual, con la excepción de las integraciones serverless.

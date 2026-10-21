@@ -18,12 +18,12 @@ sources:
   - source: cryptography-docs
     url: https://cryptography.io/en/stable/hazmat/primitives/keywrap/
     accessed: 2026-10-21
-    page_title: "Key wrapping "
+    page_title: "Key wrapping"
     note: "Key wrapping (cryptography): aes_key_wrap(wrapping_key, key_to_wrap) hace AES key wrap sin relleno según RFC 3394 y devuelve la clave envuelta; aes_key_unwrap la desenvuelve; también hay variantes con relleno."
   - source: cryptography-docs
     url: https://cryptography.io/en/stable/hazmat/primitives/aead/
     accessed: 2026-10-21
-    page_title: "Authenticated encryption "
+    page_title: "Authenticated encryption"
     note: "Authenticated encryption (cryptography): AESGCM cifra y autentica los datos y autentica los datos asociados (associated_data). Advertencia de la página: reusar un nonce con la misma clave compromete la seguridad de todo mensaje con ese par. decrypt lanza cryptography.exceptions.InvalidTag si la etiqueta de autenticación no valida, lo que ocurre si el texto cifrado cambió y también si la clave, el nonce o los datos asociados son incorrectos."
   - source: gcp-cloud-kms-docs
     url: https://docs.cloud.google.com/kms/docs/envelope-encryption
@@ -44,7 +44,7 @@ sources:
     url: https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html
     accessed: 2026-10-21
     page_title: "Rotate AWS KMS keys"
-    note: "Rotate AWS KMS keys: con la rotación automática activada, AWS KMS genera material criptográfico nuevo para la clave cada año por defecto; se puede fijar un período propio en días, o rotar a pedido."
+    note: "Rotate AWS KMS keys: la rotación automática es opcional en las claves administradas por el cliente (las administradas por AWS rotan cada año); una vez activada, si no se indica RotationPeriodInDays, el período por defecto es de 365 días; se puede fijar un período propio o rotar a pedido."
   - source: azure-key-vault-docs
     url: https://learn.microsoft.com/en-us/azure/key-vault/keys/how-to-configure-key-rotation
     accessed: 2026-10-21
@@ -201,7 +201,7 @@ En AWS, **AWS KMS**. Según *Key wrapping*, *AWS KMS cryptography essentials* y 
 | | KMS simulado (este ejemplo) | AWS KMS |
 |---|---|---|
 | Envelope | DEK envuelta por la KEK | Clave por mensaje cifrada con una clave estática de más largo plazo, empaquetadas juntas |
-| Rotación | Manual en el ejemplo | Automática cada año por defecto, con período propio o a pedido |
+| Rotación | Manual en el ejemplo | Automática opcional en las claves del cliente; activada, cada 365 días por defecto, con período propio; también a pedido |
 
 ## 13. Azure
 
@@ -264,3 +264,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-21: creación (lote F3b-18b).
+- 2026-10-21: revisión B-F3.1 (`cards-f3b-18b.md`): en AWS KMS, la rotación automática es opcional y, activada, su período por defecto es de un año.

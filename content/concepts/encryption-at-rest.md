@@ -18,7 +18,7 @@ sources:
   - source: cryptography-docs
     url: https://cryptography.io/en/stable/hazmat/primitives/aead/
     accessed: 2026-10-21
-    page_title: "Authenticated encryption "
+    page_title: "Authenticated encryption"
     note: "Authenticated encryption (cryptography): AESGCM cifra y autentica los datos y autentica los datos asociados (associated_data). Advertencia de la página: reusar un nonce con la misma clave compromete la seguridad de todo mensaje con ese par. decrypt lanza cryptography.exceptions.InvalidTag si la etiqueta de autenticación no valida, lo que ocurre si el texto cifrado cambió y también si la clave, el nonce o los datos asociados son incorrectos."
   - source: gcp-security-docs
     url: https://docs.cloud.google.com/docs/security/encryption/default-encryption

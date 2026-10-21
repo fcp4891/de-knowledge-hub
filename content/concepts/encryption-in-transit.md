@@ -23,7 +23,7 @@ sources:
   - source: cryptography-docs
     url: https://cryptography.io/en/stable/x509/tutorial/
     accessed: 2026-10-21
-    page_title: "Tutorial "
+    page_title: "Tutorial"
     note: "Tutorial (X.509, cryptography): crear una solicitud de firma (CSR), un certificado autofirmado y una jerarquía de CA con el módulo x509."
   - source: gcp-security-docs
     url: https://docs.cloud.google.com/docs/security/encryption-in-transit
