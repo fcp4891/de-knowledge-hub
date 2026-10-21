@@ -2984,3 +2984,39 @@ created_at: '2026-10-20'
 updated_at: '2026-10-20'
 last_verified: '2026-10-20'
 verification_status: verified
+---
+id: source:gcp-sensitive-data-protection-docs
+slug: gcp-sensitive-data-protection-docs
+type: source
+title: Sensitive Data Protection documentation
+description: Documentación oficial de Sensitive Data Protection, Google Cloud.
+url: https://docs.cloud.google.com/sensitive-data-protection/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-21'
+updated_at: '2026-10-21'
+last_verified: '2026-10-21'
+verification_status: verified
+---
+id: source:aws-macie-docs
+slug: aws-macie-docs
+type: source
+title: Amazon Macie User Guide
+description: Guía oficial de Amazon Macie.
+url: https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-21'
+updated_at: '2026-10-21'
+last_verified: '2026-10-21'
+verification_status: verified
