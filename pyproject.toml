@@ -3,6 +3,8 @@ name = "de-knowledge-hub"
 version = "0.1.0"
 description = "Data Engineering Knowledge Hub: modelo de conocimiento content-as-code."
 requires-python = ">=3.12"
+license = "Apache-2.0"  # código; el contenido de content/ y docs/ es CC BY-NC 4.0 (LICENSE-CONTENT, NOTICE)
+license-files = ["LICENSE", "LICENSE-CONTENT", "NOTICE"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

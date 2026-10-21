@@ -73,3 +73,9 @@ La demo es el sitio sin API ni base de datos: todo el contenido va en JSON dentr
 6. **Abrir** https://voltakchile.cl/DES_conocimiento/.
 
 Para actualizar la demo, borra el contenido de `public_html/DES_conocimiento` y repite los pasos 3 y 4 con el zip nuevo. Los datos guardados por cada visitante en su navegador se conservan.
+
+## Licencia
+
+- **Código** (`backend/`, `scripts/`, `pipelines/`, `tests/`, `frontend/`, `schemas/` y los bloques de código de las fichas): [Apache License 2.0](LICENSE).
+- **Contenido** (`content/` y `docs/`): [CC BY-NC 4.0](LICENSE-CONTENT), atribución y sin uso comercial.
+- Los títulos y las citas de documentación de terceros pertenecen a sus dueños y no están cubiertos por estas licencias. Detalle en [NOTICE](NOTICE).

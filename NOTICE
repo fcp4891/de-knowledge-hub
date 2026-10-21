@@ -1,0 +1,16 @@
+Data Engineering Knowledge Hub
+Copyright 2026 Felipe Céspedes Pérez
+
+Licencias
+- Código (backend/, scripts/, pipelines/, tests/, frontend/, schemas/, la configuración del repositorio y los
+  bloques de código de las fichas): Apache License 2.0. Ver LICENSE.
+- Contenido (content/ y docs/, salvo los bloques de código de las fichas): Creative Commons
+  Atribución-NoComercial 4.0 Internacional (CC BY-NC 4.0). Ver LICENSE-CONTENT.
+
+Material de terceros
+Las fichas citan documentación de terceros (Google Cloud, Amazon Web Services, Microsoft, Python, PostgreSQL,
+NIST, IETF y otros). Los títulos de esas páginas (page_title), las citas textuales y los nombres de productos y
+marcas pertenecen a sus respectivos dueños. No están cubiertos por las licencias de este repositorio; se
+reproducen solo para identificar y citar la fuente, con su URL.
+
+Las dependencias de Python y de npm se distribuyen bajo sus propias licencias.
