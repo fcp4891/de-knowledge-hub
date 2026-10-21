@@ -140,7 +140,7 @@ with psycopg.connect(host=os.environ["PG_HOST"], port=os.environ["PG_PORT"], use
                      password=os.environ["PG_PASSWORD"], dbname=S, autocommit=True) as conn:
     try:
         conn.execute("CREATE TABLE clientes (id int, region text, monto numeric, email text, rut text)")
-        conn.execute("INSERT INTO clientes VALUES (1, 'norte', 10, 'ana@example.com', '11.111.111-1')")
+        conn.execute("INSERT INTO clientes VALUES (1, 'norte', 10, 'ana@example.com', '11.111.111-0')")  # RUT ficticio: dígito verificador inválido
         conn.execute(f"CREATE ROLE {ANALISTA}")
         conn.execute(f"GRANT SELECT (id, region, monto) ON clientes TO {ANALISTA}")
 
@@ -247,3 +247,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-21: creación (lote F3b-18a).
+- 2026-10-21: datos de ejemplo sin dominios ni números reales (RUT ficticio con dígito verificador inválido); sin cambios de contenido (auditoría antes de publicar el repositorio).

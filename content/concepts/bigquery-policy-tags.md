@@ -168,7 +168,7 @@ resource "google_data_catalog_policy_tag" "identificador" {
 resource "google_data_catalog_policy_tag_iam_member" "auditores" {
   policy_tag = google_data_catalog_policy_tag.identificador.name
   role       = "roles/datacatalog.categoryFineGrainedReader"
-  member     = "group:auditoria@empresa.com"
+  member     = "group:auditoria@example.com"
 }
 
 # Acceso enmascarado: una política de datos con hash SHA-256 sobre el mismo tag.
@@ -189,7 +189,7 @@ resource "google_bigquery_datapolicy_data_policy_iam_member" "analistas" {
   location       = "us"
   data_policy_id = google_bigquery_datapolicy_data_policy.hash_identificador.data_policy_id
   role           = "roles/bigquerydatapolicy.maskedReader"
-  member         = "group:analistas@empresa.com"
+  member         = "group:analistas@example.com"
 }
 
 # La columna rut lleva el policy tag en el esquema de la tabla.
@@ -283,3 +283,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-08b aplicada (docs/reviews/cards-f3b-08b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-21: datos de ejemplo sin dominios ni números reales (correos de grupo en `example.com`); sin cambios de contenido (auditoría antes de publicar el repositorio).

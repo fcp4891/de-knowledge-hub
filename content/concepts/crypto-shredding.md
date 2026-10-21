@@ -162,7 +162,7 @@ def leer(registro: tuple[str, bytes, bytes]) -> str:
 
 
 tabla = [cifrar("cliente-1", "ana.perez@example.com"), cifrar("cliente-2", "luis@example.org"),
-         cifrar("cliente-1", "+56 9 1234 5678")]
+         cifrar("cliente-1", "+56 9 1234 5678")]   # teléfono ficticio
 respaldo = list(tabla)                                # una copia más: respaldo, export, réplica
 del claves["cliente-1"]                               # el titular pide ser olvidado: se destruye su clave
 
@@ -257,3 +257,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-21: creación (lote F3b-18b).
+- 2026-10-21: datos de ejemplo sin dominios ni números reales (teléfono marcado como ficticio); sin cambios de contenido (auditoría antes de publicar el repositorio).

@@ -153,7 +153,7 @@ def luhn(valor: str) -> bool:
     return total % 10 == 0
 
 
-MUESTRA = {
+MUESTRA = {   # valores ficticios: correos en dominios reservados, teléfonos y tarjetas de prueba
     "contacto": ["ana@example.com", "luis@example.org", "sin correo", "pedro@example.net"],
     "fono": ["+56 9 1234 5678", "+56912345678", "22 123 4567"],
     "medio_pago": ["4111 1111 1111 1111", "5500-0000-0000-0004", "1234 5678 9012 3456"],
@@ -257,3 +257,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-21: creación (lote F3b-17b).
 - 2026-10-21: revisión B-F3.1 del lote F3b-17b aplicada (docs/reviews/cards-f3b-17b.md), sin hallazgos en esta ficha.
 - 2026-10-21: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-21: datos de ejemplo sin dominios ni números reales (teléfonos marcados como ficticios); sin cambios de contenido (auditoría antes de publicar el repositorio).

@@ -156,7 +156,7 @@ resource "google_monitoring_notification_channel" "datos" {
   display_name = "equipo-datos"
   type         = "email"
   labels = {
-    email_address = "datos-alertas@empresa.com"
+    email_address = "datos-alertas@example.com"
   }
 }
 
@@ -247,3 +247,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-08b aplicada (docs/reviews/cards-f3b-08b.md), regla del §17: relations incluye `orchestration-observability`, que el §17 nombra.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-21: datos de ejemplo sin dominios ni números reales (correo de grupo en `example.com`); sin cambios de contenido (auditoría antes de publicar el repositorio).

@@ -185,7 +185,7 @@ resource "google_bigquery_dataset_access" "analistas_compartido" {
   project        = var.project_id
   dataset_id     = google_bigquery_dataset.compartido.dataset_id
   role           = "READER"
-  group_by_email = "analistas@empresa.com"
+  group_by_email = "analistas@example.com"
 }
 
 # La vista se autoriza sobre core: los analistas no necesitan acceso a core.
@@ -205,18 +205,18 @@ resource "google_bigquery_dataset_access" "autorizar_vista" {
 -- sus filas; el equipo central ve todo con un filtro TRUE. Sin una política que lo incluya, un usuario no ve filas.
 CREATE ROW ACCESS POLICY ventas_norte
 ON `mi-proyecto.core.ventas`
-GRANT TO ("group:ventas-norte@empresa.com")
+GRANT TO ("group:ventas-norte@example.com")
 FILTER USING (region = 'norte');
 
 CREATE ROW ACCESS POLICY ventas_sur
 ON `mi-proyecto.core.ventas`
-GRANT TO ("group:ventas-sur@empresa.com")
+GRANT TO ("group:ventas-sur@example.com")
 FILTER USING (region = 'sur');
 
 -- Quien tenía acceso completo antes de crear políticas debe quedar en un filtro TRUE para no perderlo.
 CREATE ROW ACCESS POLICY central_todo
 ON `mi-proyecto.core.ventas`
-GRANT TO ("group:datos-central@empresa.com")
+GRANT TO ("group:datos-central@example.com")
 FILTER USING (TRUE);
 ```
 
@@ -291,3 +291,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-08b aplicada (docs/reviews/cards-f3b-08b.md), regla del §17: relations incluye `bigquery-policy-tags`, `data-mart`, `bigquery-monitoring`, que el §17 nombra; el §17 nombra `bigquery-architecture`, que ya estaba en relations.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-21: datos de ejemplo sin dominios ni números reales (correos de grupo en `example.com`); sin cambios de contenido (auditoría antes de publicar el repositorio).

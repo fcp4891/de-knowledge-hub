@@ -107,9 +107,9 @@ Lote con dos versiones del cliente 42; se conserva la de mayor `version`:
 
 | cliente_id | email | version | ¿se conserva? |
 |---|---|---|---|
-| 42 | ana@viejo.cl | 3 | no |
-| 42 | ana@nuevo.cl | 5 | sí |
-| 77 | luis@x.cl | 1 | sí |
+| 42 | ana@viejo.invalid | 3 | no |
+| 42 | ana@nuevo.invalid | 5 | sí |
+| 77 | luis@ejemplo.invalid | 1 | sí |
 
 ## 8. Ejemplo de producción
 
@@ -225,3 +225,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
 - 2026-10-05: `sql-window-functions` deja de figurar como pendiente: ahora es relación (ficha verificada en el lote 6).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-21: datos de ejemplo sin dominios ni números reales (correos en `.invalid`); sin cambios de contenido (auditoría antes de publicar el repositorio).

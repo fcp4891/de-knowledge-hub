@@ -137,7 +137,7 @@ Los atributos descriptivos cambian (un cliente corrige su email, un producto cam
 
 ## 7. Ejemplo sencillo
 
-Un cliente cambia su email de `ana@x.cl` a `ana@nuevo.cl`. Con tipo 1, la fila de la dimensión pasa a tener `ana@nuevo.cl`. Todas sus compras, pasadas y futuras, se ven con el email nuevo.
+Un cliente cambia su email de `ana@viejo.invalid` a `ana@nuevo.invalid`. Con tipo 1, la fila de la dimensión pasa a tener `ana@nuevo.invalid`. Todas sus compras, pasadas y futuras, se ven con el email nuevo.
 
 ## 8. Ejemplo de producción
 
@@ -259,3 +259,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `sql-nulls`.
+- 2026-10-21: datos de ejemplo sin dominios ni números reales (correos en `.invalid`); sin cambios de contenido (auditoría antes de publicar el repositorio).

@@ -170,7 +170,7 @@ CREATE TABLE venta_vendedor (                          -- relación muchos a muc
 );
 
 INSERT INTO sucursal VALUES (1, 'Centro');
-INSERT INTO cliente VALUES (10, 'ana@example.com', '+56 9 1111 1111');
+INSERT INTO cliente VALUES (10, 'ana@example.com', '+56 9 1111 1111');  -- teléfono ficticio
 INSERT INTO vendedor VALUES (100, 'Luis');
 INSERT INTO auto VALUES (500, 'Marca A', 'P-01', 1);
 INSERT INTO venta VALUES (9000, 500, 10, '2026-10-07', 15990000);
@@ -273,3 +273,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-13: `page_title` del PDF citado, con el título del paper tal como aparece en su primera página (ADR-012).
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `kimball-methodology`; el §17 nombra `kimball-methodology`, que el cuerpo ya citaba.
+- 2026-10-21: datos de ejemplo sin dominios ni números reales (teléfonos marcados como ficticios); sin cambios de contenido (auditoría antes de publicar el repositorio).
