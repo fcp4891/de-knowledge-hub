@@ -5,7 +5,7 @@
 - data-minimization-by-layer y data-subject-requests: psycopg contra una base temporal en el PostgreSQL de la CI; el rol
   lleva como sufijo el nombre de la base temporal y se borra al terminar.
 - chilean-identifier-pseudonymization: biblioteca estándar.
-- erasure-across-copies: PyIceberg con catálogo SQL en SQLite (ADR-018) y cryptography (ADR-022).
+- erasure-across-copies: PyIceberg con catálogo SQL en SQLite (ADR-018) y cryptography (ADR-022); se salta en Windows.
 """
 
 from __future__ import annotations
@@ -16,7 +16,7 @@ from pathlib import Path
 
 import pytest
 
-from tests.test_open_stack_snippets import pg_env, run_python_block  # noqa: F401 - fixture
+from tests.test_open_stack_snippets import pg_env, require_iceberg, run_python_block  # noqa: F401 - fixture
 
 UTF8 = {"PYTHONIOENCODING": "utf-8"}   # los ejemplos imprimen tildes; en Windows la salida sería cp1252
 
@@ -103,7 +103,7 @@ def test_data_subject_requests_in_postgres(pg_env: dict[str, str], tmp_path: Pat
 
 
 def test_erasure_across_copies_with_pyiceberg_and_crypto_shredding(tmp_path: Path) -> None:
-    pytest.importorskip("pyiceberg", reason="falta pyiceberg (make snippets-deps)")
+    require_iceberg()  # se salta en Windows (ADR-018)
     pytest.importorskip("cryptography")
     work = tmp_path / "work"
     work.mkdir()
