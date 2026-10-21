@@ -2929,3 +2929,58 @@ created_at: '2026-10-20'
 updated_at: '2026-10-20'
 last_verified: '2026-10-20'
 verification_status: verified
+---
+id: source:openlineage-docs
+slug: openlineage-docs
+type: source
+title: OpenLineage documentation
+description: Documentación oficial de OpenLineage (especificación y clientes); sin URLs con versión (ADR-021).
+url: https://openlineage.io/docs/
+source_type: official_docs
+authority_level: 1
+provider: openlineage
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- openlineage
+created_at: '2026-10-20'
+updated_at: '2026-10-20'
+last_verified: '2026-10-20'
+verification_status: verified
+---
+id: source:aws-datazone-docs
+slug: aws-datazone-docs
+type: source
+title: Amazon DataZone User Guide
+description: Guía oficial de Amazon DataZone.
+url: https://docs.aws.amazon.com/datazone/latest/userguide/what-is-datazone.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-20'
+updated_at: '2026-10-20'
+last_verified: '2026-10-20'
+verification_status: verified
+---
+id: source:aws-sagemaker-unified-studio-docs
+slug: aws-sagemaker-unified-studio-docs
+type: source
+title: Amazon SageMaker Unified Studio User Guide
+description: Guía oficial de Amazon SageMaker Unified Studio, incluido Amazon SageMaker Catalog.
+url: https://docs.aws.amazon.com/sagemaker-unified-studio/latest/userguide/what-is-sagemaker-unified-studio.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-20'
+updated_at: '2026-10-20'
+last_verified: '2026-10-20'
+verification_status: verified
