@@ -21,3 +21,4 @@ great_expectations==1.24.0             # GX Core, versión fija (ADR-019); PyPI 
 opentelemetry-api==1.45.1              # API de OpenTelemetry, versión fija (ADR-020); PyPI 2026-10-06
 opentelemetry-sdk==1.45.1              # SDK de OpenTelemetry con InMemoryMetricReader, sin collector (ADR-020); PyPI 2026-10-06
 openlineage-python==1.54.0             # cliente de OpenLineage con transporte a archivo, sin backend (ADR-021); PyPI 2026-10-12
+cryptography==50.0.2                   # AES-GCM, key wrap y X.509 para los ejemplos de cifrado (ADR-022); PyPI 2026-09-30

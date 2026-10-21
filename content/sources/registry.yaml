@@ -3020,3 +3020,57 @@ created_at: '2026-10-21'
 updated_at: '2026-10-21'
 last_verified: '2026-10-21'
 verification_status: verified
+---
+id: source:cryptography-docs
+slug: cryptography-docs
+type: source
+title: pyca/cryptography documentation
+description: Documentación oficial de la biblioteca cryptography para Python (cryptography.io, en /en/stable/).
+url: https://cryptography.io/en/stable/
+source_type: official_docs
+authority_level: 1
+provider: pyca
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-21'
+updated_at: '2026-10-21'
+last_verified: '2026-10-21'
+verification_status: verified
+---
+id: source:aws-kms-docs
+slug: aws-kms-docs
+type: source
+title: AWS Key Management Service Developer Guide
+description: Guía oficial de AWS KMS.
+url: https://docs.aws.amazon.com/kms/latest/developerguide/overview.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-21'
+updated_at: '2026-10-21'
+last_verified: '2026-10-21'
+verification_status: verified
+---
+id: source:gcp-security-docs
+slug: gcp-security-docs
+type: source
+title: Google Cloud security documentation
+description: Documentación oficial de seguridad de Google Cloud (cifrado en reposo y en tránsito, entre otros).
+url: https://docs.cloud.google.com/docs/security
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-21'
+updated_at: '2026-10-21'
+last_verified: '2026-10-21'
+verification_status: verified
