@@ -6,7 +6,8 @@
   cada ejemplo los borra al terminar.
 - encryption-at-rest, key-management, crypto-shredding y encryption-in-transit: cryptography (ADR-022); el de TLS
   levanta un servidor en 127.0.0.1 con una CA de prueba en un directorio temporal.
-- secrets-management: solo biblioteca estándar.
+- secrets-management y las técnicas de privacidad (pseudonymization-vs-anonymization, tokenization, keyed-hashing y
+  k-anonymity): solo biblioteca estándar.
 """
 
 from __future__ import annotations
@@ -42,6 +43,20 @@ STDLIB = {
         "repr del secreto: Secreto(****)", "log: conectando con password=****",
         "sin API_TOKEN: falta la variable API_TOKEN: el proceso no arranca sin ella",
         "archivos con secretos escritos: ['viejo.py']"],
+    "pseudonymization-vs-anonymization": [
+        "seudonimizado, reidentificados: ['Ana', 'Bea', 'Ciro', 'Dani']",
+        "seudonimizado, con la clave se vuelve a encontrar c-003: compra [45]",
+        "anonimizado (sin id, edad en rango, sexo suprimido), reidentificados: []"],
+    "tokenization": [
+        "mismo valor, mismo token: True", "el token contiene el valor: False",
+        "pedidos unidos a reclamos por token: [1, 3]", "detokenizar como sa:facturacion: ana.perez@example.com",
+        "detokenizar como usuario:analista: PermissionError (usuario:analista no puede detokenizar)"],
+    "keyed-hashing": [
+        "hash simple: 3 de 3 reidentificados probando 1000000 valores", "HMAC sin la clave: 0 de 3 reidentificados",
+        "mismo cliente, mismo seudónimo en dos tablas: True", "con otra clave el seudónimo cambia: True"],
+    "k-anonymity": [
+        "k con la edad exacta: 1", "k con la edad en rangos de 10 años: 2",
+        "clases con un solo valor de plan (l=1): [('norte', '50-59', 'M'), ('sur', '20-29', 'M')]"],
 }
 CRYPTO = {
     "encryption-at-rest": [
