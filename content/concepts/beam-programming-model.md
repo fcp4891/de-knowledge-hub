@@ -33,7 +33,7 @@ sources:
   - source: apache-beam-docs
     url: https://beam.apache.org/releases/pydoc/2.77.0/
     accessed: 2026-10-08
-    page_title: "Apache Beam SDK for Python "
+    page_title: "Apache Beam SDK for Python"
     note: "Referencia del SDK de Python de Apache Beam 2.77.0 (apache_beam.testing.util.assert_that y equal_to; apache_beam.transforms.window.FixedWindows y TimestampedValue)."
   - source: gcp-dataflow-docs
     url: https://docs.cloud.google.com/dataflow/docs/guides/setting-pipeline-options
@@ -279,3 +279,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-09: revisión B-F3.1 del lote F3b-03b aplicada (docs/reviews/cards-f3b-03b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-21: `page_title` sin el icono de enlace permanente (U+F0C1) que dejaba el HTML de la página; sin cambios de contenido.

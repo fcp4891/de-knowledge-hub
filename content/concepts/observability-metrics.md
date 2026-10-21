@@ -33,7 +33,7 @@ sources:
   - source: opentelemetry-python-docs
     url: https://opentelemetry-python.readthedocs.io/en/stable/sdk/metrics.export.html
     accessed: 2026-10-20
-    page_title: "opentelemetry.sdk.metrics.export "
+    page_title: "opentelemetry.sdk.metrics.export"
     note: "opentelemetry.sdk.metrics.export (SDK de Python): InMemoryMetricReader es un MetricReader que devuelve sus métricas desde get_metrics_data(), útil por ejemplo para tests."
   - source: gcp-cloud-monitoring-docs
     url: https://docs.cloud.google.com/monitoring/api/v3/metric-model
@@ -264,3 +264,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-20: creación (lote F3b-16a).
 - 2026-10-20: revisión B-F3.1 del lote F3b-16a (docs/reviews/cards-f3b-16a.md), sin hallazgos que corregir.
 - 2026-10-20: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-21: `page_title` sin el icono de enlace permanente (U+F0C1) que dejaba el HTML de la página; sin cambios de contenido.

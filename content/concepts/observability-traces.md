@@ -28,7 +28,7 @@ sources:
   - source: opentelemetry-python-docs
     url: https://opentelemetry-python.readthedocs.io/en/stable/sdk/trace.export.html
     accessed: 2026-10-20
-    page_title: "opentelemetry.sdk.trace.export "
+    page_title: "opentelemetry.sdk.trace.export"
     note: "opentelemetry.sdk.trace.export (SDK de Python): un SpanExporter exporta lotes de spans con export(spans), que devuelve un SpanExportResult; para exportar, se registra con un SimpleSpanProcessor o un BatchSpanProcessor. SimpleSpanProcessor pasa los spans terminados directamente al SpanExporter configurado."
   - source: gcp-cloud-trace-docs
     url: https://docs.cloud.google.com/trace/docs/overview
@@ -271,3 +271,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-20: creación (lote F3b-16a).
 - 2026-10-20: revisión B-F3.1 del lote F3b-16a (docs/reviews/cards-f3b-16a.md), sin hallazgos que corregir.
 - 2026-10-20: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-21: `page_title` sin el icono de enlace permanente (U+F0C1) que dejaba el HTML de la página; sin cambios de contenido.

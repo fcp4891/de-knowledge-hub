@@ -19,6 +19,7 @@ import datetime as dt
 import json
 import re
 import sys
+import unicodedata
 from collections.abc import Iterator
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -265,6 +266,20 @@ def check_duplicate_citations(doc: Document, report: Report) -> None:
                 report.warn(doc.location, f"[sources.{i}.page_title] repite el de sources.{titles[key]} con la misma fuente '{ref['source']}': '{title}'")
             else:
                 titles[key] = i
+
+
+def check_page_titles(doc: Document, report: Report) -> None:
+    """Error: un page_title es el h1 de la página como texto. Los caracteres de uso privado (p. ej. U+F0C1, el
+    icono de enlace permanente de Sphinx) y los espacios en los extremos vienen de copiar el HTML."""
+    for i, ref in enumerate(doc.data.get("sources", [])):
+        title = ref.get("page_title")
+        if not title:
+            continue
+        private = [f"U+{ord(ch):04X}" for ch in title if unicodedata.category(ch) == "Co"]
+        if private:
+            report.add(doc.location, f"[sources.{i}.page_title] caracteres de uso privado {', '.join(private)}: {title!r}")
+        if title != title.strip():
+            report.add(doc.location, f"[sources.{i}.page_title] espacios en los extremos: {title!r}")
 
 
 def check_relations(
@@ -656,6 +671,7 @@ def validate(content_dir: Path, schemas_dir: Path) -> Report:
         check_slug_lists(doc, by_slug, report)
         check_sources(doc, by_slug, report)
         check_duplicate_citations(doc, report)
+        check_page_titles(doc, report)
         check_relations(doc, by_slug, catalog, report)
         check_source_level(doc, report)
     check_mvp_source_coverage(valid_docs, report)

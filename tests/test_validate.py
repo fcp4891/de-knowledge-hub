@@ -430,6 +430,16 @@ def test_page_title_must_not_be_empty(content: Path) -> None:
     assert_error(run(content), "page_title")
 
 
+def test_page_title_rejects_private_use_characters_and_outer_spaces(content: Path) -> None:
+    write_yaml(content, "sources/r.yaml", source("docs-a"))
+    refs = [{"source": "docs-a", "url": "https://example.org/a", "page_title": "Key wrapping "},
+            {"source": "docs-a", "url": "https://example.org/b", "page_title": "Tutorial "}]
+    write_md(content, "concepts/p.md", concept("p", sources=refs))
+    report = run(content)
+    assert_error(report, "[sources.0.page_title]", "caracteres de uso privado U+F0C1")
+    assert_error(report, "[sources.1.page_title]", "espacios en los extremos")
+
+
 def test_bigquery_citations_are_distinguishable_by_page_title() -> None:
     mock = json.loads((ROOT / "docs/contracts/mock-data/concepts/bigquery-partitioning.json").read_text(encoding="utf-8"))
     bq = [s for s in mock["sources"] if s["source"] == "gcp-bigquery-docs"]
