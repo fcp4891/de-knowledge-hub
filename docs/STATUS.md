@@ -18,8 +18,8 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | 16-observability: F3b-16a (7) y F3b-16b (6) en revisión | Aplicar revisiones de 16 | — |
-| B · Cursor revisión | — | Revisar F3b-16a y F3b-16b (B-F3.1, `lane-a.md`) | — |
+| A · Claude Code | 16-observability: 13/13 verified, pendiente de aprobación en el navegador | Plan de 17-governance | — |
+| B · Cursor revisión | — | Lo que asigne Felipe | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
@@ -45,7 +45,7 @@
 - [x] 14-streaming: 14/14 `verified`, aprobado por Felipe en el navegador el 2026-10-20 (ADR-017: Kafka 4.3.1 en KRaft en Docker, por digest; PySpark 4.2.0 en la CI; Flink 2.3 citado y no ejecutado).
 - [x] 20-open-data-stack: 7/7 `verified`, aprobado por Felipe en el navegador el 2026-10-20 (ADR-018: dbt Core y PyIceberg en la CI; Delta y Hudi sin ejecutar).
 - [x] 15-data-quality: 8/8 `verified`, aprobado por Felipe en el navegador el 2026-10-20 (ADR-019: Great Expectations 1.24.0 en la CI; Dataform y el Publish de WAP sin ejecutar).
-- [ ] 16-observability: 16a (7) y 16b (6) en revisión (ADR-020: OpenTelemetry en la CI, sin collector; SRE como N4 solo para conceptos).
+- [ ] 16-observability: 13/13 verified, pendiente de aprobación en el navegador (ADR-020: OpenTelemetry en la CI, sin collector; SRE como N4 solo para conceptos).
 - Orden de dominios desde 12 (2026-10-14): 12 → 13 → 14 → 20 → 15 → 16 → 17 → 18 → 19 → 21 → 22 → 23.
 - [x] Lote F3b-rel: la regla del §17 es error de `make validate` (2026-10-14; `docs/reviews/f3b-rel.md`).
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
