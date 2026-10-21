@@ -4,7 +4,8 @@
 - processing-activities-inventory: openlineage-python con transporte a archivo, sin backend (ADR-021).
 - data-minimization-by-layer y data-subject-requests: psycopg contra una base temporal en el PostgreSQL de la CI; el rol
   lleva como sufijo el nombre de la base temporal y se borra al terminar.
-- chilean-identifier-pseudonymization: biblioteca estándar.
+- chilean-identifier-pseudonymization, personal-data-breach-readiness y dpia-technical-input: biblioteca estándar.
+- privacy-by-design-checklist: jsonschema (ya en requirements.txt); sin mypy, porque jsonschema no trae tipos.
 - erasure-across-copies: PyIceberg con catálogo SQL en SQLite (ADR-018) y cryptography (ADR-022); se salta en Windows.
 """
 
@@ -43,7 +44,25 @@ STDLIB = {
         "variantes del mismo RUT, mismo seudónimo: True", "sin normalizar, seudónimos distintos: 3",
         "DV inválido: RUT no válido: '11111111-0'", "hash simple revertido probando 1.000.000 RUT del tramo: True",
         "con HMAC y sin la clave, el mismo ataque no sirve: True"],
+    "personal-data-breach-readiness": [
+        "alcance: 4 titulares [1, 2, 3, 4]; desde 2026-12-03T22:10:00; vía ['bucket público']",
+        "categorías afectadas: ['contacto', 'identificación', 'obligaciones económicas y financieras']",
+        "preparar comunicación a los titulares: True ['obligaciones económicas y financieras']",
+        '"titulares_aprox": 4',
+        "plazos al CSIRT Nacional: {'alerta temprana': '2026-12-04T11:30', 'actualización': '2026-12-07T08:30', "
+        "'informe final': '2026-12-19T08:30'}"],
+    "dpia-technical-input": [
+        "casos que exigen evaluación: ['a) decisiones automatizadas o perfiles con efectos significativos', "
+        "'b) tratamiento masivo o a gran escala']",
+        "flujo de datos de gold.puntajes: ['modelo_riesgo', 'silver.clientes', 'silver.creditos']",
+        "riesgo de reidentificación de la salida: k=1, l=1 entre las clases con 2 o más filas",
+        "clases únicas (k=1): [('norte', '50-59', 'M'), ('sur', '40-49', 'F')]"],
 }
+PRIVACY_GATE = [
+    "- SQL: SELECT * sobre la tabla personal bronze.clientes", "- contrato: 'base_licitud' is a required property",
+    "- contrato: 'retencion_dias' is a required property", "- log 1: dato personal en claro", "- log 2: dato personal en claro",
+    "puerta de privacidad: falla (5 hallazgos)",
+]
 DSR = [
     "acceso: {'clientes': (1, 'venta y despacho'), 'optin': (1, 'envío de ofertas'), 'pedidos': (2, 'venta y despacho')}",
     "portabilidad: JSON de 3 tablas", "rectificación: ('ana@nuevo.invalid',)",
@@ -111,3 +130,9 @@ def test_erasure_across_copies_with_pyiceberg_and_crypto_shredding(tmp_path: Pat
     for line in ERASURE:
         assert line in out, out
     assert_mypy_strict(tmp_path)
+
+
+def test_privacy_gate_with_jsonschema(tmp_path: Path) -> None:
+    out = run_python_block("privacy-by-design-checklist", tmp_path, UTF8)
+    for line in PRIVACY_GATE:
+        assert line in out, out

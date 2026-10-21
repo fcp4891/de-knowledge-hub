@@ -3186,3 +3186,21 @@ last_verified: '2026-10-21'
 verification_status: verified
 jurisdiction:
 - CL
+---
+id: source:aws-cloudtrail-docs
+slug: aws-cloudtrail-docs
+type: source
+title: AWS CloudTrail User Guide
+description: Guía oficial de AWS CloudTrail.
+url: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-21'
+updated_at: '2026-10-21'
+last_verified: '2026-10-21'
+verification_status: verified
