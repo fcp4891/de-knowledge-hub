@@ -154,6 +154,13 @@
           "note": "Particionado en general."
         },
         {
+          "slug": "data-retention",
+          "title": "Retención",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Borrar particiones vencidas es la forma barata de retener."
+        },
+        {
           "slug": "emr-spark-clusters",
           "title": "Spark sobre EMR",
           "entity_type": "concept",

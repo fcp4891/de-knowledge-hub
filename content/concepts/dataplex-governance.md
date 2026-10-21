@@ -54,6 +54,12 @@ relations:
   - type: RELATED_TO
     target: bigquery-policy-tags
     note: Los policy tags siguen en la API de Data Catalog.
+  - type: RELATED_TO
+    target: data-catalog
+    note: El catálogo de datos en general.
+  - type: RELATED_TO
+    target: data-lineage
+    note: El linaje fuera de Knowledge Catalog, con OpenLineage.
 created_at: 2026-10-11
 updated_at: 2026-10-13
 last_verified: 2026-10-11
@@ -244,7 +250,8 @@ Knowledge Catalog da calidad, linaje y catálogo administrados, sin infraestruct
 - `data-products`: los data products de Knowledge Catalog.
 - `data-validation-with-pydantic` y `sql-quality-checks`: validar dentro del pipeline.
 - `bigquery-policy-tags`: seguridad por columna, en la API de Data Catalog.
-- Del blueprint, pendientes de ficha: `data-catalog` y `data-lineage` (dominio 17).
+- `data-catalog`: el catálogo de datos en general.
+- `data-lineage`: el linaje, en su vista operativa y de gobierno.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -272,3 +279,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-08b aplicada (docs/reviews/cards-f3b-08b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-20: lote F3b-17a (regla del §17): relations y el §17 enlazan `data-catalog` y `data-lineage`, que ya tienen ficha; antes figuraban como pendientes de ficha.

@@ -3919,9 +3919,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-20"
     },
     {
       "slug": "metadata-management",
@@ -3933,9 +3933,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-20"
     },
     {
       "slug": "data-lineage",
@@ -3947,9 +3947,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-20"
     },
     {
       "slug": "data-ownership",
@@ -4017,9 +4017,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-20"
     },
     {
       "slug": "data-lifecycle-management",
@@ -4031,9 +4031,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-20"
     },
     {
       "slug": "iam-fundamentals",

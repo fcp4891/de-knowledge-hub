@@ -469,6 +469,13 @@
           "note": "Replay."
         },
         {
+          "slug": "data-retention",
+          "title": "Retención",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Aplicar la retención dos veces no borra más."
+        },
+        {
           "slug": "retries",
           "title": "Retries",
           "entity_type": "pattern",
