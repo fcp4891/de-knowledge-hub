@@ -16,6 +16,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 ## Actual
 - **Tarea activa:** B-F3.1 del lote F3b-17a. Revisión en `docs/reviews/cards-f3b-17a.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. El lote 17b va en otra rama.
+- **Tarea activa:** B-F3.1 del lote F3b-17b. Revisión en `docs/reviews/cards-f3b-17b.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: citar «Assign at least two people as governance domain owners». El lote 17a está en `b/f3b-review-17a`.
 - **Tarea activa:** B-F3.1 del lote F3b-16a. Revisión en `docs/reviews/cards-f3b-16a.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: el renombre de Cloud Composer sigue en curso. El lote 16b va en otra rama.
 - **Tarea activa:** B-F3.1 del lote F3b-16b. Revisión en `docs/reviews/cards-f3b-16b.md`. No se editó `content/` ni `frontend/`.
@@ -81,6 +83,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ### B-F3.1 · lote F3b-17a
 - Cinco fichas de catálogo, linaje, retención y ciclo de vida. OpenLineage escribe a un archivo. La retención no asesora y solo nombra las regulaciones de la página. DataZone y SageMaker Catalog no se presentan como reemplazo. `dataplex-governance` solo enlaza. No se editó `content/` ni `frontend/`.
+### B-F3.1 · lote F3b-17b
+- Cuatro fichas de dueños, stewards, dominios y clasificación. Los regex son heurística. Knowledge Catalog no define un rol de steward en la página citada. Propuesta media: Purview dice asignar al menos dos owners, no recomendarlo. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-16a
 - Siete fichas de observabilidad. Lo ejecutado está en el test, con exporters en memoria. `volume-anomalies` no es ML. `data-observability` se separa de data quality. `python-logging` solo enlaza. Propuesta media: varias fichas dan por hecho el renombre de Cloud Composer. No se editó `content/` ni `frontend/`.
@@ -337,6 +341,8 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 
 ### B-F3.1 · lote F3b-17a (2026-10-21)
 - Revisión de las 5 fichas de catálogo, linaje y retención. Sin hallazgos. No se editó `content/`.
+### B-F3.1 · lote F3b-17b (2026-10-21)
+- Revisión de las 4 fichas de ownership, dominios y clasificación. Propuesta media: la frase de los dos owners de Purview. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-16a (2026-10-20)
 - Revisión de las 7 fichas de señales y telemetría. Propuesta media: el renombre de Cloud Composer sigue en curso. No se editó `content/`.
