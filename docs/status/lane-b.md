@@ -16,6 +16,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 ## Actual
 - **Tarea activa:** B-F3.1 del lote F3b-16a. Revisión en `docs/reviews/cards-f3b-16a.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: el renombre de Cloud Composer sigue en curso. El lote 16b va en otra rama.
+- **Tarea activa:** B-F3.1 del lote F3b-16b. Revisión en `docs/reviews/cards-f3b-16b.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. El lote 16a está en `b/f3b-review-16a`.
 - **Tarea activa:** B-F3.1 del lote F3b-15a. Revisión en `docs/reviews/cards-f3b-15a.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuesta baja: la fecha del §12 en `spark-structured-streaming`. El lote 15b va en otra rama.
 - **Tarea activa:** B-F3.1 del lote F3b-15b. Revisión en `docs/reviews/cards-f3b-15b.md`. No se editó `content/` ni `frontend/`.
@@ -77,6 +79,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ### B-F3.1 · lote F3b-16a
 - Siete fichas de observabilidad. Lo ejecutado está en el test, con exporters en memoria. `volume-anomalies` no es ML. `data-observability` se separa de data quality. `python-logging` solo enlaza. Propuesta media: varias fichas dan por hecho el renombre de Cloud Composer. No se editó `content/` ni `frontend/`.
+### B-F3.1 · lote F3b-16b
+- Seis fichas de salud, SLA, SLO, alertas e incidentes. Airflow 3.3.2 cita el reemplazo del SLA. La aritmética del SLO cierra. Incident Manager y el título de Microsoft coinciden con sus páginas. El libro de SRE no respalda productos. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-15a
 - Cuatro fichas de calidad. Las seis dimensiones de DAMA UK salen del marco de GOV.UK. Knowledge Catalog, Glue y Purview quedan en tablas con su página. Los textos ejecutados están en el test. La nota de EMR 7.14.0 cita la columna completa. Propuesta baja: la fecha del §12 en `spark-structured-streaming`. No se editó `content/` ni `frontend/`.
@@ -328,6 +332,8 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 
 ### B-F3.1 · lote F3b-16a (2026-10-20)
 - Revisión de las 7 fichas de señales y telemetría. Propuesta media: el renombre de Cloud Composer sigue en curso. No se editó `content/`.
+### B-F3.1 · lote F3b-16b (2026-10-20)
+- Revisión de las 6 fichas de confiabilidad. Sin hallazgos. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-15a (2026-10-20)
 - Revisión de las 4 fichas de dimensiones, schema, validadores y gate. Sin hallazgos de contenido. Propuesta baja: la fecha del §12 junto a la nota de EMR. No se editó `content/`.
