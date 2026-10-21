@@ -97,6 +97,12 @@ relations:
   - type: RELATED_TO
     target: infrastructure-as-code
     note: Las concesiones de IAM se declaran y revisan como código.
+  - type: RELATED_TO
+    target: service-accounts
+    note: Cuentas de servicio fuera de Google Cloud.
+  - type: RELATED_TO
+    target: column-level-security
+    note: Seguridad por columna en general.
 created_at: 2026-10-01
 updated_at: 2026-10-13
 last_verified: 2026-10-01
@@ -218,7 +224,9 @@ Permisos granulares por dataset y bucket reducen el impacto de un error, a cambi
 
 - `gcs-buckets-and-objects`: permisos por bucket con acceso uniforme.
 - `infrastructure-as-code`: concesiones declaradas y revisadas.
-- Del blueprint, pendientes de ficha: `data-governance`, `column-level-security`, `service-accounts`.
+- `service-accounts`: cuentas de servicio en general.
+- `column-level-security`: seguridad a nivel de columna en general.
+- Del blueprint, pendiente de ficha: `data-governance`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -247,3 +255,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-01: creación (lote 4 de F3).
 - 2026-10-01: `verification_status: verified` (revisión B-F3.1 del lote 4 aplicada; sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-21: lote F3b-18a (regla del §17): relations y el §17 enlazan `service-accounts` y `column-level-security`, que ya tienen ficha; antes figuraban como pendientes de ficha.

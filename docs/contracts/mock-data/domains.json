@@ -141,7 +141,7 @@
       "slug": "security",
       "title": "Seguridad",
       "description": "Control de acceso, cifrado, secretos e identidades de servicio aplicados a plataformas de datos.",
-      "concept_count": 12,
+      "concept_count": 17,
       "mvp_count": 0
     },
     {
