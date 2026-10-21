@@ -19,7 +19,7 @@ sources:
     url: https://learn.microsoft.com/en-us/purview/data-governance-roles-permissions
     accessed: 2026-10-21
     page_title: "Data governance roles and permissions in Microsoft Purview"
-    note: "Data governance roles and permissions in Microsoft Purview: Governance Domain Owner puede delegar los demás permisos del dominio, configurar alertas y la programación de escaneos de calidad del dominio y fijar políticas de acceso del dominio; se recomienda asignar al menos dos personas como governance domain owners. Data Product Owner puede crear, actualizar y leer data products solo dentro de su dominio. Data Steward puede crear, actualizar y leer artefactos y políticas dentro de su dominio y leer artefactos de otros dominios. Data Quality Steward es un subrol para reglas, escaneos, programación, umbrales y alertas de calidad."
+    note: "Data governance roles and permissions in Microsoft Purview: Governance Domain Owner puede delegar los demás permisos del dominio, configurar alertas y la programación de escaneos de calidad del dominio y fijar políticas de acceso del dominio; la página indica: «Assign at least two people as governance domain owners». Data Product Owner puede crear, actualizar y leer data products solo dentro de su dominio. Data Steward puede crear, actualizar y leer artefactos y políticas dentro de su dominio y leer artefactos de otros dominios. Data Quality Steward es un subrol para reglas, escaneos, programación, umbrales y alertas de calidad."
   - source: microsoft-purview-docs
     url: https://learn.microsoft.com/en-us/purview/unified-catalog-governance-domains
     accessed: 2026-10-21
@@ -51,7 +51,7 @@ relations:
 created_at: 2026-10-21
 updated_at: 2026-10-21
 last_verified: 2026-10-21
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -223,8 +223,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-21. `review_required`: pendiente de revisión B-F3.1 del lote F3b-17b.
+2026-10-21. Pasa a `verified`: revisión B-F3.1 del lote F3b-17b aplicada, sin VERIFY pendientes.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-21: creación (lote F3b-17b).
+- 2026-10-21: revisión B-F3.1 del lote F3b-17b aplicada (docs/reviews/cards-f3b-17b.md): la cita de Purview sobre los governance domain owners queda literal, como instrucción de la página («Assign at least two people as governance domain owners»), en lugar de «se recomienda».
+- 2026-10-21: `verification_status: verified` (sin VERIFY pendientes).
