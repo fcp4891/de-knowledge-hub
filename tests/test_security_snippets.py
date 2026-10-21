@@ -38,9 +38,11 @@ STDLIB = {
 }
 POSTGRES = {
     "rbac": ["ana: leer=sí, escribir=no", "bot: leer=no, escribir=sí", "ana sin el rol analista, leer: no"],
-    "least-privilege": ["privilegios: 21; usados en 30 días: 3; sobran: 18",
-                        "REVOKE DELETE, INSERT, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE ON clientes FROM pipeline_ventas",
-                        "quedan: [('staging_ventas', 'INSERT'), ('staging_ventas', 'SELECT'), ('ventas', 'INSERT')]"],
+    "least-privilege": ["privilegios: 24 (la vista table_privileges muestra 21: no lista MAINTAIN)",
+                        "usados en 30 días: 3; sobran: 21",
+                        "REVOKE DELETE, INSERT, MAINTAIN, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE ON clientes FROM pipeline_ventas",
+                        "quedan: [('staging_ventas', 'INSERT'), ('staging_ventas', 'SELECT'), ('ventas', 'INSERT')]",
+                        "MAINTAIN revocado en todas: True"],
     "service-accounts": ["superusuario, crea roles, crea bases: (False, False, False)", "escribe su staging: ok",
                          "lee clientes: denegado (42501)", "crea un rol: denegado (42501)"],
     "row-level-security": ["con RLS y sin política, norte ve: []", "norte ve: [1, 3]", "sur ve: [2]",

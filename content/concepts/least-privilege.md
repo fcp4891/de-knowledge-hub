@@ -24,7 +24,12 @@ sources:
     url: https://www.postgresql.org/docs/17/ddl-priv.html
     accessed: 2026-10-21
     page_title: "5.8. Privileges"
-    note: "5.8. Privileges (PostgreSQL 17): al crear un objeto se le asigna un dueño, y al principio solo el dueño (o un superusuario) puede hacer algo con él; para que otros roles lo usen hay que conceder privilegios (SELECT, INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER, entre otros), y REVOKE los quita. PUBLIC concede a todos los roles; los roles de grupo ayudan cuando hay muchos usuarios."
+    note: "5.8. Privileges (PostgreSQL 17): al crear un objeto se le asigna un dueño y al principio solo él (o un superusuario) puede usarlo; para otros roles hay que conceder privilegios, que REVOKE quita. Entre los privilegios está MAINTAIN, que permite VACUUM, ANALYZE, CLUSTER, REFRESH MATERIALIZED VIEW, REINDEX y LOCK TABLE sobre una relación. Los privilegios concedidos se muestran como una lista de aclitem (grantee = abreviaturas / grantor)."
+  - source: postgresql-docs
+    url: https://www.postgresql.org/docs/17/infoschema-table-privileges.html
+    accessed: 2026-10-21
+    page_title: "35.53. table_privileges"
+    note: "35.53. table_privileges (PostgreSQL 17): la vista identifica los privilegios concedidos sobre tablas o vistas a un rol habilitado o por él; su columna privilege_type solo toma los valores SELECT, INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES o TRIGGER, así que MAINTAIN no aparece en ella."
   - source: gcp-iam-docs
     url: https://docs.cloud.google.com/iam/docs/using-iam-securely
     accessed: 2026-10-21
@@ -100,13 +105,13 @@ Para que un pipeline nuevo «funcione ya», le dan `ALL` sobre tres tablas. Un a
 
 ## 7. Ejemplo sencillo
 
-El rol `pipeline_ventas` tenía `ALL` sobre `staging_ventas`, `ventas` y `clientes` (21 privilegios); en 30 días usó 3.
+El rol `pipeline_ventas` tenía `ALL` sobre `staging_ventas`, `ventas` y `clientes`: 24 privilegios, 8 por tabla, incluido `MAINTAIN` (*5.8. Privileges*). La vista `information_schema.table_privileges` muestra 21, porque no lista `MAINTAIN` (*35.53. table_privileges*); por eso el ejemplo los lee de `pg_class.relacl` con `aclexplode`. En 30 días usó 3.
 
 | Tabla | Se revoca | Queda |
 |---|---|---|
-| `clientes` | todo | nada |
-| `staging_ventas` | DELETE, REFERENCES, TRIGGER, TRUNCATE, UPDATE | INSERT, SELECT |
-| `ventas` | DELETE, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE | INSERT |
+| `staging_ventas` | DELETE, MAINTAIN, REFERENCES, TRIGGER, TRUNCATE, UPDATE | INSERT, SELECT |
+| `ventas` | DELETE, MAINTAIN, REFERENCES, SELECT, TRIGGER, TRUNCATE, UPDATE | INSERT |
+| `clientes` | todo, incluido MAINTAIN | nada |
 
 ## 8. Ejemplo de producción
 
@@ -119,7 +124,7 @@ El rol `pipeline_ventas` tenía `ALL` sobre `staging_ventas`, `ventas` y `client
 
 ```mermaid
 flowchart LR
-  G["Concedido<br/>(table_privileges)"] --> C{"Comparar"}
+  G["Concedido<br/>(pg_class.relacl)"] --> C{"Comparar"}
   U["Usado<br/>(auditoría)"] --> C
   C -- "exceso" --> R["REVOKE propuesto"]
   R --> D["Dueño aprueba"]
@@ -129,41 +134,53 @@ flowchart LR
 
 ```python
 # Python 3.12 y psycopg contra PostgreSQL 17 (ejecutado en la CI con el servicio postgres:17): mínimo privilegio.
-# Se comparan los privilegios que tiene un rol (information_schema.table_privileges) con los que usó en 30 días, y se
-# proponen los REVOKE de lo que sobra. PG_HOST, PG_PORT, PG_USER, PG_PASSWORD y PG_DB: base vacía temporal.
+# Se leen los privilegios reales del rol desde pg_class.relacl con aclexplode (incluye MAINTAIN, que la vista
+# information_schema.table_privileges no muestra), se comparan con los usados en 30 días y se revoca lo que sobra.
+# PG_HOST, PG_PORT, PG_USER, PG_PASSWORD y PG_DB: base vacía temporal; el rol lleva sufijo y se borra.
 import os
 
 import psycopg
 
 S = os.environ["PG_DB"]
 ROL = f"pipeline_ventas_{S}"
+TABLAS = ("staging_ventas", "ventas", "clientes")
 USADOS = {("staging_ventas", "INSERT"), ("staging_ventas", "SELECT"), ("ventas", "INSERT")}   # del log de 30 días
+ACL = ("SELECT c.relname, a.privilege_type FROM pg_class c CROSS JOIN LATERAL aclexplode(c.relacl) a "
+       "WHERE a.grantee = %s::regrole AND c.relname = ANY(%s) ORDER BY 1, 2")
+
+
+def privilegios(conn: psycopg.Connection[tuple[str, str]]) -> set[tuple[str, str]]:
+    return set(conn.execute(ACL, (ROL, list(TABLAS))).fetchall())
+
 
 with psycopg.connect(host=os.environ["PG_HOST"], port=os.environ["PG_PORT"], user=os.environ["PG_USER"],
                      password=os.environ["PG_PASSWORD"], dbname=S, autocommit=True) as conn:
     try:
-        for t in ("staging_ventas", "ventas", "clientes"):
+        for t in TABLAS:
             conn.execute(f"CREATE TABLE {t} (id int)")
         conn.execute(f"CREATE ROLE {ROL}")
-        conn.execute(f"GRANT ALL ON staging_ventas, ventas, clientes TO {ROL}")    # lo que alguien dio «por si acaso»
-        tiene = set(conn.execute("SELECT table_name, privilege_type FROM information_schema.table_privileges "
-                                 "WHERE grantee = %s", (ROL,)).fetchall())
+        conn.execute(f"GRANT ALL ON {', '.join(TABLAS)} TO {ROL}")      # lo que alguien dio «por si acaso»
+        tiene = privilegios(conn)
+        vista = conn.execute("SELECT count(*) FROM information_schema.table_privileges WHERE grantee = %s",
+                             (ROL,)).fetchone()
+        assert vista is not None
         sobran = sorted(tiene - USADOS)
-        print(f"privilegios: {len(tiene)}; usados en 30 días: {len(USADOS & tiene)}; sobran: {len(sobran)}")
-        for tabla in sorted({t for t, _ in sobran}):
+        print(f"privilegios: {len(tiene)} (la vista table_privileges muestra {vista[0]}: no lista MAINTAIN)")
+        print(f"usados en 30 días: {len(USADOS & tiene)}; sobran: {len(sobran)}")
+        for tabla in TABLAS:
             privs = ", ".join(p for t, p in sobran if t == tabla)
-            sentencia = f"REVOKE {privs} ON {tabla} FROM {ROL}"
-            conn.execute(sentencia)
-            print(f"  {sentencia.replace(ROL, 'pipeline_ventas')}")
-        quedan = sorted(conn.execute("SELECT table_name, privilege_type FROM information_schema.table_privileges "
-                                     "WHERE grantee = %s", (ROL,)).fetchall())
+            if privs:
+                conn.execute(f"REVOKE {privs} ON {tabla} FROM {ROL}")
+                print(f"  REVOKE {privs} ON {tabla} FROM pipeline_ventas")
+        quedan = sorted(privilegios(conn))
         print("quedan:", quedan)
+        print("MAINTAIN revocado en todas:", not any(p == "MAINTAIN" for _, p in quedan))
     finally:
-        conn.execute("DROP TABLE IF EXISTS staging_ventas, ventas, clientes")
+        conn.execute(f"DROP TABLE IF EXISTS {', '.join(TABLAS)}")
         conn.execute(f"DROP ROLE IF EXISTS {ROL}")
 ```
 
-El script se **ejecuta en la CI contra el servicio postgres:17** y pasa `mypy --strict`. Imprime `privilegios: 21; usados en 30 días: 3; sobran: 18`, los tres `REVOKE` y lo que queda: `INSERT` y `SELECT` en `staging_ventas` e `INSERT` en `ventas`.
+El script se **ejecuta en la CI contra el servicio postgres:17** y pasa `mypy --strict`. Imprime `privilegios: 24 (la vista table_privileges muestra 21: no lista MAINTAIN)`, `usados en 30 días: 3; sobran: 21`, los tres `REVOKE` (los tres incluyen `MAINTAIN`), lo que queda (`INSERT` y `SELECT` en `staging_ventas` e `INSERT` en `ventas`) y `MAINTAIN revocado en todas: True`.
 
 ## 11. GCP
 
@@ -205,6 +222,7 @@ En Azure, **Azure RBAC**. Según *GRANT* y *Understand scope for Azure RBAC* (no
 - `ALL` «por ahora».
 - Revisar solo al dar el acceso.
 - Revocar sin avisar y romper un proceso mensual.
+- Contar privilegios con una vista que no los muestra todos: en PostgreSQL 17, `table_privileges` no lista `MAINTAIN`.
 
 ## 16. Trade-offs
 
@@ -229,7 +247,7 @@ Pendiente (F4).
 
 ## 20. Fuentes
 
-- PostgreSQL 17: *GRANT* y *5.8. Privileges*.
+- PostgreSQL 17: *GRANT*, *5.8. Privileges* y *35.53. table_privileges*.
 - Google Cloud: *Use IAM securely*.
 - AWS: *Security best practices in IAM* y *Using AWS Identity and Access Management Access Analyzer*.
 - Microsoft Learn: *Understand scope for Azure RBAC*.
@@ -243,3 +261,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-21: creación (lote F3b-18a).
+- 2026-10-21: revisión B-F3.1 del lote F3b-18a (docs/reviews/cards-f3b-18a.md): el ejemplo lee los privilegios de `pg_class.relacl` con `aclexplode`, así cuenta y revoca `MAINTAIN`, que `information_schema.table_privileges` no muestra; cifras reales (24 concedidos, 3 usados, 21 revocados) y cita de *5.8. Privileges* y *35.53. table_privileges*.
