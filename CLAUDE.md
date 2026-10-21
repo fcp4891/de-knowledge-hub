@@ -30,6 +30,7 @@ Trabajas en paralelo con Cursor (Carril B, frontend y revisión).
 - Distingue `core` / `modern` / `emerging`. Emerging nunca se presenta como reemplazo de lo consolidado.
 - Las equivalencias multicloud incluyen diferencias; nunca "son lo mismo".
 - No citar versiones de parche de SDKs ni CLIs; sí de motores y frameworks cuando el comportamiento depende de la versión.
+- Renombres: usar la formulación exacta de la página (completado vs. en curso); no inferir que un cambio terminó.
 - Sin quizzes, sin alternativas A/B/C/D, sin gamificación.
 - §17 y `relations` coinciden: si la ficha nombrada existe, va en `relations`; si no existe, queda como texto «pendiente de ficha», fuera de `relations`; todo lo que está en `relations` se nombra en el §17.
 
