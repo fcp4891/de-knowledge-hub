@@ -27,6 +27,9 @@
     "batch"
   ],
   "aliases": [],
+  "jurisdiction": [],
+  "legal_basis": [],
+  "owner_approved_at": null,
   "related_topics": [
     "change-data-capture",
     "dead-letter-queue",

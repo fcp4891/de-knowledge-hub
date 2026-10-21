@@ -27,7 +27,7 @@ from backend.db import schema as t
 from backend.content import validate as v
 from backend.app.projection import markdown_body, sections
 
-COMPILER_VERSION = "4"  # 2: search_documents (A-F2.3); 3: aliases en la búsqueda (ADR-010); 4: page_title (ADR-012)
+COMPILER_VERSION = "5"  # 2: search_documents (A-F2.3); 3: aliases en la búsqueda (ADR-010); 4: page_title (ADR-012); 5: ADR-023
 TECHNOLOGY_TYPES = {"technology", "cloud_service"}
 SEARCHABLE_TYPES = {"concept", "pattern", "architecture", "technology", "cloud_service", "code_snippet", "source"}
 SEARCH_CONFIGS = {"tsv_es": "es_unaccent", "tsv_en": "en_unaccent"}
@@ -90,7 +90,9 @@ def insert_entity(conn: Connection, file_path: str, position: int, data: dict[st
         level=data.get("level"), verification_status=data["verification_status"],
         last_verified=to_date(data.get("last_verified")), created_at=to_date(data["created_at"]),
         updated_at=to_date(data["updated_at"]),
-        stub=data.get("stub", False), data=data, body_markdown=body, position=position, file_path=file_path,
+        stub=data.get("stub", False), jurisdiction=data.get("jurisdiction", []),
+        owner_approved_at=to_date(data.get("owner_approved_at")),
+        data=data, body_markdown=body, position=position, file_path=file_path,
     ))
     insert_typed(conn, data, body)
     if data["type"] in SEARCHABLE_TYPES:
@@ -99,6 +101,11 @@ def insert_entity(conn: Connection, file_path: str, position: int, data: dict[st
         conn.execute(insert(t.entity_sources).values(
             entity_slug=data["slug"], position=i, source_slug=ref["source"], url=ref.get("url"),
             accessed=to_date(ref.get("accessed")), page_title=ref.get("page_title"), note=ref.get("note"),
+        ))
+    for i, basis in enumerate(data.get("legal_basis", [])):
+        conn.execute(insert(t.entity_legal_basis).values(
+            entity_slug=data["slug"], position=i, law=basis["law"], article=basis["article"], url=basis["url"],
+            note=basis.get("note"),
         ))
     for i, relation in enumerate(data.get("relations", [])):
         insert_edge(conn, file_path, i, data["slug"], relation["type"], relation["target"], "entity", relation.get("note"))

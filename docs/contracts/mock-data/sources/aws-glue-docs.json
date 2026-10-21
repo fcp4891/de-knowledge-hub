@@ -13,5 +13,6 @@
     "aws-glue"
   ],
   "last_verified": "2026-09-30",
-  "verification_status": "verified"
+  "verification_status": "verified",
+  "jurisdiction": []
 }

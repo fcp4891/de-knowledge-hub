@@ -84,5 +84,5 @@ def check_practices(body: str) -> list[str]:
     return [
         f"[secciones] la sección {PRACTICES_SECTION} ('{title}') necesita la viñeta '- **{label}...**'"
         for label in PRACTICE_BULLETS
-        if not re.search(rf"^- \*\*{label}\b", content, re.M)
+        if not re.search(rf"^- (?:\*\*\[[^\]]+\]\*\* )?\*\*{label}\b", content, re.M)  # etiqueta opcional (ADR-023)
     ]

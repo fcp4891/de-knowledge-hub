@@ -410,7 +410,18 @@ components:
     Kind: { description: Tipo de ficha que tendrá el concepto (ADR-003)., enum: [concept, pattern, architecture] }
     TechnologyType: { enum: [technology, cloud_service] }
     Origin: { description: Proveedor (cloud_service) o vendor (technology)., enum: [gcp, aws, azure, open-source, other] }
-    SourceType: { enum: [official_docs, release_notes, engineering_blog, spec_paper, secondary] }
+    SourceType: { enum: [official_docs, release_notes, engineering_blog, spec_paper, secondary, legislative] }  # legislative: ADR-023
+    Jurisdiction: { enum: [CL], description: "País cuya ley origina el contenido, ISO 3166-1 alfa-2 (ADR-023)." }
+    LegalBasis:
+      description: Artículo en que se apoya una ficha con jurisdicción (ADR-023); url es la cita oficial.
+      type: object
+      required: [law, article, url, note]
+      properties:
+        law: { enum: [ley-19628, ley-21719, ley-21663] }
+        article: { type: string, description: "Como lo numera el texto oficial, p. ej. 14 quinquies." }
+        url: { type: string, format: uri }
+        note: { type: [string, "null"] }
+      additionalProperties: false
     RelationType:
       enum: [USES, IMPLEMENTS, DEPENDS_ON, ALTERNATIVE_TO, RELATED_TO, REPLACES, EXTENDS, RUNS_ON, PRODUCES, CONSUMES, PRACTICES, AFFECTS, UPDATES, REQUIRES]
     EntityType:
@@ -544,9 +555,12 @@ components:
     ConceptDetail:
       allOf: [{ $ref: "#/components/schemas/Metadata" }]
       type: object
-      required: [kind, importance, mvp, has_page, stub, sections, aliases]
+      required: [kind, importance, mvp, has_page, stub, sections, aliases, jurisdiction, legal_basis, owner_approved_at]
       properties:
         aliases: { type: array, items: { type: string }, description: Nombres anteriores o alternativos (ADR-010); vacía si no hay. }
+        jurisdiction: { type: array, items: { $ref: "#/components/schemas/Jurisdiction" }, description: Países cuya ley origina la ficha (ADR-023); vacía si no aplica. }
+        legal_basis: { type: array, items: { $ref: "#/components/schemas/LegalBasis" }, description: Artículos citados (ADR-023); vacía si no aplica. }
+        owner_approved_at: { oneOf: [{ $ref: "#/components/schemas/Date" }, { type: "null" }], description: Aprobación explícita del dueño, exigida para verified en fichas con jurisdicción (ADR-023). }
         kind: { $ref: "#/components/schemas/Kind" }
         importance: { $ref: "#/components/schemas/Importance" }
         mvp: { type: boolean }
@@ -707,7 +721,7 @@ components:
       additionalProperties: false
     Source:
       type: object
-      required: [slug, title, description, url, source_type, authority_level, provider, url_verified, review_frequency, trust, technologies, last_verified, verification_status]
+      required: [slug, title, description, url, source_type, authority_level, provider, url_verified, review_frequency, trust, technologies, last_verified, verification_status, jurisdiction]
       properties:
         slug: { $ref: "#/components/schemas/Slug" }
         title: { type: string }
@@ -722,6 +736,7 @@ components:
         technologies: { type: array, items: { $ref: "#/components/schemas/Slug" } }
         last_verified: { oneOf: [{ $ref: "#/components/schemas/Date" }, { type: "null" }] }
         verification_status: { $ref: "#/components/schemas/VerificationStatus" }
+        jurisdiction: { type: array, items: { $ref: "#/components/schemas/Jurisdiction" }, description: País de una fuente legislative (ADR-023); vacía en las demás. }
       additionalProperties: false
 
     # --- Búsqueda ---

@@ -1,25 +1,28 @@
 # Knowledge Blueprint v1 · Dominio 19 (plan maestro §19: Compliance)
-# Explicación técnica, no asesoría legal (§19). Toda ficha de este dominio requiere fuente oficial y last_verified.
+# Explicación técnica, no asesoría legal (§19). Plan de 19 aprobado por Felipe el 2026-10-21 (ADR-023):
+# ingeniería de datos bajo la Ley 21.719; la ley solo como origen de cada requisito. Fichas con jurisdiction,
+# legal_basis, etiqueta por afirmación y verified solo con owner_approved_at.
 domain:
   id: "19"
   slug: compliance
   title: Compliance
-  description: Marcos regulatorios relevantes para el trabajo con datos, desde su impacto técnico y sin constituir asesoría legal.
+  description: Cómo se diseña y opera una plataforma de datos bajo una ley de protección de datos, desde su impacto técnico y sin constituir asesoría legal.
 
 subdomains:
-  - slug: compliance-foundations
-    title: Fundamentos
+  - slug: data-engineering-under-ley-21719
+    title: Ingeniería de datos y Ley 21.719
     concepts:
-      - slug: compliance-scope-for-data-engineers
-        title: Alcance del compliance para Data Engineers
+      - slug: chile-data-protection
+        title: Ley 21.719 para ingenieros de datos
         kind: concept
         classification: core
-        level: basic
-        importance: medium
+        level: intermediate
+        importance: high
         mvp: false
-        note: Distingue explicación técnica de asesoría legal (§19).
+        related_concepts: [pii-identification, processing-activities-inventory]
+        note: Panorama y mapa requisito → control → evidencia; absorbe compliance-scope-for-data-engineers (qué decide el área legal y qué implementa el ingeniero de datos). Lote 19a.
       - slug: pii-identification
-        title: Identificación de datos personales (PII)
+        title: Identificación de datos personales y sensibles
         kind: concept
         classification: core
         level: intermediate
@@ -27,6 +30,107 @@ subdomains:
         mvp: false
         added_by: blueprint
         related_concepts: [data-classification, data-masking]
+        note: Dato personal y dato sensible según la ley; detección y clasificación por columna. Lote 19a.
+      - slug: processing-activities-inventory
+        title: Inventario de actividades de tratamiento
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [data-catalog, data-lineage]
+        note: Generado desde el catálogo y el linaje, no una planilla. Lote 19a.
+      - slug: data-minimization-by-layer
+        title: Minimización por capa
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [pseudonymization-vs-anonymization]
+        note: Datos personales solo donde se necesitan; bronze, silver con seudónimos y gold agregado. Lote 19a.
+      - slug: chilean-identifier-pseudonymization
+        title: Seudonimización de identificadores chilenos
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [keyed-hashing, tokenization]
+        note: RUT con dígito verificador, HMAC con llave en KMS y tokenización. Lote 19b.
+      - slug: data-subject-requests
+        title: Solicitudes de los titulares
+        kind: pattern
+        classification: core
+        level: advanced
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [data-catalog]
+        note: Orquestación de acceso, rectificación, supresión, oposición, portabilidad y bloqueo, con evidencia. Lote 19b.
+      - slug: erasure-across-copies
+        title: Supresión en todas las copias
+        kind: pattern
+        classification: core
+        level: advanced
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [crypto-shredding, data-retention]
+        note: DELETE, expiración de snapshots, crypto-shredding y evidencia por copia. Lote 19b.
+      - slug: personal-data-breach-readiness
+        title: Preparación técnica ante vulneraciones
+        kind: concept
+        classification: core
+        level: advanced
+        importance: medium
+        mvp: false
+        added_by: blueprint
+        related_concepts: [incident-response]
+        note: Alcance desde logs de acceso y linaje; cruce con la Ley 21.663. Lote 19c.
+      - slug: dpia-technical-input
+        title: Aporte técnico a la evaluación de impacto
+        kind: concept
+        classification: core
+        level: advanced
+        importance: medium
+        mvp: false
+        added_by: blueprint
+        related_concepts: [k-anonymity]
+        note: Flujo de datos, controles y pruebas de reidentificación; lo legal lo decide el responsable. Lote 19c.
+      - slug: privacy-by-design-checklist
+        title: Privacidad desde el diseño en cada pipeline
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [quality-gate, data-contracts]
+        note: Puerta de privacidad en la CI. Lote 19c.
+      - slug: international-data-transfers
+        title: Transferencias internacionales de datos
+        kind: concept
+        classification: core
+        level: advanced
+        importance: medium
+        mvp: false
+        added_by: blueprint
+        related_concepts: [chile-data-protection]
+        note: Regiones de la nube, APIs de terceros y LLM externos. Lote 19d.
+      - slug: automated-decision-traceability
+        title: Trazabilidad de decisiones automatizadas
+        kind: pattern
+        classification: core
+        level: advanced
+        importance: medium
+        mvp: false
+        added_by: blueprint
+        related_concepts: [data-lineage]
+        note: Modelo, versión, features y datos por decisión, más revisión humana. Lote 19d.
 
   - slug: regulatory-frameworks
     title: Marcos regulatorios
@@ -38,7 +142,7 @@ subdomains:
         level: intermediate
         importance: medium
         mvp: false
-        related_concepts: [data-retention, pii-identification]
+        note: En BACKLOG (plan de 19, 2026-10-21); requiere un ADR que agregue la jurisdicción UE y EUR-Lex como fuente legislative. Sin ficha.
       - slug: lgpd
         title: LGPD (Brasil)
         kind: concept
@@ -47,20 +151,4 @@ subdomains:
         importance: low
         mvp: false
         related_concepts: [gdpr]
-      - slug: chile-data-protection
-        title: Legislación chilena de protección de datos personales
-        kind: concept
-        classification: core
-        level: intermediate
-        importance: medium
-        mvp: false
-        related_concepts: [gdpr]
-        note: Marco normativo en transición; verificar ley vigente y fechas de entrada en vigor contra fuente oficial antes de redactar.
-      - slug: corporate-data-policies
-        title: Políticas corporativas de datos
-        kind: concept
-        classification: core
-        level: basic
-        importance: medium
-        mvp: false
-        related_concepts: [data-classification, data-retention]
+        note: En BACKLOG (plan de 19, 2026-10-21); requiere un ADR que agregue la jurisdicción BR y su fuente oficial. Sin ficha.

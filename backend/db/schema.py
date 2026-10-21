@@ -63,6 +63,8 @@ entities = Table(
     Column("created_at", Date, nullable=False),
     Column("updated_at", Date, nullable=False),
     Column("stub", Boolean, nullable=False, server_default="false"),
+    Column("jurisdiction", ARRAY(String(2)), nullable=False, server_default="{}", comment="ADR-023."),
+    Column("owner_approved_at", Date, comment="ADR-023: aprobación explícita del dueño."),
     Column("data", JSONB, nullable=False, comment="Frontmatter completo normalizado."),
     Column("body_markdown", Text, comment="Cuerpo Markdown; NULL si la entidad viene de un YAML."),
     Column("position", Integer, nullable=False, comment="Índice del documento dentro del archivo."),
@@ -112,6 +114,17 @@ entity_sources = Table(
     Column("url", Text),
     Column("accessed", Date),
     Column("page_title", Text),
+    Column("note", Text),
+)
+
+entity_legal_basis = Table(  # ADR-023
+    "entity_legal_basis",
+    metadata,
+    Column("entity_slug", String(100), ForeignKey("entities.slug", ondelete="CASCADE"), primary_key=True),
+    Column("position", Integer, primary_key=True),
+    Column("law", String(20), nullable=False),
+    Column("article", String(30), nullable=False),
+    Column("url", Text, nullable=False),
     Column("note", Text),
 )
 

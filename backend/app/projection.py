@@ -172,6 +172,10 @@ def source_refs(index: ContentIndex, refs: list[dict[str, Any]]) -> list[dict[st
     return resolved
 
 
+def legal_basis(page: dict[str, Any]) -> list[dict[str, Any]]:
+    return [{"law": b["law"], "article": b["article"], "url": b["url"], "note": b.get("note")} for b in page.get("legal_basis", [])]
+
+
 def union(*lists: list[str]) -> list[str]:
     seen: list[str] = []
     for items in lists:
@@ -190,6 +194,8 @@ def concept_detail(index: ContentIndex, slug: str) -> dict[str, Any]:
         "cloud": page.get("cloud", []),
         "technologies": union(page.get("technologies", []), concept.get("related_technologies", [])),
         "tags": page.get("tags", []), "aliases": page.get("aliases", []),
+        "jurisdiction": page.get("jurisdiction", []), "legal_basis": legal_basis(page),  # ADR-023
+        "owner_approved_at": page.get("owner_approved_at"),
         "related_topics": union(page.get("related_topics", []), concept.get("related_concepts", [])),
         "sources": source_refs(index, page.get("sources", [])),
         "created_at": page.get("created_at"), "updated_at": page.get("updated_at"),
@@ -310,7 +316,7 @@ def source_detail(index: ContentIndex, slug: str) -> dict[str, Any]:
     s = index.entities[slug]
     keys = ["slug", "title", "description", "url", "source_type", "authority_level", "provider", "url_verified",
             "review_frequency", "trust", "technologies", "last_verified", "verification_status"]
-    return {key: s.get(key) for key in keys}
+    return {**{key: s.get(key) for key in keys}, "jurisdiction": s.get("jurisdiction", [])}  # ADR-023
 
 
 # --- Relaciones --------------------------------------------------------------

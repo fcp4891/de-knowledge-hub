@@ -64,6 +64,23 @@
     "updated_at": { "$ref": "enums.schema.json#/$defs/date" },
     "last_verified": { "$ref": "enums.schema.json#/$defs/date" },
     "verification_status": { "$ref": "enums.schema.json#/$defs/verification_status" },
+    "jurisdiction": {
+      "description": "Países cuya ley origina el contenido (ADR-023). Solo en fichas del dominio compliance y en fuentes legislative.",
+      "type": "array",
+      "items": { "$ref": "enums.schema.json#/$defs/jurisdiction" },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "legal_basis": {
+      "description": "Artículos en que se apoya una ficha con jurisdiction (ADR-023); cada url es una cita legislative de sources.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/legal_basis_ref" },
+      "minItems": 1
+    },
+    "owner_approved_at": {
+      "description": "Fecha de la aprobación explícita del dueño del proyecto; obligatoria para verified en fichas con jurisdiction (ADR-023).",
+      "$ref": "enums.schema.json#/$defs/date"
+    },
     "stub": {
       "description": "true si la entidad es un marcador mínimo creado para sostener relaciones; su contenido está pendiente.",
       "type": "boolean"
@@ -91,6 +108,21 @@
       "type": "array",
       "items": { "type": "string", "minLength": 1, "maxLength": 100 },
       "uniqueItems": true
+    },
+    "legal_basis_ref": {
+      "type": "object",
+      "required": ["law", "article", "url"],
+      "properties": {
+        "law": { "$ref": "enums.schema.json#/$defs/law" },
+        "article": {
+          "description": "Artículo como lo numera el texto oficial, sin «art.» ni «°» (p. ej. 3, 14 quinquies, 16 quáter).",
+          "type": "string",
+          "pattern": "^[0-9]+( [a-záéíóú]+)?$"
+        },
+        "url": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
     },
     "source_ref": {
       "type": "object",

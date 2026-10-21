@@ -326,7 +326,9 @@ def check_mvp_source_coverage(docs: list[Document], report: Report) -> None:
 
 
 # enums.schema.json#/$defs/source_type: nivel de autoridad que corresponde a cada tipo de fuente (§30).
-SOURCE_TYPE_LEVEL = {"official_docs": 1, "release_notes": 2, "engineering_blog": 3, "spec_paper": 4, "secondary": 5}
+SOURCE_TYPE_LEVEL = {
+    "official_docs": 1, "release_notes": 2, "engineering_blog": 3, "spec_paper": 4, "secondary": 5, "legislative": 1,
+}
 PAGE_SOURCE_LEVELS = {1, 2, 4}  # Nivel 4 solo como referencia conceptual canónica (spec_paper)
 PRODUCT_SOURCE_LEVELS = {1, 2}
 
@@ -455,6 +457,171 @@ def check_snippets(docs: list[Document], by_slug: dict[str, Document], report: R
         ]
         if not verified:
             report.add(doc.location, "[relations] un snippet necesita al menos un IMPLEMENTS hacia un concept o pattern verified")
+
+
+# --- Contenido con origen legal (ADR-023) -------------------------------------
+
+LEGAL_DOMAIN = "compliance"
+LEGISLATIVE = "legislative"
+DISCLAIMER = "Esta ficha no es asesoría legal"
+EVIDENCE_HEADING = re.compile(r"^### Evidencia de cumplimiento\s*$", re.M)
+LABEL = r"\*\*\[(?:Obligación legal · (?:(Ley [0-9.]+), )?art\. ([0-9]+(?: [a-záéíóú]+)?)|Buena práctica|Decisión de arquitectura)\]\*\*"
+LABEL_RE = re.compile(LABEL)
+LABELED_SECTIONS = (2, 3, 4, 14)  # cada ítem y párrafo empieza con una etiqueta
+TABLE_SECTIONS = (2, 3, 4, 11, 12, 13, 14)  # toda tabla lleva la columna «Etiqueta»
+LIST_ITEM = re.compile(r"^\s*(?:[-*]|\d+\.)\s+")
+REVIEW_DAYS = 31  # revisión mensual
+
+
+def law_label(law: str) -> str:
+    """ley-21719 -> «Ley 21.719», como se escribe en la etiqueta."""
+    return f"Ley {int(law.removeprefix('ley-')):,}".replace(",", ".")
+
+
+def blocks(content: str) -> Iterator[str]:
+    """Ítems de lista y párrafos de una sección, sin tablas, encabezados, citas ni comentarios."""
+    paragraph: list[str] = []
+    for line in content.splitlines():
+        stripped = line.strip()
+        is_item = bool(LIST_ITEM.match(line))
+        if not stripped or is_item or stripped.startswith(("|", "#", ">", "<!--")):
+            if paragraph:
+                yield " ".join(paragraph)
+                paragraph = []
+            if is_item:
+                yield LIST_ITEM.sub("", line, count=1)
+            continue
+        if line.startswith((" ", "\t")) and not paragraph:
+            continue  # continuación de un ítem
+        paragraph.append(stripped)
+    if paragraph:
+        yield " ".join(paragraph)
+
+
+def table_rows(content: str) -> Iterator[list[list[str]]]:
+    """Cada tabla Markdown de la sección como lista de filas (celdas), sin la fila separadora."""
+    table: list[list[str]] = []
+    for line in [*content.splitlines(), ""]:
+        if line.strip().startswith("|"):
+            cells = [c.strip() for c in line.strip().strip("|").split("|")]
+            if not all(re.fullmatch(r":?-+:?", c) for c in cells):
+                table.append(cells)
+        elif table:
+            yield table
+            table = []
+
+
+def check_legal_body(doc: Document, body: str, report: Report) -> set[tuple[str | None, str]]:
+    """Aviso, evidencia, etiqueta por ítem y columna «Etiqueta»; devuelve los artículos citados (ley o None, art.)."""
+    clean = FENCE.sub("", body)
+    parts = {n: content for n, _, content in page_sections.sections(clean)}
+    if DISCLAIMER not in parts.get(1, ""):
+        report.add(doc.location, f"[§1] falta el aviso «{DISCLAIMER}» (ADR-023)")
+    if not EVIDENCE_HEADING.search(parts.get(8, "")):
+        report.add(doc.location, "[§8] falta la subsección «### Evidencia de cumplimiento» (ADR-023)")
+    for number in LABELED_SECTIONS:
+        for block in blocks(parts.get(number, "")):
+            if not re.match(LABEL, block):
+                report.add(doc.location, f"[§{number}] ítem o párrafo sin etiqueta (ADR-023): {block[:60]!r}")
+    for number in TABLE_SECTIONS:
+        for table in table_rows(parts.get(number, "")):
+            header = table[0]
+            if "Etiqueta" not in header:
+                report.add(doc.location, f"[§{number}] tabla sin columna «Etiqueta» (ADR-023): {header}")
+                continue
+            col = header.index("Etiqueta")
+            for row in table[1:]:
+                cell = row[col] if col < len(row) else ""
+                if not re.fullmatch(LABEL, cell):
+                    report.add(doc.location, f"[§{number}] celda «Etiqueta» inválida (ADR-023): {cell!r}")
+    return {(m.group(1), m.group(2)) for m in LABEL_RE.finditer(clean) if m.group(2)}
+
+
+def check_legal_basis(
+    doc: Document, by_slug: dict[str, Document], cited: set[tuple[str | None, str]], report: Report
+) -> None:
+    """Cada url de legal_basis es una cita legislative de la misma jurisdicción; artículos del cuerpo y de
+    legal_basis coinciden (la etiqueta nombra la ley si el artículo existe en más de una)."""
+    jurisdiction = set(doc.data["jurisdiction"])
+    legislative = {
+        ref.get("url")
+        for ref in doc.data.get("sources", [])
+        if (target := by_slug.get(ref["source"])) is not None
+        and target.data.get("source_type") == LEGISLATIVE
+        and set(target.data.get("jurisdiction", [])) <= jurisdiction
+    }
+    basis = doc.data.get("legal_basis", [])
+    if not basis:
+        report.add(doc.location, "[legal_basis] una ficha con jurisdiction necesita legal_basis (ADR-023)")
+    declared: set[tuple[str, str]] = set()
+    for i, item in enumerate(basis):
+        declared.add((law_label(item["law"]), item["article"]))
+        if item["url"] not in legislative:
+            report.add(doc.location, f"[legal_basis.{i}.url] no es una cita legislative de sources con la misma jurisdicción")
+    for law, article in sorted(cited, key=str):
+        matches = {d for d in declared if d[1] == article and (law is None or d[0] == law)}
+        if not matches:
+            where = f"{law}, " if law else ""
+            report.add(doc.location, f"[legal_basis] el cuerpo cita {where}art. {article} y no está en legal_basis")
+        elif law is None and len(matches) > 1:
+            report.add(doc.location, f"[legal_basis] art. {article} existe en varias leyes: la etiqueta debe nombrar la ley")
+    for law, article in sorted(declared):
+        if (law, article) not in cited and (None, article) not in cited:
+            report.add(doc.location, f"[legal_basis] {law}, art. {article} está en legal_basis y el cuerpo no lo cita")
+
+
+def check_legal_source(doc: Document, report: Report) -> None:
+    data = doc.data
+    if data["source_type"] == LEGISLATIVE:
+        if len(data.get("jurisdiction", [])) != 1:
+            report.add(doc.location, "[jurisdiction] una fuente legislative declara exactamente un país (ADR-023)")
+        if data.get("review_frequency") != "monthly":
+            report.add(doc.location, "[review_frequency] una fuente legislative se revisa monthly (ADR-023)")
+    elif "jurisdiction" in data:
+        report.add(doc.location, "[jurisdiction] solo las fuentes legislative declaran jurisdiction (ADR-023)")
+
+
+def check_without_jurisdiction(doc: Document, by_slug: dict[str, Document], report: Report) -> None:
+    for f in ("legal_basis", "owner_approved_at"):
+        if f in doc.data:
+            report.add(doc.location, f"[{f}] requiere jurisdiction (ADR-023)")
+    for i, ref in enumerate(doc.data.get("sources", [])):
+        target = by_slug.get(ref["source"])
+        if target is not None and target.data.get("source_type") == LEGISLATIVE:
+            report.add(doc.location, f"[sources.{i}] '{ref['source']}' es legislative: solo en fichas con jurisdiction (ADR-023)")
+
+
+def check_legal_content(
+    content_dir: Path, docs: list[Document], by_slug: dict[str, Document], report: Report, today: dt.date | None = None
+) -> None:
+    """ADR-023: fuentes legislative, jurisdiction solo en fichas del dominio compliance, legal_basis, etiquetas,
+    aviso, evidencia, cita legal consultada el día de last_verified, revisión mensual y aprobación del dueño."""
+    today = today or dt.date.today()
+    for doc in docs:
+        data = doc.data
+        if data["type"] == "source":
+            check_legal_source(doc, report)
+            continue
+        if "jurisdiction" not in data:
+            check_without_jurisdiction(doc, by_slug, report)
+            continue
+        if data["type"] not in page_sections.PAGE_TYPES or data.get("domain") != LEGAL_DOMAIN:
+            report.add(doc.location, f"[jurisdiction] solo en fichas (concept o pattern) del dominio {LEGAL_DOMAIN} (ADR-023)")
+            continue
+        if data["verification_status"] == "verified" and "owner_approved_at" not in data:
+            report.add(doc.location, "[owner_approved_at] verified exige la aprobación explícita del dueño (ADR-023)")
+        last = data.get("last_verified")
+        for i, ref in enumerate(data.get("sources", [])):
+            target = by_slug.get(ref["source"])
+            if target is not None and target.data.get("source_type") == LEGISLATIVE and ref.get("accessed") != last:
+                report.add(doc.location, f"[sources.{i}.accessed] la cita legal se consulta el día de last_verified ({last})")
+        if last and (today - dt.date.fromisoformat(str(last))).days > REVIEW_DAYS:
+            report.warn(doc.location, f"[last_verified] {last}: más de {REVIEW_DAYS} días; revisar o pasar a potentially_outdated (ADR-023)")
+        cited: set[tuple[str | None, str]] = set()
+        if doc.path.suffix == ".md" and not data.get("stub"):
+            body = page_sections.body_of((content_dir.parent / doc.path).read_text(encoding="utf-8"))
+            cited = check_legal_body(doc, body, report)
+        check_legal_basis(doc, by_slug, cited, report)
 
 
 # --- Blueprint (ADR-003) -----------------------------------------------------
@@ -680,6 +847,7 @@ def validate(content_dir: Path, schemas_dir: Path) -> Report:
     check_related_section(content_dir, valid_docs, report)
     check_page_source_levels(valid_docs, by_slug, report)
     check_snippets(valid_docs, by_slug, report)
+    check_legal_content(content_dir, valid_docs, by_slug, report)
     index = validate_blueprints(content_dir, schemas_dir, by_slug, valid_docs, report)
     validate_matrices(content_dir, schemas_dir, index, by_slug, report)
     report.technologies = [doc.data for doc in valid_docs if doc.data["type"] in TECHNOLOGY_TYPES]

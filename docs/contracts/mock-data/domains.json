@@ -148,8 +148,8 @@
       "id": "19",
       "slug": "compliance",
       "title": "Compliance",
-      "description": "Marcos regulatorios relevantes para el trabajo con datos, desde su impacto técnico y sin constituir asesoría legal.",
-      "concept_count": 6,
+      "description": "Cómo se diseña y opera una plataforma de datos bajo una ley de protección de datos, desde su impacto técnico y sin constituir asesoría legal.",
+      "concept_count": 14,
       "mvp_count": 0
     },
     {

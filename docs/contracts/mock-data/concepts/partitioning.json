@@ -25,6 +25,9 @@
     "cost"
   ],
   "aliases": [],
+  "jurisdiction": [],
+  "legal_basis": [],
+  "owner_approved_at": null,
   "related_topics": [
     "bigquery-partitioning",
     "incremental-load",

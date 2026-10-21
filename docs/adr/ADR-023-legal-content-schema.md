@@ -1,6 +1,6 @@
 # ADR-023 — Schema para contenido con origen legal (dominio 19, Ley 21.719)
 
-- **Estado:** Aceptado (aprobado por Felipe el 2026-10-21, tal como está; se implementa junto con el primer lote de 19, después de aprobar el plan)
+- **Estado:** Aceptado (aprobado por Felipe el 2026-10-21, tal como está); implementado con el lote F3b-19a
 - **Fecha:** 2026-10-21
 - **Fase:** F3b — Contenido por dominio, antes de 19-compliance
 - **Referencias:** ADR-000 (content-as-code), ADR-002 (contrato), ADR-009 (contenido por dominio), ADR-012 (`page_title`); decisión de Felipe sobre la Ley 21.719 (ROADMAP, F3b, 2026-10-21).
@@ -137,3 +137,13 @@ La Ley 21.719 y la 21.663 no son un tipo de entidad nuevo:
   - el subdominio «Ingeniería de datos y Ley 21.719»;
   - sus fichas candidatas;
   - qué pasa con las fichas de 19 que ya están en el blueprint (`gdpr`, `lgpd`, `chile-data-protection` y otras).
+
+## Notas de implementación (lote F3b-19a, 2026-10-21)
+
+- `ConceptDetail` cubre concept y pattern (`kind`), así que los campos nuevos van ahí; no existe un `PatternDetail` aparte.
+- Etiqueta con ley: si un artículo existe en más de una norma de `legal_basis`, la etiqueta la nombra: `**[Obligación legal · Ley 21.663, art. 9]**`. Sin ambigüedad basta `art. N`.
+- `article` sin «art.» ni «°» (p. ej. `3`, `14 quinquies`, `16 quáter`).
+- Las tablas de §2, §3, §4 y §14 también llevan la columna «Etiqueta», como las de §11–13.
+- La viñeta de §14 admite la etiqueta antes del rótulo: `- **[Buena práctica]** **Seguridad:** ...`.
+- Fuentes: `bcn-leychile` (texto oficial, con la versión «Con Vigencia Diferida por Fecha») y `senado-tramitacion` (boletines). BCN no tiene h1 en esas páginas: `page_title` es su `<title>` (ADR-012).
+- `law` admite `ley-19628`: la Ley 21.719 (art. primero) reescribe la Ley 19.628, y los deberes del responsable se citan del texto de la 19.628 con vigencia diferida.

@@ -3146,3 +3146,43 @@ created_at: '2026-10-21'
 updated_at: '2026-10-21'
 last_verified: '2026-10-21'
 verification_status: verified
+---
+id: source:bcn-leychile
+slug: bcn-leychile
+type: source
+title: Ley Chile (Biblioteca del Congreso Nacional)
+description: Texto oficial de las leyes chilenas, con sus versiones y vigencias, publicado por la Biblioteca del Congreso Nacional.
+url: https://www.bcn.cl/leychile/
+source_type: legislative
+authority_level: 1
+provider: bcn
+url_verified: true
+review_frequency: monthly
+trust: high
+technologies: []
+created_at: '2026-10-21'
+updated_at: '2026-10-21'
+last_verified: '2026-10-21'
+verification_status: verified
+jurisdiction:
+- CL
+---
+id: source:senado-tramitacion
+slug: senado-tramitacion
+type: source
+title: 'Senado de Chile: tramitación de proyectos'
+description: Estado oficial de tramitación de los proyectos de ley (boletines) en el Senado de Chile.
+url: https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php
+source_type: legislative
+authority_level: 1
+provider: senado
+url_verified: true
+review_frequency: monthly
+trust: high
+technologies: []
+created_at: '2026-10-21'
+updated_at: '2026-10-21'
+last_verified: '2026-10-21'
+verification_status: verified
+jurisdiction:
+- CL
