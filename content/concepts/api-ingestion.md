@@ -55,6 +55,11 @@ sources:
     accessed: 2026-09-30
     page_title: "Managed Airflow overview"
     note: "Cloud Composer evoluciona a Managed Service for Apache Airflow; servicio totalmente administrado de orquestación construido sobre Apache Airflow."
+  - source: gcp-cloud-composer-release-notes
+    url: https://docs.cloud.google.com/composer/docs/release-notes
+    accessed: 2026-10-20
+    page_title: "Managed Service for Apache Airflow release notes"
+    note: "Managed Service for Apache Airflow release notes: anuncio del 15 de abril de 2026: «Cloud Composer is evolving to become Managed Service for Apache Airflow»; la página lo presenta como un cambio de nombre en curso («is evolving to become»)."
 relations:
   - type: DEPENDS_ON
     target: retries
@@ -200,7 +205,7 @@ def iter_pages(url: str, since: str, until: str, max_pages: int = 10_000) -> Ite
 
 ## 11. GCP
 
-En **Managed Service for Apache Airflow (ex Cloud Composer)**, el servicio de Google construido sobre Apache Airflow, la ingesta se orquesta con tareas Python o con el **HttpOperator** del provider HTTP. Su `pagination_function` recibe cada respuesta y devuelve los parámetros de la siguiente petición; el operador repite llamadas hasta que la función no devuelve nada. `response_check` valida el contenido de la respuesta.
+En **Managed Service for Apache Airflow** (según el anuncio del 15 de abril de 2026 en *Managed Service for Apache Airflow release notes*, Cloud Composer «is evolving to become» Managed Service for Apache Airflow), el servicio de Google construido sobre Apache Airflow, la ingesta se orquesta con tareas Python o con el **HttpOperator** del provider HTTP. Su `pagination_function` recibe cada respuesta y devuelve los parámetros de la siguiente petición; el operador repite llamadas hasta que la función no devuelve nada. `response_check` valida el contenido de la respuesta.
 
 ## 12. AWS
 
@@ -279,3 +284,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `data-contracts`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `batch-ingestion`, `data-contracts`, `python-api-consumption`.
+- 2026-10-20: revisión B-F3.1 del lote F3b-16a (docs/reviews/cards-f3b-16a.md): el renombre de Cloud Composer usa la formulación de la página, «is evolving to become» (anuncio del 15 de abril de 2026 en las release notes), en lugar de darlo por terminado.

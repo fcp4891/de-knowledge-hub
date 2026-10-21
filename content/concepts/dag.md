@@ -70,6 +70,11 @@ sources:
     accessed: 2026-09-30
     page_title: "Pipelines and activities in Azure Data Factory and Azure Synapse Analytics"
     note: "En Data Factory, un pipeline es una agrupación lógica de activities, definida en JSON (activities, parameters, concurrency); una activity puede depender de otras con condiciones Succeeded, Failed, Skipped y Completed."
+  - source: gcp-cloud-composer-release-notes
+    url: https://docs.cloud.google.com/composer/docs/release-notes
+    accessed: 2026-10-20
+    page_title: "Managed Service for Apache Airflow release notes"
+    note: "Managed Service for Apache Airflow release notes: anuncio del 15 de abril de 2026: «Cloud Composer is evolving to become Managed Service for Apache Airflow»; la página lo presenta como un cambio de nombre en curso («is evolving to become»)."
 relations:
   - type: RELATED_TO
     target: data-pipeline
@@ -217,7 +222,7 @@ Las dependencias salen de pasar el resultado de una tarea a otra: `validar_pedid
 
 ## 11. GCP
 
-**Managed Service for Apache Airflow (ex Cloud Composer)** es el servicio de Google construido sobre Apache Airflow: ejecuta los mismos Dags. Lo que cambia es la operación (entorno, workers, configuración), no el modelo de Dag.
+**Managed Service for Apache Airflow** (según el anuncio del 15 de abril de 2026 en *Managed Service for Apache Airflow release notes*, Cloud Composer «is evolving to become» Managed Service for Apache Airflow) es el servicio de Google construido sobre Apache Airflow: ejecuta los mismos Dags. Lo que cambia es la operación (entorno, workers, configuración), no el modelo de Dag.
 
 ## 12. AWS
 
@@ -294,3 +299,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: §17 enlaza `pipeline-dependencies`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `data-orchestration`, `pipeline-dependencies`, `scheduler`.
+- 2026-10-20: revisión B-F3.1 del lote F3b-16a (docs/reviews/cards-f3b-16a.md): el renombre de Cloud Composer usa la formulación de la página, «is evolving to become» (anuncio del 15 de abril de 2026 en las release notes), en lugar de darlo por terminado.

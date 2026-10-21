@@ -70,6 +70,11 @@ sources:
     accessed: 2026-10-01
     page_title: "BigQuery IAM roles and permissions"
     note: "roles/bigquery.jobUser permite ejecutar consultas en el proyecto; roles/bigquery.dataEditor sobre un dataset permite modificar sus tablas."
+  - source: gcp-cloud-composer-release-notes
+    url: https://docs.cloud.google.com/composer/docs/release-notes
+    accessed: 2026-10-20
+    page_title: "Managed Service for Apache Airflow release notes"
+    note: "Managed Service for Apache Airflow release notes: anuncio del 15 de abril de 2026: «Cloud Composer is evolving to become Managed Service for Apache Airflow»; la página lo presenta como un cambio de nombre en curso («is evolving to become»)."
 relations:
   - type: RELATED_TO
     target: etl-vs-elt
@@ -207,7 +212,7 @@ Requiere Apache Airflow 3.x con `google-cloud-bigquery`, credenciales con `roles
 
 ## 11. GCP
 
-**Dataflow** ejecuta pipelines de procesamiento unificado batch y streaming: leen de una o más fuentes, transforman y escriben en un destino. La orquestación de varios pasos suele hacerse con **Managed Service for Apache Airflow (ex Cloud Composer)**: Google renombró Cloud Composer y lo describe como un servicio totalmente administrado de orquestación de workflows construido sobre Apache Airflow, así que ejecuta Dags como el de §10.
+**Dataflow** ejecuta pipelines de procesamiento unificado batch y streaming: leen de una o más fuentes, transforman y escriben en un destino. La orquestación de varios pasos suele hacerse con **Managed Service for Apache Airflow** (según el anuncio del 15 de abril de 2026 en *Managed Service for Apache Airflow release notes*, Cloud Composer «is evolving to become» Managed Service for Apache Airflow): la documentación lo describe como un servicio totalmente administrado de orquestación de workflows construido sobre Apache Airflow, así que ejecuta Dags como el de §10.
 
 ## 12. AWS
 
@@ -280,3 +285,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `data-contracts`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `dag`, `data-contracts`.
+- 2026-10-20: revisión B-F3.1 del lote F3b-16a (docs/reviews/cards-f3b-16a.md): el renombre de Cloud Composer usa la formulación de la página, «is evolving to become» (anuncio del 15 de abril de 2026 en las release notes), en lugar de darlo por terminado.

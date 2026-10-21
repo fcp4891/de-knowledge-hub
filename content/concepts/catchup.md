@@ -65,6 +65,11 @@ sources:
     accessed: 2026-09-30
     page_title: "airflow.sdk API Reference"
     note: "API del Task SDK (airflow.sdk): el Dag acepta max_active_runs, el máximo de Dag runs activos; por encima de ese número en estado running, el scheduler no crea nuevos runs activos."
+  - source: gcp-cloud-composer-release-notes
+    url: https://docs.cloud.google.com/composer/docs/release-notes
+    accessed: 2026-10-20
+    page_title: "Managed Service for Apache Airflow release notes"
+    note: "Managed Service for Apache Airflow release notes: anuncio del 15 de abril de 2026: «Cloud Composer is evolving to become Managed Service for Apache Airflow»; la página lo presenta como un cambio de nombre en curso («is evolving to become»)."
 relations:
   - type: RELATED_TO
     target: backfill
@@ -193,7 +198,7 @@ Cada ejecución reemplaza la partición de su día dentro de una transacción: s
 
 ## 11. GCP
 
-En **Managed Service for Apache Airflow (ex Cloud Composer)**, el comportamiento es el de Airflow: `catchup` por Dag y `catchup_by_default` para el entorno. Las opciones de configuración de Airflow se sobrescriben al crear el entorno o después; algunas opciones están bloqueadas y no se pueden cambiar.
+En **Managed Service for Apache Airflow** (según el anuncio del 15 de abril de 2026 en *Managed Service for Apache Airflow release notes*, Cloud Composer «is evolving to become» Managed Service for Apache Airflow), el comportamiento es el de Airflow: `catchup` por Dag y `catchup_by_default` para el entorno. Las opciones de configuración de Airflow se sobrescriben al crear el entorno o después; algunas opciones están bloqueadas y no se pueden cambiar.
 
 ## 12. AWS
 
@@ -264,3 +269,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: §17 enlaza `pipeline-dependencies`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `data-orchestration`, `pipeline-dependencies`, `scheduler`.
+- 2026-10-20: revisión B-F3.1 del lote F3b-16a (docs/reviews/cards-f3b-16a.md): el renombre de Cloud Composer usa la formulación de la página, «is evolving to become» (anuncio del 15 de abril de 2026 en las release notes), en lugar de darlo por terminado.

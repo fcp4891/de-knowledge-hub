@@ -3,7 +3,7 @@ id: concept:composer-environments
 slug: composer-environments
 type: concept
 title: Entornos de Managed Service for Apache Airflow
-description: "Qué es un entorno de Managed Service for Apache Airflow (antes Cloud Composer) en Gen 3 según su documentación: recursos repartidos entre el proyecto del cliente y un tenant project de Google, bucket del entorno sincronizado hacia Airflow, base de metadatos en Cloud SQL, autoscaling de workers entre límites, tamaño del entorno, imagen con versión de Airflow fijada (la de por defecto puede no ser Gen 3) y upgrades: la infraestructura se actualiza sola, la versión de Airflow no."
+description: "Qué es un entorno de Managed Service for Apache Airflow en Gen 3 según su documentación: recursos repartidos entre el proyecto del cliente y un tenant project de Google, bucket del entorno sincronizado hacia Airflow, base de metadatos en Cloud SQL, autoscaling de workers entre límites, tamaño del entorno, imagen con versión de Airflow fijada (la de por defecto puede no ser Gen 3) y upgrades: la infraestructura se actualiza sola, la versión de Airflow no."
 domain: gcp
 subdomain: orchestration-and-transformation
 category: gcp
@@ -80,7 +80,7 @@ verification_status: verified
 
 ## 1. Resumen
 
-Un **entorno** de **Managed Service for Apache Airflow** (el servicio que antes se llamaba Cloud Composer) es un Airflow completo que Google opera. En **Gen 3**, según su documentación:
+Un **entorno** de **Managed Service for Apache Airflow** (según el anuncio del 15 de abril de 2026 en *Managed Service for Apache Airflow release notes*, Cloud Composer «is evolving to become» Managed Service for Apache Airflow) es un Airflow completo que Google opera. En **Gen 3**, según su documentación:
 
 - **Recursos repartidos:** una parte vive en el proyecto del cliente; otra, en un **tenant project** de Google propio de cada entorno, incluida la base de metadatos (Cloud SQL).
 - **Bucket del entorno:** los DAGs, plugins, datos y logs están en un bucket que se sincroniza **en un solo sentido**, del bucket hacia Airflow.
@@ -296,3 +296,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-12: revisión B-F3.1 del lote F3b-08c aplicada (docs/reviews/cards-f3b-08c.md): el §11 cita también las release notes, con el anuncio del 15 de abril de 2026 y su fecha de consulta.
 - 2026-10-12: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-20: revisión B-F3.1 del lote F3b-16a (docs/reviews/cards-f3b-16a.md): el renombre de Cloud Composer usa la formulación de la página, «is evolving to become» (anuncio del 15 de abril de 2026 en las release notes), en lugar de darlo por terminado.

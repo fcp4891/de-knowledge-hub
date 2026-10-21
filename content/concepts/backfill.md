@@ -45,6 +45,11 @@ sources:
     accessed: 2026-09-30
     page_title: "Managed Airflow overview"
     note: Cloud Composer evoluciona a Managed Service for Apache Airflow (cambio de nombre); Managed Airflow es un servicio totalmente administrado de orquestación de workflows construido sobre Apache Airflow.
+  - source: gcp-cloud-composer-release-notes
+    url: https://docs.cloud.google.com/composer/docs/release-notes
+    accessed: 2026-10-20
+    page_title: "Managed Service for Apache Airflow release notes"
+    note: "Managed Service for Apache Airflow release notes: anuncio del 15 de abril de 2026: «Cloud Composer is evolving to become Managed Service for Apache Airflow»; la página lo presenta como un cambio de nombre en curso («is evolving to become»)."
 relations:
   - type: DEPENDS_ON
     target: idempotency
@@ -150,7 +155,7 @@ COMMIT TRANSACTION;
 
 ## 11. GCP
 
-En **Managed Service for Apache Airflow (ex Cloud Composer)**, el servicio administrado construido sobre Apache Airflow, el backfill se hace con los mecanismos de Airflow: data intervals, backfill por rango y `catchup` (desactivado por defecto). En **BigQuery**, la escritura por partición dentro de una transacción de varias sentencias hace que cada día reprocesado se reemplace de forma atómica.
+En **Managed Service for Apache Airflow** (según el anuncio del 15 de abril de 2026 en *Managed Service for Apache Airflow release notes*, Cloud Composer «is evolving to become» Managed Service for Apache Airflow), el servicio administrado construido sobre Apache Airflow, el backfill se hace con los mecanismos de Airflow: data intervals, backfill por rango y `catchup` (desactivado por defecto). En **BigQuery**, la escritura por partición dentro de una transacción de varias sentencias hace que cada día reprocesado se reemplace de forma atómica.
 
 ## 12. AWS
 
@@ -222,3 +227,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: §17 enlaza `failure-recovery`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `catchup`, `data-reconciliation`, `failure-recovery`.
+- 2026-10-20: revisión B-F3.1 del lote F3b-16a (docs/reviews/cards-f3b-16a.md): el renombre de Cloud Composer usa la formulación de la página, «is evolving to become» (anuncio del 15 de abril de 2026 en las release notes), en lugar de darlo por terminado.
