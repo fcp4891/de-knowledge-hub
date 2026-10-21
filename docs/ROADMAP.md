@@ -167,6 +167,16 @@ Cambio de alcance del 2026-10-05: antes de F4 se completan las fichas de **todos
 
 **Orden de dominios desde 12 (decisión de Felipe, 2026-10-14):** se cierra por capas del mapa: 12 → 13 → 14 → 20 → 15 → 16 → 17 → 18 → 19 → 21 → 22 → 23. Los dominios 01 a 11 siguieron el orden del blueprint.
 
+**Decisión de Felipe sobre la Ley 21.719 (2026-10-21):**
+
+- **Enfoque.** El contenido no es legal: trata de cómo trabaja un ingeniero de datos bajo la Ley 21.719 (metodologías, herramientas, diseño de bases de datos y pipelines, y cómo se demuestra el cumplimiento). La ley entra solo como origen del requisito. Lo legal se limita a vigencia, conceptos (dato personal, dato sensible, responsable y encargado, base de licitud, finalidad) y qué artículo exige qué; sin interpretación jurídica.
+- **Genérico.** Sin empresas, consultoras ni clientes, y sin una industria como foco (banca, salud o retail solo como ejemplos).
+- **Fuentes.** El brief de Felipe (`docs/briefs/Proteccion_de_Datos_Personales_en_Chile_para_Ingenieros_de_Datos.pdf`) es guion, no fuente; sus enlaces de consultoras son Nivel 3. Las afirmaciones legales se citan de Nivel 1: BCN LeyChile, Diario Oficial y Senado.
+- **Estructura de cada ficha de 19:** Requisito (artículo citado) → implicancia técnica → patrón o metodología → herramientas → código ejecutable en la CI → evidencia de cumplimiento. Cada afirmación lleva una etiqueta: Obligación legal (art. N), Buena práctica o Decisión de arquitectura.
+- **Ubicación.** Lo técnico genérico, sin la ley, va en 18-security (seudonimización frente a anonimización, tokenización, HMAC en lugar de un hash simple de un identificador, crypto-shredding, enmascaramiento estático y dinámico, k-anonimato). En 19, un subdominio «Ingeniería de datos y Ley 21.719» con fichas candidatas: panorama y mapa requisito → control; inventario de tratamientos desde catálogo y linaje; minimización por capa; seudonimización de identificadores chilenos (RUT con DV, HMAC con llave en KMS, tokenización); orquestación de derechos de titulares (DSR); retención y supresión en todas las copias; preparación técnica ante vulneraciones, con el cruce con la Ley 21.663; aporte técnico a la EIPD; checklist de privacidad desde el diseño por pipeline. Enlazan las fichas de 15, 16, 17 y 20 sin repetir su contenido. Las normas sectoriales (banca, CMF, Fintec) van al BACKLOG.
+- **Antes de 19:** un ADR del schema con `jurisdiction` (CL), el tipo de fuente `legislative` (Nivel 1) y un campo para la etiqueta de cada afirmación.
+- **Reglas para Chile:** aviso «no es asesoría legal»; vigencia y postergación (boletín 18.623-07) verificadas el día en que se escriba; revisión mensual; las fichas de 19 pasan a `verified` solo con la aprobación explícita de Felipe.
+
 **Salida:** todos los dominios aprobados, o decisión explícita de pasar a F4 con los restantes en el backlog. **Gate humano por dominio.**
 
 ---

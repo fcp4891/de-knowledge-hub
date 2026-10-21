@@ -18,8 +18,8 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | 17-governance: F3b-17a (5) y F3b-17b (4) en revisión | Aplicar revisiones de 17 | — |
-| B · Cursor revisión | — | Revisar F3b-17a y F3b-17b (B-F3.1, `lane-a.md`) | — |
+| A · Claude Code | 17-governance: 9/9 verified, pendiente de aprobación en el navegador | Plan de 18-security | — |
+| B · Cursor revisión | — | Lo que asigne Felipe | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
@@ -46,7 +46,8 @@
 - [x] 20-open-data-stack: 7/7 `verified`, aprobado por Felipe en el navegador el 2026-10-20 (ADR-018: dbt Core y PyIceberg en la CI; Delta y Hudi sin ejecutar).
 - [x] 15-data-quality: 8/8 `verified`, aprobado por Felipe en el navegador el 2026-10-20 (ADR-019: Great Expectations 1.24.0 en la CI; Dataform y el Publish de WAP sin ejecutar).
 - [x] 16-observability: 13/13 `verified`, aprobado por Felipe en el navegador el 2026-10-20 (ADR-020: OpenTelemetry en la CI, sin collector; SRE como N4 solo para conceptos).
-- [ ] 17-governance: 17a (5) y 17b (4) en revisión (ADR-021: OpenLineage en la CI, transporte a archivo).
+- [ ] 17-governance: 9/9 verified, pendiente de aprobación en el navegador (ADR-021: OpenLineage en la CI, transporte a archivo).
+- Ley 21.719 (decisión de Felipe, 2026-10-21): contenido técnico en 18 y 19, ADR del schema antes de 19 (ver ROADMAP, F3b).
 - Orden de dominios desde 12 (2026-10-14): 12 → 13 → 14 → 20 → 15 → 16 → 17 → 18 → 19 → 21 → 22 → 23.
 - [x] Lote F3b-rel: la regla del §17 es error de `make validate` (2026-10-14; `docs/reviews/f3b-rel.md`).
 - [ ] Resto de dominios, uno a la vez, en el orden del blueprint (299 conceptos sin ficha al inicio de F3b).
