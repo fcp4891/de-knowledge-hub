@@ -1,6 +1,6 @@
 # STATUS — Data Engineering Knowledge Hub
 
-**Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 17-governance (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08, 03-python el 2026-10-10, 04-data-modeling, 05-pipelines, 06-orchestration y los conceptos de 07-architecture el 2026-10-11, 08-gcp el 2026-10-12, 09-aws el 2026-10-13, 10-azure y 11-devops el 2026-10-14, 12-infrastructure-as-code y 13-containers el 2026-10-19, 14-streaming, 20-open-data-stack, 15-data-quality y 16-observability el 2026-10-20). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
+**Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 18-security (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08, 03-python el 2026-10-10, 04-data-modeling, 05-pipelines, 06-orchestration y los conceptos de 07-architecture el 2026-10-11, 08-gcp el 2026-10-12, 09-aws el 2026-10-13, 10-azure y 11-devops el 2026-10-14, 12-infrastructure-as-code y 13-containers el 2026-10-19, 14-streaming, 20-open-data-stack, 15-data-quality y 16-observability el 2026-10-20, 17-governance el 2026-10-21). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
 **Última actualización:** 2026-10-20
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**
@@ -18,8 +18,8 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | 17-governance: 9/9 verified, pendiente de aprobación en el navegador | Plan de 18-security | — |
-| B · Cursor revisión | — | Lo que asigne Felipe | — |
+| A · Claude Code | 18-security: F3b-18a (8) en revisión | F3b-18b (5) | — |
+| B · Cursor revisión | — | Revisar F3b-18a (B-F3.1, `lane-a.md`) | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
@@ -46,7 +46,8 @@
 - [x] 20-open-data-stack: 7/7 `verified`, aprobado por Felipe en el navegador el 2026-10-20 (ADR-018: dbt Core y PyIceberg en la CI; Delta y Hudi sin ejecutar).
 - [x] 15-data-quality: 8/8 `verified`, aprobado por Felipe en el navegador el 2026-10-20 (ADR-019: Great Expectations 1.24.0 en la CI; Dataform y el Publish de WAP sin ejecutar).
 - [x] 16-observability: 13/13 `verified`, aprobado por Felipe en el navegador el 2026-10-20 (ADR-020: OpenTelemetry en la CI, sin collector; SRE como N4 solo para conceptos).
-- [ ] 17-governance: 9/9 verified, pendiente de aprobación en el navegador (ADR-021: OpenLineage en la CI, transporte a archivo).
+- [x] 17-governance: 9/9 `verified`, aprobado por Felipe en el navegador el 2026-10-21 (ADR-021: OpenLineage en la CI, transporte a archivo).
+- [ ] 18-security: 18a (8) en revisión; 18b (5) y 18c (4) por escribir (ADR-022: cryptography en 18b).
 - Ley 21.719 (decisión de Felipe, 2026-10-21): contenido técnico en 18 y 19, ADR del schema antes de 19 (ver ROADMAP, F3b).
 - Orden de dominios desde 12 (2026-10-14): 12 → 13 → 14 → 20 → 15 → 16 → 17 → 18 → 19 → 21 → 22 → 23.
 - [x] Lote F3b-rel: la regla del §17 es error de `make validate` (2026-10-14; `docs/reviews/f3b-rel.md`).
