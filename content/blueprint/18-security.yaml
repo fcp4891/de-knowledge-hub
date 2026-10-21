@@ -111,3 +111,55 @@ subdomains:
         importance: high
         mvp: false
         related_concepts: [gcp-secret-manager-usage, key-vault-secrets, ci-cd-secrets]
+      - slug: crypto-shredding
+        title: Crypto-shredding
+        kind: pattern
+        classification: modern
+        level: advanced
+        importance: medium
+        mvp: false
+        added_by: blueprint
+        related_concepts: [key-management, encryption-at-rest]
+        note: Borrar la clave para que los datos cifrados con ella queden ilegibles en todas las copias (decisión de Felipe, 2026-10-21).
+
+  - slug: privacy-techniques
+    title: Técnicas de privacidad
+    concepts:
+      - slug: pseudonymization-vs-anonymization
+        title: Seudonimización frente a anonimización
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [tokenization, keyed-hashing, k-anonymity]
+        note: Una sola ficha; sin mencionar la ley (decisión de Felipe, 2026-10-21).
+      - slug: tokenization
+        title: Tokenización
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        added_by: blueprint
+        related_concepts: [pseudonymization-vs-anonymization]
+      - slug: keyed-hashing
+        title: Hash con clave (HMAC)
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [pseudonymization-vs-anonymization, key-management]
+        note: Explica por qué un hash simple de un identificador se puede reidentificar.
+      - slug: k-anonymity
+        title: k-anonimato
+        kind: concept
+        classification: core
+        level: advanced
+        importance: medium
+        mvp: false
+        added_by: blueprint
+        related_concepts: [pseudonymization-vs-anonymization]
