@@ -14,6 +14,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** B-F3.1 del lote F3b-18a. Revisión en `docs/reviews/cards-f3b-18a.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: `GRANT ALL` en PostgreSQL 17 también concede `MAINTAIN`, y el conteo de 21 no lo incluye.
 - **Tarea activa:** B-F3.1 del lote F3b-17a. Revisión en `docs/reviews/cards-f3b-17a.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. El lote 17b va en otra rama.
 - **Tarea activa:** B-F3.1 del lote F3b-17b. Revisión en `docs/reviews/cards-f3b-17b.md`. No se editó `content/` ni `frontend/`.
@@ -80,6 +82,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Si hay alias, bajo el título: «También conocido como: …» (ficha de concepto y página de tecnología).
 - `make test-frontend`: 11/11. En la demo estática, «Dataplex» encuentra Knowledge Catalog y la ficha `gcp-dataplex` muestra los dos alias.
 - No se editó `content/` ni el contrato.
+
+### B-F3.1 · lote F3b-18a
+- Ocho fichas de control de acceso. RLS, Azure ABAC y el enmascaramiento coinciden con sus páginas. La cuenta 21 / 3 / 18 es la del test. Propuesta media: `MAINTAIN` queda fuera de ese conteo. `gcp-iam-for-data` solo enlaza. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-17a
 - Cinco fichas de catálogo, linaje, retención y ciclo de vida. OpenLineage escribe a un archivo. La retención no asesora y solo nombra las regulaciones de la página. DataZone y SageMaker Catalog no se presentan como reemplazo. `dataplex-governance` solo enlaza. No se editó `content/` ni `frontend/`.
@@ -338,6 +343,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-18a (2026-10-21)
+- Revisión de las 8 fichas de control de acceso. Propuesta media: `MAINTAIN` en `least-privilege`. No se editó `content/`. El CI no se esperó.
 
 ### B-F3.1 · lote F3b-17a (2026-10-21)
 - Revisión de las 5 fichas de catálogo, linaje y retención. Sin hallazgos. No se editó `content/`.
