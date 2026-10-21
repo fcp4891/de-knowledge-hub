@@ -145,5 +145,5 @@ La Ley 21.719 y la 21.663 no son un tipo de entidad nuevo:
 - `article` sin «art.» ni «°» (p. ej. `3`, `14 quinquies`, `16 quáter`).
 - Las tablas de §2, §3, §4 y §14 también llevan la columna «Etiqueta», como las de §11–13.
 - La viñeta de §14 admite la etiqueta antes del rótulo: `- **[Buena práctica]** **Seguridad:** ...`.
-- Fuentes: `bcn-leychile` (texto oficial, con la versión «Con Vigencia Diferida por Fecha») y `senado-tramitacion` (boletines). BCN no tiene h1 en esas páginas: `page_title` es su `<title>` (ADR-012).
+- Fuentes: `bcn-leychile` (texto oficial, con la versión «Con Vigencia Diferida por Fecha») y `senado-tramitacion` (boletines). `page_title` es el h1 que renderiza la página (por ejemplo «Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES» y «Boletín 18623-07»), no su `<title>` (ADR-012).
 - `law` admite `ley-19628`: la Ley 21.719 (art. primero) reescribe la Ley 19.628, y los deberes del responsable se citan del texto de la 19.628 con vigencia diferida.

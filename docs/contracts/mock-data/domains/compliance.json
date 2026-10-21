@@ -20,9 +20,9 @@
           "level": "intermediate",
           "importance": "high",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-21"
         },
         {
           "slug": "pii-identification",
@@ -34,9 +34,9 @@
           "level": "intermediate",
           "importance": "high",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-21"
         },
         {
           "slug": "processing-activities-inventory",
@@ -48,9 +48,9 @@
           "level": "intermediate",
           "importance": "high",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-21"
         },
         {
           "slug": "data-minimization-by-layer",
@@ -62,9 +62,9 @@
           "level": "intermediate",
           "importance": "high",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-21"
         },
         {
           "slug": "chilean-identifier-pseudonymization",
