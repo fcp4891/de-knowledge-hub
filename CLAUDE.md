@@ -43,6 +43,7 @@ Trabajas en paralelo con Cursor (Carril B, frontend y revisión).
 - En local, corre solo los tests de lo que cambió; la suite completa corre en la CI.
 - Verifica solo las URLs nuevas o modificadas.
 - Espera el CI una sola vez, en `main`.
+- La CI completa corre solo en push a `main` y en pull requests (más `workflow_dispatch` a mano), no en cada push a ramas `a/*` o `b/*`; `concurrency` con `cancel-in-progress` cancela el run anterior de la misma ref.
 - Las entregas llevan solo tablas y decisiones pendientes.
 
 ## Idioma

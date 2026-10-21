@@ -2,7 +2,13 @@ name: ci
 
 on:
   push:
+    branches: [main]      # la CI completa solo en main y en PR; no en cada push a a/* o b/*
   pull_request:
+  workflow_dispatch:       # para correrla a mano en una rama si hace falta
+
+concurrency:               # un push nuevo a la misma ref cancela el run anterior, que ya no sirve
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 # Versiones de acciones con runtime node24 (Node 20 está obsoleto en los runners).
 # Imagen de Ubuntu fijada: ubuntu-latest cambiará de versión mayor sin aviso en el workflow.
