@@ -18,8 +18,8 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | 18-security: F3b-18a (8) en revisión | F3b-18b (5) | — |
-| B · Cursor revisión | — | Revisar F3b-18a (B-F3.1, `lane-a.md`) | — |
+| A · Claude Code | 18-security: revisión de 18a aplicada; F3b-18b en escritura | F3b-18b (5) | GitHub Actions sin correr por facturación (Felipe) |
+| B · Cursor revisión | — | Revisar F3b-18b cuando esté (B-F3.1, `lane-a.md`) | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
@@ -47,7 +47,7 @@
 - [x] 15-data-quality: 8/8 `verified`, aprobado por Felipe en el navegador el 2026-10-20 (ADR-019: Great Expectations 1.24.0 en la CI; Dataform y el Publish de WAP sin ejecutar).
 - [x] 16-observability: 13/13 `verified`, aprobado por Felipe en el navegador el 2026-10-20 (ADR-020: OpenTelemetry en la CI, sin collector; SRE como N4 solo para conceptos).
 - [x] 17-governance: 9/9 `verified`, aprobado por Felipe en el navegador el 2026-10-21 (ADR-021: OpenLineage en la CI, transporte a archivo).
-- [ ] 18-security: 18a (8) en revisión; 18b (5) y 18c (4) por escribir (ADR-022: cryptography en 18b).
+- [ ] 18-security (17 fichas): revisión de 18a aplicada; 18b (5) en escritura y 18c (4) por escribir (ADR-022: cryptography en 18b). 18a y 18b no pasan a verified sin CI en verde.
 - Ley 21.719 (decisión de Felipe, 2026-10-21): contenido técnico en 18 y 19, ADR del schema antes de 19 (ver ROADMAP, F3b).
 - Orden de dominios desde 12 (2026-10-14): 12 → 13 → 14 → 20 → 15 → 16 → 17 → 18 → 19 → 21 → 22 → 23.
 - [x] Lote F3b-rel: la regla del §17 es error de `make validate` (2026-10-14; `docs/reviews/f3b-rel.md`).
