@@ -69,7 +69,7 @@ relations:
 created_at: 2026-10-21
 updated_at: 2026-10-21
 last_verified: 2026-10-21
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -290,9 +290,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-21. `review_required`: pendiente de revisión B-F3.1 del lote F3b-18b.
+2026-10-21. Pasa a `verified`: revisión B-F3.1 del lote F3b-18b aplicada y CI en verde (run 39677322697).
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-21: creación (lote F3b-18b).
 - 2026-10-21: revisión B-F3.1 (`cards-f3b-18b.md`): la indicación de Secret Manager sobre archivos y variables de entorno se cita textual, con la excepción de las integraciones serverless.
+- 2026-10-21: `verification_status: verified` (revisión aplicada; CI en verde, run 39677322697).
