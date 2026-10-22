@@ -62,15 +62,24 @@ relations:
   - type: RELATED_TO
     target: pii-identification
     note: Qué columnas son personales.
+  - type: RELATED_TO
+    target: chile-data-protection
+    note: Ficha padre del subdominio.
+  - type: RELATED_TO
+    target: chilean-identifier-pseudonymization
+    note: El seudónimo de silver, con el RUT normalizado.
+  - type: RELATED_TO
+    target: privacy-controls-as-code
+    note: La regla de la CI contra SELECT * sobre tablas personales.
 created_at: 2026-10-21
-updated_at: 2026-10-21
+updated_at: 2026-10-22
 last_verified: 2026-10-21
 verification_status: review_required
 ---
 
 ## 1. Resumen
 
-Esta ficha no es asesoría legal: cubre cómo se aplica técnicamente la minimización en una arquitectura por capas.
+Esta ficha no es asesoría legal: cubre cómo se aplica técnicamente la minimización en una arquitectura por capas. Es ficha hija de `chile-data-protection`.
 
 La ley pide tratar solo los datos necesarios y, por defecto, solo los estrictamente necesarios. En una arquitectura por capas eso significa que **cada capa tiene menos datos personales que la anterior**:
 
@@ -277,6 +286,9 @@ Quitar columnas en silver protege más que enmascararlas, y obliga a volver a br
 - `k-anonymity`: gold sin grupos chicos.
 - `medallion-architecture`: las capas bronze, silver y gold (pendiente de ficha).
 - `pii-identification`: qué columnas son personales.
+- `chile-data-protection`: ficha padre.
+- `chilean-identifier-pseudonymization`: el seudónimo de silver.
+- `privacy-controls-as-code`: la regla de la CI.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -305,3 +317,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-21: creación (lote F3b-19a).
+- 2026-10-22: upgrade de 19: pasa a ser ficha hija de `chile-data-protection`; relaciones con `chilean-identifier-pseudonymization` y `privacy-controls-as-code`. Sin cambios de contenido legal ni de código.

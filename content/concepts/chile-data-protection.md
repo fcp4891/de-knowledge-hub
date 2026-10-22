@@ -3,7 +3,7 @@ id: concept:chile-data-protection
 slug: chile-data-protection
 type: concept
 title: Ley 21.719 para ingenieros de datos
-description: "Qué cambia la Ley 21.719 para quien diseña y opera plataformas de datos: casi todo pipeline es «tratamiento», y cada principio de la ley se vuelve un control técnico con evidencia. Separa lo que decide el área legal (finalidad, base de licitud, plazos) de lo que implementa ingeniería de datos. Vigencia según BCN y estado del boletín 18.623-07 al 2026-10-21. Matriz requisito → control → evidencia ejecutada en la CI. No es asesoría legal."
+description: "Ficha padre del subdominio. Qué cambia la Ley 21.719 para quien diseña y opera plataformas de datos: casi todo pipeline es tratamiento y hay que demostrar que cumple. Mapa de artículos de la Ley 19.628 modificada a sus fichas hijas, vigencia y boletín 18.623-07 según BCN y el Senado, Decreto 662, sanciones, y una matriz requisito → control → evidencia que hace fallar la CI si un control no tiene evidencia reciente. No es asesoría legal."
 domain: compliance
 subdomain: data-engineering-under-ley-21719
 category: compliance
@@ -14,246 +14,374 @@ cloud: [agnostic]
 technologies: [python]
 tags: [compliance, privacy, ley-21719, chile, personal-data]
 related_topics: [pii-identification, processing-activities-inventory]
+aliases: [compliance-scope-for-data-engineers]
 jurisdiction: [CL]
 legal_basis:
-  - law: ley-19628
-    article: "2"
-    url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    note: "Definiciones: dato personal, datos personales sensibles, anonimización, seudonimización, responsable, titular y tratamiento."
-  - law: ley-19628
-    article: "3"
-    url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    note: "Principios: licitud y lealtad, finalidad, proporcionalidad, calidad, responsabilidad, seguridad, transparencia e información, y confidencialidad."
-  - law: ley-19628
-    article: "14"
-    url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    note: "Obligaciones del responsable, entre ellas informar y poner a disposición del titular los antecedentes que acrediten la licitud del tratamiento."
-  - law: ley-19628
-    article: "15 bis"
-    url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    note: "Tratamiento a través de un tercero mandatario o encargado, conforme al encargo y a las instrucciones del responsable y regido por un contrato."
+  - {law: ley-19628, article: "1 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Ámbito territorial, también para responsables o encargados fuera de Chile en los casos que indica."}
+  - {law: ley-19628, article: "2", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Definiciones."}
+  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Principios, letras a) a h)."}
+  - {law: ley-19628, article: "4", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Derechos del titular; desarrollados en los arts. 5 a 11."}
+  - {law: ley-19628, article: "8 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Decisiones individuales automatizadas."}
+  - {law: ley-19628, article: "12", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Consentimiento; el responsable prueba la licitud."}
+  - {law: ley-19628, article: "14", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Obligaciones del responsable."}
+  - {law: ley-19628, article: "14 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Secreto o confidencialidad, también de datos públicos organizados o combinados."}
+  - {law: ley-19628, article: "14 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Información y transparencia."}
+  - {law: ley-19628, article: "14 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Protección desde el diseño y por defecto."}
+  - {law: ley-19628, article: "14 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Medidas de seguridad, verificación regular y acreditación tras un incidente."}
+  - {law: ley-19628, article: "14 sexies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Reporte y registro de vulneraciones."}
+  - {law: ley-19628, article: "15 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Tratamiento por un encargado."}
+  - {law: ley-19628, article: "15 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Evaluación de impacto."}
+  - {law: ley-19628, article: "16", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Datos sensibles; reglas especiales en los arts. 16 bis a 16 sexies."}
+  - {law: ley-19628, article: "27", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Transferencia internacional."}
+  - {law: ley-19628, article: "35", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Sanciones."}
+  - {law: ley-19628, article: "49", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Modelo de prevención de infracciones, voluntario."}
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    accessed: 2026-10-21
+    accessed: 2026-10-22
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 en la versión que BCN marca «Con Vigencia Diferida por Fecha» desde 2026-12-01: el texto con las modificaciones de la Ley 21.719 (art. primero, D.O. 13.12.2024). Art. 2: dato personal es cualquier información vinculada o referida a una persona natural identificada o identificable; tratamiento es cualquier operación o conjunto de operaciones o procedimientos técnicos, automatizados o no, que permitan recolectar, procesar, almacenar, comunicar, transmitir o utilizar datos personales; responsable es quien decide acerca de los fines y medios del tratamiento. Art. 3: los principios de licitud y lealtad (el responsable debe ser capaz de acreditar la licitud), finalidad, proporcionalidad (datos necesarios, adecuados y pertinentes; conservados solo el tiempo necesario y luego suprimidos o anonimizados), calidad, responsabilidad, seguridad, transparencia e información, y confidencialidad. Art. 14: obligaciones del responsable. Art. 15 bis: el encargado trata los datos conforme al encargo y a las instrucciones del responsable; el contrato fija objeto, duración, finalidad, tipo de datos y otras condiciones. Consultado el 2026-10-21."
+    note: "Ley 19.628 en la versión «Con Vigencia Diferida por Fecha» desde 2026-12-01 (texto con las modificaciones de la Ley 21.719), consultada el 2026-10-22. Art. 1 bis: se aplica al responsable o mandatario establecido en Chile, al mandatario que trata a nombre de un responsable en Chile y a quien, sin estar en Chile, ofrece bienes o servicios a titulares en Chile o monitorea su comportamiento. Art. 2: definiciones, entre ellas f) dato personal, g) sensibles (incluida la situación socioeconómica), k) anonimización, l) seudonimización, v) cesión, w) elaboración de perfiles y x) encargado. Art. 3: principios a) licitud y lealtad (el responsable acredita la licitud) a h) confidencialidad. Arts. 4 a 11: derechos y procedimiento. Art. 8 bis: decisiones automatizadas. Arts. 12 y 13: bases de licitud; el responsable prueba la licitud. Art. 14 a 14 septies: obligaciones, secreto, transparencia, diseño y por defecto, seguridad, vulneraciones y estándares diferenciados. Arts. 15 y 15 bis: cesión y encargo. Art. 15 ter: evaluación de impacto. Arts. 16 a 16 sexies: sensibles, salud, biométricos, niños, niñas y adolescentes, investigación y geolocalización. Arts. 27 y 28: transferencia internacional. Arts. 34 bis a 35: infracciones y sanciones. Art. 49: modelo de prevención voluntario."
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=1209272
-    accessed: 2026-10-21
+    accessed: 2026-10-22
     page_title: "Ley 21719 REGULA LA PROTECCIÓN Y EL TRATAMIENTO DE LOS DATOS PERSONALES Y CREA LA AGENCIA DE PROTECCIÓN DE DATOS PERSONALES"
-    note: "Ley 21.719, publicada en el Diario Oficial el 2024-12-13 (promulgada el 2024-11-25). Su artículo primero transitorio dispone que las modificaciones de sus artículos primero, segundo y tercero permanentes entran en vigencia el día primero del mes vigésimo cuarto posterior a su publicación en el Diario Oficial. BCN muestra para la Ley 19.628 una versión «Con Vigencia Diferida por Fecha» desde el 2026-12-01. Consultado el 2026-10-21."
+    note: "Ley 21.719, publicada en el Diario Oficial el 2024-12-13 (promulgada el 2024-11-25). Su artículo primero transitorio dispone que las modificaciones de sus artículos primero, segundo y tercero permanentes entran en vigencia el día primero del mes vigésimo cuarto posterior a su publicación en el Diario Oficial. BCN muestra para la Ley 19.628 una versión «Con Vigencia Diferida por Fecha» desde el 2026-12-01. Consultado el 2026-10-22."
   - source: senado-tramitacion
     url: https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07
-    accessed: 2026-10-21
+    accessed: 2026-10-22
     page_title: "Boletín 18623-07"
-    note: "Boletín 18623-07, «Modifica la ley N° 21.719, que regula la protección y el tratamiento de los datos personales y crea la Agencia de Protección de Datos Personales, en el sentido que indica»: ingreso el martes 1 de septiembre de 2026, iniciativa: mensaje; urgencia actual: discusión inmediata; etapa: primer trámite constitucional (Senado), primer informe de la Comisión de Constitución, Legislación, Justicia y Reglamento. Consultado el 2026-10-21."
+    note: "Boletín 18623-07, «Modifica la ley N° 21.719 [...] en el sentido que indica», consultado el 2026-10-22: ingreso el martes 1 de septiembre de 2026 por mensaje; urgencia actual: discusión inmediata (cuenta del 21/10/2026); etapa: primer trámite constitucional (Senado), primer informe de la Comisión de Constitución, Legislación, Justicia y Reglamento. La página no registra una votación en general a esa fecha."
+  - source: senado-tramitacion
+    url: https://tramitacion.senado.cl/appsenado/index.php?mo=tramitacion&ac=getDocto&iddocto=19307&tipodoc=mensaje_mocion
+    accessed: 2026-10-22
+    page_title: "Boletín N° 18.623-07"
+    note: "Mensaje N° 110-374 del 31 de agosto de 2026 (boletín 18.623-07), en el Senado: el numeral 2 del artículo único reemplaza, en el artículo primero transitorio de la Ley 21.719, la frase «día primero del mes vigésimo cuarto posterior a la publicación de esta ley en el Diario Oficial» por «1 de diciembre de 2027»; también aumenta el Consejo Directivo de la Agencia de tres a cinco consejeros y elimina la limitación a empresas de menor tamaño del artículo sexto transitorio. Es un proyecto, no una ley."
+  - source: bcn-leychile
+    url: https://www.bcn.cl/leychile/navegar?idNorma=1227971
+    accessed: 2026-10-22
+    page_title: "Decreto 662 APRUEBA REGLAMENTO QUE REGULA LOS REQUISITOS, MODALIDADES Y PROCEDIMIENTOS PARA LA IMPLEMENTACIÓN, CERTIFICACIÓN, REGISTRO Y SUPERVISIÓN DE LOS MODELOS DE PREVENCIÓN DE INFRACCIONES A QUE SE REFIERE EL ARTÍCULO 49 QUE INCORPORA LA LEY N° 21.719 A LA LEY N° 19.628"
+    note: "Decreto 662 del Ministerio de Hacienda, promulgado el 2025-06-13 y publicado el 2026-09-09: reglamento de los requisitos, modalidades y procedimientos para implementar, certificar, registrar y supervisar los modelos de prevención de infracciones del art. 49 de la Ley 19.628."
   - source: gcp-sensitive-data-protection-docs
     url: https://docs.cloud.google.com/sensitive-data-protection/docs/sensitive-data-protection-overview
     accessed: 2026-10-21
     page_title: "Sensitive Data Protection overview"
     note: "Sensitive Data Protection overview: ayuda a descubrir, clasificar y desidentificar datos sensibles dentro y fuera de Google Cloud; un caso de uso es escanear y perfilar en forma continua activos de BigQuery, Cloud SQL y Cloud Storage para encontrar datos sensibles sin catalogar."
+  - source: gcp-cloud-logging-docs
+    url: https://docs.cloud.google.com/logging/docs/audit
+    accessed: 2026-10-21
+    page_title: "Cloud Audit Logs overview"
+    note: "Cloud Audit Logs overview: salvo en BigQuery, los Data Access audit logs están desactivados por defecto porque generan mucho volumen; para registrarlos en otros servicios hay que activarlos en forma explícita."
   - source: aws-macie-docs
     url: https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html
     accessed: 2026-10-21
     page_title: "What is Amazon Macie?"
     note: "What is Amazon Macie?: servicio de seguridad de datos que descubre datos sensibles con machine learning y coincidencia de patrones, da visibilidad de los riesgos y permite protección automatizada; lleva un inventario de los buckets de propósito general de Amazon S3 y evalúa y monitorea su seguridad y control de acceso."
+  - source: aws-cloudtrail-docs
+    url: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html
+    accessed: 2026-10-21
+    page_title: "Logging data events"
+    note: "Logging data events (AWS CloudTrail): por defecto, los trails y event data stores no registran data events, que informan las operaciones sobre un recurso o dentro de él; registrarlos tiene cargos adicionales según la página de precios de CloudTrail."
   - source: microsoft-purview-docs
     url: https://learn.microsoft.com/en-us/purview/data-map-classification
     accessed: 2026-10-21
     page_title: "Data classification in Data Map"
     note: "Data classification in Data Map (Purview): asignar etiquetas o clases lógicas a los activos según su contexto de negocio (número de pasaporte, de licencia, de tarjeta, código SWIFT, nombre de persona); ayuda a entender, buscar y gobernar, y a entender riesgos. Más de 200 clasificaciones de sistema incorporadas y clasificaciones propias; se clasifica automáticamente al escanear o a mano después."
+  - source: azure-databricks-docs
+    url: https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/
+    accessed: 2026-10-22
+    page_title: "What is Unity Catalog?"
+    note: "What is Unity Catalog? (Azure Databricks): herramientas de gobierno de datos e IA; el control de acceso cubre privilegios, políticas basadas en atributos y filtros de fila y de columna; además, auditoría y linaje."
 relations:
-  - type: RELATED_TO
-    target: pii-identification
-    note: Qué columnas son datos personales o sensibles.
-  - type: RELATED_TO
-    target: processing-activities-inventory
-    note: El registro que permite acreditar el tratamiento.
-  - type: RELATED_TO
-    target: data-minimization-by-layer
-    note: El principio de proporcionalidad en la arquitectura.
-  - type: RELATED_TO
-    target: pseudonymization-vs-anonymization
-    note: La ley define ambos términos; la técnica está en 18.
-  - type: RELATED_TO
-    target: data-classification
-    note: La clasificación técnica de los datos.
+  - {type: RELATED_TO, target: pii-identification, note: "Ficha hija. Qué datos son personales o sensibles."}
+  - {type: RELATED_TO, target: processing-activities-inventory, note: "Ficha hija. Actividades de tratamiento con finalidad, base y plazo."}
+  - {type: RELATED_TO, target: data-minimization-by-layer, note: "Ficha hija. Proporcionalidad y por defecto por capa."}
+  - {type: RELATED_TO, target: chilean-identifier-pseudonymization, note: "Ficha hija. Seudonimizar el RUT; seudonimizar no es anonimizar."}
+  - {type: RELATED_TO, target: data-subject-rights-pipeline, note: "Ficha hija. Derechos del titular."}
+  - {type: RELATED_TO, target: retention-and-erasure, note: "Ficha hija. Retención y supresión."}
+  - {type: RELATED_TO, target: data-breach-response, note: "Ficha hija. Vulneraciones."}
+  - {type: RELATED_TO, target: dpia-and-automated-decisions, note: "Ficha hija. Evaluación de impacto y decisiones automatizadas."}
+  - {type: RELATED_TO, target: processors-and-international-transfers, note: "Ficha hija. Encargados y transferencias."}
+  - {type: RELATED_TO, target: privacy-controls-as-code, note: "Ficha hija. Controles verificados en la CI."}
+  - {type: RELATED_TO, target: data-classification, note: "Clasificación técnica de datos."}
 created_at: 2026-10-21
-updated_at: 2026-10-21
-last_verified: 2026-10-21
+updated_at: 2026-10-22
+last_verified: 2026-10-22
 verification_status: review_required
 ---
 
 ## 1. Resumen
 
-Esta ficha no es asesoría legal: explica cómo trabaja un ingeniero de datos bajo la Ley 21.719, que entra solo como origen de cada requisito.
+Esta ficha no es asesoría legal: explica cómo trabaja un ingeniero de datos bajo la Ley 21.719. La ley entra solo como origen de cada requisito; el detalle técnico de cada uno está en su ficha hija.
 
-La Ley 21.719 reescribe la Ley 19.628 sobre datos personales. Según BCN, fue publicada el 2024-12-13 y sus modificaciones rigen desde el 2026-12-01: su artículo primero transitorio fija el día primero del mes vigésimo cuarto posterior a la publicación, y BCN muestra la Ley 19.628 con una versión «Con Vigencia Diferida por Fecha» desde esa fecha. Al 2026-10-21, el boletín 18.623-07, que «modifica la ley N° 21.719 […] en el sentido que indica», está en primer trámite en el Senado (*Boletín 18623-07*). Mientras no se publique otra ley, la fecha que rige es la de BCN.
+La Ley 21.719 reescribe la Ley 19.628. Según BCN, fue publicada el 2024-12-13 y, por su artículo primero transitorio, sus modificaciones rigen desde el **2026-12-01**; BCN muestra la Ley 19.628 con una versión «Con Vigencia Diferida por Fecha» desde esa fecha.
 
-Para ingeniería de datos, el cambio es este: casi todo lo que hace un pipeline es **tratamiento**, y la ley pide poder **demostrar** que cada tratamiento cumple sus principios. Eso se traduce en controles técnicos con evidencia.
+**Estado al 2026-10-22.** El Ejecutivo ingresó el boletín 18.623-07 (mensaje N° 110-374). Su numeral 2 reemplaza esa fecha por el **1 de diciembre de 2027**. Según la tramitación oficial del Senado, el proyecto está en primer trámite, en primer informe de la Comisión de Constitución, con urgencia de discusión inmediata. Es un proyecto: **mientras no se publique otra ley, rige el 2026-12-01**.
+
+El reglamento de los modelos de prevención de infracciones (art. 49) es el Decreto 662 del Ministerio de Hacienda, publicado el 2026-09-09.
+
+Para ingeniería de datos, el cambio es este: casi todo lo que hace un pipeline es **tratamiento**, y la ley exige poder **demostrar** que cada tratamiento cumple sus principios. Eso se traduce en controles técnicos implementados, verificados de forma continua y con evidencia.
 
 ## 2. Qué es
 
-- **[Obligación legal · art. 2]** La ley define dato personal (información vinculada a una persona natural identificada o identificable), dato sensible, tratamiento (recolectar, procesar, almacenar, comunicar, transmitir o utilizar), responsable (quien decide fines y medios), titular, anonimización y seudonimización.
-- **[Obligación legal · art. 3]** El tratamiento se rige por ocho principios: licitud y lealtad, finalidad, proporcionalidad, calidad, responsabilidad, seguridad, transparencia e información, y confidencialidad.
-- **[Obligación legal · art. 14]** El responsable tiene obligaciones propias, entre ellas poner a disposición del titular los antecedentes que acrediten la licitud del tratamiento.
-- **[Obligación legal · art. 15 bis]** Quien trata datos por encargo (un proveedor de nube o de ETL, una consultora) actúa conforme al encargo y a las instrucciones del responsable, regido por un contrato.
-- **[Decisión de arquitectura]** Lo que decide el área legal (finalidad, base de licitud, plazos de conservación) entra a la plataforma como metadato; el pipeline lo lee y lo hace cumplir, no lo decide.
+**[Buena práctica]** Mapa de los artículos de la Ley 19.628 modificada y la ficha hija que los trata:
+
+| Artículo | Qué implica para datos | Ficha | Etiqueta |
+|---|---|---|---|
+| 1 bis | También se aplica a quien, desde fuera de Chile, ofrece bienes o servicios a titulares en Chile o monitorea su comportamiento | `processors-and-international-transfers` | **[Obligación legal · art. 1 bis]** |
+| 2 | Dato personal, sensible, anonimización, seudonimización, perfiles, encargado | `pii-identification`, `chilean-identifier-pseudonymization` | **[Obligación legal · art. 2]** |
+| 3 | Cada principio (letras a a h) necesita un control y una evidencia | esta ficha | **[Obligación legal · art. 3]** |
+| 4 a 11 | Acceso, rectificación, supresión, oposición, portabilidad y bloqueo; 30 días corridos | `data-subject-rights-pipeline` | **[Obligación legal · art. 4]** |
+| 8 bis | Explicación, intervención humana y revisión de decisiones automatizadas | `dpia-and-automated-decisions` | **[Obligación legal · art. 8 bis]** |
+| 12 y 13 | Bases de licitud, registradas por actividad de tratamiento | `processing-activities-inventory` | **[Obligación legal · art. 12]** |
+| 14 | Acreditar la licitud; suprimir o anonimizar datos precontractuales | `processing-activities-inventory` | **[Obligación legal · art. 14]** |
+| 14 bis | El secreto alcanza datos públicos que se organizan o combinan | esta ficha | **[Obligación legal · art. 14 bis]** |
+| 14 ter | La política pública de tratamiento se alimenta del catálogo | `processing-activities-inventory` | **[Obligación legal · art. 14 ter]** |
+| 14 quáter | Por defecto, solo los datos estrictamente necesarios | `data-minimization-by-layer` | **[Obligación legal · art. 14 quáter]** |
+| 14 quinquies | Seguridad, restauración y verificación regular de su eficacia | `privacy-controls-as-code` | **[Obligación legal · art. 14 quinquies]** |
+| 14 sexies | Reporte y registro de vulneraciones; aviso a titulares en ciertos casos | `data-breach-response` | **[Obligación legal · art. 14 sexies]** |
+| 15 y 15 bis | Cesión y encargo; el encargado suprime o devuelve al terminar | `processors-and-international-transfers` | **[Obligación legal · art. 15 bis]** |
+| 15 ter | Evaluación de impacto en casos tasados | `dpia-and-automated-decisions` | **[Obligación legal · art. 15 ter]** |
+| 16 a 16 sexies | Sensibles, salud, biométricos, niños, niñas y adolescentes, investigación, geolocalización | `pii-identification` | **[Obligación legal · art. 16]** |
+| 27 y 28 | Transferencia internacional | `processors-and-international-transfers` | **[Obligación legal · art. 27]** |
+| 34 bis a 35 | Infracciones y sanciones; varias nacen de fallas técnicas | esta ficha (§16) | **[Obligación legal · art. 35]** |
+| 49 a 53 | Modelo de prevención voluntario; reglamento en el Decreto 662 | `privacy-controls-as-code` | **[Obligación legal · art. 49]** |
+
+- **[Obligación legal · art. 3]** Ocho principios: a) licitud y lealtad, b) finalidad, c) proporcionalidad, d) calidad, e) responsabilidad, f) seguridad, g) transparencia e información, h) confidencialidad.
+- **[Obligación legal · art. 12]** La carga de la prueba es del responsable: debe poder acreditar la licitud de cada tratamiento (también arts. 3 a) y 13).
+- **[Obligación legal · art. 15 bis]** El encargado (proveedor de nube, de ETL u otro) trata datos solo según el encargo; si los usa para otro fin o los cede sin autorización, pasa a ser responsable y responde solidariamente.
+- **[Decisión de arquitectura]** El área legal, privacidad y el negocio deciden finalidad, base y plazo; seguridad define el nivel de riesgo. Ingeniería implementa los controles, aporta el análisis técnico y genera la evidencia. La responsabilidad legal sigue siendo del responsable del tratamiento.
 
 ## 3. Problema que resuelve
 
-**[Buena práctica]** Sin una traducción técnica, la ley queda en un documento que nadie del equipo de datos lee: hay copias de datos personales sin control, accesos amplios, tablas que no se pueden borrar y ninguna evidencia de qué se hizo.
+**[Buena práctica]** Sin traducción técnica, la ley queda en un documento: hay copias de datos personales sin control, accesos amplios, tablas que no se pueden borrar, backfills que reintroducen datos suprimidos y ninguna evidencia de qué se hizo.
 
-**[Decisión de arquitectura]** Con un mapa requisito → control → evidencia, cada principio tiene un dueño técnico, un control en la plataforma y una prueba que se puede mostrar.
+**[Decisión de arquitectura]** Con una matriz requisito → control → evidencia, ejecutada en la CI, cada requisito tiene un dueño técnico, un control que funciona y una prueba reciente.
 
 ## 4. Cómo funciona
 
-1. **[Obligación legal · art. 2]** Identificar qué datos son personales o sensibles, con las definiciones de la ley.
-2. **[Obligación legal · art. 3]** Por cada principio, definir el control técnico (por ejemplo, proporcionalidad → columnas mínimas por capa y retención por tabla).
-3. **[Decisión de arquitectura]** Guardar en el catálogo lo que decide el área legal: finalidad, base de licitud, plazo de conservación.
-4. **[Buena práctica]** Asociar a cada control una evidencia automática: un test de la CI, un informe, un registro generado.
-5. **[Buena práctica]** Revisar la matriz en la CI: un requisito sin control o sin evidencia es una brecha visible.
+1. **[Obligación legal · art. 2]** Inventariar y clasificar datos personales y sensibles (`pii-identification`).
+2. **[Obligación legal · art. 14 ter]** Registrar cada **actividad de tratamiento** con finalidad, base de licitud y plazo, y asociarla a los activos que usa; un dataset puede servir a varias actividades con bases distintas (`processing-activities-inventory`).
+3. **[Obligación legal · art. 14 quáter]** Minimizar desde la ingesta: contratos de datos con campos permitidos por capa (`data-minimization-by-layer`).
+4. **[Obligación legal · art. 4]** Construir las capacidades para atender derechos: localizar, exportar, rectificar, bloquear y suprimir (`data-subject-rights-pipeline`, `retention-and-erasure`).
+5. **[Obligación legal · art. 14 sexies]** Controles de seguridad verificados y capacidad de dimensionar una vulneración (`data-breach-response`).
+6. **[Obligación legal · art. 14 quinquies]** Cada control produce evidencia automática y la CI falla si falta un control, falta la evidencia o la evidencia está vencida (`privacy-controls-as-code`).
 
 ## 5. Cuándo utilizarlo
 
-- Al diseñar una plataforma o un pipeline que trata datos de personas en Chile.
-- Al preparar una revisión interna o la respuesta a un pedido de información.
+- Al diseñar una plataforma o un pipeline que trata datos de personas en Chile, o de personas en Chile desde fuera (art. 1 bis).
+- Al preparar una revisión interna, un modelo de prevención o la respuesta a un requerimiento.
 
 ## 6. Cuándo no utilizarlo
 
-- Para decidir finalidades, bases de licitud o plazos: eso lo decide el área legal.
-- Como interpretación de la ley: esta ficha solo cita su texto.
+- Para decidir finalidades, bases de licitud o plazos: eso lo deciden el área legal y el responsable.
+- Como interpretación de la ley: esta ficha cita su texto y lo traduce a controles.
 
 ## 7. Ejemplo sencillo
 
-| Requisito | Control | Evidencia |
+| Requisito | Control implementado | Evidencia |
 |---|---|---|
-| Proporcionalidad (art. 3) | Columnas mínimas por capa; retención por tabla | Test de la CI |
-| Seguridad (art. 3) | Cifrado, mínimo privilegio, seudonimización | Informe de accesos |
-| Acreditar la licitud (art. 14) | Base de licitud en el catálogo | Registro de tratamientos |
-| Protección desde el diseño (art. 14 quáter) | Revisión de privacidad por pipeline | Falta |
-| Encargo a terceros (art. 15 bis) | Falta | Falta |
+| Proporcionalidad y por defecto (arts. 3 c) y 14 quáter) | Contrato de datos con columnas permitidas por capa; retención por tabla | Test de esquema en la CI; retención aplicada |
+| Calidad (art. 3 d)) | Tests de exactitud y actualidad | Reporte de calidad |
+| Derechos (arts. 4 a 11) | Pipeline de solicitudes con índice de titulares | Log de solicitudes con plazos, sin datos del titular |
+| Seguridad (art. 14 quinquies) | Cifrado, mínimo privilegio, seudonimización con HMAC | Revisión periódica de accesos; prueba de restauración |
+| Vulneraciones (art. 14 sexies) | Consulta de alcance por linaje | Registro de vulneraciones |
+| Encargo (art. 15 bis) | Inventario de encargados por dataset; supresión al cierre | Constancia de supresión o devolución |
 
 ## 8. Ejemplo de producción
 
-- Matriz versionada en el repositorio, con dueño técnico por requisito.
-- Metadatos legales (finalidad, base, plazo) en el catálogo, mantenidos por el dueño del dato y el área legal.
-- La CI revisa la matriz y los tests de cada control en cada cambio.
+Caso genérico: una aerolínea con datos de pasajeros, reservas y vuelos, en arquitectura por capas.
+
+| Capa | Qué contiene | Controles | Error frecuente |
+|---|---|---|---|
+| Ingesta | Reservas, CRM, check-in, APIs | Contrato de datos, clasificación, campos permitidos | Ingerir «todo por si acaso» |
+| Bronze | Datos de origen | Acceso restringido, retención definida, lista de supresión aplicada | Creer que bronze está exenta |
+| Silver | Validado y minimizado | Seudonimización con HMAC y llave separada | Creer que un seudónimo vuelve anónimo el dato |
+| Gold | Agregado o mínimo por caso de uso | Acceso por finalidad; agregación con umbral mínimo | Creer que gold no tiene datos personales |
+| Consumo | BI, APIs, modelos | Máscaras de columna, filtros de fila, registro de decisiones automatizadas | Exportaciones sin control |
 
 ### Evidencia de cumplimiento
 
 | Evidencia | Dónde queda | Quién la produce |
 |---|---|---|
 | Matriz requisito → control → evidencia | Repositorio, versionada | Ingeniería de datos |
-| Resultado de la revisión de la matriz | Log de la CI | CI |
-| Metadatos de finalidad, base y plazo | Catálogo | Dueño del dato y área legal |
+| Resultado de la matriz y fecha de cada evidencia | Log de la CI | CI |
+| Actividades de tratamiento con finalidad, base y plazo | Catálogo | Dueño del dato, área legal |
+| Solicitudes de titulares y su cierre | Log de solicitudes, sin datos del titular | Pipeline de derechos |
+| Vulneraciones | Registro de vulneraciones | Seguridad, ingeniería |
 
 ## 9. Arquitectura
 
 ```mermaid
 flowchart LR
-  L["Área legal:<br/>finalidad, base, plazo"] --> C["Catálogo"]
-  C --> P["Pipeline lee y aplica"]
+  L["Área legal y negocio:<br/>finalidad, base, plazo"] --> C["Catálogo:<br/>actividades de tratamiento"]
+  C --> I["Ingesta con contrato<br/>y lista de supresión"]
+  I --> B["Bronze"] --> S["Silver<br/>seudonimizado"] --> G["Gold"]
+  G --> U["Consumo con<br/>control por finalidad"]
+  R["Solicitudes de titulares"] --> X["Índice de titulares<br/>+ linaje"]
+  X --> B & S & G
   M["Matriz requisito → control → evidencia"] --> CI{"CI"}
-  P --> CI
-  CI --> E["Evidencia"]
+  B & S & G --> CI
+  CI -- "falla con brechas" --> E["Evidencia"]
 ```
 
 ## 10. Código
 
 ```python
-# Python 3.12, biblioteca estándar (ejecutado en la CI): matriz requisito → control → evidencia. Cada requisito
-# de la ley apunta a un control técnico y a la evidencia que lo demuestra; la CI falla si falta alguno.
-# Los requisitos citan el texto de la Ley 19.628 con las modificaciones de la Ley 21.719.
+# Python 3.12+, biblioteca estándar. Se ejecuta en la CI: matriz requisito → control → evidencia.
+# Termina con código 1 si algún requisito no tiene control, no tiene evidencia o su evidencia está vencida,
+# para que el despliegue se bloquee. Los artículos citan la Ley 19.628 con las modificaciones de la Ley 21.719.
+import sys
 from dataclasses import dataclass
+from datetime import date
+
+HOY = date(2026, 10, 22)          # en la CI real: date.today()
+VIGENCIA_EVIDENCIA_DIAS = 30      # una evidencia más antigua no demuestra que el control sigue operando
 
 
 @dataclass(frozen=True)
 class Fila:
-    requisito: str          # artículo y tema, del texto oficial
-    decide: str             # "legal" decide el qué; "datos" implementa el cómo
-    control: str | None     # control técnico en la plataforma
-    evidencia: str | None   # dónde queda la prueba
+    requisito: str                # artículo y tema
+    decide: str                   # "legal", "datos" o "legal+datos"
+    control: str | None           # control técnico implementado (no documentado)
+    evidencia: str | None         # prueba generada por el sistema
+    ultima_evidencia: date | None # cuándo se generó por última vez
 
 
 MATRIZ = [
-    Fila("art. 3 c) proporcionalidad", "datos", "columnas mínimas por capa; retención por tabla", "test de la CI y política de retención"),
-    Fila("art. 3 f) seguridad", "datos", "cifrado, mínimo privilegio, seudonimización", "informe de accesos y de cifrado"),
-    Fila("art. 14 a) acreditar la licitud", "legal", "base de licitud por dataset en el catálogo", "registro de tratamientos generado"),
-    Fila("art. 14 quáter protección desde el diseño", "datos", "revisión de privacidad en cada pipeline", None),
-    Fila("art. 15 bis encargo a terceros", "legal", None, None),
+    Fila("art. 3 C / 14 quáter: proporcionalidad y por defecto", "datos",
+         "contrato de datos con columnas permitidas por capa", "test de esquema en la CI", date(2026, 10, 21)),
+    Fila("art. 3 D: calidad", "datos",
+         "tests de exactitud y actualidad por tabla", "reporte de calidad", date(2026, 10, 20)),
+    Fila("art. 11: derechos en 30 días corridos", "legal+datos",
+         "pipeline de solicitudes con índice de titulares", "log de solicitudes y plazos", date(2026, 10, 15)),
+    Fila("art. 14 quinquies: seguridad", "datos",
+         "cifrado, mínimo privilegio, seudonimización con HMAC", "revisión de accesos", date(2026, 8, 1)),
+    Fila("art. 14 sexies: registro de vulneraciones", "legal+datos",
+         "consulta de alcance por linaje", None, None),
+    Fila("art. 15 bis: encargados", "legal+datos",
+         None, None, None),
 ]
 
-completas = [f for f in MATRIZ if f.control and f.evidencia]
-print(f"requisitos: {len(MATRIZ)}; con control y evidencia: {len(completas)}")
-print("sin control:", [f.requisito for f in MATRIZ if not f.control])
-print("sin evidencia:", [f.requisito for f in MATRIZ if f.control and not f.evidencia])
-print("los decide el área legal:", [f.requisito for f in MATRIZ if f.decide == "legal"])
-brechas = len(MATRIZ) - len(completas)
-print(f"la CI falla: {brechas > 0} ({brechas} brechas)")
+
+def problemas(f: Fila) -> list[str]:
+    if f.control is None:
+        return ["sin control"]
+    if f.evidencia is None or f.ultima_evidencia is None:
+        return ["sin evidencia"]
+    if (HOY - f.ultima_evidencia).days > VIGENCIA_EVIDENCIA_DIAS:
+        return [f"evidencia vencida ({(HOY - f.ultima_evidencia).days} días)"]
+    return []
+
+
+def main() -> int:
+    brechas = [(f.requisito, p) for f in MATRIZ for p in problemas(f)]
+    print(f"requisitos: {len(MATRIZ)}; brechas: {len(brechas)}")
+    for requisito, problema in brechas:
+        print(f"  BRECHA  {requisito}: {problema}")
+    return 1 if brechas else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
 ```
 
-El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Imprime 5 requisitos con 3 completos, el que no tiene control y el que no tiene evidencia, los dos que decide el área legal, y que la CI fallaría por 2 brechas.
+El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Imprime 6 requisitos con 3 brechas: la evidencia de seguridad vencida (82 días), el registro de vulneraciones sin evidencia y los encargados sin control; termina con código 1, así que la CI falla. La tercera regla es la importante: un control documentado sin evidencia reciente no demuestra que siga operando (art. 14 quinquies d)).
 
 ## 11. GCP
 
-En GCP, **Sensitive Data Protection** como herramienta de descubrimiento y clasificación. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* y *Sensitive Data Protection overview* (no ejecutado):
+En GCP, **Sensitive Data Protection** y **Cloud Audit Logs**. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES*, *Sensitive Data Protection overview* y *Cloud Audit Logs overview* (no ejecutado):
 
-| | Matriz (este ejemplo) | Google Cloud | Etiqueta |
-|---|---|---|---|
-| Qué resuelve | Qué control y qué evidencia tiene cada requisito | Descubrir, clasificar y desidentificar datos sensibles; perfilar BigQuery, Cloud SQL y Cloud Storage | **[Buena práctica]** |
-| Qué no resuelve | — | Decidir finalidad o base de licitud | **[Decisión de arquitectura]** |
+| Necesidad | Servicio | Etiqueta |
+|---|---|---|
+| Descubrir y clasificar | Sensitive Data Protection: descubre, clasifica y desidentifica; perfila BigQuery, Cloud SQL y Cloud Storage | **[Buena práctica]** |
+| Auditar accesos a datos | Cloud Audit Logs: los Data Access audit logs están desactivados por defecto, salvo en BigQuery | **[Decisión de arquitectura]** |
 
 ## 12. AWS
 
-En AWS, **Amazon Macie**. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* y *What is Amazon Macie?* (no ejecutado):
+En AWS, **Amazon Macie** y **AWS CloudTrail**. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES*, *What is Amazon Macie?* y *Logging data events* (no ejecutado):
 
-| | Matriz (este ejemplo) | Amazon Macie | Etiqueta |
-|---|---|---|---|
-| Qué resuelve | Qué control y qué evidencia tiene cada requisito | Descubrir datos sensibles en Amazon S3 y evaluar la seguridad de los buckets | **[Buena práctica]** |
-| Alcance | Toda la plataforma | Buckets de Amazon S3 | **[Buena práctica]** |
+| Necesidad | Servicio | Etiqueta |
+|---|---|---|
+| Descubrir | Amazon Macie: datos sensibles en buckets de S3 | **[Buena práctica]** |
+| Auditar accesos a datos | CloudTrail: los data events no se registran por defecto | **[Decisión de arquitectura]** |
 
 ## 13. Azure
 
-En Azure, **Microsoft Purview** (Data Map). Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* y *Data classification in Data Map* (no ejecutado):
+En Azure, **Microsoft Purview** y **Unity Catalog** de Azure Databricks. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES*, *Data classification in Data Map* y *What is Unity Catalog?* (no ejecutado):
 
-| | Matriz (este ejemplo) | Purview Data Map | Etiqueta |
-|---|---|---|---|
-| Qué resuelve | Qué control y qué evidencia tiene cada requisito | Clasificar activos al escanear, con más de 200 clasificaciones de sistema y propias | **[Buena práctica]** |
-| Qué no resuelve | — | Decidir finalidad o base de licitud | **[Decisión de arquitectura]** |
+| Necesidad | Servicio | Etiqueta |
+|---|---|---|
+| Descubrir y clasificar | Purview Data Map: clasificaciones de sistema y propias al escanear | **[Buena práctica]** |
+| Gobierno en el lakehouse | Unity Catalog: privilegios, políticas por atributos, filtros de fila y columna, auditoría y linaje | **[Buena práctica]** |
+
+Ningún servicio certifica cumplimiento por sí solo: cada uno se evalúa por alcance, configuración y evidencia disponible.
 
 ## 14. Buenas prácticas
 
-- **[Buena práctica]** Una fila de la matriz por requisito, con dueño técnico.
-- **[Decisión de arquitectura]** Los metadatos legales viven en el catálogo, no en el código del pipeline.
-- **[Buena práctica]** **Seguridad:** la matriz no reemplaza los controles; cada fila apunta a un control real y probado.
-- **[Buena práctica]** **Observabilidad:** la revisión de la matriz corre en la CI y su resultado queda como evidencia.
-- **[Buena práctica]** **Costo:** empezar por los requisitos con más riesgo (datos sensibles, copias, accesos) y no por documentar todo a la vez.
+- **[Buena práctica]** Una fila de la matriz por requisito, con dueño técnico y fecha de la última evidencia.
+- **[Decisión de arquitectura]** Los metadatos legales viven en el catálogo, por actividad de tratamiento, no en el código del pipeline.
+- **[Buena práctica]** **Seguridad:** ningún ambiente no productivo con datos personales reales; datos enmascarados o sintéticos.
+- **[Buena práctica]** **Observabilidad:** sin datos personales en los logs; los logs de solicitudes y de vulneraciones guardan identificadores internos.
+- **[Obligación legal · art. 15 bis]** **GenAI:** enviar datos personales a una API externa de LLM es tratamiento por un encargado y puede ser transferencia internacional (art. 27).
+- **[Buena práctica]** **Costo:** empezar por lo de mayor riesgo: datos sensibles (incluida la situación socioeconómica), datos de niños, niñas y adolescentes, copias y accesos.
 
 ## 15. Errores frecuentes
 
 - Tratar la ley como un tema solo del área legal.
-- Controles sin evidencia: si no hay prueba, no se puede demostrar.
-- Decidir finalidades desde el pipeline.
+- Controles documentados que nadie verifica.
+- Base de licitud asignada a un dataset entero.
+- Borrar en una tabla y olvidar derivados, respaldos y backfills.
+- Creer que seudonimizar es anonimizar.
+- Ignorar que tratar datos innecesarios o inexactos es infracción grave (art. 34 ter c) y d)).
 
 ## 16. Trade-offs
 
-Una matriz detallada da trazabilidad completa y cuesta mantenerla; una matriz corta se mantiene y deja huecos. Conviene una fila por requisito con un control y una evidencia, y el detalle en las fichas de cada técnica.
+Una matriz detallada da trazabilidad completa y cuesta mantenerla; una matriz corta se mantiene y deja huecos. Conviene una fila por requisito, con el detalle en las fichas hijas. Exigir evidencia reciente aumenta el costo de operación, pero es lo que permite demostrar que el control funciona.
+
+### Sanciones (arts. 34 bis a 35)
+
+| Tipo | Ejemplos con origen técnico | Multa máxima |
+|---|---|---|
+| Leve | Responder solicitudes en forma incompleta o fuera de plazo (34 bis c)) | 5.000 UTM o amonestación escrita |
+| Grave | Datos innecesarios o inexactos (34 ter c) y d)); fallas de seguridad (j)); omitir registros de vulneraciones (k)); transferencias contra la ley (m)) | 10.000 UTM |
+| Gravísima | Omitir en forma deliberada la comunicación de una vulneración (34 quáter f)); no hacer la evaluación de impacto obligatoria (k)) | 20.000 UTM |
+
+En reincidencia, hasta tres veces el monto. Una empresa que no es de menor tamaño y reincide en infracciones graves o gravísimas puede llegar al 2 % o 4 % de sus ingresos anuales del último año calendario, respectivamente (art. 35). Haber cumplido los deberes de dirección y supervisión, acreditado con el certificado del modelo de prevención (art. 51), es atenuante (art. 36 n.º 5).
+
+### Básico vs. senior
+
+| Enfoque básico | Enfoque senior |
+|---|---|
+| Identifica datos personales | Automatiza su descubrimiento y clasificación |
+| Aplica permisos IAM | Diseña segregación de funciones y revisiones de privilegios |
+| Ejecuta un DELETE | Diseña supresión consistente entre capas, respaldos y reprocesamientos |
+| Conoce el cifrado | Gestiona llaves, secretos y evidencia de configuración |
+| Documenta pipelines | Mantiene linaje técnico por actividad de tratamiento |
+| Ejecuta pruebas de calidad | Pone controles de privacidad en la CI |
+| Responde ante incidentes | Calcula el alcance de una vulneración en horas |
 
 ## 17. Conceptos relacionados
 
-- `pii-identification`: qué datos son personales o sensibles.
-- `processing-activities-inventory`: el registro de tratamientos.
+Fichas hijas del subdominio:
+
+- `pii-identification`: datos personales y sensibles.
+- `processing-activities-inventory`: actividades de tratamiento.
 - `data-minimization-by-layer`: proporcionalidad por capa.
-- `pseudonymization-vs-anonymization`: los términos que define la ley.
-- `data-classification`: clasificación técnica.
+- `chilean-identifier-pseudonymization`: seudonimización del RUT.
+- `data-subject-rights-pipeline`: derechos del titular.
+- `retention-and-erasure`: retención y supresión.
+- `data-breach-response`: vulneraciones.
+- `dpia-and-automated-decisions`: evaluación de impacto y decisiones automatizadas.
+- `processors-and-international-transfers`: encargados y transferencias.
+- `privacy-controls-as-code`: controles en la CI.
+
+Otras: `data-classification`.
 
 ## 18. Preguntas técnicas abiertas
 
-1. ¿Qué pipelines tuyos tratan datos de personas?
-2. ¿Dónde queda hoy la finalidad de cada dataset?
-3. ¿Qué evidencia podrías mostrar mañana de cada control?
+1. ¿Qué pipelines tuyos tratan datos de personas, y para qué actividades?
+2. Si mañana llega una solicitud de supresión, ¿en cuántas tablas, respaldos y exportaciones está ese titular?
+3. ¿Qué control tuyo tiene evidencia de los últimos 30 días?
 
 ## 19. Laboratorio relacionado
 
@@ -261,18 +389,19 @@ Pendiente (F4).
 
 ## 20. Fuentes
 
-- BCN Ley Chile: *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* (versión con vigencia diferida desde 2026-12-01) y *Ley 21719 REGULA LA PROTECCIÓN Y EL TRATAMIENTO DE LOS DATOS PERSONALES Y CREA LA AGENCIA DE PROTECCIÓN DE DATOS PERSONALES*.
-- Senado: *Boletín 18623-07*.
-- Google Cloud: *Sensitive Data Protection overview*.
-- AWS: *What is Amazon Macie?*.
-- Microsoft Learn: *Data classification in Data Map*.
+- BCN Ley Chile: *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* (versión con vigencia diferida desde 2026-12-01), *Ley 21719* y *Decreto 662*.
+- Senado: *Boletín 18623-07* (tramitación) y *Boletín N° 18.623-07* (mensaje N° 110-374).
+- Google Cloud: *Sensitive Data Protection overview* y *Cloud Audit Logs overview*.
+- AWS: *What is Amazon Macie?* y *Logging data events*.
+- Microsoft Learn: *Data classification in Data Map* y *What is Unity Catalog?*.
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-21: texto legal, vigencia y estado del boletín 18.623-07 consultados ese día en BCN y en el Senado. `review_required`: pendiente de revisión B-F3.1 del lote F3b-19a; pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
+2026-10-22: articulado, vigencia, estado del boletín 18.623-07 y Decreto 662 consultados ese día en BCN y en el Senado. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual, y extraordinaria si se publica la ley de postergación.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-21: creación (lote F3b-19a); absorbe `compliance-scope-for-data-engineers`.
+- 2026-10-22: reestructura como ficha padre del subdominio (upgrade de 19): mapa de artículos, estado de la postergación según el Senado, Decreto 662, caso por capas, sanciones y contraste básico/senior. La matriz exige evidencia reciente y hace fallar la CI. El detalle pasa a las fichas hijas.

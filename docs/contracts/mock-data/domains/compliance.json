@@ -3,7 +3,7 @@
   "slug": "compliance",
   "title": "Compliance",
   "description": "Cómo se diseña y opera una plataforma de datos bajo una ley de protección de datos, desde su impacto técnico y sin constituir asesoría legal.",
-  "concept_count": 14,
+  "concept_count": 13,
   "mvp_count": 0,
   "subdomains": [
     {
@@ -22,7 +22,7 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "review_required",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-22"
         },
         {
           "slug": "pii-identification",
@@ -50,7 +50,7 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "review_required",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-22"
         },
         {
           "slug": "data-minimization-by-layer",
@@ -78,11 +78,11 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "review_required",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-22"
         },
         {
-          "slug": "data-subject-requests",
-          "title": "Solicitudes de los titulares",
+          "slug": "data-subject-rights-pipeline",
+          "title": "Pipeline de derechos del titular",
           "kind": "pattern",
           "domain": "compliance",
           "subdomain": "data-engineering-under-ley-21719",
@@ -92,11 +92,11 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "review_required",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-22"
         },
         {
-          "slug": "erasure-across-copies",
-          "title": "Supresión en todas las copias",
+          "slug": "retention-and-erasure",
+          "title": "Retención y supresión",
           "kind": "pattern",
           "domain": "compliance",
           "subdomain": "data-engineering-under-ley-21719",
@@ -106,40 +106,40 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "review_required",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-22"
         },
         {
-          "slug": "personal-data-breach-readiness",
-          "title": "Preparación técnica ante vulneraciones",
-          "kind": "concept",
-          "domain": "compliance",
-          "subdomain": "data-engineering-under-ley-21719",
-          "classification": "core",
-          "level": "advanced",
-          "importance": "medium",
-          "mvp": false,
-          "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-21"
-        },
-        {
-          "slug": "dpia-technical-input",
-          "title": "Aporte técnico a la evaluación de impacto",
-          "kind": "concept",
-          "domain": "compliance",
-          "subdomain": "data-engineering-under-ley-21719",
-          "classification": "core",
-          "level": "advanced",
-          "importance": "medium",
-          "mvp": false,
-          "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-21"
-        },
-        {
-          "slug": "privacy-by-design-checklist",
-          "title": "Privacidad desde el diseño en cada pipeline",
+          "slug": "data-breach-response",
+          "title": "Respuesta ante vulneraciones",
           "kind": "pattern",
+          "domain": "compliance",
+          "subdomain": "data-engineering-under-ley-21719",
+          "classification": "core",
+          "level": "advanced",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-22"
+        },
+        {
+          "slug": "dpia-and-automated-decisions",
+          "title": "Evaluación de impacto y decisiones automatizadas",
+          "kind": "concept",
+          "domain": "compliance",
+          "subdomain": "data-engineering-under-ley-21719",
+          "classification": "core",
+          "level": "advanced",
+          "importance": "high",
+          "mvp": false,
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-22"
+        },
+        {
+          "slug": "processors-and-international-transfers",
+          "title": "Encargados y transferencias internacionales",
+          "kind": "concept",
           "domain": "compliance",
           "subdomain": "data-engineering-under-ley-21719",
           "classification": "core",
@@ -148,35 +148,21 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "review_required",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-22"
         },
         {
-          "slug": "international-data-transfers",
-          "title": "Transferencias internacionales de datos",
-          "kind": "concept",
-          "domain": "compliance",
-          "subdomain": "data-engineering-under-ley-21719",
-          "classification": "core",
-          "level": "advanced",
-          "importance": "medium",
-          "mvp": false,
-          "has_page": true,
-          "verification_status": "review_required",
-          "last_verified": "2026-10-21"
-        },
-        {
-          "slug": "automated-decision-traceability",
-          "title": "Trazabilidad de decisiones automatizadas",
+          "slug": "privacy-controls-as-code",
+          "title": "Controles de privacidad como código",
           "kind": "pattern",
           "domain": "compliance",
           "subdomain": "data-engineering-under-ley-21719",
           "classification": "core",
           "level": "advanced",
-          "importance": "medium",
+          "importance": "high",
           "mvp": false,
           "has_page": true,
           "verification_status": "review_required",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-22"
         }
       ]
     },

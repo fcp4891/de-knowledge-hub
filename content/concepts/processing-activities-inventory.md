@@ -3,7 +3,7 @@ id: pattern:processing-activities-inventory
 slug: processing-activities-inventory
 type: pattern
 title: Inventario de actividades de tratamiento
-description: "Un registro de qué se hace con los datos personales (finalidad, base, categorías, plazo, destinatarios), generado en cada ejecución desde el linaje y el catálogo en vez de una planilla que envejece. Responde lo que la ley pide informar y acreditar, y lista como brecha todo dataset personal al que le falte un dato. Ejemplo ejecutado en la CI con openlineage-python. Knowledge Catalog, SageMaker Catalog y Purview Unified Catalog. No es asesoría legal."
+description: "Ficha hija de chile-data-protection. La base de licitud vive en la actividad de tratamiento, no en el dataset: un mismo dataset sirve a varias actividades con bases distintas. El registro de actividades se cruza con los usos observados (linaje y logs de consultas) y la CI falla si hay tablas con datos personales sin actividad, actividades incompletas o usos no registrados; además genera el resumen que pide el art. 14 ter. Ejemplo ejecutado en la CI. No es asesoría legal."
 domain: compliance
 subdomain: data-engineering-under-ley-21719
 classification: core
@@ -11,260 +11,258 @@ level: intermediate
 importance: high
 cloud: [agnostic]
 technologies: [python]
-tags: [compliance, privacy, inventory, lineage, catalog]
+tags: [compliance, privacy, inventory, lawful-basis, lineage]
 related_topics: [data-catalog, data-lineage]
 jurisdiction: [CL]
 legal_basis:
-  - law: ley-19628
-    article: "3"
-    url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    note: "Licitud (el responsable debe ser capaz de acreditarla) y responsabilidad."
-  - law: ley-19628
-    article: "14 ter"
-    url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    note: "Deber de información y transparencia: categorías de datos, finalidades, base de legitimidad, destinatarios, transferencias, plazo de conservación y fuente."
+  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "a) el responsable acredita la licitud; b) fines específicos y sus excepciones."}
+  - {law: ley-19628, article: "12", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Consentimiento libre, informado, específico, previo e inequívoco; revocable; el responsable lo prueba."}
+  - {law: ley-19628, article: "13", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Otras bases: obligaciones económicas (Título III), obligación legal, contrato, interés legítimo, defensa de derechos."}
+  - {law: ley-19628, article: "14", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "a) informar y poner a disposición los antecedentes de licitud."}
+  - {law: ley-19628, article: "14 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Información pública sobre categorías, destinatarios, finalidades, base, plazo, fuente y decisiones automatizadas."}
+  - {law: ley-19628, article: "34 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "a) tratar sin base o con finalidad distinta es infracción grave."}
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    accessed: 2026-10-21
+    accessed: 2026-10-22
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01). Art. 3 a): el responsable deberá ser capaz de acreditar la licitud del tratamiento; art. 3 e): quienes tratan datos personales son legalmente responsables del cumplimiento de los principios. Art. 14 ter: el responsable debe mantener a disposición del público, entre otros, la política de tratamiento con fecha y versión; las categorías de datos que trata, el universo de personas, los destinatarios, las finalidades y la base de legitimidad; la política y medidas de seguridad; las transferencias a terceros países; el período de conservación y la fuente de los datos. Consultado el 2026-10-21."
-  - source: openlineage-docs
-    url: https://openlineage.io/docs/spec/object-model
-    accessed: 2026-10-20
-    page_title: "Object Model"
-    note: "Object Model (OpenLineage 1.54.0): pensado para observar a gran escala los datasets a medida que pasan por un pipeline, emitiendo eventos de linaje en tiempo real; el modelo tiene Jobs y Datasets porque le importa cómo se crean los datasets, no solo que estén relacionados; un backend aprende de los datasets sobre todo por la información de los jobs, que en general tienen al menos una entrada o una salida."
-  - source: openlineage-docs
-    url: https://openlineage.io/docs/client/python/configuration
-    accessed: 2026-10-20
-    page_title: "Configuration"
-    note: "Configuration (cliente de Python, OpenLineage 1.54.0): el transporte define cómo se envían los eventos (HTTP, Kafka, File, Console, entre otros); la configuración se lee solo al crear el cliente; el transporte file acepta log_file_path y append."
+    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-22. Art. 3 a): el responsable deberá ser capaz de acreditar la licitud; b): fines específicos, explícitos y lícitos; no se trata con fines distintos salvo fines compatibles, relación contractual o precontractual que lo justifique, nuevo consentimiento o ley. Art. 12: consentimiento libre, informado y específico en cuanto a su finalidad, previo e inequívoco; revocable en cualquier momento con medios similares; corresponde al responsable probar que contó con él. Art. 13: otras bases: a) obligaciones económicas según el Título III, b) obligación legal, c) contrato o medidas precontractuales, d) interés legítimo, e) defensa de un derecho; el responsable acredita la licitud. Art. 14 a): informar y poner a disposición del titular los antecedentes de licitud. Art. 14 ter: política de tratamiento pública con categorías de datos, universo de titulares, destinatarios, finalidades, base de legitimidad e intereses legítimos, seguridad, derechos, transferencias, plazo de conservación, fuente y decisiones automatizadas. Art. 34 ter a): tratar sin base o con finalidad distinta es infracción grave."
   - source: gcp-knowledge-catalog-docs
-    url: https://docs.cloud.google.com/knowledge-catalog/docs/metadata-overview
+    url: https://docs.cloud.google.com/knowledge-catalog/docs/about-data-lineage
     accessed: 2026-10-20
-    page_title: "About metadata in Knowledge Catalog"
-    note: "About metadata in Knowledge Catalog: las entries se crean automáticamente desde fuentes de Google Cloud (tablas, vistas, datasets y modelos de BigQuery, entre otras) o las crean los usuarios para fuentes propias, archivos o bases de terceros; los aspect types son plantillas predefinidas (Schema, Overview, Contacts, DataQuality, Lineage) o propias (por ejemplo, clasificación de PII o niveles de SLA); los aspects se llenan desde los sistemas de origen, logs de consultas o escaneos, o los agregan usuarios, pipelines o agentes; las entry links relacionan entries o columnas (synonym, definition, schema-join, related)."
-  - source: aws-sagemaker-unified-studio-docs
-    url: https://docs.aws.amazon.com/sagemaker-unified-studio/latest/userguide/working-with-business-catalog.html
+    page_title: "About data lineage"
+    note: "About data lineage (Knowledge Catalog): el linaje es un mapa de dónde vienen los datos, adónde van y qué transformaciones ocurren; se ve en la consola para activos de Knowledge Catalog (formerly Dataplex Universal Catalog), BigQuery y Vertex AI, con linaje multirregión. Con la API activada, servicios como BigQuery y Dataflow informan linaje automáticamente; para otras fuentes, la Data Lineage API, y se recomienda importar eventos en el formato de OpenLineage. Hay linaje a nivel de columna."
+  - source: aws-datazone-docs
+    url: https://docs.aws.amazon.com/datazone/latest/userguide/datazone-data-lineage.html
     accessed: 2026-10-20
-    page_title: "Catalog in IDC-based domains"
-    note: "Catalog in IDC-based domains (Amazon SageMaker Unified Studio): Amazon SageMaker Catalog cataloga datos de la organización con contexto de negocio para que todos los encuentren y entiendan; primero los assets se traen como inventario de un proyecto, visibles solo para sus miembros, y no quedan disponibles para todos los usuarios del dominio hasta publicarlos."
+    page_title: "Data lineage in Amazon DataZone"
+    note: "Data lineage in Amazon DataZone: función compatible con OpenLineage para capturar y visualizar eventos de linaje desde sistemas con OpenLineage o por API, rastrear orígenes y transformaciones y ver el consumo entre organizaciones; incluye la actividad dentro del catálogo de datos de negocio de DataZone."
+  - source: azure-databricks-docs
+    url: https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/data-lineage
+    accessed: 2026-10-22
+    page_title: "Lineage in Unity Catalog"
+    note: "Lineage in Unity Catalog (Azure Databricks): captura el linaje automáticamente para las consultas ejecutadas en Azure Databricks, hasta el nivel de columna, y lo agrega entre los workspaces del metastore; permite análisis de impacto antes de cambiar o borrar una tabla o columna. No se preserva para objetos renombrados."
   - source: microsoft-purview-docs
     url: https://learn.microsoft.com/en-us/purview/unified-catalog
     accessed: 2026-10-20
     page_title: "Learn about Microsoft Purview Unified Catalog"
     note: "Learn about Microsoft Purview Unified Catalog: inventario de los activos de datos, su metadata y su linaje; herramientas para principios de gobierno: políticas de acceso de Unified Catalog, critical data elements, glossary terms, governance domains (organizar los datos por conceptos de negocio y distribuir el ownership) y data products (agrupar activos relacionados)."
 relations:
-  - type: RELATED_TO
-    target: data-catalog
-    note: Los metadatos de finalidad, base y plazo viven en el catálogo.
-  - type: RELATED_TO
-    target: data-lineage
-    note: Qué job lee y escribe qué datos personales.
-  - type: RELATED_TO
-    target: chile-data-protection
-    note: El panorama de la ley.
-  - type: RELATED_TO
-    target: data-retention
-    note: El plazo de conservación del registro se aplica con retención.
+  - {type: RELATED_TO, target: chile-data-protection, note: "Ficha padre del subdominio."}
+  - {type: RELATED_TO, target: data-catalog, note: "Donde viven las actividades y sus tags."}
+  - {type: RELATED_TO, target: data-lineage, note: "Usos observados de cada activo."}
+  - {type: RELATED_TO, target: data-subject-rights-pipeline, note: "El acceso se responde por actividad."}
+  - {type: RELATED_TO, target: retention-and-erasure, note: "El plazo viene de la actividad."}
+  - {type: RELATED_TO, target: dpia-and-automated-decisions, note: "Las actividades con perfiles o gran escala piden evaluación."}
+  - {type: RELATED_TO, target: processors-and-international-transfers, note: "Destinatarios y transferencias de cada actividad."}
 created_at: 2026-10-21
-updated_at: 2026-10-21
-last_verified: 2026-10-21
+updated_at: 2026-10-22
+last_verified: 2026-10-22
 verification_status: review_required
 ---
 
 ## 1. Resumen
 
-Esta ficha no es asesoría legal: cubre cómo generar técnicamente el inventario de tratamientos.
+Esta ficha no es asesoría legal: finalidad, base de licitud y plazo los definen el área legal y el negocio; aquí se explica cómo modelarlos y hacerlos cumplir en la plataforma. Es ficha hija de `chile-data-protection`.
 
-La ley pide que el responsable pueda **acreditar** la licitud de lo que hace y que informe qué datos trata, para qué, con qué base, a quién los comunica y por cuánto tiempo los guarda. Una planilla hecha a mano envejece el día que se termina. Este patrón la **genera en cada ejecución**:
-
-- el **linaje** dice qué job lee y escribe cada dataset;
-- el **catálogo** dice si el dataset es personal, su finalidad, base, categorías, plazo y destinatarios (lo mantienen el dueño del dato y el área legal);
-- el cruce produce una fila por actividad, y cada dato faltante es una **brecha**.
+El inventario es la base de casi todos los demás controles: sin saber **qué actividad** usa **qué datos**, con **qué base** y **por cuánto tiempo**, no se puede responder un acceso, aplicar retención, dimensionar una vulneración ni detectar un uso indebido. La clave de diseño es modelar la **actividad de tratamiento** como entidad propia y asociarla a los activos: un mismo dataset suele servir a varias actividades con bases distintas.
 
 ## 2. Qué es
 
-- **[Obligación legal · art. 3]** El responsable debe poder acreditar la licitud del tratamiento y responde por el cumplimiento de los principios.
-- **[Obligación legal · art. 14 ter]** Debe informar al público, entre otras cosas, las categorías de datos, las finalidades, la base de legitimidad, los destinatarios, las transferencias, el plazo de conservación y la fuente.
-- **[Decisión de arquitectura]** El inventario es una vista derivada del linaje y del catálogo, no un documento aparte.
+- **[Obligación legal · art. 3]** El responsable debe poder acreditar la licitud, y no puede tratar los datos con fines distintos de los informados salvo las excepciones de la letra b).
+- **[Obligación legal · art. 12]** Si la base es el consentimiento, debe ser libre, informado, específico por finalidad, previo e inequívoco, y revocable; el responsable lo prueba.
+- **[Obligación legal · art. 13]** Otras bases: obligaciones económicas (Título III), obligación legal, contrato, interés legítimo y defensa de un derecho.
+- **[Decisión de arquitectura]** **Actividad de tratamiento:** unidad con finalidad, base, categorías de datos y de titulares, destinatarios, plazo, transferencias y decisiones automatizadas.
+- **[Decisión de arquitectura]** **Relación actividad ↔ activo:** muchos a muchos. `silver.pasajeros` puede servir a venta de pasajes (contrato) y a marketing (consentimiento).
+- **[Buena práctica]** **Usos observados:** qué jobs, dashboards y modelos leen cada activo, desde el linaje y los logs de consultas; se comparan con los usos registrados.
 
 ## 3. Problema que resuelve
 
-**[Buena práctica]** Alguien pregunta para qué se usa la tabla de audiencias de marketing y con qué base. Nadie lo sabe: la tabla la creó un job hace un año y la planilla de tratamientos no la menciona.
+**[Buena práctica]** Con la base asignada al dataset, un modelo de fraude que lee la tabla de clientes «hereda» la base de marketing y nadie lo nota. Con actividades explícitas y usos observados, ese uso aparece como no registrado.
 
-**[Decisión de arquitectura]** Con el inventario generado, la tabla aparece en cuanto un job la escribe, y si le falta la finalidad aparece como brecha en la CI.
+**[Obligación legal · art. 34 ter]** Tratar datos sin base o con una finalidad distinta es infracción grave (letra a)): un uso no registrado es una brecha que la CI debe mostrar.
 
 ## 4. Cómo funciona
 
-1. **[Buena práctica]** Cada job emite eventos de linaje con sus entradas y salidas (OpenLineage).
-2. **[Decisión de arquitectura]** El catálogo marca los datasets personales y guarda finalidad, base, categorías, plazo y destinatarios.
-3. **[Obligación legal · art. 14 ter]** Se arma una fila por actividad con lo que la ley pide informar.
-4. **[Obligación legal · art. 3]** Cada dato faltante en un dataset personal es una brecha: sin finalidad o sin base no se puede acreditar la licitud.
-5. **[Buena práctica]** El registro y las brechas quedan como artefacto de cada ejecución.
+1. **[Decisión de arquitectura]** El área legal y el negocio crean la actividad: finalidad, base, plazo y destinatarios.
+2. **[Buena práctica]** Ingeniería la asocia a los activos que usa y propaga plazo y finalidad como tags.
+3. **[Buena práctica]** El linaje y los logs de consultas generan los usos observados.
+4. **[Buena práctica]** La CI falla si hay tablas con datos personales sin actividad, actividades incompletas o usos no registrados.
+5. **[Obligación legal · art. 14 ter]** El catálogo genera el resumen público para la política de tratamiento.
+6. **[Obligación legal · art. 14]** El registro se exporta bajo demanda para poner a disposición los antecedentes de licitud (letra a)).
 
 ## 5. Cuándo utilizarlo
 
-- Cuando hay más de unos pocos pipelines con datos personales.
-- Cuando el linaje ya se emite (o se puede emitir) desde los jobs.
+- Antes de construir un pipeline, dashboard o modelo nuevo que use datos personales.
+- Como fuente para derechos, retención, vulneraciones y evaluación de impacto.
 
 ## 6. Cuándo no utilizarlo
 
-- Sin catálogo: el linaje solo dice qué se mueve, no para qué.
-- Para decidir finalidades o bases: el registro las muestra, no las decide.
+- Para decidir la base de licitud o si un fin es compatible: lo decide el área legal.
+- No reemplaza al catálogo técnico (esquemas, calidad); lo complementa.
 
 ## 7. Ejemplo sencillo
 
-Tres jobs: `cargar_clientes`, `ventas_por_comuna` y `audiencia_campana`.
-
-| Dataset | Personal | Resultado |
-|---|---|---|
-| `silver.clientes` | sí | Fila completa: finalidad, base, categorías, plazo, destinatarios |
-| `gold.ventas_por_comuna` | no | No entra al registro |
-| `mkt.audiencia_campana` | sí | Brechas: falta finalidad, base y plazo |
+| Actividad | Finalidad | Base | Plazo | Activos |
+|---|---|---|---|---|
+| venta_pasajes | Emitir y gestionar pasajes | Contrato (art. 13 c)) | 5 años | silver.pasajeros, silver.reservas |
+| marketing | Ofertas personalizadas | Consentimiento (art. 12) | Por definir | silver.pasajeros |
+| riesgo_fraude | — no registrada — | — | — | gold.score_fraude (lee silver.pasajeros) |
 
 ## 8. Ejemplo de producción
 
-- Todos los jobs emiten linaje a un backend de linaje (el del catálogo de la nube o uno propio).
-- Un job diario cruza linaje y catálogo, publica el registro y abre una alerta por cada brecha.
-- El área legal revisa el registro y completa los metadatos en el catálogo.
+| Componente | Implementación posible |
+|---|---|
+| Registro de actividades | Tabla `governance.actividades` versionada, o el módulo de una herramienta de privacidad |
+| Relación con activos | Tags en el catálogo: `actividad`, `plazo`, `finalidad` |
+| Consentimientos | Tabla por titular, finalidad, versión del texto, fecha y canal; revocación con la misma facilidad |
+| Usos observados | Linaje (del catálogo de la nube u OpenLineage) y logs de consultas |
+| Control | Job de la CI que compara registrados contra observados |
 
 ### Evidencia de cumplimiento
 
 | Evidencia | Dónde queda | Quién la produce |
 |---|---|---|
-| Registro de actividades con fecha | Almacenamiento versionado | Job del inventario |
-| Lista de brechas | Alerta y log del job | Job del inventario |
-| Metadatos de finalidad, base y plazo | Catálogo | Dueño del dato y área legal |
+| Registro de actividades versionado | Repositorio o catálogo | Área legal, ingeniería |
+| Consentimientos con versión y fecha | Tabla de consentimientos | Aplicación de origen |
+| Resultado de la comparación de usos | Log de la CI | CI |
 
 ## 9. Arquitectura
 
 ```mermaid
 flowchart LR
-  J["Jobs"] -- "OpenLineage" --> L["Linaje"]
-  C["Catálogo:<br/>personal, finalidad, base, plazo"] --> I["Inventario generado"]
-  L --> I
-  I --> R["Registro de actividades"]
-  I --> B["Brechas"]
+  L["Área legal y negocio"] --> R["Registro de actividades<br/>finalidad, base, plazo"]
+  R --> T["Tags en el catálogo"]
+  T --> P["Pipelines: retención,<br/>derechos, acceso"]
+  LG["Linaje + logs de consultas"] --> U["Usos observados"]
+  R & U --> CI{"CI: ¿coinciden?"}
+  CI -- "no" --> E["Brecha: uso no registrado"]
+  R --> PO["Política pública (art. 14 ter)"]
 ```
 
 ## 10. Código
 
 ```python
-# Python 3.12 y openlineage-python 1.54 (ejecutado en la CI; ADR-021): el registro de actividades de tratamiento
-# se genera desde el linaje (qué job lee y escribe qué) y el catálogo (qué es personal, para qué, con qué base y
-# por cuánto tiempo). Si a un dataset personal le falta un dato del registro, se lista como brecha.
-import json
+# Python 3.12+, biblioteca estándar. Registro de actividades de tratamiento: la base de licitud vive en la
+# actividad, no en el dataset. La CI falla si hay tablas con PII sin actividad, actividades incompletas o
+# usos de un dataset para una finalidad no registrada. Además genera el resumen que exige el art. 14 ter d).
 import sys
-import tempfile
-from datetime import datetime, timezone
-from pathlib import Path
-from typing import Any
+from dataclasses import dataclass
 
-from openlineage.client import OpenLineageClient
-from openlineage.client.event_v2 import InputDataset, Job, OutputDataset, Run, RunEvent, RunState
-from openlineage.client.uuid import generate_new_uuid
+BASES = {"consentimiento (art. 12)", "obligación legal (art. 13 b)", "contrato (art. 13 c)",
+         "interés legítimo (art. 13 d)", "defensa de derechos (art. 13 e)", "obligaciones económicas (art. 13 a)"}
 
-archivo = Path(sys.argv[1] if len(sys.argv) > 1 else tempfile.mkdtemp()) / "lineage.jsonl"
-client = OpenLineageClient(config={"transport": {"type": "file", "log_file_path": str(archivo), "append": True}})
-NS = "postgres://warehouse"
-JOBS = {  # job -> (entradas, salidas)
-    "cargar_clientes": (["crm.clientes"], ["silver.clientes"]),
-    "ventas_por_comuna": (["silver.clientes", "silver.pedidos"], ["gold.ventas_por_comuna"]),
-    "audiencia_campana": (["silver.clientes"], ["mkt.audiencia_campana"]),
-}
-CATALOGO: dict[str, dict[str, Any]] = {  # metadatos que mantienen el dueño y el área legal; el pipeline solo los lee
-    "silver.clientes": {"personal": True, "categorias": ["identificación", "contacto"], "finalidad": "venta y despacho",
-                        "base": "contrato", "retencion_dias": 1825, "destinatarios": ["operador logístico"]},
-    "gold.ventas_por_comuna": {"personal": False},
-    "mkt.audiencia_campana": {"personal": True, "categorias": ["contacto"], "finalidad": None,
-                              "base": None, "retencion_dias": None, "destinatarios": []},
-}
-CAMPOS = ("categorias", "finalidad", "base", "retencion_dias")
 
-for nombre, (entradas, salidas) in JOBS.items():
-    client.emit(RunEvent(eventType=RunState.COMPLETE, eventTime=datetime.now(timezone.utc).isoformat(),
-                         run=Run(runId=str(generate_new_uuid())), job=Job(namespace="ventas", name=nombre),
-                         producer="https://example.com/pipelines/ventas",
-                         inputs=[InputDataset(namespace=NS, name=n) for n in entradas],
-                         outputs=[OutputDataset(namespace=NS, name=n) for n in salidas]))
+@dataclass(frozen=True)
+class Actividad:
+    nombre: str
+    finalidad: str
+    base: str
+    plazo: str
+    categorias: tuple[str, ...]
+    destinatarios: tuple[str, ...]
+    activos: tuple[str, ...]
 
-registro: list[dict[str, Any]] = []
-brechas: list[str] = []
-for evento in (json.loads(linea) for linea in archivo.read_text(encoding="utf-8").splitlines()):
-    for salida in evento["outputs"]:
-        meta = CATALOGO.get(salida["name"], {})
-        if not meta.get("personal"):
-            continue
-        faltan = [c for c in CAMPOS if not meta.get(c)]
-        brechas += [f"{salida['name']}: falta {c}" for c in faltan]
-        registro.append({"actividad": evento["job"]["name"], "dataset": salida["name"],
-                         "origen": [e["name"] for e in evento["inputs"]], **{c: meta.get(c) for c in (*CAMPOS, "destinatarios")}})
 
-print(f"actividades con datos personales: {len(registro)}")
-print("primera actividad:", json.dumps(registro[0], ensure_ascii=False))
-print("brechas del registro:", brechas)
+ACTIVIDADES = [
+    Actividad("venta_pasajes", "emitir y gestionar pasajes", "contrato (art. 13 c)", "5 años",
+              ("identificación", "contacto", "itinerario"), ("aerolíneas socias",),
+              ("silver.pasajeros", "silver.reservas")),
+    Actividad("marketing", "ofertas personalizadas", "consentimiento (art. 12)", "",
+              ("contacto", "preferencias"), ("plataforma de email",), ("silver.pasajeros",)),
+]
+
+TABLAS_CON_PII = {"silver.pasajeros", "silver.reservas", "gold.score_fraude"}
+USOS_OBSERVADOS = [("silver.pasajeros", "venta_pasajes"), ("silver.pasajeros", "riesgo_fraude")]  # desde logs/linaje
+
+
+def brechas() -> list[str]:
+    salida: list[str] = []
+    cubiertas = {t for a in ACTIVIDADES for t in a.activos}
+    salida += [f"tabla con PII sin actividad: {t}" for t in sorted(TABLAS_CON_PII - cubiertas)]
+    for a in ACTIVIDADES:
+        if a.base not in BASES:
+            salida.append(f"{a.nombre}: base no reconocida")
+        if not a.plazo:
+            salida.append(f"{a.nombre}: sin plazo de conservación")
+    registradas = {(t, a.nombre) for a in ACTIVIDADES for t in a.activos}
+    salida += [f"uso no registrado: {t} → {u}" for t, u in USOS_OBSERVADOS if (t, u) not in registradas]
+    return salida
+
+
+def resumen_14_ter() -> None:
+    for a in ACTIVIDADES:
+        print(f"- {a.finalidad} | base: {a.base} | datos: {', '.join(a.categorias)} "
+              f"| destinatarios: {', '.join(a.destinatarios)} | plazo: {a.plazo or 'POR DEFINIR'}")
+
+
+if __name__ == "__main__":
+    resumen_14_ter()
+    b = brechas()
+    for x in b:
+        print("BRECHA", x)
+    sys.exit(1 if b else 0)
 ```
 
-El script se **ejecuta en la CI con openlineage-python 1.54** (ADR-021), con transporte a archivo, y pasa `mypy --strict`. Imprime 2 actividades con datos personales, la fila completa de `silver.clientes` y las tres brechas de `mkt.audiencia_campana`.
+El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Imprime el resumen de las dos actividades registradas y tres brechas: `gold.score_fraude` sin actividad, marketing sin plazo y el uso no registrado `silver.pasajeros → riesgo_fraude`; termina con código 1. La tercera brecha es la importante: con la base asignada al dataset, ese uso habría pasado inadvertido.
 
 ## 11. GCP
 
-En GCP, **Knowledge Catalog**. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* y *About metadata in Knowledge Catalog* (no ejecutado):
+En GCP, **Knowledge Catalog**. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* y *About data lineage* (no ejecutado):
 
-| | Inventario (este ejemplo) | Knowledge Catalog | Etiqueta |
-|---|---|---|---|
-| Metadatos legales | Diccionario `CATALOGO` | Aspect types propios (por ejemplo, clasificación de PII) sobre las entries | **[Decisión de arquitectura]** |
-| Linaje | Eventos OpenLineage en un archivo | Linaje de datos del propio catálogo | **[Buena práctica]** |
+| Necesidad | Servicio | Etiqueta |
+|---|---|---|
+| Usos observados | Linaje de datos de Knowledge Catalog | **[Buena práctica]** |
+| Registro de actividades | Propio, con tags en el catálogo | **[Decisión de arquitectura]** |
 
 ## 12. AWS
 
-En AWS, **Amazon SageMaker Catalog**. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* y *Catalog in IDC-based domains* (no ejecutado):
+En AWS, **Amazon DataZone**. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* y *Data lineage in Amazon DataZone* (no ejecutado):
 
-| | Inventario (este ejemplo) | SageMaker Catalog | Etiqueta |
-|---|---|---|---|
-| Metadatos legales | Diccionario `CATALOGO` | Contexto de negocio de cada asset | **[Decisión de arquitectura]** |
-| Visibilidad | Registro generado | Assets visibles en el proyecto hasta publicarlos | **[Buena práctica]** |
+| Necesidad | Servicio | Etiqueta |
+|---|---|---|
+| Usos observados | Linaje de DataZone | **[Buena práctica]** |
+| Registro de actividades | Propio, con metadatos de negocio | **[Decisión de arquitectura]** |
 
 ## 13. Azure
 
-En Azure, **Purview Unified Catalog**. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* y *Learn about Microsoft Purview Unified Catalog* (no ejecutado):
+En Azure, **Unity Catalog** y **Purview Unified Catalog**. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES*, *Lineage in Unity Catalog* y *Learn about Microsoft Purview Unified Catalog* (no ejecutado):
 
-| | Inventario (este ejemplo) | Purview Unified Catalog | Etiqueta |
-|---|---|---|---|
-| Inventario | Generado desde linaje y catálogo | Inventario de activos, metadata y linaje | **[Buena práctica]** |
-| Gobierno | Brechas en la CI | Governance domains, glossary terms y data products | **[Decisión de arquitectura]** |
+| Necesidad | Servicio | Etiqueta |
+|---|---|---|
+| Usos observados | Unity Catalog: linaje automático hasta el nivel de columna | **[Buena práctica]** |
+| Catálogo corporativo | Purview Unified Catalog: inventario, metadata y linaje | **[Buena práctica]** |
 
 ## 14. Buenas prácticas
 
-- **[Obligación legal · art. 14 ter]** Incluir en cada fila lo que la ley pide informar: categorías, finalidad, base, destinatarios, plazo y fuente.
-- **[Buena práctica]** Tratar cada brecha como un error de la CI en los datasets nuevos.
-- **[Buena práctica]** **Seguridad:** el registro describe datos personales sin contenerlos; no copiar valores.
-- **[Buena práctica]** **Observabilidad:** alertar cuando aparece un dataset personal nuevo sin finalidad.
-- **[Buena práctica]** **Costo:** el linaje ya existe para operar; reusarlo evita mantener un inventario aparte.
+- **[Decisión de arquitectura]** La actividad es la unidad de licitud; el dataset solo la referencia.
+- **[Buena práctica]** Cada nuevo consumidor de datos personales declara su actividad antes de obtener acceso.
+- **[Buena práctica]** **Seguridad:** el acceso se concede por actividad, no por dataset completo.
+- **[Buena práctica]** **Observabilidad:** métrica de usos no registrados; debe tender a cero.
+- **[Buena práctica]** **Costo:** empezar por las actividades con datos sensibles, decisiones automatizadas o terceros.
 
 ## 15. Errores frecuentes
 
-- Una planilla mantenida a mano que nadie actualiza.
-- Inventariar solo las tablas finales y no los exports ni las copias.
-- Que el pipeline invente la finalidad cuando falta.
+- Base de licitud por dataset.
+- Consentimiento genérico para «mejorar nuestros servicios».
+- Inventario en una planilla que nadie conecta con la plataforma.
+- No registrar los usos analíticos y de modelos.
 
 ## 16. Trade-offs
 
-Generar el registro exige que todos los jobs emitan linaje y que el catálogo esté al día; a cambio, el registro no envejece. Un documento manual es más rápido de empezar y deja de ser cierto con el primer job nuevo.
+Un registro muy granular (por consulta) es difícil de mantener; uno muy grueso (por sistema) no detecta usos indebidos. Conviene una actividad por finalidad de negocio y usos observados a nivel de job, dashboard y modelo.
 
 ## 17. Conceptos relacionados
 
-- `data-catalog`: dónde viven los metadatos.
-- `data-lineage`: qué lee y escribe cada job.
-- `chile-data-protection`: el panorama.
-- `data-retention`: el plazo de conservación aplicado.
+- `chile-data-protection`: ficha padre.
+- `data-catalog`, `data-lineage`: catálogo y linaje.
+- `data-subject-rights-pipeline`, `retention-and-erasure`, `dpia-and-automated-decisions`, `processors-and-international-transfers`: fichas hermanas que usan el registro.
 
 ## 18. Preguntas técnicas abiertas
 
-1. ¿Tus jobs emiten linaje hoy?
-2. ¿Dónde está la finalidad de cada dataset personal?
-3. ¿Cuántos datasets personales aparecerían como brecha?
+1. ¿Puedes listar las actividades que usan una tabla dada?
+2. ¿Cuántos consumidores de datos personales no declaran finalidad?
+3. ¿Dónde se guarda hoy la prueba del consentimiento?
 
 ## 19. Laboratorio relacionado
 
@@ -273,17 +271,17 @@ Pendiente (F4).
 ## 20. Fuentes
 
 - BCN Ley Chile: *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* (versión con vigencia diferida desde 2026-12-01).
-- OpenLineage: *Object Model* y *Configuration*.
-- Google Cloud: *About metadata in Knowledge Catalog*.
-- AWS: *Catalog in IDC-based domains*.
-- Microsoft Learn: *Learn about Microsoft Purview Unified Catalog*.
+- Google Cloud: *About data lineage*.
+- AWS: *Data lineage in Amazon DataZone*.
+- Microsoft Learn: *Lineage in Unity Catalog* y *Learn about Microsoft Purview Unified Catalog*.
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-21: texto legal consultado ese día en BCN. `review_required`: pendiente de revisión B-F3.1 del lote F3b-19a; pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
+2026-10-22: arts. 3, 12, 13, 14, 14 ter y 34 ter consultados ese día en BCN. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-21: creación (lote F3b-19a).
+- 2026-10-22: upgrade de 19: la base de licitud pasa a la actividad de tratamiento, con usos observados contra registrados y resumen del art. 14 ter.

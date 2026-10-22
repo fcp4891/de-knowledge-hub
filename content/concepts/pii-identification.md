@@ -63,15 +63,24 @@ relations:
   - type: RELATED_TO
     target: data-minimization-by-layer
     note: Lo identificado decide qué columnas pasan de capa.
+  - type: RELATED_TO
+    target: chilean-identifier-pseudonymization
+    note: Qué hacer con el RUT detectado.
+  - type: RELATED_TO
+    target: privacy-controls-as-code
+    note: Reglas de cobertura de etiquetas sobre lo detectado.
+  - type: RELATED_TO
+    target: data-breach-response
+    note: Las categorías deciden el aviso a titulares.
 created_at: 2026-10-21
-updated_at: 2026-10-21
+updated_at: 2026-10-22
 last_verified: 2026-10-21
 verification_status: review_required
 ---
 
 ## 1. Resumen
 
-Esta ficha no es asesoría legal: cubre la parte técnica de identificar datos personales y sensibles.
+Esta ficha no es asesoría legal: cubre la parte técnica de identificar datos personales y sensibles. Es ficha hija de `chile-data-protection`.
 
 Ningún control sirve si no se sabe **dónde** están los datos personales. La ley define dato personal (cualquier información vinculada a una persona identificada o identificable, también de forma indirecta) y enumera los datos **sensibles**, entre ellos la situación socioeconómica y los datos de salud. Identificarlos en una plataforma combina:
 
@@ -258,8 +267,11 @@ Un umbral bajo encuentra más columnas y genera más falsos positivos que revisa
 
 - `data-classification`: clasificación general.
 - `data-masking`: qué hacer con lo detectado al mostrarlo.
-- `chile-data-protection`: el panorama.
+- `chile-data-protection`: ficha padre.
 - `data-minimization-by-layer`: qué columnas pasan de capa.
+- `chilean-identifier-pseudonymization`: el RUT detectado.
+- `privacy-controls-as-code`: cobertura de etiquetas.
+- `data-breach-response`: categorías y aviso a titulares.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -287,3 +299,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-21: creación (lote F3b-19a).
+- 2026-10-22: upgrade de 19: pasa a ser ficha hija de `chile-data-protection`; relaciones con `chilean-identifier-pseudonymization`, `privacy-controls-as-code` y `data-breach-response`. Sin cambios de contenido legal ni de código.

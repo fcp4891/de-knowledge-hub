@@ -20,7 +20,7 @@ subdomains:
         importance: high
         mvp: false
         related_concepts: [pii-identification, processing-activities-inventory]
-        note: Panorama y mapa requisito → control → evidencia; absorbe compliance-scope-for-data-engineers (qué decide el área legal y qué implementa el ingeniero de datos). Lote 19a.
+        note: Ficha padre del subdominio (upgrade de 19, 2026-10-22). Mapa de artículos, vigencia y matriz requisito → control → evidencia; absorbe compliance-scope-for-data-engineers.
       - slug: pii-identification
         title: Identificación de datos personales y sensibles
         kind: concept
@@ -60,19 +60,19 @@ subdomains:
         mvp: false
         added_by: blueprint
         related_concepts: [keyed-hashing, tokenization]
-        note: RUT con dígito verificador, HMAC con llave en KMS y tokenización. Lote 19b.
-      - slug: data-subject-requests
-        title: Solicitudes de los titulares
+        note: RUT con dígito verificador, HMAC con llave en KMS; incorpora la parte legal de seudonimización y anonimización del upgrade de 19 (2026-10-22).
+      - slug: data-subject-rights-pipeline
+        title: Pipeline de derechos del titular
         kind: pattern
         classification: core
         level: advanced
         importance: high
         mvp: false
         added_by: blueprint
-        related_concepts: [data-catalog]
-        note: Orquestación de acceso, rectificación, supresión, oposición, portabilidad y bloqueo, con evidencia. Lote 19b.
-      - slug: erasure-across-copies
-        title: Supresión en todas las copias
+        related_concepts: [processing-activities-inventory]
+        note: Upgrade de 19 (2026-10-22); reemplaza a data-subject-requests.
+      - slug: retention-and-erasure
+        title: Retención y supresión
         kind: pattern
         classification: core
         level: advanced
@@ -80,57 +80,47 @@ subdomains:
         mvp: false
         added_by: blueprint
         related_concepts: [crypto-shredding, data-retention]
-        note: DELETE, expiración de snapshots, crypto-shredding y evidencia por copia. Lote 19b.
-      - slug: personal-data-breach-readiness
-        title: Preparación técnica ante vulneraciones
-        kind: concept
+        note: Upgrade de 19 (2026-10-22); reemplaza a erasure-across-copies.
+      - slug: data-breach-response
+        title: Respuesta ante vulneraciones
+        kind: pattern
         classification: core
         level: advanced
         importance: medium
         mvp: false
         added_by: blueprint
         related_concepts: [incident-response]
-        note: Alcance desde logs de acceso y linaje; cruce con la Ley 21.663. Lote 19c.
-      - slug: dpia-technical-input
-        title: Aporte técnico a la evaluación de impacto
+        note: Upgrade de 19 (2026-10-22); reemplaza a personal-data-breach-readiness. Cruce con la Ley 21.663.
+      - slug: dpia-and-automated-decisions
+        title: Evaluación de impacto y decisiones automatizadas
         kind: concept
         classification: core
         level: advanced
-        importance: medium
+        importance: high
         mvp: false
         added_by: blueprint
         related_concepts: [k-anonymity]
-        note: Flujo de datos, controles y pruebas de reidentificación; lo legal lo decide el responsable. Lote 19c.
-      - slug: privacy-by-design-checklist
-        title: Privacidad desde el diseño en cada pipeline
-        kind: pattern
+        note: Upgrade de 19 (2026-10-22); reemplaza a dpia-technical-input y automated-decision-traceability.
+      - slug: processors-and-international-transfers
+        title: Encargados y transferencias internacionales
+        kind: concept
         classification: core
         level: intermediate
         importance: high
         mvp: false
         added_by: blueprint
-        related_concepts: [quality-gate, data-contracts]
-        note: Puerta de privacidad en la CI. Lote 19c.
-      - slug: international-data-transfers
-        title: Transferencias internacionales de datos
-        kind: concept
-        classification: core
-        level: advanced
-        importance: medium
-        mvp: false
-        added_by: blueprint
-        related_concepts: [chile-data-protection]
-        note: Regiones de la nube, APIs de terceros y LLM externos. Lote 19d.
-      - slug: automated-decision-traceability
-        title: Trazabilidad de decisiones automatizadas
+        related_concepts: [processing-activities-inventory]
+        note: Upgrade de 19 (2026-10-22); reemplaza a international-data-transfers.
+      - slug: privacy-controls-as-code
+        title: Controles de privacidad como código
         kind: pattern
         classification: core
         level: advanced
-        importance: medium
+        importance: high
         mvp: false
         added_by: blueprint
-        related_concepts: [data-lineage]
-        note: Modelo, versión, features y datos por decisión, más revisión humana. Lote 19d.
+        related_concepts: [quality-gate, data-contracts]
+        note: Upgrade de 19 (2026-10-22); reemplaza a privacy-by-design-checklist.
 
   - slug: regulatory-frameworks
     title: Marcos regulatorios

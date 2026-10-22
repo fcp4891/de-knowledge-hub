@@ -1,24 +1,24 @@
-"""Ejemplos de 19-compliance ejecutados en la CI (ADR-023).
+"""Ejemplos de 19-compliance ejecutados en la CI (ADR-023, upgrade de 19 del 2026-10-22).
 
-- chile-data-protection y pii-identification: solo biblioteca estándar.
-- processing-activities-inventory: openlineage-python con transporte a archivo, sin backend (ADR-021).
-- data-minimization-by-layer y data-subject-requests: psycopg contra una base temporal en el PostgreSQL de la CI; el rol
-  lleva como sufijo el nombre de la base temporal y se borra al terminar.
-- chilean-identifier-pseudonymization, personal-data-breach-readiness, dpia-technical-input, international-data-transfers
-  y automated-decision-traceability: biblioteca estándar.
-- privacy-by-design-checklist: jsonschema (ya en requirements.txt); sin mypy, porque jsonschema no trae tipos.
-- erasure-across-copies: PyIceberg con catálogo SQL en SQLite (ADR-018) y cryptography (ADR-022); se salta en Windows.
+- Biblioteca estándar: chile-data-protection, pii-identification, processing-activities-inventory,
+  chilean-identifier-pseudonymization, data-subject-rights-pipeline, retention-and-erasure, data-breach-response,
+  dpia-and-automated-decisions, processors-and-international-transfers y privacy-controls-as-code.
+- data-minimization-by-layer: psycopg contra una base temporal en el PostgreSQL de la CI; el rol lleva como sufijo el
+  nombre de la base temporal y se borra al terminar.
+- Los ejemplos que hacen fallar la CI con brechas terminan con código 1: el test verifica ese código y la salida.
 """
 
 from __future__ import annotations
 
+import os
 import subprocess
 import sys
 from pathlib import Path
 
 import pytest
 
-from tests.test_open_stack_snippets import pg_env, require_iceberg, run_python_block  # noqa: F401 - fixture
+from tests.test_docker_snippets import blocks
+from tests.test_open_stack_snippets import pg_env, run_python_block  # noqa: F401 - fixture
 
 UTF8 = {"PYTHONIOENCODING": "utf-8"}   # los ejemplos imprimen tildes; en Windows la salida sería cp1252
 
@@ -29,12 +29,17 @@ def assert_mypy_strict(tmp_path: Path) -> None:
     assert typed.returncode == 0, typed.stdout + typed.stderr
 
 
+def run_gate(ficha: str, tmp_path: Path) -> str:
+    """Corre el bloque ```python de la §10 que termina con código 1 (brechas): la CI del ejemplo falla a propósito."""
+    (code,) = blocks(ficha, "python")
+    (tmp_path / "snippet.py").write_text(code, encoding="utf-8", newline="\n")
+    result = subprocess.run([sys.executable, "snippet.py"], cwd=tmp_path, env={**os.environ, **UTF8},
+                            capture_output=True, text=True, encoding="utf-8", timeout=300)
+    assert result.returncode == 1, f"se esperaba código 1 (brechas): {result.returncode}\n{result.stdout}{result.stderr}"
+    return result.stdout
+
+
 STDLIB = {
-    "chile-data-protection": [
-        "requisitos: 5; con control y evidencia: 3", "sin control: ['art. 15 bis encargo a terceros']",
-        "sin evidencia: ['art. 14 quáter protección desde el diseño']",
-        "los decide el área legal: ['art. 14 a) acreditar la licitud', 'art. 15 bis encargo a terceros']",
-        "la CI falla: True (2 brechas)"],
     "pii-identification": [
         "rut_cliente: personal (RUT con DV válido 100%)", "contacto: personal (correo 75%)",
         "fono: personal (teléfono 67%)", "diagnostico_principal: sensible (datos relativos a la salud)",
@@ -44,51 +49,55 @@ STDLIB = {
     "chilean-identifier-pseudonymization": [
         "variantes del mismo RUT, mismo seudónimo: True", "sin normalizar, seudónimos distintos: 3",
         "DV inválido: RUT no válido: '11111111-0'", "hash simple revertido probando 1.000.000 RUT del tramo: True",
-        "con HMAC y sin la clave, el mismo ataque no sirve: True"],
-    "personal-data-breach-readiness": [
-        "alcance: 4 titulares [1, 2, 3, 4]; desde 2026-12-03T22:10:00; vía ['bucket público']",
-        "categorías afectadas: ['contacto', 'identificación', 'obligaciones económicas y financieras']",
-        "preparar comunicación a los titulares: True ['obligaciones económicas y financieras']",
-        '"titulares_aprox": 4',
-        "plazos al CSIRT Nacional: {'alerta temprana': '2026-12-04T11:30', 'actualización': '2026-12-07T08:30', "
-        "'informe final': '2026-12-19T08:30'}"],
-    "dpia-technical-input": [
-        "casos que exigen evaluación: ['a) decisiones automatizadas o perfiles con efectos significativos', "
+        "con HMAC y sin la clave, el mismo ataque no sirve: True", "k con datos exactos: 1",
+        "k generalizando comuna y década: 1", "grupos únicos a suprimir: [('Tarapacá', '1950s', 'M')]",
+        "k tras suprimir atípicos: 2"],
+    "data-subject-rights-pipeline": [
+        "plazos supresión: {'respuesta': '2026-11-28', 'con_prorroga': '2026-12-28', 'bloqueo_si_se_pide': '2026-11-02'}",
+        '"actividad": "riesgo_fraude"', '"interes_legitimo": "prevenir fraude en pagos"',
+        '"logica_automatizada": "puntaje de riesgo; transacciones sobre el umbral pasan a revisión humana"',
+        '"actividad": "venta_pasajes"', "tablas portables: []"],
+    "retention-and-erasure": [
+        "evidencia: {'solicitud': 'SOL-2026-0042', 'borradas': {'bronze.reservas': 1, 'silver.pasajeros': 1}, "
+        "'conservadas_por_obligacion_legal': {'gold.facturas': 1}, 'en_lista_supresion': True}",
+        "llave del titular en la evidencia: 16 caracteres hex, sin RUT",
+        "retención vencida al 2026-10-22: {'bronze.reservas': (1, 'suprimir')}",
+        "¿el backfill reintroduce al titular?: False"],
+    "data-breach-response": [
+        "'tablas': ['silver.pagos', 'silver.pasajeros'], 'titulares_aprox': 4, "
+        "'categorias': ['contacto', 'financiero', 'identificación'], 'incluye_menores_14': True",
+        "'avisar_a_titulares': True}", "'tablas': ['gold.vuelos_agregados'], 'titulares_aprox': 0",
+        "'avisar_a_titulares': False}",
+        "plazos Ley 21.663 (no operador vital): {'alerta_temprana': '2026-10-22T12:40', "
+        "'actualizacion': '2026-10-25T09:40', 'informe_final': '2026-11-06T12:40'}"],
+    "dpia-and-automated-decisions": [
+        "score_fraude_pagos → EIPD obligatoria por: ['a) perfilamiento con efectos significativos', "
         "'b) tratamiento masivo o a gran escala']",
-        "flujo de datos de gold.puntajes: ['modelo_riesgo', 'silver.clientes', 'silver.creditos']",
-        "riesgo de reidentificación de la salida: k=1, l=1 entre las clases con 2 o más filas",
-        "clases únicas (k=1): [('norte', '50-59', 'M'), ('sur', '40-49', 'F')]"],
-    "international-data-transfers": [
-        "flujos con datos personales fuera de Chile: [('warehouse en otra región de la nube', 'US'), "
-        "('API de un LLM externo', 'US'), ('API de despacho de un tercero', 'AR')]",
-        "amparados por adecuación: []", "sin mecanismo documentado: ['API de un LLM externo']",
-        "regiones permitidas por política para datos personales: ['AR', 'CL', 'US']"],
-    "automated-decision-traceability": [
-        "decisión: rechazado (puntaje 0.8, modelo riesgo-v1, datos 809f6813103c)",
-        "explicación: [('atraso_dias', 0.3), ('deuda_sobre_ingreso', 0.3)]",
-        "reproducible con la versión registrada: True", "con la versión nueva daría: rechazado",
-        "revisión humana registrada: analista-credito -> aprobado"],
+        "tablero_ocupacion_vuelos → EIPD obligatoria por: ningún caso tasado",
+        "'huella_entradas': '3c4c036d2fd4', 'variables_principales': ['pais_tarjeta_distinto', 'monto_relativo']",
+        "'resultado': 'derivada a revisión humana', 'titular_puede_pedir_revision': True}"],
 }
-PRIVACY_GATE = [
-    "- SQL: SELECT * sobre la tabla personal bronze.clientes", "- contrato: 'base_licitud' is a required property",
-    "- contrato: 'retencion_dias' is a required property", "- log 1: dato personal en claro", "- log 2: dato personal en claro",
-    "puerta de privacidad: falla (5 hallazgos)",
-]
-DSR = [
-    "acceso: {'clientes': (1, 'venta y despacho'), 'optin': (1, 'envío de ofertas'), 'pedidos': (2, 'venta y despacho')}",
-    "portabilidad: JSON de 3 tablas", "rectificación: ('ana@nuevo.invalid',)",
-    "bloqueo: el pipeline procesa 1 de 2 clientes; los datos siguen guardados",
-    "supresión: {'clientes': 1, 'optin': 1} | se conserva: pedidos (obligación legal)",
-    "verificación: {'clientes': 0, 'optin': 0, 'pedidos': 2}", "log de evidencia íntegro: True (6 registros)",
-    "tras alterar un registro, íntegro: False", "plazo de respuesta: 2027-01-01; con prórroga: 2027-01-31",
-]
-ERASURE = [
-    "tabla actual tiene a la titular: False", "snapshot anterior (time travel) todavía la tiene: True",
-    "snapshots que quedan: 1 | el anterior expiró: True",
-    "tras expirar, archivos Parquet que todavía contienen el correo: 1",
-    "archivos sin referencia borrados: 1; con el correo: 0",
-    "respaldo: ['ilegible (clave destruida)', 'luis@example.org']",
-]
+GATES = {
+    "chile-data-protection": [
+        "requisitos: 6; brechas: 3", "BRECHA  art. 14 quinquies: seguridad: evidencia vencida (82 días)",
+        "BRECHA  art. 14 sexies: registro de vulneraciones: sin evidencia", "BRECHA  art. 15 bis: encargados: sin control"],
+    "processing-activities-inventory": [
+        "- emitir y gestionar pasajes | base: contrato (art. 13 c) | datos: identificación, contacto, itinerario "
+        "| destinatarios: aerolíneas socias | plazo: 5 años",
+        "BRECHA tabla con PII sin actividad: gold.score_fraude", "BRECHA marketing: sin plazo de conservación",
+        "BRECHA uso no registrado: silver.pasajeros → riesgo_fraude"],
+    "processors-and-international-transfers": [
+        "flujos: 4; brechas: 3", "BRECHA tickets_soporte → API de LLM externa: sin contrato de encargo (art. 15 bis)",
+        "BRECHA tickets_soporte → API de LLM externa: transferencia a US sin mecanismo (art. 27)",
+        "BRECHA silver.reservas → proveedor de ETL (contrato cerrado): terminado sin constancia de supresión o devolución "
+        "(art. 15 bis)"],
+    "privacy-controls-as-code": [
+        "cobertura de etiquetas: 2/4; columnas PII con máscara: 1/4",
+        "FALLA PII real en ambiente no productivo: dev.pasajeros_copia.email",
+        "FALLA tabla sin retención o dueño: dev.pasajeros_copia", "FALLA SELECT * sobre tabla con PII: silver.pasajeros",
+        "FALLA PII en claro en el log 1", "FALLA PII en claro en el log 2", "FALLA contrato de gold.ventas sin base_licitud",
+        "FALLA contrato de gold.ventas sin retencion_dias"],
+}
 MINIMIZATION = [
     "bronze: ['rut', 'nombre', 'email', 'comuna', 'edad', 'monto']; valores con RUT o correo en claro: 10",
     "silver: ['cliente_key', 'comuna', 'tramo_edad', 'monto']; valores con RUT o correo en claro: 0",
@@ -106,15 +115,11 @@ def test_compliance_examples_in_python(ficha: str, tmp_path: Path) -> None:
     assert_mypy_strict(tmp_path)
 
 
-def test_processing_inventory_from_openlineage_and_catalog(tmp_path: Path) -> None:
-    pytest.importorskip("openlineage.client", reason="falta openlineage-python (make snippets-deps)")
-    work = tmp_path / "work"
-    work.mkdir()
-    out = run_python_block("processing-activities-inventory", tmp_path, UTF8, args=(str(work),))
-    assert "actividades con datos personales: 2" in out, out
-    assert '"dataset": "silver.clientes", "origen": ["crm.clientes"]' in out, out
-    assert ("brechas del registro: ['mkt.audiencia_campana: falta finalidad', 'mkt.audiencia_campana: falta base', "
-            "'mkt.audiencia_campana: falta retencion_dias']") in out, out
+@pytest.mark.parametrize("ficha", sorted(GATES))
+def test_compliance_gates_fail_the_ci_with_gaps(ficha: str, tmp_path: Path) -> None:
+    out = run_gate(ficha, tmp_path)
+    for line in GATES[ficha]:
+        assert line in out, out
     assert_mypy_strict(tmp_path)
 
 
@@ -123,27 +128,3 @@ def test_minimization_by_layer_in_postgres(pg_env: dict[str, str], tmp_path: Pat
     for line in MINIMIZATION:
         assert line in out, out
     assert_mypy_strict(tmp_path)
-
-
-def test_data_subject_requests_in_postgres(pg_env: dict[str, str], tmp_path: Path) -> None:  # noqa: F811
-    out = run_python_block("data-subject-requests", tmp_path, {**pg_env, **UTF8})
-    for line in DSR:
-        assert line in out, out
-    assert_mypy_strict(tmp_path)
-
-
-def test_erasure_across_copies_with_pyiceberg_and_crypto_shredding(tmp_path: Path) -> None:
-    require_iceberg()  # se salta en Windows (ADR-018)
-    pytest.importorskip("cryptography")
-    work = tmp_path / "work"
-    work.mkdir()
-    out = run_python_block("erasure-across-copies", tmp_path, UTF8, args=(str(work),))
-    for line in ERASURE:
-        assert line in out, out
-    assert_mypy_strict(tmp_path)
-
-
-def test_privacy_gate_with_jsonschema(tmp_path: Path) -> None:
-    out = run_python_block("privacy-by-design-checklist", tmp_path, UTF8)
-    for line in PRIVACY_GATE:
-        assert line in out, out
