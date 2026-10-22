@@ -14,6 +14,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** B-F3.1 del lote F3b-19a. Revisión en `docs/reviews/cards-f3b-19a.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Hallazgo alto: el mínimo de 2 en gold no está en el art. 14 quáter. Los lotes 19b, 19c y 19d van en otras ramas.
 - **Tarea activa:** B-F3.1 del lote F3b-18c. Revisión en `docs/reviews/cards-f3b-18c.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. La bóveda de `tokenization` es un dict, como pide el pedido (biblioteca estándar).
 - **Tarea activa:** B-F3.1 del lote F3b-18b. Revisión en `docs/reviews/cards-f3b-18b.md`. No se editó `content/` ni `frontend/`.
@@ -86,6 +88,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Si hay alias, bajo el título: «También conocido como: …» (ficha de concepto y página de tecnología).
 - `make test-frontend`: 11/11. En la demo estática, «Dataplex» encuentra Knowledge Catalog y la ficha `gcp-dataplex` muestra los dos alias.
 - No se editó `content/` ni el contrato.
+
+### B-F3.1 · lote F3b-19a
+- Cuatro fichas de Ley 21.719 para ingeniería de datos. Vigencia y boletín coinciden con BCN y el Senado. Hallazgo alto: gold de menos de 2 no está en el art. 14 quáter. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-18c
 - Cuatro fichas de técnicas de privacidad. Lo seudonimizado sigue siendo datos de personas y la anonimización no se declara irreversible. El HMAC sin la clave no se revierte. La bóveda es un dict, con el mapeo separado. Sin propuestas. No se editó `content/` ni `frontend/`.
@@ -353,6 +358,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-19a (2026-10-21)
+- Revisión de las 4 fichas de alcance de la Ley 21.719. Hallazgo alto: el umbral de 2 en gold. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-18c (2026-10-21)
 - Revisión de las 4 fichas de técnicas de privacidad. Sin hallazgos. No se editó `content/`. El CI no se esperó.
