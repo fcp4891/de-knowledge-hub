@@ -70,6 +70,44 @@ export function extractLegalNotice(markdown: string): { notice: string | null; m
   return { notice, markdown: kept.join("\n\n") };
 }
 
+export type LegalBasisInput = {
+  law: string;
+  article: string;
+  url: string;
+  note: string | null;
+};
+
+export type LegalBasisRow = {
+  law: string;
+  article: string;
+  url: string;
+  says: string | null;
+  implication: string | null;
+};
+
+/** El paso de «cómo funciona» que cita ese artículo, si la ficha lo escribió. */
+export function implicationForArticle(article: string, markdown: string): string | null {
+  const escaped = article.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = new RegExp(
+    `\\*\\*\\[Obligación legal · art\\. ${escaped}\\]\\*\\*\\s*([^\\n]+)`,
+  ).exec(markdown);
+  const text = match?.[1]?.trim() ?? "";
+  return text.length > 0 ? text : null;
+}
+
+export function legalBasisRows(
+  items: readonly LegalBasisInput[],
+  technicalMarkdown = "",
+): LegalBasisRow[] {
+  return items.map((item) => ({
+    law: item.law,
+    article: item.article,
+    url: item.url,
+    says: item.note?.trim() || null,
+    implication: implicationForArticle(item.article, technicalMarkdown),
+  }));
+}
+
 export function legalNoticeCopy(paragraph: string | null): LegalNoticeCopy {
   const lead = `${LEGAL_NOTICE}.`;
   if (!paragraph) {

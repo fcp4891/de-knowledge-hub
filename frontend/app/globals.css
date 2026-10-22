@@ -667,6 +667,33 @@ details.panel summary + * {
   border-radius: 0 0 0.5rem 0.5rem;
 }
 
+.diagram svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.evidence {
+  margin: 1.25rem 0;
+  padding: 14px 16px 4px;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+}
+
+.evidence-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+.evidence-mark {
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;
+}
+
 .code-block button {
   font: inherit;
   font-size: 0.8rem;

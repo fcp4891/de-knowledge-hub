@@ -10,12 +10,11 @@ export function MermaidDiagram({ source }: { source: string }) {
   useEffect(() => {
     let cancelled = false;
     void (async () => {
-      const mermaid = (await import("mermaid")).default;
-      mermaid.initialize({ startOnLoad: false, securityLevel: "strict" });
       try {
-        const rendered = await mermaid.render(`diagram-${reactId}`, source);
+        const { renderMermaid } = await import("@/lib/renderMermaid");
+        const rendered = await renderMermaid(source, `diagram-${reactId}`);
         if (!cancelled) {
-          setSvg(rendered.svg);
+          setSvg(rendered);
         }
       } catch {
         if (!cancelled) {
@@ -34,5 +33,7 @@ export function MermaidDiagram({ source }: { source: string }) {
   if (!svg) {
     return <p className="muted">Cargando diagrama…</p>;
   }
-  return <div className="diagram" dangerouslySetInnerHTML={{ __html: svg }} />;
+  return (
+    <div className="diagram" role="img" aria-label="Diagrama" dangerouslySetInnerHTML={{ __html: svg }} />
+  );
 }
