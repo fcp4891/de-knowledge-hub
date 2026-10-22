@@ -1,13 +1,15 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { parseMarkdown } from "../../frontend/lib/markdown.ts";
+import { groupEvidence, parseMarkdown } from "../../frontend/lib/markdown.ts";
 import {
   bcnLinkText,
   claimKind,
   claimLabel,
   extractLegalNotice,
+  implicationForArticle,
   lawLabel,
+  legalBasisRows,
   legalNoticeCopy,
   legislationBadge,
 } from "../../frontend/lib/legal.ts";
@@ -46,6 +48,42 @@ test("el aviso sale del resumen y no queda como párrafo suelto", () => {
   const copy = legalNoticeCopy(split.notice);
   assert.equal(copy.lead, "Esta ficha no es asesoría legal.");
   assert.equal(copy.detail, "explica el alcance técnico.");
+});
+
+test("la base legal separa qué dice el artículo de la implicancia del §4", () => {
+  const how = [
+    "1. **[Obligación legal · art. 2]** Identificar qué datos son personales.",
+    "2. **[Obligación legal · art. 14 quáter]** Gold agrega por comuna.",
+  ].join("\n");
+  assert.equal(implicationForArticle("2", how), "Identificar qué datos son personales.");
+  assert.equal(implicationForArticle("14", how), null);
+  assert.equal(implicationForArticle("14 quáter", how), "Gold agrega por comuna.");
+  const [row] = legalBasisRows(
+    [
+      {
+        law: "ley-19628",
+        article: "2",
+        url: "https://www.bcn.cl/leychile/navegar?idNorma=141599",
+        note: "Definiciones: dato personal y tratamiento.",
+      },
+    ],
+    how,
+  );
+  assert.equal(row.says, "Definiciones: dato personal y tratamiento.");
+  assert.equal(row.implication, "Identificar qué datos son personales.");
+  assert.equal(legalBasisRows([{ law: "ley-19628", article: "15 bis", url: "https://www.bcn.cl/", note: null }])[0].implication, null);
+});
+
+test("la subsección de evidencia agrupa el título y la tabla", () => {
+  const blocks = parseMarkdown(
+    ["Texto previo.", "", "### Evidencia de cumplimiento", "", "| Evidencia | Dónde queda |", "|---|---|", "| Matriz | Repositorio |", ""].join("\n"),
+  );
+  const grouped = groupEvidence(blocks);
+  const evidence = grouped.find((block) => block.type === "evidence");
+  assert.ok(evidence && evidence.type === "evidence");
+  assert.equal(evidence.blocks.length, 1);
+  assert.equal(evidence.blocks[0].type, "table");
+  assert.equal(grouped.some((block) => block.type === "heading"), false);
 });
 
 test("el parser deja cada etiqueta como un solo énfasis", () => {

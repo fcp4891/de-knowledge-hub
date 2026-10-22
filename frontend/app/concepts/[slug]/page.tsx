@@ -241,6 +241,7 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
       jurisdiction={data.jurisdiction}
       legalNotice={data.jurisdiction.length > 0 ? legalNoticeCopy(noticeSplit.notice) : null}
       legalBasis={data.legal_basis}
+      technicalMarkdown={data.sections.find((section) => section.key === "how_it_works")?.markdown ?? ""}
       minutes={readingMinutes(sections)}
       sourceCount={data.sources.length}
       crumb={crumb}

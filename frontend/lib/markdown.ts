@@ -15,10 +15,36 @@ export type TableAlign = "left" | "center" | "right";
 
 export type Block =
   | { type: "paragraph"; inlines: Inline[] }
+  | { type: "heading"; level: number; text: string }
   | { type: "list"; ordered: boolean; items: ListItem[] }
   | { type: "table"; headers: Inline[][]; aligns: TableAlign[]; rows: Inline[][][] }
   | { type: "code"; language: string; code: string }
   | { type: "note"; inlines: Inline[] };
+
+export const EVIDENCE_TITLE = "Evidencia de cumplimiento";
+
+export type EvidenceGroup = { type: "evidence"; blocks: Block[] };
+
+/** Agrupa el subtítulo de evidencia con lo que le sigue, hasta el próximo título. */
+export function groupEvidence(blocks: readonly Block[]): Array<Block | EvidenceGroup> {
+  const grouped: Array<Block | EvidenceGroup> = [];
+  for (let index = 0; index < blocks.length; index += 1) {
+    const block = blocks[index];
+    if (block.type === "heading" && block.text === EVIDENCE_TITLE) {
+      const inner: Block[] = [];
+      index += 1;
+      while (index < blocks.length && blocks[index].type !== "heading") {
+        inner.push(blocks[index]);
+        index += 1;
+      }
+      index -= 1;
+      grouped.push({ type: "evidence", blocks: inner });
+      continue;
+    }
+    grouped.push(block);
+  }
+  return grouped;
+}
 
 const URL_PATTERN = /(?:https?:\/\/|www\.)[^\s<>"']+|[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g;
 
@@ -110,6 +136,14 @@ function parseProse(source: string): Block[] {
       }
       index -= 1;
       blocks.push({ type: "table", headers, aligns, rows });
+      continue;
+    }
+
+    const heading = /^(#{1,6})[ \t]+(\S.*)$/.exec(line);
+    if (heading) {
+      flushParagraph();
+      flushList();
+      blocks.push({ type: "heading", level: heading[1].length, text: heading[2].trim() });
       continue;
     }
 

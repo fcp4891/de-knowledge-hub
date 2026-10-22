@@ -15,7 +15,7 @@ import type {
 } from "@/lib/api/types";
 import { CARD_SECTION_GROUPS } from "@/lib/learning-paths";
 import type { LegalBasis } from "@/lib/api/types";
-import { bcnLinkText, lawLabel, type LegalNoticeCopy } from "@/lib/legal";
+import { bcnLinkText, lawLabel, legalBasisRows, type LegalNoticeCopy } from "@/lib/legal";
 import { alsoKnownLabel, CLOUD_LABEL, LEVEL_LABEL, STUDY_LABEL, VERIFICATION_LABEL } from "@/lib/labels";
 import { saveStudyState } from "@/lib/personalActions";
 import {
@@ -72,6 +72,45 @@ type StudySeed = {
   state: StudyStatus;
   pendingDeepDive: boolean;
 };
+
+function LegalBasisTable({
+  items,
+  technicalMarkdown,
+}: {
+  items: readonly LegalBasis[];
+  technicalMarkdown: string;
+}) {
+  const rows = legalBasisRows(items, technicalMarkdown);
+  return (
+    <section className="legal-basis" aria-labelledby="legal-basis-title">
+      <h2 id="legal-basis-title">Base legal</h2>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Artículo</th>
+            <th scope="col">Qué dice</th>
+            <th scope="col">Implicancia técnica</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={`${row.law}-${row.article}`}>
+              <th scope="row">
+                <span className="legal-basis-law">{lawLabel(row.law)}</span>
+                <a href={row.url}>
+                  art. {row.article}
+                  <span className="legal-basis-bcn">{bcnLinkText(row.url)}</span>
+                </a>
+              </th>
+              <td>{row.says ?? "—"}</td>
+              <td>{row.implication ?? "—"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+  );
+}
 
 function sentence(value: string): string {
   return value.charAt(0).toUpperCase() + value.slice(1);
@@ -137,6 +176,7 @@ export function ConceptReading({
   jurisdiction,
   legalNotice,
   legalBasis,
+  technicalMarkdown,
   minutes,
   sourceCount,
   crumb,
@@ -162,6 +202,7 @@ export function ConceptReading({
   jurisdiction: readonly string[];
   legalNotice: LegalNoticeCopy | null;
   legalBasis: readonly LegalBasis[];
+  technicalMarkdown: string;
   minutes: number | null;
   sourceCount: number;
   crumb: ReadingCrumb | null;
@@ -616,18 +657,7 @@ export function ConceptReading({
               {meta ? <p className="reading-meta">{meta}</p> : null}
             </header>
             {legalBasis.length > 0 ? (
-              <section className="legal-basis" aria-labelledby="legal-basis-title">
-                <h2 id="legal-basis-title">Base legal</h2>
-                <ul>
-                  {legalBasis.map((item) => (
-                    <li key={`${item.law}-${item.article}`}>
-                      <span className="legal-basis-law">{lawLabel(item.law)}</span>
-                      <span className="legal-basis-article">art. {item.article}</span>
-                      <a href={item.url}>{bcnLinkText(item.url)}</a>
-                    </li>
-                  ))}
-                </ul>
-              </section>
+              <LegalBasisTable items={legalBasis} technicalMarkdown={technicalMarkdown} />
             ) : null}
             {blocks}
             {sections.length === 0 ? <p className="reading-quiet">Esta ficha todavía no tiene secciones.</p> : null}
