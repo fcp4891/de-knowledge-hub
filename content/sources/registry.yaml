@@ -3204,3 +3204,57 @@ created_at: '2026-10-21'
 updated_at: '2026-10-21'
 last_verified: '2026-10-21'
 verification_status: verified
+---
+id: source:gcp-organization-policy-docs
+slug: gcp-organization-policy-docs
+type: source
+title: Organization Policy documentation
+description: Documentación oficial de Organization Policy, Google Cloud.
+url: https://docs.cloud.google.com/organization-policy/overview
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-21'
+updated_at: '2026-10-21'
+last_verified: '2026-10-21'
+verification_status: verified
+---
+id: source:azure-policy-docs
+slug: azure-policy-docs
+type: source
+title: Azure Policy documentation
+description: Documentación oficial de Azure Policy.
+url: https://learn.microsoft.com/en-us/azure/governance/policy/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-21'
+updated_at: '2026-10-21'
+last_verified: '2026-10-21'
+verification_status: verified
+---
+id: source:azure-machine-learning-docs
+slug: azure-machine-learning-docs
+type: source
+title: Azure Machine Learning documentation
+description: Documentación oficial de Azure Machine Learning.
+url: https://learn.microsoft.com/en-us/azure/machine-learning/?view=azureml-api-2
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-21'
+updated_at: '2026-10-21'
+last_verified: '2026-10-21'
+verification_status: verified

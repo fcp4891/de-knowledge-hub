@@ -4,7 +4,8 @@
 - processing-activities-inventory: openlineage-python con transporte a archivo, sin backend (ADR-021).
 - data-minimization-by-layer y data-subject-requests: psycopg contra una base temporal en el PostgreSQL de la CI; el rol
   lleva como sufijo el nombre de la base temporal y se borra al terminar.
-- chilean-identifier-pseudonymization, personal-data-breach-readiness y dpia-technical-input: biblioteca estándar.
+- chilean-identifier-pseudonymization, personal-data-breach-readiness, dpia-technical-input, international-data-transfers
+  y automated-decision-traceability: biblioteca estándar.
 - privacy-by-design-checklist: jsonschema (ya en requirements.txt); sin mypy, porque jsonschema no trae tipos.
 - erasure-across-copies: PyIceberg con catálogo SQL en SQLite (ADR-018) y cryptography (ADR-022); se salta en Windows.
 """
@@ -57,6 +58,16 @@ STDLIB = {
         "flujo de datos de gold.puntajes: ['modelo_riesgo', 'silver.clientes', 'silver.creditos']",
         "riesgo de reidentificación de la salida: k=1, l=1 entre las clases con 2 o más filas",
         "clases únicas (k=1): [('norte', '50-59', 'M'), ('sur', '40-49', 'F')]"],
+    "international-data-transfers": [
+        "flujos con datos personales fuera de Chile: [('warehouse en otra región de la nube', 'US'), "
+        "('API de un LLM externo', 'US'), ('API de despacho de un tercero', 'AR')]",
+        "amparados por adecuación: []", "sin mecanismo documentado: ['API de un LLM externo']",
+        "regiones permitidas por política para datos personales: ['AR', 'CL', 'US']"],
+    "automated-decision-traceability": [
+        "decisión: rechazado (puntaje 0.8, modelo riesgo-v1, datos 809f6813103c)",
+        "explicación: [('atraso_dias', 0.3), ('deuda_sobre_ingreso', 0.3)]",
+        "reproducible con la versión registrada: True", "con la versión nueva daría: rechazado",
+        "revisión humana registrada: analista-credito -> aprobado"],
 }
 PRIVACY_GATE = [
     "- SQL: SELECT * sobre la tabla personal bronze.clientes", "- contrato: 'base_licitud' is a required property",
