@@ -1,4 +1,11 @@
+import { claimKind, claimLabel } from "@/lib/legal";
 import type { Inline } from "@/lib/markdown";
+
+const CLAIM_MARK = {
+  obligation: "§",
+  practice: "✓",
+  architecture: "◇",
+} as const;
 
 export function InlineText({ inlines }: { inlines: Inline[] }) {
   return inlines.map((part, index) => {
@@ -7,6 +14,17 @@ export function InlineText({ inlines }: { inlines: Inline[] }) {
       return <code key={key}>{part.value}</code>;
     }
     if (part.type === "strong") {
+      const kind = claimKind(part.value);
+      if (kind) {
+        return (
+          <span key={key} className={`claim claim-${kind}`}>
+            <span className="claim-mark" aria-hidden="true">
+              {CLAIM_MARK[kind]}
+            </span>
+            {claimLabel(part.value)}
+          </span>
+        );
+      }
       return <strong key={key}>{part.value}</strong>;
     }
     if (part.type === "em") {
