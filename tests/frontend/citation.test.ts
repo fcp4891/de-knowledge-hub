@@ -23,6 +23,17 @@ test("dos citas del mismo registro con page_title distinto se muestran con texto
   assert.equal(citationDetail(partitioned), "BigQuery documentation · Nivel 1");
 });
 
+test("una fuente legislative usa el rótulo Legislación y no el título del registro", () => {
+  assert.equal(
+    citationDetail({
+      title: "BCN LeyChile",
+      authority_level: 1,
+      source_type: "legislative",
+    }),
+    "Legislación · Nivel 1",
+  );
+});
+
 test("una cita con page_title null muestra la ruta de la URL", () => {
   assert.equal(
     citationLinkText({

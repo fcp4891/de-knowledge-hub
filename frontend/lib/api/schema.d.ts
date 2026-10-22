@@ -329,7 +329,22 @@ export interface components {
          */
         Origin: "gcp" | "aws" | "azure" | "open-source" | "other";
         /** @enum {unknown} */
-        SourceType: "official_docs" | "release_notes" | "engineering_blog" | "spec_paper" | "secondary";
+        SourceType: "official_docs" | "release_notes" | "engineering_blog" | "spec_paper" | "secondary" | "legislative";
+        /**
+         * @description País cuya ley origina el contenido, ISO 3166-1 alfa-2 (ADR-023).
+         * @enum {unknown}
+         */
+        Jurisdiction: "CL";
+        /** @description Artículo en que se apoya una ficha con jurisdicción (ADR-023); url es la cita oficial. */
+        LegalBasis: {
+            /** @enum {unknown} */
+            law: "ley-19628" | "ley-21719" | "ley-21663";
+            /** @description Como lo numera el texto oficial, p. ej. 14 quinquies. */
+            article: string;
+            /** Format: uri */
+            url: string;
+            note: string | null;
+        };
         /** @enum {unknown} */
         RelationType: "USES" | "IMPLEMENTS" | "DEPENDS_ON" | "ALTERNATIVE_TO" | "RELATED_TO" | "REPLACES" | "EXTENDS" | "RUNS_ON" | "PRODUCES" | "CONSUMES" | "PRACTICES" | "AFFECTS" | "UPDATES" | "REQUIRES";
         /** @enum {unknown} */
@@ -427,6 +442,12 @@ export interface components {
         ConceptDetail: {
             /** @description Nombres anteriores o alternativos (ADR-010); vacía si no hay. */
             aliases: string[];
+            /** @description Países cuya ley origina la ficha (ADR-023); vacía si no aplica. */
+            jurisdiction: components["schemas"]["Jurisdiction"][];
+            /** @description Artículos citados (ADR-023); vacía si no aplica. */
+            legal_basis: components["schemas"]["LegalBasis"][];
+            /** @description Aprobación explícita del dueño */
+            owner_approved_at: components["schemas"]["Date"] | null;
             kind: components["schemas"]["Kind"];
             importance: components["schemas"]["Importance"];
             mvp: boolean;
@@ -569,6 +590,8 @@ export interface components {
             technologies: components["schemas"]["Slug"][];
             last_verified: components["schemas"]["Date"] | null;
             verification_status: components["schemas"]["VerificationStatus"];
+            /** @description País de una fuente legislative (ADR-023); vacía en las demás. */
+            jurisdiction: components["schemas"]["Jurisdiction"][];
         };
         SearchResult: {
             slug: components["schemas"]["Slug"];

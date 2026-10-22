@@ -14,6 +14,8 @@ import type {
   VerificationStatus,
 } from "@/lib/api/types";
 import { CARD_SECTION_GROUPS } from "@/lib/learning-paths";
+import type { LegalBasis } from "@/lib/api/types";
+import { bcnLinkText, lawLabel, type LegalNoticeCopy } from "@/lib/legal";
 import { alsoKnownLabel, CLOUD_LABEL, LEVEL_LABEL, STUDY_LABEL, VERIFICATION_LABEL } from "@/lib/labels";
 import { saveStudyState } from "@/lib/personalActions";
 import {
@@ -132,6 +134,9 @@ export function ConceptReading({
   mvp,
   lastVerified,
   verificationStatus,
+  jurisdiction,
+  legalNotice,
+  legalBasis,
   minutes,
   sourceCount,
   crumb,
@@ -154,6 +159,9 @@ export function ConceptReading({
   mvp: boolean;
   lastVerified: string | null;
   verificationStatus: VerificationStatus | null;
+  jurisdiction: readonly string[];
+  legalNotice: LegalNoticeCopy | null;
+  legalBasis: readonly LegalBasis[];
   minutes: number | null;
   sourceCount: number;
   crumb: ReadingCrumb | null;
@@ -593,11 +601,34 @@ export function ConceptReading({
                     {badge.text}
                   </span>
                 ) : null}
+                {jurisdiction.length > 0 ? (
+                  <span className="reading-badge is-legal">Legislación · {jurisdiction.join(" · ")}</span>
+                ) : null}
               </div>
+              {legalNotice ? (
+                <aside className="legal-notice" role="note">
+                  <p className="legal-notice-lead">{legalNotice.lead}</p>
+                  {legalNotice.detail ? <p className="legal-notice-detail">{legalNotice.detail}</p> : null}
+                </aside>
+              ) : null}
               <h1 className="reading-title">{title}</h1>
               {known ? <p className="reading-meta">{known}</p> : null}
               {meta ? <p className="reading-meta">{meta}</p> : null}
             </header>
+            {legalBasis.length > 0 ? (
+              <section className="legal-basis" aria-labelledby="legal-basis-title">
+                <h2 id="legal-basis-title">Base legal</h2>
+                <ul>
+                  {legalBasis.map((item) => (
+                    <li key={`${item.law}-${item.article}`}>
+                      <span className="legal-basis-law">{lawLabel(item.law)}</span>
+                      <span className="legal-basis-article">art. {item.article}</span>
+                      <a href={item.url}>{bcnLinkText(item.url)}</a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : null}
             {blocks}
             {sections.length === 0 ? <p className="reading-quiet">Esta ficha todavía no tiene secciones.</p> : null}
             <div className="reading-footer">
