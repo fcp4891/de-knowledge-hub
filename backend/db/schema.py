@@ -126,7 +126,7 @@ entity_legal_basis = Table(  # ADR-023
     Column("article", String(30), nullable=False),
     Column("url", Text, nullable=False),
     Column("note", Text),
-    Column("implication", Text),  # enmienda de ADR-023
+    Column("implication", Text, comment="Enmienda de ADR-023."),
 )
 
 edges = Table(
