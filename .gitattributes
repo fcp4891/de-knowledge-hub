@@ -1,1 +1,6 @@
+# Finales de línea: el repositorio guarda LF y los extrae con LF también en Windows (core.autocrlf no
+# los convierte). .md, .py y .ts van explícitos; el resto del texto, por la regla general.
 * text=auto eol=lf
+*.md text eol=lf
+*.py text eol=lf
+*.ts text eol=lf
