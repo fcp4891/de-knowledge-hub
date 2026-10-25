@@ -18,8 +18,8 @@ MERMAID_BLOCK = re.compile(r"^```mermaid\s*\n(.*?)^```", re.S | re.M)
 QUOTED = re.compile(r'"[^"]*"')
 SHAPE = re.compile(r"\[[^\[\]]*\]|\([^()]*\)|\{[^{}]*\}|(?<=\w)>[^\]\n]*\]")
 PIPE_LABEL = re.compile(r"\|[^|]*\|")
-# Etiqueta en medio de la flecha: `A -- texto --> B`, `A -. texto .-> B`, `A == texto ==> B`.
-TEXT_ARROW = re.compile(r"--\s+[^-]+?\s+-->|--\s+[^-]+?\s+---|-\.\s+.+?\s+\.->|==\s+.+?\s+==>")
+# Etiqueta en medio de la flecha: `A -- texto --> B`, `A -. texto .-> B` (también `-.texto.->`), `A == texto ==> B`.
+TEXT_ARROW = re.compile(r"(?<![-.=])--\s+[^-]+?\s+-->|(?<![-.=])--\s+[^-]+?\s+---|-\.\s*[^.>]+?\s*\.->|==\s+.+?\s+==>")
 ARROW = re.compile(r"\s*(?:<?(?:-\.+-?>?|-{2,}[>ox]?|={2,}>?)|~~~)\s*")
 NODE_ID = re.compile(r"^([A-Za-z0-9_][\w.-]*)")
 FLOW_SKIP = ("subgraph", "end", "direction", "classDef", "class ", "style", "linkStyle", "click", "%%")
@@ -70,9 +70,13 @@ def node_ids(chunk: str) -> list[str]:
 
 
 def flowchart_size(lines: list[str]) -> tuple[int, int]:
+    """Nodos y aristas; un subgraph es un grupo, no un nodo, aunque una arista lo use de extremo."""
     nodes: set[str] = set()
+    groups_ids: set[str] = set()
     edges = 0
     for line in lines:
+        if line.startswith("subgraph "):
+            groups_ids.update(node_ids(strip_labels(line.removeprefix("subgraph "))))
         if line.startswith(FLOW_SKIP):
             continue
         groups = [node_ids(chunk) for chunk in ARROW.split(strip_labels(line))]
@@ -80,7 +84,7 @@ def flowchart_size(lines: list[str]) -> tuple[int, int]:
         for group in groups:
             nodes.update(group)
         edges += sum(len(a) * len(b) for a, b in zip(groups, groups[1:], strict=False))
-    return len(nodes), edges
+    return len(nodes - groups_ids), edges
 
 
 def pair_size(lines: list[str], edge: re.Pattern[str], extra: re.Pattern[str] | None = None) -> tuple[int, int]:

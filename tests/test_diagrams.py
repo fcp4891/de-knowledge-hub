@@ -32,9 +32,33 @@ def test_flowchart_shapes_labels_fan_out_and_subgraphs() -> None:
   B -.-> E
   B -. tal vez .-> F
   B == fuerte ==> F
+  A -.sin espacios.-> F
   style A fill:#fff
 """
-    assert d.diagram_size(code) == d.DiagramSize("flowchart", 6, 7)
+    assert d.diagram_size(code) == d.DiagramSize("flowchart", 6, 8)
+
+
+def test_chained_open_links_are_not_text_labels() -> None:
+    code = """flowchart LR
+  V[Ventas] --- DF[Fecha] --- DP[Producto] --- DT[Tienda]
+  I --- DF
+  A -- texto --- B
+"""
+    assert d.diagram_size(code) == d.DiagramSize("flowchart", 7, 5)
+
+
+def test_subgraph_used_as_edge_end_is_not_a_node() -> None:
+    code = """flowchart TB
+  subgraph Q["Quorum"]
+    C1 --- C2
+  end
+  subgraph B
+    B1
+  end
+  Q -.-> B
+  P --> B1
+"""
+    assert d.diagram_size(code) == d.DiagramSize("flowchart", 4, 3)
 
 
 def test_state_er_sequence_and_git_diagrams() -> None:
