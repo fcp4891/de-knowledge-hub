@@ -19,8 +19,8 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | 19-compliance: upgrade aplicado (11 fichas), en revisión; ADR-024 propuesto | Aplicar la revisión; verified con aprobación de Felipe | — |
-| B · Cursor revisión | — | Revisar el upgrade de 19; ADR-023 en el frontend; UI padre/hija según ADR-024 (`lane-a.md`) | — |
+| A · Claude Code | 19-compliance: 11 fichas en revisión; ADR-024 (`PART_OF`) y `implication` (enmienda de ADR-023) implementados | Aplicar la revisión; verified con aprobación de Felipe | — |
+| B · Cursor revisión | — | Revisar el upgrade de 19; ADR-023 en el frontend; ficha padre/hijas (`PART_OF`) e `implication` (`lane-a.md`) | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
