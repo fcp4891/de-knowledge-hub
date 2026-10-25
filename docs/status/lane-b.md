@@ -3,7 +3,7 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-24
+**Última actualización:** 2026-10-25
 
 ## Reglas de revisión
 
@@ -14,6 +14,7 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** `b/ui-legal` (ADR-023 y ADR-024). «Implicancia técnica» lee `legal_basis.implication`. La padre lista «Fichas de esta ruta» en el orden de estudio de `ley21719`. Cada hija muestra «Parte de: …» hacia la padre. `PART_OF` no se repite en la lista de relaciones.
 - **Tarea activa:** B-F3.1 del upgrade de 19. Revisión en `docs/reviews/cards-f3b-19-upgrade.md`. No se editó `content/` ni `frontend/`. Los pedidos 19a–19d quedan anulados.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas altas: el art. 49 no es obligación, el mínimo de 2 en gold, y el registro de vulneraciones no se lleva si no se reporta. Propuestas media: «la más gravosa entre», una etiqueta por artículo, y los 24 h solo si además hay servicios esenciales afectados.
 - **Última actualización de esta entrada:** 2026-10-24. `scripts/validate.py` OK (588 entidades). El boletín, al 2026-10-24, sigue en discusión inmediata.

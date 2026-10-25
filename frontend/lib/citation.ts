@@ -3,6 +3,7 @@ export type CitationLabel = {
   url: string;
   authority_level: number;
   page_title?: string | null;
+  source_type?: string | null;
 };
 
 /** Texto del enlace: el título de la página, o la ruta de la URL si no hay. */
@@ -18,7 +19,12 @@ export function citationLinkText(citation: Pick<CitationLabel, "url" | "page_tit
   }
 }
 
-/** Línea secundaria: título del registro y nivel de autoridad. */
-export function citationDetail(citation: Pick<CitationLabel, "title" | "authority_level">): string {
+/** Línea secundaria: título del registro y nivel, o «Legislación» si la fuente es legislative. */
+export function citationDetail(
+  citation: Pick<CitationLabel, "title" | "authority_level" | "source_type">,
+): string {
+  if (citation.source_type === "legislative") {
+    return `Legislación · Nivel ${citation.authority_level}`;
+  }
   return `${citation.title} · Nivel ${citation.authority_level}`;
 }

@@ -14,6 +14,10 @@ import type {
   VerificationStatus,
 } from "@/lib/api/types";
 import { CARD_SECTION_GROUPS } from "@/lib/learning-paths";
+import type { LegalBasis } from "@/lib/api/types";
+import { entityHref } from "@/lib/entityHref";
+import { bcnLinkText, lawLabel, legalBasisRows, type LegalNoticeCopy } from "@/lib/legal";
+import { partOfParent, routeChildren, withoutPartOf, type PartLink } from "@/lib/partOf";
 import { alsoKnownLabel, CLOUD_LABEL, LEVEL_LABEL, STUDY_LABEL, VERIFICATION_LABEL } from "@/lib/labels";
 import { saveStudyState } from "@/lib/personalActions";
 import {
@@ -70,6 +74,43 @@ type StudySeed = {
   state: StudyStatus;
   pendingDeepDive: boolean;
 };
+
+function LegalBasisTable({ items }: { items: readonly LegalBasis[] }) {
+  const rows = legalBasisRows(items);
+  return (
+    <section className="legal-basis" aria-labelledby="legal-basis-title">
+      <h2 id="legal-basis-title">Base legal</h2>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Artículo</th>
+            <th scope="col">Qué dice</th>
+            <th scope="col">Implicancia técnica</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={`${row.law}-${row.article}`}>
+              <th scope="row">
+                <span className="legal-basis-law">{lawLabel(row.law)}</span>
+                <a href={row.url}>
+                  art. {row.article}
+                  <span className="legal-basis-bcn">{bcnLinkText(row.url)}</span>
+                </a>
+              </th>
+              <td>{row.says ?? "—"}</td>
+              <td>{row.implication ?? "—"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+  );
+}
+
+function partHref(link: PartLink): string {
+  return entityHref(link.entityType as EntityType, link.slug);
+}
 
 function sentence(value: string): string {
   return value.charAt(0).toUpperCase() + value.slice(1);
@@ -132,6 +173,9 @@ export function ConceptReading({
   mvp,
   lastVerified,
   verificationStatus,
+  jurisdiction,
+  legalNotice,
+  legalBasis,
   minutes,
   sourceCount,
   crumb,
@@ -154,6 +198,9 @@ export function ConceptReading({
   mvp: boolean;
   lastVerified: string | null;
   verificationStatus: VerificationStatus | null;
+  jurisdiction: readonly string[];
+  legalNotice: LegalNoticeCopy | null;
+  legalBasis: readonly LegalBasis[];
   minutes: number | null;
   sourceCount: number;
   crumb: ReadingCrumb | null;
@@ -231,7 +278,10 @@ export function ConceptReading({
   const meta = readingMeta(minutes, sourceCount);
   const shown = Math.min(CARD_SECTION_COUNT, readMax);
   const listed = sections.filter((section) => section.listed);
-  const hasRelations = relationGroups.some((group) => group.items.length > 0);
+  const parentPart = partOfParent(relationGroups);
+  const routeCards = routeChildren(relationGroups);
+  const listedGroups = withoutPartOf(relationGroups);
+  const hasRelations = listedGroups.some((group) => group.items.length > 0);
 
   const note = useCallback(
     (number: number, sectionTitle: string, highlight: boolean) => {
@@ -510,6 +560,11 @@ export function ConceptReading({
               <span aria-hidden="true">/</span> <span aria-current="page">{title}</span>
             </li>
           </ol>
+          {parentPart ? (
+            <p className="part-of">
+              Parte de: <Link href={partHref(parentPart)}>{parentPart.title}</Link>
+            </p>
+          ) : null}
         </nav>
         <div className="reading-toggles">
           <button type="button" className="reading-toggle" aria-expanded={tocOpen} onClick={toggleToc}>
@@ -593,11 +648,33 @@ export function ConceptReading({
                     {badge.text}
                   </span>
                 ) : null}
+                {jurisdiction.length > 0 ? (
+                  <span className="reading-badge is-legal">Legislación · {jurisdiction.join(" · ")}</span>
+                ) : null}
               </div>
+              {legalNotice ? (
+                <aside className="legal-notice" role="note">
+                  <p className="legal-notice-lead">{legalNotice.lead}</p>
+                  {legalNotice.detail ? <p className="legal-notice-detail">{legalNotice.detail}</p> : null}
+                </aside>
+              ) : null}
               <h1 className="reading-title">{title}</h1>
               {known ? <p className="reading-meta">{known}</p> : null}
               {meta ? <p className="reading-meta">{meta}</p> : null}
             </header>
+            {routeCards.length > 0 ? (
+              <section className="route-cards" aria-labelledby="route-cards-title">
+                <h2 id="route-cards-title">Fichas de esta ruta</h2>
+                <ol>
+                  {routeCards.map((card) => (
+                    <li key={card.slug}>
+                      <Link href={partHref(card)}>{card.title}</Link>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            ) : null}
+            {legalBasis.length > 0 ? <LegalBasisTable items={legalBasis} /> : null}
             {blocks}
             {sections.length === 0 ? <p className="reading-quiet">Esta ficha todavía no tiene secciones.</p> : null}
             <div className="reading-footer">
@@ -698,7 +775,7 @@ export function ConceptReading({
                 {graphOpen ? "Ocultar grafo" : "Ver todas"}
               </button>
             ) : null}
-            {graphOpen ? <RelationGraph center={{ slug, title, entityType }} groups={relationGroups} /> : null}
+            {graphOpen ? <RelationGraph center={{ slug, title, entityType }} groups={listedGroups} /> : null}
           </section>
         </aside>
       </div>

@@ -5,6 +5,8 @@ import { MarkdownBody } from "@/components/markdown/MarkdownBody";
 import { getConcept, getDomain, getRelations, getStudyState, listNotes } from "@/lib/api/client";
 import type { NoteList, RelationGroups, Section, SourceRef } from "@/lib/api/types";
 import { citationDetail, citationLinkText } from "@/lib/citation";
+import { extractLegalNotice, legalNoticeCopy } from "@/lib/legal";
+import { withoutPartOf } from "@/lib/partOf";
 import { entityHref } from "@/lib/entityHref";
 import { SHORT_NAMES } from "@/lib/learning-paths";
 import { nextInRoute } from "@/lib/domainRoute";
@@ -195,9 +197,15 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
   }
 
   const data = concept.data;
+  const summary = data.sections.find((section) => section.key === "summary");
+  const noticeSplit = extractLegalNotice(summary?.markdown ?? "");
+  const sections = data.sections.map((section) =>
+    section.key === "summary" ? { ...section, markdown: noticeSplit.markdown } : section,
+  );
   const domain = data.domain ? await getDomain(data.domain) : null;
   const study = staticMode ? null : await getStudyState(slug);
   const groups = relations.ok ? relations.data.groups : [];
+  const listedGroups = withoutPartOf(groups);
 
   let crumb: { domainHref: string; domainLabel: string; subdomain: string | null } | null = null;
   let next: { slug: string; title: string } | null = null;
@@ -232,17 +240,20 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
       mvp={data.mvp}
       lastVerified={data.last_verified}
       verificationStatus={data.verification_status}
-      minutes={readingMinutes(data.sections)}
+      jurisdiction={data.jurisdiction}
+      legalNotice={data.jurisdiction.length > 0 ? legalNoticeCopy(noticeSplit.notice) : null}
+      legalBasis={data.legal_basis}
+      minutes={readingMinutes(sections)}
       sourceCount={data.sources.length}
       crumb={crumb}
       next={next}
-      sections={sectionModels(data.sections, data.sources)}
+      sections={sectionModels(sections, data.sources)}
       staticMode={staticMode}
       initialStudy={
         study?.ok ? { state: study.data.state, pendingDeepDive: study.data.pending_deep_dive } : null
       }
       studyError={study && !study.ok ? (study.detail ?? "No se pudo cargar el estado de estudio.") : null}
-      related={relatedItems(groups)}
+      related={relatedItems(listedGroups)}
       relationGroups={groups}
       relationsError={relations.ok ? null : (relations.detail ?? "No se pudieron cargar las relaciones.")}
       entityType={data.type}

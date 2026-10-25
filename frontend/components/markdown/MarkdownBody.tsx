@@ -1,24 +1,70 @@
 import { InlineText } from "@/components/markdown/InlineText";
-import { parseMarkdown, type Block } from "@/lib/markdown";
+import { groupEvidence, parseMarkdown, type Block, type EvidenceGroup } from "@/lib/markdown";
 
 export async function MarkdownBody({ markdown }: { markdown: string }) {
   const blocks = parseMarkdown(markdown);
+  const grouped = groupEvidence(blocks);
   const hasCode = blocks.some((block) => block.type === "code" && block.language !== "mermaid");
   const hasMermaid = blocks.some((block) => block.type === "code" && block.language === "mermaid");
   const codeModule = hasCode ? await import("@/components/markdown/CodeBlock") : null;
   const mermaidModule = hasMermaid ? await import("@/components/markdown/MermaidDiagram") : null;
+  const codeBlock = codeModule?.CodeBlock ?? null;
+  const mermaidDiagram = mermaidModule?.MermaidDiagram ?? null;
 
   return (
     <div className="markdown">
-      {blocks.map((block, index) => (
+      {grouped.map((block, index) =>
+        block.type === "evidence" ? (
+          <EvidenceBlock
+            key={index}
+            titleId={`evidence-title-${index}`}
+            group={block}
+            CodeBlock={codeBlock}
+            MermaidDiagram={mermaidDiagram}
+          />
+        ) : (
+          <MarkdownBlock
+            key={index}
+            block={block}
+            CodeBlock={codeBlock}
+            MermaidDiagram={mermaidDiagram}
+          />
+        ),
+      )}
+    </div>
+  );
+}
+
+function EvidenceBlock({
+  titleId,
+  group,
+  CodeBlock,
+  MermaidDiagram,
+}: {
+  titleId: string;
+  group: EvidenceGroup;
+  CodeBlock: ((props: { code: string; language: string }) => React.ReactNode) | null;
+  MermaidDiagram: ((props: { source: string }) => React.ReactNode) | null;
+}) {
+  return (
+    <section className="evidence" aria-labelledby={titleId}>
+      <h3 id={titleId} className="evidence-title">
+        <svg className="evidence-mark" viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="6" y="3" width="12" height="18" fill="none" stroke="currentColor" strokeWidth="2" />
+          <path d="M9 3h6v4H9z" fill="none" stroke="currentColor" strokeWidth="2" />
+          <path d="m8.5 14 2.2 2.2 4.8-5" fill="none" stroke="currentColor" strokeWidth="2" />
+        </svg>
+        Evidencia de cumplimiento
+      </h3>
+      {group.blocks.map((block, index) => (
         <MarkdownBlock
           key={index}
           block={block}
-          CodeBlock={codeModule?.CodeBlock ?? null}
-          MermaidDiagram={mermaidModule?.MermaidDiagram ?? null}
+          CodeBlock={CodeBlock}
+          MermaidDiagram={MermaidDiagram}
         />
       ))}
-    </div>
+    </section>
   );
 }
 
@@ -31,6 +77,9 @@ function MarkdownBlock({
   CodeBlock: ((props: { code: string; language: string }) => React.ReactNode) | null;
   MermaidDiagram: ((props: { source: string }) => React.ReactNode) | null;
 }) {
+  if (block.type === "heading") {
+    return <h3>{block.text}</h3>;
+  }
   if (block.type === "code" && block.language === "mermaid") {
     return MermaidDiagram ? <MermaidDiagram source={block.code} /> : <pre>{block.code}</pre>;
   }

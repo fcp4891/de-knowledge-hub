@@ -198,6 +198,161 @@
   color: var(--warn-ink);
 }
 
+.reading-badge.is-legal {
+  border-radius: 2px;
+  border: 2px solid #1e3a5f;
+  background: #e4eaf3;
+  color: #1e3a5f;
+}
+
+.legal-notice {
+  margin: 4px 0 0;
+  padding: 12px 14px 12px 16px;
+  border: 2px solid var(--warn-ink);
+  border-left-width: 8px;
+  background: var(--warn-bg);
+  color: var(--ink);
+}
+
+.legal-notice-lead,
+.legal-notice-detail {
+  margin: 0;
+}
+
+.legal-notice-lead {
+  font-weight: 700;
+}
+
+.legal-notice-detail {
+  margin-top: 6px;
+}
+
+.part-of {
+  margin: 8px 0 0;
+  font-size: 14px;
+}
+
+.route-cards {
+  margin: 8px 0 28px;
+  padding: 16px 18px;
+  border: 2px solid var(--ink);
+  background: var(--surface, #fff);
+}
+
+.route-cards h2 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.route-cards ol {
+  margin: 0;
+  padding-left: 1.4rem;
+}
+
+.route-cards li {
+  margin: 6px 0;
+}
+
+.legal-basis {
+  margin: 8px 0 28px;
+  padding: 16px 18px;
+  border: 2px solid #1e3a5f;
+  border-left-width: 8px;
+  background: #f4f7fb;
+}
+
+.legal-basis h2 {
+  margin: 0 0 12px;
+  font-size: 1rem;
+}
+
+.legal-basis table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.legal-basis th,
+.legal-basis td {
+  vertical-align: top;
+  text-align: left;
+  padding: 8px 12px 8px 0;
+  border-top: 1px solid var(--line, #d5d8de);
+}
+
+.legal-basis thead th {
+  border-top: 0;
+  padding-top: 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.legal-basis tbody th {
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.legal-basis tbody th a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4em;
+  font-weight: 700;
+}
+
+.legal-basis-law {
+  display: block;
+  font-weight: 700;
+}
+
+.legal-basis-bcn {
+  font-size: 0.78em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.claim {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  margin: 0 0.4em 0.15em 0;
+  padding: 0.05em 0.5em 0.05em 0.35em;
+  font-size: 0.78em;
+  font-weight: 700;
+  line-height: 1.45;
+  vertical-align: 0.08em;
+  border-color: currentColor;
+}
+
+.claim-mark {
+  font-size: 1.05em;
+  line-height: 1;
+}
+
+.claim-obligation {
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 2px;
+  color: #6e2a24;
+  background: #f6e4e1;
+}
+
+.claim-practice {
+  border-style: dashed;
+  border-width: 2px;
+  border-radius: 999px;
+  color: #165536;
+  background: #e3f2e8;
+}
+
+.claim-architecture {
+  border-style: double;
+  border-width: 4px;
+  border-radius: 0;
+  color: #1e3a5f;
+  background: #e4eaf3;
+}
+
 .reading-page h1.reading-title {
   margin: 0;
   font-size: clamp(1.75rem, 4vw, var(--text-display));

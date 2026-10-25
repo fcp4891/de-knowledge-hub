@@ -27,6 +27,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.5.26",
+    "happy-dom": "^21.0.4",
     "openapi-typescript": "^7.13.0",
     "typescript": "^5"
   }
