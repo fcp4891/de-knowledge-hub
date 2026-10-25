@@ -17,24 +17,24 @@ related_topics: [pii-identification, processing-activities-inventory]
 aliases: [compliance-scope-for-data-engineers]
 jurisdiction: [CL]
 legal_basis:
-  - {law: ley-19628, article: "1 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Ámbito territorial, también para responsables o encargados fuera de Chile en los casos que indica."}
-  - {law: ley-19628, article: "2", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Definiciones."}
-  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Principios, letras a) a h)."}
-  - {law: ley-19628, article: "4", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Derechos del titular; desarrollados en los arts. 5 a 11."}
-  - {law: ley-19628, article: "8 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Decisiones individuales automatizadas."}
-  - {law: ley-19628, article: "12", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Consentimiento; el responsable prueba la licitud."}
-  - {law: ley-19628, article: "14", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Obligaciones del responsable."}
-  - {law: ley-19628, article: "14 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Secreto o confidencialidad, también de datos públicos organizados o combinados."}
-  - {law: ley-19628, article: "14 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Información y transparencia."}
-  - {law: ley-19628, article: "14 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Protección desde el diseño y por defecto."}
-  - {law: ley-19628, article: "14 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Medidas de seguridad, verificación regular y acreditación tras un incidente."}
-  - {law: ley-19628, article: "14 sexies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Reporte y registro de vulneraciones."}
-  - {law: ley-19628, article: "15 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Tratamiento por un encargado."}
-  - {law: ley-19628, article: "15 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Evaluación de impacto."}
-  - {law: ley-19628, article: "16", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Datos sensibles; reglas especiales en los arts. 16 bis a 16 sexies."}
-  - {law: ley-19628, article: "27", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Transferencia internacional."}
-  - {law: ley-19628, article: "35", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Sanciones."}
-  - {law: ley-19628, article: "49", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Modelo de prevención de infracciones, voluntario."}
+  - {law: ley-19628, article: "1 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Ámbito territorial, también para responsables o encargados fuera de Chile en los casos que indica.", implication: "También alcanza al encargado fuera de Chile que trata por cuenta de un responsable en Chile y a quien, desde fuera, ofrece bienes o servicios a titulares en Chile o monitorea su comportamiento: el inventario de flujos los incluye."}
+  - {law: ley-19628, article: "2", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Definiciones.", implication: "Dato personal, sensible, anonimización, seudonimización, perfiles y encargado son las categorías con que se clasifican columnas, datasets y proveedores."}
+  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Principios, letras a) a h).", implication: "Cada principio necesita un control y una evidencia."}
+  - {law: ley-19628, article: "4", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Derechos del titular; desarrollados en los arts. 5 a 11.", implication: "Seis tipos de solicitud que la plataforma atiende con plazo y evidencia."}
+  - {law: ley-19628, article: "8 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Decisiones individuales automatizadas.", implication: "Explicación, intervención humana y revisión en los modelos que deciden."}
+  - {law: ley-19628, article: "12", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Consentimiento; el responsable prueba la licitud.", implication: "Las bases de licitud se registran por actividad de tratamiento."}
+  - {law: ley-19628, article: "14", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Obligaciones del responsable.", implication: "Acreditar la licitud; suprimir o anonimizar los datos precontractuales."}
+  - {law: ley-19628, article: "14 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Secreto o confidencialidad, también de datos públicos organizados o combinados.", implication: "El secreto alcanza a datos públicos que se organizan o combinan."}
+  - {law: ley-19628, article: "14 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Información y transparencia.", implication: "La política pública se alimenta del catálogo."}
+  - {law: ley-19628, article: "14 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Protección desde el diseño y por defecto.", implication: "Minimización por defecto: número de datos, extensión del tratamiento, plazo de conservación y accesibilidad."}
+  - {law: ley-19628, article: "14 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Medidas de seguridad, verificación regular y acreditación tras un incidente.", implication: "Cifrado, seudonimización, resiliencia, restauración y verificación periódica de las medidas."}
+  - {law: ley-19628, article: "14 sexies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Reporte y registro de vulneraciones.", implication: "Reporte a la Agencia y registro de las vulneraciones; aviso a los titulares en ciertos casos."}
+  - {law: ley-19628, article: "15 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Tratamiento por un encargado.", implication: "El encargado cumple secreto y seguridad, reporta las vulneraciones y suprime o devuelve al terminar."}
+  - {law: ley-19628, article: "15 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Evaluación de impacto.", implication: "Evaluación de impacto obligatoria en los casos que el artículo enumera."}
+  - {law: ley-19628, article: "16", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Datos sensibles; reglas especiales en los arts. 16 bis a 16 sexies.", implication: "Reglas más estrictas por categoría de dato sensible."}
+  - {law: ley-19628, article: "27", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Transferencia internacional.", implication: "Región de la nube, proveedores y APIs externas: cada flujo al exterior necesita un mecanismo."}
+  - {law: ley-19628, article: "35", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Sanciones.", implication: "Varias infracciones nacen de fallas técnicas."}
+  - {law: ley-19628, article: "49", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Modelo de prevención de infracciones, voluntario.", implication: "Programa voluntario, con reglamento en el Decreto 662; los controles y su evidencia lo alimentan."}
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
@@ -92,19 +92,9 @@ sources:
     page_title: "What is Unity Catalog?"
     note: "What is Unity Catalog? (Azure Databricks): herramientas de gobierno de datos e IA; el control de acceso cubre privilegios, políticas basadas en atributos y filtros de fila y de columna; además, auditoría y linaje."
 relations:
-  - {type: RELATED_TO, target: pii-identification, note: "Ficha hija. Qué datos son personales o sensibles."}
-  - {type: RELATED_TO, target: processing-activities-inventory, note: "Ficha hija. Actividades de tratamiento con finalidad, base y plazo."}
-  - {type: RELATED_TO, target: data-minimization-by-layer, note: "Ficha hija. Proporcionalidad y por defecto por capa."}
-  - {type: RELATED_TO, target: chilean-identifier-pseudonymization, note: "Ficha hija. Seudonimizar el RUT; seudonimizar no es anonimizar."}
-  - {type: RELATED_TO, target: data-subject-rights-pipeline, note: "Ficha hija. Derechos del titular."}
-  - {type: RELATED_TO, target: retention-and-erasure, note: "Ficha hija. Retención y supresión."}
-  - {type: RELATED_TO, target: data-breach-response, note: "Ficha hija. Vulneraciones."}
-  - {type: RELATED_TO, target: dpia-and-automated-decisions, note: "Ficha hija. Evaluación de impacto y decisiones automatizadas."}
-  - {type: RELATED_TO, target: processors-and-international-transfers, note: "Ficha hija. Encargados y transferencias."}
-  - {type: RELATED_TO, target: privacy-controls-as-code, note: "Ficha hija. Controles verificados en la CI."}
   - {type: RELATED_TO, target: data-classification, note: "Clasificación técnica de datos."}
 created_at: 2026-10-21
-updated_at: 2026-10-22
+updated_at: 2026-10-24
 last_verified: 2026-10-22
 verification_status: review_required
 ---
@@ -405,3 +395,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-21: creación (lote F3b-19a); absorbe `compliance-scope-for-data-engineers`.
 - 2026-10-22: reestructura como ficha padre del subdominio (upgrade de 19): mapa de artículos, estado de la postergación según el Senado, Decreto 662, caso por capas, sanciones y contraste básico/senior. La matriz exige evidencia reciente y hace fallar la CI. El detalle pasa a las fichas hijas.
+- 2026-10-24: las hijas se declaran con `PART_OF` (ADR-024) en vez de `RELATED_TO`; `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.

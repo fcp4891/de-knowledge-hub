@@ -1,6 +1,6 @@
 # ADR-023 — Schema para contenido con origen legal (dominio 19, Ley 21.719)
 
-- **Estado:** Aceptado (aprobado por Felipe el 2026-10-21, tal como está); implementado con el lote F3b-19a
+- **Estado:** Aceptado (aprobado por Felipe el 2026-10-21, tal como está); implementado con el lote F3b-19a. Enmienda 1 (2026-10-24): `implication` en `legal_basis`
 - **Fecha:** 2026-10-21
 - **Fase:** F3b — Contenido por dominio, antes de 19-compliance
 - **Referencias:** ADR-000 (content-as-code), ADR-002 (contrato), ADR-009 (contenido por dominio), ADR-012 (`page_title`); decisión de Felipe sobre la Ley 21.719 (ROADMAP, F3b, 2026-10-21).
@@ -147,3 +147,25 @@ La Ley 21.719 y la 21.663 no son un tipo de entidad nuevo:
 - La viñeta de §14 admite la etiqueta antes del rótulo: `- **[Buena práctica]** **Seguridad:** ...`.
 - Fuentes: `bcn-leychile` (texto oficial, con la versión «Con Vigencia Diferida por Fecha») y `senado-tramitacion` (boletines). `page_title` es el h1 que renderiza la página (por ejemplo «Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES» y «Boletín 18623-07»), no su `<title>` (ADR-012).
 - `law` admite `ley-19628`: la Ley 21.719 (art. primero) reescribe la Ley 19.628, y los deberes del responsable se citan del texto de la 19.628 con vigencia diferida.
+
+## Enmienda 1 — Implicancia técnica por artículo (2026-10-24)
+
+Pedida por Felipe el 2026-10-24, junto con la aceptación de ADR-024.
+
+- **Qué cambia.** Cada entrada de `legal_basis` lleva `implication`, obligatorio: la implicancia técnica del artículo para la plataforma de datos. Dice qué se construye o se controla (por ejemplo, «Guardar el consentimiento por finalidad, con fecha y versión») y no repite el texto legal; eso sigue en `note` y en el cuerpo, con su etiqueta.
+- **No es una afirmación legal.** Es una consecuencia técnica, como una **[Buena práctica]**. No reemplaza la etiqueta del cuerpo ni cambia la regla de que cada artículo de `legal_basis` aparece en el cuerpo y viceversa.
+- **Origen del texto en las 11 fichas de 19.** La columna «Implicancia técnica» de las tablas de `docs/briefs/upgrade-19/`, ajustada a los artículos corregidos. Ejemplos:
+  - en el art. 34 ter, la k) en vez de la j);
+  - en el art. 26, el reglamento de comunicación y cesión;
+  - en el art. 28, sin «la Agencia no está instalada».
+
+  Donde el brief no tiene esa columna, el texto sale de la tabla y del cuerpo de cada ficha:
+  - `chile-data-protection` usa la columna «Qué implica para datos»;
+  - `pii-identification` y `data-minimization-by-layer` no están en el brief;
+  - el art. 9 de la Ley 21.663 en `data-breach-response` tampoco.
+- **Schema.** `legal_basis_ref` en `base.schema.json` agrega `implication` (string, `minLength` 1) a `required`.
+- **Contrato** (aditivo). `LegalBasis` agrega `implication: string`, requerido en la respuesta.
+- **Base derivada.**
+  - La migración 0006 agrega `entity_legal_basis.implication`.
+  - `COMPILER_VERSION` pasa a `"6"`.
+- **Pedido a Carril B.** Mostrar `implication` junto a cada artículo de la lista de `legal_basis`.

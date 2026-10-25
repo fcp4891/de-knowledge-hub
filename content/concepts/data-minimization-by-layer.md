@@ -19,10 +19,12 @@ legal_basis:
     article: "3"
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
     note: "Principio de proporcionalidad: datos necesarios, adecuados y pertinentes; conservados solo el tiempo necesario."
+    implication: "Cada capa guarda solo las columnas, el detalle y el plazo que su finalidad necesita."
   - law: ley-19628
     article: "14 quáter"
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
     note: "Protección desde el diseño y por defecto: por defecto, solo los datos específicos y estrictamente necesarios."
+    implication: "La configuración por defecto de cada capa expone lo mínimo; ampliarla es una excepción aprobada."
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
@@ -62,7 +64,7 @@ relations:
   - type: RELATED_TO
     target: pii-identification
     note: Qué columnas son personales.
-  - type: RELATED_TO
+  - type: PART_OF
     target: chile-data-protection
     note: Ficha padre del subdominio.
   - type: RELATED_TO
@@ -72,14 +74,14 @@ relations:
     target: privacy-controls-as-code
     note: La regla de la CI contra SELECT * sobre tablas personales.
 created_at: 2026-10-21
-updated_at: 2026-10-22
+updated_at: 2026-10-24
 last_verified: 2026-10-21
 verification_status: review_required
 ---
 
 ## 1. Resumen
 
-Esta ficha no es asesoría legal: cubre cómo se aplica técnicamente la minimización en una arquitectura por capas. Es ficha hija de `chile-data-protection`.
+Esta ficha no es asesoría legal: cubre cómo se aplica técnicamente la minimización en una arquitectura por capas.
 
 La ley pide tratar solo los datos necesarios y, por defecto, solo los estrictamente necesarios. En una arquitectura por capas eso significa que **cada capa tiene menos datos personales que la anterior**:
 
@@ -318,3 +320,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-21: creación (lote F3b-19a).
 - 2026-10-22: upgrade de 19: pasa a ser ficha hija de `chile-data-protection`; relaciones con `chilean-identifier-pseudonymization` y `privacy-controls-as-code`. Sin cambios de contenido legal ni de código.
+- 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.

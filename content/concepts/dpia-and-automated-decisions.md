@@ -3,7 +3,7 @@ id: concept:dpia-and-automated-decisions
 slug: dpia-and-automated-decisions
 type: concept
 title: Evaluación de impacto y decisiones automatizadas
-description: "Ficha hija de chile-data-protection. Los equipos de datos e IA construyen lo que la ley regula con más rigor: perfiles, scoring y decisiones automatizadas a gran escala. Dos capacidades: una puerta de evaluación de impacto antes de producción (casos obligatorios del art. 15 ter) y un registro por decisión con versión del modelo, huella de las entradas y ruta de revisión humana (art. 8 bis). Ejemplo ejecutado en la CI. Registros de modelos de las tres nubes. No es asesoría legal."
+description: "Los equipos de datos e IA construyen lo que la ley regula con más rigor: perfiles, scoring y decisiones automatizadas a gran escala. Dos capacidades: una puerta de evaluación de impacto antes de producción (casos obligatorios del art. 15 ter) y un registro por decisión con versión del modelo, huella de las entradas y ruta de revisión humana (art. 8 bis). Ejemplo ejecutado en la CI. Registros de modelos de las tres nubes. No es asesoría legal."
 domain: compliance
 subdomain: data-engineering-under-ley-21719
 category: compliance
@@ -17,12 +17,12 @@ related_topics: [k-anonymity]
 aliases: [dpia-technical-input, automated-decision-traceability, Aporte técnico a la evaluación de impacto, Trazabilidad de decisiones automatizadas]
 jurisdiction: [CL]
 legal_basis:
-  - {law: ley-19628, article: "2", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "w) elaboración de perfiles."}
-  - {law: ley-19628, article: "5", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "f) el acceso incluye información significativa sobre la lógica de decisiones automatizadas."}
-  - {law: ley-19628, article: "8 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Decisiones automatizadas: oposición, excepciones e intervención humana."}
-  - {law: ley-19628, article: "14 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "l) la política informa las decisiones automatizadas, su lógica y consecuencias."}
-  - {law: ley-19628, article: "15 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Evaluación de impacto previa y casos en que es obligatoria."}
-  - {law: ley-19628, article: "34 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "k) incumplir el art. 15 ter es infracción gravísima."}
+  - {law: ley-19628, article: "2", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "w) elaboración de perfiles.", implication: "Scoring, segmentación y recomendación son perfiles."}
+  - {law: ley-19628, article: "5", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "f) el acceso incluye información significativa sobre la lógica de decisiones automatizadas.", implication: "Explicación disponible por titular."}
+  - {law: ley-19628, article: "8 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Decisiones automatizadas: oposición, excepciones e intervención humana.", implication: "Log por decisión y ruta de revisión humana."}
+  - {law: ley-19628, article: "14 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "l) la política informa las decisiones automatizadas, su lógica y consecuencias.", implication: "Fichas de modelo (model cards) publicables."}
+  - {law: ley-19628, article: "15 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Evaluación de impacto previa y casos en que es obligatoria.", implication: "Puerta antes de producción."}
+  - {law: ley-19628, article: "34 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "k) incumplir el art. 15 ter es infracción gravísima.", implication: "La puerta debe ser bloqueante."}
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
@@ -50,21 +50,21 @@ sources:
     page_title: "Re-identification risk analysis"
     note: "Re-identification risk analysis (Sensitive Data Protection): los cuasi-identificadores no identifican solos a una persona, pero combinados y cruzados con otros registros aumentan mucho la probabilidad de reidentificarla (por ejemplo, código postal y edad). Una clase de equivalencia es un grupo de filas con los mismos cuasi-identificadores. Un conjunto es k-anónimo si los cuasi-identificadores de cada persona son idénticos a los de al menos k-1 personas más; la l-diversidad extiende el k-anonimato midiendo la diversidad de los valores sensibles: hay l-diversidad si cada grupo con los mismos cuasi-identificadores tiene al menos l valores distintos. Calcula también k-map y δ-presence."
 relations:
-  - {type: RELATED_TO, target: chile-data-protection, note: "Ficha padre del subdominio."}
+  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del subdominio."}
   - {type: RELATED_TO, target: k-anonymity, note: "Prueba de reidentificación para la evaluación."}
   - {type: RELATED_TO, target: processing-activities-inventory, note: "La descripción del tratamiento."}
   - {type: RELATED_TO, target: data-subject-rights-pipeline, note: "El acceso incluye la lógica de la decisión."}
   - {type: RELATED_TO, target: chilean-identifier-pseudonymization, note: "El titular se registra con su seudónimo."}
   - {type: RELATED_TO, target: data-lineage, note: "De qué datos sale cada decisión."}
 created_at: 2026-10-22
-updated_at: 2026-10-22
+updated_at: 2026-10-24
 last_verified: 2026-10-22
 verification_status: review_required
 ---
 
 ## 1. Resumen
 
-Esta ficha no es asesoría legal: la evaluación de impacto la firma el responsable; ingeniería aporta la descripción técnica del tratamiento, los riesgos y los controles, y construye lo que el art. 8 bis exige en los modelos. Es ficha hija de `chile-data-protection`.
+Esta ficha no es asesoría legal: la evaluación de impacto la firma el responsable; ingeniería aporta la descripción técnica del tratamiento, los riesgos y los controles, y construye lo que el art. 8 bis exige en los modelos.
 
 Los equipos de datos e IA construyen exactamente lo que la ley regula con más rigor: perfiles, scoring y decisiones automatizadas a gran escala. Dos capacidades marcan la diferencia: una **puerta de evaluación de impacto** antes de pasar a producción, y un **registro por decisión** que permite explicar y revisar cualquier resultado que afecte a una persona.
 
@@ -281,3 +281,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-22: creación (upgrade de 19); reemplaza a `dpia-technical-input` y `automated-decision-traceability`, que quedan como alias.
+- 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.

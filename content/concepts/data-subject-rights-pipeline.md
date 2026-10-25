@@ -3,7 +3,7 @@ id: pattern:data-subject-rights-pipeline
 slug: data-subject-rights-pipeline
 type: pattern
 title: Pipeline de derechos del titular
-description: "Ficha hija de chile-data-protection. Cualquier titular puede pedir acceso, rectificación, supresión, oposición, portabilidad o bloqueo; la respuesta va en 30 días corridos y el bloqueo temporal en 2 días hábiles. Para cumplir hace falta encontrar a una persona en toda la plataforma: índice de titulares con llave seudónima, catálogo por actividad y evidencia sin datos del titular. Plazos, respuesta de acceso desde el catálogo y filtro de portabilidad, ejecutados en la CI. No es asesoría legal."
+description: "Cualquier titular puede pedir acceso, rectificación, supresión, oposición, portabilidad o bloqueo; la respuesta va en 30 días corridos y el bloqueo temporal en 2 días hábiles. Para cumplir hace falta encontrar a una persona en toda la plataforma: índice de titulares con llave seudónima, catálogo por actividad y evidencia sin datos del titular. Plazos, respuesta de acceso desde el catálogo y filtro de portabilidad, ejecutados en la CI. No es asesoría legal."
 domain: compliance
 subdomain: data-engineering-under-ley-21719
 classification: core
@@ -16,15 +16,15 @@ related_topics: [processing-activities-inventory]
 aliases: [data-subject-requests, Solicitudes de los titulares]
 jurisdiction: [CL]
 legal_basis:
-  - {law: ley-19628, article: "4", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Acceso, rectificación, supresión, oposición, portabilidad y bloqueo; irrenunciables."}
-  - {law: ley-19628, article: "5", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Acceso: datos y origen, finalidades, destinatarios, período, intereses legítimos y lógica de decisiones automatizadas."}
-  - {law: ley-19628, article: "6", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Rectificación comunicada a quienes recibieron los datos; no volver a tratar el dato sin rectificar."}
-  - {law: ley-19628, article: "7", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Supresión, con causales y excepciones."}
-  - {law: ley-19628, article: "8", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Oposición: interés legítimo, marketing directo y perfiles, fuentes de acceso público."}
-  - {law: ley-19628, article: "8 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Bloqueo: suspensión temporal sin afectar el almacenamiento."}
-  - {law: ley-19628, article: "9", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Portabilidad de lo facilitado, tratado en forma automatizada y basado en consentimiento."}
-  - {law: ley-19628, article: "10", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Mecanismos tecnológicos expeditos; gratuidad."}
-  - {law: ley-19628, article: "11", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Procedimiento, plazos, bloqueo temporal y respaldos de la respuesta."}
+  - {law: ley-19628, article: "4", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Acceso, rectificación, supresión, oposición, portabilidad y bloqueo; irrenunciables.", implication: "Seis tipos de solicitud."}
+  - {law: ley-19628, article: "5", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Acceso: datos y origen, finalidades, destinatarios, período, intereses legítimos y lógica de decisiones automatizadas.", implication: "La respuesta se arma desde el catálogo, no solo desde las tablas."}
+  - {law: ley-19628, article: "6", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Rectificación comunicada a quienes recibieron los datos; no volver a tratar el dato sin rectificar.", implication: "Propagar la corrección e impedir que el valor antiguo vuelva."}
+  - {law: ley-19628, article: "7", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Supresión, con causales y excepciones.", implication: "La supresión se ejecuta como en retention-and-erasure."}
+  - {law: ley-19628, article: "8", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Oposición: interés legítimo, marketing directo y perfiles, fuentes de acceso público.", implication: "Filtro por titular y por actividad."}
+  - {law: ley-19628, article: "8 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Bloqueo: suspensión temporal sin afectar el almacenamiento.", implication: "Flag que excluye al titular del tratamiento."}
+  - {law: ley-19628, article: "9", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Portabilidad de lo facilitado, tratado en forma automatizada y basado en consentimiento.", implication: "Export en JSON o CSV con esquema documentado."}
+  - {law: ley-19628, article: "10", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Mecanismos tecnológicos expeditos; gratuidad.", implication: "Canal automatizado y costo controlado."}
+  - {law: ley-19628, article: "11", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Procedimiento, plazos, bloqueo temporal y respaldos de la respuesta.", implication: "SLA, evidencia y propagación."}
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
@@ -47,21 +47,21 @@ sources:
     page_title: "Row filters and column masks"
     note: "Row filters and column masks (Azure Databricks): controles de acceso de Unity Catalog que restringen las filas y los valores de columna que un usuario ve al consultar."
 relations:
-  - {type: RELATED_TO, target: chile-data-protection, note: "Ficha padre del subdominio."}
+  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del subdominio."}
   - {type: RELATED_TO, target: processing-activities-inventory, note: "La respuesta de acceso sale del catálogo por actividad."}
   - {type: RELATED_TO, target: retention-and-erasure, note: "La supresión en todas las capas."}
   - {type: RELATED_TO, target: chilean-identifier-pseudonymization, note: "La llave seudónima del titular."}
   - {type: RELATED_TO, target: dpia-and-automated-decisions, note: "La lógica de las decisiones automatizadas."}
   - {type: RELATED_TO, target: row-level-security, note: "El bloqueo se aplica como filtro de fila."}
 created_at: 2026-10-22
-updated_at: 2026-10-22
+updated_at: 2026-10-24
 last_verified: 2026-10-22
 verification_status: review_required
 ---
 
 ## 1. Resumen
 
-Esta ficha no es asesoría legal: si una solicitud procede, y con qué alcance, lo decide el responsable con el área legal; aquí se explica la plataforma que permite responder a tiempo, completo y con evidencia. Es ficha hija de `chile-data-protection`.
+Esta ficha no es asesoría legal: si una solicitud procede, y con qué alcance, lo decide el responsable con el área legal; aquí se explica la plataforma que permite responder a tiempo, completo y con evidencia.
 
 Desde la vigencia de la ley, cualquier titular puede pedir qué datos se tienen de él, corregirlos, borrarlos, oponerse, bloquearlos o llevárselos. Para un equipo de datos, eso significa poder **encontrar a una persona en toda la plataforma** en días, no semanas, y ejecutar la acción en cada lugar donde está. Sin un índice de titulares y un catálogo por actividad de tratamiento, el plazo de 30 días es difícil de cumplir.
 
@@ -336,3 +336,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-22: creación (upgrade de 19); reemplaza a `data-subject-requests`, que queda como alias.
+- 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.

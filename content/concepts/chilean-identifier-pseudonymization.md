@@ -3,7 +3,7 @@ id: pattern:chilean-identifier-pseudonymization
 slug: chilean-identifier-pseudonymization
 type: pattern
 title: Seudonimización de identificadores chilenos
-description: "Ficha hija de chile-data-protection. Seudonimizar el RUT: normalizarlo, validar el dígito verificador y calcular un HMAC con una llave en un KMS, separada de los datos, como pide la ley. Un hash simple del RUT se revierte. Y seudonimizar no es anonimizar: los cuasi-identificadores reidentifican hasta generalizar y suprimir atípicos (k-anonimato). Ejecutado en la CI. Sensitive Data Protection, DataBrew y Always Encrypted. No es asesoría legal."
+description: "Seudonimizar el RUT: normalizarlo, validar el dígito verificador y calcular un HMAC con una llave en un KMS, separada de los datos, como pide la ley. Un hash simple del RUT se revierte. Y seudonimizar no es anonimizar: los cuasi-identificadores reidentifican hasta generalizar y suprimir atípicos (k-anonimato). Ejecutado en la CI. Sensitive Data Protection, DataBrew y Always Encrypted. No es asesoría legal."
 domain: compliance
 subdomain: data-engineering-under-ley-21719
 classification: core
@@ -15,12 +15,12 @@ tags: [compliance, privacy, rut, pseudonymization, anonymization]
 related_topics: [keyed-hashing, tokenization]
 jurisdiction: [CL]
 legal_basis:
-  - {law: ley-19628, article: "2", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "f) identificable con medios razonables; k) anonimización irreversible; l) seudonimización con información adicional separada y protegida."}
-  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "c) al vencer el plazo, suprimir o anonimizar."}
-  - {law: ley-19628, article: "14 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "a) la seudonimización y el cifrado como medidas de seguridad."}
-  - {law: ley-19628, article: "16 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "c) los resultados de estudios con datos de salud se publican anonimizados."}
-  - {law: ley-19628, article: "16 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Fines históricos, estadísticos o científicos: publicar anonimizado."}
-  - {law: ley-19628, article: "26", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Un reglamento regulará los procedimientos de anonimización."}
+  - {law: ley-19628, article: "2", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "f) identificable con medios razonables; k) anonimización irreversible; l) seudonimización con información adicional separada y protegida.", implication: "El riesgo de reidentificación se evalúa con los datos y medios disponibles (f); solo la anonimización real saca el dato del alcance de la ley (k); la llave va en otro sistema, con otro control de acceso (l)."}
+  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "c) al vencer el plazo, suprimir o anonimizar.", implication: "La anonimización es alternativa a la supresión solo si es real."}
+  - {law: ley-19628, article: "14 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "a) la seudonimización y el cifrado como medidas de seguridad.", implication: "Seudonimizar reduce el riesgo, no elimina obligaciones."}
+  - {law: ley-19628, article: "16 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "c) los resultados de estudios con datos de salud se publican anonimizados.", implication: "Publicar resultados de estudios con datos de salud exige anonimización probada."}
+  - {law: ley-19628, article: "16 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Fines históricos, estadísticos o científicos: publicar anonimizado.", implication: "Datasets estadísticos o abiertos exigen anonimización probada."}
+  - {law: ley-19628, article: "26", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Un reglamento regulará los procedimientos de anonimización.", implication: "Revisar los procedimientos de anonimización cuando se dicte el reglamento."}
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
@@ -53,7 +53,7 @@ sources:
     page_title: "Always Encrypted"
     note: "Always Encrypted: dos tipos de cifrado. El determinista siempre da el mismo valor cifrado para un mismo texto y permite búsquedas puntuales, joins por igualdad, agrupar e indexar columnas cifradas, pero usuarios no autorizados pueden adivinar información mirando patrones, sobre todo si hay pocos valores posibles (True/False o Norte/Sur/Este/Oeste). El aleatorio cifra de forma impredecible y no permite buscar, agrupar, indexar ni unir sin secure enclaves."
 relations:
-  - {type: RELATED_TO, target: chile-data-protection, note: "Ficha padre del subdominio."}
+  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del subdominio."}
   - {type: RELATED_TO, target: pseudonymization-vs-anonymization, note: "La versión genérica, sin la ley, en 18."}
   - {type: RELATED_TO, target: keyed-hashing, note: "Por qué HMAC y no un hash simple."}
   - {type: RELATED_TO, target: tokenization, note: "La alternativa reversible, con bóveda."}
@@ -64,14 +64,14 @@ relations:
   - {type: RELATED_TO, target: data-subject-rights-pipeline, note: "El mismo seudónimo indexa al titular."}
   - {type: RELATED_TO, target: retention-and-erasure, note: "El seudónimo como clave de supresión."}
 created_at: 2026-10-21
-updated_at: 2026-10-22
+updated_at: 2026-10-24
 last_verified: 2026-10-22
 verification_status: review_required
 ---
 
 ## 1. Resumen
 
-Esta ficha no es asesoría legal: si un dataset puede declararse anonimizado lo valida el responsable con el área legal; aquí están las técnicas y las pruebas que respaldan esa decisión. Es ficha hija de `chile-data-protection`; la versión genérica, sin la ley, es `pseudonymization-vs-anonymization`.
+Esta ficha no es asesoría legal: si un dataset puede declararse anonimizado lo valida el responsable con el área legal; aquí están las técnicas y las pruebas que respaldan esa decisión. La versión genérica, sin la ley, es `pseudonymization-vs-anonymization`.
 
 En la práctica, «anonimizado» suele significar «le sacamos el RUT». Para la ley eso no basta: si alguien puede volver a identificar a la persona con medios razonables, el dato sigue siendo personal. Para el RUT:
 
@@ -321,3 +321,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-21: creación (lote F3b-19b).
 - 2026-10-22: upgrade de 19: incorpora la parte legal de la seudonimización y la anonimización (arts. 2 f), k) y l), 3 c), 14 quinquies a), 16 bis c), 16 quinquies y 26) y la prueba de k-anonimato; enlaza `pseudonymization-vs-anonymization` (18), que no cambia.
+- 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.

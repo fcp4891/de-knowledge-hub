@@ -3,7 +3,7 @@ id: pattern:retention-and-erasure
 slug: retention-and-erasure
 type: pattern
 title: Retención y supresión
-description: "Ficha hija de chile-data-protection. Un dato personal está en el origen, en bronze, silver y gold, en features, exportaciones, versiones y respaldos. Retener y suprimir bien es que el plazo se aplique solo, que la supresión alcance todas las copias que corresponde, conservando lo que tiene obligación legal, y que ningún backfill la deshaga: lista de supresión, llave seudónima y evidencia sin datos del titular. Ejemplo ejecutado en la CI. BigQuery, S3, Iceberg y Delta. No es asesoría legal."
+description: "Un dato personal está en el origen, en bronze, silver y gold, en features, exportaciones, versiones y respaldos. Retener y suprimir bien es que el plazo se aplique solo, que la supresión alcance todas las copias que corresponde, conservando lo que tiene obligación legal, y que ningún backfill la deshaga: lista de supresión, llave seudónima y evidencia sin datos del titular. Ejemplo ejecutado en la CI. BigQuery, S3, Iceberg y Delta. No es asesoría legal."
 domain: compliance
 subdomain: data-engineering-under-ley-21719
 classification: core
@@ -16,14 +16,14 @@ related_topics: [crypto-shredding, data-retention]
 aliases: [erasure-across-copies, Supresión en todas las copias]
 jurisdiction: [CL]
 legal_basis:
-  - {law: ley-19628, article: "2", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "h) eliminación: destrucción de los datos, cualquiera sea el procedimiento; k) anonimización."}
-  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "c) conservar solo lo necesario y luego suprimir o anonimizar."}
-  - {law: ley-19628, article: "7", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Causales de supresión y excepciones."}
-  - {law: ley-19628, article: "8 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Bloqueo alternativo a la supresión, sin afectar el almacenamiento."}
-  - {law: ley-19628, article: "11", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Plazos; la supresión se comunica a quienes recibieron los datos."}
-  - {law: ley-19628, article: "14", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "d) suprimir o anonimizar datos obtenidos para medidas precontractuales."}
-  - {law: ley-19628, article: "14 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Por defecto, considerar el plazo de conservación."}
-  - {law: ley-19628, article: "15 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "El encargado suprime o devuelve los datos al terminar el servicio."}
+  - {law: ley-19628, article: "2", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "h) eliminación: destrucción de los datos, cualquiera sea el procedimiento; k) anonimización.", implication: "Un borrado lógico no basta si el dato sigue recuperable (h); anonimizar exige irreversibilidad (k)."}
+  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "c) conservar solo lo necesario y luego suprimir o anonimizar.", implication: "Cada tabla tiene plazo y acción al vencer."}
+  - {law: ley-19628, article: "7", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Causales de supresión y excepciones.", implication: "La supresión puede ser parcial: hay datos con obligación de conservar."}
+  - {law: ley-19628, article: "8 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Bloqueo alternativo a la supresión, sin afectar el almacenamiento.", implication: "Estado intermedio: se guarda, no se trata."}
+  - {law: ley-19628, article: "11", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Plazos; la supresión se comunica a quienes recibieron los datos.", implication: "Propagar a derivados y a terceros."}
+  - {law: ley-19628, article: "14", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "d) suprimir o anonimizar datos obtenidos para medidas precontractuales.", implication: "Leads y cotizaciones con plazo propio."}
+  - {law: ley-19628, article: "14 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Por defecto, considerar el plazo de conservación.", implication: "Retención definida desde el diseño."}
+  - {law: ley-19628, article: "15 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "El encargado suprime o devuelve los datos al terminar el servicio.", implication: "Cierre de contrato con constancia."}
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
@@ -61,7 +61,7 @@ sources:
     page_title: "VACUUM"
     note: "VACUUM (Azure Databricks): borra los archivos que ya no están en el log de transacciones de Delta y superan el umbral de retención, de 7 días por defecto; después de VACUUM no se puede volver por time travel a versiones anteriores al período de retención; Databricks recomienda al menos 7 días. Para tablas Apache Iceberg, VACUUM borra archivos sin referencia con una retención fija de 7 días."
 relations:
-  - {type: RELATED_TO, target: chile-data-protection, note: "Ficha padre del subdominio."}
+  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del subdominio."}
   - {type: RELATED_TO, target: data-subject-rights-pipeline, note: "Cómo llega y se valida la solicitud."}
   - {type: RELATED_TO, target: chilean-identifier-pseudonymization, note: "La llave seudónima como clave de supresión."}
   - {type: RELATED_TO, target: processing-activities-inventory, note: "De dónde vienen plazo y acción."}
@@ -70,14 +70,14 @@ relations:
   - {type: RELATED_TO, target: data-retention, note: "Mecanismos técnicos de retención."}
   - {type: RELATED_TO, target: open-table-formats, note: "Snapshots y time travel."}
 created_at: 2026-10-22
-updated_at: 2026-10-22
+updated_at: 2026-10-24
 last_verified: 2026-10-22
 verification_status: review_required
 ---
 
 ## 1. Resumen
 
-Esta ficha no es asesoría legal: qué datos se conservan, por cuánto tiempo y si una supresión procede lo deciden el área legal y el responsable; aquí se explica cómo ejecutarlo de forma consistente y demostrable. Es ficha hija de `chile-data-protection`.
+Esta ficha no es asesoría legal: qué datos se conservan, por cuánto tiempo y si una supresión procede lo deciden el área legal y el responsable; aquí se explica cómo ejecutarlo de forma consistente y demostrable.
 
 En una plataforma moderna, un dato personal no está en una tabla: está en el origen, en bronze, silver y gold, en features, en exportaciones, en el historial de versiones (time travel), en respaldos y en sistemas de terceros. Retener y suprimir bien significa que el plazo se aplique sin intervención manual, que una supresión alcance todas las copias que corresponde y que **ningún reprocesamiento la deshaga**.
 
@@ -373,3 +373,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-22: creación (upgrade de 19); reemplaza a `erasure-across-copies`, que queda como alias.
+- 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.

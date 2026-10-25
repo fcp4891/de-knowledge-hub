@@ -38,7 +38,8 @@
         "PRACTICES",
         "AFFECTS",
         "UPDATES",
-        "REQUIRES"
+        "REQUIRES",
+        "PART_OF"
       ]
     }
   },
@@ -306,6 +307,21 @@
         "concept",
         "technology",
         "cloud_service",
+        "pattern",
+        "architecture"
+      ]
+    },
+    "PART_OF": {
+      "inverse": "has_part",
+      "symmetric": false,
+      "description": "El origen es ficha hija del destino, su ficha padre (ADR-024). A lo sumo una por ficha, del mismo dominio y subdominio, sin ciclos; la padre nombra a sus hijas en el §17.",
+      "source_types": [
+        "concept",
+        "pattern",
+        "architecture"
+      ],
+      "target_types": [
+        "concept",
         "pattern",
         "architecture"
       ]

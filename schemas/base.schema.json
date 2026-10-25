@@ -111,7 +111,7 @@
     },
     "legal_basis_ref": {
       "type": "object",
-      "required": ["law", "article", "url"],
+      "required": ["law", "article", "url", "implication"],
       "properties": {
         "law": { "$ref": "enums.schema.json#/$defs/law" },
         "article": {
@@ -120,7 +120,12 @@
           "pattern": "^[0-9]+( [a-záéíóú]+)?$"
         },
         "url": { "type": "string", "format": "uri", "pattern": "^https://" },
-        "note": { "type": "string" }
+        "note": { "type": "string" },
+        "implication": {
+          "description": "Implicancia técnica del artículo para la plataforma de datos (enmienda de ADR-023): qué se construye o se controla, sin repetir el texto legal.",
+          "type": "string",
+          "minLength": 1
+        }
       },
       "additionalProperties": false
     },

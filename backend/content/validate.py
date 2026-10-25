@@ -367,11 +367,13 @@ def check_page_source_levels(docs: list[Document], by_slug: dict[str, Document],
 
 
 def check_topics_in_relations(docs: list[Document], report: Report) -> None:
-    """Fichas y snippets: todo related_topics debe estar en relations (el grafo solo ve relations)."""
+    """Fichas y snippets: todo related_topics debe estar en relations (el grafo solo ve relations); en la
+    ficha padre cuentan también sus hijas (PART_OF entrante, ADR-024)."""
+    children = children_by_parent(docs)
     for doc in docs:
         if doc.data["type"] not in page_sections.SECTIONED_TYPES:
             continue
-        targets = {r["target"] for r in doc.data.get("relations", [])}
+        targets = {r["target"] for r in doc.data.get("relations", [])} | children.get(doc.data["slug"], set())
         for slug in doc.data.get("related_topics", []):
             if slug not in targets:
                 report.add(doc.location, f"[related_topics] '{slug}' no está en relations: el grafo no lo verá")
@@ -398,13 +400,15 @@ def check_related_section(content_dir: Path, docs: list[Document], report: Repor
     """Regla del §17: la ficha nombrada que existe va en relations; la que no existe queda como
     «pendiente de ficha»; todo lo de relations se nombra en el §17. Un slug de ficha existente
     nombrado en otra sección (salvo el historial y los bloques de código) también debe estar en
-    relations, salvo las menciones incidentales listadas (revisión de 10a, lote F3b-rel)."""
+    relations, salvo las menciones incidentales listadas (revisión de 10a, lote F3b-rel). Las hijas
+    (PART_OF entrante, ADR-024) cuentan como relaciones de la padre, que debe nombrarlas todas."""
     fichas = {doc.data["slug"] for doc in docs if doc.data["type"] in page_sections.PAGE_TYPES}
+    children = children_by_parent(docs)
     for doc in docs:
         if doc.data["type"] not in page_sections.PAGE_TYPES or doc.path.suffix != ".md" or doc.data.get("stub"):
             continue
         own = doc.data["slug"]
-        targets = {r["target"] for r in doc.data.get("relations", [])}
+        targets = {r["target"] for r in doc.data.get("relations", [])} | children.get(own, set())
         body = FENCE.sub("", page_sections.body_of((content_dir.parent / doc.path).read_text(encoding="utf-8")))
         parts = page_sections.sections(body)
         if not any(n == RELATED_SECTION for n, _, _ in parts):
@@ -418,10 +422,52 @@ def check_related_section(content_dir: Path, docs: list[Document], report: Repor
         for slug in sorted(named_fichas(linked, fichas, own) - targets):
             report.add(doc.location, f"[§17] '{slug}' se nombra en el §17 y no está en relations")
         for slug in sorted(targets - set(INLINE_SLUG.findall(related))):
-            report.add(doc.location, f"[§17] '{slug}' está en relations y el §17 no lo nombra")
+            kind = "es ficha hija (PART_OF)" if slug in children.get(own, set()) else "está en relations"
+            report.add(doc.location, f"[§17] '{slug}' {kind} y el §17 no lo nombra")
         in_body = named_fichas(other, fichas, own) - targets - named_fichas(related, fichas, own)
         for slug in sorted(s for s in in_body if (own, s) not in INCIDENTAL_MENTIONS):
             report.add(doc.location, f"[§17] '{slug}' tiene ficha, se nombra en el cuerpo y no está en relations")
+
+
+# --- Fichas padre e hijas (ADR-024) -------------------------------------------
+
+PART_OF = "PART_OF"
+
+
+def part_of_targets(doc: Document) -> list[str]:
+    return [r["target"] for r in doc.data.get("relations", []) if r["type"] == PART_OF]
+
+
+def parent_by_child(docs: list[Document]) -> dict[str, str]:
+    """Hija -> padre (la primera PART_OF si hay varias; check_part_of reporta el resto)."""
+    return {doc.data["slug"]: targets[0] for doc in docs if (targets := part_of_targets(doc))}
+
+
+def children_by_parent(docs: list[Document]) -> dict[str, set[str]]:
+    result: dict[str, set[str]] = {}
+    for child, parent in parent_by_child(docs).items():
+        result.setdefault(parent, set()).add(child)
+    return result
+
+
+def check_part_of(docs: list[Document], index: BlueprintIndex | None, report: Report) -> None:
+    """ADR-024: a lo sumo una ficha padre, del mismo dominio y subdominio, y sin ciclos."""
+    for doc in docs:
+        if len(targets := part_of_targets(doc)) > 1:
+            report.add(doc.location, f"[relations] PART_OF -> {', '.join(targets)}: una ficha tiene a lo sumo una ficha padre")
+    parents = parent_by_child(docs)
+    locations = {doc.data["slug"]: doc.location for doc in docs}
+    for child, parent in sorted(parents.items()):
+        if index is not None:
+            a, b = index.concepts.get(child), index.concepts.get(parent)
+            if a is not None and b is not None and (a.domain, a.subdomain) != (b.domain, b.subdomain):
+                report.add(locations[child], f"[relations] PART_OF -> '{parent}': la ficha padre es de otro dominio o subdominio")
+        seen, node = {child}, parent
+        while node in parents and node not in seen:
+            seen.add(node)
+            node = parents[node]
+        if node == child:
+            report.add(locations[child], f"[relations] PART_OF -> '{parent}': la jerarquía forma un ciclo")
 
 
 def check_page_sections(content_dir: Path, docs: list[Document], report: Report) -> None:
@@ -849,6 +895,7 @@ def validate(content_dir: Path, schemas_dir: Path) -> Report:
     check_snippets(valid_docs, by_slug, report)
     check_legal_content(content_dir, valid_docs, by_slug, report)
     index = validate_blueprints(content_dir, schemas_dir, by_slug, valid_docs, report)
+    check_part_of(valid_docs, index, report)
     validate_matrices(content_dir, schemas_dir, index, by_slug, report)
     report.technologies = [doc.data for doc in valid_docs if doc.data["type"] in TECHNOLOGY_TYPES]
     return report

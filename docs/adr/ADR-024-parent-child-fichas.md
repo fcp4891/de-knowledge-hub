@@ -1,7 +1,7 @@
 # ADR-024 — Jerarquía de fichas padre e hijas
 
-- **Estado:** Propuesto (pendiente de aprobación de Felipe; no implementado)
-- **Fecha:** 2026-10-22
+- **Estado:** Aceptado (aprobado por Felipe el 2026-10-24, opción A: `PART_OF` hija → padre); implementado el 2026-10-24
+- **Fecha:** 2026-10-22 (propuesta); 2026-10-24 (aceptación)
 - **Fase:** F3b — upgrade de 19-compliance
 - **Referencias:** ADR-000, ADR-002 (contrato), ADR-003 (blueprint), ADR-023 (contenido con origen legal).
 
@@ -35,16 +35,35 @@ Hoy la jerarquía se representa con `RELATED_TO` en las dos direcciones y con te
 - **A favor:** explícito y fácil de leer.
 - **En contra:** duplica algo que es una relación del grafo, y el grafo no lo ve si no se proyecta aparte.
 
-## Decisión propuesta
+## Decisión
 
 Opción A: `PART_OF`, con las reglas de validación de arriba. El orden de las hijas lo da el blueprint: se agrega un campo opcional `order` al subdominio, o se usa el orden en que aparecen. Eso queda a definir al implementar.
 
 ## Consecuencias
 
-- **Implementación** (cuando se apruebe):
+- **Implementación:**
   - schema y catálogo de relaciones;
   - las reglas de validación, con sus tests;
   - el contrato;
   - reemplazar en las fichas de 19 los `RELATED_TO` hija → padre por `PART_OF`.
 - **Pedido a Carril B:** mostrar «Ficha padre» arriba de cada hija y la lista «Fichas hijas» en la padre, en el orden del blueprint.
-- **Mientras tanto:** la jerarquía va en el texto y en `RELATED_TO`, como está hoy.
+
+## Notas de implementación (2026-10-24)
+
+- **Catálogo.** `PART_OF` en `relationships.schema.json`, con inversa `has_part`, no simétrica. Origen y destino son fichas: `concept`, `pattern` o `architecture`.
+- **Validación** (`backend/content/validate.py`, `check_part_of`):
+  - una sola ficha padre;
+  - padre e hija en el mismo dominio y subdominio del blueprint;
+  - sin ciclos.
+- **§17 y `related_topics`.** En la ficha padre, las hijas (`PART_OF` entrante) cuentan como relaciones. El §17 de la padre debe nombrarlas todas («'x' es ficha hija (PART_OF) y el §17 no lo nombra»). La padre no repite a sus hijas con `RELATED_TO`.
+- **Orden.** Las hijas siguen el orden en que aparecen en el blueprint, sin un campo nuevo. `relation_groups` ordena así el grupo `PART_OF` entrante; los demás grupos siguen ordenados por título.
+- **Contrato** (aditivo). `RelationType` agrega `PART_OF`. En `RelationGroups`:
+  - `PART_OF` `outgoing` es la ficha padre;
+  - `PART_OF` `incoming` (label `has_part`) son las hijas.
+
+  `frontend/lib/api/schema.d.ts` lo regenera Carril B.
+- **Base derivada.** `edges.relation_type` es texto: no hace falta migración.
+- **Contenido.**
+  - Las 10 hijas de 19 cambian su `RELATED_TO` hacia `chile-data-protection` por `PART_OF`.
+  - `chile-data-protection` deja sus 10 `RELATED_TO` hacia las hijas.
+  - Se quita la frase «Es ficha hija de `chile-data-protection`» del §1 y de `description`, porque la UI la muestra desde la relación.

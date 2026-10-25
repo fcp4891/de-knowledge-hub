@@ -173,7 +173,10 @@ def source_refs(index: ContentIndex, refs: list[dict[str, Any]]) -> list[dict[st
 
 
 def legal_basis(page: dict[str, Any]) -> list[dict[str, Any]]:
-    return [{"law": b["law"], "article": b["article"], "url": b["url"], "note": b.get("note")} for b in page.get("legal_basis", [])]
+    return [
+        {"law": b["law"], "article": b["article"], "url": b["url"], "note": b.get("note"), "implication": b["implication"]}
+        for b in page.get("legal_basis", [])
+    ]
 
 
 def union(*lists: list[str]) -> list[str]:
@@ -383,8 +386,11 @@ def relation_groups(index: ContentIndex, slug: str) -> dict[str, Any]:
     order = list(index.catalog)
     direction_order = {"outgoing": 0, "incoming": 1, "both": 2}
     ordered = sorted(groups.values(), key=lambda g: (order.index(g["type"]), direction_order[g["direction"]]))
+    blueprint_order = {s: i for i, s in enumerate(index.concepts)}
     for group in ordered:
         group["items"].sort(key=lambda i: (i["title"].lower(), i["slug"]))
+        if (group["type"], group["direction"]) == ("PART_OF", "incoming"):  # hijas en el orden del blueprint (ADR-024)
+            group["items"].sort(key=lambda i: blueprint_order.get(i["slug"], len(blueprint_order)))
     return {"slug": slug, "groups": ordered}
 
 

@@ -3,7 +3,7 @@ id: pattern:privacy-controls-as-code
 slug: privacy-controls-as-code
 type: pattern
 title: Controles de privacidad como código
-description: "Ficha hija de chile-data-protection. Un control documentado no es un control implementado: la ley pide verificar regularmente que las medidas funcionan y acreditarlo tras un incidente. Reglas como código que leen el estado real de la plataforma (etiquetas, máscaras, lectores, ambientes, retención, dueño) y también el cambio (SELECT * sobre tablas personales, datos en logs, contrato de datos incompleto), fallan la CI y publican cobertura. Ejemplo ejecutado en la CI. No es asesoría legal."
+description: "Un control documentado no es un control implementado: la ley pide verificar regularmente que las medidas funcionan y acreditarlo tras un incidente. Reglas como código que leen el estado real de la plataforma (etiquetas, máscaras, lectores, ambientes, retención, dueño) y también el cambio (SELECT * sobre tablas personales, datos en logs, contrato de datos incompleto), fallan la CI y publican cobertura. Ejemplo ejecutado en la CI. No es asesoría legal."
 domain: compliance
 subdomain: data-engineering-under-ley-21719
 classification: core
@@ -16,12 +16,12 @@ related_topics: [quality-gate, data-contracts]
 aliases: [privacy-by-design-checklist, Privacidad desde el diseño en cada pipeline]
 jurisdiction: [CL]
 legal_basis:
-  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "c) proporcionalidad; e) responsabilidad."}
-  - {law: ley-19628, article: "14 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Medidas desde el diseño y por defecto."}
-  - {law: ley-19628, article: "14 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Seguridad acorde al riesgo; d) verificación regular de su eficacia; acreditación tras un incidente."}
-  - {law: ley-19628, article: "14 septies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Estándares diferenciados que fijará la Agencia por instrucción general."}
-  - {law: ley-19628, article: "36", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Atenuante n.º 5: deberes de dirección y supervisión acreditados con el certificado del art. 51."}
-  - {law: ley-19628, article: "49", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Modelo de prevención de infracciones voluntario; reglamento en el Decreto 662."}
+  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "c) proporcionalidad; e) responsabilidad.", implication: "Reglas de proporcionalidad (c) y controles con dueño (e)."}
+  - {law: ley-19628, article: "14 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Medidas desde el diseño y por defecto.", implication: "Reglas en la CI, antes de producción."}
+  - {law: ley-19628, article: "14 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Seguridad acorde al riesgo; d) verificación regular de su eficacia; acreditación tras un incidente.", implication: "Verificación continua y evidencia fechada."}
+  - {law: ley-19628, article: "14 septies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Estándares diferenciados que fijará la Agencia por instrucción general.", implication: "Ajustar los umbrales cuando la Agencia publique los estándares."}
+  - {law: ley-19628, article: "36", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Atenuante n.º 5: deberes de dirección y supervisión acreditados con el certificado del art. 51.", implication: "Las métricas de esta ficha son evidencia de diligencia."}
+  - {law: ley-19628, article: "49", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Modelo de prevención de infracciones voluntario; reglamento en el Decreto 662.", implication: "Las métricas de esta ficha son evidencia para el modelo de prevención."}
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
@@ -59,21 +59,21 @@ sources:
     page_title: "Azure Policy built-in policy definitions"
     note: "Azure Policy built-in policy definitions: «Allowed locations» restringe las ubicaciones que la organización puede usar al desplegar recursos, para requisitos de geocumplimiento; excluye resource groups, Microsoft.AzureActiveDirectory/b2cDirectories y los recursos de la región «global»; efectos Audit, Deny o Disabled."
 relations:
-  - {type: RELATED_TO, target: chile-data-protection, note: "Ficha padre; la matriz usa la evidencia de estas reglas."}
+  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre; la matriz usa la evidencia de estas reglas."}
   - {type: RELATED_TO, target: quality-gate, note: "La puerta de privacidad es una puerta más de la CI."}
   - {type: RELATED_TO, target: data-contracts, note: "El contrato declara finalidad, base, retención y columnas personales."}
   - {type: RELATED_TO, target: data-minimization-by-layer, note: "Sin SELECT * sobre tablas personales."}
   - {type: RELATED_TO, target: pii-identification, note: "Columnas personales y patrones de RUT y correo."}
   - {type: RELATED_TO, target: column-level-security, note: "Máscaras y lectores por columna."}
 created_at: 2026-10-22
-updated_at: 2026-10-22
+updated_at: 2026-10-24
 last_verified: 2026-10-22
 verification_status: review_required
 ---
 
 ## 1. Resumen
 
-Esta ficha no es asesoría legal: explica cómo convertir los requisitos de la ley en reglas verificables que corren en la CI y en producción. Es ficha hija de `chile-data-protection`.
+Esta ficha no es asesoría legal: explica cómo convertir los requisitos de la ley en reglas verificables que corren en la CI y en producción.
 
 Un control documentado no es un control implementado. La ley pide verificar regularmente que las medidas funcionan y poder acreditarlo después de un incidente. Eso se resuelve como cualquier otro requisito de ingeniería: **reglas como código** que leen el **estado real** de la plataforma (etiquetas, máscaras, permisos, retención, ambientes) y el **cambio** que se quiere desplegar (SQL, logs, contrato de datos), fallan la CI cuando algo no cumple y publican métricas de cobertura.
 
@@ -308,3 +308,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-22: creación (upgrade de 19); reemplaza a `privacy-by-design-checklist`, que queda como alias; rescata sus reglas de `SELECT *`, datos en logs y contrato de datos.
+- 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.

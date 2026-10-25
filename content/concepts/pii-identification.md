@@ -20,10 +20,12 @@ legal_basis:
     article: "2"
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
     note: "Dato personal (persona identificada o identificable, también por medios indirectos) y datos personales sensibles (lista cerrada de categorías)."
+    implication: "Clasificar cada columna como personal, sensible o no personal, incluidas las que identifican por medios indirectos."
   - law: ley-19628
     article: "16"
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
     note: "Regla general para los datos sensibles: se tratan con consentimiento expreso del titular, salvo los casos que el artículo enumera."
+    implication: "Las columnas sensibles llevan una etiqueta propia y controles más estrictos."
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
@@ -57,7 +59,7 @@ relations:
   - type: RELATED_TO
     target: data-masking
     note: Lo que se detecta como personal se enmascara al mostrar.
-  - type: RELATED_TO
+  - type: PART_OF
     target: chile-data-protection
     note: El panorama de la ley.
   - type: RELATED_TO
@@ -73,14 +75,14 @@ relations:
     target: data-breach-response
     note: Las categorías deciden el aviso a titulares.
 created_at: 2026-10-21
-updated_at: 2026-10-22
+updated_at: 2026-10-24
 last_verified: 2026-10-21
 verification_status: review_required
 ---
 
 ## 1. Resumen
 
-Esta ficha no es asesoría legal: cubre la parte técnica de identificar datos personales y sensibles. Es ficha hija de `chile-data-protection`.
+Esta ficha no es asesoría legal: cubre la parte técnica de identificar datos personales y sensibles.
 
 Ningún control sirve si no se sabe **dónde** están los datos personales. La ley define dato personal (cualquier información vinculada a una persona identificada o identificable, también de forma indirecta) y enumera los datos **sensibles**, entre ellos la situación socioeconómica y los datos de salud. Identificarlos en una plataforma combina:
 
@@ -300,3 +302,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-21: creación (lote F3b-19a).
 - 2026-10-22: upgrade de 19: pasa a ser ficha hija de `chile-data-protection`; relaciones con `chilean-identifier-pseudonymization`, `privacy-controls-as-code` y `data-breach-response`. Sin cambios de contenido legal ni de código.
+- 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.

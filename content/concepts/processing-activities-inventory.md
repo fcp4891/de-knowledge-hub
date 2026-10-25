@@ -3,7 +3,7 @@ id: pattern:processing-activities-inventory
 slug: processing-activities-inventory
 type: pattern
 title: Inventario de actividades de tratamiento
-description: "Ficha hija de chile-data-protection. La base de licitud vive en la actividad de tratamiento, no en el dataset: un mismo dataset sirve a varias actividades con bases distintas. El registro de actividades se cruza con los usos observados (linaje y logs de consultas) y la CI falla si hay tablas con datos personales sin actividad, actividades incompletas o usos no registrados; además genera el resumen que pide el art. 14 ter. Ejemplo ejecutado en la CI. No es asesoría legal."
+description: "La base de licitud vive en la actividad de tratamiento, no en el dataset: un mismo dataset sirve a varias actividades con bases distintas. El registro de actividades se cruza con los usos observados (linaje y logs de consultas) y la CI falla si hay tablas con datos personales sin actividad, actividades incompletas o usos no registrados; además genera el resumen que pide el art. 14 ter. Ejemplo ejecutado en la CI. No es asesoría legal."
 domain: compliance
 subdomain: data-engineering-under-ley-21719
 classification: core
@@ -15,12 +15,12 @@ tags: [compliance, privacy, inventory, lawful-basis, lineage]
 related_topics: [data-catalog, data-lineage]
 jurisdiction: [CL]
 legal_basis:
-  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "a) el responsable acredita la licitud; b) fines específicos y sus excepciones."}
-  - {law: ley-19628, article: "12", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Consentimiento libre, informado, específico, previo e inequívoco; revocable; el responsable lo prueba."}
-  - {law: ley-19628, article: "13", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Otras bases: obligaciones económicas (Título III), obligación legal, contrato, interés legítimo, defensa de derechos."}
-  - {law: ley-19628, article: "14", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "a) informar y poner a disposición los antecedentes de licitud."}
-  - {law: ley-19628, article: "14 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Información pública sobre categorías, destinatarios, finalidades, base, plazo, fuente y decisiones automatizadas."}
-  - {law: ley-19628, article: "34 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "a) tratar sin base o con finalidad distinta es infracción grave."}
+  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "a) el responsable acredita la licitud; b) fines específicos y sus excepciones.", implication: "Registro de actividades consultable y versionado (a) y detección de usos no registrados (b)."}
+  - {law: ley-19628, article: "12", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Consentimiento libre, informado, específico, previo e inequívoco; revocable; el responsable lo prueba.", implication: "Guardar el consentimiento por finalidad, con fecha y versión."}
+  - {law: ley-19628, article: "13", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Otras bases: obligaciones económicas (Título III), obligación legal, contrato, interés legítimo, defensa de derechos.", implication: "Una base por actividad."}
+  - {law: ley-19628, article: "14", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "a) informar y poner a disposición los antecedentes de licitud.", implication: "Antecedentes de licitud exportables bajo demanda."}
+  - {law: ley-19628, article: "14 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Información pública sobre categorías, destinatarios, finalidades, base, plazo, fuente y decisiones automatizadas.", implication: "El catálogo alimenta la política."}
+  - {law: ley-19628, article: "34 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "a) tratar sin base o con finalidad distinta es infracción grave.", implication: "Un uso no registrado es una brecha de la CI."}
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
@@ -48,7 +48,7 @@ sources:
     page_title: "Learn about Microsoft Purview Unified Catalog"
     note: "Learn about Microsoft Purview Unified Catalog: inventario de los activos de datos, su metadata y su linaje; herramientas para principios de gobierno: políticas de acceso de Unified Catalog, critical data elements, glossary terms, governance domains (organizar los datos por conceptos de negocio y distribuir el ownership) y data products (agrupar activos relacionados)."
 relations:
-  - {type: RELATED_TO, target: chile-data-protection, note: "Ficha padre del subdominio."}
+  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del subdominio."}
   - {type: RELATED_TO, target: data-catalog, note: "Donde viven las actividades y sus tags."}
   - {type: RELATED_TO, target: data-lineage, note: "Usos observados de cada activo."}
   - {type: RELATED_TO, target: data-subject-rights-pipeline, note: "El acceso se responde por actividad."}
@@ -56,14 +56,14 @@ relations:
   - {type: RELATED_TO, target: dpia-and-automated-decisions, note: "Las actividades con perfiles o gran escala piden evaluación."}
   - {type: RELATED_TO, target: processors-and-international-transfers, note: "Destinatarios y transferencias de cada actividad."}
 created_at: 2026-10-21
-updated_at: 2026-10-22
+updated_at: 2026-10-24
 last_verified: 2026-10-22
 verification_status: review_required
 ---
 
 ## 1. Resumen
 
-Esta ficha no es asesoría legal: finalidad, base de licitud y plazo los definen el área legal y el negocio; aquí se explica cómo modelarlos y hacerlos cumplir en la plataforma. Es ficha hija de `chile-data-protection`.
+Esta ficha no es asesoría legal: finalidad, base de licitud y plazo los definen el área legal y el negocio; aquí se explica cómo modelarlos y hacerlos cumplir en la plataforma.
 
 El inventario es la base de casi todos los demás controles: sin saber **qué actividad** usa **qué datos**, con **qué base** y **por cuánto tiempo**, no se puede responder un acceso, aplicar retención, dimensionar una vulneración ni detectar un uso indebido. La clave de diseño es modelar la **actividad de tratamiento** como entidad propia y asociarla a los activos: un mismo dataset suele servir a varias actividades con bases distintas.
 
@@ -285,3 +285,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-21: creación (lote F3b-19a).
 - 2026-10-22: upgrade de 19: la base de licitud pasa a la actividad de tratamiento, con usos observados contra registrados y resumen del art. 14 ter.
+- 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.

@@ -3,7 +3,7 @@ id: pattern:data-breach-response
 slug: data-breach-response
 type: pattern
 title: Respuesta ante vulneraciones
-description: "Ficha hija de chile-data-protection. Ante una vulneración, el área legal pregunta cuántas personas, qué datos y si hay sensibles, financieros o de menores de 14; la ley pide reportar sin dilaciones indebidas, registrar siempre y avisar a los titulares en esos casos. Ingeniería lo responde en horas con catálogo, índice de titulares, linaje y logs de acceso preparados. Consulta de alcance y plazos de la Ley 21.663 (art. 9 y Decreto 295), ejecutados en la CI. No es asesoría legal."
+description: "Ante una vulneración, el área legal pregunta cuántas personas, qué datos y si hay sensibles, financieros o de menores de 14; la ley pide reportar sin dilaciones indebidas, registrar siempre y avisar a los titulares en esos casos. Ingeniería lo responde en horas con catálogo, índice de titulares, linaje y logs de acceso preparados. Consulta de alcance y plazos de la Ley 21.663 (art. 9 y Decreto 295), ejecutados en la CI. No es asesoría legal."
 domain: compliance
 subdomain: data-engineering-under-ley-21719
 classification: core
@@ -16,11 +16,11 @@ related_topics: [incident-response]
 aliases: [personal-data-breach-readiness, Preparación técnica ante vulneraciones]
 jurisdiction: [CL]
 legal_basis:
-  - {law: ley-19628, article: "14 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Medidas de seguridad y su acreditación ante un incidente."}
-  - {law: ley-19628, article: "14 sexies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Reporte a la Agencia, registro y aviso a titulares en ciertos casos."}
-  - {law: ley-19628, article: "15 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "El encargado reporta las vulneraciones al responsable."}
-  - {law: ley-19628, article: "34 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "k) omitir las comunicaciones o los registros de vulneraciones es infracción grave; omitir deliberadamente la comunicación es gravísima (art. 34 quáter f))."}
-  - {law: ley-21663, article: "9", url: "https://www.bcn.cl/leychile/navegar?idNorma=1202434", note: "Reporte al CSIRT Nacional para las instituciones del art. 4."}
+  - {law: ley-19628, article: "14 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Medidas de seguridad y su acreditación ante un incidente.", implication: "Evidencia de los controles, fechada antes del incidente."}
+  - {law: ley-19628, article: "14 sexies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Reporte a la Agencia, registro y aviso a titulares en ciertos casos.", implication: "Calcular rápido el alcance: titulares, categorías y edades que tocó el incidente."}
+  - {law: ley-19628, article: "15 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "El encargado reporta las vulneraciones al responsable.", implication: "Canal de reporte con los proveedores."}
+  - {law: ley-19628, article: "34 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "k) omitir las comunicaciones o los registros de vulneraciones es infracción grave; omitir deliberadamente la comunicación es gravísima (art. 34 quáter f)).", implication: "El registro existe aunque no se reporte."}
+  - {law: ley-21663, article: "9", url: "https://www.bcn.cl/leychile/navegar?idNorma=1202434", note: "Reporte al CSIRT Nacional para las instituciones del art. 4.", implication: "Si la institución está obligada, los plazos se calculan desde que se toma conocimiento del incidente; los operadores de importancia vital tienen plazos más cortos."}
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
@@ -53,7 +53,7 @@ sources:
     page_title: "Auditing for Azure SQL Database"
     note: "Auditing for Azure SQL Database: registra los eventos de la base en un log de auditoría en una cuenta de Azure Storage, un workspace de Log Analytics o Event Hubs; ayuda a entender la actividad y a detectar anomalías que podrían indicar problemas de seguridad."
 relations:
-  - {type: RELATED_TO, target: chile-data-protection, note: "Ficha padre del subdominio."}
+  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del subdominio."}
   - {type: RELATED_TO, target: incident-response, note: "El runbook de incidentes, con el paso de datos personales."}
   - {type: RELATED_TO, target: data-subject-rights-pipeline, note: "El índice de titulares."}
   - {type: RELATED_TO, target: processing-activities-inventory, note: "Categorías y actividades afectadas."}
@@ -61,14 +61,14 @@ relations:
   - {type: RELATED_TO, target: processors-and-international-transfers, note: "Vulneraciones en encargados."}
   - {type: RELATED_TO, target: observability-logs, note: "Los logs de acceso."}
 created_at: 2026-10-22
-updated_at: 2026-10-22
+updated_at: 2026-10-24
 last_verified: 2026-10-22
 verification_status: review_required
 ---
 
 ## 1. Resumen
 
-Esta ficha no es asesoría legal: si una vulneración se reporta, y a quién, lo deciden el área legal y seguridad; aquí se explica cómo ingeniería entrega en horas los datos que esa decisión necesita. Es ficha hija de `chile-data-protection`.
+Esta ficha no es asesoría legal: si una vulneración se reporta, y a quién, lo deciden el área legal y seguridad; aquí se explica cómo ingeniería entrega en horas los datos que esa decisión necesita.
 
 Cuando hay un incidente, la primera pregunta es: **¿cuántas personas, qué datos, y hay sensibles, financieros o de menores de 14?** Si la respuesta toma una semana de consultas manuales, el reporte llega tarde. Ingeniería marca la diferencia teniendo listo antes del incidente el catálogo de clasificación, el índice de titulares, el linaje y los logs de acceso. Un mismo incidente puede activar también la Ley 21.663, con plazos propios.
 
@@ -289,3 +289,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-22: creación (upgrade de 19); reemplaza a `personal-data-breach-readiness`, que queda como alias.
+- 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.

@@ -12,6 +12,7 @@ from backend.content import validate as v
 from tests.test_validate import TODAY, assert_error, concept, entity, run, source, write_md, write_yaml
 
 LAW_URL = "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01"
+IMPL = "Cada principio necesita un control y una evidencia."
 
 BODY = f"""## 1. Resumen
 
@@ -56,7 +57,7 @@ def legal_concept(slug: str = "chile-data-protection", **fields: Any) -> dict[st
             {"source": "bcn-leychile", "url": LAW_URL, "accessed": TODAY, "page_title": "Ley Chile - Ley 19628"},
             {"source": "docs-a", "url": "https://example.org/a"},
         ],
-        "legal_basis": [{"law": "ley-19628", "article": "3", "url": LAW_URL}],
+        "legal_basis": [{"law": "ley-19628", "article": "3", "url": LAW_URL, "implication": IMPL}],
     }
     return concept(slug, **{**defaults, **fields})
 
@@ -112,15 +113,20 @@ def test_articles_in_body_and_legal_basis_must_match(content: Path) -> None:
 
 
 def test_article_in_two_laws_needs_the_law_in_the_label(content: Path) -> None:
-    basis = [{"law": "ley-19628", "article": "3", "url": LAW_URL}, {"law": "ley-21663", "article": "3", "url": LAW_URL}]
+    basis = [{"law": "ley-19628", "article": "3", "url": LAW_URL, "implication": IMPL}, {"law": "ley-21663", "article": "3", "url": LAW_URL, "implication": IMPL}]
     assert_error(setup(content, legal_basis=basis), "art. 3 existe en varias leyes: la etiqueta debe nombrar la ley")
     report = setup(content, BODY.replace("art. 3]", "Ley 19.628, art. 3]") + "\n**[Obligación legal · Ley 21.663, art. 3]** Otra.\n",
                    legal_basis=basis)
     assert report.ok, report.errors
 
 
+def test_legal_basis_needs_an_implication(content: Path) -> None:
+    basis = [{"law": "ley-19628", "article": "3", "url": LAW_URL}]
+    assert_error(setup(content, legal_basis=basis), "[legal_basis.0]", "'implication' is a required property")
+
+
 def test_legal_basis_url_must_be_a_legislative_citation(content: Path) -> None:
-    basis = [{"law": "ley-19628", "article": "3", "url": "https://example.org/a"}]
+    basis = [{"law": "ley-19628", "article": "3", "url": "https://example.org/a", "implication": IMPL}]
     assert_error(setup(content, legal_basis=basis), "[legal_basis.0.url] no es una cita legislative")
 
 

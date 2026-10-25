@@ -3,7 +3,7 @@ id: concept:processors-and-international-transfers
 slug: processors-and-international-transfers
 type: concept
 title: Encargados y transferencias internacionales
-description: "Ficha hija de chile-data-protection. Una plataforma está llena de encargados: nube, SaaS, ETL gestionado, observabilidad, APIs de LLM y proveedores. Cada uno necesita contrato de encargo y, si procesa fuera de Chile, un mecanismo de transferencia; al terminar, suprime o devuelve. Ingeniería mantiene el inventario de flujos (dataset → proveedor → país → contrato → mecanismo) y la CI falla con brechas. Ejemplo ejecutado en la CI. Políticas de regiones de las tres nubes. No es asesoría legal."
+description: "Una plataforma está llena de encargados: nube, SaaS, ETL gestionado, observabilidad, APIs de LLM y proveedores. Cada uno necesita contrato de encargo y, si procesa fuera de Chile, un mecanismo de transferencia; al terminar, suprime o devuelve. Ingeniería mantiene el inventario de flujos (dataset → proveedor → país → contrato → mecanismo) y la CI falla con brechas. Ejemplo ejecutado en la CI. Políticas de regiones de las tres nubes. No es asesoría legal."
 domain: compliance
 subdomain: data-engineering-under-ley-21719
 category: compliance
@@ -17,14 +17,14 @@ related_topics: [processing-activities-inventory]
 aliases: [international-data-transfers, Transferencias internacionales de datos]
 jurisdiction: [CL]
 legal_basis:
-  - {law: ley-19628, article: "1 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "b) se aplica al mandatario que trata a nombre de un responsable en Chile, aunque esté fuera."}
-  - {law: ley-19628, article: "2", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "v) cesión; x) encargado."}
-  - {law: ley-19628, article: "14 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "h) informar las transferencias y si el destino es adecuado."}
-  - {law: ley-19628, article: "15", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Cesión por escrito; el cesionario pasa a ser responsable."}
-  - {law: ley-19628, article: "15 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Encargo, subencargo autorizado, secreto, seguridad, reporte y supresión al terminar."}
-  - {law: ley-19628, article: "27", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Cuándo es lícita la transferencia internacional."}
-  - {law: ley-19628, article: "28", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Países adecuados y garantías; el responsable acredita la transferencia."}
-  - {law: ley-19628, article: "34 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "m) transferir en contravención a la ley es infracción grave; a sabiendas es gravísima (art. 34 quáter h))."}
+  - {law: ley-19628, article: "1 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "b) se aplica al mandatario que trata a nombre de un responsable en Chile, aunque esté fuera.", implication: "El proveedor extranjero también queda alcanzado."}
+  - {law: ley-19628, article: "2", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "v) cesión; x) encargado.", implication: "Clasificar cada proveedor como encargado o cesionario."}
+  - {law: ley-19628, article: "14 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "h) informar las transferencias y si el destino es adecuado.", implication: "El inventario alimenta la política."}
+  - {law: ley-19628, article: "15", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Cesión por escrito; el cesionario pasa a ser responsable.", implication: "Registrar la cesión aparte del encargo: el cesionario pasa a ser responsable."}
+  - {law: ley-19628, article: "15 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Encargo, subencargo autorizado, secreto, seguridad, reporte y supresión al terminar.", implication: "Inventario de encargados, subencargados y cierre."}
+  - {law: ley-19628, article: "27", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Cuándo es lícita la transferencia internacional.", implication: "Cada flujo al exterior necesita un mecanismo."}
+  - {law: ley-19628, article: "28", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Países adecuados y garantías; el responsable acredita la transferencia.", implication: "El inventario guarda el mecanismo de cada transferencia y su evidencia."}
+  - {law: ley-19628, article: "34 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "m) transferir en contravención a la ley es infracción grave; a sabiendas es gravísima (art. 34 quáter h)).", implication: "Bloquear los flujos no aprobados."}
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
@@ -47,20 +47,20 @@ sources:
     page_title: "Azure Policy built-in policy definitions"
     note: "Azure Policy built-in policy definitions: «Allowed locations» restringe las ubicaciones que la organización puede usar al desplegar recursos, para requisitos de geocumplimiento; excluye resource groups, Microsoft.AzureActiveDirectory/b2cDirectories y los recursos de la región «global»; efectos Audit, Deny o Disabled."
 relations:
-  - {type: RELATED_TO, target: chile-data-protection, note: "Ficha padre del subdominio."}
+  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del subdominio."}
   - {type: RELATED_TO, target: processing-activities-inventory, note: "Destinatarios y transferencias por actividad."}
   - {type: RELATED_TO, target: chilean-identifier-pseudonymization, note: "Seudonimizar lo que sale si el proveedor no necesita identificar."}
   - {type: RELATED_TO, target: retention-and-erasure, note: "Supresión o devolución al cierre."}
   - {type: RELATED_TO, target: data-breach-response, note: "El encargado reporta las vulneraciones."}
 created_at: 2026-10-22
-updated_at: 2026-10-22
+updated_at: 2026-10-24
 last_verified: 2026-10-22
 verification_status: review_required
 ---
 
 ## 1. Resumen
 
-Esta ficha no es asesoría legal: contratos, cláusulas y la elección del mecanismo de transferencia son del área legal; aquí se explica cómo ingeniería sabe y demuestra hacia dónde van los datos. Es ficha hija de `chile-data-protection`.
+Esta ficha no es asesoría legal: contratos, cláusulas y la elección del mecanismo de transferencia son del área legal; aquí se explica cómo ingeniería sabe y demuestra hacia dónde van los datos.
 
 Una plataforma moderna está llena de encargados: nube, herramientas SaaS, ETL gestionado, observabilidad, APIs de LLM y otros proveedores. Cada uno que toca datos personales necesita contrato de encargo y, si procesa fuera de Chile, un mecanismo de transferencia. Ingeniería es quien sabe **qué datos salen, hacia qué servicio y en qué región**; sin ese inventario, el área legal no puede firmar lo correcto.
 
@@ -276,3 +276,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-22: creación (upgrade de 19); reemplaza a `international-data-transfers`, que queda como alias.
+- 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
