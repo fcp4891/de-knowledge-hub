@@ -7,7 +7,7 @@ pyspark==4.2.0                   # pyspark-dataframes §10 en modo local; requie
 # 09-aws (ADR-011): los snippets con boto3 se ejecutan en los tests contra moto, sin cuenta de AWS ni credenciales.
 boto3>=1.43,<2                         # cliente de AWS que usan los snippets de 09-aws
 moto[s3,glue,kinesis,cloudwatch,sagemaker]>=5.2.4,<6  # simula S3, Glue Data Catalog, Kinesis, CloudWatch y SageMaker AI en memoria para ejecutar esos snippets sin costo
-boto3-stubs[s3,glue,kinesis,cloudwatch,sagemaker,bedrock]>=1.43,<2  # tipos de boto3 para revisar esos snippets con mypy --strict
+boto3-stubs[s3,glue,kinesis,cloudwatch,sagemaker,bedrock,bedrock-runtime]>=1.43,<2  # tipos de boto3 para revisar esos snippets con mypy --strict; bedrock-runtime: Converse y CountTokens con Stubber (ADR-025)
 mypy>=2.4,<3                           # mypy --strict sobre los snippets de boto3 en los tests
 # 10-azure (ADR-013): los snippets de Blob se ejecutan en los tests contra Azurite, el emulador de Azure Storage.
 azure-storage-blob>=12.31,<13          # SDK de Blob que usan los snippets de 10-azure; trae sus tipos para mypy --strict
@@ -22,3 +22,6 @@ opentelemetry-api==1.45.1              # API de OpenTelemetry, versión fija (AD
 opentelemetry-sdk==1.45.1              # SDK de OpenTelemetry con InMemoryMetricReader, sin collector (ADR-020); PyPI 2026-10-06
 openlineage-python==1.54.0             # cliente de OpenLineage con transporte a archivo, sin backend (ADR-021); PyPI 2026-10-12
 cryptography==50.0.2                   # AES-GCM, key wrap y X.509 para los ejemplos de cifrado (ADR-022); PyPI 2026-09-30
+# 21-ai-for-data-engineering (ADR-025): sin APIs pagadas; vectores deterministas con numpy y embeddings locales.
+numpy>=1.26,<3                         # opción A: vectores por hashing de n-gramas, sin descargas (ya llegaba con great_expectations)
+fastembed==0.9.0                       # opción B, solo embeddings y rag: modelo ONNX local, revisión fijada en el test; PyPI 2026-10-07

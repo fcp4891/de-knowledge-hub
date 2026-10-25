@@ -57,8 +57,14 @@ jobs:
         with:
           terraform_version: "1.16.6"
           terraform_wrapper: false
+      # Modelo local de embeddings de 21 (ADR-025): caché por revisión; si la descarga falla, ese test queda «no ejecutado».
+      - uses: actions/cache@v6
+        with:
+          path: ~/.cache/dekh-models
+          key: dekh-models-faf4aa4225822f3bc6376869cb1164e8e3feedd0
       - run: make test
         env:
+          PYTEST_ADDOPTS: "-rs"  # los saltos aparecen con su motivo en el resumen (ADR-025)
           REQUIRE_PYSPARK: "1"  # en la CI el test de PySpark no se salta: falla si falta pyspark o Java
           REQUIRE_AWS_SNIPPETS: "1"  # los snippets de boto3 se ejecutan contra moto (ADR-011): falla si falta moto
           REQUIRE_AZURITE: "1"  # los snippets de Blob se ejecutan contra Azurite (ADR-013): falla si no responde
