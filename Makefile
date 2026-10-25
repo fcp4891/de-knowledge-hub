@@ -66,8 +66,12 @@ BASE_PATH ?= /aprendizaje-continuo
 static-data: validate
 	$(PYTHON) -m scripts.static.build_static_data
 
+# Git Bash convertiría --base-path /aprendizaje-continuo en una ruta de Windows. Las variables se exportan
+# desde make (no como prefijo del comando), así funciona igual con cmd.exe, Git Bash y sh en Linux.
+static: export MSYS_NO_PATHCONV := 1
+static: export MSYS2_ARG_CONV_EXCL := *
 static: static-data
-	MSYS_NO_PATHCONV=1 MSYS2_ARG_CONV_EXCL="*" $(PYTHON) -m scripts.static.package_static --base-path $(BASE_PATH)
+	$(PYTHON) -m scripts.static.package_static --base-path $(BASE_PATH)
 
 db-up:
 	docker compose up -d --wait
