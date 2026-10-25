@@ -16,6 +16,7 @@ from backend.db.compiler import compile_content
 from scripts.contracts import build_mocks
 from tests.conftest import temporary_database
 from tests.test_api import validate_response
+from tests.test_compiler import TMP_TECHNOLOGY
 from tests.test_contract import INDEX, MOCKS
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -225,15 +226,16 @@ def test_compiler_never_touches_personal_state(content: Path) -> None:
 
 def test_orphaned_state_is_kept_but_hidden(content: Path) -> None:
     with temporary_database() as engine, TestClient(create_app(engine)) as api:
+        # Tecnología temporal sin referencias (desde F3b-21b las fichas de retrieval citan pgvector).
+        tech = content / "technologies" / "tmp-vector-store.yaml"
+        tech.write_text(TMP_TECHNOLOGY, encoding="utf-8")
         compile_content(engine, content, SCHEMAS)
-        api.put(f"{ME}/favorites/pgvector", json={"favorite": True})
-        api.put(f"{ME}/study-state/pgvector", json={"state": "reviewing"})
+        api.put(f"{ME}/favorites/tmp-vector-store", json={"favorite": True})
+        api.put(f"{ME}/study-state/tmp-vector-store", json={"state": "reviewing"})
         assert api.get(f"{ME}/favorites").json()["total"] == 1
-        blueprint = content / "blueprint" / "21-ai-for-data-engineering.yaml"
-        blueprint.write_text(blueprint.read_text(encoding="utf-8").replace("        related_technologies: [pgvector]\n", ""), encoding="utf-8")
-        (content / "technologies" / "pgvector.yaml").unlink()
+        tech.unlink()
         compile_content(engine, content, SCHEMAS)
         assert api.get(f"{ME}/favorites").json()["total"] == 0
         assert api.get(f"{ME}/study-state").json()["total"] == 0
-        assert api.get(f"{ME}/favorites/pgvector").status_code == 404
+        assert api.get(f"{ME}/favorites/tmp-vector-store").status_code == 404
         assert personal_rows(engine) == (1, 0, 1)
