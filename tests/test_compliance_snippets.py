@@ -69,7 +69,11 @@ STDLIB = {
         "'avisar_a_titulares': True}", "'tablas': ['gold.vuelos_agregados'], 'titulares_aprox': 0",
         "'avisar_a_titulares': False}",
         "plazos Ley 21.663 (no operador vital): {'alerta_temprana': '2026-10-22T12:40', "
-        "'actualizacion': '2026-10-25T09:40', 'informe_final': '2026-11-06T12:40'}"],
+        "'actualizacion': '2026-10-25T09:40', 'informe_final': '2026-11-06T12:40'}",
+        "plazos Ley 21.663 (operador vital, sin servicios esenciales afectados): {'alerta_temprana': '2026-10-22T12:40', "
+        "'actualizacion': '2026-10-25T09:40', 'informe_final': '2026-11-06T12:40', 'plan_de_accion': '2026-10-29T09:40'}",
+        "plazos Ley 21.663 (operador vital, servicios esenciales afectados): {'alerta_temprana': '2026-10-22T12:40', "
+        "'actualizacion': '2026-10-23T09:40', 'informe_final': '2026-11-06T12:40', 'plan_de_accion': '2026-10-29T09:40'}"],
     "dpia-and-automated-decisions": [
         "score_fraude_pagos → EIPD obligatoria por: ['a) perfilamiento con efectos significativos', "
         "'b) tratamiento masivo o a gran escala']",

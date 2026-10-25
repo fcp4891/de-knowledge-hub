@@ -28,9 +28,9 @@ legal_basis:
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    accessed: 2026-10-22
+    accessed: 2026-10-25
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-22. Art. 1 bis b): se aplica cuando el mandatario, cualquiera sea su lugar de establecimiento, trata a nombre de un responsable establecido en Chile. Art. 2 v): cesión es la transferencia a otro responsable; x): encargado es quien trata por cuenta del responsable. Art. 14 ter h): informar las transferencias a terceros países y si ofrecen un nivel adecuado. Art. 15: la cesión consta por escrito y el cesionario pasa a ser responsable. Art. 15 bis: el encargado trata según el encargo y las instrucciones; no puede usar los datos para otro fin ni cederlos sin autorización; no delega sin autorización específica y por escrito; cumple los arts. 14 bis y 14 quinquies; reporta las vulneraciones al responsable; al terminar, suprime o devuelve los datos. Art. 27: transferencia lícita a) a un país adecuado, b) con cláusulas contractuales, normas corporativas vinculantes u otros instrumentos con garantías, c) con un modelo de cumplimiento o certificación; sin ellos, solo transferencias específicas y no habituales en los supuestos que enumera. Art. 28: la Agencia determina los países adecuados y pondrá en su sitio web un listado y modelos de cláusulas; el responsable acredita ante la Agencia que la transferencia se hizo conforme a la ley. Art. 34 ter m): transferir en contravención a la ley es grave; art. 34 quáter h): a sabiendas, gravísima."
+    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-25. Art. 1 bis b): se aplica cuando el mandatario, cualquiera sea su lugar de establecimiento, trata a nombre de un responsable establecido en Chile. Art. 2 v): cesión es la transferencia a otro responsable; x): encargado es quien trata por cuenta del responsable. Art. 14 ter h): informar las transferencias a terceros países y si ofrecen un nivel adecuado. Art. 15: la cesión consta por escrito y el cesionario pasa a ser responsable. Art. 15 bis: el encargado trata según el encargo y las instrucciones; no puede usar los datos para otro fin ni cederlos sin autorización; no delega sin autorización específica y por escrito; cumple los arts. 14 bis y 14 quinquies; reporta las vulneraciones al responsable; al terminar, suprime o devuelve los datos. Art. 27: transferencia lícita a) a un país adecuado, b) con cláusulas contractuales, normas corporativas vinculantes u otros instrumentos con garantías, c) con un modelo de cumplimiento o certificación; sin ellos, solo transferencias específicas y no habituales en los supuestos que enumera. Art. 28: la Agencia determina los países adecuados y pondrá en su sitio web un listado y modelos de cláusulas; el responsable acredita ante la Agencia que la transferencia se hizo conforme a la ley. Art. 34 ter m): transferir en contravención a la ley es grave; art. 34 quáter h): a sabiendas, gravísima."
   - source: gcp-organization-policy-docs
     url: https://docs.cloud.google.com/organization-policy/restrict-locations
     accessed: 2026-10-21
@@ -53,8 +53,8 @@ relations:
   - {type: RELATED_TO, target: retention-and-erasure, note: "Supresión o devolución al cierre."}
   - {type: RELATED_TO, target: data-breach-response, note: "El encargado reporta las vulneraciones."}
 created_at: 2026-10-22
-updated_at: 2026-10-24
-last_verified: 2026-10-22
+updated_at: 2026-10-25
+last_verified: 2026-10-25
 verification_status: review_required
 ---
 
@@ -67,7 +67,7 @@ Una plataforma moderna está llena de encargados: nube, herramientas SaaS, ETL g
 ## 2. Qué es
 
 - **[Obligación legal · art. 2]** **Encargado:** trata datos por cuenta del responsable (letra x)). **Cesión:** transferencia a otro responsable, que decide sus propios fines (letra v)).
-- **[Obligación legal · art. 15]** La cesión consta por escrito y el cesionario pasa a ser responsable: distinguir cesión de encargo.
+- **[Obligación legal · art. 15]** La cesión consta por escrito o por un medio electrónico idóneo, y el cesionario pasa a ser responsable. **[Buena práctica]** Distinguir cesión de encargo en el inventario.
 - **[Obligación legal · art. 15 bis]** El encargado trata según el encargo; no usa los datos para otro fin, no los cede ni subcontrata sin autorización escrita; cumple secreto y seguridad; reporta las vulneraciones; al terminar suprime o devuelve.
 - **[Obligación legal · art. 1 bis]** La ley alcanza al encargado que trata a nombre de un responsable en Chile, aunque esté fuera.
 - **[Obligación legal · art. 27]** **Transferencia internacional:** lícita a un país adecuado, con cláusulas o normas corporativas vinculantes, o con un modelo o certificación; sin eso, solo excepciones específicas y no habituales.
@@ -78,16 +78,16 @@ Una plataforma moderna está llena de encargados: nube, herramientas SaaS, ETL g
 
 **[Buena práctica]** Casos típicos sin control: un equipo envía tickets de soporte con nombres y RUT a una API de LLM en otro país; un SaaS de email recibe la base completa de clientes; un proveedor conserva copias tras cerrar el contrato.
 
-**[Obligación legal · art. 34 ter]** Transferir en contravención a la ley es infracción grave (letra m)); hacerlo a sabiendas, gravísima (art. 34 quáter h)).
+**[Obligación legal · art. 34 ter]** Transferir en contravención a la ley es infracción grave (letra m)); hacerlo a sabiendas, gravísima (art. 34 quáter h)). **[Decisión de arquitectura]** Bloquear los flujos no aprobados.
 
 ## 4. Cómo funciona
 
 1. **[Buena práctica]** Inventariar los flujos salientes: reverse ETL, exportaciones, integraciones y llamadas a APIs.
 2. **[Decisión de arquitectura]** Elegir región: si el servicio está disponible en una región en Chile, preferirla para datos personales.
-3. **[Obligación legal · art. 27]** Para cada flujo al exterior, el área legal define el mecanismo; ingeniería lo registra.
+3. **[Obligación legal · art. 27]** Una transferencia internacional necesita una de las vías del artículo. **[Decisión de arquitectura]** El área legal elige el mecanismo de cada flujo e ingeniería lo registra.
 4. **[Buena práctica]** Minimizar lo que sale: solo campos necesarios, seudonimizados cuando el proveedor no necesita identificar.
-5. **[Obligación legal · art. 15 bis]** Al terminar, exigir y guardar constancia de supresión o devolución.
-6. **[Obligación legal · art. 14 ter]** El inventario alimenta la información pública sobre transferencias (letra h)).
+5. **[Obligación legal · art. 15 bis]** Al terminar el servicio, el encargado suprime o devuelve los datos. **[Buena práctica]** Exigir y guardar la constancia.
+6. **[Obligación legal · art. 14 ter]** La información pública incluye las transferencias a terceros países y si estos ofrecen un nivel adecuado de protección (letra h)). **[Decisión de arquitectura]** El inventario la alimenta.
 7. **[Buena práctica]** La CI bloquea flujos nuevos sin registro.
 
 ## 5. Cuándo utilizarlo
@@ -227,7 +227,7 @@ En Azure, **Azure Policy**. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERS
 
 - **[Buena práctica]** Verificar la región de cada servicio gestionado, no solo la del almacenamiento: logs, respaldos y soporte pueden estar en otro país.
 - **[Buena práctica]** **Seguridad:** credenciales por proveedor, revocables al cierre.
-- **[Obligación legal · art. 15 bis]** **GenAI:** una API de LLM que recibe datos personales es un encargado; revisar si retiene prompts o los usa para entrenar, y preferir opciones sin retención y con región conocida.
+- **[Buena práctica]** **GenAI:** tratar como encargado (art. 15 bis) una API de LLM que recibe datos personales; revisar si retiene prompts o los usa para entrenar, y preferir opciones sin retención y con región conocida.
 - **[Buena práctica]** **Observabilidad:** alertas por volumen anómalo de datos salientes.
 - **[Buena práctica]** **Costo:** mientras la Agencia no publique países adecuados ni modelos de cláusulas, preparar los flujos para cláusulas contractuales.
 
@@ -271,9 +271,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-22: arts. 1 bis, 2, 14 ter, 15, 15 bis, 27, 28, 34 ter y 34 quáter consultados ese día en BCN. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-22: arts. 1 bis, 2, 14 ter, 15, 15 bis, 27, 28, 34 ter y 34 quáter consultados ese día en BCN. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-22: creación (upgrade de 19); reemplaza a `international-data-transfers`, que queda como alias.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
+- 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.

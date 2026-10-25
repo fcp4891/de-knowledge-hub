@@ -3,7 +3,7 @@ id: pattern:privacy-controls-as-code
 slug: privacy-controls-as-code
 type: pattern
 title: Controles de privacidad como código
-description: "Un control documentado no es un control implementado: la ley pide verificar regularmente que las medidas funcionan y acreditarlo tras un incidente. Reglas como código que leen el estado real de la plataforma (etiquetas, máscaras, lectores, ambientes, retención, dueño) y también el cambio (SELECT * sobre tablas personales, datos en logs, contrato de datos incompleto), fallan la CI y publican cobertura. Ejemplo ejecutado en la CI. No es asesoría legal."
+description: "Un control documentado no es un control implementado: la ley pide verificar regularmente que las medidas funcionan y, ante un incidente con controversia, acreditarlo. Reglas como código que leen el estado real de la plataforma (etiquetas, máscaras, lectores, ambientes, retención, dueño) y también el cambio (SELECT * sobre tablas personales, datos en logs, contrato de datos incompleto), fallan la CI y publican cobertura. Ejemplo ejecutado en la CI. No es asesoría legal."
 domain: compliance
 subdomain: data-engineering-under-ley-21719
 classification: core
@@ -18,19 +18,18 @@ jurisdiction: [CL]
 legal_basis:
   - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "c) proporcionalidad; e) responsabilidad.", implication: "Reglas de proporcionalidad (c) y controles con dueño (e)."}
   - {law: ley-19628, article: "14 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Medidas desde el diseño y por defecto.", implication: "Reglas en la CI, antes de producción."}
-  - {law: ley-19628, article: "14 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Seguridad acorde al riesgo; d) verificación regular de su eficacia; acreditación tras un incidente.", implication: "Verificación continua y evidencia fechada."}
+  - {law: ley-19628, article: "14 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Seguridad acorde al riesgo; d) verificación regular de su eficacia; ante un incidente, si hay controversia judicial o administrativa, el responsable acredita sus medidas.", implication: "Verificación continua y evidencia fechada."}
   - {law: ley-19628, article: "14 septies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Estándares diferenciados que fijará la Agencia por instrucción general.", implication: "Ajustar los umbrales cuando la Agencia publique los estándares."}
   - {law: ley-19628, article: "36", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Atenuante n.º 5: deberes de dirección y supervisión acreditados con el certificado del art. 51.", implication: "Las métricas de esta ficha son evidencia de diligencia."}
-  - {law: ley-19628, article: "49", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Modelo de prevención de infracciones voluntario; reglamento en el Decreto 662.", implication: "Las métricas de esta ficha son evidencia para el modelo de prevención."}
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    accessed: 2026-10-22
+    accessed: 2026-10-25
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-22. Art. 3 c): datos estrictamente necesarios; e): quienes tratan datos son responsables del cumplimiento. Art. 14 quáter: medidas técnicas y organizativas desde el diseño y, por defecto, solo los datos necesarios. Art. 14 quinquies: medidas acordes al riesgo, entre ellas d) un proceso de verificación, evaluación y valoración regulares de su eficacia; ante un incidente, el responsable acredita la existencia y el funcionamiento de las medidas. Art. 14 septies: la Agencia fijará por instrucción general estándares diferenciados según tipo de dato, tamaño de la entidad, actividad y volumen. Art. 36 n.º 5: es atenuante haber cumplido los deberes de dirección y supervisión, verificado con el certificado del art. 51. Art. 49: modelo de prevención de infracciones voluntario, con, entre otros, identificación de los datos tratados, de los procesos con riesgo de infracción y de protocolos para prevenirlas."
+    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-25. Art. 3 c): datos estrictamente necesarios; e): quienes tratan datos son responsables del cumplimiento. Art. 14 quáter: medidas técnicas y organizativas desde el diseño y, por defecto, solo los datos necesarios. Art. 14 quinquies: medidas acordes al riesgo, entre ellas d) un proceso de verificación, evaluación y valoración regulares de su eficacia; ante un incidente, el responsable acredita la existencia y el funcionamiento de las medidas. Art. 14 septies: la Agencia fijará por instrucción general estándares diferenciados según tipo de dato, tamaño de la entidad, actividad y volumen. Art. 36 n.º 5: es atenuante haber cumplido los deberes de dirección y supervisión, verificado con el certificado del art. 51. Art. 49: modelo de prevención de infracciones voluntario, con, entre otros, identificación de los datos tratados, de los procesos con riesgo de infracción y de protocolos para prevenirlas."
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=1227971
-    accessed: 2026-10-22
+    accessed: 2026-10-25
     page_title: "Decreto 662 APRUEBA REGLAMENTO QUE REGULA LOS REQUISITOS, MODALIDADES Y PROCEDIMIENTOS PARA LA IMPLEMENTACIÓN, CERTIFICACIÓN, REGISTRO Y SUPERVISIÓN DE LOS MODELOS DE PREVENCIÓN DE INFRACCIONES A QUE SE REFIERE EL ARTÍCULO 49 QUE INCORPORA LA LEY N° 21.719 A LA LEY N° 19.628"
     note: "Decreto 662 del Ministerio de Hacienda, publicado el 2026-09-09: reglamento de la implementación, certificación, registro y supervisión de los modelos de prevención de infracciones del art. 49."
   - source: gcp-bigquery-docs
@@ -66,8 +65,8 @@ relations:
   - {type: RELATED_TO, target: pii-identification, note: "Columnas personales y patrones de RUT y correo."}
   - {type: RELATED_TO, target: column-level-security, note: "Máscaras y lectores por columna."}
 created_at: 2026-10-22
-updated_at: 2026-10-24
-last_verified: 2026-10-22
+updated_at: 2026-10-25
+last_verified: 2026-10-25
 verification_status: review_required
 ---
 
@@ -75,11 +74,11 @@ verification_status: review_required
 
 Esta ficha no es asesoría legal: explica cómo convertir los requisitos de la ley en reglas verificables que corren en la CI y en producción.
 
-Un control documentado no es un control implementado. La ley pide verificar regularmente que las medidas funcionan y poder acreditarlo después de un incidente. Eso se resuelve como cualquier otro requisito de ingeniería: **reglas como código** que leen el **estado real** de la plataforma (etiquetas, máscaras, permisos, retención, ambientes) y el **cambio** que se quiere desplegar (SQL, logs, contrato de datos), fallan la CI cuando algo no cumple y publican métricas de cobertura.
+Un control documentado no es un control implementado. La ley pide verificar regularmente que las medidas funcionan y, si después de un incidente hay una controversia judicial o administrativa, acreditar que existían y funcionaban. Eso se resuelve como cualquier otro requisito de ingeniería: **reglas como código** que leen el **estado real** de la plataforma (etiquetas, máscaras, permisos, retención, ambientes) y el **cambio** que se quiere desplegar (SQL, logs, contrato de datos), fallan la CI cuando algo no cumple y publican métricas de cobertura.
 
 ## 2. Qué es
 
-- **[Obligación legal · art. 14 quinquies]** Las medidas de seguridad incluyen un proceso de verificación, evaluación y valoración regulares de su eficacia (letra d)); tras un incidente, el responsable acredita que existían y funcionaban.
+- **[Obligación legal · art. 14 quinquies]** Las medidas de seguridad incluyen un proceso de verificación, evaluación y valoración regulares de su eficacia (letra d)); ante un incidente, si hay controversia judicial o administrativa, el responsable acredita que existían y funcionaban.
 - **[Obligación legal · art. 14 quáter]** Medidas desde el diseño y, por defecto, solo los datos necesarios.
 - **[Decisión de arquitectura]** **Política como código:** regla versionada que evalúa metadatos o el cambio y devuelve cumple o no cumple.
 - **[Buena práctica]** **Dos momentos de evaluación:** en la CI (cambios de esquema, SQL y pipelines nuevos) y programada en producción (deriva de configuración, permisos agregados a mano).
@@ -92,10 +91,10 @@ Un control documentado no es un control implementado. La ley pide verificar regu
 ## 4. Cómo funciona
 
 1. **[Buena práctica]** Extraer metadatos reales: catálogo, permisos, configuración de retención, resultados del escaneo de datos personales.
-2. **[Obligación legal · art. 3]** Expresar cada requisito como regla con umbral: «toda tabla con retención y dueño», «sin `SELECT *` sobre tablas personales», «contrato con finalidad, base y retención».
+2. **[Obligación legal · art. 3]** Solo los datos necesarios para el fin (letra c)), y quienes tratan los datos responden por el cumplimiento (letra e)). **[Buena práctica]** Expresar cada requisito como regla con umbral: «toda tabla con retención y dueño», «sin `SELECT *` sobre tablas personales», «contrato con finalidad, base y retención».
 3. **[Buena práctica]** Correr las reglas en la CI sobre los cambios y diariamente sobre producción.
 4. **[Buena práctica]** Fallar con código distinto de cero; las excepciones se aprueban explícitamente, con fecha de vencimiento.
-5. **[Obligación legal · art. 49]** Publicar métricas y guardar los resultados como evidencia fechada: alimentan la matriz de `chile-data-protection` y un modelo de prevención de infracciones, si se adopta.
+5. **[Buena práctica]** Publicar métricas y guardar los resultados como evidencia fechada: alimentan la matriz de `chile-data-protection` y, si el responsable adopta el modelo de prevención de infracciones, que es voluntario (art. 49), sirven a su certificación, que opera como atenuante (art. 36 n.º 5).
 
 ## 5. Cuándo utilizarlo
 
@@ -258,8 +257,8 @@ En Azure, **Unity Catalog** y **Azure Policy**. Según *Ley 19628 SOBRE PROTECCI
 - **[Buena práctica]** Empezar con pocas reglas bloqueantes y muchas informativas; endurecer cuando la cobertura suba.
 - **[Buena práctica]** **Seguridad:** el job de reglas usa una identidad de solo lectura sobre metadatos, sin acceso a los datos.
 - **[Buena práctica]** **Observabilidad:** alertar por regresión de cobertura, no solo por fallas.
-- **[Obligación legal · art. 14 septies]** Ajustar los umbrales cuando la Agencia publique los estándares diferenciados por tipo de dato, tamaño y volumen.
-- **[Obligación legal · art. 36]** Las métricas y su historial son evidencia de los deberes de dirección y supervisión, que con el certificado del art. 51 es atenuante (n.º 5).
+- **[Obligación legal · art. 14 septies]** La Agencia fijará por instrucción general estándares diferenciados según el tipo de dato, el tamaño de la entidad y el volumen. **[Buena práctica]** Ajustar los umbrales cuando se publiquen.
+- **[Obligación legal · art. 36]** Es atenuante haber cumplido diligentemente los deberes de dirección y supervisión, lo que se verifica con el certificado del art. 51 (n.º 5). **[Buena práctica]** Las métricas y su historial respaldan ese cumplimiento.
 - **[Buena práctica]** **Costo:** evaluar sobre metadatos, no escanear datos completos en cada corrida.
 
 ## 15. Errores frecuentes
@@ -303,9 +302,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-22: arts. 3, 14 quáter, 14 quinquies, 14 septies, 36 y 49 y Decreto 662 consultados ese día en BCN. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-22: arts. 3, 14 quáter, 14 quinquies, 14 septies, 36 y 49 y Decreto 662 consultados ese día en BCN. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-22: creación (upgrade de 19); reemplaza a `privacy-by-design-checklist`, que queda como alias; rescata sus reglas de `SELECT *`, datos en logs y contrato de datos.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
+- 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.

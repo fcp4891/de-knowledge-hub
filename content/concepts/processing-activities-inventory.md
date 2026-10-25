@@ -24,9 +24,9 @@ legal_basis:
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    accessed: 2026-10-22
+    accessed: 2026-10-25
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-22. Art. 3 a): el responsable deberá ser capaz de acreditar la licitud; b): fines específicos, explícitos y lícitos; no se trata con fines distintos salvo fines compatibles, relación contractual o precontractual que lo justifique, nuevo consentimiento o ley. Art. 12: consentimiento libre, informado y específico en cuanto a su finalidad, previo e inequívoco; revocable en cualquier momento con medios similares; corresponde al responsable probar que contó con él. Art. 13: otras bases: a) obligaciones económicas según el Título III, b) obligación legal, c) contrato o medidas precontractuales, d) interés legítimo, e) defensa de un derecho; el responsable acredita la licitud. Art. 14 a): informar y poner a disposición del titular los antecedentes de licitud. Art. 14 ter: política de tratamiento pública con categorías de datos, universo de titulares, destinatarios, finalidades, base de legitimidad e intereses legítimos, seguridad, derechos, transferencias, plazo de conservación, fuente y decisiones automatizadas. Art. 34 ter a): tratar sin base o con finalidad distinta es infracción grave."
+    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-25. Art. 3 a): el responsable deberá ser capaz de acreditar la licitud; b): fines específicos, explícitos y lícitos; no se trata con fines distintos salvo fines compatibles, relación contractual o precontractual que lo justifique, nuevo consentimiento o ley. Art. 12: consentimiento libre, informado y específico en cuanto a su finalidad, previo e inequívoco; revocable en cualquier momento con medios similares; corresponde al responsable probar que contó con él. Art. 13: otras bases: a) obligaciones económicas según el Título III, b) obligación legal, c) contrato o medidas precontractuales, d) interés legítimo, e) defensa de un derecho; el responsable acredita la licitud. Art. 14 a): informar y poner a disposición del titular los antecedentes de licitud. Art. 14 ter: política de tratamiento pública con categorías de datos, universo de titulares, destinatarios, finalidades, base de legitimidad e intereses legítimos, seguridad, derechos, transferencias, plazo de conservación, fuente y decisiones automatizadas. Art. 34 ter a): tratar sin base o con finalidad distinta es infracción grave."
   - source: gcp-knowledge-catalog-docs
     url: https://docs.cloud.google.com/knowledge-catalog/docs/about-data-lineage
     accessed: 2026-10-20
@@ -56,8 +56,8 @@ relations:
   - {type: RELATED_TO, target: dpia-and-automated-decisions, note: "Las actividades con perfiles o gran escala piden evaluación."}
   - {type: RELATED_TO, target: processors-and-international-transfers, note: "Destinatarios y transferencias de cada actividad."}
 created_at: 2026-10-21
-updated_at: 2026-10-24
-last_verified: 2026-10-22
+updated_at: 2026-10-25
+last_verified: 2026-10-25
 verification_status: review_required
 ---
 
@@ -80,7 +80,7 @@ El inventario es la base de casi todos los demás controles: sin saber **qué ac
 
 **[Buena práctica]** Con la base asignada al dataset, un modelo de fraude que lee la tabla de clientes «hereda» la base de marketing y nadie lo nota. Con actividades explícitas y usos observados, ese uso aparece como no registrado.
 
-**[Obligación legal · art. 34 ter]** Tratar datos sin base o con una finalidad distinta es infracción grave (letra a)): un uso no registrado es una brecha que la CI debe mostrar.
+**[Obligación legal · art. 34 ter]** Tratar datos sin base o con una finalidad distinta es infracción grave (letra a)). **[Decisión de arquitectura]** Un uso no registrado es una brecha que la CI debe mostrar.
 
 ## 4. Cómo funciona
 
@@ -88,8 +88,8 @@ El inventario es la base de casi todos los demás controles: sin saber **qué ac
 2. **[Buena práctica]** Ingeniería la asocia a los activos que usa y propaga plazo y finalidad como tags.
 3. **[Buena práctica]** El linaje y los logs de consultas generan los usos observados.
 4. **[Buena práctica]** La CI falla si hay tablas con datos personales sin actividad, actividades incompletas o usos no registrados.
-5. **[Obligación legal · art. 14 ter]** El catálogo genera el resumen público para la política de tratamiento.
-6. **[Obligación legal · art. 14]** El registro se exporta bajo demanda para poner a disposición los antecedentes de licitud (letra a)).
+5. **[Obligación legal · art. 14 ter]** El responsable mantiene a disposición del público las categorías de datos, los destinatarios, las finalidades, la base de licitud y el plazo de conservación (letras d) e i)). **[Decisión de arquitectura]** El catálogo genera ese resumen.
+6. **[Obligación legal · art. 14]** El responsable informa y pone a disposición los antecedentes de la licitud del tratamiento (letra a)). **[Buena práctica]** El registro se exporta bajo demanda.
 
 ## 5. Cuándo utilizarlo
 
@@ -279,10 +279,11 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-22: arts. 3, 12, 13, 14, 14 ter y 34 ter consultados ese día en BCN. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-22: arts. 3, 12, 13, 14, 14 ter y 34 ter consultados ese día en BCN. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-21: creación (lote F3b-19a).
 - 2026-10-22: upgrade de 19: la base de licitud pasa a la actividad de tratamiento, con usos observados contra registrados y resumen del art. 14 ter.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
+- 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.

@@ -3,7 +3,7 @@ id: pattern:data-breach-response
 slug: data-breach-response
 type: pattern
 title: Respuesta ante vulneraciones
-description: "Ante una vulneración, el área legal pregunta cuántas personas, qué datos y si hay sensibles, financieros o de menores de 14; la ley pide reportar sin dilaciones indebidas, registrar siempre y avisar a los titulares en esos casos. Ingeniería lo responde en horas con catálogo, índice de titulares, linaje y logs de acceso preparados. Consulta de alcance y plazos de la Ley 21.663 (art. 9 y Decreto 295), ejecutados en la CI. No es asesoría legal."
+description: "Ante una vulneración, el área legal pregunta cuántas personas, qué datos y si hay sensibles, financieros o de menores de 14; la ley pide reportar sin dilaciones indebidas, registrar esas comunicaciones y avisar a los titulares en esos casos. Ingeniería lo responde en horas con catálogo, índice de titulares, linaje y logs de acceso preparados. Consulta de alcance y plazos de la Ley 21.663 (art. 9 y Decreto 295), ejecutados en la CI. No es asesoría legal."
 domain: compliance
 subdomain: data-engineering-under-ley-21719
 classification: core
@@ -16,25 +16,25 @@ related_topics: [incident-response]
 aliases: [personal-data-breach-readiness, Preparación técnica ante vulneraciones]
 jurisdiction: [CL]
 legal_basis:
-  - {law: ley-19628, article: "14 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Medidas de seguridad y su acreditación ante un incidente.", implication: "Evidencia de los controles, fechada antes del incidente."}
-  - {law: ley-19628, article: "14 sexies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Reporte a la Agencia, registro y aviso a titulares en ciertos casos.", implication: "Calcular rápido el alcance: titulares, categorías y edades que tocó el incidente."}
+  - {law: ley-19628, article: "14 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Medidas de seguridad; ante un incidente, si hay controversia judicial o administrativa, el responsable acredita que existían y funcionaban.", implication: "Evidencia de los controles, fechada antes del incidente."}
+  - {law: ley-19628, article: "14 sexies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Reporte a la Agencia, registro de esas comunicaciones y aviso a titulares en ciertos casos.", implication: "Calcular rápido el alcance: titulares, categorías y edades que tocó el incidente."}
   - {law: ley-19628, article: "15 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "El encargado reporta las vulneraciones al responsable.", implication: "Canal de reporte con los proveedores."}
-  - {law: ley-19628, article: "34 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "k) omitir las comunicaciones o los registros de vulneraciones es infracción grave; omitir deliberadamente la comunicación es gravísima (art. 34 quáter f)).", implication: "El registro existe aunque no se reporte."}
+  - {law: ley-19628, article: "34 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "k) omitir las comunicaciones o los registros de vulneraciones es infracción grave; omitir deliberadamente la comunicación es gravísima (art. 34 quáter f)).", implication: "Las comunicaciones y su registro quedan con evidencia: omitirlos es infracción grave."}
   - {law: ley-21663, article: "9", url: "https://www.bcn.cl/leychile/navegar?idNorma=1202434", note: "Reporte al CSIRT Nacional para las instituciones del art. 4.", implication: "Si la institución está obligada, los plazos se calculan desde que se toma conocimiento del incidente; los operadores de importancia vital tienen plazos más cortos."}
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    accessed: 2026-10-22
+    accessed: 2026-10-25
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-22. Art. 14 quinquies: medidas de seguridad, capacidad de restaurar y verificación regular; ante un incidente, el responsable acredita la existencia y el funcionamiento de sus medidas. Art. 14 sexies: reporte a la Agencia, sin dilaciones indebidas, de las vulneraciones con riesgo razonable para los titulares; registro con naturaleza, efectos, categorías de datos, número aproximado de titulares y medidas; si se trata de datos sensibles, de niños y niñas menores de catorce años o de obligaciones de carácter económico, financiero, bancario o comercial, también se comunica a los titulares. Art. 15 bis: el encargado reporta las vulneraciones al responsable. Art. 34 ter k): omitir las comunicaciones o los registros de vulneraciones es infracción grave. Art. 34 quáter f): omitirlas en forma deliberada es gravísima."
+    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-25. Art. 14 quinquies: medidas de seguridad, capacidad de restaurar y verificación regular; ante un incidente y en caso de controversia judicial o administrativa, el responsable acredita la existencia y el funcionamiento de sus medidas. Art. 14 sexies: reporte a la Agencia, sin dilaciones indebidas, de las vulneraciones con riesgo razonable para los titulares; registro de esas comunicaciones con naturaleza, efectos, categorías de datos, número aproximado de titulares y medidas; si se trata de datos sensibles, de niños y niñas menores de catorce años o de obligaciones de carácter económico, financiero, bancario o comercial, también se comunica a los titulares. Art. 15 bis: el encargado reporta las vulneraciones al responsable. Art. 34 ter k): omitir las comunicaciones o los registros de vulneraciones es infracción grave. Art. 34 quáter f): omitirlas en forma deliberada es gravísima."
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=1202434
-    accessed: 2026-10-22
+    accessed: 2026-10-25
     page_title: "Ley 21663 LEY MARCO DE CIBERSEGURIDAD"
-    note: "Ley 21.663, Ley Marco de Ciberseguridad (última versión desde 2025-03-01). Art. 9: las instituciones del art. 4 reportan al CSIRT Nacional los ciberataques e incidentes que puedan tener efectos significativos: alerta temprana en un plazo máximo de tres horas desde que se tiene conocimiento; actualización con evaluación inicial, gravedad, impacto e indicadores de compromiso en un máximo de setenta y dos horas (veinticuatro para operadores de importancia vital con servicios esenciales afectados); e informe final en un máximo de quince días corridos. Consultado el 2026-10-22."
+    note: "Ley 21.663, Ley Marco de Ciberseguridad (última versión desde 2025-03-01). Art. 9: las instituciones del art. 4 reportan al CSIRT Nacional los ciberataques e incidentes que puedan tener efectos significativos: alerta temprana en un plazo máximo de tres horas desde que se tiene conocimiento; actualización con evaluación inicial, gravedad, impacto e indicadores de compromiso en un máximo de setenta y dos horas (veinticuatro para operadores de importancia vital con servicios esenciales afectados); e informe final en un máximo de quince días corridos. Consultado el 2026-10-25."
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=1211466
-    accessed: 2026-10-22
+    accessed: 2026-10-25
     page_title: "Decreto 295 APRUEBA REGLAMENTO DE REPORTE DE INCIDENTES DE CIBERSEGURIDAD DE LA LEY N° 21.663"
     note: "Decreto 295, reglamento de reporte de incidentes de la Ley 21.663 (publicado el 2025-03-01, vigente desde el 2025-01-01): art. 9, alerta temprana en un máximo de tres horas desde que se toma conocimiento; art. 10, segundo reporte en un máximo de setenta y dos horas, o veinticuatro si un operador de importancia vital ve afectados sus servicios esenciales; art. 11, plan de acción de los operadores de importancia vital en un máximo de siete días corridos; art. 12, informe final en un máximo de quince días corridos desde la alerta temprana, si el incidente fue gestionado."
   - source: gcp-cloud-logging-docs
@@ -61,8 +61,8 @@ relations:
   - {type: RELATED_TO, target: processors-and-international-transfers, note: "Vulneraciones en encargados."}
   - {type: RELATED_TO, target: observability-logs, note: "Los logs de acceso."}
 created_at: 2026-10-22
-updated_at: 2026-10-24
-last_verified: 2026-10-22
+updated_at: 2026-10-25
+last_verified: 2026-10-25
 verification_status: review_required
 ---
 
@@ -75,7 +75,7 @@ Cuando hay un incidente, la primera pregunta es: **¿cuántas personas, qué dat
 ## 2. Qué es
 
 - **[Obligación legal · Ley 19.628, art. 14 sexies]** **Vulneración:** destrucción, filtración, pérdida o alteración accidental o ilícita, o comunicación o acceso no autorizados; se reporta a la Agencia sin dilaciones indebidas cuando hay riesgo razonable para los titulares.
-- **[Obligación legal · Ley 19.628, art. 14 sexies]** **Registro de vulneraciones:** naturaleza, efectos, categorías, número aproximado de titulares y medidas; se lleva aunque no se reporte.
+- **[Obligación legal · Ley 19.628, art. 14 sexies]** **Registro de las comunicaciones:** el responsable registra las comunicaciones a la Agencia, con la naturaleza de la vulneración, sus efectos, las categorías de datos, el número aproximado de titulares y las medidas adoptadas. **[Buena práctica]** Registrar también, con los mismos campos, los incidentes que no se reportan y el motivo.
 - **[Obligación legal · Ley 19.628, art. 14 sexies]** **Aviso a los titulares:** además de la Agencia, si hay datos sensibles, de niños y niñas menores de 14 años o de obligaciones económicas, financieras, bancarias o comerciales.
 - **[Obligación legal · Ley 21.663, art. 9]** Las instituciones del art. 4 de la Ley 21.663 reportan al CSIRT Nacional: alerta temprana en 3 horas, actualización en 72 horas (24 si un operador de importancia vital ve afectados sus servicios esenciales), informe final en 15 días corridos y, los operadores de importancia vital, plan de acción en 7 días.
 - **[Decisión de arquitectura]** **Consulta de alcance:** desde las tablas o archivos expuestos, obtiene titulares únicos, categorías, presencia de menores y periodo.
@@ -92,10 +92,10 @@ Cuando hay un incidente, la primera pregunta es: **¿cuántas personas, qué dat
 2. **[Buena práctica]** Contener y preservar: revocar credenciales, congelar logs y snapshots; no borrar evidencia.
 3. **[Decisión de arquitectura]** Determinar los activos expuestos con logs de auditoría y linaje, incluidos derivados y exportaciones.
 4. **[Decisión de arquitectura]** Ejecutar la consulta de alcance con el catálogo y el índice de titulares.
-5. **[Obligación legal · Ley 19.628, art. 14 sexies]** El área legal decide el reporte a la Agencia y el aviso a titulares; registrar el incidente y las medidas.
-6. **[Obligación legal · Ley 21.663, art. 9]** Si la institución está obligada por la Ley 21.663 (lo determina el área legal), calcular sus plazos desde que se tomó conocimiento.
+5. **[Obligación legal · Ley 19.628, art. 14 sexies]** Si hay riesgo razonable, reportar a la Agencia y, en los casos del artículo, avisar a los titulares; registrar esas comunicaciones. **[Decisión de arquitectura]** El área legal decide si hay riesgo razonable; ingeniería entrega el alcance.
+6. **[Obligación legal · Ley 21.663, art. 9]** Si la institución está obligada por la Ley 21.663 (lo determina el área legal), la alerta temprana al CSIRT Nacional va dentro de 3 horas desde que se tiene conocimiento. **[Buena práctica]** El procedimiento calcula todos los plazos desde ese momento.
 7. **[Obligación legal · Ley 19.628, art. 15 bis]** Si el incidente es de un encargado, este debe reportarlo al responsable: el canal está en el contrato.
-8. **[Obligación legal · Ley 19.628, art. 14 quinquies]** Tener la evidencia de los controles previa al incidente: el responsable debe acreditar que sus medidas existían y funcionaban.
+8. **[Obligación legal · Ley 19.628, art. 14 quinquies]** Ante un incidente, si hay controversia judicial o administrativa, el responsable acredita que sus medidas existían y funcionaban. **[Buena práctica]** Tener la evidencia de los controles fechada antes del incidente.
 
 ## 5. Cuándo utilizarlo
 
@@ -192,12 +192,13 @@ def alcance(expuestas: set[str], detectado: datetime) -> dict[str, object]:
     }
 
 
-def plazos_ley_21663(conocimiento: datetime, operador_vital: bool) -> dict[str, str]:
+def plazos_ley_21663(conocimiento: datetime, operador_vital: bool, servicios_esenciales_afectados: bool) -> dict[str, str]:
     """Ley 21.663, art. 9, solo si la institución está obligada (art. 4): alerta temprana, actualización e informe final."""
+    actualizacion = 24 if operador_vital and servicios_esenciales_afectados else 72  # 24 h: se cumplen las dos condiciones
     p = {"alerta_temprana": conocimiento + timedelta(hours=3),
-         "actualizacion": conocimiento + timedelta(hours=24 if operador_vital else 72),
+         "actualizacion": conocimiento + timedelta(hours=actualizacion),
          "informe_final": conocimiento + timedelta(hours=3) + timedelta(days=15)}  # desde la alerta temprana
-    if operador_vital:
+    if operador_vital:  # plan de acción: solo operadores de importancia vital (Decreto 295, art. 11)
         p["plan_de_accion"] = conocimiento + timedelta(days=7)
     return {k: v.isoformat(timespec="minutes") for k, v in p.items()}
 
@@ -205,10 +206,13 @@ def plazos_ley_21663(conocimiento: datetime, operador_vital: bool) -> dict[str, 
 if __name__ == "__main__":
     print(alcance({"silver.pasajeros", "silver.pagos"}, datetime(2026, 10, 22, 9, 40)))
     print(alcance({"gold.vuelos_agregados"}, datetime(2026, 10, 22, 9, 40)))
-    print("plazos Ley 21.663 (no operador vital):", plazos_ley_21663(datetime(2026, 10, 22, 9, 40), False))
+    detectado = datetime(2026, 10, 22, 9, 40)
+    print("plazos Ley 21.663 (no operador vital):", plazos_ley_21663(detectado, False, False))
+    print("plazos Ley 21.663 (operador vital, sin servicios esenciales afectados):", plazos_ley_21663(detectado, True, False))
+    print("plazos Ley 21.663 (operador vital, servicios esenciales afectados):", plazos_ley_21663(detectado, True, True))
 ```
 
-El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Imprime el alcance de dos incidentes: el primero expone 4 titulares, datos financieros y un menor de 14, así que corresponde avisar a los titulares por dos razones; el segundo expone una tabla agregada sin titulares. Ambos se registran. Al final, los plazos de la Ley 21.663 para una institución obligada que no es operador de importancia vital.
+El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Imprime el alcance de dos incidentes: el primero expone 4 titulares, datos financieros y un menor de 14, así que corresponde avisar a los titulares por dos razones; el segundo expone una tabla agregada sin titulares. Ambos quedan en el registro interno de incidentes; el registro del art. 14 sexies es el de las comunicaciones a la Agencia. Al final, los plazos de la Ley 21.663 en tres casos: una institución obligada que no es operador de importancia vital (actualización en 72 horas); un operador de importancia vital sin servicios esenciales afectados (72 horas y plan de acción en 7 días); y uno con servicios esenciales afectados (24 horas y plan de acción en 7 días).
 
 ## 11. GCP
 
@@ -238,7 +242,7 @@ En Azure, **auditoría de Azure SQL Database**. Según *Ley 19628 SOBRE PROTECCI
 
 - **[Buena práctica]** Activar los logs de acceso a datos antes de necesitarlos; en varias nubes no están activos por defecto.
 - **[Buena práctica]** **Seguridad:** cuentas de servicio con mínimo privilegio, para que el radio de exposición sea chico.
-- **[Obligación legal · Ley 21.663, art. 9]** Un único procedimiento con dos salidas (Ley 21.719 y Ley 21.663) cuando la institución está obligada por ambas.
+- **[Decisión de arquitectura]** Un único procedimiento con dos salidas (Ley 21.719 y Ley 21.663) cuando la institución está obligada por ambas.
 - **[Buena práctica]** **Observabilidad:** tiempo de cálculo del alcance como métrica del simulacro.
 - **[Buena práctica]** **Costo:** retener los logs de acceso en almacenamiento frío, no en la plataforma de consulta.
 
@@ -247,7 +251,7 @@ En Azure, **auditoría de Azure SQL Database**. Según *Ley 19628 SOBRE PROTECCI
 - Borrar o rotar logs durante la investigación.
 - Contar filas en lugar de titulares únicos.
 - Olvidar derivados y exportaciones de la tabla expuesta.
-- No registrar incidentes que se decidió no reportar.
+- No dejar constancia de los incidentes que se decidió no reportar, ni del motivo.
 
 ## 16. Trade-offs
 
@@ -284,9 +288,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-22: art. 14 sexies, Ley 21.663 (art. 9) y Decreto 295 consultados ese día en BCN. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-22: art. 14 sexies, Ley 21.663 (art. 9) y Decreto 295 consultados ese día en BCN. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-22: creación (upgrade de 19); reemplaza a `personal-data-breach-readiness`, que queda como alias.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
+- 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.

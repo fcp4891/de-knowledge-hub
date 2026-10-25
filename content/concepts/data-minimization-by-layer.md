@@ -28,9 +28,9 @@ legal_basis:
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    accessed: 2026-10-21
+    accessed: 2026-10-25
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01). Art. 3 c): los datos que se traten deben limitarse estrictamente a los necesarios, adecuados y pertinentes en relación con los fines; se conservan solo el tiempo necesario y luego se suprimen o anonimizan. Art. 14 quáter: el responsable aplica medidas técnicas y organizativas desde el diseño, y por defecto solo trata los datos específicos y estrictamente necesarios, considerando el número de datos recogidos, la extensión del tratamiento, el plazo de conservación y su accesibilidad. Consultado el 2026-10-21."
+    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01). Art. 3 c): los datos que se traten deben limitarse estrictamente a los necesarios, adecuados y pertinentes en relación con los fines; se conservan solo el tiempo necesario y luego se suprimen o anonimizan. Art. 14 quáter: el responsable aplica medidas técnicas y organizativas desde el diseño, y por defecto solo trata los datos específicos y estrictamente necesarios, considerando el número de datos recogidos, la extensión del tratamiento, el plazo de conservación y su accesibilidad. Consultado el 2026-10-25."
   - source: postgresql-docs
     url: https://www.postgresql.org/docs/17/sql-grant.html
     accessed: 2026-10-21
@@ -74,8 +74,8 @@ relations:
     target: privacy-controls-as-code
     note: La regla de la CI contra SELECT * sobre tablas personales.
 created_at: 2026-10-21
-updated_at: 2026-10-24
-last_verified: 2026-10-21
+updated_at: 2026-10-25
+last_verified: 2026-10-25
 verification_status: review_required
 ---
 
@@ -105,8 +105,8 @@ Un test en la CI comprueba que no hay RUT ni correo en claro fuera de bronze.
 ## 4. Cómo funciona
 
 1. **[Decisión de arquitectura]** Bronze recibe los datos tal como llegan; solo las cuentas de servicio lo leen.
-2. **[Obligación legal · art. 3]** Silver extrae solo las columnas necesarias: el RUT pasa a un HMAC con clave, la edad a un tramo, y el nombre y el correo no pasan.
-3. **[Obligación legal · art. 14 quáter]** Gold agrega por comuna y suprime los grupos de menos de 2 clientes.
+2. **[Obligación legal · art. 3]** Silver extrae solo las columnas necesarias para el fin (letra c)). **[Decisión de arquitectura]** El RUT pasa a un HMAC con clave, la edad a un tramo, y el nombre y el correo no pasan.
+3. **[Decisión de arquitectura]** Gold agrega por comuna y suprime los grupos de menos de 2 clientes. El umbral es una decisión interna: la ley no fija un mínimo de personas por grupo.
 4. **[Buena práctica]** El rol de análisis tiene permiso solo sobre gold.
 5. **[Buena práctica]** Un test recorre silver y gold y falla si encuentra un RUT o un correo en claro.
 
@@ -265,8 +265,8 @@ En Azure, **Azure SQL** con enmascaramiento dinámico. Según *Ley 19628 SOBRE P
 
 ## 14. Buenas prácticas
 
-- **[Obligación legal · art. 3]** Decidir por capa qué columnas personales son necesarias y para qué fin.
-- **[Obligación legal · art. 14 quáter]** Que la opción por defecto de una tabla nueva sea no incluir columnas personales.
+- **[Obligación legal · art. 3]** Solo los datos necesarios, adecuados y pertinentes para el fin (letra c)). **[Buena práctica]** Decidir por capa qué columnas personales son necesarias y para qué fin.
+- **[Obligación legal · art. 14 quáter]** Por defecto, solo los datos específicos y estrictamente necesarios. **[Decisión de arquitectura]** Una tabla nueva parte sin columnas personales y cada una se agrega con su finalidad.
 - **[Buena práctica]** **Seguridad:** la clave del HMAC fuera de la plataforma de datos, en un KMS.
 - **[Buena práctica]** **Observabilidad:** el test de identificadores en claro también corre programado sobre los datos reales.
 - **[Buena práctica]** **Costo:** menos columnas personales en silver y gold reducen el alcance de cada control y de cada borrado.
@@ -314,10 +314,11 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-21: texto legal consultado ese día en BCN. `review_required`: pendiente de revisión B-F3.1 del lote F3b-19a; pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-21: texto legal consultado ese día en BCN. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-21: creación (lote F3b-19a).
 - 2026-10-22: upgrade de 19: pasa a ser ficha hija de `chile-data-protection`; relaciones con `chilean-identifier-pseudonymization` y `privacy-controls-as-code`. Sin cambios de contenido legal ni de código.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
+- 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.

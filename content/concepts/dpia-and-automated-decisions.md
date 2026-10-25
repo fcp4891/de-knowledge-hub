@@ -26,9 +26,9 @@ legal_basis:
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    accessed: 2026-10-22
+    accessed: 2026-10-25
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-22. Art. 2 w): elaboración de perfiles es el tratamiento automatizado para evaluar, analizar o predecir aspectos como rendimiento profesional, situación económica, salud, preferencias, intereses, fiabilidad, comportamiento, ubicación o movimientos. Art. 5 f): el acceso incluye información significativa sobre la lógica aplicada en decisiones automatizadas. Art. 8 bis: derecho a oponerse y a no ser objeto de decisiones basadas en tratamiento automatizado, incluidos perfiles, con efectos jurídicos o significativos, salvo contrato, consentimiento previo y expreso o ley; en todos los casos, información y transparencia, explicación, intervención humana, expresar su punto de vista y pedir revisión. Art. 14 ter l): la política informa las decisiones automatizadas, su lógica y consecuencias. Art. 15 ter: evaluación de impacto previa si es probable un alto riesgo; siempre en a) evaluación sistemática con perfiles y efectos jurídicos significativos, b) tratamiento masivo o a gran escala, c) monitoreo sistemático de zonas de acceso público, d) datos sensibles en las excepciones al consentimiento; la Agencia publicará una lista orientativa y orientaciones mínimas. Art. 34 quáter k): incumplir el art. 15 ter es infracción gravísima."
+    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-25. Art. 2 w): elaboración de perfiles es el tratamiento automatizado para evaluar, analizar o predecir aspectos como rendimiento profesional, situación económica, salud, preferencias, intereses, fiabilidad, comportamiento, ubicación o movimientos. Art. 5 f): el acceso incluye información significativa sobre la lógica aplicada en decisiones automatizadas. Art. 8 bis: derecho a oponerse y a no ser objeto de decisiones basadas en tratamiento automatizado, incluidos perfiles, con efectos jurídicos o significativos, salvo contrato, consentimiento previo y expreso o ley; en todos los casos, información y transparencia, explicación, intervención humana, expresar su punto de vista y pedir revisión. Art. 14 ter l): la política informa las decisiones automatizadas, su lógica y consecuencias. Art. 15 ter: evaluación de impacto previa si es probable un alto riesgo; siempre en a) evaluación sistemática con perfiles y efectos jurídicos significativos, b) tratamiento masivo o a gran escala, c) monitoreo sistemático de zonas de acceso público, d) datos sensibles en las excepciones al consentimiento; la Agencia publicará una lista orientativa y orientaciones mínimas. Art. 34 quáter k): incumplir el art. 15 ter es infracción gravísima."
   - source: gcp-agent-platform-docs
     url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning/model-registry/introduction
     accessed: 2026-10-21
@@ -57,8 +57,8 @@ relations:
   - {type: RELATED_TO, target: chilean-identifier-pseudonymization, note: "El titular se registra con su seudónimo."}
   - {type: RELATED_TO, target: data-lineage, note: "De qué datos sale cada decisión."}
 created_at: 2026-10-22
-updated_at: 2026-10-24
-last_verified: 2026-10-22
+updated_at: 2026-10-25
+last_verified: 2026-10-25
 verification_status: review_required
 ---
 
@@ -70,9 +70,9 @@ Los equipos de datos e IA construyen exactamente lo que la ley regula con más r
 
 ## 2. Qué es
 
-- **[Obligación legal · art. 2]** **Elaboración de perfiles:** tratamiento automatizado para evaluar, analizar o predecir aspectos de una persona (letra w)); scoring, segmentación y recomendación lo son.
+- **[Obligación legal · art. 2]** **Elaboración de perfiles:** tratamiento automatizado para evaluar, analizar o predecir aspectos de una persona (letra w)). **[Buena práctica]** Tratar como perfiles el scoring, la segmentación y la recomendación.
 - **[Obligación legal · art. 15 ter]** **Evaluación de impacto:** previa al tratamiento si es probable un alto riesgo, y siempre en cuatro casos: a) perfiles con efectos significativos, b) tratamiento masivo o a gran escala, c) monitoreo sistemático de zonas públicas, d) sensibles en las excepciones al consentimiento.
-- **[Obligación legal · art. 8 bis]** **Decisión automatizada con efectos significativos:** aprobar o rechazar un crédito, bloquear una transacción, fijar un precio individual, filtrar candidatos; aun en las excepciones, el titular tiene derecho a explicación, intervención humana y revisión.
+- **[Obligación legal · art. 8 bis]** **Decisión automatizada:** el titular puede oponerse y no ser objeto de decisiones basadas en el tratamiento automatizado de sus datos, incluidos los perfiles, que le produzcan efectos jurídicos o lo afecten significativamente; aun en las excepciones (contrato, consentimiento, ley), tiene derecho a explicación, intervención humana, expresar su punto de vista y pedir revisión. **[Buena práctica]** Casos típicos: aprobar o rechazar un crédito, bloquear una transacción, fijar un precio individual, filtrar candidatos.
 - **[Obligación legal · art. 14 ter]** La política de tratamiento informa las decisiones automatizadas, su lógica y consecuencias (letra l)).
 - **[Decisión de arquitectura]** **Registro de decisión:** versión del modelo, huella de las entradas, puntaje, resultado, variables principales y estado de revisión humana.
 
@@ -80,15 +80,15 @@ Los equipos de datos e IA construyen exactamente lo que la ley regula con más r
 
 **[Buena práctica]** Sin esto: modelos en producción sin evaluación previa, imposibilidad de explicar por qué se rechazó a una persona, reentrenamientos que cambian decisiones sin trazabilidad, y ninguna forma de revisar un caso cuando el titular lo pide.
 
-**[Obligación legal · art. 34 quáter]** No hacer la evaluación de impacto cuando corresponde es infracción gravísima (letra k)): la puerta debe ser bloqueante.
+**[Obligación legal · art. 34 quáter]** No hacer la evaluación de impacto cuando corresponde es infracción gravísima (letra k)). **[Decisión de arquitectura]** Por eso la puerta es bloqueante.
 
 ## 4. Cómo funciona
 
 1. **[Obligación legal · art. 15 ter]** Clasificar cada tratamiento nuevo contra los cuatro casos obligatorios; si alguno aplica, la evaluación es requisito para desplegar.
 2. **[Buena práctica]** Ingeniería aporta a la evaluación: flujo de datos, fuentes, variables, sensibles o variables que los revelan, retención, accesos, terceros, métricas del modelo y prueba de reidentificación.
 3. **[Decisión de arquitectura]** En producción, registrar cada decisión con versión de modelo y huella de las entradas.
-4. **[Obligación legal · art. 8 bis]** Diseñar la intervención humana: umbrales que derivan a revisión y un flujo para que el titular pida revisar su caso.
-5. **[Obligación legal · art. 5]** Generar una explicación por titular desde el registro: variables principales y lógica general (letra f)).
+4. **[Obligación legal · art. 8 bis]** El responsable asegura la intervención humana y el derecho a pedir revisión. **[Decisión de arquitectura]** Umbrales que derivan a revisión y un flujo para que el titular pida revisar su caso.
+5. **[Obligación legal · art. 5]** El acceso incluye información significativa sobre la lógica aplicada (letra f)). **[Decisión de arquitectura]** Generarla por titular desde el registro: variables principales y lógica general.
 
 ## 5. Cuándo utilizarlo
 
@@ -231,7 +231,7 @@ En Azure, **Azure Machine Learning**. Según *Ley 19628 SOBRE PROTECCION DE LOS 
 
 - **[Buena práctica]** Revisar variables que revelan datos sensibles: comuna o nivel de ingreso pueden revelar la situación socioeconómica, que la ley trata como sensible.
 - **[Buena práctica]** **Seguridad:** el registro de decisiones es dato personal; retención y acceso restringido.
-- **[Obligación legal · art. 8 bis]** **GenAI:** si un LLM clasifica o prioriza personas con efectos significativos, aplica igual; registrar el prompt (sin datos personales o seudonimizado), la versión del modelo y el resultado.
+- **[Buena práctica]** **GenAI:** tratar como decisión automatizada (art. 8 bis) la de un LLM que clasifica o prioriza personas con efectos significativos; registrar el prompt (sin datos personales o seudonimizado), la versión del modelo y el resultado.
 - **[Buena práctica]** **Observabilidad:** tasa de derivación a revisión humana y tasa de decisiones revertidas por la revisión.
 - **[Buena práctica]** **Costo:** guardar explicaciones solo para decisiones con efecto (rechazos, bloqueos), no para todas las inferencias.
 
@@ -276,9 +276,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-22: arts. 2, 5, 8 bis, 14 ter, 15 ter y 34 quáter consultados ese día en BCN. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-22: arts. 2, 5, 8 bis, 14 ter, 15 ter y 34 quáter consultados ese día en BCN. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-22: creación (upgrade de 19); reemplaza a `dpia-technical-input` y `automated-decision-traceability`, que quedan como alias.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
+- 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.

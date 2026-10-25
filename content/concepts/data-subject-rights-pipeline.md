@@ -28,9 +28,9 @@ legal_basis:
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    accessed: 2026-10-22
+    accessed: 2026-10-25
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-22. Art. 4: derechos de acceso, rectificación, supresión, oposición, portabilidad y bloqueo, personales, intransferibles e irrenunciables. Art. 5: el acceso incluye a) datos y origen, b) finalidades, c) destinatarios, d) período, e) intereses legítimos y f) la lógica de las decisiones automatizadas. Art. 6: los datos rectificados se comunican a quienes los recibieron, salvo imposibilidad o esfuerzo desproporcionado; no se vuelven a tratar sin rectificar. Art. 7: supresión por causales, con excepciones como obligación legal o contrato. Art. 8: oposición si la base es interés legítimo, marketing directo con perfiles, o fuentes de acceso público sin otro fundamento. Art. 8 ter: bloqueo temporal; no afecta el almacenamiento. Art. 9: copia en formato estructurado, genérico y de uso común, cuando el tratamiento es automatizado y se basa en el consentimiento; transmisión directa entre responsables cuando sea técnicamente posible. Art. 10: mecanismos tecnológicos expeditos; rectificación, supresión y oposición gratuitas; acceso gratuito al menos trimestralmente. Art. 11: autenticación del titular; acuse de recibo y respuesta en 30 días corridos, prorrogables una vez por 30; respaldos de la respuesta; bloqueo temporal fundado respondido dentro de 2 días hábiles y, mientras no se resuelva, no se tratan los datos del requerimiento; los cambios se comunican a quienes recibieron los datos."
+    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-25. Art. 4: derechos de acceso, rectificación, supresión, oposición, portabilidad y bloqueo, personales, intransferibles e irrenunciables. Art. 5: el acceso incluye a) datos y origen, b) finalidades, c) destinatarios, d) período, e) intereses legítimos y f) la lógica de las decisiones automatizadas. Art. 6: los datos rectificados se comunican a quienes los recibieron, salvo imposibilidad o esfuerzo desproporcionado; no se vuelven a tratar sin rectificar. Art. 7: supresión por causales, con excepciones como obligación legal o contrato. Art. 8: oposición si la base es interés legítimo, marketing directo con perfiles, o fuentes de acceso público sin otro fundamento. Art. 8 ter: bloqueo temporal; no afecta el almacenamiento. Art. 9: copia en formato estructurado, genérico y de uso común, cuando el tratamiento es automatizado y se basa en el consentimiento; transmisión directa entre responsables cuando sea técnicamente posible. Art. 10: mecanismos tecnológicos expeditos; rectificación, supresión y oposición gratuitas; acceso gratuito al menos trimestralmente. Art. 11: autenticación del titular; acuse de recibo y respuesta en 30 días corridos, prorrogables una vez por 30; respaldos de la respuesta; bloqueo temporal fundado respondido dentro de 2 días hábiles y, mientras no se resuelva, no se tratan los datos del requerimiento; los cambios se comunican a quienes recibieron los datos."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/row-level-security-intro
     accessed: 2026-10-22
@@ -54,8 +54,8 @@ relations:
   - {type: RELATED_TO, target: dpia-and-automated-decisions, note: "La lógica de las decisiones automatizadas."}
   - {type: RELATED_TO, target: row-level-security, note: "El bloqueo se aplica como filtro de fila."}
 created_at: 2026-10-22
-updated_at: 2026-10-24
-last_verified: 2026-10-22
+updated_at: 2026-10-25
+last_verified: 2026-10-25
 verification_status: review_required
 ---
 
@@ -69,6 +69,11 @@ Desde la vigencia de la ley, cualquier titular puede pedir qué datos se tienen 
 
 - **[Obligación legal · art. 4]** Seis derechos: acceso, rectificación, supresión, oposición, portabilidad y bloqueo; son irrenunciables.
 - **[Obligación legal · art. 11]** Respuesta en 30 días corridos, prorrogables una vez; el bloqueo temporal fundado se responde en 2 días hábiles y, mientras no se resuelva, no se tratan esos datos.
+- **[Obligación legal · art. 5]** Acceso: los datos y su origen, las finalidades, los destinatarios, el período de tratamiento, los intereses legítimos si esa es la base, y la lógica de las decisiones automatizadas.
+- **[Obligación legal · art. 6]** Rectificación: los datos rectificados se comunican a quienes los recibieron, salvo que sea imposible o desproporcionado, y no se vuelven a tratar sin rectificar.
+- **[Obligación legal · art. 7]** Supresión: procede por las causales del artículo, con excepciones.
+- **[Obligación legal · art. 8]** Oposición: si la base es el interés legítimo, si el fin es exclusivamente marketing directo (incluidos los perfiles) o si los datos vienen de una fuente de acceso público sin otro fundamento.
+- **[Obligación legal · art. 9]** Portabilidad: copia de lo que el titular facilitó, en formato estructurado, genérico y de uso común, si el tratamiento es automatizado y se basa en su consentimiento.
 - **[Obligación legal · art. 10]** Mecanismos tecnológicos expeditos; rectificación, supresión y oposición siempre gratuitas; acceso gratuito al menos trimestralmente.
 - **[Decisión de arquitectura]** **Índice de titulares:** tabla que mapea la llave seudónima de cada titular a las tablas, actividades y sistemas donde aparece; se mantiene desde la ingesta y el linaje.
 - **[Decisión de arquitectura]** **Pipeline de solicitudes:** recepción → autenticación → decisión del área legal → ejecución técnica → respuesta → evidencia.
@@ -79,19 +84,19 @@ Desde la vigencia de la ley, cualquier titular puede pedir qué datos se tienen 
 
 ## 4. Cómo funciona
 
-1. **[Obligación legal · art. 11]** Recibir la solicitud por el canal publicado, autenticar al titular, acusar recibo y registrar la fecha de ingreso y los plazos.
+1. **[Obligación legal · art. 11]** La solicitud llega al correo, formulario o medio electrónico dispuesto, con la autenticación del titular que fije la Agencia, y el responsable acusa recibo. **[Buena práctica]** Registrar la fecha de ingreso y calcular los plazos.
 2. **[Buena práctica]** Calcular la llave seudónima (HMAC) y consultar el índice de titulares.
-3. **[Obligación legal · art. 8 ter]** Si se pide bloqueo, activar el flag del titular: las vistas de consumo y los jobs lo excluyen, sin borrar.
+3. **[Obligación legal · art. 8 ter]** El bloqueo suspende temporalmente el tratamiento sin afectar el almacenamiento. **[Decisión de arquitectura]** Un flag del titular que las vistas de consumo y los jobs excluyen, sin borrar.
 4. **[Decisión de arquitectura]** El área legal decide si la solicitud procede y su alcance; ingeniería ejecuta según el tipo:
 
 | Derecho | Ejecución técnica | Etiqueta |
 |---|---|---|
-| Acceso | Consolidar datos por actividad con finalidad, base, destinatarios, plazo y lógica automatizada desde el catálogo | **[Obligación legal · art. 5]** |
-| Rectificación | Corregir en la fuente o en una capa de correcciones que gane en cada recálculo; propagar a destinatarios | **[Obligación legal · art. 6]** |
-| Supresión | `retention-and-erasure` | **[Obligación legal · art. 7]** |
-| Oposición | Excluir al titular de la actividad objetada (por ejemplo, marketing directo o perfiles) | **[Obligación legal · art. 8]** |
-| Bloqueo | Flag de exclusión en consumo y en jobs | **[Obligación legal · art. 8 ter]** |
-| Portabilidad | Export estructurado de lo que corresponde según el art. 9 | **[Obligación legal · art. 9]** |
+| Acceso | Consolidar datos por actividad con finalidad, base, destinatarios, plazo y lógica automatizada desde el catálogo | **[Decisión de arquitectura]** |
+| Rectificación | Corregir en la fuente o en una capa de correcciones que gane en cada recálculo; propagar a destinatarios | **[Decisión de arquitectura]** |
+| Supresión | `retention-and-erasure` | **[Decisión de arquitectura]** |
+| Oposición | Excluir al titular de la actividad objetada (por ejemplo, marketing directo o perfiles) | **[Decisión de arquitectura]** |
+| Bloqueo | Flag de exclusión en consumo y en jobs | **[Decisión de arquitectura]** |
+| Portabilidad | Export estructurado de lo que corresponde según el art. 9 | **[Decisión de arquitectura]** |
 
 5. **[Obligación legal · art. 11]** Responder por escrito y guardar respaldo de la respuesta: fecha, destino y contenido.
 6. **[Buena práctica]** Registrar evidencia con id de solicitud, llave seudónima, acciones y fechas, sin datos del titular.
@@ -331,9 +336,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-22: arts. 4 a 11 consultados ese día en BCN. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-22: arts. 4 a 11 consultados ese día en BCN. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-22: creación (upgrade de 19); reemplaza a `data-subject-requests`, que queda como alias.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
+- 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.

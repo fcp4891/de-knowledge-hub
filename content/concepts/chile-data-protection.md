@@ -27,38 +27,37 @@ legal_basis:
   - {law: ley-19628, article: "14 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Secreto o confidencialidad, también de datos públicos organizados o combinados.", implication: "El secreto alcanza a datos públicos que se organizan o combinan."}
   - {law: ley-19628, article: "14 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Información y transparencia.", implication: "La política pública se alimenta del catálogo."}
   - {law: ley-19628, article: "14 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Protección desde el diseño y por defecto.", implication: "Minimización por defecto: número de datos, extensión del tratamiento, plazo de conservación y accesibilidad."}
-  - {law: ley-19628, article: "14 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Medidas de seguridad, verificación regular y acreditación tras un incidente.", implication: "Cifrado, seudonimización, resiliencia, restauración y verificación periódica de las medidas."}
-  - {law: ley-19628, article: "14 sexies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Reporte y registro de vulneraciones.", implication: "Reporte a la Agencia y registro de las vulneraciones; aviso a los titulares en ciertos casos."}
+  - {law: ley-19628, article: "14 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Medidas de seguridad y verificación regular; ante un incidente, si hay controversia judicial o administrativa, el responsable acredita sus medidas.", implication: "Cifrado, seudonimización, resiliencia, restauración y verificación periódica de las medidas."}
+  - {law: ley-19628, article: "14 sexies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Reporte de vulneraciones a la Agencia, registro de esas comunicaciones y aviso a titulares en ciertos casos.", implication: "Dimensionar la vulneración para reportarla, registrar la comunicación y decidir el aviso a los titulares."}
   - {law: ley-19628, article: "15 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Tratamiento por un encargado.", implication: "El encargado cumple secreto y seguridad, reporta las vulneraciones y suprime o devuelve al terminar."}
   - {law: ley-19628, article: "15 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Evaluación de impacto.", implication: "Evaluación de impacto obligatoria en los casos que el artículo enumera."}
   - {law: ley-19628, article: "16", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Datos sensibles; reglas especiales en los arts. 16 bis a 16 sexies.", implication: "Reglas más estrictas por categoría de dato sensible."}
   - {law: ley-19628, article: "27", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Transferencia internacional.", implication: "Región de la nube, proveedores y APIs externas: cada flujo al exterior necesita un mecanismo."}
   - {law: ley-19628, article: "35", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Sanciones.", implication: "Varias infracciones nacen de fallas técnicas."}
-  - {law: ley-19628, article: "49", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Modelo de prevención de infracciones, voluntario.", implication: "Programa voluntario, con reglamento en el Decreto 662; los controles y su evidencia lo alimentan."}
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    accessed: 2026-10-22
+    accessed: 2026-10-25
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 en la versión «Con Vigencia Diferida por Fecha» desde 2026-12-01 (texto con las modificaciones de la Ley 21.719), consultada el 2026-10-22. Art. 1 bis: se aplica al responsable o mandatario establecido en Chile, al mandatario que trata a nombre de un responsable en Chile y a quien, sin estar en Chile, ofrece bienes o servicios a titulares en Chile o monitorea su comportamiento. Art. 2: definiciones, entre ellas f) dato personal, g) sensibles (incluida la situación socioeconómica), k) anonimización, l) seudonimización, v) cesión, w) elaboración de perfiles y x) encargado. Art. 3: principios a) licitud y lealtad (el responsable acredita la licitud) a h) confidencialidad. Arts. 4 a 11: derechos y procedimiento. Art. 8 bis: decisiones automatizadas. Arts. 12 y 13: bases de licitud; el responsable prueba la licitud. Art. 14 a 14 septies: obligaciones, secreto, transparencia, diseño y por defecto, seguridad, vulneraciones y estándares diferenciados. Arts. 15 y 15 bis: cesión y encargo. Art. 15 ter: evaluación de impacto. Arts. 16 a 16 sexies: sensibles, salud, biométricos, niños, niñas y adolescentes, investigación y geolocalización. Arts. 27 y 28: transferencia internacional. Arts. 34 bis a 35: infracciones y sanciones. Art. 49: modelo de prevención voluntario."
+    note: "Ley 19.628 en la versión «Con Vigencia Diferida por Fecha» desde 2026-12-01 (texto con las modificaciones de la Ley 21.719), consultada el 2026-10-25. Art. 1 bis: se aplica al responsable o mandatario establecido en Chile, al mandatario que trata a nombre de un responsable en Chile y a quien, sin estar en Chile, ofrece bienes o servicios a titulares en Chile o monitorea su comportamiento. Art. 2: definiciones, entre ellas f) dato personal, g) sensibles (incluida la situación socioeconómica), k) anonimización, l) seudonimización, v) cesión, w) elaboración de perfiles y x) encargado. Art. 3: principios a) licitud y lealtad (el responsable acredita la licitud) a h) confidencialidad. Arts. 4 a 11: derechos y procedimiento. Art. 8 bis: decisiones automatizadas. Arts. 12 y 13: bases de licitud; el responsable prueba la licitud. Art. 14 a 14 septies: obligaciones, secreto, transparencia, diseño y por defecto, seguridad, vulneraciones y estándares diferenciados. Arts. 15 y 15 bis: cesión y encargo. Art. 15 ter: evaluación de impacto. Arts. 16 a 16 sexies: sensibles, salud, biométricos, niños, niñas y adolescentes, investigación y geolocalización. Arts. 27 y 28: transferencia internacional. Arts. 34 bis a 35: infracciones y sanciones. Art. 49: modelo de prevención voluntario."
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=1209272
-    accessed: 2026-10-22
+    accessed: 2026-10-25
     page_title: "Ley 21719 REGULA LA PROTECCIÓN Y EL TRATAMIENTO DE LOS DATOS PERSONALES Y CREA LA AGENCIA DE PROTECCIÓN DE DATOS PERSONALES"
-    note: "Ley 21.719, publicada en el Diario Oficial el 2024-12-13 (promulgada el 2024-11-25). Su artículo primero transitorio dispone que las modificaciones de sus artículos primero, segundo y tercero permanentes entran en vigencia el día primero del mes vigésimo cuarto posterior a su publicación en el Diario Oficial. BCN muestra para la Ley 19.628 una versión «Con Vigencia Diferida por Fecha» desde el 2026-12-01. Consultado el 2026-10-22."
+    note: "Ley 21.719, publicada en el Diario Oficial el 2024-12-13 (promulgada el 2024-11-25). Su artículo primero transitorio dispone que las modificaciones de sus artículos primero, segundo y tercero permanentes entran en vigencia el día primero del mes vigésimo cuarto posterior a su publicación en el Diario Oficial. BCN muestra para la Ley 19.628 una versión «Con Vigencia Diferida por Fecha» desde el 2026-12-01. Consultado el 2026-10-25."
   - source: senado-tramitacion
     url: https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07
-    accessed: 2026-10-22
+    accessed: 2026-10-25
     page_title: "Boletín 18623-07"
-    note: "Boletín 18623-07, «Modifica la ley N° 21.719 [...] en el sentido que indica», consultado el 2026-10-22: ingreso el martes 1 de septiembre de 2026 por mensaje; urgencia actual: discusión inmediata (cuenta del 21/10/2026); etapa: primer trámite constitucional (Senado), primer informe de la Comisión de Constitución, Legislación, Justicia y Reglamento. La página no registra una votación en general a esa fecha."
+    note: "Boletín 18623-07, «Modifica la ley N° 21.719 [...] en el sentido que indica», consultado el 2026-10-25: ingreso el martes 1 de septiembre de 2026 por mensaje; urgencia actual: discusión inmediata (cuenta del 21/10/2026); etapa: primer trámite constitucional (Senado), primer informe de la Comisión de Constitución, Legislación, Justicia y Reglamento. La página no registra una votación en general a esa fecha."
   - source: senado-tramitacion
     url: https://tramitacion.senado.cl/appsenado/index.php?mo=tramitacion&ac=getDocto&iddocto=19307&tipodoc=mensaje_mocion
-    accessed: 2026-10-22
+    accessed: 2026-10-25
     page_title: "Boletín N° 18.623-07"
     note: "Mensaje N° 110-374 del 31 de agosto de 2026 (boletín 18.623-07), en el Senado: el numeral 2 del artículo único reemplaza, en el artículo primero transitorio de la Ley 21.719, la frase «día primero del mes vigésimo cuarto posterior a la publicación de esta ley en el Diario Oficial» por «1 de diciembre de 2027»; también aumenta el Consejo Directivo de la Agencia de tres a cinco consejeros y elimina la limitación a empresas de menor tamaño del artículo sexto transitorio. Es un proyecto, no una ley."
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=1227971
-    accessed: 2026-10-22
+    accessed: 2026-10-25
     page_title: "Decreto 662 APRUEBA REGLAMENTO QUE REGULA LOS REQUISITOS, MODALIDADES Y PROCEDIMIENTOS PARA LA IMPLEMENTACIÓN, CERTIFICACIÓN, REGISTRO Y SUPERVISIÓN DE LOS MODELOS DE PREVENCIÓN DE INFRACCIONES A QUE SE REFIERE EL ARTÍCULO 49 QUE INCORPORA LA LEY N° 21.719 A LA LEY N° 19.628"
     note: "Decreto 662 del Ministerio de Hacienda, promulgado el 2025-06-13 y publicado el 2026-09-09: reglamento de los requisitos, modalidades y procedimientos para implementar, certificar, registrar y supervisar los modelos de prevención de infracciones del art. 49 de la Ley 19.628."
   - source: gcp-sensitive-data-protection-docs
@@ -94,8 +93,8 @@ sources:
 relations:
   - {type: RELATED_TO, target: data-classification, note: "Clasificación técnica de datos."}
 created_at: 2026-10-21
-updated_at: 2026-10-24
-last_verified: 2026-10-22
+updated_at: 2026-10-25
+last_verified: 2026-10-25
 verification_status: review_required
 ---
 
@@ -105,7 +104,7 @@ Esta ficha no es asesoría legal: explica cómo trabaja un ingeniero de datos ba
 
 La Ley 21.719 reescribe la Ley 19.628. Según BCN, fue publicada el 2024-12-13 y, por su artículo primero transitorio, sus modificaciones rigen desde el **2026-12-01**; BCN muestra la Ley 19.628 con una versión «Con Vigencia Diferida por Fecha» desde esa fecha.
 
-**Estado al 2026-10-22.** El Ejecutivo ingresó el boletín 18.623-07 (mensaje N° 110-374). Su numeral 2 reemplaza esa fecha por el **1 de diciembre de 2027**. Según la tramitación oficial del Senado, el proyecto está en primer trámite, en primer informe de la Comisión de Constitución, con urgencia de discusión inmediata. Es un proyecto: **mientras no se publique otra ley, rige el 2026-12-01**.
+**Estado al 2026-10-25.** El Ejecutivo ingresó el boletín 18.623-07 (mensaje N° 110-374). Su numeral 2 reemplaza esa fecha por el **1 de diciembre de 2027**. Según la tramitación oficial del Senado, el proyecto está en primer trámite, en primer informe de la Comisión de Constitución, con urgencia de discusión inmediata. Es un proyecto: **mientras no se publique otra ley, rige el 2026-12-01**.
 
 El reglamento de los modelos de prevención de infracciones (art. 49) es el Decreto 662 del Ministerio de Hacienda, publicado el 2026-09-09.
 
@@ -120,25 +119,25 @@ Para ingeniería de datos, el cambio es este: casi todo lo que hace un pipeline 
 | 1 bis | También se aplica a quien, desde fuera de Chile, ofrece bienes o servicios a titulares en Chile o monitorea su comportamiento | `processors-and-international-transfers` | **[Obligación legal · art. 1 bis]** |
 | 2 | Dato personal, sensible, anonimización, seudonimización, perfiles, encargado | `pii-identification`, `chilean-identifier-pseudonymization` | **[Obligación legal · art. 2]** |
 | 3 | Cada principio (letras a a h) necesita un control y una evidencia | esta ficha | **[Obligación legal · art. 3]** |
-| 4 a 11 | Acceso, rectificación, supresión, oposición, portabilidad y bloqueo; 30 días corridos | `data-subject-rights-pipeline` | **[Obligación legal · art. 4]** |
+| 4 | Acceso, rectificación, supresión, oposición, portabilidad y bloqueo; los arts. 5 a 11 los desarrollan | `data-subject-rights-pipeline` | **[Obligación legal · art. 4]** |
 | 8 bis | Explicación, intervención humana y revisión de decisiones automatizadas | `dpia-and-automated-decisions` | **[Obligación legal · art. 8 bis]** |
-| 12 y 13 | Bases de licitud, registradas por actividad de tratamiento | `processing-activities-inventory` | **[Obligación legal · art. 12]** |
+| 12 | Consentimiento; el responsable prueba que lo obtuvo y que el tratamiento fue lícito (las demás bases, en el art. 13) | `processing-activities-inventory` | **[Obligación legal · art. 12]** |
 | 14 | Acreditar la licitud; suprimir o anonimizar datos precontractuales | `processing-activities-inventory` | **[Obligación legal · art. 14]** |
 | 14 bis | El secreto alcanza datos públicos que se organizan o combinan | esta ficha | **[Obligación legal · art. 14 bis]** |
 | 14 ter | La política pública de tratamiento se alimenta del catálogo | `processing-activities-inventory` | **[Obligación legal · art. 14 ter]** |
 | 14 quáter | Por defecto, solo los datos estrictamente necesarios | `data-minimization-by-layer` | **[Obligación legal · art. 14 quáter]** |
 | 14 quinquies | Seguridad, restauración y verificación regular de su eficacia | `privacy-controls-as-code` | **[Obligación legal · art. 14 quinquies]** |
-| 14 sexies | Reporte y registro de vulneraciones; aviso a titulares en ciertos casos | `data-breach-response` | **[Obligación legal · art. 14 sexies]** |
-| 15 y 15 bis | Cesión y encargo; el encargado suprime o devuelve al terminar | `processors-and-international-transfers` | **[Obligación legal · art. 15 bis]** |
+| 14 sexies | Reporte de vulneraciones a la Agencia y registro de esas comunicaciones; aviso a titulares en ciertos casos | `data-breach-response` | **[Obligación legal · art. 14 sexies]** |
+| 15 bis | Encargo; el encargado suprime o devuelve al terminar (la cesión, en el art. 15) | `processors-and-international-transfers` | **[Obligación legal · art. 15 bis]** |
 | 15 ter | Evaluación de impacto en casos tasados | `dpia-and-automated-decisions` | **[Obligación legal · art. 15 ter]** |
-| 16 a 16 sexies | Sensibles, salud, biométricos, niños, niñas y adolescentes, investigación, geolocalización | `pii-identification` | **[Obligación legal · art. 16]** |
-| 27 y 28 | Transferencia internacional | `processors-and-international-transfers` | **[Obligación legal · art. 27]** |
-| 34 bis a 35 | Infracciones y sanciones; varias nacen de fallas técnicas | esta ficha (§16) | **[Obligación legal · art. 35]** |
-| 49 a 53 | Modelo de prevención voluntario; reglamento en el Decreto 662 | `privacy-controls-as-code` | **[Obligación legal · art. 49]** |
+| 16 | Datos sensibles: consentimiento expreso, salvo excepciones; salud, biométricos, niños, niñas y adolescentes, investigación y geolocalización, en los arts. 16 bis a 16 sexies | `pii-identification` | **[Obligación legal · art. 16]** |
+| 27 | Transferencia internacional: cuándo es lícita (países adecuados y cláusulas, en el art. 28) | `processors-and-international-transfers` | **[Obligación legal · art. 27]** |
+| 35 | Sanciones por tipo de infracción (las infracciones, en los arts. 34 bis a 34 quáter); varias nacen de fallas técnicas | esta ficha (§16) | **[Obligación legal · art. 35]** |
+| 49 | Modelo de prevención de infracciones: los responsables pueden adoptarlo voluntariamente (art. 49); el certificado del art. 51 acredita el atenuante del art. 36 n.º 5; reglamento en el Decreto 662 | `privacy-controls-as-code` | **[Buena práctica]** |
 
 - **[Obligación legal · art. 3]** Ocho principios: a) licitud y lealtad, b) finalidad, c) proporcionalidad, d) calidad, e) responsabilidad, f) seguridad, g) transparencia e información, h) confidencialidad.
-- **[Obligación legal · art. 12]** La carga de la prueba es del responsable: debe poder acreditar la licitud de cada tratamiento (también arts. 3 a) y 13).
-- **[Obligación legal · art. 15 bis]** El encargado (proveedor de nube, de ETL u otro) trata datos solo según el encargo; si los usa para otro fin o los cede sin autorización, pasa a ser responsable y responde solidariamente.
+- **[Obligación legal · art. 12]** La carga de la prueba es del responsable: debe probar que contó con el consentimiento del titular y que el tratamiento fue lícito, leal y transparente.
+- **[Obligación legal · art. 15 bis]** El encargado (proveedor de nube, de ETL u otro) trata datos solo según el encargo; si los usa para otro fin o los cede sin autorización, se le considera responsable, responde personalmente por sus infracciones y solidariamente con el responsable por los daños.
 - **[Decisión de arquitectura]** El área legal, privacidad y el negocio deciden finalidad, base y plazo; seguridad define el nivel de riesgo. Ingeniería implementa los controles, aporta el análisis técnico y genera la evidencia. La responsabilidad legal sigue siendo del responsable del tratamiento.
 
 ## 3. Problema que resuelve
@@ -149,12 +148,12 @@ Para ingeniería de datos, el cambio es este: casi todo lo que hace un pipeline 
 
 ## 4. Cómo funciona
 
-1. **[Obligación legal · art. 2]** Inventariar y clasificar datos personales y sensibles (`pii-identification`).
-2. **[Obligación legal · art. 14 ter]** Registrar cada **actividad de tratamiento** con finalidad, base de licitud y plazo, y asociarla a los activos que usa; un dataset puede servir a varias actividades con bases distintas (`processing-activities-inventory`).
-3. **[Obligación legal · art. 14 quáter]** Minimizar desde la ingesta: contratos de datos con campos permitidos por capa (`data-minimization-by-layer`).
-4. **[Obligación legal · art. 4]** Construir las capacidades para atender derechos: localizar, exportar, rectificar, bloquear y suprimir (`data-subject-rights-pipeline`, `retention-and-erasure`).
-5. **[Obligación legal · art. 14 sexies]** Controles de seguridad verificados y capacidad de dimensionar una vulneración (`data-breach-response`).
-6. **[Obligación legal · art. 14 quinquies]** Cada control produce evidencia automática y la CI falla si falta un control, falta la evidencia o la evidencia está vencida (`privacy-controls-as-code`).
+1. **[Buena práctica]** Inventariar y clasificar datos personales y sensibles según las definiciones del art. 2 (`pii-identification`).
+2. **[Decisión de arquitectura]** Registrar cada **actividad de tratamiento** con finalidad, base de licitud y plazo, y asociarla a los activos que usa; un dataset puede servir a varias actividades con bases distintas. De ahí sale la información pública que pide el art. 14 ter (`processing-activities-inventory`).
+3. **[Decisión de arquitectura]** Minimizar desde la ingesta con contratos de datos que fijan los campos permitidos por capa, para que por defecto solo se traten los datos necesarios (art. 14 quáter; `data-minimization-by-layer`).
+4. **[Buena práctica]** Construir las capacidades para atender los derechos del art. 4: localizar, exportar, rectificar, bloquear y suprimir (`data-subject-rights-pipeline`, `retention-and-erasure`).
+5. **[Buena práctica]** Controles de seguridad verificados y capacidad de dimensionar una vulneración, para reportarla y registrar la comunicación (art. 14 sexies; `data-breach-response`).
+6. **[Decisión de arquitectura]** Cada control produce evidencia automática y la CI falla si falta un control, falta la evidencia o la evidencia está vencida; así se cumple la verificación regular del art. 14 quinquies (`privacy-controls-as-code`).
 
 ## 5. Cuándo utilizarlo
 
@@ -312,7 +311,7 @@ Ningún servicio certifica cumplimiento por sí solo: cada uno se evalúa por al
 - **[Decisión de arquitectura]** Los metadatos legales viven en el catálogo, por actividad de tratamiento, no en el código del pipeline.
 - **[Buena práctica]** **Seguridad:** ningún ambiente no productivo con datos personales reales; datos enmascarados o sintéticos.
 - **[Buena práctica]** **Observabilidad:** sin datos personales en los logs; los logs de solicitudes y de vulneraciones guardan identificadores internos.
-- **[Obligación legal · art. 15 bis]** **GenAI:** enviar datos personales a una API externa de LLM es tratamiento por un encargado y puede ser transferencia internacional (art. 27).
+- **[Buena práctica]** **GenAI:** tratar una API externa de LLM que recibe datos personales como un encargado (art. 15 bis) y revisar si hay transferencia internacional (art. 27).
 - **[Buena práctica]** **Costo:** empezar por lo de mayor riesgo: datos sensibles (incluida la situación socioeconómica), datos de niños, niñas y adolescentes, copias y accesos.
 
 ## 15. Errores frecuentes
@@ -336,7 +335,7 @@ Una matriz detallada da trazabilidad completa y cuesta mantenerla; una matriz co
 | Grave | Datos innecesarios o inexactos (34 ter c) y d)); fallas de seguridad (j)); omitir registros de vulneraciones (k)); transferencias contra la ley (m)) | 10.000 UTM |
 | Gravísima | Omitir en forma deliberada la comunicación de una vulneración (34 quáter f)); no hacer la evaluación de impacto obligatoria (k)) | 20.000 UTM |
 
-En reincidencia, hasta tres veces el monto. Una empresa que no es de menor tamaño y reincide en infracciones graves o gravísimas puede llegar al 2 % o 4 % de sus ingresos anuales del último año calendario, respectivamente (art. 35). Haber cumplido los deberes de dirección y supervisión, acreditado con el certificado del modelo de prevención (art. 51), es atenuante (art. 36 n.º 5).
+En reincidencia, la Agencia puede aplicar hasta tres veces el monto de la infracción. Si una empresa que no es de menor tamaño reincide en infracciones graves o gravísimas, la multa puede alcanzar la más gravosa entre ese triple y el 2 % o 4 % de sus ingresos anuales por ventas y servicios del último año calendario, respectivamente (art. 35). Es atenuante haber cumplido diligentemente los deberes de dirección y supervisión, lo que se verifica con el certificado del art. 51 (art. 36 n.º 5). Ese certificado es del modelo de prevención de infracciones, que los responsables pueden adoptar voluntariamente (art. 49).
 
 ### Básico vs. senior
 
@@ -389,10 +388,11 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-22: articulado, vigencia, estado del boletín 18.623-07 y Decreto 662 consultados ese día en BCN y en el Senado. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual, y extraordinaria si se publica la ley de postergación.
+2026-10-25: textos legales vueltos a consultar en BCN y en el Senado, sin cambios. Antes, 2026-10-22: articulado, vigencia, estado del boletín 18.623-07 y Decreto 662 consultados ese día en BCN y en el Senado. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual, y extraordinaria si se publica la ley de postergación.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-21: creación (lote F3b-19a); absorbe `compliance-scope-for-data-engineers`.
 - 2026-10-22: reestructura como ficha padre del subdominio (upgrade de 19): mapa de artículos, estado de la postergación según el Senado, Decreto 662, caso por capas, sanciones y contraste básico/senior. La matriz exige evidencia reciente y hace fallar la CI. El detalle pasa a las fichas hijas.
 - 2026-10-24: las hijas se declaran con `PART_OF` (ADR-024) en vez de `RELATED_TO`; `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
+- 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.

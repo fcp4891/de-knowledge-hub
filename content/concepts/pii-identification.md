@@ -29,9 +29,9 @@ legal_basis:
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    accessed: 2026-10-21
+    accessed: 2026-10-25
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01). Art. 2 f): dato personal es cualquier información vinculada o referida a una persona natural identificada o identificable; es identificable quien puede ser determinado directa o indirectamente, en particular mediante identificadores como el nombre o el número de cédula de identidad; se consideran todos los medios y factores objetivos que razonablemente se podrían usar para identificarla. Art. 2 g): son datos sensibles los que revelen el origen étnico o racial, la afiliación política, sindical o gremial, la situación socioeconómica, las convicciones ideológicas o filosóficas, las creencias religiosas, los datos relativos a la salud, al perfil biológico humano, los datos biométricos, y la información relativa a la vida sexual, la orientación sexual y la identidad de género. Art. 16: los sensibles solo se tratan con consentimiento expreso del titular, salvo los casos que enumera. Consultado el 2026-10-21."
+    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01). Art. 2 f): dato personal es cualquier información vinculada o referida a una persona natural identificada o identificable; es identificable quien puede ser determinado directa o indirectamente, en particular mediante identificadores como el nombre o el número de cédula de identidad; se consideran todos los medios y factores objetivos que razonablemente se podrían usar para identificarla. Art. 2 g): son datos sensibles los que revelen el origen étnico o racial, la afiliación política, sindical o gremial, la situación socioeconómica, las convicciones ideológicas o filosóficas, las creencias religiosas, los datos relativos a la salud, al perfil biológico humano, los datos biométricos, y la información relativa a la vida sexual, la orientación sexual y la identidad de género. Art. 16: los sensibles solo se tratan con consentimiento expreso del titular, salvo los casos que enumera. Consultado el 2026-10-25."
   - source: gcp-sensitive-data-protection-docs
     url: https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference
     accessed: 2026-10-21
@@ -75,8 +75,8 @@ relations:
     target: data-breach-response
     note: Las categorías deciden el aviso a titulares.
 created_at: 2026-10-21
-updated_at: 2026-10-24
-last_verified: 2026-10-21
+updated_at: 2026-10-25
+last_verified: 2026-10-25
 verification_status: review_required
 ---
 
@@ -105,7 +105,7 @@ Ningún control sirve si no se sabe **dónde** están los datos personales. La l
 
 1. **[Buena práctica]** Tomar una muestra de cada columna.
 2. **[Buena práctica]** Aplicar patrones: RUT con dígito verificador válido, correo, teléfono; marcar la columna si calza al menos el 60 % de la muestra.
-3. **[Obligación legal · art. 2]** Marcar como sensibles las columnas cuyo nombre o contenido corresponde a una categoría de la lista de la ley.
+3. **[Buena práctica]** Marcar como sensibles las columnas cuyo nombre o contenido corresponde a una categoría de la lista del art. 2.
 4. **[Decisión de arquitectura]** Guardar la clase (sensible, personal, sin datos personales detectados) en el catálogo, para que los demás controles la lean.
 5. **[Buena práctica]** Revisar a mano lo que la heurística no ve: formatos raros, texto libre, combinaciones de columnas.
 
@@ -250,7 +250,7 @@ En Azure, **Microsoft Purview**. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS
 ## 14. Buenas prácticas
 
 - **[Buena práctica]** Validar el dígito verificador: reduce los falsos positivos de un número cualquiera de 8 dígitos.
-- **[Obligación legal · art. 2]** Usar la lista de sensibles de la ley, no una propia: incluye la situación socioeconómica.
+- **[Buena práctica]** Usar la lista de sensibles del art. 2, no una propia: incluye la situación socioeconómica.
 - **[Buena práctica]** **Seguridad:** la muestra del escaneo también tiene datos personales; se procesa con los mismos controles.
 - **[Buena práctica]** **Observabilidad:** alertar cuando aparece una columna personal nueva en una capa que no debería tenerla.
 - **[Buena práctica]** **Costo:** escanear muestras y no tablas completas; el volumen inspeccionado crece con cada capa y cada copia.
@@ -296,10 +296,11 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-21: texto legal consultado ese día en BCN. `review_required`: pendiente de revisión B-F3.1 del lote F3b-19a; pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-21: texto legal consultado ese día en BCN. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-21: creación (lote F3b-19a).
 - 2026-10-22: upgrade de 19: pasa a ser ficha hija de `chile-data-protection`; relaciones con `chilean-identifier-pseudonymization`, `privacy-controls-as-code` y `data-breach-response`. Sin cambios de contenido legal ni de código.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
+- 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.

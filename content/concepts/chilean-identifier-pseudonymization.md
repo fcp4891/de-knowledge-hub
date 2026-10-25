@@ -18,15 +18,15 @@ legal_basis:
   - {law: ley-19628, article: "2", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "f) identificable con medios razonables; k) anonimización irreversible; l) seudonimización con información adicional separada y protegida.", implication: "El riesgo de reidentificación se evalúa con los datos y medios disponibles (f); solo la anonimización real saca el dato del alcance de la ley (k); la llave va en otro sistema, con otro control de acceso (l)."}
   - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "c) al vencer el plazo, suprimir o anonimizar.", implication: "La anonimización es alternativa a la supresión solo si es real."}
   - {law: ley-19628, article: "14 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "a) la seudonimización y el cifrado como medidas de seguridad.", implication: "Seudonimizar reduce el riesgo, no elimina obligaciones."}
-  - {law: ley-19628, article: "16 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "c) los resultados de estudios con datos de salud se publican anonimizados.", implication: "Publicar resultados de estudios con datos de salud exige anonimización probada."}
-  - {law: ley-19628, article: "16 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Fines históricos, estadísticos o científicos: publicar anonimizado.", implication: "Datasets estadísticos o abiertos exigen anonimización probada."}
+  - {law: ley-19628, article: "16 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "c) los resultados de estudios con datos de salud se publican anonimizados.", implication: "Si se publican resultados de estudios con datos de salud, el dataset publicado va anonimizado."}
+  - {law: ley-19628, article: "16 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Fines históricos, estadísticos o científicos: publicar anonimizado.", implication: "Si se publican resultados estadísticos o científicos, los datos publicados van anonimizados."}
   - {law: ley-19628, article: "26", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Un reglamento regulará los procedimientos de anonimización.", implication: "Revisar los procedimientos de anonimización cuando se dicte el reglamento."}
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    accessed: 2026-10-22
+    accessed: 2026-10-25
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-22. Art. 2 f): es identificable quien puede ser determinado directa o indirectamente; se consideran los medios y factores que razonablemente se podrían usar. Art. 2 k): anonimización es un procedimiento irreversible; un dato anonimizado deja de ser personal. Art. 2 l): seudonimización: sin información adicional ya no se atribuye a un titular, siempre que esa información figure por separado y esté sujeta a medidas técnicas y organizativas. Art. 3 c): al vencer el plazo, suprimir o anonimizar. Art. 14 quinquies a): la seudonimización y el cifrado entre las medidas de seguridad. Art. 16 bis c): los resultados de estudios con datos de salud o de perfil biológico pueden publicarse, previa anonimización de lo publicado. Art. 16 quinquies: quienes tratan datos con fines históricos, estadísticos o científicos de interés público anonimizan lo que publican. Art. 26: un reglamento del Ministerio Secretaría General de la Presidencia regulará la comunicación o cesión de datos entre organismos públicos y con privados, y también los procedimientos de anonimización, especialmente de datos sensibles."
+    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-25. Art. 2 f): es identificable quien puede ser determinado directa o indirectamente; se consideran los medios y factores que razonablemente se podrían usar. Art. 2 k): anonimización es un procedimiento irreversible; un dato anonimizado deja de ser personal. Art. 2 l): seudonimización: sin información adicional ya no se atribuye a un titular, siempre que esa información figure por separado y esté sujeta a medidas técnicas y organizativas. Art. 3 c): al vencer el plazo, suprimir o anonimizar. Art. 14 quinquies a): la seudonimización y el cifrado entre las medidas de seguridad. Art. 16 bis c): los resultados de estudios con datos de salud o de perfil biológico pueden publicarse, previa anonimización de lo publicado. Art. 16 quinquies: quienes tratan datos con fines históricos, estadísticos o científicos de interés público anonimizan lo que publican. Art. 26: un reglamento del Ministerio Secretaría General de la Presidencia regulará la comunicación o cesión de datos entre organismos públicos y con privados, y también los procedimientos de anonimización, especialmente de datos sensibles."
   - source: python-docs
     url: https://docs.python.org/3.12/library/hmac.html
     accessed: 2026-10-21
@@ -64,8 +64,8 @@ relations:
   - {type: RELATED_TO, target: data-subject-rights-pipeline, note: "El mismo seudónimo indexa al titular."}
   - {type: RELATED_TO, target: retention-and-erasure, note: "El seudónimo como clave de supresión."}
 created_at: 2026-10-21
-updated_at: 2026-10-24
-last_verified: 2026-10-22
+updated_at: 2026-10-25
+last_verified: 2026-10-25
 verification_status: review_required
 ---
 
@@ -85,9 +85,9 @@ En la práctica, «anonimizado» suele significar «le sacamos el RUT». Para la
 - **[Obligación legal · art. 2]** **Seudonimización** (letra l)): sin información adicional que figure por separado y esté protegida, el dato ya no se atribuye al titular. **Anonimización** (letra k)): procedimiento irreversible; el dato anonimizado deja de ser personal. Para saber si alguien es identificable se consideran los medios que razonablemente se podrían usar (letra f)).
 - **[Obligación legal · art. 14 quinquies]** Entre las medidas de seguridad, la ley nombra la seudonimización y el cifrado (letra a)): seudonimizar reduce el riesgo, no saca al dato de la ley.
 - **[Obligación legal · art. 3]** Al vencer el plazo de conservación, suprimir o anonimizar (letra c)); anonimizar solo sirve si es real.
-- **[Obligación legal · art. 16 bis]** Los resultados de estudios con datos de salud o de perfil biológico se publican anonimizados (letra c)).
-- **[Obligación legal · art. 16 quinquies]** Con fines históricos, estadísticos o científicos, lo que se publica se anonimiza.
-- **[Obligación legal · art. 26]** Un reglamento regulará los procedimientos de anonimización, especialmente de datos sensibles; revisar cuando se dicte.
+- **[Obligación legal · art. 16 bis]** Los resultados de estudios con datos de salud o de perfil biológico pueden publicarse; si se publican, los datos se anonimizan antes (letra c)).
+- **[Obligación legal · art. 16 quinquies]** Con fines históricos, estadísticos o científicos se pueden publicar resultados; antes, se anonimizan los datos que se publiquen.
+- **[Obligación legal · art. 26]** Un reglamento regulará los procedimientos de anonimización, especialmente de datos sensibles. **[Buena práctica]** Revisar estas técnicas cuando se dicte.
 - **[Buena práctica]** **Cuasi-identificadores:** atributos que solos no identifican pero combinados sí (comuna, año de nacimiento, sexo, ruta de vuelo).
 
 ## 3. Problema que resuelve
@@ -98,7 +98,7 @@ En la práctica, «anonimizado» suele significar «le sacamos el RUT». Para la
 
 1. **[Buena práctica]** Normalizar: quitar puntos y espacios, pasar la `k` a mayúscula y llevar al formato `número-DV`.
 2. **[Buena práctica]** Validar el dígito verificador con módulo 11; rechazar el valor si no calza.
-3. **[Obligación legal · art. 2]** Calcular `HMAC-SHA-256(llave, rut_normalizado)`; la llave vive en un KMS, separada de los datos y con un rol distinto del que lee los datos.
+3. **[Decisión de arquitectura]** Calcular `HMAC-SHA-256(llave, rut_normalizado)`, con la llave en un KMS y un rol distinto del que lee los datos. **[Obligación legal · art. 2]** Para que sea seudonimización, la información adicional (aquí, la llave) figura por separado y sujeta a medidas técnicas y organizativas (letra l)).
 4. **[Decisión de arquitectura]** Usar el mismo seudónimo en todas las capas: habilita uniones, el índice de titulares y la supresión.
 5. **[Buena práctica]** Para anonimizar: definir cuasi-identificadores, generalizar (comuna → región, año → década), suprimir grupos atípicos y medir k.
 6. **[Decisión de arquitectura]** Registrar en el catálogo el estado de cada dataset: `personal`, `seudonimizado` o `anonimizado`, con la evidencia de la prueba.
@@ -264,7 +264,7 @@ En Azure, **Always Encrypted** en Azure SQL. Según *Ley 19628 SOBRE PROTECCION 
 ## 14. Buenas prácticas
 
 - **[Buena práctica]** Una sola función de normalización para todos los pipelines.
-- **[Obligación legal · art. 2]** La llave, separada de los datos y con acceso restringido.
+- **[Obligación legal · art. 2]** La llave figura por separado de los datos y sujeta a medidas técnicas y organizativas (letra l)). **[Buena práctica]** Acceso restringido a un rol distinto.
 - **[Buena práctica]** **Seguridad:** nunca `sha256(rut)` sin llave; rotar la llave con un plan de re-seudonimización, porque perderla rompe uniones históricas.
 - **[Buena práctica]** **GenAI:** quitar o seudonimizar los datos personales antes de enviar texto a un LLM; el texto libre trae datos que ningún esquema declara.
 - **[Buena práctica]** **Observabilidad:** alertar si aparece un RUT en claro fuera de bronze.
@@ -315,10 +315,11 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-22: arts. 2, 3, 14 quinquies, 16 bis, 16 quinquies y 26 consultados ese día en BCN. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-22: arts. 2, 3, 14 quinquies, 16 bis, 16 quinquies y 26 consultados ese día en BCN. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-21: creación (lote F3b-19b).
 - 2026-10-22: upgrade de 19: incorpora la parte legal de la seudonimización y la anonimización (arts. 2 f), k) y l), 3 c), 14 quinquies a), 16 bis c), 16 quinquies y 26) y la prueba de k-anonimato; enlaza `pseudonymization-vs-anonymization` (18), que no cambia.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
+- 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.

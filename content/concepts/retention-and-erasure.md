@@ -27,9 +27,9 @@ legal_basis:
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    accessed: 2026-10-22
+    accessed: 2026-10-25
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-22. Art. 2 h): eliminación es la destrucción de datos almacenados, cualquiera sea el procedimiento; k): un dato anonimizado deja de ser personal. Art. 3 c): conservar solo el tiempo necesario y luego suprimir o anonimizar, salvo excepciones legales. Art. 7: causales de supresión; no procede, entre otros casos, cuando el tratamiento es necesario para cumplir una obligación legal o ejecutar un contrato (ii), o para fines históricos o estadísticos de interés público (v). Art. 8 ter: el bloqueo se puede pedir alternativamente a la supresión y no afecta el almacenamiento. Art. 11: respuesta en 30 días corridos, prorrogables una vez; si los datos se comunicaron a otros, se les comunican los cambios. Art. 14 d): suprimir o anonimizar los datos obtenidos para medidas precontractuales. Art. 14 quáter: por defecto, considerar el plazo de conservación. Art. 15 bis: cumplido el servicio, el encargado suprime o devuelve los datos."
+    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-25. Art. 2 h): eliminación es la destrucción de datos almacenados, cualquiera sea el procedimiento; k): un dato anonimizado deja de ser personal. Art. 3 c): conservar solo el tiempo necesario y luego suprimir o anonimizar, salvo excepciones legales. Art. 7: causales de supresión; no procede, entre otros casos, cuando el tratamiento es necesario para cumplir una obligación legal o ejecutar un contrato (ii), o para fines históricos o estadísticos de interés público (v). Art. 8 ter: el bloqueo se puede pedir alternativamente a la supresión y no afecta el almacenamiento. Art. 11: respuesta en 30 días corridos, prorrogables una vez; si los datos se comunicaron a otros, se les comunican los cambios. Art. 14 d): suprimir o anonimizar los datos obtenidos para medidas precontractuales. Art. 14 quáter: por defecto, considerar el plazo de conservación. Art. 15 bis: cumplido el servicio, el encargado suprime o devuelve los datos."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/time-travel
     accessed: 2026-10-21
@@ -70,8 +70,8 @@ relations:
   - {type: RELATED_TO, target: data-retention, note: "Mecanismos técnicos de retención."}
   - {type: RELATED_TO, target: open-table-formats, note: "Snapshots y time travel."}
 created_at: 2026-10-22
-updated_at: 2026-10-24
-last_verified: 2026-10-22
+updated_at: 2026-10-25
+last_verified: 2026-10-25
 verification_status: review_required
 ---
 
@@ -97,13 +97,13 @@ En una plataforma moderna, un dato personal no está en una tabla: está en el o
 ## 4. Cómo funciona
 
 1. **[Decisión de arquitectura]** El área legal define plazo y acción (suprimir o anonimizar) por actividad de tratamiento; el catálogo lo propaga a cada tabla.
-2. **[Obligación legal · art. 14 quáter]** Un job diario aplica la retención: particiones vencidas se eliminan o se anonimizan.
+2. **[Obligación legal · art. 14 quáter]** La protección por defecto considera el plazo de conservación. **[Decisión de arquitectura]** Un job diario aplica la retención: particiones vencidas se eliminan o se anonimizan.
 3. **[Obligación legal · art. 14]** Los datos de medidas precontractuales (leads, cotizaciones) tienen plazo propio y se suprimen o anonimizan (letra d)).
 4. **[Buena práctica]** Ante una supresión aprobada: identificar al titular con su llave, localizarlo con el índice de titulares y el linaje, separar lo que tiene obligación de conservar y borrar el resto.
 5. **[Buena práctica]** Purgar las versiones físicas: VACUUM en Delta, expiración de snapshots en Iceberg, ventana de time travel en BigQuery, versiones de objetos en almacenamiento.
 6. **[Decisión de arquitectura]** Agregar la llave del titular a la lista de supresión, que la ingesta y los backfills aplican antes de escribir.
 7. **[Obligación legal · art. 11]** Comunicar la supresión a los destinatarios que recibieron los datos.
-8. **[Obligación legal · art. 15 bis]** Al cerrar un encargo, exigir y guardar la constancia de supresión o devolución.
+8. **[Obligación legal · art. 15 bis]** Al terminar el servicio, el encargado suprime o devuelve los datos. **[Buena práctica]** Exigir y guardar la constancia.
 9. **[Buena práctica]** Generar evidencia con identificadores internos y conteos por tabla, sin datos del titular.
 
 ## 5. Cuándo utilizarlo
@@ -368,9 +368,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-22: artículos consultados ese día en BCN; comportamiento de BigQuery, S3 y Delta según sus páginas. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-22: artículos consultados ese día en BCN; comportamiento de BigQuery, S3 y Delta según sus páginas. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-22: creación (upgrade de 19); reemplaza a `erasure-across-copies`, que queda como alias.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
+- 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
