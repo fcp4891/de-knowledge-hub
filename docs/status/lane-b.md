@@ -3,7 +3,7 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-21
+**Última actualización:** 2026-10-24
 
 ## Reglas de revisión
 
@@ -14,6 +14,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** B-F3.1 del upgrade de 19. Revisión en `docs/reviews/cards-f3b-19-upgrade.md`. No se editó `content/` ni `frontend/`. Los pedidos 19a–19d quedan anulados.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuestas altas: el art. 49 no es obligación, el mínimo de 2 en gold, y el registro de vulneraciones no se lleva si no se reporta. Propuestas media: «la más gravosa entre», una etiqueta por artículo, y los 24 h solo si además hay servicios esenciales afectados.
+- **Última actualización de esta entrada:** 2026-10-24. `scripts/validate.py` OK (588 entidades). El boletín, al 2026-10-24, sigue en discusión inmediata.
 - **Tarea activa:** B-F3.1 del lote F3b-18c. Revisión en `docs/reviews/cards-f3b-18c.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. La bóveda de `tokenization` es un dict, como pide el pedido (biblioteca estándar).
 - **Tarea activa:** B-F3.1 del lote F3b-18b. Revisión en `docs/reviews/cards-f3b-18b.md`. No se editó `content/` ni `frontend/`.
@@ -86,6 +89,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Si hay alias, bajo el título: «También conocido como: …» (ficha de concepto y página de tecnología).
 - `make test-frontend`: 11/11. En la demo estática, «Dataplex» encuentra Knowledge Catalog y la ficha `gcp-dataplex` muestra los dos alias.
 - No se editó `content/` ni el contrato.
+
+### B-F3.1 · upgrade de 19
+- Once fichas de ingeniería de datos y Ley 21.719. El boletín y el mensaje N° 110-374 coinciden con la página del Senado. Hallazgos altos: el art. 49 etiquetado como obligación, el mínimo de 2 en gold, y el registro «aunque no se reporte». No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-18c
 - Cuatro fichas de técnicas de privacidad. Lo seudonimizado sigue siendo datos de personas y la anonimización no se declara irreversible. El HMAC sin la clave no se revierte. La bóveda es un dict, con el mapeo separado. Sin propuestas. No se editó `content/` ni `frontend/`.
@@ -353,6 +359,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · upgrade de 19 (2026-10-24)
+- Revisión de las 11 fichas del subdominio. Los pedidos 19a–19d quedan anulados. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-18c (2026-10-21)
 - Revisión de las 4 fichas de técnicas de privacidad. Sin hallazgos. No se editó `content/`. El CI no se esperó.
