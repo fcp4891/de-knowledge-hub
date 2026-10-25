@@ -1,7 +1,14 @@
 import { InlineText } from "@/components/markdown/InlineText";
+import { droppedEtiquetaIndex } from "@/lib/legal";
 import { groupEvidence, parseMarkdown, type Block, type EvidenceGroup } from "@/lib/markdown";
 
-export async function MarkdownBody({ markdown }: { markdown: string }) {
+export async function MarkdownBody({
+  markdown,
+  etiquetaColumn = false,
+}: {
+  markdown: string;
+  etiquetaColumn?: boolean;
+}) {
   const blocks = parseMarkdown(markdown);
   const grouped = groupEvidence(blocks);
   const hasCode = blocks.some((block) => block.type === "code" && block.language !== "mermaid");
@@ -26,6 +33,7 @@ export async function MarkdownBody({ markdown }: { markdown: string }) {
           <MarkdownBlock
             key={index}
             block={block}
+            etiquetaColumn={etiquetaColumn}
             CodeBlock={codeBlock}
             MermaidDiagram={mermaidDiagram}
           />
@@ -60,6 +68,7 @@ function EvidenceBlock({
         <MarkdownBlock
           key={index}
           block={block}
+          etiquetaColumn={false}
           CodeBlock={CodeBlock}
           MermaidDiagram={MermaidDiagram}
         />
@@ -70,10 +79,12 @@ function EvidenceBlock({
 
 function MarkdownBlock({
   block,
+  etiquetaColumn,
   CodeBlock,
   MermaidDiagram,
 }: {
   block: Block;
+  etiquetaColumn: boolean;
   CodeBlock: ((props: { code: string; language: string }) => React.ReactNode) | null;
   MermaidDiagram: ((props: { source: string }) => React.ReactNode) | null;
 }) {
@@ -100,14 +111,16 @@ function MarkdownBlock({
     );
   }
   if (block.type === "table") {
+    const drop = etiquetaColumn ? droppedEtiquetaIndex(block.headers, block.rows) : null;
+    const indexes = block.headers.map((_, index) => index).filter((index) => index !== drop);
     return (
       <div className="markdown-table-wrap">
         <table>
           <thead>
             <tr>
-              {block.headers.map((cell, index) => (
+              {indexes.map((index) => (
                 <th key={index} data-align={block.aligns[index] ?? "left"}>
-                  <InlineText inlines={cell} />
+                  <InlineText inlines={block.headers[index]} />
                 </th>
               ))}
             </tr>
@@ -115,9 +128,9 @@ function MarkdownBlock({
           <tbody>
             {block.rows.map((row, rowIndex) => (
               <tr key={rowIndex}>
-                {row.map((cell, index) => (
+                {indexes.map((index) => (
                   <td key={index} data-align={block.aligns[index] ?? "left"}>
-                    <InlineText inlines={cell} />
+                    <InlineText inlines={row[index] ?? []} />
                   </td>
                 ))}
               </tr>

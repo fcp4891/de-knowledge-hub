@@ -8,9 +8,12 @@ import {
   claimLabel,
   extractLegalNotice,
   lawLabel,
+  droppedEtiquetaIndex,
+  etiquetaVisual,
   legalBasisRows,
   legalNoticeCopy,
   legislationBadge,
+  usesArchitectureMark,
 } from "../../frontend/lib/legal.ts";
 
 test("el badge de jurisdicción nombra el país", () => {
@@ -79,6 +82,22 @@ test("la subsección de evidencia agrupa el título y la tabla", () => {
   assert.equal(evidence.blocks.length, 1);
   assert.equal(evidence.blocks[0].type, "table");
   assert.equal(grouped.some((block) => block.type === "heading"), false);
+});
+
+test("en §11–13 la columna Etiqueta se oculta si no queda ni un punto", () => {
+  const need = [{ type: "text", value: "Descubrir" }];
+  const headers = [[{ type: "text", value: "Necesidad" }], [{ type: "text", value: "Etiqueta" }]];
+  const practice = [{ type: "strong", value: "[Buena práctica]" }];
+  const decision = [{ type: "strong", value: "[Decisión de arquitectura]" }];
+  const obligation = [{ type: "strong", value: "[Obligación legal · art. 2]" }];
+  assert.equal(etiquetaVisual(practice), "empty");
+  assert.equal(etiquetaVisual(decision), "dot");
+  assert.equal(etiquetaVisual(obligation), "keep");
+  assert.equal(droppedEtiquetaIndex(headers, [[need, practice], [need, practice]]), 1);
+  assert.equal(droppedEtiquetaIndex(headers, [[need, practice], [need, decision]]), null);
+  assert.equal(droppedEtiquetaIndex(headers, [[need, practice], [need, obligation]]), null);
+  assert.equal(usesArchitectureMark("Texto **[Decisión de arquitectura]** y sigue."), true);
+  assert.equal(usesArchitectureMark("Solo una buena práctica."), false);
 });
 
 test("el parser deja cada etiqueta como un solo énfasis", () => {

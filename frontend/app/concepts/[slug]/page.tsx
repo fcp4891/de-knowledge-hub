@@ -5,7 +5,7 @@ import { MarkdownBody } from "@/components/markdown/MarkdownBody";
 import { getConcept, getDomain, getRelations, getStudyState, listNotes } from "@/lib/api/client";
 import type { NoteList, RelationGroups, Section, SourceRef } from "@/lib/api/types";
 import { citationDetail, citationLinkText } from "@/lib/citation";
-import { extractLegalNotice, legalNoticeCopy } from "@/lib/legal";
+import { extractLegalNotice, legalNoticeCopy, usesArchitectureMark } from "@/lib/legal";
 import { withoutPartOf } from "@/lib/partOf";
 import { entityHref } from "@/lib/entityHref";
 import { SHORT_NAMES } from "@/lib/learning-paths";
@@ -92,7 +92,7 @@ function sectionModels(sections: Section[], sources: SourceRef[]): ReadingSectio
         title: section.title,
         presentation: "cloud",
         listed: true,
-        body: <MarkdownBody markdown={section.markdown} />,
+        body: <MarkdownBody markdown={section.markdown} etiquetaColumn />,
       });
       continue;
     }
@@ -257,6 +257,7 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
       relationGroups={groups}
       relationsError={relations.ok ? null : (relations.detail ?? "No se pudieron cargar las relaciones.")}
       entityType={data.type}
+      architectureLegend={sections.some((section) => usesArchitectureMark(section.markdown))}
     >
       {staticMode ? null : <HybridNotes slug={data.slug} />}
     </ConceptReading>
