@@ -4285,7 +4285,7 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "review_required",
-      "last_verified": "2026-10-22"
+      "last_verified": "2026-10-25"
     },
     {
       "slug": "pii-identification",
@@ -4299,7 +4299,7 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "review_required",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-25"
     },
     {
       "slug": "processing-activities-inventory",
@@ -4313,7 +4313,7 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "review_required",
-      "last_verified": "2026-10-22"
+      "last_verified": "2026-10-25"
     },
     {
       "slug": "data-minimization-by-layer",
@@ -4327,7 +4327,7 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "review_required",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-25"
     },
     {
       "slug": "chilean-identifier-pseudonymization",
@@ -4341,7 +4341,7 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "review_required",
-      "last_verified": "2026-10-22"
+      "last_verified": "2026-10-25"
     },
     {
       "slug": "data-subject-rights-pipeline",
@@ -4355,7 +4355,7 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "review_required",
-      "last_verified": "2026-10-22"
+      "last_verified": "2026-10-25"
     },
     {
       "slug": "retention-and-erasure",
@@ -4369,7 +4369,7 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "review_required",
-      "last_verified": "2026-10-22"
+      "last_verified": "2026-10-25"
     },
     {
       "slug": "data-breach-response",
@@ -4383,7 +4383,7 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "review_required",
-      "last_verified": "2026-10-22"
+      "last_verified": "2026-10-25"
     },
     {
       "slug": "dpia-and-automated-decisions",
@@ -4397,7 +4397,7 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "review_required",
-      "last_verified": "2026-10-22"
+      "last_verified": "2026-10-25"
     },
     {
       "slug": "processors-and-international-transfers",
@@ -4411,7 +4411,7 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "review_required",
-      "last_verified": "2026-10-22"
+      "last_verified": "2026-10-25"
     },
     {
       "slug": "privacy-controls-as-code",
@@ -4425,7 +4425,7 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "review_required",
-      "last_verified": "2026-10-22"
+      "last_verified": "2026-10-25"
     },
     {
       "slug": "gdpr",
