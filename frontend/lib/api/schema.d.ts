@@ -344,9 +344,11 @@ export interface components {
             /** Format: uri */
             url: string;
             note: string | null;
+            /** @description Implicancia técnica del artículo para la plataforma de datos (enmienda de ADR-023). */
+            implication: string;
         };
         /** @enum {unknown} */
-        RelationType: "USES" | "IMPLEMENTS" | "DEPENDS_ON" | "ALTERNATIVE_TO" | "RELATED_TO" | "REPLACES" | "EXTENDS" | "RUNS_ON" | "PRODUCES" | "CONSUMES" | "PRACTICES" | "AFFECTS" | "UPDATES" | "REQUIRES";
+        RelationType: "USES" | "IMPLEMENTS" | "DEPENDS_ON" | "ALTERNATIVE_TO" | "RELATED_TO" | "REPLACES" | "EXTENDS" | "RUNS_ON" | "PRODUCES" | "CONSUMES" | "PRACTICES" | "AFFECTS" | "UPDATES" | "REQUIRES" | "PART_OF";
         /** @enum {unknown} */
         EntityType: "concept" | "pattern" | "architecture" | "technology" | "cloud_service" | "code_snippet" | "lab" | "news" | "release" | "source" | "job_description" | "interview_question" | "personal_note";
         /** @enum {unknown} */

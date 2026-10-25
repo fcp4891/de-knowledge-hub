@@ -3,7 +3,7 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-22
+**Última actualización:** 2026-10-25
 
 ## Reglas de revisión
 
@@ -14,7 +14,7 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
-- **Tarea activa:** `b/ui-legal` (ADR-023). Badge «Legislación · CL», aviso al inicio y chips. «Base legal» es una tabla Artículo / Qué dice / Implicancia técnica antes del §1. §8 destaca «Evidencia de cumplimiento». §9 dibuja Mermaid a SVG con el paquete local, sin CDN.
+- **Tarea activa:** `b/ui-legal` (ADR-023 y ADR-024). «Implicancia técnica» lee `legal_basis.implication`. La padre lista «Fichas de esta ruta» en el orden de estudio de `ley21719`. Cada hija muestra «Parte de: …» hacia la padre. `PART_OF` no se repite en la lista de relaciones.
 - **Tarea activa:** B-F3.1 del lote F3b-18c. Revisión en `docs/reviews/cards-f3b-18c.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. La bóveda de `tokenization` es un dict, como pide el pedido (biblioteca estándar).
 - **Tarea activa:** B-F3.1 del lote F3b-18b. Revisión en `docs/reviews/cards-f3b-18b.md`. No se editó `content/` ni `frontend/`.

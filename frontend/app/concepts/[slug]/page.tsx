@@ -6,6 +6,7 @@ import { getConcept, getDomain, getRelations, getStudyState, listNotes } from "@
 import type { NoteList, RelationGroups, Section, SourceRef } from "@/lib/api/types";
 import { citationDetail, citationLinkText } from "@/lib/citation";
 import { extractLegalNotice, legalNoticeCopy } from "@/lib/legal";
+import { withoutPartOf } from "@/lib/partOf";
 import { entityHref } from "@/lib/entityHref";
 import { SHORT_NAMES } from "@/lib/learning-paths";
 import { nextInRoute } from "@/lib/domainRoute";
@@ -204,6 +205,7 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
   const domain = data.domain ? await getDomain(data.domain) : null;
   const study = staticMode ? null : await getStudyState(slug);
   const groups = relations.ok ? relations.data.groups : [];
+  const listedGroups = withoutPartOf(groups);
 
   let crumb: { domainHref: string; domainLabel: string; subdomain: string | null } | null = null;
   let next: { slug: string; title: string } | null = null;
@@ -241,7 +243,6 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
       jurisdiction={data.jurisdiction}
       legalNotice={data.jurisdiction.length > 0 ? legalNoticeCopy(noticeSplit.notice) : null}
       legalBasis={data.legal_basis}
-      technicalMarkdown={data.sections.find((section) => section.key === "how_it_works")?.markdown ?? ""}
       minutes={readingMinutes(sections)}
       sourceCount={data.sources.length}
       crumb={crumb}
@@ -252,7 +253,7 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
         study?.ok ? { state: study.data.state, pendingDeepDive: study.data.pending_deep_dive } : null
       }
       studyError={study && !study.ok ? (study.detail ?? "No se pudo cargar el estado de estudio.") : null}
-      related={relatedItems(groups)}
+      related={relatedItems(listedGroups)}
       relationGroups={groups}
       relationsError={relations.ok ? null : (relations.detail ?? "No se pudieron cargar las relaciones.")}
       entityType={data.type}

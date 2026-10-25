@@ -75,6 +75,7 @@ export type LegalBasisInput = {
   article: string;
   url: string;
   note: string | null;
+  implication: string;
 };
 
 export type LegalBasisRow = {
@@ -85,26 +86,13 @@ export type LegalBasisRow = {
   implication: string | null;
 };
 
-/** El paso de «cómo funciona» que cita ese artículo, si la ficha lo escribió. */
-export function implicationForArticle(article: string, markdown: string): string | null {
-  const escaped = article.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = new RegExp(
-    `\\*\\*\\[Obligación legal · art\\. ${escaped}\\]\\*\\*\\s*([^\\n]+)`,
-  ).exec(markdown);
-  const text = match?.[1]?.trim() ?? "";
-  return text.length > 0 ? text : null;
-}
-
-export function legalBasisRows(
-  items: readonly LegalBasisInput[],
-  technicalMarkdown = "",
-): LegalBasisRow[] {
+export function legalBasisRows(items: readonly LegalBasisInput[]): LegalBasisRow[] {
   return items.map((item) => ({
     law: item.law,
     article: item.article,
     url: item.url,
     says: item.note?.trim() || null,
-    implication: implicationForArticle(item.article, technicalMarkdown),
+    implication: item.implication.trim() || null,
   }));
 }
 

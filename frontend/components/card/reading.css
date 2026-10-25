@@ -227,6 +227,32 @@
   margin-top: 6px;
 }
 
+.part-of {
+  margin: 8px 0 0;
+  font-size: 14px;
+}
+
+.route-cards {
+  margin: 8px 0 28px;
+  padding: 16px 18px;
+  border: 2px solid var(--ink);
+  background: var(--surface, #fff);
+}
+
+.route-cards h2 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.route-cards ol {
+  margin: 0;
+  padding-left: 1.4rem;
+}
+
+.route-cards li {
+  margin: 6px 0;
+}
+
 .legal-basis {
   margin: 8px 0 28px;
   padding: 16px 18px;

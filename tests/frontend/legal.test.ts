@@ -7,7 +7,6 @@ import {
   claimKind,
   claimLabel,
   extractLegalNotice,
-  implicationForArticle,
   lawLabel,
   legalBasisRows,
   legalNoticeCopy,
@@ -50,28 +49,24 @@ test("el aviso sale del resumen y no queda como párrafo suelto", () => {
   assert.equal(copy.detail, "explica el alcance técnico.");
 });
 
-test("la base legal separa qué dice el artículo de la implicancia del §4", () => {
-  const how = [
-    "1. **[Obligación legal · art. 2]** Identificar qué datos son personales.",
-    "2. **[Obligación legal · art. 14 quáter]** Gold agrega por comuna.",
-  ].join("\n");
-  assert.equal(implicationForArticle("2", how), "Identificar qué datos son personales.");
-  assert.equal(implicationForArticle("14", how), null);
-  assert.equal(implicationForArticle("14 quáter", how), "Gold agrega por comuna.");
-  const [row] = legalBasisRows(
-    [
-      {
-        law: "ley-19628",
-        article: "2",
-        url: "https://www.bcn.cl/leychile/navegar?idNorma=141599",
-        note: "Definiciones: dato personal y tratamiento.",
-      },
-    ],
-    how,
+test("la implicancia técnica sale de legal_basis y no del texto del §4", () => {
+  const [row] = legalBasisRows([
+    {
+      law: "ley-19628",
+      article: "2",
+      url: "https://www.bcn.cl/leychile/navegar?idNorma=141599",
+      note: "Definiciones.",
+      implication: "Clasificar columnas y datasets.",
+    },
+  ]);
+  assert.equal(row.says, "Definiciones.");
+  assert.equal(row.implication, "Clasificar columnas y datasets.");
+  assert.equal(
+    legalBasisRows([
+      { law: "ley-19628", article: "15 bis", url: "https://www.bcn.cl/", note: null, implication: "  " },
+    ])[0].implication,
+    null,
   );
-  assert.equal(row.says, "Definiciones: dato personal y tratamiento.");
-  assert.equal(row.implication, "Identificar qué datos son personales.");
-  assert.equal(legalBasisRows([{ law: "ley-19628", article: "15 bis", url: "https://www.bcn.cl/", note: null }])[0].implication, null);
 });
 
 test("la subsección de evidencia agrupa el título y la tabla", () => {
