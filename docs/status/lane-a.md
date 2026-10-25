@@ -125,6 +125,10 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ## Historial
 
+### Estándar de diagramas de la §9 (2026-10-25)
+- CLAUDE.md «Diagramas (§9)» y plantillas `concept.md` y `architecture.md`. `make validate` avisa (sin error) si un Mermaid tiene más de 8 nodos o 10 aristas (`backend/content/diagrams.py`; los subgraphs no cuentan como nodo).
+- 21 diagramas sobre el límite, rehechos: 9 de 19 (`pii-identification` y `data-minimization-by-layer` ya cumplían) y 12 verified (solo §9 y una línea de historial). Los 318 diagramas de `content/` pasan `mermaid.parse`. `semantic-models` estaba roto en `main` (coma en el título del subgraph) y se corrigió.
+
 ### Revisión del upgrade de 19 aplicada (2026-10-25)
 - Merge de `b/f3b-review-19-upgrade` (028035c) y de `b/ui-legal` (e5d2f3d); en `lane-b.md` se combinaron los dos lados.
 - ALTO: art. 49 / Decreto 662 como Buena práctica (adopción voluntaria, atenuante del art. 36 n.º 5 con el certificado del art. 51; sale de `legal_basis` de `chile-data-protection` y `privacy-controls-as-code`); mínimo de 2 en gold como Decisión de arquitectura; art. 14 sexies: se registran las comunicaciones a la Agencia, registrar lo no reportado es Buena práctica. MEDIO: «la más gravosa entre» (art. 35); mapa con un artículo por fila; Ley 21.663: 24 h solo con operador vital y servicios esenciales afectados, 7 días solo vital (texto y código, tres casos en la salida).
