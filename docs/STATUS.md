@@ -19,8 +19,8 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | 19-compliance: 11 fichas en revisión; ADR-024 (`PART_OF`) y `implication` (enmienda de ADR-023) implementados | Aplicar la revisión; verified con aprobación de Felipe | — |
-| B · Cursor revisión | — | Revisar el upgrade de 19; ADR-023 en el frontend; ficha padre/hijas (`PART_OF`) e `implication` (`lane-a.md`) | — |
+| A · Claude Code | 19-compliance: revisión del upgrade aplicada (11 fichas) | `verified` con la aprobación de Felipe; luego el objetivo `ley21719` | Aprobación de Felipe |
+| B · Cursor revisión | — (upgrade de 19 revisado; `b/ui-legal` en `main`) | — | — |
 | B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
 
 ## Pedidos abiertos entre carriles
