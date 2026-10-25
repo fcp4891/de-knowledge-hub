@@ -3271,6 +3271,7 @@ provider: qdrant
 url_verified: true
 review_frequency: quarterly
 trust: high
+technologies: []
 created_at: '2026-10-25'
 updated_at: '2026-10-25'
 last_verified: '2026-10-25'
@@ -3288,6 +3289,7 @@ provider: huggingface
 url_verified: true
 review_frequency: quarterly
 trust: high
+technologies: []
 created_at: '2026-10-25'
 updated_at: '2026-10-25'
 last_verified: '2026-10-25'
