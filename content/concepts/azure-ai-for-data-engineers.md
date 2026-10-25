@@ -58,6 +58,9 @@ sources:
     note: "Batch inference with Gemini: inferencia asíncrona y de alto volumen con Gemini (antes batch prediction), para grandes conjuntos de prompts sin respuesta inmediata, con descuento frente a la inferencia en tiempo real."
 relations:
   - type: RELATED_TO
+    target: rag
+    note: Recuperar datos propios para el modelo (dominio 21).
+  - type: RELATED_TO
     target: vertex-ai-for-data-engineers
     note: La plataforma de IA de GCP; no son lo mismo.
   - type: RELATED_TO
@@ -239,7 +242,7 @@ La Batch API procesa grandes volúmenes con menor costo y cuota aparte, a cambio
 - `vertex-ai-for-data-engineers` y `bedrock-for-data-engineers`: la inferencia por lotes en GCP y AWS.
 - `json-format` y `batch-ingestion`: cómo se preparan los lotes.
 - `entra-id-for-data`: el acceso al recurso de Foundry.
-- Del blueprint, pendiente de ficha: `rag` (dominio 21).
+- `rag`: recuperar datos propios para el modelo (dominio 21).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -267,3 +270,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-13: creación (lote F3b-10b), con los nombres actuales según la tabla «Evolution of Foundry» y los anteriores como alias de búsqueda.
 - 2026-10-14: revisión B-F3.1 del lote F3b-10b aplicada (docs/reviews/cards-f3b-10b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-14: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-25: §17 y `relations` enlazan `rag`, creadas en el lote F3b-21b (regla del §17); sin otros cambios.

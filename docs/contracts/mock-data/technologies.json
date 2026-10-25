@@ -1,5 +1,5 @@
 {
-  "total": 93,
+  "total": 94,
   "limit": 500,
   "offset": 0,
   "items": [
@@ -361,6 +361,17 @@
       "type": "cloud_service",
       "origin": "azure",
       "category": "ai-platform",
+      "classification": "modern",
+      "mvp": false,
+      "stub": true,
+      "verification_status": "review_required"
+    },
+    {
+      "slug": "azure-ai-search",
+      "title": "Azure AI Search",
+      "type": "cloud_service",
+      "origin": "azure",
+      "category": "vector-search",
       "classification": "modern",
       "mvp": false,
       "stub": true,

@@ -67,6 +67,9 @@ sources:
     note: "Batch inference for BigQuery: la entrada es una tabla de BigQuery (bq://proyecto.dataset.tabla) en la misma región que el job, sin datasets multirregión; la salida va a una tabla de BigQuery o a JSONL en Cloud Storage."
 relations:
   - type: RELATED_TO
+    target: rag
+    note: Recuperar datos propios para el modelo (dominio 21).
+  - type: RELATED_TO
     target: vertex-ai-for-data-engineers
     note: La plataforma de IA de GCP, con otro modelo; no son lo mismo.
   - type: RELATED_TO
@@ -254,7 +257,7 @@ Bedrock da modelos fundacionales sin entrenar ni operar infraestructura, a cambi
 - `vertex-ai-for-data-engineers`: la plataforma de IA de GCP.
 - `s3-data-lake`, `batch-ingestion` y `json-format`: cómo se preparan y guardan los lotes.
 - `sagemaker-for-data-engineers`: modelos propios en AWS.
-- Del blueprint, pendiente de ficha: `rag` (dominio 21).
+- `rag`: recuperar datos propios para el modelo (dominio 21).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -282,3 +285,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-12: creación (lote F3b-09b).
 - 2026-10-13: revisión B-F3.1 del lote F3b-09b aplicada (docs/reviews/cards-f3b-09b.md): el §11 compara la inferencia por lotes con la de Gemini en Agent Platform (entrada, salida y modelos), con fuente de cada lado.
 - 2026-10-13: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-25: §17 y `relations` enlazan `rag`, creadas en el lote F3b-21b (regla del §17); sin otros cambios.

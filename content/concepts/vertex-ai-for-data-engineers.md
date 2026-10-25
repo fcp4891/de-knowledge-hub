@@ -48,6 +48,9 @@ sources:
     note: "Introduction to ML in BigQuery: BigQuery ML crea y ejecuta modelos de ML con GoogleSQL o la consola; los modelos se guardan en datasets de BigQuery, como tablas y vistas. También accede a modelos de Gemini Enterprise Agent Platform y a APIs de Cloud AI; los modelos remotos referencian modelos desplegados en Agent Platform por su endpoint, y su CREATE MODEL no procesa bytes ni tiene costo de BigQuery."
 relations:
   - type: RELATED_TO
+    target: rag
+    note: Recuperar datos propios para el modelo (dominio 21).
+  - type: RELATED_TO
     target: bigquery-sql-dialect
     note: BigQuery ML entrena y predice con GoogleSQL.
   - type: RELATED_TO
@@ -223,7 +226,8 @@ BigQuery ML deja entrenar y predecir sin salir del warehouse, con menos control 
 - `batch-ingestion`: las cargas batch de features y predicciones.
 - `orchestration-landscape`: los orquestadores de datos frente a los de ML.
 - `bigquery-security`: los controles sobre las tablas de features.
-- Del blueprint, pendientes de ficha: `ml-feature-pipeline-architecture` (arquitectura, Backlog) y `rag` (dominio 21).
+- `rag`: recuperar datos propios para el modelo (dominio 21).
+- Del blueprint, pendiente de ficha: `ml-feature-pipeline-architecture` (arquitectura, Backlog).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -252,3 +256,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-12: revisión B-F3.1 del lote F3b-08c aplicada (docs/reviews/cards-f3b-08c.md): el §1 y el §11 dicen las dos filas de la página de cambios de nombre (Vertex AI Platform → Gemini Enterprise Agent Platform; Vertex AI → Agent Platform); «Vertex AI» queda solo como alias de búsqueda; aliases con Vertex AI Platform y Agent Platform.
 - 2026-10-12: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-25: §17 y `relations` enlazan `rag`, creadas en el lote F3b-21b (regla del §17); sin otros cambios.

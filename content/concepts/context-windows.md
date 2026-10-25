@@ -37,6 +37,9 @@ sources:
     note: "Work with chat completion models, «Manage conversations»: con cada pregunta y respuesta la lista de mensajes crece; los tokens de los mensajes más la salida pedida deben quedar dentro del límite del modelo, o la solicitud falla; en conversaciones largas hay que llevar la cuenta y enviar solo lo que cabe; con la Responses API, la API puede manejar el truncado."
 relations:
   - type: RELATED_TO
+    target: rag
+    note: Recuperar solo lo relevante.
+  - type: RELATED_TO
     target: tokens
     note: La unidad de la ventana.
   - type: RELATED_TO
@@ -86,7 +89,7 @@ Un asistente sobre el catálogo de datos funciona bien en las primeras preguntas
 
 ## 6. Cuándo no utilizarlo
 
-- Para meter un corpus entero en cada llamada «porque cabe»: se paga en cada llamada; recuperar solo lo relevante (`rag`, pendiente de ficha) o cachear el contexto fijo puede ser más barato.
+- Para meter un corpus entero en cada llamada «porque cabe»: se paga en cada llamada; recuperar solo lo relevante (`rag`) o cachear el contexto fijo puede ser más barato.
 - Como reemplazo de resumir: una historia larga puede resumirse en lugar de recortarse.
 
 ## 7. Ejemplo sencillo
@@ -223,7 +226,7 @@ Más contexto da más información al modelo y cuesta más por llamada. Recortar
 - `tokens`: la unidad.
 - `llm-fundamentals`: el modelo.
 - `prompt-engineering`: qué va en el contexto.
-- Pendiente de ficha: `rag` (lote 21b).
+- `rag`: recuperar solo lo relevante en lugar de enviar todo.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -250,3 +253,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-25: creación (lote F3b-21a).
+- 2026-10-25: §17 y `relations` enlazan `rag`, creadas en el lote F3b-21b (regla del §17); sin otros cambios.

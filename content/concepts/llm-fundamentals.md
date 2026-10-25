@@ -37,6 +37,9 @@ sources:
     note: "What is Microsoft Foundry?: plataforma unificada que consolida servicios y herramientas anteriores de Azure AI; un agente es un modelo con instrucciones y herramientas. Tabla «Evolution of Foundry»: Azure AI Studio / Azure AI Foundry → Microsoft Foundry; Azure AI Services → Foundry Tools; el portal anterior es Foundry (classic)."
 relations:
   - type: RELATED_TO
+    target: rag
+    note: Responder con documentos propios.
+  - type: RELATED_TO
     target: tokens
     note: La unidad en que el modelo lee y genera.
   - type: RELATED_TO
@@ -229,7 +232,7 @@ Un LLM cubre texto libre que una regla no cubre, a cambio de costo por token, la
 - `vertex-ai-for-data-engineers`, `bedrock-for-data-engineers` y `azure-ai-for-data-engineers`: la inferencia por lotes en cada nube.
 - `processors-and-international-transfers`: el proveedor como destino de los datos.
 - `structured-outputs`: la salida validada contra un esquema.
-- Pendiente de ficha: `rag` (lote 21b).
+- `rag`: responder con documentos propios.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -256,3 +259,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-25: creación (lote F3b-21a).
+- 2026-10-25: §17 y `relations` enlazan `rag`, creadas en el lote F3b-21b (regla del §17); sin otros cambios.

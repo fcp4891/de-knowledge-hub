@@ -52,6 +52,15 @@ sources:
     note: "Repositorio del modelo ONNX que usa el ejemplo B, en la revisión faf4aa4225822f3bc6376869cb1164e8e3feedd0; etiquetas sentence-similarity y license:apache-2.0."
 relations:
   - type: RELATED_TO
+    target: vector-databases
+    note: Dónde se guardan y buscan los vectores.
+  - type: RELATED_TO
+    target: chunking
+    note: Cómo se fragmenta antes de vectorizar.
+  - type: RELATED_TO
+    target: rag
+    note: El uso principal de los embeddings.
+  - type: RELATED_TO
     target: llm-fundamentals
     note: Los modelos que generan texto; aquí, vectores.
   - type: RELATED_TO
@@ -68,7 +77,7 @@ verification_status: review_required
 
 ## 1. Resumen
 
-Un **embedding** es un vector de números que representa un texto (o una imagen) de modo que textos de significado parecido quedan **cerca**. La cercanía se mide con la **similitud coseno**: con vectores normalizados, el producto punto. Es la base de la búsqueda semántica, de la deduplicación aproximada y de RAG (`rag`, pendiente de ficha).
+Un **embedding** es un vector de números que representa un texto (o una imagen) de modo que textos de significado parecido quedan **cerca**. La cercanía se mide con la **similitud coseno**: con vectores normalizados, el producto punto. Es la base de la búsqueda semántica, de la deduplicación aproximada y de RAG (`rag`).
 
 Para un data engineer, generar embeddings es un **pipeline más**: leer textos, dividirlos en fragmentos que respeten el límite de tokens del modelo, llamar al modelo por lotes, guardar los vectores con su metadata y versionar el modelo usado. Un vector de un modelo no se compara con uno de otro.
 
@@ -90,7 +99,7 @@ Buscar «ventas por región» en un catálogo de 5 000 tablas con `LIKE` encuent
 2. Se llama al modelo por lotes, respetando el máximo por solicitud: 250 textos y 20 000 tokens en Agent Platform, 2048 entradas y 300 000 tokens en Azure OpenAI.
 3. Se normalizan los vectores y se guardan con el texto, la metadata y el modelo usado.
 4. La consulta se vectoriza con el mismo modelo.
-5. Se ordena por similitud coseno y se devuelven los k más cercanos (`vector-databases`, pendiente de ficha).
+5. Se ordena por similitud coseno y se devuelven los k más cercanos (`vector-databases`).
 
 ## 5. Cuándo utilizarlo
 
@@ -272,7 +281,7 @@ Más dimensiones guardan más matices y ocupan más; reducir dimensiones ahorra 
 - `llm-fundamentals`: los modelos generativos.
 - `tokens`: los límites por entrada.
 - `chilean-identifier-pseudonymization`: antes de indexar.
-- Pendientes de ficha: `vector-databases`, `chunking` y `rag` (lote 21b).
+- `vector-databases`, `chunking` y `rag`: el índice, la fragmentación y su uso principal.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -300,3 +309,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-25: creación (lote F3b-21a).
+- 2026-10-25: §17 y `relations` enlazan `vector-databases`, `chunking` y `rag`, creadas en el lote F3b-21b (regla del §17); sin otros cambios.
