@@ -14,6 +14,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** B-F3.1 del lote F3b-21b. Revisión en `docs/reviews/cards-f3b-21b.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. Las cifras citadas coinciden con la página y las fichas enlazadas solo suman la relación.
 - **Tarea activa:** `b/ui-legal` (ADR-023 y ADR-024). «Implicancia técnica» lee `legal_basis.implication`. La padre lista «Fichas de esta ruta» en el orden de estudio de `ley21719`. Cada hija muestra «Parte de: …» hacia la padre. `PART_OF` no se repite en la lista de relaciones.
 - **Tarea activa:** B-F3.1 del upgrade de 19. Revisión en `docs/reviews/cards-f3b-19-upgrade.md`. No se editó `content/` ni `frontend/`. Los pedidos 19a–19d quedan anulados.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas altas: el art. 49 no es obligación, el mínimo de 2 en gold, y el registro de vulneraciones no se lleva si no se reporta. Propuestas media: «la más gravosa entre», una etiqueta por artículo, y los 24 h solo si además hay servicios esenciales afectados.
@@ -90,6 +92,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Si hay alias, bajo el título: «También conocido como: …» (ficha de concepto y página de tecnología).
 - `make test-frontend`: 11/11. En la demo estática, «Dataplex» encuentra Knowledge Catalog y la ficha `gcp-dataplex` muestra los dos alias.
 - No se editó `content/` ni el contrato.
+
+### B-F3.1 · lote F3b-21b
+- Seis fichas de recuperación. RAG Engine usa 1024 y 256; Azure, 512 tokens con 25 %; el hybrid de Bedrock queda en Amazon RDS, OpenSearch Serverless y MongoDB. Sin propuestas. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · upgrade de 19
 - Once fichas de ingeniería de datos y Ley 21.719. El boletín y el mensaje N° 110-374 coinciden con la página del Senado. Hallazgos altos: el art. 49 etiquetado como obligación, el mínimo de 2 en gold, y el registro «aunque no se reporte». No se editó `content/` ni `frontend/`.
@@ -360,6 +365,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-21b (2026-10-25)
+- Revisión de las 6 fichas de recuperación. La opción A de `rag` dice que los vectores no son semánticos. No se editó `content/`.
 
 ### B-F3.1 · upgrade de 19 (2026-10-24)
 - Revisión de las 11 fichas del subdominio. Los pedidos 19a–19d quedan anulados. No se editó `content/`.
