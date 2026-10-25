@@ -658,8 +658,7 @@ details.panel summary + * {
   color: var(--muted);
 }
 
-.code-block pre,
-.diagram {
+.code-block pre {
   overflow-x: auto;
   margin: 0;
   padding: 0.85rem;
@@ -667,10 +666,94 @@ details.panel summary + * {
   border-radius: 0 0 0.5rem 0.5rem;
 }
 
-.diagram svg {
+.diagram-frame {
+  margin: 1rem 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+}
+
+.diagram-bar,
+.diagram-modal-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 8px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.diagram-bar button,
+.diagram-modal-bar button {
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.diagram {
+  overflow-x: auto;
+  margin: 0;
+  padding: 16px;
+  background: var(--bg);
+}
+
+.diagram svg,
+.diagram-modal svg {
   display: block;
-  max-width: 100%;
+  max-width: none;
   height: auto;
+}
+
+.diagram svg text,
+.diagram svg tspan,
+.diagram-modal svg text,
+.diagram-modal svg tspan {
+  font-family: var(--font-ui), system-ui, sans-serif !important;
+  font-size: 14px !important;
+}
+
+.diagram svg .label-container,
+.diagram svg .flowchart-link,
+.diagram-modal svg .label-container,
+.diagram-modal svg .flowchart-link {
+  stroke: var(--ink) !important;
+  stroke-width: 1.5px !important;
+}
+
+.diagram-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.diagram-modal-bar {
+  justify-content: flex-start;
+}
+
+.diagram-modal-zoom {
+  min-width: 4ch;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.diagram-modal-stage {
+  flex: 1;
+  overflow: auto;
+  padding: 24px;
+}
+
+.diagram-modal-canvas {
+  width: max-content;
 }
 
 .evidence {

@@ -48,6 +48,65 @@ export function claimLabel(value: string): string {
   return value.slice(1, -1);
 }
 
+const ARCHITECTURE_MARK = "[Decisión de arquitectura]";
+
+export function usesArchitectureMark(markdown: string): boolean {
+  return markdown.includes(ARCHITECTURE_MARK);
+}
+
+type MarkCell = readonly { type: string; value: string }[];
+
+export function plainInline(parts: MarkCell): string {
+  return parts.map((part) => part.value).join("").trim();
+}
+
+/** Qué queda visible en una celda de la columna «Etiqueta». */
+export type EtiquetaVisual = "empty" | "dot" | "keep";
+
+export function etiquetaVisual(parts: MarkCell): EtiquetaVisual {
+  let dot = false;
+  let keep = false;
+  for (const part of parts) {
+    if (part.type === "strong") {
+      const kind = claimKind(part.value);
+      if (kind === "practice") {
+        continue;
+      }
+      if (kind === "architecture") {
+        dot = true;
+        continue;
+      }
+      if (kind === "obligation") {
+        keep = true;
+        continue;
+      }
+    }
+    if (part.value.trim().length > 0) {
+      keep = true;
+    }
+  }
+  if (keep) {
+    return "keep";
+  }
+  if (dot) {
+    return "dot";
+  }
+  return "empty";
+}
+
+/** Índice de «Etiqueta» cuando ninguna fila muestra punto ni obligación. */
+export function droppedEtiquetaIndex(
+  headers: readonly MarkCell[],
+  rows: readonly (readonly MarkCell[])[],
+): number | null {
+  const index = headers.findIndex((cell) => plainInline(cell) === "Etiqueta");
+  if (index < 0) {
+    return null;
+  }
+  const allEmpty = rows.every((row) => etiquetaVisual(row[index] ?? []) === "empty");
+  return allEmpty ? index : null;
+}
+
 export type LegalNoticeCopy = {
   lead: string;
   detail: string | null;

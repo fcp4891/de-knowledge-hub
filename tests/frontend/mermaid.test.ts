@@ -37,6 +37,13 @@ test("un bloque mermaid se convierte en SVG", async () => {
   const svg = await renderMermaid("flowchart LR\n  A-->B", "diagramTest");
   assert.match(svg, /<svg[\s>]/);
   assert.equal(/jsdelivr|unpkg|cdn\./i.test(svg), false);
+  assert.match(svg, /font-size:\s*14px|font-size="14"/);
+  assert.equal(/max-width\s*:\s*100%/i.test(svg), false);
+  const viewBox = /viewBox="\s*[-\d.]+\s+[-\d.]+\s+([\d.]+)\s+([\d.]+)\s*"/.exec(svg);
+  const width = /\swidth="([\d.]+)"/.exec(svg);
+  assert.ok(viewBox && width);
+  assert.equal(width[1], viewBox[1]);
+  assert.match(svg, /stroke-width:1\.5px/);
 
   const labeled = await renderMermaid(
     'flowchart LR\n  L["Área legal:<br/>finalidad"] --> C["Catálogo"]',
