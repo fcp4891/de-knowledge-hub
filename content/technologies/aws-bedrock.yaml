@@ -10,6 +10,13 @@ classification: modern
 mvp: false
 cloud:
 - aws
+sources:
+  - source: aws-bedrock-docs
+    url: https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html
+    accessed: 2026-10-25
+    page_title: "Overview"
+    note: "Overview - Amazon Bedrock: servicio totalmente administrado con acceso a modelos fundacionales de empresas de IA para construir y escalar aplicaciones de IA generativa; para aplicaciones nuevas recomienda el endpoint bedrock-runtime."
 created_at: '2026-09-28'
-updated_at: '2026-09-28'
+updated_at: '2026-10-25'
+last_verified: '2026-10-25'
 verification_status: review_required

@@ -3258,3 +3258,37 @@ created_at: '2026-10-21'
 updated_at: '2026-10-21'
 last_verified: '2026-10-21'
 verification_status: verified
+---
+id: source:qdrant-fastembed-docs
+slug: qdrant-fastembed-docs
+type: source
+title: FastEmbed (Qdrant)
+description: Documentación oficial de FastEmbed, la biblioteca de Python de Qdrant para generar embeddings con modelos ONNX locales (ADR-025).
+url: https://github.com/qdrant/fastembed
+source_type: official_docs
+authority_level: 1
+provider: qdrant
+url_verified: true
+review_frequency: quarterly
+trust: high
+created_at: '2026-10-25'
+updated_at: '2026-10-25'
+last_verified: '2026-10-25'
+verification_status: verified
+---
+id: source:huggingface-docs
+slug: huggingface-docs
+type: source
+title: Hugging Face Hub documentation
+description: Documentación oficial del Hub de Hugging Face y de su biblioteca de Python (huggingface_hub); repositorios de modelos por revisión (ADR-025).
+url: https://huggingface.co/docs/huggingface_hub/index
+source_type: official_docs
+authority_level: 1
+provider: huggingface
+url_verified: true
+review_frequency: quarterly
+trust: high
+created_at: '2026-10-25'
+updated_at: '2026-10-25'
+last_verified: '2026-10-25'
+verification_status: verified
