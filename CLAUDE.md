@@ -35,6 +35,14 @@ Trabajas en paralelo con Cursor (Carril B, frontend y revisión).
 - Sin quizzes, sin alternativas A/B/C/D, sin gamificación.
 - §17 y `relations` coinciden: si la ficha nombrada existe, va en `relations`; si no existe, queda como texto «pendiente de ficha», fuera de `relations`; todo lo que está en `relations` se nombra en el §17.
 
+## Diagramas (§9)
+- Máximo 8 nodos por diagrama. Si hace falta más, dividir en dos diagramas o usar `subgraph` por capa.
+- Dirección: `LR` solo si la cadena más larga tiene 5 nodos o menos; si no, `TB`.
+- Etiquetas de nodo: máximo 4 palabras por línea y 2 líneas. Sin `<br/>` encadenados.
+- Evitar líneas que se cruzan y varias flechas que llegan al mismo nodo desde lejos: agrupar las entradas con un nodo intermedio.
+- Referencia: el §9 de `terraform-variables-and-outputs`.
+- `make validate` avisa (sin error) si un diagrama tiene más de 8 nodos o más de 10 aristas (`backend/content/diagrams.py`).
+
 ## Reglas de código
 - Python 3.12, FastAPI, tipado estricto, Pydantic, pytest.
 - Funciones pequeñas, sin dependencias nuevas sin justificarlas en el commit.

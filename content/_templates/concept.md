@@ -68,7 +68,11 @@ verification_status: review_required    # verified | review_required | potential
 
 ## 9. Arquitectura
 
-<!-- ¿Dónde se ubica en un flujo real, con qué componentes y con qué datos? -->
+<!-- ¿Dónde se ubica en un flujo real, con qué componentes y con qué datos?
+Estándar del diagrama (CLAUDE.md, «Diagramas (§9)»): máximo 8 nodos (si no, dos diagramas o subgraph
+por capa); LR solo si la cadena más larga tiene 5 nodos o menos, si no TB; etiquetas de máximo 4
+palabras por línea y 2 líneas, sin <br/> encadenados; sin líneas cruzadas ni flechas que llegan de
+lejos al mismo nodo (agrupar con un nodo intermedio). Referencia: §9 de terraform-variables-and-outputs. -->
 
 ## 10. Código
 

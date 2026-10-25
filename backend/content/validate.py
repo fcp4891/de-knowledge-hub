@@ -29,7 +29,7 @@ import yaml
 from jsonschema import Draft202012Validator
 from referencing import Registry, Resource
 
-from backend.content import page_sections
+from backend.content import diagrams, page_sections
 
 ROOT = Path(__file__).resolve().parents[2]
 CONTENT_EXTENSIONS = {".md", ".yaml", ".yml"}
@@ -470,6 +470,20 @@ def check_part_of(docs: list[Document], index: BlueprintIndex | None, report: Re
             report.add(locations[child], f"[relations] PART_OF -> '{parent}': la jerarquía forma un ciclo")
 
 
+def check_diagrams(content_dir: Path, docs: list[Document], report: Report) -> None:
+    """Estándar de la §9 (CLAUDE.md): aviso, no error, si un diagrama Mermaid supera
+    diagrams.MAX_NODES nodos o diagrams.MAX_EDGES aristas."""
+    for doc in docs:
+        if doc.path.suffix != ".md":
+            continue
+        text = (content_dir.parent / doc.path).read_text(encoding="utf-8")
+        for i, code in enumerate(diagrams.mermaid_blocks(text), start=1):
+            size = diagrams.diagram_size(code)
+            if size.too_big:
+                report.warn(doc.location, f"[mermaid {i}] {size.kind}: {size.nodes} nodos y {size.edges} aristas "
+                            f"(máximo {diagrams.MAX_NODES} y {diagrams.MAX_EDGES}): dividir o agrupar")
+
+
 def check_page_sections(content_dir: Path, docs: list[Document], report: Report) -> None:
     """Fichas (22 secciones, §22) y snippets (10 secciones, §23) no stub: las secciones de su plantilla.
     En las fichas, además, las viñetas Seguridad, Observabilidad y Costo en la §14."""
@@ -889,6 +903,7 @@ def validate(content_dir: Path, schemas_dir: Path) -> Report:
         check_source_level(doc, report)
     check_mvp_source_coverage(valid_docs, report)
     check_page_sections(content_dir, valid_docs, report)
+    check_diagrams(content_dir, valid_docs, report)
     check_topics_in_relations(valid_docs, report)
     check_related_section(content_dir, valid_docs, report)
     check_page_source_levels(valid_docs, by_slug, report)

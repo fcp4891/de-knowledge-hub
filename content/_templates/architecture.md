@@ -46,7 +46,7 @@ verification_status: review_required
 
 ## Diagrama
 
-<!-- ¿Cómo se ve el flujo de datos de punta a punta? Usar Mermaid. -->
+<!-- ¿Cómo se ve el flujo de datos de punta a punta? Usar Mermaid, con el estándar de CLAUDE.md («Diagramas (§9)»). -->
 
 ## Flujo
 
