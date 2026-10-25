@@ -156,8 +156,6 @@ stateDiagram-v2
   up_for_retry --> scheduled: tras retry_delay
   running --> failed: falla sin reintentos
   none --> upstream_failed: falló una anterior
-  success --> [*]
-  failed --> [*]
 ```
 
 ## 10. Código
@@ -315,3 +313,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `airflow-operators-and-hooks`, `dynamic-workflows`, `airflow-architecture`, `open-source-vs-managed-orchestration`, `orchestration-observability`; el §17 nombra `airflow-architecture`, `open-source-vs-managed-orchestration`, `orchestration-observability`, que el cuerpo ya citaba.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): sin las transiciones finales success → [*] y failed → [*].

@@ -131,13 +131,12 @@ El inventario es la base de casi todos los demás controles: sin saber **qué ac
 
 ```mermaid
 flowchart LR
-  L["Área legal y negocio"] --> R["Registro de actividades<br/>finalidad, base, plazo"]
-  R --> T["Tags en el catálogo"]
-  T --> P["Pipelines: retención,<br/>derechos, acceso"]
-  LG["Linaje + logs de consultas"] --> U["Usos observados"]
-  R & U --> CI{"CI: ¿coinciden?"}
-  CI -- "no" --> E["Brecha: uso no registrado"]
-  R --> PO["Política pública (art. 14 ter)"]
+  L["Área legal y negocio"] --> R["Registro de actividades"]
+  R --> T["Tags del catálogo:<br/>retención, derechos, acceso"]
+  R --> PO["Política pública<br/>(art. 14 ter)"]
+  U["Usos observados:<br/>linaje y logs"] --> CI{"CI: ¿coinciden?"}
+  R --> CI
+  CI -- "no" --> E["Brecha: uso<br/>no registrado"]
 ```
 
 ## 10. Código
@@ -287,3 +286,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-22: upgrade de 19: la base de licitud pasa a la actividad de tratamiento, con usos observados contra registrados y resumen del art. 14 ter.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): tags y pipelines en un nodo; linaje y logs dentro de «usos observados».

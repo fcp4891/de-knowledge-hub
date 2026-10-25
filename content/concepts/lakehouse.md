@@ -159,9 +159,7 @@ flowchart LR
   W --> T[(Tabla Iceberg / Delta / Hudi<br/>metadatos + log de commits)]
   T --> F[(Archivos Parquet<br/>en GCS · S3 · OneLake)]
   CAT[Catálogo] --- T
-  T --> R1[BigQuery]
-  T --> R2[Athena / Trino]
-  T --> R3[Spark / Fabric]
+  T --> R["BigQuery, Athena, Trino,<br/>Spark, Fabric"]
   T --> DWH[(Warehouse para BI)]
 ```
 
@@ -264,3 +262,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: revisión B-F3.1 del lote F3b-01a aplicada (docs/reviews/cards-f3b-01a.md): Lake Formation citado con su fuente.
 - 2026-10-06: `verification_status: verified` (revisión B-F3.1 del lote F3b-01a aplicada; sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): los motores de consulta en un nodo.

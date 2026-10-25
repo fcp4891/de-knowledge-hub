@@ -128,16 +128,23 @@ Los equipos de datos e IA construyen exactamente lo que la ley regula con más r
 
 ## 9. Arquitectura
 
+**Antes de producción.**
+
 ```mermaid
 flowchart LR
-  N["Tratamiento nuevo"] --> G{"¿Caso art. 15 ter?"}
-  G -- "sí" --> E["Evaluación + aporte técnico"] --> D["Despliegue"]
+  N["Tratamiento nuevo"] --> G{"¿Caso del<br/>art. 15 ter?"}
+  G -- "sí" --> E["Evaluación con<br/>aporte técnico"] --> D["Despliegue"]
   G -- "no" --> D
-  D --> M["Modelo en producción"]
-  M --> L["Registro de decisión<br/>versión, huella, puntaje"]
+```
+
+**En producción.**
+
+```mermaid
+flowchart LR
+  M["Modelo en producción"] --> L["Registro de decisión:<br/>versión, huella, puntaje"]
+  L --> X["Explicación<br/>(art. 5 f))"]
   M -- "sobre umbral" --> H["Revisión humana"]
   T["Titular pide revisión"] --> H
-  L --> X["Explicación (art. 5 f))"]
 ```
 
 ## 10. Código
@@ -283,3 +290,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-22: creación (upgrade de 19); reemplaza a `dpia-technical-input` y `automated-decision-traceability`, que quedan como alias.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): dos diagramas: antes de producción (puerta del art. 15 ter) y en producción.

@@ -143,15 +143,23 @@ En la práctica, «anonimizado» suele significar «le sacamos el RUT». Para la
 
 ## 9. Arquitectura
 
+**Seudonimizar el RUT.**
+
 ```mermaid
 flowchart LR
-  O["Origen con RUT"] --> N["Normalizar y validar DV"]
+  O["Origen con RUT"] --> N{"Normalizar y<br/>validar DV"}
   N -- "DV inválido" --> X["Rechazar"]
-  N --> B["Bronze<br/>personal"]
-  K["KMS: llave HMAC<br/>rol separado"] -.-> S
-  B --> S["Silver<br/>seudonimizado"]
-  S --> G["Gold analítico<br/>seudonimizado"]
-  S --> A{"Generalizar + k +<br/>prueba de reidentificación"}
+  N -- "válido" --> B["Bronze personal"]
+  B --> S["Silver seudonimizado"]
+  K["KMS: llave HMAC<br/>con rol separado"] -.-> S
+```
+
+**Publicar: seudonimizar no es anonimizar.**
+
+```mermaid
+flowchart LR
+  S["Silver seudonimizado"] --> G["Gold analítico<br/>seudonimizado"]
+  S --> A{"Generalizar, k y<br/>prueba de reidentificación"}
   A -- "pasa" --> P["Gold publicado<br/>anonimizado"]
   A -- "no pasa" --> Y["Sigue siendo<br/>dato personal"]
 ```
@@ -323,3 +331,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-22: upgrade de 19: incorpora la parte legal de la seudonimización y la anonimización (arts. 2 f), k) y l), 3 c), 14 quinquies a), 16 bis c), 16 quinquies y 26) y la prueba de k-anonimato; enlaza `pseudonymization-vs-anonymization` (18), que no cambia.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): dos diagramas: seudonimizar el RUT, y publicar (seudonimizar no es anonimizar).

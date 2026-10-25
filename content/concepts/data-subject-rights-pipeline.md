@@ -142,16 +142,24 @@ Solicitud de supresión ingresada el jueves 2026-10-29, con pedido de bloqueo:
 
 ## 9. Arquitectura
 
+**Recepción.**
+
+```mermaid
+flowchart TB
+  T["Titular"] --> F["Canal y autenticación"]
+  F --> Q["Cola de solicitudes<br/>con plazos del art. 11"]
+  Q -- "bloqueo" --> BL["Flag de bloqueo<br/>en 2 días hábiles"]
+  BL --> V["Consumo y jobs<br/>lo excluyen"]
+  Q --> K["Llave seudónima"] --> X["Índice de titulares<br/>y catálogo"]
+  Q --> L{"Área legal:<br/>¿procede?"}
+```
+
+**Ejecución.**
+
 ```mermaid
 flowchart LR
-  T["Titular"] --> F["Canal + autenticación"]
-  F --> Q["Cola de solicitudes<br/>plazos art. 11"]
-  Q --> K["Llave seudónima"] --> X["Índice de titulares<br/>+ catálogo de actividades"]
-  Q -- "bloqueo" --> BL["Flag de bloqueo<br/>(2 días hábiles)"]
-  BL --> V["Vistas de consumo y jobs"]
-  Q --> L{"Área legal: ¿procede?"}
-  L --> A["Acceso"] & R["Rectificación"] & S["Supresión"] & O["Oposición"] & P["Portabilidad"]
-  A & R & S & O & P --> E["Respuesta + evidencia sin datos del titular"]
+  L{"Área legal:<br/>¿procede?"} --> A["Acceso"] & R["Rectificación"] & S["Supresión"] & O["Oposición"] & P["Portabilidad"]
+  A & R & S & O & P --> E["Respuesta y evidencia<br/>sin datos del titular"]
 ```
 
 ## 10. Código
@@ -343,3 +351,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-22: creación (upgrade de 19); reemplaza a `data-subject-requests`, que queda como alias.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): dos diagramas: recepción y ejecución; los cinco derechos convergen en la respuesta.

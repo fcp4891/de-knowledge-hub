@@ -139,9 +139,7 @@ flowchart TB
   R --> P
   R -->|agotado| FA[(Estado: fallida)]
   P -->|permanente| RJ[(Estado: rechazada<br/>DLQ / revisión)]
-  RL[Relanzar] -->|salta ok| P
-  FIX[Corregir causa] --> RP[Replay / backfill]
-  RP --> P
+  RE[Relanzar, o replay<br/>tras corregir la causa] -->|salta ok| P
 ```
 
 ## 10. Código
@@ -291,3 +289,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `pipeline-dependencies`.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): relanzar y replay tras corregir en un nodo de reentrada.

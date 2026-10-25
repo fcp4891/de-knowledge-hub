@@ -117,17 +117,19 @@ La matriz de bus de un retailer tiene cinco procesos y seis dimensiones. Fecha, 
 ## 9. Arquitectura
 
 ```mermaid
-flowchart TB
+flowchart LR
   subgraph Matriz de bus
     direction LR
     V[Ventas] --- DF[Fecha] --- DP[Producto] --- DT[Tienda]
     I[Inventario] --- DF
     I --- DP
   end
-  FV[fact_ventas] --> DF2[(dim_fecha)]
-  FV --> DP2[(dim_producto)]
-  FI[fact_inventario] --> DF2
-  FI --> DP2
+```
+
+```mermaid
+flowchart TB
+  FV[fact_ventas] --> D[("dim_fecha y dim_producto<br/>(conformadas)")]
+  FI[fact_inventario] --> D
   FV -->|agregar| A1[ventas por fecha y categoría]
   FI -->|agregar| A2[stock por fecha y categoría]
   A1 -->|FULL JOIN sobre atributos conformados| R[Reporte drill-across]
@@ -248,3 +250,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): dos diagramas: matriz de bus y drill-across; dim_fecha y dim_producto en un nodo, sin cruces.

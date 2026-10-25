@@ -151,19 +151,27 @@ Una aerolínea recibe una solicitud de supresión aprobada por el área legal:
 
 ## 9. Arquitectura
 
+**La ingesta respeta la supresión.**
+
 ```mermaid
 flowchart LR
-  O["Origen"] --> I{"Ingesta:<br/>¿llave en lista<br/>de supresión?"}
+  O["Origen"] --> I{"¿Llave en la<br/>lista de supresión?"}
   I -- "sí" --> D["Descartar"]
-  I -- "no" --> B["Bronze"] --> S["Silver"] --> G["Gold"]
-  R["Supresión aprobada"] --> X["Índice + linaje"]
-  X --> B & S & G
-  X --> T["Terceros y exportaciones"]
-  R --> L["Lista de supresión"]
+  I -- "no" --> P["Bronze, silver, gold"]
+  R["Supresión aprobada"] --> L["Lista de supresión"]
   L --> I
+```
+
+**Supresión y retención en cada copia.**
+
+```mermaid
+flowchart TB
+  R["Supresión aprobada"] --> X["Índice y linaje"]
   C["Catálogo:<br/>plazo y acción"] --> J["Job de retención"]
-  J --> B & S & G
-  B & S & G --> V["VACUUM / expiración<br/>de versiones"]
+  X --> P["Bronze, silver, gold"]
+  J --> P
+  X --> T["Terceros y exportaciones"]
+  P --> V["VACUUM y expiración<br/>de versiones"]
 ```
 
 ## 10. Código
@@ -375,3 +383,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-22: creación (upgrade de 19); reemplaza a `erasure-across-copies`, que queda como alias.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): dos diagramas: la ingesta respeta la lista de supresión, y supresión y retención en cada copia.

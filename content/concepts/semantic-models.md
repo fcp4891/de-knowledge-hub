@@ -147,11 +147,9 @@ Una empresa con dbt y una herramienta de BI define sus métricas centrales (vent
 
 ```mermaid
 flowchart LR
-  W[(Warehouse<br/>estrella / marts)] --> S["Modelo semántico<br/>entidades, relaciones,<br/>dimensiones, métricas"]
-  S --> B1[Tableros]
-  S --> B2[Cuadernos / APIs]
-  S --> B3[Lenguaje natural]
-  subgraph Cada herramienta, su formato
+  W[(Warehouse<br/>estrella / marts)] --> S["Modelo semántico:<br/>entidades, relaciones, dimensiones, métricas"]
+  S --> B["Tableros, cuadernos, APIs<br/>y lenguaje natural"]
+  subgraph F["Cada herramienta, su formato"]
     D[dbt: YAML + MetricFlow]
     L[Looker: LookML]
     P[Power BI: semantic model]
@@ -296,3 +294,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): los consumidores en un nodo; la etiqueta del modelo en 2 líneas; el título del subgraph va entre comillas (con la coma, Mermaid no lo dibujaba).

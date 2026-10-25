@@ -140,15 +140,15 @@ Un control documentado no es un control implementado. La ley pide verificar regu
 ## 9. Arquitectura
 
 ```mermaid
-flowchart LR
-  MD["Metadatos reales:<br/>catálogo, permisos, escaneo,<br/>retención, ambientes"] --> R["Reglas como código"]
-  CH["Cambio: SQL, logs,<br/>contrato de datos"] --> R
+flowchart TB
+  MD["Metadatos reales"] --> R["Reglas como código"]
+  CH["Cambios: SQL,<br/>logs, contratos"] --> R
   EX["Excepciones con<br/>vencimiento"] --> R
-  R --> CI{"CI: cambios"}
-  R --> DJ["Job diario:<br/>deriva en producción"]
-  CI -- "falla" --> B["Bloquea despliegue"]
-  CI & DJ --> M["Métricas y evidencia fechada"]
-  M --> MX["Matriz requisito → control → evidencia"]
+  R --> CI{"CI sobre<br/>los cambios"}
+  R --> DJ["Job diario<br/>en producción"]
+  CI -- "falla" --> B["Bloquea el despliegue"]
+  CI --> M["Evidencia fechada<br/>para la matriz"]
+  DJ --> M
 ```
 
 ## 10. Código
@@ -309,3 +309,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-22: creación (upgrade de 19); reemplaza a `privacy-by-design-checklist`, que queda como alias; rescata sus reglas de `SELECT *`, datos en logs y contrato de datos.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): TB; la matriz pasa a la etiqueta de la evidencia.

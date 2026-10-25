@@ -169,8 +169,7 @@ Un archivo corregido tiene otra huella, así que se reprocesa y reemplaza su par
 
 ```mermaid
 flowchart TB
-  IN[(Carpeta / bucket de entrada)] --> L[Listar en orden]
-  L --> H{¿Nombre y huella<br/>en el manifiesto?}
+  L[(Listar carpeta o bucket<br/>en orden)] --> H{¿Nombre y huella<br/>en el manifiesto?}
   H -->|sí| SK[Omitir]
   H -->|no| R["Leer en flujo<br/>gzip + json por línea"]
   R --> V{¿Válido?}
@@ -340,3 +339,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `beam-programming-model`, `pyspark-dataframes`; el §17 nombra `beam-programming-model`, `pyspark-dataframes`, que el cuerpo ya citaba.
 - 2026-10-20: `page_title` sin la versión de parche del SDK (*Class Blob*), según la regla de CLAUDE.md de no citar versiones de parche de SDKs ni CLIs; sin cambios de contenido.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): la entrada y el listado en un nodo.

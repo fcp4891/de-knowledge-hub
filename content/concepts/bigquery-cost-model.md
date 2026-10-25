@@ -193,8 +193,12 @@ flowchart LR
   DR -->|ok| M{Modelo del proyecto}
   M -->|on-demand| B[Cobro por bytes procesados]
   M -->|capacidad| S[Slots de la reserva]
-  T[(Tablas)] --> ST[Almacenamiento:<br/>activo / long-term,<br/>lógico / físico]
-  J[INFORMATION_SCHEMA.JOBS] --> R[Revisión de costo por usuario y consulta]
+```
+
+```mermaid
+flowchart LR
+  T[(Tablas)] --> ST["Almacenamiento: activo / long-term,<br/>lógico / físico"]
+  J[INFORMATION_SCHEMA.JOBS] --> R["Revisión de costo<br/>por usuario y consulta"]
 ```
 
 ## 10. Código
@@ -310,3 +314,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: «pendiente de ficha» actualizado: la ficha ya existe (lote F3b-08a); el §17 la enlaza y relations la incluye: relations incluye `bigquery-query-optimization`, que el §17 nombra; §17 enlaza las fichas que ya existen.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `scan-reduction`.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): dos diagramas: costo de consulta, y almacenamiento y revisión.

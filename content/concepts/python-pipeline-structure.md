@@ -163,16 +163,12 @@ El job `ventas_job` corre cada día a las 02:00. El orquestador le pasa `--fecha
 ## 9. Arquitectura
 
 ```mermaid
-flowchart LR
-  O[Orquestador] -->|--fecha, entorno| M["main(argv)<br/>args + logging"]
-  M --> C["Config.desde_entorno()"]
+flowchart TB
+  O[Orquestador] -->|--fecha, entorno| M["main(argv): args, logging<br/>y Config.desde_entorno()"]
   M --> R["run(cfg, dia)"]
   R --> E["extraer<br/>E/S"] --> T["transformar<br/>pura"] --> Q{"¿rechazos > umbral?"}
-  Q -->|sí| X[código 2, sin carga]
-  Q -->|no| L["cargar<br/>reemplaza dia=..."]
-  L --> Z[código 0]
-  X --> O
-  Z --> O
+  Q -->|sí| X["código 2 al orquestador,<br/>sin carga"]
+  Q -->|no| L["cargar (reemplaza dia=...)<br/>y código 0"]
 ```
 
 ## 10. Código
@@ -342,3 +338,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `python-database-io`, `data-apis-with-fastapi`; el §17 nombra `data-apis-with-fastapi`, que el cuerpo ya citaba.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): TB (la cadena tiene 7 nodos); Config en el nodo de main; sin las flechas de vuelta al orquestador: el código de salida va en la etiqueta.

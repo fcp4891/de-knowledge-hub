@@ -177,7 +177,11 @@ flowchart LR
   S1 --> C1[Servicio de facturación]
   S2 --> BQ[(Tabla BigQuery)]
   S3 --> C3[Servicio regional]
-  S1 -. agota intentos .-> DLT[Topic dead letter]
+```
+
+```mermaid
+flowchart LR
+  S1[Suscripción pull<br/>facturación] -. agota intentos .-> DLT[Topic dead letter]
   DLT --> DLS[Suscripción de revisión]
 ```
 
@@ -313,3 +317,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `streaming-ingestion`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `streaming-ingestion`.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): dos diagramas: suscripciones del topic, y dead letter.

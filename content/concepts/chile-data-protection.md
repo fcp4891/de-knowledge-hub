@@ -200,17 +200,28 @@ Caso genérico: una aerolínea con datos de pasajeros, reservas y vuelos, en arq
 
 ## 9. Arquitectura
 
+**Del requisito al dato.**
+
+```mermaid
+flowchart TB
+  L["Legal y negocio:<br/>finalidad, base, plazo"] --> C["Catálogo de<br/>actividades"]
+  C --> I["Ingesta con contrato"]
+  subgraph Capas["Capas de datos"]
+    B["Bronze"] --> S["Silver seudonimizado"] --> G["Gold"]
+  end
+  I --> B
+  G --> U["Consumo por finalidad"]
+```
+
+**Control y evidencia.**
+
 ```mermaid
 flowchart LR
-  L["Área legal y negocio:<br/>finalidad, base, plazo"] --> C["Catálogo:<br/>actividades de tratamiento"]
-  C --> I["Ingesta con contrato<br/>y lista de supresión"]
-  I --> B["Bronze"] --> S["Silver<br/>seudonimizado"] --> G["Gold"]
-  G --> U["Consumo con<br/>control por finalidad"]
-  R["Solicitudes de titulares"] --> X["Índice de titulares<br/>+ linaje"]
-  X --> B & S & G
-  M["Matriz requisito → control → evidencia"] --> CI{"CI"}
-  B & S & G --> CI
-  CI -- "falla con brechas" --> E["Evidencia"]
+  R["Solicitudes de titulares"] --> X["Índice de titulares"]
+  X --> P["Bronze, silver, gold"]
+  M["Matriz requisito,<br/>control, evidencia"] --> CI{"CI"}
+  P --> CI
+  CI -- "falla con brechas" --> E["Evidencia fechada"]
 ```
 
 ## 10. Código
@@ -396,3 +407,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-22: reestructura como ficha padre del subdominio (upgrade de 19): mapa de artículos, estado de la postergación según el Senado, Decreto 662, caso por capas, sanciones y contraste básico/senior. La matriz exige evidencia reciente y hace fallar la CI. El detalle pasa a las fichas hijas.
 - 2026-10-24: las hijas se declaran con `PART_OF` (ADR-024) en vez de `RELATED_TO`; `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): dos diagramas: del requisito al dato, y control y evidencia; capas en un subgraph.

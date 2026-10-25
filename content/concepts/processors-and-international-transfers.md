@@ -130,15 +130,16 @@ Una plataforma moderna está llena de encargados: nube, herramientas SaaS, ETL g
 ## 9. Arquitectura
 
 ```mermaid
-flowchart LR
+flowchart TB
   P["Plataforma de datos"] --> GW{"Gateway de salida:<br/>¿flujo registrado?"}
+  LLM["Llamadas a LLM:<br/>quitar datos personales"] --> GW
   GW -- "no" --> X["Bloqueado"]
-  GW -- "sí, CL" --> C["Encargado en Chile"]
-  GW -- "sí, exterior" --> M{"¿Mecanismo art. 27?"}
-  M -- "sí" --> E["Encargado en el exterior"]
+  GW -- "sí, Chile" --> C["Encargado en Chile"]
+  GW -- "sí, exterior" --> M{"¿Mecanismo<br/>del art. 27?"}
+  M -- "sí" --> E["Encargado<br/>en el exterior"]
   M -- "no" --> X
-  LLM["Llamadas a LLM"] --> RD["Quitar datos personales"] --> GW
-  C & E --> F["Cierre: supresión<br/>o devolución"]
+  C --> F["Cierre: supresión<br/>o devolución"]
+  E --> F
 ```
 
 ## 10. Código
@@ -278,3 +279,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-22: creación (upgrade de 19); reemplaza a `international-data-transfers`, que queda como alias.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): TB; quitar datos personales pasa a la etiqueta de las llamadas a LLM.

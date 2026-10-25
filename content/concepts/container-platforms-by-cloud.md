@@ -180,14 +180,19 @@ Una plataforma de datos multicloud:
 
 ```mermaid
 flowchart TB
-  I["Imagen<br/>(registry, por digest)"] --> S["Serverless de contenedores"]
-  I --> K["Kubernetes administrado"]
-  S --> CR["Cloud Run"]
-  S --> EF["ECS + Fargate"]
-  S --> CA["Container Apps"]
-  K --> GKE["GKE"]
-  K --> EKS["EKS"]
-  K --> AKS["AKS"]
+  I["Imagen<br/>(registry, por digest)"]
+  subgraph S["Serverless de contenedores"]
+    CR["Cloud Run"]
+    EF["ECS + Fargate"]
+    CA["Container Apps"]
+  end
+  subgraph K["Kubernetes administrado"]
+    GKE["GKE"]
+    EKS["EKS"]
+    AKS["AKS"]
+  end
+  I --> S
+  I --> K
 ```
 
 ## 10. Código
@@ -306,3 +311,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-19: creación (lote F3b-13b).
 - 2026-10-19: revisión B-F3.1 del lote F3b-13b aplicada (docs/reviews/cards-f3b-13b.md): Fargate cita «per second with a 1-minute minimum» y «rounded up to the nearest second»; Cloud Run redondea hacia arriba al tramo de 100 ms; *run-task* sin número de versión de la AWS CLI.
 - 2026-10-19: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): los servicios de cada familia van en un subgraph; la imagen apunta a cada familia.

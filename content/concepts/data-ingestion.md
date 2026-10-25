@@ -172,8 +172,7 @@ Todo aterriza en `raw`, con columnas de metadatos (`_fuente`, `_cargado_en`, `_l
 ```mermaid
 flowchart LR
   DB[(Bases de datos)] -->|CDC| RAW[(raw / staging)]
-  F[Archivos] -->|batch| RAW
-  API[APIs] -->|batch| RAW
+  F[Archivos y APIs] -->|batch| RAW
   EV[Eventos] -->|streaming| RAW
   SaaS[SaaS] -->|transferencia administrada| RAW
   RAW --> V{Validación de contrato}
@@ -273,3 +272,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: `verification_status: verified` (revisión B-F3.1 del lote F3b-01a aplicada; sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `data-lake`, `oltp-vs-olap`; el §17 nombra `data-lake`, `oltp-vs-olap`, que el cuerpo ya citaba.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): archivos y APIs (batch) en un nodo.
