@@ -91,6 +91,7 @@ CLOUD = {
         ("microsoft-entra-id", "Microsoft Entra ID", "identity-access", "Servicio de identidad y acceso de Microsoft (antes Azure Active Directory).", [], MS_NOTE),
         ("azure-key-vault", "Azure Key Vault", "secrets", "Almacenamiento de secretos, claves y certificados en Azure.", [], "Cubre secretos y claves; en la matriz aparece en ambas capacidades."),
         ("azure-ai", "Servicios de IA de Azure", "ai-platform", "Servicios de IA de Microsoft en Azure (modelos, APIs cognitivas y herramientas de desarrollo).", [], "Nombres y empaquetado cambian con frecuencia; verificar al redactar la ficha."),
+        ("azure-ai-search", "Azure AI Search", "vector-search", "Servicio de búsqueda de Azure con índices vectoriales, búsqueda híbrida (texto y vectores con RRF) y ranking semántico.", [], None),  # F3b-21b
         ("azure-aks", "Azure Kubernetes Service (AKS)", "container-orchestration", "Kubernetes administrado en Azure.", [], None),
         ("azure-container-registry", "Azure Container Registry", "container-registry", "Registro de imágenes de contenedores de Azure.", [], None),
         ("azure-bicep", "Bicep", "iac", "Lenguaje declarativo de infraestructura como código para Azure.", [], None),

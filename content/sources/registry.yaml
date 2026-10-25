@@ -3294,3 +3294,41 @@ created_at: '2026-10-25'
 updated_at: '2026-10-25'
 last_verified: '2026-10-25'
 verification_status: verified
+---
+id: source:azure-ai-search-docs
+slug: azure-ai-search-docs
+type: source
+title: Azure AI Search documentation
+description: Documentación oficial de Azure AI Search (índices vectoriales, búsqueda híbrida, ranking semántico y filtros).
+url: https://learn.microsoft.com/en-us/azure/search/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- azure-ai-search
+created_at: '2026-10-25'
+updated_at: '2026-10-25'
+last_verified: '2026-10-25'
+verification_status: verified
+---
+id: source:pgvector-docs
+slug: pgvector-docs
+type: source
+title: pgvector
+description: Documentación oficial de pgvector, la extensión de PostgreSQL para búsqueda de similitud vectorial (README del repositorio, citado por tag).
+url: https://github.com/pgvector/pgvector
+source_type: official_docs
+authority_level: 1
+provider: pgvector
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies:
+- pgvector
+created_at: '2026-10-25'
+updated_at: '2026-10-25'
+last_verified: '2026-10-25'
+verification_status: verified

@@ -33,7 +33,7 @@ def test_generated_bundle_validates(generated: Path) -> None:
 
 
 def test_technologies_generator_is_idempotent(generated: Path) -> None:
-    assert technologies.generate(generated / "technologies") == (0, 89)
+    assert technologies.generate(generated / "technologies") == (0, 90)
 
 
 def test_generated_technologies_exist_in_content() -> None:

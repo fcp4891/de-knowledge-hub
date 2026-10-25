@@ -1,0 +1,22 @@
+id: cloud_service:azure-ai-search
+slug: azure-ai-search
+type: cloud_service
+stub: true
+title: Azure AI Search
+description: Servicio de búsqueda de Azure con índices vectoriales, búsqueda híbrida (texto y vectores con RRF) y ranking semántico.
+provider: azure
+category: vector-search
+classification: modern
+mvp: false
+cloud:
+- azure
+sources:
+  - source: azure-ai-search-docs
+    url: https://learn.microsoft.com/en-us/azure/search/vector-store
+    accessed: 2026-10-25
+    page_title: "Vector indexes in Azure AI Search"
+    note: "Vector indexes in Azure AI Search: el índice vectorial se configura con HNSW o KNN exhaustivo para la búsqueda de similitud; el servicio impone límites al almacenamiento vectorial, que se informan aparte en el portal y en las estadísticas del servicio."
+created_at: '2026-10-25'
+updated_at: '2026-10-25'
+last_verified: '2026-10-25'
+verification_status: review_required

@@ -10,9 +10,16 @@ classification: modern
 mvp: false
 cloud:
 - agnostic
+sources:
+  - source: pgvector-docs
+    url: https://github.com/pgvector/pgvector/blob/v0.8.7/README.md
+    accessed: 2026-10-25
+    page_title: "pgvector"
+    note: "README de pgvector en el tag v0.8.7: búsqueda de similitud vectorial para PostgreSQL; por defecto búsqueda exacta, con índices HNSW e IVFFlat para búsqueda aproximada; operadores <-> (L2), <#> (producto interno negativo), <=> (coseno) y <+> (L1)."
 relations:
 - type: DEPENDS_ON
   target: postgresql
 created_at: '2026-09-28'
-updated_at: '2026-09-28'
+updated_at: '2026-10-25'
+last_verified: '2026-10-25'
 verification_status: review_required

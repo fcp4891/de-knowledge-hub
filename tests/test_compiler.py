@@ -131,19 +131,40 @@ def test_deleted_page_is_removed_with_its_edges(engine: Engine, content: Path) -
     assert count(engine, "concepts", "slug = 'dataops'") == 1
 
 
+TMP_TECHNOLOGY = """id: technology:tmp-vector-store
+slug: tmp-vector-store
+type: technology
+stub: true
+title: Tmp vector store
+description: Tecnología temporal del test.
+vendor: open-source
+category: vector-search
+classification: modern
+mvp: false
+cloud:
+- agnostic
+relations:
+- type: DEPENDS_ON
+  target: postgresql
+created_at: '2026-10-25'
+updated_at: '2026-10-25'
+verification_status: review_required
+"""
+
+
 def test_deleted_technology_removes_typed_rows_sources_and_edges(engine: Engine, content: Path) -> None:
+    # Una tecnología propia del test, sin referencias de otras entidades ni del blueprint: borrarla no rompe la
+    # validación. (Antes se usaba pgvector, que desde F3b-21b citan las fichas de retrieval.)
+    tech = content / "technologies" / "tmp-vector-store.yaml"
+    tech.write_text(TMP_TECHNOLOGY, encoding="utf-8")
     compile_content(engine, content, SCHEMAS)
-    assert count(engine, "technologies", "slug = 'pgvector'") == 1
-    assert count(engine, "edges", "source_slug = 'pgvector'") > 0
-    # pgvector no es referenciado por otras entidades ni por el blueprint salvo como related_technologies.
-    # (Antes se usaba dagster, que desde el lote F3b-06a cita orchestration-landscape y la fuente dagster-docs.)
-    blueprint = content / "blueprint" / "21-ai-for-data-engineering.yaml"
-    blueprint.write_text(blueprint.read_text(encoding="utf-8").replace("        related_technologies: [pgvector]\n", ""), encoding="utf-8")
-    (content / "technologies" / "pgvector.yaml").unlink()
+    assert count(engine, "technologies", "slug = 'tmp-vector-store'") == 1
+    assert count(engine, "edges", "source_slug = 'tmp-vector-store'") > 0
+    tech.unlink()
     compile_content(engine, content, SCHEMAS)
-    assert count(engine, "entities", "slug = 'pgvector'") == 0
-    assert count(engine, "technologies", "slug = 'pgvector'") == 0
-    assert count(engine, "edges", "source_slug = 'pgvector' or target_slug = 'pgvector'") == 0
+    assert count(engine, "entities", "slug = 'tmp-vector-store'") == 0
+    assert count(engine, "technologies", "slug = 'tmp-vector-store'") == 0
+    assert count(engine, "edges", "source_slug = 'tmp-vector-store' or target_slug = 'tmp-vector-store'") == 0
 
 
 def test_slug_moved_between_files(engine: Engine, content: Path) -> None:

@@ -78,7 +78,7 @@ subdomains:
         level: intermediate
         importance: medium
         mvp: false
-        related_technologies: [pgvector]
+        related_technologies: [pgvector, azure-ai-search]
         related_concepts: [embeddings]
       - slug: chunking
         title: Chunking
@@ -104,6 +104,7 @@ subdomains:
         importance: medium
         mvp: false
         related_concepts: [rag, metadata-filtering]
+        related_technologies: [azure-ai-search]
         note: Combinación de búsqueda léxica y semántica.
       - slug: reranking
         title: Reranking
