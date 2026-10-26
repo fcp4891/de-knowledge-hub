@@ -346,9 +346,9 @@
           "level": "intermediate",
           "importance": "low",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-26"
         },
         {
           "slug": "ai-pipeline-generation",
@@ -360,9 +360,9 @@
           "level": "advanced",
           "importance": "low",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-26"
         },
         {
           "slug": "ai-error-analysis",
@@ -374,9 +374,9 @@
           "level": "intermediate",
           "importance": "low",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-26"
         },
         {
           "slug": "natural-language-catalog-interfaces",
@@ -388,9 +388,9 @@
           "level": "intermediate",
           "importance": "low",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-26"
         },
         {
           "slug": "rag-over-technical-docs",

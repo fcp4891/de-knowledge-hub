@@ -322,6 +322,13 @@
           "note": "Deduplicar por clave de negocio hace que reprocesar el mismo lote no duplique filas."
         },
         {
+          "slug": "ai-metadata-enrichment",
+          "title": "Enriquecimiento de metadata con IA",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Aplicar lo aprobado sin duplicar."
+        },
+        {
           "slug": "pubsub-delivery-semantics",
           "title": "Entrega, orden y reintentos en Pub/Sub",
           "entity_type": "concept",
