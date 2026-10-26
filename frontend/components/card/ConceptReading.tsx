@@ -551,7 +551,10 @@ export function ConceptReading({
             </li>
             {crumb ? (
               <li>
-                <span aria-hidden="true">/</span> <Link href={crumb.domainHref}>{crumb.domainLabel}</Link>
+                <span aria-hidden="true">/</span>{" "}
+                <Link className="reading-crumb-domain" href={crumb.domainHref}>
+                  {crumb.domainLabel}
+                </Link>
               </li>
             ) : null}
             {crumb?.subdomain ? (

@@ -33,6 +33,15 @@
   color: var(--accent);
 }
 
+.reading-crumbs a.reading-crumb-domain {
+  color: #1f5a8a;
+  font-weight: 600;
+}
+
+.reading-crumbs a.reading-crumb-domain:hover {
+  color: #163e66;
+}
+
 .reading-crumbs [aria-current="page"] {
   color: var(--ink);
   font-weight: 600;
