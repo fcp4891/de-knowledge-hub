@@ -8,6 +8,7 @@ import { SearchDialog } from "@/components/SearchDialog";
 import { listStoredStudy, subscribePersonal } from "@/lib/personalStore";
 
 const IS_STATIC = process.env.NEXT_PUBLIC_API_MODE === "static";
+const AUTHOR_SITE = "https://felipe-a-cespedes-perez.cl/";
 
 type NavItem = { href: string; label: string; exact?: boolean };
 
@@ -28,7 +29,11 @@ function isTextField(target: EventTarget | null): boolean {
   return tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || target.isContentEditable;
 }
 
-function Icon({ name }: { name: "home" | "routes" | "review" | "snippets" | "search" | "mark" | "collapse" | "expand" }) {
+function Icon({
+  name,
+}: {
+  name: "home" | "routes" | "review" | "snippets" | "search" | "mark" | "collapse" | "expand" | "external";
+}) {
   const props = {
     width: 22,
     height: 22,
@@ -77,6 +82,15 @@ function Icon({ name }: { name: "home" | "routes" | "review" | "snippets" | "sea
       <svg {...props}>
         <circle cx="11" cy="11" r="6" />
         <path d="m20 20-3.5-3.5" />
+      </svg>
+    );
+  }
+  if (name === "external") {
+    return (
+      <svg {...props}>
+        <path d="M14 5h5v5" />
+        <path d="M19 5 10 14" />
+        <path d="M17 13.5V19a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5.5" />
       </svg>
     );
   }
@@ -279,6 +293,19 @@ export function SideNav({ reviewCount, warning }: { reviewCount: number | null; 
             })}
           </ul>
         </nav>
+        <div className="side-author-slot">
+          <a
+            className="side-author"
+            href={AUTHOR_SITE}
+            aria-label={collapsed ? "Página del autor" : undefined}
+            title={collapsed ? "Página del autor" : undefined}
+          >
+            <Icon name="external" />
+            <span className="side-link-label" aria-hidden={collapsed || undefined}>
+              Página del autor
+            </span>
+          </a>
+        </div>
         <button
           type="button"
           className="side-collapse"

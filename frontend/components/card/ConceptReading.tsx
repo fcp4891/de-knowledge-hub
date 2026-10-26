@@ -15,8 +15,9 @@ import type {
 } from "@/lib/api/types";
 import { CARD_SECTION_GROUPS } from "@/lib/learning-paths";
 import type { LegalBasis } from "@/lib/api/types";
+import { ArchitectureDot } from "@/components/markdown/InlineText";
 import { entityHref } from "@/lib/entityHref";
-import { bcnLinkText, lawLabel, legalBasisRows, type LegalNoticeCopy } from "@/lib/legal";
+import { bcnLinkText, lawLabel, legalBasisRows, legalRowId, type LegalNoticeCopy } from "@/lib/legal";
 import { partOfParent, routeChildren, withoutPartOf, type PartLink } from "@/lib/partOf";
 import { alsoKnownLabel, CLOUD_LABEL, LEVEL_LABEL, STUDY_LABEL, VERIFICATION_LABEL } from "@/lib/labels";
 import { saveStudyState } from "@/lib/personalActions";
@@ -90,7 +91,7 @@ function LegalBasisTable({ items }: { items: readonly LegalBasis[] }) {
         </thead>
         <tbody>
           {rows.map((row) => (
-            <tr key={`${row.law}-${row.article}`}>
+            <tr id={legalRowId(row.law, row.article)} key={`${row.law}-${row.article}`}>
               <th scope="row">
                 <span className="legal-basis-law">{lawLabel(row.law)}</span>
                 <a href={row.url}>
@@ -188,6 +189,7 @@ export function ConceptReading({
   relationGroups,
   relationsError,
   entityType,
+  architectureLegend,
   children,
 }: {
   slug: string;
@@ -213,6 +215,7 @@ export function ConceptReading({
   relationGroups: RelationGroups["groups"];
   relationsError: string | null;
   entityType: EntityType;
+  architectureLegend: boolean;
   children?: React.ReactNode;
 }) {
   const router = useRouter();
@@ -548,7 +551,10 @@ export function ConceptReading({
             </li>
             {crumb ? (
               <li>
-                <span aria-hidden="true">/</span> <Link href={crumb.domainHref}>{crumb.domainLabel}</Link>
+                <span aria-hidden="true">/</span>{" "}
+                <Link className="reading-crumb-domain" href={crumb.domainHref}>
+                  {crumb.domainLabel}
+                </Link>
               </li>
             ) : null}
             {crumb?.subdomain ? (
@@ -677,6 +683,11 @@ export function ConceptReading({
             {legalBasis.length > 0 ? <LegalBasisTable items={legalBasis} /> : null}
             {blocks}
             {sections.length === 0 ? <p className="reading-quiet">Esta ficha todavía no tiene secciones.</p> : null}
+            {architectureLegend ? (
+              <p className="claim-legend">
+                <ArchitectureDot labelled={false} /> Decisión de arquitectura: elección de diseño, no exigida por la ley
+              </p>
+            ) : null}
             <div className="reading-footer">
               <div className="reading-footer-actions">
                 <button

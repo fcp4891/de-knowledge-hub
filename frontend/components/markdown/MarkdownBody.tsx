@@ -1,7 +1,16 @@
 import { InlineText } from "@/components/markdown/InlineText";
+import { articleMapColumns, droppedEtiquetaIndex, type ObligationBasis } from "@/lib/legal";
 import { groupEvidence, parseMarkdown, type Block, type EvidenceGroup } from "@/lib/markdown";
 
-export async function MarkdownBody({ markdown }: { markdown: string }) {
+export async function MarkdownBody({
+  markdown,
+  etiquetaColumn = false,
+  obligations = [],
+}: {
+  markdown: string;
+  etiquetaColumn?: boolean;
+  obligations?: readonly ObligationBasis[];
+}) {
   const blocks = parseMarkdown(markdown);
   const grouped = groupEvidence(blocks);
   const hasCode = blocks.some((block) => block.type === "code" && block.language !== "mermaid");
@@ -19,6 +28,7 @@ export async function MarkdownBody({ markdown }: { markdown: string }) {
             key={index}
             titleId={`evidence-title-${index}`}
             group={block}
+            obligations={obligations}
             CodeBlock={codeBlock}
             MermaidDiagram={mermaidDiagram}
           />
@@ -26,6 +36,8 @@ export async function MarkdownBody({ markdown }: { markdown: string }) {
           <MarkdownBlock
             key={index}
             block={block}
+            etiquetaColumn={etiquetaColumn}
+            obligations={obligations}
             CodeBlock={codeBlock}
             MermaidDiagram={mermaidDiagram}
           />
@@ -38,11 +50,13 @@ export async function MarkdownBody({ markdown }: { markdown: string }) {
 function EvidenceBlock({
   titleId,
   group,
+  obligations,
   CodeBlock,
   MermaidDiagram,
 }: {
   titleId: string;
   group: EvidenceGroup;
+  obligations: readonly ObligationBasis[];
   CodeBlock: ((props: { code: string; language: string }) => React.ReactNode) | null;
   MermaidDiagram: ((props: { source: string }) => React.ReactNode) | null;
 }) {
@@ -60,6 +74,8 @@ function EvidenceBlock({
         <MarkdownBlock
           key={index}
           block={block}
+          etiquetaColumn={false}
+          obligations={obligations}
           CodeBlock={CodeBlock}
           MermaidDiagram={MermaidDiagram}
         />
@@ -70,10 +86,14 @@ function EvidenceBlock({
 
 function MarkdownBlock({
   block,
+  etiquetaColumn,
+  obligations,
   CodeBlock,
   MermaidDiagram,
 }: {
   block: Block;
+  etiquetaColumn: boolean;
+  obligations: readonly ObligationBasis[];
   CodeBlock: ((props: { code: string; language: string }) => React.ReactNode) | null;
   MermaidDiagram: ((props: { source: string }) => React.ReactNode) | null;
 }) {
@@ -95,19 +115,24 @@ function MarkdownBlock({
   if (block.type === "note") {
     return (
       <p className="verify-note">
-        Pendiente de verificación: <InlineText inlines={block.inlines} />
+        Pendiente de verificación: <InlineText inlines={block.inlines} obligations={obligations} />
       </p>
     );
   }
   if (block.type === "table") {
+    const articleMap = etiquetaColumn ? null : articleMapColumns(block.headers, block.rows);
+    const drop = etiquetaColumn ? droppedEtiquetaIndex(block.headers, block.rows) : null;
+    const indexes = articleMap
+      ? articleMap.columns
+      : block.headers.map((_, index) => index).filter((index) => index !== drop);
     return (
-      <div className="markdown-table-wrap">
+      <div className={articleMap ? "markdown-table-wrap markdown-table-fit" : "markdown-table-wrap"}>
         <table>
           <thead>
             <tr>
-              {block.headers.map((cell, index) => (
+              {indexes.map((index) => (
                 <th key={index} data-align={block.aligns[index] ?? "left"}>
-                  <InlineText inlines={cell} />
+                  <InlineText inlines={block.headers[index]} obligations={obligations} />
                 </th>
               ))}
             </tr>
@@ -115,11 +140,14 @@ function MarkdownBlock({
           <tbody>
             {block.rows.map((row, rowIndex) => (
               <tr key={rowIndex}>
-                {row.map((cell, index) => (
-                  <td key={index} data-align={block.aligns[index] ?? "left"}>
-                    <InlineText inlines={cell} />
-                  </td>
-                ))}
+                {indexes.map((index) => {
+                  const ficha = articleMap && index === articleMap.articleIndex ? articleMap.fichaTitles[rowIndex] : null;
+                  return (
+                    <td key={index} data-align={block.aligns[index] ?? "left"} title={ficha ?? undefined}>
+                      <InlineText inlines={row[index] ?? []} obligations={obligations} />
+                    </td>
+                  );
+                })}
               </tr>
             ))}
           </tbody>
@@ -136,7 +164,7 @@ function MarkdownBlock({
             {item.checked === null ? null : (
               <input type="checkbox" defaultChecked={item.checked} disabled aria-label={item.checked ? "Hecho" : "Pendiente"} />
             )}
-            <InlineText inlines={item.inlines} />
+            <InlineText inlines={item.inlines} obligations={obligations} />
           </li>
         ))}
       </Tag>
@@ -144,7 +172,7 @@ function MarkdownBlock({
   }
   return (
     <p>
-      <InlineText inlines={block.inlines} />
+      <InlineText inlines={block.inlines} obligations={obligations} />
     </p>
   );
 }
