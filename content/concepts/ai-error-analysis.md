@@ -222,7 +222,7 @@ En Azure, **Copilot en Data Factory** de Microsoft Fabric. Según *Get started w
 
 ## 16. Trade-offs
 
-El modelo encuentra rápido la evidencia en logs largos y puede sonar seguro sin serlo; exigir citas reduce ese riesgo y descarta también hipótesis útiles sin línea exacta. Es emergente: las funciones están en preview o cambian seguido.
+El modelo encuentra rápido la evidencia en logs largos y puede sonar seguro sin serlo; exigir citas reduce ese riesgo y descarta también hipótesis útiles sin línea exacta. Es emergente: Gemini Cloud Assist en Managed Service for Apache Spark está en preview según su página; las funciones de Glue y de Copilot en Data Factory pueden cambiar, aunque sus páginas no las declaran en preview.
 
 ## 17. Conceptos relacionados
 
@@ -257,3 +257,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-26: creación (lote F3b-21e).
+- 2026-10-26: revisión B-F3.1 aplicada (docs/reviews/cards-f3b-21e.md): el §16 deja «preview» solo para Gemini Cloud Assist, la única de las tres páginas que lo declara.
