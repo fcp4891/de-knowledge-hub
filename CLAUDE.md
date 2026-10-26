@@ -34,6 +34,7 @@ Trabajas en paralelo con Cursor (Carril B, frontend y revisión).
 - Renombres: usar la formulación exacta de la página (completado vs. en curso); no inferir que un cambio terminó.
 - Sin quizzes, sin alternativas A/B/C/D, sin gamificación.
 - §17 y `relations` coinciden: si la ficha nombrada existe, va en `relations`; si no existe, queda como texto «pendiente de ficha», fuera de `relations`; todo lo que está en `relations` se nombra en el §17.
+- Al crear un lote: si una ficha anterior (verified o en revisión) nombra una ficha nueva como «pendiente de ficha», se enlaza en el mismo lote con cambio mínimo (`relations`, la línea del §17 y las menciones «pendiente de ficha» del cuerpo) y una línea de historial; el estado de la ficha no cambia (aprobado por Felipe el 2026-10-25).
 
 ## Diagramas (§9)
 - Máximo 8 nodos por diagrama. Si hace falta más, dividir en dos diagramas o usar `subgraph` por capa.
