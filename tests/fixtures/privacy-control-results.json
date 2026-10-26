@@ -1,0 +1,10 @@
+{
+  "results": [
+    {"control_id": "schema_minimization", "status": "passed", "executed_at": "2026-10-25T12:00:00Z",
+     "run_id": "ci-4821", "evidence_uri": "artifact://ci-4821/schema-minimization"},
+    {"control_id": "access_review", "status": "passed", "executed_at": "2026-08-01T09:00:00Z",
+     "run_id": "ci-3310", "evidence_uri": "artifact://ci-3310/access-review"},
+    {"control_id": "retention_check", "status": "failed", "executed_at": "2026-10-25T12:05:00Z",
+     "run_id": "ci-4821", "evidence_uri": ""}
+  ]
+}

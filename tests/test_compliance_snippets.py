@@ -82,9 +82,6 @@ STDLIB = {
         "'resultado': 'derivada a revisión humana', 'titular_puede_pedir_revision': True}"],
 }
 GATES = {
-    "chile-data-protection": [
-        "requisitos: 6; brechas: 3", "BRECHA  art. 14 quinquies: seguridad: evidencia vencida (82 días)",
-        "BRECHA  art. 14 sexies: registro de vulneraciones: sin evidencia", "BRECHA  art. 15 bis: encargados: sin control"],
     "processing-activities-inventory": [
         "- emitir y gestionar pasajes | base: contrato (art. 13 c) | datos: identificación, contacto, itinerario "
         "| destinatarios: aerolíneas socias | plazo: 5 años",
@@ -124,6 +121,26 @@ def test_compliance_gates_fail_the_ci_with_gaps(ficha: str, tmp_path: Path) -> N
     out = run_gate(ficha, tmp_path)
     for line in GATES[ficha]:
         assert line in out, out
+    assert_mypy_strict(tmp_path)
+
+
+FIXTURE = Path(__file__).parent / "fixtures" / "privacy-control-results.json"
+
+
+def test_privacy_control_results_fail_the_ci_with_gaps(tmp_path: Path) -> None:
+    """chile-data-protection §10: valida la entrada versionada con una fecha fija; la entrada del §10 es la misma."""
+    (code,) = blocks("chile-data-protection", "python")
+    (shown,) = blocks("chile-data-protection", "json")
+    assert shown.strip() == FIXTURE.read_text(encoding="utf-8").strip()
+    (tmp_path / "snippet.py").write_text(code, encoding="utf-8", newline="\n")
+    result = subprocess.run([sys.executable, "snippet.py", str(FIXTURE), "2026-10-26"], cwd=tmp_path,
+                            env={**os.environ, **UTF8}, capture_output=True, text=True, encoding="utf-8", timeout=300)
+    assert result.returncode == 1, result.stdout + result.stderr
+    for line in ("controles exigidos: 4; resultados: 3; brechas: 4",
+                 "BRECHA access_review: evidencia vencida (86 días)", "BRECHA erasure_replay_check: sin resultado",
+                 "BRECHA retention_check: prueba no aprobada (failed)",
+                 "BRECHA retention_check: falta run_id o evidence_uri"):
+        assert line in result.stdout, result.stdout
     assert_mypy_strict(tmp_path)
 
 
