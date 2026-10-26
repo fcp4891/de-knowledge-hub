@@ -42,6 +42,9 @@ sources:
     note: "Repositorio del modelo ONNX del ejemplo B, en la revisión faf4aa4225822f3bc6376869cb1164e8e3feedd0; etiquetas sentence-similarity y license:apache-2.0."
 relations:
   - type: RELATED_TO
+    target: rag-over-technical-docs
+    note: Indexar la documentación de la plataforma por sección, de forma idempotente.
+  - type: RELATED_TO
     target: llm-evaluation
     note: Medir la recuperación y las citas con preguntas de control.
   - type: RELATED_TO
@@ -320,7 +323,7 @@ Más fragmentos dan más contexto y más ruido y costo. Un umbral alto evita res
 - `processors-and-international-transfers`: el proveedor del modelo.
 - `chilean-identifier-pseudonymization`: seudonimizar antes de indexar.
 - `llm-evaluation`: el conjunto de control.
-- Pendiente de ficha: `rag-over-technical-docs` (lote 21d).
+- `rag-over-technical-docs`: el caso de la documentación de la plataforma.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -349,3 +352,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-25: creación (lote F3b-21b).
 - 2026-10-26: §17 y `relations` enlazan `llm-evaluation`, creada en el lote F3b-21c (regla del §17); sin otros cambios.
+- 2026-10-26: §17 y `relations` enlazan `rag-over-technical-docs`, creada en el lote F3b-21d (regla del §17); sin otros cambios.

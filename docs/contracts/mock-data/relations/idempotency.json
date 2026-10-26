@@ -448,6 +448,13 @@
           "note": "Re-ejecutar el lote bloqueado no duplica lo publicado."
         },
         {
+          "slug": "rag-over-technical-docs",
+          "title": "RAG sobre documentación técnica",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "Reindexar sin duplicar."
+        },
+        {
           "slug": "rds-as-source",
           "title": "RDS como fuente de datos",
           "entity_type": "concept",

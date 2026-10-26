@@ -42,6 +42,9 @@ sources:
     note: "AI agent orchestration patterns (Azure Architecture Center): un agente con herramientas razona y elige entre herramientas, fuentes y APIs, y puede iterar varias llamadas al modelo; suele ser el default correcto en casos empresariales, más simple de depurar que varios agentes; contra los ciclos infinitos de llamadas a herramientas, fijar límites de iteración."
 relations:
   - type: RELATED_TO
+    target: rag-over-technical-docs
+    note: El runbook indexado que consulta el agente de guardia.
+  - type: RELATED_TO
     target: tool-calling
     note: Lo que hace el agente en cada paso.
   - type: RELATED_TO
@@ -260,7 +263,7 @@ Un agente maneja tareas abiertas a cambio de costo, latencia y menos previsibili
 - `rag`: el runbook como herramienta.
 - `data-pipeline`: lo determinista.
 - `dpia-and-automated-decisions`: decisiones sobre personas.
-- Pendiente de ficha: `rag-over-technical-docs` (lote 21d).
+- `rag-over-technical-docs`: el runbook indexado que consulta el agente.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -287,3 +290,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-26: creación (lote F3b-21c).
+- 2026-10-26: §17 y `relations` enlazan `rag-over-technical-docs`, creada en el lote F3b-21d (regla del §17); sin otros cambios.
