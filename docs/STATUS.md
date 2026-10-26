@@ -21,7 +21,7 @@
 |---|---|---|---|
 | A · Claude Code | 21: 21a a 21d `verified`; 21e en revisión; `chile-data-protection` mejorada, en revisión; 19 (11) espera aprobación | Plan de 22 (propuesta); `verified` de 19 con la aprobación de Felipe | Aprobación de Felipe (19) |
 | B · Cursor revisión | — | Revisar F3b-21e y la mejora de `chile-data-protection` (`lane-a.md`) | — |
-| B · Cursor UI | — (rediseño UI cerrado y mergeado a `main`) | — | — |
+| B · Cursor UI | — (`b/ui-labels-diagrams` integrada en `main` el 2026-10-26) | — | — |
 
 ## Pedidos abiertos entre carriles
 | De | Para | Pedido | Estado |
