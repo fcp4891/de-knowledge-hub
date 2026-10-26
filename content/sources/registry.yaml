@@ -3332,3 +3332,39 @@ created_at: '2026-10-25'
 updated_at: '2026-10-25'
 last_verified: '2026-10-25'
 verification_status: verified
+---
+id: source:azure-architecture-center
+slug: azure-architecture-center
+type: source
+title: Azure Architecture Center
+description: Guías y arquitecturas de referencia oficiales de Microsoft para Azure.
+url: https://learn.microsoft.com/en-us/azure/architecture/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-26'
+updated_at: '2026-10-26'
+last_verified: '2026-10-26'
+verification_status: verified
+---
+id: source:microsoft-agent-framework-docs
+slug: microsoft-agent-framework-docs
+type: source
+title: Microsoft Agent Framework documentation
+description: Documentación oficial de Microsoft Agent Framework (agentes y workflows multi-agente).
+url: https://learn.microsoft.com/en-us/agent-framework/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-26'
+updated_at: '2026-10-26'
+last_verified: '2026-10-26'
+verification_status: verified
