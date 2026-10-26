@@ -3,7 +3,7 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-25
+**Última actualización:** 2026-10-26
 
 ## Reglas de revisión
 
@@ -14,6 +14,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** B-F3.1 del lote F3b-21e. Revisión en `docs/reviews/cards-f3b-21e.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuesta baja: el §16 de `ai-error-analysis` deja «preview» solo en Gemini Cloud Assist.
 - **Tarea activa:** `b/ui-legal` (ADR-023 y ADR-024). «Implicancia técnica» lee `legal_basis.implication`. La padre lista «Fichas de esta ruta» en el orden de estudio de `ley21719`. Cada hija muestra «Parte de: …» hacia la padre. `PART_OF` no se repite en la lista de relaciones.
 - **Tarea activa:** B-F3.1 del upgrade de 19. Revisión en `docs/reviews/cards-f3b-19-upgrade.md`. No se editó `content/` ni `frontend/`. Los pedidos 19a–19d quedan anulados.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas altas: el art. 49 no es obligación, el mínimo de 2 en gold, y el registro de vulneraciones no se lleva si no se reporta. Propuestas media: «la más gravosa entre», una etiqueta por artículo, y los 24 h solo si además hay servicios esenciales afectados.
@@ -90,6 +92,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Si hay alias, bajo el título: «También conocido como: …» (ficha de concepto y página de tecnología).
 - `make test-frontend`: 11/11. En la demo estática, «Dataplex» encuentra Knowledge Catalog y la ficha `gcp-dataplex` muestra los dos alias.
 - No se editó `content/` ni el contrato.
+
+### B-F3.1 · lote F3b-21e
+- Cuatro fichas emergentes. El límite de 600 restricts es de Knowledge Catalog. Propuesta baja: no llamar preview a Glue ni a Copilot. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · upgrade de 19
 - Once fichas de ingeniería de datos y Ley 21.719. El boletín y el mensaje N° 110-374 coinciden con la página del Senado. Hallazgos altos: el art. 49 etiquetado como obligación, el mínimo de 2 en gold, y el registro «aunque no se reporte». No se editó `content/` ni `frontend/`.
@@ -360,6 +365,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-21e (2026-10-26)
+- Revisión de las 4 fichas emergentes. `agentic-data-engineering` y `data-agents` siguen pendientes. No se editó `content/`.
 
 ### B-F3.1 · upgrade de 19 (2026-10-24)
 - Revisión de las 11 fichas del subdominio. Los pedidos 19a–19d quedan anulados. No se editó `content/`.
