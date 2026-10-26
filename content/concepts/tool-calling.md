@@ -42,6 +42,9 @@ sources:
     note: "How to use function calling with Microsoft Foundry Models: si el request incluye funciones, el modelo decide si llama a alguna según el contexto y responde con un JSON con los argumentos; la aplicación ejecuta las funciones y devuelve los resultados, de modo que mantiene el control de las acciones. Incluye un ejemplo de llamadas en paralelo con una sola función definida."
 relations:
   - type: RELATED_TO
+    target: llm-agents
+    note: El bucle que usa estas herramientas.
+  - type: RELATED_TO
     target: structured-outputs
     note: Los argumentos son salida con esquema.
   - type: RELATED_TO
@@ -83,7 +86,7 @@ Un asistente de operaciones tiene que responder «¿se cargó `silver.pedidos` h
 
 - Consultas de solo lectura a datos operativos: estado de cargas, conteos, metadata del catálogo.
 - Cuando la respuesta necesita un dato actual que el modelo no tiene.
-- Como base de un agente (`llm-agents`, pendiente de ficha).
+- Como base de un agente (`llm-agents`).
 
 ## 6. Cuándo no utilizarlo
 
@@ -250,7 +253,7 @@ Más herramientas dan más capacidades y más formas de usarlas mal; Google reco
 
 - `structured-outputs`: el esquema de los argumentos.
 - `llm-fundamentals`: el modelo.
-- Pendiente de ficha: `llm-agents` (lote 21c).
+- `llm-agents`: el bucle que usa estas herramientas.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -277,3 +280,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-25: creación (lote F3b-21a).
+- 2026-10-26: §17 y `relations` enlazan `llm-agents`, creada en el lote F3b-21c (regla del §17); sin otros cambios.

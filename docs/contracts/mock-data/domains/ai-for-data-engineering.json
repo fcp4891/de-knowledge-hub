@@ -214,9 +214,9 @@
           "level": "intermediate",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-26"
         },
         {
           "slug": "multi-agent-systems",
@@ -228,9 +228,9 @@
           "level": "advanced",
           "importance": "low",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-26"
         },
         {
           "slug": "llm-evaluation",
@@ -242,9 +242,9 @@
           "level": "intermediate",
           "importance": "high",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-26"
         },
         {
           "slug": "llm-observability",
@@ -256,9 +256,9 @@
           "level": "intermediate",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-26"
         },
         {
           "slug": "guardrails",
@@ -270,9 +270,9 @@
           "level": "intermediate",
           "importance": "medium",
           "mvp": false,
-          "has_page": false,
-          "verification_status": null,
-          "last_verified": null
+          "has_page": true,
+          "verification_status": "review_required",
+          "last_verified": "2026-10-26"
         }
       ]
     },

@@ -37,6 +37,9 @@ sources:
     note: "Prompt engineering techniques (Microsoft Foundry): los ejemplos one-shot o few-shot (pares de entrada y salida) condicionan al modelo solo para la inferencia actual, sin cambiarlo; sin ejemplos es zero-shot. Con la Chat Completion API, los ejemplos van como mensajes de usuario y asistente después del mensaje de sistema."
 relations:
   - type: RELATED_TO
+    target: llm-evaluation
+    note: Medir un cambio de prompt con el conjunto de control.
+  - type: RELATED_TO
     target: llm-fundamentals
     note: El modelo que recibe el prompt.
   - type: RELATED_TO
@@ -220,7 +223,7 @@ Más ejemplos suelen orientar mejor al modelo y cuestan tokens en cada llamada. 
 - `llm-fundamentals`: el modelo.
 - `context-windows`: el espacio del prompt.
 - `structured-outputs`: el formato con esquema.
-- Pendiente de ficha: `llm-evaluation` (lote 21c).
+- `llm-evaluation`: medir un cambio de prompt con el conjunto de control.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -247,3 +250,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-25: creación (lote F3b-21a).
+- 2026-10-26: §17 y `relations` enlazan `llm-evaluation`, creada en el lote F3b-21c (regla del §17); sin otros cambios.

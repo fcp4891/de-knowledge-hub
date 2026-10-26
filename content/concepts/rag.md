@@ -42,6 +42,9 @@ sources:
     note: "Repositorio del modelo ONNX del ejemplo B, en la revisión faf4aa4225822f3bc6376869cb1164e8e3feedd0; etiquetas sentence-similarity y license:apache-2.0."
 relations:
   - type: RELATED_TO
+    target: llm-evaluation
+    note: Medir la recuperación y las citas con preguntas de control.
+  - type: RELATED_TO
     target: embeddings
     note: Los vectores de fragmentos y preguntas.
   - type: RELATED_TO
@@ -293,7 +296,7 @@ En Azure, **Azure AI Search** con un modelo de Foundry. Según *Chunk large docu
 - Umbral de similitud: sin contexto suficiente, no se llama al modelo.
 - Citas obligatorias y verificadas contra lo recuperado.
 - El mismo modelo de embeddings para indexar y preguntar, fijado por versión.
-- Un conjunto de preguntas de control con su fragmento esperado (`llm-evaluation`, pendiente de ficha).
+- Un conjunto de preguntas de control con su fragmento esperado (`llm-evaluation`).
 - **Seguridad:** filtrar por permisos antes de recuperar; seudonimizar datos personales antes de indexar (`chilean-identifier-pseudonymization`).
 - **Observabilidad:** preguntas sin contexto, citas rechazadas y fragmentos recuperados por pregunta.
 - **Costo:** cada fragmento recuperado es entrada del modelo; k y el tamaño del fragmento fijan el costo por pregunta.
@@ -316,7 +319,8 @@ Más fragmentos dan más contexto y más ruido y costo. Un umbral alto evita res
 - `prompt-engineering` y `context-windows`: el prompt.
 - `processors-and-international-transfers`: el proveedor del modelo.
 - `chilean-identifier-pseudonymization`: seudonimizar antes de indexar.
-- Pendientes de ficha: `llm-evaluation` (lote 21c) y `rag-over-technical-docs` (lote 21d).
+- `llm-evaluation`: el conjunto de control.
+- Pendiente de ficha: `rag-over-technical-docs` (lote 21d).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -344,3 +348,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-25: creación (lote F3b-21b).
+- 2026-10-26: §17 y `relations` enlazan `llm-evaluation`, creada en el lote F3b-21c (regla del §17); sin otros cambios.

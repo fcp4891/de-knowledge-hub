@@ -32,6 +32,9 @@ sources:
     note: "Semantic ranking in Azure AI Search: agrega un ranking secundario sobre un resultado inicial puntuado con BM25 o RRF, con modelos de deep learning multilingües adaptados de Bing; solo los 50 primeros resultados pasan al ranking semántico; por documento, el modelo acepta hasta 2000 tokens; también devuelve captions y, opcionalmente, respuestas."
 relations:
   - type: RELATED_TO
+    target: llm-evaluation
+    note: Medir si el reranking mejora.
+  - type: RELATED_TO
     target: rag
     note: El paso entre recuperar y generar.
   - type: RELATED_TO
@@ -189,7 +192,7 @@ En Azure, **Azure AI Search**. Según *Semantic ranking in Azure AI Search* (no 
 
 - Recuperar más candidatos que los que entran al prompt.
 - Deduplicar antes de usar un reranker pagado.
-- Medir si el reranking mejora el acierto en preguntas de control (`llm-evaluation`, pendiente de ficha).
+- Medir si el reranking mejora el acierto en preguntas de control (`llm-evaluation`).
 - **Seguridad:** el reranker administrado recibe la pregunta y los fragmentos; mismas reglas que el modelo.
 - **Observabilidad:** latencia del reranking y cuántas veces cambia el primer resultado.
 - **Costo:** un reranker con LLM cobra tokens por cada candidato.
@@ -209,6 +212,7 @@ Un reranker mejora el orden a cambio de latencia y costo por candidato. MMR es b
 - `rag`: el contexto.
 - `hybrid-rag`: la fusión previa.
 - `embeddings`: los vectores que compara MMR.
+- `llm-evaluation`: medir si el reranking mejora.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -235,3 +239,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-25: creación (lote F3b-21b).
+- 2026-10-26: §17 y `relations` enlazan `llm-evaluation`, creada en el lote F3b-21c (regla del §17); sin otros cambios.
