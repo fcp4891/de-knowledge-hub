@@ -22,6 +22,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: la tabla de renombres no tiene «Vertex AI» → «Agent Platform». El lote 21b va en otra rama.
 - **Tarea activa:** B-F3.1 del lote F3b-21b. Revisión en `docs/reviews/cards-f3b-21b.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. Las cifras citadas coinciden con la página y las fichas enlazadas solo suman la relación.
+- **Tarea activa:** B-F3.1 del lote F3b-21e. Revisión en `docs/reviews/cards-f3b-21e.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuesta baja: el §16 de `ai-error-analysis` deja «preview» solo en Gemini Cloud Assist.
 - **Tarea activa:** `b/ui-legal` (ADR-023 y ADR-024). «Implicancia técnica» lee `legal_basis.implication`. La padre lista «Fichas de esta ruta» en el orden de estudio de `ley21719`. Cada hija muestra «Parte de: …» hacia la padre. `PART_OF` no se repite en la lista de relaciones.
 - **Tarea activa:** B-F3.1 del upgrade de 19. Revisión en `docs/reviews/cards-f3b-19-upgrade.md`. No se editó `content/` ni `frontend/`. Los pedidos 19a–19d quedan anulados.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas altas: el art. 49 no es obligación, el mínimo de 2 en gold, y el registro de vulneraciones no se lleva si no se reporta. Propuestas media: «la más gravosa entre», una etiqueta por artículo, y los 24 h solo si además hay servicios esenciales afectados.
@@ -110,6 +112,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ### B-F3.1 · lote F3b-21b
 - Seis fichas de recuperación. RAG Engine usa 1024 y 256; Azure, 512 tokens con 25 %; el hybrid de Bedrock queda en Amazon RDS, OpenSearch Serverless y MongoDB. Sin propuestas. No se editó `content/` ni `frontend/`.
+
+### B-F3.1 · lote F3b-21e
+- Cuatro fichas emergentes. El límite de 600 restricts es de Knowledge Catalog. Propuesta baja: no llamar preview a Glue ni a Copilot. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · upgrade de 19
 - Once fichas de ingeniería de datos y Ley 21.719. El boletín y el mensaje N° 110-374 coinciden con la página del Senado. Hallazgos altos: el art. 49 etiquetado como obligación, el mínimo de 2 en gold, y el registro «aunque no se reporte». No se editó `content/` ni `frontend/`.
@@ -392,6 +397,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 
 ### B-F3.1 · lote F3b-21b (2026-10-25)
 - Revisión de las 6 fichas de recuperación. La opción A de `rag` dice que los vectores no son semánticos. No se editó `content/`.
+
+### B-F3.1 · lote F3b-21e (2026-10-26)
+- Revisión de las 4 fichas emergentes. `agentic-data-engineering` y `data-agents` siguen pendientes. No se editó `content/`.
 
 ### B-F3.1 · upgrade de 19 (2026-10-24)
 - Revisión de las 11 fichas del subdominio. Los pedidos 19a–19d quedan anulados. No se editó `content/`.
