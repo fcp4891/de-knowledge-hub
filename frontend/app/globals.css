@@ -628,6 +628,21 @@ details.panel summary + * {
   text-align: right;
 }
 
+.markdown-table-fit table {
+  width: 100%;
+  min-width: 0;
+}
+
+.markdown-table-fit th:first-child,
+.markdown-table-fit td:first-child {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.markdown-table-fit td[title] {
+  cursor: help;
+}
+
 .markdown li.task {
   display: flex;
   align-items: flex-start;

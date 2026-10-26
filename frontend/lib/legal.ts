@@ -175,6 +175,31 @@ export function droppedEtiquetaIndex(
   return allEmpty ? index : null;
 }
 
+/**
+ * Tabla «Artículo | Qué implica para datos | Ficha | Etiqueta»:
+ * se ocultan Ficha y Etiqueta. El texto de Ficha queda como tooltip del artículo.
+ */
+export function articleMapColumns<T extends { type: string; value: string }>(
+  headers: readonly (readonly T[])[],
+  rows: readonly (readonly (readonly T[])[])[],
+): { columns: number[]; articleIndex: number; fichaTitles: (string | null)[] } | null {
+  const articulo = headers.findIndex((cell) => plainInline(cell) === "Artículo");
+  const implica = headers.findIndex((cell) => plainInline(cell) === "Qué implica para datos");
+  const ficha = headers.findIndex((cell) => plainInline(cell) === "Ficha");
+  const etiqueta = headers.findIndex((cell) => plainInline(cell) === "Etiqueta");
+  if (articulo < 0 || implica < 0 || ficha < 0 || etiqueta < 0) {
+    return null;
+  }
+  return {
+    columns: headers.map((_, index) => index).filter((index) => index !== ficha && index !== etiqueta),
+    articleIndex: articulo,
+    fichaTitles: rows.map((row) => {
+      const text = plainInline(row[ficha] ?? []);
+      return text.length > 0 ? text : null;
+    }),
+  };
+}
+
 export type LegalNoticeCopy = {
   lead: string;
   detail: string | null;

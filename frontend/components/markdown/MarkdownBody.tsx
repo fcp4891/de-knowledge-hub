@@ -1,5 +1,5 @@
 import { InlineText } from "@/components/markdown/InlineText";
-import { droppedEtiquetaIndex, type ObligationBasis } from "@/lib/legal";
+import { articleMapColumns, droppedEtiquetaIndex, type ObligationBasis } from "@/lib/legal";
 import { groupEvidence, parseMarkdown, type Block, type EvidenceGroup } from "@/lib/markdown";
 
 export async function MarkdownBody({
@@ -120,10 +120,13 @@ function MarkdownBlock({
     );
   }
   if (block.type === "table") {
+    const articleMap = etiquetaColumn ? null : articleMapColumns(block.headers, block.rows);
     const drop = etiquetaColumn ? droppedEtiquetaIndex(block.headers, block.rows) : null;
-    const indexes = block.headers.map((_, index) => index).filter((index) => index !== drop);
+    const indexes = articleMap
+      ? articleMap.columns
+      : block.headers.map((_, index) => index).filter((index) => index !== drop);
     return (
-      <div className="markdown-table-wrap">
+      <div className={articleMap ? "markdown-table-wrap markdown-table-fit" : "markdown-table-wrap"}>
         <table>
           <thead>
             <tr>
@@ -137,11 +140,14 @@ function MarkdownBlock({
           <tbody>
             {block.rows.map((row, rowIndex) => (
               <tr key={rowIndex}>
-                {indexes.map((index) => (
-                  <td key={index} data-align={block.aligns[index] ?? "left"}>
-                    <InlineText inlines={row[index] ?? []} obligations={obligations} />
-                  </td>
-                ))}
+                {indexes.map((index) => {
+                  const ficha = articleMap && index === articleMap.articleIndex ? articleMap.fichaTitles[rowIndex] : null;
+                  return (
+                    <td key={index} data-align={block.aligns[index] ?? "left"} title={ficha ?? undefined}>
+                      <InlineText inlines={row[index] ?? []} obligations={obligations} />
+                    </td>
+                  );
+                })}
               </tr>
             ))}
           </tbody>

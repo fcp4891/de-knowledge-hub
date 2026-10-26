@@ -8,6 +8,7 @@ import {
   claimLabel,
   extractLegalNotice,
   lawLabel,
+  articleMapColumns,
   droppedEtiquetaIndex,
   etiquetaVisual,
   legalBasisRows,
@@ -126,6 +127,32 @@ test("en §11–13 la columna Etiqueta se oculta si no queda ni un punto", () =>
   assert.equal(droppedEtiquetaIndex(headers, [[need, practice], [need, obligation]]), null);
   assert.equal(usesArchitectureMark("Texto **[Decisión de arquitectura]** y sigue."), true);
   assert.equal(usesArchitectureMark("Solo una buena práctica."), false);
+});
+
+test("el mapa de artículos oculta Ficha y Etiqueta y deja la ficha en el artículo", () => {
+  const headers = [
+    [{ type: "text", value: "Artículo" }],
+    [{ type: "text", value: "Qué implica para datos" }],
+    [{ type: "text", value: "Ficha" }],
+    [{ type: "text", value: "Etiqueta" }],
+  ];
+  const view = articleMapColumns(headers, [
+    [
+      [{ type: "text", value: "2" }],
+      [{ type: "text", value: "Dato personal, sensible, anonimización" }],
+      [
+        { type: "code", value: "pii-identification" },
+        { type: "text", value: ", " },
+        { type: "code", value: "chilean-identifier-pseudonymization" },
+      ],
+      [{ type: "strong", value: "[Obligación legal · art. 2]" }],
+    ],
+  ]);
+  assert.ok(view);
+  assert.deepEqual(view.columns, [0, 1]);
+  assert.equal(view.articleIndex, 0);
+  assert.deepEqual(view.fichaTitles, ["pii-identification, chilean-identifier-pseudonymization"]);
+  assert.equal(articleMapColumns([[{ type: "text", value: "Necesidad" }]], []), null);
 });
 
 test("el parser deja cada etiqueta como un solo énfasis", () => {
