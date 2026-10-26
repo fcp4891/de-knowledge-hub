@@ -1,13 +1,15 @@
 import { InlineText } from "@/components/markdown/InlineText";
-import { droppedEtiquetaIndex } from "@/lib/legal";
+import { droppedEtiquetaIndex, type ObligationBasis } from "@/lib/legal";
 import { groupEvidence, parseMarkdown, type Block, type EvidenceGroup } from "@/lib/markdown";
 
 export async function MarkdownBody({
   markdown,
   etiquetaColumn = false,
+  obligations = [],
 }: {
   markdown: string;
   etiquetaColumn?: boolean;
+  obligations?: readonly ObligationBasis[];
 }) {
   const blocks = parseMarkdown(markdown);
   const grouped = groupEvidence(blocks);
@@ -26,6 +28,7 @@ export async function MarkdownBody({
             key={index}
             titleId={`evidence-title-${index}`}
             group={block}
+            obligations={obligations}
             CodeBlock={codeBlock}
             MermaidDiagram={mermaidDiagram}
           />
@@ -34,6 +37,7 @@ export async function MarkdownBody({
             key={index}
             block={block}
             etiquetaColumn={etiquetaColumn}
+            obligations={obligations}
             CodeBlock={codeBlock}
             MermaidDiagram={mermaidDiagram}
           />
@@ -46,11 +50,13 @@ export async function MarkdownBody({
 function EvidenceBlock({
   titleId,
   group,
+  obligations,
   CodeBlock,
   MermaidDiagram,
 }: {
   titleId: string;
   group: EvidenceGroup;
+  obligations: readonly ObligationBasis[];
   CodeBlock: ((props: { code: string; language: string }) => React.ReactNode) | null;
   MermaidDiagram: ((props: { source: string }) => React.ReactNode) | null;
 }) {
@@ -69,6 +75,7 @@ function EvidenceBlock({
           key={index}
           block={block}
           etiquetaColumn={false}
+          obligations={obligations}
           CodeBlock={CodeBlock}
           MermaidDiagram={MermaidDiagram}
         />
@@ -80,11 +87,13 @@ function EvidenceBlock({
 function MarkdownBlock({
   block,
   etiquetaColumn,
+  obligations,
   CodeBlock,
   MermaidDiagram,
 }: {
   block: Block;
   etiquetaColumn: boolean;
+  obligations: readonly ObligationBasis[];
   CodeBlock: ((props: { code: string; language: string }) => React.ReactNode) | null;
   MermaidDiagram: ((props: { source: string }) => React.ReactNode) | null;
 }) {
@@ -106,7 +115,7 @@ function MarkdownBlock({
   if (block.type === "note") {
     return (
       <p className="verify-note">
-        Pendiente de verificación: <InlineText inlines={block.inlines} />
+        Pendiente de verificación: <InlineText inlines={block.inlines} obligations={obligations} />
       </p>
     );
   }
@@ -120,7 +129,7 @@ function MarkdownBlock({
             <tr>
               {indexes.map((index) => (
                 <th key={index} data-align={block.aligns[index] ?? "left"}>
-                  <InlineText inlines={block.headers[index]} />
+                  <InlineText inlines={block.headers[index]} obligations={obligations} />
                 </th>
               ))}
             </tr>
@@ -130,7 +139,7 @@ function MarkdownBlock({
               <tr key={rowIndex}>
                 {indexes.map((index) => (
                   <td key={index} data-align={block.aligns[index] ?? "left"}>
-                    <InlineText inlines={row[index] ?? []} />
+                    <InlineText inlines={row[index] ?? []} obligations={obligations} />
                   </td>
                 ))}
               </tr>
@@ -149,7 +158,7 @@ function MarkdownBlock({
             {item.checked === null ? null : (
               <input type="checkbox" defaultChecked={item.checked} disabled aria-label={item.checked ? "Hecho" : "Pendiente"} />
             )}
-            <InlineText inlines={item.inlines} />
+            <InlineText inlines={item.inlines} obligations={obligations} />
           </li>
         ))}
       </Tag>
@@ -157,7 +166,7 @@ function MarkdownBlock({
   }
   return (
     <p>
-      <InlineText inlines={block.inlines} />
+      <InlineText inlines={block.inlines} obligations={obligations} />
     </p>
   );
 }

@@ -287,6 +287,15 @@
   text-transform: uppercase;
 }
 
+.legal-basis tbody tr {
+  scroll-margin-top: 5.5rem;
+}
+
+.legal-basis tbody tr:target th,
+.legal-basis tbody tr:target td {
+  background: #fff1c2;
+}
+
 .legal-basis tbody th {
   font-weight: 400;
   white-space: nowrap;
@@ -335,6 +344,29 @@
   border-radius: 2px;
   color: #6e2a24;
   background: #f6e4e1;
+}
+
+.claim-art {
+  margin-right: 0.2em;
+  font-family: var(--font-ui), system-ui, sans-serif;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 0;
+}
+
+.claim-art a,
+.claim-art span {
+  color: #1e3a5f;
+  text-decoration: none;
+}
+
+.claim-art a:hover {
+  text-decoration: underline;
+}
+
+.claim-art a[title],
+.claim-art span[title] {
+  cursor: help;
 }
 
 .claim-dot {

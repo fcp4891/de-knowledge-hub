@@ -48,6 +48,74 @@ export function claimLabel(value: string): string {
   return value.slice(1, -1);
 }
 
+/** Ley que se cita como «art. N» sin repetir el número. */
+export const DEFAULT_LAW = "ley-19628";
+
+export type ObligationCite = {
+  law: string;
+  article: string;
+  text: string;
+};
+
+const OBLIGATION_BODY = /^\[Obligación legal · (.+)\]$/;
+const LAW_CITE = /^Ley (\d{2})\.(\d+), art\. (.+)$/;
+const ART_CITE = /^art\. (.+)$/;
+
+/** Texto visible de una obligación: «art. N», o «Ley 21.663, art. 9» si no es la 19.628. */
+export function obligationCite(value: string): ObligationCite | null {
+  const body = OBLIGATION_BODY.exec(value);
+  if (!body) {
+    return null;
+  }
+  const cited = body[1];
+  const named = LAW_CITE.exec(cited);
+  if (named) {
+    const law = `ley-${named[1]}${named[2]}`;
+    const article = named[3];
+    const text = law === DEFAULT_LAW ? `art. ${article}` : `Ley ${named[1]}.${named[2]}, art. ${article}`;
+    return { law, article, text };
+  }
+  const plain = ART_CITE.exec(cited);
+  if (!plain) {
+    return null;
+  }
+  return { law: DEFAULT_LAW, article: plain[1], text: `art. ${plain[1]}` };
+}
+
+export type ObligationBasis = {
+  law: string;
+  article: string;
+  note: string | null;
+};
+
+export function legalRowId(law: string, article: string): string {
+  const slug = article
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return `lb-${law}-${slug}`;
+}
+
+export function matchingObligation(
+  items: readonly ObligationBasis[],
+  law: string,
+  article: string,
+): ObligationBasis | null {
+  return items.find((item) => item.law === law && item.article === article) ?? null;
+}
+
+/** Resumen del artículo: `note` de legal_basis. */
+export function obligationNote(
+  items: readonly ObligationBasis[],
+  law: string,
+  article: string,
+): string | null {
+  const note = matchingObligation(items, law, article)?.note?.trim() ?? "";
+  return note.length > 0 ? note : null;
+}
+
 const ARCHITECTURE_MARK = "[Decisión de arquitectura]";
 
 export function usesArchitectureMark(markdown: string): boolean {

@@ -5,7 +5,7 @@ import { MarkdownBody } from "@/components/markdown/MarkdownBody";
 import { getConcept, getDomain, getRelations, getStudyState, listNotes } from "@/lib/api/client";
 import type { NoteList, RelationGroups, Section, SourceRef } from "@/lib/api/types";
 import { citationDetail, citationLinkText } from "@/lib/citation";
-import { extractLegalNotice, legalNoticeCopy, usesArchitectureMark } from "@/lib/legal";
+import { extractLegalNotice, legalNoticeCopy, usesArchitectureMark, type ObligationBasis } from "@/lib/legal";
 import { withoutPartOf } from "@/lib/partOf";
 import { entityHref } from "@/lib/entityHref";
 import { SHORT_NAMES } from "@/lib/learning-paths";
@@ -58,7 +58,11 @@ function SourceLinks({ sources }: { sources: SourceRef[] }) {
   );
 }
 
-function sectionModels(sections: Section[], sources: SourceRef[]): ReadingSectionModel[] {
+function sectionModels(
+  sections: Section[],
+  sources: SourceRef[],
+  obligations: readonly ObligationBasis[],
+): ReadingSectionModel[] {
   const ordered = [...sections].sort((left, right) => left.number - right.number);
   const models: ReadingSectionModel[] = [];
   let clouds: ReadingSectionModel[] = [];
@@ -78,7 +82,7 @@ function sectionModels(sections: Section[], sources: SourceRef[]): ReadingSectio
         title: section.title,
         presentation: "summary",
         listed: text,
-        body: text ? <MarkdownBody markdown={section.markdown} /> : null,
+        body: text ? <MarkdownBody markdown={section.markdown} obligations={obligations} /> : null,
       });
       continue;
     }
@@ -92,7 +96,7 @@ function sectionModels(sections: Section[], sources: SourceRef[]): ReadingSectio
         title: section.title,
         presentation: "cloud",
         listed: true,
-        body: <MarkdownBody markdown={section.markdown} etiquetaColumn />,
+        body: <MarkdownBody markdown={section.markdown} etiquetaColumn obligations={obligations} />,
       });
       continue;
     }
@@ -108,7 +112,7 @@ function sectionModels(sections: Section[], sources: SourceRef[]): ReadingSectio
         title: section.title,
         presentation: "details",
         listed: true,
-        body: showList ? <SourceLinks sources={sources} /> : <MarkdownBody markdown={section.markdown} />,
+        body: showList ? <SourceLinks sources={sources} /> : <MarkdownBody markdown={section.markdown} obligations={obligations} />,
       });
       continue;
     }
@@ -121,7 +125,7 @@ function sectionModels(sections: Section[], sources: SourceRef[]): ReadingSectio
       title: section.title,
       presentation: OPEN_NUMBERS.has(section.number) ? "open" : "details",
       listed: true,
-      body: <MarkdownBody markdown={section.markdown} />,
+      body: <MarkdownBody markdown={section.markdown} obligations={obligations} />,
     });
   }
   flushClouds();
@@ -247,7 +251,7 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
       sourceCount={data.sources.length}
       crumb={crumb}
       next={next}
-      sections={sectionModels(sections, data.sources)}
+      sections={sectionModels(sections, data.sources, data.legal_basis)}
       staticMode={staticMode}
       initialStudy={
         study?.ok ? { state: study.data.state, pendingDeepDive: study.data.pending_deep_dive } : null

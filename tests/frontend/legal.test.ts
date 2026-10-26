@@ -12,7 +12,10 @@ import {
   etiquetaVisual,
   legalBasisRows,
   legalNoticeCopy,
+  legalRowId,
   legislationBadge,
+  obligationCite,
+  obligationNote,
   usesArchitectureMark,
 } from "../../frontend/lib/legal.ts";
 
@@ -50,6 +53,31 @@ test("el aviso sale del resumen y no queda como párrafo suelto", () => {
   const copy = legalNoticeCopy(split.notice);
   assert.equal(copy.lead, "Esta ficha no es asesoría legal.");
   assert.equal(copy.detail, "explica el alcance técnico.");
+});
+
+test("la obligación cita art. N y nombra la ley si no es la 19.628", () => {
+  assert.deepEqual(obligationCite("[Obligación legal · art. 15 bis]"), {
+    law: "ley-19628",
+    article: "15 bis",
+    text: "art. 15 bis",
+  });
+  assert.deepEqual(obligationCite("[Obligación legal · Ley 19.628, art. 14 sexies]"), {
+    law: "ley-19628",
+    article: "14 sexies",
+    text: "art. 14 sexies",
+  });
+  assert.deepEqual(obligationCite("[Obligación legal · Ley 21.663, art. 9]"), {
+    law: "ley-21663",
+    article: "9",
+    text: "Ley 21.663, art. 9",
+  });
+  assert.equal(obligationCite("[Buena práctica]"), null);
+  assert.equal(legalRowId("ley-19628", "14 quáter"), "lb-ley-19628-14-quater");
+  assert.equal(legalRowId("ley-21663", "9"), "lb-ley-21663-9");
+  const basis = [{ law: "ley-19628", article: "3", note: "Principios, letras a) a h)." }];
+  assert.equal(obligationNote(basis, "ley-19628", "3"), "Principios, letras a) a h).");
+  assert.equal(obligationNote([{ law: "ley-19628", article: "3", note: "  " }], "ley-19628", "3"), null);
+  assert.equal(obligationNote(basis, "ley-21663", "9"), null);
 });
 
 test("la implicancia técnica sale de legal_basis y no del texto del §4", () => {
