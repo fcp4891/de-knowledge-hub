@@ -3,7 +3,7 @@ id: concept:chile-data-protection
 slug: chile-data-protection
 type: concept
 title: Ley 21.719 para ingenieros de datos
-description: "Ficha padre del subdominio. Qué cambia la Ley 21.719 para quien diseña y opera plataformas de datos: casi todo pipeline es tratamiento y hay que demostrar que cumple. Mapa de artículos de la Ley 19.628 modificada a sus fichas hijas, vigencia y boletín 18.623-07 según BCN y el Senado, Decreto 662, sanciones, y una matriz requisito → control → evidencia que hace fallar la CI si un control no tiene evidencia reciente. No es asesoría legal."
+description: "Ficha padre del subdominio. Qué cambia la Ley 21.719 para quien diseña y opera plataformas de datos: casi todo pipeline es tratamiento y hay que demostrar que cumple. Mapa de artículos de la Ley 19.628 modificada a sus fichas hijas, vigencia y boletín 18.623-07 según BCN y el Senado, Decreto 662, sanciones, seis preguntas de diseño, un caso de supresión de punta a punta y un validador de los resultados de los controles que hace fallar la CI. No es asesoría legal."
 domain: compliance
 subdomain: data-engineering-under-ley-21719
 category: compliance
@@ -102,6 +102,8 @@ verification_status: review_required
 
 Esta ficha no es asesoría legal: explica cómo trabaja un ingeniero de datos bajo la Ley 21.719. La ley entra solo como origen de cada requisito; el detalle técnico de cada uno está en su ficha hija.
 
+**Cómo leerla.** *Comprender* (§1–6): qué exige la ley y qué afecta a tu trabajo. *Aplicar* (§7–13): cómo diseñarías la solución. *Demostrar*: la evidencia del §8, el código del §10 y las preguntas del §18, para verificar que funciona.
+
 La Ley 21.719 reescribe la Ley 19.628. Según BCN, fue publicada el 2024-12-13 y, por su artículo primero transitorio, sus modificaciones rigen desde el **2026-12-01**; BCN muestra la Ley 19.628 con una versión «Con Vigencia Diferida por Fecha» desde esa fecha.
 
 **Estado al 2026-10-25.** El Ejecutivo ingresó el boletín 18.623-07 (mensaje N° 110-374). Su numeral 2 reemplaza esa fecha por el **1 de diciembre de 2027**. Según la tramitación oficial del Senado, el proyecto está en primer trámite, en primer informe de la Comisión de Constitución, con urgencia de discusión inmediata. Es un proyecto: **mientras no se publique otra ley, rige el 2026-12-01**.
@@ -111,6 +113,8 @@ El reglamento de los modelos de prevención de infracciones (art. 49) es el Decr
 Para ingeniería de datos, el cambio es este: casi todo lo que hace un pipeline es **tratamiento**, y la ley exige poder **demostrar** que cada tratamiento cumple sus principios. Eso se traduce en controles técnicos implementados, verificados de forma continua y con evidencia.
 
 ## 2. Qué es
+
+**[Buena práctica]** **Obligación legal frente a patrón técnico.** La ley impone obligaciones a quien corresponde (responsable o encargado). La matriz requisito → control → evidencia, las pruebas en la CI y los plazos internos de revisión son patrones técnicos propuestos aquí: **no** son obligaciones literales ni exigen una herramienta específica.
 
 **[Buena práctica]** Mapa de los artículos de la Ley 19.628 modificada y la ficha hija que los trata:
 
@@ -140,41 +144,99 @@ Para ingeniería de datos, el cambio es este: casi todo lo que hace un pipeline 
 - **[Obligación legal · art. 15 bis]** El encargado (proveedor de nube, de ETL u otro) trata datos solo según el encargo; si los usa para otro fin o los cede sin autorización, se le considera responsable, responde personalmente por sus infracciones y solidariamente con el responsable por los daños.
 - **[Decisión de arquitectura]** El área legal, privacidad y el negocio deciden finalidad, base y plazo; seguridad define el nivel de riesgo. Ingeniería implementa los controles, aporta el análisis técnico y genera la evidencia. La responsabilidad legal sigue siendo del responsable del tratamiento.
 
+### Conceptos que el ingeniero debe dominar
+
+**[Buena práctica]** La etiqueta de cada fila corresponde a la definición (letra del art. 2 entre paréntesis); la columna «Error a evitar» es orientación técnica.
+
+| Concepto | Explicación práctica | Error a evitar | Etiqueta |
+|---|---|---|---|
+| Dato personal (f) | Información vinculada o referida a una persona natural identificada o identificable, directa o indirectamente | Suponer que solo el nombre o el RUT son datos personales | **[Obligación legal · art. 2]** |
+| Dato sensible (g) | Características físicas o morales, o hechos de la vida privada: entre otros, origen étnico o racial, afiliación política o sindical y situación socioeconómica | Clasificar solo por el nombre de la columna | **[Obligación legal · art. 2]** |
+| Tratamiento (o) | Cualquier operación, automatizada o no, para recolectar, procesar, almacenar, comunicar, transmitir o utilizar datos personales | Creer que un ETL interno no es tratamiento | **[Obligación legal · art. 2]** |
+| Responsable (n) | Decide los fines y medios del tratamiento, aunque lo ejecute un encargado | Atribuir las decisiones jurídicas al equipo técnico | **[Obligación legal · art. 2]** |
+| Encargado (x) | Trata datos personales por cuenta del responsable | Suponer que todo proveedor es encargado en toda actividad | **[Obligación legal · art. 2]** |
+| Seudonimización (l) | Los datos ya no se atribuyen a un titular sin información adicional, guardada por separado y protegida | Considerarla anonimización | **[Obligación legal · art. 2]** |
+| Anonimización (k) | Procedimiento irreversible: el dato ya no puede vincularse a una persona ni permitir su identificación | Declarar anónima una tabla solo porque se quitó el RUT | **[Obligación legal · art. 2]** |
+| Finalidad y base de licitud (arts. 3 b), 12 y 13) | Para qué se trata el dato y qué habilita ese tratamiento | Asignar una sola base a un dataset que se reutiliza | **[Obligación legal · art. 3]** |
+
+### Los ocho principios del art. 3 como decisiones técnicas
+
+**[Obligación legal · art. 3]** Los ocho principios rigen el tratamiento; la pregunta y el control de cada fila son orientativos y llevan su propia etiqueta.
+
+| Principio | Pregunta del ingeniero | Control orientativo | Etiqueta |
+|---|---|---|---|
+| a) Licitud y lealtad | ¿Este tratamiento tiene una base validada para esta finalidad? | Cada actividad del catálogo con su base validada | **[Decisión de arquitectura]** |
+| b) Finalidad | ¿Algún consumidor usa los datos para otro propósito? | Metadatos de uso, permisos y contratos de consumo | **[Decisión de arquitectura]** |
+| c) Proporcionalidad | ¿Capturamos más campos de los necesarios? | Lista de columnas permitidas por producto y capa | **[Decisión de arquitectura]** |
+| d) Calidad | ¿Los datos son exactos y están actualizados? | Pruebas de exactitud, vigencia y rectificación | **[Buena práctica]** |
+| e) Responsabilidad | ¿Quién decide y quién opera cada control? | Dueños, aprobaciones y evidencia | **[Buena práctica]** |
+| f) Seguridad | ¿Quién puede acceder y qué pasa ante una falla? | Mínimo privilegio, cifrado, respaldo y monitoreo | **[Buena práctica]** |
+| g) Transparencia e información | ¿Podemos explicar qué tratamientos existen? | Catálogo conectado al inventario de actividades | **[Decisión de arquitectura]** |
+| h) Confidencialidad | ¿Se exponen datos a usuarios o sistemas no autorizados? | Segregación, secretos, registros y control de exportaciones | **[Buena práctica]** |
+
+**[Buena práctica]** Estos controles son propuestas de diseño: su suficiencia depende del contexto, del riesgo y de las obligaciones aplicables.
+
 ## 3. Problema que resuelve
 
 **[Buena práctica]** Sin traducción técnica, la ley queda en un documento: hay copias de datos personales sin control, accesos amplios, tablas que no se pueden borrar, backfills que reintroducen datos suprimidos y ninguna evidencia de qué se hizo.
 
 **[Decisión de arquitectura]** Con una matriz requisito → control → evidencia, ejecutada en la CI, cada requisito tiene un dueño técnico, un control que funciona y una prueba reciente.
 
+**[Buena práctica]** **La pregunta central:** ¿podemos reconstruir qué ocurrió con los datos de una persona y demostrar qué medidas se aplicaron?
+
+**[Decisión de arquitectura]** Responderla exige coordinar negocio, legal y privacidad, seguridad, plataforma e ingeniería de datos. Ingeniería no decide la finalidad ni la base; sí identifica las implicancias técnicas, implementa los controles y reporta sus limitaciones.
+
 ## 4. Cómo funciona
 
-1. **[Buena práctica]** Inventariar y clasificar datos personales y sensibles según las definiciones del art. 2 (`pii-identification`).
-2. **[Decisión de arquitectura]** Registrar cada **actividad de tratamiento** con finalidad, base de licitud y plazo, y asociarla a los activos que usa; un dataset puede servir a varias actividades con bases distintas. De ahí sale la información pública que pide el art. 14 ter (`processing-activities-inventory`).
-3. **[Decisión de arquitectura]** Minimizar desde la ingesta con contratos de datos que fijan los campos permitidos por capa, para que por defecto solo se traten los datos necesarios (art. 14 quáter; `data-minimization-by-layer`).
-4. **[Buena práctica]** Construir las capacidades para atender los derechos del art. 4: localizar, exportar, rectificar, bloquear y suprimir (`data-subject-rights-pipeline`, `retention-and-erasure`).
-5. **[Buena práctica]** Controles de seguridad verificados y capacidad de dimensionar una vulneración, para reportarla y registrar la comunicación (art. 14 sexies; `data-breach-response`).
-6. **[Decisión de arquitectura]** Cada control produce evidencia automática y la CI falla si falta un control, falta la evidencia o la evidencia está vencida; así se cumple la verificación regular del art. 14 quinquies (`privacy-controls-as-code`).
+**[Buena práctica]** Seis preguntas de diseño; cada una lleva a su ficha hija.
+
+1. **[Buena práctica]** **¿Qué datos trato?** Descubrir identificadores directos e indirectos, datos sensibles y combinaciones reidentificables, según las definiciones del art. 2 (`pii-identification`).
+2. **[Decisión de arquitectura]** **¿Para qué se necesitan?** Registrar cada **actividad de tratamiento** con finalidad, base de licitud y plazo, y asociarla a los activos que usa; un dataset puede servir a varias actividades con bases distintas. De ahí sale la información pública que pide el art. 14 ter (`processing-activities-inventory`).
+3. **[Buena práctica]** **¿Dónde circulan?** Trazar fuentes, APIs, colas, buckets, tablas, modelos, exportaciones y proveedores, incluidos los que están fuera de Chile (arts. 1 bis y 27; `processors-and-international-transfers`).
+4. **[Decisión de arquitectura]** **¿Cómo los protejo?** Minimizar desde la ingesta con contratos que fijan los campos permitidos por capa (art. 14 quáter; `data-minimization-by-layer`), seudonimizar cuando proceda (`chilean-identifier-pseudonymization`) y evaluar el impacto en los casos que lo exigen (`dpia-and-automated-decisions`).
+5. **[Buena práctica]** **¿Cómo los corrijo, bloqueo o suprimo?** Capacidades para los derechos del art. 4 que alcancen derivados, historiales, respaldos, CDC y reprocesos (`data-subject-rights-pipeline`, `retention-and-erasure`).
+6. **[Decisión de arquitectura]** **¿Cómo lo demuestro?** Cada control produce evidencia automática y la CI falla si falta un control o su evidencia (verificación regular del art. 14 quinquies; `privacy-controls-as-code`); la consulta de alcance por linaje permite dimensionar una vulneración (art. 14 sexies; `data-breach-response`).
+
+**[Decisión de arquitectura]** Matriz de control:
+
+| Requisito o necesidad | Decisión aprobada por | Control técnico | Evidencia verificable | Etiqueta |
+|---|---|---|---|---|
+| Minimización | Negocio y privacidad | Contrato de campos permitidos | Test de esquema y versión del contrato | **[Decisión de arquitectura]** |
+| Retención | Privacidad y negocio | Política por clase de dato y almacenamiento | Configuración, ejecución y excepciones | **[Decisión de arquitectura]** |
+| Acceso restringido | Seguridad y dueño del dato | IAM o RBAC, segregación y revisión | Inventario de permisos y revisión fechada | **[Decisión de arquitectura]** |
+| Derechos del titular | Responsable y privacidad | Localizador de registros y flujo autorizado | ID interno de la solicitud, estados y resultado | **[Decisión de arquitectura]** |
+| Vulneraciones | Seguridad y privacidad | Logs, alertas y consulta de alcance por linaje | Línea de tiempo, sistemas afectados y acciones | **[Decisión de arquitectura]** |
+| Transferencias | Privacidad, compras y seguridad | Inventario de destinos y controles del proveedor | Contrato, evaluación y trazabilidad de flujos | **[Decisión de arquitectura]** |
+
+**[Buena práctica]** La evidencia no guarda nombres, RUT ni datos sensibles cuando basta una referencia interna protegida.
 
 ## 5. Cuándo utilizarlo
 
 - Al diseñar una plataforma o un pipeline que trata datos de personas en Chile, o de personas en Chile desde fuera (art. 1 bis).
+- Al incorporar una fuente, API, CDC o pipeline nuevo que trate datos personales.
+- Al migrar una plataforma on-premise a la nube.
+- Al crear productos de datos, modelos, dashboards, exportaciones o integraciones externas.
+- Al habilitar ambientes de desarrollo y pruebas, respaldos y recuperación.
+- Al introducir servicios de IA o LLM que puedan recibir datos personales.
 - Al preparar una revisión interna, un modelo de prevención o la respuesta a un requerimiento.
 
 ## 6. Cuándo no utilizarlo
 
 - Para decidir finalidades, bases de licitud o plazos: eso lo deciden el área legal y el responsable.
 - Como interpretación de la ley: esta ficha cita su texto y lo traduce a controles.
+- Para concluir por sí sola que una actividad es lícita, que una transferencia está habilitada o que una anonimización es suficiente. Tampoco dice que todo tratamiento exija consentimiento: la base se determina caso a caso.
 
 ## 7. Ejemplo sencillo
 
-| Requisito | Control implementado | Evidencia |
-|---|---|---|
-| Proporcionalidad y por defecto (arts. 3 c) y 14 quáter) | Contrato de datos con columnas permitidas por capa; retención por tabla | Test de esquema en la CI; retención aplicada |
-| Calidad (art. 3 d)) | Tests de exactitud y actualidad | Reporte de calidad |
-| Derechos (arts. 4 a 11) | Pipeline de solicitudes con índice de titulares | Log de solicitudes con plazos, sin datos del titular |
-| Seguridad (art. 14 quinquies) | Cifrado, mínimo privilegio, seudonimización con HMAC | Revisión periódica de accesos; prueba de restauración |
-| Vulneraciones (art. 14 sexies) | Consulta de alcance por linaje | Registro de vulneraciones |
-| Encargo (art. 15 bis) | Inventario de encargados por dataset; supresión al cierre | Constancia de supresión o devolución |
+**[Buena práctica]** Minimización de una API. Una API entrega `customer_id`, `email`, `phone`, `birth_date`, `country` y `purchase_total`; el caso analítico aprobado solo necesita estadísticas de compras por país.
+
+| | Qué se hace |
+|---|---|
+| Diseño deficiente | `SELECT *` en cada carga y retención indefinida de todos los campos |
+| Diseño recomendado | Contrato de campos permitidos (`country`, `purchase_total`); no almacenar lo innecesario cuando sea viable; retención documentada; acceso restringido a la fuente; en gold, agregados acordes al riesgo de reidentificación |
+| Prueba | Una columna nueva no autorizada hace fallar la validación del contrato antes de llegar al producto de datos |
+
+El detalle por capa y su código están en `data-minimization-by-layer`.
 
 ## 8. Ejemplo de producción
 
@@ -187,6 +249,17 @@ Caso genérico: una aerolínea con datos de pasajeros, reservas y vuelos, en arq
 | Silver | Validado y minimizado | Seudonimización con HMAC y llave separada | Creer que un seudónimo vuelve anónimo el dato |
 | Gold | Agregado o mínimo por caso de uso | Acceso por finalidad; agregación con umbral mínimo | Creer que gold no tiene datos personales |
 | Consumo | BI, APIs, modelos | Máscaras de columna, filtros de fila, registro de decisiones automatizadas | Exportaciones sin control |
+
+### Caso: solicitud de supresión, de punta a punta
+
+1. **[Buena práctica]** El responsable verifica identidad, alcance, procedencia y posibles obligaciones de conservación.
+2. **[Buena práctica]** Ingeniería localiza registros y derivados con un índice de titulares protegido y el linaje.
+3. **[Decisión de arquitectura]** Cada sistema ejecuta la acción autorizada: supresión, bloqueo u otra medida.
+4. **[Buena práctica]** Se revisan snapshots, exportaciones, respaldos y reprocesos: un `DELETE` en una tabla no resuelve todo.
+5. **[Decisión de arquitectura]** Las próximas cargas no reintroducen al titular, con reglas de exclusión que no retienen más datos de los necesarios.
+6. **[Buena práctica]** Se registra la evidencia técnica y el resultado vuelve al responsable para la respuesta formal.
+
+La dificultad no es el SQL del borrado, sino la consistencia entre capas, versiones, réplicas y cargas futuras. El procedimiento y su código están en `retention-and-erasure` y `data-subject-rights-pipeline`.
 
 ### Evidencia de cumplimiento
 
@@ -227,65 +300,73 @@ flowchart LR
 ## 10. Código
 
 ```python
-# Python 3.12+, biblioteca estándar. Se ejecuta en la CI: matriz requisito → control → evidencia.
-# Termina con código 1 si algún requisito no tiene control, no tiene evidencia o su evidencia está vencida,
-# para que el despliegue se bloquee. Los artículos citan la Ley 19.628 con las modificaciones de la Ley 21.719.
+# Python 3.12+, biblioteca estándar. Se ejecuta en la CI: valida los resultados que dejaron las pruebas de los
+# controles (no su descripción). Uso: python validate_privacy_controls.py privacy-control-results.json 2026-10-26
+# La fecha de referencia entra como argumento para que el resultado sea reproducible; en un pipeline real la pasa
+# el orquestador. Termina con código 1 si falta un control, no aprobó, su evidencia está vencida o no tiene
+# referencia de ejecución. Es didáctico: no certifica cumplimiento.
+import json
 import sys
-from dataclasses import dataclass
-from datetime import date
+from datetime import date, datetime, timedelta, timezone
+from pathlib import Path
 
-HOY = date(2026, 10, 22)          # en la CI real: date.today()
-VIGENCIA_EVIDENCIA_DIAS = 30      # una evidencia más antigua no demuestra que el control sigue operando
-
-
-@dataclass(frozen=True)
-class Fila:
-    requisito: str                # artículo y tema
-    decide: str                   # "legal", "datos" o "legal+datos"
-    control: str | None           # control técnico implementado (no documentado)
-    evidencia: str | None         # prueba generada por el sistema
-    ultima_evidencia: date | None # cuándo se generó por última vez
+MAX_AGE = timedelta(days=30)  # política interna ilustrativa, NO un plazo legal
+REQUIRED = ("access_review", "erasure_replay_check", "retention_check", "schema_minimization")
 
 
-MATRIZ = [
-    Fila("art. 3 C / 14 quáter: proporcionalidad y por defecto", "datos",
-         "contrato de datos con columnas permitidas por capa", "test de esquema en la CI", date(2026, 10, 21)),
-    Fila("art. 3 D: calidad", "datos",
-         "tests de exactitud y actualidad por tabla", "reporte de calidad", date(2026, 10, 20)),
-    Fila("art. 11: derechos en 30 días corridos", "legal+datos",
-         "pipeline de solicitudes con índice de titulares", "log de solicitudes y plazos", date(2026, 10, 15)),
-    Fila("art. 14 quinquies: seguridad", "datos",
-         "cifrado, mínimo privilegio, seudonimización con HMAC", "revisión de accesos", date(2026, 8, 1)),
-    Fila("art. 14 sexies: registro de vulneraciones", "legal+datos",
-         "consulta de alcance por linaje", None, None),
-    Fila("art. 15 bis: encargados", "legal+datos",
-         None, None, None),
-]
+def validate(results: list[dict[str, str]], today: date) -> list[str]:
+    now = datetime(today.year, today.month, today.day, 23, 59, tzinfo=timezone.utc)
+    by_id = {r["control_id"]: r for r in results}
+    errors: list[str] = []
+    for control_id in REQUIRED:
+        result = by_id.get(control_id)
+        if result is None:
+            errors.append(f"{control_id}: sin resultado")
+            continue
+        if result.get("status") != "passed":
+            errors.append(f"{control_id}: prueba no aprobada ({result.get('status')})")
+        try:
+            executed = datetime.fromisoformat(result["executed_at"].replace("Z", "+00:00"))
+            if executed.tzinfo is None or executed > now:
+                errors.append(f"{control_id}: fecha inválida")
+            elif now - executed > MAX_AGE:
+                errors.append(f"{control_id}: evidencia vencida ({(now - executed).days} días)")
+        except (KeyError, ValueError):
+            errors.append(f"{control_id}: fecha ausente o incorrecta")
+        if not result.get("evidence_uri") or not result.get("run_id"):
+            errors.append(f"{control_id}: falta run_id o evidence_uri")
+    return errors
 
 
-def problemas(f: Fila) -> list[str]:
-    if f.control is None:
-        return ["sin control"]
-    if f.evidencia is None or f.ultima_evidencia is None:
-        return ["sin evidencia"]
-    if (HOY - f.ultima_evidencia).days > VIGENCIA_EVIDENCIA_DIAS:
-        return [f"evidencia vencida ({(HOY - f.ultima_evidencia).days} días)"]
-    return []
-
-
-def main() -> int:
-    brechas = [(f.requisito, p) for f in MATRIZ for p in problemas(f)]
-    print(f"requisitos: {len(MATRIZ)}; brechas: {len(brechas)}")
-    for requisito, problema in brechas:
-        print(f"  BRECHA  {requisito}: {problema}")
-    return 1 if brechas else 0
+def main(path: Path, today: date) -> int:
+    results = json.loads(path.read_text(encoding="utf-8"))["results"]
+    errors = validate(results, today)
+    print(f"controles exigidos: {len(REQUIRED)}; resultados: {len(results)}; brechas: {len(errors)}")
+    for e in errors:
+        print("  BRECHA", e)
+    return 1 if errors else 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(Path(sys.argv[1]), date.fromisoformat(sys.argv[2])))
 ```
 
-El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Imprime 6 requisitos con 3 brechas: la evidencia de seguridad vencida (82 días), el registro de vulneraciones sin evidencia y los encargados sin control; termina con código 1, así que la CI falla. La tercera regla es la importante: un control documentado sin evidencia reciente no demuestra que siga operando (art. 14 quinquies d)).
+Entrada versionada en el repositorio (`tests/fixtures/privacy-control-results.json`); en un pipeline real la generan las pruebas de cada control:
+
+```json
+{
+  "results": [
+    {"control_id": "schema_minimization", "status": "passed", "executed_at": "2026-10-25T12:00:00Z",
+     "run_id": "ci-4821", "evidence_uri": "artifact://ci-4821/schema-minimization"},
+    {"control_id": "access_review", "status": "passed", "executed_at": "2026-08-01T09:00:00Z",
+     "run_id": "ci-3310", "evidence_uri": "artifact://ci-3310/access-review"},
+    {"control_id": "retention_check", "status": "failed", "executed_at": "2026-10-25T12:05:00Z",
+     "run_id": "ci-4821", "evidence_uri": ""}
+  ]
+}
+```
+
+El script se **ejecuta en la CI** con la biblioteca estándar, con esa entrada y la fecha `2026-10-26` como argumento, y pasa `mypy --strict`. Imprime 4 brechas: `access_review` con evidencia vencida (86 días), `erasure_replay_check` sin resultado, y `retention_check` no aprobado y sin `evidence_uri`; termina con código 1, así que la CI falla. **Los 30 días son una política interna de ejemplo, no un plazo legal.** Un `status` autodeclarado no basta: en producción también se comprueba que la evidencia exista, esté íntegra, tenga permisos adecuados y venga del sistema que la generó (`privacy-controls-as-code`).
 
 ## 11. GCP
 
@@ -295,6 +376,8 @@ En GCP, **Sensitive Data Protection** y **Cloud Audit Logs**. Según *Ley 19628 
 |---|---|---|
 | Descubrir y clasificar | Sensitive Data Protection: descubre, clasifica y desidentifica; perfila BigQuery, Cloud SQL y Cloud Storage | **[Buena práctica]** |
 | Auditar accesos a datos | Cloud Audit Logs: los Data Access audit logs están desactivados por defecto, salvo en BigQuery | **[Decisión de arquitectura]** |
+
+Los Data Access audit logs se configuran por servicio: revisar BigQuery y cada recurso que se use.
 
 ## 12. AWS
 
@@ -314,7 +397,7 @@ En Azure, **Microsoft Purview** y **Unity Catalog** de Azure Databricks. Según 
 | Descubrir y clasificar | Purview Data Map: clasificaciones de sistema y propias al escanear | **[Buena práctica]** |
 | Gobierno en el lakehouse | Unity Catalog: privilegios, políticas por atributos, filtros de fila y columna, auditoría y linaje | **[Buena práctica]** |
 
-Ningún servicio certifica cumplimiento por sí solo: cada uno se evalúa por alcance, configuración y evidencia disponible.
+Los servicios de §11 a §13 no son equivalencias exactas. Ningún servicio certifica cumplimiento por sí solo: cada uno se evalúa por alcance, configuración y evidencia disponible.
 
 ## 14. Buenas prácticas
 
@@ -327,16 +410,35 @@ Ningún servicio certifica cumplimiento por sí solo: cada uno se evalúa por al
 
 ## 15. Errores frecuentes
 
-- Tratar la ley como un tema solo del área legal.
-- Controles documentados que nadie verifica.
-- Base de licitud asignada a un dataset entero.
-- Borrar en una tabla y olvidar derivados, respaldos y backfills.
-- Creer que seudonimizar es anonimizar.
-- Ignorar que tratar datos innecesarios o inexactos es infracción grave (art. 34 ter c) y d)).
+**[Buena práctica]**
+
+| Error | Por qué importa | Corrección |
+|---|---|---|
+| Tratar la ley como un tema solo del área legal | Las fallas nacen en el diseño | Controles con dueño técnico |
+| `SELECT *` permanente | Propaga campos innecesarios | Contratos explícitos |
+| «Es bronze, se guarda todo» | La capa raw también trata datos | Retención y acceso por riesgo |
+| «Tiene hash, es anónimo» | Un hash de un identificador se puede reidentificar | Evaluar técnica, llaves y contexto (`chilean-identifier-pseudonymization`) |
+| Una base de licitud para un dataset entero | Un dataset sirve a varias actividades | Base por actividad |
+| Borrar solo en gold | Quedan fuentes, derivados y respaldos | Linaje y proceso integral |
+| Ignorar los backfills | Reintroducen datos suprimidos | Reglas de reproceso consistentes |
+| PII en logs | Amplía la exposición | Identificadores internos protegidos |
+| «Tenemos cifrado, cumplimos» | La seguridad no cubre finalidad ni derechos | Revisar todos los principios |
+| «La CI pasó, cumplimos la ley» | Una prueba técnica no acredita el marco jurídico | Evidencia y revisión del responsable |
+| Controles documentados que nadie verifica | No demuestran que operan | Evidencia reciente en la CI |
+
+Tratar datos innecesarios o inexactos es infracción grave (art. 34 ter c) y d)).
 
 ## 16. Trade-offs
 
-Una matriz detallada da trazabilidad completa y cuesta mantenerla; una matriz corta se mantiene y deja huecos. Conviene una fila por requisito, con el detalle en las fichas hijas. Exigir evidencia reciente aumenta el costo de operación, pero es lo que permite demostrar que el control funciona.
+**[Decisión de arquitectura]**
+
+- **Minimización frente a flexibilidad analítica:** capturar menos reduce el riesgo y puede limitar análisis futuros; se resuelve con finalidades explícitas, aprobaciones y productos de datos definidos, no recolectando por si acaso.
+- **Linaje completo frente a costo:** rastrear todas las copias cuesta; priorizar los datos y flujos de mayor riesgo y automatizar el descubrimiento de a poco.
+- **Retención frente a auditoría y recuperación:** borrar demasiado pronto puede afectar obligaciones legítimas de conservación; conservar indefinidamente aumenta la exposición. La política se aprueba y debe poder ejecutarse.
+- **Seguridad frente a rendimiento:** tokenización, máscaras y controles finos agregan latencia y complejidad; se diseñan con pruebas de carga y análisis de riesgo.
+- **Matriz detallada frente a mantenible:** una fila por requisito, con el detalle en las fichas hijas; exigir evidencia reciente cuesta, pero es lo que demuestra que el control funciona.
+
+No toda falla técnica es una infracción: la calificación jurídica depende del hecho y del procedimiento. Lo útil para ingeniería es prevenir las fallas que sí tienen origen técnico.
 
 ### Sanciones (arts. 34 bis a 35)
 
@@ -377,11 +479,15 @@ Fichas hijas del subdominio:
 
 Otras: `data-classification`.
 
+Regla editorial: esta ficha es el mapa y el ejemplo de punta a punta; los procedimientos, el SQL, el IAM detallado y los modelos de datos van en las fichas hijas.
+
 ## 18. Preguntas técnicas abiertas
 
 1. ¿Qué pipelines tuyos tratan datos de personas, y para qué actividades?
 2. Si mañana llega una solicitud de supresión, ¿en cuántas tablas, respaldos y exportaciones está ese titular?
 3. ¿Qué control tuyo tiene evidencia de los últimos 30 días?
+4. ¿Cómo impedirías que un backfill restaure datos que debían quedar suprimidos?
+5. ¿Qué información técnica necesitarían seguridad y privacidad para dimensionar una vulneración?
 
 ## 19. Laboratorio relacionado
 
@@ -408,3 +514,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-24: las hijas se declaran con `PART_OF` (ADR-024) en vez de `RELATED_TO`; `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
 - 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): dos diagramas: del requisito al dato, y control y evidencia; capas en un subgraph.
+- 2026-10-26: mejora de contenido con tres niveles de lectura: §1 (cómo leerla), §2 (obligación frente a patrón técnico, conceptos del art. 2 con «Error a evitar» y principios del art. 3 con pregunta y control), §3 (pregunta central), §4 (seis preguntas enlazadas a las hijas y matriz con «Decisión aprobada por»), §5, §6, §7 (minimización de una API), §8 (caso de supresión), §10 (validador de resultados con entrada versionada y fecha como argumento), §11 y §13 (no son equivalencias exactas; Data Access audit logs), §15 (tabla), §16 (trade-offs), §17 (regla editorial) y §18. Sin cambios en `legal_basis`, etiquetas de los artículos, aviso, vigencia, boletín ni sanciones.

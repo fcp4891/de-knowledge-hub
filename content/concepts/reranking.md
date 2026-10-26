@@ -46,7 +46,7 @@ relations:
 created_at: 2026-10-25
 updated_at: 2026-10-25
 last_verified: 2026-10-25
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -234,9 +234,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-25. `review_required`: pendiente de revisión B-F3.1 del lote F3b-21b.
+2026-10-25. Pasa a `verified` el 2026-10-26: revisión B-F3.1 del lote F3b-21b sin hallazgos (docs/reviews/cards-f3b-21b.md) y CI en verde (run 40364714269).
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-25: creación (lote F3b-21b).
 - 2026-10-26: §17 y `relations` enlazan `llm-evaluation`, creada en el lote F3b-21c (regla del §17); sin otros cambios.
+- 2026-10-26: `verification_status: verified` (revisión sin hallazgos; CI en verde, run 40364714269).
