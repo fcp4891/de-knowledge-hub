@@ -24,7 +24,7 @@ sources:
     url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/vertex-ai-name-changes
     accessed: 2026-10-25
     page_title: "Gemini Enterprise Agent Platform name changes"
-    note: "Gemini Enterprise Agent Platform name changes (Last updated 2026-10-22 UTC): «Vertex AI Platform» → «Gemini Enterprise Agent Platform»; «Vertex AI» → «Agent Platform»; «Vertex AI Model Garden» → «Gemini Enterprise Agent Platform Model Garden»."
+    note: "Gemini Enterprise Agent Platform name changes (Last updated 2026-10-22 UTC): algunos productos y funciones de Vertex AI «have been renamed»; entre las filas de la tabla, «Vertex AI Platform» → «Gemini Enterprise Agent Platform» y «Vertex AI Model Garden» → «Gemini Enterprise Agent Platform Model Garden»."
   - source: aws-bedrock-docs
     url: https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html
     accessed: 2026-10-25
@@ -182,7 +182,7 @@ En GCP, **Gemini Enterprise Agent Platform** (antes Vertex AI Platform). Según 
 | Acceso | Un modelo por API | Modelos fundacionales por una API administrada |
 | Catálogo | — | Model Garden: modelos de Google, abiertos y de socios |
 | Ajuste | Prompt | También customización (tuning) del comportamiento por defecto |
-| Nombre | — | «Vertex AI Platform» pasa a «Gemini Enterprise Agent Platform»; «Vertex AI», a «Agent Platform» |
+| Nombre | — | «Vertex AI Platform» se renombró «Gemini Enterprise Agent Platform», y «Vertex AI Model Garden», «Gemini Enterprise Agent Platform Model Garden» |
 
 ## 12. AWS
 
@@ -260,3 +260,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-25: creación (lote F3b-21a).
 - 2026-10-25: §17 y `relations` enlazan `rag`, creadas en el lote F3b-21b (regla del §17); sin otros cambios.
+- 2026-10-26: revisión B-F3.1 aplicada (docs/reviews/cards-f3b-21a.md): la nota de la fuente y el §11 citan solo filas de la tabla de *Gemini Enterprise Agent Platform name changes*; se quita «Vertex AI» → «Agent Platform», que la tabla no tiene.
