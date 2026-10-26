@@ -19,7 +19,7 @@ sources:
     url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/evaluation-overview
     accessed: 2026-10-26
     page_title: "Gen AI evaluation service overview"
-    note: "Gen AI evaluation service overview (Gemini Enterprise Agent Platform): la característica que define el servicio son las rúbricas adaptativas, pruebas de aprobado o reprobado propias de cada prompt, comparables a pruebas unitarias. Métodos: rúbricas adaptativas (recomendadas), rúbricas estáticas (criterios fijos para todos los prompts), métricas computadas (algoritmos deterministas como ROUGE o BLEU cuando hay una respuesta de referencia) y funciones propias en Python."
+    note: "Gen AI evaluation service overview (Gemini Enterprise Agent Platform): la característica que define el servicio son las rúbricas adaptativas, pruebas de aprobado o reprobado propias de cada prompt, comparables a pruebas unitarias. Métodos: rúbricas adaptativas (recomendadas), rúbricas estáticas (los mismos criterios para todos los prompts, con un puntaje numérico por prompt, por ejemplo 1-5), métricas computadas (algoritmos deterministas como ROUGE o BLEU cuando hay una respuesta de referencia) y funciones propias en Python."
   - source: gcp-agent-platform-docs
     url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/vertex-ai-name-changes
     accessed: 2026-10-26
@@ -61,7 +61,7 @@ verification_status: review_required
 
 Cambiar un prompt, un modelo o la forma de fragmentar cambia las respuestas de todo el sistema. **Evaluar** es medir esos cambios con un **conjunto fijo de preguntas de control** antes de desplegarlos, como un test de regresión. Para un data engineer el modelo mental es el de calidad de datos (`data-quality-dimensions`): métricas definidas, umbrales y una puerta que bloquea lo que empeora.
 
-Hay tres familias de métricas. **Computadas** cuando hay respuesta de referencia: recall@k y MRR para la recuperación, acierto exacto para la respuesta (Google menciona ROUGE y BLEU entre las deterministas). **Rúbricas**, pruebas de aprobado o reprobado por pregunta (*Gen AI evaluation service overview*). Y **LLM como juez**, un segundo modelo que puntúa y explica (*Evaluate model performance using another LLM as a judge*).
+Hay tres familias de métricas. **Computadas** cuando hay respuesta de referencia: recall@k y MRR para la recuperación, acierto exacto para la respuesta (Google menciona ROUGE y BLEU entre las deterministas). **Rúbricas**: adaptativas, con pruebas de aprobado o reprobado propias de cada pregunta, o estáticas, con los mismos criterios y un puntaje numérico (*Gen AI evaluation service overview*). Y **LLM como juez**, un segundo modelo que puntúa y explica (*Evaluate model performance using another LLM as a judge*).
 
 ## 2. Qué es
 
@@ -70,7 +70,7 @@ Hay tres familias de métricas. **Computadas** cuando hay respuesta de referenci
 - **MRR:** promedio de 1/posición del fragmento esperado.
 - **Acierto:** la respuesta coincide con la esperada después de normalizar.
 - **Citas correctas:** la respuesta cita el fragmento esperado y solo fragmentos recuperados.
-- **Rúbrica:** criterios de aprobado o reprobado; adaptativa (por pregunta) o estática.
+- **Rúbrica:** adaptativa, un conjunto de pruebas de aprobado o reprobado propio de cada pregunta; o estática, los mismos criterios para todas las preguntas con un puntaje numérico por pregunta (la página pone de ejemplo 1-5) (*Gen AI evaluation service overview*).
 - **LLM como juez:** un modelo evaluador puntúa las respuestas de un modelo generador.
 - **Evaluadores de agentes:** por ejemplo, adherencia a la tarea o exactitud de las llamadas a herramientas (*Agent evaluators*).
 
@@ -283,3 +283,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-26: creación (lote F3b-21c).
+- 2026-10-26: revisión B-F3.1 aplicada: §1, §2 y la nota de la fuente distinguen las rúbricas adaptativas (aprobado o reprobado) de las estáticas (puntaje numérico, por ejemplo 1-5), según *Gen AI evaluation service overview* (actualizada el 2026-10-22).
