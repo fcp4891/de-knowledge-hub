@@ -69,7 +69,7 @@ relations:
 created_at: 2026-10-25
 updated_at: 2026-10-25
 last_verified: 2026-10-25
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -254,10 +254,11 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-25. `review_required`: pendiente de revisión B-F3.1 del lote F3b-21a.
+2026-10-25. Pasa a `verified` el 2026-10-26: revisión B-F3.1 del lote F3b-21a aplicada (docs/reviews/cards-f3b-21a.md; tabla de renombres) y CI en verde (run 40368698140).
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-25: creación (lote F3b-21a).
 - 2026-10-25: §17 y `relations` enlazan `rag`, creadas en el lote F3b-21b (regla del §17); sin otros cambios.
 - 2026-10-26: revisión B-F3.1 aplicada (docs/reviews/cards-f3b-21a.md): la nota de la fuente y el §11 citan solo filas de la tabla de *Gemini Enterprise Agent Platform name changes*; se quita «Vertex AI» → «Agent Platform», que la tabla no tiene.
+- 2026-10-26: `verification_status: verified` (revisión aplicada; CI en verde, run 40368698140).
