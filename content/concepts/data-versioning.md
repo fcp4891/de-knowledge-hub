@@ -3,7 +3,7 @@ id: concept:data-versioning
 slug: data-versioning
 type: concept
 title: Versionado de datos y time travel
-description: "Conservar versiones de las tablas para reproducir un resultado, auditar qué se vio en una fecha y recuperar tras un error: snapshots, etiquetas con nombre, time travel y clones. Cada motor tiene su ventana de retención. Ejecutado en la CI con PyIceberg: se etiqueta el cierre de mes, un job sobrescribe la tabla, el reporte se reproduce desde la etiqueta y la tabla vuelve a ese snapshot. Time travel y clones de BigQuery, time travel de Athena sobre Iceberg y de Fabric Data Warehouse."
+description: "Conservar versiones de las tablas para reproducir un resultado, auditar qué se vio en una fecha y recuperar tras un error: snapshots, etiquetas con nombre, time travel y clones. Cada motor tiene su ventana de retención. Ejecutado en la CI con PyIceberg: se etiqueta el cierre de mes, un job sobrescribe la tabla, el reporte se reproduce desde la etiqueta y la tabla vuelve a ese snapshot. Time travel y clones de BigQuery, time travel de Athena sobre Iceberg y de Fabric Data Warehouse (preview)."
 domain: modern-data-engineering
 subdomain: modern-practices
 category: modern-data-engineering
@@ -38,8 +38,8 @@ sources:
   - source: microsoft-fabric-docs
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/time-travel
     accessed: 2026-10-26
-    page_title: "Query data as it existed in the past"
-    note: "Query data as it existed in the past (Fabric Data Warehouse): el hint FOR TIMESTAMP AS OF en la cláusula OPTION devuelve los datos como existían en ese instante; los resultados son de solo lectura; el time travel está limitado por el período de retención configurable del warehouse."
+    page_title: "Time Travel"
+    note: "Time Travel (Fabric Data Warehouse): la página marca como preview la consulta de datos históricos en warehouse y SQL analytics endpoint («as it existed in the past ... (preview)»); el hint FOR TIMESTAMP AS OF en la cláusula OPTION devuelve los datos como existían en ese instante; los resultados son de solo lectura; el time travel está limitado por el período de retención configurable del warehouse."
 relations:
   - type: RELATED_TO
     target: open-table-formats
@@ -206,12 +206,13 @@ En AWS, el **time travel de Amazon Athena** sobre Iceberg. Según *Perform time 
 
 ## 13. Azure
 
-En Azure, el **time travel de Fabric Data Warehouse**. Según *Query data as it existed in the past* (no ejecutado):
+En Azure, el **time travel de Fabric Data Warehouse**, que la página marca como preview. Según *Time Travel* (no ejecutado):
 
 | | Este concepto | Fabric Data Warehouse |
 |---|---|---|
 | Sintaxis | Lectura de un snapshot | Hint `FOR TIMESTAMP AS OF` en `OPTION` |
 | Resultado | Lectura | Solo lectura; limitado por la retención configurable del warehouse |
+| Estado | — | Preview, según la página |
 
 ## 14. Buenas prácticas
 
@@ -255,7 +256,7 @@ Pendiente (F4).
 - Apache Iceberg: *Branching and Tagging*.
 - Google Cloud: *Data retention with time travel and fail-safe* e *Introduction to table clones*.
 - AWS: *Perform time travel and version travel queries*.
-- Microsoft Learn: *Query data as it existed in the past*.
+- Microsoft Learn: *Time Travel*.
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
@@ -266,3 +267,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-26: creación (lote F3b-22a).
+- 2026-10-27: revisión B-F3.1 del lote F3b-22a aplicada (docs/reviews/cards-f3b-22a.md): `page_title` «Time Travel» y el §13 dice que la página marca la capacidad como preview.

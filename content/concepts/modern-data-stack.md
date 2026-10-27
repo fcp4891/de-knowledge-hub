@@ -25,6 +25,21 @@ sources:
     accessed: 2026-10-26
     page_title: "Dataform overview"
     note: "Dataform overview: en un repositorio de Dataform se escribe Dataform core, una extensión de SQL, en archivos SQLX que definen el workflow; Dataform compila Dataform core a SQL y ejecuta el árbol de dependencias en BigQuery; los repositorios admiten control de versiones y Git de terceros."
+  - source: aws-redshift-docs
+    url: https://docs.aws.amazon.com/redshift/latest/dg/c_high_level_system_architecture.html
+    accessed: 2026-10-27
+    page_title: "Data warehouse system architecture"
+    note: "Data warehouse system architecture (Amazon Redshift): el nodo líder recibe las consultas y distribuye el plan a los nodos de cómputo; Redshift Managed Storage guarda los datos en un nivel separado, sobre Amazon S3."
+  - source: aws-mwaa-docs
+    url: https://docs.aws.amazon.com/mwaa/latest/userguide/samples-dbt.html
+    accessed: 2026-10-26
+    page_title: "Using dbt with Amazon MWAA"
+    note: "Using dbt with Amazon MWAA: el ejemplo sube el proyecto dbt a Amazon S3, instala dbt como dependencia del entorno, crea profiles.yml y ejecuta dbt desde un DAG de Airflow."
+  - source: microsoft-fabric-docs
+    url: https://learn.microsoft.com/en-us/fabric/data-factory/dbt-job-overview
+    accessed: 2026-10-26
+    page_title: "dbt job in Microsoft Fabric"
+    note: "dbt job in Microsoft Fabric: integra dbt Core con configuración sin código, programación y monitoreo nativos; se habilita con la opción de tenant «dbt jobs (preview)»."
 relations:
   - type: RELATED_TO
     target: etl-vs-elt
@@ -140,11 +155,11 @@ En GCP, la transformación en el warehouse se hace con **Dataform** sobre BigQue
 
 ## 12. AWS
 
-En AWS, el warehouse es Amazon Redshift y la transformación con dbt se orquesta, por ejemplo, desde Amazon MWAA. El detalle está en `redshift-architecture` y en el §12 de `analytics-engineering`.
+En AWS, el warehouse es Amazon Redshift, según *Data warehouse system architecture*, y la transformación con dbt se orquesta, por ejemplo, desde Amazon MWAA, según *Using dbt with Amazon MWAA* (no ejecutado). El detalle está en `redshift-architecture` y en el §12 de `analytics-engineering`.
 
 ## 13. Azure
 
-En Azure, Microsoft Fabric reúne warehouse, lakehouse y orquestación, y tiene dbt jobs. El detalle está en `azure-analytics-landscape` y en el §13 de `analytics-engineering`.
+En Azure, Microsoft Fabric reúne warehouse, lakehouse y orquestación, y tiene dbt jobs, según *dbt job in Microsoft Fabric* (no ejecutado). El detalle está en `azure-analytics-landscape` y en el §13 de `analytics-engineering`.
 
 ## 14. Buenas prácticas
 
@@ -188,6 +203,8 @@ Pendiente (F4).
 
 - dbt: *What is dbt?*.
 - Google Cloud: *Dataform overview*.
+- AWS: *Data warehouse system architecture* (Amazon Redshift) y *Using dbt with Amazon MWAA*.
+- Microsoft Learn: *dbt job in Microsoft Fabric*.
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
@@ -198,3 +215,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-26: creación (lote F3b-22a).
+- 2026-10-27: revisión B-F3.1 del lote F3b-22a aplicada (docs/reviews/cards-f3b-22a.md): el §12 y el §13 citan con «Según» las páginas de Redshift, MWAA y dbt jobs, agregadas a `sources`.
