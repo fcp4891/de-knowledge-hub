@@ -3368,3 +3368,94 @@ created_at: '2026-10-26'
 updated_at: '2026-10-26'
 last_verified: '2026-10-26'
 verification_status: verified
+---
+id: source:finops-foundation
+slug: finops-foundation
+type: source
+title: FinOps Framework (FinOps Foundation)
+description: 'Framework de la FinOps Foundation (Linux Foundation): referencia conceptual canónica (Nivel 4) solo para principios, fases y capacidades
+  de FinOps; no respalda afirmaciones de costo ni de producto.'
+url: https://www.finops.org/framework/
+source_type: spec_paper
+authority_level: 4
+provider: finops-foundation
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-26'
+updated_at: '2026-10-26'
+last_verified: '2026-10-26'
+verification_status: verified
+---
+id: source:aws-well-architected-docs
+slug: aws-well-architected-docs
+type: source
+title: AWS Well-Architected Framework
+description: Documentación oficial del AWS Well-Architected Framework y sus lentes, entre ellas la Data Analytics Lens.
+url: https://docs.aws.amazon.com/wellarchitected/
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-26'
+updated_at: '2026-10-26'
+last_verified: '2026-10-26'
+verification_status: verified
+---
+id: source:aws-billing-docs
+slug: aws-billing-docs
+type: source
+title: AWS Billing and Cost Management User Guide
+description: Guía oficial de AWS Billing and Cost Management (etiquetas de asignación de costos, Cost Explorer y exportaciones de datos).
+url: https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/billing-what-is.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-26'
+updated_at: '2026-10-26'
+last_verified: '2026-10-26'
+verification_status: verified
+---
+id: source:azure-cost-management-docs
+slug: azure-cost-management-docs
+type: source
+title: Microsoft Cost Management documentation
+description: Documentación oficial de Microsoft Cost Management (análisis de costos, etiquetas y reglas de asignación), Microsoft Learn.
+url: https://learn.microsoft.com/en-us/azure/cost-management-billing/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-26'
+updated_at: '2026-10-26'
+last_verified: '2026-10-26'
+verification_status: verified
+---
+id: source:microsoft-platform-engineering-docs
+slug: microsoft-platform-engineering-docs
+type: source
+title: Microsoft platform engineering guide
+description: Guía oficial de Microsoft Learn sobre platform engineering (plataforma interna, caminos recomendados y autoservicio).
+url: https://learn.microsoft.com/en-us/platform-engineering/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-26'
+updated_at: '2026-10-26'
+last_verified: '2026-10-26'
+verification_status: verified
