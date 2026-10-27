@@ -41,11 +41,14 @@ def run_gate(ficha: str, tmp_path: Path) -> str:
 
 STDLIB = {
     "pii-identification": [
-        "rut_cliente: personal (RUT con DV válido 100%)", "contacto: personal (correo 75%)",
-        "fono: personal (teléfono 67%)", "diagnostico_principal: sensible (datos relativos a la salud)",
-        "tramo_ingreso: sensible (situación socioeconómica)",
-        "rut_sin_guion: sin datos personales detectados (nada calza)",
-        "rut_dv_cambiado: sin datos personales detectados (nada calza)"],
+        "rut_cliente: personal: RUT con DV válido (2 de 2)", "contacto: personal: correo en el valor (1 de 2)",
+        "cliente_id: revisión personal: posible identificador indirecto o texto libre",
+        "diagnostico: revisión sensible: nombre asociado a datos relativos a la salud",
+        "tramo_ingreso: revisión sensible: nombre asociado a situación socioeconómica",
+        "comentarios: personal: correo en el valor (1 de 2)",
+        "comentarios: revisión personal: posible identificador indirecto o texto libre",
+        "rut_malformado: revisión personal: forma de RUT con DV inválido (1 de 1)",
+        "sin hallazgos (no significa anónimo): ['comuna', 'producto']"],
     "chilean-identifier-pseudonymization": [
         "variantes del mismo RUT, mismo seudónimo: True", "sin normalizar, seudónimos distintos: 3",
         "DV inválido: RUT no válido: '11111111-0'", "hash simple revertido probando 1.000.000 RUT del tramo: True",
