@@ -228,8 +228,8 @@ def test_search_flags_pages(client: TestClient) -> None:
     assert items["azure-adls"]["has_page"] is True          # tecnología: tiene entidad
     lake = {i["slug"]: i for g in get(client, "/search", q="lakehouse").json()["groups"] for i in g["items"]}
     assert lake["lakehouse"]["has_page"] is True            # concepto con ficha (F3b-01a)
-    plat = {i["slug"]: i for g in get(client, "/search", q="plataforma de datos").json()["groups"] for i in g["items"]}
-    assert plat["data-platform-engineering"]["has_page"] is False   # concepto del blueprint sin ficha (dominio 22)
+    kappa = {i["slug"]: i for g in get(client, "/search", q="kappa").json()["groups"] for i in g["items"]}
+    assert kappa["kappa-architecture"]["has_page"] is False         # arquitectura de 07-architecture, sin ficha
     parti = {i["slug"]: i for g in get(client, "/search", q="particion").json()["groups"] for i in g["items"]}
     assert parti["partitioning"]["has_page"] is True and parti["topics-and-partitions"]["has_page"] is True  # F3b-14a
     lam = {i["slug"]: i for g in get(client, "/search", q="lambda").json()["groups"] for i in g["items"]}

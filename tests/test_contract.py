@@ -133,7 +133,7 @@ def test_concept_list_covers_blueprint(index: p.ContentIndex) -> None:
 
 
 def test_concept_without_page_has_no_sections(index: p.ContentIndex) -> None:
-    detail = p.concept_detail(index, "data-platform-engineering")  # dominio 22, sin ficha (data-mesh ya tiene, F3b-07a)
+    detail = p.concept_detail(index, "kappa-architecture")  # arquitectura de 07, sin ficha (data-platform-engineering ya tiene, F3b-22a)
     assert detail["has_page"] is False and detail["sections"] == [] and detail["verification_status"] is None
 
 

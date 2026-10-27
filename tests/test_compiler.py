@@ -85,15 +85,15 @@ def test_only_changed_file_is_recompiled(engine: Engine, content: Path) -> None:
 # Ficha temporal de un concepto del blueprint que no tiene ficha: ninguna otra entidad puede relacionarse con él
 # (una relación a un slug sin ficha es inválida), así que borrarla no rompe referencias.
 EXTRA_PAGE = """---
-id: concept:dataops
-slug: dataops
+id: concept:open-table-format-evolution
+slug: open-table-format-evolution
 type: concept
 stub: true
-title: Plataforma de datos como producto
+title: Evolución de los open table formats
 description: Ficha de prueba del compilador.
-domain: modern-data-engineering
-subdomain: modern-practices
-classification: core
+domain: emerging-technologies
+subdomain: evolving-standards
+classification: emerging
 level: basic
 importance: high
 relations:
@@ -112,23 +112,23 @@ Prueba.
 
 
 def test_deleted_page_is_removed_with_its_edges(engine: Engine, content: Path) -> None:
-    # dataops: concepto del blueprint sin ficha que ninguna ficha nombra (data-mesh nombra data-platform-engineering
-    # como «pendiente de ficha», y crearla rompería la regla del §17, lote F3b-rel).
-    page = content / "concepts" / "dataops.md"
+    # open-table-format-evolution: concepto del blueprint (dominio 23) sin ficha que ninguna ficha nombra; crear una
+    # ficha que otra nombra como «pendiente de ficha» rompería la regla del §17 (lote F3b-rel).
+    page = content / "concepts" / "open-table-format-evolution.md"
     page.write_text(EXTRA_PAGE, encoding="utf-8")
     compile_content(engine, content, SCHEMAS)
-    assert count(engine, "entities", "slug = 'dataops'") == 1
-    assert count(engine, "concept_pages", "slug = 'dataops'") == 1
-    assert count(engine, "edges", "source_slug = 'dataops' and origin = 'entity'") == 1
+    assert count(engine, "entities", "slug = 'open-table-format-evolution'") == 1
+    assert count(engine, "concept_pages", "slug = 'open-table-format-evolution'") == 1
+    assert count(engine, "edges", "source_slug = 'open-table-format-evolution' and origin = 'entity'") == 1
 
     page.unlink()
     stats = compile_content(engine, content, SCHEMAS)
-    assert stats.deleted == ["concepts/dataops.md"]
-    assert count(engine, "entities", "slug = 'dataops'") == 0
-    assert count(engine, "concept_pages", "slug = 'dataops'") == 0
-    assert count(engine, "edges", "(source_slug = 'dataops' or target_slug = 'dataops') and origin = 'entity'") == 0
+    assert stats.deleted == ["concepts/open-table-format-evolution.md"]
+    assert count(engine, "entities", "slug = 'open-table-format-evolution'") == 0
+    assert count(engine, "concept_pages", "slug = 'open-table-format-evolution'") == 0
+    assert count(engine, "edges", "(source_slug = 'open-table-format-evolution' or target_slug = 'open-table-format-evolution') and origin = 'entity'") == 0
     # El concepto sigue en el blueprint: sus aristas de origen blueprint se mantienen.
-    assert count(engine, "concepts", "slug = 'dataops'") == 1
+    assert count(engine, "concepts", "slug = 'open-table-format-evolution'") == 1
 
 
 TMP_TECHNOLOGY = """id: technology:tmp-vector-store
