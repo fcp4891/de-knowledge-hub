@@ -54,7 +54,7 @@ relations:
 created_at: 2026-10-26
 updated_at: 2026-10-26
 last_verified: 2026-10-26
-verification_status: review_required
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -252,9 +252,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-26. `review_required`: pendiente de revisión B-F3.1 del lote F3b-22b.
+2026-10-26. Pasa a `verified` el 2026-10-27: revisión B-F3.1 del lote F3b-22b aplicada (docs/reviews/cards-f3b-22b.md) y CI en verde (run 40596994498).
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-26: creación (lote F3b-22b).
 - 2026-10-27: revisión B-F3.1 del lote F3b-22b aplicada (docs/reviews/cards-f3b-22b.md): `page_title` «Mirroring».
+- 2026-10-27: `verification_status: verified` (revisión aplicada; CI en verde, run 40596994498).
