@@ -47,6 +47,9 @@ sources:
     note: "Get query performance insights: la insight de slot contention aparece cuando una consulta tiene muchas tareas listas para ejecutarse y no hay slots disponibles para todas."
 relations:
   - type: RELATED_TO
+    target: finops-for-data
+    note: Atribuir y controlar el consumo (dominio 22).
+  - type: RELATED_TO
     target: bigquery-cost-model
     note: El cómputo es la mitad del costo de BigQuery; la otra es el almacenamiento.
   - type: RELATED_TO
@@ -290,7 +293,7 @@ On-demand no requiere planificar y escala con el uso, pero su costo es variable 
 - `bigquery-architecture`: la capa de cómputo.
 - `bigquery-query-optimization`: menos slots por consulta.
 - `cloud-warehouse-optimization`: comparación entre warehouses.
-- Del blueprint, pendiente de ficha: `finops-for-data`.
+- `finops-for-data`: atribuir y controlar el consumo (dominio 22).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -319,3 +322,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-08a aplicada (docs/reviews/cards-f3b-08a.md), regla del §17: relations incluye `cloud-warehouse-optimization`, que el §17 nombra.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-26: §17 y `relations` enlazan `finops-for-data`, creada en el lote F3b-22a (regla del §17); sin otros cambios.

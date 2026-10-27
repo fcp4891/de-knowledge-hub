@@ -52,6 +52,9 @@ sources:
     note: Data Factory en Microsoft Fabric integra y transforma datos dentro de Fabric.
 relations:
   - type: RELATED_TO
+    target: analytics-engineering
+    note: Los modelos en el warehouse como software (dominio 22).
+  - type: RELATED_TO
     target: incremental-load
     note: En ELT, la carga incremental suele resolverse dentro del warehouse.
   - type: RELATED_TO
@@ -177,7 +180,8 @@ ELT gana en agilidad, trazabilidad y uso del cómputo del warehouse, a cambio de
 - `change-data-capture`: fuente habitual de la capa raw en ELT.
 - Con ficha: `data-transformation`.
 - `pipeline-layers`: las capas cruda, validada y de consumo de un pipeline.
-- Del blueprint, pendientes de ficha: `medallion-architecture`, `analytics-engineering`.
+- `analytics-engineering`: los modelos en el warehouse como software (dominio 22).
+- Del blueprint, pendiente de ficha: `medallion-architecture`.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -212,3 +216,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: §17 enlaza `pipeline-layers`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `data-transformation`, `pipeline-layers`.
+- 2026-10-26: §17 y `relations` enlazan `analytics-engineering`, creada en el lote F3b-22a (regla del §17); sin otros cambios.

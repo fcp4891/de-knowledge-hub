@@ -10,8 +10,8 @@
           "slug": "analytics-engineering",
           "title": "Analytics engineering",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Transformar dentro del warehouse."
         },
         {
           "slug": "pipeline-layers",
@@ -61,6 +61,13 @@
           "entity_type": "concept",
           "origin": "entity",
           "note": "Cuándo conviene transformar en SQL."
+        },
+        {
+          "slug": "modern-data-stack",
+          "title": "Modern data stack",
+          "entity_type": "concept",
+          "origin": "entity",
+          "note": "El cambio de transformar fuera a transformar en el warehouse."
         },
         {
           "slug": "modern-data-warehouse-architecture",

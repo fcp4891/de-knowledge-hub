@@ -4941,9 +4941,9 @@
       "level": "basic",
       "importance": "low",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-26"
     },
     {
       "slug": "analytics-engineering",
@@ -4955,9 +4955,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-26"
     },
     {
       "slug": "dataops",
@@ -4969,9 +4969,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-26"
     },
     {
       "slug": "finops-for-data",
@@ -4983,9 +4983,9 @@
       "level": "advanced",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-26"
     },
     {
       "slug": "data-platform-engineering",
@@ -4997,9 +4997,9 @@
       "level": "advanced",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-26"
     },
     {
       "slug": "data-versioning",
@@ -5011,9 +5011,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-26"
     },
     {
       "slug": "reverse-etl",

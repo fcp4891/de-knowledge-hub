@@ -62,6 +62,9 @@ sources:
     note: "Microsoft Fabric, Domains: data mesh es una arquitectura de datos descentralizada que organiza los datos por dominios de negocio. Hoy, la arquitectura de data mesh de Fabric soporta principalmente organizar los datos en dominios (y subdominios), que los consumidores filtren y encuentren contenido por dominio en el OneLake catalog, y gobierno federado: delegar a nivel de dominio algunas configuraciones del tenant. Los workspaces se asocian a dominios; la asignación de dominio no cambia la visibilidad ni el acceso, que dependen de roles de workspace y permisos de los ítems."
 relations:
   - type: RELATED_TO
+    target: data-platform-engineering
+    note: La plataforma de autoservicio como producto (dominio 22).
+  - type: RELATED_TO
     target: data-products
     note: El producto de datos es la unidad que publica cada dominio.
   - type: RELATED_TO
@@ -304,7 +307,7 @@ Un warehouse o lake central es más simple de operar y gobernar, y suficiente pa
 - `data-products`: la unidad que publica cada dominio.
 - `data-contracts`: lo que un producto promete a sus consumidores.
 - `data-lake` y `data-warehouse`: las arquitecturas centralizadas frente a las que se plantea.
-- Del blueprint, pendiente de ficha: `data-platform-engineering`.
+- `data-platform-engineering`: la plataforma de autoservicio como producto (dominio 22).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -335,3 +338,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-07a aplicada (docs/reviews/cards-f3b-07a.md): §11 alineado al aviso de Knowledge Catalog (API, bibliotecas cliente, CLI y nombres de IAM); la fuente de AWS cita por separado Introduction, Getting started with data mesh y Teams and interactions; §1 nombra también hub-and-spoke.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-10-26: §17 y `relations` enlazan `data-platform-engineering`, creada en el lote F3b-22a (regla del §17); sin otros cambios.
