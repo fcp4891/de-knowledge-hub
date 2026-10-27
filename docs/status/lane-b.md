@@ -16,6 +16,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 ## Actual
 - **Tarea activa:** revisión de la mejora de `chile-data-protection`. Informe en `docs/reviews/cdp-v2.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: la letra g) del art. 2 no dice «entre otros». Propuesta baja: la letra l) pide medidas técnicas y organizativas.
+- **Tarea activa:** B-F3.1 del lote F3b-22a. Revisión en `docs/reviews/cards-f3b-22a.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuestas bajas: el `page_title` de time travel de Fabric y el preview de esa página; el §12 y el §13 de `modern-data-stack` sin «Según».
 - **Tarea activa:** B-F3.1 del lote F3b-21d. Revisión en `docs/reviews/cards-f3b-21d.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. El renombre de Agent Search queda en curso, como dice su página.
 - **Tarea activa:** B-F3.1 del lote F3b-21c. Revisión en `docs/reviews/cards-f3b-21c.md`. No se editó `content/` ni `frontend/`.
@@ -106,6 +108,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ### Revisión · cdp-v2
 - Mejora de `chile-data-protection`. `legal_basis`, vigencia, boletín, sanciones y los diagramas no cambian. Propuesta media: completar la letra g) del art. 2. No se editó `content/` ni `frontend/`.
+
+### B-F3.1 · lote F3b-22a
+- Seis fichas de prácticas modernas. `finops-for-data` usa la FinOps Foundation solo para las fases. Propuestas bajas: el título de time travel de Fabric y el §12 y el §13 del mapa. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-21d
 - Cinco fichas de casos de uso. Agent Search sigue en renombre, el Web Crawler no admite conectores nuevos desde el 2026-09-30 y Purview no trata las descripciones generadas. Sin propuestas. No se editó `content/` ni `frontend/`.
@@ -394,6 +399,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 
 ### Revisión · cdp-v2 (2026-10-26)
 - Revisión de la mejora de `chile-data-protection`. El §10 encuentra 4 brechas y los 30 días son política interna. No se editó `content/`.
+
+### B-F3.1 · lote F3b-22a (2026-10-26)
+- Revisión de las 6 fichas de prácticas modernas. La ventana de BigQuery sigue en siete días. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-21d (2026-10-26)
 - Revisión de las 5 fichas de casos de uso. El z robusto y el reindexado coinciden con los tests. No se editó `content/`.
