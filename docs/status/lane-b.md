@@ -14,6 +14,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** B-F3.1 del lote F3b-22a. Revisión en `docs/reviews/cards-f3b-22a.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuestas bajas: el `page_title` de time travel de Fabric y el preview de esa página; el §12 y el §13 de `modern-data-stack` sin «Según».
 - **Tarea activa:** B-F3.1 del lote F3b-21d. Revisión en `docs/reviews/cards-f3b-21d.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. El renombre de Agent Search queda en curso, como dice su página.
 - **Tarea activa:** B-F3.1 del lote F3b-21c. Revisión en `docs/reviews/cards-f3b-21c.md`. No se editó `content/` ni `frontend/`.
@@ -101,6 +103,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Si hay alias, bajo el título: «También conocido como: …» (ficha de concepto y página de tecnología).
 - `make test-frontend`: 11/11. En la demo estática, «Dataplex» encuentra Knowledge Catalog y la ficha `gcp-dataplex` muestra los dos alias.
 - No se editó `content/` ni el contrato.
+
+### B-F3.1 · lote F3b-22a
+- Seis fichas de prácticas modernas. `finops-for-data` usa la FinOps Foundation solo para las fases. Propuestas bajas: el título de time travel de Fabric y el §12 y el §13 del mapa. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-21d
 - Cinco fichas de casos de uso. Agent Search sigue en renombre, el Web Crawler no admite conectores nuevos desde el 2026-09-30 y Purview no trata las descripciones generadas. Sin propuestas. No se editó `content/` ni `frontend/`.
@@ -386,6 +391,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### B-F3.1 · lote F3b-22a (2026-10-26)
+- Revisión de las 6 fichas de prácticas modernas. La ventana de BigQuery sigue en siete días. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-21d (2026-10-26)
 - Revisión de las 5 fichas de casos de uso. El z robusto y el reindexado coinciden con los tests. No se editó `content/`.
