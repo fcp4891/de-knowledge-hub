@@ -3495,3 +3495,165 @@ created_at: '2026-10-26'
 updated_at: '2026-10-26'
 last_verified: '2026-10-26'
 verification_status: verified
+---
+id: source:modelcontextprotocol-docs
+slug: modelcontextprotocol-docs
+type: source
+title: Model Context Protocol
+description: Especificación y documentación oficial del Model Context Protocol (MCP), con revisiones versionadas por fecha.
+url: https://modelcontextprotocol.io/
+source_type: official_docs
+authority_level: 1
+provider: mcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-27'
+updated_at: '2026-10-27'
+last_verified: '2026-10-27'
+verification_status: verified
+---
+id: source:mcp-python-sdk-docs
+slug: mcp-python-sdk-docs
+type: source
+title: MCP Python SDK
+description: Documentación oficial del SDK de Python de Model Context Protocol.
+url: https://py.sdk.modelcontextprotocol.io/
+source_type: official_docs
+authority_level: 1
+provider: mcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-27'
+updated_at: '2026-10-27'
+last_verified: '2026-10-27'
+verification_status: verified
+---
+id: source:adk-docs
+slug: adk-docs
+type: source
+title: Agent Development Kit (ADK)
+description: Documentación oficial del Agent Development Kit de Google.
+url: https://adk.dev/
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-27'
+updated_at: '2026-10-27'
+last_verified: '2026-10-27'
+verification_status: verified
+---
+id: source:gcp-mcp-docs
+slug: gcp-mcp-docs
+type: source
+title: Google Cloud MCP servers
+description: Documentación oficial de los servidores MCP de Google Cloud y sus release notes.
+url: https://docs.cloud.google.com/mcp/overview
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-27'
+updated_at: '2026-10-27'
+last_verified: '2026-10-27'
+verification_status: verified
+---
+id: source:gcp-gemini-docs
+slug: gcp-gemini-docs
+type: source
+title: Gemini for Google Cloud
+description: Documentación oficial de Gemini for Google Cloud, incluidos Gemini Code Assist y los data agents.
+url: https://docs.cloud.google.com/gemini/docs/overview
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-27'
+updated_at: '2026-10-27'
+last_verified: '2026-10-27'
+verification_status: verified
+---
+id: source:aws-agent-toolkit-docs
+slug: aws-agent-toolkit-docs
+type: source
+title: Agent Toolkit for AWS User Guide
+description: Guía oficial de Agent Toolkit for AWS, incluido el AWS MCP Server.
+url: https://docs.aws.amazon.com/agent-toolkit/latest/userguide/what-is-agent-toolkit.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-27'
+updated_at: '2026-10-27'
+last_verified: '2026-10-27'
+verification_status: verified
+---
+id: source:aws-amazon-q-developer-docs
+slug: aws-amazon-q-developer-docs
+type: source
+title: Amazon Q Developer User Guide
+description: Guía oficial de Amazon Q Developer, con la actualización a Kiro.
+url: https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/what-is.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-27'
+updated_at: '2026-10-27'
+last_verified: '2026-10-27'
+verification_status: verified
+---
+id: source:azure-mcp-server-docs
+slug: azure-mcp-server-docs
+type: source
+title: Azure MCP Server documentation
+description: Documentación oficial del Azure MCP Server, Microsoft Learn.
+url: https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-27'
+updated_at: '2026-10-27'
+last_verified: '2026-10-27'
+verification_status: verified
+---
+id: source:azure-logic-apps-docs
+slug: azure-logic-apps-docs
+type: source
+title: Azure Logic Apps documentation
+description: Documentación oficial de Azure Logic Apps, incluidos los workflows agénticos, Microsoft Learn.
+url: https://learn.microsoft.com/en-us/azure/logic-apps/logic-apps-overview
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-27'
+updated_at: '2026-10-27'
+last_verified: '2026-10-27'
+verification_status: verified
