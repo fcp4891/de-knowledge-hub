@@ -19,8 +19,8 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | 21: 27/27 `verified`; `chile-data-protection` mejorada, en revisión; 19 (11) espera aprobación | 22a (6) en revisión; luego 22b (4); `verified` de 19 con la aprobación de Felipe | Aprobación de Felipe (19) |
-| B · Cursor revisión | — | Revisar F3b-22a y la mejora de `chile-data-protection` (`lane-a.md`) | — |
+| A · Claude Code | 21: 27/27 `verified`; `chile-data-protection` mejorada, en revisión; 19 (11) espera aprobación | 22a (6) y 22b (4) en revisión; siguiente dominio según ROADMAP (23); `verified` de 19 con la aprobación de Felipe | Aprobación de Felipe (19) |
+| B · Cursor revisión | — | Revisar F3b-22a, F3b-22b y la mejora de `chile-data-protection` (`lane-a.md`) | — |
 | B · Cursor UI | — (`b/ui-labels-diagrams` integrada en `main` el 2026-10-26) | — | — |
 
 ## Pedidos abiertos entre carriles
@@ -51,7 +51,7 @@
 - [x] 18-security: 17/17 `verified`, aprobado por Felipe en el navegador el 2026-10-21 (ADR-022: cryptography). 18 no menciona la ley.
 - [ ] 19-compliance (11 fichas tras el upgrade, ADR-023): upgrade del 2026-10-22: 11 fichas (una padre y diez hijas) en revisión. Las fichas pasan a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`).
 - [x] 21-ai-for-data-engineering (27 fichas en 21a–21e, ADR-025): 27/27 `verified` el 2026-10-26.
-- [ ] 22-modern-data-engineering (10 fichas en 22a–22b): 22a (6) en revisión.
+- [ ] 22-modern-data-engineering (10 fichas en 22a–22b): 22a (6) y 22b (4) escritos, en revisión.
 - Ley 21.719 (decisión de Felipe, 2026-10-21): contenido técnico en 18 y 19, ADR del schema antes de 19 (ver ROADMAP, F3b).
 - Orden de dominios desde 12 (2026-10-14): 12 → 13 → 14 → 20 → 15 → 16 → 17 → 18 → 19 → 21 → 22 → 23.
 - [x] Lote F3b-rel: la regla del §17 es error de `make validate` (2026-10-14; `docs/reviews/f3b-rel.md`).
