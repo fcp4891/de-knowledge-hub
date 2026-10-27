@@ -33,8 +33,8 @@ sources:
   - source: microsoft-fabric-docs
     url: https://learn.microsoft.com/en-us/fabric/mirroring/overview
     accessed: 2026-10-26
-    page_title: "What is Mirroring in Fabric?"
-    note: "What is Mirroring in Fabric?: crea en OneLake una réplica en tablas Delta de una base operacional, completa o por tablas, y la mantiene sincronizada; los cambios pueden publicarse cada 15 segundos; el metadata mirroring referencia los datos de origen con shortcuts de OneLake."
+    page_title: "Mirroring"
+    note: "Mirroring (Microsoft Fabric): crea en OneLake una réplica en tablas Delta de una base operacional, completa o por tablas, y la mantiene sincronizada; los cambios pueden publicarse cada 15 segundos; el metadata mirroring referencia los datos de origen con shortcuts de OneLake."
 relations:
   - type: RELATED_TO
     target: etl-vs-elt
@@ -59,7 +59,7 @@ verification_status: review_required
 
 ## 1. Resumen
 
-Para analizar datos de una base operacional, lo clásico es un pipeline: extraer, cargar, transformar (`etl-vs-elt`). Hay dos formas de saltarse la primera parte. La **federación** consulta la base de origen en el momento, sin copiar: BigQuery lo hace con consultas federadas de solo lectura que delegan filtros a la fuente (*Introduction to federated queries*). **Zero-ETL** replica en forma administrada al motor analítico, casi en tiempo real: Aurora hacia Redshift (*Aurora zero-ETL integrations*) o Mirroring hacia OneLake en Fabric (*What is Mirroring in Fabric?*).
+Para analizar datos de una base operacional, lo clásico es un pipeline: extraer, cargar, transformar (`etl-vs-elt`). Hay dos formas de saltarse la primera parte. La **federación** consulta la base de origen en el momento, sin copiar: BigQuery lo hace con consultas federadas de solo lectura que delegan filtros a la fuente (*Introduction to federated queries*). **Zero-ETL** replica en forma administrada al motor analítico, casi en tiempo real: Aurora hacia Redshift (*Aurora zero-ETL integrations*) o Mirroring hacia OneLake en Fabric (*Mirroring*).
 
 La terminología es de proveedores y está en evolución: cada afirmación se verifica con su página. Ninguna de las dos **transforma**: los datos llegan con la forma de la base de origen, y el modelado sigue siendo trabajo de ELT. Por eso **no lo reemplazan**.
 
@@ -195,7 +195,7 @@ En AWS, **zero-ETL de Aurora** hacia Amazon Redshift. Según *Aurora zero-ETL in
 
 ## 13. Azure
 
-En Azure, **Mirroring** de Microsoft Fabric. Según *What is Mirroring in Fabric?* (no ejecutado):
+En Azure, **Mirroring** de Microsoft Fabric. Según *Mirroring* (no ejecutado):
 
 | | Este concepto | Mirroring |
 |---|---|---|
@@ -246,7 +246,7 @@ Pendiente (F4).
 - PostgreSQL 17: *F.36. postgres_fdw — access data stored in external PostgreSQL servers*.
 - Google Cloud: *Introduction to federated queries*.
 - AWS: *Aurora zero-ETL integrations*.
-- Microsoft Learn: *What is Mirroring in Fabric?*.
+- Microsoft Learn: *Mirroring*.
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
@@ -257,3 +257,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-26: creación (lote F3b-22b).
+- 2026-10-27: revisión B-F3.1 del lote F3b-22b aplicada (docs/reviews/cards-f3b-22b.md): `page_title` «Mirroring».

@@ -3,7 +3,7 @@ id: concept:semantic-layer
 slug: semantic-layer
 type: concept
 title: Semantic layer
-description: "La capa de métricas gobernadas: ingresos, ticket promedio o clientes activos se definen una vez, versionadas junto al modelo, y cada herramienta las consulta en lugar de reescribir el SQL. semantic-models es la estructura; esta ficha es la capa de métricas. Ejecutado en la CI con dbt parse, que valida semantic models y métricas, y un compilador propio de juguete que arma el SQL contra PostgreSQL. dbt Semantic Layer, LookML de Looker, Topics de Amazon Quick Sight y semantic models de Power BI."
+description: "La capa de métricas gobernadas: ingresos, ticket promedio o clientes activos se definen una vez, versionadas junto al modelo, y cada herramienta las consulta en lugar de reescribir el SQL. semantic-models es la estructura; esta ficha es la capa de métricas. Ejecutado en la CI con dbt parse, que valida semantic models y métricas, y un compilador propio de juguete que arma el SQL contra PostgreSQL. dbt Semantic Layer, LookML de Looker, Topics de Amazon Quick y semantic models de Power BI."
 domain: modern-data-engineering
 subdomain: data-activation-and-sharing
 category: modern-data-engineering
@@ -33,8 +33,8 @@ sources:
   - source: aws-quick-docs
     url: https://docs.aws.amazon.com/quick/latest/userguide/topics-how-it-works.html
     accessed: 2026-10-26
-    page_title: "How Topics work"
-    note: "How Topics work (Amazon Quick): los datasets se enriquecen con metadata semántica (descripciones de columnas, sinónimos, tipos semánticos, campos calculados y exclusiones), en Quick Sight o desde AWS Glue Data Catalog y Databricks Unity Catalog; el Topic reúne los datasets en un contenedor unificado."
+    page_title: "How Topics work - Amazon Quick"
+    note: "How Topics work - Amazon Quick: el producto se llama Amazon Quick y la página aún usa «Quick Sight» en el texto («A Topic in Quick Sight»); los datasets se enriquecen con metadata semántica (descripciones de columnas, sinónimos, tipos semánticos, campos calculados y exclusiones), en Quick Sight o desde AWS Glue Data Catalog y Databricks Unity Catalog; el Topic reúne los datasets en un contenedor unificado."
   - source: microsoft-fabric-docs
     url: https://learn.microsoft.com/en-us/fabric/data-warehouse/semantic-models
     accessed: 2026-10-26
@@ -113,7 +113,7 @@ Métricas comerciales:
 - validación en cada pull request (`dbt parse` y build);
 - BI y notebooks que consultan por nombre de métrica;
 - catálogo con la definición publicada (`metadata-management`);
-- en la nube (no ejecutado): dbt Semantic Layer, LookML en Looker, Topics de Amazon Quick Sight o semantic models de Power BI en Fabric.
+- en la nube (no ejecutado): dbt Semantic Layer, LookML en Looker, Topics de Amazon Quick o semantic models de Power BI en Fabric.
 
 ## 9. Arquitectura
 
@@ -251,9 +251,9 @@ En GCP, **LookML** de Looker. Según *Introduction to LookML* (no ejecutado):
 
 ## 12. AWS
 
-En AWS, **Topics** de Amazon Quick Sight. Según *How Topics work* (no ejecutado):
+En AWS, **Topics** de Amazon Quick; la página aún escribe «Quick Sight» en el texto. Según *How Topics work - Amazon Quick* (no ejecutado):
 
-| | Este concepto | Quick Sight Topics |
+| | Este concepto | Topics de Amazon Quick |
 |---|---|---|
 | Qué se define | Métricas y dimensiones | Metadata semántica: descripciones, sinónimos, tipos semánticos y campos calculados |
 | Origen de la metadata | El proyecto dbt | Quick Sight, AWS Glue Data Catalog o Databricks Unity Catalog |
@@ -308,7 +308,7 @@ Pendiente (F4).
 
 - dbt: *dbt Semantic Layer* y *MetricFlow time spine*.
 - Google Cloud: *Introduction to LookML*.
-- AWS: *How Topics work* (Amazon Quick).
+- AWS: *How Topics work - Amazon Quick*.
 - Microsoft Learn: *Power BI semantic models in Microsoft Fabric*.
 
 El detalle de cada fuente está en `sources` del frontmatter.
@@ -320,3 +320,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-26: creación (lote F3b-22b).
+- 2026-10-27: revisión B-F3.1 del lote F3b-22b aplicada (docs/reviews/cards-f3b-22b.md): el producto se nombra «Amazon Quick» y se aclara que la página aún usa «Quick Sight» en el texto; `page_title` «How Topics work - Amazon Quick».
