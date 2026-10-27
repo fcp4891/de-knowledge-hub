@@ -3,7 +3,7 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-26
+**Última actualización:** 2026-10-27
 
 ## Reglas de revisión
 
@@ -20,6 +20,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas bajas: el `page_title` de time travel de Fabric y el preview de esa página; el §12 y el §13 de `modern-data-stack` sin «Según».
 - **Tarea activa:** B-F3.1 del lote F3b-22b. Revisión en `docs/reviews/cards-f3b-22b.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: «Amazon Quick Sight» no es la formulación de la página. Propuesta baja: el título de Mirroring.
+- **Tarea activa:** revisión de la mejora de `pii-identification`. Informe en `docs/reviews/pii-v2.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuesta baja: «combinación de columnas» no va dentro de la obligación del art. 2.
 - **Tarea activa:** B-F3.1 del lote F3b-21d. Revisión en `docs/reviews/cards-f3b-21d.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. El renombre de Agent Search queda en curso, como dice su página.
 - **Tarea activa:** B-F3.1 del lote F3b-21c. Revisión en `docs/reviews/cards-f3b-21c.md`. No se editó `content/` ni `frontend/`.
@@ -116,6 +118,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ### B-F3.1 · lote F3b-22b
 - Cuatro fichas de activación y acceso. Dataverse queda en Upsert y el filtro de `postgres_fdw` está en el test. Propuesta media: la formulación de Amazon Quick. No se editó `content/` ni `frontend/`.
+
+### Revisión · pii-v2
+- Mejora de `pii-identification`. La lista del art. 2 g) coincide con BCN. Propuesta baja: sacar «combinación de columnas» de la obligación legal. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-21d
 - Cinco fichas de casos de uso. Agent Search sigue en renombre, el Web Crawler no admite conectores nuevos desde el 2026-09-30 y Purview no trata las descripciones generadas. Sin propuestas. No se editó `content/` ni `frontend/`.
@@ -410,6 +415,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 
 ### B-F3.1 · lote F3b-22b (2026-10-26)
 - Revisión de las 4 fichas de activación y acceso. MetricFlow queda fuera de la ejecución. No se editó `content/`.
+
+### Revisión · pii-v2 (2026-10-27)
+- Revisión de la mejora de `pii-identification`. El §10 coincide con las líneas del test y no imprime valores. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-21d (2026-10-26)
 - Revisión de las 5 fichas de casos de uso. El z robusto y el reindexado coinciden con los tests. No se editó `content/`.
