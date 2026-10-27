@@ -3459,3 +3459,39 @@ created_at: '2026-10-26'
 updated_at: '2026-10-26'
 last_verified: '2026-10-26'
 verification_status: verified
+---
+id: source:aws-appflow-docs
+slug: aws-appflow-docs
+type: source
+title: Amazon AppFlow User Guide
+description: Guía oficial de Amazon AppFlow (flujos entre aplicaciones SaaS y servicios de AWS).
+url: https://docs.aws.amazon.com/appflow/latest/userguide/what-is-appflow.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-26'
+updated_at: '2026-10-26'
+last_verified: '2026-10-26'
+verification_status: verified
+---
+id: source:aws-aurora-docs
+slug: aws-aurora-docs
+type: source
+title: Amazon Aurora User Guide
+description: Guía oficial de Amazon Aurora, incluidas las integraciones zero-ETL.
+url: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-26'
+updated_at: '2026-10-26'
+last_verified: '2026-10-26'
+verification_status: verified
