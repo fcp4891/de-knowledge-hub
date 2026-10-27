@@ -1,6 +1,6 @@
 {
   "query": "idempotencia",
-  "total": 2,
+  "total": 3,
   "groups": [
     {
       "type": "concept",
@@ -24,6 +24,21 @@
           "has_page": true,
           "snippet": "Traer datos desde sus fuentes a la plataforma: los modos (batch, streaming, CDC, transferencias administradas y consulta federada), cómo elegir entre ellos y qué tienen en común (idempotencia, contrat",
           "score": 1.8
+        }
+      ]
+    },
+    {
+      "type": "pattern",
+      "items": [
+        {
+          "slug": "reverse-etl",
+          "title": "Reverse ETL",
+          "type": "pattern",
+          "domain": "modern-data-engineering",
+          "classification": "modern",
+          "has_page": true,
+          "snippet": "Llevar datos calculados en el warehouse (segmentos, puntajes, métricas por cliente) de vuelta a las herramientas operativas: CRM, marketing, soporte o una base de baja latencia. Se sincroniza por dife",
+          "score": 1.3
         }
       ]
     }

@@ -57,6 +57,9 @@ sources:
     note: "Los datasets son la base de la analítica de Quick Sight: fuentes de datos preparadas y estructuradas para análisis y tableros, con versionado, uso compartido y seguridad a nivel de fila y de columna."
 relations:
   - type: RELATED_TO
+    target: semantic-layer
+    note: La capa de métricas gobernadas sobre este modelo (dominio 22).
+  - type: RELATED_TO
     target: star-schema
     note: Las herramientas semánticas suelen asentarse sobre un modelo estrella; la guía de Power BI lo explica en esos términos.
   - type: RELATED_TO
@@ -263,7 +266,7 @@ Un modelo semántico da números consistentes y autoservicio sin joins. A cambio
 - `star-schema` y `kimball-methodology`: el modelo de datos debajo de la capa semántica.
 - `one-big-table`: la alternativa sin capa semántica.
 - `data-contracts`: definiciones acordadas con los consumidores.
-- Del blueprint (dominio 22), pendiente de ficha: `semantic-layer`, la capa de métricas gobernadas.
+- `semantic-layer`: la capa de métricas gobernadas (dominio 22).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -295,3 +298,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): los consumidores en un nodo; la etiqueta del modelo en 2 líneas; el título del subgraph va entre comillas (con la coma, Mermaid no lo dibujaba).
+- 2026-10-26: §17 y `relations` enlazan `semantic-layer`, creada en el lote F3b-22b (regla del §17); sin otros cambios.

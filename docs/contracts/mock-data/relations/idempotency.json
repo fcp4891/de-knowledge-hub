@@ -497,6 +497,13 @@
           "note": "Retries."
         },
         {
+          "slug": "reverse-etl",
+          "title": "Reverse ETL",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Reenviar sin duplicar."
+        },
+        {
           "slug": "rollback",
           "title": "Rollback",
           "entity_type": "concept",

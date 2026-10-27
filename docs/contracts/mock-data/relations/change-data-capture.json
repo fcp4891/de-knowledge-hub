@@ -213,8 +213,8 @@
           "slug": "zero-etl-and-federation",
           "title": "Zero-ETL y consultas federadas",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Lo que zero-ETL administra por detrás."
         }
       ]
     }

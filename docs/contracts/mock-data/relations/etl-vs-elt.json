@@ -80,8 +80,8 @@
           "slug": "reverse-etl",
           "title": "Reverse ETL",
           "entity_type": "pattern",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "El camino de ida; esto es la vuelta."
         },
         {
           "slug": "bigquery-external-tables",
@@ -108,8 +108,8 @@
           "slug": "zero-etl-and-federation",
           "title": "Zero-ETL y consultas federadas",
           "entity_type": "concept",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Lo que esto no reemplaza."
         }
       ]
     }
