@@ -3,7 +3,7 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-26
+**Última actualización:** 2026-10-27
 
 ## Reglas de revisión
 
@@ -14,6 +14,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** revisión de la mejora de `pii-identification`. Informe en `docs/reviews/pii-v2.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuesta baja: «combinación de columnas» no va dentro de la obligación del art. 2.
 - **Tarea activa:** B-F3.1 del lote F3b-21d. Revisión en `docs/reviews/cards-f3b-21d.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Sin propuestas. El renombre de Agent Search queda en curso, como dice su página.
 - **Tarea activa:** B-F3.1 del lote F3b-21c. Revisión en `docs/reviews/cards-f3b-21c.md`. No se editó `content/` ni `frontend/`.
@@ -101,6 +103,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Si hay alias, bajo el título: «También conocido como: …» (ficha de concepto y página de tecnología).
 - `make test-frontend`: 11/11. En la demo estática, «Dataplex» encuentra Knowledge Catalog y la ficha `gcp-dataplex` muestra los dos alias.
 - No se editó `content/` ni el contrato.
+
+### Revisión · pii-v2
+- Mejora de `pii-identification`. La lista del art. 2 g) coincide con BCN. Propuesta baja: sacar «combinación de columnas» de la obligación legal. No se editó `content/` ni `frontend/`.
 
 ### B-F3.1 · lote F3b-21d
 - Cinco fichas de casos de uso. Agent Search sigue en renombre, el Web Crawler no admite conectores nuevos desde el 2026-09-30 y Purview no trata las descripciones generadas. Sin propuestas. No se editó `content/` ni `frontend/`.
@@ -386,6 +391,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### Revisión · pii-v2 (2026-10-27)
+- Revisión de la mejora de `pii-identification`. El §10 coincide con las líneas del test y no imprime valores. No se editó `content/`.
 
 ### B-F3.1 · lote F3b-21d (2026-10-26)
 - Revisión de las 5 fichas de casos de uso. El z robusto y el reindexado coinciden con los tests. No se editó `content/`.
