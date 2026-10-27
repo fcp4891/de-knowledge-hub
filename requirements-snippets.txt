@@ -25,3 +25,4 @@ cryptography==50.0.2                   # AES-GCM, key wrap y X.509 para los ejem
 # 21-ai-for-data-engineering (ADR-025): sin APIs pagadas; vectores deterministas con numpy y embeddings locales.
 numpy>=1.26,<3                         # opción A: vectores por hashing de n-gramas, sin descargas (ya llegaba con great_expectations)
 fastembed==0.9.0                       # opción B, solo embeddings y rag: modelo ONNX local, revisión fijada en el test; PyPI 2026-10-07
+mcp==2.3.0                             # SDK oficial de Model Context Protocol: servidor y cliente locales por stdio (ADR-026); PyPI 2026-10-02
