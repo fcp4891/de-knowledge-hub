@@ -32,6 +32,9 @@ sources:
     note: "Application card: Microsoft Purview Unified Catalog: Natural language search (preview) es un modo de búsqueda con IA en que el usuario describe en lenguaje común los datos que necesita y recibe data products rankeados según metadata y contexto de negocio; útil cuando no se conocen los nombres técnicos de las tablas."
 relations:
   - type: RELATED_TO
+    target: data-agents
+    note: Agentes que consultan los datos encontrados (dominio 23).
+  - type: RELATED_TO
     target: data-catalog
     note: El catálogo gobernado, que esto no reemplaza.
   - type: RELATED_TO
@@ -226,7 +229,7 @@ El lenguaje natural acerca el catálogo a quien no conoce los nombres técnicos,
 - `rag`: recuperar y citar.
 - `least-privilege`: los permisos.
 - `ai-metadata-enrichment`: la metadata de negocio.
-- Pendiente de ficha: `data-agents` (dominio 23).
+- `data-agents`: agentes que consultan los datos encontrados (dominio 23).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -254,3 +257,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-26: creación (lote F3b-21e).
 - 2026-10-26: `verification_status: verified` (revisión sin hallazgos en esta ficha; CI en verde, run 40375774081).
+- 2026-10-27: §17 y `relations` enlazan `data-agents`, creada en el lote F3b-23a (regla del §17); sin otros cambios.

@@ -32,6 +32,9 @@ sources:
     note: "What is Copilot in Fabric in the Data Factory workload?: en pipelines, Pipeline Generation genera las actividades a partir de una descripción en lenguaje natural; además asiste con errores, resume pipelines y construye expresiones. La página advierte que Copilot funciona con IA y que son posibles sorpresas y errores."
 relations:
   - type: RELATED_TO
+    target: agentic-data-engineering
+    note: El agente que ejecuta el plan (dominio 23).
+  - type: RELATED_TO
     target: data-pipeline
     note: El pipeline que se diseña y revisa; esto no lo reemplaza.
   - type: RELATED_TO
@@ -233,7 +236,7 @@ Generar acelera el código repetitivo y traslada el esfuerzo a revisar. Más aut
 - `code-review`: la revisión.
 - `ai-assisted-sql-generation`: el caso consolidado.
 - `data-orchestration`: la ejecución.
-- Pendiente de ficha: `agentic-data-engineering` (dominio 23).
+- `agentic-data-engineering`: el agente que ejecuta el plan, no solo lo propone (dominio 23).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -261,3 +264,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-26: creación (lote F3b-21e).
 - 2026-10-26: `verification_status: verified` (revisión sin hallazgos en esta ficha; CI en verde, run 40375774081).
+- 2026-10-27: §17 y `relations` enlazan `agentic-data-engineering`, creada en el lote F3b-23a (regla del §17); sin otros cambios.

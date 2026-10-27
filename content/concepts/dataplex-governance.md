@@ -43,6 +43,9 @@ sources:
     note: "About data lineage: mapa del ciclo de vida de los datos (origen, destinos y transformaciones), visible en la consola para assets de Knowledge Catalog, BigQuery (incluidas tablas externas de Iceberg REST Catalog) y Vertex AI; linaje multirregión; también por la Data Lineage API."
 relations:
   - type: RELATED_TO
+    target: model-context-protocol
+    note: El contexto vía MCP que nombra su página (dominio 23).
+  - type: RELATED_TO
     target: data-products
     note: Knowledge Catalog tiene data products con assets, acceso y contrato.
   - type: RELATED_TO
@@ -252,6 +255,7 @@ Knowledge Catalog da calidad, linaje y catálogo administrados, sin infraestruct
 - `bigquery-policy-tags`: seguridad por columna, en la API de Data Catalog.
 - `data-catalog`: el catálogo de datos en general.
 - `data-lineage`: el linaje, en su vista operativa y de gobierno.
+- `model-context-protocol`: el contexto vía MCP que nombra la página (dominio 23).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -280,3 +284,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-20: lote F3b-17a (regla del §17): relations y el §17 enlazan `data-catalog` y `data-lineage`, que ya tienen ficha; antes figuraban como pendientes de ficha.
+- 2026-10-27: §17 y `relations` enlazan `model-context-protocol`, creada en el lote F3b-23a (regla del §17); sin otros cambios.

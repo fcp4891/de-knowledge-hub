@@ -5081,9 +5081,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-27"
     },
     {
       "slug": "data-agents",
@@ -5095,9 +5095,9 @@
       "level": "intermediate",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-27"
     },
     {
       "slug": "agentic-workflows",
@@ -5109,9 +5109,9 @@
       "level": "advanced",
       "importance": "low",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-27"
     },
     {
       "slug": "agentic-data-engineering",
@@ -5123,9 +5123,9 @@
       "level": "advanced",
       "importance": "low",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-27"
     },
     {
       "slug": "llm-driven-automation",
@@ -5137,9 +5137,9 @@
       "level": "intermediate",
       "importance": "low",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-27"
     },
     {
       "slug": "ai-assisted-development",
@@ -5151,9 +5151,9 @@
       "level": "basic",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-27"
     },
     {
       "slug": "emerging-semantic-layers",
