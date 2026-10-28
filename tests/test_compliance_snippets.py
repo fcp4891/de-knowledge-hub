@@ -73,10 +73,11 @@ STDLIB = {
         "SOL-2026-0042 aún no verificada: ['silver.pasajeros: pendiente_expiracion_copias', 'proveedor_email: pendiente', "
         "'proveedor_email: falta evidencia']"],
     "data-breach-response": [
-        "'tablas': ['silver.pagos', 'silver.pasajeros'], 'titulares_aprox': 4, "
+        "'tablas': ['export.tmp_reservas', 'silver.pagos', 'silver.pasajeros'], 'titulares_aprox': 4, "
         "'categorias': ['contacto', 'financiero', 'identificación'], 'incluye_menores_14': True",
-        "'avisar_a_titulares': True}", "'tablas': ['gold.vuelos_agregados'], 'titulares_aprox': 0",
-        "'avisar_a_titulares': False}",
+        "'limitaciones': ['sin catálogo: export.tmp_reservas', 'índice parcial: silver.pagos']",
+        "'aviso_a_titulares_si_se_reporta': True}", "'tablas': ['gold.vuelos_agregados'], 'titulares_aprox': 0",
+        "'aviso_a_titulares_si_se_reporta': False}",
         "plazos Ley 21.663 (no operador vital): {'alerta_temprana': '2026-10-22T12:40', "
         "'actualizacion': '2026-10-25T09:40', 'informe_final': '2026-11-06T12:40'}",
         "plazos Ley 21.663 (operador vital, sin servicios esenciales afectados): {'alerta_temprana': '2026-10-22T12:40', "

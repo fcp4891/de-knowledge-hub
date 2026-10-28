@@ -3,7 +3,7 @@ id: pattern:data-breach-response
 slug: data-breach-response
 type: pattern
 title: Respuesta ante vulneraciones
-description: "Ante una vulneración, el área legal pregunta cuántas personas, qué datos y si hay sensibles, financieros o de menores de 14; la ley pide reportar sin dilaciones indebidas, registrar esas comunicaciones y avisar a los titulares en esos casos. Ingeniería lo responde en horas con catálogo, índice de titulares, linaje y logs de acceso preparados. Consulta de alcance y plazos de la Ley 21.663 (art. 9 y Decreto 295), ejecutados en la CI. No es asesoría legal."
+description: "Ante una vulneración, el área legal pregunta cuántas personas, qué datos y si hay sensibles, financieros o de menores de 14; la ley pide reportar sin dilaciones indebidas, registrar esas comunicaciones y avisar a los titulares en esos casos. Ingeniería entrega en horas una estimación revisable que separa lo accesible de lo extraído y declara sus lagunas. Consulta de alcance con limitaciones y plazos de la Ley 21.663 (art. 9 y Decreto 295), ejecutados en la CI. No es asesoría legal."
 domain: compliance
 subdomain: data-engineering-under-ley-21719
 classification: core
@@ -60,8 +60,9 @@ relations:
   - {type: RELATED_TO, target: privacy-controls-as-code, note: "Evidencia de controles previa al incidente."}
   - {type: RELATED_TO, target: processors-and-international-transfers, note: "Vulneraciones en encargados."}
   - {type: RELATED_TO, target: observability-logs, note: "Los logs de acceso."}
+  - {type: RELATED_TO, target: pii-identification, note: "La clasificación que da las categorías del alcance."}
 created_at: 2026-10-22
-updated_at: 2026-10-25
+updated_at: 2026-10-28
 last_verified: 2026-10-25
 verification_status: review_required
 ---
@@ -70,7 +71,9 @@ verification_status: review_required
 
 Esta ficha no es asesoría legal: si una vulneración se reporta, y a quién, lo deciden el área legal y seguridad; aquí se explica cómo ingeniería entrega en horas los datos que esa decisión necesita.
 
-Cuando hay un incidente, la primera pregunta es: **¿cuántas personas, qué datos, y hay sensibles, financieros o de menores de 14?** Si la respuesta toma una semana de consultas manuales, el reporte llega tarde. Ingeniería marca la diferencia teniendo listo antes del incidente el catálogo de clasificación, el índice de titulares, el linaje y los logs de acceso. Un mismo incidente puede activar también la Ley 21.663, con plazos propios.
+**Cómo leerla.** *Comprender* (§1–6): qué se reporta, a quién, y por qué «accesible» no es «extraído». *Aplicar* (§7–13): cómo se estima el alcance con sus limitaciones y qué logs hacen falta antes del incidente. *Demostrar*: el expediente del §8, la consulta del §10 y los criterios del §18.
+
+Cuando hay un incidente, la primera pregunta es: **¿cuántas personas, qué datos, y hay sensibles, financieros o de menores de 14?** Si la respuesta toma una semana de consultas manuales, el reporte llega tarde. Ingeniería marca la diferencia teniendo listo antes del incidente el catálogo de clasificación, el índice de titulares, el linaje y los logs de acceso. Lo que entrega no es una conclusión legal, sino una **estimación trazable y revisable**: qué activos pudieron verse comprometidos, qué contenían, qué personas podrían estar involucradas, con qué evidencia y con qué lagunas. Un mismo incidente puede activar también la Ley 21.663, con plazos propios.
 
 ## 2. Qué es
 
@@ -78,32 +81,46 @@ Cuando hay un incidente, la primera pregunta es: **¿cuántas personas, qué dat
 - **[Obligación legal · Ley 19.628, art. 14 sexies]** **Registro de las comunicaciones:** el responsable registra las comunicaciones a la Agencia, con la naturaleza de la vulneración, sus efectos, las categorías de datos, el número aproximado de titulares y las medidas adoptadas. **[Buena práctica]** Registrar también, con los mismos campos, los incidentes que no se reportan y el motivo.
 - **[Obligación legal · Ley 19.628, art. 14 sexies]** **Aviso a los titulares:** además de la Agencia, si hay datos sensibles, de niños y niñas menores de 14 años o de obligaciones económicas, financieras, bancarias o comerciales.
 - **[Obligación legal · Ley 21.663, art. 9]** Las instituciones del art. 4 de la Ley 21.663 reportan al CSIRT Nacional: alerta temprana en 3 horas, actualización en 72 horas (24 si un operador de importancia vital ve afectados sus servicios esenciales), informe final en 15 días corridos y, los operadores de importancia vital, plan de acción en 7 días.
-- **[Decisión de arquitectura]** **Consulta de alcance:** desde las tablas o archivos expuestos, obtiene titulares únicos, categorías, presencia de menores y periodo.
+- **[Decisión de arquitectura]** **Consulta de alcance:** desde los activos con acceso observado, obtiene titulares únicos, categorías, presencia de menores, periodo y limitaciones de cobertura.
+- **[Buena práctica]** Cinco términos que no son sinónimos:
+
+| Término | Qué significa | Cómo se sabe | Etiqueta |
+|---|---|---|---|
+| Activo comprometido | Sistema o credencial bajo control no autorizado | Investigación de seguridad | **[Buena práctica]** |
+| Acceso observado | Lectura, consulta o exportación registrada en un log | Logs de auditoría | **[Buena práctica]** |
+| Dato potencialmente accesible | Lo que la identidad comprometida podía leer | Permisos y catálogo | **[Buena práctica]** |
+| Dato efectivamente extraído | Lo que salió del perímetro | Logs de exportación, red y destino | **[Buena práctica]** |
+| Titular posiblemente afectado | Persona cuyos datos están en lo accesible o lo extraído | Índice de titulares, deduplicado | **[Buena práctica]** |
 
 ## 3. Problema que resuelve
 
-**[Buena práctica]** Sin preparación: no se sabe qué tablas leyó la cuenta comprometida, no se sabe si había datos financieros, los logs ya rotaron, y el conteo de afectados es una estimación que cambia cada día.
+**[Buena práctica]** Una cuenta de servicio de una aerolínea hace exportaciones inusuales. Sin logs ni catálogo, el equipo no distingue una tabla de vuelos agregados de otra con nombres, reservas y pagos; no sabe si hubo descargas, qué rango de tiempo fue accesible ni si los archivos llegaron a un tercero. Los logs ya rotaron y el conteo de afectados es una estimación que cambia cada día.
 
 **[Obligación legal · Ley 19.628, art. 34 ter]** Omitir las comunicaciones o los registros de una vulneración es infracción grave (letra k)); omitir en forma deliberada la comunicación es gravísima (art. 34 quáter f)).
 
 ## 4. Cómo funciona
 
-1. **[Buena práctica]** Detectar: alertas sobre accesos anómalos, exportaciones masivas y cuentas de servicio.
-2. **[Buena práctica]** Contener y preservar: revocar credenciales, congelar logs y snapshots; no borrar evidencia.
-3. **[Decisión de arquitectura]** Determinar los activos expuestos con logs de auditoría y linaje, incluidos derivados y exportaciones.
-4. **[Decisión de arquitectura]** Ejecutar la consulta de alcance con el catálogo y el índice de titulares.
-5. **[Obligación legal · Ley 19.628, art. 14 sexies]** Si hay riesgo razonable, reportar a la Agencia y, en los casos del artículo, avisar a los titulares; registrar esas comunicaciones. **[Decisión de arquitectura]** El área legal decide si hay riesgo razonable; ingeniería entrega el alcance.
-6. **[Obligación legal · Ley 21.663, art. 9]** Si la institución está obligada por la Ley 21.663 (lo determina el área legal), la alerta temprana al CSIRT Nacional va dentro de 3 horas desde que se tiene conocimiento. **[Buena práctica]** El procedimiento calcula todos los plazos desde ese momento.
-7. **[Obligación legal · Ley 19.628, art. 15 bis]** Si el incidente es de un encargado, este debe reportarlo al responsable: el canal está en el contrato.
-8. **[Obligación legal · Ley 19.628, art. 14 quinquies]** Ante un incidente, si hay controversia judicial o administrativa, el responsable acredita que sus medidas existían y funcionaban. **[Buena práctica]** Tener la evidencia de los controles fechada antes del incidente.
+1. **[Buena práctica]** Detectar y escalar: registrar alerta, hora, identidad, recurso y señal; alertas sobre accesos anómalos, exportaciones masivas y cuentas de servicio.
+2. **[Buena práctica]** Contener sin destruir evidencia: seguridad dirige la revocación de credenciales y el aislamiento; se congelan logs y snapshots.
+3. **[Decisión de arquitectura]** Delimitar activos y ventana con logs de IAM, de consultas, de exportaciones, de objetos y de jobs, y con el linaje, incluidos derivados y exportaciones.
+4. **[Decisión de arquitectura]** Ejecutar la consulta de alcance con el catálogo (tabla y columna) y el índice de titulares: titulares únicos potencialmente expuestos, deduplicados.
+5. **[Buena práctica]** Separar hechos observados, inferencias y lagunas (logs ausentes, exportaciones desconocidas, derivados sin catalogar); la estimación se revisa con cada evidencia nueva.
+6. **[Obligación legal · Ley 19.628, art. 14 sexies]** Si hay riesgo razonable, reportar a la Agencia y, en los casos del artículo, avisar a los titulares; registrar esas comunicaciones. **[Decisión de arquitectura]** El área legal decide si hay riesgo razonable; ingeniería entrega el alcance.
+7. **[Obligación legal · Ley 21.663, art. 9]** Si la institución está obligada por la Ley 21.663 (lo determina el área legal), la alerta temprana al CSIRT Nacional va dentro de 3 horas desde que se tiene conocimiento. **[Buena práctica]** El procedimiento calcula todos los plazos desde ese momento, en un calendario separado del de datos personales.
+8. **[Obligación legal · Ley 19.628, art. 15 bis]** Si el incidente es de un encargado, este debe reportarlo al responsable: el canal está en el contrato.
+9. **[Obligación legal · Ley 19.628, art. 14 quinquies]** Ante un incidente, si hay controversia judicial o administrativa, el responsable acredita que sus medidas existían y funcionaban. **[Buena práctica]** Tener la evidencia de los controles fechada antes del incidente.
+10. **[Buena práctica]** Corregir y aprender: revisar permisos, alertas y retención de logs con lo que mostró el incidente o el simulacro.
 
 ## 5. Cuándo utilizarlo
 
-- En la preparación (antes del incidente) y en cada incidente que toque datos personales, propio o de un encargado.
+- En la preparación (antes del incidente), en simulacros, y en cada incidente que toque datos personales, propio o de un encargado.
+- Sin esperar a confirmar una filtración: el inventario y el procedimiento se preparan antes.
 
 ## 6. Cuándo no utilizarlo
 
 - Para decidir si existe «riesgo razonable» o si se notifica: lo deciden el área legal y seguridad.
+- Como prueba de extracción: una consulta al catálogo dice qué era accesible, no qué salió.
+- Contando filas como si fueran personas.
 
 ## 7. Ejemplo sencillo
 
@@ -114,7 +131,18 @@ Cuando hay un incidente, la primera pregunta es: **¿cuántas personas, qué dat
 | Datos de salud | Sí (sensibles) |
 | Cualquier dato de un niño o niña menor de 14 | Sí |
 
+Cómo leer la evidencia sin sobreestimar ni subestimar:
+
+| Evidencia | Interpretación correcta |
+|---|---|
+| Se consultó una tabla con 50.000 clientes | Hasta 50.000 titulares potencialmente accesibles; falta saber qué devolvió la consulta |
+| Se exportaron 2.000 registros | Puede haber menos de 2.000 titulares únicos; deduplicar y revisar el contenido |
+| Tabla con la etiqueta «financiero» | Una categoría que investigar; no decide por sí sola el aviso |
+| No hay logs de lectura | No demuestra que no hubo acceso; aumenta la incertidumbre |
+
 ## 8. Ejemplo de producción
+
+Escenario genérico: en GCP, una cuenta técnica consulta `silver.reservas` y deja un archivo en Cloud Storage. Ingeniería identifica la identidad que ejecutó el job, la consulta, el destino del archivo, quién podía leerlo y los accesos posteriores; clasifica las columnas de contacto y viaje, estima los titulares únicos del resultado y documenta los derivados.
 
 | Preparación | Implementación posible |
 |---|---|
@@ -126,20 +154,21 @@ Cuando hay un incidente, la primera pregunta es: **¿cuántas personas, qué dat
 
 ### Evidencia de cumplimiento
 
-| Evidencia | Dónde queda | Quién la produce |
-|---|---|---|
-| Registro de vulneraciones | Sistema de incidentes | Seguridad |
-| Resultado de la consulta de alcance | Expediente del incidente, sin datos personales | Ingeniería |
-| Logs preservados | Almacenamiento inmutable | Plataforma |
-| Simulacros | Reporte del ejercicio | Seguridad, ingeniería |
+| Evidencia | Dónde queda | Quién la produce | Qué demuestra | Qué no demuestra |
+|---|---|---|---|---|
+| Registro de vulneraciones y de comunicaciones | Sistema de incidentes | Seguridad | Qué se reportó, a quién y cuándo | Que la decisión de reportar fuera correcta |
+| Resultado de la consulta de alcance, con limitaciones | Expediente del incidente, sin datos personales | Ingeniería | Titulares y categorías potencialmente expuestos, y qué no se pudo cubrir | Qué se extrajo efectivamente |
+| Cronología y logs preservados | Almacenamiento inmutable | Plataforma | Qué accesos y exportaciones quedaron registrados | Accesos fuera de lo que se registraba |
+| Evidencia de controles fechada antes del incidente | Repositorio de controles | Seguridad e ingeniería | Que las medidas existían y funcionaban (art. 14 quinquies) | Que fueran suficientes |
+| Simulacros | Reporte del ejercicio | Seguridad, ingeniería | Cuánto tarda y qué cubre la consulta de alcance | El comportamiento ante un incidente real |
 
 ## 9. Arquitectura
 
 ```mermaid
 flowchart TB
   D["Detección:<br/>accesos anómalos"] --> C["Contención y<br/>preservación de logs"]
-  C --> A["Activos expuestos:<br/>auditoría y linaje"]
-  A --> Q["Alcance:<br/>catálogo e índice"]
+  C --> A["Activos y ventana:<br/>auditoría y linaje"]
+  A --> Q["Alcance con limitaciones:<br/>catálogo e índice"]
   Q --> R["Registro interno<br/>del incidente"]
   Q --> L{"Área legal<br/>y seguridad"}
   L --> N["Agencia, titulares y CSIRT,<br/>según corresponda"]
@@ -149,9 +178,10 @@ flowchart TB
 ## 10. Código
 
 ```python
-# Python 3.12+, biblioteca estándar. Alcance de una vulneración (art. 14 sexies): a partir de las tablas
-# expuestas, calcula titulares únicos, categorías de datos y si corresponde avisar también a los titulares.
-# El registro usa conteos y categorías, no datos personales.
+# Python 3.12+, biblioteca estándar. Alcance de una vulneración (art. 14 sexies): a partir de los activos con acceso
+# observado, calcula titulares únicos potencialmente expuestos, categorías de datos y si, de reportarse, corresponde
+# avisar también a los titulares. Declara sus limitaciones (activos sin catálogo, índice parcial): es una estimación
+# revisable, no la prueba de una extracción ni la decisión de notificar. El registro usa conteos y categorías.
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 
@@ -162,32 +192,36 @@ class Tabla:
     categorias: frozenset[str]          # desde el catálogo de clasificación
     titulares: frozenset[str]           # llaves seudónimas presentes (desde el índice de titulares)
     menores_14: frozenset[str]          # titulares menores de 14 años
+    indice_completo: bool               # False: el índice no cubre toda la tabla
 
 
 AVISO_A_TITULARES = {"sensible", "financiero"}   # art. 14 sexies: además, niños y niñas menores de 14
 
-CATALOGO = [
+CATALOGO = {t.nombre: t for t in [
     Tabla("silver.pasajeros", frozenset({"identificación", "contacto"}),
-          frozenset({"t1", "t2", "t3", "t4"}), frozenset({"t4"})),
-    Tabla("silver.pagos", frozenset({"financiero"}), frozenset({"t1", "t2"}), frozenset()),
-    Tabla("gold.vuelos_agregados", frozenset(), frozenset(), frozenset()),
-]
+          frozenset({"t1", "t2", "t3", "t4"}), frozenset({"t4"}), True),
+    Tabla("silver.pagos", frozenset({"financiero"}), frozenset({"t1", "t2"}), frozenset(), False),
+    Tabla("gold.vuelos_agregados", frozenset(), frozenset(), frozenset(), True),
+]}
 
 
-def alcance(expuestas: set[str], detectado: datetime) -> dict[str, object]:
-    tablas = [t for t in CATALOGO if t.nombre in expuestas]
+def alcance(observados: set[str], detectado: datetime) -> dict[str, object]:
+    tablas = [CATALOGO[n] for n in sorted(observados) if n in CATALOGO]
     titulares = set().union(*(t.titulares for t in tablas))
     categorias = set().union(*(t.categorias for t in tablas))
     menores = set().union(*(t.menores_14 for t in tablas))
-    avisar = bool(categorias & AVISO_A_TITULARES) or bool(menores)
+    limitaciones = [f"sin catálogo: {n}" for n in sorted(observados - CATALOGO.keys())]
+    limitaciones += [f"índice parcial: {t.nombre}" for t in tablas if not t.indice_completo]
     return {
         "detectado": detectado.isoformat(timespec="minutes"),
-        "tablas": sorted(expuestas),
+        "tablas": sorted(observados),
         "titulares_aprox": len(titulares),
         "categorias": sorted(categorias),
         "incluye_menores_14": bool(menores),
+        "estado": "potencialmente accesibles; extracción no probada",
+        "limitaciones": limitaciones,
         "reportar_a_agencia": "si hay riesgo razonable para los titulares (decide Legal)",
-        "avisar_a_titulares": avisar,
+        "aviso_a_titulares_si_se_reporta": bool(categorias & AVISO_A_TITULARES) or bool(menores),
     }
 
 
@@ -203,63 +237,82 @@ def plazos_ley_21663(conocimiento: datetime, operador_vital: bool, servicios_ese
 
 
 if __name__ == "__main__":
-    print(alcance({"silver.pasajeros", "silver.pagos"}, datetime(2026, 10, 22, 9, 40)))
-    print(alcance({"gold.vuelos_agregados"}, datetime(2026, 10, 22, 9, 40)))
     detectado = datetime(2026, 10, 22, 9, 40)
+    print(alcance({"silver.pasajeros", "silver.pagos", "export.tmp_reservas"}, detectado))
+    print(alcance({"gold.vuelos_agregados"}, detectado))
     print("plazos Ley 21.663 (no operador vital):", plazos_ley_21663(detectado, False, False))
     print("plazos Ley 21.663 (operador vital, sin servicios esenciales afectados):", plazos_ley_21663(detectado, True, False))
     print("plazos Ley 21.663 (operador vital, servicios esenciales afectados):", plazos_ley_21663(detectado, True, True))
 ```
 
-El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Imprime el alcance de dos incidentes: el primero expone 4 titulares, datos financieros y un menor de 14, así que corresponde avisar a los titulares por dos razones; el segundo expone una tabla agregada sin titulares. Ambos quedan en el registro interno de incidentes; el registro del art. 14 sexies es el de las comunicaciones a la Agencia. Al final, los plazos de la Ley 21.663 en tres casos: una institución obligada que no es operador de importancia vital (actualización en 72 horas); un operador de importancia vital sin servicios esenciales afectados (72 horas y plan de acción en 7 días); y uno con servicios esenciales afectados (24 horas y plan de acción en 7 días).
+El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Imprime el alcance de dos incidentes. El primero alcanza 4 titulares potencialmente expuestos, datos financieros y un menor de 14, así que, si se reporta, corresponde avisar también a los titulares, por dos razones; y declara dos limitaciones: `export.tmp_reservas` no está en el catálogo y el índice de `silver.pagos` es parcial, así que 4 no es una cota máxima. El segundo expone una tabla agregada sin titulares. Ambos quedan en el registro interno de incidentes; el registro del art. 14 sexies es el de las comunicaciones a la Agencia. Al final, los plazos de la Ley 21.663 en tres casos: una institución obligada que no es operador de importancia vital (actualización en 72 horas); un operador de importancia vital sin servicios esenciales afectados (72 horas y plan de acción en 7 días); y uno con servicios esenciales afectados (24 horas y plan de acción en 7 días).
+
+**Limitaciones:** el resultado no acredita acceso efectivo a todos los registros ni decide la notificación.
 
 ## 11. GCP
 
-En GCP, **Cloud Audit Logs**. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* y *Cloud Audit Logs overview* (no ejecutado):
+En GCP, **Cloud Audit Logs**. Según *Cloud Audit Logs overview* (no ejecutado):
 
 | Necesidad | Servicio | Etiqueta |
 |---|---|---|
 | Logs de acceso a datos | Data Access audit logs: desactivados por defecto, salvo en BigQuery; hay que activarlos | **[Decisión de arquitectura]** |
+| Cobertura | Comprobar antes del incidente qué servicios registran lecturas; sin ellos, el alcance queda como «potencialmente accesible» | **[Buena práctica]** |
 
 ## 12. AWS
 
-En AWS, **AWS CloudTrail**. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* y *Logging data events* (no ejecutado):
+En AWS, **AWS CloudTrail**. Según *Logging data events* (no ejecutado):
 
 | Necesidad | Servicio | Etiqueta |
 |---|---|---|
 | Logs de acceso a datos | Data events de CloudTrail: no se registran por defecto y tienen cargos adicionales | **[Decisión de arquitectura]** |
+| Cobertura | Los eventos de administración no muestran qué objetos se leyeron; para eso hacen falta los data events | **[Buena práctica]** |
 
 ## 13. Azure
 
-En Azure, **auditoría de Azure SQL Database**. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* y *Auditing for Azure SQL Database* (no ejecutado):
+En Azure, **auditoría de Azure SQL Database**. Según *Auditing for Azure SQL Database* (no ejecutado):
 
 | Necesidad | Servicio | Etiqueta |
 |---|---|---|
 | Logs de acceso a datos | Auditoría hacia Azure Storage, Log Analytics o Event Hubs | **[Buena práctica]** |
+| Cobertura | La auditoría de una base no cubre los archivos exportados ni otros servicios de datos | **[Buena práctica]** |
+
+**Criterio común:** la auditoría del plano de control no sustituye la del acceso al contenido; verificar la cobertura real en un simulacro.
 
 ## 14. Buenas prácticas
 
 - **[Buena práctica]** Activar los logs de acceso a datos antes de necesitarlos; en varias nubes no están activos por defecto.
-- **[Buena práctica]** **Seguridad:** cuentas de servicio con mínimo privilegio, para que el radio de exposición sea chico.
+- **[Decisión de arquitectura]** Definir de antemano quién preserva la evidencia, quién estima el alcance y quién decide las comunicaciones.
+- **[Buena práctica]** **Seguridad:** cuentas de servicio con mínimo privilegio y credenciales diferenciadas, para que el radio de exposición sea chico; monitorear las exportaciones.
 - **[Decisión de arquitectura]** Un único procedimiento con dos salidas (Ley 21.719 y Ley 21.663) cuando la institución está obligada por ambas.
-- **[Buena práctica]** **Observabilidad:** tiempo de cálculo del alcance como métrica del simulacro.
+- **[Buena práctica]** Mantener la clasificación y el linaje al día y registrar los sistemas que no cubren.
+- **[Buena práctica]** El expediente no copia RUT, correos ni contenidos sensibles; cada revisión de la estimación queda trazada.
+- **[Buena práctica]** **Observabilidad:** tiempo de cálculo del alcance y cobertura como métricas del simulacro.
 - **[Buena práctica]** **Costo:** retener los logs de acceso en almacenamiento frío, no en la plataforma de consulta.
 
 ## 15. Errores frecuentes
 
-- Borrar o rotar logs durante la investigación.
-- Contar filas en lugar de titulares únicos.
-- Olvidar derivados y exportaciones de la tabla expuesta.
-- No dejar constancia de los incidentes que se decidió no reportar, ni del motivo.
+- **Declarar afectados a todos los titulares de una tabla sin analizar los accesos:** se sobreestima el alcance y se comunica de más.
+- **Leer la ausencia de logs como ausencia de incidente:** se subestima el alcance sin base.
+- **Confundir una etiqueta «sensible» con una prueba de exposición:** la clasificación dice qué había, no qué se leyó.
+- **Borrar o rotar logs durante la investigación:** se pierde la cronología.
+- **Contar filas en lugar de titulares únicos:** el número reportado no es el de personas.
+- **Olvidar derivados, exportaciones, APIs y subencargados:** el alcance queda corto.
+- **No dejar constancia de los incidentes que se decidió no reportar, ni del motivo:** no hay cómo justificar la decisión después.
 
 ## 16. Trade-offs
 
-Más logs y por más tiempo permiten un alcance preciso, pero cuestan y también contienen datos personales. Conviene registrar identificadores y metadatos de acceso, no los valores consultados.
+| Decisión | Beneficio | Costo o riesgo |
+|---|---|---|
+| Logs detallados y por más tiempo | Alcance preciso | Costo, y los logs también contienen datos personales: registrar identificadores y metadatos de acceso, no valores |
+| Índice de titulares | Estimaciones rápidas | Sincronización y control de acceso al índice |
+| Preservación prolongada | Investigación posterior | Retención, seguridad y proporcionalidad |
+| Clasificación automatizada | Más cobertura | Falsos positivos y negativos; revisión humana |
 
 ## 17. Conceptos relacionados
 
 - `chile-data-protection`: ficha padre.
 - `incident-response`: el runbook.
+- `pii-identification`: la clasificación de las categorías.
 - `data-subject-rights-pipeline`: el índice de titulares.
 - `processing-activities-inventory`: categorías y actividades.
 - `privacy-controls-as-code`: evidencia previa.
@@ -271,10 +324,13 @@ Más logs y por más tiempo permiten un alcance preciso, pero cuestan y también
 1. ¿Cuánto tardarías en saber cuántas personas había en una tabla filtrada?
 2. ¿Tus logs de acceso a datos están activos y cuánto se retienen?
 3. ¿Sabes qué tablas tienen datos de menores de 14 años?
+4. ¿Qué parte de tu plataforma no cubre la consulta de alcance?
+
+**Criterio de dominio:** dominas esta ficha si puedes mostrar qué activos con datos personales tienes inventariados, qué fuentes de auditoría están activas, cómo distingues lo accesible de lo extraído, cómo estimas titulares únicos con limitaciones explícitas y cómo entregas evidencia reproducible sin ampliar la exposición.
 
 ## 19. Laboratorio relacionado
 
-Pendiente (F4). Propuesta: simulacro con logs de auditoría y consulta de alcance.
+Propuesta para F4: simular un acceso no autorizado a una tabla de prueba; correlacionar el evento, la consulta, el inventario y el índice de titulares, y producir un expediente con una estimación inicial y una revisión posterior. Se aprueba si identifica la cobertura incompleta y no produce una decisión automática de notificación. Datos ficticios.
 
 ## 20. Fuentes
 
@@ -295,3 +351,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
 - 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): TB; Agencia, titulares y CSIRT en un nodo de comunicaciones; registro interno y registro de las comunicaciones separados.
+- 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (estimación trazable y revisable), §2 (activo comprometido, acceso observado, dato accesible, dato extraído y titular posiblemente afectado), §3 (exportaciones inusuales de una cuenta de servicio), §4 (diez pasos: hechos, inferencias y lagunas; calendario separado para la Ley 21.663; corregir y aprender), §5, §6, §7 (cómo leer la evidencia), §8 (escenario y evidencia «qué demuestra y qué no»), §10 (limitaciones de cobertura en el alcance; el aviso a titulares queda condicionado a que se reporte), §11–13 (cobertura de los logs y criterio común), §14–16, §17 (relación con `pii-identification`), §18 (criterio de dominio) y §19 (laboratorio para F4). Los plazos verificados de la Ley 21.663 y el Decreto 295 se mantienen. Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
