@@ -3,7 +3,7 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-27
+**Última actualización:** 2026-10-28
 
 ## Reglas de revisión
 
@@ -14,6 +14,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** revisión del lote 23b (3 fichas). Informe en `docs/reviews/cards-f3b-23b.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuestas medias: la frase de BigLake que ya no está en la página, el límite v1/v2 de Glue y el aviso de BigQuery sobre las tablas externas Iceberg.
 - **Tarea activa:** revisión de la mejora de `chile-data-protection`. Informe en `docs/reviews/cdp-v2.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: la letra g) del art. 2 no dice «entre otros». Propuesta baja: la letra l) pide medidas técnicas y organizativas.
 - **Tarea activa:** B-F3.1 del lote F3b-22a. Revisión en `docs/reviews/cards-f3b-22a.md`. No se editó `content/` ni `frontend/`.
@@ -109,6 +111,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Si hay alias, bajo el título: «También conocido como: …» (ficha de concepto y página de tecnología).
 - `make test-frontend`: 11/11. En la demo estática, «Dataplex» encuentra Knowledge Catalog y la ficha `gcp-dataplex` muestra los dos alias.
 - No se editó `content/` ni el contrato.
+
+### Revisión · lote 23b
+- Tres fichas emerging. Ossie cita el DRAFT del commit fijado y v3 cita «no ejecutado». Propuestas medias en Glue, Lakehouse y BigQuery. No se editó `content/` ni `frontend/`.
 
 ### Revisión · cdp-v2
 - Mejora de `chile-data-protection`. `legal_basis`, vigencia, boletín, sanciones y los diagramas no cambian. Propuesta media: completar la letra g) del art. 2. No se editó `content/` ni `frontend/`.
@@ -406,6 +411,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### Revisión · lote 23b (2026-10-28)
+- Revisión de las 3 fichas. El DRAFT de Ossie y el «no ejecutado» de v3 están citados. No se editó `content/`.
 
 ### Revisión · cdp-v2 (2026-10-26)
 - Revisión de la mejora de `chile-data-protection`. El §10 encuentra 4 brechas y los 30 días son política interna. No se editó `content/`.
