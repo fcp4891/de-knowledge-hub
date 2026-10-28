@@ -2,7 +2,8 @@
 
 - interoperability-standards: PyIceberg contra apache/iceberg-rest-fixture:1.10.1 en Docker, fijada por digest
   (ADR-026). El contenedor corre con el uid y gid del runner y comparte una carpeta en la misma ruta, porque el
-  catálogo escribe la metadata y el cliente los archivos de datos. Solo en Linux (ADR-018); con REQUIRE_DOCKER=1 no se
+  catálogo escribe la metadata y el cliente los archivos de datos. El warehouse va con esquema file:// porque
+  HadoopFileIO no resuelve una ruta sin esquema («Failed to get file system for path»). Solo en Linux (ADR-018); con REQUIRE_DOCKER=1 no se
   salta.
 - open-table-format-evolution: PyIceberg con catálogo SQLite, en Linux (ADR-018).
 - emerging-semantic-layers: PyYAML y jsonschema contra el esquema de Apache Ossie fijado por commit; si la descarga
@@ -45,7 +46,7 @@ def iceberg_rest_uri(tmp_path: Path) -> Iterator[str]:
     name, port = f"dekh-iceberg-rest-{uuid.uuid4().hex[:8]}", free_port()
     started = docker("run", "-d", "--rm", "--name", name, "--user", f"{os.getuid()}:{os.getgid()}",  # type: ignore[attr-defined]
                      "-p", f"127.0.0.1:{port}:8181", "-v", f"{warehouse}:{warehouse}",
-                     "-e", f"CATALOG_WAREHOUSE={warehouse}", "-e", "CATALOG_IO__IMPL=org.apache.iceberg.hadoop.HadoopFileIO",
+                     "-e", f"CATALOG_WAREHOUSE=file://{warehouse}", "-e", "CATALOG_IO__IMPL=org.apache.iceberg.hadoop.HadoopFileIO",
                      ICEBERG_REST_IMAGE)
     assert started.returncode == 0, started.stderr
     uri = f"http://127.0.0.1:{port}"
