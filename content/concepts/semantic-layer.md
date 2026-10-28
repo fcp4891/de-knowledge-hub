@@ -42,6 +42,9 @@ sources:
     note: "Power BI semantic models in Microsoft Fabric: un semantic model es una descripción lógica de un dominio analítico, con métricas, terminología de negocio y representación; típicamente un esquema en estrella con hechos y dimensiones. Microsoft renombró el tipo de contenido dataset de Power BI a semantic model."
 relations:
   - type: RELATED_TO
+    target: emerging-semantic-layers
+    note: El intercambio de modelos semánticos entre herramientas (dominio 23).
+  - type: RELATED_TO
     target: semantic-models
     note: La estructura del modelo; esta ficha es la capa de métricas.
   - type: RELATED_TO
@@ -292,7 +295,7 @@ Una sola definición da consistencia y obliga a acordar entre equipos. Una capa 
 - `semantic-models`: la estructura.
 - `analytics-engineering` y `star-schema`: el modelo debajo.
 - `metadata-management`: las definiciones publicadas.
-- Pendiente de ficha: `emerging-semantic-layers` (dominio 23).
+- `emerging-semantic-layers`: el intercambio de modelos semánticos entre herramientas (dominio 23).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -322,3 +325,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-26: creación (lote F3b-22b).
 - 2026-10-27: revisión B-F3.1 del lote F3b-22b aplicada (docs/reviews/cards-f3b-22b.md): el producto se nombra «Amazon Quick» y se aclara que la página aún usa «Quick Sight» en el texto; `page_title` «How Topics work - Amazon Quick».
 - 2026-10-27: `verification_status: verified` (revisión aplicada; CI en verde, run 40596994498).
+- 2026-10-27: §17 y `relations` enlazan `emerging-semantic-layers`, creada en el lote F3b-23b (regla del §17); sin otros cambios.

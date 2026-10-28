@@ -5165,9 +5165,9 @@
       "level": "intermediate",
       "importance": "low",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-27"
     },
     {
       "slug": "interoperability-standards",
@@ -5179,9 +5179,9 @@
       "level": "intermediate",
       "importance": "low",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-27"
     },
     {
       "slug": "open-table-format-evolution",
@@ -5193,9 +5193,9 @@
       "level": "advanced",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-27"
     }
   ]
 }
