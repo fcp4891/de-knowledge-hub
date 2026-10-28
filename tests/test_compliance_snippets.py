@@ -68,7 +68,10 @@ STDLIB = {
         "'conservadas_por_obligacion_legal': {'gold.facturas': 1}, 'en_lista_supresion': True}",
         "llave del titular en la evidencia: 16 caracteres hex, sin RUT",
         "retención vencida al 2026-10-22: {'bronze.reservas': (1, 'suprimir')}",
-        "¿el backfill reintroduce al titular?: False"],
+        "¿el backfill reintroduce al titular?: False",
+        "alcance en la lista de supresión: ['bronze.reservas', 'silver.pasajeros']",
+        "SOL-2026-0042 aún no verificada: ['silver.pasajeros: pendiente_expiracion_copias', 'proveedor_email: pendiente', "
+        "'proveedor_email: falta evidencia']"],
     "data-breach-response": [
         "'tablas': ['silver.pagos', 'silver.pasajeros'], 'titulares_aprox': 4, "
         "'categorias': ['contacto', 'financiero', 'identificación'], 'incluye_menores_14': True",

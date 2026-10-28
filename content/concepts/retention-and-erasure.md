@@ -3,7 +3,7 @@ id: pattern:retention-and-erasure
 slug: retention-and-erasure
 type: pattern
 title: Retención y supresión
-description: "Un dato personal está en el origen, en bronze, silver y gold, en features, exportaciones, versiones y respaldos. Retener y suprimir bien es que el plazo se aplique solo, que la supresión alcance todas las copias que corresponde, conservando lo que tiene obligación legal, y que ningún backfill la deshaga: lista de supresión, llave seudónima y evidencia sin datos del titular. Ejemplo ejecutado en la CI. BigQuery, S3, Iceberg y Delta. No es asesoría legal."
+description: "Un dato personal está en el origen, en bronze, silver y gold, en features, exportaciones, versiones y respaldos. Retener y suprimir bien es que el plazo se aplique solo, que la supresión alcance las copias que corresponde, conservando lo que tiene obligación legal, que ningún backfill la deshaga y que el caso no se dé por verificado con copias por expirar o destinos pendientes. Ejemplo ejecutado en la CI. BigQuery, S3, Iceberg y Delta. No es asesoría legal."
 domain: compliance
 subdomain: data-engineering-under-ley-21719
 classification: core
@@ -69,17 +69,20 @@ relations:
   - {type: RELATED_TO, target: crypto-shredding, note: "Suprimir en copias que no se reescriben."}
   - {type: RELATED_TO, target: data-retention, note: "Mecanismos técnicos de retención."}
   - {type: RELATED_TO, target: open-table-formats, note: "Snapshots y time travel."}
+  - {type: RELATED_TO, target: data-lineage, note: "Descubrir dependencias, sin garantizar todas las copias."}
 created_at: 2026-10-22
-updated_at: 2026-10-25
+updated_at: 2026-10-28
 last_verified: 2026-10-25
 verification_status: review_required
 ---
 
 ## 1. Resumen
 
-Esta ficha no es asesoría legal: qué datos se conservan, por cuánto tiempo y si una supresión procede lo deciden el área legal y el responsable; aquí se explica cómo ejecutarlo de forma consistente y demostrable.
+Esta ficha no es asesoría legal: qué datos se conservan, por cuánto tiempo, con qué excepciones y si una supresión procede lo deciden el área legal y el responsable; aquí se explica cómo ejecutarlo de forma consistente y demostrable. Los plazos de los ejemplos son ilustrativos, no obligaciones legales.
 
-En una plataforma moderna, un dato personal no está en una tabla: está en el origen, en bronze, silver y gold, en features, en exportaciones, en el historial de versiones (time travel), en respaldos y en sistemas de terceros. Retener y suprimir bien significa que el plazo se aplique sin intervención manual, que una supresión alcance todas las copias que corresponde y que **ningún reprocesamiento la deshaga**.
+**Cómo leerla.** *Comprender* (§1–6): qué distingue retención, supresión, bloqueo y anonimización, y por qué un DELETE no es una eliminación. *Aplicar* (§7–13): plazos por actividad, supresión por destino, versiones físicas y reintroducciones. *Demostrar*: la evidencia del §8, el código del §10 y los criterios del §18.
+
+La **retención** define hasta cuándo se conserva un dato para una finalidad aprobada; la **supresión**, qué se elimina, de dónde, cuándo y cómo se comprueba. En una plataforma moderna, un dato personal no está en una tabla: está en el origen, en bronze, silver y gold, en features, en exportaciones, en el historial de versiones (time travel), en respaldos y en sistemas de terceros. Retener y suprimir bien significa que el plazo se aplique sin intervención manual, que una supresión alcance todas las copias que corresponde, que **ningún reprocesamiento la deshaga** y que la evidencia distinga lo verificado de lo que aún depende de una ventana de recuperación.
 
 ## 2. Qué es
 
@@ -87,42 +90,60 @@ En una plataforma moderna, un dato personal no está en una tabla: está en el o
 - **[Obligación legal · art. 2]** **Eliminación:** es la destrucción de los datos, cualquiera sea el procedimiento (letra h)); un borrado lógico que deja el dato recuperable no lo es.
 - **[Obligación legal · art. 7]** **Supresión a pedido:** procede por causales; hay excepciones, como una obligación legal de conservar.
 - **[Obligación legal · art. 8 ter]** **Bloqueo:** suspensión temporal del tratamiento sin borrar.
-- **[Decisión de arquitectura]** **Lista de supresión:** registro de llaves de titulares suprimidos que la ingesta aplica para no reintroducirlos.
+- **[Buena práctica]** Cinco nociones que conviene no mezclar:
+
+| Noción | Qué es | Qué no es | Etiqueta |
+|---|---|---|---|
+| Regla de retención | Evento de inicio, duración, finalidad, acción al vencer y excepciones aprobadas | Un plazo único por tabla para todo | **[Buena práctica]** |
+| Supresión | Ejecución de una decisión de eliminar sobre los destinos alcanzados | Un DELETE en una tabla | **[Buena práctica]** |
+| Borrado lógico | La fila ya no se ve, pero puede quedar recuperable en versiones o respaldos | Eliminación (art. 2 h)) | **[Buena práctica]** |
+| Bloqueo | Restringir el tratamiento sin borrar | Supresión | **[Buena práctica]** |
+| Anonimización | Transformación evaluada contra los medios razonables de reidentificación | Quitar el RUT o seudonimizar | **[Buena práctica]** |
+
+- **[Buena práctica]** Los datos de una misma persona no tienen un solo plazo: una reserva, una preferencia comercial y un comprobante tributario responden a finalidades y reglas distintas.
+- **[Decisión de arquitectura]** **Lista de supresión con alcance:** registro de llaves de titulares suprimidos y de los destinos que abarca la decisión, que la ingesta aplica para no reintroducirlos. Una lista global que descarte siempre a la persona puede interferir con tratamientos posteriores legítimos.
 - **[Decisión de arquitectura]** **Crypto-shredding:** cifrar los datos de cada titular con una llave propia y destruirla para volver ilegibles todas las copias, incluidos los respaldos.
 
 ## 3. Problema que resuelve
 
-**[Buena práctica]** Fallas típicas: el DELETE se ejecuta en silver, pero el dato sigue en bronze, en features y en un CSV exportado; el DELETE funciona, pero el dato sigue recuperable por time travel o en un respaldo; un backfill desde el origen reintroduce a un titular suprimido; la evidencia guarda el RUT del titular, lo que crea un tratamiento nuevo; nadie sabe qué tablas debían borrarse a los 90 días.
+**[Buena práctica]** Una aerolínea elimina a un pasajero de `silver.pasajeros`, pero el registro sigue en `bronze.reservas`, en un feature store, en un CSV exportado y en una versión histórica; al día siguiente un backfill lo vuelve a cargar. La consulta fue exitosa; la supresión fracasó. La salida no es agregar más DELETE, sino gestionar el ciclo completo de copias y dependencias.
+
+**[Buena práctica]** Otras fallas típicas: el dato sigue recuperable por time travel o en un respaldo; la evidencia guarda el RUT del titular, lo que crea un tratamiento nuevo; nadie sabe qué tablas debían borrarse a los 90 días.
 
 ## 4. Cómo funciona
 
-1. **[Decisión de arquitectura]** El área legal define plazo y acción (suprimir o anonimizar) por actividad de tratamiento; el catálogo lo propaga a cada tabla.
+1. **[Decisión de arquitectura]** El área legal define plazo, evento de inicio, acción (suprimir o anonimizar) y excepciones por actividad de tratamiento; el catálogo lo propaga a cada tabla.
 2. **[Obligación legal · art. 14 quáter]** La protección por defecto considera el plazo de conservación. **[Decisión de arquitectura]** Un job diario aplica la retención: particiones vencidas se eliminan o se anonimizan.
 3. **[Obligación legal · art. 14]** Los datos de medidas precontractuales (leads, cotizaciones) tienen plazo propio y se suprimen o anonimizan (letra d)).
-4. **[Buena práctica]** Ante una supresión aprobada: identificar al titular con su llave, localizarlo con el índice de titulares y el linaje, separar lo que tiene obligación de conservar y borrar el resto.
-5. **[Buena práctica]** Purgar las versiones físicas: VACUUM en Delta, expiración de snapshots en Iceberg, ventana de time travel en BigQuery, versiones de objetos en almacenamiento.
-6. **[Decisión de arquitectura]** Agregar la llave del titular a la lista de supresión, que la ingesta y los backfills aplican antes de escribir.
-7. **[Obligación legal · art. 11]** Comunicar la supresión a los destinatarios que recibieron los datos.
-8. **[Obligación legal · art. 15 bis]** Al terminar el servicio, el encargado suprime o devuelve los datos. **[Buena práctica]** Exigir y guardar la constancia.
-9. **[Buena práctica]** Generar evidencia con identificadores internos y conteos por tabla, sin datos del titular.
+4. **[Buena práctica]** Ante una supresión aprobada, descubrir el alcance: identificar al titular con su llave, localizarlo con el índice de titulares, el inventario de actividades y el linaje, e incluir copias, exportaciones y encargados. El linaje ayuda a descubrir dependencias, pero no encuentra todas las copias ni los archivos descargados.
+5. **[Buena práctica]** Planificar cada destino como eliminar, conservar por excepción, restringir o gestionar según la política de respaldos; ejecutar con operaciones idempotentes y registrar el estado por destino.
+6. **[Buena práctica]** Purgar las versiones físicas: VACUUM en Delta, expiración de snapshots en Iceberg, ventana de time travel en BigQuery, versiones de objetos en almacenamiento. Mientras corre la ventana, el destino queda en `pendiente_expiracion_copias`, no en `verificado`.
+7. **[Decisión de arquitectura]** Agregar la llave del titular a la lista de supresión con su alcance; la ingesta, el CDC, los backfills y las restauraciones la aplican antes de escribir.
+8. **[Obligación legal · art. 11]** Comunicar la supresión a los destinatarios que recibieron los datos.
+9. **[Obligación legal · art. 15 bis]** Al terminar el servicio, el encargado suprime o devuelve los datos. **[Buena práctica]** Exigir y guardar la constancia.
+10. **[Buena práctica]** Cerrar con evidencia, con identificadores internos y conteos por tabla, sin datos del titular: solo cuando las acciones obligatorias estén verificadas y las excepciones documentadas.
 
 ## 5. Cuándo utilizarlo
 
 - En toda tabla con datos personales, desde su creación.
 - Al diseñar la ingesta incremental y los procesos de backfill y restauración.
+- Ante solicitudes aprobadas de supresión, y al migrar plataformas, retirar sistemas, terminar contratos o restaurar respaldos.
 
 ## 6. Cuándo no utilizarlo
 
 - Para decidir si una supresión procede o si aplica una excepción del art. 7: lo decide el área legal.
-- En datos realmente anonimizados (art. 2 k)): ya no son datos personales. Verificarlo antes (`chilean-identifier-pseudonymization`).
+- Como política global de «borrar todo sobre una persona» sin revisar actividades, obligaciones de conservación y alcance.
+- En datos realmente anonimizados (art. 2 k)): ya no son datos personales. Verificarlo antes (`chilean-identifier-pseudonymization`); anonimizar, bloquear o seudonimizar no equivale a eliminar.
 
 ## 7. Ejemplo sencillo
 
-| Tabla | Plazo | Al vencer | Excepción |
+| Tabla | Plazo (ilustrativo) | Al vencer | Excepción |
 |---|---|---|---|
-| `bronze.reservas` | 90 días | Suprimir | — |
+| `bronze.reservas` | 90 días desde la ingesta | Suprimir | — (revisar copias y versiones) |
 | `silver.pasajeros` | 2 años | Anonimizar | — |
+| `silver.preferencias` | Hasta la revocación o el plazo aprobado | Suprimir o restringir según la decisión | Evitar que el origen la recargue |
 | `gold.facturas` | Según obligación tributaria | Suprimir | Obligación legal: no se borra a pedido |
+| Exportación a un proveedor | Vigencia del encargo | Pedir la supresión y la constancia | La plataforma no controla el destino |
 
 ## 8. Ejemplo de producción
 
@@ -131,23 +152,26 @@ Una aerolínea recibe una solicitud de supresión aprobada por el área legal:
 | Paso | Qué hace ingeniería | Resultado |
 |---|---|---|
 | Identificar | Calcula la llave HMAC del RUT | Llave interna, sin RUT en los logs |
-| Localizar | Consulta el índice de titulares y el linaje | 7 tablas, 1 feature store, 1 exportación semanal a un proveedor |
+| Localizar | Consulta el índice de titulares, el inventario y el linaje | 7 tablas, 1 feature store, 1 exportación semanal a un proveedor |
 | Clasificar | Separa facturas (obligación legal) del resto | 6 tablas a borrar, 1 a conservar |
-| Ejecutar | DELETE por llave | Filas lógicas eliminadas |
-| Purgar | VACUUM y expiración de versiones según la ventana configurada | Copias físicas eliminadas al cumplirse la ventana |
-| Proteger | Agrega la llave a la lista de supresión | Los backfills la descartan |
+| Ejecutar | DELETE por llave, idempotente por solicitud y destino | Filas lógicas eliminadas |
+| Purgar | VACUUM y expiración de versiones según la ventana configurada | `pendiente_expiracion_copias` hasta que se cumpla la ventana |
+| Proteger | Agrega la llave y su alcance a la lista de supresión | Los backfills la descartan en esos destinos |
 | Propagar | Notifica al proveedor de la exportación | Constancia del encargado |
-| Evidenciar | Registro con id de solicitud, llave, conteos y fecha | Prueba sin datos del titular |
+| Evidenciar | Registro con id de solicitud, llave, conteos, estado por destino y fecha | Prueba sin datos del titular |
+
+**Estados por destino:** `pendiente`, `en_ejecucion`, `verificado`, `excepcion_aprobada`, `fallido`, `pendiente_expiracion_copias`. Lo que todavía depende de la expiración de versiones o respaldos no se declara `verificado`.
 
 ### Evidencia de cumplimiento
 
-| Evidencia | Dónde queda | Quién la produce |
-|---|---|---|
-| Plazo y acción por tabla | Catálogo | Área legal, dueño del dato |
-| Ejecución diaria de retención | Log del job | Orquestador |
-| Registro de cada supresión | Log de solicitudes, sin datos del titular | Pipeline de derechos |
-| Historial de VACUUM o expiración | Historial de la tabla, logs de auditoría | Plataforma |
-| Prueba de no reintroducción | Test de la CI sobre la ingesta | CI |
+| Evidencia | Dónde queda | Quién la produce | Qué demuestra | Qué no demuestra |
+|---|---|---|---|---|
+| Plazo y acción por tabla | Catálogo | Área legal, dueño del dato | Qué regla rige cada tabla | Que la regla se aplique |
+| Ejecución diaria de retención | Log del job | Orquestador | Qué particiones se eliminaron o anonimizaron | Que no haya copias fuera del catálogo |
+| Registro de cada supresión, con estado por destino | Log de solicitudes, sin datos del titular | Pipeline de derechos | Qué se borró, qué se conservó por excepción y qué falta | Que el inventario de destinos esté completo |
+| Historial de VACUUM o expiración | Historial de la tabla, logs de auditoría | Plataforma | Cuándo dejaron de existir las versiones | Que los respaldos externos se rotaron |
+| Prueba de no reintroducción | Test de la CI sobre la ingesta | CI | Que un backfill no vuelve a cargar al titular | Que una restauración manual la respete |
+| Constancia del encargado | Gestión de contratos | Encargado | Que declaró suprimir o devolver | La eliminación física en su sistema |
 
 ## 9. Arquitectura
 
@@ -155,10 +179,10 @@ Una aerolínea recibe una solicitud de supresión aprobada por el área legal:
 
 ```mermaid
 flowchart LR
-  O["Origen"] --> I{"¿Llave en la<br/>lista de supresión?"}
+  O["Origen"] --> I{"¿Llave en la lista<br/>para este destino?"}
   I -- "sí" --> D["Descartar"]
   I -- "no" --> P["Bronze, silver, gold"]
-  R["Supresión aprobada"] --> L["Lista de supresión"]
+  R["Supresión aprobada"] --> L["Lista de supresión<br/>con alcance"]
   L --> I
 ```
 
@@ -166,12 +190,13 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-  R["Supresión aprobada"] --> X["Índice y linaje"]
+  R["Supresión aprobada"] --> X["Índice, inventario<br/>y linaje"]
   C["Catálogo:<br/>plazo y acción"] --> J["Job de retención"]
   X --> P["Bronze, silver, gold"]
   J --> P
   X --> T["Terceros y exportaciones"]
   P --> V["VACUUM y expiración<br/>de versiones"]
+  V & T --> E["Estado por destino<br/>y evidencia"]
 ```
 
 ## 10. Código
@@ -180,8 +205,10 @@ flowchart TB
 # Python 3.12+, biblioteca estándar. Supresión consistente en un lakehouse simulado (Bronze, Silver, Gold):
 # 1) el titular se identifica con una llave seudónima (HMAC del RUT con una llave separada),
 # 2) la supresión borra en todas las capas salvo donde hay una obligación legal de conservar,
-# 3) la llave queda en una lista de supresión que la ingesta aplica, para que un backfill no la reintroduzca,
-# 4) la evidencia registra conteos e identificadores internos, nunca el RUT.
+# 3) la llave queda en una lista de supresión, con su alcance, que la ingesta aplica para que un backfill no la
+#    reintroduzca,
+# 4) la evidencia registra conteos e identificadores internos, nunca el RUT,
+# 5) el caso no queda verificado mientras un destino esté pendiente o falten copias por expirar.
 import hashlib
 import hmac
 import secrets
@@ -217,18 +244,19 @@ TABLAS = {
     "gold.facturas": Tabla("gold.facturas", 2190, "suprimir", True),
 }
 
-ORIGEN = [  # lo que devuelve el sistema fuente en un backfill
-    ("12.345.678-5", "reserva SCL-LIM", date(2026, 10, 1)),
-    ("9.876.543-2", "reserva SCL-PMC", date(2026, 10, 3)),
+ORIGEN = [  # lo que devuelve el sistema fuente en un backfill; RUT ficticios (dígitos repetidos)
+    ("11.111.111-1", "reserva SCL-LIM", date(2026, 10, 1)),
+    ("22.222.222-2", "reserva SCL-PMC", date(2026, 10, 3)),
 ]
 
-LISTA_SUPRESION: set[str] = set()
+LISTA_SUPRESION: dict[str, set[str]] = {}   # llave del titular → tablas alcanzadas por la decisión
+VERIFICABLES = {"verificado", "excepcion_aprobada"}
 
 
-def ingestar(origen: list[tuple[str, str, date]]) -> list[Fila]:
-    """La ingesta seudonimiza y descarta titulares en la lista de supresión."""
+def ingestar(origen: list[tuple[str, str, date]], destino: str) -> list[Fila]:
+    """La ingesta seudonimiza y descarta los titulares cuya supresión alcanza a este destino."""
     filas = [Fila(llave_titular(rut), dato, f) for rut, dato, f in origen]
-    return [f for f in filas if f.titular not in LISTA_SUPRESION]
+    return [f for f in filas if destino not in LISTA_SUPRESION.get(f.titular, set())]
 
 
 def suprimir(datos: dict[str, list[Fila]], rut: str, solicitud: str) -> dict[str, object]:
@@ -242,7 +270,7 @@ def suprimir(datos: dict[str, list[Fila]], rut: str, solicitud: str) -> dict[str
         antes = len(filas)
         datos[nombre] = [f for f in filas if f.titular != t]
         borradas[nombre] = antes - len(datos[nombre])
-    LISTA_SUPRESION.add(t)
+    LISTA_SUPRESION[t] = set(borradas)   # alcance: no descarta al titular de tratamientos fuera de la decisión
     # En producción, además: VACUUM / expiración de time travel, backups y exportaciones a terceros.
     return {"solicitud": solicitud, "titular": t, "borradas": borradas,
             "conservadas_por_obligacion_legal": conservadas, "en_lista_supresion": True}
@@ -259,8 +287,14 @@ def vencidas(datos: dict[str, list[Fila]], hoy: date) -> dict[str, tuple[int, st
     return salida
 
 
+def pendientes(estados: dict[str, tuple[str, str | None]]) -> list[str]:
+    """Lo que impide dar el caso por verificado: estado no final o destino sin evidencia."""
+    salida = [f"{d}: {e}" for d, (e, _) in estados.items() if e not in VERIFICABLES]
+    return salida + [f"{d}: falta evidencia" for d, (_, ev) in estados.items() if ev is None]
+
+
 def main() -> None:
-    bronze = ingestar(ORIGEN)
+    bronze = ingestar(ORIGEN, "bronze.reservas")
     datos = {
         "bronze.reservas": bronze,
         "silver.pasajeros": [Fila(f.titular, "pasajero frecuente", f.fecha) for f in bronze],
@@ -268,38 +302,54 @@ def main() -> None:
     }
     datos["bronze.reservas"].append(Fila(llave_titular("5.555.555-5"), "reserva antigua", date(2026, 5, 1)))
 
-    evidencia = suprimir(datos, "12.345.678-5", "SOL-2026-0042")   # RUT ficticio
+    evidencia = suprimir(datos, "11.111.111-1", "SOL-2026-0042")
     print("evidencia:", {k: v for k, v in evidencia.items() if k != "titular"})
     print("llave del titular en la evidencia:", len(str(evidencia["titular"])), "caracteres hex, sin RUT")
-    assert "12.345.678-5" not in str(evidencia), "la evidencia no debe contener el RUT"
+    assert "11.111.111-1" not in str(evidencia), "la evidencia no debe contener el RUT"
+    print("alcance en la lista de supresión:", sorted(LISTA_SUPRESION[str(evidencia["titular"])]))
 
     print("retención vencida al 2026-10-22:", vencidas(datos, date(2026, 10, 22)))
 
     # Backfill: se vuelve a leer el origen completo.
-    datos["bronze.reservas"] = ingestar(ORIGEN)
+    datos["bronze.reservas"] = ingestar(ORIGEN, "bronze.reservas")
     reaparece = any(f.titular == evidencia["titular"] for f in datos["bronze.reservas"])
     print("¿el backfill reintroduce al titular?:", reaparece)
+
+    estados: dict[str, tuple[str, str | None]] = {   # destino → (estado, evidencia)
+        "bronze.reservas": ("verificado", "job-105"),
+        "silver.pasajeros": ("pendiente_expiracion_copias", "job-106"),   # sigue en la ventana de time travel
+        "gold.facturas": ("excepcion_aprobada", "decision-22"),
+        "proveedor_email": ("pendiente", None),
+    }
+    print("SOL-2026-0042 aún no verificada:", pendientes(estados))
 
 
 if __name__ == "__main__":
     main()
 ```
 
-El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. La llave HMAC se genera con `secrets` y los RUT son ficticios. Imprime la evidencia de la supresión (1 fila en `bronze.reservas` y 1 en `silver.pasajeros`, la factura conservada por obligación legal), que la llave del titular es un valor hex de 16 caracteres sin RUT, la reserva de mayo vencida a los 90 días y que el backfill no reintroduce al titular.
+El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. La llave HMAC se genera con `secrets` y los RUT son ficticios (dígitos repetidos). Imprime la evidencia de la supresión (1 fila en `bronze.reservas` y 1 en `silver.pasajeros`, la factura conservada por obligación legal), que la llave del titular es un valor hex de 16 caracteres sin RUT, el alcance de la lista de supresión, la reserva de mayo vencida a los 90 días, que el backfill no reintroduce al titular y qué impide dar el caso por verificado:
+
+```text
+alcance en la lista de supresión: ['bronze.reservas', 'silver.pasajeros']
+SOL-2026-0042 aún no verificada: ['silver.pasajeros: pendiente_expiracion_copias', 'proveedor_email: pendiente', 'proveedor_email: falta evidencia']
+```
+
+**Limitaciones:** el ejemplo no ejecuta borrados físicos ni acredita la eliminación en versiones, respaldos o terceros; las ventanas de cada servicio están en §11–13.
 
 ## 11. GCP
 
-En GCP, **BigQuery**. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* y *Data retention with time travel and fail-safe* (no ejecutado):
+En GCP, **BigQuery**. Según *Data retention with time travel and fail-safe* (no ejecutado):
 
 | Tema | Comportamiento | Etiqueta |
 |---|---|---|
 | Time travel | Los datos cambiados o borrados siguen recuperables durante la ventana: 7 días por defecto, configurable entre 2 y 7 | **[Buena práctica]** |
 | Fail-safe | 7 días más, no configurables; se recupera con Cloud Customer Care | **[Buena práctica]** |
-| Consecuencia | Tras un DELETE, el dato sigue recuperable hasta unos 14 días; la evidencia declara esa ventana | **[Decisión de arquitectura]** |
+| Consecuencia | Tras un DELETE, el dato sigue recuperable hasta unos 14 días; el destino queda en `pendiente_expiracion_copias` y la evidencia declara esa ventana | **[Decisión de arquitectura]** |
 
 ## 12. AWS
 
-En AWS, **Amazon S3** e **Iceberg**. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES*, *Managing the lifecycle of objects*, *Deleting object versions from a versioning-enabled bucket* y *Maintenance* (Apache Iceberg) (no ejecutado):
+En AWS, **Amazon S3** e **Iceberg**. Según *Managing the lifecycle of objects*, *Deleting object versions from a versioning-enabled bucket* y *Maintenance* (Apache Iceberg) (no ejecutado):
 
 | Tema | Comportamiento | Etiqueta |
 |---|---|---|
@@ -309,7 +359,7 @@ En AWS, **Amazon S3** e **Iceberg**. Según *Ley 19628 SOBRE PROTECCION DE LOS D
 
 ## 13. Azure
 
-En Azure, **Delta** en Azure Databricks. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES*, *Remove unused data files with vacuum* y *VACUUM* (no ejecutado):
+En Azure, **Delta** en Azure Databricks. Según *Remove unused data files with vacuum* y *VACUUM* (no ejecutado):
 
 | Tema | Comportamiento | Etiqueta |
 |---|---|---|
@@ -322,26 +372,34 @@ Databricks recomienda una retención de al menos 7 días; bajarla arriesga borra
 ## 14. Buenas prácticas
 
 - **[Decisión de arquitectura]** Usar la llave seudónima del titular como clave de supresión en todas las capas: sin ella, borrar exige buscar el RUT en cada tabla.
+- **[Buena práctica]** Modelar las reglas por actividad, categoría de datos y evento de inicio, no solo por tabla.
 - **[Buena práctica]** Particionar por fecha para que la retención sea un DROP de particiones, no un DELETE fila a fila.
-- **[Buena práctica]** **Seguridad:** la lista de supresión también es tratamiento: guardar solo la llave seudónima, la fecha y el id de solicitud.
-- **[Buena práctica]** **Observabilidad:** métrica de tablas con datos personales sin plazo definido; debe ser cero.
+- **[Buena práctica]** **Seguridad:** la lista de supresión también es tratamiento: guardar solo la llave seudónima, el alcance, la fecha y el id de solicitud.
+- **[Buena práctica]** **Observabilidad:** métricas de tablas con datos personales sin plazo definido (debe ser cero), destinos pendientes por solicitud y copias aún recuperables.
 - **[Decisión de arquitectura]** **Respaldos:** si no se pueden editar, documentar el plazo de rotación y reaplicar la lista de supresión en toda restauración, o usar crypto-shredding.
 - **[Buena práctica]** **Costo:** el crypto-shredding agrega llaves y latencia; reservarlo para datos sensibles o sistemas con copias imposibles de editar.
 
 ## 15. Errores frecuentes
 
-- Borrar en silver y olvidar bronze, features y exportaciones.
-- Asumir que un DELETE es una eliminación definitiva sin considerar time travel, VACUUM y respaldos.
-- Backfills e ingestas «full refresh» que no aplican la lista de supresión.
-- Restaurar un respaldo sin reaplicar las supresiones posteriores.
-- Evidencia que guarda el RUT o el nombre del titular.
+| Error | Consecuencia |
+|---|---|
+| Borrar en silver y olvidar bronze, features y exportaciones | Un derivado o la próxima carga reintroduce el dato |
+| Asumir que un DELETE es una eliminación definitiva | Time travel, versiones y respaldos lo dejan recuperable |
+| Backfills e ingestas «full refresh» que no aplican la lista de supresión | El titular suprimido vuelve |
+| Restaurar un respaldo sin reaplicar las supresiones posteriores | Se deshacen supresiones ya respondidas |
+| Lista de supresión global, sin alcance | Se bloquean tratamientos legítimos que la decisión no abarcaba |
+| Declarar anonimizado tras quitar identificadores | Sigue el riesgo de reidentificación indirecta |
+| Evidencia con el RUT o el nombre del titular | La evidencia se vuelve otra copia personal |
+| Registrar solo conteos de filas | No demuestra cobertura ni estado por destino |
 
 ## 16. Trade-offs
 
 | Opción | A favor | En contra |
 |---|---|---|
 | DELETE + VACUUM | Simple, nativo | Ventana de recuperación; no alcanza respaldos |
-| Crypto-shredding | Alcanza respaldos y copias | Gestión de llaves, latencia, complejidad |
+| Borrado por fila | Preciso para solicitudes individuales | Costoso en grandes volúmenes |
+| Expiración por partición | Eficiente para la retención | Exige un particionado alineado con la regla |
+| Crypto-shredding | Alcanza respaldos y copias | Gestión de llaves, latencia, complejidad; depende de la granularidad de las llaves |
 | Anonimizar en vez de borrar | Conserva valor analítico | Exige probar que la anonimización es irreversible |
 | Bloqueo | Rápido, reversible | No reemplaza la supresión cuando corresponde |
 
@@ -352,17 +410,21 @@ Databricks recomienda una retención de al menos 7 días; bajarla arriesga borra
 - `chilean-identifier-pseudonymization`: HMAC, llaves y anonimización real.
 - `processing-activities-inventory`: de dónde vienen plazo y acción.
 - `processors-and-international-transfers`: supresión en terceros.
+- `data-lineage`: descubrir dependencias.
 - `crypto-shredding`, `data-retention`, `open-table-formats`: técnicas de 18, 17 y 20.
 
 ## 18. Preguntas técnicas abiertas
 
-1. ¿Tus backfills leen una lista de supresión?
+1. ¿Tus backfills leen una lista de supresión, y con qué alcance?
 2. ¿Cuánto tiempo sigue recuperable un dato borrado en tu plataforma, sumando versiones y respaldos?
 3. ¿Qué tablas con datos personales no tienen plazo definido?
+4. ¿Cómo sigues una acción pendiente en un sistema que no controlas?
+
+**Criterio de dominio:** dominas esta ficha si puedes explicar, antes de declarar una supresión completa, qué destinos activos, derivados, exportaciones y terceros abarca; qué acción o excepción tiene cada uno; cómo la evidencia distingue borrado lógico, eliminación física y ventanas pendientes; y cómo los backfills, el CDC y las restauraciones respetan el alcance de la decisión.
 
 ## 19. Laboratorio relacionado
 
-Pendiente (F4). Propuesta: tabla Delta con supresión, VACUUM y backfill que respete la lista de supresión.
+Propuesta para F4: tablas bronze, silver y gold con una supresión aprobada, un backfill que no debe reintroducir al titular y un destino externo simulado que queda `pendiente`, para demostrar que el caso no se cierra. La recuperación histórica y los respaldos se documentan aparte: el laboratorio no acredita una eliminación física real.
 
 ## 20. Fuentes
 
@@ -384,3 +446,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
 - 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): dos diagramas: la ingesta respeta la lista de supresión, y supresión y retención en cada copia.
+- 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (retención frente a supresión), §2 (tabla de regla, supresión, borrado lógico, bloqueo y anonimización; plazos distintos para una misma persona; lista de supresión con alcance), §3 (caso del pasajero que vuelve con un backfill), §4 (diez pasos: alcance con inventario y linaje, plan por destino, `pendiente_expiracion_copias`, cierre con evidencia), §5, §6, §7 (preferencias y exportación a un proveedor), §8 (estados por destino y evidencia «qué demuestra y qué no»), §9 (alcance y estado por destino), §10 (lista de supresión con alcance y estados que impiden dar el caso por verificado, sobre el mismo ejemplo; RUT ficticios de dígitos repetidos en lugar de `12.345.678-5` y `9.876.543-2`), §11 (estado en la ventana de BigQuery), §14–16, §17 (relación con `data-lineage`), §18 (criterio de dominio) y §19 (laboratorio para F4). Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
