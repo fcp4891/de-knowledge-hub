@@ -67,6 +67,7 @@ Es emergente de verdad: la especificación está en «DRAFT version — in devel
 
 ## 2. Qué es
 
+- **Estado de la especificación:** Apache Ossie está en la incubadora de la ASF («Apache Ossie (incubating)») y su especificación es un borrador: «DRAFT version — in development, schema may change before 0.2.0 is released», versión 0.2.0.dev0. Todo lo de esta ficha puede cambiar.
 - **Modelo semántico portable:** datasets, campos, métricas y relaciones en un archivo.
 - **Expresiones por dialecto:** cada métrica trae su SQL por dialecto (por ejemplo, ANSI_SQL).
 - **Contexto para IA:** descripciones y sinónimos para agentes (`data-agents`).
@@ -240,6 +241,7 @@ Un formato común evita definiciones divergentes a cambio de depender de convert
 1. ¿Qué métrica está definida en más de una herramienta?
 2. ¿Qué herramienta tendría que leer el modelo primero?
 3. ¿Qué te haría adoptar la especificación en producción?
+4. **Riesgo de inestabilidad:** la especificación es un borrador (DRAFT 0.2.0.dev0) de un proyecto en incubación; el esquema puede cambiar antes de la 0.2.0. ¿Cómo aislarías tus modelos de un cambio de esquema (commit fijado, validación en la CI, convertidor propio)?
 
 ## 19. Laboratorio relacionado
 
@@ -261,3 +263,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-27: creación (lote F3b-23b).
+- 2026-10-28: el §2 dice explícitamente que la especificación es un borrador (DRAFT 0.2.0.dev0) de un proyecto en incubación, y el §18 lo registra como riesgo de inestabilidad (pedido de Felipe).
