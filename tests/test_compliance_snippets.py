@@ -87,7 +87,8 @@ STDLIB = {
     "dpia-and-automated-decisions": [
         "score_fraude_pagos → EIPD obligatoria por: ['a) perfilamiento con efectos significativos', "
         "'b) tratamiento masivo o a gran escala']",
-        "tablero_ocupacion_vuelos → EIPD obligatoria por: ningún caso tasado",
+        "tablero_ocupacion_vuelos → EIPD obligatoria por: ningún caso tasado", "despliegue fraude-v3.3: permitido",
+        "despliegue fraude-v4.0: bloqueado: EIPD obligatoria sin aprobación vigente para la versión mayor 4",
         "'huella_entradas': '3c4c036d2fd4', 'variables_principales': ['pais_tarjeta_distinto', 'monto_relativo']",
         "'resultado': 'derivada a revisión humana', 'titular_puede_pedir_revision': True}"],
 }
