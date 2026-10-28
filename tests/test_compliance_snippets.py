@@ -100,7 +100,10 @@ GATES = {
         "BRECHA sin aprobación: job_fraude → silver.pasajeros (modelo_fraude)",
         "BRECHA sin vínculo: dashboard_externo → silver.pasajeros"],
     "processors-and-international-transfers": [
-        "flujos: 4; brechas: 3", "BRECHA tickets_soporte → API de LLM externa: sin contrato de encargo (art. 15 bis)",
+        "flujos: 7; brechas: 6", "BRECHA tickets_soporte → API de LLM externa: sin contrato de encargo (art. 15 bis)",
+        "BRECHA silver.pasajeros → plataforma de email: finalidad «perfilamiento» fuera del alcance aprobado "
+        "(['notificaciones'])",
+        "BRECHA logs_aplicacion → soporte remoto del proveedor de monitoreo: transferencia a US sin mecanismo (art. 27)",
         "BRECHA tickets_soporte → API de LLM externa: transferencia a US sin mecanismo (art. 27)",
         "BRECHA silver.reservas → proveedor de ETL (contrato cerrado): terminado sin constancia de supresión o devolución "
         "(art. 15 bis)"],
