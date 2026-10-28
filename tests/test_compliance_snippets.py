@@ -3,6 +3,8 @@
 - Biblioteca estándar: chile-data-protection, pii-identification, processing-activities-inventory,
   chilean-identifier-pseudonymization, data-subject-rights-pipeline, retention-and-erasure, data-breach-response,
   dpia-and-automated-decisions, processors-and-international-transfers y privacy-controls-as-code.
+- retention-and-erasure: además del ejemplo con biblioteca estándar, PyIceberg con catálogo SQLite en Linux (ADR-018) y
+  crypto-shredding con cryptography (ADR-022); las llaves por titular las genera el test, no el snippet.
 - data-minimization-by-layer: psycopg contra una base temporal en el PostgreSQL de la CI; el rol lleva como sufijo el
   nombre de la base temporal y se borra al terminar.
 - Los ejemplos que hacen fallar la CI con brechas terminan con código 1: el test verifica ese código y la salida.
@@ -10,7 +12,9 @@
 
 from __future__ import annotations
 
+import json
 import os
+import secrets
 import subprocess
 import sys
 from pathlib import Path
@@ -18,7 +22,7 @@ from pathlib import Path
 import pytest
 
 from tests.test_docker_snippets import blocks
-from tests.test_open_stack_snippets import pg_env, run_python_block  # noqa: F401 - fixture
+from tests.test_open_stack_snippets import pg_env, require_iceberg, run_python_block  # noqa: F401 - fixture
 
 UTF8 = {"PYTHONIOENCODING": "utf-8"}   # los ejemplos imprimen tildes; en Windows la salida sería cp1252
 
@@ -132,9 +136,12 @@ MINIMIZATION = [
 ]
 
 
+MARKERS = {"retention-and-erasure": "biblioteca estándar"}   # fichas con más de un bloque ```python
+
+
 @pytest.mark.parametrize("ficha", sorted(STDLIB))
 def test_compliance_examples_in_python(ficha: str, tmp_path: Path) -> None:
-    out = run_python_block(ficha, tmp_path, UTF8)
+    out = run_python_block(ficha, tmp_path, UTF8, marker=MARKERS.get(ficha, ""))
     for line in STDLIB[ficha]:
         assert line in out, out
     assert_mypy_strict(tmp_path)
@@ -171,5 +178,26 @@ def test_privacy_control_results_fail_the_ci_with_gaps(tmp_path: Path) -> None:
 def test_minimization_by_layer_in_postgres(pg_env: dict[str, str], tmp_path: Path) -> None:  # noqa: F811
     out = run_python_block("data-minimization-by-layer", tmp_path, {**pg_env, **UTF8})
     for line in MINIMIZATION:
+        assert line in out, out
+    assert_mypy_strict(tmp_path)
+
+
+def test_erasure_expires_iceberg_snapshots(tmp_path: Path) -> None:
+    require_iceberg()
+    out = run_python_block("retention-and-erasure", tmp_path, UTF8, marker="PyIceberg", args=(str(tmp_path / "work"),))
+    for line in ("lectura actual tras el DELETE: False", "time travel al snapshot anterior: True",
+                 "snapshots vigentes tras expirar: 1", "¿algún snapshot vigente lo devuelve?: False"):
+        assert line in out, out
+    assert_mypy_strict(tmp_path)
+
+
+def test_erasure_by_crypto_shredding(tmp_path: Path) -> None:
+    pytest.importorskip("cryptography", reason="falta cryptography (make snippets-deps)")
+    llaves = tmp_path / "llaves.json"   # las llaves por titular las genera el test; el snippet no trae ninguna
+    llaves.write_text(json.dumps({t: secrets.token_bytes(32).hex() for t in ("a1b2c3", "d4e5f6")}), encoding="utf-8")
+    out = run_python_block("retention-and-erasure", tmp_path, UTF8, marker="cryptography", args=(str(llaves),))
+    for line in ("titulares con llave: ['d4e5f6']", "a1b2c3 en el respaldo: no se puede descifrar: la llave no existe",
+                 "a1b2c3 con la llave de otro titular: no se puede descifrar: llave incorrecta",
+                 "d4e5f6 en el respaldo: reserva SCL-PMC"):
         assert line in out, out
     assert_mypy_strict(tmp_path)

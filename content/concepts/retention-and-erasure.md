@@ -50,6 +50,11 @@ sources:
     accessed: 2026-10-21
     page_title: "Maintenance"
     note: "Maintenance (Apache Iceberg, Java 1.12.0): cada escritura crea un snapshot; los snapshots se acumulan hasta expirarlos y, una vez expirados, ya no sirven para time travel; los archivos de datos no se borran mientras algún snapshot que pueda usarse para time travel o rollback los referencie. Delete orphan files: en Spark y otros motores, fallas pueden dejar archivos sin referencia y, en algunos casos, la expiración normal no puede determinar que un archivo ya no se necesita."
+  - source: cryptography-docs
+    url: https://cryptography.io/en/stable/hazmat/primitives/aead/
+    accessed: 2026-10-21
+    page_title: "Authenticated encryption"
+    note: "Authenticated encryption (cryptography): AESGCM cifra y autentica los datos y autentica los datos asociados (associated_data). Advertencia de la página: reusar un nonce con la misma clave compromete la seguridad de todo mensaje con ese par. decrypt lanza cryptography.exceptions.InvalidTag si la etiqueta de autenticación no valida, lo que ocurre si el texto cifrado cambió y también si la clave, el nonce o los datos asociados son incorrectos."
   - source: azure-databricks-docs
     url: https://learn.microsoft.com/en-us/azure/databricks/tables/operations/vacuum
     accessed: 2026-10-22
@@ -117,7 +122,7 @@ La **retención** define hasta cuándo se conserva un dato para una finalidad ap
 3. **[Obligación legal · art. 14]** Los datos de medidas precontractuales (leads, cotizaciones) tienen plazo propio y se suprimen o anonimizan (letra d)).
 4. **[Buena práctica]** Ante una supresión aprobada, descubrir el alcance: identificar al titular con su llave, localizarlo con el índice de titulares, el inventario de actividades y el linaje, e incluir copias, exportaciones y encargados. El linaje ayuda a descubrir dependencias, pero no encuentra todas las copias ni los archivos descargados.
 5. **[Buena práctica]** Planificar cada destino como eliminar, conservar por excepción, restringir o gestionar según la política de respaldos; ejecutar con operaciones idempotentes y registrar el estado por destino.
-6. **[Buena práctica]** Purgar las versiones físicas: VACUUM en Delta, expiración de snapshots en Iceberg, ventana de time travel en BigQuery, versiones de objetos en almacenamiento. Mientras corre la ventana, el destino queda en `pendiente_expiracion_copias`, no en `verificado`.
+6. **[Buena práctica]** Purgar las versiones físicas: VACUUM en Delta, expiración de snapshots en Iceberg, ventana de time travel en BigQuery, versiones de objetos en almacenamiento. Mientras corre la ventana, el destino queda en `pendiente_expiracion_copias`, no en `verificado`. En Iceberg, la prueba es que ningún snapshot vigente devuelva al titular; en copias que no se reescriben, como los respaldos, la alternativa es destruir la llave del titular (crypto-shredding). Los dos ejemplos están en el §10.
 7. **[Decisión de arquitectura]** Agregar la llave del titular a la lista de supresión con su alcance; la ingesta, el CDC, los backfills y las restauraciones la aplican antes de escribir.
 8. **[Obligación legal · art. 11]** Comunicar la supresión a los destinatarios que recibieron los datos.
 9. **[Obligación legal · art. 15 bis]** Al terminar el servicio, el encargado suprime o devuelve los datos. **[Buena práctica]** Exigir y guardar la constancia.
@@ -170,6 +175,8 @@ Una aerolínea recibe una solicitud de supresión aprobada por el área legal:
 | Ejecución diaria de retención | Log del job | Orquestador | Qué particiones se eliminaron o anonimizaron | Que no haya copias fuera del catálogo |
 | Registro de cada supresión, con estado por destino | Log de solicitudes, sin datos del titular | Pipeline de derechos | Qué se borró, qué se conservó por excepción y qué falta | Que el inventario de destinos esté completo |
 | Historial de VACUUM o expiración | Historial de la tabla, logs de auditoría | Plataforma | Cuándo dejaron de existir las versiones | Que los respaldos externos se rotaron |
+| Lectura en los snapshots vigentes tras expirar | Log del job de supresión | Pipeline de derechos | Que ninguna versión vigente devuelve al titular | Que los archivos de datos se borraron del almacenamiento |
+| Llave del titular destruida | Auditoría del KMS o del key store | Seguridad | Que sus registros cifrados ya no se descifran, incluidos los respaldos | Que no quedaran copias en claro fuera del cifrado |
 | Prueba de no reintroducción | Test de la CI sobre la ingesta | CI | Que un backfill no vuelve a cargar al titular | Que una restauración manual la respete |
 | Constancia del encargado | Gestión de contratos | Encargado | Que declaró suprimir o devolver | La eliminación física en su sistema |
 
@@ -335,7 +342,113 @@ alcance en la lista de supresión: ['bronze.reservas', 'silver.pasajeros']
 SOL-2026-0042 aún no verificada: ['silver.pasajeros: pendiente_expiracion_copias', 'proveedor_email: pendiente', 'proveedor_email: falta evidencia']
 ```
 
-**Limitaciones:** el ejemplo no ejecuta borrados físicos ni acredita la eliminación en versiones, respaldos o terceros; las ventanas de cada servicio están en §11–13.
+**Limitaciones:** este ejemplo no ejecuta borrados físicos ni acredita la eliminación en versiones, respaldos o terceros; las ventanas de cada servicio están en §11–13. Los dos ejemplos siguientes cubren las versiones de una tabla Iceberg y las copias que no se reescriben.
+
+**Versiones de una tabla Iceberg.** El DELETE no basta: el dato sigue legible por time travel hasta que se expiran los snapshots que lo contienen.
+
+```python
+# Python 3.12, PyIceberg 0.12 y PyArrow (ejecutado en la CI en Linux; ADR-018): un DELETE en Iceberg crea un snapshot
+# nuevo, pero el dato sigue legible por time travel desde el snapshot anterior. Hay que expirar los snapshots que lo
+# contienen y comprobar que ningún snapshot vigente lo devuelve. Si la versión fijada no soporta un paso, se imprime
+# «no ejecutado» con el mensaje de la biblioteca. Uso: iceberg_supresion.py <carpeta de trabajo>
+import sys
+import tempfile
+from pathlib import Path
+
+import pyarrow as pa  # type: ignore[import-untyped]  # pyarrow no publica stubs de tipos
+from pyiceberg.catalog.sql import SqlCatalog
+from pyiceberg.table import Table
+
+base = Path(sys.argv[1] if len(sys.argv) > 1 else tempfile.mkdtemp())
+(base / "warehouse").mkdir(parents=True, exist_ok=True)
+catalogo = SqlCatalog("local", uri=f"sqlite:///{(base / 'catalog.db').as_posix()}", warehouse=(base / "warehouse").as_uri())
+catalogo.create_namespace("silver")
+tabla = catalogo.create_table("silver.pasajeros", schema=pa.schema([("titular", pa.string()), ("ruta", pa.string())]),
+                              properties={"format-version": "2"})
+tabla.append(pa.table({"titular": ["a1b2c3", "d4e5f6"], "ruta": ["SCL-LIM", "SCL-PMC"]}))  # llaves seudónimas
+TITULAR = "a1b2c3"
+
+
+def lo_lee(t: Table, snapshot_id: int) -> bool:
+    return TITULAR in t.scan(snapshot_id=snapshot_id).to_arrow().column("titular").to_pylist()
+
+
+tabla.delete(f"titular = '{TITULAR}'")
+tabla = catalogo.load_table("silver.pasajeros")
+anteriores = [s.snapshot_id for s in tabla.metadata.snapshots if s.snapshot_id != tabla.metadata.current_snapshot_id]
+print("lectura actual tras el DELETE:", TITULAR in tabla.scan().to_arrow().column("titular").to_pylist())
+print("time travel al snapshot anterior:", any(lo_lee(tabla, s) for s in anteriores))
+
+try:
+    expirar = tabla.maintenance.expire_snapshots()
+    for snapshot_id in anteriores:
+        expirar = expirar.by_id(snapshot_id)
+    expirar.commit()
+    tabla = catalogo.load_table("silver.pasajeros")
+    vigentes = [s.snapshot_id for s in tabla.metadata.snapshots]
+    print("snapshots vigentes tras expirar:", len(vigentes))
+    print("¿algún snapshot vigente lo devuelve?:", any(lo_lee(tabla, s) for s in vigentes))
+except (AttributeError, NotImplementedError, ValueError) as exc:
+    print(f"expire_snapshots: no ejecutado ({exc})")
+```
+
+El script se **ejecuta en la CI en Linux** con PyIceberg 0.12 y catálogo SQLite (ADR-018) y pasa `mypy --strict`. PyIceberg 0.12 soporta `expire_snapshots`, así que no queda nada «no ejecutado»:
+
+```text
+lectura actual tras el DELETE: False
+time travel al snapshot anterior: True
+snapshots vigentes tras expirar: 1
+¿algún snapshot vigente lo devuelve?: False
+```
+
+Expirar saca el snapshot de la metadata; según *Maintenance*, los archivos de datos no se borran mientras algún snapshot que sirva para time travel o rollback los referencie, y los archivos huérfanos se limpian aparte. El ejemplo comprueba la lectura, no el borrado físico de los archivos.
+
+**Copias que no se reescriben: crypto-shredding.** Las llaves por titular las genera el test y llegan en un archivo; el código no contiene ninguna.
+
+```python
+# Python 3.12 y cryptography (ejecutado en la CI; ADR-022): crypto-shredding para suprimir en copias que no se
+# reescriben (respaldos, exportaciones). Cada titular tiene su llave; sus registros se cifran con ella. Suprimir es
+# destruir la llave: el registro sigue en el respaldo, pero ya no se puede descifrar. Las llaves no están en el
+# código: llegan en un archivo JSON (titular → llave en hex) que en producción sería un KMS o un key store.
+# Uso: crypto_shredding.py <archivo de llaves>
+import json
+import os
+import sys
+from pathlib import Path
+
+from cryptography.exceptions import InvalidTag
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+
+almacen = Path(sys.argv[1])
+llaves = {t: bytes.fromhex(h) for t, h in json.loads(almacen.read_text(encoding="utf-8")).items()}
+
+
+def cifrar(titular: str, valor: str) -> tuple[str, bytes, bytes]:
+    nonce = os.urandom(12)
+    return titular, nonce, AESGCM(llaves[titular]).encrypt(nonce, valor.encode(), titular.encode())
+
+
+def descifrar(registro: tuple[str, bytes, bytes], llave: bytes | None) -> str:
+    titular, nonce, cifrado = registro
+    if llave is None:
+        return "no se puede descifrar: la llave no existe"
+    try:
+        return AESGCM(llave).decrypt(nonce, cifrado, titular.encode()).decode()
+    except InvalidTag:
+        return "no se puede descifrar: llave incorrecta"
+
+
+respaldo = [cifrar("a1b2c3", "reserva SCL-LIM"), cifrar("d4e5f6", "reserva SCL-PMC")]  # llaves seudónimas
+del llaves["a1b2c3"]                                       # supresión aprobada: se destruye la llave del titular
+almacen.write_text(json.dumps({t: k.hex() for t, k in llaves.items()}), encoding="utf-8")
+
+print("titulares con llave:", sorted(json.loads(almacen.read_text(encoding="utf-8"))))
+print("a1b2c3 en el respaldo:", descifrar(respaldo[0], llaves.get("a1b2c3")))
+print("a1b2c3 con la llave de otro titular:", descifrar(respaldo[0], llaves["d4e5f6"]))
+print("d4e5f6 en el respaldo:", descifrar(respaldo[1], llaves.get("d4e5f6")))
+```
+
+El script se **ejecuta en la CI con cryptography** (ADR-022) y pasa `mypy --strict`. Imprime que solo queda la llave de `d4e5f6`, que el registro de `a1b2c3` en el respaldo ya no se puede descifrar (sin llave, y con la llave de otro titular falla la autenticación: `InvalidTag`) y que el registro del otro titular sigue legible. Destruir la llave sirve solo si el dato nunca quedó en claro fuera del cifrado (`crypto-shredding`).
 
 ## 11. GCP
 
@@ -447,3 +560,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
 - 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): dos diagramas: la ingesta respeta la lista de supresión, y supresión y retención en cada copia.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (retención frente a supresión), §2 (tabla de regla, supresión, borrado lógico, bloqueo y anonimización; plazos distintos para una misma persona; lista de supresión con alcance), §3 (caso del pasajero que vuelve con un backfill), §4 (diez pasos: alcance con inventario y linaje, plan por destino, `pendiente_expiracion_copias`, cierre con evidencia), §5, §6, §7 (preferencias y exportación a un proveedor), §8 (estados por destino y evidencia «qué demuestra y qué no»), §9 (alcance y estado por destino), §10 (lista de supresión con alcance y estados que impiden dar el caso por verificado, sobre el mismo ejemplo; RUT ficticios de dígitos repetidos en lugar de `12.345.678-5` y `9.876.543-2`), §11 (estado en la ventana de BigQuery), §14–16, §17 (relación con `data-lineage`), §18 (criterio de dominio) y §19 (laboratorio para F4). Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
+- 2026-10-28: dos ejemplos ejecutables más en el §10, con dependencias ya aprobadas: PyIceberg 0.12 (ADR-018: DELETE, `expire_snapshots` y ningún snapshot vigente devuelve al titular) y crypto-shredding con cryptography (ADR-022: llave por titular generada por el test, destruida, y registro del respaldo que ya no se descifra). §4 y §8 (dos filas de evidencia) ajustados; fuente `cryptography-docs`.
