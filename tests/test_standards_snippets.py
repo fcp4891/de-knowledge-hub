@@ -3,7 +3,8 @@
 - interoperability-standards: PyIceberg contra apache/iceberg-rest-fixture:1.10.1 en Docker, fijada por digest
   (ADR-026). El contenedor corre con el uid y gid del runner y comparte una carpeta en la misma ruta, porque el
   catálogo escribe la metadata y el cliente los archivos de datos. El warehouse va con esquema file:// porque
-  HadoopFileIO no resuelve una ruta sin esquema («Failed to get file system for path»). Solo en Linux (ADR-018); con REQUIRE_DOCKER=1 no se
+  HadoopFileIO no resuelve una ruta sin esquema («Failed to get file system for path»), y se monta un /etc/passwd
+  mínimo con el uid del runner porque Hadoop no inicia sesión con un uid sin nombre. Solo en Linux (ADR-018); con REQUIRE_DOCKER=1 no se
   salta.
 - open-table-format-evolution: PyIceberg con catálogo SQLite, en Linux (ADR-018).
 - emerging-semantic-layers: PyYAML y jsonschema contra el esquema de Apache Ossie fijado por commit; si la descarga
@@ -43,8 +44,12 @@ def iceberg_rest_uri(tmp_path: Path) -> Iterator[str]:
         pytest.skip("Docker no disponible")
     warehouse = tmp_path / "warehouse"
     warehouse.mkdir()
+    uid, gid = os.getuid(), os.getgid()  # type: ignore[attr-defined]
+    # Hadoop necesita un nombre de usuario para el uid («invalid null input: name» sin él); HADOOP_USER_NAME no basta.
+    passwd = tmp_path / "passwd"
+    passwd.write_text(f"root:x:0:0:root:/root:/bin/sh\ndekh:x:{uid}:{gid}::/tmp:/sbin/nologin\n", encoding="utf-8")
     name, port = f"dekh-iceberg-rest-{uuid.uuid4().hex[:8]}", free_port()
-    started = docker("run", "-d", "--rm", "--name", name, "--user", f"{os.getuid()}:{os.getgid()}",  # type: ignore[attr-defined]
+    started = docker("run", "-d", "--rm", "--name", name, "--user", f"{uid}:{gid}", "-v", f"{passwd}:/etc/passwd:ro",
                      "-p", f"127.0.0.1:{port}:8181", "-v", f"{warehouse}:{warehouse}",
                      "-e", f"CATALOG_WAREHOUSE=file://{warehouse}", "-e", "CATALOG_IO__IMPL=org.apache.iceberg.hadoop.HadoopFileIO",
                      ICEBERG_REST_IMAGE)
