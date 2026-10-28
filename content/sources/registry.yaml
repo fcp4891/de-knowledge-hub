@@ -3657,3 +3657,58 @@ created_at: '2026-10-27'
 updated_at: '2026-10-27'
 last_verified: '2026-10-27'
 verification_status: verified
+---
+id: source:gcp-lakehouse-docs
+slug: gcp-lakehouse-docs
+type: source
+title: Lakehouse documentation (Google Cloud)
+description: Documentación oficial de Lakehouse de Google Cloud (antes BigLake), incluido el Lakehouse runtime catalog y su endpoint REST de Iceberg.
+url: https://docs.cloud.google.com/lakehouse/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-27'
+updated_at: '2026-10-27'
+last_verified: '2026-10-27'
+verification_status: verified
+---
+id: source:apache-polaris-docs
+slug: apache-polaris-docs
+type: source
+title: Apache Polaris
+description: Documentación oficial de Apache Polaris, catálogo que implementa la REST API de Apache Iceberg.
+url: https://polaris.apache.org/
+source_type: official_docs
+authority_level: 1
+provider: apache
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-27'
+updated_at: '2026-10-27'
+last_verified: '2026-10-27'
+verification_status: verified
+---
+id: source:apache-ossie-docs
+slug: apache-ossie-docs
+type: source
+title: Apache Ossie (incubating)
+description: 'Repositorio oficial de Apache Ossie (antes Open Semantic Interchange, OSI): especificación de intercambio de modelos semánticos,
+  citada por commit.'
+url: https://github.com/apache/ossie
+source_type: official_docs
+authority_level: 1
+provider: apache
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-27'
+updated_at: '2026-10-27'
+last_verified: '2026-10-27'
+verification_status: verified
