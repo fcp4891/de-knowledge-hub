@@ -82,20 +82,30 @@ def test_only_changed_file_is_recompiled(engine: Engine, content: Path) -> None:
 
 # --- Borrado -----------------------------------------------------------------
 
-# Ficha temporal de un concepto del blueprint que no tiene ficha: ninguna otra entidad puede relacionarse con él
-# (una relación a un slug sin ficha es inválida), así que borrarla no rompe referencias.
-EXTRA_PAGE = """---
-id: concept:open-table-format-evolution
-slug: open-table-format-evolution
+# Concepto temporal que el test agrega al blueprint de la copia del contenido: no tiene ficha y ninguna entidad lo
+# nombra, así que su ficha se puede crear y borrar sin romper referencias. No depende de ningún slug real del
+# blueprint, que tarde o temprano recibe su ficha (como pasó con dataops y open-table-format-evolution).
+TMP_CONCEPT = "tmp-blueprint-concept"
+TMP_BLUEPRINT_ENTRY = f"""      - slug: {TMP_CONCEPT}
+        title: Concepto temporal del test
+        kind: concept
+        classification: emerging
+        level: basic
+        importance: low
+        mvp: false
+"""
+EXTRA_PAGE = f"""---
+id: concept:{TMP_CONCEPT}
+slug: {TMP_CONCEPT}
 type: concept
 stub: true
-title: Evolución de los open table formats
+title: Concepto temporal del test
 description: Ficha de prueba del compilador.
 domain: emerging-technologies
 subdomain: evolving-standards
 classification: emerging
 level: basic
-importance: high
+importance: low
 relations:
   - type: RELATED_TO
     target: change-data-capture
@@ -112,23 +122,23 @@ Prueba.
 
 
 def test_deleted_page_is_removed_with_its_edges(engine: Engine, content: Path) -> None:
-    # open-table-format-evolution: concepto del blueprint (dominio 23) sin ficha que ninguna ficha nombra; crear una
-    # ficha que otra nombra como «pendiente de ficha» rompería la regla del §17 (lote F3b-rel).
-    page = content / "concepts" / "open-table-format-evolution.md"
+    blueprint = content / "blueprint" / "23-emerging-technologies.yaml"   # el último subdominio es evolving-standards
+    blueprint.write_text(blueprint.read_text(encoding="utf-8").rstrip("\n") + "\n" + TMP_BLUEPRINT_ENTRY, encoding="utf-8")
+    page = content / "concepts" / f"{TMP_CONCEPT}.md"
     page.write_text(EXTRA_PAGE, encoding="utf-8")
     compile_content(engine, content, SCHEMAS)
-    assert count(engine, "entities", "slug = 'open-table-format-evolution'") == 1
-    assert count(engine, "concept_pages", "slug = 'open-table-format-evolution'") == 1
-    assert count(engine, "edges", "source_slug = 'open-table-format-evolution' and origin = 'entity'") == 1
+    assert count(engine, "entities", f"slug = '{TMP_CONCEPT}'") == 1
+    assert count(engine, "concept_pages", f"slug = '{TMP_CONCEPT}'") == 1
+    assert count(engine, "edges", f"source_slug = '{TMP_CONCEPT}' and origin = 'entity'") == 1
 
     page.unlink()
     stats = compile_content(engine, content, SCHEMAS)
-    assert stats.deleted == ["concepts/open-table-format-evolution.md"]
-    assert count(engine, "entities", "slug = 'open-table-format-evolution'") == 0
-    assert count(engine, "concept_pages", "slug = 'open-table-format-evolution'") == 0
-    assert count(engine, "edges", "(source_slug = 'open-table-format-evolution' or target_slug = 'open-table-format-evolution') and origin = 'entity'") == 0
+    assert stats.deleted == [f"concepts/{TMP_CONCEPT}.md"]
+    assert count(engine, "entities", f"slug = '{TMP_CONCEPT}'") == 0
+    assert count(engine, "concept_pages", f"slug = '{TMP_CONCEPT}'") == 0
+    assert count(engine, "edges", f"(source_slug = '{TMP_CONCEPT}' or target_slug = '{TMP_CONCEPT}') and origin = 'entity'") == 0
     # El concepto sigue en el blueprint: sus aristas de origen blueprint se mantienen.
-    assert count(engine, "concepts", "slug = 'open-table-format-evolution'") == 1
+    assert count(engine, "concepts", f"slug = '{TMP_CONCEPT}'") == 1
 
 
 TMP_TECHNOLOGY = """id: technology:tmp-vector-store
