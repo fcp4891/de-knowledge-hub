@@ -51,7 +51,8 @@ STDLIB = {
         "sin hallazgos (no significa anónimo): ['comuna', 'producto']"],
     "chilean-identifier-pseudonymization": [
         "variantes del mismo RUT, mismo seudónimo: True", "sin normalizar, seudónimos distintos: 3",
-        "DV inválido: RUT no válido: '11111111-0'", "hash simple revertido probando 1.000.000 RUT del tramo: True",
+        "DV inválido: RUT no válido: '11111111-0' → cuarentena para revisión, no se descarta",
+        "mismo RUT en dos dominios con claves distintas, mismo seudónimo: False", "hash simple revertido probando 1.000.000 RUT del tramo: True",
         "con HMAC y sin la clave, el mismo ataque no sirve: True", "k con datos exactos: 1",
         "k generalizando comuna y década: 1", "grupos únicos a suprimir: [('Tarapacá', '1950s', 'M')]",
         "k tras suprimir atípicos: 2"],
