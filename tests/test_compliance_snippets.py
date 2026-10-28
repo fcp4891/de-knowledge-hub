@@ -108,11 +108,18 @@ GATES = {
         "BRECHA silver.reservas → proveedor de ETL (contrato cerrado): terminado sin constancia de supresión o devolución "
         "(art. 15 bis)"],
     "privacy-controls-as-code": [
-        "cobertura de etiquetas: 2/4; columnas PII con máscara: 1/4",
-        "FALLA PII real en ambiente no productivo: dev.pasajeros_copia.email",
-        "FALLA tabla sin retención o dueño: dev.pasajeros_copia", "FALLA SELECT * sobre tabla con PII: silver.pasajeros",
-        "FALLA PII en claro en el log 1", "FALLA PII en claro en el log 2", "FALLA contrato de gold.ventas sin base_licitud",
-        "FALLA contrato de gold.ventas sin retencion_dias"],
+        "cobertura de etiquetas: 3/5; columnas PII con máscara: 1/5 (1 sin verificar)",
+        "FAIL PII sin etiqueta: silver.pasajeros.telefono",
+        "EXCEPCIÓN PII con demasiados lectores sin máscara (vence 2026-11-30, dueño equipo-clientes): "
+        "silver.pasajeros.telefono",
+        "FAIL PII real en ambiente no productivo (excepción vencida el 2026-10-01): dev.pasajeros_copia.email",
+        "UNKNOWN PII de contacto sin máscara: gold.clientes_contacto.telefono",
+        "FAIL tabla sin retención o dueño: dev.pasajeros_copia", "FAIL SELECT * sobre tabla con PII: silver.pasajeros",
+        "FAIL PII en claro en el log: línea 1", "FAIL PII en claro en el log: línea 2",
+        "FAIL contrato sin base_licitud: gold.ventas", "FAIL contrato sin retencion_dias: gold.ventas",
+        "DERIVA silver.pasajeros.telefono: máscara declarada en Git y ausente en producción",
+        "pruebas negativas: 4/4 reglas detectan su caso malo",
+        "resultados: {'EXCEPCIÓN': 1, 'FAIL': 10, 'PASS': 13, 'UNKNOWN': 2}"],
 }
 MINIMIZATION = [
     "bronze: ['rut', 'nombre', 'email', 'comuna', 'edad', 'monto']; valores con RUT o correo en claro: 10",
