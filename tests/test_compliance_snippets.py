@@ -89,7 +89,8 @@ GATES = {
         "- emitir y gestionar pasajes | base: contrato (art. 13 c) | datos: identificación, contacto, itinerario "
         "| destinatarios: aerolíneas socias | plazo: 5 años",
         "BRECHA tabla con PII sin actividad: gold.score_fraude", "BRECHA marketing: sin plazo de conservación",
-        "BRECHA uso no registrado: silver.pasajeros → riesgo_fraude"],
+        "BRECHA sin aprobación: job_fraude → silver.pasajeros (modelo_fraude)",
+        "BRECHA sin vínculo: dashboard_externo → silver.pasajeros"],
     "processors-and-international-transfers": [
         "flujos: 4; brechas: 3", "BRECHA tickets_soporte → API de LLM externa: sin contrato de encargo (art. 15 bis)",
         "BRECHA tickets_soporte → API de LLM externa: transferencia a US sin mecanismo (art. 27)",
