@@ -109,6 +109,8 @@ MINIMIZATION = [
     "gold: ['comuna', 'clientes', 'monto_total']; valores con RUT o correo en claro: 0",
     "gold: [('Maipú', 2), ('Ñuñoa', 2)]",
     "analista lee gold: ok (2 filas); lee bronze: denegado (42501)",
+    "contrato: sin columnas fuera del contrato",
+    "tras agregar email a silver, fuera del contrato: {'silver': ['email']}",
 ]
 
 
