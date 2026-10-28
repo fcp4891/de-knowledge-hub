@@ -60,7 +60,9 @@ STDLIB = {
         "plazos supresión: {'respuesta': '2026-11-28', 'con_prorroga': '2026-12-28', 'bloqueo_si_se_pide': '2026-11-02'}",
         '"actividad": "riesgo_fraude"', '"interes_legitimo": "prevenir fraude en pagos"',
         '"logica_automatizada": "puntaje de riesgo; transacciones sobre el umbral pasan a revisión humana"',
-        '"actividad": "venta_pasajes"', "tablas portables: []"],
+        '"actividad": "venta_pasajes"', "tablas portables: []",
+        "tras el backfill, ¿sigue rectificado?: True",
+        "cierre de la rectificación: no permitido: ['plataforma_campanas: pendiente']"],
     "retention-and-erasure": [
         "evidencia: {'solicitud': 'SOL-2026-0042', 'borradas': {'bronze.reservas': 1, 'silver.pasajeros': 1}, "
         "'conservadas_por_obligacion_legal': {'gold.facturas': 1}, 'en_lista_supresion': True}",
