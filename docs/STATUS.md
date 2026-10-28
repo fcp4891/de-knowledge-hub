@@ -1,7 +1,7 @@
 # STATUS — Data Engineering Knowledge Hub
 
 **Fase actual:** F3b — Contenido por dominio (ADR-009), dominios 19-compliance (en aprobación) y 21-ai-for-data-engineering (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08, 03-python el 2026-10-10, 04-data-modeling, 05-pipelines, 06-orchestration y los conceptos de 07-architecture el 2026-10-11, 08-gcp el 2026-10-12, 09-aws el 2026-10-13, 10-azure y 11-devops el 2026-10-14, 12-infrastructure-as-code y 13-containers el 2026-10-19, 14-streaming, 20-open-data-stack, 15-data-quality y 16-observability el 2026-10-20, 17-governance y 18-security el 2026-10-21). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
-**Última actualización:** 2026-10-21
+**Última actualización:** 2026-10-28
 **Demo estática:** https://felipe-a-cespedes-perez.cl/aprendizaje-continuo/ (`make static`, `BASE_PATH` por defecto `/aprendizaje-continuo`).
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**
@@ -19,8 +19,8 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | 21: 27/27 `verified`; `chile-data-protection` mejorada, en revisión; 19 (11) espera aprobación | 22: 10/10 `verified`; 23a (6) y 23b (3) en revisión; `verified` de 19 con la aprobación de Felipe | Aprobación de Felipe (19) |
-| B · Cursor revisión | — | Revisar F3b-23a y F3b-23b (`lane-a.md`) | — |
+| A · Claude Code | Lote P1: 9 fichas hijas de 19 mejoradas, en revisión; 23a (6) y 23b (3) en revisión | Reestructuración de 19 (decisión de Felipe); `verified` de 19 con la aprobación de Felipe | Aprobación de Felipe (19) |
+| B · Cursor revisión | — | Revisar P1, F3b-23a y F3b-23b (`lane-a.md`) | — |
 | B · Cursor UI | — (`b/ui-labels-diagrams` integrada en `main` el 2026-10-26) | — | — |
 
 ## Pedidos abiertos entre carriles
@@ -49,7 +49,7 @@
 - [x] 16-observability: 13/13 `verified`, aprobado por Felipe en el navegador el 2026-10-20 (ADR-020: OpenTelemetry en la CI, sin collector; SRE como N4 solo para conceptos).
 - [x] 17-governance: 9/9 `verified`, aprobado por Felipe en el navegador el 2026-10-21 (ADR-021: OpenLineage en la CI, transporte a archivo).
 - [x] 18-security: 17/17 `verified`, aprobado por Felipe en el navegador el 2026-10-21 (ADR-022: cryptography). 18 no menciona la ley.
-- [ ] 19-compliance (11 fichas tras el upgrade, ADR-023): upgrade del 2026-10-22: 11 fichas (una padre y diez hijas) en revisión. Las fichas pasan a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`).
+- [ ] 19-compliance (11 fichas tras el upgrade, ADR-023): upgrade del 2026-10-22: 11 fichas (una padre y diez hijas) en revisión; lote P1 (2026-10-28): 9 hijas mejoradas, en revisión. Las fichas pasan a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`).
 - [x] 21-ai-for-data-engineering (27 fichas en 21a–21e, ADR-025): 27/27 `verified` el 2026-10-26.
 - [x] 22-modern-data-engineering: 10/10 `verified` el 2026-10-27.
 - [ ] 23-emerging-technologies (9 fichas en 23a–23b, ADR-026): 23a (6) y 23b (3) escritos, en revisión.
