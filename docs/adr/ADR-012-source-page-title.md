@@ -20,3 +20,7 @@ En la §20 de las fichas, cada cita se muestra con el título de la fuente del r
 
 - El frontend puede mostrar `page_title` como link principal y «registro · Nivel N» como línea secundaria; sin `page_title`, la ruta de la URL (pedido a Carril B en `docs/status/lane-a.md`).
 - Las citas nuevas llevan `page_title` desde su creación.
+
+## Enmienda 1 (2026-10-28)
+
+- Un H1 de banner, aviso o navegación no cuenta como encabezado principal; en ese caso se usa el `<title>` sin el nombre del sitio (p. ej. OWASP: «LLMRisks Archive»).
