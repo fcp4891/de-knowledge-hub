@@ -3,8 +3,10 @@
   "slug": "fundamentals",
   "title": "Fundamentos de Data Engineering",
   "description": "Conceptos base, estables e independientes de proveedor, sobre cómo se mueve, almacena y procesa el dato.",
+  "band": null,
   "concept_count": 28,
   "mvp_count": 16,
+  "legal_framework": null,
   "subdomains": [
     {
       "slug": "foundations",

@@ -3,8 +3,10 @@
   "slug": "architecture",
   "title": "Arquitecturas de datos",
   "description": "Arquitecturas de referencia con problema, componentes, trade-offs e implementación por cloud.",
+  "band": null,
   "concept_count": 17,
   "mvp_count": 5,
+  "legal_framework": null,
   "subdomains": [
     {
       "slug": "reference-architectures",

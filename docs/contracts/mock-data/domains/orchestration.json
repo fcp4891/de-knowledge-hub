@@ -3,8 +3,10 @@
   "slug": "orchestration",
   "title": "Orquestación",
   "description": "Conceptos de orquestación independientes de proveedor y diferencia entre proyectos open source y servicios administrados.",
+  "band": null,
   "concept_count": 12,
   "mvp_count": 5,
+  "legal_framework": null,
   "subdomains": [
     {
       "slug": "orchestration-concepts",

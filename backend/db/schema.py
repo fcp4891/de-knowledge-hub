@@ -151,6 +151,18 @@ domains = Table(
     Column("id", String(2), nullable=False, unique=True),
     Column("title", Text, nullable=False),
     Column("description", Text, nullable=False),
+    # Migración 0007 (ADR-027): banda fuera de las 6 capas de la UI y marco legal verificado del dominio.
+    Column("band", String(30), comment="ADR-027: banda fuera de las 6 capas (especializacion)."),
+    Column("legal_framework", String(100), comment="ADR-027: slug de legal_frameworks."),
+    file_fk(),
+)
+
+# Migración 0007 (ADR-027): un marco legal verificado por archivo de content/legal-frameworks/.
+legal_frameworks = Table(
+    "legal_frameworks",
+    metadata,
+    Column("slug", String(100), primary_key=True),
+    Column("data", JSONB, nullable=False, comment="ADR-027: documento completo, con URL N1 y verified_at por hecho."),
     file_fk(),
 )
 

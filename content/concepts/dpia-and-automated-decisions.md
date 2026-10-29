@@ -4,8 +4,8 @@ slug: dpia-and-automated-decisions
 type: concept
 title: Evaluación de impacto y decisiones automatizadas
 description: "Los equipos de datos e IA construyen lo que la ley regula con más rigor: perfiles, scoring y decisiones automatizadas. La evaluación de impacto mira el tratamiento; la trazabilidad, cada decisión. Dos capacidades: una puerta de despliegue que bloquea un cambio material sin evaluación (casos del art. 15 ter) y un registro por decisión que permite reconstruir, explicar y revisar (art. 8 bis). Ejemplo ejecutado en la CI. Registros de modelos de las tres nubes. No es asesoría legal."
-domain: compliance
-subdomain: data-engineering-under-ley-21719
+domain: privacy-engineering
+subdomain: riesgo-terceros-incidentes
 category: compliance
 classification: core
 level: advanced
@@ -50,7 +50,7 @@ sources:
     page_title: "Re-identification risk analysis"
     note: "Re-identification risk analysis (Sensitive Data Protection): los cuasi-identificadores no identifican solos a una persona, pero combinados y cruzados con otros registros aumentan mucho la probabilidad de reidentificarla (por ejemplo, código postal y edad). Una clase de equivalencia es un grupo de filas con los mismos cuasi-identificadores. Un conjunto es k-anónimo si los cuasi-identificadores de cada persona son idénticos a los de al menos k-1 personas más; la l-diversidad extiende el k-anonimato midiendo la diversidad de los valores sensibles: hay l-diversidad si cada grupo con los mismos cuasi-identificadores tiene al menos l valores distintos. Calcula también k-map y δ-presence."
 relations:
-  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del subdominio."}
+  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del dominio."}
   - {type: RELATED_TO, target: k-anonymity, note: "Prueba de reidentificación para la evaluación."}
   - {type: RELATED_TO, target: processing-activities-inventory, note: "La descripción del tratamiento."}
   - {type: RELATED_TO, target: data-subject-rights-pipeline, note: "El acceso incluye la lógica de la decisión."}
@@ -355,3 +355,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
 - 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): dos diagramas: antes de producción (puerta del art. 15 ter) y en producción.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (la evaluación mira el tratamiento; la trazabilidad, cada decisión), §2 (perfil no es decisión significativa; tabla de evaluación, trazabilidad y revisión efectiva), §3, §4 (registro del tratamiento, cambios materiales en la puerta, entradas guardadas por referencia, revisión con facultad real), §5, §6, §7 (reclamos con LLM y pregunta técnica por caso), §8 (escenario y evidencia «qué demuestra y qué no»), §9 (puerta por versión y vuelta de la revisión al registro), §10 (puerta de despliegue por versión mayor y registro con versión de reglas y referencia a las entradas, sobre el mismo ejemplo; la huella sola no reconstruye), §11–13 (criterio común), §14–16, §17 (relación con `privacy-controls-as-code`), §18 (criterio de dominio) y §19 (laboratorio para F4). Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia; Model Registry se sigue nombrando como en su página (Gemini Enterprise Agent Platform).
+- 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `riesgo-terceros-incidentes` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/dpia-and-automated-decisions/`) no cambia.

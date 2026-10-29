@@ -30,6 +30,7 @@
   "GET /domains/open-data-stack": "domains/open-data-stack.json",
   "GET /domains/orchestration": "domains/orchestration.json",
   "GET /domains/pipelines": "domains/pipelines.json",
+  "GET /domains/privacy-engineering": "domains/privacy-engineering.json",
   "GET /domains/python": "domains/python.json",
   "GET /domains/security": "domains/security.json",
   "GET /domains/sql": "domains/sql.json",

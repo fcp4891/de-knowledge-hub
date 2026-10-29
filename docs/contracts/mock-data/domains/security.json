@@ -3,8 +3,10 @@
   "slug": "security",
   "title": "Seguridad",
   "description": "Control de acceso, cifrado, secretos e identidades de servicio aplicados a plataformas de datos.",
+  "band": null,
   "concept_count": 17,
   "mvp_count": 0,
+  "legal_framework": null,
   "subdomains": [
     {
       "slug": "access-control",

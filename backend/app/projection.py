@@ -47,6 +47,7 @@ class ContentIndex:
     concepts: dict[str, BlueprintEntry] = field(default_factory=dict)
     capabilities: list[dict[str, Any]] = field(default_factory=list)
     catalog: dict[str, dict[str, Any]] = field(default_factory=dict)
+    legal_frameworks: dict[str, dict[str, Any]] = field(default_factory=dict)   # ADR-027
 
 
 # --- Carga -------------------------------------------------------------------
@@ -77,6 +78,8 @@ def load_index(content_dir: Path, schemas_dir: Path) -> ContentIndex:
                 index.concepts[concept["slug"]] = entry
     for doc in v.load_structures(content_dir, v.MATRIX_DIR, v.Report()):
         index.capabilities.extend(doc.data["capabilities"])
+    for doc in v.load_structures(content_dir, v.LEGAL_FRAMEWORKS_DIR, v.Report()):
+        index.legal_frameworks[doc.data["slug"]] = doc.data
     return index
 
 
@@ -92,6 +95,7 @@ def domain_summary(domain_doc: dict[str, Any]) -> dict[str, Any]:
     domain = domain_doc["domain"]
     return {
         "id": domain["id"], "slug": domain["slug"], "title": domain["title"], "description": domain["description"],
+        "band": domain.get("band"),   # ADR-027: None = el dominio está en una de las 6 capas
         "concept_count": len(concepts), "mvp_count": sum(1 for c in concepts if c["mvp"]),
     }
 
@@ -106,7 +110,18 @@ def domain_detail(index: ContentIndex, slug: str) -> dict[str, Any]:
         {"slug": s["slug"], "title": s["title"], "concepts": [concept_summary(index, c["slug"]) for c in s["concepts"]]}
         for s in doc["subdomains"]
     ]
-    return {**domain_summary(doc), "subdomains": subdomains}
+    framework = index.legal_frameworks.get(doc["domain"].get("legal_framework") or "")
+    return {**domain_summary(doc), "legal_framework": legal_framework_out(framework) if framework else None,
+            "subdomains": subdomains}
+
+
+FACT_KEYS = ("key", "label", "value", "url", "checked_with", "source", "verified_at", "note")
+
+
+def legal_framework_out(doc: dict[str, Any]) -> dict[str, Any]:
+    """ADR-027: orden fijo de claves, igual desde content/ y desde PostgreSQL (JSONB no conserva el orden)."""
+    facts = [{k: fact[k] for k in FACT_KEYS if k in fact} for fact in doc["facts"]]
+    return {"slug": doc["slug"], "title": doc["title"], "jurisdiction": doc["jurisdiction"], "facts": facts}
 
 
 # --- Conceptos ---------------------------------------------------------------

@@ -3,8 +3,10 @@
   "slug": "modern-data-engineering",
   "title": "Modern Data Engineering",
   "description": "Prácticas y enfoques ampliamente adoptados hoy, que complementan y no reemplazan los fundamentos.",
+  "band": null,
   "concept_count": 10,
   "mvp_count": 0,
+  "legal_framework": null,
   "subdomains": [
     {
       "slug": "modern-practices",

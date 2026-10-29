@@ -85,9 +85,15 @@ def test_legislative_source_needs_one_jurisdiction_monthly_review_and_level_1(co
                  "[review_frequency] una fuente legislative se revisa monthly", "legislative corresponde al Nivel 1")
 
 
-def test_jurisdiction_only_in_compliance_fichas(content: Path) -> None:
+def test_jurisdiction_only_in_legal_domain_fichas(content: Path) -> None:
     report = setup(content, domain="pipelines")
-    assert_error(report, "[jurisdiction] solo en fichas (concept o pattern) del dominio compliance")
+    assert_error(report, "[jurisdiction] solo en fichas (concept o pattern) de los dominios compliance y privacy-engineering")
+
+
+def test_privacy_engineering_is_a_legal_domain(content: Path) -> None:
+    """Enmienda de ADR-023 por ADR-027: rige en los dominios 19 y 24."""
+    report = setup(content, domain="privacy-engineering")
+    assert report.ok, report.errors
 
 
 def test_legislative_source_only_in_fichas_with_jurisdiction(content: Path) -> None:
@@ -152,3 +158,31 @@ def test_monthly_review_is_a_warning(content: Path) -> None:
     v.check_legal_content(content, docs, by_slug, report, today=dt.date.fromisoformat(TODAY) + dt.timedelta(days=32))
     assert any("más de 31 días" in w for w in report.warnings), report.warnings
     assert report.ok, report.errors
+
+
+# --- Marcos legales (ADR-027) -------------------------------------------------
+
+
+def framework(url: str = "https://www.bcn.cl/leychile/navegar?idNorma=1209272", source: str = "bcn-leychile") -> dict[str, Any]:
+    fact = {"key": "effective-date", "label": "Vigencia", "value": "2026-12-01", "url": url, "source": source,
+            "verified_at": TODAY}
+    return {"slug": "cl-ley-21719", "title": "Ley 21.719", "jurisdiction": "CL", "facts": [fact]}
+
+
+def test_legal_framework_with_n1_url_and_legislative_source_passes(content: Path) -> None:
+    write_yaml(content, "sources/r.yaml", legislative(), source("docs-a"))
+    write_yaml(content, "legal-frameworks/cl-ley-21719.yaml", framework())
+    report = run(content)
+    assert report.ok, report.errors
+
+
+def test_legal_framework_url_must_be_bcn_or_congress(content: Path) -> None:
+    write_yaml(content, "sources/r.yaml", legislative(), source("docs-a"))
+    write_yaml(content, "legal-frameworks/cl-ley-21719.yaml", framework(url="https://example.org/ley"))
+    assert_error(run(content), "does not match")
+
+
+def test_legal_framework_source_must_be_legislative(content: Path) -> None:
+    write_yaml(content, "sources/r.yaml", legislative(), source("docs-a"))
+    write_yaml(content, "legal-frameworks/cl-ley-21719.yaml", framework(source="docs-a"))
+    assert_error(run(content), "[facts.0.source] 'docs-a' no es una fuente legislative del registro")

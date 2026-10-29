@@ -3,8 +3,10 @@
   "slug": "azure",
   "title": "Microsoft Azure",
   "description": "Implementación en Azure y Microsoft Fabric de los conceptos de almacenamiento, integración, streaming y gobierno.",
+  "band": null,
   "concept_count": 14,
   "mvp_count": 0,
+  "legal_framework": null,
   "subdomains": [
     {
       "slug": "analytics-platform",

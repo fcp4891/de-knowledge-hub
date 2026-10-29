@@ -1,0 +1,181 @@
+# Knowledge Blueprint v1 · Dominio 24 (ADR-027): ingeniería de privacidad bajo la Ley 21.719.
+# Banda «Especialización», fuera de las 6 capas. Explicación técnica, no asesoría legal: rige ADR-023 (jurisdiction,
+# legal_basis, etiqueta por afirmación, aviso, y verified solo con owner_approved_at de Felipe). Las 11 fichas vienen
+# de 19-compliance (2026-10-28) sin cambios de contenido; 19 queda para el cumplimiento genérico (GDPR, LGPD).
+domain:
+  id: "24"
+  slug: privacy-engineering
+  title: Ingeniería de privacidad · Ley 21.719
+  description: Cómo se diseña, opera y demuestra una plataforma de datos que trata datos personales bajo la Ley 21.719, desde su impacto técnico y sin constituir asesoría legal.
+  band: especializacion
+  legal_framework: cl-ley-21719
+
+subdomains:
+  - slug: fundamentos
+    title: Fundamentos
+    concepts:
+      - slug: chile-data-protection
+        title: Ley 21.719 para ingenieros de datos
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        related_concepts: [pii-identification, processing-activities-inventory]
+        note: Ficha padre del subdominio (upgrade de 19, 2026-10-22). Mapa de artículos, vigencia y matriz requisito → control → evidencia; absorbe compliance-scope-for-data-engineers.
+      - slug: pii-identification
+        title: Identificación de datos personales y sensibles
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [data-classification, data-masking]
+        note: Dato personal y dato sensible según la ley; detección y clasificación por columna. Lote 19a.
+      - slug: processing-activities-inventory
+        title: Inventario de actividades de tratamiento
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [data-catalog, data-lineage]
+        note: Generado desde el catálogo y el linaje, no una planilla. Lote 19a.
+
+  - slug: diseno-protegido
+    title: Diseño protegido
+    concepts:
+      - slug: data-minimization-by-layer
+        title: Minimización por capa
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [pseudonymization-vs-anonymization]
+        note: Datos personales solo donde se necesitan; bronze, silver con seudónimos y gold agregado. Lote 19a.
+      - slug: chilean-identifier-pseudonymization
+        title: Seudonimización de identificadores chilenos
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [keyed-hashing, tokenization]
+        note: RUT con dígito verificador, HMAC con llave en KMS; incorpora la parte legal de seudonimización y anonimización del upgrade de 19 (2026-10-22).
+      - slug: purpose-based-authorization
+        title: Autorización por finalidad
+        kind: pattern
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [processing-activities-inventory, data-minimization-by-layer]
+        note: Pendiente de ficha (lote A, ADR-027). Conceder acceso por actividad y finalidad, no por dataset.
+
+  - slug: derechos-ciclo-vida
+    title: Derechos y ciclo de vida
+    concepts:
+      - slug: data-subject-rights-pipeline
+        title: Pipeline de derechos del titular
+        kind: pattern
+        classification: core
+        level: advanced
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [processing-activities-inventory]
+        note: Upgrade de 19 (2026-10-22); reemplaza a data-subject-requests.
+      - slug: distributed-erasure-propagation
+        title: Propagación de supresiones en sistemas distribuidos
+        kind: pattern
+        classification: core
+        level: advanced
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [data-subject-rights-pipeline, retention-and-erasure]
+        note: Pendiente de ficha (lote A, ADR-027). Llevar una supresión aprobada a réplicas, derivados, eventos y terceros.
+      - slug: retention-and-erasure
+        title: Retención y supresión
+        kind: pattern
+        classification: core
+        level: advanced
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [crypto-shredding, data-retention]
+        note: Upgrade de 19 (2026-10-22); reemplaza a erasure-across-copies.
+      - slug: privacy-backup-and-recovery
+        title: Respaldos y recuperación con privacidad
+        kind: pattern
+        classification: core
+        level: advanced
+        importance: medium
+        mvp: false
+        added_by: blueprint
+        related_concepts: [retention-and-erasure, crypto-shredding]
+        note: Pendiente de ficha (lote A, ADR-027). Respaldos, restauraciones y la lista de supresión.
+
+  - slug: riesgo-terceros-incidentes
+    title: Riesgo, terceros e incidentes
+    concepts:
+      - slug: processors-and-international-transfers
+        title: Encargados y transferencias internacionales
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [processing-activities-inventory]
+        note: Upgrade de 19 (2026-10-22); reemplaza a international-data-transfers.
+      - slug: dpia-and-automated-decisions
+        title: Evaluación de impacto y decisiones automatizadas
+        kind: concept
+        classification: core
+        level: advanced
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [k-anonymity]
+        note: Upgrade de 19 (2026-10-22); reemplaza a dpia-technical-input y automated-decision-traceability.
+      - slug: data-breach-response
+        title: Respuesta ante vulneraciones
+        kind: pattern
+        classification: core
+        level: advanced
+        importance: medium
+        mvp: false
+        added_by: blueprint
+        related_concepts: [incident-response]
+        note: Upgrade de 19 (2026-10-22); reemplaza a personal-data-breach-readiness. Cruce con la Ley 21.663.
+
+  - slug: evidencia-automatizacion
+    title: Evidencia y automatización
+    concepts:
+      - slug: privacy-controls-as-code
+        title: Controles de privacidad como código
+        kind: pattern
+        classification: core
+        level: advanced
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [quality-gate, data-contracts]
+        note: Upgrade de 19 (2026-10-22); reemplaza a privacy-by-design-checklist.
+      - slug: privacy-in-ai-rag-llm
+        title: Privacidad en IA, RAG y LLM
+        kind: concept
+        classification: modern
+        level: advanced
+        importance: high
+        mvp: false
+        added_by: blueprint
+        related_concepts: [pii-identification, processors-and-international-transfers]
+        note: Pendiente de ficha (lote A, ADR-027). Datos personales en prompts, índices vectoriales y proveedores de modelos.

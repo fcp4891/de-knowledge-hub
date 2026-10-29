@@ -3,8 +3,10 @@
   "slug": "devops",
   "title": "DevOps",
   "description": "Control de versiones, CI/CD y prácticas de entrega aplicadas a plataformas y pipelines de datos.",
+  "band": null,
   "concept_count": 13,
   "mvp_count": 0,
+  "legal_framework": null,
   "subdomains": [
     {
       "slug": "git",

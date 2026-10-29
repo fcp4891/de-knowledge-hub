@@ -3,8 +3,10 @@
   "slug": "open-data-stack",
   "title": "Open Data Stack",
   "description": "Tecnologías independientes del cloud y los conceptos necesarios para usarlas con criterio.",
+  "band": null,
   "concept_count": 7,
   "mvp_count": 0,
+  "legal_framework": null,
   "subdomains": [
     {
       "slug": "open-stack-overview",

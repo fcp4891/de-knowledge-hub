@@ -4,8 +4,8 @@ slug: pii-identification
 type: concept
 title: Identificación de datos personales y sensibles
 description: "Identificar qué permite reconocer a una persona, sola o combinada, y registrarlo con fundamento, revisor y fecha: es el primer control. La ley define dato personal y enumera los sensibles, incluida la situación socioeconómica. Seis pasos sin umbral universal y un detector didáctico (RUT con dígito verificador, correo, nombres sensibles) que da hallazgos para revisión sin imprimir valores; ejecutado en la CI. Detectores chilenos en Sensitive Data Protection, Macie y Purview. No es asesoría legal."
-domain: compliance
-subdomain: data-engineering-under-ley-21719
+domain: privacy-engineering
+subdomain: fundamentos
 category: compliance
 classification: core
 level: intermediate
@@ -380,3 +380,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-27: mejora de contenido con tres niveles de lectura: §1 (definición de identificar y resultado esperado), §2 (art. 2 g) citado tal cual desde BCN, identificador directo e indirecto, dato seudonimizado, etiqueta técnica frente a categoría jurídica), §3 (caso de cinco columnas), §4 (seis pasos; se quita el umbral del 60 %), §5, §6, §7, §8 (escenario por capas y evidencia sin valores personales), §9 (cadena fuente → políticas), §10 (detector con varios hallazgos por columna, sin umbral ni valores en el reporte, con limitaciones), §11–13 (páginas consultadas el 2026-10-27 y criterio de selección), §14–16, §17 (nota editorial), §18 y §19 (laboratorio para F4). Sin cambios en `legal_basis`, aviso ni vigencia.
 - 2026-10-27: se revierte un `verified` registrado por error: no hubo aprobación de Felipe (su mensaje se refería solo al criterio de los RUT ficticios). Sigue en `review_required`, sin `owner_approved_at`.
 - 2026-10-27: revisión `docs/reviews/pii-v2.md` aplicada: la etiqueta **[Obligación legal · art. 2]** del §2 dice solo lo del art. 2 f); la combinación de columnas queda en la buena práctica del identificador indirecto.
+- 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `fundamentos` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/pii-identification/`) no cambia.

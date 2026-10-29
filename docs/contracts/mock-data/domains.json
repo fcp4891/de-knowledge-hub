@@ -5,6 +5,7 @@
       "slug": "fundamentals",
       "title": "Fundamentos de Data Engineering",
       "description": "Conceptos base, estables e independientes de proveedor, sobre cómo se mueve, almacena y procesa el dato.",
+      "band": null,
       "concept_count": 28,
       "mvp_count": 16
     },
@@ -13,6 +14,7 @@
       "slug": "sql",
       "title": "SQL avanzado",
       "description": "SQL aplicado al trabajo de datos, con patrones de carga y optimización en warehouses.",
+      "band": null,
       "concept_count": 33,
       "mvp_count": 14
     },
@@ -21,6 +23,7 @@
       "slug": "python",
       "title": "Python para Data Engineering",
       "description": "Python aplicado a ingesta, transformación, validación y construcción de pipelines.",
+      "band": null,
       "concept_count": 26,
       "mvp_count": 5
     },
@@ -29,6 +32,7 @@
       "slug": "data-modeling",
       "title": "Modelado de datos",
       "description": "Niveles de modelado, normalización, modelado dimensional y modelos alternativos para analítica.",
+      "band": null,
       "concept_count": 17,
       "mvp_count": 9
     },
@@ -37,6 +41,7 @@
       "slug": "pipelines",
       "title": "Pipelines de datos",
       "description": "Patrones completos de ingesta, procesamiento y confiabilidad, de la fuente al consumo (Source → Raw → Curated → Serving).",
+      "band": null,
       "concept_count": 16,
       "mvp_count": 10
     },
@@ -45,6 +50,7 @@
       "slug": "orchestration",
       "title": "Orquestación",
       "description": "Conceptos de orquestación independientes de proveedor y diferencia entre proyectos open source y servicios administrados.",
+      "band": null,
       "concept_count": 12,
       "mvp_count": 5
     },
@@ -53,6 +59,7 @@
       "slug": "architecture",
       "title": "Arquitecturas de datos",
       "description": "Arquitecturas de referencia con problema, componentes, trade-offs e implementación por cloud.",
+      "band": null,
       "concept_count": 17,
       "mvp_count": 5
     },
@@ -61,6 +68,7 @@
       "slug": "gcp",
       "title": "Google Cloud Platform",
       "description": "Cómo se implementan los conceptos de Data Engineering con los servicios prioritarios de GCP.",
+      "band": null,
       "concept_count": 31,
       "mvp_count": 12
     },
@@ -69,6 +77,7 @@
       "slug": "aws",
       "title": "Amazon Web Services",
       "description": "Implementación en AWS de los conceptos de almacenamiento, procesamiento, streaming, orquestación y gobierno.",
+      "band": null,
       "concept_count": 16,
       "mvp_count": 0
     },
@@ -77,6 +86,7 @@
       "slug": "azure",
       "title": "Microsoft Azure",
       "description": "Implementación en Azure y Microsoft Fabric de los conceptos de almacenamiento, integración, streaming y gobierno.",
+      "band": null,
       "concept_count": 14,
       "mvp_count": 0
     },
@@ -85,6 +95,7 @@
       "slug": "devops",
       "title": "DevOps",
       "description": "Control de versiones, CI/CD y prácticas de entrega aplicadas a plataformas y pipelines de datos.",
+      "band": null,
       "concept_count": 13,
       "mvp_count": 0
     },
@@ -93,6 +104,7 @@
       "slug": "infrastructure-as-code",
       "title": "Infrastructure as Code",
       "description": "Definición declarativa y versionada de la infraestructura de datos, principalmente con Terraform.",
+      "band": null,
       "concept_count": 12,
       "mvp_count": 4
     },
@@ -101,6 +113,7 @@
       "slug": "containers",
       "title": "Containers y plataforma",
       "description": "Contenedores, su construcción y las plataformas donde se ejecutan cargas de datos en cada cloud.",
+      "band": null,
       "concept_count": 9,
       "mvp_count": 0
     },
@@ -109,6 +122,7 @@
       "slug": "streaming",
       "title": "Streaming y Event-Driven",
       "description": "Eventos, brokers, semánticas de entrega y procesamiento en el tiempo.",
+      "band": null,
       "concept_count": 14,
       "mvp_count": 0
     },
@@ -117,6 +131,7 @@
       "slug": "data-quality",
       "title": "Data Quality",
       "description": "Dimensiones de calidad, formas de implementar validaciones y patrones de publicación con control de calidad.",
+      "band": null,
       "concept_count": 8,
       "mvp_count": 0
     },
@@ -125,6 +140,7 @@
       "slug": "observability",
       "title": "Observabilidad",
       "description": "Señales, salud de pipelines, acuerdos de servicio y respuesta a incidentes en plataformas de datos.",
+      "band": null,
       "concept_count": 13,
       "mvp_count": 0
     },
@@ -133,6 +149,7 @@
       "slug": "governance",
       "title": "Gobierno de datos",
       "description": "Catálogo, metadata, linaje, responsabilidades, clasificación y ciclo de vida del dato en la organización.",
+      "band": null,
       "concept_count": 9,
       "mvp_count": 0
     },
@@ -141,6 +158,7 @@
       "slug": "security",
       "title": "Seguridad",
       "description": "Control de acceso, cifrado, secretos e identidades de servicio aplicados a plataformas de datos.",
+      "band": null,
       "concept_count": 17,
       "mvp_count": 0
     },
@@ -149,7 +167,8 @@
       "slug": "compliance",
       "title": "Compliance",
       "description": "Cómo se diseña y opera una plataforma de datos bajo una ley de protección de datos, desde su impacto técnico y sin constituir asesoría legal.",
-      "concept_count": 13,
+      "band": null,
+      "concept_count": 2,
       "mvp_count": 0
     },
     {
@@ -157,6 +176,7 @@
       "slug": "open-data-stack",
       "title": "Open Data Stack",
       "description": "Tecnologías independientes del cloud y los conceptos necesarios para usarlas con criterio.",
+      "band": null,
       "concept_count": 7,
       "mvp_count": 0
     },
@@ -165,6 +185,7 @@
       "slug": "ai-for-data-engineering",
       "title": "IA aplicada a Data Engineering",
       "description": "Fundamentos de LLM, retrieval y sistemas con IA, y sus casos de uso concretos en ingeniería de datos.",
+      "band": null,
       "concept_count": 27,
       "mvp_count": 0
     },
@@ -173,6 +194,7 @@
       "slug": "modern-data-engineering",
       "title": "Modern Data Engineering",
       "description": "Prácticas y enfoques ampliamente adoptados hoy, que complementan y no reemplazan los fundamentos.",
+      "band": null,
       "concept_count": 10,
       "mvp_count": 0
     },
@@ -181,7 +203,17 @@
       "slug": "emerging-technologies",
       "title": "Tecnologías emergentes",
       "description": "Tecnologías y patrones en evolución rápida que pueden adquirir relevancia profesional.",
+      "band": null,
       "concept_count": 9,
+      "mvp_count": 0
+    },
+    {
+      "id": "24",
+      "slug": "privacy-engineering",
+      "title": "Ingeniería de privacidad · Ley 21.719",
+      "description": "Cómo se diseña, opera y demuestra una plataforma de datos que trata datos personales bajo la Ley 21.719, desde su impacto técnico y sin constituir asesoría legal.",
+      "band": "especializacion",
+      "concept_count": 15,
       "mvp_count": 0
     }
   ]

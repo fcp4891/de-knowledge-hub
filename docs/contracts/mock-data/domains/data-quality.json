@@ -3,8 +3,10 @@
   "slug": "data-quality",
   "title": "Data Quality",
   "description": "Dimensiones de calidad, formas de implementar validaciones y patrones de publicación con control de calidad.",
+  "band": null,
   "concept_count": 8,
   "mvp_count": 0,
+  "legal_framework": null,
   "subdomains": [
     {
       "slug": "quality-dimensions",

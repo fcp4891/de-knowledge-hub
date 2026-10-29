@@ -3,8 +3,10 @@
   "slug": "gcp",
   "title": "Google Cloud Platform",
   "description": "Cómo se implementan los conceptos de Data Engineering con los servicios prioritarios de GCP.",
+  "band": null,
   "concept_count": 31,
   "mvp_count": 12,
+  "legal_framework": null,
   "subdomains": [
     {
       "slug": "bigquery",

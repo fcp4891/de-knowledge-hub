@@ -3,8 +3,10 @@
   "slug": "pipelines",
   "title": "Pipelines de datos",
   "description": "Patrones completos de ingesta, procesamiento y confiabilidad, de la fuente al consumo (Source → Raw → Curated → Serving).",
+  "band": null,
   "concept_count": 16,
   "mvp_count": 10,
+  "legal_framework": null,
   "subdomains": [
     {
       "slug": "pipeline-stages",

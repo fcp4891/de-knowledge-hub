@@ -1,0 +1,31 @@
+# Marco legal del dominio 24-privacy-engineering (ADR-027). Datos para la UI: cada valor con su URL de Nivel 1 y la
+# fecha en que se verificó. Verificado el 2026-10-28 con el JSON de BCN (get_norma_json) y el servicio de tramitación
+# del Senado. Si cambia un valor, se vuelve a verificar y se actualiza verified_at; no se supone.
+slug: cl-ley-21719
+title: Ley 21.719 sobre protección de datos personales
+jurisdiction: CL
+facts:
+  - key: law-name
+    label: Ley
+    value: "Ley 21.719, que regula la protección y el tratamiento de los datos personales y crea la Agencia de Protección de Datos Personales"
+    url: https://www.bcn.cl/leychile/navegar?idNorma=1209272
+    checked_with: https://nuevo.leychile.cl/servicios/Navegar/get_norma_json?idNorma=1209272
+    source: bcn-leychile
+    verified_at: 2026-10-28
+    note: "BCN: título «REGULA LA PROTECCIÓN Y EL TRATAMIENTO DE LOS DATOS PERSONALES Y CREA LA AGENCIA DE PROTECCIÓN DE DATOS PERSONALES»; promulgada el 2024-11-25 y publicada el 2024-12-13. Modifica la Ley 19.628."
+  - key: effective-date
+    label: Vigencia de las modificaciones a la Ley 19.628
+    value: "2026-12-01"
+    url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
+    checked_with: https://nuevo.leychile.cl/servicios/Navegar/get_norma_json?idNorma=141599&idVersion=2026-12-01
+    source: bcn-leychile
+    verified_at: 2026-10-28
+    note: "BCN muestra la Ley 19.628 en una versión «Con Vigencia Diferida por Fecha» desde el 2026-12-01; la versión anterior rige hasta el 2026-11-30. El artículo primero transitorio de la Ley 21.719 fija la vigencia el «día primero del mes vigésimo cuarto posterior a la publicación de esta ley en el Diario Oficial»."
+  - key: postponement-bill
+    label: Proyecto de postergación (boletín 18.623-07)
+    value: "En tramitación: aprobado en general y en particular por el Senado el 2026-10-28; subetapa «Oficio de ley a Cámara Revisora». Es un proyecto, no una ley: la vigencia sigue siendo el 2026-12-01."
+    url: https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07
+    checked_with: https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=18623
+    source: senado-tramitacion
+    verified_at: 2026-10-28
+    note: "Senado, servicio de tramitación: ingreso el 2026-09-01 por mensaje; etapa «Primer trámite constitucional (Senado)»; primeros informes de las comisiones de Constitución y de Hacienda el 2026-10-27; el 2026-10-28, «Discusión general. Aprobado en general y particular a la vez»; urgencia «Discusión inmediata»; estado «En tramitación». El mensaje propone reemplazar la fecha del artículo primero transitorio por el «1 de diciembre de 2027»."

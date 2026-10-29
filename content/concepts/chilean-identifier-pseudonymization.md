@@ -4,8 +4,8 @@ slug: chilean-identifier-pseudonymization
 type: pattern
 title: Seudonimización de identificadores chilenos
 description: "Seudonimizar el RUT: normalizarlo, validar el dígito verificador (lo dudoso va a cuarentena) y calcular un HMAC con una llave separada de los datos, como pide la ley, y una llave por dominio si no hace falta unir entre finalidades. Un hash simple del RUT se revierte. Seudonimizar no es anonimizar: los cuasi-identificadores reidentifican hasta generalizar y suprimir atípicos (k-anonimato). Ejecutado en la CI. No es asesoría legal."
-domain: compliance
-subdomain: data-engineering-under-ley-21719
+domain: privacy-engineering
+subdomain: diseno-protegido
 classification: core
 level: intermediate
 importance: high
@@ -53,7 +53,7 @@ sources:
     page_title: "Always Encrypted"
     note: "Always Encrypted: dos tipos de cifrado. El determinista siempre da el mismo valor cifrado para un mismo texto y permite búsquedas puntuales, joins por igualdad, agrupar e indexar columnas cifradas, pero usuarios no autorizados pueden adivinar información mirando patrones, sobre todo si hay pocos valores posibles (True/False o Norte/Sur/Este/Oeste). El aleatorio cifra de forma impredecible y no permite buscar, agrupar, indexar ni unir sin secure enclaves."
 relations:
-  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del subdominio."}
+  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del dominio."}
   - {type: RELATED_TO, target: pseudonymization-vs-anonymization, note: "La versión genérica, sin la ley, en 18."}
   - {type: RELATED_TO, target: keyed-hashing, note: "Por qué HMAC y no un hash simple."}
   - {type: RELATED_TO, target: tokenization, note: "La alternativa reversible, con bóveda."}
@@ -376,3 +376,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
 - 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): dos diagramas: seudonimizar el RUT, y publicar (seudonimizar no es anonimizar).
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1, §2 (tabla de identificador directo, seudónimo, cuasi-identificador y dato anonimizado; el HMAC es determinista y permite correlacionar), §3 (caso de uniones entre compras, reservas y atención), §4 (ocho pasos: alcance, cuarentena para DV inválido, llave por dominio, separación de funciones y comprobación), §6, §7 (llave por dominio y cuasi-identificadores con seudónimo), §8 (escenario y evidencia «qué demuestra y qué no», con el procedimiento de rotación), §9 (cuarentena en lugar de rechazo), §10 (DV inválido a cuarentena y llaves por dominio, sobre el mismo ejemplo; limitaciones), §11–13 (integridad referencial, hash sin llave, riesgo del determinismo y criterio común), §14–16, §18 (criterio de dominio) y §19 (laboratorio para F4). Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia. El código de la propuesta no se usó: su RUT de ejemplo no cumple el criterio de RUT ficticios.
+- 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `diseno-protegido` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/chilean-identifier-pseudonymization/`) no cambia.

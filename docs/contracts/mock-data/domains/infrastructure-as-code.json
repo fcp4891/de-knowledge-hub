@@ -3,8 +3,10 @@
   "slug": "infrastructure-as-code",
   "title": "Infrastructure as Code",
   "description": "Definición declarativa y versionada de la infraestructura de datos, principalmente con Terraform.",
+  "band": null,
   "concept_count": 12,
   "mvp_count": 4,
+  "legal_framework": null,
   "subdomains": [
     {
       "slug": "iac-foundations",

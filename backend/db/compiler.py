@@ -27,7 +27,7 @@ from backend.db import schema as t
 from backend.content import validate as v
 from backend.app.projection import markdown_body, sections
 
-COMPILER_VERSION = "6"  # 2: search_documents (A-F2.3); 3: aliases en la búsqueda (ADR-010); 4: page_title (ADR-012); 5: ADR-023; 6: implication (enmienda de ADR-023)
+COMPILER_VERSION = "7"  # 2: search_documents (A-F2.3); 3: aliases en la búsqueda (ADR-010); 4: page_title (ADR-012); 5: ADR-023; 6: implication (enmienda de ADR-023); 7: band y legal_frameworks (ADR-027)
 TECHNOLOGY_TYPES = {"technology", "cloud_service"}
 SEARCHABLE_TYPES = {"concept", "pattern", "architecture", "technology", "cloud_service", "code_snippet", "source"}
 SEARCH_CONFIGS = {"tsv_es": "es_unaccent", "tsv_en": "en_unaccent"}
@@ -191,7 +191,8 @@ def insert_edge(
 def insert_blueprint(conn: Connection, file_path: str, doc: dict[str, Any]) -> None:
     domain = doc["domain"]
     conn.execute(insert(t.domains).values(
-        slug=domain["slug"], id=domain["id"], title=domain["title"], description=domain["description"], file_path=file_path,
+        slug=domain["slug"], id=domain["id"], title=domain["title"], description=domain["description"],
+        band=domain.get("band"), legal_framework=domain.get("legal_framework"), file_path=file_path,
     ))
     for s_pos, subdomain in enumerate(doc["subdomains"]):
         conn.execute(insert(t.subdomains).values(
@@ -229,11 +230,19 @@ def insert_matrix(conn: Connection, file_path: str, doc: dict[str, Any]) -> None
             ))
 
 
+def insert_legal_framework(conn: Connection, file_path: str, doc: dict[str, Any]) -> None:
+    conn.execute(insert(t.legal_frameworks).values(slug=doc["slug"], data=doc, file_path=file_path))
+
+
+STRUCTURE_LOADERS = {v.BLUEPRINT_DIR: insert_blueprint, v.MATRIX_DIR: insert_matrix,
+                     v.LEGAL_FRAMEWORKS_DIR: insert_legal_framework}
+
+
 def load_file(conn: Connection, rel: str, path: Path) -> None:
     top = rel.split("/", 1)[0]
     if top in v.STRUCTURE_DIRS:
         doc = v.normalize(yaml.safe_load(path.read_text(encoding="utf-8")))
-        (insert_blueprint if top == v.BLUEPRINT_DIR else insert_matrix)(conn, rel, doc)
+        STRUCTURE_LOADERS[top](conn, rel, doc)
         return
     for position, data, body in entity_documents(path):
         insert_entity(conn, rel, position, data, body)

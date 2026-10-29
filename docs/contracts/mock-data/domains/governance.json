@@ -3,8 +3,10 @@
   "slug": "governance",
   "title": "Gobierno de datos",
   "description": "Catálogo, metadata, linaje, responsabilidades, clasificación y ciclo de vida del dato en la organización.",
+  "band": null,
   "concept_count": 9,
   "mvp_count": 0,
+  "legal_framework": null,
   "subdomains": [
     {
       "slug": "metadata-and-lineage",

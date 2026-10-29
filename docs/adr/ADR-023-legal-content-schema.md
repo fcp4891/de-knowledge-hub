@@ -1,6 +1,6 @@
 # ADR-023 — Schema para contenido con origen legal (dominio 19, Ley 21.719)
 
-- **Estado:** Aceptado (aprobado por Felipe el 2026-10-21, tal como está); implementado con el lote F3b-19a. Enmienda 1 (2026-10-24): `implication` en `legal_basis`
+- **Estado:** Aceptado (aprobado por Felipe el 2026-10-21, tal como está); implementado con el lote F3b-19a. Enmienda 1 (2026-10-24): `implication` en `legal_basis`. Enmienda 2 (2026-10-28, ADR-027): alcance en los dominios 19 y 24
 - **Fecha:** 2026-10-21
 - **Fase:** F3b — Contenido por dominio, antes de 19-compliance
 - **Referencias:** ADR-000 (content-as-code), ADR-002 (contrato), ADR-009 (contenido por dominio), ADR-012 (`page_title`); decisión de Felipe sobre la Ley 21.719 (ROADMAP, F3b, 2026-10-21).
@@ -169,3 +169,8 @@ Pedida por Felipe el 2026-10-24, junto con la aceptación de ADR-024.
   - La migración 0006 agrega `entity_legal_basis.implication`.
   - `COMPILER_VERSION` pasa a `"6"`.
 - **Pedido a Carril B.** Mostrar `implication` junto a cada artículo de la lista de `legal_basis`.
+
+## Enmienda 2 — Alcance en los dominios 19 y 24 (2026-10-28, ADR-027)
+
+- Las fichas de la Ley 21.719 pasan a `24-privacy-engineering`. Esta decisión rige en los dominios `compliance` (19) y `privacy-engineering` (24): `jurisdiction`, `legal_basis` con `implication`, la etiqueta por afirmación, el aviso «no es asesoría legal», la evidencia del §8, la cita legal consultada el día de `last_verified` y `verified` solo con `owner_approved_at`, que da Felipe.
+- **Implementación:** `LEGAL_DOMAINS` en `backend/content/validate.py`; el error de `jurisdiction` nombra los dos dominios.

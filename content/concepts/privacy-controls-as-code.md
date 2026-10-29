@@ -4,8 +4,8 @@ slug: privacy-controls-as-code
 type: pattern
 title: Controles de privacidad como código
 description: "Un control documentado no es un control implementado: la ley pide verificar regularmente que las medidas funcionan y, ante un incidente con controversia, acreditarlo. Reglas versionadas que evalúan el cambio (CI) y el estado real (producción) con tres resultados: PASS, FAIL y UNKNOWN, que nunca cuenta como PASS; excepciones con vencimiento, deriva entre Git y producción y pruebas negativas por regla. Ejemplo ejecutado en la CI. No es asesoría legal."
-domain: compliance
-subdomain: data-engineering-under-ley-21719
+domain: privacy-engineering
+subdomain: evidencia-automatizacion
 classification: core
 level: advanced
 importance: high
@@ -459,3 +459,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
 - 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): TB; la matriz pasa a la etiqueta de la evidencia.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura y fusión de la propuesta de Privacy as Code avanzado (no es una ficha aparte): §1, §2 (control verificable, decisión frente a control y prueba, tabla PASS/FAIL/UNKNOWN, deriva; NIST y CNIL como referencias conceptuales de Nivel 4), §3 (permiso dado a mano), §4 (matriz riesgo → evidencia, fallar cerrado, excepciones con vencimiento, pruebas negativas), §5, §6 (UNKNOWN cuando no se puede observar), §7 (las reglas son decisiones locales), §8 (escenario y evidencia «qué demuestra y qué no»), §9, §10 (PASS/FAIL/UNKNOWN, excepción vigente y vencida, deriva Git–producción y pruebas negativas sobre las mismas reglas de estado y de cambio), §11–13 (`INFORMATION_SCHEMA`, lo que no cubre cada servicio y criterio común), §14–16, §17 (relaciones con `processing-activities-inventory` y `bigquery-information-schema`; nota editorial), §18 (criterio de dominio) y §19 (laboratorio para F4). Fuentes nuevas: `nist-privacy-engineering` y `cnil-gdpr-developers-guide` (Nivel 4). Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
+- 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `evidencia-automatizacion` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/privacy-controls-as-code/`) no cambia.

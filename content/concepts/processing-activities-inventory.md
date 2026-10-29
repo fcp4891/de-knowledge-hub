@@ -4,8 +4,8 @@ slug: processing-activities-inventory
 type: pattern
 title: Inventario de actividades de tratamiento
 description: "El inventario explica para qué se tratan los datos personales y lo vincula con qué activos y consumidores los usan: la base de licitud vive en la actividad, no en la tabla. Actividad, activo, consumidor y evidencia son entidades distintas. La CI compara los usos observados con lo declarado y abre alertas (sin vínculo, sin aprobación) sin presumir infracciones; genera el insumo del art. 14 ter para revisión. Ejemplo ejecutado en la CI. No es asesoría legal."
-domain: compliance
-subdomain: data-engineering-under-ley-21719
+domain: privacy-engineering
+subdomain: fundamentos
 classification: core
 level: intermediate
 importance: high
@@ -48,7 +48,7 @@ sources:
     page_title: "Learn about Microsoft Purview Unified Catalog"
     note: "Learn about Microsoft Purview Unified Catalog: inventario de los activos de datos, su metadata y su linaje; herramientas para principios de gobierno: políticas de acceso de Unified Catalog, critical data elements, glossary terms, governance domains (organizar los datos por conceptos de negocio y distribuir el ownership) y data products (agrupar activos relacionados)."
 relations:
-  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del subdominio."}
+  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del dominio."}
   - {type: RELATED_TO, target: data-catalog, note: "Donde viven las actividades y sus tags."}
   - {type: RELATED_TO, target: data-lineage, note: "Usos observados de cada activo."}
   - {type: RELATED_TO, target: pii-identification, note: "Qué activos tienen datos personales."}
@@ -369,3 +369,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
 - 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): tags y pipelines en un nodo; linaje y logs dentro de «usos observados».
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (idea central), §2 (art. 3 c) verificado en BCN y agregado a `legal_basis`; actividad, activo, consumidor y evidencia como entidades distintas), §3 (caso del modelo nuevo sobre una tabla disponible; la falta de registro no prueba la infracción), §4 (ocho pasos con autorizar y gestionar desviaciones; el linaje no muestra intención), §6, §7 (tres actividades sobre el mismo activo), §8 (escenario con evidencia «qué demuestra y qué no»), §9 (consumidores declarados y conciliación), §10 (consumidores por actividad: brechas «sin vínculo» y «sin aprobación», insumo del art. 14 ter solo con actividades aprobadas), §11–13 (columna de limitaciones; retención de 30 días del linaje en GCP), §14–16, §17 (relaciones con `pii-identification` y `privacy-controls-as-code`), §18 (criterio de dominio) y §19 (laboratorio para F4). Sin cambios en las etiquetas existentes, aviso ni vigencia.
+- 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `fundamentos` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/processing-activities-inventory/`) no cambia.

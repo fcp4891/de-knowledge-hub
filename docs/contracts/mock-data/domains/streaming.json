@@ -3,8 +3,10 @@
   "slug": "streaming",
   "title": "Streaming y Event-Driven",
   "description": "Eventos, brokers, semánticas de entrega y procesamiento en el tiempo.",
+  "band": null,
   "concept_count": 14,
   "mvp_count": 0,
+  "legal_framework": null,
   "subdomains": [
     {
       "slug": "streaming-fundamentals",

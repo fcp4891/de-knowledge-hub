@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import zipfile
 from pathlib import Path
 from typing import Any
 
@@ -11,7 +12,7 @@ import pytest
 from scripts.static import build_static_data as s
 import datetime as dt
 
-from scripts.static import package_static
+from scripts.static import package_static, redirects
 from scripts.static.package_static import check_base_path, zip_name
 
 
@@ -40,7 +41,7 @@ def test_every_list_item_has_its_detail(out: Path) -> None:
 def test_lists_cover_all_content(out: Path) -> None:
     concepts = read(out, "concepts.json")
     assert concepts["total"] == len(concepts["items"]) == len(s.p.load_index(s.ROOT / "content", s.ROOT / "schemas").concepts)
-    assert len(read(out, "domains.json")["items"]) == 23
+    assert len(read(out, "domains.json")["items"]) == 24   # 24-privacy-engineering desde ADR-027
 
 
 def test_keys_read_by_static_mode_exist(out: Path) -> None:
@@ -95,7 +96,7 @@ def test_package_refuses_to_overwrite(tmp_path: Path, monkeypatch: pytest.Monkey
     existing = tmp_path / zip_name(moment)
     existing.write_bytes(b"anterior")
     with pytest.raises(SystemExit):
-        package_static.package(moment)
+        package_static.package(moment, "/aprendizaje-continuo")
     assert existing.read_bytes() == b"anterior"
 
 
@@ -105,3 +106,38 @@ def test_search_index_includes_aliases(out: Path) -> None:
     assert documents["gcp-dataplex"]["aliases"] == ["Dataplex", "Dataplex Universal Catalog"]
     assert documents["gcp-cloud-composer"]["aliases"] == ["Cloud Composer", "Composer"]
     assert all(isinstance(d["aliases"], list) for d in documents.values())
+
+
+# --- Redirecciones de las fichas que cambiaron de dominio (ADR-027) -----------
+
+
+def test_moved_fichas_are_in_privacy_engineering(out: Path) -> None:
+    """Las 11 fichas de las redirecciones están en el dominio 24 y su ficha existe en /concepts/<slug>/."""
+    domain = read(out, "domains/privacy-engineering.json")
+    in_domain = {c["slug"] for s in domain["subdomains"] for c in s["concepts"] if c["has_page"]}
+    assert set(redirects.MOVED_TO_PRIVACY_ENGINEERING) == in_domain
+    assert domain["band"] == "especializacion"
+    assert all((out / "concepts" / f"{slug}.json").is_file() for slug in redirects.MOVED_TO_PRIVACY_ENGINEERING)
+
+
+def test_old_compliance_urls_redirect_with_canonical_and_refresh() -> None:
+    pages = redirects.redirect_pages("/aprendizaje-continuo")
+    assert len(pages) == 11
+    html = pages["explorer/compliance/pii-identification/index.html"]
+    assert '<link rel="canonical" href="https://felipe-a-cespedes-perez.cl/aprendizaje-continuo/concepts/pii-identification/">' in html
+    assert '<meta http-equiv="refresh" content="0; url=/aprendizaje-continuo/concepts/pii-identification/">' in html
+    assert '<a href="/aprendizaje-continuo/concepts/pii-identification/">' in html
+
+
+def test_package_adds_redirect_pages_to_the_zip(tmp_path: Path) -> None:
+    out = tmp_path / "out"
+    for name in package_static.REQUIRED:
+        (out / name).parent.mkdir(parents=True, exist_ok=True)
+        (out / name).write_text("x", encoding="utf-8")
+    target = package_static.package(dt.datetime(2026, 10, 28, 21, 0, 0), "/aprendizaje-continuo", out, tmp_path / "dist")
+    with zipfile.ZipFile(target) as zf:
+        names = set(zf.namelist())
+        html = zf.read("explorer/compliance/retention-and-erasure/index.html").decode("utf-8")
+    assert {f"explorer/compliance/{s}/index.html" for s in redirects.MOVED_TO_PRIVACY_ENGINEERING} <= names
+    assert 'url=/aprendizaje-continuo/concepts/retention-and-erasure/' in html
+

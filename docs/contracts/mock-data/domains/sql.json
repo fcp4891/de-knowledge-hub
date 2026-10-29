@@ -3,8 +3,10 @@
   "slug": "sql",
   "title": "SQL avanzado",
   "description": "SQL aplicado al trabajo de datos, con patrones de carga y optimización en warehouses.",
+  "band": null,
   "concept_count": 33,
   "mvp_count": 14,
+  "legal_framework": null,
   "subdomains": [
     {
       "slug": "sql-language",

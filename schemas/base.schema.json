@@ -65,7 +65,7 @@
     "last_verified": { "$ref": "enums.schema.json#/$defs/date" },
     "verification_status": { "$ref": "enums.schema.json#/$defs/verification_status" },
     "jurisdiction": {
-      "description": "Países cuya ley origina el contenido (ADR-023). Solo en fichas del dominio compliance y en fuentes legislative.",
+      "description": "Países cuya ley origina el contenido (ADR-023). Solo en fichas de los dominios compliance y privacy-engineering (ADR-023, Enmienda 2 por ADR-027) y en fuentes legislative.",
       "type": "array",
       "items": { "$ref": "enums.schema.json#/$defs/jurisdiction" },
       "minItems": 1,

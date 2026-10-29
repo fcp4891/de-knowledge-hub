@@ -1,6 +1,6 @@
 # ADR-024 — Jerarquía de fichas padre e hijas
 
-- **Estado:** Aceptado (aprobado por Felipe el 2026-10-24, opción A: `PART_OF` hija → padre); implementado el 2026-10-24
+- **Estado:** Aceptado (aprobado por Felipe el 2026-10-24, opción A: `PART_OF` hija → padre); implementado el 2026-10-24. Enmienda 1 (2026-10-28, ADR-027): la padre, del mismo dominio, no necesariamente del mismo subdominio
 - **Fecha:** 2026-10-22 (propuesta); 2026-10-24 (aceptación)
 - **Fase:** F3b — upgrade de 19-compliance
 - **Referencias:** ADR-000, ADR-002 (contrato), ADR-003 (blueprint), ADR-023 (contenido con origen legal).
@@ -67,3 +67,8 @@ Opción A: `PART_OF`, con las reglas de validación de arriba. El orden de las h
   - Las 10 hijas de 19 cambian su `RELATED_TO` hacia `chile-data-protection` por `PART_OF`.
   - `chile-data-protection` deja sus 10 `RELATED_TO` hacia las hijas.
   - Se quita la frase «Es ficha hija de `chile-data-protection`» del §1 y de `description`, porque la UI la muestra desde la relación.
+
+## Enmienda 1 — Padre del mismo dominio (2026-10-28, ADR-027)
+
+- En 24-privacy-engineering, la ficha padre abre el primer tramo y sus hijas están en los cinco. `check_part_of` exige ahora el mismo **dominio**, no el mismo subdominio («la ficha padre es de otro dominio»).
+- Sin cambios en el resto: a lo sumo una padre, sin ciclos, y la padre nombra a todas sus hijas en el §17. Las hijas se listan en el orden del blueprint del dominio.

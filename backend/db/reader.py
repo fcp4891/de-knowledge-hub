@@ -46,10 +46,12 @@ def read_blueprint(conn: Connection, index: ContentIndex) -> None:
         .order_by(t.subdomains.c.domain_slug, t.subdomains.c.position)
     ).all()
     domains = conn.execute(
-        select(t.domains.c.id, t.domains.c.slug, t.domains.c.title, t.domains.c.description).order_by(t.domains.c.id)
+        select(t.domains.c.id, t.domains.c.slug, t.domains.c.title, t.domains.c.description, t.domains.c.band,
+               t.domains.c.legal_framework).order_by(t.domains.c.id)
     )
-    for domain_id, slug, title, description in domains:
+    for domain_id, slug, title, description, band, legal_framework in domains:
         domain = {"id": domain_id, "slug": slug, "title": title, "description": description}
+        domain.update({k: val for k, val in (("band", band), ("legal_framework", legal_framework)) if val is not None})
         subdomains = [
             {"slug": sub, "title": sub_title, "concepts": concepts.get(f"{slug}/{sub}", [])}
             for dom, sub, sub_title in subdomain_rows
@@ -59,6 +61,11 @@ def read_blueprint(conn: Connection, index: ContentIndex) -> None:
         for subdomain in subdomains:
             for concept in subdomain["concepts"]:
                 index.concepts[concept["slug"]] = BlueprintEntry(domain, subdomain, concept, len(index.concepts))
+
+
+def read_legal_frameworks(conn: Connection, index: ContentIndex) -> None:
+    for slug, data in conn.execute(select(t.legal_frameworks.c.slug, t.legal_frameworks.c.data)):
+        index.legal_frameworks[slug] = data
 
 
 def read_matrix(conn: Connection, index: ContentIndex) -> None:
@@ -73,5 +80,6 @@ def load_index_from_db(engine: Engine, schemas_dir: Path) -> ContentIndex:
     with engine.connect() as conn:
         read_entities(conn, index)
         read_blueprint(conn, index)
+        read_legal_frameworks(conn, index)
         read_matrix(conn, index)
     return index

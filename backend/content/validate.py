@@ -5,8 +5,8 @@ separados por ---), valida cada entidad según su `type` y verifica la
 integridad global: ids y slugs únicos, referencias existentes y pares
 origen/destino permitidos por relationships.schema.json.
 
-content/blueprint/ y content/matrix/ se validan aparte contra blueprint.schema.json
-(ADR-003) y matrix.schema.json (ADR-004).
+content/blueprint/, content/matrix/ y content/legal-frameworks/ se validan aparte contra blueprint.schema.json
+(ADR-003), matrix.schema.json (ADR-004) y legal-framework.schema.json (ADR-027).
 
 Uso: python -m backend.content.validate [--content DIR] [--schemas DIR] [--report]
 (`python scripts/validate.py` y `make validate` delegan aquí).
@@ -37,7 +37,8 @@ SLUG_LIST_FIELDS = ("technologies", "related_topics")
 TECHNOLOGY_TYPES = {"technology", "cloud_service"}
 BLUEPRINT_DIR = "blueprint"
 MATRIX_DIR = "matrix"
-STRUCTURE_DIRS = frozenset({BLUEPRINT_DIR, MATRIX_DIR})
+LEGAL_FRAMEWORKS_DIR = "legal-frameworks"   # ADR-027: marco legal verificado de un dominio
+STRUCTURE_DIRS = frozenset({BLUEPRINT_DIR, MATRIX_DIR, LEGAL_FRAMEWORKS_DIR})
 CLOUD_COLUMNS = ("gcp", "aws", "azure")
 
 
@@ -451,7 +452,8 @@ def children_by_parent(docs: list[Document]) -> dict[str, set[str]]:
 
 
 def check_part_of(docs: list[Document], index: BlueprintIndex | None, report: Report) -> None:
-    """ADR-024: a lo sumo una ficha padre, del mismo dominio y subdominio, y sin ciclos."""
+    """ADR-024 (enmendado por ADR-027): a lo sumo una ficha padre, del mismo dominio, y sin ciclos. La padre puede
+    estar en otro subdominio del dominio (24: la padre abre el primer tramo y las hijas están en los cinco)."""
     for doc in docs:
         if len(targets := part_of_targets(doc)) > 1:
             report.add(doc.location, f"[relations] PART_OF -> {', '.join(targets)}: una ficha tiene a lo sumo una ficha padre")
@@ -460,8 +462,8 @@ def check_part_of(docs: list[Document], index: BlueprintIndex | None, report: Re
     for child, parent in sorted(parents.items()):
         if index is not None:
             a, b = index.concepts.get(child), index.concepts.get(parent)
-            if a is not None and b is not None and (a.domain, a.subdomain) != (b.domain, b.subdomain):
-                report.add(locations[child], f"[relations] PART_OF -> '{parent}': la ficha padre es de otro dominio o subdominio")
+            if a is not None and b is not None and a.domain != b.domain:
+                report.add(locations[child], f"[relations] PART_OF -> '{parent}': la ficha padre es de otro dominio")
         seen, node = {child}, parent
         while node in parents and node not in seen:
             seen.add(node)
@@ -521,7 +523,7 @@ def check_snippets(docs: list[Document], by_slug: dict[str, Document], report: R
 
 # --- Contenido con origen legal (ADR-023) -------------------------------------
 
-LEGAL_DOMAIN = "compliance"
+LEGAL_DOMAINS = ("compliance", "privacy-engineering")   # ADR-023, enmendado por ADR-027: dominios 19 y 24
 LEGISLATIVE = "legislative"
 DISCLAIMER = "Esta ficha no es asesoría legal"
 EVIDENCE_HEADING = re.compile(r"^### Evidencia de cumplimiento\s*$", re.M)
@@ -654,7 +656,7 @@ def check_without_jurisdiction(doc: Document, by_slug: dict[str, Document], repo
 def check_legal_content(
     content_dir: Path, docs: list[Document], by_slug: dict[str, Document], report: Report, today: dt.date | None = None
 ) -> None:
-    """ADR-023: fuentes legislative, jurisdiction solo en fichas del dominio compliance, legal_basis, etiquetas,
+    """ADR-023: fuentes legislative, jurisdiction solo en fichas de los dominios legales, legal_basis, etiquetas,
     aviso, evidencia, cita legal consultada el día de last_verified, revisión mensual y aprobación del dueño."""
     today = today or dt.date.today()
     for doc in docs:
@@ -665,8 +667,8 @@ def check_legal_content(
         if "jurisdiction" not in data:
             check_without_jurisdiction(doc, by_slug, report)
             continue
-        if data["type"] not in page_sections.PAGE_TYPES or data.get("domain") != LEGAL_DOMAIN:
-            report.add(doc.location, f"[jurisdiction] solo en fichas (concept o pattern) del dominio {LEGAL_DOMAIN} (ADR-023)")
+        if data["type"] not in page_sections.PAGE_TYPES or data.get("domain") not in LEGAL_DOMAINS:
+            report.add(doc.location, f"[jurisdiction] solo en fichas (concept o pattern) de los dominios {' y '.join(LEGAL_DOMAINS)} (ADR-023)")
             continue
         if data["verification_status"] == "verified" and "owner_approved_at" not in data:
             report.add(doc.location, "[owner_approved_at] verified exige la aprobación explícita del dueño (ADR-023)")
@@ -880,6 +882,35 @@ def validate_matrices(
             report.matrix_capabilities += check_matrix(doc, index, by_slug, report)
 
 
+# --- Marcos legales (ADR-027) -------------------------------------------------
+
+
+def validate_legal_frameworks(
+    content_dir: Path, schemas_dir: Path, by_slug: dict[str, Document], report: Report
+) -> set[str]:
+    """Cada archivo cumple su schema, se llama como su slug y cita fuentes legislative del Source Registry."""
+    validator, _ = load_structure_schema(schemas_dir, "legal-framework.schema.json")
+    slugs: set[str] = set()
+    for doc in load_structures(content_dir, LEGAL_FRAMEWORKS_DIR, report):
+        if not validate_structure(doc, validator, report):
+            continue
+        if Path(doc.path).stem != doc.data["slug"]:
+            report.add(doc.location, f"[slug] el archivo debe llamarse {doc.data['slug']}.yaml")
+        slugs.add(doc.data["slug"])
+        for i, fact in enumerate(doc.data["facts"]):
+            target = by_slug.get(fact["source"])
+            if target is None or target.data.get("source_type") != LEGISLATIVE:
+                report.add(doc.location, f"[facts.{i}.source] '{fact['source']}' no es una fuente legislative del registro")
+    return slugs
+
+
+def check_domain_legal_frameworks(content_dir: Path, frameworks: set[str], report: Report) -> None:
+    for doc in load_structures(content_dir, BLUEPRINT_DIR, Report()):
+        ref = doc.data.get("domain", {}).get("legal_framework")
+        if ref is not None and ref not in frameworks:
+            report.add(doc.location, f"[domain.legal_framework] '{ref}' no existe en content/{LEGAL_FRAMEWORKS_DIR}/")
+
+
 # --- Orquestación ------------------------------------------------------------
 
 
@@ -912,6 +943,7 @@ def validate(content_dir: Path, schemas_dir: Path) -> Report:
     index = validate_blueprints(content_dir, schemas_dir, by_slug, valid_docs, report)
     check_part_of(valid_docs, index, report)
     validate_matrices(content_dir, schemas_dir, index, by_slug, report)
+    check_domain_legal_frameworks(content_dir, validate_legal_frameworks(content_dir, schemas_dir, by_slug, report), report)
     report.technologies = [doc.data for doc in valid_docs if doc.data["type"] in TECHNOLOGY_TYPES]
     return report
 

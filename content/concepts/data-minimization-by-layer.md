@@ -4,8 +4,8 @@ slug: data-minimization-by-layer
 type: pattern
 title: Minimización por capa
 description: "La ley pide tratar solo los datos necesarios y, por defecto, solo los estrictamente necesarios: menos columnas, menos detalle, menos tiempo y menos accesos. En una arquitectura por capas, cada zona responde a una finalidad: silver seudonimiza y proyecta, gold agrega, el análisis lee solo gold, y un contrato de columnas por capa detecta campos nuevos. Ejemplo ejecutado en la CI contra postgres:17. BigQuery, Lake Formation y Azure SQL. No es asesoría legal."
-domain: compliance
-subdomain: data-engineering-under-ley-21719
+domain: privacy-engineering
+subdomain: diseno-protegido
 classification: core
 level: intermediate
 importance: high
@@ -66,7 +66,7 @@ relations:
     note: Qué columnas son personales.
   - type: PART_OF
     target: chile-data-protection
-    note: Ficha padre del subdominio.
+    note: Ficha padre del dominio.
   - type: RELATED_TO
     target: chilean-identifier-pseudonymization
     note: El seudónimo de silver, con el RUT normalizado.
@@ -386,3 +386,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (sin regla universal por capa; pregunta guía), §2 (cuatro dimensiones y distinción con enmascarar, seudonimizar y anonimizar), §3, §4 (contrato de entrada y prueba con la identidad del consumidor), §5, §6 (no borrar lo que exige una obligación legal), §7 (columna de decisión; un umbral no basta para declarar anonimato), §8 (escenario y evidencia «qué demuestra y qué no»), §9 (contrato de ingesta), §10 (contrato de columnas por capa que detecta un campo nuevo, sobre el mismo ejemplo en PostgreSQL), §11–13 (criterio común), §14–16, §17 (relaciones con `processing-activities-inventory` y `retention-and-erasure`), §18 (criterio de dominio) y §19 (laboratorio para F4). Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
+- 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `diseno-protegido` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/data-minimization-by-layer/`) no cambia.

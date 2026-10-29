@@ -19,7 +19,7 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | Lote P1: 9 fichas hijas de 19 mejoradas, en revisión; 23a (6) y 23b (3) en revisión | Reestructuración de 19 (decisión de Felipe); `verified` de 19 con la aprobación de Felipe | Aprobación de Felipe (19) |
+| A · Claude Code | Lote A: dominio 24-privacy-engineering (ADR-027) con las 11 fichas de la Ley 21.719; P1, 23a y 23b en revisión | Reestructuración de 19 (decisión de Felipe); `verified` de 19 con la aprobación de Felipe | Aprobación de Felipe (19) |
 | B · Cursor revisión | — | Revisar P1, F3b-23a y F3b-23b (`lane-a.md`) | — |
 | B · Cursor UI | — (`b/ui-labels-diagrams` integrada en `main` el 2026-10-26) | — | — |
 
@@ -49,7 +49,8 @@
 - [x] 16-observability: 13/13 `verified`, aprobado por Felipe en el navegador el 2026-10-20 (ADR-020: OpenTelemetry en la CI, sin collector; SRE como N4 solo para conceptos).
 - [x] 17-governance: 9/9 `verified`, aprobado por Felipe en el navegador el 2026-10-21 (ADR-021: OpenLineage en la CI, transporte a archivo).
 - [x] 18-security: 17/17 `verified`, aprobado por Felipe en el navegador el 2026-10-21 (ADR-022: cryptography). 18 no menciona la ley.
-- [ ] 19-compliance (11 fichas tras el upgrade, ADR-023): upgrade del 2026-10-22: 11 fichas (una padre y diez hijas) en revisión; lote P1 (2026-10-28): 9 hijas mejoradas, en revisión. Las fichas pasan a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`).
+- [ ] 24-privacy-engineering (ADR-027, desde el 2026-10-28): las 11 fichas de la Ley 21.719 (una padre y diez hijas), venidas de 19, en revisión, más 4 «pendiente de ficha»; lote P1: 9 hijas mejoradas. Pasan a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`).
+- [ ] 19-compliance: queda en Transversal para el cumplimiento genérico (GDPR y LGPD en el BACKLOG). Las fichas pasan a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`).
 - [x] 21-ai-for-data-engineering (27 fichas en 21a–21e, ADR-025): 27/27 `verified` el 2026-10-26.
 - [x] 22-modern-data-engineering: 10/10 `verified` el 2026-10-27.
 - [ ] 23-emerging-technologies (9 fichas en 23a–23b, ADR-026): 23a (6) y 23b (3) escritos, en revisión.

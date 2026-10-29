@@ -3,8 +3,10 @@
   "slug": "aws",
   "title": "Amazon Web Services",
   "description": "Implementación en AWS de los conceptos de almacenamiento, procesamiento, streaming, orquestación y gobierno.",
+  "band": null,
   "concept_count": 16,
   "mvp_count": 0,
+  "legal_framework": null,
   "subdomains": [
     {
       "slug": "storage-and-analytics",

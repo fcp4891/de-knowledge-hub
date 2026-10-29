@@ -3,8 +3,10 @@
   "slug": "python",
   "title": "Python para Data Engineering",
   "description": "Python aplicado a ingesta, transformación, validación y construcción de pipelines.",
+  "band": null,
   "concept_count": 26,
   "mvp_count": 5,
+  "legal_framework": null,
   "subdomains": [
     {
       "slug": "python-core",

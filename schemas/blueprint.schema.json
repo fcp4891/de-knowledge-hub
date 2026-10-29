@@ -23,7 +23,15 @@
         "id": { "description": "Número de dominio de dos dígitos (§54).", "type": "string", "pattern": "^\\d{2}$" },
         "slug": { "$ref": "enums.schema.json#/$defs/slug" },
         "title": { "type": "string", "minLength": 1 },
-        "description": { "type": "string", "minLength": 1 }
+        "description": { "type": "string", "minLength": 1 },
+        "band": {
+          "description": "Banda fuera de las 6 capas de la UI (ADR-027). Sin band, el dominio está en una de las capas.",
+          "enum": ["especializacion"]
+        },
+        "legal_framework": {
+          "description": "Slug de un archivo de content/legal-frameworks/ con el marco legal verificado del dominio (ADR-027).",
+          "$ref": "enums.schema.json#/$defs/slug"
+        }
       },
       "additionalProperties": false
     },

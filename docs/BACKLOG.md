@@ -23,6 +23,7 @@ Formato: `- [fase sugerida] idea — origen`
 - ~~[F2 · A-F2.3] Mover `projection.py` a `backend/app/`~~ — hecho en A-F2.3
 - ~~[F3] Mover `scripts/validate.py` a un paquete compartido (`backend/content/`)~~ — hecho en la deuda técnica de F3
 - ~~[F4] Respaldo del estado personal~~ — hecho en F3 (`make backup-me` / `make restore-me`)
+- [F4] Laboratorio integral de privacidad (dominio 24, ADR-027) desde `docs/briefs/privacy-program/06-laboratorio-integral-gcp.md`: el brief es un guion, no una fuente; datos ficticios y RUT según el criterio vigente — lote A (2026-10-28)
 - [F4] Programar `make backup-me` (tarea programada de Windows o cron) y rotar respaldos antiguos — F3
 - [F3] Resaltar HCL en los bloques de código: highlight.js no trae Terraform, así que esos snippets quedan en texto plano con Copiar — B-F3.2
 - [post-F4] Dominio 07: las 9 arquitecturas que no están entre las 6 de F4, con la plantilla de arquitectura: `modern-data-warehouse-architecture`, `data-lake-architecture`, `lakehouse-architecture`, `lambda-architecture`, `kappa-architecture`, `real-time-analytics-architecture`, `iot-pipeline-architecture`, `ml-feature-pipeline-architecture` y `rag-data-pipeline-architecture` — plan de 07-architecture (2026-10-11)

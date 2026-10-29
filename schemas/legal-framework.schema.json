@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "legal-framework.schema.json",
+  "title": "Marco legal verificado de un dominio",
+  "description": "Un archivo content/legal-frameworks/<slug>.yaml por marco legal (ADR-027). No es una entidad: lo referencia el dominio del blueprint con legal_framework. Cada hecho lleva su URL de Nivel 1 (BCN o Senado/Cámara) y la fecha en que se verificó; no se suponen valores.",
+  "type": "object",
+  "required": ["slug", "title", "jurisdiction", "facts"],
+  "properties": {
+    "slug": { "$ref": "enums.schema.json#/$defs/slug" },
+    "title": { "type": "string", "minLength": 1 },
+    "jurisdiction": { "$ref": "enums.schema.json#/$defs/jurisdiction" },
+    "facts": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/fact" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "fact": {
+      "type": "object",
+      "required": ["key", "label", "value", "url", "source", "verified_at"],
+      "properties": {
+        "key": { "$ref": "enums.schema.json#/$defs/slug" },
+        "label": { "type": "string", "minLength": 1 },
+        "value": { "type": "string", "minLength": 1 },
+        "url": {
+          "description": "Página oficial de Nivel 1 donde se lee el valor: BCN, Senado o Cámara de Diputados.",
+          "type": "string",
+          "pattern": "^https://(www\\.bcn\\.cl|nuevo\\.leychile\\.cl|tramitacion\\.senado\\.cl|www\\.senado\\.cl|www\\.camara\\.cl)/"
+        },
+        "checked_with": {
+          "description": "Servicio oficial con que se leyó el valor, si no es la misma página (p. ej. el servicio XML de tramitación del Senado).",
+          "type": "string",
+          "pattern": "^https://(www\\.bcn\\.cl|nuevo\\.leychile\\.cl|tramitacion\\.senado\\.cl|www\\.senado\\.cl|www\\.camara\\.cl)/"
+        },
+        "source": {
+          "description": "Fuente legislative del Source Registry.",
+          "$ref": "enums.schema.json#/$defs/slug"
+        },
+        "verified_at": { "$ref": "enums.schema.json#/$defs/date" },
+        "note": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    }
+  }
+}

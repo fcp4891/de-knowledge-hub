@@ -455,12 +455,15 @@ components:
     # --- Dominios ---
     DomainSummary:
       type: object
-      required: [id, slug, title, description, concept_count, mvp_count]
+      required: [id, slug, title, description, band, concept_count, mvp_count]
       properties:
         id: { type: string, pattern: "^\\d{2}$" }
         slug: { $ref: "#/components/schemas/Slug" }
         title: { type: string }
         description: { type: string }
+        band:
+          description: "ADR-027: banda fuera de las 6 capas de la UI; null si el dominio está en una capa."
+          enum: [especializacion, null]
         concept_count: { type: integer, minimum: 0 }
         mvp_count: { type: integer, minimum: 0 }
     DomainList:
@@ -474,8 +477,11 @@ components:
     DomainDetail:
       allOf: [{ $ref: "#/components/schemas/DomainSummary" }]
       type: object
-      required: [subdomains]
+      required: [legal_framework, subdomains]
       properties:
+        legal_framework:
+          description: "ADR-027: marco legal verificado del dominio; null si no tiene."
+          oneOf: [{ $ref: "#/components/schemas/LegalFramework" }, { type: "null" }]
         subdomains:
           type: array
           items:
@@ -487,6 +493,31 @@ components:
               concepts: { type: array, items: { $ref: "#/components/schemas/ConceptSummary" } }
             additionalProperties: false
       unevaluatedProperties: false
+
+    LegalFramework:
+      description: "ADR-027: cada hecho con su URL de Nivel 1 (BCN o Senado/Cámara) y la fecha en que se verificó."
+      type: object
+      required: [slug, title, jurisdiction, facts]
+      properties:
+        slug: { $ref: "#/components/schemas/Slug" }
+        title: { type: string }
+        jurisdiction: { type: string }
+        facts:
+          type: array
+          items:
+            type: object
+            required: [key, label, value, url, source, verified_at]
+            properties:
+              key: { type: string }
+              label: { type: string }
+              value: { type: string }
+              url: { type: string, format: uri }
+              checked_with: { type: string, format: uri }
+              source: { type: string }
+              verified_at: { type: string, format: date }
+              note: { type: string }
+            additionalProperties: false
+      additionalProperties: false
 
     # --- Conceptos ---
     ConceptSummary:

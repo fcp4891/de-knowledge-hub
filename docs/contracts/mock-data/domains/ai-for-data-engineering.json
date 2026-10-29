@@ -3,8 +3,10 @@
   "slug": "ai-for-data-engineering",
   "title": "IA aplicada a Data Engineering",
   "description": "Fundamentos de LLM, retrieval y sistemas con IA, y sus casos de uso concretos en ingeniería de datos.",
+  "band": null,
   "concept_count": 27,
   "mvp_count": 0,
+  "legal_framework": null,
   "subdomains": [
     {
       "slug": "ai-fundamentals",

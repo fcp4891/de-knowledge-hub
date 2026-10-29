@@ -4,8 +4,8 @@ slug: processors-and-international-transfers
 type: concept
 title: Encargados y transferencias internacionales
 description: "Una plataforma está llena de terceros: nube, SaaS, ETL gestionado, observabilidad, soporte remoto, APIs de LLM. Encargo, cesión y transferencia internacional son cosas distintas, y la aprobación es de un flujo y su finalidad, no de un proveedor. Ingeniería mantiene el inventario de flujos (dataset → tercero → rol → países → documento → mecanismo → finalidad) y la CI falla con brechas. Ejemplo ejecutado en la CI. Políticas de regiones de las tres nubes. No es asesoría legal."
-domain: compliance
-subdomain: data-engineering-under-ley-21719
+domain: privacy-engineering
+subdomain: riesgo-terceros-incidentes
 category: compliance
 classification: core
 level: intermediate
@@ -47,7 +47,7 @@ sources:
     page_title: "Azure Policy built-in policy definitions"
     note: "Azure Policy built-in policy definitions: «Allowed locations» restringe las ubicaciones que la organización puede usar al desplegar recursos, para requisitos de geocumplimiento; excluye resource groups, Microsoft.AzureActiveDirectory/b2cDirectories y los recursos de la región «global»; efectos Audit, Deny o Disabled."
 relations:
-  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del subdominio."}
+  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del dominio."}
   - {type: RELATED_TO, target: processing-activities-inventory, note: "Destinatarios y transferencias por actividad."}
   - {type: RELATED_TO, target: chilean-identifier-pseudonymization, note: "Seudonimizar lo que sale si el proveedor no necesita identificar."}
   - {type: RELATED_TO, target: retention-and-erasure, note: "Supresión o devolución al cierre."}
@@ -364,3 +364,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
 - 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): TB; quitar datos personales pasa a la etiqueta de las llamadas a LLM.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (qué sale, quién lo recibe y desde dónde se accede; resultado esperado), §2 (tabla de encargo, cesión y transferencia; el rol no se deduce del producto; inventario con rol y finalidades), §3 (soporte remoto, respaldos y telemetría), §4 (nueve pasos con descubrir, caracterizar, observar y cierre; la aprobación es del flujo), §5, §6, §7 (rol y finalidad por flujo), §8 (controles y evidencia «qué demuestra y qué no»), §9, §10 (rol encargo o cesión, países de proceso o acceso y finalidades aprobadas, sobre el mismo ejemplo: 7 flujos y 6 brechas), §11–13 (lo que no cubre cada política y criterio común), §14–16, §17 (relaciones con `pii-identification` y `data-minimization-by-layer`), §18 (criterio de dominio) y §19 (laboratorio para F4). Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
+- 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `riesgo-terceros-incidentes` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/processors-and-international-transfers/`) no cambia.

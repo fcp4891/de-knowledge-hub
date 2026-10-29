@@ -53,13 +53,23 @@ def test_cycle_is_an_error(content: Path) -> None:
     assert_error(run(content), "PART_OF -> 'b': la jerarquía forma un ciclo", "PART_OF -> 'a': la jerarquía forma un ciclo")
 
 
-def test_parent_in_another_subdomain_is_an_error(content: Path) -> None:
+def test_parent_in_another_subdomain_of_the_same_domain_passes(content: Path) -> None:
+    """Enmienda de ADR-024 por ADR-027: la padre puede estar en otro subdominio del mismo dominio."""
     doc = domain_doc("01", "fundamentals", bp_concept("a"))
     doc["subdomains"].append({"slug": "other-topics", "title": "Otra", "concepts": [bp_concept("b")]})
     write_domain(content, doc)
+    write_md(content, "concepts/a.md", concept("a", domain="fundamentals"), body=PARENT_BODY.replace("- `c`: hija.\n", ""))
+    write_md(content, "concepts/b.md", concept("b", domain="fundamentals", relations=part_of("a")), body=CHILD_BODY)
+    report = run(content)
+    assert not [e for e in report.errors if "PART_OF" in e], report.errors
+
+
+def test_parent_in_another_domain_is_an_error(content: Path) -> None:
+    write_domain(content, domain_doc("01", "fundamentals", bp_concept("a")))
+    write_domain(content, domain_doc("02", "sql", bp_concept("b")))
     write_md(content, "concepts/a.md", concept("a", domain="fundamentals"))
-    write_md(content, "concepts/b.md", concept("b", domain="fundamentals", relations=part_of("a")))
-    assert_error(run(content), "PART_OF -> 'a': la ficha padre es de otro dominio o subdominio")
+    write_md(content, "concepts/b.md", concept("b", domain="sql", relations=part_of("a")))
+    assert_error(run(content), "PART_OF -> 'a': la ficha padre es de otro dominio")
 
 
 def test_part_of_only_between_fichas(content: Path) -> None:
@@ -72,8 +82,8 @@ def test_children_follow_blueprint_order_and_parent_is_outgoing() -> None:
     index = p.load_index(ROOT / "content", SCHEMAS)
     groups = {(g["type"], g["direction"]): g for g in p.relation_groups(index, "chile-data-protection")["groups"]}
     children = [i["slug"] for i in groups[("PART_OF", "incoming")]["items"]]
-    subdomain = [s for s, e in index.concepts.items() if e.subdomain["slug"] == "data-engineering-under-ley-21719"]
+    domain = [s for s, e in index.concepts.items() if e.domain["slug"] == "privacy-engineering" and s in index.entities]
     assert groups[("PART_OF", "incoming")]["label"] == "has_part"
-    assert children == [s for s in subdomain if s != "chile-data-protection"]
+    assert children == [s for s in domain if s != "chile-data-protection"]   # los cinco tramos, en orden (ADR-027)
     child = {(g["type"], g["direction"]): g for g in p.relation_groups(index, "retention-and-erasure")["groups"]}
     assert [i["slug"] for i in child[("PART_OF", "outgoing")]["items"]] == ["chile-data-protection"]

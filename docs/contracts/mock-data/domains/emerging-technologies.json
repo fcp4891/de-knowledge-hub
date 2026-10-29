@@ -3,8 +3,10 @@
   "slug": "emerging-technologies",
   "title": "Tecnologías emergentes",
   "description": "Tecnologías y patrones en evolución rápida que pueden adquirir relevancia profesional.",
+  "band": null,
   "concept_count": 9,
   "mvp_count": 0,
+  "legal_framework": null,
   "subdomains": [
     {
       "slug": "agentic-data-engineering",

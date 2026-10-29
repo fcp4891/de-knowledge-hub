@@ -3,8 +3,10 @@
   "slug": "observability",
   "title": "Observabilidad",
   "description": "Señales, salud de pipelines, acuerdos de servicio y respuesta a incidentes en plataformas de datos.",
+  "band": null,
   "concept_count": 13,
   "mvp_count": 0,
+  "legal_framework": null,
   "subdomains": [
     {
       "slug": "telemetry",

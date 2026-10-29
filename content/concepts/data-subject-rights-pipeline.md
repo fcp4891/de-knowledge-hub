@@ -4,8 +4,8 @@ slug: data-subject-rights-pipeline
 type: pattern
 title: Pipeline de derechos del titular
 description: "Cualquier titular puede pedir acceso, rectificación, supresión, oposición, portabilidad o bloqueo; la respuesta va en 30 días corridos y el bloqueo temporal en 2 días hábiles. Es un flujo con estado, no una consulta: índice de titulares con llave seudónima, catálogo por actividad, acciones por destino y un cierre que no procede con destinos pendientes. Plazos, acceso, portabilidad, rectificación que sobrevive al backfill y control de cierre, ejecutados en la CI. No es asesoría legal."
-domain: compliance
-subdomain: data-engineering-under-ley-21719
+domain: privacy-engineering
+subdomain: derechos-ciclo-vida
 classification: core
 level: advanced
 importance: high
@@ -47,7 +47,7 @@ sources:
     page_title: "Row filters and column masks"
     note: "Row filters and column masks (Azure Databricks): controles de acceso de Unity Catalog que restringen las filas y los valores de columna que un usuario ve al consultar."
 relations:
-  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del subdominio."}
+  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del dominio."}
   - {type: RELATED_TO, target: processing-activities-inventory, note: "La respuesta de acceso sale del catálogo por actividad."}
   - {type: RELATED_TO, target: retention-and-erasure, note: "La supresión en todas las capas."}
   - {type: RELATED_TO, target: chilean-identifier-pseudonymization, note: "La llave seudónima del titular."}
@@ -449,3 +449,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
 - 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): dos diagramas: recepción y ejecución; los cinco derechos convergen en la respuesta.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (flujo con estado y cobertura), §2 (solicitud, decisión autorizada, índice, acción por destino y evidencia), §3 (rectificación revertida por la carga del CRM), §4 (verificación de identidad, idempotencia, verificación del efecto, cierre sin destinos pendientes, riesgo principal por derecho y plazos como configuración versionada), §5, §6, §7 (rectificación por etapas), §8 (escenario y evidencia «qué demuestra y qué no»), §9 (ejecución por destino y cierre), §10 (rectificación que sobrevive al backfill y control de cierre, sobre el mismo ejemplo), §11–13 (límites de los filtros de fila y criterio común), §14–16, §18 (criterio de dominio) y §19 (laboratorio para F4). Los plazos verificados del art. 11 se mantienen. Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
+- 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `derechos-ciclo-vida` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/data-subject-rights-pipeline/`) no cambia.

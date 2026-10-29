@@ -4,8 +4,8 @@ slug: data-breach-response
 type: pattern
 title: Respuesta ante vulneraciones
 description: "Ante una vulneración, el área legal pregunta cuántas personas, qué datos y si hay sensibles, financieros o de menores de 14; la ley pide reportar sin dilaciones indebidas, registrar esas comunicaciones y avisar a los titulares en esos casos. Ingeniería entrega en horas una estimación revisable que separa lo accesible de lo extraído y declara sus lagunas. Consulta de alcance con limitaciones y plazos de la Ley 21.663 (art. 9 y Decreto 295), ejecutados en la CI. No es asesoría legal."
-domain: compliance
-subdomain: data-engineering-under-ley-21719
+domain: privacy-engineering
+subdomain: riesgo-terceros-incidentes
 classification: core
 level: advanced
 importance: medium
@@ -53,7 +53,7 @@ sources:
     page_title: "Auditing for Azure SQL Database"
     note: "Auditing for Azure SQL Database: registra los eventos de la base en un log de auditoría en una cuenta de Azure Storage, un workspace de Log Analytics o Event Hubs; ayuda a entender la actividad y a detectar anomalías que podrían indicar problemas de seguridad."
 relations:
-  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del subdominio."}
+  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del dominio."}
   - {type: RELATED_TO, target: incident-response, note: "El runbook de incidentes, con el paso de datos personales."}
   - {type: RELATED_TO, target: data-subject-rights-pipeline, note: "El índice de titulares."}
   - {type: RELATED_TO, target: processing-activities-inventory, note: "Categorías y actividades afectadas."}
@@ -352,3 +352,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
 - 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): TB; Agencia, titulares y CSIRT en un nodo de comunicaciones; registro interno y registro de las comunicaciones separados.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (estimación trazable y revisable), §2 (activo comprometido, acceso observado, dato accesible, dato extraído y titular posiblemente afectado), §3 (exportaciones inusuales de una cuenta de servicio), §4 (diez pasos: hechos, inferencias y lagunas; calendario separado para la Ley 21.663; corregir y aprender), §5, §6, §7 (cómo leer la evidencia), §8 (escenario y evidencia «qué demuestra y qué no»), §10 (limitaciones de cobertura en el alcance; el aviso a titulares queda condicionado a que se reporte), §11–13 (cobertura de los logs y criterio común), §14–16, §17 (relación con `pii-identification`), §18 (criterio de dominio) y §19 (laboratorio para F4). Los plazos verificados de la Ley 21.663 y el Decreto 295 se mantienen. Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
+- 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `riesgo-terceros-incidentes` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/data-breach-response/`) no cambia.

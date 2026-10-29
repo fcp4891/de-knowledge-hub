@@ -4,8 +4,8 @@ slug: retention-and-erasure
 type: pattern
 title: Retención y supresión
 description: "Un dato personal está en el origen, en bronze, silver y gold, en features, exportaciones, versiones y respaldos. Retener y suprimir bien es que el plazo se aplique solo, que la supresión alcance las copias que corresponde, conservando lo que tiene obligación legal, que ningún backfill la deshaga y que el caso no se dé por verificado con copias por expirar o destinos pendientes. Ejemplo ejecutado en la CI. BigQuery, S3, Iceberg y Delta. No es asesoría legal."
-domain: compliance
-subdomain: data-engineering-under-ley-21719
+domain: privacy-engineering
+subdomain: derechos-ciclo-vida
 classification: core
 level: advanced
 importance: high
@@ -66,7 +66,7 @@ sources:
     page_title: "VACUUM"
     note: "VACUUM (Azure Databricks): borra los archivos que ya no están en el log de transacciones de Delta y superan el umbral de retención, de 7 días por defecto; después de VACUUM no se puede volver por time travel a versiones anteriores al período de retención; Databricks recomienda al menos 7 días. Para tablas Apache Iceberg, VACUUM borra archivos sin referencia con una retención fija de 7 días."
 relations:
-  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del subdominio."}
+  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del dominio."}
   - {type: RELATED_TO, target: data-subject-rights-pipeline, note: "Cómo llega y se valida la solicitud."}
   - {type: RELATED_TO, target: chilean-identifier-pseudonymization, note: "La llave seudónima como clave de supresión."}
   - {type: RELATED_TO, target: processing-activities-inventory, note: "De dónde vienen plazo y acción."}
@@ -561,3 +561,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): dos diagramas: la ingesta respeta la lista de supresión, y supresión y retención en cada copia.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (retención frente a supresión), §2 (tabla de regla, supresión, borrado lógico, bloqueo y anonimización; plazos distintos para una misma persona; lista de supresión con alcance), §3 (caso del pasajero que vuelve con un backfill), §4 (diez pasos: alcance con inventario y linaje, plan por destino, `pendiente_expiracion_copias`, cierre con evidencia), §5, §6, §7 (preferencias y exportación a un proveedor), §8 (estados por destino y evidencia «qué demuestra y qué no»), §9 (alcance y estado por destino), §10 (lista de supresión con alcance y estados que impiden dar el caso por verificado, sobre el mismo ejemplo; RUT ficticios de dígitos repetidos en lugar de `12.345.678-5` y `9.876.543-2`), §11 (estado en la ventana de BigQuery), §14–16, §17 (relación con `data-lineage`), §18 (criterio de dominio) y §19 (laboratorio para F4). Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
 - 2026-10-28: dos ejemplos ejecutables más en el §10, con dependencias ya aprobadas: PyIceberg 0.12 (ADR-018: DELETE, `expire_snapshots` y ningún snapshot vigente devuelve al titular) y crypto-shredding con cryptography (ADR-022: llave por titular generada por el test, destruida, y registro del respaldo que ya no se descifra). §4 y §8 (dos filas de evidencia) ajustados; fuente `cryptography-docs`.
+- 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `derechos-ciclo-vida` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/retention-and-erasure/`) no cambia.
