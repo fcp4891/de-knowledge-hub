@@ -37,7 +37,7 @@ sources:
   - source: azure-ai-search-docs
     url: https://learn.microsoft.com/en-us/azure/search/search-security-trimming-for-azure-search
     accessed: 2026-10-28
-    page_title: "Security Filter Pattern"
+    page_title: "Security filters for trimming results in Azure AI Search"
     note: "Security filters for trimming results in Azure AI Search: para soluciones que no pueden usar el soporte integrado de listas de control de acceso (ACL) por documento, Azure AI Search permite un filtro que recorta los resultados según un campo con identificadores de grupo o usuario, consultado con la función search.in; el patrón simula la autorización por documento con un filtro OData. La página indica que Azure AI Search también sustenta Foundry IQ en el portal de Microsoft Foundry."
   - source: owasp-llm-top-10
     url: https://genai.owasp.org/llm-top-10/
@@ -283,7 +283,7 @@ En AWS, **Amazon Bedrock** Knowledge Bases. Según *Configure and customize quer
 
 ## 13. Azure
 
-En Azure, **Azure AI Search**. Según *Security Filter Pattern* (no ejecutado):
+En Azure, **Azure AI Search**. Según *Security filters for trimming results in Azure AI Search* (no ejecutado):
 
 | Necesidad | Servicio | Etiqueta |
 |---|---|---|
@@ -346,7 +346,7 @@ Propuesta para F4: un corpus ficticio con permisos por documento; usuarios con d
 - BCN Ley Chile: *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* (versión con vigencia diferida desde 2026-12-01).
 - Google Cloud: *Set up data source access control* (Agent Search).
 - AWS: *Configure and customize queries and response generation* (Amazon Bedrock).
-- Microsoft Learn: *Security Filter Pattern* (Azure AI Search).
+- Microsoft Learn: *Security filters for trimming results in Azure AI Search*.
 - Referencias conceptuales (Nivel 4): OWASP, *LLMRisks Archive* (OWASP Top 10 for LLM Applications); NIST, *AI Risk Management Framework* (no son normas chilenas).
 
 El detalle de cada fuente está en `sources` del frontmatter.
@@ -360,3 +360,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: creación (lote P2, dominio 24, ADR-027) desde `docs/briefs/privacy-program/03-privacidad-ia-rag-llm.md`, que es un guion, no una fuente.
 - 2026-10-28: completada con lo que pedía el prompt de P2: OWASP Top 10 for LLM Applications y NIST AI RMF como fuentes de Nivel 4, solo para conceptos (§2, §4, §20); el nombre «Azure AI Search» se confirmó en su página N1 ese día.
 - 2026-10-28: revisión `docs/reviews/p2.md` aplicada: el art. 8 bis dice que sus salvaguardas, incluida expresar el punto de vista, aplican en todos los casos; el art. 15 bis incluye la prohibición de ceder o entregar sin autorización expresa; el art. 3 c) conserva «estrictamente»; el control de acceso de Agent Search se cita como Preview y elegido al crear el data store, con cita textual; `page_title` de Azure «Security Filter Pattern»; diagrama del §9 en TB.
+- 2026-10-28: `page_title` de Azure según ADR-012 (encabezado principal de la página; `<title>` solo si no tiene): «Security filters for trimming results in Azure AI Search», el H1 consultado ese día; «Security Filter Pattern» es su `<title>`.
