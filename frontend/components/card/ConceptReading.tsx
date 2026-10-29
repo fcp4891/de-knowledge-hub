@@ -683,10 +683,23 @@ export function ConceptReading({
             {legalBasis.length > 0 ? <LegalBasisTable items={legalBasis} /> : null}
             {blocks}
             {sections.length === 0 ? <p className="reading-quiet">Esta ficha todavía no tiene secciones.</p> : null}
-            {architectureLegend ? (
-              <p className="claim-legend">
-                <ArchitectureDot labelled={false} /> Decisión de arquitectura: elección de diseño, no exigida por la ley
-              </p>
+            {legalBasis.length > 0 || architectureLegend ? (
+              <ul className="claim-legend">
+                {legalBasis.length > 0 ? (
+                  <li>
+                    <sup className="claim-art">
+                      <span>art. N</span>
+                    </sup>
+                    <span>Obligación legal: cita el artículo y enlaza su fila en Base legal</span>
+                  </li>
+                ) : null}
+                {architectureLegend ? (
+                  <li>
+                    <ArchitectureDot labelled={false} />
+                    <span>Decisión de arquitectura: elección de diseño, no exigida por la ley</span>
+                  </li>
+                ) : null}
+              </ul>
             ) : null}
             <div className="reading-footer">
               <div className="reading-footer-actions">

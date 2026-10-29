@@ -14,6 +14,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** `b/ui-privacy-space` (worktree `DES_conocimiento-privacy`). `/privacidad` usa el mismo layout que la ruta de dominio. Las 15 fichas tienen página. La cabecera es lo propio: Especialización, el aviso «Este contenido no es asesoría legal.» y la caja Comprender → Aplicar → Demostrar → Profundizar. Las fichas siguen con «Esta ficha no es asesoría legal.». El laboratorio es la etapa 6 deshabilitada, una sola vez. El marco legal va debajo en el panel derecho. En mock no se consulta `/me`.
+- **Siguiente:** lo que asigne Felipe.
+- **Bloqueos:** ninguno.
 - **Tarea activa:** revisión del lote P2. Informe en `docs/reviews/p2.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: el art. 7 sin «entre otros», el art. 14 quáter con los cuatro factores, el art. 8 bis en todos los casos, el preview de Agent Search y tres diagramas LR con cadena de 6.
 - **Tarea activa:** revisión del lote A. Informe en `docs/reviews/lote-a.md`. No se editó `content/` ni `frontend/`.
@@ -414,8 +417,12 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 
 ## Notas para Carril A
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
+- El pedido de un párrafo por nivel queda sin efecto. Esos nombres no se asignan a los tramos ni hace falta un campo nuevo: la interfaz muestra la caja «Cómo estudiar cada ficha: Comprender → Aplicar → Demostrar → Profundizar».
 
 ## Historial
+
+### UI · espacio de privacidad (2026-10-28)
+- `/privacidad` reutiliza la ruta de dominio. Con P2 en `main`, las 15 fichas enlazan a su concepto. El laboratorio queda como etapa 6 deshabilitada. El aviso del espacio es «Este contenido no es asesoría legal.»; el de las fichas no cambia. No se editó `content/`.
 
 ### Revisión · lote P2 (2026-10-28)
 - Revisión de las cuatro fichas nuevas del dominio 24. No se editó `content/`.

@@ -1,4 +1,5 @@
 import { GOALS } from "@/lib/learning-paths";
+import { nextDistinctDomain } from "@/lib/privacySpace";
 import type { Level, StudyStatus } from "@/lib/api/types";
 
 const LEVEL_RANK: Record<Level, number> = {
@@ -76,9 +77,5 @@ export function nextGoalDomain(goalKey: string | null, currentDomainId: string):
   if (!goal) {
     return null;
   }
-  const index = goal.steps.findIndex((step) => step.domain === currentDomainId);
-  if (index < 0) {
-    return null;
-  }
-  return goal.steps[index + 1]?.domain ?? null;
+  return nextDistinctDomain(goal.steps, currentDomainId);
 }

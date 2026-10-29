@@ -2,6 +2,7 @@ import { ApiFailure } from "@/components/ApiFailure";
 import { HomeScreen, type HomeConcept, type HomeDomain } from "@/components/home/HomeScreen";
 import { getDomain, listAllConcepts, listDomains, listStudyStates } from "@/lib/api/client";
 import type { ApiResult, StudyState } from "@/lib/api/types";
+import { verifiedCount } from "@/lib/privacySpace";
 
 async function latestReviewing(): Promise<ApiResult<StudyState | null>> {
   const items: StudyState[] = [];
@@ -26,10 +27,11 @@ async function latestReviewing(): Promise<ApiResult<StudyState | null>> {
 
 export default async function HomePage() {
   const staticMode = process.env.API_MODE === "static";
+  const localStudy = staticMode || process.env.API_MODE === "mock";
   const [domainList, conceptList, reviewing] = await Promise.all([
     listDomains(),
     listAllConcepts(),
-    staticMode ? Promise.resolve(null) : latestReviewing(),
+    localStudy ? Promise.resolve(null) : latestReviewing(),
   ]);
 
   const domainItems = domainList.ok ? domainList.data.items : [];
@@ -53,12 +55,35 @@ export default async function HomePage() {
     }
   }
 
-  const domains: HomeDomain[] = domainItems.map((domain) => ({
-    id: domain.id,
-    slug: domain.slug,
-    conceptCount: domain.concept_count,
-    withPage: conceptList.ok ? (withPage.get(domain.slug) ?? 0) : null,
-  }));
+  const domains: HomeDomain[] = domainItems.map((domain) => {
+    const detail = details.find((item) => item.ok && item.data.id === domain.id);
+    const data = detail && detail.ok ? detail.data : null;
+    const stages =
+      domain.band === "especializacion" && data
+        ? data.subdomains.map((subdomain) => {
+            const progress = verifiedCount(subdomain.concepts.map((concept) => concept.verification_status));
+            return { slug: subdomain.slug, title: subdomain.title, ...progress };
+          })
+        : [];
+    const legalFacts = data?.legal_framework
+      ? data.legal_framework.facts.map((fact) => ({
+          key: fact.key,
+          label: fact.label,
+          value: fact.value,
+          verifiedAt: fact.verified_at,
+        }))
+      : [];
+    return {
+      id: domain.id,
+      slug: domain.slug,
+      title: domain.title,
+      band: domain.band,
+      conceptCount: domain.concept_count,
+      withPage: conceptList.ok ? (withPage.get(domain.slug) ?? 0) : null,
+      stages,
+      legalFacts,
+    };
+  });
   const idBySlug = new Map(domains.map((domain) => [domain.slug, domain.id]));
   const concepts: HomeConcept[] = conceptList.ok
     ? conceptList.data.map((concept) => ({

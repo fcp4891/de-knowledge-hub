@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 
 /** En static el contador se calcula en el navegador (SideNav), desde localStorage. */
 async function reviewCount(): Promise<number | null> {
-  if (process.env.API_MODE === "static") {
+  if (process.env.API_MODE === "static" || process.env.API_MODE === "mock") {
     return null;
   }
   const result = await listStudyStates("needs_review");
