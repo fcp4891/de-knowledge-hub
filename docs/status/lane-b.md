@@ -14,6 +14,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** revisión del lote P2. Informe en `docs/reviews/p2.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: el art. 7 sin «entre otros», el art. 14 quáter con los cuatro factores, el art. 8 bis en todos los casos, el preview de Agent Search y tres diagramas LR con cadena de 6.
 - **Tarea activa:** revisión del lote A. Informe en `docs/reviews/lote-a.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuesta baja: `GET /domains` sigue diciendo 23 dominios.
 - **Tarea activa:** revisión de la mejora de `chile-data-protection`. Informe en `docs/reviews/cdp-v2.md`. No se editó `content/` ni `frontend/`.
@@ -111,6 +113,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Si hay alias, bajo el título: «También conocido como: …» (ficha de concepto y página de tecnología).
 - `make test-frontend`: 11/11. En la demo estática, «Dataplex» encuentra Knowledge Catalog y la ficha `gcp-dataplex` muestra los dos alias.
 - No se editó `content/` ni el contrato.
+
+### Revisión · lote P2
+- Cuatro fichas nuevas del dominio 24. Las salidas de la CI coinciden y OWASP y el NIST AI RMF no aparecen. Propuestas media en las notas del art. 7, el art. 14 quáter, el art. 8 bis y el preview de Agent Search. No se editó `content/` ni `frontend/`.
 
 ### Revisión · lote A
 - ADR-027, migración 0007 y el marco legal. La vigencia 2026-12-01 y el boletín 18.623-07 coinciden con BCN y el Senado. Propuesta baja en el contrato. No se editó `content/` ni `frontend/`.
@@ -411,6 +416,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 
 ## Historial
+
+### Revisión · lote P2 (2026-10-28)
+- Revisión de las cuatro fichas nuevas del dominio 24. No se editó `content/`.
 
 ### Revisión · lote A (2026-10-28)
 - Revisión de ADR-027, la migración 0007, el schema, el marco legal y el contrato. No se editó `content/`.
