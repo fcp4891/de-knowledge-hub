@@ -41,7 +41,7 @@ Las 11 fichas de la Ley 21.719 (una padre y diez hijas) estaban en un solo subdo
    - La migración 0007 agrega `domains.band` y `domains.legal_framework`, y crea la tabla `legal_frameworks`.
    - `COMPILER_VERSION` pasa a "7".
    - No hay endpoint nuevo.
-9. **URLs antiguas.** La ficha se publica en `/concepts/<slug>/`, que no depende del dominio, así que su URL no cambia. Aun así, la demo estática incluye `/explorer/compliance/<slug>/` para las 11 fichas: una página sin JavaScript con `canonical` y `meta refresh` hacia `/concepts/<slug>/` (`scripts/static/redirects.py`). Se agrega al zip al empaquetar, sin tocar `frontend/`.
+9. **URLs antiguas.** La ficha se publica en `/concepts/<slug>/`, que no depende del dominio: mover las fichas no cambia ninguna URL. La primera implementación agregó al zip estático 11 páginas `/explorer/compliance/<slug>/` con canonical y meta refresh. Se quitaron el mismo día (`scripts/static/redirects.py`, su paso en `package_static.py` y sus tests): esas URLs nunca existieron, porque el frontend solo publica `/explorer/<dominio>/` y `/concepts/<slug>/`, y la premisa era errónea.
 
 ## Enmiendas
 
@@ -52,7 +52,6 @@ Las 11 fichas de la Ley 21.719 (una padre y diez hijas) estaban en un solo subdo
 
 - **Un subdominio más dentro de 19:** mezcla la especialización chilena con el cumplimiento genérico y no permite tramos.
 - **Una capa nueva entre las 6:** las capas ordenan el oficio general de data engineering; esto es una especialización transversal a él.
-- **Redirigir en `.htaccess`:** lo escribe el build de Carril B (`frontend/`); la página estática funciona en cualquier hosting.
 
 ## Consecuencias
 

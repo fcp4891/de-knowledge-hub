@@ -3,7 +3,6 @@
 Ejecuta `npm run build:static` en frontend/ con BASE_PATH (lo usa el build de Carril B, que también
 escribe out/.htaccess) y comprime el contenido de frontend/out/ en la raíz del zip: al usar
 «Extract» en public_html/<carpeta>/ de cPanel, index.html y .htaccess quedan en esa carpeta.
-Agrega al zip las páginas de redirección de scripts.static.redirects (ADR-027).
 El nombre lleva la fecha y la hora locales del sistema (AAAA-MM-DD-HHMMSS): re-ejecutar no sobrescribe
 ningún zip anterior, y si el nombre ya existe el empaquetado se detiene.
 
@@ -21,8 +20,6 @@ import subprocess
 import sys
 import zipfile
 from pathlib import Path
-
-from scripts.static.redirects import redirect_pages
 
 ROOT = Path(__file__).resolve().parents[2]
 FRONTEND = ROOT / "frontend"
@@ -57,24 +54,18 @@ def zip_name(moment: dt.datetime) -> str:
     return f"dekh-static-{moment:%Y-%m-%d-%H%M%S}.zip"
 
 
-def package(moment: dt.datetime, base_path: str, out: Path | None = None, dist: Path | None = None) -> Path:
-    out, dist = out or OUT, dist or DIST
-    dist.mkdir(exist_ok=True)
-    target = dist / zip_name(moment)
+def package(moment: dt.datetime) -> Path:
+    DIST.mkdir(exist_ok=True)
+    target = DIST / zip_name(moment)
     if target.exists():
         raise SystemExit(f"Ya existe {target}: no se sobrescribe")
-    files = sorted(path for path in out.rglob("*") if path.is_file())
-    redirects = redirect_pages(base_path)   # ADR-027: /explorer/compliance/<slug>/ → /concepts/<slug>/
+    files = sorted(path for path in OUT.rglob("*") if path.is_file())
     with zipfile.ZipFile(target, "w", compression=zipfile.ZIP_DEFLATED) as zf:
         for path in files:
-            name = path.relative_to(out).as_posix()
-            if name not in redirects:
-                zf.write(path, name)
-        for name, html in sorted(redirects.items()):
-            zf.writestr(name, html)
+            zf.write(path, path.relative_to(OUT).as_posix())
     with zipfile.ZipFile(target) as zf:
         names = set(zf.namelist())
-    assert all(name in names for name in [*REQUIRED, *redirects]), "el zip no contiene los archivos obligatorios"
+    assert all(name in names for name in REQUIRED), "el zip no contiene los archivos obligatorios"
     return target
 
 
@@ -87,7 +78,7 @@ def main(argv: list[str] | None = None) -> None:
     if not args.skip_build:
         build_frontend(base_path)
     check_output(base_path)
-    target = package(dt.datetime.now(), base_path)   # hora local del sistema
+    target = package(dt.datetime.now())   # hora local del sistema
     print(f"zip: {target} ({target.stat().st_size:,} bytes, BASE_PATH={base_path})")
 
 
