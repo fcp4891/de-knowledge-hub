@@ -44,6 +44,11 @@ def run_gate(ficha: str, tmp_path: Path) -> str:
 
 
 STDLIB = {
+    "distributed-erasure-propagation": [
+        "aplicaciones en bigquery.silver tras el reintento: 1",
+        "CDC tardío con la versión 2: rechazado (versión 2 ≤ corte de la orden 2)",
+        "¿reaparece en bigquery.silver?: False", "otro titular intacto: {'a1b2c3d4e5f60718': 5}",
+        "cierre de SOL-2026-0042: ['proveedor_email: PENDING']"],
     "purpose-based-authorization": [
         "grp-soporte · atencion_cliente · contacto_minimo: PERMITIR",
         "grp-soporte · campana_ofertas · contacto_minimo: DENEGAR: la finalidad «campana_ofertas» no es la aprobada",
