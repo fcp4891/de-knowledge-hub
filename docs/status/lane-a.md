@@ -143,6 +143,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 ## Historial
 
 ### Ajustes al lote A (2026-10-28)
+- Revisión `docs/reviews/lote-a.md` (`b/review-a`) integrada; su hallazgo bajo aplicado: `GET /domains` describe «Los dominios», sin número.
 - Quitadas las redirecciones `/explorer/compliance/<slug>/` (nunca existieron; línea en ADR-027). `chile-data-protection`: vigencia con el estado de hoy del boletín 18.623-07 (aprobado por el Senado y despachado a la Cámara; vigencia legal 2026-12-01), citas legales consultadas el 2026-10-28; §17 «del dominio». `tests/test_legal_framework_sync.py` compara la ficha con `content/legal-frameworks/cl-ley-21719.yaml`.
 
 ### Lote A: dominio 24-privacy-engineering (2026-10-28)
