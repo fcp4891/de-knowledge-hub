@@ -44,6 +44,11 @@ def run_gate(ficha: str, tmp_path: Path) -> str:
 
 
 STDLIB = {
+    "privacy-in-ai-rag-llm": [
+        "público pregunta por equipaje: ['c1']", "soporte pregunta por equipaje: ['c1', 'c2', 'c3']",
+        "respuesta='Reclamo de [REDACTADO] ([REDACTADO]) por equipaje.'",
+        "supresión de reclamo-0042: {'fragmentos': 2, 'cache': 1, 'trazas': 1}", "reconciliación, restos: ninguno",
+        "soporte vuelve a preguntar: ['c1']"],
     "privacy-backup-and-recovery": [
         "sin reconciliar, reaparecen: ['t-02', 't-03'] → no se libera", "órdenes posteriores al respaldo: [11, 12, 13]",
         "filas tras reconciliar: {'t-01': 'SCL-LIM'}", "¿idempotente?: True",

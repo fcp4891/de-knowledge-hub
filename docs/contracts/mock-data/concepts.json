@@ -5123,9 +5123,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-28"
     },
     {
       "slug": "data-subject-rights-pipeline",
@@ -5151,9 +5151,9 @@
       "level": "advanced",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-28"
     },
     {
       "slug": "retention-and-erasure",
@@ -5179,9 +5179,9 @@
       "level": "advanced",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-28"
     },
     {
       "slug": "processors-and-international-transfers",
@@ -5249,9 +5249,9 @@
       "level": "advanced",
       "importance": "high",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-10-28"
     }
   ]
 }

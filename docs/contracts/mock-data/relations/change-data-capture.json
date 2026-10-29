@@ -189,6 +189,13 @@
           "note": "La decodificación lógica es la base del CDC en PostgreSQL."
         },
         {
+          "slug": "distributed-erasure-propagation",
+          "title": "Propagación de supresiones en sistemas distribuidos",
+          "entity_type": "pattern",
+          "origin": "entity",
+          "note": "Los eventos que pueden reintroducir al titular."
+        },
+        {
           "slug": "rds-as-source",
           "title": "RDS como fuente de datos",
           "entity_type": "concept",
