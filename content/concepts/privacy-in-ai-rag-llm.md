@@ -15,20 +15,20 @@ tags: [privacy, rag, llm, embeddings, access-control]
 related_topics: [processors-and-international-transfers, pii-identification]
 jurisdiction: [CL]
 legal_basis:
-  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "b) fines específicos; c) proporcionalidad.", implication: "Cada fuente que se indexa tiene una finalidad aprobada (b), y se indexa solo lo necesario para ella (c)."}
-  - {law: ley-19628, article: "8 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Decisiones basadas en tratamiento automatizado con efectos jurídicos o significativos: explicación, intervención humana y revisión.", implication: "Si el asistente decide sobre personas, se conecta con la evaluación de impacto y la revisión humana."}
-  - {law: ley-19628, article: "15 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "El encargado trata según el encargo; no usa los datos para otro fin.", implication: "Un proveedor de modelos o de búsqueda que recibe datos personales es un encargado, con su contrato y su cierre."}
+  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "b) fines específicos; c) proporcionalidad: solo los datos estrictamente necesarios.", implication: "Cada fuente que se indexa tiene una finalidad aprobada (b), y se indexa solo lo necesario para ella (c)."}
+  - {law: ley-19628, article: "8 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Decisiones basadas en tratamiento automatizado con efectos jurídicos o significativos; en todos los casos, incluidas las excepciones, explicación, intervención humana, expresar su punto de vista y pedir revisión.", implication: "Si el asistente decide sobre personas, se conecta con la evaluación de impacto y la revisión humana."}
+  - {law: ley-19628, article: "15 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "El encargado trata según el encargo; no los trata para un objeto distinto del convenido ni los cede o entrega sin autorización expresa y específica del responsable.", implication: "Un proveedor de modelos o de búsqueda que recibe datos personales es un encargado, con su contrato y su cierre."}
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
     accessed: 2026-10-28
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-28. Art. 3 b): fines específicos, explícitos y lícitos; c): solo los datos necesarios, adecuados y pertinentes. Art. 8 bis: derecho a oponerse y a no ser objeto de decisiones basadas en tratamiento automatizado, incluidos perfiles, con efectos jurídicos o significativos, salvo excepciones; en ellas, explicación, intervención humana, expresar el punto de vista y pedir revisión. Art. 15 bis: el encargado trata según el encargo y las instrucciones del responsable; no puede usar los datos para otro fin ni cederlos sin autorización."
+    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-28. Art. 3 b): fines específicos, explícitos y lícitos; c): solo los datos necesarios, adecuados y pertinentes. Art. 8 bis: derecho a oponerse y a no ser objeto de decisiones basadas en tratamiento automatizado, incluidos perfiles, con efectos jurídicos o significativos, salvo las excepciones de las letras a), b) y c); en todos los casos, inclusive esas excepciones, el responsable asegura el derecho a obtener una explicación, a la intervención humana, a expresar su punto de vista y a solicitar la revisión de la decisión. Art. 15 bis: el encargado trata según el encargo y las instrucciones del responsable; le está prohibido tratarlos para un objeto distinto del convenido y cederlos o entregarlos si el responsable no lo autorizó de manera expresa y específica."
   - source: gcp-agent-search-docs
     url: https://docs.cloud.google.com/generative-ai-app-builder/docs/data-source-access-control
     accessed: 2026-10-28
     page_title: "Set up data source access control"
-    note: "Set up data source access control (Agent Search): con el control de acceso de la fuente de datos activado, un usuario obtiene resultados solo de los documentos a los que su cuenta ya tiene acceso en la fuente; está disponible para Cloud Storage, BigQuery, Google Drive y todas las fuentes de terceros, y requiere tener configurado en Google Cloud el proveedor de identidad de la organización. Activarlo es un procedimiento único."
+    note: "Set up data source access control (Agent Search): la página dice «This feature is a Preview offering, subject to the \"Pre-GA Offerings Terms\"» y, en sus limitaciones, «To set a data source as access-controlled, you must select this setting during data store creation. You can't turn this setting on or off for an existing data store.» Con el control de acceso de la fuente de datos activado, un usuario obtiene resultados solo de los documentos a los que su cuenta ya tiene acceso en la fuente; está disponible para Cloud Storage, BigQuery, Google Drive y todas las fuentes de terceros, y requiere tener configurado en Google Cloud el proveedor de identidad de la organización. Activarlo es un procedimiento único."
   - source: aws-bedrock-docs
     url: https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html
     accessed: 2026-10-28
@@ -37,7 +37,7 @@ sources:
   - source: azure-ai-search-docs
     url: https://learn.microsoft.com/en-us/azure/search/search-security-trimming-for-azure-search
     accessed: 2026-10-28
-    page_title: "Security filters for trimming results in Azure AI Search"
+    page_title: "Security Filter Pattern"
     note: "Security filters for trimming results in Azure AI Search: para soluciones que no pueden usar el soporte integrado de listas de control de acceso (ACL) por documento, Azure AI Search permite un filtro que recorta los resultados según un campo con identificadores de grupo o usuario, consultado con la función search.in; el patrón simula la autorización por documento con un filtro OData. La página indica que Azure AI Search también sustenta Foundry IQ en el portal de Microsoft Foundry."
   - source: owasp-llm-top-10
     url: https://genai.owasp.org/llm-top-10/
@@ -75,8 +75,8 @@ Un pipeline de IA amplía la superficie de tratamiento: documentos, fragmentos (
 
 ## 2. Qué es
 
-- **[Obligación legal · art. 3]** Fines específicos, explícitos y lícitos (letra b)) y solo los datos necesarios, adecuados y pertinentes (letra c)).
-- **[Obligación legal · art. 15 bis]** El encargado trata según el encargo y no usa los datos para otro fin.
+- **[Obligación legal · art. 3]** Fines específicos, explícitos y lícitos (letra b)) y solo los datos estrictamente necesarios, adecuados y pertinentes (letra c)).
+- **[Obligación legal · art. 15 bis]** El encargado trata según el encargo; no puede tratar los datos para un objeto distinto del convenido ni cederlos o entregarlos sin autorización expresa y específica del responsable.
 - **[Buena práctica]** Las piezas de un pipeline de IA:
 
 | Pieza | Qué es | Por qué importa | Etiqueta |
@@ -104,7 +104,7 @@ Un pipeline de IA amplía la superficie de tratamiento: documentos, fragmentos (
 7. **[Decisión de arquitectura]** Diseñar la supresión y la reindexación por `document_id`, y reconciliar que no queden fragmentos, entradas de caché ni trazas.
 8. **[Buena práctica]** No afirmar el borrado de lo que un modelo ya entrenado aprendió sin evidencia: borrar el índice no lo cubre.
 9. **[Buena práctica]** Probar la inyección de prompt, la exfiltración por herramientas y las filtraciones entre usuarios (LLM01, LLM02 y LLM06 del OWASP Top 10 for LLM Applications).
-10. **[Obligación legal · art. 8 bis]** Si las decisiones basadas en tratamiento automatizado producen efectos jurídicos o significativos, el titular tiene derecho a explicación, intervención humana y revisión. **[Buena práctica]** Conectar esos casos con la evaluación de impacto (`dpia-and-automated-decisions`).
+10. **[Obligación legal · art. 8 bis]** El titular puede oponerse a decisiones basadas en tratamiento automatizado, incluidos los perfiles, con efectos jurídicos o significativos, y en todos los casos, incluidas las excepciones, tiene derecho a una explicación, a la intervención humana, a expresar su punto de vista y a pedir la revisión. **[Buena práctica]** Conectar esos casos con la evaluación de impacto (`dpia-and-automated-decisions`).
 
 ## 5. Cuándo utilizarlo
 
@@ -150,7 +150,7 @@ Escenario genérico: una aerolínea con un asistente interno de atención al cli
 ## 9. Arquitectura
 
 ```mermaid
-flowchart LR
+flowchart TB
   F["Fuentes aprobadas"] --> C["Clasificar y<br/>minimizar"]
   C --> I["Fragmentos e índice<br/>con permisos"]
   U["Usuario autenticado"] --> R["Recuperación<br/>con permisos"]
@@ -264,7 +264,7 @@ soporte vuelve a preguntar: ['c1']
 
 ## 11. GCP
 
-En GCP, **Agent Search**. Según *Set up data source access control* (no ejecutado):
+En GCP, **Agent Search**. Según *Set up data source access control* (no ejecutado). La página marca el control de acceso como Preview («This feature is a Preview offering») y dice que se elige al crear el data store («you must select this setting during data store creation»):
 
 | Necesidad | Servicio | Etiqueta |
 |---|---|---|
@@ -283,7 +283,7 @@ En AWS, **Amazon Bedrock** Knowledge Bases. Según *Configure and customize quer
 
 ## 13. Azure
 
-En Azure, **Azure AI Search**. Según *Security filters for trimming results in Azure AI Search* (no ejecutado):
+En Azure, **Azure AI Search**. Según *Security Filter Pattern* (no ejecutado):
 
 | Necesidad | Servicio | Etiqueta |
 |---|---|---|
@@ -300,7 +300,7 @@ En Azure, **Azure AI Search**. Según *Security filters for trimming results in 
 - **[Buena práctica]** **Seguridad:** herramientas del agente con permisos mínimos y sin secretos en el contexto.
 - **[Buena práctica]** **Observabilidad:** trazas con identificadores y datos redactados; retención propia y acceso restringido.
 - **[Buena práctica]** **Costo:** reindexar por `document_id`, no el corpus completo, ante cada supresión.
-- **[Obligación legal · art. 15 bis]** El encargado no usa los datos para otro fin. **[Buena práctica]** Evaluar proveedores, retención y transferencias antes de habilitar herramientas o modelos externos.
+- **[Obligación legal · art. 15 bis]** El encargado no trata los datos para otro objeto ni los cede o entrega sin autorización expresa y específica. **[Buena práctica]** Evaluar proveedores, retención y transferencias antes de habilitar herramientas o modelos externos.
 
 ## 15. Errores frecuentes
 
@@ -346,7 +346,7 @@ Propuesta para F4: un corpus ficticio con permisos por documento; usuarios con d
 - BCN Ley Chile: *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* (versión con vigencia diferida desde 2026-12-01).
 - Google Cloud: *Set up data source access control* (Agent Search).
 - AWS: *Configure and customize queries and response generation* (Amazon Bedrock).
-- Microsoft Learn: *Security filters for trimming results in Azure AI Search*.
+- Microsoft Learn: *Security Filter Pattern* (Azure AI Search).
 - Referencias conceptuales (Nivel 4): OWASP, *LLMRisks Archive* (OWASP Top 10 for LLM Applications); NIST, *AI Risk Management Framework* (no son normas chilenas).
 
 El detalle de cada fuente está en `sources` del frontmatter.
@@ -359,3 +359,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-28: creación (lote P2, dominio 24, ADR-027) desde `docs/briefs/privacy-program/03-privacidad-ia-rag-llm.md`, que es un guion, no una fuente.
 - 2026-10-28: completada con lo que pedía el prompt de P2: OWASP Top 10 for LLM Applications y NIST AI RMF como fuentes de Nivel 4, solo para conceptos (§2, §4, §20); el nombre «Azure AI Search» se confirmó en su página N1 ese día.
+- 2026-10-28: revisión `docs/reviews/p2.md` aplicada: el art. 8 bis dice que sus salvaguardas, incluida expresar el punto de vista, aplican en todos los casos; el art. 15 bis incluye la prohibición de ceder o entregar sin autorización expresa; el art. 3 c) conserva «estrictamente»; el control de acceso de Agent Search se cita como Preview y elegido al crear el data store, con cita textual; `page_title` de Azure «Security Filter Pattern»; diagrama del §9 en TB.

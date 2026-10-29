@@ -129,7 +129,7 @@ Para ingeniería de datos, el cambio es este: casi todo lo que hace un pipeline 
 | 14 | Acreditar la licitud; suprimir o anonimizar datos precontractuales | `processing-activities-inventory` | **[Obligación legal · art. 14]** |
 | 14 bis | El secreto alcanza datos públicos que se organizan o combinan | esta ficha | **[Obligación legal · art. 14 bis]** |
 | 14 ter | La política pública de tratamiento se alimenta del catálogo | `processing-activities-inventory` | **[Obligación legal · art. 14 ter]** |
-| 14 quáter | Por defecto, solo los datos estrictamente necesarios | `data-minimization-by-layer` | **[Obligación legal · art. 14 quáter]** |
+| 14 quáter | Por defecto, solo los datos específicos y estrictamente necesarios, según número de datos, extensión, plazo y accesibilidad | `data-minimization-by-layer` | **[Obligación legal · art. 14 quáter]** |
 | 14 quinquies | Seguridad, restauración y verificación regular de su eficacia | `privacy-controls-as-code` | **[Obligación legal · art. 14 quinquies]** |
 | 14 sexies | Reporte de vulneraciones a la Agencia y registro de esas comunicaciones; aviso a titulares en ciertos casos | `data-breach-response` | **[Obligación legal · art. 14 sexies]** |
 | 15 bis | Encargo; el encargado suprime o devuelve al terminar (la cesión, en el art. 15) | `processors-and-international-transfers` | **[Obligación legal · art. 15 bis]** |
@@ -523,3 +523,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `fundamentos` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/chile-data-protection/`) no cambia.
 - 2026-10-28: vigencia actualizada con el estado de hoy del boletín 18.623-07 (aprobado por el Senado y despachado a la Cámara; la vigencia legal sigue en el 2026-12-01), consultado en el Senado; textos de BCN y mensaje vueltos a consultar, sin cambios. Un test compara la fecha y el estado con `content/legal-frameworks/cl-ley-21719.yaml`. §17: «Fichas hijas del dominio».
 - 2026-10-28: §17 nombra las cuatro fichas hijas del lote P2 (`purpose-based-authorization`, `distributed-erasure-propagation`, `privacy-backup-and-recovery`, `privacy-in-ai-rag-llm`), en el orden del blueprint. Sin otros cambios.
+- 2026-10-28: mismos errores que la revisión de P2: la fila del art. 14 quáter del mapa de artículos nombra sus cuatro factores.

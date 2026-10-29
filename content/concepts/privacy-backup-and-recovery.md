@@ -23,7 +23,7 @@ sources:
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
     accessed: 2026-10-28
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-28. Art. 14 quinquies: medidas técnicas y organizativas apropiadas al riesgo que, en su caso, incluyen, entre otros, a) la seudonimización y el cifrado, b) la confidencialidad, integridad, disponibilidad y resiliencia permanentes, c) la capacidad de restaurar la disponibilidad y el acceso a los datos personales de forma rápida en caso de incidente físico o técnico, y d) un proceso de verificación, evaluación y valoración regulares de su eficacia. Art. 7: derecho de supresión en los casos que enumera; no procede, entre otros, cuando el tratamiento es necesario para cumplir una obligación legal o ejecutar un contrato. Art. 3 c): conservar los datos solo el tiempo necesario y luego suprimirlos o anonimizarlos, sin perjuicio de las excepciones legales."
+    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-28. Art. 14 quinquies: medidas técnicas y organizativas apropiadas al riesgo que, en su caso, incluyen, entre otros, a) la seudonimización y el cifrado, b) la confidencialidad, integridad, disponibilidad y resiliencia permanentes, c) la capacidad de restaurar la disponibilidad y el acceso a los datos personales de forma rápida en caso de incidente físico o técnico, y d) un proceso de verificación, evaluación y valoración regulares de su eficacia. Art. 7: derecho de supresión en los casos que enumera; no procede cuando el tratamiento es necesario en los casos cerrados i a vi del artículo, entre ellos el cumplimiento de una obligación legal o la ejecución de un contrato (ii). Art. 3 c): conservar los datos solo el tiempo necesario y luego suprimirlos o anonimizarlos, sin perjuicio de las excepciones legales."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/table-snapshots-intro
     accessed: 2026-10-28
@@ -148,7 +148,7 @@ Escenario genérico: una aerolínea restaura una tabla histórica de BigQuery en
 ## 9. Arquitectura
 
 ```mermaid
-flowchart LR
+flowchart TB
   B["Respaldo o snapshot"] --> Q["Restaurar<br/>en cuarentena"]
   O["Registro de órdenes<br/>externo"] --> R["Reconciliar"]
   Q --> R
@@ -331,3 +331,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-28: creación (lote P2, dominio 24, ADR-027) desde `docs/briefs/privacy-program/05-recuperacion-respaldos-privacidad.md`, que es un guion, no una fuente.
 - 2026-10-28: completada con lo que pedía el prompt de P2: regla «no se declara verificado lo que depende de la expiración de copias» en el §4 y RPO y RTO con la reconciliación en el §14. RPO y RTO ya estaban definidos en el §2.
+- 2026-10-28: revisión `docs/reviews/p2.md` aplicada: la nota del art. 7 dice que la lista de casos en que no procede la supresión es cerrada (i a vi), sin «entre otros»; el diagrama del §9 pasa a TB (la cadena más larga tiene 6 nodos).

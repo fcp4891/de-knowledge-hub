@@ -23,7 +23,7 @@ sources:
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
     accessed: 2026-10-28
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-28. Art. 7: el titular tiene derecho a obtener la eliminación de sus datos en los casos que enumera (a a f); no procede, entre otros, cuando el tratamiento es necesario para cumplir una obligación legal o ejecutar un contrato (ii). Art. 8 ter: bloqueo, suspensión temporal de cualquier operación de tratamiento mientras se resuelve una solicitud de rectificación, supresión u oposición, o alternativo a la supresión; no afecta el almacenamiento. Art. 11: la rectificación, supresión u oposición se aplica respecto de los responsables a quienes se formuló la solicitud; cuando el responsable haya comunicado los datos a otras personas, debe comunicarles los cambios realizados."
+    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-28. Art. 7: el titular tiene derecho a obtener la eliminación de sus datos en los casos que enumera (a a f); no procede cuando el tratamiento es necesario en los casos cerrados i a vi del artículo, entre ellos el cumplimiento de una obligación legal o la ejecución de un contrato (ii). Art. 8 ter: bloqueo, suspensión temporal de cualquier operación de tratamiento mientras se resuelve una solicitud de rectificación, supresión u oposición, o alternativo a la supresión; no afecta el almacenamiento. Art. 11: la rectificación, supresión u oposición se aplica respecto de los responsables a quienes se formuló la solicitud; cuando el responsable haya comunicado los datos a otras personas, debe comunicarles los cambios realizados."
   - source: gcp-pubsub-docs
     url: https://docs.cloud.google.com/pubsub/docs/ordering
     accessed: 2026-10-28
@@ -140,7 +140,7 @@ Escenario genérico: una aerolínea aprueba una supresión parcial. La reserva o
 ## 9. Arquitectura
 
 ```mermaid
-flowchart LR
+flowchart TB
   A["Decisión aprobada"] --> O["Orden durable:<br/>alcance y corte"]
   O --> Q["Orquestador"]
   Q --> D["Fuente, capas<br/>y derivados"]
@@ -322,3 +322,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-28: creación (lote P2, dominio 24, ADR-027) desde `docs/briefs/privacy-program/01-propagacion-derechos-supresion-distribuida.md`, que es un guion, no una fuente.
 - 2026-10-28: completada con lo que pedía el prompt de P2: estado `RUNNING` en el §4 y en el código (la salida no cambia) y el alcance por finalidad en el §2. Tombstones y lista no global ya estaban.
+- 2026-10-28: revisión `docs/reviews/p2.md` aplicada: la nota del art. 7 dice que la lista de casos en que no procede la supresión es cerrada (i a vi), sin «entre otros»; el diagrama del §9 pasa a TB (la cadena más larga tiene 6 nodos).

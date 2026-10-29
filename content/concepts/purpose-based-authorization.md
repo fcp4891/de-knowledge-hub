@@ -16,7 +16,7 @@ related_topics: [processing-activities-inventory, column-level-security]
 jurisdiction: [CL]
 legal_basis:
   - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "b) fines específicos, explícitos y lícitos; c) proporcionalidad: solo los datos necesarios, adecuados y pertinentes.", implication: "El acceso se concede para una finalidad aprobada (b) y a un producto con solo los datos que esa finalidad necesita (c)."}
-  - {law: ley-19628, article: "14 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Por defecto, solo los datos específicos y estrictamente necesarios, considerando su accesibilidad.", implication: "La configuración por defecto no da acceso; cada concesión es explícita, acotada y con vencimiento."}
+  - {law: ley-19628, article: "14 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Por defecto, solo los datos específicos y estrictamente necesarios, considerando el número de datos recogidos, la extensión del tratamiento, el plazo de conservación y su accesibilidad.", implication: "La configuración por defecto no da acceso; cada concesión es explícita, acotada y con vencimiento."}
   - {law: ley-19628, article: "34 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "b) destinar maliciosamente los datos a una finalidad distinta de la consentida o prevista en la ley es infracción gravísima.", implication: "Un uso para otra finalidad se deniega o se escala, y queda auditado."}
 sources:
   - source: bcn-leychile
@@ -64,7 +64,7 @@ Los permisos tradicionales responden **quién** puede consultar. La autorizació
 ## 2. Qué es
 
 - **[Obligación legal · art. 3]** Los datos se recolectan con fines específicos, explícitos y lícitos, y no se tratan con fines distintos salvo las excepciones de la letra b); se limitan estrictamente a los necesarios, adecuados y pertinentes (letra c)).
-- **[Obligación legal · art. 14 quáter]** Por defecto, solo los datos específicos y estrictamente necesarios, considerando su accesibilidad.
+- **[Obligación legal · art. 14 quáter]** Por defecto, solo los datos específicos y estrictamente necesarios, considerando el número de datos recogidos, la extensión del tratamiento, el plazo de conservación y su accesibilidad.
 - **[Decisión de arquitectura]** Cuatro piezas que no conviene mezclar:
 
 | Pieza | Qué es | Ejemplo | Etiqueta |
@@ -146,7 +146,7 @@ flowchart LR
   P --> D
   D -- "permitir" --> V["Producto mínimo:<br/>vista o API"]
   D -- "denegar o escalar" --> R["Rechazo o revisión<br/>auditable"]
-  V --> L["Logs y revisión de uso"]
+  V --> L["Logs y<br/>revisión de uso"]
 ```
 
 ## 10. Código
@@ -327,3 +327,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-10-28: creación (lote P2, dominio 24, ADR-027) desde `docs/briefs/privacy-program/04-autorizacion-por-finalidad.md`, que es un guion, no una fuente.
 - 2026-10-28: completada con lo que pedía el prompt de P2: la tupla (rol, finalidad, dataset o producto) y el deny por defecto en el §2 y en un comentario del código (la salida no cambia), y la revisión periódica de concesiones en el §4.
+- 2026-10-28: revisión `docs/reviews/p2.md` aplicada: el art. 14 quáter nombra sus cuatro factores (número de datos, extensión, plazo y accesibilidad) en el §2 y en `legal_basis`; etiqueta del nodo de logs en dos líneas.

@@ -23,7 +23,7 @@ legal_basis:
   - law: ley-19628
     article: "14 quáter"
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    note: "Protección desde el diseño y por defecto: por defecto, solo los datos específicos y estrictamente necesarios."
+    note: "Protección desde el diseño y por defecto: por defecto, solo los datos específicos y estrictamente necesarios, considerando el número de datos recogidos, la extensión del tratamiento, el plazo de conservación y su accesibilidad."
     implication: "La configuración por defecto de cada capa expone lo mínimo; ampliarla es una excepción aprobada."
 sources:
   - source: bcn-leychile
@@ -316,7 +316,7 @@ En Azure, **Azure SQL** con enmascaramiento dinámico. Según *Dynamic data mask
 ## 14. Buenas prácticas
 
 - **[Obligación legal · art. 3]** Solo los datos necesarios, adecuados y pertinentes para el fin (letra c)). **[Buena práctica]** Decidir por capa qué columnas personales son necesarias, para qué fin y cuándo dejan de serlo.
-- **[Obligación legal · art. 14 quáter]** Por defecto, solo los datos específicos y estrictamente necesarios. **[Decisión de arquitectura]** Una tabla nueva parte sin columnas personales y cada una se agrega con su finalidad.
+- **[Obligación legal · art. 14 quáter]** Por defecto, solo los datos específicos y estrictamente necesarios, según número de datos, extensión, plazo y accesibilidad. **[Decisión de arquitectura]** Una tabla nueva parte sin columnas personales y cada una se agrega con su finalidad.
 - **[Buena práctica]** Listas explícitas de columnas en lugar de `SELECT *` en productos con datos personales; minimizar desde la fuente cuando se pueda.
 - **[Buena práctica]** Revisar cambios de esquema y finalidades nuevas antes de desplegar.
 - **[Buena práctica]** **Seguridad:** la clave del HMAC fuera de la plataforma de datos, en un KMS.
@@ -387,3 +387,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (sin regla universal por capa; pregunta guía), §2 (cuatro dimensiones y distinción con enmascarar, seudonimizar y anonimizar), §3, §4 (contrato de entrada y prueba con la identidad del consumidor), §5, §6 (no borrar lo que exige una obligación legal), §7 (columna de decisión; un umbral no basta para declarar anonimato), §8 (escenario y evidencia «qué demuestra y qué no»), §9 (contrato de ingesta), §10 (contrato de columnas por capa que detecta un campo nuevo, sobre el mismo ejemplo en PostgreSQL), §11–13 (criterio común), §14–16, §17 (relaciones con `processing-activities-inventory` y `retention-and-erasure`), §18 (criterio de dominio) y §19 (laboratorio para F4). Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `diseno-protegido` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/data-minimization-by-layer/`) no cambia.
+- 2026-10-28: mismos errores que la revisión de P2: el art. 14 quáter nombra sus cuatro factores en el §14 y en `legal_basis`.
