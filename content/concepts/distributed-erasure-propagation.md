@@ -46,6 +46,7 @@ relations:
   - {type: RELATED_TO, target: change-data-capture, note: "Los eventos que pueden reintroducir al titular."}
   - {type: RELATED_TO, target: data-lineage, note: "Localizar dependencias, sin garantizar todas las copias."}
   - {type: RELATED_TO, target: privacy-controls-as-code, note: "El cierre sin destinos pendientes como regla."}
+  - {type: RELATED_TO, target: privacy-backup-and-recovery, note: "Reproducir las órdenes tras una restauración."}
 created_at: 2026-10-28
 updated_at: 2026-10-28
 last_verified: 2026-10-28

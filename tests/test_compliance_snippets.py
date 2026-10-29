@@ -44,6 +44,11 @@ def run_gate(ficha: str, tmp_path: Path) -> str:
 
 
 STDLIB = {
+    "privacy-backup-and-recovery": [
+        "sin reconciliar, reaparecen: ['t-02', 't-03'] → no se libera", "órdenes posteriores al respaldo: [11, 12, 13]",
+        "filas tras reconciliar: {'t-01': 'SCL-LIM'}", "¿idempotente?: True",
+        "lectores del respaldo: ['grp-ex-proveedor', 'grp-soporte'] | se reaplican los vigentes: ['grp-soporte']",
+        "liberar a consumidores: sí"],
     "distributed-erasure-propagation": [
         "aplicaciones en bigquery.silver tras el reintento: 1",
         "CDC tardío con la versión 2: rechazado (versión 2 ≤ corte de la orden 2)",
