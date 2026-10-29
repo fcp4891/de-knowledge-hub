@@ -44,6 +44,13 @@ def run_gate(ficha: str, tmp_path: Path) -> str:
 
 
 STDLIB = {
+    "purpose-based-authorization": [
+        "grp-soporte · atencion_cliente · contacto_minimo: PERMITIR",
+        "grp-soporte · campana_ofertas · contacto_minimo: DENEGAR: la finalidad «campana_ofertas» no es la aprobada",
+        "grp-soporte · auditoria_reclamos · contacto_minimo: ESCALAR: finalidad en revisión",
+        "sa-bi-operacional · estadistica_operacional · contacto_minimo: DENEGAR: sin concesión para ese producto",
+        "grp-marketing · campana_ofertas · contacto_con_consentimiento: DENEGAR: concesión vencida",
+        "pruebas negativas: 4/4 no se permiten"],
     "pii-identification": [
         "rut_cliente: personal: RUT con DV válido (2 de 2)", "contacto: personal: correo en el valor (1 de 2)",
         "cliente_id: revisión personal: posible identificador indirecto o texto libre",

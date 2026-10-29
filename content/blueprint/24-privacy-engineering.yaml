@@ -76,7 +76,7 @@ subdomains:
         mvp: false
         added_by: blueprint
         related_concepts: [processing-activities-inventory, data-minimization-by-layer]
-        note: Pendiente de ficha (lote A, ADR-027). Conceder acceso por actividad y finalidad, no por dataset.
+        note: Lote P2 (2026-10-28), desde docs/briefs/privacy-program/. Conceder acceso por actividad y finalidad, no por dataset.
 
   - slug: derechos-ciclo-vida
     title: Derechos y ciclo de vida
@@ -100,7 +100,7 @@ subdomains:
         mvp: false
         added_by: blueprint
         related_concepts: [data-subject-rights-pipeline, retention-and-erasure]
-        note: Pendiente de ficha (lote A, ADR-027). Llevar una supresión aprobada a réplicas, derivados, eventos y terceros.
+        note: Lote P2 (2026-10-28), desde docs/briefs/privacy-program/. Llevar una supresión aprobada a réplicas, derivados, eventos y terceros.
       - slug: retention-and-erasure
         title: Retención y supresión
         kind: pattern
@@ -120,7 +120,7 @@ subdomains:
         mvp: false
         added_by: blueprint
         related_concepts: [retention-and-erasure, crypto-shredding]
-        note: Pendiente de ficha (lote A, ADR-027). Respaldos, restauraciones y la lista de supresión.
+        note: Lote P2 (2026-10-28), desde docs/briefs/privacy-program/. Respaldos, restauraciones y la lista de supresión.
 
   - slug: riesgo-terceros-incidentes
     title: Riesgo, terceros e incidentes
@@ -178,4 +178,4 @@ subdomains:
         mvp: false
         added_by: blueprint
         related_concepts: [pii-identification, processors-and-international-transfers]
-        note: Pendiente de ficha (lote A, ADR-027). Datos personales en prompts, índices vectoriales y proveedores de modelos.
+        note: Lote P2 (2026-10-28), desde docs/briefs/privacy-program/. Datos personales en prompts, índices vectoriales y proveedores de modelos.

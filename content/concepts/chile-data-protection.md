@@ -470,12 +470,16 @@ Fichas hijas del dominio:
 - `processing-activities-inventory`: actividades de tratamiento.
 - `data-minimization-by-layer`: proporcionalidad por capa.
 - `chilean-identifier-pseudonymization`: seudonimización del RUT.
+- `purpose-based-authorization`: acceso por finalidad.
 - `data-subject-rights-pipeline`: derechos del titular.
+- `distributed-erasure-propagation`: propagación de supresiones.
 - `retention-and-erasure`: retención y supresión.
+- `privacy-backup-and-recovery`: respaldos y restauraciones.
 - `data-breach-response`: vulneraciones.
 - `dpia-and-automated-decisions`: evaluación de impacto y decisiones automatizadas.
 - `processors-and-international-transfers`: encargados y transferencias.
 - `privacy-controls-as-code`: controles en la CI.
+- `privacy-in-ai-rag-llm`: IA, RAG y LLM.
 
 Otras: `data-classification`.
 
@@ -518,3 +522,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-27: revisión `docs/reviews/cdp-v2.md` aplicada: la fila del art. 2 g) recoge la lista completa de la letra, sin «entre otros», y la del art. 2 l) dice «medidas técnicas y organizativas». Sin cambios en `legal_basis` ni vigencia.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `fundamentos` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/chile-data-protection/`) no cambia.
 - 2026-10-28: vigencia actualizada con el estado de hoy del boletín 18.623-07 (aprobado por el Senado y despachado a la Cámara; la vigencia legal sigue en el 2026-12-01), consultado en el Senado; textos de BCN y mensaje vueltos a consultar, sin cambios. Un test compara la fecha y el estado con `content/legal-frameworks/cl-ley-21719.yaml`. §17: «Fichas hijas del dominio».
+- 2026-10-28: §17 nombra las cuatro fichas hijas del lote P2 (`purpose-based-authorization`, `distributed-erasure-propagation`, `privacy-backup-and-recovery`, `privacy-in-ai-rag-llm`), en el orden del blueprint. Sin otros cambios.
