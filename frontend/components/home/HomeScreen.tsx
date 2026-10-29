@@ -3,10 +3,9 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 
-import { LegalFactLink } from "@/components/legal/LegalFactLink";
 import { GOALS, LAYERS, SHORT_NAMES, UPCOMING_GOALS, type Goal, type Layer } from "@/lib/learning-paths";
 import { contentStatus, paintStation, type GoalPath } from "@/lib/platformMap";
-import { goalPathIds, PRIVACY_SPACE_HREF, verifiedLegend } from "@/lib/privacySpace";
+import { goalPathIds, PRIVACY_SPACE_HREF } from "@/lib/privacySpace";
 import { listStoredStudy, subscribePersonal } from "@/lib/personalStore";
 import { CARD_SECTION_COUNT, readReadingProgress, type ReadingProgress } from "@/lib/readingProgress";
 import type { StudyState } from "@/lib/api/types";
@@ -22,14 +21,6 @@ export type HomeStage = {
   total: number;
 };
 
-export type HomeLegalFact = {
-  key: string;
-  label: string;
-  value: string;
-  url: string;
-  verifiedAt: string;
-};
-
 export type HomeDomain = {
   id: string;
   slug: string;
@@ -38,7 +29,6 @@ export type HomeDomain = {
   conceptCount: number;
   withPage: number | null;
   stages: HomeStage[];
-  legalFacts: HomeLegalFact[];
 };
 
 export type HomeConcept = {
@@ -118,7 +108,6 @@ export function HomeScreen({
 
   const goal = GOALS.find((item) => item.key === goalKey) ?? null;
   const path: GoalPath = goal ? goalPathIds(goal.steps) : null;
-  const special = [...domainsById.values()].find((domain) => domain.band === "especializacion") ?? null;
   const continueConcept = activeSlug ? conceptsBySlug.get(activeSlug) ?? null : null;
 
   function pickGoal(key: string) {
@@ -146,8 +135,6 @@ export function HomeScreen({
       </header>
 
       {continueConcept ? <ContinueCard concept={continueConcept} reading={reading} /> : null}
-
-      {special && special.legalFacts.length > 0 ? <LegalFrameworkCard domain={special} /> : null}
 
       <section className="home-block" aria-labelledby="obj-titulo">
         <div className="home-block-head">
@@ -325,29 +312,6 @@ function PlatformMap({ path, domainsById }: { path: GoalPath; domainsById: Map<s
       {LAYERS.map((layer) => (
         <LayerRow key={layer.key} layer={layer} path={path} domainsById={domainsById} />
       ))}
-    </section>
-  );
-}
-
-function LegalFrameworkCard({ domain }: { domain: HomeDomain }) {
-  const legend = verifiedLegend(domain.legalFacts.map((fact) => fact.verifiedAt));
-  return (
-    <section className="home-legal">
-      <Link className="home-legal-space" href={PRIVACY_SPACE_HREF}>
-        <span className="home-kicker">Especialización</span>
-        <h2>{domain.title}</h2>
-      </Link>
-      <dl>
-        {domain.legalFacts.map((fact) => (
-          <div key={fact.key}>
-            <dt>{fact.label}</dt>
-            <dd>
-              <LegalFactLink value={fact.value} url={fact.url} />
-            </dd>
-          </div>
-        ))}
-      </dl>
-      {legend ? <p className="home-legal-verified">{legend}</p> : null}
     </section>
   );
 }
