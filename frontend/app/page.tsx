@@ -65,14 +65,6 @@ export default async function HomePage() {
             return { slug: subdomain.slug, title: subdomain.title, ...progress };
           })
         : [];
-    const legalFacts = data?.legal_framework
-      ? data.legal_framework.facts.map((fact) => ({
-          key: fact.key,
-          label: fact.label,
-          value: fact.value,
-          verifiedAt: fact.verified_at,
-        }))
-      : [];
     return {
       id: domain.id,
       slug: domain.slug,
@@ -81,7 +73,6 @@ export default async function HomePage() {
       conceptCount: domain.concept_count,
       withPage: conceptList.ok ? (withPage.get(domain.slug) ?? 0) : null,
       stages,
-      legalFacts,
     };
   });
   const idBySlug = new Map(domains.map((domain) => [domain.slug, domain.id]));

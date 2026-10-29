@@ -422,7 +422,7 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 ## Historial
 
 ### UI · espacio de privacidad (2026-10-28)
-- `/privacidad` reutiliza la ruta de dominio. Con P2 en `main`, las 15 fichas enlazan a su concepto. El laboratorio queda como etapa 6 deshabilitada. El aviso del espacio es «Este contenido no es asesoría legal.»; el de las fichas no cambia. No se editó `content/`.
+- `/privacidad` reutiliza la ruta de dominio. Con P2 en `main`, las 15 fichas enlazan a su concepto. El laboratorio queda como etapa 6 deshabilitada. El aviso del espacio es «Este contenido no es asesoría legal.»; el de las fichas no cambia. En el inicio no está la tarjeta del marco legal. La banda muestra solo el nombre de los cinco tramos. No se editó `content/`.
 
 ### Revisión · lote P2 (2026-10-28)
 - Revisión de las cuatro fichas nuevas del dominio 24. No se editó `content/`.

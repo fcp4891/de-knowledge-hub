@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState, type CSSProperties } from "react";
 
 import { GOALS, LAYERS, SHORT_NAMES, UPCOMING_GOALS, type Goal, type Layer } from "@/lib/learning-paths";
 import { contentStatus, paintStation, type GoalPath } from "@/lib/platformMap";
-import { displayFactValue, goalPathIds, PRIVACY_LAB, PRIVACY_SPACE_HREF, verifiedLegend } from "@/lib/privacySpace";
+import { goalPathIds, PRIVACY_SPACE_HREF } from "@/lib/privacySpace";
 import { listStoredStudy, subscribePersonal } from "@/lib/personalStore";
 import { CARD_SECTION_COUNT, readReadingProgress, type ReadingProgress } from "@/lib/readingProgress";
 import type { StudyState } from "@/lib/api/types";
@@ -21,13 +21,6 @@ export type HomeStage = {
   total: number;
 };
 
-export type HomeLegalFact = {
-  key: string;
-  label: string;
-  value: string;
-  verifiedAt: string;
-};
-
 export type HomeDomain = {
   id: string;
   slug: string;
@@ -36,7 +29,6 @@ export type HomeDomain = {
   conceptCount: number;
   withPage: number | null;
   stages: HomeStage[];
-  legalFacts: HomeLegalFact[];
 };
 
 export type HomeConcept = {
@@ -116,7 +108,6 @@ export function HomeScreen({
 
   const goal = GOALS.find((item) => item.key === goalKey) ?? null;
   const path: GoalPath = goal ? goalPathIds(goal.steps) : null;
-  const special = [...domainsById.values()].find((domain) => domain.band === "especializacion") ?? null;
   const continueConcept = activeSlug ? conceptsBySlug.get(activeSlug) ?? null : null;
 
   function pickGoal(key: string) {
@@ -144,8 +135,6 @@ export function HomeScreen({
       </header>
 
       {continueConcept ? <ContinueCard concept={continueConcept} reading={reading} /> : null}
-
-      {special && special.legalFacts.length > 0 ? <LegalFrameworkCard domain={special} /> : null}
 
       <section className="home-block" aria-labelledby="obj-titulo">
         <div className="home-block-head">
@@ -327,36 +316,14 @@ function PlatformMap({ path, domainsById }: { path: GoalPath; domainsById: Map<s
   );
 }
 
-function LegalFrameworkCard({ domain }: { domain: HomeDomain }) {
-  const legend = verifiedLegend(domain.legalFacts.map((fact) => fact.verifiedAt));
-  return (
-    <Link className="home-legal" href={PRIVACY_SPACE_HREF}>
-      <span className="home-kicker">Especialización</span>
-      <h2>{domain.title}</h2>
-      <dl>
-        {domain.legalFacts.map((fact) => (
-          <div key={fact.key}>
-            <dt>{fact.label}</dt>
-            <dd>{displayFactValue(fact.value)}</dd>
-          </div>
-        ))}
-      </dl>
-      {legend ? <p className="home-legal-verified">{legend}</p> : null}
-    </Link>
-  );
-}
-
 function SpecializationBand({ domain, path }: { domain: HomeDomain; path: GoalPath }) {
-  const stations = [
-    ...domain.stages.map((stage) => ({
-      id: stage.slug,
-      name: stage.title,
-      verified: stage.verified,
-      total: stage.total,
-      href: `${PRIVACY_SPACE_HREF}#${stage.slug}`,
-    })),
-    { id: PRIVACY_LAB.id, name: PRIVACY_LAB.label, verified: 0, total: 0, href: `${PRIVACY_SPACE_HREF}#${PRIVACY_LAB.id}` },
-  ];
+  const stations = domain.stages.map((stage) => ({
+    id: stage.slug,
+    name: stage.title,
+    verified: stage.verified,
+    total: stage.total,
+    href: `${PRIVACY_SPACE_HREF}#${stage.slug}`,
+  }));
   const verified = domain.stages.reduce((sum, stage) => sum + stage.verified, 0);
   const total = domain.stages.reduce((sum, stage) => sum + stage.total, 0);
   const ids = stations.map((station) => station.id);
@@ -405,11 +372,6 @@ function SpecializationBand({ domain, path }: { domain: HomeDomain; path: GoalPa
                 <span className="home-station-name" data-emphasis={emphasis}>
                   {station.name}
                 </span>
-                {station.total > 0 ? (
-                  <span className="home-station-progress">
-                    {station.verified}/{station.total}
-                  </span>
-                ) : null}
               </Link>
             );
           })}
