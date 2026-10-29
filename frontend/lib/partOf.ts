@@ -1,19 +1,20 @@
-/**
- * Orden de estudio del paso 19 del objetivo ley21719 (pedido en docs/status/lane-a.md).
- * La padre va primera; la lista de la ficha muestra solo las hijas, en este orden.
- */
+/** Orden de las hijas de la ficha padre. No es un paso del dominio 19. */
 export const LEY21719_STUDY_ORDER = [
   "chile-data-protection",
   "pii-identification",
   "processing-activities-inventory",
   "data-minimization-by-layer",
   "chilean-identifier-pseudonymization",
+  "purpose-based-authorization",
   "data-subject-rights-pipeline",
+  "distributed-erasure-propagation",
   "retention-and-erasure",
+  "privacy-backup-and-recovery",
   "data-breach-response",
   "dpia-and-automated-decisions",
   "processors-and-international-transfers",
   "privacy-controls-as-code",
+  "privacy-in-ai-rag-llm",
 ] as const;
 
 export type PartLink = {

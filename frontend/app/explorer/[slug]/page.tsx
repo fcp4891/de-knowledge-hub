@@ -63,7 +63,7 @@ async function loadMinutes(slugs: string[]): Promise<Record<string, number>> {
 
 export default async function DomainPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const staticMode = process.env.API_MODE === "static";
+  const staticMode = process.env.API_MODE === "static" || process.env.API_MODE === "mock";
   const domain = await getDomain(slug);
 
   if (!domain.ok) {

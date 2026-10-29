@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState, type CSSProperties } from "react";
 
 import { GOALS, LAYERS, SHORT_NAMES, UPCOMING_GOALS, type Goal, type Layer } from "@/lib/learning-paths";
 import { contentStatus, paintStation, type GoalPath } from "@/lib/platformMap";
+import { goalPathIds, PRIVACY_SPACE_HREF } from "@/lib/privacySpace";
 import { listStoredStudy, subscribePersonal } from "@/lib/personalStore";
 import { CARD_SECTION_COUNT, readReadingProgress, type ReadingProgress } from "@/lib/readingProgress";
 import type { StudyState } from "@/lib/api/types";
@@ -13,11 +14,21 @@ import "./home.css";
 
 const GOAL_KEY = "dekh:goal";
 
+export type HomeStage = {
+  slug: string;
+  title: string;
+  verified: number;
+  total: number;
+};
+
 export type HomeDomain = {
   id: string;
   slug: string;
+  title: string;
+  band: "especializacion" | null;
   conceptCount: number;
   withPage: number | null;
+  stages: HomeStage[];
 };
 
 export type HomeConcept = {
@@ -96,7 +107,7 @@ export function HomeScreen({
   }, [activeSlug]);
 
   const goal = GOALS.find((item) => item.key === goalKey) ?? null;
-  const path: GoalPath = goal ? goal.steps.map((step) => step.domain) : null;
+  const path: GoalPath = goal ? goalPathIds(goal.steps) : null;
   const continueConcept = activeSlug ? conceptsBySlug.get(activeSlug) ?? null : null;
 
   function pickGoal(key: string) {
@@ -123,9 +134,7 @@ export function HomeScreen({
         <p className="lead">Elige un camino. Todo lo demás espera.</p>
       </header>
 
-      {continueConcept ? (
-        <ContinueCard concept={continueConcept} reading={reading} />
-      ) : null}
+      {continueConcept ? <ContinueCard concept={continueConcept} reading={reading} /> : null}
 
       <section className="home-block" aria-labelledby="obj-titulo">
         <div className="home-block-head">
@@ -219,7 +228,8 @@ function GoalCard({ goal, pressed, onPick }: { goal: Goal; pressed: boolean; onP
 function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsById: Map<string, HomeDomain> }) {
   const first = goal?.steps[0];
   const firstDomain = first ? domainsById.get(first.domain) : undefined;
-  const firstName = first ? SHORT_NAMES[first.domain] : undefined;
+  const firstStage = first?.stage ? firstDomain?.stages.find((stage) => stage.slug === first.stage) : undefined;
+  const firstName = firstStage?.title ?? (first ? SHORT_NAMES[first.domain] : undefined);
 
   return (
     <section className="home-itinerary" aria-labelledby="itin">
@@ -235,9 +245,16 @@ function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsById: Map<
           <ol className="home-steps">
             {goal.steps.map((step, index) => {
               const domain = domainsById.get(step.domain);
-              const layer = LAYERS.find((item) => item.domains.includes(step.domain));
-              const status = domain ? contentStatus(domain.withPage, domain.conceptCount) : null;
-              const name = SHORT_NAMES[step.domain] ?? domain?.slug ?? step.domain;
+              const stage = step.stage ? domain?.stages.find((item) => item.slug === step.stage) : undefined;
+              const layer = step.stage ? undefined : LAYERS.find((item) => item.domains.includes(step.domain));
+              const status = stage
+                ? `${stage.verified}/${stage.total} verificadas`
+                : domain
+                  ? contentStatus(domain.withPage, domain.conceptCount)
+                  : null;
+              const place = step.stage ? "Especialización" : layer?.name;
+              const name = stage?.title ?? SHORT_NAMES[step.domain] ?? domain?.slug ?? step.domain;
+              const href = step.stage ? `${PRIVACY_SPACE_HREF}#${step.stage}` : domain ? `/explorer/${domain.slug}` : null;
               const body = (
                 <>
                   <span className="home-step-name">
@@ -246,28 +263,30 @@ function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsById: Map<
                       {step.weight}
                     </span>
                   </span>
-                  <span className="home-step-meta">{[layer?.name, status].filter(Boolean).join(" · ")}</span>
+                  <span className="home-step-meta">{[place, status].filter(Boolean).join(" · ")}</span>
                 </>
               );
               return (
-                <li key={step.domain} className="home-step">
+                <li key={`${step.domain}-${step.stage ?? index}`} className="home-step">
                   <span className="home-step-rail">
-                    <span className="home-step-num" style={{ background: layer?.dark ?? "var(--ink)" }}>
+                    <span
+                      className="home-step-num"
+                      style={{ background: step.stage ? "var(--band-especializacion-dark)" : (layer?.dark ?? "var(--ink)") }}
+                    >
                       {index + 1}
                     </span>
                     <span className="home-step-line" data-last={index === goal.steps.length - 1} />
                   </span>
-                  {domain ? (
-                    <Link href={`/explorer/${domain.slug}`}>{body}</Link>
-                  ) : (
-                    <span className="home-step-text">{body}</span>
-                  )}
+                  {href ? <Link href={href}>{body}</Link> : <span className="home-step-text">{body}</span>}
                 </li>
               );
             })}
           </ol>
           {firstDomain && firstName ? (
-            <Link className="home-start" href={`/explorer/${firstDomain.slug}`}>
+            <Link
+              className="home-start"
+              href={first?.stage ? `${PRIVACY_SPACE_HREF}#${first.stage}` : `/explorer/${firstDomain.slug}`}
+            >
               {`Empezar por ${firstName}`}
             </Link>
           ) : null}
@@ -286,12 +305,80 @@ function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsById: Map<
 }
 
 function PlatformMap({ path, domainsById }: { path: GoalPath; domainsById: Map<string, HomeDomain> }) {
+  const special = [...domainsById.values()].find((domain) => domain.band === "especializacion") ?? null;
   return (
     <section className="home-map" aria-label="Mapa de la plataforma">
+      {special && special.stages.length > 0 ? <SpecializationBand domain={special} path={path} /> : null}
       {LAYERS.map((layer) => (
         <LayerRow key={layer.key} layer={layer} path={path} domainsById={domainsById} />
       ))}
     </section>
+  );
+}
+
+function SpecializationBand({ domain, path }: { domain: HomeDomain; path: GoalPath }) {
+  const stations = domain.stages.map((stage) => ({
+    id: stage.slug,
+    name: stage.title,
+    verified: stage.verified,
+    total: stage.total,
+    href: `${PRIVACY_SPACE_HREF}#${stage.slug}`,
+  }));
+  const verified = domain.stages.reduce((sum, stage) => sum + stage.verified, 0);
+  const total = domain.stages.reduce((sum, stage) => sum + stage.total, 0);
+  const ids = stations.map((station) => station.id);
+  const style = {
+    "--layer-color": "var(--band-especializacion)",
+    "--layer-dark": "var(--band-especializacion-dark)",
+    "--layer-fill": "var(--band-especializacion-fill)",
+    "--station-count": String(stations.length),
+  } as CSSProperties;
+
+  return (
+    <div className="home-layer" data-layer="especializacion" style={style}>
+      <div className="home-layer-label">
+        <span className="home-layer-name">
+          <span className="home-swatch" />
+          Especialización
+        </span>
+        <span className="home-layer-count">
+          {verified}/{total} verificadas
+        </span>
+      </div>
+      <div className="home-stations-scroll">
+        <div className="home-stations">
+          {stations.map((station, index) => {
+            const paint = paintStation({
+              id: station.id,
+              index,
+              ids,
+              path,
+              withPage: station.total > 0 ? station.verified : null,
+              total: station.total,
+            });
+            const emphasis = paint.emphasized ? "step" : paint.dimmed ? "dimmed" : "plain";
+            const dotStyle =
+              paint.fill === "partial"
+                ? { background: `conic-gradient(var(--band-especializacion) ${paint.percent}%, var(--surface) 0)` }
+                : undefined;
+            return (
+              <Link key={station.id} className="home-station" href={station.href}>
+                <span className="home-station-track">
+                  <span className="home-station-line" data-tone={paint.lineLeft} />
+                  <span className="home-station-dot" data-fill={paint.fill} data-dimmed={paint.dimmed} style={dotStyle}>
+                    {paint.stepNumber}
+                  </span>
+                  <span className="home-station-line" data-tone={paint.lineRight} />
+                </span>
+                <span className="home-station-name" data-emphasis={emphasis}>
+                  {station.name}
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </div>
   );
 }
 

@@ -30,13 +30,18 @@ export const SHORT_NAMES: Record<string, string> = {
   '09': 'AWS', '10': 'Azure', '11': 'DevOps', '12': 'IaC', '13': 'Contenedores',
   '14': 'Streaming', '15': 'Calidad', '16': 'Observabilidad', '17': 'Gobierno',
   '18': 'Seguridad', '19': 'Compliance', '20': 'Open Data Stack', '21': 'IA para DE',
-  '22': 'Modern DE', '23': 'Emergentes',
+  '22': 'Modern DE', '23': 'Emergentes', '24': 'Ingeniería de privacidad',
 };
 
 export type Level = 'Inicial' | 'Intermedio' | 'Avanzado';
 export type Weight = 'Esencial' | 'Complementario';
 
-export interface GoalStep { domain: string; weight: Weight }
+export interface GoalStep {
+  domain: string;
+  weight: Weight;
+  /** Slug del tramo, cuando el paso recorre un subdominio y no el dominio entero. */
+  stage?: string;
+}
 
 export interface Goal {
   key: string;
@@ -102,6 +107,20 @@ export const GOALS: Goal[] = [
       { domain: '07', weight: 'Esencial' }, { domain: '20', weight: 'Esencial' },
       { domain: '22', weight: 'Esencial' }, { domain: '17', weight: 'Complementario' },
       { domain: '21', weight: 'Complementario' },
+    ],
+  },
+  {
+    key: 'ley21719',
+    label: 'Tratar datos personales bajo la Ley 21.719',
+    description: 'Fundamentos, diseño, derechos, riesgo y evidencia',
+    level: 'Avanzado',
+    requires: 'Requiere: Modelado y Pipelines.',
+    steps: [
+      { domain: '24', weight: 'Esencial', stage: 'fundamentos' },
+      { domain: '24', weight: 'Esencial', stage: 'diseno-protegido' },
+      { domain: '24', weight: 'Esencial', stage: 'derechos-ciclo-vida' },
+      { domain: '24', weight: 'Esencial', stage: 'riesgo-terceros-incidentes' },
+      { domain: '24', weight: 'Esencial', stage: 'evidencia-automatizacion' },
     ],
   },
 ];

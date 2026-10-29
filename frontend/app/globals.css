@@ -15,6 +15,15 @@
   --side-width: 240px;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --core: #2A2E28;
+    --modern: #1C2C38;
+    --emerging: #3A301C;
+  }
+}
+
 * {
   box-sizing: border-box;
 }

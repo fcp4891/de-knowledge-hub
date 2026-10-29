@@ -56,6 +56,12 @@
   --layer-plataforma: #B85A08;  --layer-plataforma-dark: #8A4306;
   --layer-cimientos: #0D7C74;   --layer-cimientos-dark: #0A5E58;  --layer-cimientos-bg: #EEF7F5;
 
+  /* Banda Especialización, fuera de las 6 capas.
+     El color es línea y texto. El fondo del punto con texto blanco es el fill (AA). */
+  --band-especializacion: #7C3A6E;
+  --band-especializacion-dark: #5C234F;
+  --band-especializacion-fill: #7C3A6E;
+
   /* Forma y espacio */
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -66,4 +72,35 @@
   --touch-min: 44px;
 }
 
-/* Modo oscuro: pendiente de diseñar; no implementar en esta iteración. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #12141A;
+    --surface: #1C1F27;
+    --surface-muted: #262A33;
+    --border: #343842;
+    --border-strong: #454A55;
+    --ink: #F2F3F5;
+    --ink-2: #E4E6EB;
+    --ink-3: #C5C8D0;
+    --ink-muted: #A7ACB6;
+    --ink-disabled: #7C818C;
+    --accent: #7DCEC6;
+    --accent-hover: #B7E6E1;
+    --accent-soft: #163632;
+    --accent-on-dark: #DCEFEC;
+    --ok-bg: #163628;
+    --ok-ink: #B7E4C7;
+    --warn-bg: #3A2A12;
+    --warn-ink: #F3D19C;
+    --lvl-inicial-bg: #163628;
+    --lvl-inicial-ink: #B7E4C7;
+    --lvl-intermedio-bg: #1A2744;
+    --lvl-intermedio-ink: #C5D4F5;
+    --lvl-avanzado-bg: #2E1A38;
+    --lvl-avanzado-ink: #E4C6EF;
+    --band-especializacion: #E4C0EA;
+    /* #E4C0EA queda para línea y texto. El punto completo sigue con fondo AA y texto blanco (7,81:1). */
+    --band-especializacion-fill: #7C3A6E;
+    --layer-cimientos-bg: #132825;
+  }
+}

@@ -380,6 +380,11 @@ export interface components {
             slug: components["schemas"]["Slug"];
             title: string;
             description: string;
+            /**
+             * @description ADR-027: banda fuera de las 6 capas de la UI; null si el dominio está en una capa.
+             * @enum {unknown}
+             */
+            band: "especializacion" | null;
             concept_count: number;
             mvp_count: number;
         };
@@ -387,12 +392,33 @@ export interface components {
             items: components["schemas"]["DomainSummary"][];
         };
         DomainDetail: {
+            /** @description ADR-027: marco legal verificado del dominio; null si no tiene. */
+            legal_framework: components["schemas"]["LegalFramework"] | null;
             subdomains: {
                 slug: components["schemas"]["Slug"];
                 title: string;
                 concepts: components["schemas"]["ConceptSummary"][];
             }[];
         } & components["schemas"]["DomainSummary"];
+        /** @description ADR-027: cada hecho con su URL de Nivel 1 (BCN o Senado/Cámara) y la fecha en que se verificó. */
+        LegalFramework: {
+            slug: components["schemas"]["Slug"];
+            title: string;
+            jurisdiction: string;
+            facts: {
+                key: string;
+                label: string;
+                value: string;
+                /** Format: uri */
+                url: string;
+                /** Format: uri */
+                checked_with?: string;
+                source: string;
+                /** Format: date */
+                verified_at: string;
+                note?: string;
+            }[];
+        };
         ConceptSummary: {
             slug: components["schemas"]["Slug"];
             title: string;

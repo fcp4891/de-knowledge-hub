@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { SearchDialog } from "@/components/SearchDialog";
 import type { Level, StudyStatus } from "@/lib/api/types";
@@ -74,6 +74,12 @@ export function DomainRoute({
   study,
   staticMode,
   goalDomains,
+  bandLabel,
+  notice,
+  readingPath,
+  asideExtra,
+  disabledStage,
+  verifiedTotal,
 }: {
   id: string;
   slug: string;
@@ -85,6 +91,12 @@ export function DomainRoute({
   study: Record<string, RouteStudy> | null;
   staticMode: boolean;
   goalDomains: GoalDomain[];
+  bandLabel?: string;
+  notice?: string;
+  readingPath?: readonly string[];
+  asideExtra?: ReactNode;
+  disabledStage?: { id: string; title: string };
+  verifiedTotal?: number;
 }) {
   const [localStudy, setLocalStudy] = useState<Record<string, RouteStudy> | null>(staticMode ? null : study);
   const [goalKey, setGoalKey] = useState<string | null>(null);
@@ -142,6 +154,13 @@ export function DomainRoute({
   const concepts = orderedStages.flatMap((stage) => stage.concepts);
   const fichas = concepts.filter((concept) => concept.hasPage);
   const verified = fichas.filter((concept) => concept.verified).length;
+  const verifiedBase = verifiedTotal ?? fichas.length;
+  const shownStages = [
+    ...orderedStages.map((stage) => ({ ...stage, disabled: false })),
+    ...(disabledStage
+      ? [{ slug: disabledStage.id, title: disabledStage.title, concepts: [] as RouteConcept[], disabled: true }]
+      : []),
+  ];
   const mastered = concepts.filter((concept) => isMastered(lookup(concept.slug))).length;
   const reviewItems = concepts.filter((concept) => lookup(concept.slug) === "needs_review");
   const crumb = `${id} ${SHORT_NAMES[id] ?? title}`;
@@ -183,14 +202,24 @@ export function DomainRoute({
       </div>
 
       <header className="route-header">
-        <span className="route-kicker">
-          Dominio {id} · {stages.length} etapas · {conceptCount} conceptos
-        </span>
+        {bandLabel ? (
+          <span className="route-kicker route-kicker-band">{bandLabel}</span>
+        ) : (
+          <span className="route-kicker">
+            Dominio {id} · {stages.length} etapas · {conceptCount} conceptos
+          </span>
+        )}
         <h1>{title}</h1>
         {description ? <p className="lead">{description}</p> : null}
+        {notice ? <p className="legal-notice legal-notice-lead">{notice}</p> : null}
+        {readingPath && readingPath.length > 0 ? (
+          <p className="route-reading">
+            Cómo estudiar cada ficha: {readingPath.join(" → ")}
+          </p>
+        ) : null}
         <div className="route-pills">
           <span className="route-pill route-pill-ok">
-            {fichas.length === 0 ? "0 fichas verificadas" : `${verified} de ${fichas.length} fichas verificadas`}
+            {verifiedBase === 0 ? "0 fichas verificadas" : `${verified} de ${verifiedBase} fichas verificadas`}
           </span>
           <span className="route-pill route-pill-you">
             {mastered} comprendidos por ti
@@ -203,13 +232,19 @@ export function DomainRoute({
 
       <div className="route-split">
         <ol className="route-stages" aria-label="Etapas de la ruta">
-          {orderedStages.map((stage, index) => {
+          {shownStages.map((stage, index) => {
             const done = stage.concepts.filter((concept) => isMastered(lookup(concept.slug))).length;
             const started = stage.concepts.some((concept) => lookup(concept.slug) !== "not_reviewed");
-            const marker = stage.concepts.length > 0 && done === stage.concepts.length ? "complete" : started ? "started" : "pending";
-            const line = index === orderedStages.length - 1 ? "none" : marker === "complete" ? "accent" : "muted";
+            const marker = stage.disabled
+              ? "pending"
+              : stage.concepts.length > 0 && done === stage.concepts.length
+                ? "complete"
+                : started
+                  ? "started"
+                  : "pending";
+            const line = index === shownStages.length - 1 ? "none" : marker === "complete" ? "accent" : "muted";
             return (
-              <li key={stage.slug} className="route-stage">
+              <li key={stage.slug} id={stage.slug} className="route-stage" data-disabled={stage.disabled || undefined}>
                 <div className="route-rail">
                   <div className="route-marker" data-state={marker}>
                     {index + 1}
@@ -219,21 +254,25 @@ export function DomainRoute({
                 <div className="route-stage-body">
                   <div className="route-stage-head">
                     <h2>{stage.title}</h2>
-                    <span className="route-stage-count">
-                      {done} de {stage.concepts.length} comprendidos
-                    </span>
+                    {stage.disabled ? null : (
+                      <span className="route-stage-count">
+                        {done} de {stage.concepts.length} comprendidos
+                      </span>
+                    )}
                   </div>
-                  <div className="route-cards">
-                    {stage.concepts.map((concept) => (
-                      <ConceptCard
-                        key={concept.slug}
-                        concept={concept}
-                        state={lookup(concept.slug)}
-                        recommended={recommended?.slug === concept.slug}
-                        section={sections[concept.slug]}
-                      />
-                    ))}
-                  </div>
+                  {stage.disabled ? null : (
+                    <div className="route-cards">
+                      {stage.concepts.map((concept) => (
+                        <ConceptCard
+                          key={concept.slug}
+                          concept={concept}
+                          state={lookup(concept.slug)}
+                          recommended={recommended?.slug === concept.slug}
+                          section={sections[concept.slug]}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </div>
               </li>
             );
@@ -265,7 +304,7 @@ export function DomainRoute({
                 ) : (
                   <span key={concept.slug} className="route-review-link">
                     {label}
-                    <span className="route-card-meta">Ficha pendiente</span>
+                    <span className="route-card-meta">Sin ficha</span>
                   </span>
                 );
               })}
@@ -292,6 +331,7 @@ export function DomainRoute({
               </span>
             </div>
           </section>
+          {asideExtra}
         </aside>
       </div>
 
@@ -319,7 +359,7 @@ function ConceptCard({
         <span className="route-card-text">
           <span className="route-card-title">{concept.title}</span>
           <span className="route-card-meta">
-            {level} · Ficha pendiente
+            {level} · Sin ficha
           </span>
         </span>
       </div>

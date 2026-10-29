@@ -387,17 +387,34 @@
 
 .claim-legend {
   display: flex;
-  align-items: baseline;
-  gap: 0.4em;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
   margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
   font-family: var(--font-ui), system-ui, sans-serif;
   font-size: 14px;
   line-height: 1.45;
   color: var(--ink-2);
 }
 
+.claim-legend li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4em;
+}
+
 .claim-legend .claim-dot {
   cursor: default;
+}
+
+@media (prefers-color-scheme: dark) {
+  .claim-dot,
+  .claim-art a,
+  .claim-art span {
+    color: #D6E4F5;
+  }
 }
 
 .reading-page h1.reading-title {
