@@ -56,9 +56,11 @@
   --layer-plataforma: #B85A08;  --layer-plataforma-dark: #8A4306;
   --layer-cimientos: #0D7C74;   --layer-cimientos-dark: #0A5E58;  --layer-cimientos-bg: #EEF7F5;
 
-  /* Banda Especialización, fuera de las 6 capas. El oscuro lleva texto blanco (AA). */
+  /* Banda Especialización, fuera de las 6 capas.
+     El color es línea y texto. El fondo del punto con texto blanco es el fill (AA). */
   --band-especializacion: #7C3A6E;
   --band-especializacion-dark: #5C234F;
+  --band-especializacion-fill: #7C3A6E;
 
   /* Forma y espacio */
   --radius-sm: 8px;
@@ -97,6 +99,8 @@
     --lvl-avanzado-bg: #2E1A38;
     --lvl-avanzado-ink: #E4C6EF;
     --band-especializacion: #E4C0EA;
+    /* #E4C0EA queda para línea y texto. El punto completo sigue con fondo AA y texto blanco (7,81:1). */
+    --band-especializacion-fill: #7C3A6E;
     --layer-cimientos-bg: #132825;
   }
 }

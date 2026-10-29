@@ -1,8 +1,9 @@
 import { ApiFailure } from "@/components/ApiFailure";
 import { DomainRoute, type GoalDomain, type RouteStage, type RouteStudy } from "@/components/explorer/DomainRoute";
+import { LegalFactLink } from "@/components/legal/LegalFactLink";
 import { getConcept, getDomain, listDomains, listStudyStates } from "@/lib/api/client";
 import type { ApiResult, DomainDetail } from "@/lib/api/types";
-import { displayFactValue, PRIVACY_LAB, STUDY_PATH, verifiedLegend } from "@/lib/privacySpace";
+import { PRIVACY_LAB, STUDY_PATH, verifiedLegend } from "@/lib/privacySpace";
 
 const SPACE_NOTICE = "Este contenido no es asesoría legal.";
 
@@ -62,7 +63,9 @@ function LegalCard({ framework }: { framework: NonNullable<DomainDetail["legal_f
         {framework.facts.map((fact) => (
           <div key={fact.key}>
             <dt>{fact.label}</dt>
-            <dd>{displayFactValue(fact.value)}</dd>
+            <dd>
+              <LegalFactLink value={fact.value} url={fact.url} />
+            </dd>
           </div>
         ))}
       </dl>
