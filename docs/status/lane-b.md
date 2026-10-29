@@ -3,7 +3,7 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-28
+**Última actualización:** 2026-10-29
 
 ## Reglas de revisión
 
@@ -14,6 +14,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** revisión review-ui-privacy. Informe en `docs/reviews/ui-privacy.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: la tarjeta del marco legal volvió a salir de Inicio, y el punto completo de la banda en oscuro queda en 1.61:1.
 - **Tarea activa:** `b/ui-privacy-space` (worktree `DES_conocimiento-privacy`). `/privacidad` usa el mismo layout que la ruta de dominio. Las 15 fichas tienen página. La cabecera es lo propio: Especialización, el aviso «Este contenido no es asesoría legal.» y la caja Comprender → Aplicar → Demostrar → Profundizar. Las fichas siguen con «Esta ficha no es asesoría legal.». El laboratorio es la etapa 6 deshabilitada, una sola vez. El marco legal va debajo en el panel derecho. En mock no se consulta `/me`.
 - **Siguiente:** lo que asigne Felipe.
 - **Bloqueos:** ninguno.
@@ -105,6 +107,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Tarea activa:** `b/ui-page-title` (ADR-012). Sin merge a `main`.
 - **Siguiente:** lo que asigne Felipe. Sigue abierta la revisión F3b-08c.
 - **Bloqueos:** ninguno.
+
+### Revisión · review-ui-privacy
+- `/privacidad` usa la ruta de dominio. El objetivo 7 y la banda fuera de las 6 capas coinciden con el test. Propuestas media: devolver a Inicio la tarjeta leída de `legal_framework`, y no usar `#E4C0EA` como fondo de texto blanco. No se editó `content/` ni `frontend/`.
 
 ### Título de página en las citas (`b/ui-page-title`)
 - El enlace de cada cita es `page_title`. La línea secundaria, en texto muted, es «título del registro · Nivel N». Si `page_title` es null, el enlace muestra la ruta de la URL. Igual en la §20 de la ficha y en `SourceList`.
@@ -420,6 +425,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - El pedido de un párrafo por nivel queda sin efecto. Esos nombres no se asignan a los tramos ni hace falta un campo nuevo: la interfaz muestra la caja «Cómo estudiar cada ficha: Comprender → Aplicar → Demostrar → Profundizar».
 
 ## Historial
+
+### Revisión · review-ui-privacy (2026-10-29)
+- Revisión de `/privacidad`, la banda, el objetivo 7 y el token. No se editó `content/` ni `frontend/`.
 
 ### UI · espacio de privacidad (2026-10-28)
 - `/privacidad` reutiliza la ruta de dominio. Con P2 en `main`, las 15 fichas enlazan a su concepto. El laboratorio queda como etapa 6 deshabilitada. El aviso del espacio es «Este contenido no es asesoría legal.»; el de las fichas no cambia. En el inicio no está la tarjeta del marco legal. La banda muestra solo el nombre de los cinco tramos. No se editó `content/`.
