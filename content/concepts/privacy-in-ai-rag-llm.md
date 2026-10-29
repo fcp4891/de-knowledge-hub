@@ -39,6 +39,16 @@ sources:
     accessed: 2026-10-28
     page_title: "Security filters for trimming results in Azure AI Search"
     note: "Security filters for trimming results in Azure AI Search: para soluciones que no pueden usar el soporte integrado de listas de control de acceso (ACL) por documento, Azure AI Search permite un filtro que recorta los resultados según un campo con identificadores de grupo o usuario, consultado con la función search.in; el patrón simula la autorización por documento con un filtro OData. La página indica que Azure AI Search también sustenta Foundry IQ en el portal de Microsoft Foundry."
+  - source: owasp-llm-top-10
+    url: https://genai.owasp.org/llm-top-10/
+    accessed: 2026-10-28
+    page_title: "LLMRisks Archive"
+    note: "OWASP Top 10 for LLM Applications (OWASP Gen AI Security Project), Nivel 4, solo para conceptos; no es norma chilena. Lista 2025 de riesgos de aplicaciones con LLM; entre ellos, LLM01:2025 Prompt Injection, LLM02:2025 Sensitive Information Disclosure, LLM06:2025 Excessive Agency, LLM07:2025 System Prompt Leakage y LLM08:2025 Vector and Embedding Weaknesses."
+  - source: nist-ai-rmf
+    url: https://www.nist.gov/itl/ai-risk-management-framework
+    accessed: 2026-10-28
+    page_title: "AI Risk Management Framework"
+    note: "AI Risk Management Framework (NIST), Nivel 4, solo para conceptos; no es legislación chilena. El AI RMF es de uso voluntario y busca incorporar consideraciones de confiabilidad en el diseño, desarrollo, uso y evaluación de productos, servicios y sistemas de IA; publicado el 26 de enero de 2023."
 relations:
   - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del dominio."}
   - {type: RELATED_TO, target: processors-and-international-transfers, note: "Proveedores de modelos y de búsqueda como encargados."}
@@ -77,6 +87,8 @@ Un pipeline de IA amplía la superficie de tratamiento: documentos, fragmentos (
 | Agente | Sistema que invoca herramientas | Puede llevar datos a servicios adicionales | **[Buena práctica]** |
 | Trazas y cachés | Registro de prompts, respuestas y resultados recuperados | Son copias personales si guardan el texto | **[Buena práctica]** |
 
+- **[Buena práctica]** Como referencias conceptuales (Nivel 4, no son normas chilenas): el OWASP Top 10 for LLM Applications nombra los riesgos que esta ficha controla, como LLM01:2025 Prompt Injection, LLM02:2025 Sensitive Information Disclosure, LLM06:2025 Excessive Agency y LLM08:2025 Vector and Embedding Weaknesses; el NIST AI RMF es un marco voluntario para gestionar los riesgos de los sistemas de IA.
+
 ## 3. Problema que resuelve
 
 **[Buena práctica]** Borrar un documento de la fuente no borra sus fragmentos, embeddings, cachés ni trazas. Un agente puede enviar datos personales a una API externa. Un prompt puede incorporar texto de documentos que el usuario no tiene derecho a ver, si el filtro se le pide al modelo en lugar de aplicarse al recuperar.
@@ -91,7 +103,7 @@ Un pipeline de IA amplía la superficie de tratamiento: documentos, fragmentos (
 6. **[Buena práctica]** Tratar trazas, conversaciones, cachés y evaluaciones como posibles datos personales: identificadores en lugar de texto, y redacción de RUT y correos.
 7. **[Decisión de arquitectura]** Diseñar la supresión y la reindexación por `document_id`, y reconciliar que no queden fragmentos, entradas de caché ni trazas.
 8. **[Buena práctica]** No afirmar el borrado de lo que un modelo ya entrenado aprendió sin evidencia: borrar el índice no lo cubre.
-9. **[Buena práctica]** Probar la inyección de prompt, la exfiltración por herramientas y las filtraciones entre usuarios.
+9. **[Buena práctica]** Probar la inyección de prompt, la exfiltración por herramientas y las filtraciones entre usuarios (LLM01, LLM02 y LLM06 del OWASP Top 10 for LLM Applications).
 10. **[Obligación legal · art. 8 bis]** Si las decisiones basadas en tratamiento automatizado producen efectos jurídicos o significativos, el titular tiene derecho a explicación, intervención humana y revisión. **[Buena práctica]** Conectar esos casos con la evaluación de impacto (`dpia-and-automated-decisions`).
 
 ## 5. Cuándo utilizarlo
@@ -335,13 +347,15 @@ Propuesta para F4: un corpus ficticio con permisos por documento; usuarios con d
 - Google Cloud: *Set up data source access control* (Agent Search).
 - AWS: *Configure and customize queries and response generation* (Amazon Bedrock).
 - Microsoft Learn: *Security filters for trimming results in Azure AI Search*.
+- Referencias conceptuales (Nivel 4): OWASP, *LLMRisks Archive* (OWASP Top 10 for LLM Applications); NIST, *AI Risk Management Framework* (no son normas chilenas).
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-28: arts. 3, 8 bis y 15 bis consultados ese día en BCN; páginas de Agent Search, Amazon Bedrock y Azure AI Search consultadas ese día. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
+2026-10-28: arts. 3, 8 bis y 15 bis consultados ese día en BCN; páginas de Agent Search, Amazon Bedrock y Azure AI Search consultadas ese día (el nombre «Azure AI Search» se confirmó en su página), y OWASP Top 10 for LLM Applications y NIST AI RMF como referencias de Nivel 4. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-28: creación (lote P2, dominio 24, ADR-027) desde `docs/briefs/privacy-program/03-privacidad-ia-rag-llm.md`, que es un guion, no una fuente.
+- 2026-10-28: completada con lo que pedía el prompt de P2: OWASP Top 10 for LLM Applications y NIST AI RMF como fuentes de Nivel 4, solo para conceptos (§2, §4, §20); el nombre «Azure AI Search» se confirmó en su página N1 ese día.

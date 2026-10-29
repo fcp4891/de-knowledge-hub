@@ -76,6 +76,7 @@ Un derecho aprobado se propaga a cada representación del titular: fuente, CDC, 
 | Tombstone | Evento durable que avisa a los consumidores que un registro se suprimió o restringió | La supresión física | **[Decisión de arquitectura]** |
 | Reconciliación | Comparación entre el estado esperado y el observado en cada destino | Un conteo de filas borradas | **[Decisión de arquitectura]** |
 
+- **[Decisión de arquitectura]** **Alcance por finalidad:** la orden lista las actividades y los destinos que abarca; no es una lista de supresión global que descarte al titular de tratamientos nuevos y lícitos.
 - **[Buena práctica]** El índice de titulares y el linaje ayudan a localizar, pero no prueban que la cobertura sea completa: las copias fuera del catálogo no aparecen.
 
 ## 3. Problema que resuelve
@@ -86,7 +87,7 @@ Un derecho aprobado se propaga a cada representación del titular: fuente, CDC, 
 
 1. **[Buena práctica]** Recibir la decisión aprobada y acotada por finalidad y destino; verificar identidad, autorización y excepciones.
 2. **[Buena práctica]** Resolver identificadores y dependencias con el inventario, el índice de titulares y el linaje; registrar lo que no se pudo localizar.
-3. **[Decisión de arquitectura]** Crear una orden durable y única (`request_id` y corte de versión) con estados por destino: `PENDING`, `VERIFIED`, `EXCEPTION`, `FAILED`.
+3. **[Decisión de arquitectura]** Crear una orden durable y única (`request_id` y corte de versión) con estados por destino: `PENDING`, `RUNNING`, `VERIFIED`, `EXCEPTION`, `FAILED`.
 4. **[Decisión de arquitectura]** Emitir eventos idempotentes y aplicar la acción de cada destino: suprimir, rectificar, bloquear o conservar con acceso restringido cuando haya una excepción aprobada.
 5. **[Decisión de arquitectura]** En el CDC y en los backfills, consultar la orden vigente antes de publicar: un evento con una versión anterior al corte no reintroduce al titular.
 6. **[Obligación legal · art. 11]** Comunicar los cambios a quienes recibieron los datos. **[Buena práctica]** Cada encargado es un destino con su estado; un HTTP 200 sin constancia no lo verifica.
@@ -171,13 +172,14 @@ class Orden:
 class Destino:
     nombre: str
     filas: dict[str, int] = field(default_factory=dict)   # titular → versión de la fila
-    estado: str = "PENDING"   # PENDING, VERIFIED, EXCEPTION o FAILED
+    estado: str = "PENDING"   # PENDING, RUNNING, VERIFIED, EXCEPTION o FAILED
     aplicaciones: int = 0
 
 
 def aplicar(destino: Destino, orden: Orden, confirmado: bool = True) -> None:
     if destino.estado == "VERIFIED":
         return                                            # reintento idempotente: no repite el efecto
+    destino.estado = "RUNNING"
     destino.filas.pop(orden.titular, None)
     destino.aplicaciones += 1
     destino.estado = "VERIFIED" if confirmado and orden.titular not in destino.filas else "PENDING"
@@ -319,3 +321,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-28: creación (lote P2, dominio 24, ADR-027) desde `docs/briefs/privacy-program/01-propagacion-derechos-supresion-distribuida.md`, que es un guion, no una fuente.
+- 2026-10-28: completada con lo que pedía el prompt de P2: estado `RUNNING` en el §4 y en el código (la salida no cambia) y el alcance por finalidad en el §2. Tombstones y lista no global ya estaban.

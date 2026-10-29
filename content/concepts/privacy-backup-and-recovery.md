@@ -99,6 +99,7 @@ Una restauración puede reintroducir datos suprimidos, permisos antiguos o reten
 5. **[Buena práctica]** Reaplicar los accesos, la clasificación, la retención y las llaves vigentes, no los del momento del respaldo.
 6. **[Buena práctica]** Correr la prueba negativa: ningún titular con supresión aprobada en lo restaurado, incluidos derivados y copias.
 7. **[Buena práctica]** Liberar con aprobación operativa y registrar resultados, incertidumbres y excepciones.
+   **[Decisión de arquitectura]** No se declara verificado lo que depende de la expiración de copias: un respaldo inmutable o una ventana de soft delete deja ese destino en `pendiente_expiracion_copias` hasta que vence (`retention-and-erasure`).
 8. **[Obligación legal · art. 14 quinquies]** Verificar regularmente la eficacia de las medidas (letra d)). **[Buena práctica]** Ensayar restauración y reconciliación juntas, y medir el tiempo de reconciliación además del RTO y el RPO.
 
 ## 5. Cuándo utilizarlo
@@ -274,6 +275,7 @@ En Azure, **Azure Storage**. Según *Soft delete for blobs* (no ejecutado):
 - **[Buena práctica]** **Observabilidad:** tiempo de reconciliación, órdenes reproducidas y resultado de la prueba negativa en cada ensayo.
 - **[Buena práctica]** **Costo:** la retención de los respaldos define cuánto dura cada dato personal fuera de los sistemas activos; acortarla reduce el alcance de cada reproducción.
 - **[Buena práctica]** Incluir a proveedores y exportaciones en el alcance de la restauración.
+- **[Buena práctica]** Fijar RPO y RTO con el tiempo de reconciliación incluido: el servicio no está recuperado mientras siga en cuarentena.
 
 ## 15. Errores frecuentes
 
@@ -328,3 +330,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-28: creación (lote P2, dominio 24, ADR-027) desde `docs/briefs/privacy-program/05-recuperacion-respaldos-privacidad.md`, que es un guion, no una fuente.
+- 2026-10-28: completada con lo que pedía el prompt de P2: regla «no se declara verificado lo que depende de la expiración de copias» en el §4 y RPO y RTO con la reconciliación en el §14. RPO y RTO ya estaban definidos en el §2.

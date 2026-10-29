@@ -74,6 +74,7 @@ Los permisos tradicionales responden **quién** puede consultar. La autorizació
 | Producto | Vista o API mínima para esa finalidad, no el dataset completo | `contacto_minimo` | **[Decisión de arquitectura]** |
 | Concesión | Identidad + actividad + producto + vencimiento, con aprobador | Soporte lee `contacto_minimo` hasta el 2026-12-31 | **[Decisión de arquitectura]** |
 
+- **[Decisión de arquitectura]** **Deny por defecto:** la concesión es la tupla (rol, finalidad, dataset o producto) con su vencimiento; lo que no está concedido se deniega.
 - **[Decisión de arquitectura]** **Decisión:** permitir, denegar o escalar a revisión. Una finalidad no aprobada se deniega; una pedida y en revisión se escala; una concesión vencida se deniega.
 - **[Buena práctica]** La base de licitud se define por actividad de tratamiento; no se deduce de una etiqueta en una tabla ni de una columna (`processing-activities-inventory`).
 
@@ -92,6 +93,7 @@ Los permisos tradicionales responden **quién** puede consultar. La autorizació
 5. **[Buena práctica]** Probar las denegaciones: cada regla tiene casos que deben fallar, y la CI falla si alguno pasa.
 6. **[Buena práctica]** Auditar el uso y los desvíos; un log muestra qué se consultó, no la intención real.
 7. **[Buena práctica]** Revocar al vencer y gestionar las excepciones como temporales, con fecha de revisión.
+8. **[Buena práctica]** Revisar periódicamente las concesiones vigentes con su dueño (por ejemplo, cada trimestre): las que nadie confirma se revocan.
 
 ## 5. Cuándo utilizarlo
 
@@ -186,7 +188,7 @@ EXCEPCIONES_EN_REVISION = {("grp-soporte", "auditoria_reclamos")}   # pedidas, n
 
 def decidir(s: Solicitud) -> str:
     vigentes = [c for c in CONCESIONES if c.identidad == s.identidad and c.producto == s.producto]
-    if not vigentes:
+    if not vigentes:                                  # deny por defecto: sin concesión, no hay acceso
         return "DENEGAR: sin concesión para ese producto"
     if not any(c.actividad == s.finalidad for c in vigentes):
         if (s.identidad, s.finalidad) in EXCEPCIONES_EN_REVISION:
@@ -324,3 +326,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-28: creación (lote P2, dominio 24, ADR-027) desde `docs/briefs/privacy-program/04-autorizacion-por-finalidad.md`, que es un guion, no una fuente.
+- 2026-10-28: completada con lo que pedía el prompt de P2: la tupla (rol, finalidad, dataset o producto) y el deny por defecto en el §2 y en un comentario del código (la salida no cambia), y la revisión periódica de concesiones en el §4.
