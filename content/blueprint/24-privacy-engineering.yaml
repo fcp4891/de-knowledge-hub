@@ -192,7 +192,7 @@ subdomains:
         importance: medium
         mvp: false
         related_concepts: [lgpd, processors-and-international-transfers]
-        note: Lote P4 (2026-10-30), con la Enmienda 4 de ADR-023 (jurisdicción EU). RGPD comparado con la Ley 21.719 y resolvedor de plazos por jurisdicción.
+        note: Lote P4 (2026-10-30), con la Enmienda 5 de ADR-023 (jurisdicción EU). RGPD comparado con la Ley 21.719 y resolvedor de plazos por jurisdicción.
       - slug: lgpd
         title: LGPD (Brasil)
         kind: concept
@@ -201,4 +201,4 @@ subdomains:
         importance: low
         mvp: false
         related_concepts: [gdpr]
-        note: Lote P4 (2026-10-30), con la Enmienda 4 de ADR-023 (jurisdicción BR). LGPD comparada con la Ley 21.719, días hábiles y cláusulas-padrão.
+        note: Lote P4 (2026-10-30), con la Enmienda 5 de ADR-023 (jurisdicción BR). LGPD comparada con la Ley 21.719, días hábiles y cláusulas-padrão.

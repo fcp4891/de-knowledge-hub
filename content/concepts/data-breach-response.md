@@ -84,13 +84,13 @@ Cuando hay un incidente, la primera pregunta es: **¿cuántas personas, qué dat
 - **[Decisión de arquitectura]** **Consulta de alcance:** desde los activos con acceso observado, obtiene titulares únicos, categorías, presencia de menores, periodo y limitaciones de cobertura.
 - **[Buena práctica]** Cinco términos que no son sinónimos:
 
-| Término | Qué significa | Cómo se sabe | Etiqueta |
-|---|---|---|---|
-| Activo comprometido | Sistema o credencial bajo control no autorizado | Investigación de seguridad | **[Buena práctica]** |
-| Acceso observado | Lectura, consulta o exportación registrada en un log | Logs de auditoría | **[Buena práctica]** |
-| Dato potencialmente accesible | Lo que la identidad comprometida podía leer | Permisos y catálogo | **[Buena práctica]** |
-| Dato efectivamente extraído | Lo que salió del perímetro | Logs de exportación, red y destino | **[Buena práctica]** |
-| Titular posiblemente afectado | Persona cuyos datos están en lo accesible o lo extraído | Índice de titulares, deduplicado | **[Buena práctica]** |
+| Término | Qué significa | Cómo se sabe |
+|---|---|---|
+| Activo comprometido | Sistema o credencial bajo control no autorizado | Investigación de seguridad |
+| Acceso observado | Lectura, consulta o exportación registrada en un log | Logs de auditoría |
+| Dato potencialmente accesible | Lo que la identidad comprometida podía leer | Permisos y catálogo |
+| Dato efectivamente extraído | Lo que salió del perímetro | Logs de exportación, red y destino |
+| Titular posiblemente afectado | Persona cuyos datos están en lo accesible o lo extraído | Índice de titulares, deduplicado |
 
 ## 3. Problema que resuelve
 
@@ -253,25 +253,23 @@ El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --str
 
 En GCP, **Cloud Audit Logs**. Según *Cloud Audit Logs overview* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Logs de acceso a datos | Data Access audit logs: desactivados por defecto, salvo en BigQuery; hay que activarlos | **[Decisión de arquitectura]** |
-| Cobertura | Comprobar antes del incidente qué servicios registran lecturas; sin ellos, el alcance queda como «potencialmente accesible» | **[Buena práctica]** |
+| Necesidad | Servicio |
+|---|---|
+| Logs de acceso a datos | Data Access audit logs: desactivados por defecto, salvo en BigQuery; hay que activarlos |
+| Cobertura | Comprobar antes del incidente qué servicios registran lecturas; sin ellos, el alcance queda como «potencialmente accesible» |
 
 ## 12. AWS
 
 En AWS, **AWS CloudTrail**. Según *Logging data events* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Logs de acceso a datos | Data events de CloudTrail: no se registran por defecto y tienen cargos adicionales | **[Decisión de arquitectura]** |
-| Cobertura | Los eventos de administración no muestran qué objetos se leyeron; para eso hacen falta los data events | **[Buena práctica]** |
+| Necesidad | Servicio |
+|---|---|
+| Logs de acceso a datos | Data events de CloudTrail: no se registran por defecto y tienen cargos adicionales |
+| Cobertura | Los eventos de administración no muestran qué objetos se leyeron; para eso hacen falta los data events |
 
 ## 13. Azure
 
 En Azure, **auditoría de Azure SQL Database**. Según *Auditing for Azure SQL Database* (no ejecutado):
-
-Etiqueta: **[Buena práctica]**
 
 | Necesidad | Servicio |
 |---|---|
@@ -356,3 +354,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (estimación trazable y revisable), §2 (activo comprometido, acceso observado, dato accesible, dato extraído y titular posiblemente afectado), §3 (exportaciones inusuales de una cuenta de servicio), §4 (diez pasos: hechos, inferencias y lagunas; calendario separado para la Ley 21.663; corregir y aprender), §5, §6, §7 (cómo leer la evidencia), §8 (escenario y evidencia «qué demuestra y qué no»), §10 (limitaciones de cobertura en el alcance; el aviso a titulares queda condicionado a que se reporte), §11–13 (cobertura de los logs y criterio común), §14–16, §17 (relación con `pii-identification`), §18 (criterio de dominio) y §19 (laboratorio para F4). Los plazos verificados de la Ley 21.663 y el Decreto 295 se mantienen. Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `riesgo-terceros-incidentes` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/data-breach-response/`) no cambia.
 - 2026-10-30: Enmienda 3 de ADR-023: en §13, la tabla con la misma etiqueta en todas sus filas pasa a la línea «Etiqueta: […]» antes de la tabla, sin columna. Sin cambios de contenido.
+- 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.

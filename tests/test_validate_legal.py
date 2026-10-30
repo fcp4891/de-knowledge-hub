@@ -37,10 +37,10 @@ Resumen. Esta ficha no es asesoría legal.
 
 ## 11. GCP
 
-| | Este ejemplo | Google Cloud | Etiqueta |
-|---|---|---|---|
-| Qué | A | B | **[Buena práctica]** |
-| Cómo | C | D | **[Decisión de arquitectura]** |
+| | Este ejemplo | Google Cloud |
+|---|---|---|
+| **[Obligación legal · art. 3]** Qué | A | B |
+| Cómo | C | D |
 """
 
 
@@ -107,10 +107,10 @@ def test_disclaimer_evidence_labels_and_label_column_are_required(content: Path)
     body = (BODY.replace("Esta ficha no es asesoría legal.", "")
             .replace("### Evidencia de cumplimiento", "### Evidencia")
             .replace("- **[Buena práctica]** Un catálogo", "- Un catálogo")
-            .replace("| Etiqueta |", "| Nota |"))
+            .replace("| Google Cloud |", "| Google Cloud | Etiqueta |"))
     assert_error(setup(content, body), "falta el aviso «Esta ficha no es asesoría legal»",
                  "falta la subsección «### Evidencia de cumplimiento»", "[§2] ítem o párrafo sin etiqueta",
-                 "[§11] tabla sin columna «Etiqueta»")
+                 "[§11] la tabla no lleva columna «Etiqueta»")
 
 
 def test_articles_in_body_and_legal_basis_must_match(content: Path) -> None:
@@ -189,38 +189,35 @@ def test_legal_framework_source_must_be_legislative(content: Path) -> None:
     assert_error(run(content), "[facts.0.source] 'docs-a' no es una fuente legislative del registro")
 
 
-# --- Enmienda 3: línea «Etiqueta: […]» en §4 y §11–13 -------------------------
+# --- Enmienda 4: tablas sin columna «Etiqueta»; solo la fila legal se marca, en su primera celda ---
 
-UNIFORM_TABLE = "| Necesidad | Servicio |\n|---|---|\n| Auditar | Logs |\n| Descubrir | Escáner |\n"
+TABLE = "| Necesidad | Servicio |\n|---|---|\n| Auditar | Logs |\n| Descubrir | Escáner |\n"
 
 
-def test_uniform_label_line_before_the_table_passes(content: Path) -> None:
-    body = BODY + "\n## 12. AWS\n\nEtiqueta: **[Buena práctica]**\n\n" + UNIFORM_TABLE
-    report = setup(content, body)
+def test_table_without_marks_passes(content: Path) -> None:
+    report = setup(content, BODY + "\n## 12. AWS\n\n" + TABLE)
     assert report.ok, report.errors
 
 
-def test_same_label_in_every_row_must_use_the_line(content: Path) -> None:
-    table = ("| Necesidad | Servicio | Etiqueta |\n|---|---|---|\n| Auditar | Logs | **[Buena práctica]** |\n"
-             "| Descubrir | Escáner | **[Buena práctica]** |\n")
-    assert_error(setup(content, BODY + "\n## 12. AWS\n\n" + table),
-                 "[§12] todas las filas llevan **[Buena práctica]**: va la línea «Etiqueta: **[Buena práctica]**»")
+def test_label_column_is_an_error_in_any_section(content: Path) -> None:
+    table = "| Paso | Etiqueta |\n|---|---|\n| Uno | **[Buena práctica]** |\n"
+    assert_error(setup(content, BODY + "\n## 7. Ejemplo sencillo\n\n" + table),
+                 "[§7] la tabla no lleva columna «Etiqueta» (ADR-023, Enmienda 4)")
 
 
-def test_table_without_column_or_line_is_an_error(content: Path) -> None:
-    assert_error(setup(content, BODY + "\n## 12. AWS\n\nServicios de la nube.\n\n" + UNIFORM_TABLE),
-                 "[§12] tabla sin columna «Etiqueta» ni línea «Etiqueta: […]» antes")
+def test_label_line_before_the_table_is_an_error(content: Path) -> None:
+    body = BODY + "\n## 12. AWS\n\nEtiqueta: **[Buena práctica]**\n\n" + TABLE
+    assert_error(setup(content, body), "[§12] sin línea «Etiqueta: […]» antes de la tabla")
 
 
-def test_label_line_does_not_replace_the_column_outside_4_and_11_to_13(content: Path) -> None:
-    body = BODY.replace("## 3. Problema que resuelve\n\n",
-                        "## 3. Problema que resuelve\n\nEtiqueta: **[Buena práctica]**\n\n" + UNIFORM_TABLE + "\n")
-    assert_error(setup(content, body), "[§3] tabla sin columna «Etiqueta» (ADR-023)")
+def test_only_the_legal_row_is_marked_and_at_the_start_of_its_first_cell(content: Path) -> None:
+    good_practice = BODY + "\n## 12. AWS\n\n" + TABLE.replace("| Logs |", "| **[Buena práctica]** Logs |")
+    assert_error(setup(content, good_practice), "[§12] en una tabla solo se marca la fila legal")
+    late = BODY + "\n## 12. AWS\n\n" + TABLE.replace("| Logs |", "| Logs **[Obligación legal · art. 3]** |")
+    assert_error(setup(content, late), "[§12] **[Obligación legal · art. 3]** va al inicio de la primera celda")
 
 
-
-
-# --- Enmienda 4: marcos comparados (EU y BR) ----------------------------------
+# --- Enmienda 5: marcos comparados (EU y BR) ----------------------------------
 
 GDPR_URL = "https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807"
 

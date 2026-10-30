@@ -79,12 +79,12 @@ Una restauración puede reintroducir datos suprimidos, permisos antiguos o reten
 - **[Obligación legal · art. 3]** Los datos se conservan solo el tiempo necesario y luego se suprimen o anonimizan (letra c)).
 - **[Buena práctica]** Cuatro nociones:
 
-| Noción | Qué es | Etiqueta |
-|---|---|---|
-| RPO | Pérdida máxima de datos tolerada en una recuperación | **[Buena práctica]** |
-| RTO | Tiempo objetivo para recuperar el servicio | **[Buena práctica]** |
-| Punto de control de privacidad | Última orden aplicada cuando se tomó el respaldo | **[Decisión de arquitectura]** |
-| Reconciliación | Reproducir las órdenes posteriores y comprobar que lo restaurado las cumple | **[Decisión de arquitectura]** |
+| Noción | Qué es |
+|---|---|
+| RPO | Pérdida máxima de datos tolerada en una recuperación |
+| RTO | Tiempo objetivo para recuperar el servicio |
+| Punto de control de privacidad | Última orden aplicada cuando se tomó el respaldo |
+| Reconciliación | Reproducir las órdenes posteriores y comprobar que lo restaurado las cumple |
 
 ## 3. Problema que resuelve
 
@@ -239,30 +239,30 @@ liberar a consumidores: sí
 
 En GCP, **BigQuery** y **Cloud Storage**. Según *Introduction to table snapshots* y *Object Versioning* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Respaldo de una tabla | Table snapshot: preserva el contenido en un momento, con expiración opcional; se restaura a una tabla estándar | **[Buena práctica]** |
-| Más allá de la ventana | Time travel llega hasta siete días; el snapshot dura lo que se configure, y con él, los datos personales que contiene | **[Decisión de arquitectura]** |
-| Objetos | Con Object Versioning las versiones no actuales siguen accesibles hasta borrarlas; la página recomienda soft delete contra la pérdida de datos | **[Buena práctica]** |
+| Necesidad | Servicio |
+|---|---|
+| Respaldo de una tabla | Table snapshot: preserva el contenido en un momento, con expiración opcional; se restaura a una tabla estándar |
+| Más allá de la ventana | Time travel llega hasta siete días; el snapshot dura lo que se configure, y con él, los datos personales que contiene |
+| Objetos | Con Object Versioning las versiones no actuales siguen accesibles hasta borrarlas; la página recomienda soft delete contra la pérdida de datos |
 
 ## 12. AWS
 
 En AWS, **AWS Backup** y **Amazon S3**. Según *What is AWS Backup?* y *Locking objects with Object Lock* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Respaldos centralizados | AWS Backup: políticas de respaldo y monitoreo en un solo lugar | **[Buena práctica]** |
-| Inmutabilidad | Object Lock: modelo WORM con períodos de retención y legal holds | **[Buena práctica]** |
-| Supresión en un respaldo inmutable | No se borra antes del plazo: se documenta la ventana y se reproduce la orden en toda restauración | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Respaldos centralizados | AWS Backup: políticas de respaldo y monitoreo en un solo lugar |
+| Inmutabilidad | Object Lock: modelo WORM con períodos de retención y legal holds |
+| Supresión en un respaldo inmutable | No se borra antes del plazo: se documenta la ventana y se reproduce la orden en toda restauración |
 
 ## 13. Azure
 
 En Azure, **Azure Storage**. Según *Soft delete for blobs* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Recuperar un blob borrado | Soft delete: mantiene lo borrado durante el período de retención y se puede restaurar; al vencer, se borra en forma permanente | **[Buena práctica]** |
-| Supresión de un titular | El dato sigue recuperable hasta que vence el período; la orden se reproduce si se restaura | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Recuperar un blob borrado | Soft delete: mantiene lo borrado durante el período de retención y se puede restaurar; al vencer, se borra en forma permanente |
+| Supresión de un titular | El dato sigue recuperable hasta que vence el período; la orden se reproduce si se restaura |
 
 **Criterio común:** las tres plataformas restauran datos; ninguna sabe qué decisiones de privacidad se tomaron después del respaldo. Ese registro y su reproducción son de la arquitectura propia.
 
@@ -332,3 +332,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: creación (lote P2, dominio 24, ADR-027) desde `docs/briefs/privacy-program/05-recuperacion-respaldos-privacidad.md`, que es un guion, no una fuente.
 - 2026-10-28: completada con lo que pedía el prompt de P2: regla «no se declara verificado lo que depende de la expiración de copias» en el §4 y RPO y RTO con la reconciliación en el §14. RPO y RTO ya estaban definidos en el §2.
 - 2026-10-28: revisión `docs/reviews/p2.md` aplicada: la nota del art. 7 dice que la lista de casos en que no procede la supresión es cerrada (i a vi), sin «entre otros»; el diagrama del §9 pasa a TB (la cadena más larga tiene 6 nodos).
+- 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.

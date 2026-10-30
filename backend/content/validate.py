@@ -527,21 +527,20 @@ LEGAL_DOMAINS = ("privacy-engineering",)   # ADR-023, enmendado por ADR-027 (19 
 LEGISLATIVE = "legislative"
 DISCLAIMER = "Esta ficha no es asesoría legal"
 EVIDENCE_HEADING = re.compile(r"^### Evidencia de cumplimiento\s*$", re.M)
-# Enmienda 4: «Obligación legal · GDPR art. N» y «Obligación legal · LGPD art. N» para los marcos comparados (EU y BR).
+# Enmienda 5: «Obligación legal · GDPR art. N» y «Obligación legal · LGPD art. N» para los marcos comparados (EU y BR).
 LABEL = (r"\*\*\[(?:Obligación legal · (?:(Ley [0-9.]+), |(GDPR|LGPD) )?art\. ([0-9]+(?: [a-záéíóú]+)?)"
          r"|Buena práctica|Decisión de arquitectura)\]\*\*")
 LABEL_RE = re.compile(LABEL)
 LABELED_SECTIONS = (2, 3, 4, 14)  # cada ítem y párrafo empieza con una etiqueta
-TABLE_SECTIONS = (2, 3, 4, 11, 12, 13, 14)  # toda tabla lleva la columna «Etiqueta»
-# Enmienda 3: en §4 y §11–13, si todas las filas llevan la misma etiqueta, va una línea «Etiqueta: […]» antes de la
-# tabla, sin columna; la columna queda solo para tablas con etiquetas distintas.
-UNIFORM_SECTIONS = (4, 11, 12, 13)
-UNIFORM_LINE = re.compile(rf"^Etiqueta: ({LABEL})\s*$")
+# Enmienda 4 (reemplaza la columna «Etiqueta» y la Enmienda 3): las tablas no llevan columna «Etiqueta» ni línea
+# «Etiqueta: […]»; una fila con origen legal empieza su primera celda con «Obligación legal · …» y el resto va sin marca.
+OBLIGATION_LABEL = re.compile(r"\*\*\[Obligación legal · ")
+LABEL_LINE = re.compile(r"^Etiqueta: ")
 LIST_ITEM = re.compile(r"^\s*(?:[-*]|\d+\.)\s+")
 REVIEW_DAYS = 31  # revisión mensual
 
 
-FOREIGN_LAWS = {"eu-2016-679": "GDPR", "br-lei-13709": "LGPD"}   # Enmienda 4
+FOREIGN_LAWS = {"eu-2016-679": "GDPR", "br-lei-13709": "LGPD"}   # Enmienda 5
 
 
 def law_label(law: str) -> str:
@@ -557,7 +556,7 @@ def blocks(content: str) -> Iterator[str]:
     for line in content.splitlines():
         stripped = line.strip()
         is_item = bool(LIST_ITEM.match(line))
-        if not stripped or is_item or stripped.startswith(("|", "#", ">", "<!--")) or UNIFORM_LINE.match(stripped):
+        if not stripped or is_item or stripped.startswith(("|", "#", ">", "<!--")):
             if paragraph:
                 yield " ".join(paragraph)
                 paragraph = []
@@ -608,30 +607,27 @@ def check_legal_body(doc: Document, body: str, report: Report) -> set[tuple[str 
         for block in blocks(parts.get(number, "")):
             if not re.match(LABEL, block):
                 report.add(doc.location, f"[§{number}] ítem o párrafo sin etiqueta (ADR-023): {block[:60]!r}")
-    for number in TABLE_SECTIONS:
-        for lead, table in tables_with_lead(parts.get(number, "")):
+    for number, _, content in page_sections.sections(clean):
+        for lead, table in tables_with_lead(content):
             check_label_table(doc, number, lead, table, report)
     return {(m.group(1) or m.group(2), m.group(3)) for m in LABEL_RE.finditer(clean) if m.group(3)}
 
 
 def check_label_table(doc: Document, number: int, lead: str, table: list[list[str]], report: Report) -> None:
-    """Columna «Etiqueta» con celdas válidas; en §4 y §11–13 (Enmienda 3), línea «Etiqueta: […]» si son iguales."""
-    header = table[0]
-    uniform_allowed = number in UNIFORM_SECTIONS
-    if "Etiqueta" not in header:
-        if uniform_allowed and UNIFORM_LINE.match(lead):
-            return
-        hint = " ni línea «Etiqueta: […]» antes" if uniform_allowed else ""
-        report.add(doc.location, f"[§{number}] tabla sin columna «Etiqueta»{hint} (ADR-023): {header}")
-        return
-    col = header.index("Etiqueta")
-    cells = [row[col] if col < len(row) else "" for row in table[1:]]
-    for cell in cells:
-        if not re.fullmatch(LABEL, cell):
-            report.add(doc.location, f"[§{number}] celda «Etiqueta» inválida (ADR-023): {cell!r}")
-    if uniform_allowed and cells and len(set(cells)) == 1:
-        report.add(doc.location, f"[§{number}] todas las filas llevan {cells[0]}: va la línea «Etiqueta: {cells[0]}» "
-                                 "antes de la tabla, sin columna (ADR-023, Enmienda 3)")
+    """Enmienda 4: sin columna ni línea «Etiqueta»; solo «Obligación legal» y solo al inicio de la primera celda."""
+    if "Etiqueta" in table[0]:
+        report.add(doc.location, f"[§{number}] la tabla no lleva columna «Etiqueta» (ADR-023, Enmienda 4): {table[0]}")
+    if LABEL_LINE.match(lead):
+        report.add(doc.location, f"[§{number}] sin línea «Etiqueta: […]» antes de la tabla (ADR-023, Enmienda 4)")
+    for row in table[1:]:
+        for i, cell in enumerate(row):
+            for m in LABEL_RE.finditer(cell):
+                legal = OBLIGATION_LABEL.match(m.group(0))
+                if not legal:
+                    report.add(doc.location, f"[§{number}] en una tabla solo se marca la fila legal; "
+                                             f"sin {m.group(0)} (ADR-023, Enmienda 4)")
+                elif i > 0 or m.start() > 0:
+                    report.add(doc.location, f"[§{number}] {m.group(0)} va al inicio de la primera celda (ADR-023, Enmienda 4)")
 
 
 def check_legal_basis(

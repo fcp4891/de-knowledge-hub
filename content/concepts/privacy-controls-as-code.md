@@ -104,11 +104,11 @@ Un control documentado no es un control implementado. La ley pide verificar regu
 - **[Buena práctica]** Tres niveles que no se mezclan: la **decisión aprobada** (área legal, gobierno), el **control** (cómo se implementa) y la **prueba** (cómo se demuestra). Minimizar el acceso no obliga a enmascarar todas las columnas personales: puede resolverse con vistas, roles, separación de ambientes o quitando atributos.
 - **[Decisión de arquitectura]** **Tres resultados:**
 
-| Resultado | Significa | Tratamiento | Etiqueta |
-|---|---|---|---|
-| PASS | La regla se verificó y se cumple | Registrar la evidencia | **[Decisión de arquitectura]** |
-| FAIL | Hay evidencia de que la regla técnica no se cumple | Bloquear el cambio o abrir la remediación | **[Decisión de arquitectura]** |
-| UNKNOWN | No hubo información suficiente para comprobarla (API sin respuesta, metadato faltante u obsoleto) | Nunca cuenta como PASS; en reglas críticas bloquea | **[Decisión de arquitectura]** |
+| Resultado | Significa | Tratamiento |
+|---|---|---|
+| PASS | La regla se verificó y se cumple | Registrar la evidencia |
+| FAIL | Hay evidencia de que la regla técnica no se cumple | Bloquear el cambio o abrir la remediación |
+| UNKNOWN | No hubo información suficiente para comprobarla (API sin respuesta, metadato faltante u obsoleto) | Nunca cuenta como PASS; en reglas críticas bloquea |
 
 - **[Buena práctica]** **Dos momentos de evaluación:** en la CI (cambios de esquema, SQL, IaC y pipelines nuevos) y programada en producción (deriva de configuración, permisos agregados a mano). **Deriva** es la diferencia entre lo aprobado en Git y lo observado en la plataforma.
 - **[Buena práctica]** **Métricas:** cobertura de clasificación, de máscaras, de retención y de dueños; edad de la evidencia; tiempo de corrección.
@@ -351,31 +351,31 @@ Los diez FAIL vienen del estado de la plataforma (la copia en desarrollo falla e
 
 En GCP, **BigQuery**. Según *Introduction to data masking* e *Introduction to INFORMATION_SCHEMA* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Políticas de columna | Enmascaramiento por columna sobre policy tags y data policies | **[Buena práctica]** |
-| Metadatos para las reglas | Vistas `INFORMATION_SCHEMA` de solo lectura sobre datasets, jobs y control de acceso (por ejemplo, `OBJECT_PRIVILEGES`) | **[Buena práctica]** |
-| Reglas | Leer esas políticas y privilegios y compararlos con la clasificación y lo declarado en Git; si una vista no responde, UNKNOWN | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Políticas de columna | Enmascaramiento por columna sobre policy tags y data policies |
+| Metadatos para las reglas | Vistas `INFORMATION_SCHEMA` de solo lectura sobre datasets, jobs y control de acceso (por ejemplo, `OBJECT_PRIVILEGES`) |
+| Reglas | Leer esas políticas y privilegios y compararlos con la clasificación y lo declarado en Git; si una vista no responde, UNKNOWN |
 
 ## 12. AWS
 
 En AWS, **Amazon Macie** y **Lake Formation**. Según *What is Amazon Macie?* y *Data filtering and cell-level security in Lake Formation* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Escaneo de datos personales | Amazon Macie en los buckets de propósito general de S3 | **[Buena práctica]** |
-| Permisos de datos | Filtros de columna, fila y celda en Lake Formation | **[Buena práctica]** |
-| Lo que no cubre | Macie inventaría S3, no los demás almacenes: fuera de su alcance, el resultado de esa regla es UNKNOWN | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Escaneo de datos personales | Amazon Macie en los buckets de propósito general de S3 |
+| Permisos de datos | Filtros de columna, fila y celda en Lake Formation |
+| Lo que no cubre | Macie inventaría S3, no los demás almacenes: fuera de su alcance, el resultado de esa regla es UNKNOWN |
 
 ## 13. Azure
 
 En Azure, **Unity Catalog** y **Azure Policy**. Según *Row filters and column masks* y *Azure Policy built-in policy definitions* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Máscaras y filtros | Row filters y column masks de Unity Catalog | **[Buena práctica]** |
-| Políticas de recursos | Azure Policy con efectos Audit o Deny | **[Buena práctica]** |
-| Lo que no cubre | Una política sobre recursos no equivale a un control de columna o de contenido | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Máscaras y filtros | Row filters y column masks de Unity Catalog |
+| Políticas de recursos | Azure Policy con efectos Audit o Deny |
+| Lo que no cubre | Una política sobre recursos no equivale a un control de columna o de contenido |
 
 **Criterio común:** cada servicio aporta evidencia parcial; la regla declara qué fuente usó, cuándo la leyó y qué no cubre.
 
@@ -464,3 +464,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `evidencia-automatizacion` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/privacy-controls-as-code/`) no cambia.
 - 2026-10-28: mismos errores que la revisión de P2: el art. 14 quáter nombra sus cuatro factores (§2, `legal_basis` y nota de BCN).
 - 2026-10-30: §17 enlaza `gdpr` (lote P4), que cita la guía de la CNIL. Sin cambios de contenido.
+- 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.

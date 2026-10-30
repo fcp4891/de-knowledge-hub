@@ -64,6 +64,11 @@ sources:
     accessed: 2026-10-30
     page_title: "Documento DOUE-L-2016-80807"
     note: "Reglamento (UE) 2016/679 en español (BOE, reproducción del DOUE), para la columna RGPD de la comparación: art. 12.3, un mes prorrogable otros dos meses; art. 33.1, «a más tardar 72 horas después de que haya tenido constancia de ella». El detalle está en la ficha `gdpr`."
+  - source: mj-biblioteca-digital
+    url: https://bibliotecadigital.mj.gov.br/bitstream/1/12879/2/RES_ANPD_2024_15.html
+    accessed: 2026-10-30
+    page_title: "resolução CD/ANPD Nº 15, de 24 de abril de 2024"
+    note: "Resolución CD/ANPD nº 15/2024 (Regulamento de Comunicação de Incidente de Segurança), copia del acto en la Biblioteca Digital del Ministerio de Justicia (SEI/MJ); el Diário Oficial da União (in.gov.br) no respondió el 2026-10-30. Art. 6º: «A comunicação de incidente de segurança à ANPD deverá ser realizada pelo controlador no prazo de três dias úteis»; § 1º: «O prazo a que se refere o caput será contado do conhecimento pelo controlador de que o incidente afetou dados pessoais» (se cuenta desde que el controlador sabe que el incidente afectó datos personales); § 3º: complementación «no prazo de vinte dias úteis»; § 8º: plazos «contados em dobro para os agentes de pequeno porte» (el doble para agentes de pequeño porte). Art. 9º: al titular, «no prazo de três dias úteis, contados do conhecimento pelo controlador de que o incidente afetou dados pessoais»."
   - source: ec-data-protection
     url: https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/adequacy-decisions_en
     accessed: 2026-10-30
@@ -120,16 +125,16 @@ Las citas de la LGPD y de la ANPD van en portugués, con una traducción breve.
 - **[Buena práctica]** La tercera condición de la LGPD, la recolección en Brasil, no tiene equivalente en el art. 3 del RGPD: un formulario que recoge datos en Brasil basta, aunque la oferta no esté dirigida allí.
 - **[Buena práctica]** Comparación en lo que impacta a ingeniería. Cada fila lleva la etiqueta de la LGPD; la columna chilena se etiqueta en el §4 y la europea en la ficha `gdpr`.
 
-| Tema | Ley 21.719 (Chile) | RGPD (UE) | LGPD (Brasil) | Etiqueta |
-|---|---|---|---|---|
-| Bases de licitud | Consentimiento (art. 12) y casos sin consentimiento (art. 13) | Condiciones del art. 6.1 | «somente poderá ser realizado nas seguintes hipóteses» (solo en las hipótesis que enumera) | **[Obligación legal · LGPD art. 7]** |
-| Plazo de respuesta a una solicitud | 30 días corridos, prorrogable una vez (art. 11) | Un mes, prorrogable dos (art. 12.3) | «no prazo de até 15 (quinze) dias, contado da data do requerimento» (hasta 15 días desde el requerimiento), para la declaración completa | **[Obligación legal · LGPD art. 19]** |
-| Registro de actividades | Política de tratamiento disponible (art. 14 ter) | Registro de actividades (art. 30) | «registro das operações de tratamento» (registro de las operaciones) | **[Obligación legal · LGPD art. 37]** |
-| Evaluación de impacto | Si puede producir un alto riesgo (art. 15 ter) | Si es probable un alto riesgo (art. 35) | La ANPD «poderá determinar» que se elabore un relatório de impacto (puede exigirlo) | **[Obligación legal · LGPD art. 38]** |
-| Incidente | Agencia sin dilaciones indebidas; titulares en los casos que indica (art. 14 sexies) | Autoridad en 72 horas (art. 33.1); interesados con alto riesgo (art. 34.1) | ANPD y titular, si hay «risco ou dano relevante», en el plazo que define la autoridad: 3 días hábiles según la ANPD | **[Obligación legal · LGPD art. 48]** |
-| Transferencias | País adecuado según la Agencia, cláusulas u otros instrumentos (arts. 27 y 28) | Adecuación (art. 45) o cláusulas tipo (art. 46.2 c)) | Protección adecuada o «cláusulas-padrão contratuais» | **[Obligación legal · LGPD art. 33]** |
-| Delegado | En el modelo de prevención voluntario (art. 49) | En los casos del art. 37.1 | «O controlador deverá indicar encarregado» (el controlador indica un encarregado) | **[Obligación legal · LGPD art. 41]** |
-| Decisiones automatizadas | Oponerse y no ser objeto de ellas (art. 8 bis) | No ser objeto de una decisión únicamente automatizada (art. 22.1) | «solicitar a revisão de decisões tomadas unicamente com base em tratamento automatizado» (pedir su revisión) | **[Obligación legal · LGPD art. 20]** |
+| Tema | Ley 21.719 (Chile) | RGPD (UE) | LGPD (Brasil) |
+|---|---|---|---|
+| **[Obligación legal · LGPD art. 7]** Bases de licitud | Consentimiento (art. 12) y casos sin consentimiento (art. 13) | Condiciones del art. 6.1 | «somente poderá ser realizado nas seguintes hipóteses» (solo en las hipótesis que enumera) |
+| **[Obligación legal · LGPD art. 19]** Plazo de respuesta a una solicitud | 30 días corridos, prorrogable una vez (art. 11) | Un mes, prorrogable dos (art. 12.3) | «no prazo de até 15 (quinze) dias, contado da data do requerimento» (hasta 15 días desde el requerimiento), para la declaración completa |
+| **[Obligación legal · LGPD art. 37]** Registro de actividades | Política de tratamiento disponible (art. 14 ter) | Registro de actividades (art. 30) | «registro das operações de tratamento» (registro de las operaciones) |
+| **[Obligación legal · LGPD art. 38]** Evaluación de impacto | Si puede producir un alto riesgo (art. 15 ter) | Si es probable un alto riesgo (art. 35) | La ANPD «poderá determinar» que se elabore un relatório de impacto (puede exigirlo) |
+| **[Obligación legal · LGPD art. 48]** Incidente | Agencia sin dilaciones indebidas; titulares en los casos que indica (art. 14 sexies) | Autoridad en 72 horas (art. 33.1); interesados con alto riesgo (art. 34.1) | ANPD y titular, si hay «risco ou dano relevante», en el plazo que define la autoridad: 3 días hábiles según la ANPD |
+| **[Obligación legal · LGPD art. 33]** Transferencias | País adecuado según la Agencia, cláusulas u otros instrumentos (arts. 27 y 28) | Adecuación (art. 45) o cláusulas tipo (art. 46.2 c)) | Protección adecuada o «cláusulas-padrão contratuais» |
+| **[Obligación legal · LGPD art. 41]** Delegado | En el modelo de prevención voluntario (art. 49) | En los casos del art. 37.1 | «O controlador deverá indicar encarregado» (el controlador indica un encarregado) |
+| **[Obligación legal · LGPD art. 20]** Decisiones automatizadas | Oponerse y no ser objeto de ellas (art. 8 bis) | No ser objeto de una decisión únicamente automatizada (art. 22.1) | «solicitar a revisão de decisões tomadas unicamente com base em tratamento automatizado» (pedir su revisión) |
 
 - **[Buena práctica]** Las filas no son equivalencias: la LGPD pide revisar la decisión automatizada; la ley chilena da derecho a oponerse y a no ser objeto de ella; el RGPD, a no ser objeto de ella.
 
@@ -222,8 +227,8 @@ import datetime as dt
 from dataclasses import dataclass
 
 CONFIG_VERSION = "2026-10-30"
-# Plazo de la ANPD: 3 días hábiles (arts. 6 y 9 de la Res. CD/ANPD 15/2024, según la página de la ANPD); el día de
-# inicio se toma aquí como el del conocimiento del incidente (ilustrativo: la página no dice desde cuándo se cuenta).
+# Plazo de la ANPD: 3 días hábiles «contados do conhecimento pelo controlador de que o incidente afetou dados pessoais»
+# (Res. CD/ANPD 15/2024, art. 6 § 1º y art. 9): `known` es esa fecha, no la del incidente.
 INCIDENT_BUSINESS_DAYS = {"BR": 3}
 HOLIDAYS = {"BR": {dt.date(2026, 12, 8)}}   # feriado ficticio para el ejemplo; el calendario real lo mantiene legal
 # Decisiones de adecuación vigentes según la fuente de cada origen (Comisión Europea; ANPD, Res. 32/2026).
@@ -289,18 +294,16 @@ clientes en Chile → API de LLM en EE. UU.: BRECHA: sin adecuación ni cláusul
 brechas: 2 de 5
 ```
 
-Limitaciones: el feriado es ficticio y el día de inicio del conteo es ilustrativo; las listas de adecuación tienen la fecha de su configuración y no se actualizan solas; «cláusulas firmadas» es un dato declarado, no una verificación del contrato. El plazo de solicitudes y el resolvedor para las tres jurisdicciones están en la ficha `gdpr`.
+Limitaciones: el feriado es ficticio; el conteo parte del día en que el controlador sabe que el incidente afectó datos personales (art. 6 § 1º de la Res. CD/ANPD 15/2024); no se aplica el plazo en dobro de los agentes de pequeño porte (§ 8º); las listas de adecuación tienen la fecha de su configuración y no se actualizan solas; «cláusulas firmadas» es un dato declarado, no una verificación del contrato. El plazo de solicitudes y el resolvedor para las tres jurisdicciones están en la ficha `gdpr`.
 
 ## 11. GCP
 
-| Necesidad | Servicio y alcance | Lo que no cubre | Etiqueta |
-|---|---|---|---|
-| Recursos de datos brasileños solo en Brasil | Organization Policy con el grupo `in:br-locations` (`southamerica-east1-locations`) | Recursos creados antes de la política | **[Buena práctica]** |
-| Datos de Brasil y de Chile en la región | `in:southamerica-locations` incluye `br-locations` y `cl-locations` | Permitir el grupo completo deja mover datos brasileños a Chile: es un flujo internacional | **[Decisión de arquitectura]** |
+| Necesidad | Servicio y alcance | Lo que no cubre |
+|---|---|---|
+| Recursos de datos brasileños solo en Brasil | Organization Policy con el grupo `in:br-locations` (`southamerica-east1-locations`) | Recursos creados antes de la política |
+| Datos de Brasil y de Chile en la región | `in:southamerica-locations` incluye `br-locations` y `cl-locations` | Permitir el grupo completo deja mover datos brasileños a Chile: es un flujo internacional |
 
 ## 12. AWS
-
-Etiqueta: **[Buena práctica]**
 
 | Necesidad | Servicio y alcance | Lo que no cubre |
 |---|---|---|
@@ -309,11 +312,11 @@ Etiqueta: **[Buena práctica]**
 
 ## 13. Azure
 
-| Necesidad | Servicio y alcance | Lo que no cubre | Etiqueta |
-|---|---|---|---|
-| Región en Brasil | Brazil South (Sao Paulo State) | Su región par es South Central US (Texas): una réplica geográfica basada en el par sale de Brasil | **[Decisión de arquitectura]** |
-| Recuperación dentro de Brasil | Brazil Southeast (Rio), de acceso restringido para escenarios como recuperación ante desastres | Requiere solicitar acceso | **[Buena práctica]** |
-| Limitar ubicaciones | Azure Policy «Allowed locations» | Resource groups y recursos de la región «global» | **[Buena práctica]** |
+| Necesidad | Servicio y alcance | Lo que no cubre |
+|---|---|---|
+| Región en Brasil | Brazil South (Sao Paulo State) | Su región par es South Central US (Texas): una réplica geográfica basada en el par sale de Brasil |
+| Recuperación dentro de Brasil | Brazil Southeast (Rio), de acceso restringido para escenarios como recuperación ante desastres | Requiere solicitar acceso |
+| Limitar ubicaciones | Azure Policy «Allowed locations» | Resource groups y recursos de la región «global» |
 
 ## 14. Buenas prácticas
 
@@ -385,4 +388,6 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 22. Historial de cambios importantes
 
-- 2026-10-30: creación (lote P4), en el tramo 6 «Marcos regulatorios comparados», después de la Enmienda 4 de ADR-023 (jurisdicción BR y etiquetas «LGPD art. N»).
+- 2026-10-30: creación (lote P4), en el tramo 6 «Marcos regulatorios comparados», después de la Enmienda 5 de ADR-023 (jurisdicción BR y etiquetas «LGPD art. N»).
+- 2026-10-30: la Enmienda de jurisdicciones pasa a ser la Enmienda 5 de ADR-023. Desde cuándo corren los 3 días hábiles, con cita textual de la Res. CD/ANPD 15/2024 (art. 6 § 1º y art. 9) desde la Biblioteca Digital del MJ: deja de ser ilustrativo.
+- 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.

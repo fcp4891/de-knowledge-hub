@@ -92,12 +92,12 @@ Seudonimizar es sustituir un identificador por otro que no permita atribuir el d
 - **[Obligación legal · art. 26]** Un reglamento regulará los procedimientos de anonimización, especialmente de datos sensibles. **[Buena práctica]** Revisar estas técnicas cuando se dicte.
 - **[Buena práctica]** Cuatro términos que no conviene mezclar:
 
-| Término | Qué es | Ejemplo | Etiqueta |
-|---|---|---|---|
-| Identificador directo | Identifica por sí solo en un contexto | RUT, número de documento | **[Buena práctica]** |
-| Seudónimo | Valor sustituto que necesita información adicional (llave o tabla de correspondencia) para volver al titular | HMAC del RUT normalizado | **[Buena práctica]** |
-| Cuasi-identificador | Solo no identifica; combinado con otros, sí | Comuna, año de nacimiento, sexo, ruta de vuelo | **[Buena práctica]** |
-| Dato anonimizado | Resultado de un procedimiento irreversible, evaluado contra los medios razonables | Agregado con k medido y prueba de reidentificación | **[Buena práctica]** |
+| Término | Qué es | Ejemplo |
+|---|---|---|
+| Identificador directo | Identifica por sí solo en un contexto | RUT, número de documento |
+| Seudónimo | Valor sustituto que necesita información adicional (llave o tabla de correspondencia) para volver al titular | HMAC del RUT normalizado |
+| Cuasi-identificador | Solo no identifica; combinado con otros, sí | Comuna, año de nacimiento, sexo, ruta de vuelo |
+| Dato anonimizado | Resultado de un procedimiento irreversible, evaluado contra los medios razonables | Agregado con k medido y prueba de reidentificación |
 
 - **[Buena práctica]** **El HMAC es determinista:** con la misma llave y el mismo RUT normalizado da el mismo seudónimo. Eso permite uniones, y también correlacionar registros; por eso un seudónimo universal compartido entre todos los sistemas no siempre conviene.
 
@@ -274,32 +274,32 @@ El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --str
 
 En GCP, **Sensitive Data Protection**. Según *Pseudonymization* y *Re-identification risk analysis* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Seudónimo de una vía | Hash criptográfico con HMAC-SHA-256 | **[Buena práctica]** |
-| Seudónimo reversible | AES-SIV o FPE, con la llave | **[Decisión de arquitectura]** |
-| Integridad referencial | Misma clave y mismo context tweak, mismo token; una clave transitoria solo la mantiene dentro de una solicitud | **[Buena práctica]** |
-| Medir el riesgo | Análisis de k-anonimato y l-diversidad | **[Buena práctica]** |
+| Necesidad | Servicio |
+|---|---|
+| Seudónimo de una vía | Hash criptográfico con HMAC-SHA-256 |
+| Seudónimo reversible | AES-SIV o FPE, con la llave |
+| Integridad referencial | Misma clave y mismo context tweak, mismo token; una clave transitoria solo la mantiene dentro de una solicitud |
+| Medir el riesgo | Análisis de k-anonimato y l-diversidad |
 
 ## 12. AWS
 
 En AWS, **AWS Glue DataBrew**. Según *CRYPTOGRAPHIC_HASH* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Seudónimo con llave | `HMAC_SHA256` por defecto, con un secreto de Secrets Manager | **[Buena práctica]** |
-| Hash sin llave | `SHA256` y otros sin secreto: se revierten como en el §10 | **[Buena práctica]** |
-| Normalización del RUT | Propia, antes del hash | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Seudónimo con llave | `HMAC_SHA256` por defecto, con un secreto de Secrets Manager |
+| Hash sin llave | `SHA256` y otros sin secreto: se revierten como en el §10 |
+| Normalización del RUT | Propia, antes del hash |
 
 ## 13. Azure
 
 En Azure, **Always Encrypted** en Azure SQL. Según *Always Encrypted* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Igualdad y uniones sobre la columna | Cifrado determinista, reversible con la llave | **[Buena práctica]** |
-| Riesgo del determinismo | La página advierte que se puede adivinar información mirando patrones, sobre todo con pocos valores posibles | **[Buena práctica]** |
-| Diferencia con el HMAC | El determinista protege la columna dentro de la base; el HMAC produce un seudónimo para llevar a otra capa | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Igualdad y uniones sobre la columna | Cifrado determinista, reversible con la llave |
+| Riesgo del determinismo | La página advierte que se puede adivinar información mirando patrones, sobre todo con pocos valores posibles |
+| Diferencia con el HMAC | El determinista protege la columna dentro de la base; el HMAC produce un seudónimo para llevar a otra capa |
 
 **Criterio común:** guardar la llave en un KMS no basta si la biblioteca que calcula el HMAC la recibe en claro; revisar dónde se ejecuta la operación y quién puede invocarla.
 
@@ -377,3 +377,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): dos diagramas: seudonimizar el RUT, y publicar (seudonimizar no es anonimizar).
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1, §2 (tabla de identificador directo, seudónimo, cuasi-identificador y dato anonimizado; el HMAC es determinista y permite correlacionar), §3 (caso de uniones entre compras, reservas y atención), §4 (ocho pasos: alcance, cuarentena para DV inválido, llave por dominio, separación de funciones y comprobación), §6, §7 (llave por dominio y cuasi-identificadores con seudónimo), §8 (escenario y evidencia «qué demuestra y qué no», con el procedimiento de rotación), §9 (cuarentena en lugar de rechazo), §10 (DV inválido a cuarentena y llaves por dominio, sobre el mismo ejemplo; limitaciones), §11–13 (integridad referencial, hash sin llave, riesgo del determinismo y criterio común), §14–16, §18 (criterio de dominio) y §19 (laboratorio para F4). Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia. El código de la propuesta no se usó: su RUT de ejemplo no cumple el criterio de RUT ficticios.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `diseno-protegido` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/chilean-identifier-pseudonymization/`) no cambia.
+- 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.

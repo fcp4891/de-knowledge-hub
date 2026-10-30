@@ -80,11 +80,11 @@ Una plataforma moderna está llena de terceros: nube, herramientas SaaS, ETL ges
 - **[Obligación legal · art. 28]** La Agencia determinará los países adecuados y publicará su listado y modelos de cláusulas; el responsable acredita la transferencia. Esta ficha no supone que ese listado ya exista.
 - **[Buena práctica]** Tres preguntas distintas para cada tercero:
 
-| Concepto | Pregunta | Ejemplo ilustrativo | Etiqueta |
-|---|---|---|---|
-| Encargo | ¿El tercero trata por cuenta del responsable y según sus instrucciones? | Un servicio que envía las confirmaciones de reserva | **[Buena práctica]** |
-| Cesión | ¿El receptor trata los datos bajo su propia responsabilidad y para sus fines? | Una aerolínea socia que recibe el itinerario | **[Buena práctica]** |
-| Transferencia internacional | ¿Los datos se procesan en otro país, o se accede a ellos desde otro país? | Una API en el exterior, o soporte remoto desde otro país | **[Buena práctica]** |
+| Concepto | Pregunta | Ejemplo ilustrativo |
+|---|---|---|
+| Encargo | ¿El tercero trata por cuenta del responsable y según sus instrucciones? | Un servicio que envía las confirmaciones de reserva |
+| Cesión | ¿El receptor trata los datos bajo su propia responsabilidad y para sus fines? | Una aerolínea socia que recibe el itinerario |
+| Transferencia internacional | ¿Los datos se procesan en otro país, o se accede a ellos desde otro país? | Una API en el exterior, o soporte remoto desde otro país |
 
 - **[Buena práctica]** El rol no se deduce del nombre del producto, del contrato comercial ni de que sea SaaS: se examina el tratamiento real, y lo valida el área legal.
 - **[Decisión de arquitectura]** **Inventario de flujos:** dataset → tercero → rol validado → países de proceso o acceso → contrato o constancia → mecanismo → finalidades aprobadas → estado.
@@ -263,31 +263,31 @@ La plataforma de email está aprobada para notificaciones, no para perfilamiento
 
 En GCP, **Organization Policy**. Según *Restrict resource locations* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Restringir ubicaciones | Restricción de ubicaciones de recursos: limita dónde se crean los recursos nuevos | **[Buena práctica]** |
-| Límite | No afecta recursos existentes ni, en algunos servicios, subrecursos | **[Decisión de arquitectura]** |
-| Lo que no cubre | La ubicación de los recursos no dice desde dónde accede el soporte ni dónde operan los subencargados | **[Buena práctica]** |
+| Necesidad | Servicio |
+|---|---|
+| Restringir ubicaciones | Restricción de ubicaciones de recursos: limita dónde se crean los recursos nuevos |
+| Límite | No afecta recursos existentes ni, en algunos servicios, subrecursos |
+| Lo que no cubre | La ubicación de los recursos no dice desde dónde accede el soporte ni dónde operan los subencargados |
 
 ## 12. AWS
 
 En AWS, **IAM**. Según *AWS global condition context keys* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Restringir regiones | Condición `aws:RequestedRegion` en las políticas | **[Buena práctica]** |
-| Límite | Controla qué endpoint se invoca, no el impacto: S3 puede replicar a otras regiones | **[Decisión de arquitectura]** |
-| Lo que no cubre | Una restricción de región no prueba dónde opera un subencargado ni cómo se presta el soporte | **[Buena práctica]** |
+| Necesidad | Servicio |
+|---|---|
+| Restringir regiones | Condición `aws:RequestedRegion` en las políticas |
+| Límite | Controla qué endpoint se invoca, no el impacto: S3 puede replicar a otras regiones |
+| Lo que no cubre | Una restricción de región no prueba dónde opera un subencargado ni cómo se presta el soporte |
 
 ## 13. Azure
 
 En Azure, **Azure Policy**. Según *Azure Policy built-in policy definitions* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Restringir ubicaciones | «Allowed locations», con efectos Audit, Deny o Disabled | **[Buena práctica]** |
-| Límite | Excluye resource groups y recursos de la región «global» | **[Decisión de arquitectura]** |
-| Lo que no cubre | La ubicación de un recurso no sustituye el análisis de acceso remoto, telemetría, respaldos y subencargos | **[Buena práctica]** |
+| Necesidad | Servicio |
+|---|---|
+| Restringir ubicaciones | «Allowed locations», con efectos Audit, Deny o Disabled |
+| Límite | Excluye resource groups y recursos de la región «global» |
+| Lo que no cubre | La ubicación de un recurso no sustituye el análisis de acceso remoto, telemetría, respaldos y subencargos |
 
 **Criterio común:** combinar controles preventivos con registros y revisión de arquitectura; no inferir la residencia de todo el servicio a partir de la región del almacenamiento.
 
@@ -365,3 +365,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): TB; quitar datos personales pasa a la etiqueta de las llamadas a LLM.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (qué sale, quién lo recibe y desde dónde se accede; resultado esperado), §2 (tabla de encargo, cesión y transferencia; el rol no se deduce del producto; inventario con rol y finalidades), §3 (soporte remoto, respaldos y telemetría), §4 (nueve pasos con descubrir, caracterizar, observar y cierre; la aprobación es del flujo), §5, §6, §7 (rol y finalidad por flujo), §8 (controles y evidencia «qué demuestra y qué no»), §9, §10 (rol encargo o cesión, países de proceso o acceso y finalidades aprobadas, sobre el mismo ejemplo: 7 flujos y 6 brechas), §11–13 (lo que no cubre cada política y criterio común), §14–16, §17 (relaciones con `pii-identification` y `data-minimization-by-layer`), §18 (criterio de dominio) y §19 (laboratorio para F4). Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `riesgo-terceros-incidentes` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/processors-and-international-transfers/`) no cambia.
+- 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.

@@ -412,7 +412,7 @@ components:
     TechnologyType: { enum: [technology, cloud_service] }
     Origin: { description: Proveedor (cloud_service) o vendor (technology)., enum: [gcp, aws, azure, open-source, other] }
     SourceType: { enum: [official_docs, release_notes, engineering_blog, spec_paper, secondary, legislative] }  # legislative: ADR-023
-    Jurisdiction: { enum: [CL, EU, BR], description: "País cuya ley origina el contenido, ISO 3166-1 alfa-2; EU es el código reservado para la Unión Europea (ADR-023, Enmienda 4)." }
+    Jurisdiction: { enum: [CL, EU, BR], description: "País cuya ley origina el contenido, ISO 3166-1 alfa-2; EU es el código reservado para la Unión Europea (ADR-023, Enmienda 5)." }
     LegalBasis:
       description: Artículo en que se apoya una ficha con jurisdicción (ADR-023); url es la cita oficial.
       type: object

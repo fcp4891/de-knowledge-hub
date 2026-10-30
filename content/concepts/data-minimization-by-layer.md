@@ -106,12 +106,12 @@ La minimización evita que una plataforma recoja, replique o exponga datos perso
 - **[Obligación legal · art. 14 quáter]** Por defecto, solo se tratan los datos específicos y estrictamente necesarios, considerando cuántos datos, la extensión del tratamiento, el plazo y la accesibilidad.
 - **[Buena práctica]** En ingeniería eso se traduce en cuatro dimensiones:
 
-| Dimensión | Qué se limita | Técnica típica | Etiqueta |
-|---|---|---|---|
-| Cantidad | Atributos y registros | Proyección de columnas, filtros | **[Buena práctica]** |
-| Granularidad | Dato individual frente a tramo o agregado | Generalización, agregación | **[Buena práctica]** |
-| Tiempo | Plazo de conservación | Expiración de particiones, purga | **[Buena práctica]** |
-| Accesibilidad | Personas, servicios y destinos | Permisos por capa y por columna | **[Buena práctica]** |
+| Dimensión | Qué se limita | Técnica típica |
+|---|---|---|
+| Cantidad | Atributos y registros | Proyección de columnas, filtros |
+| Granularidad | Dato individual frente a tramo o agregado | Generalización, agregación |
+| Tiempo | Plazo de conservación | Expiración de particiones, purga |
+| Accesibilidad | Personas, servicios y destinos | Permisos por capa y por columna |
 
 - **[Buena práctica]** **No es lo mismo que:** enmascarar (oculta una representación al mostrar; el dato sigue en la tabla), seudonimizar (sustituye el identificador; sigue siendo dato personal) ni anonimizar (exige evaluar que la persona no sea identificable por medios razonables).
 - **[Decisión de arquitectura]** La minimización se implementa como una propiedad de cada capa, comprobable con un test y con un contrato de columnas versionado.
@@ -287,29 +287,29 @@ En una CI real esa segunda línea hace fallar el despliegue. **Limitaciones:** e
 
 En GCP, **BigQuery** con control de acceso por columna. Según *Introduction to column-level access control* (no ejecutado):
 
-| | Capas (este ejemplo) | BigQuery | Etiqueta |
-|---|---|---|---|
-| Restringir columnas | Silver no tiene las columnas | Policy tags sobre columnas sensibles, verificados en tiempo de consulta | **[Decisión de arquitectura]** |
-| Acceso del análisis | `GRANT` solo sobre gold | IAM sobre datasets y el rol Fine-Grained Reader en el policy tag | **[Buena práctica]** |
-| Diferencia | Los datos no están | Los datos están; el policy tag limita quién lee la columna | **[Buena práctica]** |
+|  | Capas (este ejemplo) | BigQuery |
+|---|---|---|
+| Restringir columnas | Silver no tiene las columnas | Policy tags sobre columnas sensibles, verificados en tiempo de consulta |
+| Acceso del análisis | `GRANT` solo sobre gold | IAM sobre datasets y el rol Fine-Grained Reader en el policy tag |
+| Diferencia | Los datos no están | Los datos están; el policy tag limita quién lee la columna |
 
 ## 12. AWS
 
 En AWS, **Lake Formation**. Según *Data filtering and cell-level security in Lake Formation* (no ejecutado):
 
-| | Capas (este ejemplo) | Lake Formation | Etiqueta |
-|---|---|---|---|
-| Restringir columnas | Silver no tiene las columnas | Filtros de datos a nivel de columna, fila y celda al dar permisos | **[Decisión de arquitectura]** |
-| Diferencia | Los datos no están | Los datos están; el filtro limita lo que se ve | **[Buena práctica]** |
+|  | Capas (este ejemplo) | Lake Formation |
+|---|---|---|
+| Restringir columnas | Silver no tiene las columnas | Filtros de datos a nivel de columna, fila y celda al dar permisos |
+| Diferencia | Los datos no están | Los datos están; el filtro limita lo que se ve |
 
 ## 13. Azure
 
 En Azure, **Azure SQL** con enmascaramiento dinámico. Según *Dynamic data masking* (no ejecutado):
 
-| | Capas (este ejemplo) | Dynamic data masking | Etiqueta |
-|---|---|---|---|
-| Qué hace | Quita las columnas de la capa | Enmascara para usuarios sin privilegio, sin cambiar los datos | **[Buena práctica]** |
-| Límite | — | La página aclara que no impide consultas exhaustivas que expongan partes del dato | **[Decisión de arquitectura]** |
+|  | Capas (este ejemplo) | Dynamic data masking |
+|---|---|---|
+| Qué hace | Quita las columnas de la capa | Enmascara para usuarios sin privilegio, sin cambiar los datos |
+| Límite | — | La página aclara que no impide consultas exhaustivas que expongan partes del dato |
 
 **Criterio común:** una etiqueta de catálogo no equivale a un permiso aplicado. Comprobar el control en el servicio que ejecuta las consultas, con la identidad del consumidor.
 
@@ -388,3 +388,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (sin regla universal por capa; pregunta guía), §2 (cuatro dimensiones y distinción con enmascarar, seudonimizar y anonimizar), §3, §4 (contrato de entrada y prueba con la identidad del consumidor), §5, §6 (no borrar lo que exige una obligación legal), §7 (columna de decisión; un umbral no basta para declarar anonimato), §8 (escenario y evidencia «qué demuestra y qué no»), §9 (contrato de ingesta), §10 (contrato de columnas por capa que detecta un campo nuevo, sobre el mismo ejemplo en PostgreSQL), §11–13 (criterio común), §14–16, §17 (relaciones con `processing-activities-inventory` y `retention-and-erasure`), §18 (criterio de dominio) y §19 (laboratorio para F4). Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `diseno-protegido` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/data-minimization-by-layer/`) no cambia.
 - 2026-10-28: mismos errores que la revisión de P2: el art. 14 quáter nombra sus cuatro factores en el §14 y en `legal_basis`.
+- 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.

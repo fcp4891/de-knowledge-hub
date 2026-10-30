@@ -79,13 +79,13 @@ Un pipeline de IA amplía la superficie de tratamiento: documentos, fragmentos (
 - **[Obligación legal · art. 15 bis]** El encargado trata según el encargo; no puede tratar los datos para un objeto distinto del convenido ni cederlos o entregarlos sin autorización expresa y específica del responsable.
 - **[Buena práctica]** Las piezas de un pipeline de IA:
 
-| Pieza | Qué es | Por qué importa | Etiqueta |
-|---|---|---|---|
-| RAG | Recuperar información para dar contexto a una respuesta | El contexto puede traer documentos que el usuario no debía ver | **[Buena práctica]** |
-| Fragmento y embedding | Trozo de un documento y su representación numérica | Derivados que pueden retener información del contenido; no se presumen anónimos | **[Buena práctica]** |
-| Recuperación con permisos | Filtrar por las autorizaciones del usuario o servicio al recuperar | El filtro en el prompt no es un control | **[Decisión de arquitectura]** |
-| Agente | Sistema que invoca herramientas | Puede llevar datos a servicios adicionales | **[Buena práctica]** |
-| Trazas y cachés | Registro de prompts, respuestas y resultados recuperados | Son copias personales si guardan el texto | **[Buena práctica]** |
+| Pieza | Qué es | Por qué importa |
+|---|---|---|
+| RAG | Recuperar información para dar contexto a una respuesta | El contexto puede traer documentos que el usuario no debía ver |
+| Fragmento y embedding | Trozo de un documento y su representación numérica | Derivados que pueden retener información del contenido; no se presumen anónimos |
+| Recuperación con permisos | Filtrar por las autorizaciones del usuario o servicio al recuperar | El filtro en el prompt no es un control |
+| Agente | Sistema que invoca herramientas | Puede llevar datos a servicios adicionales |
+| Trazas y cachés | Registro de prompts, respuestas y resultados recuperados | Son copias personales si guardan el texto |
 
 - **[Buena práctica]** Como referencias conceptuales (Nivel 4, no son normas chilenas): el OWASP Top 10 for LLM Applications nombra los riesgos que esta ficha controla, como LLM01:2025 Prompt Injection, LLM02:2025 Sensitive Information Disclosure, LLM06:2025 Excessive Agency y LLM08:2025 Vector and Embedding Weaknesses; el NIST AI RMF es un marco voluntario para gestionar los riesgos de los sistemas de IA.
 
@@ -266,29 +266,29 @@ soporte vuelve a preguntar: ['c1']
 
 En GCP, **Agent Search**. Según *Set up data source access control* (no ejecutado). La página marca el control de acceso como Preview («This feature is a Preview offering») y dice que se elige al crear el data store («you must select this setting during data store creation»):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Permisos en la recuperación | Control de acceso de la fuente: el usuario obtiene resultados solo de los documentos a los que su cuenta ya tiene acceso; para Cloud Storage, BigQuery, Google Drive y fuentes de terceros | **[Buena práctica]** |
-| Requisito | El proveedor de identidad de la organización configurado en Google Cloud | **[Buena práctica]** |
-| Supresión y trazas | Reindexación por `document_id` y retención de trazas, propias | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Permisos en la recuperación | Control de acceso de la fuente: el usuario obtiene resultados solo de los documentos a los que su cuenta ya tiene acceso; para Cloud Storage, BigQuery, Google Drive y fuentes de terceros |
+| Requisito | El proveedor de identidad de la organización configurado en Google Cloud |
+| Supresión y trazas | Reindexación por `document_id` y retención de trazas, propias |
 
 ## 12. AWS
 
 En AWS, **Amazon Bedrock** Knowledge Bases. Según *Configure and customize queries and response generation* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Permisos en la recuperación | Filtros sobre la metadata de los documentos al consultar (`equals`, `in`, `notIn`, entre otros) | **[Buena práctica]** |
-| Límite | El filtro es tan bueno como la metadata: los grupos autorizados se cargan con cada documento | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Permisos en la recuperación | Filtros sobre la metadata de los documentos al consultar (`equals`, `in`, `notIn`, entre otros) |
+| Límite | El filtro es tan bueno como la metadata: los grupos autorizados se cargan con cada documento |
 
 ## 13. Azure
 
 En Azure, **Azure AI Search**. Según *Security filters for trimming results in Azure AI Search* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Permisos en la recuperación | ACL integradas por documento o, si no se pueden usar, un filtro de seguridad con `search.in` sobre un campo de grupos o usuarios | **[Buena práctica]** |
-| Límite | La página describe el filtro como una simulación de la autorización por documento: el backend sigue validando | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Permisos en la recuperación | ACL integradas por documento o, si no se pueden usar, un filtro de seguridad con `search.in` sobre un campo de grupos o usuarios |
+| Límite | La página describe el filtro como una simulación de la autorización por documento: el backend sigue validando |
 
 **Criterio común:** los tres servicios filtran al recuperar; ninguno suprime por sí solo los derivados ni las trazas, ni convierte el índice en anónimo.
 
@@ -361,3 +361,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: completada con lo que pedía el prompt de P2: OWASP Top 10 for LLM Applications y NIST AI RMF como fuentes de Nivel 4, solo para conceptos (§2, §4, §20); el nombre «Azure AI Search» se confirmó en su página N1 ese día.
 - 2026-10-28: revisión `docs/reviews/p2.md` aplicada: el art. 8 bis dice que sus salvaguardas, incluida expresar el punto de vista, aplican en todos los casos; el art. 15 bis incluye la prohibición de ceder o entregar sin autorización expresa; el art. 3 c) conserva «estrictamente»; el control de acceso de Agent Search se cita como Preview y elegido al crear el data store, con cita textual; `page_title` de Azure «Security Filter Pattern»; diagrama del §9 en TB.
 - 2026-10-28: `page_title` de Azure según ADR-012 (encabezado principal de la página; `<title>` solo si no tiene): «Security filters for trimming results in Azure AI Search», el H1 consultado ese día; «Security Filter Pattern» es su `<title>`.
+- 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.

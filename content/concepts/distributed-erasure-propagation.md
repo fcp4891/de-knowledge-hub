@@ -70,11 +70,11 @@ Un derecho aprobado se propaga a cada representación del titular: fuente, CDC, 
 - **[Obligación legal · art. 11]** Si el responsable comunicó los datos a otros, les comunica los cambios por rectificación, supresión u oposición.
 - **[Decisión de arquitectura]** Tres piezas:
 
-| Pieza | Qué es | Qué no es | Etiqueta |
-|---|---|---|---|
-| Orden de privacidad | Instrucción aprobada con `request_id`, acción, llave seudónima del titular, alcance, destinos, excepciones y corte de versión | Un script puntual | **[Decisión de arquitectura]** |
-| Tombstone | Evento durable que avisa a los consumidores que un registro se suprimió o restringió | La supresión física | **[Decisión de arquitectura]** |
-| Reconciliación | Comparación entre el estado esperado y el observado en cada destino | Un conteo de filas borradas | **[Decisión de arquitectura]** |
+| Pieza | Qué es | Qué no es |
+|---|---|---|
+| Orden de privacidad | Instrucción aprobada con `request_id`, acción, llave seudónima del titular, alcance, destinos, excepciones y corte de versión | Un script puntual |
+| Tombstone | Evento durable que avisa a los consumidores que un registro se suprimió o restringió | La supresión física |
+| Reconciliación | Comparación entre el estado esperado y el observado en cada destino | Un conteo de filas borradas |
 
 - **[Decisión de arquitectura]** **Alcance por finalidad:** la orden lista las actividades y los destinos que abarca; no es una lista de supresión global que descarte al titular de tratamientos nuevos y lícitos.
 - **[Buena práctica]** El índice de titulares y el linaje ayudan a localizar, pero no prueban que la cobertura sea completa: las copias fuera del catálogo no aparecen.
@@ -233,28 +233,28 @@ cierre de SOL-2026-0042: ['proveedor_email: PENDING']
 
 En GCP, **Pub/Sub**. Según *Order messages* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Eventos de un titular en orden | Ordering key con la llave seudónima: el suscriptor recibe los mensajes en el orden en que se publicaron, si se publican en la misma región | **[Buena práctica]** |
-| Rechazar eventos anteriores al corte | La ingesta consulta la orden vigente; el orden de entrega no reemplaza esa consulta | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Eventos de un titular en orden | Ordering key con la llave seudónima: el suscriptor recibe los mensajes en el orden en que se publicaron, si se publican en la misma región |
+| Rechazar eventos anteriores al corte | La ingesta consulta la orden vigente; el orden de entrega no reemplaza esa consulta |
 
 ## 12. AWS
 
 En AWS, **Amazon S3**. Según *Deleting object versions from a versioning-enabled bucket* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Suprimir un objeto versionado | Un DELETE simple agrega un delete marker; las versiones no actuales se borran con `NoncurrentVersionExpiration` | **[Buena práctica]** |
-| Estado del destino | `VERIFIED` para la lectura; la purga de versiones sigue su propia ventana | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Suprimir un objeto versionado | Un DELETE simple agrega un delete marker; las versiones no actuales se borran con `NoncurrentVersionExpiration` |
+| Estado del destino | `VERIFIED` para la lectura; la purga de versiones sigue su propia ventana |
 
 ## 13. Azure
 
 En Azure, **Delta** en Azure Databricks. Según *Remove unused data files with vacuum* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Archivos y change data feed | VACUUM borra los archivos fuera del umbral de retención, incluidos los del change data feed (`_change_data`) | **[Buena práctica]** |
-| Consumidores del feed | Un consumidor que ya leyó el feed es un destino más de la orden | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Archivos y change data feed | VACUUM borra los archivos fuera del umbral de retención, incluidos los del change data feed (`_change_data`) |
+| Consumidores del feed | Un consumidor que ya leyó el feed es un destino más de la orden |
 
 **Criterio común:** ningún servicio cierra una orden; cada uno aporta la acción o la evidencia de un destino.
 
@@ -323,3 +323,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: creación (lote P2, dominio 24, ADR-027) desde `docs/briefs/privacy-program/01-propagacion-derechos-supresion-distribuida.md`, que es un guion, no una fuente.
 - 2026-10-28: completada con lo que pedía el prompt de P2: estado `RUNNING` en el §4 y en el código (la salida no cambia) y el alcance por finalidad en el §2. Tombstones y lista no global ya estaban.
 - 2026-10-28: revisión `docs/reviews/p2.md` aplicada: la nota del art. 7 dice que la lista de casos en que no procede la supresión es cerrada (i a vi), sin «entre otros»; el diagrama del §9 pasa a TB (la cadena más larga tiene 6 nodos).
+- 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.

@@ -81,11 +81,11 @@ Los equipos de datos e IA construyen exactamente lo que la ley regula con más r
 - **[Obligación legal · art. 14 ter]** La política de tratamiento informa las decisiones automatizadas, su lógica y consecuencias (letra l)).
 - **[Decisión de arquitectura]** **Registro de decisión:** versiones de modelo y reglas, huella de las entradas y referencia a ellas guardadas aparte, puntaje, resultado, variables principales y estado de revisión humana.
 
-| Noción | Mira | Pregunta que responde | Etiqueta |
-|---|---|---|---|
-| Evaluación de impacto | El tratamiento | ¿Qué riesgos tiene para los titulares y cómo se mitigan? | **[Buena práctica]** |
-| Trazabilidad por decisión | Cada caso | ¿Qué datos, versión y reglas produjeron este resultado, y quién lo revisó? | **[Buena práctica]** |
-| Revisión humana efectiva | Cada caso derivado o pedido | ¿Alguien con información y facultad real puede cambiar el resultado? | **[Buena práctica]** |
+| Noción | Mira | Pregunta que responde |
+|---|---|---|
+| Evaluación de impacto | El tratamiento | ¿Qué riesgos tiene para los titulares y cómo se mitigan? |
+| Trazabilidad por decisión | Cada caso | ¿Qué datos, versión y reglas produjeron este resultado, y quién lo revisó? |
+| Revisión humana efectiva | Cada caso derivado o pedido | ¿Alguien con información y facultad real puede cambiar el resultado? |
 
 ## 3. Problema que resuelve
 
@@ -256,30 +256,30 @@ El registro guarda una huella de las entradas y una referencia a ellas, no las e
 
 En GCP, **Model Registry on Gemini Enterprise Agent Platform** y **Sensitive Data Protection**. Según *Introduction to Model Registry* y *Re-identification risk analysis* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Registro de modelos | Model Registry: repositorio central del ciclo de vida, con versiones | **[Buena práctica]** |
-| Prueba de reidentificación | Análisis de riesgo de Sensitive Data Protection (k-anonimato, l-diversidad); apoya la evaluación, no la certifica | **[Buena práctica]** |
-| Registro de decisiones y puerta | Tabla y check de CI propios; no los da el registro de modelos | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Registro de modelos | Model Registry: repositorio central del ciclo de vida, con versiones |
+| Prueba de reidentificación | Análisis de riesgo de Sensitive Data Protection (k-anonimato, l-diversidad); apoya la evaluación, no la certifica |
+| Registro de decisiones y puerta | Tabla y check de CI propios; no los da el registro de modelos |
 
 ## 12. AWS
 
 En AWS, **SageMaker Model Registry**. Según *Model Registration Deployment with Model Registry* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Registro de modelos | Versiones, métricas, Model Cards y linaje del modelo | **[Buena práctica]** |
-| Registro de decisiones y puerta | Tabla y check de CI propios | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Registro de modelos | Versiones, métricas, Model Cards y linaje del modelo |
+| Registro de decisiones y puerta | Tabla y check de CI propios |
 
 ## 13. Azure
 
 En Azure, **Azure Machine Learning**. Según *MLOps model management with Azure Machine Learning* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Linaje y auditoría del ciclo de vida | Quién publicó, por qué cambió y cuándo se desplegó cada modelo | **[Buena práctica]** |
-| Explicaciones | Interpretabilidad de modelos | **[Buena práctica]** |
-| Registro de decisiones y puerta | Tabla y check de CI propios | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Linaje y auditoría del ciclo de vida | Quién publicó, por qué cambió y cuándo se desplegó cada modelo |
+| Explicaciones | Interpretabilidad de modelos |
+| Registro de decisiones y puerta | Tabla y check de CI propios |
 
 **Criterio común:** ningún registro de modelos determina el cumplimiento ni garantiza explicaciones suficientes por decisión; versiona el artefacto, no el caso.
 
@@ -356,3 +356,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): dos diagramas: antes de producción (puerta del art. 15 ter) y en producción.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (la evaluación mira el tratamiento; la trazabilidad, cada decisión), §2 (perfil no es decisión significativa; tabla de evaluación, trazabilidad y revisión efectiva), §3, §4 (registro del tratamiento, cambios materiales en la puerta, entradas guardadas por referencia, revisión con facultad real), §5, §6, §7 (reclamos con LLM y pregunta técnica por caso), §8 (escenario y evidencia «qué demuestra y qué no»), §9 (puerta por versión y vuelta de la revisión al registro), §10 (puerta de despliegue por versión mayor y registro con versión de reglas y referencia a las entradas, sobre el mismo ejemplo; la huella sola no reconstruye), §11–13 (criterio común), §14–16, §17 (relación con `privacy-controls-as-code`), §18 (criterio de dominio) y §19 (laboratorio para F4). Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia; Model Registry se sigue nombrando como en su página (Gemini Enterprise Agent Platform).
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `riesgo-terceros-incidentes` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/dpia-and-automated-decisions/`) no cambia.
+- 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.

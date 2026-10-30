@@ -1,6 +1,6 @@
 # ADR-023 — Schema para contenido con origen legal (dominio 19, Ley 21.719)
 
-- **Estado:** Aceptado (aprobado por Felipe el 2026-10-21, tal como está); implementado con el lote F3b-19a. Enmienda 1 (2026-10-24): `implication` en `legal_basis`. Enmienda 2 (2026-10-28, ADR-027): alcance en los dominios 19 y 24. Enmienda 3 (2026-10-30): línea «Etiqueta: […]» para tablas uniformes en §4 y §11–13. Enmienda 4 (2026-10-30): jurisdicciones EU y BR para los marcos comparados
+- **Estado:** Aceptado (aprobado por Felipe el 2026-10-21, tal como está); implementado con el lote F3b-19a. Enmienda 1 (2026-10-24): `implication` en `legal_basis`. Enmienda 2 (2026-10-28, ADR-027): alcance en los dominios 19 y 24. Enmienda 3 (2026-10-30): línea «Etiqueta: […]» para tablas uniformes en §4 y §11–13. Enmienda 4 (2026-10-30): tablas sin columna «Etiqueta». Enmienda 5 (2026-10-30): jurisdicciones EU y BR para los marcos comparados
 - **Fecha:** 2026-10-21
 - **Fase:** F3b — Contenido por dominio, antes de 19-compliance
 - **Referencias:** ADR-000 (content-as-code), ADR-002 (contrato), ADR-009 (contenido por dominio), ADR-012 (`page_title`); decisión de Felipe sobre la Ley 21.719 (ROADMAP, F3b, 2026-10-21).
@@ -181,8 +181,21 @@ Pedida por Felipe el 2026-10-24, junto con la aceptación de ADR-024.
 - Decisión de Felipe. En las tablas del §4 y de §11–13, la columna «Etiqueta» es obligatoria solo si las filas tienen etiquetas distintas. Si todas son iguales, la tabla va sin columna y lleva antes la línea `Etiqueta: **[…]**`. Una columna con la misma etiqueta en todas sus filas es un error en esas secciones.
 - Sin cambios en §2, §3 y §14: allí cada tabla sigue llevando la columna.
 - **Implementación:** `UNIFORM_SECTIONS` y `check_label_table` en `backend/content/validate.py`; la línea `Etiqueta:` no cuenta como párrafo sin etiqueta del §4. Tests en `tests/test_validate_legal.py`: caso uniforme con línea, columna uniforme, tabla sin columna ni línea, y la línea fuera de §4 y §11–13. Las tablas uniformes de las fichas del dominio 24 se convirtieron con una línea de historial.
+- **Reemplazada por la Enmienda 4** el mismo día.
 
-## Enmienda 4 — Jurisdicciones EU y BR para los marcos comparados (2026-10-30)
+## Enmienda 4 — Tablas sin columna «Etiqueta» (2026-10-30)
+
+- Decisión de Felipe. Reemplaza la columna «Etiqueta» del punto original y la Enmienda 3.
+- Ninguna tabla de las fichas de privacidad, en ninguna sección, lleva columna «Etiqueta» ni línea `Etiqueta: **[…]**` antes.
+- Una fila con origen legal empieza su primera celda con `**[Obligación legal · …]**`; esos artículos cuentan para el cruce con `legal_basis`. El resto de las filas va sin marca: ni «Buena práctica» ni «Decisión de arquitectura» dentro de una tabla.
+- Sin cambios en los ítems y párrafos de §2, §3, §4 y §14, que siguen empezando con su etiqueta.
+- **Implementación:**
+  - `check_label_table` en `backend/content/validate.py` revisa todas las tablas del cuerpo. Da error si hay columna o línea «Etiqueta», si hay otra etiqueta en una celda, o si «Obligación legal» no está al inicio de la primera celda. Se quitan `TABLE_SECTIONS` y `UNIFORM_SECTIONS`.
+  - Cuatro tests en `tests/test_validate_legal.py`.
+  - Un script de una sola vez convirtió las tablas de las 17 fichas con `jurisdiction`, con una línea de historial en cada una y sin cambios de contenido.
+- **Pedido a Carril B:** revisar que la lectura de las tablas en `/concepts/<slug>/` no dependa de la columna «Etiqueta».
+
+## Enmienda 5 — Jurisdicciones EU y BR para los marcos comparados (2026-10-30)
 
 - Decisión de Felipe (lote P4). Las fichas `gdpr` y `lgpd` del tramo 6 de 24, «Marcos regulatorios comparados», comparan cada marco con la Ley 21.719 desde la ingeniería de datos. No son resúmenes legales.
 - **`jurisdiction`** acepta `EU` y `BR` además de `CL` (`schemas/enums.schema.json`). `EU` es el código que ISO 3166-1 reserva para la Unión Europea. Una ficha comparada declara las dos jurisdicciones cuyas normas etiqueta: `[CL, EU]` o `[CL, BR]`.

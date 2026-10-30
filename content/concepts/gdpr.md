@@ -61,6 +61,11 @@ sources:
     accessed: 2026-10-30
     page_title: "Comunicação de Incidente de Segurança"
     note: "ANPD, *Comunicação de Incidente de Segurança*, para la columna LGPD: según los arts. 6 y 9 de la Resolución CD/ANPD nº 15/2024, «a comunicação à ANPD e ao(s) titular(es) deverá ser realizada pelo controlador no prazo de três (3) dias úteis» (la comunicación a la ANPD y a los titulares se hace en tres días hábiles), salvo plazo de legislación específica. La página no dice desde cuándo se cuenta."
+  - source: mj-biblioteca-digital
+    url: https://bibliotecadigital.mj.gov.br/bitstream/1/12879/2/RES_ANPD_2024_15.html
+    accessed: 2026-10-30
+    page_title: "resolução CD/ANPD Nº 15, de 24 de abril de 2024"
+    note: "Resolución CD/ANPD nº 15/2024 (Regulamento de Comunicação de Incidente de Segurança), copia del acto en la Biblioteca Digital del Ministerio de Justicia (SEI/MJ); el Diário Oficial da União (in.gov.br) no respondió el 2026-10-30. Art. 6º: «A comunicação de incidente de segurança à ANPD deverá ser realizada pelo controlador no prazo de três dias úteis»; § 1º: «O prazo a que se refere o caput será contado do conhecimento pelo controlador de que o incidente afetou dados pessoais» (se cuenta desde que el controlador sabe que el incidente afectó datos personales); § 3º: complementación «no prazo de vinte dias úteis»; § 8º: plazos «contados em dobro para os agentes de pequeno porte» (el doble para agentes de pequeño porte). Art. 9º: al titular, «no prazo de três dias úteis, contados do conhecimento pelo controlador de que o incidente afetou dados pessoais»."
   - source: ec-data-protection
     url: https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/adequacy-decisions_en
     accessed: 2026-10-30
@@ -128,17 +133,17 @@ Las citas del RGPD vienen de su versión oficial en español (BOE, reproducción
 - **[Buena práctica]** Que un dato esté guardado en Chile no saca el tratamiento del RGPD, y que esté en una región europea no lo pone bajo él: decide la relación con las personas (oferta o seguimiento), no la ubicación del servidor.
 - **[Buena práctica]** Comparación en lo que impacta a ingeniería. Cada fila lleva la etiqueta del RGPD; la columna chilena se etiqueta en el §4 y la brasileña en la ficha `lgpd`.
 
-| Tema | Ley 21.719 (Chile) | RGPD (UE) | LGPD (Brasil) | Etiqueta |
-|---|---|---|---|---|
-| Bases de licitud | Consentimiento (art. 12) y casos sin consentimiento (art. 13) | «al menos una de las siguientes condiciones» del art. 6.1 | Hipótesis del art. 7 | **[Obligación legal · GDPR art. 6]** |
-| Plazo de respuesta a una solicitud | 30 días corridos, prorrogable una vez por igual período (art. 11) | Un mes, prorrogable otros dos meses (art. 12.3) | 15 días para la declaración completa (art. 19, II) | **[Obligación legal · GDPR art. 12]** |
-| Registro de actividades | Política de tratamiento disponible (art. 14 ter) | Registro de actividades, con excepción para menos de 250 personas y salvedades (art. 30) | Registro de las operaciones (art. 37) | **[Obligación legal · GDPR art. 30]** |
-| Evaluación de impacto | Si puede producir un alto riesgo (art. 15 ter) | Si es probable un alto riesgo (art. 35) | Relatório de impacto, si lo determina la ANPD (art. 38) | **[Obligación legal · GDPR art. 35]** |
-| Brecha: autoridad | Agencia, «sin dilaciones indebidas», sin plazo en horas (art. 14 sexies) | Autoridad de control, «a más tardar 72 horas» desde la constancia (art. 33.1) | ANPD, plazo que define la autoridad (art. 48); 3 días hábiles según la ANPD | **[Obligación legal · GDPR art. 33]** |
-| Brecha: personas | Titulares, en los casos que indica (art. 14 sexies) | Interesados, con probable alto riesgo, sin dilación indebida (art. 34.1) | Titulares, con risco ou dano relevante (art. 48) | **[Obligación legal · GDPR art. 34]** |
-| Transferencias | País adecuado según la Agencia, cláusulas u otros instrumentos (arts. 27 y 28) | Decisión de adecuación (art. 45) o cláusulas tipo de la Comisión (art. 46.2 c)) | País adecuado o cláusulas-padrão (art. 33) | **[Obligación legal · GDPR art. 45]** |
-| Delegado | En el modelo de prevención voluntario (art. 49) | Obligatorio en los casos del art. 37.1 | Encarregado (art. 41) | **[Obligación legal · GDPR art. 37]** |
-| Decisiones automatizadas | Oponerse y no ser objeto de ellas (art. 8 bis) | No ser objeto de una decisión basada únicamente en el tratamiento automatizado (art. 22.1) | Pedir su revisión (art. 20) | **[Obligación legal · GDPR art. 22]** |
+| Tema | Ley 21.719 (Chile) | RGPD (UE) | LGPD (Brasil) |
+|---|---|---|---|
+| **[Obligación legal · GDPR art. 6]** Bases de licitud | Consentimiento (art. 12) y casos sin consentimiento (art. 13) | «al menos una de las siguientes condiciones» del art. 6.1 | Hipótesis del art. 7 |
+| **[Obligación legal · GDPR art. 12]** Plazo de respuesta a una solicitud | 30 días corridos, prorrogable una vez por igual período (art. 11) | Un mes, prorrogable otros dos meses (art. 12.3) | 15 días para la declaración completa (art. 19, II) |
+| **[Obligación legal · GDPR art. 30]** Registro de actividades | Política de tratamiento disponible (art. 14 ter) | Registro de actividades, con excepción para menos de 250 personas y salvedades (art. 30) | Registro de las operaciones (art. 37) |
+| **[Obligación legal · GDPR art. 35]** Evaluación de impacto | Si puede producir un alto riesgo (art. 15 ter) | Si es probable un alto riesgo (art. 35) | Relatório de impacto, si lo determina la ANPD (art. 38) |
+| **[Obligación legal · GDPR art. 33]** Brecha: autoridad | Agencia, «sin dilaciones indebidas», sin plazo en horas (art. 14 sexies) | Autoridad de control, «a más tardar 72 horas» desde la constancia (art. 33.1) | ANPD, plazo que define la autoridad (art. 48); 3 días hábiles según la ANPD |
+| **[Obligación legal · GDPR art. 34]** Brecha: personas | Titulares, en los casos que indica (art. 14 sexies) | Interesados, con probable alto riesgo, sin dilación indebida (art. 34.1) | Titulares, con risco ou dano relevante (art. 48) |
+| **[Obligación legal · GDPR art. 45]** Transferencias | País adecuado según la Agencia, cláusulas u otros instrumentos (arts. 27 y 28) | Decisión de adecuación (art. 45) o cláusulas tipo de la Comisión (art. 46.2 c)) | País adecuado o cláusulas-padrão (art. 33) |
+| **[Obligación legal · GDPR art. 37]** Delegado | En el modelo de prevención voluntario (art. 49) | Obligatorio en los casos del art. 37.1 | Encarregado (art. 41) |
+| **[Obligación legal · GDPR art. 22]** Decisiones automatizadas | Oponerse y no ser objeto de ellas (art. 8 bis) | No ser objeto de una decisión basada únicamente en el tratamiento automatizado (art. 22.1) | Pedir su revisión (art. 20) |
 
 - **[Obligación legal · GDPR art. 46]** Sin decisión de adecuación, una vía son las «cláusulas tipo de protección de datos adoptadas por la Comisión».
 - **[Buena práctica]** Las filas no son equivalencias: el mismo tema tiene otra unidad (horas, meses, días corridos o hábiles), otro destinatario u otra condición. Por eso cada regla va con su jurisdicción, su base y su fecha de revisión.
@@ -342,28 +347,28 @@ CL → titular: 2027-01-03T10:00+00:00 (prórroga hasta 2027-02-02) · Ley 19.62
 EU → interesado: 2027-01-04T10:00+00:00 (prórroga hasta 2027-03-04) · GDPR art. 12.3
 ```
 
-Limitaciones: los días hábiles no descuentan feriados; «un mes» se suma como mes calendario; el plazo brasileño de solicitudes se toma en días corridos y su inicio, como la fecha del requerimiento. Las reglas marcadas `[ilustrativo]` no son literales de la norma en su unidad o su conteo. Una jurisdicción sin regla no se resuelve por defecto: se informa.
+Limitaciones: los días hábiles no descuentan feriados; los 3 días hábiles brasileños corren desde que el controlador sabe que el incidente afectó datos personales (Res. CD/ANPD 15/2024, art. 6 § 1º y art. 9), y el ejemplo usa esa misma marca de tiempo; «un mes» se suma como mes calendario; el plazo brasileño de solicitudes se toma en días corridos y su inicio, como la fecha del requerimiento. Las reglas marcadas `[ilustrativo]` no son literales de la norma en su unidad o su conteo. Una jurisdicción sin regla no se resuelve por defecto: se informa.
 
 ## 11. GCP
 
-| Necesidad | Servicio y alcance | Lo que no cubre | Etiqueta |
-|---|---|---|---|
-| Recursos de datos de la UE solo en la UE | Organization Policy con el grupo `in:eu-locations` («All locations within European Union») | Recursos creados antes de la política | **[Buena práctica]** |
-| Compromiso de residencia | Assured Workloads, *Data residency*: si la región es de la UE, el Customer Data en uso se procesa dentro de la UE | «Customer Data does not include resource identifiers, attributes, or other data labels»: nombres de recursos y etiquetas no van con datos personales | **[Decisión de arquitectura]** |
+| Necesidad | Servicio y alcance | Lo que no cubre |
+|---|---|---|
+| Recursos de datos de la UE solo en la UE | Organization Policy con el grupo `in:eu-locations` («All locations within European Union») | Recursos creados antes de la política |
+| Compromiso de residencia | Assured Workloads, *Data residency*: si la región es de la UE, el Customer Data en uso se procesa dentro de la UE | «Customer Data does not include resource identifiers, attributes, or other data labels»: nombres de recursos y etiquetas no van con datos personales |
 
 ## 12. AWS
 
-| Necesidad | Servicio y alcance | Lo que no cubre | Etiqueta |
-|---|---|---|---|
-| Regiones con geografía en la UE | eu-central-1 (Germany), eu-west-1 (Ireland), eu-west-3 (France), eu-north-1 (Sweden); eu-south-1 (Italy) y eu-south-2 (Spain) requieren habilitarse | `eu-west-2` es United Kingdom y `eu-central-2` es Switzerland: el prefijo `eu-` no equivale a la UE | **[Decisión de arquitectura]** |
-| Limitar regiones | Condición `aws:RequestedRegion` en políticas | Controla el endpoint invocado, no los efectos entre regiones, como la replicación de S3 | **[Buena práctica]** |
+| Necesidad | Servicio y alcance | Lo que no cubre |
+|---|---|---|
+| Regiones con geografía en la UE | eu-central-1 (Germany), eu-west-1 (Ireland), eu-west-3 (France), eu-north-1 (Sweden); eu-south-1 (Italy) y eu-south-2 (Spain) requieren habilitarse | `eu-west-2` es United Kingdom y `eu-central-2` es Switzerland: el prefijo `eu-` no equivale a la UE |
+| Limitar regiones | Condición `aws:RequestedRegion` en políticas | Controla el endpoint invocado, no los efectos entre regiones, como la replicación de S3 |
 
 ## 13. Azure
 
-| Necesidad | Servicio y alcance | Lo que no cubre | Etiqueta |
-|---|---|---|---|
-| Compromiso de almacenar y procesar en la UE y la EFTA | EU Data Boundary: los servicios regionales de Azure en una región de la frontera quedan dentro | «subject to limited circumstances» en que siguen transfiriéndose datos fuera; los servicios no regionales requieren su configuración | **[Decisión de arquitectura]** |
-| Limitar ubicaciones | Azure Policy «Allowed locations» | Resource groups y recursos de la región «global» | **[Buena práctica]** |
+| Necesidad | Servicio y alcance | Lo que no cubre |
+|---|---|---|
+| Compromiso de almacenar y procesar en la UE y la EFTA | EU Data Boundary: los servicios regionales de Azure en una región de la frontera quedan dentro | «subject to limited circumstances» en que siguen transfiriéndose datos fuera; los servicios no regionales requieren su configuración |
+| Limitar ubicaciones | Azure Policy «Allowed locations» | Resource groups y recursos de la región «global» |
 
 ## 14. Buenas prácticas
 
@@ -435,4 +440,6 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 22. Historial de cambios importantes
 
-- 2026-10-30: creación (lote P4), en el tramo 6 «Marcos regulatorios comparados», después de la Enmienda 4 de ADR-023 (jurisdicción EU y etiquetas «GDPR art. N»).
+- 2026-10-30: creación (lote P4), en el tramo 6 «Marcos regulatorios comparados», después de la Enmienda 5 de ADR-023 (jurisdicción EU y etiquetas «GDPR art. N»).
+- 2026-10-30: la Enmienda de jurisdicciones pasa a ser la Enmienda 5 de ADR-023; cita de la Res. CD/ANPD 15/2024 (art. 6 § 1º y art. 9) sobre el inicio del plazo brasileño.
+- 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.

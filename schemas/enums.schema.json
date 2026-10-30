@@ -43,7 +43,7 @@
       "enum": ["official_docs", "release_notes", "engineering_blog", "spec_paper", "secondary", "legislative"]
     },
     "jurisdiction": {
-      "description": "País al que se aplica el contenido o la fuente legal, en ISO 3166-1 alfa-2 (ADR-023); EU es el código reservado de ISO 3166-1 para la Unión Europea (Enmienda 4). Agregar uno pide un ADR.",
+      "description": "País al que se aplica el contenido o la fuente legal, en ISO 3166-1 alfa-2 (ADR-023); EU es el código reservado de ISO 3166-1 para la Unión Europea (Enmienda 5). Agregar uno pide un ADR.",
       "enum": ["CL", "EU", "BR"]
     },
     "law": {

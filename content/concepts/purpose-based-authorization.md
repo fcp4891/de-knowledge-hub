@@ -67,12 +67,12 @@ Los permisos tradicionales responden **quién** puede consultar. La autorizació
 - **[Obligación legal · art. 14 quáter]** Por defecto, solo los datos específicos y estrictamente necesarios, considerando el número de datos recogidos, la extensión del tratamiento, el plazo de conservación y su accesibilidad.
 - **[Decisión de arquitectura]** Cuatro piezas que no conviene mezclar:
 
-| Pieza | Qué es | Ejemplo | Etiqueta |
-|---|---|---|---|
-| Finalidad | Propósito aprobado de una actividad de tratamiento | Atención al cliente | **[Decisión de arquitectura]** |
-| Identidad | Grupo humano o cuenta de servicio, una por consumidor y finalidad | `grp-soporte`, `sa-bi-operacional` | **[Decisión de arquitectura]** |
-| Producto | Vista o API mínima para esa finalidad, no el dataset completo | `contacto_minimo` | **[Decisión de arquitectura]** |
-| Concesión | Identidad + actividad + producto + vencimiento, con aprobador | Soporte lee `contacto_minimo` hasta el 2026-12-31 | **[Decisión de arquitectura]** |
+| Pieza | Qué es | Ejemplo |
+|---|---|---|
+| Finalidad | Propósito aprobado de una actividad de tratamiento | Atención al cliente |
+| Identidad | Grupo humano o cuenta de servicio, una por consumidor y finalidad | `grp-soporte`, `sa-bi-operacional` |
+| Producto | Vista o API mínima para esa finalidad, no el dataset completo | `contacto_minimo` |
+| Concesión | Identidad + actividad + producto + vencimiento, con aprobador | Soporte lee `contacto_minimo` hasta el 2026-12-31 |
 
 - **[Decisión de arquitectura]** **Deny por defecto:** la concesión es la tupla (rol, finalidad, dataset o producto) con su vencimiento; lo que no está concedido se deniega.
 - **[Decisión de arquitectura]** **Decisión:** permitir, denegar o escalar a revisión. Una finalidad no aprobada se deniega; una pedida y en revisión se escala; una concesión vencida se deniega.
@@ -238,28 +238,28 @@ pruebas negativas: 4/4 no se permiten
 
 En GCP, **BigQuery**. Según *Authorized views* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Producto mínimo por consumidor | Authorized views: comparten un subconjunto del dataset con principals específicos, que no acceden directamente al dataset de origen | **[Buena práctica]** |
-| Finalidad y vencimiento | Registro de concesiones propio; BigQuery aplica el acceso, no la finalidad | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Producto mínimo por consumidor | Authorized views: comparten un subconjunto del dataset con principals específicos, que no acceden directamente al dataset de origen |
+| Finalidad y vencimiento | Registro de concesiones propio; BigQuery aplica el acceso, no la finalidad |
 
 ## 12. AWS
 
 En AWS, **Lake Formation**. Según *Data filtering and cell-level security in Lake Formation* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Producto mínimo por consumidor | Filtros de datos de columna, fila y celda al dar el permiso | **[Buena práctica]** |
-| Finalidad y vencimiento | Registro de concesiones propio, con una identidad por finalidad | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Producto mínimo por consumidor | Filtros de datos de columna, fila y celda al dar el permiso |
+| Finalidad y vencimiento | Registro de concesiones propio, con una identidad por finalidad |
 
 ## 13. Azure
 
 En Azure, **Unity Catalog** de Azure Databricks. Según *Row filters and column masks* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Producto mínimo por consumidor | Row filters y column masks que restringen lo que ve quien consulta | **[Buena práctica]** |
-| Finalidad y vencimiento | Registro de concesiones propio; la autorización contextual va en la aplicación | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Producto mínimo por consumidor | Row filters y column masks que restringen lo que ve quien consulta |
+| Finalidad y vencimiento | Registro de concesiones propio; la autorización contextual va en la aplicación |
 
 **Criterio común:** las tres plataformas aplican acceso a datos; ninguna decide la finalidad. La concesión, su vencimiento y las pruebas negativas son de la arquitectura propia.
 
@@ -328,3 +328,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: creación (lote P2, dominio 24, ADR-027) desde `docs/briefs/privacy-program/04-autorizacion-por-finalidad.md`, que es un guion, no una fuente.
 - 2026-10-28: completada con lo que pedía el prompt de P2: la tupla (rol, finalidad, dataset o producto) y el deny por defecto en el §2 y en un comentario del código (la salida no cambia), y la revisión periódica de concesiones en el §4.
 - 2026-10-28: revisión `docs/reviews/p2.md` aplicada: el art. 14 quáter nombra sus cuatro factores (número de datos, extensión, plazo y accesibilidad) en el §2 y en `legal_basis`; etiqueta del nodo de logs en dos líneas.
+- 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.

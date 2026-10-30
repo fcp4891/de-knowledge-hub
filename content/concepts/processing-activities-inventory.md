@@ -81,12 +81,12 @@ El inventario explica **para qué** se tratan datos personales y lo vincula con 
 - **[Decisión de arquitectura]** **Actividad de tratamiento:** unidad de gestión con identificador estable, responsable, finalidad, base validada, categorías de datos y de titulares, activos, destinatarios, transferencias, plazo, decisiones automatizadas, estado y versión.
 - **[Decisión de arquitectura]** Cuatro entidades distintas, que no conviene mezclar en un solo campo:
 
-| Entidad | Responde | Ejemplo | Etiqueta |
-|---|---|---|---|
-| Actividad | Por qué se usan los datos | Gestionar una reserva | **[Decisión de arquitectura]** |
-| Activo | Dónde están | `silver.pasajeros` | **[Decisión de arquitectura]** |
-| Consumidor | Quién o qué los usa | `dag_reservas`, un dashboard, un servicio | **[Decisión de arquitectura]** |
-| Evidencia | Cómo se demuestra la aprobación y la operación | Ticket de aprobación, ejecución, registro de auditoría | **[Decisión de arquitectura]** |
+| Entidad | Responde | Ejemplo |
+|---|---|---|
+| Actividad | Por qué se usan los datos | Gestionar una reserva |
+| Activo | Dónde están | `silver.pasajeros` |
+| Consumidor | Quién o qué los usa | `dag_reservas`, un dashboard, un servicio |
+| Evidencia | Cómo se demuestra la aprobación y la operación | Ticket de aprobación, ejecución, registro de auditoría |
 
 - **[Decisión de arquitectura]** **Relaciones muchos a muchos:** actividad ↔ activo y actividad ↔ consumidor. `silver.pasajeros` puede servir a venta de pasajes (contrato) y a marketing (consentimiento); un único `legal_basis` o `purpose` pegado a la tabla no alcanza.
 - **[Buena práctica]** **Usos observados:** qué consumidores leen cada activo, desde el linaje y los logs de acceso; se comparan con los usos declarados.
@@ -271,25 +271,23 @@ Las dos últimas son las importantes: con la base asignada al dataset, ambos con
 
 En GCP, **Knowledge Catalog**. Según *About data lineage*, consultada el 2026-10-28 (no ejecutado):
 
-| Necesidad | Servicio | Limitación | Etiqueta |
-|---|---|---|---|
-| Usos observados | Linaje de datos de Knowledge Catalog, informado por BigQuery y Dataflow | Registra metadata del movimiento, no la finalidad; la información de linaje se retiene solo 30 días | **[Buena práctica]** |
-| Registro de actividades | Propio, con tags en el catálogo | Hay que mantenerlo enlazado a las ejecuciones | **[Decisión de arquitectura]** |
+| Necesidad | Servicio | Limitación |
+|---|---|---|
+| Usos observados | Linaje de datos de Knowledge Catalog, informado por BigQuery y Dataflow | Registra metadata del movimiento, no la finalidad; la información de linaje se retiene solo 30 días |
+| Registro de actividades | Propio, con tags en el catálogo | Hay que mantenerlo enlazado a las ejecuciones |
 
 ## 12. AWS
 
 En AWS, **Amazon DataZone**. Según *Data lineage in Amazon DataZone* (no ejecutado):
 
-| Necesidad | Servicio | Limitación | Etiqueta |
-|---|---|---|---|
-| Usos observados | Linaje de DataZone, compatible con OpenLineage | Muestra orígenes, transformaciones y consumo, no la aprobación | **[Buena práctica]** |
-| Registro de actividades | Propio, con metadatos de negocio | El catálogo no sustituye la aprobación del uso | **[Decisión de arquitectura]** |
+| Necesidad | Servicio | Limitación |
+|---|---|---|
+| Usos observados | Linaje de DataZone, compatible con OpenLineage | Muestra orígenes, transformaciones y consumo, no la aprobación |
+| Registro de actividades | Propio, con metadatos de negocio | El catálogo no sustituye la aprobación del uso |
 
 ## 13. Azure
 
 En Azure, **Unity Catalog** y **Purview Unified Catalog**. Según *Lineage in Unity Catalog* y *Learn about Microsoft Purview Unified Catalog* (no ejecutado):
-
-Etiqueta: **[Buena práctica]**
 
 | Necesidad | Servicio | Limitación |
 |---|---|---|
@@ -373,3 +371,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (idea central), §2 (art. 3 c) verificado en BCN y agregado a `legal_basis`; actividad, activo, consumidor y evidencia como entidades distintas), §3 (caso del modelo nuevo sobre una tabla disponible; la falta de registro no prueba la infracción), §4 (ocho pasos con autorizar y gestionar desviaciones; el linaje no muestra intención), §6, §7 (tres actividades sobre el mismo activo), §8 (escenario con evidencia «qué demuestra y qué no»), §9 (consumidores declarados y conciliación), §10 (consumidores por actividad: brechas «sin vínculo» y «sin aprobación», insumo del art. 14 ter solo con actividades aprobadas), §11–13 (columna de limitaciones; retención de 30 días del linaje en GCP), §14–16, §17 (relaciones con `pii-identification` y `privacy-controls-as-code`), §18 (criterio de dominio) y §19 (laboratorio para F4). Sin cambios en las etiquetas existentes, aviso ni vigencia.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `fundamentos` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/processing-activities-inventory/`) no cambia.
 - 2026-10-30: Enmienda 3 de ADR-023: en §13, la tabla con la misma etiqueta en todas sus filas pasa a la línea «Etiqueta: […]» antes de la tabla, sin columna. Sin cambios de contenido.
+- 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.

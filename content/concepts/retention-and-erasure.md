@@ -97,13 +97,13 @@ La **retención** define hasta cuándo se conserva un dato para una finalidad ap
 - **[Obligación legal · art. 8 ter]** **Bloqueo:** suspensión temporal del tratamiento sin borrar.
 - **[Buena práctica]** Cinco nociones que conviene no mezclar:
 
-| Noción | Qué es | Qué no es | Etiqueta |
-|---|---|---|---|
-| Regla de retención | Evento de inicio, duración, finalidad, acción al vencer y excepciones aprobadas | Un plazo único por tabla para todo | **[Buena práctica]** |
-| Supresión | Ejecución de una decisión de eliminar sobre los destinos alcanzados | Un DELETE en una tabla | **[Buena práctica]** |
-| Borrado lógico | La fila ya no se ve, pero puede quedar recuperable en versiones o respaldos | Eliminación (art. 2 h)) | **[Buena práctica]** |
-| Bloqueo | Restringir el tratamiento sin borrar | Supresión | **[Buena práctica]** |
-| Anonimización | Transformación evaluada contra los medios razonables de reidentificación | Quitar el RUT o seudonimizar | **[Buena práctica]** |
+| Noción | Qué es | Qué no es |
+|---|---|---|
+| Regla de retención | Evento de inicio, duración, finalidad, acción al vencer y excepciones aprobadas | Un plazo único por tabla para todo |
+| Supresión | Ejecución de una decisión de eliminar sobre los destinos alcanzados | Un DELETE en una tabla |
+| Borrado lógico | La fila ya no se ve, pero puede quedar recuperable en versiones o respaldos | Eliminación (art. 2 h)) |
+| Bloqueo | Restringir el tratamiento sin borrar | Supresión |
+| Anonimización | Transformación evaluada contra los medios razonables de reidentificación | Quitar el RUT o seudonimizar |
 
 - **[Buena práctica]** Los datos de una misma persona no tienen un solo plazo: una reserva, una preferencia comercial y un comprobante tributario responden a finalidades y reglas distintas.
 - **[Decisión de arquitectura]** **Lista de supresión con alcance:** registro de llaves de titulares suprimidos y de los destinos que abarca la decisión, que la ingesta aplica para no reintroducirlos. Una lista global que descarte siempre a la persona puede interferir con tratamientos posteriores legítimos.
@@ -454,27 +454,25 @@ El script se **ejecuta en la CI con cryptography** (ADR-022) y pasa `mypy --stri
 
 En GCP, **BigQuery**. Según *Data retention with time travel and fail-safe* (no ejecutado):
 
-| Tema | Comportamiento | Etiqueta |
-|---|---|---|
-| Time travel | Los datos cambiados o borrados siguen recuperables durante la ventana: 7 días por defecto, configurable entre 2 y 7 | **[Buena práctica]** |
-| Fail-safe | 7 días más, no configurables; se recupera con Cloud Customer Care | **[Buena práctica]** |
-| Consecuencia | Tras un DELETE, el dato sigue recuperable hasta unos 14 días; el destino queda en `pendiente_expiracion_copias` y la evidencia declara esa ventana | **[Decisión de arquitectura]** |
+| Tema | Comportamiento |
+|---|---|
+| Time travel | Los datos cambiados o borrados siguen recuperables durante la ventana: 7 días por defecto, configurable entre 2 y 7 |
+| Fail-safe | 7 días más, no configurables; se recupera con Cloud Customer Care |
+| Consecuencia | Tras un DELETE, el dato sigue recuperable hasta unos 14 días; el destino queda en `pendiente_expiracion_copias` y la evidencia declara esa ventana |
 
 ## 12. AWS
 
 En AWS, **Amazon S3** e **Iceberg**. Según *Managing the lifecycle of objects*, *Deleting object versions from a versioning-enabled bucket* y *Maintenance* (Apache Iceberg) (no ejecutado):
 
-| Tema | Comportamiento | Etiqueta |
-|---|---|---|
-| Retención de objetos | S3 Lifecycle: acciones de expiración que borran los objetos vencidos | **[Buena práctica]** |
-| Versionado | Un DELETE simple agrega un delete marker; `NoncurrentVersionExpiration` borra las versiones no actuales | **[Buena práctica]** |
-| Tablas Iceberg | Expirar snapshots; los archivos se borran cuando ningún snapshot los referencia | **[Decisión de arquitectura]** |
+| Tema | Comportamiento |
+|---|---|
+| Retención de objetos | S3 Lifecycle: acciones de expiración que borran los objetos vencidos |
+| Versionado | Un DELETE simple agrega un delete marker; `NoncurrentVersionExpiration` borra las versiones no actuales |
+| Tablas Iceberg | Expirar snapshots; los archivos se borran cuando ningún snapshot los referencia |
 
 ## 13. Azure
 
 En Azure, **Delta** en Azure Databricks. Según *Remove unused data files with vacuum* y *VACUUM* (no ejecutado):
-
-Etiqueta: **[Buena práctica]**
 
 | Tema | Comportamiento |
 |---|---|
@@ -566,3 +564,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `derechos-ciclo-vida` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/retention-and-erasure/`) no cambia.
 - 2026-10-28: mismos errores que la revisión de P2: la nota del art. 7 dice que la lista de casos en que no procede la supresión es cerrada (i a vi), sin «entre otros»; el art. 14 quáter nombra sus cuatro factores, no solo el plazo.
 - 2026-10-30: Enmienda 3 de ADR-023: en §13, la tabla con la misma etiqueta en todas sus filas pasa a la línea «Etiqueta: […]» antes de la tabla, sin columna. Sin cambios de contenido.
+- 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.

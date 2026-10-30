@@ -80,13 +80,13 @@ Desde la vigencia de la ley, cualquier titular puede pedir qué datos se tienen 
 - **[Obligación legal · art. 10]** Mecanismos tecnológicos expeditos; rectificación, supresión y oposición siempre gratuitas; acceso gratuito al menos trimestralmente.
 - **[Decisión de arquitectura]** Cinco elementos que conviene modelar por separado:
 
-| Elemento | Qué guarda | Quién lo produce | Etiqueta |
-|---|---|---|---|
-| Solicitud | Qué pide el titular, cuándo ingresó y en qué estado está | Pipeline de derechos | **[Decisión de arquitectura]** |
-| Decisión autorizada | Procedencia, alcance, excepciones y fecha límite | Área legal (no el pipeline) | **[Decisión de arquitectura]** |
-| Índice de titulares | Llave seudónima → tablas, actividades y sistemas donde aparece | Ingesta y linaje | **[Decisión de arquitectura]** |
-| Acción por destino | Operación, reintentos y resultado verificable | Conectores de cada sistema | **[Decisión de arquitectura]** |
-| Evidencia | Quién autorizó, qué se ejecutó, qué falló y qué se comunicó | Pipeline de derechos | **[Decisión de arquitectura]** |
+| Elemento | Qué guarda | Quién lo produce |
+|---|---|---|
+| Solicitud | Qué pide el titular, cuándo ingresó y en qué estado está | Pipeline de derechos |
+| Decisión autorizada | Procedencia, alcance, excepciones y fecha límite | Área legal (no el pipeline) |
+| Índice de titulares | Llave seudónima → tablas, actividades y sistemas donde aparece | Ingesta y linaje |
+| Acción por destino | Operación, reintentos y resultado verificable | Conectores de cada sistema |
+| Evidencia | Quién autorizó, qué se ejecutó, qué falló y qué se comunicó | Pipeline de derechos |
 
 - **[Decisión de arquitectura]** **Pipeline de solicitudes:** recepción → autenticación → decisión del área legal → localización → ejecución por destino → verificación → respuesta → cierre.
 
@@ -103,8 +103,6 @@ Desde la vigencia de la ley, cualquier titular puede pedir qué datos se tienen 
 3. **[Buena práctica]** Calcular la llave seudónima (HMAC) y consultar el índice de titulares, el catálogo y el registro de actividades. El linaje ayuda a encontrar dependencias, pero no ubica las filas de un titular.
 4. **[Obligación legal · art. 8 ter]** El bloqueo suspende temporalmente el tratamiento sin afectar el almacenamiento. **[Decisión de arquitectura]** Un flag del titular que las vistas de consumo y los jobs excluyen, sin borrar.
 5. **[Decisión de arquitectura]** El área legal decide si la solicitud procede y su alcance; ingeniería ejecuta según el tipo:
-
-Etiqueta: **[Decisión de arquitectura]**
 
 | Derecho | Ejecución técnica | Riesgo principal |
 |---|---|---|
@@ -345,31 +343,31 @@ Cuatro lecciones: el acceso sale del **catálogo por actividad**, no de un `SELE
 
 En GCP, **BigQuery** con seguridad a nivel de fila. Según *Introduction to BigQuery row-level security* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Bloqueo en consumo | Row access policies que filtran filas según el usuario | **[Buena práctica]** |
-| Índice de titulares | Tabla propia en BigQuery | **[Decisión de arquitectura]** |
-| Límite | El filtro protege las lecturas de esa tabla; lo que ya se exportó o copió a otro sistema necesita su propio control | **[Buena práctica]** |
+| Necesidad | Servicio |
+|---|---|
+| Bloqueo en consumo | Row access policies que filtran filas según el usuario |
+| Índice de titulares | Tabla propia en BigQuery |
+| Límite | El filtro protege las lecturas de esa tabla; lo que ya se exportó o copió a otro sistema necesita su propio control |
 
 ## 12. AWS
 
 En AWS, **Lake Formation**. Según *Data filtering and cell-level security in Lake Formation* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Bloqueo en consumo | Filtros de datos a nivel de fila al dar permisos | **[Buena práctica]** |
-| Índice de titulares | Tabla propia | **[Decisión de arquitectura]** |
-| Límite | El filtro protege las lecturas con esos permisos; lo que ya se exportó o copió a otro sistema necesita su propio control | **[Buena práctica]** |
+| Necesidad | Servicio |
+|---|---|
+| Bloqueo en consumo | Filtros de datos a nivel de fila al dar permisos |
+| Índice de titulares | Tabla propia |
+| Límite | El filtro protege las lecturas con esos permisos; lo que ya se exportó o copió a otro sistema necesita su propio control |
 
 ## 13. Azure
 
 En Azure, **Unity Catalog** de Azure Databricks. Según *Row filters and column masks* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Bloqueo en consumo | Filtros de fila de Unity Catalog contra la tabla de bloqueos | **[Buena práctica]** |
-| Índice de titulares | Tabla propia en el lakehouse | **[Decisión de arquitectura]** |
-| Límite | El filtro protege las consultas a esa tabla; lo que ya se exportó o copió a otro sistema necesita su propio control | **[Buena práctica]** |
+| Necesidad | Servicio |
+|---|---|
+| Bloqueo en consumo | Filtros de fila de Unity Catalog contra la tabla de bloqueos |
+| Índice de titulares | Tabla propia en el lakehouse |
+| Límite | El filtro protege las consultas a esa tabla; lo que ya se exportó o copió a otro sistema necesita su propio control |
 
 **Criterio común:** ningún servicio implementa por sí solo los derechos del titular; el filtro de fila es una pieza del bloqueo, no el pipeline.
 
@@ -453,3 +451,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (flujo con estado y cobertura), §2 (solicitud, decisión autorizada, índice, acción por destino y evidencia), §3 (rectificación revertida por la carga del CRM), §4 (verificación de identidad, idempotencia, verificación del efecto, cierre sin destinos pendientes, riesgo principal por derecho y plazos como configuración versionada), §5, §6, §7 (rectificación por etapas), §8 (escenario y evidencia «qué demuestra y qué no»), §9 (ejecución por destino y cierre), §10 (rectificación que sobrevive al backfill y control de cierre, sobre el mismo ejemplo), §11–13 (límites de los filtros de fila y criterio común), §14–16, §18 (criterio de dominio) y §19 (laboratorio para F4). Los plazos verificados del art. 11 se mantienen. Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `derechos-ciclo-vida` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/data-subject-rights-pipeline/`) no cambia.
 - 2026-10-30: Enmienda 3 de ADR-023: en §4, la tabla con la misma etiqueta en todas sus filas pasa a la línea «Etiqueta: […]» antes de la tabla, sin columna. Sin cambios de contenido.
+- 2026-10-30: Enmienda 4 de ADR-023: 5 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.

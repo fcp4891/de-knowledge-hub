@@ -3828,7 +3828,7 @@ slug: boe-doue
 type: source
 title: 'BOE: Diario Oficial de la Unión Europea (DOUE)'
 description: Reproducción oficial en el BOE del Diario Oficial de la Unión Europea; se usa para el texto del Reglamento (UE) 2016/679 (RGPD) en
-  español, versión auténtica (ADR-023, Enmienda 4).
+  español, versión auténtica (ADR-023, Enmienda 5).
 url: https://www.boe.es/
 source_type: legislative
 authority_level: 1
@@ -3849,7 +3849,7 @@ slug: camara-legin
 type: source
 title: 'Câmara dos Deputados: Legislação Informatizada'
 description: Texto oficial de las leyes federales de Brasil, con su texto actualizado, publicado por la Cámara de Diputados; se usa para la Lei
-  13.709/2018 (LGPD) (ADR-023, Enmienda 4).
+  13.709/2018 (LGPD) (ADR-023, Enmienda 5).
 url: https://www2.camara.leg.br/legin
 source_type: legislative
 authority_level: 1
@@ -3964,6 +3964,24 @@ url: https://learn.microsoft.com/en-us/azure/reliability/
 source_type: official_docs
 authority_level: 1
 provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-30'
+updated_at: '2026-10-30'
+last_verified: '2026-10-30'
+verification_status: verified
+---
+id: source:mj-biblioteca-digital
+slug: mj-biblioteca-digital
+type: source
+title: Biblioteca Digital do Ministério da Justiça (Brasil)
+description: Repositorio oficial del Ministerio de Justicia de Brasil con copias de actos publicados (SEI/MJ), incluidas resoluciones de la ANPD.
+url: https://bibliotecadigital.mj.gov.br/
+source_type: official_docs
+authority_level: 1
+provider: mj
 url_verified: true
 review_frequency: quarterly
 trust: high

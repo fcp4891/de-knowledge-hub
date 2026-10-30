@@ -219,31 +219,31 @@ Desarrollar conocimientos que permitan no solo comprender qué debe protegerse, 
 
 **[Buena práctica]** La etiqueta de cada fila corresponde a la definición (letra del art. 2 entre paréntesis); la columna «Error a evitar» es orientación técnica.
 
-| Concepto | Explicación práctica | Error a evitar | Etiqueta |
-|---|---|---|---|
-| Dato personal (f) | Información vinculada o referida a una persona natural identificada o identificable, directa o indirectamente | Suponer que solo el nombre o el RUT son datos personales | **[Obligación legal · art. 2]** |
-| Dato sensible (g) | Se refiere a características físicas o morales o a hechos o circunstancias de la vida privada o intimidad, y revela origen étnico o racial, afiliación política, sindical o gremial, situación socioeconómica, convicciones ideológicas o filosóficas, creencias religiosas, salud, perfil biológico humano, datos biométricos, vida sexual, orientación sexual o identidad de género (lista cerrada; detección en `pii-identification`) | Clasificar solo por el nombre de la columna | **[Obligación legal · art. 2]** |
-| Tratamiento (o) | Cualquier operación, automatizada o no, para recolectar, procesar, almacenar, comunicar, transmitir o utilizar datos personales | Creer que un ETL interno no es tratamiento | **[Obligación legal · art. 2]** |
-| Responsable (n) | Decide los fines y medios del tratamiento, aunque lo ejecute un encargado | Atribuir las decisiones jurídicas al equipo técnico | **[Obligación legal · art. 2]** |
-| Encargado (x) | Trata datos personales por cuenta del responsable | Suponer que todo proveedor es encargado en toda actividad | **[Obligación legal · art. 2]** |
-| Seudonimización (l) | Los datos ya no se atribuyen a un titular sin información adicional, que figura por separado y está sujeta a medidas técnicas y organizativas | Considerarla anonimización | **[Obligación legal · art. 2]** |
-| Anonimización (k) | Procedimiento irreversible: el dato ya no puede vincularse a una persona ni permitir su identificación | Declarar anónima una tabla solo porque se quitó el RUT | **[Obligación legal · art. 2]** |
-| Finalidad y base de licitud (arts. 3 b), 12 y 13) | Para qué se trata el dato y qué habilita ese tratamiento | Asignar una sola base a un dataset que se reutiliza | **[Obligación legal · art. 3]** |
+| Concepto | Explicación práctica | Error a evitar |
+|---|---|---|
+| **[Obligación legal · art. 2]** Dato personal (f) | Información vinculada o referida a una persona natural identificada o identificable, directa o indirectamente | Suponer que solo el nombre o el RUT son datos personales |
+| **[Obligación legal · art. 2]** Dato sensible (g) | Se refiere a características físicas o morales o a hechos o circunstancias de la vida privada o intimidad, y revela origen étnico o racial, afiliación política, sindical o gremial, situación socioeconómica, convicciones ideológicas o filosóficas, creencias religiosas, salud, perfil biológico humano, datos biométricos, vida sexual, orientación sexual o identidad de género (lista cerrada; detección en `pii-identification`) | Clasificar solo por el nombre de la columna |
+| **[Obligación legal · art. 2]** Tratamiento (o) | Cualquier operación, automatizada o no, para recolectar, procesar, almacenar, comunicar, transmitir o utilizar datos personales | Creer que un ETL interno no es tratamiento |
+| **[Obligación legal · art. 2]** Responsable (n) | Decide los fines y medios del tratamiento, aunque lo ejecute un encargado | Atribuir las decisiones jurídicas al equipo técnico |
+| **[Obligación legal · art. 2]** Encargado (x) | Trata datos personales por cuenta del responsable | Suponer que todo proveedor es encargado en toda actividad |
+| **[Obligación legal · art. 2]** Seudonimización (l) | Los datos ya no se atribuyen a un titular sin información adicional, que figura por separado y está sujeta a medidas técnicas y organizativas | Considerarla anonimización |
+| **[Obligación legal · art. 2]** Anonimización (k) | Procedimiento irreversible: el dato ya no puede vincularse a una persona ni permitir su identificación | Declarar anónima una tabla solo porque se quitó el RUT |
+| **[Obligación legal · art. 3]** Finalidad y base de licitud (arts. 3 b), 12 y 13) | Para qué se trata el dato y qué habilita ese tratamiento | Asignar una sola base a un dataset que se reutiliza |
 
 ### Los ocho principios del art. 3 como decisiones técnicas
 
 **[Obligación legal · art. 3]** Los ocho principios rigen el tratamiento; la pregunta y el control de cada fila son orientativos y llevan su propia etiqueta.
 
-| Principio | Pregunta del ingeniero | Control orientativo | Etiqueta |
-|---|---|---|---|
-| a) Licitud y lealtad | ¿Este tratamiento tiene una base validada para esta finalidad? | Cada actividad del catálogo con su base validada | **[Decisión de arquitectura]** |
-| b) Finalidad | ¿Algún consumidor usa los datos para otro propósito? | Metadatos de uso, permisos y contratos de consumo | **[Decisión de arquitectura]** |
-| c) Proporcionalidad | ¿Capturamos más campos de los necesarios? | Lista de columnas permitidas por producto y capa | **[Decisión de arquitectura]** |
-| d) Calidad | ¿Los datos son exactos y están actualizados? | Pruebas de exactitud, vigencia y rectificación | **[Buena práctica]** |
-| e) Responsabilidad | ¿Quién decide y quién opera cada control? | Dueños, aprobaciones y evidencia | **[Buena práctica]** |
-| f) Seguridad | ¿Quién puede acceder y qué pasa ante una falla? | Mínimo privilegio, cifrado, respaldo y monitoreo | **[Buena práctica]** |
-| g) Transparencia e información | ¿Podemos explicar qué tratamientos existen? | Catálogo conectado al inventario de actividades | **[Decisión de arquitectura]** |
-| h) Confidencialidad | ¿Se exponen datos a usuarios o sistemas no autorizados? | Segregación, secretos, registros y control de exportaciones | **[Buena práctica]** |
+| Principio | Pregunta del ingeniero | Control orientativo |
+|---|---|---|
+| a) Licitud y lealtad | ¿Este tratamiento tiene una base validada para esta finalidad? | Cada actividad del catálogo con su base validada |
+| b) Finalidad | ¿Algún consumidor usa los datos para otro propósito? | Metadatos de uso, permisos y contratos de consumo |
+| c) Proporcionalidad | ¿Capturamos más campos de los necesarios? | Lista de columnas permitidas por producto y capa |
+| d) Calidad | ¿Los datos son exactos y están actualizados? | Pruebas de exactitud, vigencia y rectificación |
+| e) Responsabilidad | ¿Quién decide y quién opera cada control? | Dueños, aprobaciones y evidencia |
+| f) Seguridad | ¿Quién puede acceder y qué pasa ante una falla? | Mínimo privilegio, cifrado, respaldo y monitoreo |
+| g) Transparencia e información | ¿Podemos explicar qué tratamientos existen? | Catálogo conectado al inventario de actividades |
+| h) Confidencialidad | ¿Se exponen datos a usuarios o sistemas no autorizados? | Segregación, secretos, registros y control de exportaciones |
 
 **[Buena práctica]** Estos controles son propuestas de diseño: su suficiencia depende del contexto, del riesgo y de las obligaciones aplicables.
 
@@ -269,8 +269,6 @@ Desarrollar conocimientos que permitan no solo comprender qué debe protegerse, 
 6. **[Decisión de arquitectura]** **¿Cómo lo demuestro?** Cada control produce evidencia automática y la CI falla si falta un control o su evidencia (verificación regular del art. 14 quinquies; `privacy-controls-as-code`); la consulta de alcance por linaje permite dimensionar una vulneración (art. 14 sexies; `data-breach-response`).
 
 **[Decisión de arquitectura]** Matriz de control:
-
-Etiqueta: **[Decisión de arquitectura]**
 
 | Requisito o necesidad | Decisión aprobada por | Control técnico | Evidencia verificable |
 |---|---|---|---|
@@ -445,10 +443,10 @@ El script se **ejecuta en la CI** con la biblioteca estándar, con esa entrada y
 
 En GCP, **Sensitive Data Protection** y **Cloud Audit Logs**.
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Descubrir y clasificar | Sensitive Data Protection: descubre, clasifica y desidentifica; perfila BigQuery, Cloud SQL y Cloud Storage | **[Buena práctica]** |
-| Auditar accesos a datos | Cloud Audit Logs: los Data Access audit logs están desactivados por defecto, salvo en BigQuery | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Descubrir y clasificar | Sensitive Data Protection: descubre, clasifica y desidentifica; perfila BigQuery, Cloud SQL y Cloud Storage |
+| Auditar accesos a datos | Cloud Audit Logs: los Data Access audit logs están desactivados por defecto, salvo en BigQuery |
 
 Los Data Access audit logs se configuran por servicio: revisar BigQuery y cada recurso que se use.
 
@@ -456,16 +454,14 @@ Los Data Access audit logs se configuran por servicio: revisar BigQuery y cada r
 
 En AWS, **Amazon Macie** y **AWS CloudTrail**.
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Descubrir | Amazon Macie: datos sensibles en buckets de S3 | **[Buena práctica]** |
-| Auditar accesos a datos | CloudTrail: los data events no se registran por defecto | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Descubrir | Amazon Macie: datos sensibles en buckets de S3 |
+| Auditar accesos a datos | CloudTrail: los data events no se registran por defecto |
 
 ## 13. Azure
 
 En Azure, **Microsoft Purview** y **Unity Catalog** de Azure Databricks.
-
-Etiqueta: **[Buena práctica]**
 
 | Necesidad | Servicio |
 |---|---|
@@ -606,3 +602,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: Enmienda 3 de ADR-023: en §4, §13, la tabla con la misma etiqueta en todas sus filas pasa a la línea «Etiqueta: […]» antes de la tabla, sin columna. Sin cambios de contenido.
 - 2026-10-30: se quitan del resumen «Cómo leerla» y el subtítulo «Ley 21.719: Protección de datos personales aplicada a Ingeniería de Datos»; del §2, el párrafo del marco de la Ley 19.628/21.719 y el bloque «Precisiones transversales».
 - 2026-10-30: §17 nombra las fichas hijas nuevas `gdpr` y `lgpd` (lote P4, tramo 6 «Marcos regulatorios comparados»). Sin cambios de contenido.
+- 2026-10-30: Enmienda 4 de ADR-023: 6 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.

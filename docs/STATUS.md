@@ -49,7 +49,7 @@
 - [x] 16-observability: 13/13 `verified`, aprobado por Felipe en el navegador el 2026-10-20 (ADR-020: OpenTelemetry en la CI, sin collector; SRE como N4 solo para conceptos).
 - [x] 17-governance: 9/9 `verified`, aprobado por Felipe en el navegador el 2026-10-21 (ADR-021: OpenLineage en la CI, transporte a archivo).
 - [x] 18-security: 17/17 `verified`, aprobado por Felipe en el navegador el 2026-10-21 (ADR-022: cryptography). 18 no menciona la ley.
-- [ ] 24-privacy-engineering (ADR-027, desde el 2026-10-28): las 11 fichas de la Ley 21.719 (una padre y diez hijas), venidas de 19, y las 4 del lote P2 (2026-10-28): 15 fichas en revisión; lote P1: 9 hijas mejoradas. Pasan a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Lote P4 (2026-10-30): `gdpr` y `lgpd` en el tramo 6, en revisión (ADR-023 Enmienda 4).
+- [ ] 24-privacy-engineering (ADR-027, desde el 2026-10-28): las 11 fichas de la Ley 21.719 (una padre y diez hijas), venidas de 19, y las 4 del lote P2 (2026-10-28): 15 fichas en revisión; lote P1: 9 hijas mejoradas. Pasan a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Lote P4 (2026-10-30): `gdpr` y `lgpd` en el tramo 6, en revisión (ADR-023 Enmienda 5).
 - [x] 19-compliance: integrado al 24 el 2026-10-30 (ADR-027, Enmienda 1); su subdominio `regulatory-frameworks` es el tramo 6 de 24 (GDPR y LGPD en el BACKLOG). El blueprint tiene 23 dominios; Transversal queda con 15–18.
 - [x] 21-ai-for-data-engineering (27 fichas en 21a–21e, ADR-025): 27/27 `verified` el 2026-10-26.
 - [x] 22-modern-data-engineering: 10/10 `verified` el 2026-10-27.
