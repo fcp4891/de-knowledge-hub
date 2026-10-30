@@ -102,10 +102,6 @@ verification_status: review_required
 
 Esta ficha no es asesoría legal: explica el alcance técnico. El detalle de cada requisito está en su ficha hija.
 
-**Cómo leerla.** *Comprender* (§1–6): qué exige la ley y qué afecta a tu trabajo. *Aplicar* (§7–13): cómo diseñarías la solución. *Demostrar*: la evidencia del §8, el código del §10 y las preguntas del §18, para verificar que funciona.
-
-### Ley 21.719: Protección de datos personales aplicada a Ingeniería de Datos
-
 ### Objetivo
 
 Comprender cómo la protección de datos personales influye en el diseño, desarrollo, operación, seguridad y auditoría de las plataformas de datos, conectando los principios y obligaciones de la normativa chilena con arquitecturas, herramientas y prácticas reales de Ingeniería de Datos.
@@ -165,8 +161,6 @@ Desarrollar conocimientos que permitan no solo comprender qué debe protegerse, 
 
 **[Buena práctica]** **Obligación legal frente a patrón técnico.** La ley impone obligaciones a quien corresponde (responsable o encargado). La matriz requisito → control → evidencia, las pruebas en la CI y los plazos internos de revisión son patrones técnicos propuestos aquí: **no** son obligaciones literales ni exigen una herramienta específica.
 
-**[Buena práctica]** La Ley 19.628, modificada por la Ley 21.719, establece un marco de protección de datos personales. En Ingeniería de Datos, su aplicación se traduce en identificar los datos tratados, controlar sus usos, implementar salvaguardas y conservar evidencia de los controles. La interpretación y las decisiones jurídicas corresponden a las áreas responsables.
-
 ### Ocho principios del artículo 3
 
 - **[Obligación legal · art. 3]** a) Licitud y lealtad.
@@ -220,12 +214,6 @@ Desarrollar conocimientos que permitan no solo comprender qué debe protegerse, 
 - **[Buena práctica]** Seguridad: define y evalúa el riesgo y las medidas de protección.
 - **[Buena práctica]** Ingeniería de Datos: implementa controles técnicos, automatización, trazabilidad y evidencia.
 - **[Obligación legal · art. 3]** Responsable del tratamiento: conserva las responsabilidades legales que le corresponden.
-
-### Precisiones transversales
-
-- **[Obligación legal · art. 12]** La carga de probar la licitud corresponde al responsable; las demás bases de licitud se tratan en el art. 13.
-- **[Obligación legal · art. 15 bis]** El encargado trata según el encargo; si se aparta de él, puede responder como responsable.
-- **[Decisión de arquitectura]** Las decisiones de arquitectura son elecciones de diseño y no deben presentarse automáticamente como exigencias legales.
 
 ### Conceptos que el ingeniero debe dominar
 
@@ -609,3 +597,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: mismos errores que la revisión de P2: la fila del art. 14 quáter del mapa de artículos nombra sus cuatro factores.
 - 2026-10-28: el resumen pasa a ser la introducción del subdominio (objetivo, idea central, contexto normativo y preguntas que debe responder la arquitectura). La vigencia citada sigue siendo la de la ley publicada; el boletín 18.623-07 sigue siendo un proyecto.
 - 2026-10-30: sobre la versión de Felipe (`b/ui-ajustes-1030`), solo lo que exige ADR-023 para pasar `make validate`: etiquetas en el párrafo de marco y en los ítems del §2 (principios a) a h) y responsabilidades), y columna «Etiqueta» en la matriz del §4 y en las tablas de §11–13, con los mismos valores que tenían antes. La vigencia ya estaba en sincronía con `cl-ley-21719.yaml`.
+- 2026-10-30: se quitan del resumen «Cómo leerla» y el subtítulo «Ley 21.719: Protección de datos personales aplicada a Ingeniería de Datos»; del §2, el párrafo del marco de la Ley 19.628/21.719 y el bloque «Precisiones transversales».

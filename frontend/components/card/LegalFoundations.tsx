@@ -4,13 +4,12 @@ import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
 
 import {
   CHILE_GROUPS,
-  CHILE_INTRO,
-  CHILE_NOTES,
   CHILE_PRINCIPLES,
   CHILE_ROLES,
   type ChileArticle,
   type ChileFicha,
   type ChileGroup,
+  type ChilePrinciple,
 } from "@/lib/chileLegalCatalog";
 import { bcnLinkText, legalRowId } from "@/lib/legal";
 
@@ -32,6 +31,33 @@ function matches(article: ChileArticle, query: string): boolean {
     ),
   );
   return haystack.includes(query);
+}
+
+function groupFromSearch(search: string): string | null {
+  const value = new URLSearchParams(search).get("grupo");
+  if (!value) {
+    return null;
+  }
+  return CHILE_GROUPS.some((group) => group.id === value) ? value : null;
+}
+
+function writeLocation(search: string, hash: string) {
+  history.replaceState(null, "", `${window.location.pathname}${search}${hash}`);
+}
+
+function chooseGroup(next: string | null) {
+  const url = new URL(window.location.href);
+  if (next) {
+    url.searchParams.set("grupo", next);
+  } else {
+    url.searchParams.delete("grupo");
+  }
+  writeLocation(url.search, url.hash);
+}
+
+function pushHash(id: string) {
+  const url = new URL(window.location.href);
+  history.pushState(null, "", `${url.pathname}${url.search}#${id}`);
 }
 
 function findArticle(id: string): ChileArticle | null {
@@ -96,8 +122,6 @@ export function LegalFoundations() {
   }, [folded, theme]);
 
   function showArticle(item: ChileArticle, fromHash: boolean) {
-    setTheme(null);
-    setQuery("");
     setOpen(item);
     if (!fromHash) {
       return;
@@ -142,25 +166,30 @@ export function LegalFoundations() {
         return;
       }
       event.preventDefault();
-      history.pushState(null, "", `#${id}`);
+      pushHash(id);
       showArticle(item, true);
     }
+    function syncGroup() {
+      setTheme(groupFromSearch(window.location.search));
+    }
+    syncGroup();
     openFromHash();
     window.addEventListener("hashchange", openFromHash);
+    window.addEventListener("popstate", syncGroup);
     document.addEventListener("click", onClick);
     return () => {
       window.removeEventListener("hashchange", openFromHash);
+      window.removeEventListener("popstate", syncGroup);
       document.removeEventListener("click", onClick);
     };
   }, []);
 
   return (
     <div className="legal-foundations">
-      <p className="lf-lead">{CHILE_INTRO}</p>
       <h3>Ocho principios del artículo 3</h3>
       <ul className="lf-principles">
         {CHILE_PRINCIPLES.map((item) => (
-          <li key={item}>{item}</li>
+          <PrincipleTip key={item.slug} principle={item} />
         ))}
       </ul>
       <h3>Catálogo legal agrupado por temática</h3>
@@ -174,11 +203,26 @@ export function LegalFoundations() {
         />
       </div>
       <div className="lf-filters" role="group" aria-label="Filtrar por temática">
-        <button type="button" aria-pressed={theme === null} onClick={() => setTheme(null)}>
+        <button
+          type="button"
+          aria-pressed={theme === null}
+          onClick={() => {
+            setTheme(null);
+            chooseGroup(null);
+          }}
+        >
           Todas
         </button>
         {CHILE_GROUPS.map((group) => (
-          <button key={group.id} type="button" aria-pressed={theme === group.id} onClick={() => setTheme(group.id)}>
+          <button
+            key={group.id}
+            type="button"
+            aria-pressed={theme === group.id}
+            onClick={() => {
+              setTheme(group.id);
+              chooseGroup(group.id);
+            }}
+          >
             {group.title}
           </button>
         ))}
@@ -194,13 +238,88 @@ export function LegalFoundations() {
           <li key={item}>{item}</li>
         ))}
       </ul>
-      <h3>Precisiones transversales</h3>
-      <ul>
-        {CHILE_NOTES.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
     </div>
+  );
+}
+
+function PrincipleTip({ principle }: { principle: ChilePrinciple }) {
+  const rootRef = useRef<HTMLLIElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const skipClick = useRef(false);
+  const closing = useRef(false);
+  const [shown, setShown] = useState(false);
+  const tipId = `lf-tip-${principle.slug}`;
+
+  return (
+    <li
+      className="lf-principle"
+      ref={rootRef}
+      onMouseEnter={() => setShown(true)}
+      onMouseLeave={() => {
+        window.setTimeout(() => {
+          if (rootRef.current?.contains(document.activeElement)) {
+            return;
+          }
+          setShown(false);
+        }, 0);
+      }}
+      onBlur={(event) => {
+        const next = event.relatedTarget;
+        if (next instanceof Node && rootRef.current?.contains(next)) {
+          return;
+        }
+        window.setTimeout(() => {
+          if (rootRef.current?.contains(document.activeElement)) {
+            return;
+          }
+          setShown(false);
+        }, 0);
+      }}
+      onKeyDown={(event) => {
+        if (event.key !== "Escape" || !shown) {
+          return;
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        closing.current = true;
+        setShown(false);
+        buttonRef.current?.focus();
+        window.setTimeout(() => {
+          closing.current = false;
+        }, 0);
+      }}
+    >
+      <button
+        ref={buttonRef}
+        type="button"
+        className="lf-principle-trigger"
+        aria-describedby={shown ? tipId : undefined}
+        aria-expanded={shown}
+        onFocus={() => {
+          if (closing.current) {
+            return;
+          }
+          skipClick.current = true;
+          setShown(true);
+        }}
+        onClick={() => {
+          if (skipClick.current) {
+            skipClick.current = false;
+            setShown(true);
+            return;
+          }
+          setShown(true);
+        }}
+      >
+        {principle.label}
+      </button>
+      {shown ? (
+        <span className="lf-tip" id={tipId} role="tooltip">
+          <span>{principle.description}</span>
+          <a href={`/concepts/${principle.slug}/`}>Ver en detalle →</a>
+        </span>
+      ) : null}
+    </li>
   );
 }
 
