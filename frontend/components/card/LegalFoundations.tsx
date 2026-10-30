@@ -189,7 +189,7 @@ export function LegalFoundations() {
       <h3>Ocho principios del artículo 3</h3>
       <ul className="lf-principles">
         {CHILE_PRINCIPLES.map((item) => (
-          <PrincipleTip key={item.slug} principle={item} />
+          <PrincipleTip key={item.label} principle={item} />
         ))}
       </ul>
       <h3>Catálogo legal agrupado por temática</h3>
