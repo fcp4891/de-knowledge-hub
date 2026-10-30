@@ -10,6 +10,8 @@ import pytest
 
 from scripts.static import build_static_data as s
 import datetime as dt
+import zipfile
+import zipfile
 
 from scripts.static import package_static
 from scripts.static.package_static import check_base_path, zip_name
@@ -40,7 +42,7 @@ def test_every_list_item_has_its_detail(out: Path) -> None:
 def test_lists_cover_all_content(out: Path) -> None:
     concepts = read(out, "concepts.json")
     assert concepts["total"] == len(concepts["items"]) == len(s.p.load_index(s.ROOT / "content", s.ROOT / "schemas").concepts)
-    assert len(read(out, "domains.json")["items"]) == 24   # 24-privacy-engineering desde ADR-027
+    assert len(read(out, "domains.json")["items"]) == 23   # 19 integrado al 24 (ADR-027, Enmienda 1)
 
 
 def test_keys_read_by_static_mode_exist(out: Path) -> None:
@@ -97,6 +99,22 @@ def test_package_refuses_to_overwrite(tmp_path: Path, monkeypatch: pytest.Monkey
     with pytest.raises(SystemExit):
         package_static.package(moment)
     assert existing.read_bytes() == b"anterior"
+
+
+def test_package_redirects_compliance_to_privacy(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """ADR-027, Enmienda 1: /explorer/compliance/ redirige a /privacidad/ y reemplaza la página construida."""
+    out = tmp_path / "out"
+    for name in [*package_static.REQUIRED, "explorer/compliance/index.html"]:
+        (out / name).parent.mkdir(parents=True, exist_ok=True)
+        (out / name).write_text("construida", encoding="utf-8")
+    monkeypatch.setattr(package_static, "OUT", out)
+    monkeypatch.setattr(package_static, "DIST", tmp_path / "dist")
+    target = package_static.package(dt.datetime(2026, 10, 30, 12, 0, 0), "/aprendizaje-continuo")
+    with zipfile.ZipFile(target) as zf:
+        page = zf.read("explorer/compliance/index.html").decode("utf-8")
+        assert zf.namelist().count("explorer/compliance/index.html") == 1
+    assert 'content="0; url=/aprendizaje-continuo/privacidad/"' in page
+    assert '<link rel="canonical" href="/aprendizaje-continuo/privacidad/">' in page
 
 
 def test_search_index_includes_aliases(out: Path) -> None:

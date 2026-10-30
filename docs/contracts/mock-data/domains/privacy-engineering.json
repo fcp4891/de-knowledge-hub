@@ -4,7 +4,7 @@
   "title": "Ingeniería de privacidad · Ley 21.719",
   "description": "Cómo se diseña, opera y demuestra una plataforma de datos que trata datos personales bajo la Ley 21.719, desde su impacto técnico y sin constituir asesoría legal.",
   "band": "especializacion",
-  "concept_count": 15,
+  "concept_count": 17,
   "mvp_count": 0,
   "legal_framework": {
     "slug": "cl-ley-21719",
@@ -281,6 +281,40 @@
           "has_page": true,
           "verification_status": "review_required",
           "last_verified": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "slug": "regulatory-frameworks",
+      "title": "Marcos regulatorios comparados",
+      "concepts": [
+        {
+          "slug": "gdpr",
+          "title": "GDPR",
+          "kind": "concept",
+          "domain": "privacy-engineering",
+          "subdomain": "regulatory-frameworks",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "medium",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
+        },
+        {
+          "slug": "lgpd",
+          "title": "LGPD (Brasil)",
+          "kind": "concept",
+          "domain": "privacy-engineering",
+          "subdomain": "regulatory-frameworks",
+          "classification": "core",
+          "level": "intermediate",
+          "importance": "low",
+          "mvp": false,
+          "has_page": false,
+          "verification_status": null,
+          "last_verified": null
         }
       ]
     }

@@ -163,15 +163,6 @@
       "mvp_count": 0
     },
     {
-      "id": "19",
-      "slug": "compliance",
-      "title": "Compliance",
-      "description": "Cómo se diseña y opera una plataforma de datos bajo una ley de protección de datos, desde su impacto técnico y sin constituir asesoría legal.",
-      "band": null,
-      "concept_count": 2,
-      "mvp_count": 0
-    },
-    {
       "id": "20",
       "slug": "open-data-stack",
       "title": "Open Data Stack",
@@ -213,7 +204,7 @@
       "title": "Ingeniería de privacidad · Ley 21.719",
       "description": "Cómo se diseña, opera y demuestra una plataforma de datos que trata datos personales bajo la Ley 21.719, desde su impacto técnico y sin constituir asesoría legal.",
       "band": "especializacion",
-      "concept_count": 15,
+      "concept_count": 17,
       "mvp_count": 0
     }
   ]

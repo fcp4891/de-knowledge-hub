@@ -523,7 +523,7 @@ def check_snippets(docs: list[Document], by_slug: dict[str, Document], report: R
 
 # --- Contenido con origen legal (ADR-023) -------------------------------------
 
-LEGAL_DOMAINS = ("compliance", "privacy-engineering")   # ADR-023, enmendado por ADR-027: dominios 19 y 24
+LEGAL_DOMAINS = ("privacy-engineering",)   # ADR-023, enmendado por ADR-027 (19 integrado al 24 desde el 2026-10-30)
 LEGISLATIVE = "legislative"
 DISCLAIMER = "Esta ficha no es asesoría legal"
 EVIDENCE_HEADING = re.compile(r"^### Evidencia de cumplimiento\s*$", re.M)

@@ -174,6 +174,7 @@ Pedida por Felipe el 2026-10-24, junto con la aceptación de ADR-024.
 
 - Las fichas de la Ley 21.719 pasan a `24-privacy-engineering`. Esta decisión rige en los dominios `compliance` (19) y `privacy-engineering` (24): `jurisdiction`, `legal_basis` con `implication`, la etiqueta por afirmación, el aviso «no es asesoría legal», la evidencia del §8, la cita legal consultada el día de `last_verified` y `verified` solo con `owner_approved_at`, que da Felipe.
 - **Implementación:** `LEGAL_DOMAINS` en `backend/content/validate.py`; el error de `jurisdiction` nombra los dos dominios.
+- **Actualización (2026-10-30, ADR-027 Enmienda 1):** 19 se integró al 24; el alcance queda solo en `privacy-engineering`.
 
 ## Enmienda 3 — Línea «Etiqueta: […]» para tablas uniformes en §4 y §11–13 (2026-10-30)
 

@@ -1,4 +1,4 @@
-"""Ejemplos de 19-compliance ejecutados en la CI (ADR-023, upgrade de 19 del 2026-10-22).
+"""Ejemplos de las fichas de la Ley 21.719 (antes en 19-compliance, hoy en 24-privacy-engineering) ejecutados en la CI (ADR-023, upgrade del 2026-10-22).
 
 - Biblioteca estándar: chile-data-protection, pii-identification, processing-activities-inventory,
   chilean-identifier-pseudonymization, data-subject-rights-pipeline, retention-and-erasure, data-breach-response,

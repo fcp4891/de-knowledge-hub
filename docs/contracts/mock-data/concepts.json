@@ -4274,34 +4274,6 @@
       "last_verified": "2026-10-21"
     },
     {
-      "slug": "gdpr",
-      "title": "GDPR",
-      "kind": "concept",
-      "domain": "compliance",
-      "subdomain": "regulatory-frameworks",
-      "classification": "core",
-      "level": "intermediate",
-      "importance": "medium",
-      "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
-    },
-    {
-      "slug": "lgpd",
-      "title": "LGPD (Brasil)",
-      "kind": "concept",
-      "domain": "compliance",
-      "subdomain": "regulatory-frameworks",
-      "classification": "core",
-      "level": "intermediate",
-      "importance": "low",
-      "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
-    },
-    {
       "slug": "open-data-stack-overview",
       "title": "Qué es el open data stack",
       "kind": "concept",
@@ -5252,6 +5224,34 @@
       "has_page": true,
       "verification_status": "review_required",
       "last_verified": "2026-10-28"
+    },
+    {
+      "slug": "gdpr",
+      "title": "GDPR",
+      "kind": "concept",
+      "domain": "privacy-engineering",
+      "subdomain": "regulatory-frameworks",
+      "classification": "core",
+      "level": "intermediate",
+      "importance": "medium",
+      "mvp": false,
+      "has_page": false,
+      "verification_status": null,
+      "last_verified": null
+    },
+    {
+      "slug": "lgpd",
+      "title": "LGPD (Brasil)",
+      "kind": "concept",
+      "domain": "privacy-engineering",
+      "subdomain": "regulatory-frameworks",
+      "classification": "core",
+      "level": "intermediate",
+      "importance": "low",
+      "mvp": false,
+      "has_page": false,
+      "verification_status": null,
+      "last_verified": null
     }
   ]
 }

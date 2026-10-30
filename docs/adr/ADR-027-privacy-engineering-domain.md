@@ -1,6 +1,6 @@
 # ADR-027 — Dominio 24 · Ingeniería de privacidad · Ley 21.719
 
-- **Estado:** Aceptado (decisión de Felipe en el lote A, 2026-10-28)
+- **Estado:** Aceptado (decisión de Felipe en el lote A, 2026-10-28). Enmienda 1 (2026-10-30): 19 se integra al 24
 - **Fecha:** 2026-10-28
 - **Fase:** F3b — Contenido por dominio
 - **Referencias:**
@@ -47,6 +47,16 @@ Las 11 fichas de la Ley 21.719 (una padre y diez hijas) estaban en un solo subdo
 
 - **ADR-023, Enmienda 2:** su alcance pasa a ser «dominios 19 y 24». `jurisdiction`, `legal_basis`, las etiquetas por afirmación, el aviso, la cita legal consultada el día de `last_verified` y `owner_approved_at`, que solo da Felipe, rigen en `compliance` y en `privacy-engineering`.
 - **ADR-024, Enmienda 1:** la ficha padre debe ser **del mismo dominio**. Ya no se exige que esté en el mismo subdominio: en 24, la padre abre el primer tramo y las hijas están en los cinco. Las demás reglas siguen igual: a lo sumo una padre, sin ciclos, y la padre nombra a todas sus hijas en el §17.
+
+## Enmienda 1 (2026-10-30): 19 se integra al 24
+
+Decisión del dueño. Reemplaza el punto 5 y deja el alcance de ADR-023 (Enmienda 2) solo en el 24.
+
+- **19-compliance se retira del blueprint.** Su único subdominio, `regulatory-frameworks`, pasa al 24 como **tramo 6, «Marcos regulatorios comparados»**, después de «Evidencia y automatización» y antes del Laboratorio (el orden de los subdominios del blueprint es el de los tramos). GDPR y LGPD siguen en el BACKLOG, sin ficha.
+- **Transversal queda con 15–18.** El blueprint tiene 23 dominios.
+- **ADR-023 rige solo en `privacy-engineering`:** `LEGAL_DOMAINS` del validador y la descripción de `jurisdiction` en `schemas/base.schema.json`.
+- **`/explorer/compliance/` redirige a `/privacidad/`.** El zip estático reemplaza esa página por una con canonical y meta refresh (`REDIRECTS` en `scripts/static/package_static.py`). Es la única URL que existió del dominio: las fichas viven en `/concepts/<slug>/`. En modo dev, la ruta es de Carril B.
+- **Contrato de la API:** sin cambios de forma. `docs/contracts/api.yaml` no nombra dominios; `GET /domains/compliance` responde 404 como cualquier dominio inexistente, y los mocks ya no incluyen `domains/compliance.json`.
 
 ## Alternativas descartadas
 

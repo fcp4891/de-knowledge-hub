@@ -1,6 +1,6 @@
 # STATUS — Data Engineering Knowledge Hub
 
-**Fase actual:** F3b — Contenido por dominio (ADR-009), dominios 19-compliance (en aprobación) y 21-ai-for-data-engineering (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08, 03-python el 2026-10-10, 04-data-modeling, 05-pipelines, 06-orchestration y los conceptos de 07-architecture el 2026-10-11, 08-gcp el 2026-10-12, 09-aws el 2026-10-13, 10-azure y 11-devops el 2026-10-14, 12-infrastructure-as-code y 13-containers el 2026-10-19, 14-streaming, 20-open-data-stack, 15-data-quality y 16-observability el 2026-10-20, 17-governance y 18-security el 2026-10-21). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
+**Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 24-privacy-engineering (en aprobación; 19 integrado al 24 el 2026-10-30) (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08, 03-python el 2026-10-10, 04-data-modeling, 05-pipelines, 06-orchestration y los conceptos de 07-architecture el 2026-10-11, 08-gcp el 2026-10-12, 09-aws el 2026-10-13, 10-azure y 11-devops el 2026-10-14, 12-infrastructure-as-code y 13-containers el 2026-10-19, 14-streaming, 20-open-data-stack, 15-data-quality y 16-observability el 2026-10-20, 17-governance y 18-security el 2026-10-21). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
 **Última actualización:** 2026-10-28
 **Demo estática:** https://felipe-a-cespedes-perez.cl/aprendizaje-continuo/ (`make static`, `BASE_PATH` por defecto `/aprendizaje-continuo`).
 
@@ -19,7 +19,7 @@
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
 |---|---|---|---|
-| A · Claude Code | Lote A: dominio 24-privacy-engineering (ADR-027) con las 11 fichas de la Ley 21.719; P1, 23a y 23b en revisión | Reestructuración de 19 (decisión de Felipe); `verified` de 19 con la aprobación de Felipe | Aprobación de Felipe (19) |
+| A · Claude Code | Lote A: dominio 24-privacy-engineering (ADR-027) con las 11 fichas de la Ley 21.719; P1, 23a y 23b en revisión | `verified` de 24 con la aprobación de Felipe | Aprobación de Felipe (24) |
 | B · Cursor revisión | — | Revisar P1, F3b-23a y F3b-23b (`lane-a.md`) | — |
 | B · Cursor UI | — (`b/ui-labels-diagrams` integrada en `main` el 2026-10-26) | — | — |
 
@@ -50,7 +50,7 @@
 - [x] 17-governance: 9/9 `verified`, aprobado por Felipe en el navegador el 2026-10-21 (ADR-021: OpenLineage en la CI, transporte a archivo).
 - [x] 18-security: 17/17 `verified`, aprobado por Felipe en el navegador el 2026-10-21 (ADR-022: cryptography). 18 no menciona la ley.
 - [ ] 24-privacy-engineering (ADR-027, desde el 2026-10-28): las 11 fichas de la Ley 21.719 (una padre y diez hijas), venidas de 19, y las 4 del lote P2 (2026-10-28): 15 fichas en revisión; lote P1: 9 hijas mejoradas. Pasan a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`).
-- [ ] 19-compliance: queda en Transversal para el cumplimiento genérico (GDPR y LGPD en el BACKLOG). Las fichas pasan a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`).
+- [x] 19-compliance: integrado al 24 el 2026-10-30 (ADR-027, Enmienda 1); su subdominio `regulatory-frameworks` es el tramo 6 de 24 (GDPR y LGPD en el BACKLOG). El blueprint tiene 23 dominios; Transversal queda con 15–18.
 - [x] 21-ai-for-data-engineering (27 fichas en 21a–21e, ADR-025): 27/27 `verified` el 2026-10-26.
 - [x] 22-modern-data-engineering: 10/10 `verified` el 2026-10-27.
 - [ ] 23-emerging-technologies (9 fichas en 23a–23b, ADR-026): 23a (6) y 23b (3) escritos, en revisión.

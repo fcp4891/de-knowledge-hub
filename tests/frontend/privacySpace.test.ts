@@ -28,8 +28,10 @@ test("el objetivo ley21719 recorre los tramos de 24 y no apunta a 19", () => {
   assert.equal(nextDistinctDomain([{ domain: "15" }, { domain: "19" }], "15"), "19");
   assert.deepEqual([...STUDY_PATH], ["Comprender", "Aplicar", "Demostrar", "Profundizar"]);
   assert.ok(LAYERS.every((layer) => !layer.domains.includes("24")));
-  // b/ui-ajustes-1030: 19 sale del mapa y su subdominio «Marcos regulatorios» se muestra como tramo del 24.
+  // ADR-027, Enmienda 1: 19 se integró al 24; «Marcos regulatorios comparados» es su tramo 6 y Transversal queda con 15–18.
   assert.ok(LAYERS.every((layer) => !layer.domains.includes("19")));
+  assert.deepEqual(LAYERS.find((layer) => layer.key === "transversal")?.domains, ["15", "16", "17", "18"]);
+  assert.ok(GOALS.some((item) => item.steps.some((step) => step.domain === "24" && step.stage === "regulatory-frameworks")));
   assert.equal(verifiedCount(["verified", "review_required", null]).verified, 1);
   assert.equal(verifiedCount(["verified", "review_required", null]).total, 3);
 });

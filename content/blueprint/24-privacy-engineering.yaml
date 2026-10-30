@@ -1,7 +1,8 @@
 # Knowledge Blueprint v1 · Dominio 24 (ADR-027): ingeniería de privacidad bajo la Ley 21.719.
 # Banda «Especialización», fuera de las 6 capas. Explicación técnica, no asesoría legal: rige ADR-023 (jurisdiction,
 # legal_basis, etiqueta por afirmación, aviso, y verified solo con owner_approved_at de Felipe). Las 11 fichas vienen
-# de 19-compliance (2026-10-28) sin cambios de contenido; 19 queda para el cumplimiento genérico (GDPR, LGPD).
+# de 19-compliance (2026-10-28) sin cambios de contenido. Desde el 2026-10-30 (ADR-027, Enmienda 1), 19 se integra
+# aquí: su subdominio regulatory-frameworks es el tramo 6, «Marcos regulatorios comparados» (GDPR y LGPD en backlog).
 domain:
   id: "24"
   slug: privacy-engineering
@@ -179,3 +180,24 @@ subdomains:
         added_by: blueprint
         related_concepts: [pii-identification, processors-and-international-transfers]
         note: Lote P2 (2026-10-28), desde docs/briefs/privacy-program/. Datos personales en prompts, índices vectoriales y proveedores de modelos.
+
+  - slug: regulatory-frameworks
+    title: Marcos regulatorios comparados
+    concepts:
+      - slug: gdpr
+        title: GDPR
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: medium
+        mvp: false
+        note: En BACKLOG (plan de 19, 2026-10-21); requiere un ADR que agregue la jurisdicción UE y EUR-Lex como fuente legislative. Sin ficha.
+      - slug: lgpd
+        title: LGPD (Brasil)
+        kind: concept
+        classification: core
+        level: intermediate
+        importance: low
+        mvp: false
+        related_concepts: [gdpr]
+        note: En BACKLOG (plan de 19, 2026-10-21); requiere un ADR que agregue la jurisdicción BR y su fuente oficial. Sin ficha.

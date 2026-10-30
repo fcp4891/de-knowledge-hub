@@ -15,7 +15,6 @@
   "GET /domains/architecture": "domains/architecture.json",
   "GET /domains/aws": "domains/aws.json",
   "GET /domains/azure": "domains/azure.json",
-  "GET /domains/compliance": "domains/compliance.json",
   "GET /domains/containers": "domains/containers.json",
   "GET /domains/data-modeling": "domains/data-modeling.json",
   "GET /domains/data-quality": "domains/data-quality.json",

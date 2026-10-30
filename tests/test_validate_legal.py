@@ -52,7 +52,7 @@ def legislative(slug: str = "bcn-leychile", **fields: Any) -> dict[str, Any]:
 
 def legal_concept(slug: str = "chile-data-protection", **fields: Any) -> dict[str, Any]:
     defaults = {
-        "domain": "compliance",
+        "domain": "privacy-engineering",
         "jurisdiction": ["CL"],
         "sources": [
             {"source": "bcn-leychile", "url": LAW_URL, "accessed": TODAY, "page_title": "Ley Chile - Ley 19628"},
@@ -88,11 +88,11 @@ def test_legislative_source_needs_one_jurisdiction_monthly_review_and_level_1(co
 
 def test_jurisdiction_only_in_legal_domain_fichas(content: Path) -> None:
     report = setup(content, domain="pipelines")
-    assert_error(report, "[jurisdiction] solo en fichas (concept o pattern) de los dominios compliance y privacy-engineering")
+    assert_error(report, "[jurisdiction] solo en fichas (concept o pattern) de los dominios privacy-engineering")
 
 
 def test_privacy_engineering_is_a_legal_domain(content: Path) -> None:
-    """Enmienda de ADR-023 por ADR-027: rige en los dominios 19 y 24."""
+    """Enmienda de ADR-023 por ADR-027: rige en el dominio 24 (19 se integró al 24 el 2026-10-30)."""
     report = setup(content, domain="privacy-engineering")
     assert report.ok, report.errors
 

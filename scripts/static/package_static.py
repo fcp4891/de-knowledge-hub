@@ -26,6 +26,8 @@ FRONTEND = ROOT / "frontend"
 OUT = FRONTEND / "out"
 DIST = ROOT / "dist"
 REQUIRED = ["index.html", "404.html", ".htaccess", "data/index.json", "data/search-index.json"]
+# ADR-027, Enmienda 1: el dominio 19 se integró al 24; su página de dominio redirige al espacio de privacidad.
+REDIRECTS = {"explorer/compliance/index.html": "/privacidad/"}
 
 
 def check_base_path(base_path: str) -> str:
@@ -54,7 +56,16 @@ def zip_name(moment: dt.datetime) -> str:
     return f"dekh-static-{moment:%Y-%m-%d-%H%M%S}.zip"
 
 
-def package(moment: dt.datetime) -> Path:
+def redirect_html(base_path: str, target: str) -> str:
+    """Página sin JavaScript con canonical y meta refresh hacia la ruta nueva."""
+    url = f"{base_path}{target}"
+    return (f'<!DOCTYPE html>\n<html lang="es">\n<head>\n<meta charset="utf-8">\n<title>Redirigiendo…</title>\n'
+            f'<link rel="canonical" href="{url}">\n<meta http-equiv="refresh" content="0; url={url}">\n'
+            f'<meta name="robots" content="noindex">\n</head>\n<body>\n<p>Esta página se movió: <a href="{url}">{url}</a>.</p>\n'
+            '</body>\n</html>\n')
+
+
+def package(moment: dt.datetime, base_path: str = "/aprendizaje-continuo") -> Path:
     DIST.mkdir(exist_ok=True)
     target = DIST / zip_name(moment)
     if target.exists():
@@ -62,7 +73,10 @@ def package(moment: dt.datetime) -> Path:
     files = sorted(path for path in OUT.rglob("*") if path.is_file())
     with zipfile.ZipFile(target, "w", compression=zipfile.ZIP_DEFLATED) as zf:
         for path in files:
-            zf.write(path, path.relative_to(OUT).as_posix())
+            if path.relative_to(OUT).as_posix() not in REDIRECTS:
+                zf.write(path, path.relative_to(OUT).as_posix())
+        for name, route in sorted(REDIRECTS.items()):
+            zf.writestr(name, redirect_html(base_path, route))
     with zipfile.ZipFile(target) as zf:
         names = set(zf.namelist())
     assert all(name in names for name in REQUIRED), "el zip no contiene los archivos obligatorios"
@@ -78,7 +92,7 @@ def main(argv: list[str] | None = None) -> None:
     if not args.skip_build:
         build_frontend(base_path)
     check_output(base_path)
-    target = package(dt.datetime.now())   # hora local del sistema
+    target = package(dt.datetime.now(), base_path)   # hora local del sistema
     print(f"zip: {target} ({target.stat().st_size:,} bytes, BASE_PATH={base_path})")
 
 
