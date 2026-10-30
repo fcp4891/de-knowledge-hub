@@ -2,10 +2,11 @@ import { ApiFailure } from "@/components/ApiFailure";
 import { NoteForm, NoteItem } from "@/components/card/PersonalForms";
 import { ConceptReading, type ReadingSectionModel } from "@/components/card/ConceptReading";
 import { LegalFoundations } from "@/components/card/LegalFoundations";
-import { CHILE_CHILD_TITLES } from "@/lib/chileLegalCatalog";
 import { canViewChangeHistory, canViewRelatedLab, currentViewer } from "@/lib/changeHistoryAccess";
 import { MarkdownBody } from "@/components/markdown/MarkdownBody";
 import { getConcept, getDomain, getRelations, getStudyState, listNotes } from "@/lib/api/client";
+import type { ConceptRefs } from "@/lib/conceptNames";
+import { loadConceptRefs } from "@/lib/loadConceptRefs";
 import type { NoteList, RelationGroups, Section, SourceRef } from "@/lib/api/types";
 import { citationDetail, citationLinkText } from "@/lib/citation";
 import { extractLegalNotice, legalNoticeCopy, usesArchitectureMark, type ObligationBasis } from "@/lib/legal";
@@ -66,9 +67,9 @@ function sectionModels(
   sources: SourceRef[],
   obligations: readonly ObligationBasis[],
   slug: string,
+  conceptRefs: ConceptRefs,
 ): ReadingSectionModel[] {
   const ordered = [...sections].sort((left, right) => left.number - right.number);
-  const fichaTitles = slug === "chile-data-protection" ? CHILE_CHILD_TITLES : undefined;
   const viewer = currentViewer();
   const showHistory = canViewChangeHistory(viewer);
   const showLab = canViewRelatedLab(viewer);
@@ -96,7 +97,7 @@ function sectionModels(
         title: section.title,
         presentation: "summary",
         listed: text,
-        body: text ? <MarkdownBody markdown={section.markdown} obligations={obligations} fichaTitles={fichaTitles} /> : null,
+        body: text ? <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} /> : null,
       });
       continue;
     }
@@ -110,7 +111,7 @@ function sectionModels(
         title: section.title,
         presentation: "cloud",
         listed: true,
-        body: <MarkdownBody markdown={section.markdown} etiquetaColumn obligations={obligations} fichaTitles={fichaTitles} />,
+        body: <MarkdownBody markdown={section.markdown} etiquetaColumn obligations={obligations} conceptRefs={conceptRefs} />,
       });
       continue;
     }
@@ -137,7 +138,7 @@ function sectionModels(
         title: section.title,
         presentation: "details",
         listed: true,
-        body: showList ? <SourceLinks sources={sources} /> : <MarkdownBody markdown={section.markdown} obligations={obligations} fichaTitles={fichaTitles} />,
+        body: showList ? <SourceLinks sources={sources} /> : <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} />,
       });
       continue;
     }
@@ -155,7 +156,7 @@ function sectionModels(
             ? "open"
             : "details",
       listed: true,
-      body: <MarkdownBody markdown={section.markdown} obligations={obligations} fichaTitles={fichaTitles} />,
+      body: <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} />,
     });
   }
   flushClouds();
@@ -220,7 +221,11 @@ function NoteListView({ slug, notes }: { slug: string; notes: NoteList }) {
 export default async function ConceptPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const staticMode = process.env.API_MODE === "static";
-  const [concept, relations] = await Promise.all([getConcept(slug), getRelations(slug)]);
+  const [concept, relations, conceptRefs] = await Promise.all([
+    getConcept(slug),
+    getRelations(slug),
+    loadConceptRefs(),
+  ]);
 
   if (!concept.ok) {
     return (
@@ -282,7 +287,7 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
       sourceCount={data.sources.length}
       crumb={crumb}
       next={next}
-      sections={sectionModels(sections, data.sources, data.legal_basis, data.slug)}
+      sections={sectionModels(sections, data.sources, data.legal_basis, data.slug, conceptRefs)}
       staticMode={staticMode}
       initialStudy={
         study?.ok ? { state: study.data.state, pendingDeepDive: study.data.pending_deep_dive } : null

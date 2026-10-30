@@ -400,6 +400,18 @@
   text-decoration: underline;
 }
 
+.markdown .ficha-pending-mark {
+  margin-left: 0.4em;
+  padding: 0.05em 0.4em;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  color: var(--ink-muted);
+  font-family: var(--font-ui), system-ui, sans-serif;
+  font-size: 0.75em;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+}
+
 .claim-legend {
   display: flex;
   flex-direction: column;

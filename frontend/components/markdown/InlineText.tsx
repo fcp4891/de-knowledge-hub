@@ -7,6 +7,7 @@ import {
   obligationNote,
   type ObligationBasis,
 } from "@/lib/legal";
+import { conceptInline, PENDING_MARK, type ConceptRefs } from "@/lib/conceptNames";
 import type { Inline } from "@/lib/markdown";
 
 export function ArchitectureDot({ labelled = true }: { labelled?: boolean }) {
@@ -57,11 +58,11 @@ function ObligationCiteMark({ value, obligations }: { value: string; obligations
 export function InlineText({
   inlines,
   obligations = [],
-  fichaTitles,
+  conceptRefs,
 }: {
   inlines: Inline[];
   obligations?: readonly ObligationBasis[];
-  fichaTitles?: Readonly<Record<string, string>>;
+  conceptRefs?: ConceptRefs;
 }) {
   let trimLeading = false;
   return inlines.map((part, index) => {
@@ -87,12 +88,20 @@ export function InlineText({
       return null;
     }
     if (part.type === "code") {
-      const fichaTitle = fichaTitles?.[value];
-      if (fichaTitle) {
+      const named = conceptInline(value, conceptRefs);
+      if (named.kind === "link") {
         return (
-          <a key={key} className="ficha-name" href={`/concepts/${value}/`}>
-            {fichaTitle}
+          <a key={key} className="ficha-name" href={named.href} title={named.slug}>
+            {named.label}
           </a>
+        );
+      }
+      if (named.kind === "pending") {
+        return (
+          <span key={key} className="ficha-pending">
+            {named.label}
+            <span className="ficha-pending-mark">{PENDING_MARK}</span>
+          </span>
         );
       }
       return <code key={key}>{value}</code>;

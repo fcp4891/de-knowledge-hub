@@ -1,16 +1,23 @@
 import { MarkdownBody } from "@/components/markdown/MarkdownBody";
+import type { ConceptRefs } from "@/lib/conceptNames";
 import type { SnippetSection } from "@/lib/api/types";
 
 const OPEN_SECTIONS = new Set<SnippetSection["key"]>(["what_it_solves", "code"]);
 
-export function SnippetBody({ sections }: { sections: SnippetSection[] }) {
+export function SnippetBody({
+  sections,
+  conceptRefs,
+}: {
+  sections: SnippetSection[];
+  conceptRefs?: ConceptRefs;
+}) {
   const ordered = [...sections].sort((left, right) => left.number - right.number);
 
   return (
     <div className="sections">
       {ordered.map((section) => {
         const body = section.markdown.trim() ? (
-          <MarkdownBody markdown={section.markdown} />
+          <MarkdownBody markdown={section.markdown} conceptRefs={conceptRefs} />
         ) : (
           <p className="muted">Sin contenido.</p>
         );
