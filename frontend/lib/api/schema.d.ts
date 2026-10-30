@@ -331,14 +331,14 @@ export interface components {
         /** @enum {unknown} */
         SourceType: "official_docs" | "release_notes" | "engineering_blog" | "spec_paper" | "secondary" | "legislative";
         /**
-         * @description País cuya ley origina el contenido, ISO 3166-1 alfa-2 (ADR-023).
+         * @description País cuya ley origina el contenido, ISO 3166-1 alfa-2; EU es el código reservado para la Unión Europea (ADR-023, Enmienda 5).
          * @enum {unknown}
          */
-        Jurisdiction: "CL";
+        Jurisdiction: "CL" | "EU" | "BR";
         /** @description Artículo en que se apoya una ficha con jurisdicción (ADR-023); url es la cita oficial. */
         LegalBasis: {
             /** @enum {unknown} */
-            law: "ley-19628" | "ley-21719" | "ley-21663";
+            law: "ley-19628" | "ley-21719" | "ley-21663" | "eu-2016-679" | "br-lei-13709";
             /** @description Como lo numera el texto oficial, p. ej. 14 quinquies. */
             article: string;
             /** Format: uri */
@@ -726,7 +726,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Los 23 dominios, ordenados por id. */
+            /** @description Los dominios, ordenados por id. */
             200: {
                 headers: {
                     [name: string]: unknown;

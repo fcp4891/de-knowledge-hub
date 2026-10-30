@@ -142,7 +142,7 @@ function MarkdownBlock({
             <tr>
               {indexes.map((index) => (
                 <th key={index} data-align={block.aligns[index] ?? "left"}>
-                  <InlineText inlines={block.headers[index]} obligations={obligations} conceptRefs={conceptRefs} />
+                  <InlineText inlines={block.headers[index]} obligations={obligations} conceptRefs={conceptRefs} citeVariant="chip" />
                 </th>
               ))}
             </tr>
@@ -154,7 +154,7 @@ function MarkdownBlock({
                   const ficha = articleMap && index === articleMap.articleIndex ? articleMap.fichaTitles[rowIndex] : null;
                   return (
                     <td key={index} data-align={block.aligns[index] ?? "left"} title={ficha ?? undefined}>
-                      <InlineText inlines={row[index] ?? []} obligations={obligations} conceptRefs={conceptRefs} />
+                      <InlineText inlines={row[index] ?? []} obligations={obligations} conceptRefs={conceptRefs} citeVariant="chip" />
                     </td>
                   );
                 })}

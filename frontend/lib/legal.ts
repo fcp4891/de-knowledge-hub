@@ -11,7 +11,16 @@ export function legislationBadge(codes: readonly string[]): string | null {
   return `Legislación · ${codes.join(" · ")}`;
 }
 
+const NAMED_LAWS: Readonly<Record<string, string>> = {
+  "eu-2016-679": "GDPR",
+  "br-lei-13709": "LGPD",
+};
+
 export function lawLabel(law: string): string {
+  const named = NAMED_LAWS[law];
+  if (named) {
+    return named;
+  }
   const match = LAW_DIGITS.exec(law);
   if (!match) {
     return law;
@@ -24,6 +33,12 @@ export function bcnLinkText(url: string): string {
     const host = new URL(url).hostname;
     if (host === "bcn.cl" || host.endsWith(".bcn.cl")) {
       return "BCN";
+    }
+    if (host === "boe.es" || host.endsWith(".boe.es")) {
+      return "BOE";
+    }
+    if (host === "camara.leg.br" || host.endsWith(".camara.leg.br")) {
+      return "Câmara";
     }
   } catch {
     // La URL inválida se muestra tal cual.
@@ -60,8 +75,14 @@ export type ObligationCite = {
 const OBLIGATION_BODY = /^\[Obligación legal · (.+)\]$/;
 const LAW_CITE = /^Ley (\d{2})\.(\d+), art\. (.+)$/;
 const ART_CITE = /^art\. (.+)$/;
+const FRAMEWORK_CITE = /^(GDPR|LGPD) art\. (.+)$/;
 
-/** Texto visible de una obligación: «art. N», o «Ley 21.663, art. 9» si no es la 19.628. */
+const FRAMEWORK_LAW: Readonly<Record<string, string>> = {
+  GDPR: "eu-2016-679",
+  LGPD: "br-lei-13709",
+};
+
+/** Texto visible de una obligación: «art. N», o la ley si no es la 19.628. */
 export function obligationCite(value: string): ObligationCite | null {
   const body = OBLIGATION_BODY.exec(value);
   if (!body) {
@@ -74,6 +95,15 @@ export function obligationCite(value: string): ObligationCite | null {
     const article = named[3];
     const text = law === DEFAULT_LAW ? `art. ${article}` : `Ley ${named[1]}.${named[2]}, art. ${article}`;
     return { law, article, text };
+  }
+  const framework = FRAMEWORK_CITE.exec(cited);
+  if (framework) {
+    const label = framework[1];
+    const law = FRAMEWORK_LAW[label];
+    const article = framework[2];
+    if (law) {
+      return { law, article, text: `${label} art. ${article}` };
+    }
   }
   const plain = ART_CITE.exec(cited);
   if (!plain) {
@@ -176,7 +206,7 @@ export function droppedEtiquetaIndex(
 }
 
 /**
- * Tabla «Artículo | Qué implica para datos | Ficha | Etiqueta»:
+ * Tabla «Artículo | Qué implica para datos | Ficha», con «Etiqueta» opcional:
  * se ocultan Ficha y Etiqueta. El texto de Ficha queda como tooltip del artículo.
  */
 export function articleMapColumns<T extends { type: string; value: string }>(
@@ -187,7 +217,7 @@ export function articleMapColumns<T extends { type: string; value: string }>(
   const implica = headers.findIndex((cell) => plainInline(cell) === "Qué implica para datos");
   const ficha = headers.findIndex((cell) => plainInline(cell) === "Ficha");
   const etiqueta = headers.findIndex((cell) => plainInline(cell) === "Etiqueta");
-  if (articulo < 0 || implica < 0 || ficha < 0 || etiqueta < 0) {
+  if (articulo < 0 || implica < 0 || ficha < 0) {
     return null;
   }
   return {

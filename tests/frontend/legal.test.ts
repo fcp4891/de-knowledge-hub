@@ -25,11 +25,18 @@ test("el badge de jurisdicción nombra el país", () => {
   assert.equal(legislationBadge(["CL"]), "Legislación · CL");
 });
 
-test("la norma se muestra con el número oficial y el enlace a BCN", () => {
+test("la norma se muestra con el número oficial y el enlace a su fuente", () => {
   assert.equal(lawLabel("ley-19628"), "Ley 19.628");
   assert.equal(lawLabel("ley-21719"), "Ley 21.719");
   assert.equal(lawLabel("ley-21663"), "Ley 21.663");
+  assert.equal(lawLabel("eu-2016-679"), "GDPR");
+  assert.equal(lawLabel("br-lei-13709"), "LGPD");
   assert.equal(bcnLinkText("https://www.bcn.cl/leychile/navegar?idNorma=141599"), "BCN");
+  assert.equal(bcnLinkText("https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807"), "BOE");
+  assert.equal(
+    bcnLinkText("https://www2.camara.leg.br/legin/fed/lei/2018/lei-13709-14-agosto-2018-787077-normaatualizada-pl.html"),
+    "Câmara",
+  );
 });
 
 test("las tres etiquetas se distinguen por tipo", () => {
@@ -72,8 +79,20 @@ test("la obligación cita art. N y nombra la ley si no es la 19.628", () => {
     article: "9",
     text: "Ley 21.663, art. 9",
   });
+  assert.deepEqual(obligationCite("[Obligación legal · GDPR art. 33]"), {
+    law: "eu-2016-679",
+    article: "33",
+    text: "GDPR art. 33",
+  });
+  assert.deepEqual(obligationCite("[Obligación legal · LGPD art. 19]"), {
+    law: "br-lei-13709",
+    article: "19",
+    text: "LGPD art. 19",
+  });
   assert.equal(obligationCite("[Buena práctica]"), null);
   assert.equal(legalRowId("ley-19628", "14 quáter"), "lb-ley-19628-14-quater");
+  assert.equal(legalRowId("eu-2016-679", "33"), "lb-eu-2016-679-33");
+  assert.equal(legalRowId("br-lei-13709", "19"), "lb-br-lei-13709-19");
   assert.equal(legalRowId("ley-21663", "9"), "lb-ley-21663-9");
   const basis = [{ law: "ley-19628", article: "3", note: "Principios, letras a) a h)." }];
   assert.equal(obligationNote(basis, "ley-19628", "3"), "Principios, letras a) a h).");
@@ -153,6 +172,33 @@ test("el mapa de artículos oculta Ficha y Etiqueta y deja la ficha en el artíc
   assert.equal(view.articleIndex, 0);
   assert.deepEqual(view.fichaTitles, ["pii-identification, chilean-identifier-pseudonymization"]);
   assert.equal(articleMapColumns([[{ type: "text", value: "Necesidad" }]], []), null);
+});
+
+test("una tabla sin columna Etiqueta conserva sus celdas", () => {
+  const headers = [
+    [{ type: "text", value: "Requisito" }],
+    [{ type: "text", value: "Control" }],
+  ];
+  const obligation = [{ type: "strong", value: "[Obligación legal · Ley 19.628, art. 3]" }];
+  const row = [[{ type: "text", value: " " }, ...obligation, { type: "text", value: " Licitud" }], [{ type: "text", value: "Inventario" }]];
+  assert.equal(droppedEtiquetaIndex(headers, [row]), null);
+  assert.equal(articleMapColumns(headers, [row]), null);
+  const withoutEtiqueta = articleMapColumns(
+    [
+      [{ type: "text", value: "Artículo" }],
+      [{ type: "text", value: "Qué implica para datos" }],
+      [{ type: "text", value: "Ficha" }],
+    ],
+    [
+      [
+        [{ type: "strong", value: "[Obligación legal · art. 2]" }],
+        [{ type: "text", value: "Definiciones" }],
+        [{ type: "code", value: "pii-identification" }],
+      ],
+    ],
+  );
+  assert.ok(withoutEtiqueta);
+  assert.deepEqual(withoutEtiqueta.columns, [0, 1]);
 });
 
 test("el parser deja cada etiqueta como un solo énfasis", () => {

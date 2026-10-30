@@ -3,7 +3,7 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-29
+**Última actualización:** 2026-10-30
 
 ## Reglas de revisión
 
@@ -14,6 +14,7 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** `b/ui-legal-cites`. La vista de ficha no exige la columna «Etiqueta»: en las tablas el chip «Obligación legal · …» va al inicio de la celda y enlaza la fila de la Base legal. El superíndice reconoce «Ley 19.628, art. N», «GDPR art. N» (`eu-2016-679`) y «LGPD art. N» (`br-lei-13709`). `schema.d.ts` regenerado con jurisdicción EU/BR.
 - **Tarea activa:** `b/ui-concept-names`. En todas las fichas, un código inline que es un concepto conocido se muestra con el título de la API. Si tiene ficha, enlaza a `/concepts/<slug>/` y el enlace lleva el slug en `title`. Si está en el blueprint sin ficha, muestra el nombre y la marca «pendiente», sin enlace. El código que no es un slug se queda como código.
 - **Tarea activa:** `b/ui-reading-width`. En `/concepts/<slug>/` la columna de lectura crece al ocultar el índice, el estudio o ambos. En `chile-data-protection`, el §2 ya no muestra el párrafo del marco ni «Precisiones transversales». Los ocho principios abren un texto breve (por verificar) y un enlace a la ficha hija. El filtro por temática queda en `?grupo=` y no se borra al abrir o cerrar un artículo.
 - **Tarea activa:** `b/ui-privacy-space` (worktree `DES_conocimiento-privacy`). `/privacidad` usa el mismo layout que la ruta de dominio. Las 15 fichas tienen página. La cabecera es lo propio: Especialización, el aviso «Este contenido no es asesoría legal.» y la caja Comprender → Aplicar → Demostrar → Profundizar. Las fichas siguen con «Esta ficha no es asesoría legal.». El laboratorio es la etapa 6 deshabilitada, una sola vez. El marco legal queda en el panel derecho de `/privacidad`; cada hecho abre su URL. En Inicio no está la tarjeta. En oscuro el punto completo usa `--band-especializacion-fill`. En mock no se consulta `/me`.

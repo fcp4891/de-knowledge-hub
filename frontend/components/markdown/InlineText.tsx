@@ -25,21 +25,46 @@ export function ArchitectureDot({ labelled = true }: { labelled?: boolean }) {
   );
 }
 
-function ObligationCiteMark({ value, obligations }: { value: string; obligations: readonly ObligationBasis[] }) {
+function ObligationCiteMark({
+  value,
+  obligations,
+  variant,
+}: {
+  value: string;
+  obligations: readonly ObligationBasis[];
+  variant: "sup" | "chip";
+}) {
   const cite = obligationCite(value);
+  const label = claimLabel(value);
   if (!cite) {
     return (
       <span className="claim claim-obligation">
         <span className="claim-mark" aria-hidden="true">
           §
         </span>
-        {claimLabel(value)}
+        {label}
       </span>
     );
   }
   const note = obligationNote(obligations, cite.law, cite.article);
+  const href = matchingObligation(obligations, cite.law, cite.article)
+    ? `#${legalRowId(cite.law, cite.article)}`
+    : null;
+  if (variant === "chip") {
+    return (
+      <span className="claim claim-obligation claim-in-cell">
+        {href ? (
+          <a href={href} title={note ?? undefined}>
+            {label}
+          </a>
+        ) : (
+          <span title={note ?? undefined}>{label}</span>
+        )}
+      </span>
+    );
+  }
   const text = cite.text;
-  if (!matchingObligation(obligations, cite.law, cite.article)) {
+  if (!href) {
     return (
       <sup className="claim-art">
         <span title={note ?? undefined}>{text}</span>
@@ -48,7 +73,7 @@ function ObligationCiteMark({ value, obligations }: { value: string; obligations
   }
   return (
     <sup className="claim-art">
-      <a href={`#${legalRowId(cite.law, cite.article)}`} title={note ?? undefined}>
+      <a href={href} title={note ?? undefined}>
         {text}
       </a>
     </sup>
@@ -59,10 +84,12 @@ export function InlineText({
   inlines,
   obligations = [],
   conceptRefs,
+  citeVariant = "sup",
 }: {
   inlines: Inline[];
   obligations?: readonly ObligationBasis[];
   conceptRefs?: ConceptRefs;
+  citeVariant?: "sup" | "chip";
 }) {
   let trimLeading = false;
   return inlines.map((part, index) => {
@@ -79,7 +106,7 @@ export function InlineText({
       }
       if (kind === "obligation") {
         trimLeading = false;
-        return <ObligationCiteMark key={key} value={part.value} obligations={obligations} />;
+        return <ObligationCiteMark key={key} value={part.value} obligations={obligations} variant={citeVariant} />;
       }
     }
     const value = trimLeading && part.type === "text" ? part.value.replace(/^\s+/, "") : part.value;
