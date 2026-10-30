@@ -86,7 +86,7 @@ export default async function PrivacyPage() {
   }
 
   const data = domain.data;
-  const stages: RouteStage[] = data.subdomains.map((subdomain) => ({
+  const toStage = (subdomain: (typeof data.subdomains)[number]): RouteStage => ({
     slug: subdomain.slug,
     title: subdomain.title,
     concepts: subdomain.concepts.map((concept, index) => ({
@@ -97,7 +97,8 @@ export default async function PrivacyPage() {
       verified: concept.verification_status === "verified",
       blueprintIndex: index,
     })),
-  }));
+  });
+  const stages: RouteStage[] = data.subdomains.map(toStage);
   const slugs = new Set(stages.flatMap((stage) => stage.concepts.map((concept) => concept.slug)));
   const withPage = stages.flatMap((stage) => stage.concepts.filter((concept) => concept.hasPage).map((concept) => concept.slug));
   const [studyResult, catalog, minutes] = await Promise.all([
@@ -117,7 +118,7 @@ export default async function PrivacyPage() {
         slug={data.slug}
         title={data.title}
         description={data.description}
-        conceptCount={data.concept_count}
+        conceptCount={stages.reduce((sum, stage) => sum + stage.concepts.length, 0)}
         stages={stages}
         minutes={minutes}
         study={studyResult && studyResult.ok ? studyResult.data : null}
