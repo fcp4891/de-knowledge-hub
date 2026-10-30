@@ -1,5 +1,6 @@
 import { CloudTabs } from "@/components/card/CloudTabs";
 import { MarkdownBody } from "@/components/markdown/MarkdownBody";
+import type { ConceptRefs } from "@/lib/conceptNames";
 import type { Section } from "@/lib/api/types";
 
 const CLOUD_KEYS = new Set(["gcp", "aws", "azure"]);
@@ -7,9 +8,11 @@ const CLOUD_KEYS = new Set(["gcp", "aws", "azure"]);
 export function ConceptBody({
   sections,
   omitSourceSection,
+  conceptRefs,
 }: {
   sections: Section[];
   omitSourceSection: boolean;
+  conceptRefs?: ConceptRefs;
 }) {
   if (sections.length === 0) {
     return <p className="muted">Esta ficha todavía no tiene secciones.</p>;
@@ -29,7 +32,7 @@ export function ConceptBody({
                 id: item.key,
                 title: item.title,
                 content: item.markdown.trim() ? (
-                  <MarkdownBody markdown={item.markdown} />
+                  <MarkdownBody markdown={item.markdown} conceptRefs={conceptRefs} />
                 ) : (
                   <p className="muted">Sin contenido en esta nube.</p>
                 ),
@@ -47,7 +50,7 @@ export function ConceptBody({
     }
 
     const body = section.markdown.trim() ? (
-      <MarkdownBody markdown={section.markdown} />
+      <MarkdownBody markdown={section.markdown} conceptRefs={conceptRefs} />
     ) : (
       <p className="muted">Sin contenido.</p>
     );

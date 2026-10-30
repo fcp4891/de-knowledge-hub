@@ -5,6 +5,7 @@ import { CardHeader } from "@/components/card/CardHeader";
 import { SnippetBody } from "@/components/card/SnippetBody";
 import { SourceList } from "@/components/card/SourceList";
 import { getRelations, getSnippet } from "@/lib/api/client";
+import { loadConceptRefs } from "@/lib/loadConceptRefs";
 import type { RelationGroups } from "@/lib/api/types";
 import { CLOUD_LABEL, LANGUAGE_LABEL } from "@/lib/labels";
 import { staticSlugs } from "@/lib/staticParams";
@@ -36,7 +37,11 @@ function implementedConcepts(slugs: string[], relations: RelationGroups | null) 
 
 export default async function SnippetPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const [snippet, relations] = await Promise.all([getSnippet(slug), getRelations(slug)]);
+  const [snippet, relations, conceptRefs] = await Promise.all([
+    getSnippet(slug),
+    getRelations(slug),
+    loadConceptRefs(),
+  ]);
 
   if (!snippet.ok) {
     return (
@@ -96,7 +101,10 @@ export default async function SnippetPage({ params }: { params: Promise<{ slug: 
             </ul>
           )}
         </section>
-        <SnippetBody sections={data.sections.filter((section) => section.key !== "sources" || data.sources.length === 0)} />
+        <SnippetBody
+          sections={data.sections.filter((section) => section.key !== "sources" || data.sources.length === 0)}
+          conceptRefs={conceptRefs}
+        />
         {data.sources.length > 0 ? <SourceList sources={data.sources} /> : null}
       </div>
     </div>
