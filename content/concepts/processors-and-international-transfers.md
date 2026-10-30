@@ -44,8 +44,8 @@ sources:
   - source: azure-policy-docs
     url: https://learn.microsoft.com/en-us/azure/governance/policy/samples/built-in-policies
     accessed: 2026-10-21
-    page_title: "Azure Policy built-in policy definitions"
-    note: "Azure Policy built-in policy definitions: «Allowed locations» restringe las ubicaciones que la organización puede usar al desplegar recursos, para requisitos de geocumplimiento; excluye resource groups, Microsoft.AzureActiveDirectory/b2cDirectories y los recursos de la región «global»; efectos Audit, Deny o Disabled."
+    page_title: "List of built-in policy definitions"
+    note: "List of built-in policy definitions (Azure Policy): «Allowed locations» restringe las ubicaciones que la organización puede usar al desplegar recursos, para requisitos de geocumplimiento; excluye resource groups, Microsoft.AzureActiveDirectory/b2cDirectories y los recursos de la región «global»; efectos Audit, Deny o Disabled."
 relations:
   - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del dominio."}
   - {type: RELATED_TO, target: processing-activities-inventory, note: "Destinatarios y transferencias por actividad."}
@@ -281,7 +281,7 @@ En AWS, **IAM**. Según *AWS global condition context keys* (no ejecutado):
 
 ## 13. Azure
 
-En Azure, **Azure Policy**. Según *Azure Policy built-in policy definitions* (no ejecutado):
+En Azure, **Azure Policy**. Según *List of built-in policy definitions* (no ejecutado):
 
 | Necesidad | Servicio |
 |---|---|
@@ -349,7 +349,7 @@ Propuesta para F4: un archivo versionado con cuatro flujos ficticios (correo, ET
 - BCN Ley Chile: *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* (versión con vigencia diferida desde 2026-12-01).
 - Google Cloud: *Restrict resource locations*.
 - AWS: *AWS global condition context keys*.
-- Microsoft Learn: *Azure Policy built-in policy definitions*.
+- Microsoft Learn: *List of built-in policy definitions*.
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
@@ -366,3 +366,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (qué sale, quién lo recibe y desde dónde se accede; resultado esperado), §2 (tabla de encargo, cesión y transferencia; el rol no se deduce del producto; inventario con rol y finalidades), §3 (soporte remoto, respaldos y telemetría), §4 (nueve pasos con descubrir, caracterizar, observar y cierre; la aprobación es del flujo), §5, §6, §7 (rol y finalidad por flujo), §8 (controles y evidencia «qué demuestra y qué no»), §9, §10 (rol encargo o cesión, países de proceso o acceso y finalidades aprobadas, sobre el mismo ejemplo: 7 flujos y 6 brechas), §11–13 (lo que no cubre cada política y criterio común), §14–16, §17 (relaciones con `pii-identification` y `data-minimization-by-layer`), §18 (criterio de dominio) y §19 (laboratorio para F4). Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `riesgo-terceros-incidentes` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/processors-and-international-transfers/`) no cambia.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
+- 2026-10-30: mismo hallazgo que la revisión de P4: `page_title` de Azure Policy con el H1 de la página, «List of built-in policy definitions» (ADR-012). Sin cambios de contenido.

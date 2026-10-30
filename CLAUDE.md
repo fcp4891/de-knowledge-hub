@@ -58,3 +58,4 @@ Trabajas en paralelo con Cursor (Carril B, frontend y revisión).
 
 ## Idioma
 Contenido y documentación en español; identificadores, slugs y código en inglés.
+Las respuestas y entregas a Felipe, siempre en español.

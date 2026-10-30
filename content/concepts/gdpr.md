@@ -3,7 +3,7 @@ id: concept:gdpr
 slug: gdpr
 type: concept
 title: GDPR
-description: "Una plataforma chilena con clientes en la UE, ¿qué tiene que hacer distinto? El RGPD alcanza a quien ofrece bienes o servicios a interesados en la Unión o sigue su comportamiento allí, aunque no esté establecido en ella. Comparación con la Ley 21.719 en lo que impacta a ingeniería: bases, plazos, registro, evaluación de impacto, brechas (72 horas), transferencias, delegado y decisiones automatizadas. Reglas por jurisdicción versionadas, con un resolvedor en la CI. No es asesoría legal."
+description: "Una plataforma chilena con clientes en la UE, ¿qué tiene que hacer distinto? El RGPD alcanza a quien, sin estar en la Unión, trata datos de interesados que residan en ella al ofrecerles bienes o servicios o al seguir su comportamiento allí. Comparación con la Ley 21.719 para ingeniería: bases, plazos, registro, evaluación de impacto, brechas, transferencias, delegado y decisiones automatizadas. Reglas por jurisdicción versionadas y un resolvedor en la CI. No es asesoría legal."
 domain: privacy-engineering
 subdomain: regulatory-frameworks
 category: compliance
@@ -17,25 +17,25 @@ related_topics: [processors-and-international-transfers]
 aliases: [rgpd, Reglamento General de Protección de Datos]
 jurisdiction: [CL, EU]
 legal_basis:
-  - {law: eu-2016-679, article: "3", url: "https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807", note: "Apartado 2: responsables o encargados no establecidos en la Unión, por la oferta de bienes o servicios a interesados en la Unión o el control de su comportamiento allí.", implication: "Saber qué productos ofrecen servicios a personas en la UE o las perfilan."}
+  - {law: eu-2016-679, article: "3", url: "https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807", note: "Apartado 2: tratamiento de datos de interesados que residan en la Unión por un responsable o encargado no establecido en ella, cuando se relaciona con la oferta de bienes o servicios, pagados o no, o con el control de su comportamiento en la Unión.", implication: "Saber qué productos ofrecen servicios a personas en la UE o las perfilan."}
   - {law: eu-2016-679, article: "6", url: "https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807", note: "Licitud: al menos una de las condiciones del apartado 1.", implication: "Una base por actividad, registrada con su fuente."}
   - {law: eu-2016-679, article: "12", url: "https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807", note: "Apartado 3: un mes desde la recepción de la solicitud, prorrogable otros dos meses en caso necesario.", implication: "Plazo de respuesta por jurisdicción en la configuración."}
   - {law: eu-2016-679, article: "22", url: "https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807", note: "Apartado 1: derecho a no ser objeto de una decisión basada únicamente en el tratamiento automatizado.", implication: "Ruta de intervención humana por modelo que decide."}
   - {law: eu-2016-679, article: "27", url: "https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807", note: "Apartado 1: cuando se aplica el art. 3.2, designar por escrito un representante en la Unión.", implication: "Un dato más del inventario: quién es el representante."}
   - {law: eu-2016-679, article: "30", url: "https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807", note: "Registro de las actividades de tratamiento; apartado 5: excepción para organizaciones de menos de 250 personas, con salvedades.", implication: "El inventario de actividades es la base del registro."}
-  - {law: eu-2016-679, article: "33", url: "https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807", note: "Apartado 1: notificar a la autoridad de control a más tardar 72 horas después de tener constancia, si es posible.", implication: "Reloj de 72 horas desde la constancia, con su marca de tiempo."}
+  - {law: eu-2016-679, article: "33", url: "https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807", note: "Apartado 1: notificar a la autoridad de control sin dilación indebida y, de ser posible, a más tardar 72 horas después de tener constancia, salvo que sea improbable que la violación constituya un riesgo para los derechos y libertades.", implication: "Reloj de 72 horas desde la constancia, con su marca de tiempo."}
   - {law: eu-2016-679, article: "34", url: "https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807", note: "Apartado 1: con probable alto riesgo, comunicar al interesado sin dilación indebida.", implication: "Calcular el alcance por titular y por jurisdicción."}
   - {law: eu-2016-679, article: "35", url: "https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807", note: "Apartado 1: evaluación de impacto cuando sea probable un alto riesgo.", implication: "Puerta antes de producción, compartida con la del art. 15 ter."}
   - {law: eu-2016-679, article: "37", url: "https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807", note: "Apartado 1: delegado de protección de datos en los casos que enumera, entre ellos la observación habitual y sistemática a gran escala y las categorías especiales a gran escala.", implication: "El delegado como destinatario de las alertas de privacidad."}
   - {law: eu-2016-679, article: "45", url: "https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807", note: "Apartado 1: transferencia a un tercer país con decisión de adecuación de la Comisión.", implication: "La lista de adecuación es configuración con fecha."}
   - {law: eu-2016-679, article: "46", url: "https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807", note: "Apartado 2 c): cláusulas tipo de protección de datos adoptadas por la Comisión.", implication: "Mecanismo por flujo cuando no hay adecuación."}
-  - {law: ley-19628, article: "1 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Ámbito territorial, también para quien desde fuera ofrece bienes o servicios a titulares en Chile o monitorea su comportamiento.", implication: "La misma pregunta de alcance que el art. 3.2 del RGPD, en sentido inverso."}
+  - {law: ley-19628, article: "1 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Ámbito territorial, también para quien desde fuera ofrece bienes o servicios a titulares que se encuentren en Chile o monitorea su comportamiento.", implication: "Una pregunta de alcance parecida, con otro criterio: la ley chilena mira dónde se encuentra el titular; el art. 3.2 del RGPD, a los interesados que residan en la Unión."}
   - {law: ley-19628, article: "8 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Oponerse y no ser objeto de decisiones basadas en el tratamiento automatizado.", implication: "La misma ruta de revisión humana sirve a las dos normas."}
   - {law: ley-19628, article: "11", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Respuesta a más tardar dentro de treinta días corridos, prorrogable una vez hasta por igual período.", implication: "Otro plazo y otra unidad en la configuración."}
   - {law: ley-19628, article: "12", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Licitud con el consentimiento del titular.", implication: "Una base por actividad, como en el RGPD."}
   - {law: ley-19628, article: "13", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Licitud sin consentimiento en los casos que enumera.", implication: "Las bases no coinciden una a una con las del art. 6 del RGPD."}
   - {law: ley-19628, article: "14 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Información y política de tratamiento disponible.", implication: "El inventario alimenta la política chilena y el registro europeo."}
-  - {law: ley-19628, article: "14 sexies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Reportar a la Agencia por los medios más expeditos y sin dilaciones indebidas; comunicar a los titulares en los casos que indica.", implication: "Sin plazo en horas: el objetivo interno lo fija el área legal."}
+  - {law: ley-19628, article: "14 sexies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Reportar a la Agencia por los medios más expeditos y sin dilaciones indebidas las vulneraciones, cuando exista un riesgo razonable para los derechos y libertades de los titulares; comunicar a los titulares en los casos que indica.", implication: "Sin plazo en horas: el objetivo interno lo fija el área legal."}
   - {law: ley-19628, article: "15 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Evaluación de impacto cuando el tratamiento pueda producir un alto riesgo.", implication: "Una sola evaluación con secciones por jurisdicción."}
   - {law: ley-19628, article: "27", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Casos en que son lícitas las transferencias internacionales.", implication: "Cada flujo al exterior necesita un mecanismo, también desde Chile."}
   - {law: ley-19628, article: "28", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Países con niveles adecuados de protección, determinados por la Agencia.", implication: "La adecuación chilena es otra lista, distinta de la europea."}
@@ -45,12 +45,12 @@ sources:
     url: https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807
     accessed: 2026-10-30
     page_title: "Documento DOUE-L-2016-80807"
-    note: "Reglamento (UE) 2016/679 (RGPD), «DOUE» núm. 119, de 4 de mayo de 2016, texto original en español reproducido por el BOE; EUR-Lex no respondió a la lectura automática el 2026-10-30. Art. 3.2: «la oferta de bienes o servicios a dichos interesados en la Unión» y «el control de su comportamiento, en la medida en que este tenga lugar en la Unión». Art. 6.1: «El tratamiento solo será lícito si se cumple al menos una de las siguientes condiciones». Art. 12.3: «en el plazo de un mes a partir de la recepción de la solicitud»; «Dicho plazo podrá prorrogarse otros dos meses en caso necesario». Art. 22.1: «Todo interesado tendrá derecho a no ser objeto de una decisión basada únicamente en el tratamiento automatizado». Art. 27.1: representante en la Unión, designado por escrito, cuando se aplica el art. 3.2. Art. 30.1: «Cada responsable y, en su caso, su representante llevarán un registro de las actividades de tratamiento»; 30.5: excepción para quien «emplee a menos de 250 personas», con salvedades. Art. 33.1: «a más tardar 72 horas después de que haya tenido constancia de ella». Art. 34.1: «Cuando sea probable que la violación de la seguridad de los datos personales entrañe un alto riesgo». Art. 35.1: evaluación de impacto cuando sea probable un alto riesgo. Art. 37.1 b) y c): observación habitual y sistemática a gran escala; categorías especiales a gran escala. Art. 45.1: transferencia con decisión de adecuación. Art. 46.2 c): «cláusulas tipo de protección de datos adoptadas por la Comisión»."
+    note: "Reglamento (UE) 2016/679 (RGPD), «DOUE» núm. 119, de 4 de mayo de 2016, texto original en español reproducido por el BOE; EUR-Lex no respondió a la lectura automática el 2026-10-30. Art. 3.2: «El presente Reglamento se aplica al tratamiento de datos personales de interesados que residan en la Unión por parte de un responsable o encargado no establecido en la Unión», cuando se relaciona con «la oferta de bienes o servicios a dichos interesados en la Unión, independientemente de si a estos se les requiere su pago» o con «el control de su comportamiento, en la medida en que este tenga lugar en la Unión». Art. 6.1: «El tratamiento solo será lícito si se cumple al menos una de las siguientes condiciones». Art. 12.3: «en el plazo de un mes a partir de la recepción de la solicitud»; «Dicho plazo podrá prorrogarse otros dos meses en caso necesario». Art. 22.1: «Todo interesado tendrá derecho a no ser objeto de una decisión basada únicamente en el tratamiento automatizado». Art. 27.1: representante en la Unión, designado por escrito, cuando se aplica el art. 3.2. Art. 30.1: «Cada responsable y, en su caso, su representante llevarán un registro de las actividades de tratamiento»; 30.5: excepción para quien «emplee a menos de 250 personas», con salvedades. Art. 33.1: «sin dilación indebida y, de ser posible, a más tardar 72 horas después de que haya tenido constancia de ella, a menos que sea improbable que dicha violación de la seguridad constituya un riesgo para los derechos y las libertades de las personas físicas». Art. 27.2: excepciones para el tratamiento ocasional e improbablemente riesgoso y para autoridades u organismos públicos. Art. 34.1: «Cuando sea probable que la violación de la seguridad de los datos personales entrañe un alto riesgo». Art. 35.1: evaluación de impacto cuando sea probable un alto riesgo. Art. 37.1 b) y c): observación habitual y sistemática a gran escala; categorías especiales a gran escala. Art. 45.1: transferencia con decisión de adecuación. Art. 46.2 c): «cláusulas tipo de protección de datos adoptadas por la Comisión»."
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
     accessed: 2026-10-30
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión con vigencia diferida desde 2026-12-01), consultada el 2026-10-30. Art. 1 bis c): responsable o mandatario no establecido en Chile cuyas operaciones «estén destinadas a ofrecer bienes o servicios a titulares que se encuentren en Chile», o a monitorear su comportamiento. Art. 8 bis: «El titular de datos tiene derecho a oponerse y a no ser objeto de decisiones basadas en el tratamiento» automatizado. Art. 11: respuesta «a más tardar dentro de los treinta días corridos siguientes a la fecha de ingreso de la solicitud», prorrogable por una vez hasta por igual período. Art. 12: licitud con consentimiento. Art. 13: «Es lícito el tratamiento de datos personales, sin el consentimiento del titular, en los siguientes casos». Art. 14 ter a): la política de tratamiento, su fecha y versión. Art. 14 sexies: «El responsable deberá reportar a la Agencia, por los medios más expeditos posibles y sin dilaciones indebidas»; en los casos que indica, «deberá también efectuar esta comunicación a los titulares». Art. 15 ter: evaluación de impacto cuando el tratamiento «pueda producir un alto riesgo». Arts. 27 y 28: transferencias internacionales lícitas y países con niveles adecuados. Art. 49: «Los responsables de datos podrán voluntariamente adoptar un modelo de prevención de infracciones», con «La designación de un delegado de protección de datos personales»."
+    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión con vigencia diferida desde 2026-12-01), consultada el 2026-10-30. Art. 1 bis c): responsable o mandatario no establecido en Chile cuyas operaciones «estén destinadas a ofrecer bienes o servicios a titulares que se encuentren en Chile», o a monitorear su comportamiento. Art. 8 bis: «El titular de datos tiene derecho a oponerse y a no ser objeto de decisiones basadas en el tratamiento» automatizado. Art. 11: respuesta «a más tardar dentro de los treinta días corridos siguientes a la fecha de ingreso de la solicitud», prorrogable por una vez hasta por igual período. Art. 12: licitud con consentimiento. Art. 13: «Es lícito el tratamiento de datos personales, sin el consentimiento del titular, en los siguientes casos». Art. 14 ter a): la política de tratamiento, su fecha y versión. Art. 14 sexies: «El responsable deberá reportar a la Agencia, por los medios más expeditos posibles y sin dilaciones indebidas» las vulneraciones a las medidas de seguridad, «cuando exista un riesgo razonable para los derechos y libertades de los titulares»; en los casos que indica, «deberá también efectuar esta comunicación a los titulares». Art. 15 ter: evaluación de impacto cuando el tratamiento «pueda producir un alto riesgo». Arts. 27 y 28: transferencias internacionales lícitas y países con niveles adecuados. Art. 49: «Los responsables de datos podrán voluntariamente adoptar un modelo de prevención de infracciones», con «La designación de un delegado de protección de datos personales»."
   - source: camara-legin
     url: https://www2.camara.leg.br/legin/fed/lei/2018/lei-13709-14-agosto-2018-787077-normaatualizada-pl.html
     accessed: 2026-10-30
@@ -70,7 +70,7 @@ sources:
     url: https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/adequacy-decisions_en
     accessed: 2026-10-30
     page_title: "Adequacy decisions"
-    note: "Comisión Europea, *Adequacy decisions* (título de la página: «Data protection adequacy for non-EU countries»): con una decisión de adecuación, «personal data can flow from the EU» «without any further safeguard being necessary» (los datos pueden salir de la UE sin otra garantía). La lista incluye a Brasil y no incluye a Chile al 2026-10-30."
+    note: "Comisión Europea, *Adequacy decisions* (título de la página: «Data protection adequacy for non-EU countries»): con una decisión de adecuación, «personal data can flow from the EU (and Norway, Liechtenstein and Iceland) to that third country without any further safeguard being necessary» (los datos pueden salir de la UE, y de Noruega, Liechtenstein e Islandia, hacia ese tercer país sin otra garantía). La lista incluye a Brasil y no incluye a Chile al 2026-10-30."
   - source: gcp-organization-policy-docs
     url: https://docs.cloud.google.com/organization-policy/restrict-locations
     accessed: 2026-10-30
@@ -90,7 +90,7 @@ sources:
     url: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html
     accessed: 2026-10-21
     page_title: "AWS global condition context keys"
-    note: "AWS global condition context keys: aws:RequestedRegion controla qué endpoint regional se invoca, no el impacto de la operación; algunos servicios tienen efectos entre regiones, como la replicación de Amazon S3."
+    note: "AWS global condition context keys: aws:RequestedRegion controla qué endpoint regional se invoca, no el impacto de la operación; algunos servicios tienen efectos entre regiones, como la replicación de Amazon S3. «Some global services, such as IAM, have a single endpoint»: «IAM calls are always made to the us-east-1 Region» (las llamadas a IAM van siempre a us-east-1)."
   - source: microsoft-eu-data-boundary-docs
     url: https://learn.microsoft.com/en-us/privacy/eudb/eu-data-boundary-learn
     accessed: 2026-10-30
@@ -99,8 +99,8 @@ sources:
   - source: azure-policy-docs
     url: https://learn.microsoft.com/en-us/azure/governance/policy/samples/built-in-policies
     accessed: 2026-10-21
-    page_title: "Azure Policy built-in policy definitions"
-    note: "Azure Policy built-in policy definitions: «Allowed locations» restringe las ubicaciones de despliegue; excluye resource groups y los recursos de la región «global»."
+    page_title: "List of built-in policy definitions"
+    note: "List of built-in policy definitions (Azure Policy): «Allowed locations» restringe las ubicaciones de despliegue; excluye resource groups, Microsoft.AzureActiveDirectory/b2cDirectories y los recursos de la región «global»."
 relations:
   - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del dominio."}
   - {type: RELATED_TO, target: lgpd, note: "El otro marco comparado del tramo."}
@@ -127,9 +127,9 @@ Las citas del RGPD vienen de su versión oficial en español (BOE, reproducción
 
 ## 2. Qué es
 
-- **[Obligación legal · GDPR art. 3]** El Reglamento (UE) 2016/679 se aplica también a un responsable o encargado no establecido en la Unión cuando sus actividades se relacionan con «la oferta de bienes o servicios a dichos interesados en la Unión» o con «el control de su comportamiento, en la medida en que este tenga lugar en la Unión».
+- **[Obligación legal · GDPR art. 3]** El Reglamento (UE) 2016/679 «se aplica al tratamiento de datos personales de interesados que residan en la Unión por parte de un responsable o encargado no establecido en la Unión», cuando el tratamiento se relaciona con «la oferta de bienes o servicios a dichos interesados en la Unión, independientemente de si a estos se les requiere su pago», o con «el control de su comportamiento, en la medida en que este tenga lugar en la Unión».
 - **[Obligación legal · GDPR art. 27]** En ese caso, el responsable o encargado designa por escrito un representante en la Unión, con las excepciones del propio artículo.
-- **[Obligación legal · Ley 19.628, art. 1 bis]** La ley chilena usa el mismo criterio en sentido inverso: alcanza a quien, desde fuera de Chile, ofrece bienes o servicios a titulares en Chile o monitorea su comportamiento.
+- **[Obligación legal · Ley 19.628, art. 1 bis]** La ley chilena alcanza a quien, desde fuera de Chile, ofrece bienes o servicios a titulares «que se encuentren en Chile» o monitorea su comportamiento. **[Buena práctica]** Es otro criterio: Chile mira dónde se encuentra el titular; el art. 3.2 del RGPD, a los interesados que residan en la Unión.
 - **[Buena práctica]** Que un dato esté guardado en Chile no saca el tratamiento del RGPD, y que esté en una región europea no lo pone bajo él: decide la relación con las personas (oferta o seguimiento), no la ubicación del servidor.
 - **[Buena práctica]** Comparación en lo que impacta a ingeniería. Cada fila lleva la etiqueta del RGPD; la columna chilena se etiqueta en el §4 y la brasileña en la ficha `lgpd`.
 
@@ -139,7 +139,7 @@ Las citas del RGPD vienen de su versión oficial en español (BOE, reproducción
 | **[Obligación legal · GDPR art. 12]** Plazo de respuesta a una solicitud | 30 días corridos, prorrogable una vez por igual período (art. 11) | Un mes, prorrogable otros dos meses (art. 12.3) | 15 días para la declaración completa (art. 19, II) |
 | **[Obligación legal · GDPR art. 30]** Registro de actividades | Política de tratamiento disponible (art. 14 ter) | Registro de actividades, con excepción para menos de 250 personas y salvedades (art. 30) | Registro de las operaciones (art. 37) |
 | **[Obligación legal · GDPR art. 35]** Evaluación de impacto | Si puede producir un alto riesgo (art. 15 ter) | Si es probable un alto riesgo (art. 35) | Relatório de impacto, si lo determina la ANPD (art. 38) |
-| **[Obligación legal · GDPR art. 33]** Brecha: autoridad | Agencia, «sin dilaciones indebidas», sin plazo en horas (art. 14 sexies) | Autoridad de control, «a más tardar 72 horas» desde la constancia (art. 33.1) | ANPD, plazo que define la autoridad (art. 48); 3 días hábiles según la ANPD |
+| **[Obligación legal · GDPR art. 33]** Brecha: autoridad | Agencia, «sin dilaciones indebidas», sin plazo en horas, «cuando exista un riesgo razonable para los derechos y libertades de los titulares» (art. 14 sexies) | Autoridad de control, «sin dilación indebida y, de ser posible, a más tardar 72 horas» desde la constancia, salvo que el riesgo sea improbable (art. 33.1) | ANPD, plazo que define la autoridad (art. 48): 3 días hábiles desde que el controlador sabe que el incidente afectó datos personales, el doble para agentes de pequeño porte (Res. CD/ANPD 15/2024) |
 | **[Obligación legal · GDPR art. 34]** Brecha: personas | Titulares, en los casos que indica (art. 14 sexies) | Interesados, con probable alto riesgo, sin dilación indebida (art. 34.1) | Titulares, con risco ou dano relevante (art. 48) |
 | **[Obligación legal · GDPR art. 45]** Transferencias | País adecuado según la Agencia, cláusulas u otros instrumentos (arts. 27 y 28) | Decisión de adecuación (art. 45) o cláusulas tipo de la Comisión (art. 46.2 c)) | País adecuado o cláusulas-padrão (art. 33) |
 | **[Obligación legal · GDPR art. 37]** Delegado | En el modelo de prevención voluntario (art. 49) | Obligatorio en los casos del art. 37.1 | Encarregado (art. 41) |
@@ -152,7 +152,7 @@ Las citas del RGPD vienen de su versión oficial en español (BOE, reproducción
 
 **[Buena práctica]** Una agencia de viajes chilena vende paquetes en euros a clientes en España y Alemania y les envía ofertas según su historial. Un incidente expone reservas de clientes de los dos lados: el equipo de datos tiene que decir, en horas, cuántos titulares hay por jurisdicción, a quién se avisa y hasta cuándo. Si los plazos están escritos como `if pais == ...` en cinco servicios, cada cambio de norma obliga a buscarlos, y nadie puede mostrar qué regla se aplicó en cada fecha.
 
-**[Obligación legal · GDPR art. 33]** El reloj europeo es de 72 horas desde la constancia. **[Obligación legal · Ley 19.628, art. 14 sexies]** El chileno no fija horas: pide reportar sin dilaciones indebidas. **[Decisión de arquitectura]** Las dos reglas viven en la misma configuración y el mismo incidente las resuelve a la vez.
+**[Obligación legal · GDPR art. 33]** El reloj europeo pide notificar sin dilación indebida y, de ser posible, en 72 horas desde la constancia, salvo que sea improbable que la violación constituya un riesgo. **[Obligación legal · Ley 19.628, art. 14 sexies]** El chileno no fija horas: pide reportar sin dilaciones indebidas cuando exista un riesgo razonable para los titulares. **[Decisión de arquitectura]** Las dos reglas viven en la misma configuración y el mismo incidente las resuelve a la vez.
 
 ## 4. Cómo funciona
 
@@ -361,14 +361,14 @@ Limitaciones: los días hábiles no descuentan feriados; los 3 días hábiles br
 | Necesidad | Servicio y alcance | Lo que no cubre |
 |---|---|---|
 | Regiones con geografía en la UE | eu-central-1 (Germany), eu-west-1 (Ireland), eu-west-3 (France), eu-north-1 (Sweden); eu-south-1 (Italy) y eu-south-2 (Spain) requieren habilitarse | `eu-west-2` es United Kingdom y `eu-central-2` es Switzerland: el prefijo `eu-` no equivale a la UE |
-| Limitar regiones | Condición `aws:RequestedRegion` en políticas | Controla el endpoint invocado, no los efectos entre regiones, como la replicación de S3 |
+| Limitar regiones | Condición `aws:RequestedRegion` en políticas | Controla el endpoint invocado, no los efectos entre regiones, como la replicación de S3; las llamadas a IAM van siempre a `us-east-1`, así que negar toda región fuera de la UE bloquea IAM |
 
 ## 13. Azure
 
 | Necesidad | Servicio y alcance | Lo que no cubre |
 |---|---|---|
 | Compromiso de almacenar y procesar en la UE y la EFTA | EU Data Boundary: los servicios regionales de Azure en una región de la frontera quedan dentro | «subject to limited circumstances» en que siguen transfiriéndose datos fuera; los servicios no regionales requieren su configuración |
-| Limitar ubicaciones | Azure Policy «Allowed locations» | Resource groups y recursos de la región «global» |
+| Limitar ubicaciones | Azure Policy «Allowed locations» | Resource groups, `Microsoft.AzureActiveDirectory/b2cDirectories` y recursos de la región «global» |
 
 ## 14. Buenas prácticas
 
@@ -430,7 +430,7 @@ Propuesta para F4: el archivo de reglas del §10 como YAML, cargado por el resol
 - Comisión Europea: *Adequacy decisions*.
 - Google Cloud: *Restrict resource locations*; *Data residency*.
 - AWS: *AWS Regions*; *AWS global condition context keys*.
-- Microsoft Learn: *What is the EU Data Boundary?*; *Azure Policy built-in policy definitions*.
+- Microsoft Learn: *What is the EU Data Boundary?*; *List of built-in policy definitions*.
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
@@ -443,3 +443,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: creación (lote P4), en el tramo 6 «Marcos regulatorios comparados», después de la Enmienda 5 de ADR-023 (jurisdicción EU y etiquetas «GDPR art. N»).
 - 2026-10-30: la Enmienda de jurisdicciones pasa a ser la Enmienda 5 de ADR-023; cita de la Res. CD/ANPD 15/2024 (art. 6 § 1º y art. 9) sobre el inicio del plazo brasileño.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
+- 2026-10-30: revisión `docs/reviews/p4.md` aplicada (hallazgos legales tratados como altos): art. 3.2 con «interesados que residan en la Unión» y la frase del pago; art. 1 bis como presencia en Chile, en frase aparte; art. 33.1 con «sin dilación indebida», «de ser posible» y la salvedad del riesgo improbable; art. 14 sexies con el riesgo razonable; inicio y doble plazo de la ANPD; Comisión con Noruega, Liechtenstein e Islandia; IAM siempre en us-east-1; `page_title` de Azure Policy con su H1 y exclusión de b2cDirectories.

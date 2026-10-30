@@ -3,7 +3,7 @@ id: concept:lgpd
 slug: lgpd
 type: concept
 title: LGPD (Brasil)
-description: "Una plataforma chilena con clientes en Brasil, ¿qué tiene que hacer distinto? La LGPD alcanza el tratamiento que ofrece bienes o servicios a personas en Brasil o con datos recolectados allí. Comparación con la Ley 21.719 en lo que impacta a ingeniería: plazos de 15 días y de 3 días hábiles, registro, relatório de impacto, encarregado, decisiones automatizadas y cláusulas-padrão sin modificaciones. Calendario y mecanismos como configuración, en la CI. No es asesoría legal."
+description: "Una plataforma chilena con clientes en Brasil, ¿qué tiene que hacer distinto? La LGPD alcanza el tratamiento hecho en Brasil, el que ofrece bienes o servicios o trata datos de personas localizadas allí, y el de datos recolectados con el titular en Brasil. Comparación con la Ley 21.719: 15 días, 3 días hábiles, registro, relatório de impacto, encarregado, decisiones automatizadas y cláusulas-padrão sin modificaciones. Calendario y mecanismos como configuración, en la CI. No es asesoría legal."
 domain: privacy-engineering
 subdomain: regulatory-frameworks
 category: compliance
@@ -25,7 +25,7 @@ legal_basis:
   - {law: br-lei-13709, article: "33", url: "https://www2.camara.leg.br/legin/fed/lei/2018/lei-13709-14-agosto-2018-787077-normaatualizada-pl.html", note: "I: países u organismos con protección adecuada; II b): cláusulas-padrão contratuais.", implication: "Mecanismo por flujo según el origen brasileño de los datos."}
   - {law: br-lei-13709, article: "37", url: "https://www2.camara.leg.br/legin/fed/lei/2018/lei-13709-14-agosto-2018-787077-normaatualizada-pl.html", note: "Registro de las operaciones de tratamiento.", implication: "El inventario de actividades es la base del registro."}
   - {law: br-lei-13709, article: "38", url: "https://www2.camara.leg.br/legin/fed/lei/2018/lei-13709-14-agosto-2018-787077-normaatualizada-pl.html", note: "La autoridad nacional puede determinar que el controlador elabore un relatório de impacto.", implication: "La evaluación existente debe poder exportarse a ese formato."}
-  - {law: br-lei-13709, article: "41", url: "https://www2.camara.leg.br/legin/fed/lei/2018/lei-13709-14-agosto-2018-787077-normaatualizada-pl.html", note: "El controlador indica un encarregado.", implication: "El encarregado como destinatario de las alertas de privacidad."}
+  - {law: br-lei-13709, article: "41", url: "https://www2.camara.leg.br/legin/fed/lei/2018/lei-13709-14-agosto-2018-787077-normaatualizada-pl.html", note: "El controlador indica un encarregado; la definición vigente del art. 5, VIII (Lei 15.352/2026) habla de «pessoa indicada pelo controlador e operador».", implication: "El encarregado como destinatario de las alertas de privacidad."}
   - {law: br-lei-13709, article: "48", url: "https://www2.camara.leg.br/legin/fed/lei/2018/lei-13709-14-agosto-2018-787077-normaatualizada-pl.html", note: "Comunicar a la autoridad nacional y al titular un incidente que pueda acarrear riesgo o daño relevante; § 1º: plazo razonable definido por la autoridad.", implication: "El plazo en días hábiles viene del reglamento de la ANPD y va en configuración."}
   - {law: ley-19628, article: "1 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Ámbito territorial, también para quien desde fuera ofrece bienes o servicios a titulares en Chile o monitorea su comportamiento.", implication: "La pregunta de alcance existe en las dos leyes."}
   - {law: ley-19628, article: "8 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Oponerse y no ser objeto de decisiones basadas en el tratamiento automatizado.", implication: "La ruta de revisión humana sirve a las dos leyes."}
@@ -33,7 +33,7 @@ legal_basis:
   - {law: ley-19628, article: "12", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Licitud con el consentimiento del titular.", implication: "Una base por actividad en cada ley."}
   - {law: ley-19628, article: "13", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Licitud sin consentimiento en los casos que enumera.", implication: "Las bases no coinciden una a una con las hipótesis del art. 7 de la LGPD."}
   - {law: ley-19628, article: "14 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Información y política de tratamiento disponible.", implication: "El inventario alimenta la política chilena y el registro brasileño."}
-  - {law: ley-19628, article: "14 sexies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Reportar a la Agencia por los medios más expeditos y sin dilaciones indebidas; comunicar a los titulares en los casos que indica.", implication: "Sin plazo en días: el objetivo interno lo fija el área legal."}
+  - {law: ley-19628, article: "14 sexies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Reportar a la Agencia por los medios más expeditos y sin dilaciones indebidas las vulneraciones, cuando exista un riesgo razonable para los derechos y libertades de los titulares; comunicar a los titulares en los casos que indica.", implication: "Sin plazo en días: el objetivo interno lo fija el área legal."}
   - {law: ley-19628, article: "15 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Evaluación de impacto cuando el tratamiento pueda producir un alto riesgo.", implication: "En Chile la decide el supuesto; en Brasil puede pedirla la ANPD."}
   - {law: ley-19628, article: "27", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Casos en que son lícitas las transferencias internacionales.", implication: "Un flujo Brasil → Chile también es una salida desde Brasil."}
   - {law: ley-19628, article: "28", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Países con niveles adecuados de protección, determinados por la Agencia.", implication: "La adecuación chilena es otra lista, distinta de la brasileña."}
@@ -43,7 +43,7 @@ sources:
     url: https://www2.camara.leg.br/legin/fed/lei/2018/lei-13709-14-agosto-2018-787077-normaatualizada-pl.html
     accessed: 2026-10-30
     page_title: "LEI Nº 13.709, DE 14 DE AGOSTO DE 2018"
-    note: "Lei 13.709/2018 (LGPD), texto actualizado de la Câmara dos Deputados, consultado el 2026-10-30 (la última ley modificadora visible es la Lei 15.352/2026; planalto.gov.br bloqueó la lectura automática). Art. 3º: I «a operação de tratamento seja realizada no território nacional»; II «a atividade de tratamento tenha por objetivo a oferta ou o fornecimento de bens ou serviços» o «o tratamento de dados de indivíduos localizados no território nacional»; III «os dados pessoais objeto do tratamento tenham sido coletados no território nacional». Art. 7º: «O tratamento de dados pessoais somente poderá ser realizado nas seguintes hipóteses». Art. 18: «O titular dos dados pessoais tem direito a obter do controlador»; § 5º: «nos prazos e nos termos previstos em regulamento». Art. 19, II: «no prazo de até 15 (quinze) dias, contado da data do requerimento do titular». Art. 20: «tem direito a solicitar a revisão de decisões tomadas unicamente com base em tratamento automatizado». Art. 33: I «grau de proteção de dados pessoais adequado ao previsto nesta Lei»; II b) «cláusulas-padrão contratuais». Art. 37: «devem manter registro das operações de tratamento de dados pessoais que realizarem». Art. 38: la autoridad nacional «poderá determinar ao controlador que elabore relatório de impacto à proteção de dados pessoais». Art. 41: «O controlador deverá indicar encarregado pelo tratamento de dados pessoais». Art. 48: comunicar «à autoridade nacional e ao titular» el incidente «que possa acarretar risco ou dano relevante aos titulares»; § 1º: «A comunicação será feita em prazo razoável, conforme definido pela autoridade nacional»."
+    note: "Lei 13.709/2018 (LGPD), texto actualizado de la Câmara dos Deputados, consultado el 2026-10-30 (la última ley modificadora visible es la Lei 15.352/2026; planalto.gov.br bloqueó la lectura automática). Art. 3º: I «a operação de tratamento seja realizada no território nacional»; II «a atividade de tratamento tenha por objetivo a oferta ou o fornecimento de bens ou serviços» o «o tratamento de dados de indivíduos localizados no território nacional»; III «os dados pessoais objeto do tratamento tenham sido coletados no território nacional». Caput del art. 3º: «independentemente do meio, do país de sua sede ou do país onde estejam localizados os dados»; § 1º: «Consideram-se coletados no território nacional os dados pessoais cujo titular nele se encontre no momento da coleta». Art. 5º, VIII (redacción de la Lei 15.352/2026): encarregado es la «pessoa indicada pelo controlador e operador para atuar como canal de comunicação». Art. 7º: «O tratamento de dados pessoais somente poderá ser realizado nas seguintes hipóteses». Art. 18: «O titular dos dados pessoais tem direito a obter do controlador»; § 5º: «nos prazos e nos termos previstos em regulamento». Art. 19, II: «no prazo de até 15 (quinze) dias, contado da data do requerimento do titular». Art. 20: «tem direito a solicitar a revisão de decisões tomadas unicamente com base em tratamento automatizado». Art. 33: I «grau de proteção de dados pessoais adequado ao previsto nesta Lei»; II b) «cláusulas-padrão contratuais». Art. 37: «devem manter registro das operações de tratamento de dados pessoais que realizarem». Art. 38: la autoridad nacional «poderá determinar ao controlador que elabore relatório de impacto à proteção de dados pessoais». Art. 41: «O controlador deverá indicar encarregado pelo tratamento de dados pessoais». Art. 48: comunicar «à autoridade nacional e ao titular» el incidente «que possa acarretar risco ou dano relevante aos titulares»; § 1º: «A comunicação será feita em prazo razoável, conforme definido pela autoridade nacional»."
   - source: anpd-docs
     url: https://www.gov.br/anpd/pt-br/assuntos/incidente-de-seguranca
     accessed: 2026-10-30
@@ -63,17 +63,17 @@ sources:
     url: https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807
     accessed: 2026-10-30
     page_title: "Documento DOUE-L-2016-80807"
-    note: "Reglamento (UE) 2016/679 en español (BOE, reproducción del DOUE), para la columna RGPD de la comparación: art. 12.3, un mes prorrogable otros dos meses; art. 33.1, «a más tardar 72 horas después de que haya tenido constancia de ella». El detalle está en la ficha `gdpr`."
+    note: "Reglamento (UE) 2016/679 en español (BOE, reproducción del DOUE), para la columna RGPD de la comparación: art. 12.3, un mes prorrogable otros dos meses; art. 33.1, «sin dilación indebida y, de ser posible, a más tardar 72 horas después de que haya tenido constancia de ella, a menos que sea improbable que dicha violación de la seguridad constituya un riesgo». El detalle está en la ficha `gdpr`."
   - source: mj-biblioteca-digital
     url: https://bibliotecadigital.mj.gov.br/bitstream/1/12879/2/RES_ANPD_2024_15.html
     accessed: 2026-10-30
     page_title: "resolução CD/ANPD Nº 15, de 24 de abril de 2024"
-    note: "Resolución CD/ANPD nº 15/2024 (Regulamento de Comunicação de Incidente de Segurança), copia del acto en la Biblioteca Digital del Ministerio de Justicia (SEI/MJ); el Diário Oficial da União (in.gov.br) no respondió el 2026-10-30. Art. 6º: «A comunicação de incidente de segurança à ANPD deverá ser realizada pelo controlador no prazo de três dias úteis»; § 1º: «O prazo a que se refere o caput será contado do conhecimento pelo controlador de que o incidente afetou dados pessoais» (se cuenta desde que el controlador sabe que el incidente afectó datos personales); § 3º: complementación «no prazo de vinte dias úteis»; § 8º: plazos «contados em dobro para os agentes de pequeno porte» (el doble para agentes de pequeño porte). Art. 9º: al titular, «no prazo de três dias úteis, contados do conhecimento pelo controlador de que o incidente afetou dados pessoais»."
+    note: "Resolución CD/ANPD nº 15/2024 (Regulamento de Comunicação de Incidente de Segurança), copia del acto en la Biblioteca Digital del Ministerio de Justicia (SEI/MJ); el Diário Oficial da União (in.gov.br) no respondió el 2026-10-30. Art. 6º: «A comunicação de incidente de segurança à ANPD deverá ser realizada pelo controlador no prazo de três dias úteis»; § 1º: «O prazo a que se refere o caput será contado do conhecimento pelo controlador de que o incidente afetou dados pessoais» (se cuenta desde que el controlador sabe que el incidente afectó datos personales); § 3º: complementación «no prazo de vinte dias úteis»; § 8º: plazos «contados em dobro para os agentes de pequeno porte» (el doble para agentes de pequeño porte). Art. 9º: al titular, «no prazo de três dias úteis, contados do conhecimento pelo controlador de que o incidente afetou dados pessoais». § 6º: ese plazo «é contado em dobro para os agentes de pequeno porte». Art. 5º: el incidente puede acarrear riesgo o daño relevante «quando puder afetar significativamente interesses e direitos fundamentais dos titulares e, cumulativamente, envolver, pelo menos, um dos seguintes critérios»: «dados pessoais sensíveis»; «dados de crianças, de adolescentes ou de idosos»; «dados financeiros»; «dados de autenticação em sistemas»; «dados protegidos por sigilo legal, judicial ou profissional»; o «dados em larga escala»."
   - source: ec-data-protection
     url: https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/adequacy-decisions_en
     accessed: 2026-10-30
     page_title: "Adequacy decisions"
-    note: "Comisión Europea, *Adequacy decisions*: la lista incluye a Brasil al 2026-10-30; con una decisión de adecuación, los datos pueden salir de la UE «without any further safeguard being necessary» (sin otra garantía)."
+    note: "Comisión Europea, *Adequacy decisions*: la lista incluye a Brasil al 2026-10-30; con una decisión de adecuación, «personal data can flow from the EU (and Norway, Liechtenstein and Iceland) to that third country without any further safeguard being necessary» (los datos pueden salir de la UE, y de Noruega, Liechtenstein e Islandia, sin otra garantía)."
   - source: gcp-organization-policy-docs
     url: https://docs.cloud.google.com/organization-policy/restrict-locations
     accessed: 2026-10-30
@@ -92,8 +92,8 @@ sources:
   - source: azure-policy-docs
     url: https://learn.microsoft.com/en-us/azure/governance/policy/samples/built-in-policies
     accessed: 2026-10-21
-    page_title: "Azure Policy built-in policy definitions"
-    note: "Azure Policy built-in policy definitions: «Allowed locations» restringe las ubicaciones de despliegue; excluye resource groups y los recursos de la región «global»."
+    page_title: "List of built-in policy definitions"
+    note: "List of built-in policy definitions (Azure Policy): «Allowed locations» restringe las ubicaciones de despliegue; excluye resource groups, Microsoft.AzureActiveDirectory/b2cDirectories y los recursos de la región «global»."
 relations:
   - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del dominio."}
   - {type: RELATED_TO, target: gdpr, note: "El otro marco comparado del tramo y el resolvedor de plazos."}
@@ -112,7 +112,7 @@ verification_status: review_required
 
 Esta ficha no es asesoría legal: explica qué cambia en una plataforma de datos cuando también trata datos de personas en Brasil. Si la LGPD aplica, qué hipótesis corresponde o qué mecanismo usar lo decide el área legal.
 
-**Pregunta guía:** una plataforma chilena que trata datos de residentes de Brasil, ¿qué tiene que hacer distinto? Sobre todo, manejar **plazos cortos y en días hábiles**, un **calendario de feriados como dato** y transferencias con **cláusulas-padrão que no se modifican**. Las reglas van como configuración versionada por jurisdicción, junto a las de Chile y la UE (ficha `gdpr`).
+**Pregunta guía:** una plataforma chilena que trata datos de personas localizadas en Brasil, ¿qué tiene que hacer distinto? Sobre todo, manejar **plazos cortos y en días hábiles**, un **calendario de feriados como dato** y transferencias con **cláusulas-padrão que no se modifican**. Las reglas van como configuración versionada por jurisdicción, junto a las de Chile y la UE (ficha `gdpr`).
 
 **Cómo leerla.** *Comprender* (§1–6): cuándo alcanza la LGPD a una empresa chilena y en qué difiere de la Ley 21.719. *Aplicar* (§7–13): calendario, mecanismos y residencia en las tres nubes. *Demostrar*: la evidencia del §8, el código del §10 y los criterios del §18.
 
@@ -120,9 +120,9 @@ Las citas de la LGPD y de la ANPD van en portugués, con una traducción breve.
 
 ## 2. Qué es
 
-- **[Obligación legal · LGPD art. 3]** La Lei 13.709/2018 se aplica si «a operação de tratamento seja realizada no território nacional» (el tratamiento se realiza en Brasil), si busca «a oferta ou o fornecimento de bens ou serviços» o trata datos «de indivíduos localizados no território nacional» (ofrecer bienes o servicios o tratar datos de personas en Brasil), o si los datos «tenham sido coletados no território nacional» (se recolectaron en Brasil).
-- **[Obligación legal · Ley 19.628, art. 1 bis]** La ley chilena hace la misma pregunta en sentido inverso: alcanza a quien, desde fuera, ofrece bienes o servicios a titulares en Chile o monitorea su comportamiento.
-- **[Buena práctica]** La tercera condición de la LGPD, la recolección en Brasil, no tiene equivalente en el art. 3 del RGPD: un formulario que recoge datos en Brasil basta, aunque la oferta no esté dirigida allí.
+- **[Obligación legal · LGPD art. 3]** La Lei 13.709/2018 se aplica «independentemente do meio, do país de sua sede ou do país onde estejam localizados os dados» (sin importar el medio, el país de la sede ni dónde estén los datos) si «a operação de tratamento seja realizada no território nacional» (el tratamiento se realiza en Brasil), si busca «a oferta ou o fornecimento de bens ou serviços» o trata datos «de indivíduos localizados no território nacional» (ofrecer bienes o servicios o tratar datos de personas en Brasil), o si los datos «tenham sido coletados no território nacional» (se recolectaron en Brasil). El § 1º precisa: «Consideram-se coletados no território nacional os dados pessoais cujo titular nele se encontre no momento da coleta» (cuenta dónde está el titular al recolectar).
+- **[Obligación legal · Ley 19.628, art. 1 bis]** La ley chilena alcanza a quien, desde fuera, ofrece bienes o servicios a titulares «que se encuentren en Chile» o monitorea su comportamiento. **[Buena práctica]** Es una pregunta parecida, pero cada ley tiene su propio criterio y su propia lista de condiciones.
+- **[Buena práctica]** La tercera condición de la LGPD, la recolección en Brasil, no tiene equivalente en el art. 3 del RGPD: basta que el titular esté en Brasil cuando se recolectan sus datos, aunque la oferta no esté dirigida allí. Ni la sede de la empresa ni el país del servidor sacan el tratamiento de la ley.
 - **[Buena práctica]** Comparación en lo que impacta a ingeniería. Cada fila lleva la etiqueta de la LGPD; la columna chilena se etiqueta en el §4 y la europea en la ficha `gdpr`.
 
 | Tema | Ley 21.719 (Chile) | RGPD (UE) | LGPD (Brasil) |
@@ -131,7 +131,7 @@ Las citas de la LGPD y de la ANPD van en portugués, con una traducción breve.
 | **[Obligación legal · LGPD art. 19]** Plazo de respuesta a una solicitud | 30 días corridos, prorrogable una vez (art. 11) | Un mes, prorrogable dos (art. 12.3) | «no prazo de até 15 (quinze) dias, contado da data do requerimento» (hasta 15 días desde el requerimiento), para la declaración completa |
 | **[Obligación legal · LGPD art. 37]** Registro de actividades | Política de tratamiento disponible (art. 14 ter) | Registro de actividades (art. 30) | «registro das operações de tratamento» (registro de las operaciones) |
 | **[Obligación legal · LGPD art. 38]** Evaluación de impacto | Si puede producir un alto riesgo (art. 15 ter) | Si es probable un alto riesgo (art. 35) | La ANPD «poderá determinar» que se elabore un relatório de impacto (puede exigirlo) |
-| **[Obligación legal · LGPD art. 48]** Incidente | Agencia sin dilaciones indebidas; titulares en los casos que indica (art. 14 sexies) | Autoridad en 72 horas (art. 33.1); interesados con alto riesgo (art. 34.1) | ANPD y titular, si hay «risco ou dano relevante», en el plazo que define la autoridad: 3 días hábiles según la ANPD |
+| **[Obligación legal · LGPD art. 48]** Incidente | Agencia sin dilaciones indebidas, cuando exista un riesgo razonable para los titulares; titulares en los casos que indica (art. 14 sexies) | Autoridad sin dilación indebida y, de ser posible, en 72 horas, salvo riesgo improbable (art. 33.1); interesados con alto riesgo (art. 34.1) | ANPD y titular, si hay «risco ou dano relevante» (art. 5 de la Res. CD/ANPD 15/2024), en el plazo que define la autoridad: 3 días hábiles desde que el controlador sabe que el incidente afectó datos personales, el doble para agentes de pequeño porte |
 | **[Obligación legal · LGPD art. 33]** Transferencias | País adecuado según la Agencia, cláusulas u otros instrumentos (arts. 27 y 28) | Adecuación (art. 45) o cláusulas tipo (art. 46.2 c)) | Protección adecuada o «cláusulas-padrão contratuais» |
 | **[Obligación legal · LGPD art. 41]** Delegado | En el modelo de prevención voluntario (art. 49) | En los casos del art. 37.1 | «O controlador deverá indicar encarregado» (el controlador indica un encarregado) |
 | **[Obligación legal · LGPD art. 20]** Decisiones automatizadas | Oponerse y no ser objeto de ellas (art. 8 bis) | No ser objeto de una decisión únicamente automatizada (art. 22.1) | «solicitar a revisão de decisões tomadas unicamente com base em tratamento automatizado» (pedir su revisión) |
@@ -140,9 +140,9 @@ Las citas de la LGPD y de la ANPD van en portugués, con una traducción breve.
 
 ## 3. Problema que resuelve
 
-**[Buena práctica]** Un marketplace chileno vende a clientes en São Paulo y guarda sus pedidos en una bodega en la UE. Se detecta un incidente un viernes: Chile pide reportar sin dilaciones indebidas, la UE da 72 horas a sus clientes europeos y la ANPD da 3 días hábiles. Si el código cuenta días corridos, el plazo brasileño vence antes de lo calculado o después, según el calendario; si el feriado está escrito en el código, nadie lo actualiza.
+**[Buena práctica]** Un marketplace chileno vende a clientes en São Paulo y guarda sus pedidos en una bodega en la UE. Se detecta un incidente un viernes: Chile pide reportar sin dilaciones indebidas, la UE pide notificar sin dilación indebida y, de ser posible, en 72 horas, y la ANPD da 3 días hábiles desde que el controlador sabe que se afectaron datos personales. Si el código cuenta días corridos, el plazo brasileño vence antes de lo calculado o después, según el calendario; si el feriado está escrito en el código, nadie lo actualiza.
 
-**[Obligación legal · LGPD art. 48]** La comunicación va a la ANPD y al titular cuando el incidente puede acarrear riesgo o daño relevante. **[Obligación legal · Ley 19.628, art. 14 sexies]** En Chile va a la Agencia y, en los casos que indica, a los titulares. **[Decisión de arquitectura]** Un solo runbook con las reglas de cada jurisdicción como datos.
+**[Obligación legal · LGPD art. 48]** La comunicación va a la ANPD y al titular cuando el incidente puede acarrear riesgo o daño relevante. **[Buena práctica]** El reglamento de la ANPD lo concreta: cuando puede afectar significativamente intereses y derechos fundamentales y, en forma acumulativa, involucra al menos uno de los criterios del art. 5 de la Res. CD/ANPD 15/2024 (datos sensibles; de niños, adolescentes o personas mayores; financieros; de autenticación; protegidos por sigilo; o en gran escala). **[Obligación legal · Ley 19.628, art. 14 sexies]** En Chile va a la Agencia cuando exista un riesgo razonable para los titulares y, en los casos que indica, también a los titulares. **[Decisión de arquitectura]** Un solo runbook con las reglas de cada jurisdicción como datos.
 
 ## 4. Cómo funciona
 
@@ -177,7 +177,7 @@ Un incidente conocido el viernes 4 de diciembre de 2026, con el calendario del �
 |---|---|---|
 | Brasil | 3 días hábiles (ANPD), sin feriados | 2026-12-09 |
 | Brasil | 3 días hábiles, con el feriado del calendario | 2026-12-10 |
-| UE | 72 horas desde la constancia (ficha `gdpr`) | 2026-12-07 |
+| UE | Sin dilación indebida y, de ser posible, 72 horas desde la constancia (ficha `gdpr`) | 2026-12-07 |
 | Chile | Sin dilaciones indebidas: sin plazo fijo | Objetivo interno del área legal |
 
 ## 8. Ejemplo de producción
@@ -234,7 +234,7 @@ HOLIDAYS = {"BR": {dt.date(2026, 12, 8)}}   # feriado ficticio para el ejemplo; 
 # Decisiones de adecuación vigentes según la fuente de cada origen (Comisión Europea; ANPD, Res. 32/2026).
 ADEQUATE = {"EU": {"BR"}, "BR": {"EU"}, "CL": set[str]()}   # CL: sin listado de la Agencia cargado aquí (art. 28)
 CONTRACT_MECHANISMS = {"EU": "cláusulas tipo de la Comisión", "BR": "cláusulas-padrão contratuais da ANPD",
-                       "CL": "cláusulas contractuales (art. 27 b)"}
+                       "CL": "cláusulas, normas corporativas vinculantes u otros instrumentos (art. 27 b)"}
 
 
 def business_deadline(start: dt.date, jurisdiction: str) -> dt.date:
@@ -316,14 +316,14 @@ Limitaciones: el feriado es ficticio; el conteo parte del día en que el control
 |---|---|---|
 | Región en Brasil | Brazil South (Sao Paulo State) | Su región par es South Central US (Texas): una réplica geográfica basada en el par sale de Brasil |
 | Recuperación dentro de Brasil | Brazil Southeast (Rio), de acceso restringido para escenarios como recuperación ante desastres | Requiere solicitar acceso |
-| Limitar ubicaciones | Azure Policy «Allowed locations» | Resource groups y recursos de la región «global» |
+| Limitar ubicaciones | Azure Policy «Allowed locations» | Resource groups, `Microsoft.AzureActiveDirectory/b2cDirectories` y recursos de la región «global» |
 
 ## 14. Buenas prácticas
 
 - **[Decisión de arquitectura]** Los días hábiles se calculan con un calendario por jurisdicción guardado como dato, con versión y revisor.
 - **[Buena práctica]** Las cláusulas-padrão se registran con su versión; cualquier diferencia con el modelo oficial abre una revisión.
 - **[Buena práctica]** Revisar la región par y las réplicas de cada servicio, no solo la región principal.
-- **[Obligación legal · LGPD art. 41]** El encarregado recibe las alertas de incidentes y de flujos bloqueados. **[Buena práctica]** Registrar el envío.
+- **[Obligación legal · LGPD art. 41]** El encarregado recibe las alertas de incidentes y de flujos bloqueados. **[Buena práctica]** Registrar el envío; la definición vigente del encarregado (art. 5, VIII) lo vincula al controlador y al operador.
 - **[Buena práctica]** **Seguridad:** el calendario, las listas de adecuación y las reglas solo cambian con revisión del área legal en el repositorio.
 - **[Buena práctica]** **Observabilidad:** alertar si un dataset con jurisdicción `BR` aparece en una región no permitida o si su réplica está fuera de Brasil.
 - **[Buena práctica]** **Costo:** la región par fuera de Brasil abarata la recuperación; mantenerla dentro (región restringida) exige solicitar acceso.
@@ -378,7 +378,7 @@ Propuesta para F4: el calendario y la configuración de mecanismos del §10 como
 - Comisión Europea: *Adequacy decisions*.
 - Google Cloud: *Restrict resource locations*.
 - AWS: *AWS Regions*.
-- Microsoft Learn: *List of Azure regions*; *Azure Policy built-in policy definitions*.
+- Microsoft Learn: *List of Azure regions*; *List of built-in policy definitions*.
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
@@ -391,3 +391,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: creación (lote P4), en el tramo 6 «Marcos regulatorios comparados», después de la Enmienda 5 de ADR-023 (jurisdicción BR y etiquetas «LGPD art. N»).
 - 2026-10-30: la Enmienda de jurisdicciones pasa a ser la Enmienda 5 de ADR-023. Desde cuándo corren los 3 días hábiles, con cita textual de la Res. CD/ANPD 15/2024 (art. 6 § 1º y art. 9) desde la Biblioteca Digital del MJ: deja de ser ilustrativo.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
+- 2026-10-30: revisión `docs/reviews/p4.md` aplicada (hallazgos legales tratados como altos): personas localizadas en Brasil en vez de residentes; art. 3 con su caput (sede y país de los datos) y el § 1º (dónde está el titular al recolectar); art. 1 bis en frase aparte; inicio de los 3 días hábiles, doble plazo para agentes de pequeño porte y art. 5 de la Res. CD/ANPD 15/2024 con su lista cerrada; art. 33.1 del RGPD y art. 14 sexies completos; art. 27 b) con normas corporativas u otros instrumentos; art. 5, VIII del encarregado; Comisión con Noruega, Liechtenstein e Islandia; `page_title` de Azure Policy con su H1 y exclusión de b2cDirectories.

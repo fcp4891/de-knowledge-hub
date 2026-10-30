@@ -60,8 +60,8 @@ sources:
   - source: azure-policy-docs
     url: https://learn.microsoft.com/en-us/azure/governance/policy/samples/built-in-policies
     accessed: 2026-10-21
-    page_title: "Azure Policy built-in policy definitions"
-    note: "Azure Policy built-in policy definitions: «Allowed locations» restringe las ubicaciones que la organización puede usar al desplegar recursos, para requisitos de geocumplimiento; excluye resource groups, Microsoft.AzureActiveDirectory/b2cDirectories y los recursos de la región «global»; efectos Audit, Deny o Disabled."
+    page_title: "List of built-in policy definitions"
+    note: "List of built-in policy definitions (Azure Policy): «Allowed locations» restringe las ubicaciones que la organización puede usar al desplegar recursos, para requisitos de geocumplimiento; excluye resource groups, Microsoft.AzureActiveDirectory/b2cDirectories y los recursos de la región «global»; efectos Audit, Deny o Disabled."
   - source: nist-privacy-engineering
     url: https://www.nist.gov/privacy-engineering
     accessed: 2026-10-28
@@ -369,7 +369,7 @@ En AWS, **Amazon Macie** y **Lake Formation**. Según *What is Amazon Macie?* y 
 
 ## 13. Azure
 
-En Azure, **Unity Catalog** y **Azure Policy**. Según *Row filters and column masks* y *Azure Policy built-in policy definitions* (no ejecutado):
+En Azure, **Unity Catalog** y **Azure Policy**. Según *Row filters and column masks* y *List of built-in policy definitions* (no ejecutado):
 
 | Necesidad | Servicio |
 |---|---|
@@ -445,7 +445,7 @@ Propuesta para F4: un inventario sintético de cinco datasets y tres reglas en l
 - BCN Ley Chile: *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* (versión con vigencia diferida desde 2026-12-01) y *Decreto 662*.
 - Google Cloud: *Introduction to data masking* e *Introduction to INFORMATION_SCHEMA*.
 - AWS: *What is Amazon Macie?* y *Data filtering and cell-level security in Lake Formation*.
-- Microsoft Learn: *Row filters and column masks* y *Azure Policy built-in policy definitions*.
+- Microsoft Learn: *Row filters and column masks* y *List of built-in policy definitions*.
 - Referencias conceptuales (Nivel 4): NIST, *Privacy engineering*; CNIL, *GDPR developer's guide* (no son obligaciones chilenas).
 
 El detalle de cada fuente está en `sources` del frontmatter.
@@ -465,3 +465,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: mismos errores que la revisión de P2: el art. 14 quáter nombra sus cuatro factores (§2, `legal_basis` y nota de BCN).
 - 2026-10-30: §17 enlaza `gdpr` (lote P4), que cita la guía de la CNIL. Sin cambios de contenido.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
+- 2026-10-30: mismo hallazgo que la revisión de P4: `page_title` de Azure Policy con el H1 de la página, «List of built-in policy definitions» (ADR-012). Sin cambios de contenido.

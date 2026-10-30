@@ -3,7 +3,7 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-29
+**Última actualización:** 2026-10-30
 
 ## Reglas de revisión
 
@@ -15,6 +15,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ## Actual
 - **Tarea activa:** `b/ui-concept-names`. En todas las fichas, un código inline que es un concepto conocido se muestra con el título de la API. Si tiene ficha, enlaza a `/concepts/<slug>/` y el enlace lleva el slug en `title`. Si está en el blueprint sin ficha, muestra el nombre y la marca «pendiente», sin enlace. El código que no es un slug se queda como código.
+- **Tarea activa:** revisión del lote P4. Informe en `docs/reviews/p4.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: el art. 3.2 dice «residan», el art. 33 pide dilación y riesgo, el art. 3 de la LGPD mira dónde está la persona, y los 3 días de la ANPD corren desde que se sabe que el incidente afectó datos personales. Propuestas bajas: el título de Azure Policy y el art. 27 b).
 - **Tarea activa:** `b/ui-reading-width`. En `/concepts/<slug>/` la columna de lectura crece al ocultar el índice, el estudio o ambos. En `chile-data-protection`, el §2 ya no muestra el párrafo del marco ni «Precisiones transversales». Los ocho principios abren un texto breve (por verificar) y un enlace a la ficha hija. El filtro por temática queda en `?grupo=` y no se borra al abrir o cerrar un artículo.
 - **Tarea activa:** `b/ui-privacy-space` (worktree `DES_conocimiento-privacy`). `/privacidad` usa el mismo layout que la ruta de dominio. Las 15 fichas tienen página. La cabecera es lo propio: Especialización, el aviso «Este contenido no es asesoría legal.» y la caja Comprender → Aplicar → Demostrar → Profundizar. Las fichas siguen con «Esta ficha no es asesoría legal.». El laboratorio es la etapa 6 deshabilitada, una sola vez. El marco legal queda en el panel derecho de `/privacidad`; cada hecho abre su URL. En Inicio no está la tarjeta. En oscuro el punto completo usa `--band-especializacion-fill`. En mock no se consulta `/me`.
 - **Tarea activa:** revisión review-ui-privacy. Informe en `docs/reviews/ui-privacy.md`. No se editó `content/` ni `frontend/`.
@@ -110,6 +112,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Tarea activa:** `b/ui-page-title` (ADR-012). Sin merge a `main`.
 - **Siguiente:** lo que asigne Felipe. Sigue abierta la revisión F3b-08c.
 - **Bloqueos:** ninguno.
+
+### Revisión · lote P4
+- `gdpr` y `lgpd` quedan en `review_required`. El art. 19, II, la Res. 32/2026 y las regiones de §11–§13 coinciden con la página. Propuestas media: «residan» en el art. 3.2, el art. 33 completo, el § 1º del art. 3 de la LGPD y el inicio de los tres días en la Res. CD/ANPD 15/2024. No se editó `content/` ni `frontend/`.
 
 ### Revisión · review-ui-privacy
 - `/privacidad` usa la ruta de dominio. El objetivo 7 y la banda fuera de las 6 capas coinciden con el test. Propuestas media: devolver a Inicio la tarjeta leída de `legal_framework`, y no usar `#E4C0EA` como fondo de texto blanco. No se editó `content/` ni `frontend/`.
@@ -429,6 +434,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - El pedido de un párrafo por nivel queda sin efecto. Esos nombres no se asignan a los tramos ni hace falta un campo nuevo: la interfaz muestra la caja «Cómo estudiar cada ficha: Comprender → Aplicar → Demostrar → Profundizar».
 
 ## Historial
+
+### Revisión · lote P4 (2026-10-30)
+- `b/review-p4`, desde `2e4b52a`. Informe en `docs/reviews/p4.md`. BOE, Câmara, Planalto, DOU y páginas de la ANPD. EUR-Lex agotó el tiempo de lectura. No se editó `content/` ni `frontend/`.
 
 ### UI · ancho de lectura (2026-10-30)
 - `b/ui-reading-width`. La columna central es `1fr` y ocupa el hueco al cerrar un panel. Con los dos cerrados, el bloque se centra a 1200px. No se editó `content/`.
