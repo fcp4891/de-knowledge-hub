@@ -289,10 +289,12 @@ En AWS, **Amazon DataZone**. Según *Data lineage in Amazon DataZone* (no ejecut
 
 En Azure, **Unity Catalog** y **Purview Unified Catalog**. Según *Lineage in Unity Catalog* y *Learn about Microsoft Purview Unified Catalog* (no ejecutado):
 
-| Necesidad | Servicio | Limitación | Etiqueta |
-|---|---|---|---|
-| Usos observados | Unity Catalog: linaje automático de las consultas en Azure Databricks, hasta el nivel de columna | No se preserva para objetos renombrados; fuera de Databricks depende de integraciones | **[Buena práctica]** |
-| Catálogo corporativo | Purview Unified Catalog: inventario, metadata, linaje y governance domains | Organiza el ownership; no acredita la base de licitud | **[Buena práctica]** |
+Etiqueta: **[Buena práctica]**
+
+| Necesidad | Servicio | Limitación |
+|---|---|---|
+| Usos observados | Unity Catalog: linaje automático de las consultas en Azure Databricks, hasta el nivel de columna | No se preserva para objetos renombrados; fuera de Databricks depende de integraciones |
+| Catálogo corporativo | Purview Unified Catalog: inventario, metadata, linaje y governance domains | Organiza el ownership; no acredita la base de licitud |
 
 **Criterio de selección:** un registro de actividades independiente del proveedor, con identificadores estables enlazados al catálogo y a las ejecuciones de cada nube.
 
@@ -370,3 +372,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): tags y pipelines en un nodo; linaje y logs dentro de «usos observados».
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (idea central), §2 (art. 3 c) verificado en BCN y agregado a `legal_basis`; actividad, activo, consumidor y evidencia como entidades distintas), §3 (caso del modelo nuevo sobre una tabla disponible; la falta de registro no prueba la infracción), §4 (ocho pasos con autorizar y gestionar desviaciones; el linaje no muestra intención), §6, §7 (tres actividades sobre el mismo activo), §8 (escenario con evidencia «qué demuestra y qué no»), §9 (consumidores declarados y conciliación), §10 (consumidores por actividad: brechas «sin vínculo» y «sin aprobación», insumo del art. 14 ter solo con actividades aprobadas), §11–13 (columna de limitaciones; retención de 30 días del linaje en GCP), §14–16, §17 (relaciones con `pii-identification` y `privacy-controls-as-code`), §18 (criterio de dominio) y §19 (laboratorio para F4). Sin cambios en las etiquetas existentes, aviso ni vigencia.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `fundamentos` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/processing-activities-inventory/`) no cambia.
+- 2026-10-30: Enmienda 3 de ADR-023: en §13, la tabla con la misma etiqueta en todas sus filas pasa a la línea «Etiqueta: […]» antes de la tabla, sin columna. Sin cambios de contenido.

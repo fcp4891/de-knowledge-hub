@@ -104,14 +104,16 @@ Desde la vigencia de la ley, cualquier titular puede pedir qué datos se tienen 
 4. **[Obligación legal · art. 8 ter]** El bloqueo suspende temporalmente el tratamiento sin afectar el almacenamiento. **[Decisión de arquitectura]** Un flag del titular que las vistas de consumo y los jobs excluyen, sin borrar.
 5. **[Decisión de arquitectura]** El área legal decide si la solicitud procede y su alcance; ingeniería ejecuta según el tipo:
 
-| Derecho | Ejecución técnica | Riesgo principal | Etiqueta |
-|---|---|---|---|
-| Acceso | Consolidar datos por actividad con finalidad, base, destinatarios, plazo y lógica automatizada desde el catálogo | Respuesta incompleta, o entregada a quien no es el titular | **[Decisión de arquitectura]** |
-| Rectificación | Corregir en la fuente o en una capa de correcciones que gane en cada recálculo; propagar a destinatarios | Un backfill que restaura el valor antiguo | **[Decisión de arquitectura]** |
-| Supresión | `retention-and-erasure` | Réplicas, respaldos, derivados y reingesta | **[Decisión de arquitectura]** |
-| Oposición | Excluir al titular de la actividad objetada (por ejemplo, marketing directo o perfiles) | Excluir de más o dejar un uso residual | **[Decisión de arquitectura]** |
-| Bloqueo | Flag de exclusión en consumo y en jobs | Consumidores que no pasan por el filtro | **[Decisión de arquitectura]** |
-| Portabilidad | Export estructurado de lo que corresponde según el art. 9 | Incluir datos que el derecho no comprende | **[Decisión de arquitectura]** |
+Etiqueta: **[Decisión de arquitectura]**
+
+| Derecho | Ejecución técnica | Riesgo principal |
+|---|---|---|
+| Acceso | Consolidar datos por actividad con finalidad, base, destinatarios, plazo y lógica automatizada desde el catálogo | Respuesta incompleta, o entregada a quien no es el titular |
+| Rectificación | Corregir en la fuente o en una capa de correcciones que gane en cada recálculo; propagar a destinatarios | Un backfill que restaura el valor antiguo |
+| Supresión | `retention-and-erasure` | Réplicas, respaldos, derivados y reingesta |
+| Oposición | Excluir al titular de la actividad objetada (por ejemplo, marketing directo o perfiles) | Excluir de más o dejar un uso residual |
+| Bloqueo | Flag de exclusión en consumo y en jobs | Consumidores que no pasan por el filtro |
+| Portabilidad | Export estructurado de lo que corresponde según el art. 9 | Incluir datos que el derecho no comprende |
 
 6. **[Buena práctica]** Ejecutar por destino con operaciones idempotentes (`request_id` + destino + operación) y registrar resultados parciales y fallos.
 7. **[Buena práctica]** Verificar el efecto en cada destino (fuentes, capas, vistas, reingesta y terceros) con una prueba, no con el estado que declara el job; el caso no se cierra con destinos pendientes.
@@ -450,3 +452,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): dos diagramas: recepción y ejecución; los cinco derechos convergen en la respuesta.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (flujo con estado y cobertura), §2 (solicitud, decisión autorizada, índice, acción por destino y evidencia), §3 (rectificación revertida por la carga del CRM), §4 (verificación de identidad, idempotencia, verificación del efecto, cierre sin destinos pendientes, riesgo principal por derecho y plazos como configuración versionada), §5, §6, §7 (rectificación por etapas), §8 (escenario y evidencia «qué demuestra y qué no»), §9 (ejecución por destino y cierre), §10 (rectificación que sobrevive al backfill y control de cierre, sobre el mismo ejemplo), §11–13 (límites de los filtros de fila y criterio común), §14–16, §18 (criterio de dominio) y §19 (laboratorio para F4). Los plazos verificados del art. 11 se mantienen. Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `derechos-ciclo-vida` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/data-subject-rights-pipeline/`) no cambia.
+- 2026-10-30: Enmienda 3 de ADR-023: en §4, la tabla con la misma etiqueta en todas sus filas pasa a la línea «Etiqueta: […]» antes de la tabla, sin columna. Sin cambios de contenido.

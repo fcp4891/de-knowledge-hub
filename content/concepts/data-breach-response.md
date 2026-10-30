@@ -271,10 +271,12 @@ En AWS, **AWS CloudTrail**. Según *Logging data events* (no ejecutado):
 
 En Azure, **auditoría de Azure SQL Database**. Según *Auditing for Azure SQL Database* (no ejecutado):
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Logs de acceso a datos | Auditoría hacia Azure Storage, Log Analytics o Event Hubs | **[Buena práctica]** |
-| Cobertura | La auditoría de una base no cubre los archivos exportados ni otros servicios de datos | **[Buena práctica]** |
+Etiqueta: **[Buena práctica]**
+
+| Necesidad | Servicio |
+|---|---|
+| Logs de acceso a datos | Auditoría hacia Azure Storage, Log Analytics o Event Hubs |
+| Cobertura | La auditoría de una base no cubre los archivos exportados ni otros servicios de datos |
 
 **Criterio común:** la auditoría del plano de control no sustituye la del acceso al contenido; verificar la cobertura real en un simulacro.
 
@@ -353,3 +355,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): TB; Agencia, titulares y CSIRT en un nodo de comunicaciones; registro interno y registro de las comunicaciones separados.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (estimación trazable y revisable), §2 (activo comprometido, acceso observado, dato accesible, dato extraído y titular posiblemente afectado), §3 (exportaciones inusuales de una cuenta de servicio), §4 (diez pasos: hechos, inferencias y lagunas; calendario separado para la Ley 21.663; corregir y aprender), §5, §6, §7 (cómo leer la evidencia), §8 (escenario y evidencia «qué demuestra y qué no»), §10 (limitaciones de cobertura en el alcance; el aviso a titulares queda condicionado a que se reporte), §11–13 (cobertura de los logs y criterio común), §14–16, §17 (relación con `pii-identification`), §18 (criterio de dominio) y §19 (laboratorio para F4). Los plazos verificados de la Ley 21.663 y el Decreto 295 se mantienen. Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `riesgo-terceros-incidentes` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/data-breach-response/`) no cambia.
+- 2026-10-30: Enmienda 3 de ADR-023: en §13, la tabla con la misma etiqueta en todas sus filas pasa a la línea «Etiqueta: […]» antes de la tabla, sin columna. Sin cambios de contenido.

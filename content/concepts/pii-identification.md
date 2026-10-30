@@ -282,28 +282,34 @@ Limitaciones:
 
 En GCP, **Sensitive Data Protection**. Según *InfoType detector reference*, consultada el 2026-10-27, e *InfoTypes and infoType detectors* (no ejecutado):
 
-| | Detector propio (este ejemplo) | Sensitive Data Protection | Etiqueta |
-|---|---|---|---|
-| Identificador chileno | RUT con DV módulo 11 | `CHILE_CDI_NUMBER` (Cédula de Identidad), en las categorías GOVERNMENT_ID, PII y SPII | **[Buena práctica]** |
-| Otros datos | Por nombre de columna | infoTypes incorporados y personalizados, con probabilidad ajustable | **[Buena práctica]** |
+Etiqueta: **[Buena práctica]**
+
+| | Detector propio (este ejemplo) | Sensitive Data Protection |
+|---|---|---|
+| Identificador chileno | RUT con DV módulo 11 | `CHILE_CDI_NUMBER` (Cédula de Identidad), en las categorías GOVERNMENT_ID, PII y SPII |
+| Otros datos | Por nombre de columna | infoTypes incorporados y personalizados, con probabilidad ajustable |
 
 ## 12. AWS
 
 En AWS, **Amazon Macie**. Según *Quick reference: Managed data identifiers by type*, consultada el 2026-10-27 (no ejecutado):
 
-| | Detector propio (este ejemplo) | Amazon Macie | Etiqueta |
-|---|---|---|---|
-| Identificador chileno | RUT con DV módulo 11 | `CHILE_RUT_NUMBER`, en número nacional de identificación y de identificación tributaria, con Chile entre los países | **[Buena práctica]** |
-| Alcance | Una muestra en memoria | Objetos de Amazon S3 | **[Buena práctica]** |
+Etiqueta: **[Buena práctica]**
+
+| | Detector propio (este ejemplo) | Amazon Macie |
+|---|---|---|
+| Identificador chileno | RUT con DV módulo 11 | `CHILE_RUT_NUMBER`, en número nacional de identificación y de identificación tributaria, con Chile entre los países |
+| Alcance | Una muestra en memoria | Objetos de Amazon S3 |
 
 ## 13. Azure
 
 En Azure, **Microsoft Purview**. Según *Chile identity card number*, consultada el 2026-10-27 (no ejecutado):
 
-| | Detector propio (este ejemplo) | Purview | Etiqueta |
-|---|---|---|---|
-| Patrón | Siete u ocho dígitos y DV, con o sin puntos y guion | Siete a ocho dígitos con delimitadores opcionales y un dígito o letra verificador; checksum | **[Buena práctica]** |
-| Confianza | Conteo para priorizar | Alta con patrón, palabra clave a 300 caracteres o menos y checksum; media sin la palabra clave | **[Buena práctica]** |
+Etiqueta: **[Buena práctica]**
+
+| | Detector propio (este ejemplo) | Purview |
+|---|---|---|
+| Patrón | Siete u ocho dígitos y DV, con o sin puntos y guion | Siete a ocho dígitos con delimitadores opcionales y un dígito o letra verificador; checksum |
+| Confianza | Conteo para priorizar | Alta con patrón, palabra clave a 300 caracteres o menos y checksum; media sin la palabra clave |
 
 **Criterio de selección:** cobertura real de las fuentes, formatos locales, falsos negativos medidos, permisos y si los resultados llegan al catálogo. Ningún servicio sustituye la revisión de contexto.
 
@@ -381,3 +387,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-27: se revierte un `verified` registrado por error: no hubo aprobación de Felipe (su mensaje se refería solo al criterio de los RUT ficticios). Sigue en `review_required`, sin `owner_approved_at`.
 - 2026-10-27: revisión `docs/reviews/pii-v2.md` aplicada: la etiqueta **[Obligación legal · art. 2]** del §2 dice solo lo del art. 2 f); la combinación de columnas queda en la buena práctica del identificador indirecto.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `fundamentos` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/pii-identification/`) no cambia.
+- 2026-10-30: Enmienda 3 de ADR-023: en §11, §12, §13, la tabla con la misma etiqueta en todas sus filas pasa a la línea «Etiqueta: […]» antes de la tabla, sin columna. Sin cambios de contenido.

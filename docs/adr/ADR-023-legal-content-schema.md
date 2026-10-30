@@ -1,6 +1,6 @@
 # ADR-023 — Schema para contenido con origen legal (dominio 19, Ley 21.719)
 
-- **Estado:** Aceptado (aprobado por Felipe el 2026-10-21, tal como está); implementado con el lote F3b-19a. Enmienda 1 (2026-10-24): `implication` en `legal_basis`. Enmienda 2 (2026-10-28, ADR-027): alcance en los dominios 19 y 24
+- **Estado:** Aceptado (aprobado por Felipe el 2026-10-21, tal como está); implementado con el lote F3b-19a. Enmienda 1 (2026-10-24): `implication` en `legal_basis`. Enmienda 2 (2026-10-28, ADR-027): alcance en los dominios 19 y 24. Enmienda 3 (2026-10-30): línea «Etiqueta: […]» para tablas uniformes en §4 y §11–13
 - **Fecha:** 2026-10-21
 - **Fase:** F3b — Contenido por dominio, antes de 19-compliance
 - **Referencias:** ADR-000 (content-as-code), ADR-002 (contrato), ADR-009 (contenido por dominio), ADR-012 (`page_title`); decisión de Felipe sobre la Ley 21.719 (ROADMAP, F3b, 2026-10-21).
@@ -174,3 +174,9 @@ Pedida por Felipe el 2026-10-24, junto con la aceptación de ADR-024.
 
 - Las fichas de la Ley 21.719 pasan a `24-privacy-engineering`. Esta decisión rige en los dominios `compliance` (19) y `privacy-engineering` (24): `jurisdiction`, `legal_basis` con `implication`, la etiqueta por afirmación, el aviso «no es asesoría legal», la evidencia del §8, la cita legal consultada el día de `last_verified` y `verified` solo con `owner_approved_at`, que da Felipe.
 - **Implementación:** `LEGAL_DOMAINS` en `backend/content/validate.py`; el error de `jurisdiction` nombra los dos dominios.
+
+## Enmienda 3 — Línea «Etiqueta: […]» para tablas uniformes en §4 y §11–13 (2026-10-30)
+
+- Decisión de Felipe. En las tablas del §4 y de §11–13, la columna «Etiqueta» es obligatoria solo si las filas tienen etiquetas distintas. Si todas son iguales, la tabla va sin columna y lleva antes la línea `Etiqueta: **[…]**`. Una columna con la misma etiqueta en todas sus filas es un error en esas secciones.
+- Sin cambios en §2, §3 y §14: allí cada tabla sigue llevando la columna.
+- **Implementación:** `UNIFORM_SECTIONS` y `check_label_table` en `backend/content/validate.py`; la línea `Etiqueta:` no cuenta como párrafo sin etiqueta del §4. Tests en `tests/test_validate_legal.py`: caso uniforme con línea, columna uniforme, tabla sin columna ni línea, y la línea fuera de §4 y §11–13. Las tablas uniformes de las fichas del dominio 24 se convirtieron con una línea de historial.

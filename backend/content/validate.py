@@ -531,6 +531,10 @@ LABEL = r"\*\*\[(?:Obligación legal · (?:(Ley [0-9.]+), )?art\. ([0-9]+(?: [a-
 LABEL_RE = re.compile(LABEL)
 LABELED_SECTIONS = (2, 3, 4, 14)  # cada ítem y párrafo empieza con una etiqueta
 TABLE_SECTIONS = (2, 3, 4, 11, 12, 13, 14)  # toda tabla lleva la columna «Etiqueta»
+# Enmienda 3: en §4 y §11–13, si todas las filas llevan la misma etiqueta, va una línea «Etiqueta: […]» antes de la
+# tabla, sin columna; la columna queda solo para tablas con etiquetas distintas.
+UNIFORM_SECTIONS = (4, 11, 12, 13)
+UNIFORM_LINE = re.compile(rf"^Etiqueta: ({LABEL})\s*$")
 LIST_ITEM = re.compile(r"^\s*(?:[-*]|\d+\.)\s+")
 REVIEW_DAYS = 31  # revisión mensual
 
@@ -546,7 +550,7 @@ def blocks(content: str) -> Iterator[str]:
     for line in content.splitlines():
         stripped = line.strip()
         is_item = bool(LIST_ITEM.match(line))
-        if not stripped or is_item or stripped.startswith(("|", "#", ">", "<!--")):
+        if not stripped or is_item or stripped.startswith(("|", "#", ">", "<!--")) or UNIFORM_LINE.match(stripped):
             if paragraph:
                 yield " ".join(paragraph)
                 paragraph = []
@@ -562,15 +566,27 @@ def blocks(content: str) -> Iterator[str]:
 
 def table_rows(content: str) -> Iterator[list[list[str]]]:
     """Cada tabla Markdown de la sección como lista de filas (celdas), sin la fila separadora."""
+    for _, table in tables_with_lead(content):
+        yield table
+
+
+def tables_with_lead(content: str) -> Iterator[tuple[str, list[list[str]]]]:
+    """Cada tabla con la última línea no vacía que la precede (para la línea «Etiqueta: […]»)."""
     table: list[list[str]] = []
+    lead, previous = "", ""
     for line in [*content.splitlines(), ""]:
         if line.strip().startswith("|"):
+            if not table:
+                lead = previous
             cells = [c.strip() for c in line.strip().strip("|").split("|")]
             if not all(re.fullmatch(r":?-+:?", c) for c in cells):
                 table.append(cells)
-        elif table:
-            yield table
+            continue
+        if table:
+            yield lead, table
             table = []
+        if line.strip():
+            previous = line.strip()
 
 
 def check_legal_body(doc: Document, body: str, report: Report) -> set[tuple[str | None, str]]:
@@ -586,17 +602,29 @@ def check_legal_body(doc: Document, body: str, report: Report) -> set[tuple[str 
             if not re.match(LABEL, block):
                 report.add(doc.location, f"[§{number}] ítem o párrafo sin etiqueta (ADR-023): {block[:60]!r}")
     for number in TABLE_SECTIONS:
-        for table in table_rows(parts.get(number, "")):
-            header = table[0]
-            if "Etiqueta" not in header:
-                report.add(doc.location, f"[§{number}] tabla sin columna «Etiqueta» (ADR-023): {header}")
-                continue
-            col = header.index("Etiqueta")
-            for row in table[1:]:
-                cell = row[col] if col < len(row) else ""
-                if not re.fullmatch(LABEL, cell):
-                    report.add(doc.location, f"[§{number}] celda «Etiqueta» inválida (ADR-023): {cell!r}")
+        for lead, table in tables_with_lead(parts.get(number, "")):
+            check_label_table(doc, number, lead, table, report)
     return {(m.group(1), m.group(2)) for m in LABEL_RE.finditer(clean) if m.group(2)}
+
+
+def check_label_table(doc: Document, number: int, lead: str, table: list[list[str]], report: Report) -> None:
+    """Columna «Etiqueta» con celdas válidas; en §4 y §11–13 (Enmienda 3), línea «Etiqueta: […]» si son iguales."""
+    header = table[0]
+    uniform_allowed = number in UNIFORM_SECTIONS
+    if "Etiqueta" not in header:
+        if uniform_allowed and UNIFORM_LINE.match(lead):
+            return
+        hint = " ni línea «Etiqueta: […]» antes" if uniform_allowed else ""
+        report.add(doc.location, f"[§{number}] tabla sin columna «Etiqueta»{hint} (ADR-023): {header}")
+        return
+    col = header.index("Etiqueta")
+    cells = [row[col] if col < len(row) else "" for row in table[1:]]
+    for cell in cells:
+        if not re.fullmatch(LABEL, cell):
+            report.add(doc.location, f"[§{number}] celda «Etiqueta» inválida (ADR-023): {cell!r}")
+    if uniform_allowed and cells and len(set(cells)) == 1:
+        report.add(doc.location, f"[§{number}] todas las filas llevan {cells[0]}: va la línea «Etiqueta: {cells[0]}» "
+                                 "antes de la tabla, sin columna (ADR-023, Enmienda 3)")
 
 
 def check_legal_basis(

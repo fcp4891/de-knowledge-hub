@@ -40,6 +40,7 @@ Resumen. Esta ficha no es asesoría legal.
 | | Este ejemplo | Google Cloud | Etiqueta |
 |---|---|---|---|
 | Qué | A | B | **[Buena práctica]** |
+| Cómo | C | D | **[Decisión de arquitectura]** |
 """
 
 
@@ -186,3 +187,34 @@ def test_legal_framework_source_must_be_legislative(content: Path) -> None:
     write_yaml(content, "sources/r.yaml", legislative(), source("docs-a"))
     write_yaml(content, "legal-frameworks/cl-ley-21719.yaml", framework(source="docs-a"))
     assert_error(run(content), "[facts.0.source] 'docs-a' no es una fuente legislative del registro")
+
+
+# --- Enmienda 3: línea «Etiqueta: […]» en §4 y §11–13 -------------------------
+
+UNIFORM_TABLE = "| Necesidad | Servicio |\n|---|---|\n| Auditar | Logs |\n| Descubrir | Escáner |\n"
+
+
+def test_uniform_label_line_before_the_table_passes(content: Path) -> None:
+    body = BODY + "\n## 12. AWS\n\nEtiqueta: **[Buena práctica]**\n\n" + UNIFORM_TABLE
+    report = setup(content, body)
+    assert report.ok, report.errors
+
+
+def test_same_label_in_every_row_must_use_the_line(content: Path) -> None:
+    table = ("| Necesidad | Servicio | Etiqueta |\n|---|---|---|\n| Auditar | Logs | **[Buena práctica]** |\n"
+             "| Descubrir | Escáner | **[Buena práctica]** |\n")
+    assert_error(setup(content, BODY + "\n## 12. AWS\n\n" + table),
+                 "[§12] todas las filas llevan **[Buena práctica]**: va la línea «Etiqueta: **[Buena práctica]**»")
+
+
+def test_table_without_column_or_line_is_an_error(content: Path) -> None:
+    assert_error(setup(content, BODY + "\n## 12. AWS\n\nServicios de la nube.\n\n" + UNIFORM_TABLE),
+                 "[§12] tabla sin columna «Etiqueta» ni línea «Etiqueta: […]» antes")
+
+
+def test_label_line_does_not_replace_the_column_outside_4_and_11_to_13(content: Path) -> None:
+    body = BODY.replace("## 3. Problema que resuelve\n\n",
+                        "## 3. Problema que resuelve\n\nEtiqueta: **[Buena práctica]**\n\n" + UNIFORM_TABLE + "\n")
+    assert_error(setup(content, body), "[§3] tabla sin columna «Etiqueta» (ADR-023)")
+
+

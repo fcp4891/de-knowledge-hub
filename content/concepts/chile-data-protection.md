@@ -282,14 +282,16 @@ Desarrollar conocimientos que permitan no solo comprender qué debe protegerse, 
 
 **[Decisión de arquitectura]** Matriz de control:
 
-| Requisito o necesidad | Decisión aprobada por | Control técnico | Evidencia verificable | Etiqueta |
-|---|---|---|---|---|
-| Minimización | Negocio y privacidad | Contrato de campos permitidos | Test de esquema y versión del contrato | **[Decisión de arquitectura]** |
-| Retención | Privacidad y negocio | Política por clase de dato y almacenamiento | Configuración, ejecución y excepciones | **[Decisión de arquitectura]** |
-| Acceso restringido | Seguridad y dueño del dato | IAM o RBAC, segregación y revisión | Inventario de permisos y revisión fechada | **[Decisión de arquitectura]** |
-| Derechos del titular | Responsable y privacidad | Localizador de registros y flujo autorizado | ID interno de la solicitud, estados y resultado | **[Decisión de arquitectura]** |
-| Vulneraciones | Seguridad y privacidad | Logs, alertas y consulta de alcance por linaje | Línea de tiempo, sistemas afectados y acciones | **[Decisión de arquitectura]** |
-| Transferencias | Privacidad, compras y seguridad | Inventario de destinos y controles del proveedor | Contrato, evaluación y trazabilidad de flujos | **[Decisión de arquitectura]** |
+Etiqueta: **[Decisión de arquitectura]**
+
+| Requisito o necesidad | Decisión aprobada por | Control técnico | Evidencia verificable |
+|---|---|---|---|
+| Minimización | Negocio y privacidad | Contrato de campos permitidos | Test de esquema y versión del contrato |
+| Retención | Privacidad y negocio | Política por clase de dato y almacenamiento | Configuración, ejecución y excepciones |
+| Acceso restringido | Seguridad y dueño del dato | IAM o RBAC, segregación y revisión | Inventario de permisos y revisión fechada |
+| Derechos del titular | Responsable y privacidad | Localizador de registros y flujo autorizado | ID interno de la solicitud, estados y resultado |
+| Vulneraciones | Seguridad y privacidad | Logs, alertas y consulta de alcance por linaje | Línea de tiempo, sistemas afectados y acciones |
+| Transferencias | Privacidad, compras y seguridad | Inventario de destinos y controles del proveedor | Contrato, evaluación y trazabilidad de flujos |
 
 **[Buena práctica]** La evidencia no guarda nombres, RUT ni datos sensibles cuando basta una referencia interna protegida.
 
@@ -475,10 +477,12 @@ En AWS, **Amazon Macie** y **AWS CloudTrail**.
 
 En Azure, **Microsoft Purview** y **Unity Catalog** de Azure Databricks.
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Descubrir y clasificar | Purview Data Map: clasificaciones de sistema y propias al escanear | **[Buena práctica]** |
-| Gobierno en el lakehouse | Unity Catalog: privilegios, políticas por atributos, filtros de fila y columna, auditoría y linaje | **[Buena práctica]** |
+Etiqueta: **[Buena práctica]**
+
+| Necesidad | Servicio |
+|---|---|
+| Descubrir y clasificar | Purview Data Map: clasificaciones de sistema y propias al escanear |
+| Gobierno en el lakehouse | Unity Catalog: privilegios, políticas por atributos, filtros de fila y columna, auditoría y linaje |
 
 Los servicios de §11 a §13 no son equivalencias exactas. Ningún servicio certifica cumplimiento por sí solo: cada uno se evalúa por alcance, configuración y evidencia disponible.
 
@@ -609,3 +613,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: mismos errores que la revisión de P2: la fila del art. 14 quáter del mapa de artículos nombra sus cuatro factores.
 - 2026-10-28: el resumen pasa a ser la introducción del subdominio (objetivo, idea central, contexto normativo y preguntas que debe responder la arquitectura). La vigencia citada sigue siendo la de la ley publicada; el boletín 18.623-07 sigue siendo un proyecto.
 - 2026-10-30: sobre la versión de Felipe (`b/ui-ajustes-1030`), solo lo que exige ADR-023 para pasar `make validate`: etiquetas en el párrafo de marco y en los ítems del §2 (principios a) a h) y responsabilidades), y columna «Etiqueta» en la matriz del §4 y en las tablas de §11–13, con los mismos valores que tenían antes. La vigencia ya estaba en sincronía con `cl-ley-21719.yaml`.
+- 2026-10-30: Enmienda 3 de ADR-023: en §4, §13, la tabla con la misma etiqueta en todas sus filas pasa a la línea «Etiqueta: […]» antes de la tabla, sin columna. Sin cambios de contenido.

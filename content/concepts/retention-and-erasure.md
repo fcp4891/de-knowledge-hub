@@ -474,11 +474,13 @@ En AWS, **Amazon S3** e **Iceberg**. Según *Managing the lifecycle of objects*,
 
 En Azure, **Delta** en Azure Databricks. Según *Remove unused data files with vacuum* y *VACUUM* (no ejecutado):
 
-| Tema | Comportamiento | Etiqueta |
-|---|---|---|
-| VACUUM | Borra los archivos fuera del umbral de retención: 7 días por defecto, controlado por `deletedFileRetentionDuration` | **[Buena práctica]** |
-| Tras VACUUM | Se pierde el time travel a versiones anteriores al umbral | **[Buena práctica]** |
-| Change data feed | Sus datos (`_change_data`) también se eliminan con VACUUM; revisarlos en la supresión | **[Buena práctica]** |
+Etiqueta: **[Buena práctica]**
+
+| Tema | Comportamiento |
+|---|---|
+| VACUUM | Borra los archivos fuera del umbral de retención: 7 días por defecto, controlado por `deletedFileRetentionDuration` |
+| Tras VACUUM | Se pierde el time travel a versiones anteriores al umbral |
+| Change data feed | Sus datos (`_change_data`) también se eliminan con VACUUM; revisarlos en la supresión |
 
 Databricks recomienda una retención de al menos 7 días; bajarla arriesga borrar archivos de jobs en curso. Es preferible declarar esa ventana en la respuesta al titular.
 
@@ -563,3 +565,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: dos ejemplos ejecutables más en el §10, con dependencias ya aprobadas: PyIceberg 0.12 (ADR-018: DELETE, `expire_snapshots` y ningún snapshot vigente devuelve al titular) y crypto-shredding con cryptography (ADR-022: llave por titular generada por el test, destruida, y registro del respaldo que ya no se descifra). §4 y §8 (dos filas de evidencia) ajustados; fuente `cryptography-docs`.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `derechos-ciclo-vida` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/retention-and-erasure/`) no cambia.
 - 2026-10-28: mismos errores que la revisión de P2: la nota del art. 7 dice que la lista de casos en que no procede la supresión es cerrada (i a vi), sin «entre otros»; el art. 14 quáter nombra sus cuatro factores, no solo el plazo.
+- 2026-10-30: Enmienda 3 de ADR-023: en §13, la tabla con la misma etiqueta en todas sus filas pasa a la línea «Etiqueta: […]» antes de la tabla, sin columna. Sin cambios de contenido.
