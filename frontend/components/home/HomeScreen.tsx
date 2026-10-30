@@ -19,6 +19,7 @@ export type HomeStage = {
   title: string;
   verified: number;
   total: number;
+  withPage: number;
 };
 
 export type HomeDomain = {
@@ -317,15 +318,16 @@ function PlatformMap({ path, domainsById }: { path: GoalPath; domainsById: Map<s
 }
 
 function SpecializationBand({ domain, path }: { domain: HomeDomain; path: GoalPath }) {
-  const stations = domain.stages.map((stage) => ({
+  const visible = domain.stages.filter((stage) => stage.slug !== "regulatory-frameworks");
+  const stations = visible.map((stage) => ({
     id: stage.slug,
     name: stage.title,
-    verified: stage.verified,
+    withPage: stage.withPage,
     total: stage.total,
     href: `${PRIVACY_SPACE_HREF}#${stage.slug}`,
   }));
-  const verified = domain.stages.reduce((sum, stage) => sum + stage.verified, 0);
-  const total = domain.stages.reduce((sum, stage) => sum + stage.total, 0);
+  const withPage = visible.reduce((sum, stage) => sum + stage.withPage, 0);
+  const total = visible.reduce((sum, stage) => sum + stage.total, 0);
   const ids = stations.map((station) => station.id);
   const style = {
     "--layer-color": "var(--band-especializacion)",
@@ -342,7 +344,7 @@ function SpecializationBand({ domain, path }: { domain: HomeDomain; path: GoalPa
           Especialización
         </span>
         <span className="home-layer-count">
-          {verified}/{total} verificadas
+          {withPage}/{total} fichas
         </span>
       </div>
       <div className="home-stations-scroll">
@@ -353,7 +355,7 @@ function SpecializationBand({ domain, path }: { domain: HomeDomain; path: GoalPa
               index,
               ids,
               path,
-              withPage: station.total > 0 ? station.verified : null,
+              withPage: station.total > 0 ? station.withPage : null,
               total: station.total,
             });
             const emphasis = paint.emphasized ? "step" : paint.dimmed ? "dimmed" : "plain";

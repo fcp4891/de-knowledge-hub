@@ -75,7 +75,7 @@ export default async function DomainPage({ params }: { params: Promise<{ slug: s
   }
 
   const data = domain.data;
-  const stages: RouteStage[] = data.subdomains.map((subdomain) => ({
+  const toStage = (subdomain: (typeof data.subdomains)[number]): RouteStage => ({
     slug: subdomain.slug,
     title: subdomain.title,
     concepts: subdomain.concepts.map((concept, index) => ({
@@ -86,7 +86,26 @@ export default async function DomainPage({ params }: { params: Promise<{ slug: s
       verified: concept.verification_status === "verified",
       blueprintIndex: index,
     })),
-  }));
+  });
+  const stages: RouteStage[] = data.subdomains.map(toStage);
+  if (slug === "privacy-engineering" && !stages.some((stage) => stage.slug === "regulatory-frameworks")) {
+    const compliance = await getDomain("compliance");
+    const regulatory = compliance.ok
+      ? compliance.data.subdomains.find((subdomain) => subdomain.slug === "regulatory-frameworks")
+      : undefined;
+    stages.push(
+      regulatory
+        ? toStage(regulatory)
+        : {
+            slug: "regulatory-frameworks",
+            title: "Marcos regulatorios",
+            concepts: [
+              { slug: "gdpr", title: "GDPR", level: "intermediate", hasPage: false, verified: false, blueprintIndex: 0 },
+              { slug: "lgpd", title: "LGPD", level: "intermediate", hasPage: false, verified: false, blueprintIndex: 1 },
+            ],
+          },
+    );
+  }
   const slugs = new Set(stages.flatMap((stage) => stage.concepts.map((concept) => concept.slug)));
   const withPage = stages.flatMap((stage) => stage.concepts.filter((concept) => concept.hasPage).map((concept) => concept.slug));
 
@@ -108,7 +127,7 @@ export default async function DomainPage({ params }: { params: Promise<{ slug: s
         slug={data.slug}
         title={data.title}
         description={data.description}
-        conceptCount={data.concept_count}
+        conceptCount={stages.reduce((sum, stage) => sum + stage.concepts.length, 0)}
         stages={stages}
         minutes={minutes}
         study={studyResult && studyResult.ok ? studyResult.data : null}

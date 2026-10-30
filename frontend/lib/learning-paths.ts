@@ -18,7 +18,7 @@ export const LAYERS: Layer[] = [
   { key: 'frontera',    name: 'Frontera',       caption: 'Lo nuevo, sobre lo consolidado',  color: '#4E7D2B', dark: '#3A5F1F', domains: ['21', '22', '23'] },
   { key: 'flujo',       name: 'Flujo y diseño', caption: 'Cómo se mueven y arman los datos', color: '#2F5FB3', dark: '#22468A', domains: ['05', '14', '06', '07'] },
   { key: 'operacion',   name: 'Operación',      caption: 'Cómo se despliega y mantiene',     color: '#6B4FB3', dark: '#4B3590', domains: ['11', '12', '13'] },
-  { key: 'transversal', name: 'Transversal',    caption: 'Cruza todas las capas',            color: '#B23A48', dark: '#8A2433', domains: ['15', '16', '17', '18', '19'] },
+  { key: 'transversal', name: 'Transversal',    caption: 'Cruza todas las capas',            color: '#B23A48', dark: '#8A2433', domains: ['15', '16', '17', '18'] },
   { key: 'plataforma',  name: 'Plataforma',     caption: 'Dónde corre',                      color: '#B85A08', dark: '#8A4306', domains: ['08', '09', '10', '20'] },
   { key: 'cimientos',   name: 'Cimientos',      caption: 'Empieza aquí',                     color: '#0D7C74', dark: '#0A5E58', domains: ['01', '02', '03', '04'] },
 ];
@@ -97,7 +97,7 @@ export const GOALS: Goal[] = [
     steps: [
       { domain: '15', weight: 'Esencial' }, { domain: '17', weight: 'Esencial' },
       { domain: '18', weight: 'Esencial' }, { domain: '16', weight: 'Complementario' },
-      { domain: '19', weight: 'Complementario' },
+      { domain: '24', stage: 'regulatory-frameworks', weight: 'Complementario' },
     ],
   },
   {

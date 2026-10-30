@@ -12,14 +12,14 @@ import type { Inline } from "@/lib/markdown";
 export function ArchitectureDot({ labelled = true }: { labelled?: boolean }) {
   if (!labelled) {
     return (
-      <span className="claim-dot" aria-hidden="true">
-        ●
+      <span className="claim-arq" aria-hidden="true">
+        [arq]
       </span>
     );
   }
   return (
-    <span className="claim-dot" role="img" title="Decisión de arquitectura" aria-label="Decisión de arquitectura">
-      ●
+    <span className="claim-arq" title="Decisión de arquitectura">
+      [arq]
     </span>
   );
 }
@@ -57,9 +57,11 @@ function ObligationCiteMark({ value, obligations }: { value: string; obligations
 export function InlineText({
   inlines,
   obligations = [],
+  fichaTitles,
 }: {
   inlines: Inline[];
   obligations?: readonly ObligationBasis[];
+  fichaTitles?: Readonly<Record<string, string>>;
 }) {
   let trimLeading = false;
   return inlines.map((part, index) => {
@@ -85,6 +87,14 @@ export function InlineText({
       return null;
     }
     if (part.type === "code") {
+      const fichaTitle = fichaTitles?.[value];
+      if (fichaTitle) {
+        return (
+          <a key={key} className="ficha-name" href={`/concepts/${value}/`}>
+            {fichaTitle}
+          </a>
+        );
+      }
       return <code key={key}>{value}</code>;
     }
     if (part.type === "strong") {
