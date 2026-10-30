@@ -58,13 +58,23 @@ export default async function HomePage() {
   const domains: HomeDomain[] = domainItems.map((domain) => {
     const detail = details.find((item) => item.ok && item.data.id === domain.id);
     const data = detail && detail.ok ? detail.data : null;
+    const stageOf = (subdomain: { slug: string; title: string; concepts: { has_page: boolean; verification_status: string | null }[] }) => {
+      const progress = verifiedCount(subdomain.concepts.map((concept) => concept.verification_status));
+      const pages = subdomain.concepts.filter((concept) => concept.has_page).length;
+      return { slug: subdomain.slug, title: subdomain.title, ...progress, withPage: pages };
+    };
     const stages =
-      domain.band === "especializacion" && data
-        ? data.subdomains.map((subdomain) => {
-            const progress = verifiedCount(subdomain.concepts.map((concept) => concept.verification_status));
-            return { slug: subdomain.slug, title: subdomain.title, ...progress };
-          })
-        : [];
+      domain.band === "especializacion" && data ? data.subdomains.map(stageOf) : [];
+    if (domain.band === "especializacion" && !stages.some((stage) => stage.slug === "regulatory-frameworks")) {
+      const compliance = details.find((item) => item.ok && item.data.slug === "compliance");
+      const regulatory =
+        compliance && compliance.ok
+          ? compliance.data.subdomains.find((subdomain) => subdomain.slug === "regulatory-frameworks")
+          : undefined;
+      if (regulatory) {
+        stages.push(stageOf(regulatory));
+      }
+    }
     return {
       id: domain.id,
       slug: domain.slug,

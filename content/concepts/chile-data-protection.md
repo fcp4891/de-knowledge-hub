@@ -100,49 +100,132 @@ verification_status: review_required
 
 ## 1. Resumen
 
-Esta ficha no es asesoría legal: explica cómo trabaja un ingeniero de datos bajo la Ley 21.719. La ley entra solo como origen de cada requisito; el detalle técnico de cada uno está en su ficha hija.
+Esta ficha no es asesoría legal: explica el alcance técnico. El detalle de cada requisito está en su ficha hija.
 
 **Cómo leerla.** *Comprender* (§1–6): qué exige la ley y qué afecta a tu trabajo. *Aplicar* (§7–13): cómo diseñarías la solución. *Demostrar*: la evidencia del §8, el código del §10 y las preguntas del §18, para verificar que funciona.
+
+### Ley 21.719: Protección de datos personales aplicada a Ingeniería de Datos
+
+### Objetivo
+
+Comprender cómo la protección de datos personales influye en el diseño, desarrollo, operación, seguridad y auditoría de las plataformas de datos, conectando los principios y obligaciones de la normativa chilena con arquitecturas, herramientas y prácticas reales de Ingeniería de Datos.
+
+El propósito no es formar especialistas legales, sino desarrollar el criterio técnico necesario para identificar riesgos, diseñar soluciones responsables, implementar controles y generar evidencia verificable, integrando la privacidad durante todo el ciclo de vida de los datos.
+
+### Idea central
+
+Un proceso puede ejecutarse sin errores, cumplir sus controles de calidad y entregar información confiable, pero al mismo tiempo:
+
+- Utilizar datos para una finalidad no autorizada.
+- Recopilar o conservar información que no resulta necesaria.
+- Exponer datos personales mediante accesos, transformaciones o transferencias inadecuadas.
+- Mantener copias o derivados que dificultan la rectificación o supresión.
+- Carecer de trazabilidad y evidencia suficiente para investigar incidentes o demostrar la eficacia de sus controles.
+
+Por ello, la Ingeniería de Datos debe incorporar la privacidad como un criterio transversal de diseño y operación, no únicamente como una revisión posterior al desarrollo.
+
+### Contexto normativo
 
 La Ley 21.719 reescribe la Ley 19.628. Según BCN, fue publicada el 2024-12-13 y, por su artículo primero transitorio, sus modificaciones rigen desde el **2026-12-01**; BCN muestra la Ley 19.628 con una versión «Con Vigencia Diferida por Fecha» desde esa fecha.
 
 **Estado al 2026-10-28.** El Ejecutivo ingresó el boletín 18.623-07 (mensaje N° 110-374). Su numeral 2 reemplaza esa fecha por el **1 de diciembre de 2027**. Según la tramitación oficial del Senado, el 2026-10-28 el Senado lo aprobó en general y en particular a la vez y lo despachó a la Cámara de Diputados (subetapa «Oficio de ley a Cámara Revisora»), con urgencia de discusión inmediata. Es un proyecto: **mientras no se publique otra ley, rige el 2026-12-01**.
 
-El reglamento de los modelos de prevención de infracciones (art. 49) es el Decreto 662 del Ministerio de Hacienda, publicado el 2026-09-09.
+### Qué implica para Ingeniería de Datos
 
-Para ingeniería de datos, el cambio es este: casi todo lo que hace un pipeline es **tratamiento**, y la ley exige poder **demostrar** que cada tratamiento cumple sus principios. Eso se traduce en controles técnicos implementados, verificados de forma continua y con evidencia.
+Las actividades habituales de una plataforma de datos —recolección, ingesta, consulta, transformación, almacenamiento, integración, transmisión, conservación y eliminación— pueden constituir operaciones de tratamiento de datos personales.
+
+En consecuencia, una arquitectura de datos debe permitir responder preguntas fundamentales:
+
+| Pregunta | Qué debe poder responder la plataforma |
+|---|---|
+| Qué datos tratamos | Identificación, clasificación y contexto de los datos personales. |
+| Por qué los tratamos | Finalidad y fundamento de licitud definidos por los responsables correspondientes. |
+| Dónde se encuentran | Sistemas de origen, capas de procesamiento, derivados, respaldos y terceros. |
+| Quién puede utilizarlos | Identidades, permisos, condiciones de acceso y consumidores autorizados. |
+| Durante cuánto tiempo | Políticas de conservación, bloqueo, anonimización o supresión, según corresponda. |
+| Cómo protegemos los datos | Medidas de seguridad, minimización, seudonimización y prevención de exposiciones. |
+| Cómo respondemos | Mecanismos para gestionar derechos de los titulares, vulneraciones e incidentes. |
+| Cómo lo demostramos | Trazabilidad, verificaciones, registros y evidencia de los controles implementados. |
+
+### De la normativa a la implementación técnica
+
+La ley establece obligaciones y responsabilidades jurídicas. La Ingeniería de Datos contribuye a su cumplimiento mediante soluciones técnicas adecuadas al contexto, al riesgo y a las decisiones adoptadas por las áreas responsables.
+
+Para estudiar esa relación, utilizaremos el enfoque:
+
+**Requisito normativo → Riesgo identificado → Control técnico → Verificación → Evidencia**
+
+Este modelo permite conectar las obligaciones aplicables con decisiones concretas de arquitectura, desarrollo y operación.
+
+### Resultado esperado
+
+Desarrollar conocimientos que permitan no solo comprender qué debe protegerse, sino también cómo diseñar, implementar, mantener y verificar soluciones de datos que incorporen la privacidad de forma consistente, trazable y sostenible.
 
 ## 2. Qué es
 
 **[Buena práctica]** **Obligación legal frente a patrón técnico.** La ley impone obligaciones a quien corresponde (responsable o encargado). La matriz requisito → control → evidencia, las pruebas en la CI y los plazos internos de revisión son patrones técnicos propuestos aquí: **no** son obligaciones literales ni exigen una herramienta específica.
 
-**[Buena práctica]** Mapa de los artículos de la Ley 19.628 modificada y la ficha hija que los trata:
+La Ley 19.628, modificada por la Ley 21.719, establece un marco de protección de datos personales. En Ingeniería de Datos, su aplicación se traduce en identificar los datos tratados, controlar sus usos, implementar salvaguardas y conservar evidencia de los controles. La interpretación y las decisiones jurídicas corresponden a las áreas responsables.
 
-| Artículo | Qué implica para datos | Ficha | Etiqueta |
-|---|---|---|---|
-| 1 bis | También se aplica a quien, desde fuera de Chile, ofrece bienes o servicios a titulares en Chile o monitorea su comportamiento | `processors-and-international-transfers` | **[Obligación legal · art. 1 bis]** |
-| 2 | Dato personal, sensible, anonimización, seudonimización, perfiles, encargado | `pii-identification`, `chilean-identifier-pseudonymization` | **[Obligación legal · art. 2]** |
-| 3 | Cada principio (letras a a h) necesita un control y una evidencia | esta ficha | **[Obligación legal · art. 3]** |
-| 4 | Acceso, rectificación, supresión, oposición, portabilidad y bloqueo; los arts. 5 a 11 los desarrollan | `data-subject-rights-pipeline` | **[Obligación legal · art. 4]** |
-| 8 bis | Explicación, intervención humana y revisión de decisiones automatizadas | `dpia-and-automated-decisions` | **[Obligación legal · art. 8 bis]** |
-| 12 | Consentimiento; el responsable prueba que lo obtuvo y que el tratamiento fue lícito (las demás bases, en el art. 13) | `processing-activities-inventory` | **[Obligación legal · art. 12]** |
-| 14 | Acreditar la licitud; suprimir o anonimizar datos precontractuales | `processing-activities-inventory` | **[Obligación legal · art. 14]** |
-| 14 bis | El secreto alcanza datos públicos que se organizan o combinan | esta ficha | **[Obligación legal · art. 14 bis]** |
-| 14 ter | La política pública de tratamiento se alimenta del catálogo | `processing-activities-inventory` | **[Obligación legal · art. 14 ter]** |
-| 14 quáter | Por defecto, solo los datos específicos y estrictamente necesarios, según número de datos, extensión, plazo y accesibilidad | `data-minimization-by-layer` | **[Obligación legal · art. 14 quáter]** |
-| 14 quinquies | Seguridad, restauración y verificación regular de su eficacia | `privacy-controls-as-code` | **[Obligación legal · art. 14 quinquies]** |
-| 14 sexies | Reporte de vulneraciones a la Agencia y registro de esas comunicaciones; aviso a titulares en ciertos casos | `data-breach-response` | **[Obligación legal · art. 14 sexies]** |
-| 15 bis | Encargo; el encargado suprime o devuelve al terminar (la cesión, en el art. 15) | `processors-and-international-transfers` | **[Obligación legal · art. 15 bis]** |
-| 15 ter | Evaluación de impacto en casos tasados | `dpia-and-automated-decisions` | **[Obligación legal · art. 15 ter]** |
-| 16 | Datos sensibles: consentimiento expreso, salvo excepciones; salud, biométricos, niños, niñas y adolescentes, investigación y geolocalización, en los arts. 16 bis a 16 sexies | `pii-identification` | **[Obligación legal · art. 16]** |
-| 27 | Transferencia internacional: cuándo es lícita (países adecuados y cláusulas, en el art. 28) | `processors-and-international-transfers` | **[Obligación legal · art. 27]** |
-| 35 | Sanciones por tipo de infracción (las infracciones, en los arts. 34 bis a 34 quáter); varias nacen de fallas técnicas | esta ficha (§16) | **[Obligación legal · art. 35]** |
-| 49 | Modelo de prevención de infracciones: los responsables pueden adoptarlo voluntariamente (art. 49); el certificado del art. 51 acredita el atenuante del art. 36 n.º 5; reglamento en el Decreto 662 | `privacy-controls-as-code` | **[Buena práctica]** |
+### Ocho principios del artículo 3
 
-- **[Obligación legal · art. 3]** Ocho principios: a) licitud y lealtad, b) finalidad, c) proporcionalidad, d) calidad, e) responsabilidad, f) seguridad, g) transparencia e información, h) confidencialidad.
-- **[Obligación legal · art. 12]** La carga de la prueba es del responsable: debe probar que contó con el consentimiento del titular y que el tratamiento fue lícito, leal y transparente.
-- **[Obligación legal · art. 15 bis]** El encargado (proveedor de nube, de ETL u otro) trata datos solo según el encargo; si los usa para otro fin o los cede sin autorización, se le considera responsable, responde personalmente por sus infracciones y solidariamente con el responsable por los daños.
-- **[Decisión de arquitectura]** El área legal, privacidad y el negocio deciden finalidad, base y plazo; seguridad define el nivel de riesgo. Ingeniería implementa los controles, aporta el análisis técnico y genera la evidencia. La responsabilidad legal sigue siendo del responsable del tratamiento.
+- a) Licitud y lealtad.
+- b) Finalidad.
+- c) Proporcionalidad.
+- d) Calidad.
+- e) Responsabilidad.
+- f) Seguridad.
+- g) Transparencia e información.
+- h) Confidencialidad.
+
+### Fundamentos, alcance y principios
+
+- **[Obligación legal · art. 1 bis]** Ámbito territorial. También alcanza al encargado fuera de Chile que trata por cuenta de un responsable en Chile y a quien, desde fuera, ofrece bienes o servicios a titulares en Chile o monitorea su comportamiento. Ficha: `processors-and-international-transfers`.
+- **[Obligación legal · art. 2]** Definiciones. Dato personal, sensible, anonimización, seudonimización, perfiles y encargado. Fichas: `pii-identification`, `chilean-identifier-pseudonymization`.
+- **[Obligación legal · art. 3]** Principios, letras a) a h). Cada principio necesita un control y una evidencia. Ficha: esta ficha.
+
+### Derechos y decisiones automatizadas
+
+- **[Obligación legal · art. 4]** Derechos del titular, desarrollados en los arts. 5 a 11. Seis tipos de solicitud con plazo y evidencia. Ficha: `data-subject-rights-pipeline`.
+- **[Obligación legal · art. 8 bis]** Decisiones individuales automatizadas: explicación, intervención humana y revisión. Ficha: `dpia-and-automated-decisions`.
+
+### Licitud, responsabilidad y transparencia
+
+- **[Obligación legal · art. 12]** Consentimiento; el responsable prueba la licitud. Las demás bases están en el art. 13. Ficha: `processing-activities-inventory`.
+- **[Obligación legal · art. 14]** Obligaciones del responsable: acreditar la licitud y suprimir o anonimizar datos precontractuales. Ficha: `processing-activities-inventory`.
+- **[Obligación legal · art. 14 bis]** Secreto o confidencialidad, también de datos públicos organizados o combinados. Ficha: esta ficha.
+- **[Obligación legal · art. 14 ter]** Información y transparencia: la política pública se alimenta del catálogo. Ficha: `processing-activities-inventory`.
+
+### Privacidad desde el diseño y seguridad
+
+- **[Obligación legal · art. 14 quáter]** Protección desde el diseño y por defecto. Por defecto, solo los datos específicos y estrictamente necesarios, según número de datos, extensión, plazo y accesibilidad. Ficha: `data-minimization-by-layer`.
+- **[Obligación legal · art. 14 quinquies]** Medidas de seguridad y verificación regular. Ficha: `privacy-controls-as-code`.
+- **[Obligación legal · art. 14 sexies]** Reporte de vulneraciones a la Agencia, registro de esas comunicaciones y aviso a titulares en ciertos casos. Ficha: `data-breach-response`.
+
+### Encargados, impacto y datos sensibles
+
+- **[Obligación legal · art. 15 bis]** Tratamiento por un encargado. Suprime o devuelve al terminar; la cesión está en el art. 15. Ficha: `processors-and-international-transfers`.
+- **[Obligación legal · art. 15 ter]** Evaluación de impacto en los casos que el artículo enumera. Ficha: `dpia-and-automated-decisions`.
+- **[Obligación legal · art. 16]** Datos sensibles; reglas especiales en los arts. 16 bis a 16 sexies. Ficha: `pii-identification`.
+
+### Transferencias, sanciones y prevención
+
+- **[Obligación legal · art. 27]** Transferencia internacional. Cada flujo al exterior necesita un mecanismo. Países adecuados y cláusulas, en el art. 28. Ficha: `processors-and-international-transfers`.
+- **[Obligación legal · art. 35]** Sanciones. Varias infracciones nacen de fallas técnicas. Ficha: esta ficha (§16).
+- **[Buena práctica]** Art. 49. Modelo de prevención de infracciones, voluntario. El certificado del art. 51 acredita el atenuante del art. 36 n.º 5. Reglamento en el Decreto 662. Ficha: `privacy-controls-as-code`.
+
+### Responsabilidades: quién decide y quién implementa
+
+- Legal, privacidad y negocio: definen finalidad, base de licitud y plazos aplicables.
+- Seguridad: define y evalúa el riesgo y las medidas de protección.
+- Ingeniería de Datos: implementa controles técnicos, automatización, trazabilidad y evidencia.
+- Responsable del tratamiento: conserva las responsabilidades legales que le corresponden.
+
+### Precisiones transversales
+
+- **[Obligación legal · art. 12]** La carga de probar la licitud corresponde al responsable; las demás bases de licitud se tratan en el art. 13.
+- **[Obligación legal · art. 15 bis]** El encargado trata según el encargo; si se aparta de él, puede responder como responsable.
+- **[Decisión de arquitectura]** Las decisiones de arquitectura son elecciones de diseño y no deben presentarse automáticamente como exigencias legales.
 
 ### Conceptos que el ingeniero debe dominar
 
@@ -212,7 +295,7 @@ Para ingeniería de datos, el cambio es este: casi todo lo que hace un pipeline 
 
 ## 5. Cuándo utilizarlo
 
-- Al diseñar una plataforma o un pipeline que trata datos de personas en Chile, o de personas en Chile desde fuera (art. 1 bis).
+- Al diseñar una plataforma o un pipeline que trata datos de personas.
 - Al incorporar una fuente, API, CDC o pipeline nuevo que trate datos personales.
 - Al migrar una plataforma on-premise a la nube.
 - Al crear productos de datos, modelos, dashboards, exportaciones o integraciones externas.
@@ -370,32 +453,32 @@ El script se **ejecuta en la CI** con la biblioteca estándar, con esa entrada y
 
 ## 11. GCP
 
-En GCP, **Sensitive Data Protection** y **Cloud Audit Logs**. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES*, *Sensitive Data Protection overview* y *Cloud Audit Logs overview* (no ejecutado):
+En GCP, **Sensitive Data Protection** y **Cloud Audit Logs**.
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Descubrir y clasificar | Sensitive Data Protection: descubre, clasifica y desidentifica; perfila BigQuery, Cloud SQL y Cloud Storage | **[Buena práctica]** |
-| Auditar accesos a datos | Cloud Audit Logs: los Data Access audit logs están desactivados por defecto, salvo en BigQuery | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Descubrir y clasificar | Sensitive Data Protection: descubre, clasifica y desidentifica; perfila BigQuery, Cloud SQL y Cloud Storage |
+| Auditar accesos a datos | Cloud Audit Logs: los Data Access audit logs están desactivados por defecto, salvo en BigQuery |
 
 Los Data Access audit logs se configuran por servicio: revisar BigQuery y cada recurso que se use.
 
 ## 12. AWS
 
-En AWS, **Amazon Macie** y **AWS CloudTrail**. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES*, *What is Amazon Macie?* y *Logging data events* (no ejecutado):
+En AWS, **Amazon Macie** y **AWS CloudTrail**.
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Descubrir | Amazon Macie: datos sensibles en buckets de S3 | **[Buena práctica]** |
-| Auditar accesos a datos | CloudTrail: los data events no se registran por defecto | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Descubrir | Amazon Macie: datos sensibles en buckets de S3 |
+| Auditar accesos a datos | CloudTrail: los data events no se registran por defecto |
 
 ## 13. Azure
 
-En Azure, **Microsoft Purview** y **Unity Catalog** de Azure Databricks. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES*, *Data classification in Data Map* y *What is Unity Catalog?* (no ejecutado):
+En Azure, **Microsoft Purview** y **Unity Catalog** de Azure Databricks.
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Descubrir y clasificar | Purview Data Map: clasificaciones de sistema y propias al escanear | **[Buena práctica]** |
-| Gobierno en el lakehouse | Unity Catalog: privilegios, políticas por atributos, filtros de fila y columna, auditoría y linaje | **[Buena práctica]** |
+| Necesidad | Servicio |
+|---|---|
+| Descubrir y clasificar | Purview Data Map: clasificaciones de sistema y propias al escanear |
+| Gobierno en el lakehouse | Unity Catalog: privilegios, políticas por atributos, filtros de fila y columna, auditoría y linaje |
 
 Los servicios de §11 a §13 no son equivalencias exactas. Ningún servicio certifica cumplimiento por sí solo: cada uno se evalúa por alcance, configuración y evidencia disponible.
 
@@ -524,3 +607,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: vigencia actualizada con el estado de hoy del boletín 18.623-07 (aprobado por el Senado y despachado a la Cámara; la vigencia legal sigue en el 2026-12-01), consultado en el Senado; textos de BCN y mensaje vueltos a consultar, sin cambios. Un test compara la fecha y el estado con `content/legal-frameworks/cl-ley-21719.yaml`. §17: «Fichas hijas del dominio».
 - 2026-10-28: §17 nombra las cuatro fichas hijas del lote P2 (`purpose-based-authorization`, `distributed-erasure-propagation`, `privacy-backup-and-recovery`, `privacy-in-ai-rag-llm`), en el orden del blueprint. Sin otros cambios.
 - 2026-10-28: mismos errores que la revisión de P2: la fila del art. 14 quáter del mapa de artículos nombra sus cuatro factores.
+- 2026-10-28: el resumen pasa a ser la introducción del subdominio (objetivo, idea central, contexto normativo y preguntas que debe responder la arquitectura). La vigencia citada sigue siendo la de la ley publicada; el boletín 18.623-07 sigue siendo un proyecto.

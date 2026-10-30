@@ -18,7 +18,7 @@ import type { LegalBasis } from "@/lib/api/types";
 import { ArchitectureDot } from "@/components/markdown/InlineText";
 import { entityHref } from "@/lib/entityHref";
 import { bcnLinkText, lawLabel, legalBasisRows, legalRowId, type LegalNoticeCopy } from "@/lib/legal";
-import { partOfParent, routeChildren, withoutPartOf, type PartLink } from "@/lib/partOf";
+import { partOfParent, withoutPartOf, type PartLink } from "@/lib/partOf";
 import { alsoKnownLabel, CLOUD_LABEL, LEVEL_LABEL, STUDY_LABEL, VERIFICATION_LABEL } from "@/lib/labels";
 import { saveStudyState } from "@/lib/personalActions";
 import {
@@ -58,6 +58,7 @@ export type ReadingCrumb = {
   domainHref: string;
   domainLabel: string;
   subdomain: string | null;
+  subdomainHref: string | null;
 };
 
 export type ReadingNext = {
@@ -282,7 +283,6 @@ export function ConceptReading({
   const shown = Math.min(CARD_SECTION_COUNT, readMax);
   const listed = sections.filter((section) => section.listed);
   const parentPart = partOfParent(relationGroups);
-  const routeCards = routeChildren(relationGroups);
   const listedGroups = withoutPartOf(relationGroups);
   const hasRelations = listedGroups.some((group) => group.items.length > 0);
 
@@ -448,6 +448,7 @@ export function ConceptReading({
   }
 
   let expandPlaced = false;
+  const summaryBlocks: React.ReactNode[] = [];
   const blocks: React.ReactNode[] = [];
   let index = 0;
   while (index < sections.length) {
@@ -488,11 +489,13 @@ export function ConceptReading({
       continue;
     }
     if (section.presentation === "summary") {
-      blocks.push(
+      summaryBlocks.push(
         <section
           key={section.number}
           id={`s${section.number}`}
-          className="reading-summary"
+          className={
+            slug === "chile-data-protection" ? "reading-summary reading-summary-pairs" : "reading-summary"
+          }
           aria-labelledby={`h-${section.number}`}
           data-reading-section={section.number}
           data-reading-title={section.title}
@@ -559,7 +562,8 @@ export function ConceptReading({
             ) : null}
             {crumb?.subdomain ? (
               <li>
-                <span aria-hidden="true">/</span> <span>{crumb.subdomain}</span>
+                <span aria-hidden="true">/</span>{" "}
+                {crumb.subdomainHref ? <Link href={crumb.subdomainHref}>{crumb.subdomain}</Link> : <span>{crumb.subdomain}</span>}
               </li>
             ) : null}
             <li>
@@ -668,19 +672,10 @@ export function ConceptReading({
               {known ? <p className="reading-meta">{known}</p> : null}
               {meta ? <p className="reading-meta">{meta}</p> : null}
             </header>
-            {routeCards.length > 0 ? (
-              <section className="route-cards" aria-labelledby="route-cards-title">
-                <h2 id="route-cards-title">Fichas de esta ruta</h2>
-                <ol>
-                  {routeCards.map((card) => (
-                    <li key={card.slug}>
-                      <Link href={partHref(card)}>{card.title}</Link>
-                    </li>
-                  ))}
-                </ol>
-              </section>
-            ) : null}
-            {legalBasis.length > 0 ? <LegalBasisTable items={legalBasis} /> : null}
+            {summaryBlocks}
+            {slug === "chile-data-protection" || legalBasis.length === 0 ? null : (
+              <LegalBasisTable items={legalBasis} />
+            )}
             {blocks}
             {sections.length === 0 ? <p className="reading-quiet">Esta ficha todavía no tiene secciones.</p> : null}
             {legalBasis.length > 0 || architectureLegend ? (

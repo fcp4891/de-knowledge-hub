@@ -6,10 +6,12 @@ export async function MarkdownBody({
   markdown,
   etiquetaColumn = false,
   obligations = [],
+  fichaTitles,
 }: {
   markdown: string;
   etiquetaColumn?: boolean;
   obligations?: readonly ObligationBasis[];
+  fichaTitles?: Readonly<Record<string, string>>;
 }) {
   const blocks = parseMarkdown(markdown);
   const grouped = groupEvidence(blocks);
@@ -29,6 +31,7 @@ export async function MarkdownBody({
             titleId={`evidence-title-${index}`}
             group={block}
             obligations={obligations}
+            fichaTitles={fichaTitles}
             CodeBlock={codeBlock}
             MermaidDiagram={mermaidDiagram}
           />
@@ -38,6 +41,7 @@ export async function MarkdownBody({
             block={block}
             etiquetaColumn={etiquetaColumn}
             obligations={obligations}
+            fichaTitles={fichaTitles}
             CodeBlock={codeBlock}
             MermaidDiagram={mermaidDiagram}
           />
@@ -51,12 +55,14 @@ function EvidenceBlock({
   titleId,
   group,
   obligations,
+  fichaTitles,
   CodeBlock,
   MermaidDiagram,
 }: {
   titleId: string;
   group: EvidenceGroup;
   obligations: readonly ObligationBasis[];
+  fichaTitles?: Readonly<Record<string, string>>;
   CodeBlock: ((props: { code: string; language: string }) => React.ReactNode) | null;
   MermaidDiagram: ((props: { source: string }) => React.ReactNode) | null;
 }) {
@@ -76,6 +82,7 @@ function EvidenceBlock({
           block={block}
           etiquetaColumn={false}
           obligations={obligations}
+          fichaTitles={fichaTitles}
           CodeBlock={CodeBlock}
           MermaidDiagram={MermaidDiagram}
         />
@@ -88,12 +95,14 @@ function MarkdownBlock({
   block,
   etiquetaColumn,
   obligations,
+  fichaTitles,
   CodeBlock,
   MermaidDiagram,
 }: {
   block: Block;
   etiquetaColumn: boolean;
   obligations: readonly ObligationBasis[];
+  fichaTitles?: Readonly<Record<string, string>>;
   CodeBlock: ((props: { code: string; language: string }) => React.ReactNode) | null;
   MermaidDiagram: ((props: { source: string }) => React.ReactNode) | null;
 }) {
@@ -115,7 +124,7 @@ function MarkdownBlock({
   if (block.type === "note") {
     return (
       <p className="verify-note">
-        Pendiente de verificación: <InlineText inlines={block.inlines} obligations={obligations} />
+        Pendiente de verificación: <InlineText inlines={block.inlines} obligations={obligations} fichaTitles={fichaTitles} />
       </p>
     );
   }
@@ -132,7 +141,7 @@ function MarkdownBlock({
             <tr>
               {indexes.map((index) => (
                 <th key={index} data-align={block.aligns[index] ?? "left"}>
-                  <InlineText inlines={block.headers[index]} obligations={obligations} />
+                  <InlineText inlines={block.headers[index]} obligations={obligations} fichaTitles={fichaTitles} />
                 </th>
               ))}
             </tr>
@@ -144,7 +153,7 @@ function MarkdownBlock({
                   const ficha = articleMap && index === articleMap.articleIndex ? articleMap.fichaTitles[rowIndex] : null;
                   return (
                     <td key={index} data-align={block.aligns[index] ?? "left"} title={ficha ?? undefined}>
-                      <InlineText inlines={row[index] ?? []} obligations={obligations} />
+                      <InlineText inlines={row[index] ?? []} obligations={obligations} fichaTitles={fichaTitles} />
                     </td>
                   );
                 })}
@@ -164,7 +173,7 @@ function MarkdownBlock({
             {item.checked === null ? null : (
               <input type="checkbox" defaultChecked={item.checked} disabled aria-label={item.checked ? "Hecho" : "Pendiente"} />
             )}
-            <InlineText inlines={item.inlines} obligations={obligations} />
+            <InlineText inlines={item.inlines} obligations={obligations} fichaTitles={fichaTitles} />
           </li>
         ))}
       </Tag>
@@ -172,7 +181,7 @@ function MarkdownBlock({
   }
   return (
     <p>
-      <InlineText inlines={block.inlines} obligations={obligations} />
+      <InlineText inlines={block.inlines} obligations={obligations} fichaTitles={fichaTitles} />
     </p>
   );
 }

@@ -1,6 +1,9 @@
 import { ApiFailure } from "@/components/ApiFailure";
 import { NoteForm, NoteItem } from "@/components/card/PersonalForms";
 import { ConceptReading, type ReadingSectionModel } from "@/components/card/ConceptReading";
+import { LegalFoundations } from "@/components/card/LegalFoundations";
+import { CHILE_CHILD_TITLES } from "@/lib/chileLegalCatalog";
+import { canViewChangeHistory, canViewRelatedLab, currentViewer } from "@/lib/changeHistoryAccess";
 import { MarkdownBody } from "@/components/markdown/MarkdownBody";
 import { getConcept, getDomain, getRelations, getStudyState, listNotes } from "@/lib/api/client";
 import type { NoteList, RelationGroups, Section, SourceRef } from "@/lib/api/types";
@@ -62,8 +65,13 @@ function sectionModels(
   sections: Section[],
   sources: SourceRef[],
   obligations: readonly ObligationBasis[],
+  slug: string,
 ): ReadingSectionModel[] {
   const ordered = [...sections].sort((left, right) => left.number - right.number);
+  const fichaTitles = slug === "chile-data-protection" ? CHILE_CHILD_TITLES : undefined;
+  const viewer = currentViewer();
+  const showHistory = canViewChangeHistory(viewer);
+  const showLab = canViewRelatedLab(viewer);
   const models: ReadingSectionModel[] = [];
   let clouds: ReadingSectionModel[] = [];
 
@@ -73,6 +81,12 @@ function sectionModels(
   }
 
   for (const section of ordered) {
+    if (section.key === "change_history" && !showHistory) {
+      continue;
+    }
+    if (section.key === "related_lab" && !showLab) {
+      continue;
+    }
     const text = section.markdown.trim().length > 0;
     if (section.key === "summary") {
       flushClouds();
@@ -82,7 +96,7 @@ function sectionModels(
         title: section.title,
         presentation: "summary",
         listed: text,
-        body: text ? <MarkdownBody markdown={section.markdown} obligations={obligations} /> : null,
+        body: text ? <MarkdownBody markdown={section.markdown} obligations={obligations} fichaTitles={fichaTitles} /> : null,
       });
       continue;
     }
@@ -96,11 +110,22 @@ function sectionModels(
         title: section.title,
         presentation: "cloud",
         listed: true,
-        body: <MarkdownBody markdown={section.markdown} etiquetaColumn obligations={obligations} />,
+        body: <MarkdownBody markdown={section.markdown} etiquetaColumn obligations={obligations} fichaTitles={fichaTitles} />,
       });
       continue;
     }
     flushClouds();
+    if (section.key === "what_is" && slug === "chile-data-protection") {
+      models.push({
+        number: section.number,
+        key: section.key,
+        title: "Fundamentos legales y aplicación técnica",
+        presentation: "details",
+        listed: true,
+        body: <LegalFoundations />,
+      });
+      continue;
+    }
     if (section.key === "sources") {
       const showList = sources.length > 0;
       if (!text && !showList) {
@@ -112,7 +137,7 @@ function sectionModels(
         title: section.title,
         presentation: "details",
         listed: true,
-        body: showList ? <SourceLinks sources={sources} /> : <MarkdownBody markdown={section.markdown} obligations={obligations} />,
+        body: showList ? <SourceLinks sources={sources} /> : <MarkdownBody markdown={section.markdown} obligations={obligations} fichaTitles={fichaTitles} />,
       });
       continue;
     }
@@ -123,9 +148,14 @@ function sectionModels(
       number: section.number,
       key: section.key,
       title: section.title,
-      presentation: OPEN_NUMBERS.has(section.number) ? "open" : "details",
+      presentation:
+        slug === "chile-data-protection" && section.number === 3
+          ? "details"
+          : OPEN_NUMBERS.has(section.number)
+            ? "open"
+            : "details",
       listed: true,
-      body: <MarkdownBody markdown={section.markdown} obligations={obligations} />,
+      body: <MarkdownBody markdown={section.markdown} obligations={obligations} fichaTitles={fichaTitles} />,
     });
   }
   flushClouds();
@@ -211,7 +241,7 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
   const groups = relations.ok ? relations.data.groups : [];
   const listedGroups = withoutPartOf(groups);
 
-  let crumb: { domainHref: string; domainLabel: string; subdomain: string | null } | null = null;
+  let crumb: { domainHref: string; domainLabel: string; subdomain: string | null; subdomainHref: string | null } | null = null;
   let next: { slug: string; title: string } | null = null;
   if (domain?.ok) {
     const short = SHORT_NAMES[domain.data.id] ?? domain.data.title;
@@ -220,6 +250,7 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
       domainHref: `/explorer/${domain.data.slug}`,
       domainLabel: `${domain.data.id} ${short}`,
       subdomain,
+      subdomainHref: data.subdomain ? `/explorer/${domain.data.slug}#${data.subdomain}` : null,
     };
     const stages = domain.data.subdomains.map((item) => ({
       concepts: item.concepts.map((conceptItem, index) => ({
@@ -251,7 +282,7 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
       sourceCount={data.sources.length}
       crumb={crumb}
       next={next}
-      sections={sectionModels(sections, data.sources, data.legal_basis)}
+      sections={sectionModels(sections, data.sources, data.legal_basis, data.slug)}
       staticMode={staticMode}
       initialStudy={
         study?.ok ? { state: study.data.state, pendingDeepDive: study.data.pending_deep_dive } : null
