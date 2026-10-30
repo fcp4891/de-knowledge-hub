@@ -34,18 +34,60 @@ function article(
   return { article: articleId, title, basis, implication, precision, fichas, url: BCN };
 }
 
-export const CHILE_INTRO =
-  "La Ley 19.628, modificada por la Ley 21.719, establece un marco de protección de datos personales. En Ingeniería de Datos, su aplicación se traduce en identificar los datos tratados, controlar sus usos, implementar salvaguardas y conservar evidencia de los controles. La interpretación y las decisiones jurídicas corresponden a las áreas responsables.";
+export type ChilePrinciple = {
+  label: string;
+  description: string;
+  slug: string;
+};
 
-export const CHILE_PRINCIPLES = [
-  "a) Licitud y lealtad.",
-  "b) Finalidad.",
-  "c) Proporcionalidad.",
-  "d) Calidad.",
-  "e) Responsabilidad.",
-  "f) Seguridad.",
-  "g) Transparencia e información.",
-  "h) Confidencialidad.",
+export const CHILE_PRINCIPLES: readonly ChilePrinciple[] = [
+  {
+    label: "a) Licitud y lealtad.",
+    description:
+      "Los datos solo se tratan de manera lícita y leal. El responsable debe ser capaz de acreditar la licitud del tratamiento que realiza.",
+    slug: "processing-activities-inventory",
+  },
+  {
+    label: "b) Finalidad.",
+    description:
+      "Los datos se recolectan con fines específicos, explícitos y lícitos. No se tratan con fines distintos a los informados al recolectarlos, salvo las excepciones de la letra: fines compatibles, relación contractual o precontractual, nuevo consentimiento o ley.",
+    slug: "purpose-based-authorization",
+  },
+  {
+    label: "c) Proporcionalidad.",
+    description:
+      "Los datos tratados se limitan estrictamente a los necesarios, adecuados y pertinentes para los fines. Se conservan solo el tiempo necesario y luego se suprimen o anonimizan.",
+    slug: "data-minimization-by-layer",
+  },
+  {
+    label: "d) Calidad.",
+    description:
+      "Los datos deben ser exactos, completos, actuales y pertinentes en relación con su proveniencia y los fines del tratamiento.",
+    slug: "data-subject-rights-pipeline",
+  },
+  {
+    label: "e) Responsabilidad.",
+    description:
+      "Quienes realicen tratamiento de datos personales son legalmente responsables de cumplir los principios y las demás obligaciones de la ley.",
+    slug: "privacy-controls-as-code",
+  },
+  {
+    label: "f) Seguridad.",
+    description:
+      "El responsable aplica medidas de seguridad apropiadas para proteger los datos contra el tratamiento no autorizado o ilícito y contra su pérdida, filtración, daño accidental o destrucción.",
+    slug: "data-breach-response",
+  },
+  {
+    label: "g) Transparencia e información.",
+    description:
+      "El responsable entrega al titular, de manera precisa, clara, inequívoca y gratuita, la información necesaria para ejercer sus derechos, y mantiene accesibles sus políticas y prácticas de tratamiento.",
+    slug: "processing-activities-inventory",
+  },
+  {
+    label: "h) Confidencialidad.",
+    description: "El responsable y quienes tengan acceso a los datos deben guardar secreto sobre ellos. El deber sigue después de terminada la relación.",
+    slug: "purpose-based-authorization",
+  },
 ];
 
 export const CHILE_GROUPS: ChileGroup[] = [
@@ -259,8 +301,3 @@ export const CHILE_CHILD_TITLES: Readonly<Record<string, string>> = {
   "data-classification": "Clasificación de datos",
 };
 
-export const CHILE_NOTES = [
-  "Art. 12: la carga de probar la licitud corresponde al responsable; las demás bases de licitud se tratan en el art. 13.",
-  "Art. 15 bis: el encargado trata según el encargo; si se aparta de él, puede responder como responsable.",
-  "Las decisiones de arquitectura son elecciones de diseño y no deben presentarse automáticamente como exigencias legales.",
-];
