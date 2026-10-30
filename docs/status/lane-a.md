@@ -2,7 +2,7 @@
 
 Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
-**Última actualización:** 2026-10-29
+**Última actualización:** 2026-10-30
 
 ## Actual
 - **Tarea activa:** lote A (2026-10-28, ADR-027): dominio 24-privacy-engineering, banda «Especialización», con las 11 fichas de la Ley 21.719 en cinco tramos, sin cambios de contenido, en `review_required`; 4 fichas nuevas como «pendiente de ficha». Lote P1 (2026-10-28): 9 fichas hijas mejoradas, en revisión. 23 completo (9 fichas en revisión). 21 completo: 27/27 `verified` (2026-10-26). 22 completo: 10/10 `verified` (2026-10-27). `pii-identification` mejorada y revisada, en `review_required`. `chile-data-protection` mejorada (propuesta 1), en revisión. 19 (11 fichas) espera la aprobación de Felipe (`owner_approved_at`), que llega con el zip de los ajustes de UI de Carril B. 18-security aprobado en el navegador el 2026-10-21 (sitio en /aprendizaje-continuo/). 17-governance aprobado en el navegador el 2026-10-21. 16-observability aprobado en el navegador el 2026-10-20 (el título de `gcp-cloud-composer` se mantiene). 15-data-quality aprobado en el navegador el 2026-10-20 (Felipe confirmó el Publish de `write-audit-publish` «no ejecutado»). 20-open-data-stack aprobado en el navegador el 2026-10-20. 14-streaming aprobado en el navegador el 2026-10-20. 13-containers aprobado en el navegador el 2026-10-19 (12-infrastructure-as-code también el 2026-10-19; 11-devops el 2026-10-14). Orden de dominios desde aquí: 12 → 13 → 14 → 20 → 15 → 16 → 17 → 18 → 19 → 21 → 22 → 23. 10-azure aprobado en el navegador el 2026-10-14 (Felipe confirmó también 09-aws, aprobado el 2026-10-13). Lote de limpieza F3b-rel en `main`: el chequeo del §17 es error de `make validate`.
@@ -143,6 +143,9 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Implicancia técnica (enmienda 1 de ADR-023, aditivo): `LegalBasis.implication` (requerido); migración 0006 y `COMPILER_VERSION` 6.
 
 ## Historial
+
+### Ajustes de UI y contenido de Felipe del 30-10 (2026-10-30)
+- `b/ui-ajustes-1030` (720aadb, 1e6cd47, b749005) integrada en `main`, sin conflictos: fundamentos legales en las fichas, `/privacidad`, lectura de fichas y la versión de Felipe de `chile-data-protection` (reestructura, introducción, listas por grupo, §1, §4, §5 y §11–13). En la ficha, solo lo que exige ADR-023 para `make validate`: etiquetas en el párrafo de marco y en los ítems del §2, y columna «Etiqueta» en la matriz del §4 y en §11–13 (Felipe las había quitado a propósito; decisión pendiente sobre una enmienda a ADR-023). El test `privacySpace` pasa a afirmar que 19 no está en ninguna capa: la UI muestra su subdominio «Marcos regulatorios» como tramo del 24, distinto de ADR-027, punto 5 (decisión pendiente).
 
 ### Espacio de privacidad en la UI (2026-10-29)
 - `b/ui-privacy-space` (225bd1f) y `b/review-ui-privacy` (5498f17) integradas en `main`; conflicto de `lane-b.md` resuelto solo en su bloque. Decisión de Felipe registrada por Carril B: la tarjeta del marco legal vive solo en `/privacidad` y cada hecho abre su URL; el objetivo 7 («Tratar datos personales bajo la Ley 21.719») lleva a `/privacidad`. Carril B había escrito esa nota en este archivo (sección «Pedido de Carril B»); se movió aquí, porque solo Carril A edita `lane-a.md`. Contrato y tipos: `band`, `legal_framework` y `LegalFramework` de `frontend/lib/api/schema.d.ts` coinciden con `docs/contracts/api.yaml` (openapi-typescript regenerado a un archivo temporal); solo difiere el comentario de `GET /domains` («Los 23 dominios»), pedido a Carril B.

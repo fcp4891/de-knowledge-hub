@@ -28,7 +28,8 @@ test("el objetivo ley21719 recorre los tramos de 24 y no apunta a 19", () => {
   assert.equal(nextDistinctDomain([{ domain: "15" }, { domain: "19" }], "15"), "19");
   assert.deepEqual([...STUDY_PATH], ["Comprender", "Aplicar", "Demostrar", "Profundizar"]);
   assert.ok(LAYERS.every((layer) => !layer.domains.includes("24")));
-  assert.ok(LAYERS.find((layer) => layer.key === "transversal")?.domains.includes("19"));
+  // b/ui-ajustes-1030: 19 sale del mapa y su subdominio «Marcos regulatorios» se muestra como tramo del 24.
+  assert.ok(LAYERS.every((layer) => !layer.domains.includes("19")));
   assert.equal(verifiedCount(["verified", "review_required", null]).verified, 1);
   assert.equal(verifiedCount(["verified", "review_required", null]).total, 3);
 });

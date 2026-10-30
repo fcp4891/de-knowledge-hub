@@ -165,18 +165,18 @@ Desarrollar conocimientos que permitan no solo comprender qué debe protegerse, 
 
 **[Buena práctica]** **Obligación legal frente a patrón técnico.** La ley impone obligaciones a quien corresponde (responsable o encargado). La matriz requisito → control → evidencia, las pruebas en la CI y los plazos internos de revisión son patrones técnicos propuestos aquí: **no** son obligaciones literales ni exigen una herramienta específica.
 
-La Ley 19.628, modificada por la Ley 21.719, establece un marco de protección de datos personales. En Ingeniería de Datos, su aplicación se traduce en identificar los datos tratados, controlar sus usos, implementar salvaguardas y conservar evidencia de los controles. La interpretación y las decisiones jurídicas corresponden a las áreas responsables.
+**[Buena práctica]** La Ley 19.628, modificada por la Ley 21.719, establece un marco de protección de datos personales. En Ingeniería de Datos, su aplicación se traduce en identificar los datos tratados, controlar sus usos, implementar salvaguardas y conservar evidencia de los controles. La interpretación y las decisiones jurídicas corresponden a las áreas responsables.
 
 ### Ocho principios del artículo 3
 
-- a) Licitud y lealtad.
-- b) Finalidad.
-- c) Proporcionalidad.
-- d) Calidad.
-- e) Responsabilidad.
-- f) Seguridad.
-- g) Transparencia e información.
-- h) Confidencialidad.
+- **[Obligación legal · art. 3]** a) Licitud y lealtad.
+- **[Obligación legal · art. 3]** b) Finalidad.
+- **[Obligación legal · art. 3]** c) Proporcionalidad.
+- **[Obligación legal · art. 3]** d) Calidad.
+- **[Obligación legal · art. 3]** e) Responsabilidad.
+- **[Obligación legal · art. 3]** f) Seguridad.
+- **[Obligación legal · art. 3]** g) Transparencia e información.
+- **[Obligación legal · art. 3]** h) Confidencialidad.
 
 ### Fundamentos, alcance y principios
 
@@ -216,10 +216,10 @@ La Ley 19.628, modificada por la Ley 21.719, establece un marco de protección d
 
 ### Responsabilidades: quién decide y quién implementa
 
-- Legal, privacidad y negocio: definen finalidad, base de licitud y plazos aplicables.
-- Seguridad: define y evalúa el riesgo y las medidas de protección.
-- Ingeniería de Datos: implementa controles técnicos, automatización, trazabilidad y evidencia.
-- Responsable del tratamiento: conserva las responsabilidades legales que le corresponden.
+- **[Buena práctica]** Legal, privacidad y negocio: definen finalidad, base de licitud y plazos aplicables.
+- **[Buena práctica]** Seguridad: define y evalúa el riesgo y las medidas de protección.
+- **[Buena práctica]** Ingeniería de Datos: implementa controles técnicos, automatización, trazabilidad y evidencia.
+- **[Obligación legal · art. 3]** Responsable del tratamiento: conserva las responsabilidades legales que le corresponden.
 
 ### Precisiones transversales
 
@@ -282,14 +282,14 @@ La Ley 19.628, modificada por la Ley 21.719, establece un marco de protección d
 
 **[Decisión de arquitectura]** Matriz de control:
 
-| Requisito o necesidad | Decisión aprobada por | Control técnico | Evidencia verificable |
-|---|---|---|---|
-| Minimización | Negocio y privacidad | Contrato de campos permitidos | Test de esquema y versión del contrato |
-| Retención | Privacidad y negocio | Política por clase de dato y almacenamiento | Configuración, ejecución y excepciones |
-| Acceso restringido | Seguridad y dueño del dato | IAM o RBAC, segregación y revisión | Inventario de permisos y revisión fechada |
-| Derechos del titular | Responsable y privacidad | Localizador de registros y flujo autorizado | ID interno de la solicitud, estados y resultado |
-| Vulneraciones | Seguridad y privacidad | Logs, alertas y consulta de alcance por linaje | Línea de tiempo, sistemas afectados y acciones |
-| Transferencias | Privacidad, compras y seguridad | Inventario de destinos y controles del proveedor | Contrato, evaluación y trazabilidad de flujos |
+| Requisito o necesidad | Decisión aprobada por | Control técnico | Evidencia verificable | Etiqueta |
+|---|---|---|---|---|
+| Minimización | Negocio y privacidad | Contrato de campos permitidos | Test de esquema y versión del contrato | **[Decisión de arquitectura]** |
+| Retención | Privacidad y negocio | Política por clase de dato y almacenamiento | Configuración, ejecución y excepciones | **[Decisión de arquitectura]** |
+| Acceso restringido | Seguridad y dueño del dato | IAM o RBAC, segregación y revisión | Inventario de permisos y revisión fechada | **[Decisión de arquitectura]** |
+| Derechos del titular | Responsable y privacidad | Localizador de registros y flujo autorizado | ID interno de la solicitud, estados y resultado | **[Decisión de arquitectura]** |
+| Vulneraciones | Seguridad y privacidad | Logs, alertas y consulta de alcance por linaje | Línea de tiempo, sistemas afectados y acciones | **[Decisión de arquitectura]** |
+| Transferencias | Privacidad, compras y seguridad | Inventario de destinos y controles del proveedor | Contrato, evaluación y trazabilidad de flujos | **[Decisión de arquitectura]** |
 
 **[Buena práctica]** La evidencia no guarda nombres, RUT ni datos sensibles cuando basta una referencia interna protegida.
 
@@ -455,10 +455,10 @@ El script se **ejecuta en la CI** con la biblioteca estándar, con esa entrada y
 
 En GCP, **Sensitive Data Protection** y **Cloud Audit Logs**.
 
-| Necesidad | Servicio |
-|---|---|
-| Descubrir y clasificar | Sensitive Data Protection: descubre, clasifica y desidentifica; perfila BigQuery, Cloud SQL y Cloud Storage |
-| Auditar accesos a datos | Cloud Audit Logs: los Data Access audit logs están desactivados por defecto, salvo en BigQuery |
+| Necesidad | Servicio | Etiqueta |
+|---|---|---|
+| Descubrir y clasificar | Sensitive Data Protection: descubre, clasifica y desidentifica; perfila BigQuery, Cloud SQL y Cloud Storage | **[Buena práctica]** |
+| Auditar accesos a datos | Cloud Audit Logs: los Data Access audit logs están desactivados por defecto, salvo en BigQuery | **[Decisión de arquitectura]** |
 
 Los Data Access audit logs se configuran por servicio: revisar BigQuery y cada recurso que se use.
 
@@ -466,19 +466,19 @@ Los Data Access audit logs se configuran por servicio: revisar BigQuery y cada r
 
 En AWS, **Amazon Macie** y **AWS CloudTrail**.
 
-| Necesidad | Servicio |
-|---|---|
-| Descubrir | Amazon Macie: datos sensibles en buckets de S3 |
-| Auditar accesos a datos | CloudTrail: los data events no se registran por defecto |
+| Necesidad | Servicio | Etiqueta |
+|---|---|---|
+| Descubrir | Amazon Macie: datos sensibles en buckets de S3 | **[Buena práctica]** |
+| Auditar accesos a datos | CloudTrail: los data events no se registran por defecto | **[Decisión de arquitectura]** |
 
 ## 13. Azure
 
 En Azure, **Microsoft Purview** y **Unity Catalog** de Azure Databricks.
 
-| Necesidad | Servicio |
-|---|---|
-| Descubrir y clasificar | Purview Data Map: clasificaciones de sistema y propias al escanear |
-| Gobierno en el lakehouse | Unity Catalog: privilegios, políticas por atributos, filtros de fila y columna, auditoría y linaje |
+| Necesidad | Servicio | Etiqueta |
+|---|---|---|
+| Descubrir y clasificar | Purview Data Map: clasificaciones de sistema y propias al escanear | **[Buena práctica]** |
+| Gobierno en el lakehouse | Unity Catalog: privilegios, políticas por atributos, filtros de fila y columna, auditoría y linaje | **[Buena práctica]** |
 
 Los servicios de §11 a §13 no son equivalencias exactas. Ningún servicio certifica cumplimiento por sí solo: cada uno se evalúa por alcance, configuración y evidencia disponible.
 
@@ -608,3 +608,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: §17 nombra las cuatro fichas hijas del lote P2 (`purpose-based-authorization`, `distributed-erasure-propagation`, `privacy-backup-and-recovery`, `privacy-in-ai-rag-llm`), en el orden del blueprint. Sin otros cambios.
 - 2026-10-28: mismos errores que la revisión de P2: la fila del art. 14 quáter del mapa de artículos nombra sus cuatro factores.
 - 2026-10-28: el resumen pasa a ser la introducción del subdominio (objetivo, idea central, contexto normativo y preguntas que debe responder la arquitectura). La vigencia citada sigue siendo la de la ley publicada; el boletín 18.623-07 sigue siendo un proyecto.
+- 2026-10-30: sobre la versión de Felipe (`b/ui-ajustes-1030`), solo lo que exige ADR-023 para pasar `make validate`: etiquetas en el párrafo de marco y en los ítems del §2 (principios a) a h) y responsabilidades), y columna «Etiqueta» en la matriz del §4 y en las tablas de §11–13, con los mismos valores que tenían antes. La vigencia ya estaba en sincronía con `cl-ley-21719.yaml`.
