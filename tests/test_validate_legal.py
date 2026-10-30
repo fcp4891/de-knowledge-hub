@@ -218,3 +218,45 @@ def test_label_line_does_not_replace_the_column_outside_4_and_11_to_13(content: 
     assert_error(setup(content, body), "[§3] tabla sin columna «Etiqueta» (ADR-023)")
 
 
+
+
+# --- Enmienda 4: marcos comparados (EU y BR) ----------------------------------
+
+GDPR_URL = "https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807"
+
+
+def setup_gdpr(content: Path, body: str, basis: list[dict[str, str]] | None = None) -> v.Report:
+    eu = legislative("boe-doue", url="https://www.boe.es/", provider="boe", jurisdiction=["EU"])
+    write_yaml(content, "sources/r.yaml", legislative(), eu, source("docs-a"))
+    sources = [{"source": "bcn-leychile", "url": LAW_URL, "accessed": TODAY, "page_title": "Ley Chile - Ley 19628"},
+               {"source": "boe-doue", "url": GDPR_URL, "accessed": TODAY, "page_title": "Documento DOUE-L-2016-80807"},
+               {"source": "docs-a", "url": "https://example.org/a"}]
+    gdpr = {"law": "eu-2016-679", "article": "33", "url": GDPR_URL, "implication": IMPL}
+    basis = basis if basis is not None else [{"law": "ley-19628", "article": "3", "url": LAW_URL, "implication": IMPL}, gdpr]
+    write_md(content, "concepts/gdpr.md", legal_concept("gdpr", jurisdiction=["CL", "EU"], sources=sources, legal_basis=basis), body)
+    return run(content)
+
+
+def test_eu_jurisdiction_with_gdpr_label_passes(content: Path) -> None:
+    body = BODY + "\n**[Obligación legal · GDPR art. 33]** Notificar a la autoridad de control.\n"
+    report = setup_gdpr(content, body.replace("## 3. Problema que resuelve\n\n", "## 3. Problema que resuelve\n\n**[Obligación legal · GDPR art. 33]** 72 horas.\n\n"))
+    assert report.ok, report.errors
+
+
+def test_gdpr_label_must_match_legal_basis(content: Path) -> None:
+    body = BODY.replace("## 3. Problema que resuelve\n\n", "## 3. Problema que resuelve\n\n**[Obligación legal · GDPR art. 34]** Interesado.\n\n")
+    assert_error(setup_gdpr(content, body), "el cuerpo cita GDPR art. 34 y no está en legal_basis",
+                 "GDPR, art. 33 está en legal_basis y el cuerpo no lo cita")
+
+
+def test_same_article_in_ley_and_gdpr_needs_the_law_in_the_label(content: Path) -> None:
+    basis = [{"law": "ley-19628", "article": "3", "url": LAW_URL, "implication": IMPL},
+             {"law": "eu-2016-679", "article": "3", "url": GDPR_URL, "implication": IMPL}]
+    assert_error(setup_gdpr(content, BODY, basis), "art. 3 existe en varias leyes: la etiqueta debe nombrar la ley")
+
+
+def test_gdpr_basis_needs_an_eu_legislative_citation(content: Path) -> None:
+    basis = [{"law": "ley-19628", "article": "3", "url": LAW_URL, "implication": IMPL},
+             {"law": "eu-2016-679", "article": "33", "url": "https://example.org/a", "implication": IMPL}]
+    body = BODY + "\n**[Obligación legal · GDPR art. 33]** 72 horas.\n"
+    assert_error(setup_gdpr(content, body, basis), "[legal_basis.1.url] no es una cita legislative")

@@ -1,6 +1,6 @@
 """Ejemplos de las fichas de la Ley 21.719 (antes en 19-compliance, hoy en 24-privacy-engineering) ejecutados en la CI (ADR-023, upgrade del 2026-10-22).
 
-- Biblioteca estándar: chile-data-protection, pii-identification, processing-activities-inventory,
+- Biblioteca estándar: gdpr y lgpd (lote P4, reglas por jurisdicción), chile-data-protection, pii-identification, processing-activities-inventory,
   chilean-identifier-pseudonymization, data-subject-rights-pipeline, retention-and-erasure, data-breach-response,
   dpia-and-automated-decisions, processors-and-international-transfers y privacy-controls-as-code.
 - retention-and-erasure: además del ejemplo con biblioteca estándar, PyIceberg con catálogo SQLite en Linux (ADR-018) y
@@ -44,6 +44,22 @@ def run_gate(ficha: str, tmp_path: Path) -> str:
 
 
 STDLIB = {
+    "gdpr": [
+        "reglas versión 2026-10-30",
+        "BR → ANPD: 2026-12-09T10:00+00:00 si hay risco ou dano relevante (días hábiles sin feriados)",
+        "CL → Agencia de Protección de Datos Personales: sin dilación indebida (sin plazo fijo)",
+        "EU → autoridad de control: 2026-12-07T10:00+00:00",
+        "AR: sin regla configurada → revisar con el área legal antes de operar",
+        "CL → titular: 2027-01-03T10:00+00:00 (prórroga hasta 2027-02-02) · Ley 19.628, art. 11",
+        "EU → interesado: 2027-01-04T10:00+00:00 (prórroga hasta 2027-03-04) · GDPR art. 12.3",
+        "BR → titular: 2026-12-19T10:00+00:00 si se pide la declaración completa (días corridos) · LGPD art. 19, II [ilustrativo]"],
+    "lgpd": [
+        "incidente conocido el 2026-12-04: ANPD y titulares hasta 2026-12-10 (sin feriado sería 2026-12-09)",
+        "pedidos de clientes en Brasil → bodega en la UE: OK: destino adecuado según el origen",
+        "clientes en Brasil → analítica en Chile: BRECHA: las cláusulas-padrão se adoptan sin modificaciones",
+        "clientes en Brasil → CRM en EE. UU.: OK: cláusulas-padrão contratuais da ANPD",
+        "clientes en Chile → API de LLM en EE. UU.: BRECHA: sin adecuación ni cláusulas",
+        "brechas: 2 de 5"],
     "privacy-in-ai-rag-llm": [
         "público pregunta por equipaje: ['c1']", "soporte pregunta por equipaje: ['c1', 'c2', 'c3']",
         "respuesta='Reclamo de [REDACTADO] ([REDACTADO]) por equipaje.'",

@@ -93,7 +93,7 @@ sources:
 relations:
   - {type: RELATED_TO, target: data-classification, note: "Clasificación técnica de datos."}
 created_at: 2026-10-21
-updated_at: 2026-10-28
+updated_at: 2026-10-30
 last_verified: 2026-10-28
 verification_status: review_required
 ---
@@ -555,6 +555,8 @@ Fichas hijas del dominio:
 - `processors-and-international-transfers`: encargados y transferencias.
 - `privacy-controls-as-code`: controles en la CI.
 - `privacy-in-ai-rag-llm`: IA, RAG y LLM.
+- `gdpr`: el RGPD comparado con la Ley 21.719 (tramo 6).
+- `lgpd`: la LGPD de Brasil comparada con la Ley 21.719 (tramo 6).
 
 Otras: `data-classification`.
 
@@ -603,3 +605,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: sobre la versión de Felipe (`b/ui-ajustes-1030`), solo lo que exige ADR-023 para pasar `make validate`: etiquetas en el párrafo de marco y en los ítems del §2 (principios a) a h) y responsabilidades), y columna «Etiqueta» en la matriz del §4 y en las tablas de §11–13, con los mismos valores que tenían antes. La vigencia ya estaba en sincronía con `cl-ley-21719.yaml`.
 - 2026-10-30: Enmienda 3 de ADR-023: en §4, §13, la tabla con la misma etiqueta en todas sus filas pasa a la línea «Etiqueta: […]» antes de la tabla, sin columna. Sin cambios de contenido.
 - 2026-10-30: se quitan del resumen «Cómo leerla» y el subtítulo «Ley 21.719: Protección de datos personales aplicada a Ingeniería de Datos»; del §2, el párrafo del marco de la Ley 19.628/21.719 y el bloque «Precisiones transversales».
+- 2026-10-30: §17 nombra las fichas hijas nuevas `gdpr` y `lgpd` (lote P4, tramo 6 «Marcos regulatorios comparados»). Sin cambios de contenido.

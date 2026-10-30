@@ -2,7 +2,7 @@
 # Banda «Especialización», fuera de las 6 capas. Explicación técnica, no asesoría legal: rige ADR-023 (jurisdiction,
 # legal_basis, etiqueta por afirmación, aviso, y verified solo con owner_approved_at de Felipe). Las 11 fichas vienen
 # de 19-compliance (2026-10-28) sin cambios de contenido. Desde el 2026-10-30 (ADR-027, Enmienda 1), 19 se integra
-# aquí: su subdominio regulatory-frameworks es el tramo 6, «Marcos regulatorios comparados» (GDPR y LGPD en backlog).
+# aquí: su subdominio regulatory-frameworks es el tramo 6, «Marcos regulatorios comparados» (GDPR y LGPD con ficha desde el lote P4, 2026-10-30).
 domain:
   id: "24"
   slug: privacy-engineering
@@ -191,7 +191,8 @@ subdomains:
         level: intermediate
         importance: medium
         mvp: false
-        note: En BACKLOG (plan de 19, 2026-10-21); requiere un ADR que agregue la jurisdicción UE y EUR-Lex como fuente legislative. Sin ficha.
+        related_concepts: [lgpd, processors-and-international-transfers]
+        note: Lote P4 (2026-10-30), con la Enmienda 4 de ADR-023 (jurisdicción EU). RGPD comparado con la Ley 21.719 y resolvedor de plazos por jurisdicción.
       - slug: lgpd
         title: LGPD (Brasil)
         kind: concept
@@ -200,4 +201,4 @@ subdomains:
         importance: low
         mvp: false
         related_concepts: [gdpr]
-        note: En BACKLOG (plan de 19, 2026-10-21); requiere un ADR que agregue la jurisdicción BR y su fuente oficial. Sin ficha.
+        note: Lote P4 (2026-10-30), con la Enmienda 4 de ADR-023 (jurisdicción BR). LGPD comparada con la Ley 21.719, días hábiles y cláusulas-padrão.

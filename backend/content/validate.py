@@ -527,7 +527,9 @@ LEGAL_DOMAINS = ("privacy-engineering",)   # ADR-023, enmendado por ADR-027 (19 
 LEGISLATIVE = "legislative"
 DISCLAIMER = "Esta ficha no es asesoría legal"
 EVIDENCE_HEADING = re.compile(r"^### Evidencia de cumplimiento\s*$", re.M)
-LABEL = r"\*\*\[(?:Obligación legal · (?:(Ley [0-9.]+), )?art\. ([0-9]+(?: [a-záéíóú]+)?)|Buena práctica|Decisión de arquitectura)\]\*\*"
+# Enmienda 4: «Obligación legal · GDPR art. N» y «Obligación legal · LGPD art. N» para los marcos comparados (EU y BR).
+LABEL = (r"\*\*\[(?:Obligación legal · (?:(Ley [0-9.]+), |(GDPR|LGPD) )?art\. ([0-9]+(?: [a-záéíóú]+)?)"
+         r"|Buena práctica|Decisión de arquitectura)\]\*\*")
 LABEL_RE = re.compile(LABEL)
 LABELED_SECTIONS = (2, 3, 4, 14)  # cada ítem y párrafo empieza con una etiqueta
 TABLE_SECTIONS = (2, 3, 4, 11, 12, 13, 14)  # toda tabla lleva la columna «Etiqueta»
@@ -539,8 +541,13 @@ LIST_ITEM = re.compile(r"^\s*(?:[-*]|\d+\.)\s+")
 REVIEW_DAYS = 31  # revisión mensual
 
 
+FOREIGN_LAWS = {"eu-2016-679": "GDPR", "br-lei-13709": "LGPD"}   # Enmienda 4
+
+
 def law_label(law: str) -> str:
-    """ley-21719 -> «Ley 21.719», como se escribe en la etiqueta."""
+    """ley-21719 -> «Ley 21.719» y eu-2016-679 -> «GDPR», como se escribe en la etiqueta."""
+    if law in FOREIGN_LAWS:
+        return FOREIGN_LAWS[law]
     return f"Ley {int(law.removeprefix('ley-')):,}".replace(",", ".")
 
 
@@ -604,7 +611,7 @@ def check_legal_body(doc: Document, body: str, report: Report) -> set[tuple[str 
     for number in TABLE_SECTIONS:
         for lead, table in tables_with_lead(parts.get(number, "")):
             check_label_table(doc, number, lead, table, report)
-    return {(m.group(1), m.group(2)) for m in LABEL_RE.finditer(clean) if m.group(2)}
+    return {(m.group(1) or m.group(2), m.group(3)) for m in LABEL_RE.finditer(clean) if m.group(3)}
 
 
 def check_label_table(doc: Document, number: int, lead: str, table: list[list[str]], report: Report) -> None:
@@ -651,7 +658,7 @@ def check_legal_basis(
     for law, article in sorted(cited, key=str):
         matches = {d for d in declared if d[1] == article and (law is None or d[0] == law)}
         if not matches:
-            where = f"{law}, " if law else ""
+            where = f"{law} " if law in FOREIGN_LAWS.values() else f"{law}, " if law else ""
             report.add(doc.location, f"[legal_basis] el cuerpo cita {where}art. {article} y no está en legal_basis")
         elif law is None and len(matches) > 1:
             report.add(doc.location, f"[legal_basis] art. {article} existe en varias leyes: la etiqueta debe nombrar la ley")

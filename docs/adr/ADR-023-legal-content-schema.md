@@ -1,6 +1,6 @@
 # ADR-023 — Schema para contenido con origen legal (dominio 19, Ley 21.719)
 
-- **Estado:** Aceptado (aprobado por Felipe el 2026-10-21, tal como está); implementado con el lote F3b-19a. Enmienda 1 (2026-10-24): `implication` en `legal_basis`. Enmienda 2 (2026-10-28, ADR-027): alcance en los dominios 19 y 24. Enmienda 3 (2026-10-30): línea «Etiqueta: […]» para tablas uniformes en §4 y §11–13
+- **Estado:** Aceptado (aprobado por Felipe el 2026-10-21, tal como está); implementado con el lote F3b-19a. Enmienda 1 (2026-10-24): `implication` en `legal_basis`. Enmienda 2 (2026-10-28, ADR-027): alcance en los dominios 19 y 24. Enmienda 3 (2026-10-30): línea «Etiqueta: […]» para tablas uniformes en §4 y §11–13. Enmienda 4 (2026-10-30): jurisdicciones EU y BR para los marcos comparados
 - **Fecha:** 2026-10-21
 - **Fase:** F3b — Contenido por dominio, antes de 19-compliance
 - **Referencias:** ADR-000 (content-as-code), ADR-002 (contrato), ADR-009 (contenido por dominio), ADR-012 (`page_title`); decisión de Felipe sobre la Ley 21.719 (ROADMAP, F3b, 2026-10-21).
@@ -181,3 +181,21 @@ Pedida por Felipe el 2026-10-24, junto con la aceptación de ADR-024.
 - Decisión de Felipe. En las tablas del §4 y de §11–13, la columna «Etiqueta» es obligatoria solo si las filas tienen etiquetas distintas. Si todas son iguales, la tabla va sin columna y lleva antes la línea `Etiqueta: **[…]**`. Una columna con la misma etiqueta en todas sus filas es un error en esas secciones.
 - Sin cambios en §2, §3 y §14: allí cada tabla sigue llevando la columna.
 - **Implementación:** `UNIFORM_SECTIONS` y `check_label_table` en `backend/content/validate.py`; la línea `Etiqueta:` no cuenta como párrafo sin etiqueta del §4. Tests en `tests/test_validate_legal.py`: caso uniforme con línea, columna uniforme, tabla sin columna ni línea, y la línea fuera de §4 y §11–13. Las tablas uniformes de las fichas del dominio 24 se convirtieron con una línea de historial.
+
+## Enmienda 4 — Jurisdicciones EU y BR para los marcos comparados (2026-10-30)
+
+- Decisión de Felipe (lote P4). Las fichas `gdpr` y `lgpd` del tramo 6 de 24, «Marcos regulatorios comparados», comparan cada marco con la Ley 21.719 desde la ingeniería de datos. No son resúmenes legales.
+- **`jurisdiction`** acepta `EU` y `BR` además de `CL` (`schemas/enums.schema.json`). `EU` es el código que ISO 3166-1 reserva para la Unión Europea. Una ficha comparada declara las dos jurisdicciones cuyas normas etiqueta: `[CL, EU]` o `[CL, BR]`.
+- **`law`** acepta `eu-2016-679` (RGPD) y `br-lei-13709` (LGPD).
+- **Etiquetas:** `**[Obligación legal · GDPR art. N]**` y `**[Obligación legal · LGPD art. N]**`, sin coma, además de las chilenas. En las fichas comparadas, las chilenas nombran la ley (`Ley 19.628, art. N`), porque varios números de artículo existen en las dos normas.
+- **Fuentes legislative nuevas**, con revisión mensual y un solo país:
+  - `boe-doue` (EU): el BOE reproduce el DOUE y publica el RGPD en español, una de sus versiones auténticas.
+  - `camara-legin` (BR): la Câmara dos Deputados publica el texto actualizado de la LGPD.
+  - EUR-Lex y planalto.gov.br bloquearon la lectura automática el 2026-10-30. Si vuelven a responder, se pueden agregar como fuentes legislative sin otra enmienda.
+- **Fuentes N1 `official_docs`:** `anpd-docs` (reglamentos de incidentes y de transferencias de la ANPD) y `ec-data-protection` (decisiones de adecuación de la Comisión).
+- **Sin cambios:** aviso, evidencia del §8, etiqueta por afirmación, cita legal consultada el día de `last_verified`, revisión mensual y `verified` solo con `owner_approved_at`. Las citas van en su idioma original: el RGPD en español; la LGPD y la ANPD en portugués, con una traducción breve.
+- **Implementación:**
+  - `LABEL` y `FOREIGN_LAWS` en `backend/content/validate.py`.
+  - Cuatro tests en `tests/test_validate_legal.py`: caso válido, artículo sin `legal_basis`, mismo número en dos leyes y cita no legislative.
+- **Contrato (cambio aditivo):** `Jurisdiction` acepta `EU` y `BR`, y `LegalBasis.law` acepta `eu-2016-679` y `br-lei-13709`, en `docs/contracts/api.yaml`.
+- **Pedido a Carril B:** regenerar `frontend/lib/api/schema.d.ts`, y que el superíndice y el enlace a la fila de la Base legal reconozcan «GDPR art. N» y «LGPD art. N».

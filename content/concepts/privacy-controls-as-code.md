@@ -81,8 +81,9 @@ relations:
   - {type: RELATED_TO, target: column-level-security, note: "Máscaras y lectores por columna."}
   - {type: RELATED_TO, target: processing-activities-inventory, note: "Finalidad, dueño y retención aprobados que las reglas verifican."}
   - {type: RELATED_TO, target: bigquery-information-schema, note: "Metadatos de objetos y privilegios para las reglas en GCP."}
+  - {type: RELATED_TO, target: gdpr, note: "El RGPD, del que viene la guía de la CNIL citada como referencia conceptual."}
 created_at: 2026-10-22
-updated_at: 2026-10-28
+updated_at: 2026-10-30
 last_verified: 2026-10-25
 verification_status: review_required
 ---
@@ -421,6 +422,7 @@ En Azure, **Unity Catalog** y **Azure Policy**. Según *Row filters and column m
 - `pii-identification`: columnas personales y patrones.
 - `column-level-security`: máscaras y lectores.
 - `bigquery-information-schema`: metadatos para las reglas en GCP.
+- `gdpr`: el RGPD, del que viene la guía de la CNIL citada como referencia conceptual.
 
 Nota editorial: esta ficha incluye el contenido avanzado de Privacy as Code (PASS/FAIL/UNKNOWN, excepciones con vencimiento, deriva y pruebas negativas); no hay una ficha aparte.
 
@@ -461,3 +463,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura y fusión de la propuesta de Privacy as Code avanzado (no es una ficha aparte): §1, §2 (control verificable, decisión frente a control y prueba, tabla PASS/FAIL/UNKNOWN, deriva; NIST y CNIL como referencias conceptuales de Nivel 4), §3 (permiso dado a mano), §4 (matriz riesgo → evidencia, fallar cerrado, excepciones con vencimiento, pruebas negativas), §5, §6 (UNKNOWN cuando no se puede observar), §7 (las reglas son decisiones locales), §8 (escenario y evidencia «qué demuestra y qué no»), §9, §10 (PASS/FAIL/UNKNOWN, excepción vigente y vencida, deriva Git–producción y pruebas negativas sobre las mismas reglas de estado y de cambio), §11–13 (`INFORMATION_SCHEMA`, lo que no cubre cada servicio y criterio común), §14–16, §17 (relaciones con `processing-activities-inventory` y `bigquery-information-schema`; nota editorial), §18 (criterio de dominio) y §19 (laboratorio para F4). Fuentes nuevas: `nist-privacy-engineering` y `cnil-gdpr-developers-guide` (Nivel 4). Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `evidencia-automatizacion` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/privacy-controls-as-code/`) no cambia.
 - 2026-10-28: mismos errores que la revisión de P2: el art. 14 quáter nombra sus cuatro factores (§2, `legal_basis` y nota de BCN).
+- 2026-10-30: §17 enlaza `gdpr` (lote P4), que cita la guía de la CNIL. Sin cambios de contenido.

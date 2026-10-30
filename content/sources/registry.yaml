@@ -3822,3 +3822,153 @@ created_at: '2026-10-28'
 updated_at: '2026-10-28'
 last_verified: '2026-10-28'
 verification_status: verified
+---
+id: source:boe-doue
+slug: boe-doue
+type: source
+title: 'BOE: Diario Oficial de la Unión Europea (DOUE)'
+description: Reproducción oficial en el BOE del Diario Oficial de la Unión Europea; se usa para el texto del Reglamento (UE) 2016/679 (RGPD) en
+  español, versión auténtica (ADR-023, Enmienda 4).
+url: https://www.boe.es/
+source_type: legislative
+authority_level: 1
+provider: boe
+url_verified: true
+review_frequency: monthly
+trust: high
+technologies: []
+created_at: '2026-10-30'
+updated_at: '2026-10-30'
+last_verified: '2026-10-30'
+verification_status: verified
+jurisdiction:
+- EU
+---
+id: source:camara-legin
+slug: camara-legin
+type: source
+title: 'Câmara dos Deputados: Legislação Informatizada'
+description: Texto oficial de las leyes federales de Brasil, con su texto actualizado, publicado por la Cámara de Diputados; se usa para la Lei
+  13.709/2018 (LGPD) (ADR-023, Enmienda 4).
+url: https://www2.camara.leg.br/legin
+source_type: legislative
+authority_level: 1
+provider: camara
+url_verified: true
+review_frequency: monthly
+trust: high
+technologies: []
+created_at: '2026-10-30'
+updated_at: '2026-10-30'
+last_verified: '2026-10-30'
+verification_status: verified
+jurisdiction:
+- BR
+---
+id: source:anpd-docs
+slug: anpd-docs
+type: source
+title: Autoridade Nacional de Proteção de Dados (ANPD)
+description: 'Sitio oficial de la autoridad brasileña de protección de datos: reglamentos de comunicación de incidentes y de transferencia internacional.'
+url: https://www.gov.br/anpd/pt-br
+source_type: official_docs
+authority_level: 1
+provider: anpd
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-30'
+updated_at: '2026-10-30'
+last_verified: '2026-10-30'
+verification_status: verified
+---
+id: source:ec-data-protection
+slug: ec-data-protection
+type: source
+title: 'Comisión Europea: protección de datos'
+description: Páginas oficiales de la Comisión Europea sobre protección de datos, incluidas las decisiones de adecuación.
+url: https://commission.europa.eu/law/law-topic/data-protection_en
+source_type: official_docs
+authority_level: 1
+provider: european-commission
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-30'
+updated_at: '2026-10-30'
+last_verified: '2026-10-30'
+verification_status: verified
+---
+id: source:gcp-assured-workloads-docs
+slug: gcp-assured-workloads-docs
+type: source
+title: Assured Workloads documentation
+description: Documentación oficial de Assured Workloads, Google Cloud (residencia de datos y controles por régimen).
+url: https://docs.cloud.google.com/assured-workloads/docs
+source_type: official_docs
+authority_level: 1
+provider: gcp
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-30'
+updated_at: '2026-10-30'
+last_verified: '2026-10-30'
+verification_status: verified
+---
+id: source:aws-global-infrastructure-docs
+slug: aws-global-infrastructure-docs
+type: source
+title: AWS Regions and Availability Zones
+description: Documentación oficial de las regiones y zonas de disponibilidad de AWS.
+url: https://docs.aws.amazon.com/global-infrastructure/latest/regions/
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-30'
+updated_at: '2026-10-30'
+last_verified: '2026-10-30'
+verification_status: verified
+---
+id: source:microsoft-eu-data-boundary-docs
+slug: microsoft-eu-data-boundary-docs
+type: source
+title: EU Data Boundary (Microsoft Privacy)
+description: Documentación oficial de Microsoft sobre el EU Data Boundary de sus servicios en la nube.
+url: https://learn.microsoft.com/en-us/privacy/eudb/eu-data-boundary-learn
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-30'
+updated_at: '2026-10-30'
+last_verified: '2026-10-30'
+verification_status: verified
+---
+id: source:azure-reliability-docs
+slug: azure-reliability-docs
+type: source
+title: Azure reliability documentation
+description: Documentación oficial de confiabilidad de Azure, incluida la lista de regiones y sus pares.
+url: https://learn.microsoft.com/en-us/azure/reliability/
+source_type: official_docs
+authority_level: 1
+provider: azure
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-10-30'
+updated_at: '2026-10-30'
+last_verified: '2026-10-30'
+verification_status: verified

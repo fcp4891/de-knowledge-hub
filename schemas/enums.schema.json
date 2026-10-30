@@ -43,12 +43,12 @@
       "enum": ["official_docs", "release_notes", "engineering_blog", "spec_paper", "secondary", "legislative"]
     },
     "jurisdiction": {
-      "description": "País al que se aplica el contenido o la fuente legal, en ISO 3166-1 alfa-2 (ADR-023). Agregar uno pide un ADR.",
-      "enum": ["CL"]
+      "description": "País al que se aplica el contenido o la fuente legal, en ISO 3166-1 alfa-2 (ADR-023); EU es el código reservado de ISO 3166-1 para la Unión Europea (Enmienda 4). Agregar uno pide un ADR.",
+      "enum": ["CL", "EU", "BR"]
     },
     "law": {
       "description": "Norma citada en legal_basis (ADR-023): slug estable de la ley.",
-      "enum": ["ley-19628", "ley-21719", "ley-21663"]
+      "enum": ["ley-19628", "ley-21719", "ley-21663", "eu-2016-679", "br-lei-13709"]
     },
     "cloud": {
       "description": "Proveedor cloud al que aplica el contenido; agnostic si es independiente de proveedor.",
