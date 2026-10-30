@@ -22,11 +22,17 @@ export const RELATION_LABEL: Record<string, string> = {
   runs_on: "Se ejecuta en",
 };
 
+/** Un slug de ficha: kebab-case, sin espacios ni mayúsculas. */
+function isSlugAlias(alias: string): boolean {
+  return /^[a-z0-9]+(?:-[a-z0-9]+)+$/.test(alias);
+}
+
 export function alsoKnownLabel(aliases: readonly string[]): string | null {
-  if (aliases.length === 0) {
+  const visible = aliases.filter((alias) => !isSlugAlias(alias));
+  if (visible.length === 0) {
     return null;
   }
-  return `También conocido como: ${aliases.join(", ")}`;
+  return `También conocido como: ${visible.join(", ")}`;
 }
 
 export const RESULT_LABEL: Record<ResultType, string> = {

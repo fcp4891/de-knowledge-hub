@@ -14,6 +14,7 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** `b/ui-reading-width`. En `/concepts/<slug>/` la columna de lectura crece al ocultar el índice, el estudio o ambos. Párrafos y listas quedan en 90ch; tablas, código, diagramas y la cabecera usan el ancho de la columna. Con ambos paneles ocultos el bloque queda centrado, a lo sumo 1200px. La preferencia sigue en el navegador. Los alias en kebab-case no se muestran. El aviso legal no se tocó: sale del Markdown.
 - **Tarea activa:** `b/ui-privacy-space` (worktree `DES_conocimiento-privacy`). `/privacidad` usa el mismo layout que la ruta de dominio. Las 15 fichas tienen página. La cabecera es lo propio: Especialización, el aviso «Este contenido no es asesoría legal.» y la caja Comprender → Aplicar → Demostrar → Profundizar. Las fichas siguen con «Esta ficha no es asesoría legal.». El laboratorio es la etapa 6 deshabilitada, una sola vez. El marco legal queda en el panel derecho de `/privacidad`; cada hecho abre su URL. En Inicio no está la tarjeta. En oscuro el punto completo usa `--band-especializacion-fill`. En mock no se consulta `/me`.
 - **Tarea activa:** revisión review-ui-privacy. Informe en `docs/reviews/ui-privacy.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: la tarjeta del marco legal volvió a salir de Inicio, y el punto completo de la banda en oscuro queda en 1.61:1.
@@ -419,13 +420,16 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 ## Pedidos a Carril A
 | Pedido | Estado |
 |---|---|
-| — | — |
+| Aviso de las fichas. El texto visible sale del párrafo del resumen que empieza por «Esta ficha no es asesoría legal» (`extractLegalNotice`). No lo cambia el frontend. Unificar ese párrafo a: «Esta ficha no es asesoría legal. Explica el alcance técnico; el detalle de cada requisito está en su ficha hija.» Hoy cada ficha escribe su propia continuación. En `chile-data-protection` el párrafo usa dos puntos y un punto, no ese punto y coma. | Pendiente |
 
 ## Notas para Carril A
 - En news, el tipo de fuente sigue en la entidad `source` y la categoría en `domain` / `tags`. No pedimos un campo `category` en el schema de news.
 - El pedido de un párrafo por nivel queda sin efecto. Esos nombres no se asignan a los tramos ni hace falta un campo nuevo: la interfaz muestra la caja «Cómo estudiar cada ficha: Comprender → Aplicar → Demostrar → Profundizar».
 
 ## Historial
+
+### UI · ancho de lectura (2026-10-30)
+- `b/ui-reading-width`. La columna central es `1fr` y ocupa el hueco al cerrar un panel. Con los dos cerrados, el bloque se centra a 1200px. No se editó `content/`.
 
 ### Revisión · review-ui-privacy (2026-10-29)
 - Revisión de `/privacidad`, la banda, el objetivo 7 y el token. No se editó `content/` ni `frontend/`.
