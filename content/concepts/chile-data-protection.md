@@ -102,14 +102,6 @@ verification_status: review_required
 
 Esta ficha no es asesoría legal: explica cómo trabaja un ingeniero de datos bajo la Ley 21.719. La ley entra solo como origen de cada requisito; el detalle técnico de cada uno está en su ficha hija.
 
-**Cómo leerla.** *Comprender* (§1–6): qué exige la ley y qué afecta a tu trabajo. *Aplicar* (§7–13): cómo diseñarías la solución. *Demostrar*: la evidencia del §8, el código del §10 y las preguntas del §18, para verificar que funciona.
-
-La Ley 21.719 reescribe la Ley 19.628. Según BCN, fue publicada el 2024-12-13 y, por su artículo primero transitorio, sus modificaciones rigen desde el **2026-12-01**; BCN muestra la Ley 19.628 con una versión «Con Vigencia Diferida por Fecha» desde esa fecha.
-
-**Estado al 2026-10-28.** El Ejecutivo ingresó el boletín 18.623-07 (mensaje N° 110-374). Su numeral 2 reemplaza esa fecha por el **1 de diciembre de 2027**. Según la tramitación oficial del Senado, el 2026-10-28 el Senado lo aprobó en general y en particular a la vez y lo despachó a la Cámara de Diputados (subetapa «Oficio de ley a Cámara Revisora»), con urgencia de discusión inmediata. Es un proyecto: **mientras no se publique otra ley, rige el 2026-12-01**.
-
-El reglamento de los modelos de prevención de infracciones (art. 49) es el Decreto 662 del Ministerio de Hacienda, publicado el 2026-09-09.
-
 Para ingeniería de datos, el cambio es este: casi todo lo que hace un pipeline es **tratamiento**, y la ley exige poder **demostrar** que cada tratamiento cumple sus principios. Eso se traduce en controles técnicos implementados, verificados de forma continua y con evidencia.
 
 ## 2. Qué es
@@ -199,20 +191,20 @@ Para ingeniería de datos, el cambio es este: casi todo lo que hace un pipeline 
 
 **[Decisión de arquitectura]** Matriz de control:
 
-| Requisito o necesidad | Decisión aprobada por | Control técnico | Evidencia verificable | Etiqueta |
-|---|---|---|---|---|
-| Minimización | Negocio y privacidad | Contrato de campos permitidos | Test de esquema y versión del contrato | **[Decisión de arquitectura]** |
-| Retención | Privacidad y negocio | Política por clase de dato y almacenamiento | Configuración, ejecución y excepciones | **[Decisión de arquitectura]** |
-| Acceso restringido | Seguridad y dueño del dato | IAM o RBAC, segregación y revisión | Inventario de permisos y revisión fechada | **[Decisión de arquitectura]** |
-| Derechos del titular | Responsable y privacidad | Localizador de registros y flujo autorizado | ID interno de la solicitud, estados y resultado | **[Decisión de arquitectura]** |
-| Vulneraciones | Seguridad y privacidad | Logs, alertas y consulta de alcance por linaje | Línea de tiempo, sistemas afectados y acciones | **[Decisión de arquitectura]** |
-| Transferencias | Privacidad, compras y seguridad | Inventario de destinos y controles del proveedor | Contrato, evaluación y trazabilidad de flujos | **[Decisión de arquitectura]** |
+| Requisito o necesidad | Decisión aprobada por | Control técnico | Evidencia verificable |
+|---|---|---|---|
+| Minimización | Negocio y privacidad | Contrato de campos permitidos | Test de esquema y versión del contrato |
+| Retención | Privacidad y negocio | Política por clase de dato y almacenamiento | Configuración, ejecución y excepciones |
+| Acceso restringido | Seguridad y dueño del dato | IAM o RBAC, segregación y revisión | Inventario de permisos y revisión fechada |
+| Derechos del titular | Responsable y privacidad | Localizador de registros y flujo autorizado | ID interno de la solicitud, estados y resultado |
+| Vulneraciones | Seguridad y privacidad | Logs, alertas y consulta de alcance por linaje | Línea de tiempo, sistemas afectados y acciones |
+| Transferencias | Privacidad, compras y seguridad | Inventario de destinos y controles del proveedor | Contrato, evaluación y trazabilidad de flujos |
 
 **[Buena práctica]** La evidencia no guarda nombres, RUT ni datos sensibles cuando basta una referencia interna protegida.
 
 ## 5. Cuándo utilizarlo
 
-- Al diseñar una plataforma o un pipeline que trata datos de personas en Chile, o de personas en Chile desde fuera (art. 1 bis).
+- Al diseñar una plataforma o un pipeline que trata datos de personas.
 - Al incorporar una fuente, API, CDC o pipeline nuevo que trate datos personales.
 - Al migrar una plataforma on-premise a la nube.
 - Al crear productos de datos, modelos, dashboards, exportaciones o integraciones externas.
@@ -370,32 +362,32 @@ El script se **ejecuta en la CI** con la biblioteca estándar, con esa entrada y
 
 ## 11. GCP
 
-En GCP, **Sensitive Data Protection** y **Cloud Audit Logs**. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES*, *Sensitive Data Protection overview* y *Cloud Audit Logs overview* (no ejecutado):
+En GCP, **Sensitive Data Protection** y **Cloud Audit Logs**.
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Descubrir y clasificar | Sensitive Data Protection: descubre, clasifica y desidentifica; perfila BigQuery, Cloud SQL y Cloud Storage | **[Buena práctica]** |
-| Auditar accesos a datos | Cloud Audit Logs: los Data Access audit logs están desactivados por defecto, salvo en BigQuery | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Descubrir y clasificar | Sensitive Data Protection: descubre, clasifica y desidentifica; perfila BigQuery, Cloud SQL y Cloud Storage |
+| Auditar accesos a datos | Cloud Audit Logs: los Data Access audit logs están desactivados por defecto, salvo en BigQuery |
 
 Los Data Access audit logs se configuran por servicio: revisar BigQuery y cada recurso que se use.
 
 ## 12. AWS
 
-En AWS, **Amazon Macie** y **AWS CloudTrail**. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES*, *What is Amazon Macie?* y *Logging data events* (no ejecutado):
+En AWS, **Amazon Macie** y **AWS CloudTrail**.
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Descubrir | Amazon Macie: datos sensibles en buckets de S3 | **[Buena práctica]** |
-| Auditar accesos a datos | CloudTrail: los data events no se registran por defecto | **[Decisión de arquitectura]** |
+| Necesidad | Servicio |
+|---|---|
+| Descubrir | Amazon Macie: datos sensibles en buckets de S3 |
+| Auditar accesos a datos | CloudTrail: los data events no se registran por defecto |
 
 ## 13. Azure
 
-En Azure, **Microsoft Purview** y **Unity Catalog** de Azure Databricks. Según *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES*, *Data classification in Data Map* y *What is Unity Catalog?* (no ejecutado):
+En Azure, **Microsoft Purview** y **Unity Catalog** de Azure Databricks.
 
-| Necesidad | Servicio | Etiqueta |
-|---|---|---|
-| Descubrir y clasificar | Purview Data Map: clasificaciones de sistema y propias al escanear | **[Buena práctica]** |
-| Gobierno en el lakehouse | Unity Catalog: privilegios, políticas por atributos, filtros de fila y columna, auditoría y linaje | **[Buena práctica]** |
+| Necesidad | Servicio |
+|---|---|
+| Descubrir y clasificar | Purview Data Map: clasificaciones de sistema y propias al escanear |
+| Gobierno en el lakehouse | Unity Catalog: privilegios, políticas por atributos, filtros de fila y columna, auditoría y linaje |
 
 Los servicios de §11 a §13 no son equivalencias exactas. Ningún servicio certifica cumplimiento por sí solo: cada uno se evalúa por alcance, configuración y evidencia disponible.
 
