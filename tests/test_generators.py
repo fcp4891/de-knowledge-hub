@@ -23,6 +23,7 @@ def generated(tmp_path: Path) -> Path:
     for slug in F0_STUBS:
         shutil.copy(ROOT / "content" / "technologies" / f"{slug}.yaml", content / "technologies")
     shutil.copytree(ROOT / "content" / "concepts", content / "concepts")
+    shutil.copytree(ROOT / "content" / "architectures", content / "architectures")   # ADR-028
     sources.main(["--out", str(content / "sources" / "registry.yaml")])
     return content
 
