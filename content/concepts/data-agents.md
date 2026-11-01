@@ -32,9 +32,9 @@ sources:
     note: "SageMaker Data Agent (Amazon SageMaker Unified Studio): asistencia para generar código, diagnosticar errores y recomendar análisis en Notebooks y Query Editor; genera código y planes de ejecución desde prompts en lenguaje natural e integra catálogos y metadata de negocio."
   - source: microsoft-fabric-docs
     url: https://learn.microsoft.com/en-us/fabric/data-science/concept-data-agent
-    accessed: 2026-10-27
-    page_title: "Fabric data agent concepts"
-    note: "Fabric data agent concepts: «Data agent in Microsoft Fabric is a generally available feature» para construir sistemas de preguntas y respuestas conversacionales con IA generativa; aplica acceso de solo lectura y mantiene conexiones de solo lectura a todas las fuentes; los controles de Microsoft Purview para data agents están en preview."
+    accessed: 2026-11-01
+    page_title: "Fabric data agent creation"
+    note: "Fabric data agent creation: «Data agent in Microsoft Fabric is a generally available feature» para construir sistemas de preguntas y respuestas conversacionales con IA generativa; aplica acceso de solo lectura y mantiene conexiones de solo lectura a todas las fuentes; los controles de Microsoft Purview para data agents están en preview."
 relations:
   - type: RELATED_TO
     target: llm-agents
@@ -212,7 +212,7 @@ En AWS, el **SageMaker Data Agent**. Según *SageMaker Data Agent* (no ejecutado
 
 ## 13. Azure
 
-En Azure, el **Fabric data agent**. Según *Fabric data agent concepts* (no ejecutado):
+En Azure, el **Fabric data agent**. Según *Fabric data agent creation* (no ejecutado):
 
 | | Este concepto | Fabric data agent |
 |---|---|---|
@@ -262,7 +262,7 @@ Pendiente (F4).
 
 - Google Cloud: *Conversational analytics overview* y *Conversational Analytics API release notes*.
 - AWS: *SageMaker Data Agent*.
-- Microsoft Learn: *Fabric data agent concepts*.
+- Microsoft Learn: *Fabric data agent creation*.
 
 El detalle de cada fuente está en `sources` del frontmatter.
 
@@ -273,3 +273,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-27: creación (lote F3b-23a).
+- 2026-11-01: revisión `docs/reviews/cards-f3b-23a.md` aplicada: `page_title` de Fabric con el H1 de la página, «Fabric data agent creation» (ADR-012); la frase de GA sigue igual.

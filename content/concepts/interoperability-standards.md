@@ -37,9 +37,9 @@ sources:
     note: "Set up the Apache Iceberg REST catalog endpoint (Lakehouse): «As of April 20th, 2026, BigLake is now called Lakehouse. BigLake metastore is now called the Lakehouse runtime catalog»; las APIs, bibliotecas, CLI e IAM siguen con el nombre BigLake."
   - source: aws-glue-docs
     url: https://docs.aws.amazon.com/glue/latest/dg/connect-glu-iceberg-rest.html
-    accessed: 2026-10-27
+    accessed: 2026-11-01
     page_title: "Connecting to the Data Catalog using AWS Glue Iceberg REST endpoint"
-    note: "Connecting to the Data Catalog using AWS Glue Iceberg REST endpoint: el endpoint REST de Iceberg de AWS Glue soporta operaciones de la especificación REST de Apache Iceberg, con autenticación de AWS."
+    note: "Connecting to the Data Catalog using AWS Glue Iceberg REST endpoint: el endpoint REST de Iceberg de AWS Glue soporta operaciones de la especificación REST de Apache Iceberg, con autenticación de AWS. «The endpoint supports both Apache Iceberg table specifications - v1 and v2, defaulting to v2» (soporta las especificaciones de tabla v1 y v2, con v2 por defecto; consultado el 2026-11-01)."
   - source: microsoft-fabric-docs
     url: https://learn.microsoft.com/en-us/fabric/onelake/table-apis/iceberg-table-apis-overview
     accessed: 2026-10-27
@@ -178,6 +178,7 @@ En AWS, el **endpoint REST de Iceberg de AWS Glue**. Según *Connecting to the D
 | | Este concepto | AWS Glue |
 |---|---|---|
 | API | Iceberg REST | Operaciones de la especificación REST de Apache Iceberg |
+| Especificación de tabla | v1, v2 y v3 según el motor | «The endpoint supports both Apache Iceberg table specifications - v1 and v2, defaulting to v2» (v1 y v2, con v2 por defecto) |
 | Autenticación | Sin autenticación (fixture) | Autenticación de AWS |
 
 ## 13. Azure
@@ -242,3 +243,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-27: creación (lote F3b-23b).
+- 2026-11-01: revisión `docs/reviews/cards-f3b-23b.md` aplicada: el §12 dice que el endpoint REST de Glue soporta las especificaciones de tabla v1 y v2, con v2 por defecto. La frase de renombre del §11 sigue en la página (banner) consultada el 2026-11-01: se mantiene; la fila de APIs ya dice que la API y los roles IAM conservan el nombre BigLake.

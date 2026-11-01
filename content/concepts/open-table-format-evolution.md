@@ -27,9 +27,9 @@ sources:
     note: "Apache Iceberg 1.12.0 Release (blog del proyecto, 2026-10-05): la versión destaca tipos variant y geoespaciales, deletion vectors, streaming deletes, evolución de la especificación REST y bases del formato V4."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/iceberg-external-tables
-    accessed: 2026-10-27
+    accessed: 2026-11-01
     page_title: "Create Apache Iceberg external tables"
-    note: "Create Apache Iceberg external tables (BigQuery): «Iceberg external tables support Iceberg version 2, including merge-on-read. Support for Iceberg version 3, including binary deletion vectors, is in Preview»; una consulta procesa hasta 100.000 entradas de deletion vectors en total."
+    note: "Create Apache Iceberg external tables (BigQuery): «Iceberg external tables support Iceberg version 2, including merge-on-read. Support for Iceberg version 3, including binary deletion vectors, is in Preview»; una consulta procesa hasta 100.000 entradas de deletion vectors en total. «These tables are no longer recommended for most use cases» (ya no se recomiendan para la mayoría de los casos); «The following Iceberg version 3 features aren't supported»: «New data types: nanosecond timestamp(tz), unknown, variant, geometry, geography», «Initial default values» y «Table encryption keys» (consultado el 2026-11-01)."
   - source: aws-s3-docs
     url: https://docs.aws.amazon.com/AmazonS3/latest/userguide/working-with-apache-iceberg-v3.html
     accessed: 2026-10-27
@@ -163,8 +163,10 @@ En GCP, las **tablas externas Iceberg** de BigQuery. Según *Create Apache Icebe
 
 | | Este concepto | BigQuery |
 |---|---|---|
+| Recomendación | — | «These tables are no longer recommended for most use cases» (ya no se recomiendan para la mayoría de los casos) |
 | v2 | Soportada | «Iceberg external tables support Iceberg version 2, including merge-on-read» |
 | v3 | Según el motor | «Support for Iceberg version 3, including binary deletion vectors, is in Preview» |
+| v3 no soportado | — | Nuevos tipos (nanosecond timestamp(tz), unknown, variant, geometry, geography), «Initial default values» y «Table encryption keys» |
 
 ## 12. AWS
 
@@ -235,3 +237,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-10-27: creación (lote F3b-23b).
+- 2026-11-01: revisión `docs/reviews/cards-f3b-23b.md` aplicada: el §11 antepone que BigQuery ya no recomienda las tablas externas Iceberg para la mayoría de los casos y nombra las capacidades de v3 que no soporta.
