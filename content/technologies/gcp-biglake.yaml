@@ -2,14 +2,25 @@ id: cloud_service:gcp-biglake
 slug: gcp-biglake
 type: cloud_service
 stub: true
-title: BigLake
-description: Motor de almacenamiento de Google Cloud para gobernar y consultar datos de lake con formatos abiertos.
+title: Lakehouse
+description: Servicio de Google Cloud para gobernar y consultar datos de lake con formatos abiertos (antes BigLake), con el Lakehouse runtime catalog (antes BigLake metastore).
 provider: gcp
 category: lakehouse-platform
 classification: modern
 mvp: false
 cloud:
 - gcp
+aliases:
+- BigLake
+- BigLake metastore
+sources:
+  - source: gcp-lakehouse-docs
+    url: https://docs.cloud.google.com/lakehouse/docs/set-up-lakehouse-iceberg-rest-catalog
+    accessed: 2026-11-01
+    page_title: "Set up the Apache Iceberg REST catalog endpoint"
+    note: "Set up the Apache Iceberg REST catalog endpoint (Lakehouse), banner de la página consultada el 2026-11-01: «As of April 20th, 2026, BigLake is now called Lakehouse» y «BigLake metastore is now called the Lakehouse runtime catalog». La API (biglake.googleapis.com) y los roles IAM (roles/biglake.*) conservan el nombre BigLake."
+note: 'El slug gcp-biglake se mantiene por estabilidad (ADR-010). BigLake y BigLake metastore van en aliases como nombres anteriores, con la página que anuncia el cambio.'
 created_at: '2026-09-28'
-updated_at: '2026-09-28'
+updated_at: '2026-11-01'
+last_verified: '2026-11-01'
 verification_status: review_required

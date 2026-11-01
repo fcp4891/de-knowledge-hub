@@ -42,6 +42,7 @@ Trabajas en paralelo con Cursor (Carril B, frontend y revisión).
 - Etiquetas de nodo: máximo 4 palabras por línea y 2 líneas. Sin `<br/>` encadenados.
 - Evitar líneas que se cruzan y varias flechas que llegan al mismo nodo desde lejos: agrupar las entradas con un nodo intermedio.
 - Referencia: el §9 de `terraform-variables-and-outputs`.
+- Arquitecturas de referencia (ADR-028): tres vistas obligatorias, contexto (§3), datos (§5) y despliegue (§6), cada una de 8 nodos o menos; ahí cada `subgraph` cuenta como un nodo más y superar el límite es error. Las diferencias por nube van en tablas (§11–13), no en un cuarto diagrama.
 - `make validate` avisa (sin error) si un diagrama tiene más de 8 nodos o más de 10 aristas (`backend/content/diagrams.py`).
 
 ## Reglas de código

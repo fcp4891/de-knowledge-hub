@@ -105,6 +105,12 @@ def git_size(lines: list[str]) -> tuple[int, int]:
     return commits, sum(1 for line in lines if line.startswith("merge"))
 
 
+def view_nodes(code: str) -> int:
+    """Nodos de una vista de arquitectura (ADR-028): los del diagrama más un nodo por subgraph."""
+    subgraphs = sum(1 for line in statements(code) if line.startswith("subgraph "))
+    return diagram_size(code).nodes + subgraphs
+
+
 def diagram_size(code: str) -> DiagramSize:
     lines = list(statements(code))
     kind = lines[0].split()[0] if lines else ""

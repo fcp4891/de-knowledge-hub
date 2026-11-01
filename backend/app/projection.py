@@ -21,6 +21,11 @@ SECTION_KEYS = [
     "production_example", "architecture", "code", "gcp", "aws", "azure", "best_practices", "common_mistakes",
     "trade_offs", "related_concepts", "open_questions", "related_lab", "sources", "last_verified", "change_history",
 ]
+ARCHITECTURE_SECTION_KEYS = [  # ADR-028: las 22 secciones de content/_templates/architecture.md
+    "summary", "scenario", "context_view", "components", "data_view", "deployment_view", "security", "operations",
+    "costs", "code", "gcp", "aws", "azure", "risks", "common_mistakes", "trade_offs", "related_concepts", "evolution",
+    "related_lab", "sources", "last_verified", "change_history",
+]
 SNIPPET_TYPE = "code_snippet"
 SNIPPET_SECTION_KEYS = [  # ADR-008: las 10 secciones de content/_templates/snippet.md
     "what_it_solves", "code", "how_it_works", "when_to_use", "when_not_to_use", "risks", "requirements",
@@ -220,7 +225,8 @@ def concept_detail(index: ContentIndex, slug: str) -> dict[str, Any]:
         "last_verified": page.get("last_verified"), "verification_status": page.get("verification_status"),
         "kind": concept["kind"], "importance": concept["importance"], "mvp": concept["mvp"],
         "has_page": bool(page), "stub": page.get("stub", False), "note": concept.get("note"),
-        "sections": sections(index.bodies.get(slug, "")),
+        "sections": sections(index.bodies.get(slug, ""),
+                             ARCHITECTURE_SECTION_KEYS if concept["kind"] == "architecture" else SECTION_KEYS),
     }
 
 

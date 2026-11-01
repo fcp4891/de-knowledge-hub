@@ -610,7 +610,7 @@
     },
     {
       "slug": "gcp-biglake",
-      "title": "BigLake",
+      "title": "Lakehouse",
       "type": "cloud_service",
       "origin": "gcp",
       "category": "lakehouse-platform",

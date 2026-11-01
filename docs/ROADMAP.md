@@ -163,7 +163,7 @@ Cambio de alcance del 2026-10-05: antes de F4 se completan las fichas de **todos
 | Lote `verified` al aplicar la revisión | — | — |
 | — | — | Revisa el dominio completo **en el navegador** y lo aprueba antes del siguiente |
 
-**Alcance:** conceptos y patrones. Las arquitecturas (`kind: architecture`) quedan en F4.
+**Alcance:** conceptos, patrones y, desde el 2026-11-01, las 15 arquitecturas de referencia del dominio 07 (ADR-028; lotes 07a, 07b y 07c). F4 queda para los laboratorios en la nube.
 
 **Orden de dominios desde 12 (decisión de Felipe, 2026-10-14):** se cierra por capas del mapa: 12 → 13 → 14 → 20 → 15 → 16 → 17 → 18 → 19 → 21 → 22 → 23. Los dominios 01 a 11 siguieron el orden del blueprint.
 
@@ -190,6 +190,8 @@ Cambio de alcance del 2026-10-05: antes de F4 se completan las fichas de **todos
 | Endpoints de arquitecturas y labs | Navegación por problema (§36) |
 
 **Nota (gate F1):** las arquitecturas de F4 pueden referenciar conceptos que no son MVP en el blueprint. Por ejemplo, `medallion-architecture` se mantiene en F4 aunque tenga `mvp: false`.
+
+**Nota (decisión de Felipe, 2026-11-01, ADR-028):** las 15 fichas de arquitectura del dominio 07, incluidas las 6 de F4, se escriben en F3b con la plantilla de 22 secciones y tres vistas. F4 conserva solo los laboratorios en la nube de las 6 (batch, streaming, CDC PG→BQ, API→DWH, Medallion y event-driven): `terraform apply` en sandbox, costo con fuente, teardown verificado y evidencia de la corrida. Debezium se ejecuta en F4; en la CI, CDC usa logical decoding (`test_decoding`).
 
 **Nota (plan de 07-architecture, 2026-10-11):** `event-driven-architecture` (`mvp: true` en el blueprint) pasa a ser la sexta arquitectura de F4, por decisión de Felipe. El dominio 07 tiene 15 arquitecturas (`kind: architecture`); las 9 que no están entre las 6 de F4 no entran en el MVP y van al Backlog. En F3b, el dominio 07 cubre solo sus dos conceptos, `data-mesh` y `data-products`.
 

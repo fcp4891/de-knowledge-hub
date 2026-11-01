@@ -496,10 +496,29 @@ def check_page_sections(content_dir: Path, docs: list[Document], report: Report)
             continue
         body = page_sections.body_of((content_dir.parent / doc.path).read_text(encoding="utf-8"))
         errors = page_sections.check(body, expected)
-        if doc.data["type"] in page_sections.PAGE_TYPES:
+        if doc.data["type"] in page_sections.PRACTICE_TYPES:
             errors += page_sections.check_practices(body)
+        if doc.data["type"] == "architecture":
+            errors += architecture_views(body)
         for error in errors:
             report.add(doc.location, error)
+
+
+def architecture_views(body: str) -> list[str]:
+    """ADR-028: vistas de contexto (§3), datos (§5) y despliegue (§6), cada una con un diagrama Mermaid de
+    diagrams.MAX_NODES nodos o menos; aquí cada subgraph cuenta como nodo (error, no aviso)."""
+    parts = {n: content for n, _, content in page_sections.sections(body)}
+    errors = []
+    for number, view in page_sections.VIEW_SECTIONS.items():
+        codes = list(diagrams.mermaid_blocks(parts.get(number, "")))
+        if not codes:
+            errors.append(f"[§{number}] la vista de {view} necesita un diagrama Mermaid (ADR-028)")
+        for code in codes:
+            size = diagrams.view_nodes(code)
+            if size > diagrams.MAX_NODES:
+                errors.append(f"[§{number}] la vista de {view} tiene {size} nodos contando los subgraph; "
+                              f"máximo {diagrams.MAX_NODES} (ADR-028)")
+    return errors
 
 
 def check_snippets(docs: list[Document], by_slug: dict[str, Document], report: Report) -> None:

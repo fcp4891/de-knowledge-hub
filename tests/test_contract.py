@@ -106,7 +106,11 @@ def test_contract_enums_match_schemas(api_enum: str, source: dict[str, Any]) -> 
 
 
 def test_section_keys_match_contract() -> None:
-    assert API["components"]["schemas"]["Section"]["properties"]["key"]["enum"] == p.SECTION_KEYS
+    """Las claves de concept/pattern y, sin repetir, las de architecture (ADR-028), en ese orden."""
+    extra = [k for k in p.ARCHITECTURE_SECTION_KEYS if k not in p.SECTION_KEYS]
+    assert API["components"]["schemas"]["Section"]["properties"]["key"]["enum"] == p.SECTION_KEYS + extra
+    titles = page_sections.template_titles(ROOT / "content", page_sections.ARCHITECTURE_TEMPLATE)
+    assert titles is not None and len(titles) == len(p.ARCHITECTURE_SECTION_KEYS) == 22
 
 
 def test_snippet_contract_matches_schema_and_template() -> None:
@@ -213,3 +217,15 @@ def test_technology_detail_returns_aliases(index: p.ContentIndex) -> None:
     assert detail["title"] == "Knowledge Catalog"
     assert detail["aliases"] == ["Dataplex", "Dataplex Universal Catalog"]
     assert p.concept_detail(index, "data-mesh")["aliases"] == []
+
+
+def test_architecture_detail_uses_architecture_section_keys() -> None:
+    """ADR-028: una ficha con kind architecture se proyecta en /concepts con las claves de su plantilla."""
+    concept = {"slug": "arq", "title": "Arq", "kind": "architecture", "classification": "core", "level": "intermediate",
+               "importance": "high", "mvp": False}
+    entry = p.BlueprintEntry(domain={"slug": "architecture"}, subdomain={"slug": "reference-architectures"},
+                             concept=concept, position=0)
+    index = p.ContentIndex(entities={"arq": {"slug": "arq", "type": "architecture"}},
+                           bodies={"arq": "## 3. Vista de contexto\n\nx\n\n## 18. Evolución\n\ny\n"}, concepts={"arq": entry})
+    keys = [s["key"] for s in p.concept_detail(index, "arq")["sections"]]
+    assert keys == ["context_view", "evolution"]

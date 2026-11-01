@@ -1,5 +1,5 @@
 ---
-# Plantilla de arquitectura (§24). Copiar a content/architectures/<slug>.md.
+# Plantilla de arquitectura de referencia (§24, ADR-028). Copiar a content/architectures/<slug>.md.
 # No rellenar aquí: content/_templates/ no se valida.
 id: architecture:slug-de-la-arquitectura
 slug: slug-de-la-arquitectura
@@ -25,77 +25,92 @@ updated_at: 2026-09-28
 last_verified: 2026-09-28
 verification_status: review_required
 ---
+<!-- Cada componente se justifica. Las tres nubes se comparan con diferencias; no son equivalentes. Sin solución única disfrazada de "la" arquitectura. Tres vistas obligatorias (§3, §5 y §6), cada una de 8 nodos o menos. -->
 
-<!-- Cada componente se justifica. Las tres nubes se comparan con diferencias; no son equivalentes. Sin solución única disfrazada de "la" arquitectura. -->
+## 1. Resumen
 
-## Escenario
+<!-- ¿Qué problema resuelve, para quién, y cuándo conviene o no conviene esta arquitectura? -->
 
-<!-- ¿Qué situación concreta obliga a elegir una arquitectura, y quién la opera? -->
+## 2. Escenario y requerimientos
 
-## Requerimientos
+<!-- Escenario concreto, requerimientos funcionales y no funcionales (latencia, volumen, frescura) y restricciones. -->
 
-<!-- ¿Qué debe cumplir el sistema (volumen, latencia, frescura, consumidores)? -->
+## 3. Vista de contexto
 
-## Restricciones
+<!-- Diagrama Mermaid de 8 nodos o menos (cada subgraph cuenta como nodo): orígenes, la plataforma y sus consumidores. -->
 
-<!-- ¿Qué límites de equipo, costo, cumplimiento o plataforma acotan el diseño? -->
+## 4. Componentes
 
-## Arquitectura propuesta
+<!-- Tabla: componente, responsabilidad y por qué está. Los nombres son los de las tres vistas. -->
 
-<!-- ¿Qué diseño se propone y por qué encaja en este escenario? -->
+## 5. Vista de datos
 
-## Diagrama
+<!-- Diagrama Mermaid de 8 nodos o menos: cómo fluyen y se transforman los datos, con capas y contratos. -->
 
-<!-- ¿Cómo se ve el flujo de datos de punta a punta? Usar Mermaid, con el estándar de CLAUDE.md («Diagramas (§9)»). -->
+## 6. Vista de despliegue
 
-## Flujo
+<!-- Diagrama Mermaid de 8 nodos o menos: dónde corre cada componente, redes, identidades y entornos. -->
 
-<!-- ¿En qué orden se mueven los datos y dónde se decide cada transformación? -->
+## 7. Seguridad y gobierno
 
-## Componentes
+<!-- Identidades, mínimo privilegio, cifrado, datos personales, catálogo y linaje. -->
 
-<!-- ¿Qué piezas intervienen y qué responsabilidad tiene cada una? -->
+## 8. Escalabilidad, observabilidad y operación
 
-## Razón de cada componente
+<!-- Cómo crece, qué se mide (SLI/SLO), alertas, runbook y reprocesos. -->
 
-<!-- ¿Por qué esta pieza y no otra, dado el escenario y las restricciones? -->
+## 9. Costos
 
-## Alternativas
+<!-- Qué mueve el costo y cómo se controla. Sin montos sin fuente. -->
 
-<!-- ¿Qué alternativas tiene y cuándo sería preferible cada una? -->
+## 10. Código y configuración
 
-## Trade-offs
+<!-- Qué se ejecuta en la CI, qué es configuración validada (terraform validate, kubeconform, actionlint) y qué queda «no ejecutado». -->
 
-<!-- ¿Qué se gana y qué se pierde con la propuesta frente a las alternativas? -->
+## 11. GCP
 
-## Escalabilidad
+<!-- Implementación en GCP, con la fuente de cada servicio y sus diferencias. -->
 
-<!-- ¿Cómo escala (datos, concurrencia, equipos) y dónde deja de escalar? -->
+## 12. AWS
 
-## Seguridad
+<!-- Implementación en AWS, con la fuente de cada servicio y sus diferencias. -->
 
-<!-- ¿Cómo se asegura (identidad, permisos, datos sensibles, red)? -->
+## 13. Azure
 
-## Observabilidad
+<!-- Implementación en Azure, con la fuente de cada servicio y sus diferencias. -->
 
-<!-- ¿Cómo se observa (frescura, fallos, costo, calidad) y qué se haría ante una incidencia? -->
+## 14. Riesgos y modos de falla
 
-## Costo
+<!-- Qué puede fallar, cómo se detecta y cómo se recupera. -->
 
-<!-- ¿Cómo afecta el costo y qué palanca lo domina? -->
+## 15. Errores frecuentes
 
-## Código relacionado
+<!-- Error → consecuencia. -->
 
-<!-- ¿Cómo se implementa lo mínimo representativo, o qué snippets existentes lo cubren? -->
+## 16. Trade-offs y alternativas
 
-## Implementación GCP
+<!-- Qué se gana y qué se paga; cuándo elegir otra arquitectura del dominio. -->
 
-<!-- ¿Cómo se implementa en GCP? -->
+## 17. Conceptos relacionados
 
-## Implementación AWS
+<!-- Misma regla que el §17 de las fichas: si la ficha existe, va en relations. -->
 
-<!-- ¿Cuál es su equivalente conceptual en AWS, y en qué se diferencia? Nunca presentarlos como lo mismo. -->
+## 18. Evolución
 
-## Implementación Azure
+<!-- Desde qué arquitectura se llega, hacia cuál se migra y con qué señales. -->
 
-<!-- ¿Cuál es su equivalente conceptual en Azure, y en qué se diferencia? Nunca presentarlos como lo mismo. -->
+## 19. Laboratorio relacionado
+
+<!-- Laboratorio en la nube de F4 (terraform apply, costo con fuente, teardown, evidencia), si lo hay. -->
+
+## 20. Fuentes
+
+<!-- Fuentes Nivel 1–2; el detalle va en sources del frontmatter. -->
+
+## 21. Fecha de última verificación
+
+<!-- Fecha y qué se verificó. -->
+
+## 22. Historial de cambios importantes
+
+<!-- Fecha: cambio. -->

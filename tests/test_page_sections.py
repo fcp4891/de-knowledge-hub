@@ -181,3 +181,50 @@ def test_snippet_must_implement_a_verified_page(content: Path) -> None:
     verified_concept(content, verification_status="review_required")
     write_md(content, "snippets/s.md", snippet("s"))
     assert_error(run(content), "al menos un IMPLEMENTS hacia un concept o pattern verified")
+
+
+# --- Arquitecturas de referencia (ADR-028) -----------------------------------
+
+ARCH_TITLES = page_sections.template_titles(ROOT / "content", page_sections.ARCHITECTURE_TEMPLATE)
+VIEW = "```mermaid\nflowchart LR\n  A[\"Origen\"] --> B[\"Plataforma\"] --> C[\"Consumidor\"]\n```"
+
+
+def architecture_body(views: dict[int, str] | None = None) -> str:
+    views = {3: VIEW, 5: VIEW, 6: VIEW} if views is None else views
+    titles = ARCH_TITLES or []
+    return "\n".join(f"## {n}. {t}\n\n{views.get(n, 'Contenido.')}\n" for n, t in enumerate(titles, 1))
+
+
+def architecture(slug: str = "arq") -> dict[str, object]:
+    return entity("architecture", slug, domain="architecture", classification="core", level="intermediate")
+
+
+@pytest.fixture
+def with_architecture_template(content: Path) -> Path:
+    (content / "_templates").mkdir()
+    shutil.copy(ROOT / "content/_templates/architecture.md", content / "_templates/architecture.md")
+    return content
+
+
+def test_architecture_template_has_22_sections_and_three_views() -> None:
+    assert ARCH_TITLES is not None and len(ARCH_TITLES) == 22
+    assert [ARCH_TITLES[n - 1] for n in page_sections.VIEW_SECTIONS] == ["Vista de contexto", "Vista de datos", "Vista de despliegue"]
+    assert ARCH_TITLES[10:13] == ["GCP", "AWS", "Azure"] and ARCH_TITLES[16] == "Conceptos relacionados"
+
+
+def test_complete_architecture_is_valid_without_practice_bullets(with_architecture_template: Path) -> None:
+    write_md(with_architecture_template, "architectures/arq.md", architecture(), body=architecture_body())
+    report = run(with_architecture_template)
+    assert report.ok, report.errors
+
+
+def test_architecture_needs_each_view(with_architecture_template: Path) -> None:
+    write_md(with_architecture_template, "architectures/arq.md", architecture(), body=architecture_body({3: VIEW, 6: VIEW}))
+    assert_error(run(with_architecture_template), "[§5] la vista de datos necesita un diagrama Mermaid (ADR-028)")
+
+
+def test_architecture_view_counts_subgraphs_as_nodes(with_architecture_template: Path) -> None:
+    nodes = "\n".join(f"  N{i}[\"n{i}\"] --> N{i + 1}[\"n{i + 1}\"]" for i in range(6))   # 7 nodos
+    big = f"```mermaid\nflowchart TB\n  subgraph S[\"Capa\"]\n{nodes}\n  end\n  subgraph T[\"Otra\"]\n  end\n```"
+    write_md(with_architecture_template, "architectures/arq.md", architecture(), body=architecture_body({3: VIEW, 5: big, 6: VIEW}))
+    assert_error(run(with_architecture_template), "[§5] la vista de datos tiene 9 nodos contando los subgraph; máximo 8")

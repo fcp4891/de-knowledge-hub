@@ -1,7 +1,8 @@
 """Estructura de las fichas y snippets: las secciones de su plantilla en content/_templates/.
 
 La plantilla es la fuente única de los títulos. Una ficha `concept` o `pattern` que no es stub debe
-tener las 22 secciones de concept.md (§22); un `code_snippet`, las 10 de snippet.md (§23). Los
+tener las 22 secciones de concept.md (§22); una `architecture`, las 22 de architecture.md (ADR-028); un
+`code_snippet`, las 10 de snippet.md (§23). Los
 encabezados `## N. Título` van en orden, con los títulos de la plantilla y sin secciones vacías
 (un comentario HTML solo no cuenta como contenido). En las fichas, la §14 (Buenas prácticas)
 lleva además las viñetas `- **Seguridad**`, `- **Observabilidad**` y `- **Costo**` (criterio de
@@ -17,9 +18,12 @@ HEADING = re.compile(r"^## (\d+)\. (.+?)\s*$")
 HTML_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
 TEMPLATE = Path("_templates") / "concept.md"
 SNIPPET_TEMPLATE = Path("_templates") / "snippet.md"
-PAGE_TYPES = {"concept", "pattern"}
+ARCHITECTURE_TEMPLATE = Path("_templates") / "architecture.md"   # ADR-028
+PAGE_TYPES = {"concept", "pattern", "architecture"}
+PRACTICE_TYPES = {"concept", "pattern"}   # la §14 con Seguridad, Observabilidad y Costo; en architecture son §7–9
+VIEW_SECTIONS = {3: "contexto", 5: "datos", 6: "despliegue"}   # ADR-028: una vista Mermaid por sección
 SNIPPET_TYPE = "code_snippet"
-TEMPLATES = {"concept": TEMPLATE, "pattern": TEMPLATE, SNIPPET_TYPE: SNIPPET_TEMPLATE}
+TEMPLATES = {"concept": TEMPLATE, "pattern": TEMPLATE, "architecture": ARCHITECTURE_TEMPLATE, SNIPPET_TYPE: SNIPPET_TEMPLATE}
 SECTIONED_TYPES = set(TEMPLATES)  # tipos con cuerpo estructurado por secciones
 PRACTICES_SECTION = 14
 PRACTICE_BULLETS = ("Seguridad", "Observabilidad", "Costo")

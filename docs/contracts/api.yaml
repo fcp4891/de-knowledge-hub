@@ -572,7 +572,7 @@ components:
         verification_status: { oneOf: [{ $ref: "#/components/schemas/VerificationStatus" }, { type: "null" }] }
 
     Section:
-      description: Una de las 22 secciones de la ficha (§22), en Markdown.
+      description: Una de las 22 secciones de la ficha (§22) o de la arquitectura de referencia (ADR-028, `kind` architecture), en Markdown.
       type: object
       required: [number, key, title, markdown]
       properties:
@@ -580,7 +580,8 @@ components:
         key:
           enum: [summary, what_is, problem, how_it_works, when_to_use, when_not_to_use, simple_example, production_example,
                  architecture, code, gcp, aws, azure, best_practices, common_mistakes, trade_offs, related_concepts,
-                 open_questions, related_lab, sources, last_verified, change_history]
+                 open_questions, related_lab, sources, last_verified, change_history,
+                 scenario, context_view, components, data_view, deployment_view, security, operations, costs, risks, evolution]
         title: { type: string }
         markdown: { type: string }
       additionalProperties: false
