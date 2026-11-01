@@ -31,6 +31,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuesta baja: `GET /domains` sigue diciendo 23 dominios.
 - **Tarea activa:** revisión del lote P1 (9 fichas de 19). Informe en `docs/reviews/p1.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas medias: completar los bloques de salida del §10; en `data-minimization-by-layer`, pasar el diagrama a `TB`. Propuesta baja: la línea `flujos: 7; brechas: 6`.
+- **Tarea activa:** revisión del lote 23a (6 fichas). Informe en `docs/reviews/cards-f3b-23a.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuesta baja: el `page_title` de Fabric data agent.
 - **Tarea activa:** revisión de la mejora de `chile-data-protection`. Informe en `docs/reviews/cdp-v2.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: la letra g) del art. 2 no dice «entre otros». Propuesta baja: la letra l) pide medidas técnicas y organizativas.
 - **Tarea activa:** B-F3.1 del lote F3b-22a. Revisión en `docs/reviews/cards-f3b-22a.md`. No se editó `content/` ni `frontend/`.
@@ -140,6 +142,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - ADR-027, migración 0007 y el marco legal. La vigencia 2026-12-01 y el boletín 18.623-07 coinciden con BCN y el Senado. Propuesta baja en el contrato. No se editó `content/` ni `frontend/`.
 ### Revisión · lote P1
 - Nueve fichas. El art. 3 c) coincide con BCN. NIST y CNIL quedan en Nivel 4. Propuestas medias: las salidas del §10 y el diagrama de minimización. No se editó `content/` ni `frontend/`.
+### Revisión · lote 23a
+- Seis fichas emerging. Los estados citados coinciden con las páginas reabiertas. Propuesta baja: el título de Fabric data agent. No se editó `content/` ni `frontend/`.
 
 ### Revisión · cdp-v2
 - Mejora de `chile-data-protection`. `legal_basis`, vigencia, boletín, sanciones y los diagramas no cambian. Propuesta media: completar la letra g) del art. 2. No se editó `content/` ni `frontend/`.
@@ -460,6 +464,8 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - Revisión de ADR-027, la migración 0007, el schema, el marco legal y el contrato. No se editó `content/`.
 ### Revisión · lote P1 (2026-10-28)
 - Revisión de las 9 fichas. `scripts/validate.py` terminó OK (662 entidades). No se editó `content/`.
+### Revisión · lote 23a (2026-10-28)
+- Revisión de las 6 fichas. Ninguna presenta a los agentes como reemplazo de la orquestación, la revisión o la CI. No se editó `content/`.
 
 ### Revisión · cdp-v2 (2026-10-26)
 - Revisión de la mejora de `chile-data-protection`. El §10 encuentra 4 brechas y los 30 días son política interna. No se editó `content/`.
