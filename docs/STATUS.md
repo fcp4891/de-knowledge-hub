@@ -49,7 +49,7 @@
 - [x] 16-observability: 13/13 `verified`, aprobado por Felipe en el navegador el 2026-10-20 (ADR-020: OpenTelemetry en la CI, sin collector; SRE como N4 solo para conceptos).
 - [x] 17-governance: 9/9 `verified`, aprobado por Felipe en el navegador el 2026-10-21 (ADR-021: OpenLineage en la CI, transporte a archivo).
 - [x] 18-security: 17/17 `verified`, aprobado por Felipe en el navegador el 2026-10-21 (ADR-022: cryptography). 18 no menciona la ley.
-- [x] 24-privacy-engineering: 17/17 `verified`, aprobado por Felipe con lista explícita el 2026-11-01 (`owner_approved_at`; ADR-023, ADR-027). Tramos 1–6, con `gdpr` y `lgpd` en «Marcos regulatorios comparados».
+- [ ] 24-privacy-engineering: 16/17 `verified`, aprobado por Felipe con lista explícita el 2026-11-01 (`owner_approved_at`; ADR-023, ADR-027). `chile-data-protection` vuelve a `review_required` el 2026-11-01 por el cambio del §10, hasta una nueva aprobación de Felipe. Tramos 1–6, con `gdpr` y `lgpd` en «Marcos regulatorios comparados».
 - [x] 19-compliance: integrado al 24 el 2026-10-30 (ADR-027, Enmienda 1); su subdominio `regulatory-frameworks` es el tramo 6 de 24 (GDPR y LGPD en el BACKLOG). El blueprint tiene 23 dominios; Transversal queda con 15–18.
 - [x] 21-ai-for-data-engineering (27 fichas en 21a–21e, ADR-025): 27/27 `verified` el 2026-10-26.
 - [x] 22-modern-data-engineering: 10/10 `verified` el 2026-10-27.

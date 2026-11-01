@@ -3,7 +3,7 @@ id: concept:chile-data-protection
 slug: chile-data-protection
 type: concept
 title: Ley 21.719 para ingenieros de datos
-description: "Ficha padre del dominio 24. Qué cambia la Ley 21.719 para quien diseña y opera plataformas de datos: casi todo pipeline es tratamiento y hay que demostrar que cumple. Mapa de artículos de la Ley 19.628 modificada a sus fichas hijas, vigencia y boletín 18.623-07 según BCN y el Senado, Decreto 662, sanciones, seis preguntas de diseño, un caso de supresión de punta a punta y un validador de los resultados de los controles que hace fallar la CI. No es asesoría legal."
+description: "Ficha padre del dominio 24. Qué cambia la Ley 21.719 para quien diseña y opera plataformas de datos: casi todo pipeline es tratamiento y hay que demostrar que cumple. Mapa de artículos de la Ley 19.628 modificada a sus fichas hijas, vigencia y boletín 18.623-07 según BCN y el Senado, Decreto 662, sanciones, seis preguntas de diseño, un caso de supresión de punta a punta y cuatro controles con PASS, FAIL y UNKNOWN que hacen fallar la CI. No es asesoría legal."
 domain: privacy-engineering
 subdomain: fundamentos
 category: compliance
@@ -95,8 +95,7 @@ relations:
 created_at: 2026-10-21
 updated_at: 2026-10-30
 last_verified: 2026-10-28
-owner_approved_at: 2026-11-01
-verification_status: verified
+verification_status: review_required
 ---
 
 ## 1. Resumen
@@ -372,73 +371,127 @@ flowchart LR
 ## 10. Código
 
 ```python
-# Python 3.12+, biblioteca estándar. Se ejecuta en la CI: valida los resultados que dejaron las pruebas de los
-# controles (no su descripción). Uso: python validate_privacy_controls.py privacy-control-results.json 2026-10-26
-# La fecha de referencia entra como argumento para que el resultado sea reproducible; en un pipeline real la pasa
-# el orquestador. Termina con código 1 si falta un control, no aprobó, su evidencia está vencida o no tiene
-# referencia de ejecución. Es didáctico: no certifica cumplimiento.
+# Python 3.12+, biblioteca estándar. De punta a punta: datos ficticios → 4 controles → validación de la evidencia →
+# código de salida (0 aprueba, 1 rechaza). Uso: python controles.py con-brechas | corregido | sin-revision
+# PASS / FAIL / UNKNOWN como en privacy-controls-as-code: UNKNOWN (falta el dato para evaluar) nunca cuenta como PASS.
+# Didáctico: no certifica cumplimiento; excepciones, deriva y pruebas negativas están en esa ficha.
+import hashlib
 import json
 import sys
+from dataclasses import dataclass, field, replace
 from datetime import date, datetime, timedelta, timezone
-from pathlib import Path
 
-MAX_AGE = timedelta(days=30)  # política interna ilustrativa, NO un plazo legal
-REQUIRED = ("access_review", "erasure_replay_check", "retention_check", "schema_minimization")
+REFERENCE = datetime(2026, 10, 26, 12, tzinfo=timezone.utc)   # fecha fija: resultado reproducible
+MAX_AGE = timedelta(days=30)   # política interna ilustrativa, NO un plazo legal
+RETENTION_DAYS = 90            # plazo de la política. Alargarlo para que el control pase es un antipatrón: se purga
+APPROVED = {"customer_id", "email", "created_at"}
+Row = dict[str, object]
 
+@dataclass(frozen=True)
+class User:
+    name: str
+    active: bool
+    authorized: bool
 
-def validate(results: list[dict[str, str]], today: date) -> list[str]:
-    now = datetime(today.year, today.month, today.day, 23, 59, tzinfo=timezone.utc)
-    by_id = {r["control_id"]: r for r in results}
-    errors: list[str] = []
-    for control_id in REQUIRED:
-        result = by_id.get(control_id)
-        if result is None:
-            errors.append(f"{control_id}: sin resultado")
-            continue
-        if result.get("status") != "passed":
-            errors.append(f"{control_id}: prueba no aprobada ({result.get('status')})")
-        try:
-            executed = datetime.fromisoformat(result["executed_at"].replace("Z", "+00:00"))
-            if executed.tzinfo is None or executed > now:
-                errors.append(f"{control_id}: fecha inválida")
-            elif now - executed > MAX_AGE:
-                errors.append(f"{control_id}: evidencia vencida ({(now - executed).days} días)")
-        except (KeyError, ValueError):
-            errors.append(f"{control_id}: fecha ausente o incorrecta")
-        if not result.get("evidence_uri") or not result.get("run_id"):
-            errors.append(f"{control_id}: falta run_id o evidence_uri")
-    return errors
+@dataclass(frozen=True)
+class Platform:
+    warehouse: list[Row]
+    source: list[Row]
+    tombstones: set[object]
+    users: list[User]
+    last_access_review: date | None = date(2026, 10, 20)
+    replay_honors_tombstones: bool = True
 
+@dataclass(frozen=True)
+class Result:
+    control_id: str
+    status: str   # PASS | FAIL | UNKNOWN
+    detail: str
+    executed_at: datetime = REFERENCE
+    evidence_uri: str = ""
+    evidence: dict[str, str] = field(default_factory=dict)
 
-def main(path: Path, today: date) -> int:
-    results = json.loads(path.read_text(encoding="utf-8"))["results"]
-    errors = validate(results, today)
-    print(f"controles exigidos: {len(REQUIRED)}; resultados: {len(results)}; brechas: {len(errors)}")
-    for e in errors:
-        print("  BRECHA", e)
-    return 1 if errors else 0
+    def sha256(self) -> str:   # huella de la evidencia serializada, guardada junto a evidence_uri
+        return hashlib.sha256(json.dumps(self.evidence, sort_keys=True).encode()).hexdigest()
 
+def with_gaps() -> Platform:   # cada brecha se inyecta por separado y a la vista
+    ana: Row = {"customer_id": 101, "email": "ana@example.test", "created_at": "2026-10-01"}
+    bruno: Row = {"customer_id": 102, "email": "bruno@example.test", "created_at": "2026-10-03"}   # suprimido
+    old: Row = {"customer_id": 104, "email": "diego@example.test", "created_at": "2026-06-01"}
+    return Platform(
+        warehouse=[{**ana, "nota_libre": "sin aprobar"}, old],      # brecha 4: columna no aprobada; 3: registro vencido
+        source=[ana, bruno, old], tombstones={102},
+        users=[User("analista", True, True), User("ex_usuario", False, True)],   # brecha 1: inactivo con acceso
+        replay_honors_tombstones=False)                                          # brecha 2: replay sin tombstones
+
+def fix(p: Platform) -> Platform:   # corrige cada brecha; el plazo de retención no cambia
+    cutoff = REFERENCE.date() - timedelta(days=RETENTION_DAYS)
+    kept = [{c: v for c, v in r.items() if c in APPROVED} for r in p.warehouse
+            if date.fromisoformat(str(r["created_at"])) >= cutoff]           # purga el registro vencido
+    users = [replace(u, authorized=u.authorized and u.active) for u in p.users]
+    return replace(p, warehouse=kept, users=users, replay_honors_tombstones=True)
+
+def run_controls(p: Platform) -> list[Result]:
+    holders = [u.name for u in p.users if u.authorized and not u.active]   # regla: authorized ⇒ active
+    replayed = [r for r in p.source if not (p.replay_honors_tombstones and r["customer_id"] in p.tombstones)]
+    revived = [r["customer_id"] for r in replayed if r["customer_id"] in p.tombstones]
+    cutoff = REFERENCE.date() - timedelta(days=RETENTION_DAYS)
+    expired = [r["customer_id"] for r in p.warehouse if date.fromisoformat(str(r["created_at"])) < cutoff]
+    extra = sorted({c for r in p.warehouse for c in r} - APPROVED)
+    checks = {"access_review": ("FAIL", f"inactivos con acceso: {holders}") if holders else
+              ("UNKNOWN", "sin fecha de última revisión") if p.last_access_review is None else ("PASS", "ok"),
+              "erasure_replay_check": ("FAIL", f"reaparecen: {revived}") if revived else ("PASS", "ok"),
+              "retention_check": ("FAIL", f"vencidos sin purgar: {expired}") if expired else ("PASS", "ok"),
+              "schema_minimization": ("FAIL", f"columnas no aprobadas: {extra}") if extra else ("PASS", "ok")}
+    return [Result(c, s, d, evidence_uri=f"evidencia://ci-20261026/{c}.json", evidence={"status": s, "detail": d})
+            for c, (s, d) in checks.items()]
+
+def validate(results: list[Result], stored_sha256: dict[str, str]) -> list[str]:
+    gaps, seen = [], set()
+    for r in results:
+        gaps += [f"{r.control_id}: resultado duplicado"] if r.control_id in seen else []
+        seen.add(r.control_id)
+        gaps += [f"{r.control_id}: {r.status} ({r.detail})"] if r.status != "PASS" else []
+        if REFERENCE - r.executed_at > MAX_AGE:
+            gaps.append(f"{r.control_id}: evidencia vencida ({(REFERENCE - r.executed_at).days} días)")
+        if not r.evidence_uri or stored_sha256.get(r.control_id) != r.sha256():
+            gaps.append(f"{r.control_id}: evidencia sin URI o con huella distinta")
+    return gaps
+
+def main(scenario: str) -> int:
+    p = {"con-brechas": with_gaps(), "corregido": fix(with_gaps()),
+         "sin-revision": replace(fix(with_gaps()), last_access_review=None)}[scenario]
+    results = run_controls(p)
+    gaps = validate(results, {r.control_id: r.sha256() for r in results})   # en la CI, la huella guardada al ejecutar
+    print(f"{scenario}: " + ", ".join(f"{r.control_id}={r.status}" for r in results))
+    print("\n".join(f"BRECHA {g}" for g in gaps) or "sin brechas")
+    print(f"CI: {'rechazada (1)' if gaps else 'aprobada (0)'}")
+    return 1 if gaps else 0
 
 if __name__ == "__main__":
-    sys.exit(main(Path(sys.argv[1]), date.fromisoformat(sys.argv[2])))
+    sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else "con-brechas"))
 ```
 
-Entrada versionada en el repositorio (`tests/fixtures/privacy-control-results.json`); en un pipeline real la generan las pruebas de cada control:
+El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Corre el flujo completo sobre datos ficticios. El escenario con brechas inyecta cuatro, una por control y por separado: un ex usuario inactivo que conserva acceso, un replay que ignora los tombstones, un registro vencido sin purgar y una columna no aprobada. Termina con código 1:
 
-```json
-{
-  "results": [
-    {"control_id": "schema_minimization", "status": "passed", "executed_at": "2026-10-25T12:00:00Z",
-     "run_id": "ci-4821", "evidence_uri": "artifact://ci-4821/schema-minimization"},
-    {"control_id": "access_review", "status": "passed", "executed_at": "2026-08-01T09:00:00Z",
-     "run_id": "ci-3310", "evidence_uri": "artifact://ci-3310/access-review"},
-    {"control_id": "retention_check", "status": "failed", "executed_at": "2026-10-25T12:05:00Z",
-     "run_id": "ci-4821", "evidence_uri": ""}
-  ]
-}
+```text
+con-brechas: access_review=FAIL, erasure_replay_check=FAIL, retention_check=FAIL, schema_minimization=FAIL
+BRECHA access_review: FAIL (inactivos con acceso: ['ex_usuario'])
+BRECHA erasure_replay_check: FAIL (reaparecen: [102])
+BRECHA retention_check: FAIL (vencidos sin purgar: [104])
+BRECHA schema_minimization: FAIL (columnas no aprobadas: ['nota_libre'])
+CI: rechazada (1)
 ```
 
-El script se **ejecuta en la CI** con la biblioteca estándar, con esa entrada y la fecha `2026-10-26` como argumento, y pasa `mypy --strict`. Imprime 4 brechas: `access_review` con evidencia vencida (86 días), `erasure_replay_check` sin resultado, y `retention_check` no aprobado y sin `evidence_uri`; termina con código 1, así que la CI falla. **Los 30 días son una política interna de ejemplo, no un plazo legal.** Un `status` autodeclarado no basta: en producción también se comprueba que la evidencia exista, esté íntegra, tenga permisos adecuados y venga del sistema que la generó (`privacy-controls-as-code`).
+El escenario corregido aplica una corrección por brecha: quita el acceso al inactivo, respeta los tombstones, **purga** el registro vencido sin tocar el plazo de 90 días y descarta la columna. Termina con código 0:
+
+```text
+corregido: access_review=PASS, erasure_replay_check=PASS, retention_check=PASS, schema_minimization=PASS
+sin brechas
+CI: aprobada (0)
+```
+
+Sin fecha de última revisión de accesos, `access_review` queda en `UNKNOWN` y la CI también falla: falta el dato, y eso no es un `PASS`. Cada resultado guarda `evidence_uri` y `evidence_sha256`, la huella de la evidencia serializada. La validación rechaza los resultados duplicados, la evidencia vencida (`MAX_AGE`, 30 días, política interna de ejemplo y **no un plazo legal**) y la huella que no coincide. Un estado autodeclarado no basta: en producción también se comprueba que la evidencia exista, tenga permisos adecuados y venga del sistema que la generó. Las excepciones con vencimiento, la deriva y las pruebas negativas están en `privacy-controls-as-code`.
 
 ## 11. GCP
 
@@ -583,7 +636,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-28: textos legales vueltos a consultar en BCN (sin cambios) y estado del boletín 18.623-07 en el Senado (aprobado por el Senado y despachado a la Cámara). Antes, 2026-10-25: textos legales vueltos a consultar, sin cambios, y 2026-10-22: articulado, vigencia, estado del boletín 18.623-07 y Decreto 662 consultados ese día en BCN y en el Senado. `verified`: aprobada por Felipe el 2026-11-01 (`owner_approved_at`). Revisión mensual, y extraordinaria si se publica la ley de postergación.
+2026-10-28: textos legales vueltos a consultar en BCN (sin cambios) y estado del boletín 18.623-07 en el Senado (aprobado por el Senado y despachado a la Cámara). Antes, 2026-10-25: textos legales vueltos a consultar, sin cambios, y 2026-10-22: articulado, vigencia, estado del boletín 18.623-07 y Decreto 662 consultados ese día en BCN y en el Senado. `review_required` desde el 2026-11-01 por el cambio del §10: vuelve a `verified` solo con una nueva aprobación de Felipe. Revisión mensual, y extraordinaria si se publica la ley de postergación.
 
 ## 22. Historial de cambios importantes
 
@@ -605,3 +658,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: §17 nombra las fichas hijas nuevas `gdpr` y `lgpd` (lote P4, tramo 6 «Marcos regulatorios comparados»). Sin cambios de contenido.
 - 2026-10-30: Enmienda 4 de ADR-023: 6 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-01: §10 reemplazado a partir de la propuesta de Felipe: flujo de punta a punta (datos ficticios → cuatro controles → validación de la evidencia → código de salida 0/1 sin `assert`), estados PASS/FAIL/UNKNOWN, cuatro brechas inyectadas por separado, regla «autorizado ⇒ activo», purga del registro vencido sin cambiar el plazo, `evidence_sha256`, duplicados y evidencia vencida. Sale la entrada versionada `tests/fixtures/privacy-control-results.json`. **Por el cambio de código, la ficha vuelve a `review_required` hasta que Felipe la apruebe de nuevo.**

@@ -12,6 +12,7 @@
 
 from __future__ import annotations
 
+import importlib.util
 import json
 import os
 import secrets
@@ -193,24 +194,43 @@ def test_compliance_gates_fail_the_ci_with_gaps(ficha: str, tmp_path: Path) -> N
     assert_mypy_strict(tmp_path)
 
 
-FIXTURE = Path(__file__).parent / "fixtures" / "privacy-control-results.json"
-
-
-def test_privacy_control_results_fail_the_ci_with_gaps(tmp_path: Path) -> None:
-    """chile-data-protection §10: valida la entrada versionada con una fecha fija; la entrada del §10 es la misma."""
+def run_scenario(tmp_path: Path, scenario: str) -> subprocess.CompletedProcess[str]:
     (code,) = blocks("chile-data-protection", "python")
-    (shown,) = blocks("chile-data-protection", "json")
-    assert shown.strip() == FIXTURE.read_text(encoding="utf-8").strip()
     (tmp_path / "snippet.py").write_text(code, encoding="utf-8", newline="\n")
-    result = subprocess.run([sys.executable, "snippet.py", str(FIXTURE), "2026-10-26"], cwd=tmp_path,
-                            env={**os.environ, **UTF8}, capture_output=True, text=True, encoding="utf-8", timeout=300)
-    assert result.returncode == 1, result.stdout + result.stderr
-    for line in ("controles exigidos: 4; resultados: 3; brechas: 4",
-                 "BRECHA access_review: evidencia vencida (86 días)", "BRECHA erasure_replay_check: sin resultado",
-                 "BRECHA retention_check: prueba no aprobada (failed)",
-                 "BRECHA retention_check: falta run_id o evidence_uri"):
-        assert line in result.stdout, result.stdout
+    return subprocess.run([sys.executable, "snippet.py", scenario], cwd=tmp_path, env={**os.environ, **UTF8},
+                          capture_output=True, text=True, encoding="utf-8", timeout=300)
+
+
+def test_privacy_controls_end_to_end_output_is_the_documented_one(tmp_path: Path) -> None:
+    """chile-data-protection §10: con brechas termina en 1, corregido en 0, y cada salida es la del bloque text."""
+    with_gaps, fixed = blocks("chile-data-protection", "text")
+    result = run_scenario(tmp_path, "con-brechas")
+    assert result.returncode == 1 and result.stdout.strip() == with_gaps.strip(), result.stdout + result.stderr
+    result = run_scenario(tmp_path, "corregido")
+    assert result.returncode == 0 and result.stdout.strip() == fixed.strip(), result.stdout + result.stderr
+    result = run_scenario(tmp_path, "sin-revision")   # falta el dato: UNKNOWN, y nunca cuenta como PASS
+    assert result.returncode == 1 and "BRECHA access_review: UNKNOWN (sin fecha de última revisión)" in result.stdout
     assert_mypy_strict(tmp_path)
+
+
+def test_privacy_controls_validation_rejects_duplicates_stale_and_tampered_evidence(tmp_path: Path) -> None:
+    (code,) = blocks("chile-data-protection", "python")
+    module = tmp_path / "controles.py"
+    module.write_text(code, encoding="utf-8", newline="\n")
+    spec = importlib.util.spec_from_file_location("controles", module)
+    assert spec and spec.loader
+    m = importlib.util.module_from_spec(spec)
+    sys.modules["controles"] = m   # dataclasses necesita el módulo registrado
+    spec.loader.exec_module(m)
+    results = m.run_controls(m.fix(m.with_gaps()))
+    stored = {r.control_id: r.sha256() for r in results}
+    stale = m.replace(results[0], executed_at=m.REFERENCE - m.timedelta(days=31))
+    tampered = m.replace(results[1], evidence={"status": "PASS", "detail": "editado"})
+    gaps = m.validate([*results, results[2], stale, tampered], stored)
+    assert "retention_check: resultado duplicado" in gaps
+    assert "access_review: evidencia vencida (31 días)" in gaps
+    assert "erasure_replay_check: evidencia sin URI o con huella distinta" in gaps
+    assert m.validate(results, stored) == []
 
 
 def test_minimization_by_layer_in_postgres(pg_env: dict[str, str], tmp_path: Path) -> None:  # noqa: F811
