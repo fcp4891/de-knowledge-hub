@@ -246,8 +246,11 @@ if __name__ == "__main__":
 El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Imprime que el score de fraude exige evaluación por los casos a) y b), que el tablero de ocupación no cae en ningún caso tasado, la puerta de despliegue y un registro de decisión derivado a revisión humana:
 
 ```text
+score_fraude_pagos → EIPD obligatoria por: ['a) perfilamiento con efectos significativos', 'b) tratamiento masivo o a gran escala']
+tablero_ocupacion_vuelos → EIPD obligatoria por: ningún caso tasado
 despliegue fraude-v3.3: permitido
 despliegue fraude-v4.0: bloqueado: EIPD obligatoria sin aprobación vigente para la versión mayor 4
+{'titular': 'c3d3a94d7560c6ae', 'momento': '2026-10-22T10:05', 'modelo': 'fraude-v3.2', 'reglas': 'r7', 'huella_entradas': '3c4c036d2fd4', 'variables_principales': ['pais_tarjeta_distinto', 'monto_relativo'], 'puntaje': 0.81, 'entradas_ref': 'evidencia://decisiones/3c4c036d2fd4', 'resultado': 'derivada a revisión humana', 'titular_puede_pedir_revision': True}
 ```
 
 El registro guarda una huella de las entradas y una referencia a ellas, no las entradas: la huella verifica que las entradas recuperadas son las que se usaron; la reconstrucción y la explicación necesitan las entradas guardadas aparte, con acceso restringido. **Limitaciones:** que el registro tenga todos sus campos no demuestra que la evidencia exista, que la explicación sea fiel ni que la revisión humana sea efectiva; el ejemplo no decide obligaciones legales ni mide sesgo.
@@ -357,3 +360,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (la evaluación mira el tratamiento; la trazabilidad, cada decisión), §2 (perfil no es decisión significativa; tabla de evaluación, trazabilidad y revisión efectiva), §3, §4 (registro del tratamiento, cambios materiales en la puerta, entradas guardadas por referencia, revisión con facultad real), §5, §6, §7 (reclamos con LLM y pregunta técnica por caso), §8 (escenario y evidencia «qué demuestra y qué no»), §9 (puerta por versión y vuelta de la revisión al registro), §10 (puerta de despliegue por versión mayor y registro con versión de reglas y referencia a las entradas, sobre el mismo ejemplo; la huella sola no reconstruye), §11–13 (criterio común), §14–16, §17 (relación con `privacy-controls-as-code`), §18 (criterio de dominio) y §19 (laboratorio para F4). Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia; Model Registry se sigue nombrando como en su página (Gemini Enterprise Agent Platform).
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `riesgo-terceros-incidentes` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/dpia-and-automated-decisions/`) no cambia.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
+- 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.

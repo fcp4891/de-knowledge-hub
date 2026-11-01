@@ -259,6 +259,9 @@ if __name__ == "__main__":
 El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Imprime el insumo de las dos actividades aprobadas y cuatro brechas; termina con código 1:
 
 ```text
+insumo para la política (art. 14 ter), a revisar por privacidad antes de publicar:
+- emitir y gestionar pasajes | base: contrato (art. 13 c) | datos: identificación, contacto, itinerario | destinatarios: aerolíneas socias | plazo: 5 años
+- ofertas personalizadas | base: consentimiento (art. 12) | datos: contacto, preferencias | destinatarios: plataforma de email | plazo: POR DEFINIR
 BRECHA tabla con PII sin actividad: gold.score_fraude
 BRECHA marketing: sin plazo de conservación
 BRECHA sin aprobación: job_fraude → silver.pasajeros (modelo_fraude)
@@ -372,3 +375,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `fundamentos` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/processing-activities-inventory/`) no cambia.
 - 2026-10-30: Enmienda 3 de ADR-023: en §13, la tabla con la misma etiqueta en todas sus filas pasa a la línea «Etiqueta: […]» antes de la tabla, sin columna. Sin cambios de contenido.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
+- 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.

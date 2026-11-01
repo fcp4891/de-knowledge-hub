@@ -249,6 +249,7 @@ if __name__ == "__main__":
 El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Imprime 7 flujos y 6 brechas y termina con código 1:
 
 ```text
+flujos: 7; brechas: 6
 BRECHA silver.pasajeros → plataforma de email: finalidad «perfilamiento» fuera del alcance aprobado (['notificaciones'])
 BRECHA tickets_soporte → API de LLM externa: sin contrato de encargo (art. 15 bis)
 BRECHA tickets_soporte → API de LLM externa: transferencia a US sin mecanismo (art. 27)
@@ -367,3 +368,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `riesgo-terceros-incidentes` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/processors-and-international-transfers/`) no cambia.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-10-30: mismo hallazgo que la revisión de P4: `page_title` de Azure Policy con el H1 de la página, «List of built-in policy definitions» (ADR-012). Sin cambios de contenido.
+- 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.

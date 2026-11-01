@@ -247,6 +247,14 @@ if __name__ == "__main__":
 
 El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Imprime el alcance de dos incidentes. El primero alcanza 4 titulares potencialmente expuestos, datos financieros y un menor de 14, así que, si se reporta, corresponde avisar también a los titulares, por dos razones; y declara dos limitaciones: `export.tmp_reservas` no está en el catálogo y el índice de `silver.pagos` es parcial, así que 4 no es una cota máxima. El segundo expone una tabla agregada sin titulares. Ambos quedan en el registro interno de incidentes; el registro del art. 14 sexies es el de las comunicaciones a la Agencia. Al final, los plazos de la Ley 21.663 en tres casos: una institución obligada que no es operador de importancia vital (actualización en 72 horas); un operador de importancia vital sin servicios esenciales afectados (72 horas y plan de acción en 7 días); y uno con servicios esenciales afectados (24 horas y plan de acción en 7 días).
 
+```text
+{'detectado': '2026-10-22T09:40', 'tablas': ['export.tmp_reservas', 'silver.pagos', 'silver.pasajeros'], 'titulares_aprox': 4, 'categorias': ['contacto', 'financiero', 'identificación'], 'incluye_menores_14': True, 'estado': 'potencialmente accesibles; extracción no probada', 'limitaciones': ['sin catálogo: export.tmp_reservas', 'índice parcial: silver.pagos'], 'reportar_a_agencia': 'si hay riesgo razonable para los titulares (decide Legal)', 'aviso_a_titulares_si_se_reporta': True}
+{'detectado': '2026-10-22T09:40', 'tablas': ['gold.vuelos_agregados'], 'titulares_aprox': 0, 'categorias': [], 'incluye_menores_14': False, 'estado': 'potencialmente accesibles; extracción no probada', 'limitaciones': [], 'reportar_a_agencia': 'si hay riesgo razonable para los titulares (decide Legal)', 'aviso_a_titulares_si_se_reporta': False}
+plazos Ley 21.663 (no operador vital): {'alerta_temprana': '2026-10-22T12:40', 'actualizacion': '2026-10-25T09:40', 'informe_final': '2026-11-06T12:40'}
+plazos Ley 21.663 (operador vital, sin servicios esenciales afectados): {'alerta_temprana': '2026-10-22T12:40', 'actualizacion': '2026-10-25T09:40', 'informe_final': '2026-11-06T12:40', 'plan_de_accion': '2026-10-29T09:40'}
+plazos Ley 21.663 (operador vital, servicios esenciales afectados): {'alerta_temprana': '2026-10-22T12:40', 'actualizacion': '2026-10-23T09:40', 'informe_final': '2026-11-06T12:40', 'plan_de_accion': '2026-10-29T09:40'}
+```
+
 **Limitaciones:** el resultado no acredita acceso efectivo a todos los registros ni decide la notificación.
 
 ## 11. GCP
@@ -355,3 +363,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `riesgo-terceros-incidentes` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/data-breach-response/`) no cambia.
 - 2026-10-30: Enmienda 3 de ADR-023: en §13, la tabla con la misma etiqueta en todas sus filas pasa a la línea «Etiqueta: […]» antes de la tabla, sin columna. Sin cambios de contenido.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
+- 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.

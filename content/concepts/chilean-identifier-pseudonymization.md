@@ -268,6 +268,19 @@ print("k tras suprimir atípicos:", k_minimo([g for g in generalizado if g not i
 
 El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Las llaves se generan con `secrets` y el RUT es ficticio (dígitos repetidos). Imprime el mismo seudónimo para las tres variantes del RUT, 3 seudónimos sin normalizar, el DV inválido enviado a cuarentena, seudónimos distintos para el mismo RUT en dos dominios (`False`), el hash simple revertido en un tramo de 1.000.000 de RUT y que el ataque no sirve contra el HMAC. Al final, la prueba de k-anonimato: k = 1 con datos exactos y también al generalizar comuna y década, porque una persona de una comuna pequeña queda sola en su grupo; k = 2 tras suprimir ese grupo atípico.
 
+```text
+variantes del mismo RUT, mismo seudónimo: True
+sin normalizar, seudónimos distintos: 3
+DV inválido: RUT no válido: '11111111-0' → cuarentena para revisión, no se descarta
+mismo RUT en dos dominios con claves distintas, mismo seudónimo: False
+hash simple revertido probando 1.000.000 RUT del tramo: True
+con HMAC y sin la clave, el mismo ataque no sirve: True
+k con datos exactos: 1
+k generalizando comuna y década: 1
+grupos únicos a suprimir: [('Tarapacá', '1950s', 'M')]
+k tras suprimir atípicos: 2
+```
+
 **Limitaciones:** el ejemplo no implementa KMS, IAM ni rotación; no prueba la protección de la llave ni la ausencia de reidentificación con otras fuentes.
 
 ## 11. GCP
@@ -378,3 +391,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1, §2 (tabla de identificador directo, seudónimo, cuasi-identificador y dato anonimizado; el HMAC es determinista y permite correlacionar), §3 (caso de uniones entre compras, reservas y atención), §4 (ocho pasos: alcance, cuarentena para DV inválido, llave por dominio, separación de funciones y comprobación), §6, §7 (llave por dominio y cuasi-identificadores con seudónimo), §8 (escenario y evidencia «qué demuestra y qué no», con el procedimiento de rotación), §9 (cuarentena en lugar de rechazo), §10 (DV inválido a cuarentena y llaves por dominio, sobre el mismo ejemplo; limitaciones), §11–13 (integridad referencial, hash sin llave, riesgo del determinismo y criterio común), §14–16, §18 (criterio de dominio) y §19 (laboratorio para F4). Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia. El código de la propuesta no se usó: su RUT de ejemplo no cumple el criterio de RUT ficticios.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `diseno-protegido` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/chilean-identifier-pseudonymization/`) no cambia.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
+- 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.

@@ -175,13 +175,13 @@ Escenario genérico: una aerolínea ingesta reservas a BigQuery; el producto ana
 ## 9. Arquitectura
 
 ```mermaid
-flowchart LR
+flowchart TB
   F["Fuente"] --> K["Contrato de ingesta"]
   K --> B["bronze: lo que llega<br/>(solo pipelines)"]
   B -- "columnas mínimas + HMAC" --> S["silver: seudónimos"]
   S -- "agregado, sin grupos chicos" --> G["gold"]
   G --> A["Análisis"]
-  T{"Tests: contrato y<br/>sin RUT ni correo en claro"} -.-> S
+  T{"Tests: contrato y<br/>sin RUT ni correo<br/>en claro"} -.-> S
   T -.-> G
 ```
 
@@ -277,6 +277,11 @@ with psycopg.connect(host=os.environ["PG_HOST"], port=os.environ["PG_PORT"], use
 El script se **ejecuta en la CI contra el servicio postgres:17** y pasa `mypy --strict`. Los RUT y correos son ficticios. Imprime las columnas de cada capa, 10 valores en claro en bronze y 0 en silver y gold, las dos comunas que quedan en gold, que el analista lee gold pero no bronze (`42501`), y el contrato antes y después de un cambio de esquema:
 
 ```text
+bronze: ['rut', 'nombre', 'email', 'comuna', 'edad', 'monto']; valores con RUT o correo en claro: 10
+silver: ['cliente_key', 'comuna', 'tramo_edad', 'monto']; valores con RUT o correo en claro: 0
+gold: ['comuna', 'clientes', 'monto_total']; valores con RUT o correo en claro: 0
+gold: [('Maipú', 2), ('Ñuñoa', 2)]
+analista lee gold: ok (2 filas); lee bronze: denegado (42501)
 contrato: sin columnas fuera del contrato
 tras agregar email a silver, fuera del contrato: {'silver': ['email']}
 ```
@@ -389,3 +394,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `diseno-protegido` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/data-minimization-by-layer/`) no cambia.
 - 2026-10-28: mismos errores que la revisión de P2: el art. 14 quáter nombra sus cuatro factores en el §14 y en `legal_basis`.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
+- 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI; §9 en TB (cadena de 6 nodos) y etiqueta del nodo de tests en líneas de 4 palabras o menos.

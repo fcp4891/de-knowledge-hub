@@ -333,6 +333,38 @@ if __name__ == "__main__":
 El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Imprime los plazos de una supresión ingresada el 2026-10-29 (respuesta el 2026-11-28, con prórroga el 2026-12-28, bloqueo el 2026-11-02), la respuesta de acceso armada desde el catálogo por actividad, `tablas portables: []`, y el caso de rectificación:
 
 ```text
+plazos supresión: {'respuesta': '2026-11-28', 'con_prorroga': '2026-12-28', 'bloqueo_si_se_pide': '2026-11-02'}
+{
+ "titular": "c3d3a94d7560c6ae",
+ "tratamientos": [
+  {
+   "actividad": "riesgo_fraude",
+   "finalidad": "prevenir fraude en pagos",
+   "base": "interés legítimo",
+   "plazo": "2 años",
+   "destinatarios": "procesador de pagos",
+   "tablas": [
+    "gold.score_fraude"
+   ],
+   "interes_legitimo": "prevenir fraude en pagos",
+   "logica_automatizada": "puntaje de riesgo; transacciones sobre el umbral pasan a revisión humana"
+  },
+  {
+   "actividad": "venta_pasajes",
+   "finalidad": "emitir y gestionar pasajes",
+   "base": "contrato",
+   "plazo": "5 años desde el vuelo",
+   "destinatarios": "aerolíneas socias del itinerario",
+   "tablas": [
+    "silver.pasajeros",
+    "silver.reservas"
+   ],
+   "interes_legitimo": null,
+   "logica_automatizada": null
+  }
+ ]
+}
+tablas portables: []
 tras el backfill, ¿sigue rectificado?: True
 cierre de la rectificación: no permitido: ['plataforma_campanas: pendiente']
 ```
@@ -452,3 +484,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `derechos-ciclo-vida` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/data-subject-rights-pipeline/`) no cambia.
 - 2026-10-30: Enmienda 3 de ADR-023: en §4, la tabla con la misma etiqueta en todas sus filas pasa a la línea «Etiqueta: […]» antes de la tabla, sin columna. Sin cambios de contenido.
 - 2026-10-30: Enmienda 4 de ADR-023: 5 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
+- 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.

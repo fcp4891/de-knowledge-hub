@@ -338,7 +338,11 @@ if __name__ == "__main__":
 El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. La llave HMAC se genera con `secrets` y los RUT son ficticios (dígitos repetidos). Imprime la evidencia de la supresión (1 fila en `bronze.reservas` y 1 en `silver.pasajeros`, la factura conservada por obligación legal), que la llave del titular es un valor hex de 16 caracteres sin RUT, el alcance de la lista de supresión, la reserva de mayo vencida a los 90 días, que el backfill no reintroduce al titular y qué impide dar el caso por verificado:
 
 ```text
+evidencia: {'solicitud': 'SOL-2026-0042', 'borradas': {'bronze.reservas': 1, 'silver.pasajeros': 1}, 'conservadas_por_obligacion_legal': {'gold.facturas': 1}, 'en_lista_supresion': True}
+llave del titular en la evidencia: 16 caracteres hex, sin RUT
 alcance en la lista de supresión: ['bronze.reservas', 'silver.pasajeros']
+retención vencida al 2026-10-22: {'bronze.reservas': (1, 'suprimir')}
+¿el backfill reintroduce al titular?: False
 SOL-2026-0042 aún no verificada: ['silver.pasajeros: pendiente_expiracion_copias', 'proveedor_email: pendiente', 'proveedor_email: falta evidencia']
 ```
 
@@ -565,3 +569,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: mismos errores que la revisión de P2: la nota del art. 7 dice que la lista de casos en que no procede la supresión es cerrada (i a vi), sin «entre otros»; el art. 14 quáter nombra sus cuatro factores, no solo el plazo.
 - 2026-10-30: Enmienda 3 de ADR-023: en §13, la tabla con la misma etiqueta en todas sus filas pasa a la línea «Etiqueta: […]» antes de la tabla, sin columna. Sin cambios de contenido.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
+- 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.

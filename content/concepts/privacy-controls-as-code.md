@@ -337,9 +337,20 @@ if __name__ == "__main__":
 El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Los RUT y correos de los logs son ficticios. Imprime la cobertura (3 de 5 columnas personales con etiqueta, 1 de 5 con máscara y 1 sin verificar), los resultados que no son PASS, la deriva, las pruebas negativas y el resumen; termina con código 1:
 
 ```text
+cobertura de etiquetas: 3/5; columnas PII con máscara: 1/5 (1 sin verificar)
+FAIL PII sin etiqueta: silver.pasajeros.telefono
 EXCEPCIÓN PII con demasiados lectores sin máscara (vence 2026-11-30, dueño equipo-clientes): silver.pasajeros.telefono
+FAIL PII sin etiqueta: dev.pasajeros_copia.email
+FAIL PII con demasiados lectores sin máscara: dev.pasajeros_copia.email
 FAIL PII real en ambiente no productivo (excepción vencida el 2026-10-01): dev.pasajeros_copia.email
 UNKNOWN PII de contacto sin máscara: gold.clientes_contacto.telefono
+UNKNOWN PII con demasiados lectores sin máscara: gold.clientes_contacto.telefono
+FAIL tabla sin retención o dueño: dev.pasajeros_copia
+FAIL SELECT * sobre tabla con PII: silver.pasajeros
+FAIL PII en claro en el log: línea 1
+FAIL PII en claro en el log: línea 2
+FAIL contrato sin base_licitud: gold.ventas
+FAIL contrato sin retencion_dias: gold.ventas
 DERIVA silver.pasajeros.telefono: máscara declarada en Git y ausente en producción
 pruebas negativas: 4/4 reglas detectan su caso malo
 resultados: {'EXCEPCIÓN': 1, 'FAIL': 10, 'PASS': 13, 'UNKNOWN': 2}
@@ -466,3 +477,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: §17 enlaza `gdpr` (lote P4), que cita la guía de la CNIL. Sin cambios de contenido.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-10-30: mismo hallazgo que la revisión de P4: `page_title` de Azure Policy con el H1 de la página, «List of built-in policy definitions» (ADR-012). Sin cambios de contenido.
+- 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.
