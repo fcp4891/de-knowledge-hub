@@ -48,7 +48,8 @@ relations:
 created_at: 2026-10-28
 updated_at: 2026-10-28
 last_verified: 2026-10-28
-verification_status: review_required
+owner_approved_at: 2026-11-01
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -321,7 +322,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-28: arts. 3, 14 quáter y 34 quáter consultados ese día en BCN; *Authorized views* consultada ese día. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
+2026-10-28: arts. 3, 14 quáter y 34 quáter consultados ese día en BCN; *Authorized views* consultada ese día. `verified`: aprobada por Felipe el 2026-11-01 (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -329,3 +330,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: completada con lo que pedía el prompt de P2: la tupla (rol, finalidad, dataset o producto) y el deny por defecto en el §2 y en un comentario del código (la salida no cambia), y la revisión periódica de concesiones en el §4.
 - 2026-10-28: revisión `docs/reviews/p2.md` aplicada: el art. 14 quáter nombra sus cuatro factores (número de datos, extensión, plazo y accesibilidad) en el §2 y en `legal_basis`; etiqueta del nodo de logs en dos líneas.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
+- 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).

@@ -85,7 +85,8 @@ relations:
 created_at: 2026-10-22
 updated_at: 2026-10-30
 last_verified: 2026-10-25
-verification_status: review_required
+owner_approved_at: 2026-11-01
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -463,7 +464,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-28: *Introduction to INFORMATION_SCHEMA*, *Privacy engineering* (NIST) y *GDPR developer's guide* (CNIL) consultadas ese día. Antes, 2026-10-25: textos legales vueltos a consultar en BCN, sin cambios, y 2026-10-22: arts. 3, 14 quáter, 14 quinquies, 14 septies, 36 y 49 y Decreto 662 consultados ese día. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
+2026-10-28: *Introduction to INFORMATION_SCHEMA*, *Privacy engineering* (NIST) y *GDPR developer's guide* (CNIL) consultadas ese día. Antes, 2026-10-25: textos legales vueltos a consultar en BCN, sin cambios, y 2026-10-22: arts. 3, 14 quáter, 14 quinquies, 14 septies, 36 y 49 y Decreto 662 consultados ese día. `verified`: aprobada por Felipe el 2026-11-01 (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -478,3 +479,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-10-30: mismo hallazgo que la revisión de P4: `page_title` de Azure Policy con el H1 de la página, «List of built-in policy definitions» (ADR-012). Sin cambios de contenido.
 - 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.
+- 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).

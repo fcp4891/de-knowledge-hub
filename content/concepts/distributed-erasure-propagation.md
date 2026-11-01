@@ -50,7 +50,8 @@ relations:
 created_at: 2026-10-28
 updated_at: 2026-10-28
 last_verified: 2026-10-28
-verification_status: review_required
+owner_approved_at: 2026-11-01
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -316,7 +317,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-28: arts. 7, 8 ter y 11 consultados ese día en BCN; *Order messages* consultada ese día. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual.
+2026-10-28: arts. 7, 8 ter y 11 consultados ese día en BCN; *Order messages* consultada ese día. `verified`: aprobada por Felipe el 2026-11-01 (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -324,3 +325,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: completada con lo que pedía el prompt de P2: estado `RUNNING` en el §4 y en el código (la salida no cambia) y el alcance por finalidad en el §2. Tombstones y lista no global ya estaban.
 - 2026-10-28: revisión `docs/reviews/p2.md` aplicada: la nota del art. 7 dice que la lista de casos en que no procede la supresión es cerrada (i a vi), sin «entre otros»; el diagrama del §9 pasa a TB (la cadena más larga tiene 6 nodos).
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
+- 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).

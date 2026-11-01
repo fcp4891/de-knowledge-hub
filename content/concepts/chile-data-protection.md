@@ -95,7 +95,8 @@ relations:
 created_at: 2026-10-21
 updated_at: 2026-10-30
 last_verified: 2026-10-28
-verification_status: review_required
+owner_approved_at: 2026-11-01
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -582,7 +583,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-28: textos legales vueltos a consultar en BCN (sin cambios) y estado del boletín 18.623-07 en el Senado (aprobado por el Senado y despachado a la Cámara). Antes, 2026-10-25: textos legales vueltos a consultar, sin cambios, y 2026-10-22: articulado, vigencia, estado del boletín 18.623-07 y Decreto 662 consultados ese día en BCN y en el Senado. `review_required`: pasa a `verified` solo con la aprobación explícita de Felipe (`owner_approved_at`). Revisión mensual, y extraordinaria si se publica la ley de postergación.
+2026-10-28: textos legales vueltos a consultar en BCN (sin cambios) y estado del boletín 18.623-07 en el Senado (aprobado por el Senado y despachado a la Cámara). Antes, 2026-10-25: textos legales vueltos a consultar, sin cambios, y 2026-10-22: articulado, vigencia, estado del boletín 18.623-07 y Decreto 662 consultados ese día en BCN y en el Senado. `verified`: aprobada por Felipe el 2026-11-01 (`owner_approved_at`). Revisión mensual, y extraordinaria si se publica la ley de postergación.
 
 ## 22. Historial de cambios importantes
 
@@ -603,3 +604,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: se quitan del resumen «Cómo leerla» y el subtítulo «Ley 21.719: Protección de datos personales aplicada a Ingeniería de Datos»; del §2, el párrafo del marco de la Ley 19.628/21.719 y el bloque «Precisiones transversales».
 - 2026-10-30: §17 nombra las fichas hijas nuevas `gdpr` y `lgpd` (lote P4, tramo 6 «Marcos regulatorios comparados»). Sin cambios de contenido.
 - 2026-10-30: Enmienda 4 de ADR-023: 6 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
+- 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
