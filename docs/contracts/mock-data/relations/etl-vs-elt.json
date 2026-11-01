@@ -2,6 +2,20 @@
   "slug": "etl-vs-elt",
   "groups": [
     {
+      "type": "USES",
+      "direction": "incoming",
+      "label": "used_by",
+      "items": [
+        {
+          "slug": "modern-data-warehouse-architecture",
+          "title": "Modern Data Warehouse",
+          "entity_type": "architecture",
+          "origin": "entity",
+          "note": "Se carga crudo y se transforma dentro del warehouse."
+        }
+      ]
+    },
+    {
       "type": "RELATED_TO",
       "direction": "both",
       "label": "related_to",
@@ -54,6 +68,13 @@
           "entity_type": "concept",
           "origin": "entity",
           "note": "En el warehouse cloud se carga primero y se transforma dentro (ELT)."
+        },
+        {
+          "slug": "medallion-architecture",
+          "title": "Medallion Architecture",
+          "entity_type": "architecture",
+          "origin": "entity",
+          "note": "Las capas de un ELT sobre un lakehouse."
         },
         {
           "slug": "dataflow-execution-model",

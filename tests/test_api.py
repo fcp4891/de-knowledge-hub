@@ -29,7 +29,7 @@ SCHEMAS = ROOT / "schemas"
 PREFIX = "/api/v1"
 EXCLUDED = ("/me/", "/search")
 EQUIVALENT = sorted(k for k in INDEX if split_request(k)[0] == "GET" and not any(e in k for e in EXCLUDED))
-PAGES = {p.stem for p in (ROOT / "content" / "concepts").glob("*.md")}
+PAGES = {p.stem for d in ("concepts", "architectures") for p in (ROOT / "content" / d).glob("*.md")}   # ADR-028
 API = yaml.safe_load((ROOT / "docs/contracts/api.yaml").read_text(encoding="utf-8"))
 
 

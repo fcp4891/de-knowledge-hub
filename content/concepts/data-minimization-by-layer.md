@@ -79,6 +79,9 @@ relations:
   - type: RELATED_TO
     target: retention-and-erasure
     note: La dimensión de tiempo de la minimización.
+  - type: RELATED_TO
+    target: medallion-architecture
+    note: "Las capas bronze, silver y gold."
 created_at: 2026-10-21
 updated_at: 2026-10-28
 last_verified: 2026-10-25
@@ -350,7 +353,7 @@ En Azure, **Azure SQL** con enmascaramiento dinámico. Según *Dynamic data mask
 - `pseudonymization-vs-anonymization`: silver seudonimiza.
 - `keyed-hashing`: el HMAC de silver.
 - `k-anonymity`: gold sin grupos chicos.
-- `medallion-architecture`: las capas bronze, silver y gold (pendiente de ficha).
+- `medallion-architecture`: las capas bronze, silver y gold.
 - `pii-identification`: qué columnas son personales.
 - `chile-data-protection`: ficha padre.
 - `processing-activities-inventory`: la finalidad de cada capa.
@@ -397,3 +400,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI; §9 en TB (cadena de 6 nodos) y etiqueta del nodo de tests en líneas de 4 palabras o menos.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-01: `medallion-architecture` ya tiene ficha (lote 07a): se enlaza en `relations` y en el §17 (cambio mínimo). Sin cambios de contenido.

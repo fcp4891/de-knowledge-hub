@@ -80,8 +80,8 @@
           "slug": "batch-pipeline-architecture",
           "title": "Arquitectura de pipeline batch",
           "entity_type": "architecture",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Qué cambia si se carga solo lo nuevo."
         },
         {
           "slug": "backfill",

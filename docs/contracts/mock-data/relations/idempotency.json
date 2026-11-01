@@ -2,6 +2,20 @@
   "slug": "idempotency",
   "groups": [
     {
+      "type": "USES",
+      "direction": "incoming",
+      "label": "used_by",
+      "items": [
+        {
+          "slug": "batch-pipeline-architecture",
+          "title": "Arquitectura de pipeline batch",
+          "entity_type": "architecture",
+          "origin": "entity",
+          "note": "Reemplazo de la partición: reintentar no duplica."
+        }
+      ]
+    },
+    {
       "type": "DEPENDS_ON",
       "direction": "incoming",
       "label": "dependency_of",
@@ -397,6 +411,13 @@
           "entity_type": "pattern",
           "origin": "blueprint",
           "note": null
+        },
+        {
+          "slug": "medallion-architecture",
+          "title": "Medallion Architecture",
+          "entity_type": "architecture",
+          "origin": "entity",
+          "note": "Reprocesar un lote no cambia gold."
         },
         {
           "slug": "sql-merge",

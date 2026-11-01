@@ -66,6 +66,9 @@ relations:
   - type: RELATED_TO
     target: pipeline-layers
     note: "Las capas cruda, validada y de consumo de un pipeline."
+  - type: RELATED_TO
+    target: medallion-architecture
+    note: "Las capas de un ELT sobre un lakehouse."
 created_at: 2026-09-30
 updated_at: 2026-10-13
 last_verified: 2026-09-30
@@ -181,7 +184,7 @@ ELT gana en agilidad, trazabilidad y uso del cómputo del warehouse, a cambio de
 - Con ficha: `data-transformation`.
 - `pipeline-layers`: las capas cruda, validada y de consumo de un pipeline.
 - `analytics-engineering`: los modelos en el warehouse como software (dominio 22).
-- Del blueprint, pendiente de ficha: `medallion-architecture`.
+- `medallion-architecture`: las capas de un ELT sobre un lakehouse.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -217,3 +220,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `data-transformation`, `pipeline-layers`.
 - 2026-10-26: §17 y `relations` enlazan `analytics-engineering`, creada en el lote F3b-22a (regla del §17); sin otros cambios.
+- 2026-11-01: `medallion-architecture` ya tiene ficha (lote 07a): se enlaza en `relations` y en el §17 (cambio mínimo). Sin cambios de contenido.

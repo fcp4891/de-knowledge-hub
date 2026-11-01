@@ -54,6 +54,9 @@ relations:
   - type: RELATED_TO
     target: idempotency
     note: "Reprocesar desde la capa cruda sin duplicar."
+  - type: RELATED_TO
+    target: medallion-architecture
+    note: "La arquitectura de referencia de las capas."
 created_at: 2026-10-11
 updated_at: 2026-10-13
 last_verified: 2026-10-11
@@ -249,7 +252,7 @@ Las capas dan auditoría, reproceso y aislamiento de errores, a cambio de más a
 - `data-lake` y `lakehouse`: dónde viven las capas.
 - `replay` e `idempotency`: reprocesar desde la capa cruda sin duplicar.
 - `data-vault`: un modelo posible para la capa validada.
-- Del blueprint (dominio 07), pendiente de ficha: `medallion-architecture`.
+- `medallion-architecture`: la arquitectura de referencia de estas capas.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -279,3 +282,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `idempotency`.
+- 2026-11-01: `medallion-architecture` ya tiene ficha (lote 07a): se enlaza en `relations` y en el §17 (cambio mínimo). Sin cambios de contenido.

@@ -23,6 +23,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parent.parent
 CONCEPTS = ROOT / "content" / "concepts"
+ARCHITECTURES = ROOT / "content" / "architectures"   # ADR-028
 REGISTRY_IMAGE = "registry:2@sha256:a3d8aaa63ed8681a604f1dea0aa03f100d5895b6a58ace528858a7b332415373"
 REGISTRY_PORT = 5055
 # En Git Bash, sin esto las rutas de --mount y los nombres con / se convierten a rutas de Windows.
@@ -30,8 +31,9 @@ NO_PATH_CONVERSION = {"MSYS_NO_PATHCONV": "1", "MSYS2_ARG_CONV_EXCL": "*"}
 
 
 def blocks(ficha: str, language: str) -> list[str]:
-    """Bloques ```<language> de la sección 10 de la ficha, en orden."""
-    text = (CONCEPTS / f"{ficha}.md").read_text(encoding="utf-8")
+    """Bloques ```<language> de la sección 10 de la ficha o arquitectura, en orden."""
+    path = CONCEPTS / f"{ficha}.md"
+    text = (path if path.exists() else ARCHITECTURES / f"{ficha}.md").read_text(encoding="utf-8")
     start = text.index("## 10. Código")
     section = text[start : text.index("\n## 11.", start)]
     return re.findall(rf"^```{language}\n(.*?)^```", section, re.S | re.M)

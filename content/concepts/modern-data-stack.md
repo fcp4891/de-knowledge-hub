@@ -83,6 +83,9 @@ relations:
   - type: RELATED_TO
     target: finops-for-data
     note: El costo de transformar en el motor.
+  - type: RELATED_TO
+    target: medallion-architecture
+    note: "Capas bronze, silver y gold."
 created_at: 2026-10-26
 updated_at: 2026-10-26
 last_verified: 2026-10-26
@@ -187,7 +190,7 @@ Combinar servicios especializados da velocidad y cada pieza mejora por separado,
 - `lakehouse` y `open-table-formats`: el almacenamiento.
 - `data-contracts` y `data-observability`: acuerdos y monitoreo.
 - `ci-cd-for-data` y `gitops`: el despliegue.
-- Pendiente de ficha: `medallion-architecture` (F4).
+- `medallion-architecture`: capas bronze, silver y gold.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -217,3 +220,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-26: creación (lote F3b-22a).
 - 2026-10-27: revisión B-F3.1 del lote F3b-22a aplicada (docs/reviews/cards-f3b-22a.md): el §12 y el §13 citan con «Según» las páginas de Redshift, MWAA y dbt jobs, agregadas a `sources`.
 - 2026-10-27: `verification_status: verified` (revisión aplicada; CI en verde, run 40596994498).
+- 2026-11-01: `medallion-architecture` ya tiene ficha (lote 07a): se enlaza en `relations` y en el §17 (cambio mínimo). Sin cambios de contenido.

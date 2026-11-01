@@ -20,7 +20,7 @@ from backend.content import page_sections
 ROOT = Path(__file__).resolve().parent.parent
 API = yaml.safe_load((ROOT / "docs/contracts/api.yaml").read_text(encoding="utf-8"))
 MOCKS = ROOT / "docs/contracts/mock-data"
-PAGES = {p.stem for p in (ROOT / "content" / "concepts").glob("*.md")}
+PAGES = {p.stem for d in ("concepts", "architectures") for p in (ROOT / "content" / d).glob("*.md")}   # ADR-028
 INDEX: dict[str, str] = json.loads((MOCKS / "index.json").read_text(encoding="utf-8"))
 ENUMS = json.loads((ROOT / "schemas/enums.schema.json").read_text(encoding="utf-8"))["$defs"]
 RELATIONS = json.loads((ROOT / "schemas/relationships.schema.json").read_text(encoding="utf-8"))

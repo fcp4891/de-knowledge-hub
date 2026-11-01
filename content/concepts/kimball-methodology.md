@@ -83,6 +83,9 @@ relations:
   - type: RELATED_TO
     target: semantic-models
     note: "Los modelos semánticos de Power BI (§13)."
+  - type: RELATED_TO
+    target: medallion-architecture
+    note: "Gold como capa del modelo dimensional."
 created_at: 2026-10-10
 updated_at: 2026-10-13
 last_verified: 2026-10-11
@@ -257,7 +260,7 @@ El modelo dimensional es simple de consultar y entender, a cambio de trabajo de 
 - `slowly-changing-dimensions` y `surrogate-keys`: historia y claves de las dimensiones.
 - `data-vault` y `one-big-table`: otros enfoques, que no reemplazan al dimensional.
 - `data-mesh`: dominios dueños de sus datos que los publican como productos.
-- Del blueprint (dominio 07), pendiente de ficha: `medallion-architecture`.
+- `medallion-architecture`: gold como capa del modelo dimensional.
 - `denormalization`: las decisiones de implementación en BigQuery (§11).
 - `normalization`: el modelo normalizado del sistema transaccional (§6).
 - `physical-data-model`: las decisiones de implementación en BigQuery y la prueba del grano (§10 y §11).
@@ -292,3 +295,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: §17 enlaza `data-mesh`, que ya tiene ficha (lote F3b-07a); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `data-mesh`, `one-big-table`, `slowly-changing-dimensions`, `surrogate-keys`, `denormalization`, `normalization`, `physical-data-model`, `semantic-models`; el §17 nombra `denormalization`, `normalization`, `physical-data-model`, `semantic-models`, que el cuerpo ya citaba.
+- 2026-11-01: `medallion-architecture` ya tiene ficha (lote 07a): se enlaza en `relations` y en el §17 (cambio mínimo). Sin cambios de contenido.

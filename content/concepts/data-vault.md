@@ -60,6 +60,9 @@ relations:
   - type: RELATED_TO
     target: idempotency
     note: Cargas que verifican existencia antes de insertar no duplican al re-ejecutarse.
+  - type: RELATED_TO
+    target: medallion-architecture
+    note: "Silver como capa de integración."
 created_at: 2026-10-10
 updated_at: 2026-10-13
 last_verified: 2026-10-11
@@ -271,7 +274,7 @@ No compite con el modelo dimensional: lo alimenta. Frente a una capa de integrac
 - `surrogate-key-generation` y `change-detection`: claves hash y hash diff.
 - `slowly-changing-dimensions`: historia en las dimensiones de entrega.
 - `idempotency`: cargas que se pueden repetir.
-- Del blueprint (dominio 07), pendiente de ficha: `medallion-architecture`.
+- `medallion-architecture`: las capas donde suele ubicarse el Data Vault (silver).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -301,3 +304,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): el quickstart de Snowflake pasa a Nivel 3 y deja de citarse; lo conceptual (hubs, links, satélites, claves hash, columnas de sistema) se apoya en Data Vault Alliance (Nivel 4, páginas firmadas por Daniel Linstedt) y el uso en plataforma en Microsoft Learn (Nivel 1). Se quitan las afirmaciones que solo sostenía la guía de Snowflake (año de origen, regla de inserción del satélite de esa guía, exigencia de consistencia del hash de DV2.1).
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-11-01: `medallion-architecture` ya tiene ficha (lote 07a): se enlaza en `relations` y en el §17 (cambio mínimo). Sin cambios de contenido.
