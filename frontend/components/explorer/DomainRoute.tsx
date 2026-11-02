@@ -27,6 +27,7 @@ export type RouteConcept = {
   hasPage: boolean;
   verified: boolean;
   blueprintIndex: number;
+  kind?: "concept" | "pattern" | "architecture";
 };
 
 export type RouteStage = {
@@ -269,6 +270,7 @@ export function DomainRoute({
                           state={lookup(concept.slug)}
                           recommended={recommended?.slug === concept.slug}
                           section={sections[concept.slug]}
+                          markArchitecture={id === "07" && concept.kind === "architecture"}
                         />
                       ))}
                     </div>
@@ -345,18 +347,21 @@ function ConceptCard({
   state,
   recommended,
   section,
+  markArchitecture = false,
 }: {
   concept: RouteConcept;
   state: StudyStatus;
   recommended: boolean;
   section: number | undefined;
+  markArchitecture?: boolean;
 }) {
   const level = LEVEL_NAME[concept.level];
   if (!concept.hasPage) {
     return (
-      <div className="route-card" data-pending="true">
+      <div className="route-card" data-pending="true" data-kind={markArchitecture ? "architecture" : undefined}>
         <span className="route-icon" aria-hidden="true" />
         <span className="route-card-text">
+          {markArchitecture ? <span className="route-card-kind">Arquitectura</span> : null}
           <span className="route-card-title">{concept.title}</span>
           <span className="route-card-meta">
             {level} · Sin ficha
@@ -391,11 +396,12 @@ function ConceptCard({
   const glyph = look === "done" ? "✓" : look === "review" ? "↺" : look === "next" ? "→" : "";
 
   return (
-    <Link className="route-card" data-look={look} href={`/concepts/${concept.slug}`}>
+    <Link className="route-card" data-look={look} data-kind={markArchitecture ? "architecture" : undefined} href={`/concepts/${concept.slug}`}>
       <span className="route-icon" data-look={look} aria-hidden="true">
         {glyph}
       </span>
       <span className="route-card-text">
+        {markArchitecture ? <span className="route-card-kind">Arquitectura</span> : null}
         <span className="route-card-title">{concept.title}</span>
         <span className="route-card-meta">
           {level} · {status}
