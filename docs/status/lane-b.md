@@ -3,7 +3,7 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-10-30
+**Última actualización:** 2026-11-02
 **Última actualización:** 2026-10-28
 
 ## Reglas de revisión
@@ -15,6 +15,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** revisión de arquitecturas-07a. Informe en `docs/reviews/lote-07a.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: los nombres del §4 en batch, el linaje de Knowledge Catalog, el catálogo del data lake sin página, y el workspace único de silver y gold en Fabric.
 - **Tarea activa:** `b/ui-concept-names`. En todas las fichas, un código inline que es un concepto conocido se muestra con el título de la API. Si tiene ficha, enlaza a `/concepts/<slug>/` y el enlace lleva el slug en `title`. Si está en el blueprint sin ficha, muestra el nombre y la marca «pendiente», sin enlace. El código que no es un slug se queda como código.
 - **Tarea activa:** revisión del lote P4. Informe en `docs/reviews/p4.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: el art. 3.2 dice «residan», el art. 33 pide dilación y riesgo, el art. 3 de la LGPD mira dónde está la persona, y los 3 días de la ANPD corren desde que se sabe que el incidente afectó datos personales. Propuestas bajas: el título de Azure Policy y el art. 27 b).
@@ -119,6 +121,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Tarea activa:** `b/ui-page-title` (ADR-012). Sin merge a `main`.
 - **Siguiente:** lo que asigne Felipe. Sigue abierta la revisión F3b-08c.
 - **Bloqueos:** ninguno.
+
+### Revisión · arquitecturas-07a
+- Cinco arquitecturas. Las 15 vistas quedan en 6 nodos o menos y el §18 se encadena. Propuestas media: nombres del §4 en batch, linaje en Knowledge Catalog, catálogo del data lake sin página, y silver con gold en un workspace de Fabric. No se editó `content/` ni `frontend/`.
 
 ### Revisión · lote P4
 - `gdpr` y `lgpd` quedan en `review_required`. El art. 19, II, la Res. 32/2026 y las regiones de §11–§13 coinciden con la página. Propuestas media: «residan» en el art. 3.2, el art. 33 completo, el § 1º del art. 3 de la LGPD y el inicio de los tres días en la Res. CD/ANPD 15/2024. No se editó `content/` ni `frontend/`.
@@ -447,6 +452,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - El pedido de un párrafo por nivel queda sin efecto. Esos nombres no se asignan a los tramos ni hace falta un campo nuevo: la interfaz muestra la caja «Cómo estudiar cada ficha: Comprender → Aplicar → Demostrar → Profundizar».
 
 ## Historial
+
+### Revisión · arquitecturas-07a (2026-11-02)
+- `b/review-07a`, desde `cd76503`. Informe en `docs/reviews/lote-07a.md`. Tres vistas, renombres, §9, §10 y §18. No se editó `content/` ni `frontend/`.
 
 ### Revisión · lote P4 (2026-10-30)
 - `b/review-p4`, desde `2e4b52a`. Informe en `docs/reviews/p4.md`. BOE, Câmara, Planalto, DOU y páginas de la ANPD. EUR-Lex agotó el tiempo de lectura. No se editó `content/` ni `frontend/`.
