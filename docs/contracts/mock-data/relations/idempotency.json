@@ -12,6 +12,13 @@
           "entity_type": "architecture",
           "origin": "entity",
           "note": "Reemplazo de la partición: reintentar no duplica."
+        },
+        {
+          "slug": "event-driven-architecture",
+          "title": "Event-driven architecture",
+          "entity_type": "architecture",
+          "origin": "entity",
+          "note": "Cada consumidor absorbe los reintentos."
         }
       ]
     },
@@ -180,6 +187,13 @@
           "entity_type": "architecture",
           "origin": "blueprint",
           "note": null
+        },
+        {
+          "slug": "streaming-pipeline-architecture",
+          "title": "Arquitectura de pipeline streaming",
+          "entity_type": "architecture",
+          "origin": "entity",
+          "note": "El upsert del destino absorbe los reintentos."
         },
         {
           "slug": "delivery-semantics",
@@ -392,6 +406,13 @@
           "note": "Un reintento de PutRecords puede repetir registros; el consumidor debe tolerarlo."
         },
         {
+          "slug": "lambda-architecture",
+          "title": "Lambda Architecture",
+          "entity_type": "architecture",
+          "origin": "entity",
+          "note": "La capa batch recalcula; la speed debe tolerar duplicados."
+        },
+        {
           "slug": "lambda-for-data",
           "title": "Lambda para cargas de datos",
           "entity_type": "concept",
@@ -488,6 +509,13 @@
           "entity_type": "concept",
           "origin": "entity",
           "note": "Aplicar el mismo archivo de CDC dos veces deja el mismo estado."
+        },
+        {
+          "slug": "real-time-analytics-architecture",
+          "title": "Real-time analytics",
+          "entity_type": "architecture",
+          "origin": "entity",
+          "note": "Un reintento no cuenta dos veces."
         },
         {
           "slug": "failure-recovery",

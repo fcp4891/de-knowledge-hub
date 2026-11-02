@@ -72,8 +72,9 @@ relations:
   - {type: RELATED_TO, target: pipeline-layers, note: "Landing, staging y warehouse como capas."}
   - {type: RELATED_TO, target: medallion-architecture, note: "La evolución con varias fuentes y capas."}
   - {type: RELATED_TO, target: modern-data-warehouse-architecture, note: "El warehouse que recibe las cargas."}
+  - {type: RELATED_TO, target: streaming-pipeline-architecture, note: "La evolución cuando D+1 deja de alcanzar."}
 created_at: 2026-11-01
-updated_at: 2026-11-01
+updated_at: 2026-11-02
 last_verified: 2026-11-01
 verification_status: review_required
 ---
@@ -82,7 +83,7 @@ verification_status: review_required
 
 Un pipeline batch mueve datos en lotes con una frecuencia fija: cada día (o cada hora) llega un archivo, se valida y se carga en el warehouse. La arquitectura que funciona en producción tiene una propiedad central: **cada lote reemplaza su partición completa en una sola operación**. Así, reintentar, corregir un día o rehacer un mes da el mismo resultado, sin duplicados.
 
-Conviene cuando el negocio tolera latencia de horas, los orígenes entregan archivos o extractos, y el costo y la simplicidad pesan más que la frescura. No conviene cuando se necesitan datos en segundos (`streaming-pipeline-architecture`, pendiente de ficha) o cuando cada lote es tan chico que el overhead del orquestador domina.
+Conviene cuando el negocio tolera latencia de horas, los orígenes entregan archivos o extractos, y el costo y la simplicidad pesan más que la frescura. No conviene cuando se necesitan datos en segundos (`streaming-pipeline-architecture`) o cuando cada lote es tan chico que el overhead del orquestador domina.
 
 ## 2. Escenario y requerimientos
 
@@ -293,10 +294,11 @@ El reintento no cambia nada; la corrección cambia solo el día 2; el backfill d
 - `pipeline-layers`: aterrizaje, staging y warehouse como capas.
 - `medallion-architecture`: la evolución con varias fuentes y capas.
 - `modern-data-warehouse-architecture`: el warehouse que recibe las cargas y lo que pasa dentro de él.
+- `streaming-pipeline-architecture`: la evolución cuando D+1 deja de alcanzar.
 
 ## 18. Evolución
 
-Se llega desde scripts manuales o cargas que agregan filas. Se pasa a `medallion-architecture` cuando hay varias fuentes y hace falta separar crudo, limpio y curado; a `streaming-pipeline-architecture` (pendiente de ficha) cuando D+1 deja de alcanzar. La señal: los reprocesos se vuelven frecuentes o la ventana nocturna no alcanza.
+Se llega desde scripts manuales o cargas que agregan filas. Se pasa a `medallion-architecture` cuando hay varias fuentes y hace falta separar crudo, limpio y curado; a `streaming-pipeline-architecture` cuando D+1 deja de alcanzar. La señal: los reprocesos se vuelven frecuentes o la ventana nocturna no alcanza.
 
 ## 19. Laboratorio relacionado
 
@@ -318,3 +320,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-11-01: creación (lote 07a, ADR-028).
+- 2026-11-02: lote 07b (regla del §17): relations y el §17 enlazan `streaming-pipeline-architecture`, que ya tiene ficha; antes figuraba como pendiente de ficha.

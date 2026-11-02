@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+from dataclasses import replace
 from pathlib import Path
 from typing import Any
 
@@ -137,7 +138,9 @@ def test_concept_list_covers_blueprint(index: p.ContentIndex) -> None:
 
 
 def test_concept_without_page_has_no_sections(index: p.ContentIndex) -> None:
-    detail = p.concept_detail(index, "kappa-architecture")  # arquitectura de 07, sin ficha (data-platform-engineering ya tiene, F3b-22a)
+    without = replace(index, entities={k: v for k, v in index.entities.items() if k != "kappa-architecture"},
+                      bodies={k: v for k, v in index.bodies.items() if k != "kappa-architecture"})
+    detail = p.concept_detail(without, "kappa-architecture")  # concepto del blueprint sin ficha
     assert detail["has_page"] is False and detail["sections"] == [] and detail["verification_status"] is None
 
 

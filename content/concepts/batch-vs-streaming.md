@@ -47,6 +47,12 @@ sources:
     note: Event Hubs es una plataforma de streaming con particiones ordenadas para escalar el throughput y compatibilidad con Apache Kafka que permite ejecutar cargas de Kafka existentes sin cambios de código.
 relations:
   - type: RELATED_TO
+    target: lambda-architecture
+    note: Combina batch y streaming en dos caminos.
+  - type: RELATED_TO
+    target: kappa-architecture
+    note: Un solo camino streaming, con replay para recalcular.
+  - type: RELATED_TO
     target: change-data-capture
     note: CDC convierte una base operacional en un flujo de eventos.
   - type: RELATED_TO
@@ -68,7 +74,7 @@ relations:
     target: watermarks
     note: "Cuándo se cierra una ventana en tiempo de evento."
 created_at: 2026-09-30
-updated_at: 2026-10-13
+updated_at: 2026-11-02
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -182,7 +188,8 @@ El batch es más barato, más simple de operar y de reprocesar, pero tiene más 
 - `event-time-vs-processing-time`: tiempo de evento y tiempo de procesamiento.
 - `windowing`: ventanas tumbling, sliding y de sesión.
 - `watermarks`: cuándo se da por cerrada una ventana en tiempo de evento.
-- Del blueprint, pendientes de ficha: `lambda-architecture`, `kappa-architecture`.
+- `lambda-architecture`: batch y streaming en dos caminos.
+- `kappa-architecture`: un solo camino streaming, con replay para recalcular.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -216,3 +223,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `late-arriving-data`.
 - 2026-10-19: lote F3b-14b (regla del §17): relations y el §17 enlazan `event-time-vs-processing-time`, `windowing`, `watermarks`, que ya tienen ficha; antes figuraban como pendientes de ficha.
+- 2026-11-02: lote 07b (regla del §17): relations y el §17 enlazan `lambda-architecture` y `kappa-architecture`, que ya tienen ficha; antes figuraban como pendientes de ficha.

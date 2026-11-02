@@ -124,16 +124,6 @@
           "has_page": true,
           "snippet": "Qué es una watermark en streaming según Spark 4.2.0 y Flink 2.3: la marca de cuánto avanzó el tiempo de evento, que en Spark es el máximo tiempo visto menos un umbral. Hasta ella se aceptan datos tard",
           "score": 1.8
-        },
-        {
-          "slug": "dataflow-execution-model",
-          "title": "Modelo de ejecución de Dataflow",
-          "type": "concept",
-          "domain": "gcp",
-          "classification": "modern",
-          "has_page": true,
-          "snippet": "Cómo ejecuta Dataflow un pipeline de Apache Beam según su documentación: construcción del grafo en la máquina que lanza el job y código de los DoFn en los workers; optimizaciones del servicio (fusión ",
-          "score": 1.3
         }
       ]
     },
@@ -146,19 +136,29 @@
           "type": "architecture",
           "domain": "architecture",
           "classification": "core",
-          "has_page": false,
-          "snippet": "No figura en §9 pero es una de las 5 arquitecturas de F4 (ROADMAP).",
-          "score": 5.5
+          "has_page": true,
+          "snippet": "Ingesta continua desde un broker, validación con DLQ, ventanas por tiempo de evento con watermark, checkpoints y escritura idempotente en el destino. Tres vistas, operación (lag, drain y reemplazo de ",
+          "score": 5.8
         },
         {
-          "slug": "iot-pipeline-architecture",
-          "title": "Pipeline IoT",
+          "slug": "event-driven-architecture",
+          "title": "Event-driven architecture",
           "type": "architecture",
           "domain": "architecture",
           "classification": "modern",
-          "has_page": false,
-          "snippet": "Variante de streaming, no una arquitectura de estudio prioritario.",
-          "score": 1.0
+          "has_page": true,
+          "snippet": "Servicios que publican eventos de negocio sin conocer a sus consumidores; cada consumidor lee con su propia posición, procesa de forma idempotente y puede sumarse después. Publish-subscribe frente a e",
+          "score": 1.3
+        },
+        {
+          "slug": "kappa-architecture",
+          "title": "Kappa Architecture",
+          "type": "architecture",
+          "domain": "architecture",
+          "classification": "modern",
+          "has_page": true,
+          "snippet": "Un solo camino: un log de eventos inmutable y retenido es la fuente de verdad, y toda vista sale de procesarlo en streaming. Para cambiar una regla se relee el log con un consumidor nuevo, en paralelo",
+          "score": 1.3
         }
       ]
     },

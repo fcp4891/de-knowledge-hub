@@ -56,11 +56,18 @@
           "note": "Esta ficha desarrolla el lado streaming de esa decisión."
         },
         {
+          "slug": "kappa-architecture",
+          "title": "Kappa Architecture",
+          "entity_type": "architecture",
+          "origin": "entity",
+          "note": "Un solo camino streaming, con replay para recalcular."
+        },
+        {
           "slug": "lambda-architecture",
           "title": "Lambda Architecture",
           "entity_type": "architecture",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "Los dos modos que combina."
         },
         {
           "slug": "dataflow-execution-model",

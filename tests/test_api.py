@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 import json
+import re
 from collections.abc import Iterator
 from pathlib import Path
 from typing import Any
@@ -229,17 +230,37 @@ def test_search_flags_pages(client: TestClient) -> None:
     lake = {i["slug"]: i for g in get(client, "/search", q="lakehouse").json()["groups"] for i in g["items"]}
     assert lake["lakehouse"]["has_page"] is True            # concepto con ficha (F3b-01a)
     kappa = {i["slug"]: i for g in get(client, "/search", q="kappa").json()["groups"] for i in g["items"]}
-    assert kappa["kappa-architecture"]["has_page"] is False         # arquitectura de 07-architecture, sin ficha
+    assert kappa["kappa-architecture"]["has_page"] is True          # arquitectura con ficha (lote 07b, ADR-028)
     parti = {i["slug"]: i for g in get(client, "/search", q="particion").json()["groups"] for i in g["items"]}
     assert parti["partitioning"]["has_page"] is True and parti["topics-and-partitions"]["has_page"] is True  # F3b-14a
     lam = {i["slug"]: i for g in get(client, "/search", q="lambda").json()["groups"] for i in g["items"]}
-    assert lam["lambda-architecture"]["has_page"] is False          # arquitectura de 07-architecture, sin ficha
+    assert lam["lambda-architecture"]["has_page"] is True           # arquitectura con ficha (lote 07b, ADR-028)
 
 
-def test_page_bonus_breaks_ties_in_favor_of_pages(client: TestClient) -> None:
-    items = {i["slug"]: i["score"] for g in get(client, "/search", q="lambda").json()["groups"] for i in g["items"]}
+@pytest.fixture
+def client_without_pages(content: Path) -> Iterator[TestClient]:
+    """Copia de content/ sin las fichas de Lambda y Kappa ni las relaciones hacia ellas: siguen en el blueprint, sin ficha."""
+    for slug in ("lambda-architecture", "kappa-architecture"):
+        (content / "architectures" / f"{slug}.md").unlink()
+    to_them = re.compile(r"^  - \{type: \w+, target: (lambda|kappa)-architecture,.*\n"
+                         r"|^  - type: \w+\n    target: (lambda|kappa)-architecture\n(?:    note: .*\n)?", re.M)
+    for page in content.rglob("*.md"):
+        text = page.read_text(encoding="utf-8")
+        if to_them.search(text):
+            page.write_text(to_them.sub("", text), encoding="utf-8", newline="\n")
+    with temporary_database() as engine:
+        compile_content(engine, content, SCHEMAS)
+        with TestClient(create_app(engine)) as test_client:
+            yield test_client
+
+
+def test_search_flags_blueprint_concepts_without_page(client_without_pages: TestClient) -> None:
+    kappa = {i["slug"]: i for g in get(client_without_pages, "/search", q="kappa").json()["groups"] for i in g["items"]}
+    assert kappa["kappa-architecture"]["has_page"] is False
+    items = {i["slug"]: i for g in get(client_without_pages, "/search", q="lambda").json()["groups"] for i in g["items"]}
+    assert items["lambda-architecture"]["has_page"] is False
     # Misma coincidencia en el título ("AWS Lambda" y "Lambda Architecture"); gana el que tiene ficha, por PAGE_BONUS.
-    assert items["aws-lambda"] > items["lambda-architecture"]
+    assert items["aws-lambda"]["score"] > items["lambda-architecture"]["score"]
 
 
 def test_search_finds_snippets(client: TestClient) -> None:

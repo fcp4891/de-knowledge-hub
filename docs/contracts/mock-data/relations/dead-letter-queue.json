@@ -2,6 +2,27 @@
   "slug": "dead-letter-queue",
   "groups": [
     {
+      "type": "USES",
+      "direction": "incoming",
+      "label": "used_by",
+      "items": [
+        {
+          "slug": "streaming-pipeline-architecture",
+          "title": "Arquitectura de pipeline streaming",
+          "entity_type": "architecture",
+          "origin": "entity",
+          "note": "Lo ilegible sale del camino principal."
+        },
+        {
+          "slug": "event-driven-architecture",
+          "title": "Event-driven architecture",
+          "entity_type": "architecture",
+          "origin": "entity",
+          "note": "Lo que un consumidor no puede procesar."
+        }
+      ]
+    },
+    {
       "type": "IMPLEMENTS",
       "direction": "incoming",
       "label": "implemented_by",

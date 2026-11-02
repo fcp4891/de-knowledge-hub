@@ -47,6 +47,9 @@ sources:
     note: "Beam Programming Guide, watermarks y datos tardíos: con la configuración de ventanas y el trigger por defecto, el trigger emite exactamente una vez y los datos tardíos se descartan, porque la configuración de ventanas por defecto tiene allowed lateness 0. Para procesar datos que llegan después de que el watermark pasa el final de la ventana, se configura allowed lateness al definir la ventana."
 relations:
   - type: RELATED_TO
+    target: streaming-pipeline-architecture
+    note: La arquitectura de referencia del pipeline streaming.
+  - type: RELATED_TO
     target: dataflow-execution-model
     note: Cómo ejecuta Dataflow un pipeline, en general.
   - type: RELATED_TO
@@ -65,7 +68,7 @@ relations:
     target: watermarks
     note: "Cuándo se cierra una ventana en tiempo de evento."
 created_at: 2026-10-11
-updated_at: 2026-10-13
+updated_at: 2026-11-02
 last_verified: 2026-10-12
 verification_status: verified
 ---
@@ -236,7 +239,7 @@ Las ventanas por tiempo de evento dan resultados correctos aunque los datos lleg
 - `checkpoints`: el estado y la recuperación en streaming.
 - `late-arriving-data` y `streaming-ingestion`: datos tardíos e ingesta continua.
 - `watermarks`: cuándo se da por cerrada una ventana en tiempo de evento.
-- Del blueprint, pendiente de ficha: `streaming-pipeline-architecture` (arquitectura de F4).
+- `streaming-pipeline-architecture`: la arquitectura de referencia del pipeline streaming.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -266,3 +269,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-12: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-19: lote F3b-14b (regla del §17): relations y el §17 enlazan `watermarks`, que ya tiene ficha; antes figuraba como pendiente de ficha.
+- 2026-11-02: lote 07b (regla del §17): relations y el §17 enlazan `streaming-pipeline-architecture`, que ya tiene ficha; antes figuraba como pendiente de ficha.
