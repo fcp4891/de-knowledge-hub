@@ -423,12 +423,6 @@ function ArticleBody({ article }: { article: ChileArticle }) {
         <dt>Implicancia técnica</dt>
         <dd>{article.implication}</dd>
       </div>
-      {article.precision ? (
-        <div>
-          <dt>Alcance y precisión</dt>
-          <dd>{article.precision}</dd>
-        </div>
-      ) : null}
       <div>
         <dt>Ficha relacionada</dt>
         <dd>

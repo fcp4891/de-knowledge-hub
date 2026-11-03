@@ -2,6 +2,7 @@ import { InlineText } from "@/components/markdown/InlineText";
 import { PipelineSteps } from "@/components/markdown/PipelineSteps";
 import type { ConceptRefs } from "@/lib/conceptNames";
 import { annotateCode, type CodeAnnotation, type CodePresentation } from "@/lib/codeBlocks";
+import { horizontalFlowchart } from "@/lib/diagramDirection";
 import { articleMapColumns, droppedEtiquetaIndex, type ObligationBasis } from "@/lib/legal";
 import { groupEvidence, parseMarkdown, type Block, type EvidenceGroup, type Inline } from "@/lib/markdown";
 import { readPipeline } from "@/lib/pipeline";
@@ -12,12 +13,14 @@ export async function MarkdownBody({
   obligations = [],
   conceptRefs,
   markCodeStatus = false,
+  horizontalDiagrams = false,
 }: {
   markdown: string;
   etiquetaColumn?: boolean;
   obligations?: readonly ObligationBasis[];
   conceptRefs?: ConceptRefs;
   markCodeStatus?: boolean;
+  horizontalDiagrams?: boolean;
 }) {
   const blocks = parseMarkdown(markdown);
   const notes = annotateCode(blocks);
@@ -41,6 +44,7 @@ export async function MarkdownBody({
             conceptRefs={conceptRefs}
             markCodeStatus={markCodeStatus}
             notes={notes}
+            horizontalDiagrams={horizontalDiagrams}
             CodeBlock={codeBlock}
             MermaidDiagram={mermaidDiagram}
           />
@@ -53,6 +57,7 @@ export async function MarkdownBody({
             obligations={obligations}
             conceptRefs={conceptRefs}
             annotation={notes.get(block)}
+            horizontalDiagrams={horizontalDiagrams}
             CodeBlock={codeBlock}
             MermaidDiagram={mermaidDiagram}
           />
@@ -69,6 +74,7 @@ function EvidenceBlock({
   conceptRefs,
   markCodeStatus,
   notes,
+  horizontalDiagrams,
   CodeBlock,
   MermaidDiagram,
 }: {
@@ -78,6 +84,7 @@ function EvidenceBlock({
   conceptRefs?: ConceptRefs;
   markCodeStatus: boolean;
   notes: WeakMap<Block, CodeAnnotation>;
+  horizontalDiagrams: boolean;
   CodeBlock: ((props: CodePresentation) => React.ReactNode) | null;
   MermaidDiagram: ((props: { source: string }) => React.ReactNode) | null;
 }) {
@@ -100,6 +107,7 @@ function EvidenceBlock({
           obligations={obligations}
           conceptRefs={conceptRefs}
           annotation={notes.get(block)}
+          horizontalDiagrams={horizontalDiagrams}
           CodeBlock={CodeBlock}
           MermaidDiagram={MermaidDiagram}
         />
@@ -115,6 +123,7 @@ function MarkdownBlock({
   conceptRefs,
   markCodeStatus,
   annotation,
+  horizontalDiagrams,
   CodeBlock,
   MermaidDiagram,
 }: {
@@ -124,6 +133,7 @@ function MarkdownBlock({
   conceptRefs?: ConceptRefs;
   markCodeStatus: boolean;
   annotation?: CodeAnnotation;
+  horizontalDiagrams: boolean;
   CodeBlock: ((props: CodePresentation) => React.ReactNode) | null;
   MermaidDiagram: ((props: { source: string }) => React.ReactNode) | null;
 }) {
@@ -131,7 +141,8 @@ function MarkdownBlock({
     return <h3>{block.text}</h3>;
   }
   if (block.type === "code" && block.language === "mermaid") {
-    return MermaidDiagram ? <MermaidDiagram source={block.code} /> : <pre>{block.code}</pre>;
+    const source = horizontalDiagrams ? horizontalFlowchart(block.code) : block.code;
+    return MermaidDiagram ? <MermaidDiagram source={source} /> : <pre>{source}</pre>;
   }
   if (block.type === "code") {
     if (annotation?.role === "output") return null;

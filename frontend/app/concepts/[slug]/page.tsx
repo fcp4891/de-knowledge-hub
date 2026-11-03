@@ -18,7 +18,7 @@ import { nextInRoute } from "@/lib/domainRoute";
 import { staticSlugs } from "@/lib/staticParams";
 
 const CLOUD_KEYS = new Set(["gcp", "aws", "azure"]);
-const OPEN_NUMBERS = new Set([3, 10]);
+const OPEN_NUMBERS = new Set<number>();
 
 // El build estático cambia este literal a false: Next solo acepta true o false.
 export const dynamicParams = true;
@@ -192,7 +192,13 @@ function sectionModels(
             : "details",
       listed: true,
       body: (
-        <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} />
+        <MarkdownBody
+          markdown={section.markdown}
+          obligations={obligations}
+          conceptRefs={conceptRefs}
+          markCodeStatus={architecture}
+          horizontalDiagrams={section.key === "architecture"}
+        />
       ),
     });
   }
