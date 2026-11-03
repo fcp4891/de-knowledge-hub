@@ -7,6 +7,20 @@
       "label": "used_by",
       "items": [
         {
+          "slug": "api-to-warehouse-architecture",
+          "title": "API → Data Warehouse",
+          "entity_type": "architecture",
+          "origin": "entity",
+          "note": "Reintentar no duplica páginas ni filas."
+        },
+        {
+          "slug": "cdc-architecture",
+          "title": "Arquitectura CDC (PostgreSQL → BigQuery)",
+          "entity_type": "architecture",
+          "origin": "entity",
+          "note": "Reaplicar un lote no cambia el destino."
+        },
+        {
           "slug": "batch-pipeline-architecture",
           "title": "Arquitectura de pipeline batch",
           "entity_type": "architecture",
@@ -448,6 +462,13 @@
           "note": "MERGE con clave y condición de versión es la forma habitual de escribir idempotentemente en un warehouse."
         },
         {
+          "slug": "ml-feature-pipeline-architecture",
+          "title": "ML feature pipeline",
+          "entity_type": "architecture",
+          "origin": "entity",
+          "note": "Recalcular una feature no la duplica."
+        },
+        {
           "slug": "dataflow-execution-model",
           "title": "Modelo de ejecución de Dataflow",
           "entity_type": "concept",
@@ -467,6 +488,13 @@
           "entity_type": "concept",
           "origin": "entity",
           "note": "Un operador propio debe dar el mismo resultado al reintentarse."
+        },
+        {
+          "slug": "iot-pipeline-architecture",
+          "title": "Pipeline IoT",
+          "entity_type": "architecture",
+          "origin": "entity",
+          "note": "Reintentos del dispositivo."
         },
         {
           "slug": "event-driven-pipelines",
@@ -495,6 +523,13 @@
           "entity_type": "pattern",
           "origin": "entity",
           "note": "Re-ejecutar el lote bloqueado no duplica lo publicado."
+        },
+        {
+          "slug": "rag-data-pipeline-architecture",
+          "title": "RAG data pipeline",
+          "entity_type": "architecture",
+          "origin": "entity",
+          "note": "Sincronizar dos veces no cambia el índice."
         },
         {
           "slug": "rag-over-technical-docs",

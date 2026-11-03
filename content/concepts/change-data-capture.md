@@ -52,6 +52,9 @@ sources:
     note: CDC de SQL Server lee el log de transacciones y escribe tablas de cambios; aplica a SQL Server, Azure SQL Managed Instance y Azure SQL Database.
 relations:
   - type: RELATED_TO
+    target: cdc-architecture
+    note: La arquitectura de referencia PostgreSQL → BigQuery.
+  - type: RELATED_TO
     target: idempotency
     note: Los consumidores de CDC deben aplicar cambios de forma idempotente ante reentregas.
   - type: RELATED_TO
@@ -67,7 +70,7 @@ relations:
     target: schema-evolution
     note: "Evolución de esquema."
 created_at: 2026-09-28
-updated_at: 2026-10-13
+updated_at: 2026-11-03
 last_verified: 2026-09-30
 verification_status: verified
 ---
@@ -183,7 +186,7 @@ Menor latencia y carga de lectura sobre el origen, a cambio de más complejidad 
 - `scd-type-2`: conserva cada versión del registro.
 - Con ficha: `schema-evolution`.
 - `database-ingestion`: elegir entre carga completa, incremental por watermark o CDC.
-- Del blueprint, pendiente de ficha: `cdc-architecture`.
+- `cdc-architecture`: la arquitectura de referencia PostgreSQL → BigQuery.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -219,3 +222,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: §17 enlaza `database-ingestion`, que ya tiene ficha (lote F3b-05a); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `database-ingestion`, `schema-evolution`.
+- 2026-11-03: lote 07c (regla del §17): relations y el §17 enlazan `cdc-architecture`, que ya tiene ficha; antes figuraba como pendiente de ficha.

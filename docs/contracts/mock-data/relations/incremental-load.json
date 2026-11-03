@@ -21,6 +21,13 @@
       "label": "used_by",
       "items": [
         {
+          "slug": "api-to-warehouse-architecture",
+          "title": "API → Data Warehouse",
+          "entity_type": "architecture",
+          "origin": "entity",
+          "note": "El watermark: solo lo cambiado."
+        },
+        {
           "slug": "incremental-pipelines",
           "title": "Pipelines incrementales",
           "entity_type": "pattern",

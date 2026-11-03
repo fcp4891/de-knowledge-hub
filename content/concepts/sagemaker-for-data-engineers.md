@@ -63,6 +63,9 @@ sources:
     note: "Get batch inferences from a custom trained model: la solicitud indica una fuente de entrada y una ubicación de salida en Cloud Storage o BigQuery, en la misma región o multirregión."
 relations:
   - type: RELATED_TO
+    target: ml-feature-pipeline-architecture
+    note: La arquitectura de referencia de features para ML.
+  - type: RELATED_TO
     target: vertex-ai-for-data-engineers
     note: La plataforma de IA de GCP; no son lo mismo.
   - type: RELATED_TO
@@ -75,7 +78,7 @@ relations:
     target: late-arriving-data
     note: El event time ordena los registros de features que llegan tarde.
 created_at: 2026-10-12
-updated_at: 2026-10-13
+updated_at: 2026-11-03
 last_verified: 2026-10-13
 verification_status: verified
 ---
@@ -253,7 +256,7 @@ Feature Store da consistencia entre entrenamiento y predicción y un historial e
 - `bedrock-for-data-engineers`: modelos fundacionales en AWS.
 - `s3-data-lake`: el store offline y los datos de batch transform.
 - `late-arriving-data`: el event time.
-- Del blueprint, pendiente de ficha: `ml-feature-pipeline-architecture` (arquitectura de F4).
+- `ml-feature-pipeline-architecture`: la arquitectura de referencia de features para ML.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -280,3 +283,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-12: creación (lote F3b-09b), con el nombre actual del servicio según su página y «Amazon SageMaker» como alias de búsqueda de la tecnología.
 - 2026-10-13: revisión B-F3.1 del lote F3b-09b aplicada (docs/reviews/cards-f3b-09b.md): el §11 compara con Agent Platform (feature store e inferencia por lotes de modelos propios), con fuente de cada lado.
 - 2026-10-13: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-11-03: lote 07c (regla del §17): relations y el §17 enlazan `ml-feature-pipeline-architecture`, que ya tiene ficha; antes figuraba como pendiente de ficha.

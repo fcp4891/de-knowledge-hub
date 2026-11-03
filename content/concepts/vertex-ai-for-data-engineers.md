@@ -48,6 +48,9 @@ sources:
     note: "Introduction to ML in BigQuery: BigQuery ML crea y ejecuta modelos de ML con GoogleSQL o la consola; los modelos se guardan en datasets de BigQuery, como tablas y vistas. También accede a modelos de Gemini Enterprise Agent Platform y a APIs de Cloud AI; los modelos remotos referencian modelos desplegados en Agent Platform por su endpoint, y su CREATE MODEL no procesa bytes ni tiene costo de BigQuery."
 relations:
   - type: RELATED_TO
+    target: ml-feature-pipeline-architecture
+    note: La arquitectura de referencia de features para ML.
+  - type: RELATED_TO
     target: rag
     note: Recuperar datos propios para el modelo (dominio 21).
   - type: RELATED_TO
@@ -63,7 +66,7 @@ relations:
     target: bigquery-security
     note: Los controles sobre las tablas de features.
 created_at: 2026-10-11
-updated_at: 2026-10-13
+updated_at: 2026-11-03
 last_verified: 2026-10-12
 verification_status: verified
 ---
@@ -227,7 +230,7 @@ BigQuery ML deja entrenar y predecir sin salir del warehouse, con menos control 
 - `orchestration-landscape`: los orquestadores de datos frente a los de ML.
 - `bigquery-security`: los controles sobre las tablas de features.
 - `rag`: recuperar datos propios para el modelo (dominio 21).
-- Del blueprint, pendiente de ficha: `ml-feature-pipeline-architecture` (arquitectura, Backlog).
+- `ml-feature-pipeline-architecture`: la arquitectura de referencia de features para ML.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -258,3 +261,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-25: §17 y `relations` enlazan `rag`, creadas en el lote F3b-21b (regla del §17); sin otros cambios.
 - 2026-10-26: cambio mínimo en la nota de la fuente, el §1 y el §11: la tabla de *Gemini Enterprise Agent Platform name changes* no tiene una fila «Vertex AI» → «Agent Platform» (hallazgo de la revisión de 21a); se cita solo «Vertex AI Platform» → «Gemini Enterprise Agent Platform». «Agent Platform» sigue como alias de búsqueda. Sin cambio de estado.
+- 2026-11-03: lote 07c (regla del §17): relations y el §17 enlazan `ml-feature-pipeline-architecture`, que ya tiene ficha; antes figuraba como pendiente de ficha.

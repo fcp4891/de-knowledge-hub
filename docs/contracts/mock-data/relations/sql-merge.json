@@ -7,6 +7,13 @@
       "label": "used_by",
       "items": [
         {
+          "slug": "cdc-architecture",
+          "title": "Arquitectura CDC (PostgreSQL → BigQuery)",
+          "entity_type": "architecture",
+          "origin": "entity",
+          "note": "Aplicar cambios en el destino."
+        },
+        {
           "slug": "incremental-load",
           "title": "Carga incremental",
           "entity_type": "pattern",

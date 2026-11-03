@@ -77,6 +77,9 @@ sources:
     note: "AWS DMS Serverless components: se indican las DMS capacity units (DCU) mínimas y máximas; una DCU son 2 GB de RAM; se cobra cada DCU en uso."
 relations:
   - type: RELATED_TO
+    target: cdc-architecture
+    note: La arquitectura de referencia de CDC desde PostgreSQL.
+  - type: RELATED_TO
     target: database-ingestion
     note: Las formas de sacar datos de una base relacional.
   - type: RELATED_TO
@@ -95,7 +98,7 @@ relations:
     target: incremental-load
     note: Carga completa una vez y después solo los cambios.
 created_at: 2026-10-12
-updated_at: 2026-10-12
+updated_at: 2026-11-03
 last_verified: 2026-10-13
 verification_status: verified
 ---
@@ -331,7 +334,7 @@ La réplica es simple y da SQL completo, pero cada extracción lee todo lo que p
 - `incremental-load` e `idempotency`: aplicar solo cambios, sin duplicar.
 - `cloud-sql-as-source`: el caso en GCP.
 - `s3-data-lake`: el destino.
-- Del blueprint, pendiente de ficha: `cdc-architecture` (arquitectura de F4).
+- `cdc-architecture`: la arquitectura de referencia de CDC desde PostgreSQL.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -359,3 +362,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-12: creación (lote F3b-09b).
 - 2026-10-13: revisión B-F3.1 del lote F3b-09b aplicada (docs/reviews/cards-f3b-09b.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-13: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-11-03: lote 07c (regla del §17): relations y el §17 enlazan `cdc-architecture`, que ya tiene ficha; antes figuraba como pendiente de ficha.

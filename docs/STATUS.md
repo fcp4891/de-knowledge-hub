@@ -36,7 +36,7 @@
 - [x] 04-data-modeling: 17/17 `verified`, aprobado por Felipe en el navegador el 2026-10-11.
 - [x] 05-pipelines: 16/16 `verified`, aprobado por Felipe en el navegador el 2026-10-11.
 - [x] 06-orchestration: 12/12 `verified`, aprobado por Felipe en el navegador el 2026-10-11.
-- [ ] 07-architecture: 2/2 conceptos `verified` (aprobados el 2026-10-11). Las 15 arquitecturas pasan a F3b (ADR-028, 2026-11-01): 07a (5) y 07b (5) en revisión; 07c pendiente. F4 queda para los laboratorios en la nube.
+- [ ] 07-architecture: 2/2 conceptos `verified` (aprobados el 2026-10-11). Las 15 arquitecturas pasan a F3b (ADR-028, 2026-11-01): 07a, 07b y 07c (5 cada uno) en revisión: las 15 tienen ficha. F4 queda para los laboratorios en la nube.
 - [x] 08-gcp: 31/31 `verified`, aprobado por Felipe en el navegador el 2026-10-12. Sus 15 arquitecturas no son de F3b: 6 en F4 (ROADMAP) y 9 en el Backlog.
 - [x] 09-aws: 16/16 `verified`, aprobado por Felipe en el navegador el 2026-10-13.
 - [x] 10-azure: 14/14 `verified`, aprobado por Felipe en el navegador el 2026-10-14.

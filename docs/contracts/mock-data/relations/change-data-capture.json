@@ -2,6 +2,20 @@
   "slug": "change-data-capture",
   "groups": [
     {
+      "type": "USES",
+      "direction": "incoming",
+      "label": "used_by",
+      "items": [
+        {
+          "slug": "cdc-architecture",
+          "title": "Arquitectura CDC (PostgreSQL → BigQuery)",
+          "entity_type": "architecture",
+          "origin": "entity",
+          "note": "El concepto que esta arquitectura despliega."
+        }
+      ]
+    },
+    {
       "type": "IMPLEMENTS",
       "direction": "incoming",
       "label": "implemented_by",
@@ -45,8 +59,8 @@
           "slug": "cdc-architecture",
           "title": "Arquitectura CDC (PostgreSQL → BigQuery)",
           "entity_type": "architecture",
-          "origin": "blueprint",
-          "note": null
+          "origin": "entity",
+          "note": "La arquitectura de referencia PostgreSQL → BigQuery."
         },
         {
           "slug": "aws-dms",

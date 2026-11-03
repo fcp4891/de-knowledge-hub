@@ -1809,6 +1809,24 @@ updated_at: '2026-10-12'
 last_verified: '2026-10-12'
 verification_status: verified
 ---
+id: source:aws-iot-docs
+slug: aws-iot-docs
+type: source
+title: AWS IoT Core Developer Guide
+description: 'Guía oficial para desarrolladores de AWS IoT Core: conexión de dispositivos, mensajería y reglas.'
+url: https://docs.aws.amazon.com/iot/latest/developerguide/what-is-aws-iot.html
+source_type: official_docs
+authority_level: 1
+provider: aws
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-11-03'
+updated_at: '2026-11-03'
+last_verified: '2026-11-03'
+verification_status: verified
+---
 id: source:aws-cloudwatch-docs
 slug: aws-cloudwatch-docs
 type: source

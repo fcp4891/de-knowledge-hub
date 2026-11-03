@@ -2001,9 +2001,9 @@
       "level": "advanced",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-11-03"
     },
     {
       "slug": "api-to-warehouse-architecture",
@@ -2015,9 +2015,9 @@
       "level": "intermediate",
       "importance": "high",
       "mvp": true,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-11-03"
     },
     {
       "slug": "iot-pipeline-architecture",
@@ -2029,9 +2029,9 @@
       "level": "advanced",
       "importance": "low",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-11-03"
     },
     {
       "slug": "ml-feature-pipeline-architecture",
@@ -2043,9 +2043,9 @@
       "level": "advanced",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-11-03"
     },
     {
       "slug": "rag-data-pipeline-architecture",
@@ -2057,9 +2057,9 @@
       "level": "advanced",
       "importance": "medium",
       "mvp": false,
-      "has_page": false,
-      "verification_status": null,
-      "last_verified": null
+      "has_page": true,
+      "verification_status": "review_required",
+      "last_verified": "2026-11-03"
     },
     {
       "slug": "data-mesh",

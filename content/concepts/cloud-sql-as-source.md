@@ -47,6 +47,9 @@ sources:
     note: "About replication in Cloud SQL: la instancia principal y las réplicas de lectura residen en Cloud SQL; también se puede replicar desde un servidor externo."
 relations:
   - type: RELATED_TO
+    target: cdc-architecture
+    note: La arquitectura de referencia de CDC desde PostgreSQL.
+  - type: RELATED_TO
     target: change-data-capture
     note: Datastream es CDC administrado.
   - type: RELATED_TO
@@ -59,7 +62,7 @@ relations:
     target: python-database-io
     note: Leer la base desde Python, para extracciones propias.
 created_at: 2026-10-11
-updated_at: 2026-10-13
+updated_at: 2026-11-03
 last_verified: 2026-10-12
 verification_status: verified
 ---
@@ -232,7 +235,7 @@ Datastream da una copia casi en tiempo real sin consultar las tablas, a cambio d
 - `change-data-capture` y `database-ingestion`: CDC y las opciones de ingesta.
 - `bigquery-slots`: la reserva para los merges.
 - `python-database-io`: extracciones propias desde Python.
-- Del blueprint, pendiente de ficha: `cdc-architecture` (arquitectura de F4).
+- `cdc-architecture`: la arquitectura de referencia de CDC desde PostgreSQL.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -260,3 +263,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-12: revisión B-F3.1 del lote F3b-08c aplicada (docs/reviews/cards-f3b-08c.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-12: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
+- 2026-11-03: lote 07c (regla del §17): relations y el §17 enlazan `cdc-architecture`, que ya tiene ficha; antes figuraba como pendiente de ficha.
