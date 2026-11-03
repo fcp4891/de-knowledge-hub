@@ -358,7 +358,7 @@ function ConceptCard({
   const level = LEVEL_NAME[concept.level];
   if (!concept.hasPage) {
     return (
-      <div className="route-card" data-pending="true" data-kind={markArchitecture ? "architecture" : undefined}>
+      <div className="route-card" data-pending="true">
         <span className="route-icon" aria-hidden="true" />
         <span className="route-card-text">
           {markArchitecture ? <span className="route-card-kind">Arquitectura</span> : null}
@@ -396,7 +396,7 @@ function ConceptCard({
   const glyph = look === "done" ? "✓" : look === "review" ? "↺" : look === "next" ? "→" : "";
 
   return (
-    <Link className="route-card" data-look={look} data-kind={markArchitecture ? "architecture" : undefined} href={`/concepts/${concept.slug}`}>
+    <Link className="route-card" data-look={look} href={`/concepts/${concept.slug}`}>
       <span className="route-icon" data-look={look} aria-hidden="true">
         {glyph}
       </span>
