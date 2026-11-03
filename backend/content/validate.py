@@ -697,9 +697,8 @@ def check_legal_source(doc: Document, report: Report) -> None:
 
 
 def check_without_jurisdiction(doc: Document, by_slug: dict[str, Document], report: Report) -> None:
-    for f in ("legal_basis", "owner_approved_at"):
-        if f in doc.data:
-            report.add(doc.location, f"[{f}] requiere jurisdiction (ADR-023)")
+    if "legal_basis" in doc.data:   # owner_approved_at se permite en cualquier ficha (ADR-023, Enmienda 6)
+        report.add(doc.location, "[legal_basis] requiere jurisdiction (ADR-023)")
     for i, ref in enumerate(doc.data.get("sources", [])):
         target = by_slug.get(ref["source"])
         if target is not None and target.data.get("source_type") == LEGISLATIVE:

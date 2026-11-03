@@ -78,9 +78,10 @@ relations:
   - {type: RELATED_TO, target: lakehouse-architecture, note: "La alternativa sobre formatos abiertos."}
   - {type: ALTERNATIVE_TO, target: data-lake-architecture, note: "Cualquier formato y almacenamiento barato."}
 created_at: 2026-11-01
-updated_at: 2026-11-02
+updated_at: 2026-11-03
 last_verified: 2026-11-01
-verification_status: review_required
+owner_approved_at: 2026-11-03
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -345,9 +346,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-11-01: fichas de origen de cada cita revisadas; las páginas se consultaron en las fechas de `sources`. `review_required` hasta la revisión.
+2026-11-01: fichas de origen de cada cita revisadas; las páginas se consultaron en las fechas de `sources`. `verified`: aprobada por Felipe el 2026-11-03 (`owner_approved_at`).
 
 ## 22. Historial de cambios importantes
 
 - 2026-11-01: creación (lote 07a, ADR-028).
 - 2026-11-02: revisión de 07a aplicada (docs/reviews/lote-07a.md): la nota de *BigQuery overview* dice lo que dice la página (gobierno y búsqueda semántica con Knowledge Catalog, sin linaje); las vistas usan los nombres del §4.
+- 2026-11-03: `verification_status: verified`, aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-03`).

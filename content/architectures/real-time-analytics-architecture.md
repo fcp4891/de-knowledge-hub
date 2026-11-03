@@ -96,7 +96,8 @@ relations:
 created_at: 2026-11-02
 updated_at: 2026-11-03
 last_verified: 2026-11-02
-verification_status: review_required
+owner_approved_at: 2026-11-03
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -325,7 +326,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-11-02: fichas de origen de cada cita revisadas; las páginas se consultaron en las fechas de `sources`. `review_required` hasta la revisión.
+2026-11-02: fichas de origen de cada cita revisadas; las páginas se consultaron en las fechas de `sources`. `verified`: aprobada por Felipe el 2026-11-03 (`owner_approved_at`).
 
 ## 22. Historial de cambios importantes
 
@@ -333,3 +334,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-02: las tres vistas usan los nombres del §4 (criterio de la revisión de 07a).
 - 2026-11-03: el §19 ya no promete un laboratorio en F4: el ROADMAP lo deja para las 6 arquitecturas de F4, y esta no está entre ellas.
 - 2026-11-03: revisión de 07b aplicada (docs/reviews/lote-07b.md): el §3 tiene el nodo «Medición de frescura» del §4.
+- 2026-11-03: `verification_status: verified`, aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-03`).

@@ -77,9 +77,10 @@ relations:
   - {type: RELATED_TO, target: medallion-architecture, note: "Las mismas zonas con nombres bronze, silver y gold."}
   - {type: ALTERNATIVE_TO, target: modern-data-warehouse-architecture, note: "SQL y concurrencia con el formato del motor."}
 created_at: 2026-11-01
-updated_at: 2026-11-02
+updated_at: 2026-11-03
 last_verified: 2026-11-01
-verification_status: review_required
+owner_approved_at: 2026-11-03
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -303,9 +304,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-11-01: fichas de origen de cada cita revisadas; las páginas se consultaron en las fechas de `sources`. `review_required` hasta la revisión.
+2026-11-01: fichas de origen de cada cita revisadas; las páginas se consultaron en las fechas de `sources`. `verified`: aprobada por Felipe el 2026-11-03 (`owner_approved_at`).
 
 ## 22. Historial de cambios importantes
 
 - 2026-11-01: creación (lote 07a, ADR-028).
 - 2026-11-02: revisión de 07a aplicada (docs/reviews/lote-07a.md): la fila de catálogo del §11 cita *About metadata in Knowledge Catalog*; las vistas usan los nombres del §4 («Zona de cuarentena»).
+- 2026-11-03: `verification_status: verified`, aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-03`).

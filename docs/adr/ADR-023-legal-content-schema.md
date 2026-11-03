@@ -212,3 +212,11 @@ Pedida por Felipe el 2026-10-24, junto con la aceptación de ADR-024.
   - Cuatro tests en `tests/test_validate_legal.py`: caso válido, artículo sin `legal_basis`, mismo número en dos leyes y cita no legislative.
 - **Contrato (cambio aditivo):** `Jurisdiction` acepta `EU` y `BR`, y `LegalBasis.law` acepta `eu-2016-679` y `br-lei-13709`, en `docs/contracts/api.yaml`.
 - **Pedido a Carril B:** regenerar `frontend/lib/api/schema.d.ts`, y que el superíndice y el enlace a la fila de la Base legal reconozcan «GDPR art. N» y «LGPD art. N».
+
+## Enmienda 6 — `owner_approved_at` en cualquier ficha (2026-11-03)
+
+- Decisión de Felipe: aprobó con lista explícita 24 fichas sin `jurisdiction` (las 15 arquitecturas de 07 y 9 fichas de 23) y pidió registrar la fecha en `owner_approved_at`.
+- **`owner_approved_at`** se permite en cualquier ficha como registro de la aprobación explícita del dueño. Sigue siendo **obligatorio para `verified` solo en las fichas con `jurisdiction`**; en las demás, `verified` no lo exige.
+- **`legal_basis`** sigue exigiendo `jurisdiction`.
+- **Implementación:** `check_without_jurisdiction` en `backend/content/validate.py` ya no rechaza `owner_approved_at`; la descripción del campo en `schemas/base.schema.json` lo dice (sin cambio de forma). Test en `tests/test_validate_legal.py`.
+- **Contrato:** sin cambios; el campo no se publica en la API.

@@ -54,7 +54,8 @@ relations:
 created_at: 2026-11-03
 updated_at: 2026-11-03
 last_verified: 2026-11-03
-verification_status: review_required
+owner_approved_at: 2026-11-03
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -265,9 +266,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-11-03: fichas de origen de cada cita revisadas y *What is managed feature store?* leída hoy (H1 y contenido). `review_required` hasta la revisión.
+2026-11-03: fichas de origen de cada cita revisadas y *What is managed feature store?* leída hoy (H1 y contenido). `verified`: aprobada por Felipe el 2026-11-03 (`owner_approved_at`).
 
 ## 22. Historial de cambios importantes
 
 - 2026-11-03: creación (lote 07c, ADR-028).
 - 2026-11-03: revisión de 07c aplicada (docs/reviews/lote-07c.md): las citas nuevas del lote llevan su `url` (faltaba); el §5 tiene el nodo «Chequeo de consistencia» del §4; la cita de *Gemini Enterprise Agent Platform name changes* se releyó hoy: nota con las dos filas que usa la ficha y sin la fecha de actualización, que no se pudo confirmar.
+- 2026-11-03: `verification_status: verified`, aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-03`).

@@ -78,7 +78,7 @@
       "minItems": 1
     },
     "owner_approved_at": {
-      "description": "Fecha de la aprobación explícita del dueño del proyecto; obligatoria para verified en fichas con jurisdiction (ADR-023).",
+      "description": "Fecha de la aprobación explícita del dueño del proyecto; permitida en cualquier ficha y obligatoria para verified en fichas con jurisdiction (ADR-023, Enmienda 6).",
       "$ref": "enums.schema.json#/$defs/date"
     },
     "stub": {

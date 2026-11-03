@@ -54,9 +54,10 @@ relations:
     target: data-agents
     note: Agentes que necesitan las mismas definiciones.
 created_at: 2026-10-27
-updated_at: 2026-10-27
+updated_at: 2026-11-03
 last_verified: 2026-10-27
-verification_status: review_required
+owner_approved_at: 2026-11-03
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -258,9 +259,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-27. `review_required`: pendiente de revisión B-F3.1 del lote F3b-23b.
+2026-10-27. `verified`: revisión B-F3.1 del lote F3b-23b aplicada y aprobada por Felipe el 2026-11-03 (`owner_approved_at`).
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-27: creación (lote F3b-23b).
 - 2026-10-28: el §2 dice explícitamente que la especificación es un borrador (DRAFT 0.2.0.dev0) de un proyecto en incubación, y el §18 lo registra como riesgo de inestabilidad (pedido de Felipe).
+- 2026-11-03: `verification_status: verified`, aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-03`).

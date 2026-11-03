@@ -48,9 +48,10 @@ relations:
   - {type: RELATED_TO, target: idempotency, note: "Reprocesar un lote no cambia gold."}
   - {type: RELATED_TO, target: data-mesh, note: "Dominios con sus propias capas."}
 created_at: 2026-11-01
-updated_at: 2026-11-02
+updated_at: 2026-11-03
 last_verified: 2026-11-01
-verification_status: review_required
+owner_approved_at: 2026-11-03
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -294,9 +295,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-11-01: fichas de origen de cada cita revisadas; las páginas se consultaron en las fechas de `sources`. `review_required` hasta la revisión.
+2026-11-01: fichas de origen de cada cita revisadas; las páginas se consultaron en las fechas de `sources`. `verified`: aprobada por Felipe el 2026-11-03 (`owner_approved_at`).
 
 ## 22. Historial de cambios importantes
 
 - 2026-11-01: creación (lote 07a, ADR-028).
 - 2026-11-02: revisión de 07a aplicada (docs/reviews/lote-07a.md): el §6 despliega un workspace por lakehouse, como recomienda la página (gold como warehouse en el suyo); el §5 usa «Rechazos»; sin la frase de clase de almacenamiento sin fuente. El `page_title` de Fabric se mantiene: el H1 leído el 2026-11-02 sigue siendo «Understand medallion architecture for Fabric with OneLake».
+- 2026-11-03: `verification_status: verified`, aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-03`).

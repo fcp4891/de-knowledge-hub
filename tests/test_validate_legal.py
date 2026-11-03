@@ -145,10 +145,17 @@ def test_verified_needs_owner_approval_and_legal_citation_accessed_on_last_verif
     assert setup(content, verification_status="verified", owner_approved_at=TODAY).ok
 
 
-def test_owner_approval_or_legal_basis_without_jurisdiction_is_an_error(content: Path) -> None:
+def test_owner_approval_is_allowed_without_jurisdiction(content: Path) -> None:   # ADR-023, Enmienda 6
     write_yaml(content, "sources/r.yaml", source("docs-a"))
-    write_md(content, "concepts/p.md", concept("p", owner_approved_at=TODAY))
-    assert_error(run(content), "[owner_approved_at] requiere jurisdiction")
+    write_md(content, "concepts/p.md", concept("p", owner_approved_at=TODAY, verification_status="verified",
+                                               sources=[{"source": "docs-a", "url": "https://example.org/a"}]))
+    assert run(content).ok
+
+
+def test_legal_basis_without_jurisdiction_is_an_error(content: Path) -> None:
+    write_yaml(content, "sources/r.yaml", source("docs-a"))
+    write_md(content, "concepts/p.md", concept("p", legal_basis=[{"law": "ley-19628", "article": "3", "url": LAW_URL, "implication": IMPL}]))
+    assert_error(run(content), "[legal_basis] requiere jurisdiction")
 
 
 def test_monthly_review_is_a_warning(content: Path) -> None:
