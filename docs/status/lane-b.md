@@ -17,6 +17,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 ## Actual
 - **Tarea activa:** revisión del lote 07-0. Informe en `docs/reviews/lote-07-0.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas bajas: el validador no coteja los nombres del §4, el aviso de diagramas invita a agrupar, y la nota de `gcp-biglake` no menciona bibliotecas ni CLI.
+- **Tarea activa:** revisión de arquitecturas-07a. Informe en `docs/reviews/lote-07a.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: los nombres del §4 en batch, el linaje de Knowledge Catalog, el catálogo del data lake sin página, y el workspace único de silver y gold en Fabric.
 - **Tarea activa:** `b/ui-concept-names`. En todas las fichas, un código inline que es un concepto conocido se muestra con el título de la API. Si tiene ficha, enlaza a `/concepts/<slug>/` y el enlace lleva el slug en `title`. Si está en el blueprint sin ficha, muestra el nombre y la marca «pendiente», sin enlace. El código que no es un slug se queda como código.
 - **Tarea activa:** revisión del lote P4. Informe en `docs/reviews/p4.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: el art. 3.2 dice «residan», el art. 33 pide dilación y riesgo, el art. 3 de la LGPD mira dónde está la persona, y los 3 días de la ANPD corren desde que se sabe que el incidente afectó datos personales. Propuestas bajas: el título de Azure Policy y el art. 27 b).
@@ -124,6 +126,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ### Revisión · lote 07-0
 - ADR-028, validador, compilador y contrato. Las 22 claves coinciden y el renombre de Lakehouse está en el banner. Propuestas bajas: nombres del §4, el aviso «dividir o agrupar», y bibliotecas y CLI en la nota de la tecnología. No se editó `content/` ni `frontend/`.
+### Revisión · arquitecturas-07a
+- Cinco arquitecturas. Las 15 vistas quedan en 6 nodos o menos y el §18 se encadena. Propuestas media: nombres del §4 en batch, linaje en Knowledge Catalog, catálogo del data lake sin página, y silver con gold en un workspace de Fabric. No se editó `content/` ni `frontend/`.
 
 ### Revisión · lote P4
 - `gdpr` y `lgpd` quedan en `review_required`. El art. 19, II, la Res. 32/2026 y las regiones de §11–§13 coinciden con la página. Propuestas media: «residan» en el art. 3.2, el art. 33 completo, el § 1º del art. 3 de la LGPD y el inicio de los tres días en la Res. CD/ANPD 15/2024. No se editó `content/` ni `frontend/`.
@@ -455,6 +459,8 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 
 ### Revisión · lote 07-0 (2026-11-02)
 - `b/review-07-0`, desde `cd76503`. Informe en `docs/reviews/lote-07-0.md`. Banner de Lakehouse, validador y contrato. No se editó `content/` ni `frontend/`.
+### Revisión · arquitecturas-07a (2026-11-02)
+- `b/review-07a`, desde `cd76503`. Informe en `docs/reviews/lote-07a.md`. Tres vistas, renombres, §9, §10 y §18. No se editó `content/` ni `frontend/`.
 
 ### Revisión · lote P4 (2026-10-30)
 - `b/review-p4`, desde `2e4b52a`. Informe en `docs/reviews/p4.md`. BOE, Câmara, Planalto, DOU y páginas de la ANPD. EUR-Lex agotó el tiempo de lectura. No se editó `content/` ni `frontend/`.
