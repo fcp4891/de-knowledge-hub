@@ -549,6 +549,40 @@
   text-transform: uppercase;
 }
 
+@media (prefers-color-scheme: dark) {
+  .legal-basis {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--ink);
+  }
+
+  .legal-basis h2,
+  .legal-basis th,
+  .legal-basis td {
+    color: var(--ink);
+  }
+
+  .legal-basis thead th {
+    background: var(--accent-soft);
+    color: var(--ink-2);
+  }
+
+  .legal-basis th,
+  .legal-basis td {
+    border-top-color: var(--ink-muted);
+  }
+
+  .legal-basis a {
+    color: var(--accent);
+  }
+
+  .legal-basis tbody tr:target th,
+  .legal-basis tbody tr:target td {
+    background: var(--warn-bg);
+    color: var(--ink);
+  }
+}
+
 .claim {
   display: inline-flex;
   align-items: center;
