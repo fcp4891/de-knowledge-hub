@@ -225,16 +225,20 @@
 }
 
 .route-card-kind {
-  display: inline-block;
-  margin-bottom: 4px;
-  padding: 0.05em 0.45em;
+  align-self: flex-start;
+  width: fit-content;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 22px;
+  padding: 1px 8px;
   border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  background: var(--surface-muted);
+  color: var(--ink-3);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
 }
 
 .route-card {
@@ -249,11 +253,6 @@
   background: var(--surface);
   color: var(--ink);
   text-decoration: none;
-}
-
-.route-card[data-kind="architecture"] {
-  border-style: dashed;
-  border-color: var(--accent);
 }
 
 a.route-card:hover {

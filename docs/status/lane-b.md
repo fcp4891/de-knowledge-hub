@@ -3,7 +3,7 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-11-02
+**Última actualización:** 2026-11-03
 **Última actualización:** 2026-10-28
 
 ## Reglas de revisión
@@ -15,7 +15,7 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
-- **Tarea activa:** `b/ui-architecture`. Las fichas `kind: architecture` usan el índice de arquitectura (Vistas y Operación), las tres vistas en pestañas o lado a lado, la tabla de componentes como referencia, pestañas GCP/AWS/Azure, el chip «Arquitectura» y el estado del §10. En el dominio 07 las tarjetas de arquitectura se distinguen de las de concepto. `schema.d.ts` regenerado con las claves de ADR-028.
+- **Tarea activa:** `b/ui-architecture`. Las fichas `kind: architecture` usan el índice de arquitectura (Vistas y Operación), las tres vistas en pestañas o lado a lado, la tabla de componentes como referencia, pestañas GCP/AWS/Azure, el chip «Arquitectura» y el estado del §10. En el dominio 07 la tarjeta es la de concepto; solo agrega el chip «Arquitectura». `schema.d.ts` regenerado con las claves de ADR-028.
 - **Tarea activa:** `b/ui-concept-names`. En todas las fichas, un código inline que es un concepto conocido se muestra con el título de la API. Si tiene ficha, enlaza a `/concepts/<slug>/` y el enlace lleva el slug en `title`. Si está en el blueprint sin ficha, muestra el nombre y la marca «pendiente», sin enlace. El código que no es un slug se queda como código.
 - **Tarea activa:** revisión del lote P4. Informe en `docs/reviews/p4.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: el art. 3.2 dice «residan», el art. 33 pide dilación y riesgo, el art. 3 de la LGPD mira dónde está la persona, y los 3 días de la ANPD corren desde que se sabe que el incidente afectó datos personales. Propuestas bajas: el título de Azure Policy y el art. 27 b).
