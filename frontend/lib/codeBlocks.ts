@@ -190,7 +190,7 @@ export function annotateCode(blocks: readonly Block[]): WeakMap<Block, CodeAnnot
       if (candidate.type === "heading") break;
       if (candidate.type === "code" && candidate.language.trim().toLowerCase() === "mermaid") break;
       if (isRealCode(candidate)) break;
-      if (isOutput(candidate)) {
+      if (candidate.type === "code" && isOutput(candidate)) {
         outputs.push({ name: outputName(candidate.code), text: candidate.code, exitCode: exitCodeOf(candidate.code) });
         consumed.add(next);
         continue;
