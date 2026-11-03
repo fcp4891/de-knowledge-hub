@@ -1,6 +1,7 @@
 import { InlineText } from "@/components/markdown/InlineText";
 import { PipelineSteps } from "@/components/markdown/PipelineSteps";
 import type { ConceptRefs } from "@/lib/conceptNames";
+import { annotateCode, type CodeAnnotation, type CodePresentation } from "@/lib/codeBlocks";
 import { articleMapColumns, droppedEtiquetaIndex, type ObligationBasis } from "@/lib/legal";
 import { groupEvidence, parseMarkdown, type Block, type EvidenceGroup, type Inline } from "@/lib/markdown";
 import { readPipeline } from "@/lib/pipeline";
@@ -19,6 +20,7 @@ export async function MarkdownBody({
   markCodeStatus?: boolean;
 }) {
   const blocks = parseMarkdown(markdown);
+  const notes = annotateCode(blocks);
   const grouped = groupEvidence(blocks);
   const hasCode = blocks.some((block) => block.type === "code" && block.language !== "mermaid");
   const hasMermaid = blocks.some((block) => block.type === "code" && block.language === "mermaid");
@@ -38,6 +40,7 @@ export async function MarkdownBody({
             obligations={obligations}
             conceptRefs={conceptRefs}
             markCodeStatus={markCodeStatus}
+            notes={notes}
             CodeBlock={codeBlock}
             MermaidDiagram={mermaidDiagram}
           />
@@ -49,6 +52,7 @@ export async function MarkdownBody({
             markCodeStatus={markCodeStatus}
             obligations={obligations}
             conceptRefs={conceptRefs}
+            annotation={notes.get(block)}
             CodeBlock={codeBlock}
             MermaidDiagram={mermaidDiagram}
           />
@@ -64,6 +68,7 @@ function EvidenceBlock({
   obligations,
   conceptRefs,
   markCodeStatus,
+  notes,
   CodeBlock,
   MermaidDiagram,
 }: {
@@ -72,7 +77,8 @@ function EvidenceBlock({
   obligations: readonly ObligationBasis[];
   conceptRefs?: ConceptRefs;
   markCodeStatus: boolean;
-  CodeBlock: ((props: { code: string; language: string }) => React.ReactNode) | null;
+  notes: WeakMap<Block, CodeAnnotation>;
+  CodeBlock: ((props: CodePresentation) => React.ReactNode) | null;
   MermaidDiagram: ((props: { source: string }) => React.ReactNode) | null;
 }) {
   return (
@@ -93,6 +99,7 @@ function EvidenceBlock({
           markCodeStatus={markCodeStatus}
           obligations={obligations}
           conceptRefs={conceptRefs}
+          annotation={notes.get(block)}
           CodeBlock={CodeBlock}
           MermaidDiagram={MermaidDiagram}
         />
@@ -107,6 +114,7 @@ function MarkdownBlock({
   obligations,
   conceptRefs,
   markCodeStatus,
+  annotation,
   CodeBlock,
   MermaidDiagram,
 }: {
@@ -115,7 +123,8 @@ function MarkdownBlock({
   obligations: readonly ObligationBasis[];
   conceptRefs?: ConceptRefs;
   markCodeStatus: boolean;
-  CodeBlock: ((props: { code: string; language: string }) => React.ReactNode) | null;
+  annotation?: CodeAnnotation;
+  CodeBlock: ((props: CodePresentation) => React.ReactNode) | null;
   MermaidDiagram: ((props: { source: string }) => React.ReactNode) | null;
 }) {
   if (block.type === "heading") {
@@ -125,9 +134,9 @@ function MarkdownBlock({
     return MermaidDiagram ? <MermaidDiagram source={block.code} /> : <pre>{block.code}</pre>;
   }
   if (block.type === "code") {
-    return CodeBlock ? (
-      <CodeBlock code={block.code} language={block.language} />
-    ) : (
+    if (annotation?.role === "output") return null;
+    if (annotation?.role === "code" && CodeBlock) return <CodeBlock {...annotation.view} />;
+    return (
       <pre>
         <code>{block.code}</code>
       </pre>

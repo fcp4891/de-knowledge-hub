@@ -1,0 +1,324 @@
+.code-shell {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 1rem 0;
+  border-radius: var(--radius-md);
+  background: var(--code-bg);
+  color: var(--code-ink);
+  overflow: hidden;
+}
+
+.reading-measure .code-shell,
+.reading-section,
+.reading-details,
+.reading-measure .markdown,
+.reading-section .markdown,
+.reading-details .markdown {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.code-bar,
+.code-steps,
+.code-scenarios,
+.code-terminal-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.code-bar,
+.code-steps,
+.code-terminal-bar,
+.code-scenarios {
+  padding: 8px 12px;
+  background: var(--code-bar);
+}
+
+.code-bar,
+.code-steps {
+  border-bottom: 1px solid var(--code-line);
+}
+
+.code-bar {
+  min-height: 44px;
+}
+
+.code-lang,
+.code-file,
+.code-terminal-label {
+  font-family: var(--font-code), ui-monospace, monospace;
+  font-size: var(--text-xs);
+}
+
+.code-lang {
+  font-weight: 600;
+  color: var(--code-ink);
+}
+
+.code-file,
+.code-terminal-label {
+  color: var(--code-muted);
+}
+
+.code-bar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.code-shell button,
+.code-modal-panel button {
+  max-width: 100%;
+  min-height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--code-line);
+  border-radius: var(--radius-sm);
+  background: var(--code-button);
+  color: #fff;
+  font-family: var(--font-ui), system-ui, sans-serif;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.code-shell button.is-selected,
+.code-modal-panel button.is-selected {
+  background: var(--band-especializacion-fill);
+  border-color: var(--band-especializacion-fill);
+  color: #fff;
+}
+
+.code-shell button:hover,
+.code-modal-panel button:hover {
+  border-color: var(--code-muted);
+}
+
+.code-shell button.is-selected:hover,
+.code-modal-panel button.is-selected:hover {
+  background: var(--band-especializacion-dark);
+  border-color: var(--band-especializacion-dark);
+  color: #fff;
+}
+
+.code-shell button:focus-visible,
+.code-modal-panel button:focus-visible,
+.code-scroll:focus-visible,
+.code-modal-scroll:focus-visible {
+  outline: 2px solid var(--band-especializacion-fill);
+  outline-offset: 2px;
+}
+
+.code-steps button,
+.code-scenarios button {
+  max-width: 11rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.code-scroll,
+.code-modal-scroll {
+  max-width: 100%;
+  overflow: auto;
+  scroll-behavior: smooth;
+}
+
+.code-scroll {
+  max-height: 200px;
+}
+
+.code-shell[data-fit="true"] .code-scroll {
+  max-height: none;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+.code-lines {
+  display: table;
+  min-width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.code-row {
+  display: table-row;
+}
+
+.code-ln,
+.code-text {
+  display: table-cell;
+  font-family: var(--font-code), ui-monospace, monospace;
+  font-size: 13px;
+  line-height: 20px;
+  white-space: pre;
+  vertical-align: top;
+}
+
+.code-ln {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  width: 2.75rem;
+  padding: 0 0.75rem 0 0.5rem;
+  background: var(--code-bg);
+  color: var(--code-muted);
+  text-align: right;
+  user-select: none;
+}
+
+.code-text {
+  padding-right: 12px;
+  color: var(--code-ink);
+}
+
+.code-row.is-on .code-ln,
+.code-row.is-on .code-text {
+  background: color-mix(in srgb, var(--band-especializacion-fill) 22%, var(--code-bg));
+}
+
+.code-row.is-dim .code-text {
+  opacity: 0.4;
+}
+
+.code-shell .hljs,
+.code-modal-panel .hljs {
+  background: transparent;
+  padding: 0;
+  color: var(--code-ink);
+}
+
+.code-shell .hljs-keyword,
+.code-shell .hljs-built_in,
+.code-shell .hljs-type,
+.code-shell .hljs-selector-tag,
+.code-modal-panel .hljs-keyword,
+.code-modal-panel .hljs-built_in,
+.code-modal-panel .hljs-type,
+.code-modal-panel .hljs-selector-tag {
+  color: #7ddec8;
+}
+
+.code-shell .hljs-string,
+.code-shell .hljs-attr,
+.code-modal-panel .hljs-string,
+.code-modal-panel .hljs-attr {
+  color: #f3d19c;
+}
+
+.code-shell .hljs-number,
+.code-shell .hljs-literal,
+.code-modal-panel .hljs-number,
+.code-modal-panel .hljs-literal {
+  color: #f0b4a8;
+}
+
+.code-shell .hljs-comment,
+.code-modal-panel .hljs-comment {
+  color: #9aa0aa;
+}
+
+.code-shell .hljs-title,
+.code-shell .hljs-section,
+.code-shell .hljs-name,
+.code-modal-panel .hljs-title,
+.code-modal-panel .hljs-section,
+.code-modal-panel .hljs-name {
+  color: #c4b5fd;
+}
+
+.code-terminal {
+  max-width: 100%;
+  min-width: 0;
+  border-top: 1px solid var(--code-line);
+  background: var(--code-bar);
+}
+
+.code-exit {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.code-exit.is-ok {
+  color: var(--code-ok);
+}
+
+.code-exit.is-bad {
+  color: var(--code-bad);
+}
+
+.code-terminal-body {
+  margin: 0;
+  max-width: 100%;
+  max-height: 160px;
+  padding: 4px 12px 12px;
+  overflow: auto;
+  color: var(--code-ink);
+  font-family: var(--font-code), ui-monospace, monospace;
+  font-size: 13px;
+  line-height: 20px;
+  white-space: pre;
+}
+
+.code-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: color-mix(in srgb, var(--code-bg) 55%, transparent);
+}
+
+.code-modal-panel {
+  display: flex;
+  flex-direction: column;
+  width: min(960px, 100%);
+  height: min(80vh, 820px);
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--code-bg);
+  color: var(--code-ink);
+  box-shadow: 0 24px 80px color-mix(in srgb, var(--code-bg) 45%, transparent);
+}
+
+.code-modal-scroll {
+  flex: 1;
+  min-height: 0;
+}
+
+.code-modal .code-terminal-body {
+  max-height: 120px;
+}
+
+@media (max-width: 390px) {
+  .code-modal {
+    padding: 0;
+  }
+
+  .code-modal-panel {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    border-radius: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .code-scroll,
+  .code-modal-scroll,
+  .code-terminal-body {
+    scroll-behavior: auto;
+    transition: none;
+    animation: none;
+  }
+}
