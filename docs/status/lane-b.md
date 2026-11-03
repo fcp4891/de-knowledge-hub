@@ -20,6 +20,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Tarea activa:** `b/ui-code-blocks`. Todos los bloques de código usan la maqueta v3: cabecera con lenguaje, archivo y estado, números de línea fijos, pasos deducidos, terminal y modal «Ver completo». No se editó `content/`. Copiar y descargar conservan el texto original.
 - **Tarea activa:** revisión del lote 07b. Informe en `docs/reviews/lote-07b.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: las tres citas nuevas del Azure Architecture Center no traen URL. Propuestas bajas: un nodo fusionado en streaming, el grupo de event-driven, el corte de lambda y la frescura de real-time.
+- **Tarea activa:** revisión del lote 07c. Informe en `docs/reviews/lote-07c.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: las cinco citas nuevas no traen URL. Propuestas bajas: el plugin de salida de CDC, el chequeo de consistencia y la fecha de la tabla de renombres.
 - **Tarea activa:** revisión del lote 07-0. Informe en `docs/reviews/lote-07-0.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas bajas: el validador no coteja los nombres del §4, el aviso de diagramas invita a agrupar, y la nota de `gcp-biglake` no menciona bibliotecas ni CLI.
 - **Tarea activa:** revisión de arquitecturas-07a. Informe en `docs/reviews/lote-07a.md`. No se editó `content/` ni `frontend/`.
@@ -132,6 +134,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ### Revisión · lote 07b
 - Cinco arquitecturas de streaming. Las 15 vistas quedan en 7 nodos o menos y el §19 solo promete laboratorio en streaming y event-driven. El H1 de Fabric coincide con el `page_title`. Propuesta media: URL en las citas nuevas. No se editó `content/` ni `frontend/`.
+### Revisión · lote 07c
+- Cinco arquitecturas de integración y ML. Las 15 vistas quedan en 7 nodos o menos. CDC y API prometen laboratorio de F4; las otras tres, no. RAG sigue como emergente. Propuesta media: URL en las citas nuevas. No se editó `content/` ni `frontend/`.
 
 ### Revisión · lote 07-0
 - ADR-028, validador, compilador y contrato. Las 22 claves coinciden y el renombre de Lakehouse está en el banner. Propuestas bajas: nombres del §4, el aviso «dividir o agrupar», y bibliotecas y CLI en la nota de la tecnología. No se editó `content/` ni `frontend/`.
@@ -468,6 +472,8 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 
 ### Revisión · lote 07b (2026-11-03)
 - `b/review-07b`, desde `20cbe86`. Informe en `docs/reviews/lote-07b.md`. Tres vistas, fuentes nuevas, §9, §10, §18 y el H1 de Fabric. No se editó `content/` ni `frontend/`.
+### Revisión · lote 07c (2026-11-03)
+- `b/review-07c`, desde `20cbe86`. Informe en `docs/reviews/lote-07c.md`. Tres vistas, fuentes nuevas, §9, §10, §18 y laboratorios de F4. No se editó `content/` ni `frontend/`.
 
 ### Revisión · lote 07-0 (2026-11-02)
 - `b/review-07-0`, desde `cd76503`. Informe en `docs/reviews/lote-07-0.md`. Banner de Lakehouse, validador y contrato. No se editó `content/` ni `frontend/`.
