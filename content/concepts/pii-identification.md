@@ -75,10 +75,9 @@ relations:
     target: data-breach-response
     note: Las categorías deciden el aviso a titulares.
 created_at: 2026-10-21
-updated_at: 2026-10-25
+updated_at: 2026-11-03
 last_verified: 2026-10-25
-owner_approved_at: 2026-11-01
-verification_status: verified
+verification_status: review_required
 ---
 
 ## 1. Resumen
@@ -155,6 +154,7 @@ Escenario genérico: un pipeline de reservas y CRM alimenta un warehouse por cap
 | Inventario de activos con esquema y responsable | Catálogo | Ingeniería de datos |
 | Hallazgos del detector, sin valores personales | Log del job | Pipeline de clasificación |
 | Decisión de clasificación con fundamento, revisor y fecha | Catálogo | Dueño del dato y privacidad |
+| Resultado de la puerta de habilitación (0 o 1) y las columnas que la bloquean | Log del job o de la CI | Pipeline de clasificación |
 | Registro de cambios de esquema y reclasificaciones | Catálogo, versionado | Pipeline y dueño del dato |
 
 ## 9. Arquitectura
@@ -174,20 +174,32 @@ La clasificación alimenta los controles, pero no los implementa: hace falta una
 ## 10. Código
 
 ```python
-# Python 3.12, biblioteca estándar (ejecutado en la CI): detector didáctico de candidatos a datos personales y
-# sensibles. Genera hallazgos para revisión humana; no declara que una columna sea legalmente sensible. Una columna
-# puede producir más de un hallazgo. No hay umbral: cuántos valores calzan sirve para priorizar, no para descartar.
-# El reporte nunca imprime valores, solo columna, candidato, motivo y conteo.
+# Python 3.12+, biblioteca estándar. De punta a punta: muestra de columnas → detección en cuatro frentes →
+# clasificación → registro en el catálogo → puerta de habilitación → código de salida (0 habilita, 1 bloquea).
+# Uso: python detector.py muestra | revisado | fuente-nueva. Didáctico: produce candidatos para revisión humana, no
+# declara que una columna sea legalmente sensible. El reporte nunca imprime valores, solo columna, método y conteos.
 import re
-from dataclasses import dataclass
+import sys
+import unicodedata
+from dataclasses import dataclass, replace
+from datetime import date
+from typing import Literal
 
-
-@dataclass(frozen=True)
-class Hallazgo:
-    columna: str
-    candidato: str      # "personal", "revisión personal" o "revisión sensible"
-    motivo: str
-    coincidencias: int  # valores de la muestra que calzan (0 si el hallazgo es por el nombre)
+# @paso 1 Reglas
+Categoria = Literal["personal", "sensible", "revisión"]
+EstadoRut = Literal["valido", "dv_invalido", "no_rut"]
+REFERENCIA = date(2026, 11, 3)   # fecha fija: resultado reproducible
+CAPA = "silver.clientes"         # la capa que se va a habilitar para consumo
+PERSONAL = "art. 2 f)"           # dato personal: persona identificada o identificable
+SALUD, SOCIOECONOMICA = "datos relativos a la salud", "situación socioeconómica"
+REGLAS_NOMBRE: list[tuple[frozenset[str], str]] = [   # tokens que deben estar todos en el nombre -> categoría art. 2 g)
+    (frozenset({"diagnostico"}), SALUD), (frozenset({"medica"}), SALUD), (frozenset({"salud"}), SALUD),
+    (frozenset({"tramo", "ingreso"}), SOCIOECONOMICA), (frozenset({"ingresos"}), SOCIOECONOMICA),
+    (frozenset({"renta"}), SOCIOECONOMICA), (frozenset({"sueldo"}), SOCIOECONOMICA),
+    (frozenset({"religion"}), "creencias religiosas"), (frozenset({"huella"}), "datos biométricos"),
+]
+TERMINOS = {SALUD: ("diagnóstico", "licencia médica")}   # diccionario mínimo por categoría del art. 2 g)
+CUASI_IDENTIFICADORES = ("comuna", "edad")
 
 
 def dv(cuerpo: str) -> str:
@@ -197,48 +209,16 @@ def dv(cuerpo: str) -> str:
     return {11: "0", 10: "K"}.get(resto, str(resto))
 
 
-def forma_rut(valor: str) -> tuple[str, str] | None:
-    """(cuerpo, dv) si el valor tiene forma de RUT, con o sin puntos y guion."""
-    m = re.fullmatch(r"(\d{7,8})([\dK])", re.sub(r"[.\-\s]", "", valor).upper())
-    return (m.group(1), m.group(2)) if m else None
+RUT = re.compile(r"(\d{1,2})\.?(\d{3})\.?(\d{3})-?([\dK])")   # 11.111.111-1 o 111111111; una fecha no calza
 
 
-def rut_valido(valor: str) -> bool:
-    partes = forma_rut(valor)
-    return partes is not None and dv(partes[0]) == partes[1]
-
-
-def rut_dv_invalido(valor: str) -> bool:
-    partes = forma_rut(valor)
-    return partes is not None and dv(partes[0]) != partes[1]
-
-
-def correo(valor: str) -> bool:
-    return re.search(r"[^@\s]+@[^@\s]+\.[a-z]{2,}", valor, re.I) is not None  # también dentro de texto libre
-
-
-SENSIBLES = {  # palabra en el nombre de la columna -> categoría del art. 2 g) a revisar
-    "diagnostico": "datos relativos a la salud", "salud": "datos relativos a la salud",
-    "ingreso": "situación socioeconómica", "religion": "creencias religiosas", "huella": "datos biométricos",
-}
-INDIRECTOS = ("cliente_id", "usuario_id", "comentario", "observacion")
-
-
-def detectar(columnas: dict[str, list[str]]) -> list[Hallazgo]:
-    hallazgos: list[Hallazgo] = []
-    for nombre, valores in columnas.items():
-        n = nombre.lower()
-        for clave, categoria in SENSIBLES.items():
-            if clave in n:
-                hallazgos.append(Hallazgo(nombre, "revisión sensible", f"nombre asociado a {categoria}", 0))
-        for candidato, motivo, prueba in (("personal", "correo en el valor", correo),
-                                          ("personal", "RUT con DV válido", rut_valido),
-                                          ("revisión personal", "forma de RUT con DV inválido", rut_dv_invalido)):
-            if k := sum(map(prueba, valores)):
-                hallazgos.append(Hallazgo(nombre, candidato, motivo, k))
-        if any(clave in n for clave in INDIRECTOS):
-            hallazgos.append(Hallazgo(nombre, "revisión personal", "posible identificador indirecto o texto libre", 0))
-    return hallazgos
+def clasificar_rut(valor: str) -> EstadoRut:
+    m = RUT.fullmatch(valor.strip().upper())
+    if m is None:
+        return "no_rut"
+    if dv("".join(m.groups()[:3])) == m.group(4):
+        return "valido"
+    return "dv_invalido"
 
 
 def ficticio(numero: int) -> str:
@@ -246,34 +226,225 @@ def ficticio(numero: int) -> str:
     return f"{numero:,}".replace(",", ".") + "-" + dv(str(numero))
 
 
-MUESTRA = {  # valores ficticios: RUT de dígitos repetidos y correos en dominios reservados
-    "rut_cliente": [ficticio(11_111_111), ficticio(22_222_222).replace(".", "").replace("-", "")],
-    "contacto": ["ana@example.com", "sin correo"],
-    "cliente_id": ["C001", "C002"],
-    "diagnostico": ["J45", "E11"],
-    "tramo_ingreso": ["A", "B"],
-    "comuna": ["Ñuñoa", "Maipú"],
-    "comentarios": ["Cliente pide cambio de fecha", "Avisar a luis@example.org"],
-    "rut_malformado": [ficticio(33_333_333)[:-1] + ("0" if dv("33333333") != "0" else "1")],
-    "producto": ["Notebook", "Monitor"],
-}
+def con_dv_alterado(rut: str) -> str:
+    """El mismo RUT con otro dígito verificador: forma de RUT, DV inválido."""
+    otro = "1" if rut[-1] != "1" else "2"
+    return rut[:-1] + otro
 
-hallazgos = detectar(MUESTRA)
-for h in hallazgos:
-    conteo = f" ({h.coincidencias} de {len(MUESTRA[h.columna])})" if h.coincidencias else ""
-    print(f"{h.columna}: {h.candidato}: {h.motivo}{conteo}")
-sin = [c for c in MUESTRA if all(h.columna != c for h in hallazgos)]
-print(f"sin hallazgos (no significa anónimo): {sin}")
+
+def es_correo(valor: str) -> bool:
+    return re.search(r"[^@\s]+@[^@\s]+\.[a-z]{2,}", valor, re.I) is not None   # también dentro de texto libre
+
+
+def sin_tildes(texto: str) -> str:
+    return unicodedata.normalize("NFKD", texto).encode("ascii", "ignore").decode().lower()
+
+
+# @paso 2 Detección
+@dataclass(frozen=True)
+class Hallazgo:
+    columna: str
+    categoria: Categoria
+    fundamento: str
+    metodo: str
+
+
+def identificadores_directos(columna: str, valores: list[str]) -> list[Hallazgo]:
+    """RUT (válido o con DV inválido) y correo, también dentro del texto libre."""
+    hallazgos = []
+    estados = [clasificar_rut(v) for v in valores]
+    if validos := estados.count("valido"):
+        hallazgos.append(Hallazgo(columna, "personal", PERSONAL, f"RUT con DV válido ({validos} de {len(valores)})"))
+    if invalidos := estados.count("dv_invalido"):
+        hallazgos.append(Hallazgo(columna, "revisión", PERSONAL,
+                                  f"forma de RUT con DV inválido ({invalidos} de {len(valores)})"))
+    if correos := sum(map(es_correo, valores)):
+        hallazgos.append(Hallazgo(columna, "personal", PERSONAL, f"correo en el valor ({correos} de {len(valores)})"))
+    return hallazgos
+
+
+def sensibles_por_nombre(columna: str) -> list[Hallazgo]:
+    """Compara por token (split por «_»): fecha_ingreso no es socioeconómica; tramo_ingreso sí."""
+    tokens = set(sin_tildes(columna).split("_"))
+    return [Hallazgo(columna, "sensible", f"art. 2 g), {categoria}", f"nombre de columna ({', '.join(sorted(regla))})")
+            for regla, categoria in REGLAS_NOMBRE if regla <= tokens]
+
+
+def sensibles_en_contenido(columna: str, valores: list[str]) -> list[Hallazgo]:
+    """Términos del diccionario mínimo por categoría, buscados en el texto libre."""
+    hallazgos = []
+    for categoria, terminos in TERMINOS.items():
+        calzan = sum(1 for v in valores if any(sin_tildes(t) in sin_tildes(v) for t in terminos))
+        if calzan:
+            hallazgos.append(Hallazgo(columna, "sensible", f"art. 2 g), {categoria}",
+                                      f"términos en el texto ({calzan} de {len(valores)})"))
+    return hallazgos
+
+
+def identificacion_indirecta(muestra: dict[str, list[str]]) -> list[Hallazgo]:
+    """Combinaciones únicas de cuasi-identificadores: una fila única puede identificar a alguien (art. 2 f)."""
+    if not all(c in muestra for c in CUASI_IDENTIFICADORES):
+        return []
+    filas = list(zip(*(muestra[c] for c in CUASI_IDENTIFICADORES)))
+    unicas = sum(1 for f in filas if filas.count(f) == 1)
+    if not unicas:
+        return []
+    return [Hallazgo(" + ".join(CUASI_IDENTIFICADORES), "revisión", PERSONAL,
+                     f"combinación única en {unicas} de {len(filas)} filas")]
+
+
+def detectar(muestra: dict[str, list[str]]) -> list[Hallazgo]:
+    hallazgos = []
+    for columna, valores in muestra.items():
+        hallazgos += identificadores_directos(columna, valores)
+        hallazgos += sensibles_por_nombre(columna)
+        hallazgos += sensibles_en_contenido(columna, valores)
+    return hallazgos + identificacion_indirecta(muestra)
+
+
+# @paso 3 Catálogo
+@dataclass(frozen=True)
+class Entrada:
+    columna: str
+    categoria: Categoria
+    fundamento: str
+    metodo: str
+    fecha: date = REFERENCIA
+    revisor: str = "pendiente"
+
+
+def registrar(hallazgos: list[Hallazgo], revisados: dict[tuple[str, str], str]) -> list[Entrada]:
+    """Una entrada por hallazgo; conserva el revisor de lo que ya se revisó (misma columna y método)."""
+    catalogo = []
+    for h in hallazgos:
+        entrada = Entrada(h.columna, h.categoria, h.fundamento, h.metodo)
+        if revisor := revisados.get((h.columna, h.metodo)):
+            entrada = replace(entrada, revisor=revisor)
+        catalogo.append(entrada)
+    return catalogo
+
+
+# @paso 4 Puerta y reporte
+def puerta(catalogo: list[Entrada]) -> list[str]:
+    """Bloquea la capa si un candidato sensible o de revisión no tiene revisor."""
+    pendientes = [f"{e.columna} ({e.categoria})" for e in catalogo
+                  if e.categoria != "personal" and e.revisor == "pendiente"]
+    return list(dict.fromkeys(pendientes))   # una vez por columna y categoría
+
+
+def etiqueta(e: Entrada) -> str:
+    if e.categoria == "revisión":
+        return "revisión personal"
+    return e.categoria
+
+
+MUESTRA = {   # cuatro filas ficticias: RUT de dígitos repetidos y correos en example.test
+    "rut_cliente": [ficticio(11_111_111), ficticio(22_222_222).replace(".", "").replace("-", ""),
+                    con_dv_alterado(ficticio(33_333_333)), "sin dato"],
+    "contacto": ["ana@example.test", "sin correo", "bruno@example.test", ""],
+    "comentarios": ["Cliente pide cambio de fecha", "Avisar a luis@example.test", "Presenta licencia médica", ""],
+    "diagnostico": ["J45", "E11", "", "J45"],
+    "tramo_ingreso": ["A", "B", "A", "C"],
+    "fecha_ingreso": ["2026-01-10", "2026-03-02", "2026-03-02", "2026-05-20"],
+    "comuna": ["Ñuñoa", "Ñuñoa", "Maipú", "Ñuñoa"],
+    "edad": ["34", "34", "51", "29"],
+    "producto": ["Notebook", "Monitor", "Notebook", "Teclado"],
+}
+NUEVA = {"observacion_medica": ["Control por licencia médica", "", "Diagnóstico pendiente", ""]}
+
+
+def main(escenario: str) -> int:
+    revisados = {(h.columna, h.metodo): "equipo-privacidad" for h in detectar(MUESTRA)}
+    muestras = {"muestra": (MUESTRA, {}), "revisado": (MUESTRA, revisados),
+                "fuente-nueva": ({**MUESTRA, **NUEVA}, revisados)}
+    muestra, previos = muestras[escenario]
+    catalogo = registrar(detectar(muestra), previos)
+    print(f"catálogo de {CAPA} · {len(next(iter(muestra.values())))} filas · referencia {REFERENCIA}")
+    for e in catalogo:
+        print(f"  {e.columna}: {etiqueta(e)}: {e.metodo} · {e.fundamento} · revisor: {e.revisor}")
+    cubiertas = {c for e in catalogo for c in e.columna.split(" + ")}
+    print(f"sin hallazgos (no significa anónimo): {[c for c in muestra if c not in cubiertas]}")
+    bloqueos = puerta(catalogo)
+    if bloqueos:
+        print(f"puerta de {CAPA}: bloqueada (1), sin revisor: {', '.join(bloqueos)}")
+        return 1
+    print(f"puerta de {CAPA}: habilitada (0)")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else "muestra"))
 ```
 
-El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Los RUT son ficticios, de dígitos repetidos, con el DV calculado por módulo 11; `rut_malformado` tiene el DV cambiado a propósito. Imprime ocho hallazgos: `comentarios` produce dos (un correo dentro del texto y texto libre), `rut_malformado` queda en revisión y `comuna` y `producto` quedan «sin hallazgos (no significa anónimo)».
+El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Recorre cuatro pasos: las reglas, la detección en cuatro frentes (una función por frente), el registro en el catálogo y la puerta que decide si la capa se habilita. Los RUT son ficticios, de dígitos repetidos y con el DV calculado por módulo 11; `con_dv_alterado()` arma el RUT malformado; los correos usan `example.test`. El reporte nunca imprime valores.
+
+En la muestra, la detección encuentra:
+
+- **Identificadores directos:** RUT válidos y uno con DV inválido en `rut_cliente` (este queda en revisión), y correos en `contacto` y dentro del texto libre de `comentarios`.
+- **Sensibles por nombre de columna:** `diagnostico` (salud) y `tramo_ingreso` (situación socioeconómica). La comparación es por token, y una regla puede pedir varios tokens juntos: `tramo_ingreso` calza con `tramo` e `ingreso`; `fecha_ingreso` no.
+- **Sensibles en el contenido:** el término «licencia médica» en `comentarios`, con el diccionario mínimo de salud.
+- **Identificación indirecta:** `comuna` + `edad` forman una combinación única en 2 de 4 filas.
+
+Cada hallazgo es una entrada de catálogo con categoría, método, fundamento, fecha de referencia y revisor «pendiente». La puerta bloquea `silver.clientes` mientras haya un candidato sensible o de revisión sin revisor, y dice cuál. Termina con código 1:
+
+```text
+$ python detector.py muestra
+catálogo de silver.clientes · 4 filas · referencia 2026-11-03
+  rut_cliente: personal: RUT con DV válido (2 de 4) · art. 2 f) · revisor: pendiente
+  rut_cliente: revisión personal: forma de RUT con DV inválido (1 de 4) · art. 2 f) · revisor: pendiente
+  contacto: personal: correo en el valor (2 de 4) · art. 2 f) · revisor: pendiente
+  comentarios: personal: correo en el valor (1 de 4) · art. 2 f) · revisor: pendiente
+  comentarios: sensible: términos en el texto (1 de 4) · art. 2 g), datos relativos a la salud · revisor: pendiente
+  diagnostico: sensible: nombre de columna (diagnostico) · art. 2 g), datos relativos a la salud · revisor: pendiente
+  tramo_ingreso: sensible: nombre de columna (ingreso, tramo) · art. 2 g), situación socioeconómica · revisor: pendiente
+  comuna + edad: revisión personal: combinación única en 2 de 4 filas · art. 2 f) · revisor: pendiente
+sin hallazgos (no significa anónimo): ['fecha_ingreso', 'producto']
+puerta de silver.clientes: bloqueada (1), sin revisor: rut_cliente (revisión), comentarios (sensible), diagnostico (sensible), tramo_ingreso (sensible), comuna + edad (revisión)
+```
+
+Con las mismas columnas revisadas, la puerta habilita la capa. Termina con código 0:
+
+```text
+$ python detector.py revisado
+catálogo de silver.clientes · 4 filas · referencia 2026-11-03
+  rut_cliente: personal: RUT con DV válido (2 de 4) · art. 2 f) · revisor: equipo-privacidad
+  rut_cliente: revisión personal: forma de RUT con DV inválido (1 de 4) · art. 2 f) · revisor: equipo-privacidad
+  contacto: personal: correo en el valor (2 de 4) · art. 2 f) · revisor: equipo-privacidad
+  comentarios: personal: correo en el valor (1 de 4) · art. 2 f) · revisor: equipo-privacidad
+  comentarios: sensible: términos en el texto (1 de 4) · art. 2 g), datos relativos a la salud · revisor: equipo-privacidad
+  diagnostico: sensible: nombre de columna (diagnostico) · art. 2 g), datos relativos a la salud · revisor: equipo-privacidad
+  tramo_ingreso: sensible: nombre de columna (ingreso, tramo) · art. 2 g), situación socioeconómica · revisor: equipo-privacidad
+  comuna + edad: revisión personal: combinación única en 2 de 4 filas · art. 2 f) · revisor: equipo-privacidad
+sin hallazgos (no significa anónimo): ['fecha_ingreso', 'producto']
+puerta de silver.clientes: habilitada (0)
+```
+
+Si la fuente trae una columna nueva, `observacion_medica`, aparece como sensible por su nombre y por su contenido, sin revisor. La puerta vuelve a bloquear, como pide la operación del §8, aunque el resto ya esté revisado:
+
+```text
+$ python detector.py fuente-nueva
+catálogo de silver.clientes · 4 filas · referencia 2026-11-03
+  rut_cliente: personal: RUT con DV válido (2 de 4) · art. 2 f) · revisor: equipo-privacidad
+  rut_cliente: revisión personal: forma de RUT con DV inválido (1 de 4) · art. 2 f) · revisor: equipo-privacidad
+  contacto: personal: correo en el valor (2 de 4) · art. 2 f) · revisor: equipo-privacidad
+  comentarios: personal: correo en el valor (1 de 4) · art. 2 f) · revisor: equipo-privacidad
+  comentarios: sensible: términos en el texto (1 de 4) · art. 2 g), datos relativos a la salud · revisor: equipo-privacidad
+  diagnostico: sensible: nombre de columna (diagnostico) · art. 2 g), datos relativos a la salud · revisor: equipo-privacidad
+  tramo_ingreso: sensible: nombre de columna (ingreso, tramo) · art. 2 g), situación socioeconómica · revisor: equipo-privacidad
+  observacion_medica: sensible: nombre de columna (medica) · art. 2 g), datos relativos a la salud · revisor: pendiente
+  observacion_medica: sensible: términos en el texto (2 de 4) · art. 2 g), datos relativos a la salud · revisor: pendiente
+  comuna + edad: revisión personal: combinación única en 2 de 4 filas · art. 2 f) · revisor: equipo-privacidad
+sin hallazgos (no significa anónimo): ['fecha_ingreso', 'producto']
+puerta de silver.clientes: bloqueada (1), sin revisor: observacion_medica (sensible)
+```
 
 Limitaciones:
 
-- **RUT:** valida forma y DV, no que exista ni a quién pertenece.
+- **RUT:** valida la forma y el DV, no que exista ni a quién pertenece. Un DV inválido no descarta el dato: queda en revisión.
 - **Correo:** reconoce el formato, no que la dirección exista.
-- **Sensibles:** por el nombre de la columna; la clasificación jurídica exige revisar contenido y contexto.
-- **Combinaciones:** no analiza combinaciones de columnas ni relaciones entre tablas.
+- **Sensibles:** el nombre de columna y un diccionario mínimo dan candidatos. Un término ausente del diccionario no se detecta, y la clasificación jurídica exige revisar contenido y contexto.
+- **Identificación indirecta:** solo prueba la combinación declarada (`comuna` + `edad`) en la muestra. No busca otras combinaciones ni relaciones entre tablas, y en una muestra chica casi toda combinación parece única.
+- **Identificadores internos:** un `cliente_id` vinculable no se detecta aquí; se clasifica en el catálogo por conocimiento del dominio.
 - **Logs:** el reporte no imprime valores; en producción, muestras minimizadas o sintéticas.
 
 ## 11. GCP
@@ -319,6 +490,7 @@ En Azure, **Microsoft Purview**. Según *Chile identity card number*, consultada
 ## 15. Errores frecuentes
 
 - Clasificar solo por el nombre de la columna.
+- Comparar nombres por substring: «ingreso» calza en `fecha_ingreso` y «renta» en `herramienta_id`. Se compara por token (split por «_») y con reglas de varios tokens, como `tramo` + `ingreso`.
 - Tratar `cliente_id` o un hash como no personal sin analizar la reidentificación.
 - Equiparar cualquier dato financiero con sensible sin revisar qué revela; ojo: la situación socioeconómica sí es sensible según el art. 2 g).
 - Creer que un DV inválido elimina el carácter personal del dato.
@@ -367,7 +539,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-21: texto legal consultado ese día en BCN. `verified`: aprobada por Felipe el 2026-11-01 (`owner_approved_at`). Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-21: texto legal consultado ese día en BCN. `review_required` desde el 2026-11-03: el §10 se reescribió de punta a punta y espera la aprobación de Felipe (la anterior fue el 2026-11-01). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -383,3 +555,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: Enmienda 4 de ADR-023: 3 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
 - 2026-11-03: a pedido de Felipe se quita del resumen «**Cómo leerla.** *Comprender* (§1–6): qué es un dato personal y uno sensible. *Aplicar* (§7–13): cómo se detecta y clasifica. *Demostrar*: la evidencia del §8, el detector del §10 y las preguntas del §18.» y, del §2, la buena práctica «El RUT tiene un dígito verificador (módulo 11) que separa un RUT bien escrito de un número cualquiera; un DV inválido no prueba que el dato no sea personal.»
+- 2026-11-03: §10 reescrito de punta a punta (pedido de Felipe): muestra → detección en cuatro frentes (identificadores directos con `clasificar_rut` y correo; sensibles por nombre comparando por token; sensibles en el contenido con un diccionario mínimo; combinación única de `comuna` + `edad`) → catálogo con fundamento, fecha y revisor → puerta con código de salida 0/1; marcadores `# @paso 1–4` y tres escenarios (`muestra`, `revisado`, `fuente-nueva`) con su línea `$ python detector.py <escenario>`, iguales a la salida de la CI. §15 suma el falso positivo por substring y §8 la evidencia de la puerta. Vuelve a `review_required` hasta la aprobación de Felipe.

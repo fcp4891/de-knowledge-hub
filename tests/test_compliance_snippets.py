@@ -1,6 +1,7 @@
 """Ejemplos de las fichas de la Ley 21.719 (antes en 19-compliance, hoy en 24-privacy-engineering) ejecutados en la CI (ADR-023, upgrade del 2026-10-22).
 
-- Biblioteca estándar: gdpr y lgpd (lote P4, reglas por jurisdicción), chile-data-protection, pii-identification, processing-activities-inventory,
+- Biblioteca estándar: gdpr y lgpd (lote P4, reglas por jurisdicción), chile-data-protection, pii-identification (escenarios con
+  su salida documentada), processing-activities-inventory,
   chilean-identifier-pseudonymization, data-subject-rights-pipeline, retention-and-erasure, data-breach-response,
   dpia-and-automated-decisions, processors-and-international-transfers y privacy-controls-as-code.
 - retention-and-erasure: además del ejemplo con biblioteca estándar, PyIceberg con catálogo SQLite en Linux (ADR-018) y
@@ -84,15 +85,6 @@ STDLIB = {
         "sa-bi-operacional · estadistica_operacional · contacto_minimo: DENEGAR: sin concesión para ese producto",
         "grp-marketing · campana_ofertas · contacto_con_consentimiento: DENEGAR: concesión vencida",
         "pruebas negativas: 4/4 no se permiten"],
-    "pii-identification": [
-        "rut_cliente: personal: RUT con DV válido (2 de 2)", "contacto: personal: correo en el valor (1 de 2)",
-        "cliente_id: revisión personal: posible identificador indirecto o texto libre",
-        "diagnostico: revisión sensible: nombre asociado a datos relativos a la salud",
-        "tramo_ingreso: revisión sensible: nombre asociado a situación socioeconómica",
-        "comentarios: personal: correo en el valor (1 de 2)",
-        "comentarios: revisión personal: posible identificador indirecto o texto libre",
-        "rut_malformado: revisión personal: forma de RUT con DV inválido (1 de 1)",
-        "sin hallazgos (no significa anónimo): ['comuna', 'producto']"],
     "chilean-identifier-pseudonymization": [
         "variantes del mismo RUT, mismo seudónimo: True", "sin normalizar, seudónimos distintos: 3",
         "DV inválido: RUT no válido: '11111111-0' → cuarentena para revisión, no se descarta",
@@ -287,3 +279,46 @@ def test_erasure_by_crypto_shredding(tmp_path: Path) -> None:
                  "d4e5f6 en el respaldo: reserva SCL-PMC"):
         assert line in out, out
     assert_mypy_strict(tmp_path)
+
+
+PII_SCENARIOS = {"muestra": 1, "revisado": 0, "fuente-nueva": 1}
+
+
+def run_detector(tmp_path: Path, scenario: str) -> subprocess.CompletedProcess[str]:
+    (code,) = blocks("pii-identification", "python")
+    (tmp_path / "snippet.py").write_text(code, encoding="utf-8", newline="\n")   # assert_mypy_strict revisa snippet.py
+    return subprocess.run([sys.executable, "snippet.py", scenario], cwd=tmp_path, env={**os.environ, **UTF8},
+                          capture_output=True, text=True, encoding="utf-8", timeout=300)
+
+
+def test_pii_detector_each_scenario_prints_its_documented_output(tmp_path: Path) -> None:
+    """pii-identification §10: un bloque text por escenario, con su línea «$ python detector.py <escenario>»."""
+    documented = {block.splitlines()[0].removeprefix("$ python detector.py "): block
+                  for block in blocks("pii-identification", "text")}
+    assert list(documented) == list(PII_SCENARIOS)
+    for scenario, exit_code in PII_SCENARIOS.items():
+        result = run_detector(tmp_path, scenario)
+        expected = documented[scenario].split("\n", 1)[1].strip()
+        assert result.returncode == exit_code and result.stdout.strip() == expected, result.stdout + result.stderr
+        assert "@example.test" not in result.stdout and "111" not in result.stdout   # el reporte no imprime valores
+    assert_mypy_strict(tmp_path)
+
+
+def test_pii_detector_rules(tmp_path: Path) -> None:
+    (code,) = blocks("pii-identification", "python")
+    steps = [line.split("@paso", 1)[1].strip() for line in code.splitlines() if line.startswith("# @paso")]
+    assert steps == ["1 Reglas", "2 Detección", "3 Catálogo", "4 Puerta y reporte"]
+    module = tmp_path / "detector.py"
+    module.write_text(code, encoding="utf-8", newline="\n")
+    spec = importlib.util.spec_from_file_location("detector", module)
+    assert spec and spec.loader
+    m = importlib.util.module_from_spec(spec)
+    sys.modules["detector"] = m   # dataclasses necesita el módulo registrado
+    spec.loader.exec_module(m)
+    rut = m.ficticio(11_111_111)
+    assert [m.clasificar_rut(v) for v in (rut, m.con_dv_alterado(rut), "2026-01-10")] == ["valido", "dv_invalido", "no_rut"]
+    assert m.sensibles_por_nombre("fecha_ingreso") == [] and m.sensibles_por_nombre("herramienta_renta_id")
+    assert [h.fundamento for h in m.sensibles_por_nombre("tramo_ingreso")] == ["art. 2 g), situación socioeconómica"]
+    assert m.sensibles_por_nombre("herramienta_id") == []   # «renta» como substring no cuenta
+    (indirecta,) = m.identificacion_indirecta(m.MUESTRA)
+    assert (indirecta.categoria, indirecta.metodo) == ("revisión", "combinación única en 2 de 4 filas")

@@ -95,7 +95,8 @@ relations:
 created_at: 2026-10-21
 updated_at: 2026-11-03
 last_verified: 2026-10-28
-verification_status: review_required
+owner_approved_at: 2026-11-03
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -730,7 +731,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-28: textos legales vueltos a consultar en BCN (sin cambios) y estado del boletín 18.623-07 en el Senado (aprobado por el Senado y despachado a la Cámara). Antes, 2026-10-25: textos legales vueltos a consultar, sin cambios, y 2026-10-22: articulado, vigencia, estado del boletín 18.623-07 y Decreto 662 consultados ese día en BCN y en el Senado. `review_required` desde el 2026-11-03: el §10 se reescribió como piloto de código guiado y espera la aprobación de Felipe (la anterior fue el 2026-11-01). Revisión mensual, y extraordinaria si se publica la ley de postergación.
+2026-10-28: textos legales vueltos a consultar en BCN (sin cambios) y estado del boletín 18.623-07 en el Senado (aprobado por el Senado y despachado a la Cámara). Antes, 2026-10-25: textos legales vueltos a consultar, sin cambios, y 2026-10-22: articulado, vigencia, estado del boletín 18.623-07 y Decreto 662 consultados ese día en BCN y en el Senado. `verified`: aprobada de nuevo por Felipe el 2026-11-03 (`owner_approved_at`), con el §10 del piloto de código guiado. Revisión mensual, y extraordinaria si se publica la ley de postergación.
 
 ## 22. Historial de cambios importantes
 
@@ -755,3 +756,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-01: §10 reemplazado a partir de la propuesta de Felipe: flujo de punta a punta (datos ficticios → cuatro controles → validación de la evidencia → código de salida 0/1 sin `assert`), estados PASS/FAIL/UNKNOWN, cuatro brechas inyectadas por separado, regla «autorizado ⇒ activo», purga del registro vencido sin cambiar el plazo, `evidence_sha256`, duplicados y evidencia vencida. Sale la entrada versionada `tests/fixtures/privacy-control-results.json`. **Por el cambio de código, la ficha vuelve a `review_required` hasta que Felipe la apruebe de nuevo.**
 - 2026-11-01: aprobada de nuevo por Felipe con el §10 nuevo, condicionada a la CI en verde (run 41354325642, 786 tests): `owner_approved_at: 2026-11-01`, vuelve a `verified`.
 - 2026-11-03: piloto de código guiado en el §10 (pedido de Felipe): una función por control con el docstring de su letra del art. 3 y sin ternarios encadenados; marcadores `# @paso 1–4`; el replay desde `source` reintroducía el registro vencido y `retention_check` ahora evalúa también su salida (`fix()` aplica la retención al replay); escenario nuevo `evidencia-alterada`, donde falla la huella SHA-256; una salida por escenario con su línea `$ python controles.py <escenario>`, igual a la de la CI. Vuelve a `review_required` hasta la aprobación de Felipe.
+- 2026-11-03: aprobada por Felipe con el §10 nuevo (`owner_approved_at: 2026-11-03`); vuelve a `verified` (ADR-023).
