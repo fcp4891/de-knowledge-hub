@@ -5,6 +5,7 @@ import { SideNav } from "@/components/SideNav";
 import { listDomains, listStudyStates } from "@/lib/api/client";
 
 import "../styles/tokens.css";
+import "../styles/scope.css";
 import "./globals.css";
 
 const plexSans = localFont({

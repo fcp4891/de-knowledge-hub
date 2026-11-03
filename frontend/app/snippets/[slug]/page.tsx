@@ -7,7 +7,10 @@ import { SourceList } from "@/components/card/SourceList";
 import { getRelations, getSnippet } from "@/lib/api/client";
 import { loadConceptRefs } from "@/lib/loadConceptRefs";
 import type { RelationGroups } from "@/lib/api/types";
+import { ConstructionBanner } from "@/components/ConstructionBanner";
+import { conceptInline } from "@/lib/conceptNames";
 import { CLOUD_LABEL, LANGUAGE_LABEL } from "@/lib/labels";
+import { CONSTRUCTION_MARK, snippetListed, scopeFromConcepts } from "@/lib/publishedScope";
 import { staticSlugs } from "@/lib/staticParams";
 
 // El build estático cambia este literal a false: Next solo acepta true o false.
@@ -53,9 +56,13 @@ export default async function SnippetPage({ params }: { params: Promise<{ slug: 
 
   const data = snippet.data;
   const concepts = implementedConcepts(data.implements, relations.ok ? relations.data : null);
+  const scope = scopeFromConcepts(
+    Object.entries(conceptRefs).map(([conceptSlug, ref]) => ({ slug: conceptSlug, domain: ref.domain ?? "" })),
+  );
 
   return (
     <div className="page">
+      {snippetListed(data.implements, scope) ? null : <ConstructionBanner />}
       <CardHeader
         title={data.title}
         description={data.description}
@@ -93,11 +100,23 @@ export default async function SnippetPage({ params }: { params: Promise<{ slug: 
             <p className="muted">No declara conceptos.</p>
           ) : (
             <ul className="stack">
-              {concepts.map((concept) => (
-                <li key={concept.slug}>
-                  <Link href={`/concepts/${concept.slug}`}>{concept.title}</Link>
-                </li>
-              ))}
+              {concepts.map((concept) => {
+                const named = conceptInline(concept.slug, conceptRefs);
+                return (
+                  <li key={concept.slug}>
+                    {named.kind === "link" ? (
+                      <Link href={`/concepts/${concept.slug}`}>{concept.title}</Link>
+                    ) : (
+                      <span>
+                        {concept.title}
+                        {named.kind === "construction" ? (
+                          <span className="ficha-construction-mark">{CONSTRUCTION_MARK}</span>
+                        ) : null}
+                      </span>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           )}
         </section>

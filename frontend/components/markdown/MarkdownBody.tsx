@@ -1,4 +1,4 @@
-import { InlineText } from "@/components/markdown/InlineText";
+import { ArrowInlines } from "@/components/markdown/InlineArrows";
 import { PipelineSteps } from "@/components/markdown/PipelineSteps";
 import type { ConceptRefs } from "@/lib/conceptNames";
 import { annotateCode, type CodeAnnotation, type CodePresentation } from "@/lib/codeBlocks";
@@ -14,6 +14,7 @@ export async function MarkdownBody({
   conceptRefs,
   markCodeStatus = false,
   horizontalDiagrams = false,
+  styleArrows = true,
 }: {
   markdown: string;
   etiquetaColumn?: boolean;
@@ -21,6 +22,7 @@ export async function MarkdownBody({
   conceptRefs?: ConceptRefs;
   markCodeStatus?: boolean;
   horizontalDiagrams?: boolean;
+  styleArrows?: boolean;
 }) {
   const blocks = parseMarkdown(markdown);
   const notes = annotateCode(blocks);
@@ -45,6 +47,7 @@ export async function MarkdownBody({
             markCodeStatus={markCodeStatus}
             notes={notes}
             horizontalDiagrams={horizontalDiagrams}
+            styleArrows={styleArrows}
             CodeBlock={codeBlock}
             MermaidDiagram={mermaidDiagram}
           />
@@ -58,6 +61,7 @@ export async function MarkdownBody({
             conceptRefs={conceptRefs}
             annotation={notes.get(block)}
             horizontalDiagrams={horizontalDiagrams}
+            styleArrows={styleArrows}
             CodeBlock={codeBlock}
             MermaidDiagram={mermaidDiagram}
           />
@@ -75,6 +79,7 @@ function EvidenceBlock({
   markCodeStatus,
   notes,
   horizontalDiagrams,
+  styleArrows,
   CodeBlock,
   MermaidDiagram,
 }: {
@@ -85,6 +90,7 @@ function EvidenceBlock({
   markCodeStatus: boolean;
   notes: WeakMap<Block, CodeAnnotation>;
   horizontalDiagrams: boolean;
+  styleArrows: boolean;
   CodeBlock: ((props: CodePresentation) => React.ReactNode) | null;
   MermaidDiagram: ((props: { source: string }) => React.ReactNode) | null;
 }) {
@@ -108,6 +114,7 @@ function EvidenceBlock({
           conceptRefs={conceptRefs}
           annotation={notes.get(block)}
           horizontalDiagrams={horizontalDiagrams}
+          styleArrows={styleArrows}
           CodeBlock={CodeBlock}
           MermaidDiagram={MermaidDiagram}
         />
@@ -124,6 +131,7 @@ function MarkdownBlock({
   markCodeStatus,
   annotation,
   horizontalDiagrams,
+  styleArrows,
   CodeBlock,
   MermaidDiagram,
 }: {
@@ -134,6 +142,7 @@ function MarkdownBlock({
   markCodeStatus: boolean;
   annotation?: CodeAnnotation;
   horizontalDiagrams: boolean;
+  styleArrows: boolean;
   CodeBlock: ((props: CodePresentation) => React.ReactNode) | null;
   MermaidDiagram: ((props: { source: string }) => React.ReactNode) | null;
 }) {
@@ -156,7 +165,7 @@ function MarkdownBlock({
   if (block.type === "note") {
     return (
       <p className="verify-note">
-        Pendiente de verificación: <InlineText inlines={block.inlines} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} />
+        Pendiente de verificación: <ArrowInlines inlines={block.inlines} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} styleArrows={styleArrows} />
       </p>
     );
   }
@@ -173,7 +182,7 @@ function MarkdownBlock({
             <tr>
               {indexes.map((index) => (
                 <th key={index} data-align={block.aligns[index] ?? "left"}>
-                  <InlineText inlines={block.headers[index]} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} />
+                  <ArrowInlines inlines={block.headers[index]} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} styleArrows={styleArrows} />
                 </th>
               ))}
             </tr>
@@ -190,7 +199,7 @@ function MarkdownBlock({
                       data-label={cellLabel(block.headers[index] ?? [])}
                       title={ficha ?? undefined}
                     >
-                      <InlineText inlines={row[index] ?? []} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} />
+                      <ArrowInlines inlines={row[index] ?? []} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} styleArrows={styleArrows} />
                     </td>
                   );
                 })}
@@ -210,14 +219,14 @@ function MarkdownBlock({
             {item.checked === null ? null : (
               <input type="checkbox" defaultChecked={item.checked} disabled aria-label={item.checked ? "Hecho" : "Pendiente"} />
             )}
-            <FlowText inlines={item.inlines} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} />
+            <FlowText inlines={item.inlines} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} styleArrows={styleArrows} />
           </li>
         ))}
       </Tag>
     );
   }
   return (
-    <FlowText inlines={block.inlines} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} paragraph />
+    <FlowText inlines={block.inlines} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} styleArrows={styleArrows} paragraph />
   );
 }
 
@@ -226,12 +235,14 @@ function FlowText({
   obligations,
   conceptRefs,
   markCodeStatus,
+  styleArrows,
   paragraph = false,
 }: {
   inlines: Inline[];
   obligations: readonly ObligationBasis[];
   conceptRefs?: ConceptRefs;
   markCodeStatus: boolean;
+  styleArrows: boolean;
   paragraph?: boolean;
 }) {
   const chain = readPipeline(inlines);
@@ -240,8 +251,16 @@ function FlowText({
       <PipelineSteps chain={chain} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} />
     );
   }
-  const text = <InlineText inlines={inlines} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} />;
-  return paragraph ? <p>{text}</p> : text;
+  return (
+    <ArrowInlines
+      inlines={inlines}
+      obligations={obligations}
+      conceptRefs={conceptRefs}
+      markCodeStatus={markCodeStatus}
+      styleArrows={styleArrows}
+      paragraph={paragraph}
+    />
+  );
 }
 
 function cellLabel(inlines: Inline[]): string {

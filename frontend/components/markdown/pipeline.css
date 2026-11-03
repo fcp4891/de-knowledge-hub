@@ -97,6 +97,50 @@
   display: none;
 }
 
+.flow-pill {
+  display: inline-block;
+  box-sizing: border-box;
+  max-width: 100%;
+  margin: 0 1px;
+  padding: 0 6px;
+  border-radius: 9px;
+  background: var(--accent-soft);
+  color: var(--ink);
+  font-family: var(--font-ui), system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  vertical-align: baseline;
+}
+
+.flow-arrow {
+  display: inline-flex;
+  align-items: center;
+  margin-inline: 4px;
+  vertical-align: middle;
+}
+
+.flow-arrow-glyph {
+  color: var(--accent);
+  font-size: 17px;
+  line-height: 1;
+  user-select: none;
+}
+
+.flow-arrow-source,
+.flow-space {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .pipeline-step:hover,
 .pipeline-step:focus-within {
   background: var(--accent-soft);

@@ -2,6 +2,7 @@ import { ApiFailure } from "@/components/ApiFailure";
 import { DomainRoute, type GoalDomain, type RouteStage, type RouteStudy } from "@/components/explorer/DomainRoute";
 import { getConcept, getDomain, listDomains, listStudyStates } from "@/lib/api/client";
 import type { ApiResult } from "@/lib/api/types";
+import { isDomainPublished } from "@/lib/publishedScope";
 import { staticSlugs } from "@/lib/staticParams";
 
 // El build estático cambia este literal a false: Next solo acepta true o false.
@@ -134,6 +135,7 @@ export default async function DomainPage({ params }: { params: Promise<{ slug: s
         study={studyResult && studyResult.ok ? studyResult.data : null}
         staticMode={staticMode}
         goalDomains={goalDomains}
+        construction={!isDomainPublished(data)}
       />
     </>
   );

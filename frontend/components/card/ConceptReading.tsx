@@ -18,6 +18,7 @@ import type {
 import { CARD_SECTION_GROUPS } from "@/lib/learning-paths";
 import type { LegalBasis } from "@/lib/api/types";
 import { ArchitectureDot } from "@/components/markdown/InlineText";
+import { ConstructionBanner } from "@/components/ConstructionBanner";
 import { entityHref } from "@/lib/entityHref";
 import { bcnLinkText, lawLabel, legalBasisRows, legalRowId, type LegalNoticeCopy } from "@/lib/legal";
 import { partOfParent, withoutPartOf, type PartLink } from "@/lib/partOf";
@@ -57,7 +58,7 @@ export type ReadingSectionModel = {
 };
 
 export type ReadingCrumb = {
-  domainHref: string;
+  domainHref: string | null;
   domainLabel: string;
   subdomain: string | null;
   subdomainHref: string | null;
@@ -196,6 +197,7 @@ export function ConceptReading({
   entityType,
   architectureLegend,
   pageKind = "concept",
+  construction = false,
   children,
 }: {
   slug: string;
@@ -223,6 +225,7 @@ export function ConceptReading({
   entityType: EntityType;
   architectureLegend: boolean;
   pageKind?: string;
+  construction?: boolean;
   children?: React.ReactNode;
 }) {
   const sectionGroups = pageKind === "architecture" ? ARCHITECTURE_GROUPS : CARD_SECTION_GROUPS;
@@ -586,6 +589,7 @@ export function ConceptReading({
 
   return (
     <div className="page reading-page reading">
+      {construction ? <ConstructionBanner /> : null}
       <div className="reading-top">
         <nav aria-label="Ruta de navegación">
           <ol className="reading-crumbs">
@@ -595,9 +599,13 @@ export function ConceptReading({
             {crumb ? (
               <li>
                 <span aria-hidden="true">/</span>{" "}
-                <Link className="reading-crumb-domain" href={crumb.domainHref}>
-                  {crumb.domainLabel}
-                </Link>
+                {crumb.domainHref ? (
+                  <Link className="reading-crumb-domain" href={crumb.domainHref}>
+                    {crumb.domainLabel}
+                  </Link>
+                ) : (
+                  <span>{crumb.domainLabel}</span>
+                )}
               </li>
             ) : null}
             {crumb?.subdomain ? (

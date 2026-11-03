@@ -6,6 +6,16 @@ import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import { GOALS, LAYERS, SHORT_NAMES, UPCOMING_GOALS, type Goal, type Layer } from "@/lib/learning-paths";
 import { contentStatus, paintStation, type GoalPath } from "@/lib/platformMap";
 import { goalPathIds, PRIVACY_SPACE_HREF } from "@/lib/privacySpace";
+import {
+  BAND_LABEL,
+  CONSTRUCTION_BADGE,
+  CONSTRUCTION_LAYER,
+  isDomainPublished,
+  isGoalPublished,
+  layerIsClosed,
+  requirementPlainText,
+  stepHref,
+} from "@/lib/publishedScope";
 import { listStoredStudy, subscribePersonal } from "@/lib/personalStore";
 import { CARD_SECTION_COUNT, readReadingProgress, type ReadingProgress } from "@/lib/readingProgress";
 import type { StudyState } from "@/lib/api/types";
@@ -74,7 +84,7 @@ export function HomeScreen({
     setDateLabel(todayLabel(new Date()));
     try {
       const stored = window.localStorage.getItem(GOAL_KEY);
-      if (stored && GOALS.some((goal) => goal.key === stored)) {
+      if (stored && isGoalPublished(stored)) {
         setGoalKey(stored);
       }
     } catch {
@@ -109,7 +119,9 @@ export function HomeScreen({
 
   const goal = GOALS.find((item) => item.key === goalKey) ?? null;
   const path: GoalPath = goal ? goalPathIds(goal.steps) : null;
-  const continueConcept = activeSlug ? conceptsBySlug.get(activeSlug) ?? null : null;
+  const storedContinue = activeSlug ? conceptsBySlug.get(activeSlug) ?? null : null;
+  const continueConcept =
+    storedContinue && isDomainPublished({ id: storedContinue.domainId }) ? storedContinue : null;
 
   function pickGoal(key: string) {
     setGoalKey((current) => {
@@ -210,8 +222,9 @@ function ContinueCard({ concept, reading }: { concept: HomeConcept; reading: Rea
 }
 
 function GoalCard({ goal, pressed, onPick }: { goal: Goal; pressed: boolean; onPick: (key: string) => void }) {
-  return (
-    <button type="button" className="home-goal" aria-pressed={pressed} onClick={() => onPick(goal.key)}>
+  const requires = requirementPlainText(goal.requires);
+  const meta = (
+    <>
       <span className="home-goal-top">
         <span className="home-goal-label">{goal.label}</span>
         <span className="home-level" data-level={goal.level}>
@@ -220,8 +233,21 @@ function GoalCard({ goal, pressed, onPick }: { goal: Goal; pressed: boolean; onP
       </span>
       <span className="home-goal-desc">{goal.description}</span>
       <span className="home-goal-meta">
-        {goal.requires} · {goal.steps.length} pasos
+        {requires} · {goal.steps.length} pasos
       </span>
+    </>
+  );
+  if (!isGoalPublished(goal.key)) {
+    return (
+      <div className="home-goal" aria-disabled="true">
+        {meta}
+        <span className="construction-mark">{CONSTRUCTION_BADGE}</span>
+      </div>
+    );
+  }
+  return (
+    <button type="button" className="home-goal" aria-pressed={pressed} onClick={() => onPick(goal.key)}>
+      {meta}
     </button>
   );
 }
@@ -231,6 +257,7 @@ function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsById: Map<
   const firstDomain = first ? domainsById.get(first.domain) : undefined;
   const firstStage = first?.stage ? firstDomain?.stages.find((stage) => stage.slug === first.stage) : undefined;
   const firstName = firstStage?.title ?? (first ? SHORT_NAMES[first.domain] : undefined);
+  const startHref = first ? stepHref(first, firstDomain?.slug ?? null) : null;
 
   return (
     <section className="home-itinerary" aria-labelledby="itin">
@@ -253,9 +280,9 @@ function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsById: Map<
                 : domain
                   ? contentStatus(domain.withPage, domain.conceptCount)
                   : null;
-              const place = step.stage ? "Especialización" : layer?.name;
+              const place = step.stage ? BAND_LABEL : layer?.name;
               const name = stage?.title ?? SHORT_NAMES[step.domain] ?? domain?.slug ?? step.domain;
-              const href = step.stage ? `${PRIVACY_SPACE_HREF}#${step.stage}` : domain ? `/explorer/${domain.slug}` : null;
+              const href = stepHref(step, domain?.slug ?? null);
               const body = (
                 <>
                   <span className="home-step-name">
@@ -270,12 +297,22 @@ function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsById: Map<
               return (
                 <li key={`${step.domain}-${step.stage ?? index}`} className="home-step">
                   <span className="home-step-rail">
-                    <span
-                      className="home-step-num"
-                      style={{ background: step.stage ? "var(--band-especializacion-dark)" : (layer?.dark ?? "var(--ink)") }}
-                    >
-                      {index + 1}
-                    </span>
+                    {href ? (
+                      <Link
+                        href={href}
+                        className="home-step-num"
+                        style={{ background: step.stage ? "var(--band-especializacion-dark)" : (layer?.dark ?? "var(--ink)") }}
+                      >
+                        {index + 1}
+                      </Link>
+                    ) : (
+                      <span
+                        className="home-step-num"
+                        style={{ background: step.stage ? "var(--band-especializacion-dark)" : (layer?.dark ?? "var(--ink)") }}
+                      >
+                        {index + 1}
+                      </span>
+                    )}
                     <span className="home-step-line" data-last={index === goal.steps.length - 1} />
                   </span>
                   {href ? <Link href={href}>{body}</Link> : <span className="home-step-text">{body}</span>}
@@ -283,11 +320,8 @@ function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsById: Map<
               );
             })}
           </ol>
-          {firstDomain && firstName ? (
-            <Link
-              className="home-start"
-              href={first?.stage ? `${PRIVACY_SPACE_HREF}#${first.stage}` : `/explorer/${firstDomain.slug}`}
-            >
+          {startHref && firstName ? (
+            <Link className="home-start" href={startHref}>
               {`Empezar por ${firstName}`}
             </Link>
           ) : null}
@@ -318,6 +352,7 @@ function PlatformMap({ path, domainsById }: { path: GoalPath; domainsById: Map<s
 }
 
 function SpecializationBand({ domain, path }: { domain: HomeDomain; path: GoalPath }) {
+  const open = isDomainPublished(domain);
   const visible = domain.stages.filter((stage) => stage.slug !== "regulatory-frameworks");
   const stations = visible.map((stage) => ({
     id: stage.slug,
@@ -337,16 +372,17 @@ function SpecializationBand({ domain, path }: { domain: HomeDomain; path: GoalPa
   } as CSSProperties;
 
   return (
-    <div className="home-layer" data-layer="especializacion" style={style}>
+    <div className="home-layer" data-layer="especializacion" data-published={open ? "true" : "false"} style={style}>
       <div className="home-layer-label">
         <span className="home-layer-name">
           <span className="home-swatch" />
-          Especialización
+          {BAND_LABEL}
         </span>
         <span className="home-layer-count">
           {withPage}/{total} fichas
         </span>
       </div>
+      {open ? null : <p className="home-layer-note">{CONSTRUCTION_LAYER}</p>}
       <div className="home-stations-scroll">
         <div className="home-stations">
           {stations.map((station, index) => {
@@ -358,24 +394,33 @@ function SpecializationBand({ domain, path }: { domain: HomeDomain; path: GoalPa
               withPage: station.total > 0 ? station.withPage : null,
               total: station.total,
             });
-            const emphasis = paint.emphasized ? "step" : paint.dimmed ? "dimmed" : "plain";
+            const emphasis = !open ? "dimmed" : paint.emphasized ? "step" : paint.dimmed ? "dimmed" : "plain";
             const dotStyle =
               paint.fill === "partial"
                 ? { background: `conic-gradient(var(--band-especializacion) ${paint.percent}%, var(--surface) 0)` }
                 : undefined;
-            return (
-              <Link key={station.id} className="home-station" href={station.href}>
+            const body = (
+              <>
                 <span className="home-station-track">
                   <span className="home-station-line" data-tone={paint.lineLeft} />
-                  <span className="home-station-dot" data-fill={paint.fill} data-dimmed={paint.dimmed} style={dotStyle}>
-                    {paint.stepNumber}
+                  <span className="home-station-dot" data-fill={open ? paint.fill : "empty"} data-dimmed={!open || paint.dimmed} style={dotStyle}>
+                    {open ? paint.stepNumber : ""}
                   </span>
                   <span className="home-station-line" data-tone={paint.lineRight} />
                 </span>
                 <span className="home-station-name" data-emphasis={emphasis}>
                   {station.name}
                 </span>
+              </>
+            );
+            return open ? (
+              <Link key={station.id} className="home-station" href={station.href}>
+                {body}
               </Link>
+            ) : (
+              <span key={station.id} className="home-station">
+                {body}
+              </span>
             );
           })}
         </div>
@@ -397,6 +442,7 @@ function LayerRow({
   const known = stations.every((domain) => domain != null && domain.withPage !== null);
   const withPage = known ? stations.reduce((sum, domain) => sum + (domain?.withPage ?? 0), 0) : null;
   const total = stations.reduce((sum, domain) => sum + (domain?.conceptCount ?? 0), 0);
+  const closed = layerIsClosed(layer.domains);
   const style = {
     "--layer-color": layer.color,
     "--layer-dark": layer.dark,
@@ -404,7 +450,7 @@ function LayerRow({
   } as CSSProperties;
 
   return (
-    <div className="home-layer" data-layer={layer.key} style={style}>
+    <div className="home-layer" data-layer={layer.key} data-published={closed ? "false" : "true"} style={style}>
       <div className="home-layer-label">
         <span className="home-layer-name">
           <span className="home-swatch" />
@@ -416,6 +462,7 @@ function LayerRow({
           </span>
         ) : null}
       </div>
+      {closed ? <p className="home-layer-note">{CONSTRUCTION_LAYER}</p> : null}
       <div className="home-stations-scroll">
         <div className="home-stations">
           {layer.domains.map((id, index) => {
@@ -429,7 +476,8 @@ function LayerRow({
               total: domain?.conceptCount ?? 0,
             });
             const name = SHORT_NAMES[id] ?? domain?.slug ?? id;
-            const emphasis = paint.emphasized ? "step" : paint.dimmed ? "dimmed" : "plain";
+            const open = domain ? isDomainPublished(domain) : false;
+            const emphasis = !open ? "dimmed" : paint.emphasized ? "step" : paint.dimmed ? "dimmed" : "plain";
             const dotStyle =
               paint.fill === "partial"
                 ? { background: `conic-gradient(${layer.color} ${paint.percent}%, var(--surface) 0)` }
@@ -440,11 +488,11 @@ function LayerRow({
                   <span className="home-station-line" data-tone={paint.lineLeft} />
                   <span
                     className="home-station-dot"
-                    data-fill={paint.fill}
-                    data-dimmed={paint.dimmed}
+                    data-fill={open ? paint.fill : "empty"}
+                    data-dimmed={!open || paint.dimmed}
                     style={dotStyle}
                   >
-                    {paint.stepNumber}
+                    {open ? paint.stepNumber : ""}
                   </span>
                   <span className="home-station-line" data-tone={paint.lineRight} />
                 </span>
@@ -453,7 +501,7 @@ function LayerRow({
                 </span>
               </>
             );
-            return domain ? (
+            return open && domain ? (
               <Link key={id} className="home-station" href={`/explorer/${domain.slug}`}>
                 {body}
               </Link>

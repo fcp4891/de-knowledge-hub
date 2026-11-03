@@ -7,17 +7,18 @@ import type { ApiResult, SearchResults } from "@/lib/api/types";
 import { searchLocal } from "@/lib/browserSearch";
 import { resultHref } from "@/lib/entityHref";
 import { RESULT_LABEL } from "@/lib/labels";
+import { inPublishedSearch } from "@/lib/publishedScope";
 
 const DEBOUNCE_MS = 250;
 
-function filterSearchDomain(result: ApiResult<SearchResults>, domain: string): ApiResult<SearchResults> {
+function filterSearch(result: ApiResult<SearchResults>, domain?: string): ApiResult<SearchResults> {
   if (!result.ok) {
     return result;
   }
   const groups = result.data.groups
     .map((group) => ({
       ...group,
-      items: group.items.filter((item) => item.domain === domain),
+      items: group.items.filter((item) => inPublishedSearch(item.domain ?? null) && (!domain || item.domain === domain)),
     }))
     .filter((group) => group.items.length > 0);
   const total = groups.reduce((count, group) => count + group.items.length, 0);
@@ -62,14 +63,15 @@ export function SearchDialog({
     }
     const request =
       process.env.NEXT_PUBLIC_API_MODE === "static"
-        ? searchLocal(debounced).then((payload) => (domain ? filterSearchDomain(payload, domain) : payload))
+        ? searchLocal(debounced).then((payload) => filterSearch(payload, domain))
         : fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/search?${params.toString()}`, {
             signal: controller.signal,
           }).then(async (response) => {
             if (!response.ok) {
               return { ok: false as const, reason: "unavailable" as const, detail: "No se pudo contactar la API." };
             }
-            return { ok: true as const, data: (await response.json()) as SearchResults };
+            const data = (await response.json()) as SearchResults;
+            return filterSearch({ ok: true as const, data }, domain);
           });
     void request
       .then((payload) => {

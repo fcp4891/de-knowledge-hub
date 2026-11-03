@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 
 import type { Cloud, Language, SnippetSummary } from "@/lib/api/types";
 import { CLOUD_LABEL, LANGUAGE_LABEL, VERIFICATION_LABEL } from "@/lib/labels";
+import { SNIPPETS_EMPTY, snippetListed } from "@/lib/publishedScope";
 
 const LANGUAGES = Object.keys(LANGUAGE_LABEL) as Language[];
 const CLOUDS = Object.keys(CLOUD_LABEL) as Cloud[];
@@ -36,7 +37,9 @@ function pageHref(filters: { language?: Language; cloud?: Cloud; implements?: st
   return query ? `/snippets?${query}` : "/snippets";
 }
 
-export function SnippetBrowser({ snippets }: { snippets: SnippetSummary[] }) {
+export function SnippetBrowser({ snippets, scopeSlugs }: { snippets: SnippetSummary[]; scopeSlugs: readonly string[] }) {
+  const scope = new Set(scopeSlugs);
+  const listed = snippets.filter((snippet) => snippetListed(snippet.implements, scope));
   const params = useSearchParams();
   const languageParam = params.get("language");
   const cloudParam = params.get("cloud");
@@ -46,7 +49,10 @@ export function SnippetBrowser({ snippets }: { snippets: SnippetSummary[] }) {
   const parsedOffset = Number(params.get("offset"));
   const offset = Number.isFinite(parsedOffset) && parsedOffset > 0 ? Math.floor(parsedOffset) : 0;
   const filters = { language, cloud, implements: implemented };
-  const matched = snippets.filter((snippet) => {
+  if (listed.length === 0) {
+    return <p className="scope-layer-note">{SNIPPETS_EMPTY}</p>;
+  }
+  const matched = listed.filter((snippet) => {
     if (filters.language && snippet.language !== filters.language) {
       return false;
     }
@@ -116,11 +122,15 @@ export function SnippetBrowser({ snippets }: { snippets: SnippetSummary[] }) {
                 </p>
                 {snippet.implements.length > 0 ? (
                   <p className="meta">
-                    {snippet.implements.map((slug) => (
-                      <Link key={slug} href={`/concepts/${slug}`}>
-                        {slug}
-                      </Link>
-                    ))}
+                    {snippet.implements.map((slug) =>
+                      scope.has(slug) ? (
+                        <Link key={slug} href={`/concepts/${slug}`}>
+                          {slug}
+                        </Link>
+                      ) : (
+                        <span key={slug}>{slug}</span>
+                      ),
+                    )}
                   </p>
                 ) : null}
               </article>

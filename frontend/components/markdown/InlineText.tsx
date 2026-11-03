@@ -9,6 +9,7 @@ import {
 } from "@/lib/legal";
 import { splitCodeStatus } from "@/lib/architecture";
 import { conceptInline, PENDING_MARK, type ConceptRefs } from "@/lib/conceptNames";
+import { CONSTRUCTION_MARK } from "@/lib/publishedScope";
 import type { Inline } from "@/lib/markdown";
 
 export function ArchitectureDot({ labelled = true }: { labelled?: boolean }) {
@@ -123,6 +124,14 @@ export function InlineText({
           <span key={key} className="ficha-pending">
             {named.label}
             <span className="ficha-pending-mark">{PENDING_MARK}</span>
+          </span>
+        );
+      }
+      if (named.kind === "construction") {
+        return (
+          <span key={key} className="ficha-pending">
+            {named.label}
+            <span className="ficha-construction-mark">{CONSTRUCTION_MARK}</span>
           </span>
         );
       }
