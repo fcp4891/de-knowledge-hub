@@ -15,6 +15,7 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** `b/ui-principles-cards`. En `chile-data-protection`, cada principio del artículo 3 es la tarjeta-enlace. En reposo el fondo es neutro; al pasar el cursor o enfocar usa la escala de Especialización y muestra el ojo. El tooltip conserva el resumen verificado, es opaco y se cierra con Esc. En táctil, el primer toque abre y el segundo navega.
 - **Tarea activa:** revisión del lote 07-0. Informe en `docs/reviews/lote-07-0.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas bajas: el validador no coteja los nombres del §4, el aviso de diagramas invita a agrupar, y la nota de `gcp-biglake` no menciona bibliotecas ni CLI.
 - **Tarea activa:** revisión de arquitecturas-07a. Informe en `docs/reviews/lote-07a.md`. No se editó `content/` ni `frontend/`.

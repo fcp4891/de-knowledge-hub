@@ -61,6 +61,13 @@
   --band-especializacion: #7C3A6E;
   --band-especializacion-dark: #5C234F;
   --band-especializacion-fill: #7C3A6E;
+  /* Escala de la banda Especialización. Los tonos no cambian con el tema. */
+  --band-especializacion-50: #F8F1F6;
+  --band-especializacion-100: #F0DDEC;
+  --band-especializacion-200: #E0BBD6;
+  --band-especializacion-600: #7C3A6E;
+  --band-especializacion-800: #5C234F;
+  --band-especializacion-900: #3A1632;
 
   /* Forma y espacio */
   --radius-sm: 8px;

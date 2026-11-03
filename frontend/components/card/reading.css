@@ -718,57 +718,94 @@
   margin: 0;
 }
 
-.lf-principles {
+.legal-foundations .lf-principles {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.lf-principles li {
+.legal-foundations .lf-principles > li {
   position: relative;
-  margin: 0;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--bg);
-  font-family: var(--font-ui), system-ui, sans-serif;
-  font-size: var(--text-sm);
-  line-height: 1.4;
-}
-
-.lf-principle-trigger:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.lf-principle-trigger {
-  display: block;
-  width: 100%;
+  min-width: 0;
   margin: 0;
   padding: 0;
   border: 0;
   background: transparent;
-  color: inherit;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
+  font-size: 12px;
+  line-height: 1.35;
 }
 
-.lf-tip {
+.legal-foundations .lf-principles a.lf-principle-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 44px;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-ui), system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.legal-foundations .lf-principles a.lf-principle-card:hover,
+.legal-foundations .lf-principles a.lf-principle-card:focus-visible,
+.legal-foundations .lf-principles a.lf-principle-card.is-open {
+  background: var(--band-especializacion-50);
+  border-color: var(--band-especializacion-200);
+  color: var(--band-especializacion-800);
+}
+
+.legal-foundations .lf-principles a.lf-principle-card:focus-visible {
+  outline: 2px solid var(--band-especializacion-200);
+  outline-offset: 2px;
+}
+
+.lf-principle-label {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.lf-principle-eye {
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  color: var(--band-especializacion-600);
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.legal-foundations .lf-principles a.lf-principle-card:hover .lf-principle-eye,
+.legal-foundations .lf-principles a.lf-principle-card:focus-visible .lf-principle-eye,
+.legal-foundations .lf-principles a.lf-principle-card.is-open .lf-principle-eye {
+  opacity: 1;
+}
+
+.legal-foundations .lf-tip {
   position: absolute;
-  z-index: 8;
+  z-index: 30;
   top: calc(100% + 6px);
   left: 0;
-  width: max(100%, 220px);
-  max-width: min(320px, calc(100vw - 2rem));
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  right: auto;
+  box-sizing: border-box;
+  width: max(100%, min(250px, calc(100vw - 2rem)));
+  min-width: min(250px, calc(100vw - 2rem));
+  max-width: calc(100vw - 2rem);
   padding: 10px 12px;
-  border: 1px solid var(--border-strong);
+  border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--surface);
   color: var(--ink);
@@ -778,11 +815,52 @@
   line-height: 1.45;
 }
 
-.lf-tip a {
-  color: var(--accent);
-  font-family: var(--font-ui), system-ui, sans-serif;
-  font-weight: 650;
-  text-decoration: underline;
+.legal-foundations .lf-principles > li:nth-child(4n + 3) .lf-tip,
+.legal-foundations .lf-principles > li:nth-child(4n + 4) .lf-tip {
+  left: auto;
+  right: 0;
+}
+
+@media (max-width: 560px) {
+  .legal-foundations .lf-principles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .legal-foundations .lf-principles > li:nth-child(4n + 3) .lf-tip,
+  .legal-foundations .lf-principles > li:nth-child(4n + 4) .lf-tip {
+    left: 0;
+    right: auto;
+  }
+
+  .legal-foundations .lf-principles > li:nth-child(2n) .lf-tip {
+    left: auto;
+    right: 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .legal-foundations .lf-principles a.lf-principle-card:hover,
+  .legal-foundations .lf-principles a.lf-principle-card:focus-visible,
+  .legal-foundations .lf-principles a.lf-principle-card.is-open {
+    background: var(--band-especializacion-900);
+    border-color: var(--band-especializacion-600);
+    color: var(--band-especializacion-50);
+  }
+
+  .legal-foundations .lf-principles a.lf-principle-card:focus-visible {
+    outline-color: var(--band-especializacion-600);
+  }
+
+  .lf-principle-eye {
+    color: var(--band-especializacion-100);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .legal-foundations .lf-principles a.lf-principle-card,
+  .lf-principle-eye {
+    transition: none;
+  }
 }
 
 .lf-tools {
