@@ -7,7 +7,7 @@ Reglas (CLAUDE.md, «Eficiencia»):
   cambiada tiene un bloque de ese tipo;
 - frontend/ o tests/frontend/ → tests de frontend, tsc y build;
 - lo demás (docs/ salvo el contrato, CLAUDE.md, README) → nada.
-Con --full (workflow_dispatch, o antes de make static) todo corre.
+Con --full (workflow_dispatch o el cron nocturno) todo corre.
 
 Solo biblioteca estándar: corre con el Python del runner, antes de crear el .venv.
 

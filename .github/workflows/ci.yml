@@ -4,7 +4,9 @@ on:
   push:
     branches: [main]      # en main y en PR, por rutas cambiadas (job plan); no en cada push a a/* o b/*
   pull_request:
-  workflow_dispatch:       # suite completa: una vez por lote, antes de make static (CLAUDE.md, «Eficiencia»)
+  workflow_dispatch:       # suite completa a mano (CLAUDE.md, «Eficiencia»)
+  schedule:                # suite completa de noche: 07:00 UTC (04:00 en Chile en verano, 03:00 en invierno)
+    - cron: "0 7 * * *"
 
 # En PR, un push nuevo cancela el run anterior. En main cada push conserva su run: un run selectivo no cubre lo que
 # cambió el anterior.
@@ -21,6 +23,7 @@ permissions:               # repositorio público: el GITHUB_TOKEN solo lee; nin
 jobs:
   # Qué corre según los archivos del diff (scripts/ci/plan.py, solo biblioteca estándar): backend, tests, CI o
   # contrato → todo; content/ → datos y los snippets de las fichas cambiadas; frontend/ → job frontend; docs → nada.
+  # De noche (schedule) y a mano (workflow_dispatch), todo.
   # Equivale a dorny/paths-filter sin acción de terceros, y además lee los slugs y los tipos de bloque de cada ficha.
   plan:
     runs-on: ubuntu-24.04
@@ -53,7 +56,7 @@ jobs:
           base="$BEFORE"
           if [ "$EVENT" = pull_request ]; then base="$PR_BASE"; fi
           full=""
-          if [ "$EVENT" = workflow_dispatch ]; then full="--full"; fi
+          if [ "$EVENT" = workflow_dispatch ] || [ "$EVENT" = schedule ]; then full="--full"; fi
           python scripts/ci/plan.py --base "$base" --head "$GITHUB_SHA" $full --github-output "$GITHUB_OUTPUT"
 
   validate-and-test:
