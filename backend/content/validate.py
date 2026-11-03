@@ -243,6 +243,8 @@ def check_slug_lists(doc: Document, by_slug: dict[str, Document], report: Report
 
 def check_sources(doc: Document, by_slug: dict[str, Document], report: Report) -> None:
     for i, ref in enumerate(doc.data.get("sources", [])):
+        if not ref.get("url"):   # decisión de Felipe, 2026-11-03: sin URL la cita no se puede verificar
+            report.add(doc.location, f"[sources.{i}.url] cita sin url de '{ref['source']}': toda cita lleva la página citada")
         target = by_slug.get(ref["source"])
         if target is None:
             report.add(doc.location, f"[sources.{i}.source] fuente inexistente: '{ref['source']}'")

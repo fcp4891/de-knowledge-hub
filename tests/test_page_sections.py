@@ -149,7 +149,7 @@ def verified_concept(content: Path, verification_status: str = "verified") -> No
     from tests.test_validate import source, write_yaml
 
     write_yaml(content, "sources/r.yaml", source("docs-a"))
-    write_md(content, "concepts/a.md", concept("a", verification_status=verification_status, sources=[{"source": "docs-a"}]))
+    write_md(content, "concepts/a.md", concept("a", verification_status=verification_status, sources=[{"source": "docs-a", "url": "https://example.org/docs-a"}]))
 
 
 def test_snippet_template_has_10_sections() -> None:

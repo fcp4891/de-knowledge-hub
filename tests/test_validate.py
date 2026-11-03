@@ -133,7 +133,7 @@ def test_valid_graph_with_relations_and_sources(content: Path) -> None:
 
 def test_verified_with_sources_is_valid(content: Path) -> None:
     write_yaml(content, "sources/r.yaml", source("docs-a"))
-    write_md(content, "concepts/cdc.md", concept("cdc", verification_status="verified", sources=[{"source": "docs-a"}]))
+    write_md(content, "concepts/cdc.md", concept("cdc", verification_status="verified", sources=[{"source": "docs-a", "url": "https://example.org/docs-a"}]))
     assert run(content).ok
 
 
@@ -144,13 +144,13 @@ def test_source_level_must_match_source_type(content: Path) -> None:
 
 def test_page_may_cite_canonical_level_4_with_a_level_1_source(content: Path) -> None:
     write_yaml(content, "sources/r.yaml", source("docs-a"), source("kimball", "spec_paper", 4))
-    write_md(content, "concepts/scd.md", concept("scd", sources=[{"source": "docs-a"}, {"source": "kimball"}]))
+    write_md(content, "concepts/scd.md", concept("scd", sources=[{"source": "docs-a", "url": "https://example.org/docs-a"}, {"source": "kimball", "url": "https://example.org/kimball"}]))
     assert run(content).ok
 
 
 def test_page_rejects_level_3_and_5_sources(content: Path) -> None:
     write_yaml(content, "sources/r.yaml", source("docs-a"), source("blog", "engineering_blog", 3), source("wiki", "secondary", 5))
-    write_md(content, "concepts/a.md", concept("a", sources=[{"source": "docs-a"}, {"source": "blog"}, {"source": "wiki"}]))
+    write_md(content, "concepts/a.md", concept("a", sources=[{"source": "docs-a", "url": "https://example.org/docs-a"}, {"source": "blog", "url": "https://example.org/blog"}, {"source": "wiki", "url": "https://example.org/wiki"}]))
     assert_error(
         run(content),
         "[sources.1.source] 'blog' es Nivel 3: en fichas solo Nivel 1–2 o Nivel 4 canónico",
@@ -160,7 +160,7 @@ def test_page_rejects_level_3_and_5_sources(content: Path) -> None:
 
 def test_page_needs_a_level_1_or_2_source(content: Path) -> None:
     write_yaml(content, "sources/r.yaml", source("kimball", "spec_paper", 4))
-    write_md(content, "concepts/scd.md", concept("scd", sources=[{"source": "kimball"}]))
+    write_md(content, "concepts/scd.md", concept("scd", sources=[{"source": "kimball", "url": "https://example.org/kimball"}]))
     assert_error(run(content), "la ficha necesita al menos una fuente Nivel 1–2")
 
 
@@ -320,9 +320,21 @@ def test_technologies_must_reference_technology(content: Path) -> None:
 
 
 def test_source_ref_must_point_to_source(content: Path) -> None:
-    write_md(content, "concepts/a.md", concept("a", sources=[{"source": "b"}]))
+    write_md(content, "concepts/a.md", concept("a", sources=[{"source": "b", "url": "https://example.org/b"}]))
     write_md(content, "concepts/b.md", concept("b"))
     assert_error(run(content), "[sources.0.source] 'b' es concept, no source")
+
+
+def test_citation_without_url_is_an_error(content: Path) -> None:
+    write_yaml(content, "sources/registry.yaml", source("docs-a"))
+    write_md(content, "concepts/a.md", concept("a", sources=[{"source": "docs-a", "accessed": TODAY, "page_title": "Docs"}]))
+    assert_error(run(content), "[sources.0.url] cita sin url de 'docs-a'")
+
+
+def test_every_repository_citation_has_a_url() -> None:
+    missing = [f"{doc.location}: {ref.get('source')}" for doc in v.load_documents(ROOT / "content", v.Report())
+               for ref in doc.data.get("sources", []) or [] if isinstance(ref, dict) and not ref.get("url")]
+    assert missing == []
 
 
 def test_main_returns_one_on_errors(content: Path, capsys: pytest.CaptureFixture[str]) -> None:
