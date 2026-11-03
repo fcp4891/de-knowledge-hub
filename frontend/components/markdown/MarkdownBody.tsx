@@ -184,7 +184,12 @@ function MarkdownBlock({
                 {indexes.map((index) => {
                   const ficha = articleMap && index === articleMap.articleIndex ? articleMap.fichaTitles[rowIndex] : null;
                   return (
-                    <td key={index} data-align={block.aligns[index] ?? "left"} title={ficha ?? undefined}>
+                    <td
+                      key={index}
+                      data-align={block.aligns[index] ?? "left"}
+                      data-label={cellLabel(block.headers[index] ?? [])}
+                      title={ficha ?? undefined}
+                    >
                       <InlineText inlines={row[index] ?? []} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} />
                     </td>
                   );
@@ -237,4 +242,8 @@ function FlowText({
   }
   const text = <InlineText inlines={inlines} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} />;
   return paragraph ? <p>{text}</p> : text;
+}
+
+function cellLabel(inlines: Inline[]): string {
+  return inlines.map((part) => part.value).join("").replace(/\s+/g, " ").trim();
 }

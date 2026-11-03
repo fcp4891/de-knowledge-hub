@@ -124,6 +124,7 @@ export function LegalFoundations() {
   const [pinned, setPinned] = useState(false);
   const tipHold = useRef(false);
   const [hitId, setHitId] = useState<string | null>(null);
+  const [compactSearch, setCompactSearch] = useState(false);
   const folded = fold(query.trim());
 
   const visible = useMemo(() => {
@@ -186,6 +187,10 @@ export function LegalFoundations() {
     function syncGroup() {
       setTheme(groupFromSearch(window.location.search));
     }
+    const searchQuery = window.matchMedia("(max-width: 480px)");
+    const applySearch = () => setCompactSearch(searchQuery.matches);
+    applySearch();
+    searchQuery.addEventListener("change", applySearch);
     syncGroup();
     openFromHash();
     window.addEventListener("hashchange", openFromHash);
@@ -201,6 +206,7 @@ export function LegalFoundations() {
     document.addEventListener("click", onClick);
     document.addEventListener("keydown", onKey);
     return () => {
+      searchQuery.removeEventListener("change", applySearch);
       window.removeEventListener("hashchange", openFromHash);
       window.removeEventListener("popstate", syncGroup);
       document.removeEventListener("click", onClick);
@@ -249,7 +255,7 @@ export function LegalFoundations() {
         <input
           type="search"
           value={query}
-          placeholder="Buscar artículo, concepto, implicancia o ficha"
+          placeholder={compactSearch ? "Buscar artículo o ficha" : "Buscar artículo, concepto, implicancia o ficha"}
           aria-label="Buscar en el catálogo legal"
           onChange={(event) => setQuery(event.target.value)}
         />
