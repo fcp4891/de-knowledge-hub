@@ -19,6 +19,7 @@ import secrets
 import subprocess
 import sys
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -201,19 +202,10 @@ def run_scenario(tmp_path: Path, scenario: str) -> subprocess.CompletedProcess[s
                           capture_output=True, text=True, encoding="utf-8", timeout=300)
 
 
-def test_privacy_controls_end_to_end_output_is_the_documented_one(tmp_path: Path) -> None:
-    """chile-data-protection §10: con brechas termina en 1, corregido en 0, y cada salida es la del bloque text."""
-    with_gaps, fixed = blocks("chile-data-protection", "text")
-    result = run_scenario(tmp_path, "con-brechas")
-    assert result.returncode == 1 and result.stdout.strip() == with_gaps.strip(), result.stdout + result.stderr
-    result = run_scenario(tmp_path, "corregido")
-    assert result.returncode == 0 and result.stdout.strip() == fixed.strip(), result.stdout + result.stderr
-    result = run_scenario(tmp_path, "sin-revision")   # falta el dato: UNKNOWN, y nunca cuenta como PASS
-    assert result.returncode == 1 and "BRECHA access_review: UNKNOWN (sin fecha de última revisión)" in result.stdout
-    assert_mypy_strict(tmp_path)
+SCENARIOS = {"con-brechas": 1, "corregido": 0, "sin-revision": 1, "evidencia-alterada": 1}
 
 
-def test_privacy_controls_validation_rejects_duplicates_stale_and_tampered_evidence(tmp_path: Path) -> None:
+def load_controls(tmp_path: Path) -> Any:
     (code,) = blocks("chile-data-protection", "python")
     module = tmp_path / "controles.py"
     module.write_text(code, encoding="utf-8", newline="\n")
@@ -222,6 +214,42 @@ def test_privacy_controls_validation_rejects_duplicates_stale_and_tampered_evide
     m = importlib.util.module_from_spec(spec)
     sys.modules["controles"] = m   # dataclasses necesita el módulo registrado
     spec.loader.exec_module(m)
+    return m
+
+
+def test_privacy_controls_each_scenario_prints_its_documented_output(tmp_path: Path) -> None:
+    """chile-data-protection §10: un bloque text por escenario, con su línea «$ python controles.py <escenario>»."""
+    documented = {block.splitlines()[0].removeprefix("$ python controles.py "): block
+                  for block in blocks("chile-data-protection", "text")}
+    assert list(documented) == list(SCENARIOS)
+    for scenario, exit_code in SCENARIOS.items():
+        result = run_scenario(tmp_path, scenario)
+        expected = documented[scenario].split("\n", 1)[1].strip()
+        assert result.returncode == exit_code and result.stdout.strip() == expected, result.stdout + result.stderr
+    assert_mypy_strict(tmp_path)
+
+
+def test_privacy_controls_guided_code_rules(tmp_path: Path) -> None:
+    """Piloto de código guiado: pasos 1–4, un docstring con su letra del art. 3 por control y sin ternarios encadenados."""
+    (code,) = blocks("chile-data-protection", "python")
+    steps = [line.split("@paso", 1)[1].strip() for line in code.splitlines() if line.startswith("# @paso")]
+    assert steps == ["1 Datos", "2 Controles", "3 Validación", "4 Resultado"]
+    assert not [line for line in code.splitlines() if line.count(" if ") >= 2 and line.count(" else ") >= 2]
+    m = load_controls(tmp_path)
+    for control in m.CONTROLS:
+        assert control.__doc__ and control.__doc__.startswith("Art. 3 "), control.__name__
+
+
+def test_privacy_controls_replay_brings_back_the_expired_record_until_fixed(tmp_path: Path) -> None:
+    m = load_controls(tmp_path)
+    purged_only = m.replace(m.fix(m.with_gaps()), replay_applies_retention=False)   # purga el warehouse, no el replay
+    status, detail = m.retention_check(purged_only)
+    assert status == "FAIL" and detail == "vencidos sin purgar: []; en la salida del replay: [104]"
+    assert m.retention_check(m.fix(m.with_gaps())) == ("PASS", "ok")
+
+
+def test_privacy_controls_validation_rejects_duplicates_stale_and_tampered_evidence(tmp_path: Path) -> None:
+    m = load_controls(tmp_path)
     results = m.run_controls(m.fix(m.with_gaps()))
     stored = {r.control_id: r.sha256() for r in results}
     stale = m.replace(results[0], executed_at=m.REFERENCE - m.timedelta(days=31))

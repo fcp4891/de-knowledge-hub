@@ -36,7 +36,7 @@
 - [x] 04-data-modeling: 17/17 `verified`, aprobado por Felipe en el navegador el 2026-10-11.
 - [x] 05-pipelines: 16/16 `verified`, aprobado por Felipe en el navegador el 2026-10-11.
 - [x] 06-orchestration: 12/12 `verified`, aprobado por Felipe en el navegador el 2026-10-11.
-- [ ] 07-architecture: 2/2 conceptos `verified` (aprobados el 2026-10-11). Las 15 arquitecturas pasan a F3b (ADR-028, 2026-11-01): 07a, 07b y 07c (5 cada uno) en revisión: las 15 tienen ficha. F4 queda para los laboratorios en la nube.
+- [x] 07-architecture: 2/2 conceptos `verified` (aprobados el 2026-10-11) y las 15 arquitecturas de F3b (ADR-028) `verified`, aprobadas por Felipe el 2026-11-03. F4 queda para los laboratorios en la nube.
 - [x] 08-gcp: 31/31 `verified`, aprobado por Felipe en el navegador el 2026-10-12. Sus 15 arquitecturas no son de F3b: 6 en F4 (ROADMAP) y 9 en el Backlog.
 - [x] 09-aws: 16/16 `verified`, aprobado por Felipe en el navegador el 2026-10-13.
 - [x] 10-azure: 14/14 `verified`, aprobado por Felipe en el navegador el 2026-10-14.
@@ -53,7 +53,7 @@
 - [x] 19-compliance: integrado al 24 el 2026-10-30 (ADR-027, Enmienda 1); su subdominio `regulatory-frameworks` es el tramo 6 de 24 (GDPR y LGPD en el BACKLOG). El blueprint tiene 23 dominios; Transversal queda con 15–18.
 - [x] 21-ai-for-data-engineering (27 fichas en 21a–21e, ADR-025): 27/27 `verified` el 2026-10-26.
 - [x] 22-modern-data-engineering: 10/10 `verified` el 2026-10-27.
-- [ ] 23-emerging-technologies (9 fichas en 23a–23b, ADR-026): 23a (6) y 23b (3) escritos, en revisión.
+- [x] 23-emerging-technologies (9 fichas en 23a–23b, ADR-026): 9/9 `verified`, aprobadas por Felipe el 2026-11-03.
 - Ley 21.719 (decisión de Felipe, 2026-10-21): contenido técnico en 18 y 19, ADR del schema antes de 19 (ver ROADMAP, F3b).
 - Orden de dominios desde 12 (2026-10-14): 12 → 13 → 14 → 20 → 15 → 16 → 17 → 18 → 19 → 21 → 22 → 23.
 - [x] Lote F3b-rel: la regla del §17 es error de `make validate` (2026-10-14; `docs/reviews/f3b-rel.md`).

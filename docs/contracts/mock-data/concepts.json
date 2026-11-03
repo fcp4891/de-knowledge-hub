@@ -1862,7 +1862,7 @@
       "importance": "high",
       "mvp": true,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-11-01"
     },
     {
@@ -1876,7 +1876,7 @@
       "importance": "high",
       "mvp": true,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-11-02"
     },
     {
@@ -1890,7 +1890,7 @@
       "importance": "high",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-11-01"
     },
     {
@@ -1904,7 +1904,7 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-11-01"
     },
     {
@@ -1918,7 +1918,7 @@
       "importance": "high",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-11-01"
     },
     {
@@ -1932,7 +1932,7 @@
       "importance": "high",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-11-01"
     },
     {
@@ -1946,7 +1946,7 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-11-02"
     },
     {
@@ -1960,7 +1960,7 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-11-02"
     },
     {
@@ -1974,7 +1974,7 @@
       "importance": "high",
       "mvp": true,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-11-02"
     },
     {
@@ -1988,7 +1988,7 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-11-02"
     },
     {
@@ -2002,7 +2002,7 @@
       "importance": "high",
       "mvp": true,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-11-03"
     },
     {
@@ -2016,7 +2016,7 @@
       "importance": "high",
       "mvp": true,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-11-03"
     },
     {
@@ -2030,7 +2030,7 @@
       "importance": "low",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-11-03"
     },
     {
@@ -2044,7 +2044,7 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-11-03"
     },
     {
@@ -2058,7 +2058,7 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-11-03"
     },
     {
@@ -4900,7 +4900,7 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-10-27"
     },
     {
@@ -4914,7 +4914,7 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-10-27"
     },
     {
@@ -4928,7 +4928,7 @@
       "importance": "low",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-10-27"
     },
     {
@@ -4942,7 +4942,7 @@
       "importance": "low",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-10-27"
     },
     {
@@ -4956,7 +4956,7 @@
       "importance": "low",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-10-27"
     },
     {
@@ -4970,7 +4970,7 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-10-27"
     },
     {
@@ -4984,7 +4984,7 @@
       "importance": "low",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-10-27"
     },
     {
@@ -4998,7 +4998,7 @@
       "importance": "low",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-10-27"
     },
     {
@@ -5012,7 +5012,7 @@
       "importance": "medium",
       "mvp": false,
       "has_page": true,
-      "verification_status": "review_required",
+      "verification_status": "verified",
       "last_verified": "2026-10-27"
     },
     {
@@ -5026,7 +5026,7 @@
       "importance": "high",
       "mvp": false,
       "has_page": true,
-      "verification_status": "verified",
+      "verification_status": "review_required",
       "last_verified": "2026-10-28"
     },
     {

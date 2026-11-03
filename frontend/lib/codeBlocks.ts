@@ -142,8 +142,11 @@ export function outputName(text: string): string | null {
   const label = /^([A-Za-z0-9_-]+)\s*:/.exec(first.trim());
   if (label) return label[1];
   for (const line of text.split("\n")) {
-    const dollar = /^\s*\$\s+(\S+)(?:\s+(\S+))?/.exec(line);
-    if (dollar) return dollar[2] ?? dollar[1];
+    const dollar = /^\s*\$\s+(.+?)\s*$/.exec(line);
+    if (dollar) {
+      const tokens = dollar[1].split(/\s+/);
+      return tokens[tokens.length - 1];   // «$ python controles.py con-brechas» → con-brechas
+    }
   }
   return null;
 }
