@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import { componentAnchor, normalizeLabel, sameComponent } from "@/lib/architecture";
+import { splitViewsFit, svgIntrinsicWidth } from "@/lib/diagramFit";
 
 export type ArchitectureViewPane = {
   key: string;
@@ -26,7 +27,8 @@ export function ArchitectureStage({
   const rootRef = useRef<HTMLDivElement>(null);
   const [layout, setLayout] = useState<"tabs" | "split">("tabs");
   const [narrow, setNarrow] = useState(false);
-  const shown = narrow ? "tabs" : layout;
+  const [splitFits, setSplitFits] = useState(false);
+  const shown = narrow || !splitFits ? "tabs" : layout;
   const active = views.some((view) => view.key === activeKey) ? activeKey : (views[0]?.key ?? "");
 
   useEffect(() => {
@@ -36,6 +38,29 @@ export function ArchitectureStage({
     query.addEventListener("change", apply);
     return () => query.removeEventListener("change", apply);
   }, []);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root || narrow) {
+      return;
+    }
+    const apply = () => {
+      const fits = measureSplit(root, views.length);
+      setSplitFits(fits);
+      if (!fits) {
+        setLayout("tabs");
+      }
+    };
+    apply();
+    const resize = new ResizeObserver(apply);
+    resize.observe(root);
+    const mutations = new MutationObserver(apply);
+    mutations.observe(root, { childList: true, subtree: true });
+    return () => {
+      resize.disconnect();
+      mutations.disconnect();
+    };
+  }, [narrow, views.length]);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -91,7 +116,7 @@ export function ArchitectureStage({
             <button type="button" aria-pressed={shown === "tabs"} onClick={() => setLayout("tabs")}>
               Pestañas
             </button>
-            {narrow ? null : (
+            {narrow || !splitFits ? null : (
               <button type="button" aria-pressed={shown === "split"} onClick={() => setLayout("split")}>
                 Lado a lado
               </button>
@@ -153,4 +178,20 @@ export function ArchitectureStage({
       ) : null}
     </div>
   );
+}
+
+const SPLIT_GAP = 12;
+const SPLIT_CHROME = 26;
+
+function measureSplit(root: HTMLElement, viewCount: number): boolean {
+  const host = root.querySelector(".arch-views");
+  if (!(host instanceof HTMLElement) || viewCount < 2) {
+    return false;
+  }
+  const svgs = [...host.querySelectorAll(".arch-view svg")];
+  if (svgs.length < viewCount) {
+    return false;
+  }
+  const column = (host.clientWidth - SPLIT_GAP * (viewCount - 1)) / viewCount - SPLIT_CHROME;
+  return splitViewsFit(svgs.map(svgIntrinsicWidth), column);
 }

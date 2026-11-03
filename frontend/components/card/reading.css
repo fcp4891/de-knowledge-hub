@@ -328,6 +328,17 @@
   border: 1px solid var(--border);
   border-radius: 12px;
   background: var(--surface);
+  overflow: hidden;
+}
+
+.arch-views[data-layout="split"] .diagram {
+  overflow: hidden;
+}
+
+.arch-views[data-layout="split"] .diagram svg {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
 }
 
 .arch-view-kicker {
@@ -342,6 +353,83 @@
 
 .arch-components {
   margin-top: 18px;
+}
+
+.arch-components .markdown-table-wrap {
+  overflow-x: visible;
+}
+
+.arch-components .markdown table {
+  width: 100%;
+  min-width: 0;
+  table-layout: fixed;
+}
+
+.arch-components .markdown th,
+.arch-components .markdown td {
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: manual;
+}
+
+.arch-components .markdown th:nth-child(1),
+.arch-components .markdown td:nth-child(1) {
+  width: 22%;
+}
+
+.arch-components .markdown th:nth-child(2),
+.arch-components .markdown td:nth-child(2),
+.arch-components .markdown th:nth-child(3),
+.arch-components .markdown td:nth-child(3) {
+  width: 39%;
+}
+
+@media (max-width: 480px) {
+  .arch-components .markdown table,
+  .arch-components .markdown tbody,
+  .arch-components .markdown tr,
+  .arch-components .markdown td,
+  .arch-components .markdown td:nth-child(n) {
+    display: block;
+    width: auto;
+  }
+
+  .arch-components .markdown thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .arch-components .markdown tbody tr {
+    margin: 0 0 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+  }
+
+  .arch-components .markdown td {
+    border: 0;
+    padding: 10px 0 0;
+  }
+
+  .arch-components .markdown td:first-child {
+    padding-top: 0;
+  }
+
+  .arch-components .markdown td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 2px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
 }
 
 .arch-stage .diagram svg .node.is-hot .label-container,
@@ -398,6 +486,11 @@
   font-size: 1rem;
 }
 
+.legal-basis-scroll {
+  max-height: 32rem;
+  overflow: auto;
+}
+
 .legal-basis table {
   width: 100%;
   border-collapse: collapse;
@@ -412,8 +505,12 @@
 }
 
 .legal-basis thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   border-top: 0;
   padding-top: 0;
+  background: #f4f7fb;
   font-size: 0.78rem;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -872,6 +969,8 @@
 
 .lf-tools input {
   flex: 1 1 220px;
+  min-width: 0;
+  width: 100%;
   min-height: var(--touch-min);
   padding: 0 12px;
   border: 1px solid var(--border-strong);
@@ -879,6 +978,7 @@
   background: var(--surface);
   color: var(--ink);
   font: inherit;
+  text-overflow: ellipsis;
 }
 
 .lf-tools button,

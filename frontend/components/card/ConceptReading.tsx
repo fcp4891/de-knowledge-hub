@@ -84,6 +84,7 @@ function LegalBasisTable({ items }: { items: readonly LegalBasis[] }) {
   return (
     <section className="legal-basis" aria-labelledby="legal-basis-title">
       <h2 id="legal-basis-title">Base legal</h2>
+      <div className="legal-basis-scroll">
       <table>
         <thead>
           <tr>
@@ -108,6 +109,7 @@ function LegalBasisTable({ items }: { items: readonly LegalBasis[] }) {
           ))}
         </tbody>
       </table>
+      </div>
     </section>
   );
 }
