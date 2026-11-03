@@ -51,10 +51,16 @@ Trabajas en paralelo con Cursor (Carril B, frontend y revisión).
 - Idempotencia en compiladores y pipelines: re-ejecutar no duplica nada.
 
 ## Eficiencia
-- En local, corre solo los tests de lo que cambió; la suite completa corre en la CI.
+- La CI corre por rutas cambiadas: el job `plan` (`scripts/ci/plan.py`) lee el diff del push o del PR.
+  - `content/` → validate, compilador, tests de datos y solo los tests de snippets de las fichas cambiadas (`tests/conftest.py` los elige por slug). Los tests con Docker (Kafka, Iceberg REST, PostgreSQL de snippets) corren solo si los usa una ficha cambiada; los validadores de bloques (Terraform, actionlint, cfn-lint, Bicep, hadolint, kubeconform, Airflow), solo si una ficha cambiada tiene ese tipo de bloque.
+  - `frontend/` o `tests/frontend/` → tests de frontend, `tsc` y build.
+  - backend, API, `schemas/`, `scripts/`, `tests/`, migraciones, contrato, dependencias, Makefile o `.github/` → suite completa.
+  - Solo `docs/` (salvo el contrato) o CLAUDE.md → nada.
+- La suite completa corre una sola vez por lote: `workflow_dispatch` en `main` antes de `make static` (`gh workflow run ci.yml --ref main`), y cuando el plan la exige.
+- En `main` cada push conserva su run (un run selectivo no cubre lo que cambió el anterior); en PR, un push nuevo cancela el anterior.
+- En local, lo mismo: `make test-changed` corre solo lo que impacta el cambio (diff contra `origin/main` más el árbol de trabajo).
 - Verifica solo las URLs nuevas o modificadas.
 - Espera el CI una sola vez, en `main`.
-- La CI completa corre solo en push a `main` y en pull requests (más `workflow_dispatch` a mano), no en cada push a ramas `a/*` o `b/*`; `concurrency` con `cancel-in-progress` cancela el run anterior de la misma ref.
 - Las entregas llevan solo tablas y decisiones pendientes.
 
 ## Idioma

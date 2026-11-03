@@ -2,13 +2,15 @@ name: ci
 
 on:
   push:
-    branches: [main]      # la CI completa solo en main y en PR; no en cada push a a/* o b/*
+    branches: [main]      # en main y en PR, por rutas cambiadas (job plan); no en cada push a a/* o b/*
   pull_request:
-  workflow_dispatch:       # para correrla a mano en una rama si hace falta
+  workflow_dispatch:       # suite completa: una vez por lote, antes de make static (CLAUDE.md, «Eficiencia»)
 
-concurrency:               # un push nuevo a la misma ref cancela el run anterior, que ya no sirve
+# En PR, un push nuevo cancela el run anterior. En main cada push conserva su run: un run selectivo no cubre lo que
+# cambió el anterior.
+concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:               # repositorio público: el GITHUB_TOKEN solo lee; ningún job escribe
   contents: read
@@ -17,7 +19,46 @@ permissions:               # repositorio público: el GITHUB_TOKEN solo lee; nin
 # Imagen de Ubuntu fijada: ubuntu-latest cambiará de versión mayor sin aviso en el workflow.
 
 jobs:
+  # Qué corre según los archivos del diff (scripts/ci/plan.py, solo biblioteca estándar): backend, tests, CI o
+  # contrato → todo; content/ → datos y los snippets de las fichas cambiadas; frontend/ → job frontend; docs → nada.
+  # Equivale a dorny/paths-filter sin acción de terceros, y además lee los slugs y los tipos de bloque de cada ficha.
+  plan:
+    runs-on: ubuntu-24.04
+    outputs:
+      mode: ${{ steps.plan.outputs.mode }}
+      backend: ${{ steps.plan.outputs.backend }}
+      frontend: ${{ steps.plan.outputs.frontend }}
+      slugs: ${{ steps.plan.outputs.slugs }}
+      airflow: ${{ steps.plan.outputs.airflow }}
+      airflow_slugs: ${{ steps.plan.outputs.airflow_slugs }}
+      terraform: ${{ steps.plan.outputs.terraform }}
+      actions: ${{ steps.plan.outputs.actions }}
+      cfn: ${{ steps.plan.outputs.cfn }}
+      bicep: ${{ steps.plan.outputs.bicep }}
+      dockerfile: ${{ steps.plan.outputs.dockerfile }}
+      k8s: ${{ steps.plan.outputs.k8s }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0  # el diff necesita el commit anterior del push o la base del PR
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - id: plan
+        env:
+          EVENT: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          base="$BEFORE"
+          if [ "$EVENT" = pull_request ]; then base="$PR_BASE"; fi
+          full=""
+          if [ "$EVENT" = workflow_dispatch ]; then full="--full"; fi
+          python scripts/ci/plan.py --base "$base" --head "$GITHUB_SHA" $full --github-output "$GITHUB_OUTPUT"
+
   validate-and-test:
+    needs: plan
+    if: needs.plan.outputs.backend == 'true'
     runs-on: ubuntu-24.04
     services:
       db:
@@ -36,6 +77,9 @@ jobs:
     env:
       DATABASE_URL: postgresql+psycopg://dekh:dekh@localhost:54329/dekh
       BACKUP_RUNNER: docker-host  # pg_dump/psql en un contenedor postgres:17 con red del host
+      # Solo contenido: tests de datos y los de snippets de estas fichas (tests/conftest.py); vacío = suite completa.
+      DEKH_TEST_SCOPE: ${{ needs.plan.outputs.mode == 'content' && 'content' || '' }}
+      DEKH_CHANGED_SLUGS: ${{ needs.plan.outputs.slugs }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -54,6 +98,7 @@ jobs:
       - run: docker run -d -p 10000:10000 mcr.microsoft.com/azure-storage/azurite azurite-blob --blobHost 0.0.0.0 --blobPort 10000 --skipApiVersionCheck
       # Terraform 1.16.6 fijado (ADR-015): antes de make test, que ejecuta init/plan/apply con providers sin nube.
       - uses: hashicorp/setup-terraform@v4
+        if: needs.plan.outputs.terraform == 'true'
         with:
           terraform_version: "1.16.6"
           terraform_wrapper: false
@@ -72,33 +117,52 @@ jobs:
           REQUIRE_DOCKER: "1"  # los ejemplos de 13-containers se ejecutan con Docker real (ADR-016)
       # Snippets de Terraform (ADR-008): init sin backend y validate, sin credenciales ni recursos reales.
       - run: make validate-terraform
+        if: needs.plan.outputs.terraform == 'true'
       # Workflows de GitHub Actions de las fichas (ADR-014): actionlint 1.7.12 con su SHA-256, sin ejecutarlos.
-      - run: |
+      - if: needs.plan.outputs.actions == 'true'
+        run: |
           curl -sSfL -o actionlint.tar.gz https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz
           echo "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8  actionlint.tar.gz" | sha256sum -c -
           tar -xzf actionlint.tar.gz actionlint
       - run: make validate-actions ACTIONLINT=./actionlint
+        if: needs.plan.outputs.actions == 'true'
+      # El propio workflow de la CI, con el mismo actionlint (cualquier cambio en .github/ es suite completa).
+      - run: ./actionlint -shellcheck= -pyflakes= .github/workflows/ci.yml
+        if: needs.plan.outputs.mode == 'full'
       # Plantillas de CloudFormation (cfn-lint, en el .venv) y Bicep 0.48.1 con su SHA-256 (ADR-015), sin desplegar.
       - run: make validate-cfn
-      - run: |
+        if: needs.plan.outputs.cfn == 'true'
+      - if: needs.plan.outputs.bicep == 'true'
+        run: |
           curl -sSfL -o bicep https://github.com/Azure/bicep/releases/download/v0.48.1/bicep-linux-x64
           echo "b09ec25a9d376c1f8e33ede6ed22b587f915ad68488d5db77a6f9541748c7f6e  bicep" | sha256sum -c -
           chmod +x bicep
       - run: make validate-bicep BICEP=./bicep
+        if: needs.plan.outputs.bicep == 'true'
       # Dockerfiles (hadolint 2.15.1) y manifiestos de Kubernetes (kubeconform 0.8.0, sin clúster), con SHA-256 (ADR-016).
-      - run: |
+      - if: needs.plan.outputs.dockerfile == 'true'
+        run: |
           curl -sSfL -o hadolint https://github.com/hadolint/hadolint/releases/download/v2.15.1/hadolint-linux-x86_64
           echo "c7187db94eeeeca956519a6af171adc31453941a1e777961f6e680f697c8c507  hadolint" | sha256sum -c -
           chmod +x hadolint
+      - run: make validate-dockerfile HADOLINT=./hadolint
+        if: needs.plan.outputs.dockerfile == 'true'
+      - if: needs.plan.outputs.k8s == 'true'
+        run: |
           curl -sSfL -o kubeconform.tar.gz https://github.com/yannh/kubeconform/releases/download/v0.8.0/kubeconform-linux-amd64.tar.gz
           echo "9bc2bffbf71f261128533edaf912153948b7ff238f9a531ae6d34466ec287883  kubeconform.tar.gz" | sha256sum -c -
           tar -xzf kubeconform.tar.gz kubeconform
-      - run: make validate-dockerfile HADOLINT=./hadolint
       - run: make validate-k8s KUBECONFORM=./kubeconform
+        if: needs.plan.outputs.k8s == 'true'
       # Dags de Airflow de las fichas: DagBag sin errores de import y aserciones de cada ficha (venv aparte, versión fijada).
-      - run: make check-airflow-dag AIRFLOW_PYTHON=python
+      - run: make check-airflow-dag AIRFLOW_PYTHON=python AIRFLOW_SLUGS="$AIRFLOW_SLUGS"
+        if: needs.plan.outputs.airflow == 'true'
+        env:
+          AIRFLOW_SLUGS: ${{ needs.plan.outputs.airflow_slugs }}
 
   frontend:
+    needs: plan
+    if: needs.plan.outputs.frontend == 'true'
     runs-on: ubuntu-24.04
     defaults:
       run:
@@ -116,6 +180,7 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
       - run: npm ci --no-audit --no-fund
       - run: npm run lint
+      - run: npx tsc --noEmit  # tipos antes del build, con un error legible (el que rompió main el 2026-11-03)
       # Tests del parser de Markdown (tests/frontend/, fuera de frontend/): runner nativo de Node, sin dependencias.
       - run: make test-frontend
         working-directory: .

@@ -1,4 +1,4 @@
-.PHONY: help venv install snippets-deps validate test test-frontend check-airflow-dag build dev mocks static static-data db-up db-down migrate compile backup-me restore-me validate-terraform validate-actions validate-cfn validate-bicep validate-cfn validate-bicep validate-dockerfile validate-k8s
+.PHONY: help venv install snippets-deps validate test test-frontend check-airflow-dag build dev mocks static static-data db-up db-down migrate compile backup-me restore-me validate-terraform validate-actions validate-cfn validate-bicep validate-cfn validate-bicep validate-dockerfile validate-k8s test-changed
 
 # Entorno del proyecto: .venv con Python 3.12 (README, «Entorno de Python»). Nunca el Python global.
 ifeq ($(OS),Windows_NT)
@@ -42,15 +42,23 @@ test:
 	$(REQUIRE_VENV)
 	$(PYTHON) -m pytest
 
+# Solo las pruebas de lo que impacta el cambio (diff contra origin/main y árbol de trabajo; scripts/ci/plan.py):
+# contenido → tests de datos y los snippets de las fichas cambiadas; backend, tests o CI → suite completa.
+test-changed:
+	$(REQUIRE_VENV)
+	$(PYTHON) scripts/ci/plan.py --local --run
+
 # Dags de Airflow de las fichas: se cargan con DagBag en un venv aparte (.venv-airflow), con apache-airflow
 # fijado y las restricciones oficiales para Python 3.12, y se ejecutan las aserciones que cada ficha declara en
 # scripts/snippets/airflow_dag_checks.py. Se ejecuta en la CI (Linux).
 AIRFLOW_VERSION := 3.3.2
 AIRFLOW_PYTHON ?= python3.12
+# AIRFLOW_SLUGS vacío: todas las fichas declaradas; la CI pasa solo las cambiadas (scripts/ci/plan.py).
+AIRFLOW_SLUGS ?=
 check-airflow-dag:
 	$(AIRFLOW_PYTHON) -m venv .venv-airflow
 	.venv-airflow/bin/pip install --quiet "apache-airflow==$(AIRFLOW_VERSION)" --constraint https://raw.githubusercontent.com/apache/airflow/constraints-$(AIRFLOW_VERSION)/constraints-3.12.txt
-	.venv-airflow/bin/python scripts/snippets/check_airflow_dag.py
+	.venv-airflow/bin/python scripts/snippets/check_airflow_dag.py $(AIRFLOW_SLUGS)
 
 # Parser de Markdown del frontend con el runner nativo de Node (24+ elimina los tipos al importar .ts).
 test-frontend:
