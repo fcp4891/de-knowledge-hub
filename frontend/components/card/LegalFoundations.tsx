@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
 
 import {
+  CHILE_CHILD_TITLES,
   CHILE_GROUPS,
   CHILE_PRINCIPLES,
   CHILE_ROLES,
@@ -12,6 +13,7 @@ import {
   type ChilePrinciple,
 } from "@/lib/chileLegalCatalog";
 import { bcnLinkText, legalRowId } from "@/lib/legal";
+import { principleActivation, principleAriaLabel } from "@/lib/principleCards";
 
 function fold(value: string): string {
   return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -71,6 +73,15 @@ function findArticle(id: string): ChileArticle | null {
   return null;
 }
 
+function PrincipleEye() {
+  return (
+    <svg className="lf-principle-eye" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z" stroke="currentColor" strokeWidth="1.8" />
+      <circle cx="12" cy="12" r="2.5" stroke="currentColor" strokeWidth="1.8" />
+    </svg>
+  );
+}
+
 function ViewIcon() {
   return (
     <svg className="lf-view-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -109,6 +120,9 @@ export function LegalFoundations() {
   const [query, setQuery] = useState("");
   const [theme, setTheme] = useState<string | null>(null);
   const [open, setOpen] = useState<ChileArticle | null>(null);
+  const [tip, setTip] = useState<string | null>(null);
+  const [pinned, setPinned] = useState(false);
+  const tipHold = useRef(false);
   const [hitId, setHitId] = useState<string | null>(null);
   const folded = fold(query.trim());
 
@@ -176,11 +190,21 @@ export function LegalFoundations() {
     openFromHash();
     window.addEventListener("hashchange", openFromHash);
     window.addEventListener("popstate", syncGroup);
+    function onKey(event: KeyboardEvent) {
+      if (event.key !== "Escape") {
+        return;
+      }
+      tipHold.current = true;
+      setTip(null);
+      setPinned(false);
+    }
     document.addEventListener("click", onClick);
+    document.addEventListener("keydown", onKey);
     return () => {
       window.removeEventListener("hashchange", openFromHash);
       window.removeEventListener("popstate", syncGroup);
       document.removeEventListener("click", onClick);
+      document.removeEventListener("keydown", onKey);
     };
   }, []);
 
@@ -188,8 +212,36 @@ export function LegalFoundations() {
     <div className="legal-foundations">
       <h3>Ocho principios del artículo 3</h3>
       <ul className="lf-principles">
-        {CHILE_PRINCIPLES.map((item) => (
-          <PrincipleTip key={item.label} principle={item} />
+        {CHILE_PRINCIPLES.map((item, index) => (
+          <PrincipleCard
+            key={item.label}
+            index={index}
+            principle={item}
+            open={tip === item.label}
+            pinned={pinned && tip === item.label}
+            onShow={() => {
+              if (tipHold.current) {
+                return;
+              }
+              setPinned(false);
+              setTip(item.label);
+            }}
+            onHide={() => {
+              tipHold.current = false;
+              setTip((current) => (current === item.label ? null : current));
+              setPinned(false);
+            }}
+            onPin={() => {
+              tipHold.current = false;
+              setPinned(true);
+              setTip(item.label);
+            }}
+            onDismiss={() => {
+              tipHold.current = true;
+              setTip(null);
+              setPinned(false);
+            }}
+          />
         ))}
       </ul>
       <h3>Catálogo legal agrupado por temática</h3>
@@ -242,81 +294,80 @@ export function LegalFoundations() {
   );
 }
 
-function PrincipleTip({ principle }: { principle: ChilePrinciple }) {
-  const rootRef = useRef<HTMLLIElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const skipClick = useRef(false);
-  const closing = useRef(false);
-  const [shown, setShown] = useState(false);
-  const tipId = `lf-tip-${principle.slug}`;
-
+function PrincipleCard({
+  index,
+  principle,
+  open,
+  pinned,
+  onShow,
+  onHide,
+  onPin,
+  onDismiss,
+}: {
+  index: number;
+  principle: ChilePrinciple;
+  open: boolean;
+  pinned: boolean;
+  onShow: () => void;
+  onHide: () => void;
+  onPin: () => void;
+  onDismiss: () => void;
+}) {
+  const tipId = `lf-tip-${index}`;
+  const child = CHILE_CHILD_TITLES[principle.slug] ?? principle.slug;
   return (
     <li
       className="lf-principle"
-      ref={rootRef}
-      onMouseEnter={() => setShown(true)}
+      onMouseEnter={() => {
+        if (window.matchMedia("(hover: none)").matches) {
+          return;
+        }
+        onShow();
+      }}
       onMouseLeave={() => {
-        window.setTimeout(() => {
-          if (rootRef.current?.contains(document.activeElement)) {
-            return;
-          }
-          setShown(false);
-        }, 0);
-      }}
-      onBlur={(event) => {
-        const next = event.relatedTarget;
-        if (next instanceof Node && rootRef.current?.contains(next)) {
+        if (pinned) {
           return;
         }
-        window.setTimeout(() => {
-          if (rootRef.current?.contains(document.activeElement)) {
-            return;
-          }
-          setShown(false);
-        }, 0);
-      }}
-      onKeyDown={(event) => {
-        if (event.key !== "Escape" || !shown) {
-          return;
-        }
-        event.preventDefault();
-        event.stopPropagation();
-        closing.current = true;
-        setShown(false);
-        buttonRef.current?.focus();
-        window.setTimeout(() => {
-          closing.current = false;
-        }, 0);
+        onHide();
       }}
     >
-      <button
-        ref={buttonRef}
-        type="button"
-        className="lf-principle-trigger"
-        aria-describedby={shown ? tipId : undefined}
-        aria-expanded={shown}
-        onFocus={() => {
-          if (closing.current) {
-            return;
+      <a
+        className={open ? "lf-principle-card is-open" : "lf-principle-card"}
+        href={`/concepts/${principle.slug}/`}
+        aria-label={principleAriaLabel(principle.label, child)}
+        aria-describedby={open ? tipId : undefined}
+        onFocus={() => onShow()}
+        onBlur={() => {
+          if (!pinned) {
+            onHide();
           }
-          skipClick.current = true;
-          setShown(true);
         }}
-        onClick={() => {
-          if (skipClick.current) {
-            skipClick.current = false;
-            setShown(true);
+        onKeyDown={(event) => {
+          if (event.key !== "Escape") {
             return;
           }
-          setShown(true);
+          event.preventDefault();
+          event.stopPropagation();
+          onDismiss();
+        }}
+        onClick={(event) => {
+          const action = principleActivation({
+            hoverNone: window.matchMedia("(hover: none)").matches,
+            alreadyOpen: open && pinned,
+            keyboard: event.detail === 0,
+          });
+          if (action === "reveal") {
+            event.preventDefault();
+            onPin();
+          }
         }}
       >
-        {principle.label}
-      </button>
-      {shown ? (
+        <span className="lf-principle-label">{principle.label}</span>
+        <PrincipleEye />
+      </a>
+      {open ? (
         <span className="lf-tip" id={tipId} role="tooltip">
-          <span>{principle.description}</span>
-          <a href={`/concepts/${principle.slug}/`}>Ver en detalle →</a>
+          {principle.description}
         </span>
       ) : null}
     </li>
