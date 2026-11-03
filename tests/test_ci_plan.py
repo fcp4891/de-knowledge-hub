@@ -54,6 +54,7 @@ def test_dict_constants_resolve_only_the_keys_the_test_uses() -> None:
     table = {"s3": "s3-data-lake.md", "glue": "glue-catalog-and-etl.md"}
     assert constant_strings(table, {"s3"}) == {"s3", "s3-data-lake.md"}
     assert constant_strings(table, set()) == {"s3", "glue", "s3-data-lake.md", "glue-catalog-and-etl.md"}
+    assert constant_strings({"con-brechas": 1, "corregido": 0}, set()) == {"con-brechas", "corregido"}   # valores int
 
 
 def collected(slugs: str, target: str) -> list[str]:
@@ -71,3 +72,11 @@ def test_content_scope_keeps_only_tests_of_changed_fichas() -> None:
     assert kafka == ["tests/test_architecture_snippets.py::test_kafka_architectures_print_the_documented_output"
                      "[kappa-architecture]"]
     assert collected("", "tests/test_kafka_snippets.py") == []
+
+
+def test_content_scope_collects_the_whole_suite_without_errors() -> None:
+    """La selección por fichas recorre todos los módulos: un valor inesperado no debe romper la colección."""
+    env = {**os.environ, "DEKH_TEST_SCOPE": "content", "DEKH_CHANGED_SLUGS": "gdpr"}
+    result = subprocess.run([sys.executable, "-m", "pytest", "-o", "addopts=", "--collect-only", "-q", "-p",
+                             "no:cacheprovider", "tests"], cwd=ROOT, env=env, capture_output=True, text=True)
+    assert result.returncode == 0, result.stdout[-2000:] + result.stderr[-2000:]

@@ -113,7 +113,9 @@ def constant_strings(value: Any, literals: set[str]) -> set[str]:
     if isinstance(value, dict):   # un dict de nombres a fichas: solo las claves que el test usa, si usa alguna
         keys = [k for k in value if k in literals] or list(value)
         return {v for k in keys for v in constant_strings(value[k], literals)} | {str(k) for k in keys}
-    return {x for v in value for x in constant_strings(v, literals)}
+    if isinstance(value, (list, tuple, set, frozenset)):
+        return {x for v in value for x in constant_strings(v, literals)}
+    return set()   # números, None y otros valores no nombran fichas
 
 
 def named_slugs(item: pytest.Item, known: set[str]) -> set[str]:
