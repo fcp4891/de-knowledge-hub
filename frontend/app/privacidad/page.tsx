@@ -3,6 +3,7 @@ import { DomainRoute, type GoalDomain, type RouteStage, type RouteStudy } from "
 import { LegalFactLink } from "@/components/legal/LegalFactLink";
 import { getConcept, getDomain, listDomains, listStudyStates } from "@/lib/api/client";
 import type { ApiResult, DomainDetail } from "@/lib/api/types";
+import { BAND_LABEL } from "@/lib/publishedScope";
 import { PRIVACY_LAB, STUDY_PATH, verifiedLegend } from "@/lib/privacySpace";
 
 const SPACE_NOTICE = "Este contenido no es asesoría legal.";
@@ -124,7 +125,7 @@ export default async function PrivacyPage() {
         study={studyResult && studyResult.ok ? studyResult.data : null}
         staticMode={localPersonal}
         goalDomains={goalDomains}
-        bandLabel="Especialización"
+        bandLabel={BAND_LABEL}
         notice={SPACE_NOTICE}
         readingPath={STUDY_PATH}
         verifiedTotal={data.concept_count}

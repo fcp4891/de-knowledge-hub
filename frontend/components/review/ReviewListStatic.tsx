@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { ReviewList, type ReviewEntry } from "@/components/review/ReviewList";
 import { listStoredStudy, subscribePersonal } from "@/lib/personalStore";
 
-type CatalogItem = { title: string; domainLabel: string | null };
+type CatalogItem = { title: string; domainLabel: string | null; inScope?: boolean };
 
 /** Demo estática: el estado de estudio vive en localStorage; el catálogo llega del build. */
 export function ReviewListStatic({ catalog }: { catalog: Record<string, CatalogItem> }) {
@@ -15,7 +15,7 @@ export function ReviewListStatic({ catalog }: { catalog: Record<string, CatalogI
     const refresh = () =>
       setEntries(
         listStoredStudy()
-          .filter((item) => item.state === "needs_review")
+          .filter((item) => item.state === "needs_review" && catalog[item.slug]?.inScope)
           .map((item) => ({
             slug: item.slug,
             title: catalog[item.slug]?.title ?? item.slug,

@@ -14,6 +14,7 @@ import { withoutPartOf } from "@/lib/partOf";
 import { entityHref } from "@/lib/entityHref";
 import { architectureTitle, isArchitectureView } from "@/lib/architecture";
 import { SHORT_NAMES } from "@/lib/learning-paths";
+import { isDomainPublished, relationVisible, scopeFromConcepts } from "@/lib/publishedScope";
 import { nextInRoute } from "@/lib/domainRoute";
 import { staticSlugs } from "@/lib/staticParams";
 
@@ -72,6 +73,7 @@ function sectionModels(
   kind: string,
 ): ReadingSectionModel[] {
   const architecture = kind === "architecture";
+  const styleArrows = slug !== "data-lineage";
   const titleOf = (section: Section) => (architecture ? architectureTitle(section.key, section.title) : section.title);
   const ordered = [...sections].sort((left, right) => left.number - right.number);
   const viewer = currentViewer();
@@ -105,7 +107,7 @@ function sectionModels(
         presentation: section.key === "components" ? "components" : "view",
         listed: true,
         body: (
-          <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus />
+          <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus styleArrows={styleArrows} />
         ),
       });
       continue;
@@ -119,7 +121,7 @@ function sectionModels(
         presentation: "summary",
         listed: text,
         body: text ? (
-          <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} />
+          <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} styleArrows={styleArrows} />
         ) : null,
       });
       continue;
@@ -141,6 +143,7 @@ function sectionModels(
             obligations={obligations}
             conceptRefs={conceptRefs}
             markCodeStatus={architecture}
+            styleArrows={styleArrows}
           />
         ),
       });
@@ -172,7 +175,7 @@ function sectionModels(
         body: showList ? (
           <SourceLinks sources={sources} />
         ) : (
-          <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} />
+          <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} styleArrows={styleArrows} />
         ),
       });
       continue;
@@ -198,6 +201,7 @@ function sectionModels(
           conceptRefs={conceptRefs}
           markCodeStatus={architecture}
           horizontalDiagrams={section.key === "architecture"}
+          styleArrows={styleArrows}
         />
       ),
     });
@@ -216,12 +220,15 @@ function sectionModels(
   return models;
 }
 
-function relatedItems(groups: RelationGroups["groups"]) {
+function relatedItems(groups: RelationGroups["groups"], scope: ReadonlySet<string>) {
   const seen = new Set<string>();
   const items: { href: string; title: string; kind: string }[] = [];
   for (const group of groups) {
     for (const item of group.items) {
       if (item.entity_type !== "concept" && item.entity_type !== "pattern") {
+        continue;
+      }
+      if (!scope.has(item.slug)) {
         continue;
       }
       if (seen.has(item.slug)) {
@@ -286,19 +293,27 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
   );
   const domain = data.domain ? await getDomain(data.domain) : null;
   const study = staticMode ? null : await getStudyState(slug);
-  const groups = relations.ok ? relations.data.groups : [];
+  const scope = scopeFromConcepts(
+    Object.entries(conceptRefs).map(([conceptSlug, ref]) => ({ slug: conceptSlug, domain: ref.domain ?? "" })),
+  );
+  const groups = relations.ok
+    ? relations.data.groups
+        .map((group) => ({ ...group, items: group.items.filter((item) => relationVisible(item, scope)) }))
+        .filter((group) => group.items.length > 0)
+    : [];
   const listedGroups = withoutPartOf(groups);
+  const domainOpen = Boolean(domain?.ok && isDomainPublished(domain.data));
 
-  let crumb: { domainHref: string; domainLabel: string; subdomain: string | null; subdomainHref: string | null } | null = null;
+  let crumb: { domainHref: string | null; domainLabel: string; subdomain: string | null; subdomainHref: string | null } | null = null;
   let next: { slug: string; title: string } | null = null;
   if (domain?.ok) {
     const short = SHORT_NAMES[domain.data.id] ?? domain.data.title;
     const subdomain = domain.data.subdomains.find((item) => item.slug === data.subdomain)?.title ?? null;
     crumb = {
-      domainHref: `/explorer/${domain.data.slug}`,
+      domainHref: domainOpen ? `/explorer/${domain.data.slug}` : null,
       domainLabel: `${domain.data.id} ${short}`,
       subdomain,
-      subdomainHref: data.subdomain ? `/explorer/${domain.data.slug}#${data.subdomain}` : null,
+      subdomainHref: domainOpen && data.subdomain ? `/explorer/${domain.data.slug}#${data.subdomain}` : null,
     };
     const stages = domain.data.subdomains.map((item) => ({
       concepts: item.concepts.map((conceptItem, index) => ({
@@ -310,7 +325,7 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
       })),
     }));
     const found = nextInRoute(stages, data.slug);
-    next = found ? { slug: found.slug, title: found.title } : null;
+    next = found && scope.has(found.slug) ? { slug: found.slug, title: found.title } : null;
   }
 
   return (
@@ -330,13 +345,14 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
       sourceCount={data.sources.length}
       crumb={crumb}
       next={next}
+      construction={!domainOpen}
       sections={sectionModels(sections, data.sources, data.legal_basis, data.slug, conceptRefs, data.kind)}
       staticMode={staticMode}
       initialStudy={
         study?.ok ? { state: study.data.state, pendingDeepDive: study.data.pending_deep_dive } : null
       }
       studyError={study && !study.ok ? (study.detail ?? "No se pudo cargar el estado de estudio.") : null}
-      related={relatedItems(listedGroups)}
+      related={relatedItems(listedGroups, scope)}
       relationGroups={groups}
       relationsError={relations.ok ? null : (relations.detail ?? "No se pudieron cargar las relaciones.")}
       entityType={data.type}

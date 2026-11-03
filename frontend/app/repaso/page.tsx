@@ -2,8 +2,9 @@ import { ApiFailure } from "@/components/ApiFailure";
 import { ReviewList, type ReviewEntry } from "@/components/review/ReviewList";
 import { ReviewListStatic } from "@/components/review/ReviewListStatic";
 import { listAllConcepts, listDomains, listStudyStates } from "@/lib/api/client";
+import { isDomainPublished } from "@/lib/publishedScope";
 
-type CatalogItem = { title: string; domainLabel: string | null };
+type CatalogItem = { title: string; domainLabel: string | null; inScope: boolean };
 
 async function loadCatalog(): Promise<Record<string, CatalogItem>> {
   const [concepts, domains] = await Promise.all([listAllConcepts(), listDomains()]);
@@ -13,7 +14,11 @@ async function loadCatalog(): Promise<Record<string, CatalogItem>> {
   const catalog: Record<string, CatalogItem> = {};
   if (concepts.ok) {
     for (const concept of concepts.data) {
-      catalog[concept.slug] = { title: concept.title, domainLabel: domainLabel.get(concept.domain) ?? null };
+      catalog[concept.slug] = {
+        title: concept.title,
+        domainLabel: domainLabel.get(concept.domain) ?? null,
+        inScope: isDomainPublished({ slug: concept.domain }),
+      };
     }
   }
   return catalog;
@@ -33,12 +38,14 @@ export default async function ReviewPage() {
 
   const states = await listStudyStates("needs_review");
   const entries: ReviewEntry[] = states.ok
-    ? states.data.items.map((item) => ({
-        slug: item.slug,
-        title: catalog[item.slug]?.title ?? item.slug,
-        domainLabel: catalog[item.slug]?.domainLabel ?? null,
-        lastStudiedAt: item.last_studied_at,
-      }))
+    ? states.data.items
+        .filter((item) => catalog[item.slug]?.inScope)
+        .map((item) => ({
+          slug: item.slug,
+          title: catalog[item.slug]?.title ?? item.slug,
+          domainLabel: catalog[item.slug]?.domainLabel ?? null,
+          lastStudiedAt: item.last_studied_at,
+        }))
     : [];
 
   return (

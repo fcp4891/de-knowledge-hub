@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
+import { ConstructionBanner } from "@/components/ConstructionBanner";
 import { SearchDialog } from "@/components/SearchDialog";
 import type { Level, StudyStatus } from "@/lib/api/types";
 import { domainIsComplete, isMastered, nextGoalDomain, nextRecommended, orderByLevel } from "@/lib/domainRoute";
-import { GOALS, SHORT_NAMES } from "@/lib/learning-paths";
+import { SHORT_NAMES } from "@/lib/learning-paths";
+import { isDomainPublished, isGoalPublished } from "@/lib/publishedScope";
 import { listStoredStudy, subscribePersonal } from "@/lib/personalStore";
 import { CARD_SECTION_COUNT, readReadingProgress } from "@/lib/readingProgress";
 
@@ -81,6 +83,7 @@ export function DomainRoute({
   asideExtra,
   disabledStage,
   verifiedTotal,
+  construction = false,
 }: {
   id: string;
   slug: string;
@@ -98,6 +101,7 @@ export function DomainRoute({
   asideExtra?: ReactNode;
   disabledStage?: { id: string; title: string };
   verifiedTotal?: number;
+  construction?: boolean;
 }) {
   const [localStudy, setLocalStudy] = useState<Record<string, RouteStudy> | null>(staticMode ? null : study);
   const [goalKey, setGoalKey] = useState<string | null>(null);
@@ -128,7 +132,7 @@ export function DomainRoute({
   useEffect(() => {
     try {
       const stored = window.localStorage.getItem(GOAL_KEY);
-      setGoalKey(stored && GOALS.some((goal) => goal.key === stored) ? stored : null);
+      setGoalKey(stored && isGoalPublished(stored) ? stored : null);
     } catch {
       setGoalKey(null);
     }
@@ -166,10 +170,14 @@ export function DomainRoute({
   const reviewItems = concepts.filter((concept) => lookup(concept.slug) === "needs_review");
   const crumb = `${id} ${SHORT_NAMES[id] ?? title}`;
   const nextDomainId = complete ? nextGoalDomain(goalKey, id) : null;
-  const nextDomain = nextDomainId ? goalDomains.find((domain) => domain.id === nextDomainId) : undefined;
+  const nextDomain =
+    nextDomainId && isDomainPublished({ id: nextDomainId })
+      ? goalDomains.find((domain) => domain.id === nextDomainId)
+      : undefined;
 
   return (
     <div className="route">
+      {construction ? <ConstructionBanner /> : null}
       <div className="route-top">
         <nav aria-label="Ruta de navegación">
           <ol className="route-crumbs">

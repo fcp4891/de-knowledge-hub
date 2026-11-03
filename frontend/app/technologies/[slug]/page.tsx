@@ -4,7 +4,10 @@ import { CardHeader } from "@/components/card/CardHeader";
 import { PersonalSlot } from "@/components/card/PersonalSlot";
 import { RelationPanel } from "@/components/card/RelationPanel";
 import { SourceList } from "@/components/card/SourceList";
+import { ConstructionBanner } from "@/components/ConstructionBanner";
 import { getRelations, getTechnology } from "@/lib/api/client";
+import { loadConceptRefs } from "@/lib/loadConceptRefs";
+import { isDomainPublished, relationVisible, scopeFromConcepts } from "@/lib/publishedScope";
 import { staticSlugs } from "@/lib/staticParams";
 
 // El build estático cambia este literal a false: Next solo acepta true o false.
@@ -19,7 +22,11 @@ export function generateStaticParams() {
 
 export default async function TechnologyPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const [technology, relations] = await Promise.all([getTechnology(slug), getRelations(slug)]);
+  const [technology, relations, conceptRefs] = await Promise.all([
+    getTechnology(slug),
+    getRelations(slug),
+    loadConceptRefs(),
+  ]);
 
   if (!technology.ok) {
     return (
@@ -30,9 +37,24 @@ export default async function TechnologyPage({ params }: { params: Promise<{ slu
   }
 
   const data = technology.data;
+  const scope = scopeFromConcepts(
+    Object.entries(conceptRefs).map(([conceptSlug, ref]) => ({ slug: conceptSlug, domain: ref.domain ?? "" })),
+  );
+  const scopedRelations = relations.ok
+    ? {
+        ...relations,
+        data: {
+          ...relations.data,
+          groups: relations.data.groups
+            .map((group) => ({ ...group, items: group.items.filter((item) => relationVisible(item, scope)) }))
+            .filter((group) => group.items.length > 0),
+        },
+      }
+    : relations;
 
   return (
     <div className="page">
+      {isDomainPublished({ slug: data.domain }) ? null : <ConstructionBanner />}
       <CardHeader
         title={data.title}
         description={data.description}
@@ -56,7 +78,7 @@ export default async function TechnologyPage({ params }: { params: Promise<{ slu
           <SourceList sources={data.sources} />
         </div>
         <RelationPanel
-          result={relations}
+          result={scopedRelations}
           center={{ slug: data.slug, title: data.title, entityType: data.type }}
         />
       </div>
