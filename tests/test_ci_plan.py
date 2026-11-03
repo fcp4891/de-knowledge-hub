@@ -37,6 +37,14 @@ def test_airflow_checks_run_only_for_changed_dags() -> None:
     assert plan_for(["content/concepts/events.md"]).outputs()["airflow"] == "false"
 
 
+def test_mock_data_counts_as_content_and_the_rest_of_the_contract_runs_everything() -> None:
+    mocks = plan_for(["content/concepts/gdpr.md", "docs/contracts/mock-data/concepts/gdpr.json"])
+    assert mocks.mode == "content" and mocks.slugs == ["gdpr"] and not mocks.frontend
+    only_mocks = plan_for(["docs/contracts/mock-data/concepts.json"])
+    assert only_mocks.mode == "content" and only_mocks.slugs == []   # tests de datos, sin snippets
+    assert plan_for(["docs/contracts/api.yaml", "docs/contracts/mock-data/concepts.json"]).mode == "full"
+
+
 def test_frontend_and_docs_changes() -> None:
     front = plan_for(["frontend/components/card/ArchitectureStage.tsx", "tests/frontend/architecture.test.ts"])
     assert front.mode == "none" and front.frontend and front.outputs()["backend"] == "false"

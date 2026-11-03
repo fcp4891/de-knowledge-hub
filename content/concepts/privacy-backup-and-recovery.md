@@ -17,7 +17,7 @@ jurisdiction: [CL]
 legal_basis:
   - {law: ley-19628, article: "14 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "c) capacidad de restaurar la disponibilidad y el acceso a los datos de forma rápida ante un incidente; d) verificación regular de la eficacia de las medidas.", implication: "Restaurar es una medida de seguridad (c), y el ensayo de restauración con reconciliación es parte de su verificación (d)."}
   - {law: ley-19628, article: "7", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Derecho de supresión: causales y casos en que no procede.", implication: "Una supresión aprobada después del respaldo se reproduce en lo restaurado antes de liberarlo."}
-  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "c) conservar solo el tiempo necesario y luego suprimir o anonimizar.", implication: "La retención de los respaldos tiene plazo propio y se documenta."}
+  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Proporcionalidad: conservar solo el tiempo necesario y luego suprimir o anonimizar.", implication: "La retención de los respaldos tiene plazo propio y se documenta."}
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
@@ -75,7 +75,7 @@ Una restauración puede reintroducir datos suprimidos, permisos antiguos o reten
 
 - **[Obligación legal · art. 14 quinquies]** Entre las medidas de seguridad, la capacidad de restaurar la disponibilidad y el acceso a los datos de forma rápida ante un incidente (letra c)) y la verificación regular de la eficacia de las medidas (letra d)).
 - **[Obligación legal · art. 7]** La supresión procede por las causales del artículo y no procede en los casos que enumera.
-- **[Obligación legal · art. 3]** Los datos se conservan solo el tiempo necesario y luego se suprimen o anonimizan (letra c)).
+- **[Obligación legal · art. 3]** Los datos se conservan solo el tiempo necesario y luego se suprimen o anonimizan (**proporcionalidad**).
 - **[Buena práctica]** Cuatro nociones:
 
 | Noción | Qué es |
@@ -334,3 +334,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
 - 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
+- 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.

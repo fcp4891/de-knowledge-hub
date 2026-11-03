@@ -52,9 +52,9 @@ Trabajas en paralelo con Cursor (Carril B, frontend y revisión).
 
 ## Eficiencia
 - La CI corre por rutas cambiadas: el job `plan` (`scripts/ci/plan.py`) lee el diff del push o del PR.
-  - `content/` → validate, compilador, tests de datos y solo los tests de snippets de las fichas cambiadas (`tests/conftest.py` los elige por slug). Los tests con Docker (Kafka, Iceberg REST, PostgreSQL de snippets) corren solo si los usa una ficha cambiada; los validadores de bloques (Terraform, actionlint, cfn-lint, Bicep, hadolint, kubeconform, Airflow), solo si una ficha cambiada tiene ese tipo de bloque.
+  - `content/` (y `docs/contracts/mock-data/`, que `make mocks` genera desde `content/`) → validate, compilador, tests de datos y solo los tests de snippets de las fichas cambiadas (`tests/conftest.py` los elige por slug). Los tests con Docker (Kafka, Iceberg REST, PostgreSQL de snippets) corren solo si los usa una ficha cambiada; los validadores de bloques (Terraform, actionlint, cfn-lint, Bicep, hadolint, kubeconform, Airflow), solo si una ficha cambiada tiene ese tipo de bloque.
   - `frontend/` o `tests/frontend/` → tests de frontend, `tsc` y build.
-  - backend, API, `schemas/`, `scripts/`, `tests/`, migraciones, contrato, dependencias, Makefile o `.github/` → suite completa.
+  - backend, API, `schemas/`, `scripts/`, `tests/`, migraciones, contrato (`docs/contracts/` salvo `mock-data/`), dependencias, Makefile o `.github/` → suite completa.
   - Solo `docs/` (salvo el contrato) o CLAUDE.md → nada.
 - La suite completa corre solo: de noche (cron de las 07:00 UTC: 04:00 en Chile en verano, 03:00 en invierno), a mano con `workflow_dispatch` (`gh workflow run ci.yml --ref main`), o cuando el diff toca backend, `schemas/`, `scripts/`, `tests/`, contrato, dependencias o `.github/`.
 - `make static` no espera la suite completa: basta con que pasen las pruebas impactadas por el cambio (la CI del push o `make test-changed`).

@@ -16,7 +16,7 @@ related_topics: [quality-gate, data-contracts]
 aliases: [privacy-by-design-checklist, Privacidad desde el diseño en cada pipeline]
 jurisdiction: [CL]
 legal_basis:
-  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "c) proporcionalidad; e) responsabilidad.", implication: "Reglas de proporcionalidad (c) y controles con dueño (e)."}
+  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Proporcionalidad y responsabilidad.", implication: "Reglas de proporcionalidad y controles con dueño (responsabilidad)."}
   - {law: ley-19628, article: "14 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Medidas desde el diseño y, por defecto, solo los datos específicos y estrictamente necesarios, considerando el número de datos recogidos, la extensión del tratamiento, el plazo de conservación y su accesibilidad.", implication: "Reglas en la CI, antes de producción."}
   - {law: ley-19628, article: "14 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Seguridad acorde al riesgo; d) verificación regular de su eficacia; ante un incidente, si hay controversia judicial o administrativa, el responsable acredita sus medidas.", implication: "Verificación continua y evidencia fechada."}
   - {law: ley-19628, article: "14 septies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Estándares diferenciados que fijará la Agencia por instrucción general.", implication: "Ajustar los umbrales cuando la Agencia publique los estándares."}
@@ -121,7 +121,7 @@ Un control documentado no es un control implementado. La ley pide verificar regu
 
 1. **[Buena práctica]** Definir el control desde una decisión aprobada, con dueño, alcance y criterio de aprobación: una matriz riesgo → decisión → control → consulta verificadora → evidencia.
 2. **[Buena práctica]** Extraer metadatos reales: catálogo, permisos efectivos, configuración de retención, resultados del escaneo de datos personales; leer datos solo cuando sea necesario y esté autorizado.
-3. **[Obligación legal · art. 3]** Solo los datos necesarios para el fin (letra c)), y quienes tratan los datos responden por el cumplimiento (letra e)). **[Buena práctica]** Expresar cada requisito como regla: «toda tabla con retención y dueño», «sin `SELECT *` sobre tablas personales», «contrato con finalidad, base y retención».
+3. **[Obligación legal · art. 3]** Solo los datos necesarios para el fin (**proporcionalidad**), y quienes tratan los datos responden por el cumplimiento (**responsabilidad**). **[Buena práctica]** Expresar cada requisito como regla: «toda tabla con retención y dueño», «sin `SELECT *` sobre tablas personales», «contrato con finalidad, base y retención».
 4. **[Buena práctica]** Correr las reglas en la CI sobre los cambios y programadas sobre producción; comparar lo declarado en Git con lo observado.
 5. **[Decisión de arquitectura]** Emitir PASS, FAIL o UNKNOWN con severidad; fallar cerrado en las reglas críticas cuando no hay evidencia confiable.
 6. **[Buena práctica]** Las excepciones se aprueban explícitamente, con dueño, motivo, alcance, compensación y fecha de vencimiento; una excepción vencida vuelve a ser FAIL.
@@ -479,3 +479,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
 - 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
+- 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.

@@ -15,7 +15,7 @@ tags: [privacy, purpose-limitation, access-control, data-products, policy-as-cod
 related_topics: [processing-activities-inventory, column-level-security]
 jurisdiction: [CL]
 legal_basis:
-  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "b) fines específicos, explícitos y lícitos; c) proporcionalidad: solo los datos necesarios, adecuados y pertinentes.", implication: "El acceso se concede para una finalidad aprobada (b) y a un producto con solo los datos que esa finalidad necesita (c)."}
+  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Finalidad: fines específicos, explícitos y lícitos. Proporcionalidad: solo los datos necesarios, adecuados y pertinentes.", implication: "El acceso se concede para una finalidad aprobada y a un producto con solo los datos que esa finalidad necesita."}
   - {law: ley-19628, article: "14 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Por defecto, solo los datos específicos y estrictamente necesarios, considerando el número de datos recogidos, la extensión del tratamiento, el plazo de conservación y su accesibilidad.", implication: "La configuración por defecto no da acceso; cada concesión es explícita, acotada y con vencimiento."}
   - {law: ley-19628, article: "34 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "b) destinar maliciosamente los datos a una finalidad distinta de la consentida o prevista en la ley es infracción gravísima.", implication: "Un uso para otra finalidad se deniega o se escala, y queda auditado."}
 sources:
@@ -62,7 +62,7 @@ Los permisos tradicionales responden **quién** puede consultar. La autorizació
 
 ## 2. Qué es
 
-- **[Obligación legal · art. 3]** Los datos se recolectan con fines específicos, explícitos y lícitos, y no se tratan con fines distintos salvo las excepciones de la letra b); se limitan estrictamente a los necesarios, adecuados y pertinentes (letra c)).
+- **[Obligación legal · art. 3]** Los datos se recolectan con fines específicos, explícitos y lícitos, y no se tratan con fines distintos salvo las excepciones del principio de **finalidad**; se limitan estrictamente a los necesarios, adecuados y pertinentes (**proporcionalidad**).
 - **[Obligación legal · art. 14 quáter]** Por defecto, solo los datos específicos y estrictamente necesarios, considerando el número de datos recogidos, la extensión del tratamiento, el plazo de conservación y su accesibilidad.
 - **[Decisión de arquitectura]** Cuatro piezas que no conviene mezclar:
 
@@ -330,3 +330,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
 - 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
+- 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.

@@ -15,9 +15,9 @@ tags: [compliance, privacy, inventory, lawful-basis, lineage]
 related_topics: [data-catalog, data-lineage]
 jurisdiction: [CL]
 legal_basis:
-  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "a) el responsable acredita la licitud; b) fines específicos y sus excepciones; c) proporcionalidad: solo los datos necesarios, adecuados y pertinentes para los fines.", implication: "Registro de actividades consultable y versionado (a), detección de usos no registrados (b) y atributos necesarios por actividad (c)."}
+  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Licitud y lealtad: el responsable acredita la licitud. Finalidad: fines específicos y sus excepciones. Proporcionalidad: solo los datos necesarios, adecuados y pertinentes para los fines.", implication: "Registro de actividades consultable y versionado (licitud), detección de usos no registrados (finalidad) y atributos necesarios por actividad (proporcionalidad)."}
   - {law: ley-19628, article: "12", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Consentimiento libre, informado, específico, previo e inequívoco; revocable; el responsable lo prueba.", implication: "Guardar el consentimiento por finalidad, con fecha y versión."}
-  - {law: ley-19628, article: "13", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Otras bases: obligaciones económicas (Título III), obligación legal, contrato, interés legítimo, defensa de derechos.", implication: "Una base por actividad."}
+  - {law: ley-19628, article: "13", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Otras bases: obligaciones económicas, obligación legal, contrato, interés legítimo, defensa de derechos.", implication: "Una base por actividad."}
   - {law: ley-19628, article: "14", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "a) informar y poner a disposición los antecedentes de licitud.", implication: "Antecedentes de licitud exportables bajo demanda."}
   - {law: ley-19628, article: "14 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Información pública sobre categorías, destinatarios, finalidades, base, plazo, fuente y decisiones automatizadas.", implication: "El catálogo alimenta la política."}
   - {law: ley-19628, article: "34 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "a) tratar sin base o con finalidad distinta es infracción grave.", implication: "Un uso no registrado es una brecha de la CI."}
@@ -74,9 +74,9 @@ El inventario explica **para qué** se tratan datos personales y lo vincula con 
 
 ## 2. Qué es
 
-- **[Obligación legal · art. 3]** El responsable debe poder acreditar la licitud (letra a)); no puede tratar los datos con fines distintos de los informados salvo las excepciones de la letra b); y los datos que se traten deben limitarse estrictamente a los necesarios, adecuados y pertinentes en relación con los fines (letra c), proporcionalidad).
+- **[Obligación legal · art. 3]** El responsable debe poder acreditar la licitud (**licitud y lealtad**); no puede tratar los datos con fines distintos de los informados salvo las excepciones del principio de **finalidad**; y los datos que se traten deben limitarse estrictamente a los necesarios, adecuados y pertinentes en relación con los fines (**proporcionalidad**).
 - **[Obligación legal · art. 12]** Si la base es el consentimiento, debe ser libre, informado, específico por finalidad, previo e inequívoco, y revocable; el responsable lo prueba.
-- **[Obligación legal · art. 13]** Otras bases: obligaciones económicas (Título III), obligación legal, contrato, interés legítimo y defensa de un derecho.
+- **[Obligación legal · art. 13]** Otras bases: obligaciones económicas, obligación legal, contrato, interés legítimo y defensa de un derecho.
 - **[Decisión de arquitectura]** **Actividad de tratamiento:** unidad de gestión con identificador estable, responsable, finalidad, base validada, categorías de datos y de titulares, activos, destinatarios, transferencias, plazo, decisiones automatizadas, estado y versión.
 - **[Decisión de arquitectura]** Cuatro entidades distintas, que no conviene mezclar en un solo campo:
 
@@ -377,3 +377,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
 - 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
+- 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra, y se quita «(Título III)» de las otras bases del art. 13. Sin cambios de fondo; el estado no cambia.

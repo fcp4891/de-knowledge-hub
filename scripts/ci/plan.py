@@ -2,7 +2,8 @@
 
 Reglas (CLAUDE.md, «Eficiencia»):
 - backend, schemas, scripts, tests, contrato, dependencias, Makefile o la propia CI → suite completa;
-- content/ → validate, compilador, tests de datos y solo los tests de snippets de las fichas cambiadas, más los
+- content/ (y docs/contracts/mock-data/, que se genera desde content/) → validate, compilador, tests de datos y solo los
+  tests de snippets de las fichas cambiadas, más los
   validadores de bloques (Terraform, actionlint, cfn-lint, Bicep, hadolint, kubeconform, Airflow) si alguna ficha
   cambiada tiene un bloque de ese tipo;
 - frontend/ o tests/frontend/ → tests de frontend, tsc y build;
@@ -49,6 +50,7 @@ FULL_PREFIXES = ("backend/", "schemas/", "scripts/", "alembic/", "tests/", ".git
 FULL_FILES = {"Makefile", "pyproject.toml", "requirements.txt", "requirements-snippets.txt", "alembic.ini",
               "docker-compose.yml"}
 FRONTEND_PREFIXES = ("frontend/", "tests/frontend/")
+MOCKS = "docs/contracts/mock-data/"   # derivados de content/ (make mocks); el resto de docs/contracts/ es contrato
 NULL_SHA = "0" * 40
 
 # Tipo de bloque → patrón que lo identifica en una ficha (el mismo criterio que scripts/snippets/extract.py).
@@ -86,7 +88,7 @@ class Plan:
 
 
 def is_full(path: str) -> bool:
-    if path.startswith("tests/frontend/"):
+    if path.startswith(("tests/frontend/", MOCKS)):   # los mocks se generan desde content/: cuentan como contenido
         return False
     return path in FULL_FILES or path.startswith(FULL_PREFIXES)
 
@@ -96,7 +98,7 @@ def plan_for(paths: list[str], full: bool = False, root: Path = ROOT) -> Plan:
         return Plan(mode="full", frontend=True)
     plan = Plan(frontend=any(p.startswith(FRONTEND_PREFIXES) for p in paths))
     changed = sorted(p for p in paths if p.startswith("content/"))
-    if not changed:
+    if not changed and not any(p.startswith(MOCKS) for p in paths):
         return plan
     plan.mode = "content"
     plan.slugs = sorted({Path(p).stem for p in changed if Path(p).suffix in {".md", ".yaml", ".yml"}})

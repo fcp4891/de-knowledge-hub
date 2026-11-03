@@ -15,7 +15,7 @@ tags: [privacy, rag, llm, embeddings, access-control]
 related_topics: [processors-and-international-transfers, pii-identification]
 jurisdiction: [CL]
 legal_basis:
-  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "b) fines específicos; c) proporcionalidad: solo los datos estrictamente necesarios.", implication: "Cada fuente que se indexa tiene una finalidad aprobada (b), y se indexa solo lo necesario para ella (c)."}
+  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Finalidad: fines específicos. Proporcionalidad: solo los datos estrictamente necesarios.", implication: "Cada fuente que se indexa tiene una finalidad aprobada, y se indexa solo lo necesario para ella."}
   - {law: ley-19628, article: "8 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Decisiones basadas en tratamiento automatizado con efectos jurídicos o significativos; en todos los casos, incluidas las excepciones, explicación, intervención humana, expresar su punto de vista y pedir revisión.", implication: "Si el asistente decide sobre personas, se conecta con la evaluación de impacto y la revisión humana."}
   - {law: ley-19628, article: "15 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "El encargado trata según el encargo; no los trata para un objeto distinto del convenido ni los cede o entrega sin autorización expresa y específica del responsable.", implication: "Un proveedor de modelos o de búsqueda que recibe datos personales es un encargado, con su contrato y su cierre."}
 sources:
@@ -74,7 +74,7 @@ Un pipeline de IA amplía la superficie de tratamiento: documentos, fragmentos (
 
 ## 2. Qué es
 
-- **[Obligación legal · art. 3]** Fines específicos, explícitos y lícitos (letra b)) y solo los datos estrictamente necesarios, adecuados y pertinentes (letra c)).
+- **[Obligación legal · art. 3]** Fines específicos, explícitos y lícitos (**finalidad**) y solo los datos estrictamente necesarios, adecuados y pertinentes (**proporcionalidad**).
 - **[Obligación legal · art. 15 bis]** El encargado trata según el encargo; no puede tratar los datos para un objeto distinto del convenido ni cederlos o entregarlos sin autorización expresa y específica del responsable.
 - **[Buena práctica]** Las piezas de un pipeline de IA:
 
@@ -363,3 +363,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
 - 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
+- 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.

@@ -117,9 +117,9 @@ export const CHILE_GROUPS: ChileGroup[] = [
       article(
         "3",
         "Principios del tratamiento",
-        "Principios, letras a) a h).",
+        "Principios: licitud y lealtad, finalidad, proporcionalidad, calidad, responsabilidad, seguridad, transparencia e información y confidencialidad.",
         "Cada principio necesita un control y una evidencia.",
-        "Cada principio (letras a a h) necesita un control y una evidencia.",
+        "Cada principio necesita un control y una evidencia.",
         [self("Esta ficha")],
       ),
     ],

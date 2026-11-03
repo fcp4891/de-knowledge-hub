@@ -17,7 +17,7 @@ aliases: [erasure-across-copies, Supresión en todas las copias]
 jurisdiction: [CL]
 legal_basis:
   - {law: ley-19628, article: "2", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "h) eliminación: destrucción de los datos, cualquiera sea el procedimiento; k) anonimización.", implication: "Un borrado lógico no basta si el dato sigue recuperable (h); anonimizar exige irreversibilidad (k)."}
-  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "c) conservar solo lo necesario y luego suprimir o anonimizar.", implication: "Cada tabla tiene plazo y acción al vencer."}
+  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Proporcionalidad: conservar solo lo necesario y luego suprimir o anonimizar.", implication: "Cada tabla tiene plazo y acción al vencer."}
   - {law: ley-19628, article: "7", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Causales de supresión y excepciones.", implication: "La supresión puede ser parcial: hay datos con obligación de conservar."}
   - {law: ley-19628, article: "8 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Bloqueo alternativo a la supresión, sin afectar el almacenamiento.", implication: "Estado intermedio: se guarda, no se trata."}
   - {law: ley-19628, article: "11", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Plazos; la supresión se comunica a quienes recibieron los datos.", implication: "Propagar a derivados y a terceros."}
@@ -90,7 +90,7 @@ La **retención** define hasta cuándo se conserva un dato para una finalidad ap
 
 ## 2. Qué es
 
-- **[Obligación legal · art. 3]** **Retención:** cada dato se conserva solo el tiempo necesario para su finalidad y luego se suprime o anonimiza (letra c)).
+- **[Obligación legal · art. 3]** **Retención:** cada dato se conserva solo el tiempo necesario para su finalidad y luego se suprime o anonimiza (**proporcionalidad**).
 - **[Obligación legal · art. 2]** **Eliminación:** es la destrucción de los datos, cualquiera sea el procedimiento (letra h)); un borrado lógico que deja el dato recuperable no lo es.
 - **[Obligación legal · art. 7]** **Supresión a pedido:** procede por causales; hay excepciones, como una obligación legal de conservar.
 - **[Obligación legal · art. 8 ter]** **Bloqueo:** suspensión temporal del tratamiento sin borrar.
@@ -571,3 +571,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
 - 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
+- 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.

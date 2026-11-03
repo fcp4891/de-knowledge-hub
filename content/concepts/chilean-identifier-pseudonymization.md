@@ -16,7 +16,7 @@ related_topics: [keyed-hashing, tokenization]
 jurisdiction: [CL]
 legal_basis:
   - {law: ley-19628, article: "2", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "f) identificable con medios razonables; k) anonimización irreversible; l) seudonimización con información adicional separada y protegida.", implication: "El riesgo de reidentificación se evalúa con los datos y medios disponibles (f); solo la anonimización real saca el dato del alcance de la ley (k); la llave va en otro sistema, con otro control de acceso (l)."}
-  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "c) al vencer el plazo, suprimir o anonimizar.", implication: "La anonimización es alternativa a la supresión solo si es real."}
+  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Proporcionalidad: al vencer el plazo, suprimir o anonimizar.", implication: "La anonimización es alternativa a la supresión solo si es real."}
   - {law: ley-19628, article: "14 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "a) la seudonimización y el cifrado como medidas de seguridad.", implication: "Seudonimizar reduce el riesgo, no elimina obligaciones."}
   - {law: ley-19628, article: "16 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "c) los resultados de estudios con datos de salud se publican anonimizados.", implication: "Si se publican resultados de estudios con datos de salud, el dataset publicado va anonimizado."}
   - {law: ley-19628, article: "16 quinquies", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Fines históricos, estadísticos o científicos: publicar anonimizado.", implication: "Si se publican resultados estadísticos o científicos, los datos publicados van anonimizados."}
@@ -85,7 +85,7 @@ Seudonimizar es sustituir un identificador por otro que no permita atribuir el d
 
 - **[Obligación legal · art. 2]** **Seudonimización** (letra l)): sin información adicional que figure por separado y esté protegida, el dato ya no se atribuye al titular. **Anonimización** (letra k)): procedimiento irreversible; el dato anonimizado deja de ser personal. Para saber si alguien es identificable se consideran los medios que razonablemente se podrían usar (letra f)).
 - **[Obligación legal · art. 14 quinquies]** Entre las medidas de seguridad, la ley nombra la seudonimización y el cifrado (letra a)): seudonimizar reduce el riesgo, no saca al dato de la ley.
-- **[Obligación legal · art. 3]** Al vencer el plazo de conservación, suprimir o anonimizar (letra c)); anonimizar solo sirve si es real.
+- **[Obligación legal · art. 3]** Al vencer el plazo de conservación, suprimir o anonimizar (**proporcionalidad**); anonimizar solo sirve si es real.
 - **[Obligación legal · art. 16 bis]** Los resultados de estudios con datos de salud o de perfil biológico pueden publicarse; si se publican, los datos se anonimizan antes (letra c)).
 - **[Obligación legal · art. 16 quinquies]** Con fines históricos, estadísticos o científicos se pueden publicar resultados; antes, se anonimizan los datos que se publiquen.
 - **[Obligación legal · art. 26]** Un reglamento regulará los procedimientos de anonimización, especialmente de datos sensibles. **[Buena práctica]** Revisar estas técnicas cuando se dicte.
@@ -393,3 +393,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
 - 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
+- 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.

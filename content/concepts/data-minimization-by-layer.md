@@ -127,7 +127,7 @@ La minimización evita que una plataforma recoja, replique o exponga datos perso
 1. **[Buena práctica]** **Definir el producto y su finalidad:** qué decisión o proceso habilita y quién aprobó sus necesidades (`processing-activities-inventory`).
 2. **[Decisión de arquitectura]** **Contrato de entrada:** lista explícita de campos con su justificación; un campo nuevo no aprobado se rechaza o se aísla.
 3. **[Decisión de arquitectura]** **Bronze** recibe los datos tal como llegan, con retención y acceso restringidos; solo las cuentas de servicio lo leen. Bronze no es una excepción permanente a la minimización.
-4. **[Obligación legal · art. 3]** Silver extrae solo las columnas necesarias para el fin (letra c)). **[Decisión de arquitectura]** El RUT pasa a un HMAC con clave, la edad a un tramo, y el nombre y el correo no pasan.
+4. **[Obligación legal · art. 3]** Silver extrae solo las columnas necesarias para el fin (**proporcionalidad**). **[Decisión de arquitectura]** El RUT pasa a un HMAC con clave, la edad a un tramo, y el nombre y el correo no pasan.
 5. **[Decisión de arquitectura]** Gold agrega por comuna y suprime los grupos de menos de 2 clientes. El umbral es una decisión interna: la ley no fija un mínimo de personas por grupo, y un umbral solo no garantiza anonimato.
 6. **[Buena práctica]** El rol de análisis tiene permiso solo sobre gold; se prueba con la identidad del consumidor, no solo leyendo la configuración.
 7. **[Buena práctica]** Un test recorre silver y gold y falla si encuentra un RUT o un correo en claro; otro compara el esquema real con el contrato de columnas de cada capa.
@@ -322,7 +322,7 @@ En Azure, **Azure SQL** con enmascaramiento dinámico. Según *Dynamic data mask
 
 ## 14. Buenas prácticas
 
-- **[Obligación legal · art. 3]** Solo los datos necesarios, adecuados y pertinentes para el fin (letra c)). **[Buena práctica]** Decidir por capa qué columnas personales son necesarias, para qué fin y cuándo dejan de serlo.
+- **[Obligación legal · art. 3]** Solo los datos necesarios, adecuados y pertinentes para el fin (**proporcionalidad**). **[Buena práctica]** Decidir por capa qué columnas personales son necesarias, para qué fin y cuándo dejan de serlo.
 - **[Obligación legal · art. 14 quáter]** Por defecto, solo los datos específicos y estrictamente necesarios, según número de datos, extensión, plazo y accesibilidad. **[Decisión de arquitectura]** Una tabla nueva parte sin columnas personales y cada una se agrega con su finalidad.
 - **[Buena práctica]** Listas explícitas de columnas en lugar de `SELECT *` en productos con datos personales; minimizar desde la fuente cuando se pueda.
 - **[Buena práctica]** Revisar cambios de esquema y finalidades nuevas antes de desplegar.
@@ -400,3 +400,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
 - 2026-11-01: `medallion-architecture` ya tiene ficha (lote 07a): se enlaza en `relations` y en el §17 (cambio mínimo). Sin cambios de contenido.
 - 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
+- 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.
