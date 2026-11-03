@@ -224,6 +224,19 @@
   gap: 10px;
 }
 
+.route-card-kind {
+  display: inline-block;
+  margin-bottom: 4px;
+  padding: 0.05em 0.45em;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 .route-card {
   display: flex;
   align-items: flex-start;
@@ -236,6 +249,11 @@
   background: var(--surface);
   color: var(--ink);
   text-decoration: none;
+}
+
+.route-card[data-kind="architecture"] {
+  border-style: dashed;
+  border-color: var(--accent);
 }
 
 a.route-card:hover {

@@ -4,7 +4,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { ArchitectureStage } from "@/components/card/ArchitectureStage";
 import { CloudTabs } from "@/components/card/CloudTabs";
+import { ARCHITECTURE_GROUPS, VIEW_LABEL } from "@/lib/architecture";
 import type {
   Classification,
   EntityType,
@@ -49,7 +51,7 @@ export type ReadingSectionModel = {
   number: number;
   key: string;
   title: string;
-  presentation: "summary" | "open" | "details" | "cloud";
+  presentation: "summary" | "open" | "details" | "cloud" | "view" | "components";
   listed: boolean;
   body: React.ReactNode;
 };
@@ -191,6 +193,7 @@ export function ConceptReading({
   relationsError,
   entityType,
   architectureLegend,
+  pageKind = "concept",
   children,
 }: {
   slug: string;
@@ -217,8 +220,10 @@ export function ConceptReading({
   relationsError: string | null;
   entityType: EntityType;
   architectureLegend: boolean;
+  pageKind?: string;
   children?: React.ReactNode;
 }) {
+  const sectionGroups = pageKind === "architecture" ? ARCHITECTURE_GROUPS : CARD_SECTION_GROUPS;
   const router = useRouter();
   const articleRef = useRef<HTMLElement>(null);
   const cloudRef = useRef<HTMLElement>(null);
@@ -231,6 +236,8 @@ export function ConceptReading({
     (left, right) => CLOUD_ORDER.indexOf(left.key) - CLOUD_ORDER.indexOf(right.key),
   );
   const [cloudId, setCloudId] = useState(clouds[0]?.key ?? "");
+  const viewSections = sections.filter((section) => section.presentation === "view");
+  const [viewKey, setViewKey] = useState(viewSections[0]?.key ?? "");
   const [current, setCurrent] = useState<number | null>(null);
   const [readMax, setReadMax] = useState(0);
   const [progressReady, setProgressReady] = useState(false);
@@ -361,7 +368,7 @@ export function ConceptReading({
     );
     root.querySelectorAll<HTMLElement>("[data-reading-section]").forEach((node) => observer.observe(node));
     return () => observer.disconnect();
-  }, [note, progressReady, cloudId]);
+  }, [note, progressReady, cloudId, viewKey]);
 
   useEffect(() => {
     const number = pendingScroll.current;
@@ -378,7 +385,7 @@ export function ConceptReading({
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
     node.scrollIntoView({ behavior: motion, block: "start" });
     pendingScroll.current = null;
-  }, [scrollToken, cloudId]);
+  }, [scrollToken, cloudId, viewKey]);
 
   function persist(nextState: StudyStatus, nextPending: boolean) {
     pendingRef.current = nextPending;
@@ -422,6 +429,9 @@ export function ConceptReading({
     if (section.presentation === "cloud") {
       setCloudId(section.key);
     }
+    if (section.presentation === "view") {
+      setViewKey(section.key);
+    }
     pendingScroll.current = section.number;
     setScrollToken((value) => value + 1);
   }
@@ -448,6 +458,7 @@ export function ConceptReading({
   }
 
   let expandPlaced = false;
+  let viewsPlaced = false;
   const summaryBlocks: React.ReactNode[] = [];
   const blocks: React.ReactNode[] = [];
   let index = 0;
@@ -460,6 +471,33 @@ export function ConceptReading({
         </button>,
       );
       expandPlaced = true;
+    }
+    if (section.presentation === "view" || section.presentation === "components") {
+      if (!viewsPlaced) {
+        const componentSection = sections.find((item) => item.presentation === "components");
+        blocks.push(
+          <ArchitectureStage
+            key="architecture-views"
+            activeKey={viewKey}
+            onActiveKey={setViewKey}
+            views={viewSections.map((item) => ({
+              key: item.key,
+              number: item.number,
+              title: item.title,
+              label: VIEW_LABEL[item.key] ?? item.title,
+              body: item.body,
+            }))}
+            components={
+              componentSection
+                ? { number: componentSection.number, title: componentSection.title, body: componentSection.body }
+                : null
+            }
+          />,
+        );
+        viewsPlaced = true;
+      }
+      index += 1;
+      continue;
     }
     if (section.presentation === "cloud") {
       blocks.push(
@@ -607,7 +645,7 @@ export function ConceptReading({
         <nav className="reading-toc" aria-label="Índice de la ficha">
           <div className="reading-toc-nav">
             {listed.length === 0 ? <p className="reading-quiet">Sin secciones con contenido.</p> : null}
-            {CARD_SECTION_GROUPS.map((group) => {
+            {sectionGroups.map((group) => {
               const items = group.sections
                 .map((number) => listed.find((section) => section.number === number))
                 .filter((section): section is ReadingSectionModel => section !== undefined);
@@ -650,6 +688,7 @@ export function ConceptReading({
           <div className="reading-measure">
             <header>
               <div className="reading-badges">
+                {pageKind === "architecture" ? <span className="reading-badge is-architecture">Arquitectura</span> : null}
                 {classification ? <span className="reading-badge">{classification}</span> : null}
                 {level ? <span className="reading-badge">{sentence(LEVEL_LABEL[level])}</span> : null}
                 {mvp ? <span className="reading-badge">MVP</span> : null}

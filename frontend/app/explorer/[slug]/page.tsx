@@ -85,6 +85,7 @@ export default async function DomainPage({ params }: { params: Promise<{ slug: s
       hasPage: concept.has_page,
       verified: concept.verification_status === "verified",
       blueprintIndex: index,
+      kind: concept.kind,
     })),
   });
   const stages: RouteStage[] = data.subdomains.map(toStage);

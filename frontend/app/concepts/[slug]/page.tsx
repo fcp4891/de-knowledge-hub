@@ -12,6 +12,7 @@ import { citationDetail, citationLinkText } from "@/lib/citation";
 import { extractLegalNotice, legalNoticeCopy, usesArchitectureMark, type ObligationBasis } from "@/lib/legal";
 import { withoutPartOf } from "@/lib/partOf";
 import { entityHref } from "@/lib/entityHref";
+import { architectureTitle, isArchitectureView } from "@/lib/architecture";
 import { SHORT_NAMES } from "@/lib/learning-paths";
 import { nextInRoute } from "@/lib/domainRoute";
 import { staticSlugs } from "@/lib/staticParams";
@@ -68,7 +69,10 @@ function sectionModels(
   obligations: readonly ObligationBasis[],
   slug: string,
   conceptRefs: ConceptRefs,
+  kind: string,
 ): ReadingSectionModel[] {
+  const architecture = kind === "architecture";
+  const titleOf = (section: Section) => (architecture ? architectureTitle(section.key, section.title) : section.title);
   const ordered = [...sections].sort((left, right) => left.number - right.number);
   const viewer = currentViewer();
   const showHistory = canViewChangeHistory(viewer);
@@ -89,15 +93,34 @@ function sectionModels(
       continue;
     }
     const text = section.markdown.trim().length > 0;
+    if (architecture && (isArchitectureView(section.key) || section.key === "components")) {
+      flushClouds();
+      if (!text) {
+        continue;
+      }
+      models.push({
+        number: section.number,
+        key: section.key,
+        title: titleOf(section),
+        presentation: section.key === "components" ? "components" : "view",
+        listed: true,
+        body: (
+          <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus />
+        ),
+      });
+      continue;
+    }
     if (section.key === "summary") {
       flushClouds();
       models.push({
         number: section.number,
         key: section.key,
-        title: section.title,
+        title: titleOf(section),
         presentation: "summary",
         listed: text,
-        body: text ? <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} /> : null,
+        body: text ? (
+          <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} />
+        ) : null,
       });
       continue;
     }
@@ -108,10 +131,18 @@ function sectionModels(
       clouds.push({
         number: section.number,
         key: section.key,
-        title: section.title,
+        title: titleOf(section),
         presentation: "cloud",
-        listed: true,
-        body: <MarkdownBody markdown={section.markdown} etiquetaColumn obligations={obligations} conceptRefs={conceptRefs} />,
+        listed: !(architecture && (section.key === "aws" || section.key === "azure")),
+        body: (
+          <MarkdownBody
+            markdown={section.markdown}
+            etiquetaColumn
+            obligations={obligations}
+            conceptRefs={conceptRefs}
+            markCodeStatus={architecture}
+          />
+        ),
       });
       continue;
     }
@@ -135,10 +166,14 @@ function sectionModels(
       models.push({
         number: section.number,
         key: section.key,
-        title: section.title,
+        title: titleOf(section),
         presentation: "details",
         listed: true,
-        body: showList ? <SourceLinks sources={sources} /> : <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} />,
+        body: showList ? (
+          <SourceLinks sources={sources} />
+        ) : (
+          <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} />
+        ),
       });
       continue;
     }
@@ -148,7 +183,7 @@ function sectionModels(
     models.push({
       number: section.number,
       key: section.key,
-      title: section.title,
+      title: titleOf(section),
       presentation:
         slug === "chile-data-protection" && section.number === 3
           ? "details"
@@ -156,7 +191,9 @@ function sectionModels(
             ? "open"
             : "details",
       listed: true,
-      body: <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} />,
+      body: (
+        <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} />
+      ),
     });
   }
   flushClouds();
@@ -287,7 +324,7 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
       sourceCount={data.sources.length}
       crumb={crumb}
       next={next}
-      sections={sectionModels(sections, data.sources, data.legal_basis, data.slug, conceptRefs)}
+      sections={sectionModels(sections, data.sources, data.legal_basis, data.slug, conceptRefs, data.kind)}
       staticMode={staticMode}
       initialStudy={
         study?.ok ? { state: study.data.state, pendingDeepDive: study.data.pending_deep_dive } : null
@@ -297,6 +334,7 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
       relationGroups={groups}
       relationsError={relations.ok ? null : (relations.detail ?? "No se pudieron cargar las relaciones.")}
       entityType={data.type}
+      pageKind={data.kind}
       architectureLegend={sections.some((section) => usesArchitectureMark(section.markdown))}
     >
       {staticMode ? null : <HybridNotes slug={data.slug} />}

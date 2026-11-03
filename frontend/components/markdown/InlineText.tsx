@@ -7,6 +7,7 @@ import {
   obligationNote,
   type ObligationBasis,
 } from "@/lib/legal";
+import { splitCodeStatus } from "@/lib/architecture";
 import { conceptInline, PENDING_MARK, type ConceptRefs } from "@/lib/conceptNames";
 import type { Inline } from "@/lib/markdown";
 
@@ -55,14 +56,35 @@ function ObligationCiteMark({ value, obligations }: { value: string; obligations
   );
 }
 
+function StatusText({ value, mark }: { value: string; mark: boolean }) {
+  if (!mark) {
+    return value;
+  }
+  const parts = splitCodeStatus(value);
+  if (parts.every((part) => part.type === "text")) {
+    return value;
+  }
+  return parts.map((part, index) =>
+    part.type === "text" ? (
+      <span key={index}>{part.value}</span>
+    ) : (
+      <span key={index} className={`code-status is-${part.tone}`}>
+        {part.label}
+      </span>
+    ),
+  );
+}
+
 export function InlineText({
   inlines,
   obligations = [],
   conceptRefs,
+  markCodeStatus = false,
 }: {
   inlines: Inline[];
   obligations?: readonly ObligationBasis[];
   conceptRefs?: ConceptRefs;
+  markCodeStatus?: boolean;
 }) {
   let trimLeading = false;
   return inlines.map((part, index) => {
@@ -107,7 +129,11 @@ export function InlineText({
       return <code key={key}>{value}</code>;
     }
     if (part.type === "strong") {
-      return <strong key={key}>{value}</strong>;
+      return (
+        <strong key={key}>
+          <StatusText value={value} mark={markCodeStatus} />
+        </strong>
+      );
     }
     if (part.type === "em") {
       return <em key={key}>{value}</em>;
@@ -122,6 +148,10 @@ export function InlineText({
         </a>
       );
     }
-    return <span key={key}>{value}</span>;
+    return (
+      <span key={key}>
+        <StatusText value={value} mark={markCodeStatus} />
+      </span>
+    );
   });
 }

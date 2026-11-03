@@ -331,14 +331,14 @@ export interface components {
         /** @enum {unknown} */
         SourceType: "official_docs" | "release_notes" | "engineering_blog" | "spec_paper" | "secondary" | "legislative";
         /**
-         * @description País cuya ley origina el contenido, ISO 3166-1 alfa-2 (ADR-023).
+         * @description País cuya ley origina el contenido, ISO 3166-1 alfa-2; EU es el código reservado para la Unión Europea (ADR-023, Enmienda 5).
          * @enum {unknown}
          */
-        Jurisdiction: "CL";
+        Jurisdiction: "CL" | "EU" | "BR";
         /** @description Artículo en que se apoya una ficha con jurisdicción (ADR-023); url es la cita oficial. */
         LegalBasis: {
             /** @enum {unknown} */
-            law: "ley-19628" | "ley-21719" | "ley-21663";
+            law: "ley-19628" | "ley-21719" | "ley-21663" | "eu-2016-679" | "br-lei-13709";
             /** @description Como lo numera el texto oficial, p. ej. 14 quinquies. */
             article: string;
             /** Format: uri */
@@ -459,11 +459,11 @@ export interface components {
             last_verified: components["schemas"]["Date"] | null;
             verification_status: components["schemas"]["VerificationStatus"] | null;
         };
-        /** @description Una de las 22 secciones de la ficha (§22), en Markdown. */
+        /** @description Una de las 22 secciones de la ficha (§22) o de la arquitectura de referencia (ADR-028, `kind` architecture), en Markdown. */
         Section: {
             number: number;
             /** @enum {unknown} */
-            key: "summary" | "what_is" | "problem" | "how_it_works" | "when_to_use" | "when_not_to_use" | "simple_example" | "production_example" | "architecture" | "code" | "gcp" | "aws" | "azure" | "best_practices" | "common_mistakes" | "trade_offs" | "related_concepts" | "open_questions" | "related_lab" | "sources" | "last_verified" | "change_history";
+            key: "summary" | "what_is" | "problem" | "how_it_works" | "when_to_use" | "when_not_to_use" | "simple_example" | "production_example" | "architecture" | "code" | "gcp" | "aws" | "azure" | "best_practices" | "common_mistakes" | "trade_offs" | "related_concepts" | "open_questions" | "related_lab" | "sources" | "last_verified" | "change_history" | "scenario" | "context_view" | "components" | "data_view" | "deployment_view" | "security" | "operations" | "costs" | "risks" | "evolution";
             title: string;
             markdown: string;
         };
@@ -726,7 +726,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Los 23 dominios, ordenados por id. */
+            /** @description Los dominios, ordenados por id. */
             200: {
                 headers: {
                     [name: string]: unknown;

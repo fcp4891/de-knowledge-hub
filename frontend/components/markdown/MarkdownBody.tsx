@@ -8,11 +8,13 @@ export async function MarkdownBody({
   etiquetaColumn = false,
   obligations = [],
   conceptRefs,
+  markCodeStatus = false,
 }: {
   markdown: string;
   etiquetaColumn?: boolean;
   obligations?: readonly ObligationBasis[];
   conceptRefs?: ConceptRefs;
+  markCodeStatus?: boolean;
 }) {
   const blocks = parseMarkdown(markdown);
   const grouped = groupEvidence(blocks);
@@ -33,6 +35,7 @@ export async function MarkdownBody({
             group={block}
             obligations={obligations}
             conceptRefs={conceptRefs}
+            markCodeStatus={markCodeStatus}
             CodeBlock={codeBlock}
             MermaidDiagram={mermaidDiagram}
           />
@@ -41,6 +44,7 @@ export async function MarkdownBody({
             key={index}
             block={block}
             etiquetaColumn={etiquetaColumn}
+            markCodeStatus={markCodeStatus}
             obligations={obligations}
             conceptRefs={conceptRefs}
             CodeBlock={codeBlock}
@@ -57,6 +61,7 @@ function EvidenceBlock({
   group,
   obligations,
   conceptRefs,
+  markCodeStatus,
   CodeBlock,
   MermaidDiagram,
 }: {
@@ -64,6 +69,7 @@ function EvidenceBlock({
   group: EvidenceGroup;
   obligations: readonly ObligationBasis[];
   conceptRefs?: ConceptRefs;
+  markCodeStatus: boolean;
   CodeBlock: ((props: { code: string; language: string }) => React.ReactNode) | null;
   MermaidDiagram: ((props: { source: string }) => React.ReactNode) | null;
 }) {
@@ -82,6 +88,7 @@ function EvidenceBlock({
           key={index}
           block={block}
           etiquetaColumn={false}
+          markCodeStatus={markCodeStatus}
           obligations={obligations}
           conceptRefs={conceptRefs}
           CodeBlock={CodeBlock}
@@ -97,6 +104,7 @@ function MarkdownBlock({
   etiquetaColumn,
   obligations,
   conceptRefs,
+  markCodeStatus,
   CodeBlock,
   MermaidDiagram,
 }: {
@@ -104,6 +112,7 @@ function MarkdownBlock({
   etiquetaColumn: boolean;
   obligations: readonly ObligationBasis[];
   conceptRefs?: ConceptRefs;
+  markCodeStatus: boolean;
   CodeBlock: ((props: { code: string; language: string }) => React.ReactNode) | null;
   MermaidDiagram: ((props: { source: string }) => React.ReactNode) | null;
 }) {
@@ -125,7 +134,7 @@ function MarkdownBlock({
   if (block.type === "note") {
     return (
       <p className="verify-note">
-        Pendiente de verificación: <InlineText inlines={block.inlines} obligations={obligations} conceptRefs={conceptRefs} />
+        Pendiente de verificación: <InlineText inlines={block.inlines} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} />
       </p>
     );
   }
@@ -142,7 +151,7 @@ function MarkdownBlock({
             <tr>
               {indexes.map((index) => (
                 <th key={index} data-align={block.aligns[index] ?? "left"}>
-                  <InlineText inlines={block.headers[index]} obligations={obligations} conceptRefs={conceptRefs} />
+                  <InlineText inlines={block.headers[index]} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} />
                 </th>
               ))}
             </tr>
@@ -154,7 +163,7 @@ function MarkdownBlock({
                   const ficha = articleMap && index === articleMap.articleIndex ? articleMap.fichaTitles[rowIndex] : null;
                   return (
                     <td key={index} data-align={block.aligns[index] ?? "left"} title={ficha ?? undefined}>
-                      <InlineText inlines={row[index] ?? []} obligations={obligations} conceptRefs={conceptRefs} />
+                      <InlineText inlines={row[index] ?? []} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} />
                     </td>
                   );
                 })}
@@ -174,7 +183,7 @@ function MarkdownBlock({
             {item.checked === null ? null : (
               <input type="checkbox" defaultChecked={item.checked} disabled aria-label={item.checked ? "Hecho" : "Pendiente"} />
             )}
-            <InlineText inlines={item.inlines} obligations={obligations} conceptRefs={conceptRefs} />
+            <InlineText inlines={item.inlines} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} />
           </li>
         ))}
       </Tag>
@@ -182,7 +191,7 @@ function MarkdownBlock({
   }
   return (
     <p>
-      <InlineText inlines={block.inlines} obligations={obligations} conceptRefs={conceptRefs} />
+      <InlineText inlines={block.inlines} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} />
     </p>
   );
 }
