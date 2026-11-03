@@ -19,17 +19,31 @@ Uso: python scripts/ci/plan.py --base SHA [--head SHA] [--full] [--github-output
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import os
 import re
 import subprocess
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
+from types import ModuleType
 
 ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT))
 
-from scripts.snippets.airflow_dag_checks import CHECKS  # noqa: E402 - sin dependencias externas
+
+def load_checks() -> ModuleType:
+    """El registro de Airflow, cargado desde su archivo: importar el paquete scripts exige el .venv, que el job
+    plan todavía no tiene."""
+    path = ROOT / "scripts" / "snippets" / "airflow_dag_checks.py"
+    spec = importlib.util.spec_from_file_location("dekh_airflow_dag_checks", path)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module   # dataclass busca el módulo de la clase en sys.modules
+    spec.loader.exec_module(module)
+    return module
+
+
+CHECKS = load_checks().CHECKS
 
 FULL_PREFIXES = ("backend/", "schemas/", "scripts/", "alembic/", "tests/", ".github/", "docs/contracts/")
 FULL_FILES = {"Makefile", "pyproject.toml", "requirements.txt", "requirements-snippets.txt", "alembic.ini",
