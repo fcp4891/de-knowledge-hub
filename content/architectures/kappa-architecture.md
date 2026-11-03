@@ -84,7 +84,7 @@ relations:
   - {type: RELATED_TO, target: event-driven-architecture, note: "El log de eventos de negocio."}
   - {type: ALTERNATIVE_TO, target: lakehouse-architecture, note: "Historia en tablas con time travel."}
 created_at: 2026-11-02
-updated_at: 2026-11-02
+updated_at: 2026-11-03
 last_verified: 2026-11-02
 verification_status: review_required
 ---
@@ -287,7 +287,7 @@ Se llega desde `lambda-architecture` cuando el motor streaming ya da la exactitu
 
 ## 19. Laboratorio relacionado
 
-F4: laboratorio en la nube con Kafka administrado, retención larga, una regla corregida y un replay con un grupo nuevo hasta lag 0, con `terraform apply` en sandbox, costo estimado con fuente, teardown verificado y evidencia de la corrida.
+Sin laboratorio en F4: no está entre las 6 arquitecturas de F4. El §10 corre en la CI.
 
 ## 20. Fuentes
 
@@ -307,3 +307,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-11-02: creación (lote 07b, ADR-028).
 - 2026-11-02: las tres vistas usan los nombres del §4 (criterio de la revisión de 07a).
+- 2026-11-03: el §19 ya no promete un laboratorio en F4: el ROADMAP lo deja para las 6 arquitecturas de F4, y esta no está entre ellas.
