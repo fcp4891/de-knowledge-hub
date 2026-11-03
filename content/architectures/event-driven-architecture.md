@@ -15,6 +15,7 @@ tags: [event-driven, publish-subscribe, event-streaming, idempotency, eventual-c
 related_topics: [event-driven-pipelines, events, producers-and-consumers, idempotency]
 sources:
   - source: azure-architecture-center
+    url: https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/event-driven
     accessed: '2026-11-02'
     page_title: Event-driven architecture style
     note: 'Event-driven architecture style (Azure Architecture Center): productores que generan eventos, consumidores que los escuchan y canales (brokers o servicios de ingesta) que los transfieren; el productor no sabe qué consumidores escuchan. Dos modelos: publish-subscribe (el evento se envía a cada suscriptor y no queda en un log durable, así que un suscriptor nuevo no ve eventos pasados) y event streaming (eventos en un log, ordenados dentro de una partición y durables; el cliente avanza su posición, puede sumarse en cualquier momento y hacer replay, útil para recuperación, consumidores tardíos y reproceso tras corregir un error). Beneficios: sin integraciones punto a punto; se agregan consumidores sin modificar productores ni otros consumidores. Desafíos: entrega garantizada, consistencia eventual, orden y procesamiento una sola vez con varias instancias si no hay procesamiento idempotente, manejo de errores con DLQ, pérdida de datos, observabilidad con un correlation ID en cada evento y evolución del esquema. No conviene con flujos simples de request-response, con consistencia fuerte entre servicios o sin experiencia en sistemas asíncronos distribuidos.'
@@ -95,7 +96,7 @@ relations:
   - {type: RELATED_TO, target: streaming-pipeline-architecture, note: "Ingesta continua para analítica; no es lo mismo que reaccionar a eventos."}
   - {type: RELATED_TO, target: kappa-architecture, note: "El log de eventos como fuente de verdad."}
 created_at: 2026-11-02
-updated_at: 2026-11-02
+updated_at: 2026-11-03
 last_verified: 2026-11-02
 verification_status: review_required
 ---
@@ -146,14 +147,14 @@ flowchart LR
 ```mermaid
 flowchart TB
   E["Evento: event_id,<br/>tipo, clave, payload"] --> L["Canal: partición<br/>por clave"]
-  L --> G["Grupo facturación:<br/>su offset"]
-  L --> H["Grupo auditoría:<br/>su offset"]
+  L --> G["Grupo o suscripción<br/>por consumidor"]
+  L --> H["Grupo o suscripción<br/>de otro consumidor"]
   G --> V{"Consumidor idempotente:<br/>¿event_id ya aplicado?"}
   V -- "sí" --> I["Se ignora"]
   V -- "no" --> T["Efecto + registro<br/>del event_id"]
 ```
 
-Con la misma clave, los eventos van a la misma partición, y todo consumidor de una partición los lee en el orden en que se escribieron (*Introduction*, Kafka 4.3). El payload puede llevar todos los atributos o solo claves para que el consumidor consulte la fuente: lo primero evita consultas, lo segundo mantiene un solo sistema de registro (*Event-driven architecture style*).
+Cada consumidor (en el §10, facturación y auditoría) tiene su grupo con su propio offset. Con la misma clave, los eventos van a la misma partición, y todo consumidor de una partición los lee en el orden en que se escribieron (*Introduction*, Kafka 4.3). El payload puede llevar todos los atributos o solo claves para que el consumidor consulte la fuente: lo primero evita consultas, lo segundo mantiene un solo sistema de registro (*Event-driven architecture style*).
 
 ## 6. Vista de despliegue
 
@@ -322,3 +323,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-11-02: creación (lote 07b, ADR-028).
 - 2026-11-02: las tres vistas usan los nombres del §4 (criterio de la revisión de 07a).
+- 2026-11-03: revisión de 07b aplicada (docs/reviews/lote-07b.md): las citas nuevas del lote llevan su `url` (faltaba); el §5 usa el nombre del §4, «Grupo o suscripción por consumidor».

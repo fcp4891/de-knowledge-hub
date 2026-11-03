@@ -15,6 +15,7 @@ tags: [kappa-architecture, replay, event-log, retention, reprocessing, kafka]
 related_topics: [replay, lambda-architecture, streaming-pipeline-architecture]
 sources:
   - source: azure-architecture-center
+    url: https://learn.microsoft.com/en-us/azure/architecture/databases/guide/big-data-architectures
     accessed: '2026-11-02'
     page_title: Big data architectures
     note: 'Big data architectures (Azure Architecture Center): la arquitectura Lambda crea dos caminos; la batch layer (cold path) guarda todo lo que llega en crudo y lo procesa en batch en una batch view; la speed layer (hot path) analiza en tiempo real, con baja latencia «at the expense of accuracy»; la batch layer alimenta una serving layer que indexa la batch view, y la speed layer la actualiza con incrementos de lo más reciente. El dato crudo de la batch layer es inmutable (se agrega, no se sobrescribe) y permite recalcular la batch view desde el origen. Desventaja: la complejidad, porque la lógica de procesamiento aparece en dos lugares, con frameworks distintos, lo que duplica la lógica de cómputo. La arquitectura Kappa tiene los mismos objetivos, pero todo fluye por un solo camino, un sistema de stream processing sobre un log unificado, distribuido y tolerante a fallos, con eventos inmutables y ordenados; para recalcular todo el dataset se hace replay del stream, normalmente con paralelismo.'
@@ -308,3 +309,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-02: creación (lote 07b, ADR-028).
 - 2026-11-02: las tres vistas usan los nombres del §4 (criterio de la revisión de 07a).
 - 2026-11-03: el §19 ya no promete un laboratorio en F4: el ROADMAP lo deja para las 6 arquitecturas de F4, y esta no está entre ellas.
+- 2026-11-03: revisión de 07b aplicada (docs/reviews/lote-07b.md): las citas nuevas del lote llevan su `url` (faltaba).

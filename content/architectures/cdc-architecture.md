@@ -20,10 +20,12 @@ sources:
     page_title: 47.2. Logical Decoding Concepts
     note: Logical decoding sobre el WAL; los slots emiten cada cambio una vez en operación normal, pueden reenviar cambios tras un crash e impiden eliminar WAL requerido.
   - source: postgresql-docs
+    url: https://www.postgresql.org/docs/17/logicaldecoding-example.html
     accessed: '2026-11-03'
     page_title: 47.1. Logical Decoding Examples
     note: '47.1. Logical Decoding Examples (PostgreSQL 17): antes de usar logical decoding hay que fijar wal_level en logical y max_replication_slots en al menos 1. pg_create_logical_replication_slot crea un slot con el plugin test_decoding; con pg_logical_slot_get_changes, «Once changes are read, they''re consumed and not emitted in a subsequent call»; pg_logical_slot_peek_changes permite mirar los cambios sin consumirlos, y la siguiente llamada devuelve los mismos. «Remember to destroy a slot you no longer need to stop it consuming server resources».'
   - source: postgresql-docs
+    url: https://www.postgresql.org/docs/17/test-decoding.html
     accessed: '2026-11-03'
     page_title: F.43. test_decoding — SQL-based test/example module for WAL logical decoding
     note: 'F.43. test_decoding (PostgreSQL 17): «test_decoding is an example of a logical decoding output plugin. It doesn''t do anything especially useful, but can serve as a starting point for developing your own output plugin.» Recibe el WAL por el mecanismo de logical decoding y lo decodifica en representaciones de texto de las operaciones; la salida típica son líneas BEGIN, «table public.data: INSERT: id[int4]:2 data[text]:''arg''», DELETE con la clave, y COMMIT.'
@@ -142,7 +144,8 @@ flowchart LR
 flowchart TB
   T["Transacción en el origen"] --> L["WAL"]
   L --> S["Slot de replicación"]
-  S --> K["Captura de cambios:<br/>peek, sin consumir"]
+  S --> O["Plugin de salida:<br/>test_decoding o pgoutput"]
+  O --> K["Captura de cambios:<br/>peek, sin consumir"]
   K --> M["Warehouse: upsert<br/>o delete por clave"]
   M --> G["Slot: get confirma<br/>hasta el último LSN"]
 ```
@@ -366,3 +369,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-11-03: creación (lote 07c, ADR-028).
+- 2026-11-03: revisión de 07c aplicada (docs/reviews/lote-07c.md): las citas nuevas del lote llevan su `url` (faltaba); el §5 tiene el nodo «Plugin de salida» del §4.

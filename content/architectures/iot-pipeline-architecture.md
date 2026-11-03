@@ -20,10 +20,12 @@ sources:
     page_title: Big data architectures
     note: 'Componentes lógicos de una arquitectura de big data: fuentes de datos (bases de aplicaciones, archivos, fuentes en tiempo real), almacenamiento (a menudo un data lake), procesamiento batch, ingesta de mensajes en tiempo real y procesamiento de streams, almacén analítico, análisis y reporting, y orquestación.'
   - source: microsoft-learn
+    url: https://learn.microsoft.com/en-us/azure/iot-hub/iot-concepts-and-iot-hub
     accessed: '2026-11-03'
     page_title: What is Azure IoT Hub?
     note: 'What is Azure IoT Hub?: servicio administrado que actúa como hub central de mensajes entre una aplicación IoT y sus dispositivos. Cada IoT hub tiene un registro de identidades: un dispositivo solo se conecta si tiene entrada en él, y se autentica con tokens SAS o certificados X.509. Admite mensajes de dispositivo a nube y de nube a dispositivo, y métodos directos como comandos. El endpoint integrado retiene los datos hasta siete días; el enrutamiento de mensajes envía a contenedores de Storage, Event Hubs, colas y topics de Service Bus y Cosmos DB; se integra con Stream Analytics para analítica en tiempo real.'
   - source: aws-iot-docs
+    url: https://docs.aws.amazon.com/iot/latest/developerguide/what-is-aws-iot.html
     accessed: '2026-11-03'
     page_title: What is AWS IoT?
     note: 'What is AWS IoT?: AWS IoT da los servicios de nube que conectan los dispositivos IoT con otros dispositivos y con los servicios de AWS. AWS IoT Core admite MQTT, MQTT sobre WSS, HTTPS y LoRaWAN; su message broker permite publicar y suscribirse con MQTT y MQTT sobre WSS, y publicar con HTTPS. Si no se necesitan funciones como la comunicación con dispositivos, las reglas o los jobs, la página remite a otros servicios de mensajería de AWS.'
@@ -305,3 +307,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-11-03: creación (lote 07c, ADR-028).
+- 2026-11-03: revisión de 07c aplicada (docs/reviews/lote-07c.md): las citas nuevas del lote llevan su `url` (faltaba).

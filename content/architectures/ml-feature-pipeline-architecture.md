@@ -15,6 +15,7 @@ tags: [feature-store, point-in-time, data-leakage, training-serving-skew, offlin
 related_topics: [batch-pipeline-architecture]
 sources:
   - source: azure-machine-learning-docs
+    url: https://learn.microsoft.com/en-us/azure/machine-learning/concept-what-is-managed-feature-store
     accessed: '2026-11-03'
     page_title: What is managed feature store?
     note: 'What is managed feature store? (Azure Machine Learning): usar el mismo pipeline de features para generar datos de entrenamiento y para inferencia da consistencia online/offline y evita el training/serving skew; la recuperación de features admite joins temporales point-in-time («time travel») para evitar data leakage; la materialización va a un store offline (ADLS Gen2) y a uno online (Redis); los feature sets son versionados e inmutables; el costo principal del uso del feature store son los jobs de materialización en Spark administrado, visible a nivel del feature store.'
@@ -35,9 +36,9 @@ sources:
     note: 'About Feature Store on Gemini Enterprise Agent Platform: feature store administrado que gestiona los datos de features en una tabla o vista de BigQuery y los sirve online directamente desde esa fuente; actúa como capa de metadatos sobre BigQuery y sirve los últimos valores con baja latencia. Usa feature views para conectar las fuentes con clústeres de serving online. Admite gestión de embeddings con búsqueda por similitud.'
   - source: gcp-agent-platform-docs
     url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/vertex-ai-name-changes
-    accessed: '2026-10-12'
+    accessed: '2026-11-03'
     page_title: Gemini Enterprise Agent Platform name changes
-    note: 'Gemini Enterprise Agent Platform name changes (Last updated 2026-10-09 UTC): con la introducción de Gemini Enterprise Agent Platform, algunos productos y funciones de Vertex AI se renombraron; la tabla lista los nombres anteriores y los nuevos. Para la plataforma, la fila Vertex AI Platform → Gemini Enterprise Agent Platform. Entre los productos: Vertex AI API → Gemini Enterprise Agent Platform API; Vertex AI Pipelines → Gemini Enterprise Agent Platform Pipelines; Vertex AI Feature Store → Feature Store on Gemini Enterprise Agent Platform; Vertex AI Batch Inference → Gemini Enterprise Agent Platform Batch Inference; Vertex AI Model Registry → Model Registry on Gemini Enterprise Agent Platform; Vertex AI Workbench → Gemini Enterprise Agent Platform Workbench; Vertex AI Vector Search → Vector Search on Gemini Enterprise Agent Platform.'
+    note: 'Gemini Enterprise Agent Platform name changes: la tabla de renombres lista Vertex AI Platform → Gemini Enterprise Agent Platform y Vertex AI Feature Store → Feature Store on Gemini Enterprise Agent Platform (consultada el 2026-11-03).'
   - source: aws-sagemaker-docs
     url: https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html
     accessed: '2026-10-12'
@@ -103,6 +104,8 @@ flowchart TB
   L["Etiquetas"] --> J
   J --> T["Set de entrenamiento"]
   O --> N["Store online:<br/>último valor"]
+  N --> X["Chequeo de consistencia"]
+  O -.-> X
 ```
 
 En SageMaker AI, cada registro lleva un event time obligatorio, el store online solo tiene el registro del último event time y el offline todos (*Feature Store concepts*): el event time es lo que hace posible el join point-in-time.
@@ -267,3 +270,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-11-03: creación (lote 07c, ADR-028).
+- 2026-11-03: revisión de 07c aplicada (docs/reviews/lote-07c.md): las citas nuevas del lote llevan su `url` (faltaba); el §5 tiene el nodo «Chequeo de consistencia» del §4; la cita de *Gemini Enterprise Agent Platform name changes* se releyó hoy: nota con las dos filas que usa la ficha y sin la fecha de actualización, que no se pudo confirmar.

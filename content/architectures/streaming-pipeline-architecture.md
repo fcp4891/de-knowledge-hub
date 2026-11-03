@@ -120,7 +120,7 @@ relations:
   - {type: RELATED_TO, target: event-driven-architecture, note: "Reaccionar a eventos de negocio con el mismo broker."}
   - {type: RELATED_TO, target: kappa-architecture, note: "Un solo camino streaming, también para reprocesar."}
 created_at: 2026-11-02
-updated_at: 2026-11-02
+updated_at: 2026-11-03
 last_verified: 2026-11-02
 verification_status: review_required
 ---
@@ -188,13 +188,15 @@ flowchart TB
     B["Broker: topic<br/>con retención"]
   end
   subgraph PROC["Job streaming con autoescalado"]
-    J["Validación y ventanas"]
+    V["Validación"]
+    W["Ventanas y watermark"]
     C["Checkpoint"]
   end
-  B --> J
-  J --> C
-  J --> S["Sink idempotente<br/>(destino analítico)"]
-  J --> D["DLQ"]
+  B --> V
+  V --> W
+  W --> C
+  W --> S["Sink idempotente<br/>(destino analítico)"]
+  V --> D["DLQ"]
 ```
 
 El job corre siempre; los checkpoints viven en almacenamiento durable fuera del job. Borrar los archivos del checkpoint o cambiar su ubicación hace que la siguiente corrida empiece de cero (*Structured Streaming checkpoints*).
@@ -395,3 +397,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 - 2026-11-02: creación (lote 07b, ADR-028).
 - 2026-11-02: las tres vistas usan los nombres del §4 (criterio de la revisión de 07a).
+- 2026-11-03: revisión de 07b aplicada (docs/reviews/lote-07b.md): el §6 separa «Validación» y «Ventanas y watermark», como el §4.
