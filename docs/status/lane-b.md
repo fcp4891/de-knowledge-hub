@@ -18,6 +18,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Tarea activa:** `b/ui-principles-cards`. En `chile-data-protection`, cada principio del artículo 3 es la tarjeta-enlace. En reposo el fondo es neutro; al pasar el cursor o enfocar usa la escala de Especialización y muestra el ojo. El tooltip conserva el resumen verificado, es opaco y se cierra con Esc. En táctil, el primer toque abre y el segundo navega.
 - **Tarea activa:** `b/ui-pipeline-steps`. Una cadena de tres o más pasos (sola, con rótulo o con chip de arquitectura) se muestra como lista numerada. El paréntesis de un tramo queda como subtítulo. Una flecha dentro de una oración y un tramo con identificador o lista de columnas siguen como texto. A 390 px los pasos se apilan con flecha hacia abajo.
 - **Tarea activa:** `b/ui-code-blocks`. Todos los bloques de código usan la maqueta v3: cabecera con lenguaje, archivo y estado, números de línea fijos, pasos deducidos, terminal y modal «Ver completo». No se editó `content/`. Copiar y descargar conservan el texto original.
+- **Tarea activa:** revisión del lote 07b. Informe en `docs/reviews/lote-07b.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuesta media: las tres citas nuevas del Azure Architecture Center no traen URL. Propuestas bajas: un nodo fusionado en streaming, el grupo de event-driven, el corte de lambda y la frescura de real-time.
 - **Tarea activa:** revisión del lote 07-0. Informe en `docs/reviews/lote-07-0.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas bajas: el validador no coteja los nombres del §4, el aviso de diagramas invita a agrupar, y la nota de `gcp-biglake` no menciona bibliotecas ni CLI.
 - **Tarea activa:** revisión de arquitecturas-07a. Informe en `docs/reviews/lote-07a.md`. No se editó `content/` ni `frontend/`.
@@ -127,6 +129,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Tarea activa:** `b/ui-page-title` (ADR-012). Sin merge a `main`.
 - **Siguiente:** lo que asigne Felipe. Sigue abierta la revisión F3b-08c.
 - **Bloqueos:** ninguno.
+
+### Revisión · lote 07b
+- Cinco arquitecturas de streaming. Las 15 vistas quedan en 7 nodos o menos y el §19 solo promete laboratorio en streaming y event-driven. El H1 de Fabric coincide con el `page_title`. Propuesta media: URL en las citas nuevas. No se editó `content/` ni `frontend/`.
 
 ### Revisión · lote 07-0
 - ADR-028, validador, compilador y contrato. Las 22 claves coinciden y el renombre de Lakehouse está en el banner. Propuestas bajas: nombres del §4, el aviso «dividir o agrupar», y bibliotecas y CLI en la nota de la tecnología. No se editó `content/` ni `frontend/`.
@@ -460,6 +465,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - El pedido de un párrafo por nivel queda sin efecto. Esos nombres no se asignan a los tramos ni hace falta un campo nuevo: la interfaz muestra la caja «Cómo estudiar cada ficha: Comprender → Aplicar → Demostrar → Profundizar».
 
 ## Historial
+
+### Revisión · lote 07b (2026-11-03)
+- `b/review-07b`, desde `20cbe86`. Informe en `docs/reviews/lote-07b.md`. Tres vistas, fuentes nuevas, §9, §10, §18 y el H1 de Fabric. No se editó `content/` ni `frontend/`.
 
 ### Revisión · lote 07-0 (2026-11-02)
 - `b/review-07-0`, desde `cd76503`. Informe en `docs/reviews/lote-07-0.md`. Banner de Lakehouse, validador y contrato. No se editó `content/` ni `frontend/`.
