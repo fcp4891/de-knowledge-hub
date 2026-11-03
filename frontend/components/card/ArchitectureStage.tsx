@@ -47,7 +47,7 @@ export function ArchitectureStage({
       if (!table) {
         return;
       }
-      for (const row of table.querySelectorAll("tbody tr")) {
+      for (const row of table.querySelectorAll<HTMLTableRowElement>("tbody tr")) {
         const name = row.querySelector("td")?.textContent?.trim() ?? "";
         if (name.length === 0) {
           continue;
@@ -75,7 +75,7 @@ export function ArchitectureStage({
         hits += 1;
       }
     }
-    const row = [...(root.querySelectorAll(".arch-components tbody tr") ?? [])].find(
+    const row = [...(root.querySelectorAll<HTMLTableRowElement>(".arch-components tbody tr") ?? [])].find(
       (item) => item.dataset.component === name,
     );
     if (row instanceof HTMLElement) {
@@ -140,7 +140,7 @@ export function ArchitectureStage({
           data-reading-section={components.number}
           data-reading-title={components.title}
           onMouseOver={(event) => {
-            const row = (event.target as HTMLElement).closest("tbody tr");
+            const row = (event.target as HTMLElement).closest<HTMLTableRowElement>("tbody tr");
             paint(row?.dataset.component ?? "");
           }}
           onMouseLeave={() => paint("")}
