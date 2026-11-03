@@ -15,6 +15,7 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** `b/ui-code-blocks`. Todos los bloques de código usan la maqueta v3: cabecera con lenguaje, archivo y estado, números de línea fijos, pasos deducidos, terminal y modal «Ver completo». No se editó `content/`. Copiar y descargar conservan el texto original.
 - **Tarea activa:** revisión del lote 07-0. Informe en `docs/reviews/lote-07-0.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas bajas: el validador no coteja los nombres del §4, el aviso de diagramas invita a agrupar, y la nota de `gcp-biglake` no menciona bibliotecas ni CLI.
 - **Tarea activa:** revisión de arquitecturas-07a. Informe en `docs/reviews/lote-07a.md`. No se editó `content/` ni `frontend/`.

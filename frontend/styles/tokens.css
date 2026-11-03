@@ -62,6 +62,16 @@
   --band-especializacion-dark: #5C234F;
   --band-especializacion-fill: #7C3A6E;
 
+  /* Cromo de código: igual en claro y oscuro, para que el texto claro siga en AA. */
+  --code-bg: #15171C;
+  --code-bar: #1C1F27;
+  --code-button: #12141A;
+  --code-line: #3A3F49;
+  --code-ink: #F2F3F5;
+  --code-muted: #A7ACB6;
+  --code-ok: #7DCEA0;
+  --code-bad: #FF9B9B;
+
   /* Forma y espacio */
   --radius-sm: 8px;
   --radius-md: 12px;
