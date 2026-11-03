@@ -146,7 +146,25 @@ def main(argv: list[str] | None = None) -> None:
     if args.github_output:
         with open(args.github_output, "a", encoding="utf-8") as out:
             out.write("\n".join(lines) + "\n")
-    print("\n".join(lines))
+    print("\n".join(lines), flush=True)
+    if args.run:
+        sys.exit(run(plan))
+
+
+def run(plan: Plan) -> int:
+    """Las pruebas del plan, en local: pytest (completo o por fichas) y los tests de frontend si cambió frontend/."""
+    code = 0
+    if plan.backend:
+        env = {**os.environ}
+        if plan.mode == "content":
+            env |= {"DEKH_TEST_SCOPE": "content", "DEKH_CHANGED_SLUGS": ",".join(plan.slugs)}
+        code |= subprocess.run([sys.executable, "-m", "pytest"], cwd=ROOT, env=env).returncode
+    if plan.frontend:
+        code |= subprocess.run(["node", "--disable-warning=MODULE_TYPELESS_PACKAGE_JSON", "--test",
+                                "tests/frontend/*.test.ts"], cwd=ROOT).returncode
+    if plan.mode == "none" and not plan.frontend:
+        print("sin cambios que probar")
+    return code
 
 
 if __name__ == "__main__":
