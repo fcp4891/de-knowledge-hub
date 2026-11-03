@@ -1,7 +1,9 @@
 import { InlineText } from "@/components/markdown/InlineText";
+import { PipelineSteps } from "@/components/markdown/PipelineSteps";
 import type { ConceptRefs } from "@/lib/conceptNames";
 import { articleMapColumns, droppedEtiquetaIndex, type ObligationBasis } from "@/lib/legal";
-import { groupEvidence, parseMarkdown, type Block, type EvidenceGroup } from "@/lib/markdown";
+import { groupEvidence, parseMarkdown, type Block, type EvidenceGroup, type Inline } from "@/lib/markdown";
+import { readPipeline } from "@/lib/pipeline";
 
 export async function MarkdownBody({
   markdown,
@@ -183,15 +185,36 @@ function MarkdownBlock({
             {item.checked === null ? null : (
               <input type="checkbox" defaultChecked={item.checked} disabled aria-label={item.checked ? "Hecho" : "Pendiente"} />
             )}
-            <InlineText inlines={item.inlines} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} />
+            <FlowText inlines={item.inlines} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} />
           </li>
         ))}
       </Tag>
     );
   }
   return (
-    <p>
-      <InlineText inlines={block.inlines} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} />
-    </p>
+    <FlowText inlines={block.inlines} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} paragraph />
   );
+}
+
+function FlowText({
+  inlines,
+  obligations,
+  conceptRefs,
+  markCodeStatus,
+  paragraph = false,
+}: {
+  inlines: Inline[];
+  obligations: readonly ObligationBasis[];
+  conceptRefs?: ConceptRefs;
+  markCodeStatus: boolean;
+  paragraph?: boolean;
+}) {
+  const chain = readPipeline(inlines);
+  if (chain) {
+    return (
+      <PipelineSteps chain={chain} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} />
+    );
+  }
+  const text = <InlineText inlines={inlines} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} />;
+  return paragraph ? <p>{text}</p> : text;
 }
