@@ -48,7 +48,7 @@ relations:
   - {type: RELATED_TO, target: privacy-controls-as-code, note: "El cierre sin destinos pendientes como regla."}
   - {type: RELATED_TO, target: privacy-backup-and-recovery, note: "Reproducir las órdenes tras una restauración."}
 created_at: 2026-10-28
-updated_at: 2026-10-28
+updated_at: 2026-11-03
 last_verified: 2026-10-28
 owner_approved_at: 2026-11-01
 verification_status: verified
@@ -57,8 +57,6 @@ verification_status: verified
 ## 1. Resumen
 
 Esta ficha no es asesoría legal: si una supresión procede, con qué alcance y con qué excepciones lo decide el responsable con el área legal; aquí se explica cómo llevar esa decisión a cada sistema y demostrar que llegó.
-
-**Cómo leerla.** *Comprender* (§1–6): qué es una orden de privacidad, un tombstone y una reconciliación. *Aplicar* (§7–13): estados por destino, idempotencia, eventos tardíos y cierre. *Demostrar*: la evidencia del §8, el código del §10 y los criterios del §18.
 
 Un derecho aprobado se propaga a cada representación del titular: fuente, CDC, bronze, silver, gold, features, cachés, exportaciones y encargados. Hace falta un **alcance autorizado**, una **orden durable**, una **ejecución idempotente** y una **verificación por destino**. Un DELETE aislado no basta: un backfill o un evento CDC retrasado pueden traer de vuelta al titular.
 
@@ -326,3 +324,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: revisión `docs/reviews/p2.md` aplicada: la nota del art. 7 dice que la lista de casos en que no procede la supresión es cerrada (i a vi), sin «entre otros»; el diagrama del §9 pasa a TB (la cadena más larga tiene 6 nodos).
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.

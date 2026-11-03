@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { horizontalFlowchart, longestChain } from "../../frontend/lib/diagramDirection.ts";
+import { horizontalFlowchart } from "../../frontend/lib/diagramDirection.ts";
 
 const chile = `flowchart TB
   L["Legal y negocio"] --> C["Catálogo"]
@@ -18,22 +18,20 @@ test("la arquitectura vertical se dibuja de izquierda a derecha", () => {
   assert.match(horizontalFlowchart(withInit), /init/);
 });
 
-test("una cadena de más de 5 nodos se mantiene vertical (estándar de diagramas)", () => {
+test("las cadenas largas también giran: en §9 se dibuja siempre en LR (decisión de Felipe, 2026-11-03)", () => {
   const six = `flowchart TB
   A["Uno"] --> B["Dos"]
   B --> C{"¿Tres?"}
   C -- "sí" --> D["Cuatro"]
   D -.-> E["Cinco"]
   E ==> F["Seis"]`;
-  assert.equal(longestChain(six), 6);
-  assert.equal(horizontalFlowchart(six), six);
-  const five = "flowchart TB\n  A --> B --> C\n  C --> D & E\n  D --> F";
-  assert.equal(longestChain(five), 5);
-  assert.match(horizontalFlowchart(five), /^flowchart LR/);
-  const subgraphs = `flowchart TB
+  assert.match(horizontalFlowchart(six), /^flowchart LR/);
+  const eight = "flowchart TB\n  A --> B --> C --> D --> E --> F --> G --> H";
+  assert.equal(horizontalFlowchart(eight), eight.replace("flowchart TB", "flowchart LR"));
+  const subgraphs = `flowchart TD
   subgraph S["Origen"]
     A["Uno"]
   end
   A --> B --> C --> D --> E --> F`;
-  assert.equal(horizontalFlowchart(subgraphs), subgraphs);
+  assert.match(horizontalFlowchart(subgraphs), /^flowchart LR/);
 });

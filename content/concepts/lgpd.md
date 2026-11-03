@@ -103,7 +103,7 @@ relations:
   - {type: RELATED_TO, target: processing-activities-inventory, note: "Base del registro del art. 37."}
   - {type: RELATED_TO, target: dpia-and-automated-decisions, note: "Relatório de impacto y revisión de decisiones automatizadas."}
 created_at: 2026-10-30
-updated_at: 2026-10-30
+updated_at: 2026-11-03
 last_verified: 2026-10-30
 owner_approved_at: 2026-11-01
 verification_status: verified
@@ -114,8 +114,6 @@ verification_status: verified
 Esta ficha no es asesoría legal: explica qué cambia en una plataforma de datos cuando también trata datos de personas en Brasil. Si la LGPD aplica, qué hipótesis corresponde o qué mecanismo usar lo decide el área legal.
 
 **Pregunta guía:** una plataforma chilena que trata datos de personas localizadas en Brasil, ¿qué tiene que hacer distinto? Sobre todo, manejar **plazos cortos y en días hábiles**, un **calendario de feriados como dato** y transferencias con **cláusulas-padrão que no se modifican**. Las reglas van como configuración versionada por jurisdicción, junto a las de Chile y la UE (ficha `gdpr`).
-
-**Cómo leerla.** *Comprender* (§1–6): cuándo alcanza la LGPD a una empresa chilena y en qué difiere de la Ley 21.719. *Aplicar* (§7–13): calendario, mecanismos y residencia en las tres nubes. *Demostrar*: la evidencia del §8, el código del §10 y los criterios del §18.
 
 Las citas de la LGPD y de la ANPD van en portugués, con una traducción breve.
 
@@ -394,3 +392,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-10-30: revisión `docs/reviews/p4.md` aplicada (hallazgos legales tratados como altos): personas localizadas en Brasil en vez de residentes; art. 3 con su caput (sede y país de los datos) y el § 1º (dónde está el titular al recolectar); art. 1 bis en frase aparte; inicio de los 3 días hábiles, doble plazo para agentes de pequeño porte y art. 5 de la Res. CD/ANPD 15/2024 con su lista cerrada; art. 33.1 del RGPD y art. 14 sexies completos; art. 27 b) con normas corporativas u otros instrumentos; art. 5, VIII del encarregado; Comisión con Noruega, Liechtenstein e Islandia; `page_title` de Azure Policy con su H1 y exclusión de b2cDirectories.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.

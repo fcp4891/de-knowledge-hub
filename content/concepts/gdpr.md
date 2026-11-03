@@ -110,7 +110,7 @@ relations:
   - {type: RELATED_TO, target: processing-activities-inventory, note: "Base del registro del art. 30."}
   - {type: RELATED_TO, target: dpia-and-automated-decisions, note: "Evaluación de impacto y decisiones automatizadas."}
 created_at: 2026-10-30
-updated_at: 2026-10-30
+updated_at: 2026-11-03
 last_verified: 2026-10-30
 owner_approved_at: 2026-11-01
 verification_status: verified
@@ -121,8 +121,6 @@ verification_status: verified
 Esta ficha no es asesoría legal: explica qué cambia en una plataforma de datos cuando también trata datos de personas en la Unión Europea. Si el RGPD aplica, qué base corresponde o qué mecanismo usar lo decide el área legal.
 
 **Pregunta guía:** una plataforma chilena que trata datos de residentes de la UE, ¿qué tiene que hacer distinto? Ingeniería no necesita otra plataforma: necesita saber qué datos, productos y flujos quedan bajo el RGPD, tener sus plazos y destinatarios como **configuración versionada por jurisdicción** y producir evidencia que sirva a las dos normas.
-
-**Cómo leerla.** *Comprender* (§1–6): cuándo alcanza el RGPD a una empresa chilena y en qué difiere de la Ley 21.719. *Aplicar* (§7–13): reglas por jurisdicción y residencia en las tres nubes. *Demostrar*: la evidencia del §8, el resolvedor del §10 y los criterios del §18.
 
 Las citas del RGPD vienen de su versión oficial en español (BOE, reproducción del DOUE); no necesitan traducción.
 
@@ -446,3 +444,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-10-30: revisión `docs/reviews/p4.md` aplicada (hallazgos legales tratados como altos): art. 3.2 con «interesados que residan en la Unión» y la frase del pago; art. 1 bis como presencia en Chile, en frase aparte; art. 33.1 con «sin dilación indebida», «de ser posible» y la salvedad del riesgo improbable; art. 14 sexies con el riesgo razonable; inicio y doble plazo de la ANPD; Comisión con Noruega, Liechtenstein e Islandia; IAM siempre en us-east-1; `page_title` de Azure Policy con su H1 y exclusión de b2cDirectories.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.

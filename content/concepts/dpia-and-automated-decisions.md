@@ -58,7 +58,7 @@ relations:
   - {type: RELATED_TO, target: data-lineage, note: "De qué datos sale cada decisión."}
   - {type: RELATED_TO, target: privacy-controls-as-code, note: "La puerta de despliegue como control automatizado."}
 created_at: 2026-10-22
-updated_at: 2026-10-28
+updated_at: 2026-11-03
 last_verified: 2026-10-25
 owner_approved_at: 2026-11-01
 verification_status: verified
@@ -67,8 +67,6 @@ verification_status: verified
 ## 1. Resumen
 
 Esta ficha no es asesoría legal: si corresponde una evaluación de impacto y qué régimen aplica a una decisión automatizada lo determina el responsable con el área legal; ingeniería aporta la descripción técnica del tratamiento, los riesgos y los controles, y construye lo que el art. 8 bis exige en los modelos. La aprobación no la decide el pipeline.
-
-**Cómo leerla.** *Comprender* (§1–6): qué es un perfil, una evaluación de impacto y una decisión automatizada, y en qué se diferencian. *Aplicar* (§7–13): la puerta de despliegue y el registro por decisión. *Demostrar*: la evidencia del §8, el código del §10 y los criterios del §18.
 
 Los equipos de datos e IA construyen exactamente lo que la ley regula con más rigor: perfiles, scoring y decisiones automatizadas a gran escala. Dos capacidades marcan la diferencia: una **puerta de evaluación de impacto** antes de pasar a producción, también ante cambios materiales del modelo, y un **registro por decisión** que permite reconstruir, explicar y revisar cualquier resultado que afecte a una persona.
 
@@ -363,3 +361,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.

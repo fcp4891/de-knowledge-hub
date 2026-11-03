@@ -58,7 +58,7 @@ relations:
   - {type: RELATED_TO, target: privacy-controls-as-code, note: "Pruebas de acceso cruzado y de supresión como controles."}
   - {type: RELATED_TO, target: processing-activities-inventory, note: "Las finalidades aprobadas de cada fuente indexada."}
 created_at: 2026-10-28
-updated_at: 2026-10-28
+updated_at: 2026-11-03
 last_verified: 2026-10-28
 owner_approved_at: 2026-11-01
 verification_status: verified
@@ -67,8 +67,6 @@ verification_status: verified
 ## 1. Resumen
 
 Esta ficha no es asesoría legal: qué fuentes se pueden usar en un asistente, con qué finalidad y qué proveedores se aceptan lo decide el responsable con el área legal; aquí se explica cómo construir el pipeline para que esas decisiones se cumplan.
-
-**Cómo leerla.** *Comprender* (§1–6): qué copias crea un pipeline de IA y por qué un embedding no es anónimo. *Aplicar* (§7–13): permisos en la recuperación, trazas mínimas y supresión con reconciliación. *Demostrar*: la evidencia del §8, el código del §10 y los criterios del §18.
 
 Un pipeline de IA amplía la superficie de tratamiento: documentos, fragmentos (chunks), embeddings, índices vectoriales, prompts, respuestas, trazas, cachés, conjuntos de evaluación y herramientas externas. Cada una es una copia o un derivado que necesita finalidad, permisos, retención y respuesta a los derechos.
 
@@ -364,3 +362,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: `page_title` de Azure según ADR-012 (encabezado principal de la página; `<title>` solo si no tiene): «Security filters for trimming results in Azure AI Search», el H1 consultado ese día; «Security Filter Pattern» es su `<title>`.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.

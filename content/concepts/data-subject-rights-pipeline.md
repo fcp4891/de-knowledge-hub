@@ -55,7 +55,7 @@ relations:
   - {type: RELATED_TO, target: row-level-security, note: "El bloqueo se aplica como filtro de fila."}
   - {type: RELATED_TO, target: privacy-controls-as-code, note: "El control de cierre y las pruebas de backfill como controles automatizados."}
 created_at: 2026-10-22
-updated_at: 2026-10-28
+updated_at: 2026-11-03
 last_verified: 2026-10-25
 owner_approved_at: 2026-11-01
 verification_status: verified
@@ -64,8 +64,6 @@ verification_status: verified
 ## 1. Resumen
 
 Esta ficha no es asesoría legal: si una solicitud procede, con qué alcance y con qué excepciones lo decide el responsable con el área legal; aquí se explica la plataforma que permite responder a tiempo, completo y con evidencia.
-
-**Cómo leerla.** *Comprender* (§1–6): los seis derechos, los plazos y por qué responderlos es un flujo con estado. *Aplicar* (§7–13): localizar al titular, ejecutar por destino y verificar el efecto. *Demostrar*: la evidencia del §8, el código del §10 y los criterios del §18.
 
 Desde la vigencia de la ley, cualquier titular puede pedir qué datos se tienen de él, corregirlos, borrarlos, oponerse, bloquearlos o llevárselos. Responder es un **flujo transversal**, no una consulta SQL: recibir, verificar identidad, localizar los tratamientos y sistemas afectados, ejecutar solo lo aprobado, comprobar el efecto y responder con evidencia. El desafío de ingeniería es la **cobertura**: los datos están en fuentes operacionales, capas, derivados, modelos, exportaciones y proveedores, y una acción en una tabla no asegura el efecto en todas. Sin un índice de titulares y un catálogo por actividad, el plazo de 30 días es difícil de cumplir.
 
@@ -487,3 +485,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: Enmienda 4 de ADR-023: 5 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.

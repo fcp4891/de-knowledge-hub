@@ -57,7 +57,7 @@ relations:
   - {type: RELATED_TO, target: incident-response, note: "La restauración ante un incidente."}
   - {type: RELATED_TO, target: privacy-controls-as-code, note: "La prueba negativa como control de liberación."}
 created_at: 2026-10-28
-updated_at: 2026-10-28
+updated_at: 2026-11-03
 last_verified: 2026-10-28
 owner_approved_at: 2026-11-01
 verification_status: verified
@@ -66,8 +66,6 @@ verification_status: verified
 ## 1. Resumen
 
 Esta ficha no es asesoría legal: qué se conserva en los respaldos, por cuánto tiempo y qué excepciones aplican lo decide el responsable con el área legal; aquí se explica cómo restaurar sin deshacer las decisiones de privacidad.
-
-**Cómo leerla.** *Comprender* (§1–6): RPO, RTO y el punto de control de privacidad. *Aplicar* (§7–13): cuarentena, reproducción de órdenes, accesos vigentes y liberación. *Demostrar*: la evidencia del §8, el código del §10 y los criterios del §18.
 
 Una restauración puede reintroducir datos suprimidos, permisos antiguos o retenciones vencidas. El plan de recuperación incluye una **reconciliación de privacidad** después de restaurar y antes de liberar el sistema a los consumidores.
 
@@ -335,3 +333,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: revisión `docs/reviews/p2.md` aplicada: la nota del art. 7 dice que la lista de casos en que no procede la supresión es cerrada (i a vi), sin «entre otros»; el diagrama del §9 pasa a TB (la cadena más larga tiene 6 nodos).
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.

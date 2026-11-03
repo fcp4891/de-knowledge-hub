@@ -58,7 +58,7 @@ relations:
   - {type: RELATED_TO, target: processors-and-international-transfers, note: "Destinatarios y transferencias de cada actividad."}
   - {type: RELATED_TO, target: privacy-controls-as-code, note: "La conciliación como control automatizado."}
 created_at: 2026-10-21
-updated_at: 2026-10-28
+updated_at: 2026-11-03
 last_verified: 2026-10-28
 owner_approved_at: 2026-11-01
 verification_status: verified
@@ -67,8 +67,6 @@ verification_status: verified
 ## 1. Resumen
 
 Esta ficha no es asesoría legal: finalidad, base de licitud y plazo los definen el responsable, el negocio y el área legal; aquí se explica cómo modelarlos, vincularlos a la plataforma y controlarlos. Los ejemplos de bases y plazos son ilustrativos, no determinaciones legales.
-
-**Cómo leerla.** *Comprender* (§1–6): qué es una actividad y por qué no es una tabla. *Aplicar* (§7–13): cómo se vincula con activos y consumidores y cómo se concilia con lo observado. *Demostrar*: la evidencia del §8, el control del §10 y los criterios del §18.
 
 El inventario explica **para qué** se tratan datos personales y lo vincula con **qué activos, procesos y consumidores** los usan. No es una lista de tablas ni un catálogo técnico duplicado: conecta decisiones de negocio y privacidad con operaciones observables. Es la base de casi todos los demás controles: sin saber qué actividad usa qué datos, con qué base y por cuánto tiempo, no se puede responder un acceso, aplicar retención, dimensionar una vulneración ni detectar un uso indebido.
 
@@ -378,3 +376,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.

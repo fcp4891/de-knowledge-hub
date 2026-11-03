@@ -46,7 +46,7 @@ relations:
   - {type: RELATED_TO, target: data-minimization-by-layer, note: "El producto que se concede tiene solo lo necesario."}
   - {type: RELATED_TO, target: privacy-controls-as-code, note: "Pruebas negativas y concesiones vencidas como reglas de la CI."}
 created_at: 2026-10-28
-updated_at: 2026-10-28
+updated_at: 2026-11-03
 last_verified: 2026-10-28
 owner_approved_at: 2026-11-01
 verification_status: verified
@@ -55,8 +55,6 @@ verification_status: verified
 ## 1. Resumen
 
 Esta ficha no es asesoría legal: qué finalidades están aprobadas y con qué base lo deciden el responsable y el área legal; aquí se explica cómo convertir esa decisión en concesiones de acceso verificables.
-
-**Cómo leerla.** *Comprender* (§1–6): en qué se distingue un permiso de una autorización por finalidad. *Aplicar* (§7–13): concesiones por identidad, actividad y producto, con vencimiento y pruebas negativas. *Demostrar*: la evidencia del §8, el código del §10 y los criterios del §18.
 
 Los permisos tradicionales responden **quién** puede consultar. La autorización por finalidad agrega **para qué uso aprobado**, **qué datos**, **hasta cuándo** y **con qué restricciones**. Es una arquitectura de autorización y trazabilidad que complementa IAM, no lo reemplaza: IAM aplica la decisión; la finalidad la justifica.
 
@@ -331,3 +329,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: revisión `docs/reviews/p2.md` aplicada: el art. 14 quáter nombra sus cuatro factores (número de datos, extensión, plazo y accesibilidad) en el §2 y en `legal_basis`; etiqueta del nodo de logs en dos líneas.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.

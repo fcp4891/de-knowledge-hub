@@ -55,7 +55,7 @@ relations:
   - {type: RELATED_TO, target: pii-identification, note: "Qué campos personales salen, incluido el texto libre."}
   - {type: RELATED_TO, target: data-minimization-by-layer, note: "Enviar solo los campos necesarios."}
 created_at: 2026-10-22
-updated_at: 2026-10-28
+updated_at: 2026-11-03
 last_verified: 2026-10-25
 owner_approved_at: 2026-11-01
 verification_status: verified
@@ -64,8 +64,6 @@ verification_status: verified
 ## 1. Resumen
 
 Esta ficha no es asesoría legal: el rol de cada tercero, los contratos, las cláusulas y la elección del mecanismo de transferencia son del área legal; aquí se explica cómo ingeniería sabe y demuestra hacia dónde van los datos.
-
-**Cómo leerla.** *Comprender* (§1–6): encargo, cesión y transferencia internacional, y por qué la región del almacenamiento no basta. *Aplicar* (§7–13): el inventario de flujos, sus controles y su cierre. *Demostrar*: la evidencia del §8, el control del §10 y los criterios del §18.
 
 Una plataforma moderna está llena de terceros: nube, herramientas SaaS, ETL gestionado, observabilidad, soporte remoto, APIs de LLM. El reto no es solo saber en qué región está una base: es saber **qué datos personales salen, quién los recibe, con qué rol, desde dónde se puede acceder a ellos y con qué aprobación**. Cada encargado que toca datos personales necesita contrato de encargo y, si procesa fuera de Chile o se accede desde fuera, un mecanismo de transferencia. Sin ese inventario, el área legal no puede firmar lo correcto.
 
@@ -371,3 +369,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: mismo hallazgo que la revisión de P4: `page_title` de Azure Policy con el H1 de la página, «List of built-in policy definitions» (ADR-012). Sin cambios de contenido.
 - 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.

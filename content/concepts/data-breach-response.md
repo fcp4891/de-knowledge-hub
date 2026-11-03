@@ -62,7 +62,7 @@ relations:
   - {type: RELATED_TO, target: observability-logs, note: "Los logs de acceso."}
   - {type: RELATED_TO, target: pii-identification, note: "La clasificación que da las categorías del alcance."}
 created_at: 2026-10-22
-updated_at: 2026-10-28
+updated_at: 2026-11-03
 last_verified: 2026-10-25
 owner_approved_at: 2026-11-01
 verification_status: verified
@@ -71,8 +71,6 @@ verification_status: verified
 ## 1. Resumen
 
 Esta ficha no es asesoría legal: si una vulneración se reporta, y a quién, lo deciden el área legal y seguridad; aquí se explica cómo ingeniería entrega en horas los datos que esa decisión necesita.
-
-**Cómo leerla.** *Comprender* (§1–6): qué se reporta, a quién, y por qué «accesible» no es «extraído». *Aplicar* (§7–13): cómo se estima el alcance con sus limitaciones y qué logs hacen falta antes del incidente. *Demostrar*: el expediente del §8, la consulta del §10 y los criterios del §18.
 
 Cuando hay un incidente, la primera pregunta es: **¿cuántas personas, qué datos, y hay sensibles, financieros o de menores de 14?** Si la respuesta toma una semana de consultas manuales, el reporte llega tarde. Ingeniería marca la diferencia teniendo listo antes del incidente el catálogo de clasificación, el índice de titulares, el linaje y los logs de acceso. Lo que entrega no es una conclusión legal, sino una **estimación trazable y revisable**: qué activos pudieron verse comprometidos, qué contenían, qué personas podrían estar involucradas, con qué evidencia y con qué lagunas. Un mismo incidente puede activar también la Ley 21.663, con plazos propios.
 
@@ -366,3 +364,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.

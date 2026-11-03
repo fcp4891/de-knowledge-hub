@@ -83,7 +83,7 @@ relations:
   - {type: RELATED_TO, target: bigquery-information-schema, note: "Metadatos de objetos y privilegios para las reglas en GCP."}
   - {type: RELATED_TO, target: gdpr, note: "El RGPD, del que viene la guía de la CNIL citada como referencia conceptual."}
 created_at: 2026-10-22
-updated_at: 2026-10-30
+updated_at: 2026-11-03
 last_verified: 2026-10-25
 owner_approved_at: 2026-11-01
 verification_status: verified
@@ -92,8 +92,6 @@ verification_status: verified
 ## 1. Resumen
 
 Esta ficha no es asesoría legal: explica cómo convertir decisiones aprobadas (por el responsable, el área legal, seguridad y gobierno) en reglas verificables que corren en la CI y en producción. Un check, una máscara o una métrica no son exigencias tecnológicas literales de la ley.
-
-**Cómo leerla.** *Comprender* (§1–6): qué es un control verificable, por qué hay tres resultados y no dos, y qué es la deriva. *Aplicar* (§7–13): reglas sobre el cambio y sobre el estado real, excepciones con vencimiento y pruebas negativas. *Demostrar*: la evidencia del §8, el código del §10 y los criterios del §18.
 
 Un control documentado no es un control implementado. La ley pide verificar regularmente que las medidas funcionan y, si después de un incidente hay una controversia judicial o administrativa, acreditar que existían y funcionaban. Eso se resuelve como cualquier otro requisito de ingeniería: **reglas como código** que evalúan el **cambio** que se quiere desplegar (SQL, logs, contrato de datos) y el **estado real** de la plataforma (etiquetas, máscaras, permisos, retención, ambientes), fallan la CI cuando algo no cumple y publican métricas de cobertura. Su valor no es afirmar «cumplimos la ley», sino detectar desviaciones, prevenir despliegues riesgosos y producir evidencia reproducible.
 
@@ -480,3 +478,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: mismo hallazgo que la revisión de P4: `page_title` de Azure Policy con el H1 de la página, «List of built-in policy definitions» (ADR-012). Sin cambios de contenido.
 - 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.

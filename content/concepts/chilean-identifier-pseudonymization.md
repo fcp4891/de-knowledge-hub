@@ -64,7 +64,7 @@ relations:
   - {type: RELATED_TO, target: data-subject-rights-pipeline, note: "El mismo seudónimo indexa al titular."}
   - {type: RELATED_TO, target: retention-and-erasure, note: "El seudónimo como clave de supresión."}
 created_at: 2026-10-21
-updated_at: 2026-10-28
+updated_at: 2026-11-03
 last_verified: 2026-10-25
 owner_approved_at: 2026-11-01
 verification_status: verified
@@ -73,8 +73,6 @@ verification_status: verified
 ## 1. Resumen
 
 Esta ficha no es asesoría legal: si un dataset puede declararse anonimizado lo valida el responsable con el área legal; aquí están las técnicas y las pruebas que respaldan esa decisión. La versión genérica, sin la ley, es `pseudonymization-vs-anonymization`.
-
-**Cómo leerla.** *Comprender* (§1–6): qué distingue a un seudónimo de un dato anonimizado y por qué un hash no basta. *Aplicar* (§7–13): normalizar, validar, seudonimizar por dominio y medir el riesgo que queda. *Demostrar*: la evidencia del §8, las pruebas del §10 y los criterios del §18.
 
 Seudonimizar es sustituir un identificador por otro que no permita atribuir el dato a una persona sin información adicional protegida. **No es anonimizar.** En la práctica, «anonimizado» suele significar «le sacamos el RUT»; para la ley eso no basta: si alguien puede volver a identificar a la persona con medios razonables, el dato sigue siendo personal. Para el RUT:
 
@@ -394,3 +392,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.

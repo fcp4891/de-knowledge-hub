@@ -83,7 +83,7 @@ relations:
     target: medallion-architecture
     note: "Las capas bronze, silver y gold."
 created_at: 2026-10-21
-updated_at: 2026-10-28
+updated_at: 2026-11-03
 last_verified: 2026-10-25
 owner_approved_at: 2026-11-01
 verification_status: verified
@@ -92,8 +92,6 @@ verification_status: verified
 ## 1. Resumen
 
 Esta ficha no es asesoría legal: cubre cómo se aplica técnicamente la minimización en una arquitectura por capas. La finalidad, la base y los plazos los definen y aprueban las áreas responsables.
-
-**Cómo leerla.** *Comprender* (§1–6): las cuatro dimensiones de la minimización y en qué se distingue de enmascarar, seudonimizar y anonimizar. *Aplicar* (§7–13): qué columnas, detalle y accesos tiene cada capa y cómo se comprueba. *Demostrar*: la evidencia del §8, el test del §10 y los criterios del §18.
 
 La minimización evita que una plataforma recoja, replique o exponga datos personales que una actividad no necesita. No es una regla universal del tipo «bronze completo, silver seudonimizado, gold anónimo»: cada zona responde a una **finalidad concreta**, con columnas, detalle, plazo y accesos justificados. En el ejemplo de esta ficha, **cada capa tiene menos datos personales que la anterior**:
 
@@ -401,3 +399,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI; §9 en TB (cadena de 6 nodos) y etiqueta del nodo de tests en líneas de 4 palabras o menos.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
 - 2026-11-01: `medallion-architecture` ya tiene ficha (lote 07a): se enlaza en `relations` y en el §17 (cambio mínimo). Sin cambios de contenido.
+- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.

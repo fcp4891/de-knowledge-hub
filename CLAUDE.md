@@ -38,7 +38,7 @@ Trabajas en paralelo con Cursor (Carril B, frontend y revisión).
 
 ## Diagramas (§9)
 - Máximo 8 nodos por diagrama. Si hace falta más, dividir en dos diagramas o usar `subgraph` por capa.
-- Dirección: `LR` solo si la cadena más larga tiene 5 nodos o menos; si no, `TB`.
+- Dirección: en el §9 se dibuja **siempre en `LR`** (decisión de Felipe, 2026-11-03): la UI gira a `LR` todo flowchart del §9 (`frontend/lib/diagramDirection.ts`), y un diagrama ancho se lee con «Ampliar», con scroll horizontal dentro del diagrama y no de la página. Fuera del §9 (vistas de arquitectura y otras secciones), `LR` solo si la cadena más larga tiene 5 nodos o menos; si no, `TB`.
 - Etiquetas de nodo: máximo 4 palabras por línea y 2 líneas. Sin `<br/>` encadenados.
 - Evitar líneas que se cruzan y varias flechas que llegan al mismo nodo desde lejos: agrupar las entradas con un nodo intermedio.
 - Referencia: el §9 de `terraform-variables-and-outputs`.

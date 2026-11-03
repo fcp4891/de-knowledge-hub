@@ -76,7 +76,7 @@ relations:
   - {type: RELATED_TO, target: open-table-formats, note: "Snapshots y time travel."}
   - {type: RELATED_TO, target: data-lineage, note: "Descubrir dependencias, sin garantizar todas las copias."}
 created_at: 2026-10-22
-updated_at: 2026-10-28
+updated_at: 2026-11-03
 last_verified: 2026-10-25
 owner_approved_at: 2026-11-01
 verification_status: verified
@@ -85,8 +85,6 @@ verification_status: verified
 ## 1. Resumen
 
 Esta ficha no es asesoría legal: qué datos se conservan, por cuánto tiempo, con qué excepciones y si una supresión procede lo deciden el área legal y el responsable; aquí se explica cómo ejecutarlo de forma consistente y demostrable. Los plazos de los ejemplos son ilustrativos, no obligaciones legales.
-
-**Cómo leerla.** *Comprender* (§1–6): qué distingue retención, supresión, bloqueo y anonimización, y por qué un DELETE no es una eliminación. *Aplicar* (§7–13): plazos por actividad, supresión por destino, versiones físicas y reintroducciones. *Demostrar*: la evidencia del §8, el código del §10 y los criterios del §18.
 
 La **retención** define hasta cuándo se conserva un dato para una finalidad aprobada; la **supresión**, qué se elimina, de dónde, cuándo y cómo se comprueba. En una plataforma moderna, un dato personal no está en una tabla: está en el origen, en bronze, silver y gold, en features, en exportaciones, en el historial de versiones (time travel), en respaldos y en sistemas de terceros. Retener y suprimir bien significa que el plazo se aplique sin intervención manual, que una supresión alcance todas las copias que corresponde, que **ningún reprocesamiento la deshaga** y que la evidencia distinga lo verificado de lo que aún depende de una ventana de recuperación.
 
@@ -572,3 +570,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
