@@ -483,7 +483,8 @@ def check_diagrams(content_dir: Path, docs: list[Document], report: Report) -> N
             size = diagrams.diagram_size(code)
             if size.too_big:
                 report.warn(doc.location, f"[mermaid {i}] {size.kind}: {size.nodes} nodos y {size.edges} aristas "
-                            f"(máximo {diagrams.MAX_NODES} y {diagrams.MAX_EDGES}): dividir o agrupar")
+                            f"(máximo {diagrams.MAX_NODES} y {diagrams.MAX_EDGES}): dividir el diagrama "
+                            "(en las vistas de arquitectura un subgraph cuenta como nodo, ADR-028)")
 
 
 def check_page_sections(content_dir: Path, docs: list[Document], report: Report) -> None:

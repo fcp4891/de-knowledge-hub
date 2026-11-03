@@ -116,9 +116,9 @@ flowchart LR
 ```mermaid
 flowchart TB
   E["Evento"] --> M["Master dataset<br/>append-only"]
-  E --> S["Vista speed:<br/>desde el corte"]
-  M --> B["Vista batch:<br/>hasta el corte"]
-  B --> Q["Servicio:<br/>batch + speed"]
+  E --> S["Capa speed:<br/>desde el corte"]
+  M --> B["Capa batch:<br/>hasta el corte"]
+  B --> Q["Capa de servicio:<br/>batch + speed"]
   S --> Q
   B -. "nuevo corte" .-> S
 ```
@@ -130,16 +130,16 @@ El dato crudo de la capa batch es inmutable: lo nuevo se agrega y un cambio se g
 ```mermaid
 flowchart TB
   subgraph HOT["Hot path"]
-    S["Job streaming"]
+    S["Capa speed<br/>(job streaming)"]
   end
   subgraph COLD["Cold path"]
-    L["Almacenamiento crudo"]
-    B["Job batch programado"]
+    L["Master dataset<br/>(almacenamiento crudo)"]
+    B["Capa batch<br/>(job programado)"]
   end
   I["Broker"] --> S
   I --> L
   L --> B
-  S --> V["Almacén de servicio"]
+  S --> V["Capa de servicio<br/>(almacén)"]
   B --> V
 ```
 
@@ -308,3 +308,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-11-02: creación (lote 07b, ADR-028).
+- 2026-11-02: las tres vistas usan los nombres del §4 (criterio de la revisión de 07a).

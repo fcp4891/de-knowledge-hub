@@ -53,7 +53,7 @@ El §3 (contexto), el §5 (datos) y el §6 (despliegue) llevan cada uno un diagr
 
 - **Subgraph:** en estas vistas, un `subgraph` cuenta como un nodo más.
 - **Error, no aviso:** el validador marca como error que falte una vista o que una supere los 8 nodos. Para el resto de los diagramas sigue el aviso de tamaño de siempre.
-- **Conexión entre vistas:** las tres vistas comparten los nombres de la tabla de componentes del §4.
+- **Conexión entre vistas:** las tres vistas comparten los nombres de la tabla de componentes del §4. El validador no compara etiquetas: la igualdad de nombres la revisa una persona en la revisión del lote (revisión de 07-0, 2026-11-02).
 - **Nubes:** las diferencias entre GCP, AWS y Azure van en tablas en §11–13, no en un cuarto diagrama.
 
 ### 3. Validador

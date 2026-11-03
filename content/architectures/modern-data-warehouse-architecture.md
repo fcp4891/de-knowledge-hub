@@ -18,7 +18,7 @@ sources:
     url: https://docs.cloud.google.com/bigquery/docs/introduction
     accessed: '2026-10-11'
     page_title: BigQuery overview
-    note: 'BigQuery overview: plataforma de datos totalmente administrada; arquitectura serverless sin gestión de infraestructura; soporta formatos de tabla abiertos como Apache Iceberg, Delta y Apache Hudi. Su arquitectura tiene dos partes: una capa de almacenamiento que ingiere, almacena y optimiza datos, y una capa de cómputo que da capacidades de análisis; operan de forma independiente gracias a la red de Google de escala petabit. La separación permite que cada capa asigne recursos sin afectar el rendimiento o la disponibilidad de la otra y desplegar mejoras de forma independiente; no hace falta aprovisionar ni escalar recursos a mano. Las funciones de gobierno (búsqueda semántica, linaje) las provee Knowledge Catalog. Interfaces: consola, herramienta bq, bibliotecas cliente (Python, Java, JavaScript, Go), API REST y RPC.'
+    note: 'BigQuery overview: plataforma de datos totalmente administrada; arquitectura serverless sin gestión de infraestructura; soporta formatos de tabla abiertos como Apache Iceberg, Delta y Apache Hudi. Su arquitectura tiene dos partes: una capa de almacenamiento que ingiere, almacena y optimiza datos, y una capa de cómputo que da capacidades de análisis; operan de forma independiente gracias a la red de Google de escala petabit. La separación permite que cada capa asigne recursos sin afectar el rendimiento o la disponibilidad de la otra y desplegar mejoras de forma independiente; no hace falta aprovisionar ni escalar recursos a mano. Gobierno de datos y búsqueda semántica: descubrir, curar y validar activos de datos y de IA con funciones integradas basadas en Knowledge Catalog. Interfaces: consola, herramienta bq, bibliotecas cliente (Python, Java, JavaScript, Go), API REST y RPC.'
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/storage_overview
     accessed: '2026-10-11'
@@ -78,7 +78,7 @@ relations:
   - {type: RELATED_TO, target: lakehouse-architecture, note: "La alternativa sobre formatos abiertos."}
   - {type: ALTERNATIVE_TO, target: data-lake-architecture, note: "Cualquier formato y almacenamiento barato."}
 created_at: 2026-11-01
-updated_at: 2026-11-01
+updated_at: 2026-11-02
 last_verified: 2026-11-01
 verification_status: review_required
 ---
@@ -107,9 +107,9 @@ Escenario: una empresa con un CRM y un sistema de pedidos quiere un tablero de v
 flowchart LR
   A["CRM y pedidos"] --> I["Ingesta"]
   I --> W["Warehouse"]
-  W --> M["Marts por área"]
+  W --> M["Marts"]
   M --> B["BI y analistas"]
-  G["Repositorio de<br/>transformaciones"] -.-> W
+  G["Repositorio y CI"] -.-> W
 ```
 
 Los sistemas transaccionales quedan fuera: el warehouse está optimizado para muchas lecturas y pocas escrituras, y se modela para el análisis sin afectar a esos sistemas (*Online analytical processing*).
@@ -130,7 +130,7 @@ Los sistemas transaccionales quedan fuera: el warehouse está optimizado para mu
 ```mermaid
 flowchart LR
   R["Crudo cargado"] --> S["Staging (views)"]
-  S --> D["dim y fct (tables)"]
+  S --> D["Modelo dimensional<br/>(tables)"]
   D --> M["Marts"]
   T{"Tests"} -.-> D
 ```
@@ -145,8 +145,7 @@ flowchart LR
     S["Almacenamiento"]
     C["Cómputo"]
   end
-  G["Repositorio Git"] --> CI["CI: build y tests"]
-  CI --> C
+  G["Repositorio y CI:<br/>build y tests"] --> C
   U["BI"] --> C
 ```
 
@@ -351,3 +350,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-11-01: creación (lote 07a, ADR-028).
+- 2026-11-02: revisión de 07a aplicada (docs/reviews/lote-07a.md): la nota de *BigQuery overview* dice lo que dice la página (gobierno y búsqueda semántica con Knowledge Catalog, sin linaje); las vistas usan los nombres del §4.

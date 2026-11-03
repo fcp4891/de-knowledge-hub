@@ -146,13 +146,13 @@ Escenario: las cajas de una cadena publican cada pago al momento. Operaciones qu
 ## 3. Vista de contexto
 
 ```mermaid
-flowchart LR
-  C["Cajas"] --> B["Broker de eventos"]
-  B --> P["Pipeline streaming"]
-  P --> S["Tabla de servicio"]
-  P --> D["DLQ"]
+flowchart TB
+  C["Cajas"] --> B["Broker"]
+  B --> V["Validación"]
+  V --> W["Ventanas y watermark"]
+  V --> D["DLQ"]
+  W --> S["Sink idempotente"]
   S --> O["Tablero de operaciones"]
-  D --> R["Revisión manual"]
 ```
 
 ## 4. Componentes
@@ -170,12 +170,12 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-  E["Evento: tienda,<br/>event_time, monto"] --> V{"¿Parsea y<br/>tiene monto?"}
+  E["Evento: tienda,<br/>event_time, monto"] --> V{"Validación: ¿parsea<br/>y tiene monto?"}
   V -- "no" --> D["DLQ: mensaje original"]
-  V -- "sí" --> W["Ventana de 5 min<br/>por event_time"]
+  V -- "sí" --> W["Ventanas y watermark:<br/>5 min por event_time"]
   W --> M{"¿Watermark pasó<br/>el fin?"}
-  M -- "sí" --> U["Upsert<br/>(ventana, tienda)"]
-  M -- "no" --> K["Estado en checkpoint"]
+  M -- "sí" --> U["Sink idempotente:<br/>upsert (ventana, tienda)"]
+  M -- "no" --> K["Checkpoint: estado<br/>de la ventana"]
 ```
 
 Los datos no llegan garantizados en orden; la watermark es el umbral en el que se espera que hayan llegado todos los datos de una ventana, y lo que llega después con un timestamp dentro de ella es dato tardío (*Streaming pipelines*). En Spark, con `withWatermark` el motor acepta tardíos mientras el máximo tiempo de evento visto menos el umbral no supere el fin de la ventana, y en modo append emite cada ventana una vez, cuando la watermark la pasa (*Structured Streaming Programming Guide*).
@@ -185,15 +185,15 @@ Los datos no llegan garantizados en orden; la watermark es el umbral en el que s
 ```mermaid
 flowchart TB
   subgraph ING["Ingesta administrada"]
-    B["Topic / stream<br/>con retención"]
+    B["Broker: topic<br/>con retención"]
   end
-  subgraph PROC["Procesamiento"]
-    J["Job streaming<br/>con autoescalado"]
-    C["Checkpoints"]
+  subgraph PROC["Job streaming con autoescalado"]
+    J["Validación y ventanas"]
+    C["Checkpoint"]
   end
   B --> J
   J --> C
-  J --> S["Destino analítico"]
+  J --> S["Sink idempotente<br/>(destino analítico)"]
   J --> D["DLQ"]
 ```
 
@@ -394,3 +394,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-11-02: creación (lote 07b, ADR-028).
+- 2026-11-02: las tres vistas usan los nombres del §4 (criterio de la revisión de 07a).

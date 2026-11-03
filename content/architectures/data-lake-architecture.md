@@ -64,6 +64,11 @@ sources:
     accessed: '2026-10-13'
     page_title: Azure Data Lake Storage hierarchical namespace
     note: 'Azure Data Lake Storage hierarchical namespace: los almacenes de objetos simulan directorios con barras en el nombre, lo que no ayuda a mover, renombrar o borrar directorios; el namespace jerárquico permite manipular directorios de forma atómica. La página estima que en muchos casos el cómputo es más del 85 % del costo total, así que reducir la latencia baja el costo aunque el almacenamiento cueste más.'
+  - source: gcp-knowledge-catalog-docs
+    url: https://docs.cloud.google.com/knowledge-catalog/docs/metadata-overview
+    accessed: '2026-10-20'
+    page_title: About metadata in Knowledge Catalog
+    note: 'About metadata in Knowledge Catalog: las entries se crean automáticamente desde fuentes de Google Cloud (tablas, vistas, datasets y modelos de BigQuery, entre otras) o las crean los usuarios para fuentes propias, archivos o bases de terceros; los aspect types son plantillas predefinidas (Schema, Overview, Contacts, DataQuality, Lineage) o propias (por ejemplo, clasificación de PII o niveles de SLA); los aspects se llenan desde los sistemas de origen, logs de consultas o escaneos, o los agregan usuarios, pipelines o agentes; las entry links relacionan entries o columnas (synonym, definition, schema-join, related).'
 relations:
   - {type: USES, target: data-lake, note: "El concepto que esta arquitectura implementa."}
   - {type: USES, target: file-ingestion, note: "Los archivos que llegan a la zona raw."}
@@ -72,7 +77,7 @@ relations:
   - {type: RELATED_TO, target: medallion-architecture, note: "Las mismas zonas con nombres bronze, silver y gold."}
   - {type: ALTERNATIVE_TO, target: modern-data-warehouse-architecture, note: "SQL y concurrencia con el formato del motor."}
 created_at: 2026-11-01
-updated_at: 2026-11-01
+updated_at: 2026-11-02
 last_verified: 2026-11-01
 verification_status: review_required
 ---
@@ -121,10 +126,10 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-  L["Lotes del POS"] --> R["raw/source=pos/dt=…"]
+  L["Lotes del POS"] --> R["Zona raw:<br/>source=pos/dt=…"]
   R --> V{"¿Cumple el<br/>esquema?"}
-  V -- "sí" --> C["curated: un archivo<br/>por partición"]
-  V -- "no" --> Q["quarantine"]
+  V -- "sí" --> C["Zona curated: un<br/>archivo por partición"]
+  V -- "no" --> Q["Zona de cuarentena"]
   C --> S["Consulta con poda<br/>de particiones"]
 ```
 
@@ -135,8 +140,8 @@ AWS Prescriptive Guidance recomienda al menos tres capas (Raw, Stage y Analytics
 ```mermaid
 flowchart LR
   subgraph S["Almacenamiento de objetos"]
-    R["Bucket raw"]
-    C["Bucket curated"]
+    R["Zona raw (bucket)"]
+    C["Zona curated (bucket)"]
   end
   J["Jobs de validación"] --> C
   K["Catálogo"] --> E["Motor de consulta"]
@@ -227,7 +232,7 @@ Raw conserva los cinco registros; curated queda con un archivo por partición; l
 |---|---|---|
 | Almacenamiento | Cloud Storage | Reglas de ciclo de vida por bucket; Delete tiene prioridad sobre SetStorageClass (*Object Lifecycle Management*) |
 | Consulta | Tablas externas o BigLake de BigQuery | BigLake usa delegación de acceso y funciona con Cloud Storage, S3 y Azure Storage; las tablas externas no delegan acceso (*Introduction to external data sources*) |
-| Catálogo | Knowledge Catalog | No ejecutado |
+| Catálogo | Knowledge Catalog | Entries creadas automáticamente desde fuentes de Google Cloud, o por los usuarios para fuentes propias y archivos (*About metadata in Knowledge Catalog*). No ejecutado |
 
 ## 12. AWS
 
@@ -290,7 +295,7 @@ Sin laboratorio en F4: no está entre las 6 arquitecturas de F4. El §10 corre e
 
 ## 20. Fuentes
 
-- Google Cloud: *Introduction to external data sources*; *Introduction to BigLake tables*; *Object Lifecycle Management*.
+- Google Cloud: *Introduction to external data sources*; *Introduction to BigLake tables*; *Object Lifecycle Management*; *About metadata in Knowledge Catalog*.
 - AWS: *What is Amazon S3?*; *What is Amazon Athena?*; *Partition your data*; *What is AWS Lake Formation?*; *Recommended data layers*.
 - Microsoft Learn: *Introduction to Azure Data Lake Storage*; *Azure Data Lake Storage hierarchical namespace*.
 
@@ -303,3 +308,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-11-01: creación (lote 07a, ADR-028).
+- 2026-11-02: revisión de 07a aplicada (docs/reviews/lote-07a.md): la fila de catálogo del §11 cita *About metadata in Knowledge Catalog*; las vistas usan los nombres del §4 («Zona de cuarentena»).

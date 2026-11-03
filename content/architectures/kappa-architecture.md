@@ -113,7 +113,7 @@ flowchart LR
   P["Servicio de pagos"] --> L["Log de eventos"]
   L --> V1["Procesador v1"]
   L --> V2["Procesador v2"]
-  V1 --> S["Vista servida"]
+  V1 --> S["Selector: vista servida"]
   V2 --> S
   S --> C["Consumidores"]
 ```
@@ -132,12 +132,12 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-  L["Log: offsets 0..n<br/>retention.ms=-1"] --> A["Grupo v1:<br/>en el offset n"]
-  L --> B["Grupo v2:<br/>desde el offset 0"]
-  A --> X["vista_v1"]
-  B --> Y["vista_v2"]
+  L["Log de eventos:<br/>offsets 0..n"] --> A["Posición v1:<br/>en el offset n"]
+  L --> B["Posición v2:<br/>desde el offset 0"]
+  A --> X["Vista v1"]
+  B --> Y["Vista v2"]
   Y --> Z{"¿lag 0?"}
-  Z -- "sí" --> S["Se sirve vista_v2"]
+  Z -- "sí" --> S["Selector: sirve<br/>la vista v2"]
 ```
 
 En Kafka, los eventos no se borran al consumirlos sino según la retención de cada topic, y se pueden leer las veces que haga falta (*Introduction*, Kafka 4.3); con `retention.ms=-1` no hay límite de tiempo (*Topic Configs*). Si el log se compacta, queda al menos el último valor de cada clave (*Design*), lo que sirve para reconstruir estado, pero no para recalcular sobre cada evento.
@@ -147,15 +147,15 @@ En Kafka, los eventos no se borran al consumirlos sino según la retención de c
 ```mermaid
 flowchart TB
   subgraph LOG["Clúster del log"]
-    T["Topic retenido<br/>y replicado"]
+    T["Log de eventos<br/>(topic replicado)"]
   end
   subgraph RUN["Procesamiento"]
-    A["Job v1"]
-    B["Job v2 (replay)"]
+    A["Procesador v1"]
+    B["Procesador v2<br/>(replay)"]
   end
   T --> A
   T --> B
-  A --> S["Almacén de vistas"]
+  A --> S["Vistas por versión"]
   B --> S
 ```
 
@@ -306,3 +306,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-11-02: creación (lote 07b, ADR-028).
+- 2026-11-02: las tres vistas usan los nombres del §4 (criterio de la revisión de 07a).

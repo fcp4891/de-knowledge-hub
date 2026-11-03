@@ -122,11 +122,12 @@ Escenario: el servicio de pedidos de una tienda en línea publica cada pedido cr
 
 ```mermaid
 flowchart LR
-  P["Servicio de pedidos"] --> C["Canal de eventos"]
+  P["Productor: servicio<br/>de pedidos"] --> C["Canal"]
   C --> F["Facturación"]
   C --> N["Notificaciones"]
   C --> A["Auditoría"]
   F --> D["DLQ"]
+  R["Registro de esquemas"] -.-> C
 ```
 
 ## 4. Componentes
@@ -144,10 +145,10 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-  E["Evento: event_id,<br/>tipo, clave, payload"] --> L["Partición por clave"]
+  E["Evento: event_id,<br/>tipo, clave, payload"] --> L["Canal: partición<br/>por clave"]
   L --> G["Grupo facturación:<br/>su offset"]
   L --> H["Grupo auditoría:<br/>su offset"]
-  G --> V{"¿event_id<br/>ya aplicado?"}
+  G --> V{"Consumidor idempotente:<br/>¿event_id ya aplicado?"}
   V -- "sí" --> I["Se ignora"]
   V -- "no" --> T["Efecto + registro<br/>del event_id"]
 ```
@@ -162,7 +163,7 @@ flowchart TB
     P["Productor"]
   end
   subgraph BUS["Canal administrado"]
-    T["Topic con<br/>retención"]
+    T["Canal: topic<br/>con retención"]
   end
   subgraph SUBS["Consumidores"]
     F["Facturación (N instancias)"]
@@ -320,3 +321,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-11-02: creación (lote 07b, ADR-028).
+- 2026-11-02: las tres vistas usan los nombres del §4 (criterio de la revisión de 07a).

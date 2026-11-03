@@ -48,7 +48,7 @@ relations:
   - {type: RELATED_TO, target: idempotency, note: "Reprocesar un lote no cambia gold."}
   - {type: RELATED_TO, target: data-mesh, note: "Dominios con sus propias capas."}
 created_at: 2026-11-01
-updated_at: 2026-11-01
+updated_at: 2026-11-02
 last_verified: 2026-11-01
 verification_status: review_required
 ---
@@ -98,7 +98,7 @@ flowchart LR
 flowchart TB
   L["Lote"] --> B["bronze: append-only<br/>(lote, ingesta, payload)"]
   B --> V{"¿Válido?"}
-  V -- "no" --> X["silver_rejected"]
+  V -- "no" --> X["Rechazos<br/>(silver_rejected)"]
   V -- "sí" --> S["silver: última versión<br/>por clave"]
   S --> G["gold: agregados"]
 ```
@@ -110,11 +110,13 @@ En Azure Databricks, silver es también donde se integran fuentes dispares para 
 ```mermaid
 flowchart LR
   subgraph W1["Workspace bronze"]
-    B["Lakehouse bronze"]
+    B["Bronze (lakehouse)"]
   end
-  subgraph W2["Workspace silver y gold"]
-    S["Lakehouse silver"]
-    G["Warehouse gold"]
+  subgraph W2["Workspace silver"]
+    S["Silver (lakehouse)"]
+  end
+  subgraph W3["Workspace gold"]
+    G["Gold (warehouse)"]
   end
   B --> S
   S --> G
@@ -136,7 +138,7 @@ Fabric recomienda un workspace por lakehouse para tener más control y gobierno 
 
 ## 9. Costos
 
-Tres capas son tres copias del dato, con distinto formato y retención. Lo que se paga de más en almacenamiento se recupera en lecturas: gold es chico y particionado, y las consultas del negocio no tocan bronze. Particionar por fecha reduce los bytes que lee cada consulta (*Introduction to partitioned tables*). Bronze puede ir a una clase de almacenamiento más barata pasado un tiempo, según su política de retención.
+Tres capas son tres copias del dato, con distinto formato y retención. Lo que se paga de más en almacenamiento se recupera en lecturas: gold es chico y particionado, y las consultas del negocio no tocan bronze. Particionar por fecha reduce los bytes que lee cada consulta (*Introduction to partitioned tables*).
 
 ## 10. Código y configuración
 
@@ -297,3 +299,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-11-01: creación (lote 07a, ADR-028).
+- 2026-11-02: revisión de 07a aplicada (docs/reviews/lote-07a.md): el §6 despliega un workspace por lakehouse, como recomienda la página (gold como warehouse en el suyo); el §5 usa «Rechazos»; sin la frase de clase de almacenamiento sin fuente. El `page_title` de Fabric se mantiene: el H1 leído el 2026-11-02 sigue siendo «Understand medallion architecture for Fabric with OneLake».

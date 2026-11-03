@@ -19,7 +19,7 @@ sources:
     url: https://docs.cloud.google.com/bigquery/docs/introduction
     accessed: 2026-10-11
     page_title: "BigQuery overview"
-    note: "BigQuery overview: plataforma de datos totalmente administrada; arquitectura serverless sin gestión de infraestructura; soporta formatos de tabla abiertos como Apache Iceberg, Delta y Apache Hudi. Su arquitectura tiene dos partes: una capa de almacenamiento que ingiere, almacena y optimiza datos, y una capa de cómputo que da capacidades de análisis; operan de forma independiente gracias a la red de Google de escala petabit. La separación permite que cada capa asigne recursos sin afectar el rendimiento o la disponibilidad de la otra y desplegar mejoras de forma independiente; no hace falta aprovisionar ni escalar recursos a mano. Las funciones de gobierno (búsqueda semántica, linaje) las provee Knowledge Catalog. Interfaces: consola, herramienta bq, bibliotecas cliente (Python, Java, JavaScript, Go), API REST y RPC."
+    note: "BigQuery overview: plataforma de datos totalmente administrada; arquitectura serverless sin gestión de infraestructura; soporta formatos de tabla abiertos como Apache Iceberg, Delta y Apache Hudi. Su arquitectura tiene dos partes: una capa de almacenamiento que ingiere, almacena y optimiza datos, y una capa de cómputo que da capacidades de análisis; operan de forma independiente gracias a la red de Google de escala petabit. La separación permite que cada capa asigne recursos sin afectar el rendimiento o la disponibilidad de la otra y desplegar mejoras de forma independiente; no hace falta aprovisionar ni escalar recursos a mano. Gobierno de datos y búsqueda semántica: descubrir, curar y validar activos de datos y de IA con funciones integradas basadas en Knowledge Catalog. Interfaces: consola, herramienta bq, bibliotecas cliente (Python, Java, JavaScript, Go), API REST y RPC."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/storage_overview
     accessed: 2026-10-11
@@ -83,7 +83,7 @@ relations:
     target: cloud-warehouse-optimization
     note: "La comparación con otros warehouses (§12)."
 created_at: 2026-10-11
-updated_at: 2026-10-13
+updated_at: 2026-11-02
 last_verified: 2026-10-11
 verification_status: verified
 ---
@@ -196,7 +196,7 @@ Este script en Python 3.12, solo con biblioteca estándar, está ejecutado y pas
 
 **BigQuery** es el servicio de esta ficha. Su página de introducción menciona dos cosas más:
 
-- sus funciones de gobierno (búsqueda semántica, linaje, calidad) las provee **Knowledge Catalog**;
+- el gobierno de datos y la búsqueda semántica (descubrir, curar y validar activos de datos y de IA) usan funciones integradas basadas en **Knowledge Catalog**;
 - soporta formatos de tabla abiertos: Apache Iceberg, Delta y Apache Hudi (ver `bigquery-biglake-tables`).
 
 ## 12. AWS
@@ -265,3 +265,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `bigquery-query-optimization`, `cloud-warehouse-optimization`; el §17 nombra `bigquery-query-optimization`, `cloud-warehouse-optimization`, que el cuerpo ya citaba.
+- 2026-11-02: la nota de *BigQuery overview* y el §11 dicen lo que dice la página (gobierno y búsqueda semántica con Knowledge Catalog, sin linaje ni calidad); hallazgo de la revisión de 07a.

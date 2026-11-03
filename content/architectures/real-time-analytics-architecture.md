@@ -122,9 +122,10 @@ Escenario: el tablero de operaciones de una cadena muestra los ingresos de los �
 ```mermaid
 flowchart LR
   T["Cajas"] --> P["Pipeline streaming"]
-  P --> A["Almacén de servicio"]
-  A --> D["Tablero en vivo"]
-  A --> I["API de métricas"]
+  P --> A["Almacén columnar"]
+  A --> Q["Capa de consulta"]
+  Q --> D["Tablero en vivo"]
+  Q --> I["API de métricas"]
   A --> W["Warehouse histórico"]
 ```
 
@@ -143,11 +144,11 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-  E["Evento: event_id,<br/>ts, tienda, monto"] --> R{"¿event_id<br/>ya está?"}
+  E["Evento: event_id,<br/>ts, tienda, monto"] --> R{"Ingesta con deduplicación:<br/>¿event_id ya está?"}
   R -- "sí" --> X["Se ignora"]
   R -- "no" --> C["Crudo reciente"]
-  C --> U["Upsert rollup<br/>(minuto, tienda)"]
-  U --> Q["Tablero: últimos<br/>5 minutos"]
+  C --> U["Rollups por minuto:<br/>upsert (minuto, tienda)"]
+  U --> Q["Capa de consulta:<br/>últimos 5 minutos"]
 ```
 
 El rollup es un agregado por minuto y tienda que se suma al escribir; un evento tardío actualiza el minuto al que pertenece, así que **los minutos recientes son provisionales**. Azure Stream Analytics hace explícita esa decisión: los eventos fuera de la tolerancia de desorden se descartan o se ajustan, y hay que balancear oportunidad y tolerancia (*Understand time handling in Azure Stream Analytics*).
@@ -158,16 +159,16 @@ El rollup es un agregado por minuto y tienda que se suma al escribir; un evento 
 flowchart TB
   subgraph ING["Ingesta"]
     B["Broker"]
-    P["Escritura con<br/>deduplicación"]
+    P["Ingesta con<br/>deduplicación"]
   end
   subgraph SRV["Servicio"]
     A["Almacén columnar"]
-    M["Pre-agregados"]
+    M["Rollups por minuto"]
   end
   B --> P
   P --> A
   A --> M
-  M --> D["Tablero y API"]
+  M --> D["Capa de consulta"]
 ```
 
 ## 7. Seguridad y gobierno
@@ -328,3 +329,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-11-02: creación (lote 07b, ADR-028).
+- 2026-11-02: las tres vistas usan los nombres del §4 (criterio de la revisión de 07a).

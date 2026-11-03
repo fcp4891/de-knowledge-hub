@@ -16,11 +16,11 @@ aliases:
 sources:
   - source: gcp-lakehouse-docs
     url: https://docs.cloud.google.com/lakehouse/docs/set-up-lakehouse-iceberg-rest-catalog
-    accessed: 2026-11-01
+    accessed: 2026-11-02
     page_title: "Set up the Apache Iceberg REST catalog endpoint"
-    note: "Set up the Apache Iceberg REST catalog endpoint (Lakehouse), banner de la página consultada el 2026-11-01: «As of April 20th, 2026, BigLake is now called Lakehouse» y «BigLake metastore is now called the Lakehouse runtime catalog». La API (biglake.googleapis.com) y los roles IAM (roles/biglake.*) conservan el nombre BigLake."
+    note: "Set up the Apache Iceberg REST catalog endpoint (Lakehouse), banner de la página consultada el 2026-11-02: «As of April 20th, 2026, BigLake is now called Lakehouse» y «BigLake metastore is now called the Lakehouse runtime catalog». El banner agrega «Lakehouse APIs, client libraries, CLI commands, and IAM names remain unchanged and still reference BigLake»: la API (biglake.googleapis.com), las bibliotecas cliente, los comandos de la CLI (gcloud biglake) y los roles IAM (roles/biglake.*) conservan el nombre BigLake."
 note: 'El slug gcp-biglake se mantiene por estabilidad (ADR-010). BigLake y BigLake metastore van en aliases como nombres anteriores, con la página que anuncia el cambio.'
 created_at: '2026-09-28'
-updated_at: '2026-11-01'
+updated_at: '2026-11-02'
 last_verified: '2026-11-01'
 verification_status: review_required

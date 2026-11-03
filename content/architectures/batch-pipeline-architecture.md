@@ -100,12 +100,13 @@ Escenario: un e-commerce recibe cada noche un archivo de ventas por día desde s
 ## 3. Vista de contexto
 
 ```mermaid
-flowchart LR
+flowchart TB
   O["Sistema de pedidos"] --> L["Zona de aterrizaje"]
-  L --> P["Pipeline batch diario"]
+  L --> G["Staging"]
+  G --> P["Carga de partición"]
   P --> W["Warehouse"]
   W --> C["Tableros y analítica"]
-  S["Orquestador"] -.-> P
+  S["Orquestador"] -.-> G
 ```
 
 Fuera del alcance: cómo el sistema de pedidos genera el archivo y quién consume los tableros.
@@ -125,11 +126,11 @@ Fuera del alcance: cómo el sistema de pedidos genera el archivo y quién consum
 
 ```mermaid
 flowchart TB
-  F["Archivo del día"] --> V{"¿Esquema y<br/>conteos válidos?"}
+  F["Zona de aterrizaje:<br/>archivo del día"] --> V{"Staging: ¿esquema<br/>y conteos válidos?"}
   V -- "no" --> Q["Lote rechazado"]
-  V -- "sí" --> R["Reemplazo de la<br/>partición del día"]
-  R --> T["Tabla particionada"]
-  R --> A["Registro de auditoría"]
+  V -- "sí" --> R["Carga de partición:<br/>reemplazo del día"]
+  R --> T["Warehouse: tabla<br/>particionada"]
+  R --> A["Auditoría"]
 ```
 
 La unidad de trabajo es el día: lo que se escribe es la partición entera, nunca filas sueltas agregadas a lo que ya había.
@@ -138,9 +139,9 @@ La unidad de trabajo es el día: lo que se escribe es la partición entera, nunc
 
 ```mermaid
 flowchart LR
-  subgraph N["Proyecto o cuenta de datos"]
-    B["Bucket de aterrizaje"]
-    J["Job de carga"]
+  subgraph N["Proyecto o cuenta<br/>de datos"]
+    B["Zona de aterrizaje<br/>(bucket)"]
+    J["Staging y carga<br/>de partición (job)"]
     D["Warehouse"]
   end
   O["Orquestador"] --> J
@@ -163,7 +164,7 @@ El job corre con una identidad propia que solo lee el bucket y escribe en las ta
 
 ## 9. Costos
 
-Lo que mueve el costo es el volumen leído por las consultas y el cómputo de la carga. Particionar por día hace que una consulta de un rango lea solo esas particiones; en BigQuery, reducir los bytes leídos baja el costo de la consulta (*Introduction to partitioned tables*). Reemplazar una partición cuesta lo mismo que cargarla: no hay costo extra por la idempotencia.
+Lo que mueve el costo es el volumen leído por las consultas y el cómputo de la carga. Particionar por día hace que una consulta de un rango lea solo esas particiones; en BigQuery, reducir los bytes leídos baja el costo de la consulta (*Introduction to partitioned tables*).
 
 ## 10. Código y configuración
 
@@ -320,4 +321,5 @@ El detalle de cada fuente está en `sources` del frontmatter.
 ## 22. Historial de cambios importantes
 
 - 2026-11-01: creación (lote 07a, ADR-028).
+- 2026-11-02: revisión de 07a aplicada (docs/reviews/lote-07a.md): las tres vistas usan los nombres del §4, §3 en TB, sin la frase de costo del reemplazo sin fuente y etiqueta del §6 en dos líneas.
 - 2026-11-02: lote 07b (regla del §17): relations y el §17 enlazan `streaming-pipeline-architecture`, que ya tiene ficha; antes figuraba como pendiente de ficha.
