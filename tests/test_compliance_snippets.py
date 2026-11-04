@@ -80,13 +80,6 @@ STDLIB = {
         "CDC tardío con la versión 2: rechazado (versión 2 ≤ corte de la orden 2)",
         "¿reaparece en bigquery.silver?: False", "otro titular intacto: {'a1b2c3d4e5f60718': 5}",
         "cierre de SOL-2026-0042: ['proveedor_email: PENDING']"],
-    "purpose-based-authorization": [
-        "grp-soporte · atencion_cliente · contacto_minimo: PERMITIR",
-        "grp-soporte · campana_ofertas · contacto_minimo: DENEGAR: la finalidad «campana_ofertas» no es la aprobada",
-        "grp-soporte · auditoria_reclamos · contacto_minimo: ESCALAR: finalidad en revisión",
-        "sa-bi-operacional · estadistica_operacional · contacto_minimo: DENEGAR: sin concesión para ese producto",
-        "grp-marketing · campana_ofertas · contacto_con_consentimiento: DENEGAR: concesión vencida",
-        "pruebas negativas: 4/4 no se permiten"],
     "data-subject-rights-pipeline": [
         "plazos supresión: {'respuesta': '2026-11-28', 'con_prorroga': '2026-12-28', 'bloqueo_si_se_pide': '2026-11-02'}",
         '"actividad": "riesgo_fraude"', '"interes_legitimo": "prevenir fraude en pagos"',
@@ -422,3 +415,50 @@ def test_pseudonymization_rules(tmp_path: Path) -> None:
     assert m.unir(reservas, {m.seudonimo("reservas", "k1", rut): "a"}) == 1
     filas, suprimidos = m.suprimir_atipicos([("RM", "1980s", "F")] * m.K_MIN + [("Tarapacá", "1950s", "M")])
     assert suprimidos == 1 and ("Tarapacá", "1950s", "M") not in filas
+
+
+PURPOSE_SCENARIOS = {"solicitudes": 0, "fuga": 1, "revision": 1}
+
+
+def test_purpose_authorization_each_scenario_prints_its_documented_output(tmp_path: Path) -> None:
+    """purpose-based-authorization §10: un bloque text por escenario, con su línea «$ python finalidad.py …»."""
+    documented = {block.splitlines()[0].removeprefix("$ python finalidad.py "): block
+                  for block in blocks("purpose-based-authorization", "text")}
+    assert list(documented) == list(PURPOSE_SCENARIOS)
+    (code,) = blocks("purpose-based-authorization", "python")
+    (tmp_path / "snippet.py").write_text(code, encoding="utf-8", newline="\n")   # assert_mypy_strict revisa snippet.py
+    for scenario, exit_code in PURPOSE_SCENARIOS.items():
+        result = subprocess.run([sys.executable, "snippet.py", scenario], cwd=tmp_path, env={**os.environ, **UTF8},
+                                capture_output=True, text=True, encoding="utf-8", timeout=300)
+        expected = documented[scenario].split("\n", 1)[1].strip()
+        assert result.returncode == exit_code and result.stdout.strip() == expected, result.stdout + result.stderr
+    assert_mypy_strict(tmp_path)
+
+
+def test_purpose_authorization_rules(tmp_path: Path) -> None:
+    (code,) = blocks("purpose-based-authorization", "python")
+    steps = [line.split("@paso", 1)[1].strip() for line in code.splitlines() if line.startswith("# @paso")]
+    assert steps == ["1 Registro de concesiones", "2 Decisión", "3 Pruebas negativas", "4 Revisión y salida"]
+    assert not [line for line in code.splitlines() if re.match(r"\s+def ", line)]   # sin funciones anidadas
+    module = tmp_path / "finalidad.py"
+    module.write_text(code, encoding="utf-8", newline="\n")
+    spec = importlib.util.spec_from_file_location("finalidad", module)
+    assert spec and spec.loader
+    m = importlib.util.module_from_spec(spec)
+    sys.modules["finalidad"] = m   # dataclasses necesita el módulo registrado
+    spec.loader.exec_module(m)
+    assert m.Decision.__args__ == ("PERMITIR", "DENEGAR", "ESCALAR")
+    for f in (m.vigentes, m.del_producto, m.decidir, m.probar, m.cuentas_compartidas, m.sin_confirmar):
+        assert next(iter(inspect.signature(f).parameters)) == "registro", f.__name__   # sin globales: recibe el registro
+    base = m.registro_base()
+    assert "grp-marketing" not in {c.identidad for c in m.vigentes(base, m.REFERENCIA)}   # vencida: no es vigente
+    pide_rut = m.pide("grp-soporte", "atencion_cliente", "contacto_minimo", "rut")
+    assert m.decidir(base, pide_rut, m.REFERENCIA) == ("DENEGAR", "pide rut, fuera de contacto_minimo")
+    # Lo esperado se declara a mano: casos() no recibe el registro, así que una fuga cambia la decisión, no el caso.
+    assert not inspect.signature(m.casos).parameters
+    fuga = m.probar(m.escenario("fuga"), m.casos(), m.REFERENCIA)
+    assert [(caso.solicitud.columnas, decision) for caso, decision, _ in fuga if decision != caso.esperada] == [
+        (frozenset({"nombre", "rut"}), "PERMITIR")]
+    assert m.cuentas_compartidas(m.escenario("revision"), m.REFERENCIA) == [
+        "cuenta compartida: sa-compartida usa campana_ofertas y atencion_cliente"]
+    assert m.sin_confirmar(base, m.REFERENCIA) == [] and len(m.sin_confirmar(m.escenario("revision"), m.REFERENCIA)) == 1

@@ -46,10 +46,9 @@ relations:
   - {type: RELATED_TO, target: data-minimization-by-layer, note: "El producto que se concede tiene solo lo necesario."}
   - {type: RELATED_TO, target: privacy-controls-as-code, note: "Pruebas negativas y concesiones vencidas como reglas de la CI."}
 created_at: 2026-10-28
-updated_at: 2026-11-03
+updated_at: 2026-11-04
 last_verified: 2026-10-28
-owner_approved_at: 2026-11-01
-verification_status: verified
+verification_status: review_required
 ---
 
 ## 1. Resumen
@@ -151,23 +150,37 @@ flowchart LR
 ## 10. Código
 
 ```python
-# Python 3.12+, biblioteca estándar. Autorización por finalidad: una solicitud (identidad, finalidad, producto de
-# datos) se permite solo si la actividad de tratamiento aprobada la cubre y la concesión está vigente; si no, se
-# deniega o se escala a revisión. Cada producto es una vista mínima por consumidor. Las pruebas negativas fallan la
-# CI si una regla deja pasar un caso que debe denegar. La finalidad declarada no prueba el uso real: el log lo audita.
+# Python 3.12+, biblioteca estándar. Autorización por finalidad, de punta a punta: registro de concesiones → decisión
+# (deny por defecto) → pruebas negativas con su decisión esperada → revisión periódica → código de salida (0 aprueba,
+# 1 rechaza). Uso: python finalidad.py solicitudes | fuga | revision. Una solicitud (identidad, finalidad, producto,
+# columnas) se permite solo si una concesión aprobada la cubre, no está vencida y el producto mínimo trae esas columnas.
+# Las funciones reciben el registro y la fecha de referencia. La finalidad declarada no prueba el uso real: el log lo
+# audita. Datos ficticios.
 import sys
-from dataclasses import dataclass
-from datetime import date
+from dataclasses import dataclass, replace
+from datetime import date, timedelta
+from typing import Literal
 
-HOY = date(2026, 10, 28)
+Decision = Literal["PERMITIR", "DENEGAR", "ESCALAR"]
+REFERENCIA = date(2026, 11, 4)          # fecha fija: resultado reproducible
+PERIODO_REVISION = timedelta(days=90)   # política interna ilustrativa, no un plazo legal
+
+
+# @paso 1 Registro de concesiones
+@dataclass(frozen=True)
+class Concesion:
+    identidad: str      # grupo o cuenta de servicio, una por consumidor y finalidad
+    actividad: str      # actividad de tratamiento aprobada (processing-activities-inventory)
+    producto: str       # vista o API mínima, no el dataset completo
+    vence: date
+    confirmada: date    # última vez que el dueño del dato confirmó que la concesión sigue siendo necesaria
 
 
 @dataclass(frozen=True)
-class Concesion:
-    identidad: str            # grupo o cuenta de servicio, una por consumidor y finalidad
-    actividad: str            # actividad de tratamiento aprobada (processing-activities-inventory)
-    producto: str             # vista o API mínima, no el dataset completo
-    vence: date
+class Registro:
+    productos: dict[str, frozenset[str]]       # producto mínimo → columnas que expone
+    concesiones: tuple[Concesion, ...]
+    en_revision: frozenset[tuple[str, str]]    # (identidad, finalidad) pedidas y no aprobadas
 
 
 @dataclass(frozen=True)
@@ -175,63 +188,199 @@ class Solicitud:
     identidad: str
     finalidad: str
     producto: str
+    columnas: frozenset[str]
 
 
-CONCESIONES = [
-    Concesion("grp-soporte", "atencion_cliente", "contacto_minimo", date(2026, 12, 31)),
-    Concesion("sa-bi-operacional", "estadistica_operacional", "vuelos_agregados", date(2027, 3, 31)),
-    Concesion("grp-marketing", "campana_ofertas", "contacto_con_consentimiento", date(2026, 10, 1)),
-]
-EXCEPCIONES_EN_REVISION = {("grp-soporte", "auditoria_reclamos")}   # pedidas, no aprobadas
+def registro_base() -> Registro:
+    productos = {"contacto_minimo": frozenset({"pasajero_id", "nombre", "correo"}),
+                 "vuelos_agregados": frozenset({"ruta", "mes", "pasajeros"}),
+                 "contacto_con_consentimiento": frozenset({"pasajero_id", "correo", "preferencias"})}
+    concesiones = (
+        Concesion("grp-soporte", "atencion_cliente", "contacto_minimo", date(2026, 12, 31), date(2026, 10, 15)),
+        Concesion("sa-bi-operacional", "estadistica_operacional", "vuelos_agregados", date(2027, 3, 31),
+                  date(2026, 9, 30)),
+        Concesion("grp-marketing", "campana_ofertas", "contacto_con_consentimiento", date(2026, 10, 1),
+                  date(2026, 9, 1)),
+    )
+    return Registro(productos, concesiones, frozenset({("grp-soporte", "auditoria_reclamos")}))
 
 
-def decidir(s: Solicitud) -> str:
-    vigentes = [c for c in CONCESIONES if c.identidad == s.identidad and c.producto == s.producto]
-    if not vigentes:                                  # deny por defecto: sin concesión, no hay acceso
-        return "DENEGAR: sin concesión para ese producto"
-    if not any(c.actividad == s.finalidad for c in vigentes):
-        if (s.identidad, s.finalidad) in EXCEPCIONES_EN_REVISION:
-            return "ESCALAR: finalidad en revisión"
-        return f"DENEGAR: la finalidad «{s.finalidad}» no es la aprobada"
-    if all(c.vence < HOY for c in vigentes if c.actividad == s.finalidad):
-        return "DENEGAR: concesión vencida"
-    return "PERMITIR"
+def vigentes(registro: Registro, hoy: date) -> list[Concesion]:
+    """Solo las concesiones que no han vencido a la fecha de referencia."""
+    return [c for c in registro.concesiones if c.vence >= hoy]
 
 
-SOLICITUDES = [
-    Solicitud("grp-soporte", "atencion_cliente", "contacto_minimo"),
-    Solicitud("grp-soporte", "campana_ofertas", "contacto_minimo"),
-    Solicitud("grp-soporte", "auditoria_reclamos", "contacto_minimo"),
-    Solicitud("sa-bi-operacional", "estadistica_operacional", "contacto_minimo"),
-    Solicitud("grp-marketing", "campana_ofertas", "contacto_con_consentimiento"),
-]
-DEBEN_DENEGAR = [s for s in SOLICITUDES if s.finalidad != "atencion_cliente" or s.identidad != "grp-soporte"]
+# @paso 2 Decisión
+def del_producto(registro: Registro, s: Solicitud) -> list[Concesion]:
+    """Concesiones de la identidad para ese producto, vencidas o no: la vigencia se decide después."""
+    return [c for c in registro.concesiones if c.identidad == s.identidad and c.producto == s.producto]
 
 
-def main() -> int:
-    for s in SOLICITUDES:
-        print(f"{s.identidad} · {s.finalidad} · {s.producto}: {decidir(s)}")
-    fugas = [s for s in DEBEN_DENEGAR if decidir(s) == "PERMITIR"]
-    print(f"pruebas negativas: {len(DEBEN_DENEGAR) - len(fugas)}/{len(DEBEN_DENEGAR)} no se permiten")
-    return 1 if fugas else 0
+def decidir(registro: Registro, s: Solicitud, hoy: date) -> tuple[Decision, str]:
+    candidatas = del_producto(registro, s)
+    if not candidatas:   # deny por defecto: sin concesión, no hay acceso
+        return "DENEGAR", "sin concesión para ese producto"
+    de_la_finalidad = [c for c in candidatas if c.actividad == s.finalidad]
+    if not de_la_finalidad:
+        if (s.identidad, s.finalidad) in registro.en_revision:
+            return "ESCALAR", "finalidad en revisión"
+        return "DENEGAR", f"la finalidad «{s.finalidad}» no es la aprobada"
+    if all(c.vence < hoy for c in de_la_finalidad):
+        return "DENEGAR", "concesión vencida"
+    fuera = sorted(s.columnas - registro.productos[s.producto])
+    if fuera:
+        return "DENEGAR", f"pide {', '.join(fuera)}, fuera de {s.producto}"
+    return "PERMITIR", "concesión vigente para esa finalidad y ese producto"
+
+
+# @paso 3 Pruebas negativas
+@dataclass(frozen=True)
+class Caso:
+    solicitud: Solicitud
+    esperada: Decision   # la declara el dueño del dato al aprobar la regla; no se deriva del registro
+
+
+def pide(identidad: str, finalidad: str, producto: str, *columnas: str) -> Solicitud:
+    return Solicitud(identidad, finalidad, producto, frozenset(columnas))
+
+
+def casos() -> tuple[Caso, ...]:
+    return (
+        Caso(pide("grp-soporte", "atencion_cliente", "contacto_minimo", "nombre", "correo"), "PERMITIR"),
+        Caso(pide("sa-bi-operacional", "estadistica_operacional", "vuelos_agregados", "ruta", "pasajeros"), "PERMITIR"),
+        Caso(pide("grp-soporte", "campana_ofertas", "contacto_minimo", "correo"), "DENEGAR"),
+        Caso(pide("grp-soporte", "auditoria_reclamos", "contacto_minimo", "correo"), "ESCALAR"),
+        Caso(pide("sa-bi-operacional", "estadistica_operacional", "contacto_minimo", "correo"), "DENEGAR"),
+        Caso(pide("grp-marketing", "campana_ofertas", "contacto_con_consentimiento", "correo"), "DENEGAR"),
+        Caso(pide("grp-soporte", "atencion_cliente", "contacto_minimo", "nombre", "rut"), "DENEGAR"),
+    )
+
+
+def probar(registro: Registro, lista: tuple[Caso, ...], hoy: date) -> list[tuple[Caso, Decision, str]]:
+    return [(caso, *decidir(registro, caso.solicitud, hoy)) for caso in lista]
+
+
+# @paso 4 Revisión y salida
+def cuentas_compartidas(registro: Registro, hoy: date) -> list[str]:
+    """Una identidad con concesiones para dos finalidades distintas no permite saber para qué se usó cada acceso."""
+    finalidades: dict[str, list[str]] = {}
+    for c in vigentes(registro, hoy):
+        if c.actividad not in finalidades.setdefault(c.identidad, []):
+            finalidades[c.identidad].append(c.actividad)
+    return [f"cuenta compartida: {i} usa {' y '.join(f)}" for i, f in finalidades.items() if len(f) > 1]
+
+
+def sin_confirmar(registro: Registro, hoy: date) -> list[str]:
+    """Concesiones vigentes que nadie confirmó dentro del periodo de revisión: se marcan para revocar."""
+    return [f"sin confirmar en {PERIODO_REVISION.days} días: {c.identidad} → {c.producto} (última confirmación "
+            f"{c.confirmada}): marcar para revocar" for c in vigentes(registro, hoy) if hoy - c.confirmada > PERIODO_REVISION]
+
+
+def escenario(nombre: str) -> Registro:
+    base = registro_base()
+    if nombre == "fuga":   # la vista contacto_minimo quedó publicada con rut: la regla de columnas ya no lo frena
+        return replace(base, productos={**base.productos, "contacto_minimo": base.productos["contacto_minimo"] | {"rut"}})
+    if nombre == "revision":
+        compartida = (Concesion("sa-compartida", "campana_ofertas", "contacto_con_consentimiento", date(2027, 6, 30),
+                                date(2026, 10, 20)),
+                      Concesion("sa-compartida", "atencion_cliente", "contacto_minimo", date(2027, 6, 30),
+                                date(2026, 10, 20)))
+        antigua = tuple(replace(c, confirmada=date(2026, 7, 1)) if c.identidad == "sa-bi-operacional" else c
+                        for c in base.concesiones)
+        return replace(base, concesiones=antigua + compartida)
+    return base
+
+
+def main(nombre: str) -> int:
+    registro = escenario(nombre)
+    resultados = probar(registro, casos(), REFERENCIA)
+    for caso, decision, motivo in resultados:
+        s = caso.solicitud
+        marca = "" if decision == caso.esperada else f" ← se esperaba {caso.esperada}"
+        print(f"{s.identidad} · {s.finalidad} · {s.producto} [{', '.join(sorted(s.columnas))}]: {decision}: {motivo}{marca}")
+    difieren = [r for r in resultados if r[1] != r[0].esperada]
+    negativas = [r for r in resultados if r[0].esperada != "PERMITIR"]
+    fugas = [r for r in negativas if r[1] == "PERMITIR"]
+    print(f"pruebas negativas: {len(negativas) - len(fugas)}/{len(negativas)} no se permiten; "
+          f"decisiones distintas de la declarada: {len(difieren)}")
+    hallazgos = cuentas_compartidas(registro, REFERENCIA) + sin_confirmar(registro, REFERENCIA)
+    for h in hallazgos:
+        print(f"REVISIÓN {h}")
+    if difieren or hallazgos:
+        print(f"CI: rechazada (1): {len(difieren)} decisión(es) distinta(s) de la declarada, "
+              f"{len(hallazgos)} hallazgo(s) de revisión")
+        return 1
+    print("CI: aprobada (0): cada caso dio la decisión declarada y la revisión no tiene hallazgos")
+    return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else "solicitudes"))
 ```
 
-El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Imprime una decisión por solicitud y las pruebas negativas; termina con código 0 porque ninguna solicitud que debía denegarse pasó:
+El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Recorre cuatro pasos:
+
+1. **Registro de concesiones:** cada concesión une una identidad, una actividad aprobada, un producto mínimo, su vencimiento y la fecha de su última confirmación. Cada producto declara las columnas que expone.
+2. **Decisión:** deny por defecto. Sin concesión para el producto, se deniega. Con otra finalidad, se deniega o, si está pedida y en revisión, se escala. Con la concesión vencida, se deniega, y también si pide una columna que el producto no expone (**proporcionalidad**). Solo entonces se permite, para esa finalidad (**finalidad**).
+3. **Pruebas negativas:** cada caso declara a mano su decisión esperada, sin derivarla del registro, y la CI falla si alguna decisión difiere.
+4. **Revisión y salida:** una identidad con concesiones vigentes para dos finalidades es una cuenta compartida, y una concesión que nadie confirmó en 90 días (una política interna de ejemplo) se marca para revocar.
+
+Las funciones reciben el registro y la fecha de referencia, que es fija para que la salida se repita. Los datos son ficticios.
+
+Con el registro correcto, los siete casos dan la decisión declarada: dos se permiten, cuatro se deniegan y uno se escala. Ninguno de los cinco que no debían permitirse pasa. Termina con código 0:
 
 ```text
-grp-soporte · atencion_cliente · contacto_minimo: PERMITIR
-grp-soporte · campana_ofertas · contacto_minimo: DENEGAR: la finalidad «campana_ofertas» no es la aprobada
-grp-soporte · auditoria_reclamos · contacto_minimo: ESCALAR: finalidad en revisión
-sa-bi-operacional · estadistica_operacional · contacto_minimo: DENEGAR: sin concesión para ese producto
-grp-marketing · campana_ofertas · contacto_con_consentimiento: DENEGAR: concesión vencida
-pruebas negativas: 4/4 no se permiten
+$ python finalidad.py solicitudes
+grp-soporte · atencion_cliente · contacto_minimo [correo, nombre]: PERMITIR: concesión vigente para esa finalidad y ese producto
+sa-bi-operacional · estadistica_operacional · vuelos_agregados [pasajeros, ruta]: PERMITIR: concesión vigente para esa finalidad y ese producto
+grp-soporte · campana_ofertas · contacto_minimo [correo]: DENEGAR: la finalidad «campana_ofertas» no es la aprobada
+grp-soporte · auditoria_reclamos · contacto_minimo [correo]: ESCALAR: finalidad en revisión
+sa-bi-operacional · estadistica_operacional · contacto_minimo [correo]: DENEGAR: sin concesión para ese producto
+grp-marketing · campana_ofertas · contacto_con_consentimiento [correo]: DENEGAR: concesión vencida
+grp-soporte · atencion_cliente · contacto_minimo [nombre, rut]: DENEGAR: pide rut, fuera de contacto_minimo
+pruebas negativas: 5/5 no se permiten; decisiones distintas de la declarada: 0
+CI: aprobada (0): cada caso dio la decisión declarada y la revisión no tiene hallazgos
 ```
 
-**Limitaciones:** el ejemplo no autentica identidades ni comprueba que la finalidad declarada sea verdadera; requiere IAM, el proceso de aprobación y la auditoría.
+Si la vista `contacto_minimo` queda publicada con `rut`, la regla de columnas ya no frena la solicitud que pide `rut`, y la prueba negativa la detecta como fuga. Termina con código 1:
+
+```text
+$ python finalidad.py fuga
+grp-soporte · atencion_cliente · contacto_minimo [correo, nombre]: PERMITIR: concesión vigente para esa finalidad y ese producto
+sa-bi-operacional · estadistica_operacional · vuelos_agregados [pasajeros, ruta]: PERMITIR: concesión vigente para esa finalidad y ese producto
+grp-soporte · campana_ofertas · contacto_minimo [correo]: DENEGAR: la finalidad «campana_ofertas» no es la aprobada
+grp-soporte · auditoria_reclamos · contacto_minimo [correo]: ESCALAR: finalidad en revisión
+sa-bi-operacional · estadistica_operacional · contacto_minimo [correo]: DENEGAR: sin concesión para ese producto
+grp-marketing · campana_ofertas · contacto_con_consentimiento [correo]: DENEGAR: concesión vencida
+grp-soporte · atencion_cliente · contacto_minimo [nombre, rut]: PERMITIR: concesión vigente para esa finalidad y ese producto ← se esperaba DENEGAR
+pruebas negativas: 4/5 no se permiten; decisiones distintas de la declarada: 1
+CI: rechazada (1): 1 decisión(es) distinta(s) de la declarada, 0 hallazgo(s) de revisión
+```
+
+En la revisión, `sa-compartida` tiene concesiones para dos finalidades, y nadie confirma la de `sa-bi-operacional` desde el 2026-07-01. Las decisiones no cambian, pero la revisión tiene dos hallazgos. Termina con código 1:
+
+```text
+$ python finalidad.py revision
+grp-soporte · atencion_cliente · contacto_minimo [correo, nombre]: PERMITIR: concesión vigente para esa finalidad y ese producto
+sa-bi-operacional · estadistica_operacional · vuelos_agregados [pasajeros, ruta]: PERMITIR: concesión vigente para esa finalidad y ese producto
+grp-soporte · campana_ofertas · contacto_minimo [correo]: DENEGAR: la finalidad «campana_ofertas» no es la aprobada
+grp-soporte · auditoria_reclamos · contacto_minimo [correo]: ESCALAR: finalidad en revisión
+sa-bi-operacional · estadistica_operacional · contacto_minimo [correo]: DENEGAR: sin concesión para ese producto
+grp-marketing · campana_ofertas · contacto_con_consentimiento [correo]: DENEGAR: concesión vencida
+grp-soporte · atencion_cliente · contacto_minimo [nombre, rut]: DENEGAR: pide rut, fuera de contacto_minimo
+pruebas negativas: 5/5 no se permiten; decisiones distintas de la declarada: 0
+REVISIÓN cuenta compartida: sa-compartida usa campana_ofertas y atencion_cliente
+REVISIÓN sin confirmar en 90 días: sa-bi-operacional → vuelos_agregados (última confirmación 2026-07-01): marcar para revocar
+CI: rechazada (1): 0 decisión(es) distinta(s) de la declarada, 2 hallazgo(s) de revisión
+```
+
+Limitaciones:
+
+- **Identidad:** el ejemplo no autentica identidades; eso lo hace el IAM.
+- **Finalidad real:** la decisión confía en la finalidad que declara la solicitud. Si es la verdadera, lo muestra la auditoría de los logs de acceso.
+- **Cobertura de las pruebas:** las pruebas negativas solo cubren los casos declarados; una regla mal configurada que ningún caso ejercita no se detecta.
+- **Revisión:** el ejemplo marca para revocar, no revoca. Quién confirma, y que la revocación se aplique en el IAM, queda fuera.
+- **Plazo:** los 90 días son una política interna de ejemplo, no un plazo legal.
 
 ## 11. GCP
 
@@ -320,7 +469,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-28: arts. 3, 14 quáter y 34 quáter consultados ese día en BCN; *Authorized views* consultada ese día. `verified`: aprobada por Felipe el 2026-11-01 (`owner_approved_at`). Revisión mensual.
+2026-10-28: arts. 3, 14 quáter y 34 quáter consultados ese día en BCN; *Authorized views* consultada ese día. `review_required` desde el 2026-11-04: el §10 se reescribió de punta a punta y espera la aprobación de Felipe. Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -331,3 +480,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
 - 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
 - 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.
+- 2026-11-04: §10 reescrito de punta a punta al estándar de `chile-data-protection` (pedido de Felipe): pasos `# @paso 1–4` (registro de concesiones, decisión, pruebas negativas, revisión y salida); funciones que reciben el registro y la fecha; decisión `Literal` con motivo; `vigentes` excluye ahora las vencidas (la búsqueda por producto pasa a `del_producto`); cada caso declara su decisión esperada; producto mínimo con columnas («pide rut, fuera de contacto_minimo»); cuenta compartida y revisión periódica de 90 días (política interna); escenarios `solicitudes` (0), `fuga` (1) y `revision` (1), iguales a la salida de la CI. Vuelve a `review_required`.
