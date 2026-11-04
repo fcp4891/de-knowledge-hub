@@ -88,7 +88,8 @@ relations:
 created_at: 2026-10-21
 updated_at: 2026-11-04
 last_verified: 2026-10-25
-verification_status: review_required
+owner_approved_at: 2026-11-04
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -545,7 +546,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-21: texto legal consultado ese día en BCN. `review_required` desde el 2026-11-04: el §10 se reescribió de punta a punta y espera la aprobación de Felipe (la anterior fue el 2026-11-01). Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-21: texto legal consultado ese día en BCN. `verified`: aprobada de nuevo por Felipe el 2026-11-04 (`owner_approved_at`), con el §10 de punta a punta. Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -563,3 +564,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
 - 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.
 - 2026-11-04: §10 reescrito de punta a punta (pedido de Felipe), con PostgreSQL 17: funciones de nivel superior que reciben la conexión, sin `assert`; las cuatro dimensiones (contrato de columnas; tramo de edad, comuna, coordenadas a 2 decimales, teléfono que no pasa, HMAC del RUT y agregado con supresión; rol del analista con `42501`; `ingested_at`, purga y control de filas vencidas); el control «sin datos personales en claro fuera de bronze» usa la clasificación del catálogo y deja el patrón como respaldo para texto libre; marcadores `# @paso 1–4` y cuatro escenarios (`correcto`, `deriva-esquema`, `select-star`, `sin-purga`) con su línea `$ python minimizacion.py <escenario>`, iguales a la salida de la CI. §8 con la evidencia nueva y §15 con el código inline correcto. Vuelve a `review_required` hasta la aprobación de Felipe.
+- 2026-11-04: aprobada por Felipe con el §10 nuevo (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).

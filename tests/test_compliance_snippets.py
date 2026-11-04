@@ -87,13 +87,6 @@ STDLIB = {
         "sa-bi-operacional · estadistica_operacional · contacto_minimo: DENEGAR: sin concesión para ese producto",
         "grp-marketing · campana_ofertas · contacto_con_consentimiento: DENEGAR: concesión vencida",
         "pruebas negativas: 4/4 no se permiten"],
-    "chilean-identifier-pseudonymization": [
-        "variantes del mismo RUT, mismo seudónimo: True", "sin normalizar, seudónimos distintos: 3",
-        "DV inválido: RUT no válido: '11111111-0' → cuarentena para revisión, no se descarta",
-        "mismo RUT en dos dominios con claves distintas, mismo seudónimo: False", "hash simple revertido probando 1.000.000 RUT del tramo: True",
-        "con HMAC y sin la clave, el mismo ataque no sirve: True", "k con datos exactos: 1",
-        "k generalizando comuna y década: 1", "grupos únicos a suprimir: [('Tarapacá', '1950s', 'M')]",
-        "k tras suprimir atípicos: 2"],
     "data-subject-rights-pipeline": [
         "plazos supresión: {'respuesta': '2026-11-28', 'con_prorroga': '2026-12-28', 'bloqueo_si_se_pide': '2026-11-02'}",
         '"actividad": "riesgo_fraude"', '"interes_legitimo": "prevenir fraude en pagos"',
@@ -371,3 +364,39 @@ def test_inventory_rules(tmp_path: Path) -> None:
     assert [h.detalle for h in unknown] == ["consumidor no identificado: sa-7f3c → silver.reservas"]
     assert "BRECHA proporcionalidad: dag_campanas lee rut, no necesario para marketing" in run_inventory(
         tmp_path, "actual").stdout
+
+
+PSEUDONYM_SCENARIOS = {"publicar-exacto": 1, "publicar-generalizado": 0, "sin-normalizar": 1}
+
+
+def test_pseudonymization_each_scenario_prints_its_documented_output(tmp_path: Path) -> None:
+    """chilean-identifier-pseudonymization §10: un bloque text por escenario, con su línea «$ python …»."""
+    documented = {block.splitlines()[0].removeprefix("$ python seudonimizacion.py "): block
+                  for block in blocks("chilean-identifier-pseudonymization", "text")}
+    assert list(documented) == list(PSEUDONYM_SCENARIOS)
+    (code,) = blocks("chilean-identifier-pseudonymization", "python")
+    (tmp_path / "snippet.py").write_text(code, encoding="utf-8", newline="\n")   # assert_mypy_strict revisa snippet.py
+    for scenario, exit_code in PSEUDONYM_SCENARIOS.items():
+        result = subprocess.run([sys.executable, "snippet.py", scenario], cwd=tmp_path, env={**os.environ, **UTF8},
+                                capture_output=True, text=True, encoding="utf-8", timeout=300)
+        expected = documented[scenario].split("\n", 1)[1].strip()
+        assert result.returncode == exit_code and result.stdout.strip() == expected, result.stdout + result.stderr
+    assert_mypy_strict(tmp_path)
+
+
+def test_pseudonymization_rules(tmp_path: Path) -> None:
+    (code,) = blocks("chilean-identifier-pseudonymization", "python")
+    steps = [line.split("@paso", 1)[1].strip() for line in code.splitlines() if line.startswith("# @paso")]
+    assert steps == ["1 Normalizar y validar", "2 Seudónimo por dominio", "3 Ataque al hash simple",
+                     "4 Anonimizar y puerta"]
+    module = tmp_path / "seudonimizacion.py"
+    module.write_text(code, encoding="utf-8", newline="\n")
+    spec = importlib.util.spec_from_file_location("seudonimizacion", module)
+    assert spec and spec.loader
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    tabla = m.rotar("reservas", ["11111111-1"], "k1", "k2")
+    assert tabla[0][0].startswith("k1:") and tabla[0][1].startswith("k2:") and tabla[0][0][3:] != tabla[0][1][3:]
+    datos = [("RM", "1980s", "F")] * m.K_MIN
+    assert m.puerta_publicacion(datos, m.CUASI_CATALOGO) == []
+    assert m.puerta_publicacion(datos, ("comuna", "sexo")) == ["cuasi-identificador no declarado: nacimiento"]
