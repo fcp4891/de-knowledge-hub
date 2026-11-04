@@ -17,6 +17,7 @@ import importlib.util
 import inspect
 import json
 import os
+import re
 import secrets
 import subprocess
 import sys
@@ -152,17 +153,6 @@ GATES = {
         "pruebas negativas: 4/4 reglas detectan su caso malo",
         "resultados: {'EXCEPCIÓN': 1, 'FAIL': 10, 'PASS': 13, 'UNKNOWN': 2}"],
 }
-MINIMIZATION = [
-    "bronze: ['rut', 'nombre', 'email', 'comuna', 'edad', 'monto']; valores con RUT o correo en claro: 10",
-    "silver: ['cliente_key', 'comuna', 'tramo_edad', 'monto']; valores con RUT o correo en claro: 0",
-    "gold: ['comuna', 'clientes', 'monto_total']; valores con RUT o correo en claro: 0",
-    "gold: [('Maipú', 2), ('Ñuñoa', 2)]",
-    "analista lee gold: ok (2 filas); lee bronze: denegado (42501)",
-    "contrato: sin columnas fuera del contrato",
-    "tras agregar email a silver, fuera del contrato: {'silver': ['email']}",
-]
-
-
 MARKERS = {"retention-and-erasure": "biblioteca estándar"}   # fichas con más de un bloque ```python
 
 
@@ -248,11 +238,32 @@ def test_privacy_controls_validation_rejects_duplicates_stale_and_tampered_evide
     assert m.validate(results, stored) == []
 
 
-def test_minimization_by_layer_in_postgres(pg_env: dict[str, str], tmp_path: Path) -> None:  # noqa: F811
-    out = run_python_block("data-minimization-by-layer", tmp_path, {**pg_env, **UTF8})
-    for line in MINIMIZATION:
-        assert line in out, out
+MINIMIZATION_SCENARIOS = {"correcto": 0, "deriva-esquema": 1, "select-star": 1, "sin-purga": 1}
+
+
+def test_minimization_each_scenario_prints_its_documented_output(pg_env: dict[str, str], tmp_path: Path) -> None:  # noqa: F811
+    """data-minimization-by-layer §10, contra PostgreSQL: un bloque text por escenario, con su línea «$ python …»."""
+    documented = {block.splitlines()[0].removeprefix("$ python minimizacion.py "): block
+                  for block in blocks("data-minimization-by-layer", "text")}
+    assert list(documented) == list(MINIMIZATION_SCENARIOS)
+    (code,) = blocks("data-minimization-by-layer", "python")
+    (tmp_path / "snippet.py").write_text(code, encoding="utf-8", newline="\n")   # assert_mypy_strict revisa snippet.py
+    for scenario, exit_code in MINIMIZATION_SCENARIOS.items():
+        result = subprocess.run([sys.executable, "snippet.py", scenario], cwd=tmp_path,
+                                env={**os.environ, **pg_env, **UTF8}, capture_output=True, text=True, encoding="utf-8",
+                                timeout=300)
+        expected = documented[scenario].split("\n", 1)[1].strip()
+        assert result.returncode == exit_code and result.stdout.strip() == expected, result.stdout + result.stderr
     assert_mypy_strict(tmp_path)
+
+
+def test_minimization_guided_code_rules() -> None:
+    (code,) = blocks("data-minimization-by-layer", "python")
+    steps = [line.split("@paso", 1)[1].strip() for line in code.splitlines() if line.startswith("# @paso")]
+    assert steps == ["1 Capas", "2 Transformación", "3 Controles", "4 Puerta y reporte"]
+    assert not [line for line in code.splitlines() if re.match(r"\s+def ", line)]   # sin funciones anidadas
+    assert not [line for line in code.splitlines() if re.match(r"\s*assert ", line)]
+    assert "PERSONALES" in code and "ingested_at" in code   # catálogo como base del control y dimensión de tiempo
 
 
 def test_erasure_expires_iceberg_snapshots(tmp_path: Path) -> None:

@@ -83,10 +83,9 @@ relations:
     target: medallion-architecture
     note: "Las capas bronze, silver y gold."
 created_at: 2026-10-21
-updated_at: 2026-11-03
+updated_at: 2026-11-04
 last_verified: 2026-10-25
-owner_approved_at: 2026-11-01
-verification_status: verified
+verification_status: review_required
 ---
 
 ## 1. Resumen
@@ -171,7 +170,8 @@ Escenario genérico: una aerolínea ingesta reservas a BigQuery; el producto ana
 |---|---|---|---|---|
 | Contrato de columnas por capa, versionado | Repositorio o catálogo | Equipo de datos y dueño del producto | Qué columnas se aprobaron y para qué | Que la finalidad sea legítima |
 | Comparación del esquema real con el contrato | Log de la CI | CI | Que no hay columnas fuera del contrato | Que una columna aprobada no traiga datos indebidos en texto libre |
-| Resultado del test «sin RUT ni correo en claro fuera de bronze» | Log de la CI | CI | Que no hay esos patrones en silver y gold | Que no haya identificadores indirectos |
+| Resultado del control «sin datos personales en claro fuera de bronze» | Log de la CI | CI | Que silver y gold no tienen columnas que el catálogo clasifica como personales en claro | Que no haya columnas personales sin clasificar ni identificadores indirectos |
+| Purga de bronze y control de filas vencidas | Log de la CI o del job | Pipeline de la capa | Que bronze no conserva filas fuera del plazo de retención | Que no queden copias en respaldos o exportaciones |
 | Permisos efectivos del rol de análisis | Política de acceso versionada y prueba con la identidad | Plataforma | Que el análisis no lee bronze | Que nadie más tenga acceso |
 
 ## 9. Arquitectura
@@ -192,103 +192,260 @@ Las capas son un patrón de arquitectura, no categorías legales. Transversalmen
 ## 10. Código
 
 ```python
-# Python 3.12 y psycopg contra PostgreSQL 17 (ejecutado en la CI con el servicio postgres:17): minimización por
-# capa. Bronze guarda lo que llega; silver reemplaza el RUT por un HMAC y deja solo lo necesario; gold agrega y
-# suprime los grupos chicos. El analista lee solo gold. Un contrato de columnas por capa detecta un campo nuevo no
-# aprobado. PG_HOST, PG_PORT, PG_USER, PG_PASSWORD y PG_DB: base vacía temporal; el rol lleva sufijo y se borra al
-# terminar.
+# Python 3.12 y psycopg contra PostgreSQL 17 (ejecutado en la CI con el servicio postgres:17): minimización por capa
+# en sus cuatro dimensiones. Cantidad: un contrato de columnas por capa. Granularidad: silver generaliza (tramo de
+# edad, comuna, coordenadas redondeadas, HMAC del RUT) y gold agrega y suprime grupos chicos. Accesibilidad: el
+# analista lee solo gold. Tiempo: bronze guarda ingested_at y purga lo vencido. Una puerta sale con 1 si un control
+# falla. Uso: python minimizacion.py correcto | deriva-esquema | select-star | sin-purga. PG_DSN: base vacía
+# temporal; las capas y el rol se borran al terminar. Datos ficticios.
 import hashlib
 import hmac
 import os
 import re
 import secrets
+import sys
+from datetime import date, timedelta
 
 import psycopg
 from psycopg import errors
 
-S = os.environ["PG_DB"]
-ANALISTA = f"analista_{S}"
-CLAVE = secrets.token_bytes(32)  # en producción, en un KMS o gestor de secretos
-EN_CLARO = re.compile(r"\d{1,2}\.?\d{3}\.?\d{3}-[\dK]|[^@\s]+@[^@\s]+\.[a-z]{2,}", re.I)  # RUT o correo
-CONTRATO = {"silver": {"cliente_key", "comuna", "tramo_edad", "monto"},  # columnas aprobadas por capa (versionado)
+# @paso 1 Capas
+REFERENCIA = date(2026, 11, 3)    # fecha fija: resultado reproducible
+RETENCION_BRONZE = timedelta(days=30)   # política interna ilustrativa, no un plazo legal
+# Contrato de columnas aprobadas por capa (versionado).
+CONTRATO = {"silver": {"cliente_key", "tramo_edad", "comuna", "lat", "lon", "monto"},
             "gold": {"comuna", "clientes", "monto_total"}}
+# Clasificación del catálogo (la que produce pii-identification): columnas con datos personales en claro.
+PERSONALES = {"rut", "nombre", "email", "telefono", "fecha_nacimiento", "direccion"}
+RESPALDO = re.compile(r"[^@\s]+@[^@\s]+\.[a-z]{2,}|\d{1,2}\.?\d{3}\.?\d{3}-[\dK]", re.I)   # solo para texto libre
+BRONZE = [   # rut, nombre, email, telefono, fecha_nacimiento, direccion, lat, lon, monto, ingested_at
+    ("11.111.111-1", "Ana", "ana@example.test", "+56 9 1111 1111", date(1991, 4, 2), "Irarrázaval 100, Ñuñoa",
+     -33.45612, -70.59751, 120, date(2026, 10, 20)),
+    ("22.222.222-2", "Luis", "luis@example.test", "+56 9 2222 2222", date(1984, 7, 9), "Grecia 200, Ñuñoa",
+     -33.46177, -70.60034, 80, date(2026, 10, 21)),
+    ("33.333.333-3", "Bea", "bea@example.test", "+56 9 3333 3333", date(1997, 1, 15), "Pajaritos 300, Maipú",
+     -33.50941, -70.75602, 45, date(2026, 10, 22)),
+    ("44.444.444-4", "Ciro", "ciro@example.test", "+56 9 4444 4444", date(1973, 11, 30), "Rinconada 400, Maipú",
+     -33.51288, -70.76114, 60, date(2026, 10, 25)),
+    ("55.555.555-5", "Dani", "dani@example.test", "+56 9 5555 5555", date(1988, 3, 3), "Prat 500, Temuco",
+     -38.73965, -72.59842, 90, date(2026, 10, 28)),
+    ("66.666.666-6", "Eva", "eva@example.test", "+56 9 6666 6666", date(1990, 6, 6), "Grecia 600, Ñuñoa",
+     -33.46001, -70.60212, 70, date(2026, 9, 1)),   # vencida: ingresó hace más de 30 días
+]
 
-# Valores ficticios: RUT de dígitos repetidos y correos en dominios reservados.
-CLIENTES = [("11.111.111-1", "Ana", "ana@example.com", "Ñuñoa", 34, 120), ("22.222.222-2", "Luis", "luis@example.org", "Ñuñoa", 41, 80),
-            ("33.333.333-3", "Bea", "bea@example.net", "Maipú", 29, 45), ("44.444.444-4", "Ciro", "ciro@example.com", "Maipú", 52, 60),
-            ("55.555.555-5", "Dani", "dani@example.org", "Temuco", 38, 90)]
+
+def crear_capas(conn: psycopg.Connection, rol: str) -> None:
+    for capa in ("bronze", "silver", "gold"):
+        conn.execute(f"CREATE SCHEMA {capa}")
+    conn.execute("CREATE TABLE bronze.clientes (rut text, nombre text, email text, telefono text,"
+                 " fecha_nacimiento date, direccion text, lat double precision, lon double precision, monto int,"
+                 " ingested_at date)")
+    conn.cursor().executemany("INSERT INTO bronze.clientes VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", BRONZE)
+    conn.execute(f"CREATE ROLE {rol}")
 
 
-def clave_cliente(rut: str) -> str:
-    return hmac.new(CLAVE, rut.encode(), hashlib.sha256).hexdigest()[:16]
+def purgar_bronze(conn: psycopg.Connection, hoy: date) -> int:
+    """Tiempo: lo que pasó el plazo de retención se borra de bronze."""
+    return conn.execute("DELETE FROM bronze.clientes WHERE ingested_at < %s", (hoy - RETENCION_BRONZE,)).rowcount
 
 
-with psycopg.connect(host=os.environ["PG_HOST"], port=os.environ["PG_PORT"], user=os.environ["PG_USER"],
-                     password=os.environ["PG_PASSWORD"], dbname=S, autocommit=True) as conn:
+# @paso 2 Transformación
+def tramo_edad(nacimiento: date, hoy: date) -> str:
+    edad = hoy.year - nacimiento.year - ((hoy.month, hoy.day) < (nacimiento.month, nacimiento.day))
+    return f"{edad // 10 * 10}-{edad // 10 * 10 + 9}"
+
+
+def construir_silver(conn: psycopg.Connection, clave: bytes, hoy: date) -> None:
+    """Cantidad y granularidad: solo las columnas del contrato, con el dato generalizado; el teléfono no pasa."""
+    conn.execute("CREATE TABLE silver.clientes (cliente_key text, tramo_edad text, comuna text, lat double precision,"
+                 " lon double precision, monto int)")
+    filas = conn.execute("SELECT rut, fecha_nacimiento, direccion, lat, lon, monto FROM bronze.clientes").fetchall()
+    conn.cursor().executemany("INSERT INTO silver.clientes VALUES (%s, %s, %s, %s, %s, %s)", [
+        (hmac.new(clave, rut.encode(), hashlib.sha256).hexdigest()[:16], tramo_edad(nac, hoy),
+         direccion.rsplit(",", 1)[1].strip(), round(lat, 2), round(lon, 2), monto)
+        for rut, nac, direccion, lat, lon, monto in filas])
+
+
+def construir_silver_copiando_todo(conn: psycopg.Connection) -> None:
+    """El antipatrón: SELECT * de bronze a silver, más la comuna que gold necesita."""
+    conn.execute("CREATE TABLE silver.clientes AS SELECT *, split_part(direccion, ', ', 2) AS comuna"
+                 " FROM bronze.clientes")
+
+
+def construir_gold(conn: psycopg.Connection, rol: str) -> None:
+    """Granularidad y accesibilidad: agregado por comuna sin grupos de un cliente; el analista lee solo gold."""
+    conn.execute("CREATE TABLE gold.ventas_por_comuna AS SELECT comuna, count(*) AS clientes, sum(monto) AS monto_total"
+                 " FROM silver.clientes GROUP BY comuna HAVING count(*) >= 2")
+    conn.execute(f"GRANT USAGE ON SCHEMA gold TO {rol}")
+    conn.execute(f"GRANT SELECT ON ALL TABLES IN SCHEMA gold TO {rol}")
+
+
+# @paso 3 Controles
+def columnas(conn: psycopg.Connection, capa: str) -> list[str]:
+    filas = conn.execute("SELECT column_name FROM information_schema.columns WHERE table_schema = %s"
+                         " ORDER BY table_name, ordinal_position", (capa,)).fetchall()
+    return [c for (c,) in filas]
+
+
+def fuera_de_contrato(conn: psycopg.Connection) -> dict[str, list[str]]:
+    """Cantidad: columnas que una capa tiene y su contrato no aprueba."""
+    sobran = {capa: sorted(set(columnas(conn, capa)) - aprobadas) for capa, aprobadas in CONTRATO.items()}
+    return {capa: cols for capa, cols in sobran.items() if cols}
+
+
+def en_claro(conn: psycopg.Connection, capa: str) -> list[str]:
+    """Datos personales en claro en todas las tablas de la capa: columnas que el catálogo clasifica como personales y,
+    de respaldo, correos o RUT dentro del texto libre."""
+    hallazgos = []
+    tablas = conn.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = %s ORDER BY 1",
+                          (capa,)).fetchall()
+    for (tabla,) in tablas:
+        consulta = ("SELECT column_name FROM information_schema.columns WHERE table_schema = %s AND table_name = %s"
+                    " ORDER BY ordinal_position")
+        nombres = [c for (c,) in conn.execute(consulta, (capa, tabla))]
+        hallazgos += [f"{capa}.{tabla}.{c}" for c in nombres if c in PERSONALES]
+        for c in (c for c in nombres if c not in PERSONALES):
+            valores = conn.execute(f"SELECT {c}::text FROM {capa}.{tabla}").fetchall()
+            if any(v is not None and RESPALDO.search(v) for (v,) in valores):
+                hallazgos.append(f"{capa}.{tabla}.{c} (patrón en el texto)")
+    return hallazgos
+
+
+def vencidas_en_bronze(conn: psycopg.Connection, hoy: date) -> int:
+    """Tiempo: filas de bronze que pasaron el plazo y siguen ahí."""
+    corte = hoy - RETENCION_BRONZE
+    fila = conn.execute("SELECT count(*) FROM bronze.clientes WHERE ingested_at < %s", (corte,)).fetchone()
+    return int(fila[0]) if fila else 0
+
+
+def lee(conn: psycopg.Connection, rol: str, tabla: str) -> str:
+    """Accesibilidad, probada con la identidad del consumidor y no leyendo la configuración."""
+    conn.execute(f"SET ROLE {rol}")
     try:
-        for capa in ("bronze", "silver", "gold"):
-            conn.execute(f"CREATE SCHEMA {capa}")
-        conn.execute("CREATE TABLE bronze.clientes (rut text, nombre text, email text, comuna text, edad int, monto int)")
-        conn.cursor().executemany("INSERT INTO bronze.clientes VALUES (%s, %s, %s, %s, %s, %s)", CLIENTES)
-        conn.execute("CREATE TABLE silver.clientes (cliente_key text, comuna text, tramo_edad text, monto int)")
-        filas = conn.execute("SELECT rut, comuna, edad, monto FROM bronze.clientes").fetchall()  # solo lo necesario
-        conn.cursor().executemany("INSERT INTO silver.clientes VALUES (%s, %s, %s, %s)",
-                                  [(clave_cliente(r), c, f"{e // 10 * 10}-{e // 10 * 10 + 9}", m) for r, c, e, m in filas])
-        conn.execute("CREATE TABLE gold.ventas_por_comuna AS SELECT comuna, count(*) AS clientes, sum(monto) AS monto_total "
-                     "FROM silver.clientes GROUP BY comuna HAVING count(*) >= 2")  # sin grupos de un cliente
-        conn.execute(f"CREATE ROLE {ANALISTA}")
-        conn.execute(f"GRANT USAGE ON SCHEMA gold TO {ANALISTA}")
-        conn.execute(f"GRANT SELECT ON ALL TABLES IN SCHEMA gold TO {ANALISTA}")
-
-        def columnas(capa: str) -> list[str]:
-            return [c for (c,) in conn.execute("SELECT column_name FROM information_schema.columns WHERE table_schema = %s "
-                                               "ORDER BY ordinal_position", (capa,)).fetchall()]
-
-        def en_claro(capa: str) -> int:
-            tabla = conn.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = %s", (capa,)).fetchone()
-            assert tabla is not None
-            filas = conn.execute(f"SELECT * FROM {capa}.{tabla[0]}").fetchall()
-            return sum(1 for fila in filas for valor in fila if EN_CLARO.fullmatch(str(valor)))
-
-        def lee(tabla: str) -> str:
-            conn.execute(f"SET ROLE {ANALISTA}")
-            try:
-                return f"ok ({len(conn.execute(f'SELECT * FROM {tabla}').fetchall())} filas)"
-            except errors.InsufficientPrivilege as exc:
-                return f"denegado ({exc.sqlstate})"
-            finally:
-                conn.execute("RESET ROLE")
-
-        def fuera_de_contrato() -> dict[str, list[str]]:
-            return {capa: sorted(set(columnas(capa)) - aprobadas) for capa, aprobadas in CONTRATO.items()
-                    if set(columnas(capa)) - aprobadas}
-
-        for capa in ("bronze", "silver", "gold"):
-            print(f"{capa}: {columnas(capa)}; valores con RUT o correo en claro: {en_claro(capa)}")
-        print("gold:", conn.execute("SELECT comuna, clientes FROM gold.ventas_por_comuna ORDER BY comuna").fetchall())
-        print(f"analista lee gold: {lee('gold.ventas_por_comuna')}; lee bronze: {lee('bronze.clientes')}")
-        print("contrato:", fuera_de_contrato() or "sin columnas fuera del contrato")
-        conn.execute("ALTER TABLE silver.clientes ADD COLUMN email text")  # un cambio de esquema sin aprobar
-        print("tras agregar email a silver, fuera del contrato:", fuera_de_contrato())
+        return f"ok ({len(conn.execute(f'SELECT * FROM {tabla}').fetchall())} filas)"
+    except errors.InsufficientPrivilege as exc:
+        return f"denegado ({exc.sqlstate})"
     finally:
-        conn.execute("DROP SCHEMA IF EXISTS bronze, silver, gold CASCADE")
-        conn.execute(f"DROP OWNED BY {ANALISTA}")
-        conn.execute(f"DROP ROLE IF EXISTS {ANALISTA}")
+        conn.execute("RESET ROLE")
+
+
+# @paso 4 Puerta y reporte
+def construir(conn: psycopg.Connection, escenario: str, rol: str) -> int:
+    crear_capas(conn, rol)
+    purgadas = 0 if escenario == "sin-purga" else purgar_bronze(conn, REFERENCIA)
+    if escenario == "select-star":
+        construir_silver_copiando_todo(conn)
+    else:
+        construir_silver(conn, secrets.token_bytes(32), REFERENCIA)   # la clave del HMAC, en producción en un KMS
+    if escenario == "deriva-esquema":
+        conn.execute("ALTER TABLE silver.clientes ADD COLUMN email text")   # cambio de esquema sin aprobar
+    construir_gold(conn, rol)
+    return purgadas
+
+
+def reporte(conn: psycopg.Connection, escenario: str, rol: str, purgadas: int) -> int:
+    print(f"purga de bronze (plazo {RETENCION_BRONZE.days} días): {purgadas} fila(s)")
+    print(f"silver: {columnas(conn, 'silver')}")
+    print("gold:", conn.execute("SELECT comuna, clientes FROM gold.ventas_por_comuna ORDER BY comuna").fetchall())
+    lectura_bronze = lee(conn, rol, "bronze.clientes")
+    print(f"analista lee gold: {lee(conn, rol, 'gold.ventas_por_comuna')}; lee bronze: {lectura_bronze}")
+    fallas = []
+    if contrato := fuera_de_contrato(conn):
+        fallas.append(f"columnas fuera del contrato: {contrato}")
+    if claros := en_claro(conn, "silver") + en_claro(conn, "gold"):
+        fallas.append(f"datos personales en claro fuera de bronze: {claros}")
+    if vencidas := vencidas_en_bronze(conn, REFERENCIA):
+        fallas.append(f"bronze conserva {vencidas} fila(s) vencida(s)")
+    if not lectura_bronze.startswith("denegado"):
+        fallas.append("el analista lee bronze")
+    for falla in fallas:
+        print(f"FALLA {falla}")
+    if fallas:
+        print(f"puerta: rechazada (1): {len(fallas)} control(es) fallan")
+        return 1
+    print("puerta: aprobada (0): cantidad, granularidad, accesibilidad y tiempo en regla")
+    return 0
+
+
+def main(escenario: str) -> int:
+    rol = f"analista_{os.environ['PG_DB']}"
+    with psycopg.connect(os.environ["PG_DSN"], autocommit=True) as conn:
+        try:
+            return reporte(conn, escenario, rol, construir(conn, escenario, rol))
+        finally:
+            conn.execute("DROP SCHEMA IF EXISTS bronze, silver, gold CASCADE")
+            conn.execute(f"DROP OWNED BY {rol}")
+            conn.execute(f"DROP ROLE IF EXISTS {rol}")
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else "correcto"))
 ```
 
-El script se **ejecuta en la CI contra el servicio postgres:17** y pasa `mypy --strict`. Los RUT y correos son ficticios. Imprime las columnas de cada capa, 10 valores en claro en bronze y 0 en silver y gold, las dos comunas que quedan en gold, que el analista lee gold pero no bronze (`42501`), y el contrato antes y después de un cambio de esquema:
+El script se **ejecuta en la CI contra el servicio postgres:17** y pasa `mypy --strict`. Recorre cuatro pasos: las capas (bronze con `ingested_at` y su purga), la transformación, los controles y la puerta. Las funciones son de nivel superior y reciben la conexión. Los datos son ficticios. Cubre las cuatro dimensiones del §2:
+
+- **Cantidad:** un contrato de columnas por capa; silver y gold no pueden tener columnas que el contrato no apruebe.
+- **Granularidad:** silver pasa la fecha de nacimiento a tramo de edad, la dirección a comuna y las coordenadas a 2 decimales; el teléfono no pasa y el RUT se reemplaza por un HMAC con clave. Gold agrega por comuna y suprime los grupos de un cliente.
+- **Accesibilidad:** el analista lee gold y no bronze (`42501`), probado con su identidad.
+- **Tiempo:** bronze purga lo que ingresó hace más de 30 días, y un control falla si quedan filas vencidas.
+
+El control de «sin datos personales en claro fuera de bronze» recorre todas las tablas de silver y gold. Se basa en la clasificación del catálogo, las columnas marcadas como personales, como las que produce `pii-identification`. El patrón de correo o RUT queda solo de respaldo para el texto libre.
+
+En el escenario correcto, la purga borra la fila vencida, silver queda con las columnas del contrato y la puerta aprueba con código 0:
 
 ```text
-bronze: ['rut', 'nombre', 'email', 'comuna', 'edad', 'monto']; valores con RUT o correo en claro: 10
-silver: ['cliente_key', 'comuna', 'tramo_edad', 'monto']; valores con RUT o correo en claro: 0
-gold: ['comuna', 'clientes', 'monto_total']; valores con RUT o correo en claro: 0
+$ python minimizacion.py correcto
+purga de bronze (plazo 30 días): 1 fila(s)
+silver: ['cliente_key', 'tramo_edad', 'comuna', 'lat', 'lon', 'monto']
 gold: [('Maipú', 2), ('Ñuñoa', 2)]
 analista lee gold: ok (2 filas); lee bronze: denegado (42501)
-contrato: sin columnas fuera del contrato
-tras agregar email a silver, fuera del contrato: {'silver': ['email']}
+puerta: aprobada (0): cantidad, granularidad, accesibilidad y tiempo en regla
 ```
 
-En una CI real esa segunda línea hace fallar el despliegue. **Limitaciones:** el test de patrones no ve identificadores indirectos ni texto libre dentro de una columna aprobada, y el contrato no dice si la finalidad es legítima.
+Si alguien agrega `email` a silver sin aprobarlo, fallan el contrato y el control de datos en claro. Código 1:
+
+```text
+$ python minimizacion.py deriva-esquema
+purga de bronze (plazo 30 días): 1 fila(s)
+silver: ['cliente_key', 'tramo_edad', 'comuna', 'lat', 'lon', 'monto', 'email']
+gold: [('Maipú', 2), ('Ñuñoa', 2)]
+analista lee gold: ok (2 filas); lee bronze: denegado (42501)
+FALLA columnas fuera del contrato: {'silver': ['email']}
+FALLA datos personales en claro fuera de bronze: ['silver.clientes.email']
+puerta: rechazada (1): 2 control(es) fallan
+```
+
+Si silver se construye copiando todo desde bronze, llegan el RUT, el nombre, el correo, el teléfono, la fecha de nacimiento y la dirección en claro. Código 1:
+
+```text
+$ python minimizacion.py select-star
+purga de bronze (plazo 30 días): 1 fila(s)
+silver: ['rut', 'nombre', 'email', 'telefono', 'fecha_nacimiento', 'direccion', 'lat', 'lon', 'monto', 'ingested_at', 'comuna']
+gold: [('Maipú', 2), ('Ñuñoa', 2)]
+analista lee gold: ok (2 filas); lee bronze: denegado (42501)
+FALLA columnas fuera del contrato: {'silver': ['direccion', 'email', 'fecha_nacimiento', 'ingested_at', 'nombre', 'rut', 'telefono']}
+FALLA datos personales en claro fuera de bronze: ['silver.clientes.rut', 'silver.clientes.nombre', 'silver.clientes.email', 'silver.clientes.telefono', 'silver.clientes.fecha_nacimiento', 'silver.clientes.direccion']
+puerta: rechazada (1): 2 control(es) fallan
+```
+
+Si bronze no se purga, conserva la fila vencida y gold la cuenta (Ñuñoa sube a 3). Código 1:
+
+```text
+$ python minimizacion.py sin-purga
+purga de bronze (plazo 30 días): 0 fila(s)
+silver: ['cliente_key', 'tramo_edad', 'comuna', 'lat', 'lon', 'monto']
+gold: [('Maipú', 2), ('Ñuñoa', 3)]
+analista lee gold: ok (2 filas); lee bronze: denegado (42501)
+FALLA bronze conserva 1 fila(s) vencida(s)
+puerta: rechazada (1): 1 control(es) fallan
+```
+
+Limitaciones:
+
+- **Clasificación:** el control confía en el catálogo. Una columna personal sin clasificar pasa, salvo que su texto traiga un correo o un RUT que el respaldo reconozca.
+- **Identificación indirecta:** tramo de edad, comuna y coordenadas a 2 decimales siguen siendo datos personales si se combinan; el umbral de gold reduce el riesgo, no garantiza anonimato.
+- **Finalidad:** el contrato dice qué columnas se aprobaron, no si la finalidad es legítima.
+- **Plazo:** los 30 días de bronze son una política interna de ejemplo, no un plazo legal; la purga borra filas, no copias en respaldos (`privacy-backup-and-recovery`).
 
 ## 11. GCP
 
@@ -332,7 +489,7 @@ En Azure, **Azure SQL** con enmascaramiento dinámico. Según *Dynamic data mask
 
 ## 15. Errores frecuentes
 
-- **`SELECT *` de bronze a silver:** toda columna nueva de la fuente llega sola a silver.
+- **Copiar todas las columnas de bronze a silver** (`SELECT *`): toda columna nueva de la fuente llega sola a silver.
 - **Hash del RUT sin clave en silver:** se revierte probando todos los RUT (`chilean-identifier-pseudonymization`).
 - **Dar acceso a bronze «para depurar» y no quitarlo:** el control de capas queda anulado para esa persona.
 - **Tratar bronze como excepción permanente:** guarda todo sin plazo y se vuelve la copia más expuesta.
@@ -384,7 +541,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-21: texto legal consultado ese día en BCN. `verified`: aprobada por Felipe el 2026-11-01 (`owner_approved_at`). Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-21: texto legal consultado ese día en BCN. `review_required` desde el 2026-11-04: el §10 se reescribió de punta a punta y espera la aprobación de Felipe (la anterior fue el 2026-11-01). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -401,3 +558,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-01: `medallion-architecture` ya tiene ficha (lote 07a): se enlaza en `relations` y en el §17 (cambio mínimo). Sin cambios de contenido.
 - 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
 - 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.
+- 2026-11-04: §10 reescrito de punta a punta (pedido de Felipe), con PostgreSQL 17: funciones de nivel superior que reciben la conexión, sin `assert`; las cuatro dimensiones (contrato de columnas; tramo de edad, comuna, coordenadas a 2 decimales, teléfono que no pasa, HMAC del RUT y agregado con supresión; rol del analista con `42501`; `ingested_at`, purga y control de filas vencidas); el control «sin datos personales en claro fuera de bronze» usa la clasificación del catálogo y deja el patrón como respaldo para texto libre; marcadores `# @paso 1–4` y cuatro escenarios (`correcto`, `deriva-esquema`, `select-star`, `sin-purga`) con su línea `$ python minimizacion.py <escenario>`, iguales a la salida de la CI. §8 con la evidencia nueva y §15 con el código inline correcto. Vuelve a `review_required` hasta la aprobación de Felipe.
