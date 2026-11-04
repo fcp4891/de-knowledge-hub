@@ -1,6 +1,6 @@
 import { InlineText } from "@/components/markdown/InlineText";
 import type { ConceptRefs } from "@/lib/conceptNames";
-import { readInlineArrows, type ArrowRun } from "@/lib/inlineArrows";
+import { groupArrowRuns, readInlineArrows, type ArrowRun } from "@/lib/inlineArrows";
 import type { ObligationBasis } from "@/lib/legal";
 import type { Inline } from "@/lib/markdown";
 
@@ -23,7 +23,7 @@ function ArrowRuns({
   conceptRefs?: ConceptRefs;
   markCodeStatus: boolean;
 }) {
-  return runs.map((run, index) => {
+  const renderRun = (run: ArrowRun, index: number) => {
     if (run.kind === "space") {
       return (
         <span key={index} className="flow-space">
@@ -52,6 +52,17 @@ function ArrowRuns({
       );
     }
     return <span key={index}>{body}</span>;
+  };
+  return groupArrowRuns(runs).map((group, groupIndex) => {
+    const body = group.runs.map((run, index) => renderRun(run, index));
+    if (!group.nowrap) {
+      return <span key={groupIndex}>{body}</span>;
+    }
+    return (
+      <span key={groupIndex} className="flow-pair">
+        {body}
+      </span>
+    );
   });
 }
 

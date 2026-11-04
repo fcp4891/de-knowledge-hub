@@ -3,7 +3,7 @@ import { DomainRoute, type GoalDomain, type RouteStage, type RouteStudy } from "
 import { LegalFactLink } from "@/components/legal/LegalFactLink";
 import { getConcept, getDomain, listDomains, listStudyStates } from "@/lib/api/client";
 import type { ApiResult, DomainDetail } from "@/lib/api/types";
-import { BAND_LABEL } from "@/lib/publishedScope";
+import { BAND_LABEL, isStagePublished, visibleStages } from "@/lib/publishedScope";
 import { PRIVACY_LAB, STUDY_PATH, verifiedLegend } from "@/lib/privacySpace";
 
 const SPACE_NOTICE = "Este contenido no es asesoría legal.";
@@ -99,7 +99,7 @@ export default async function PrivacyPage() {
       blueprintIndex: index,
     })),
   });
-  const stages: RouteStage[] = data.subdomains.map(toStage);
+  const stages: RouteStage[] = visibleStages(data.subdomains.map(toStage));
   const slugs = new Set(stages.flatMap((stage) => stage.concepts.map((concept) => concept.slug)));
   const withPage = stages.flatMap((stage) => stage.concepts.filter((concept) => concept.hasPage).map((concept) => concept.slug));
   const [studyResult, catalog, minutes] = await Promise.all([
@@ -128,8 +128,10 @@ export default async function PrivacyPage() {
         bandLabel={BAND_LABEL}
         notice={SPACE_NOTICE}
         readingPath={STUDY_PATH}
-        verifiedTotal={data.concept_count}
-        disabledStage={{ id: PRIVACY_LAB.id, title: PRIVACY_LAB.label }}
+        verifiedTotal={stages.reduce((sum, stage) => sum + stage.concepts.length, 0)}
+        disabledStage={
+          isStagePublished(PRIVACY_LAB.id) ? { id: PRIVACY_LAB.id, title: PRIVACY_LAB.label } : undefined
+        }
         asideExtra={data.legal_framework ? <LegalCard framework={data.legal_framework} /> : null}
       />
     </>

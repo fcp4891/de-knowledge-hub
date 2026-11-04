@@ -12,7 +12,7 @@
 .construction-mark,
 .ficha-construction-mark {
   display: inline-block;
-  margin-left: 0.4em;
+  margin-left: 0.45em;
   padding: 0.05em 0.45em;
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-pill);

@@ -16,14 +16,17 @@ import {
   inPublishedSearch,
   isDomainPublished,
   isGoalPublished,
+  isStagePublished,
   layerIsClosed,
   relationVisible,
   requirementPlainText,
   scopeFromConcepts,
   snippetListed,
+  PUBLISHED_STAGES,
   stepHref,
   visibleGoals,
   visibleLayers,
+  visibleStages,
 } from "../../frontend/lib/publishedScope.ts";
 
 const HOME = readFileSync(new URL("../../frontend/components/home/HomeScreen.tsx", import.meta.url), "utf8");
@@ -104,6 +107,32 @@ test("un enlace del §17 a una ficha fuera de alcance no lleva href", () => {
   assert.equal("href" in outside, false);
   assert.equal(CONSTRUCTION_MARK, "en construcción");
   assert.equal(conceptInline("pii-identification", refs).kind, "link");
+});
+
+test("los tramos publicados ocultan marcos regulatorios y el laboratorio", () => {
+  assert.deepEqual(
+    [...PUBLISHED_STAGES],
+    [
+      "fundamentos",
+      "diseno-protegido",
+      "derechos-ciclo-vida",
+      "riesgo-terceros-incidentes",
+      "evidencia-automatizacion",
+    ],
+  );
+  assert.equal(isStagePublished("regulatory-frameworks"), false);
+  assert.equal(isStagePublished("laboratorio"), false);
+  const stages = [
+    { slug: "fundamentos" },
+    { slug: "regulatory-frameworks" },
+    { slug: "laboratorio" },
+  ];
+  assert.deepEqual(visibleStages(stages).map((stage) => stage.slug), ["fundamentos"]);
+  const withFrameworks = [...PUBLISHED_STAGES, "regulatory-frameworks", "laboratorio"];
+  assert.equal(isStagePublished("regulatory-frameworks", withFrameworks), true);
+  assert.equal(visibleStages(stages, withFrameworks).length, 3);
+  assert.match(HOME, /visibleStages\(domain\.stages\)/);
+  assert.match(HOME, /isStagePublished\(step\.stage\)/);
 });
 
 test("con SHOW_UNPUBLISHED en false, Inicio y el mapa ocultan lo no publicado", () => {

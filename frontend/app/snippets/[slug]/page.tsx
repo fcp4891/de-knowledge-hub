@@ -110,7 +110,10 @@ export default async function SnippetPage({ params }: { params: Promise<{ slug: 
                       <span>
                         {concept.title}
                         {named.kind === "construction" ? (
-                          <span className="ficha-construction-mark">{CONSTRUCTION_MARK}</span>
+                          <>
+                            {" "}
+                            <span className="ficha-construction-mark">{CONSTRUCTION_MARK}</span>
+                          </>
                         ) : null}
                       </span>
                     )}

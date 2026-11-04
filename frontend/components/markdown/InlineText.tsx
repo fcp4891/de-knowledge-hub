@@ -130,8 +130,7 @@ export function InlineText({
       if (named.kind === "construction") {
         return (
           <span key={key} className="ficha-pending">
-            {named.label}
-            <span className="ficha-construction-mark">{CONSTRUCTION_MARK}</span>
+            {named.label} <span className="ficha-construction-mark">{CONSTRUCTION_MARK}</span>
           </span>
         );
       }

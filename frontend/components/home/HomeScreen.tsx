@@ -14,11 +14,13 @@ import {
   SHOW_UNPUBLISHED,
   isDomainPublished,
   isGoalPublished,
+  isStagePublished,
   layerIsClosed,
   requirementPlainText,
   stepHref,
   visibleGoals,
   visibleLayers,
+  visibleStages,
 } from "@/lib/publishedScope";
 import { listStoredStudy, subscribePersonal } from "@/lib/personalStore";
 import { CARD_SECTION_COUNT, readReadingProgress, type ReadingProgress } from "@/lib/readingProgress";
@@ -258,7 +260,8 @@ function GoalCard({ goal, pressed, onPick }: { goal: Goal; pressed: boolean; onP
 }
 
 function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsById: Map<string, HomeDomain> }) {
-  const first = goal?.steps[0];
+  const steps = goal ? goal.steps.filter((step) => !step.stage || isStagePublished(step.stage)) : [];
+  const first = steps[0];
   const firstDomain = first ? domainsById.get(first.domain) : undefined;
   const firstStage = first?.stage ? firstDomain?.stages.find((stage) => stage.slug === first.stage) : undefined;
   const firstName = firstStage?.title ?? (first ? SHORT_NAMES[first.domain] : undefined);
@@ -268,7 +271,7 @@ function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsById: Map<
     <section className="home-itinerary" aria-labelledby="itin">
       <div className="home-itinerary-head">
         <h2 id="itin">Tu itinerario</h2>
-        {goal ? <span className="home-note">{goal.steps.length} pasos</span> : null}
+        {goal ? <span className="home-note">{steps.length} pasos</span> : null}
       </div>
       {goal ? (
         <>
@@ -276,7 +279,7 @@ function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsById: Map<
             {goal.requires} Los pasos esenciales van primero en importancia; los complementarios amplían.
           </p>
           <ol className="home-steps">
-            {goal.steps.map((step, index) => {
+            {steps.map((step, index) => {
               const domain = domainsById.get(step.domain);
               const stage = step.stage ? domain?.stages.find((item) => item.slug === step.stage) : undefined;
               const layer = step.stage ? undefined : LAYERS.find((item) => item.domains.includes(step.domain));
@@ -318,7 +321,7 @@ function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsById: Map<
                         {index + 1}
                       </span>
                     )}
-                    <span className="home-step-line" data-last={index === goal.steps.length - 1} />
+                    <span className="home-step-line" data-last={index === steps.length - 1} />
                   </span>
                   {href ? <Link href={href}>{body}</Link> : <span className="home-step-text">{body}</span>}
                 </li>
@@ -361,7 +364,7 @@ function PlatformMap({ path, domainsById }: { path: GoalPath; domainsById: Map<s
 
 function SpecializationBand({ domain, path }: { domain: HomeDomain; path: GoalPath }) {
   const open = isDomainPublished(domain);
-  const visible = domain.stages.filter((stage) => stage.slug !== "regulatory-frameworks");
+  const visible = visibleStages(domain.stages);
   const stations = visible.map((stage) => ({
     id: stage.slug,
     name: stage.title,

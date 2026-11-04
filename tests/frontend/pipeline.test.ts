@@ -99,6 +99,8 @@ test("ocho pasos a 390 px se apilan en vertical", () => {
   assert.equal(pipelineLayout(5, 1440), "row");
   const css = readFileSync(join(import.meta.dirname, "../../frontend/components/markdown/pipeline.css"), "utf8");
   assert.match(css, /max-width:\s*450px/);
+  assert.match(css, /justify-content:\s*center/);
+  assert.match(css, /width:\s*100%/);
   assert.match(css, /pipeline-arrow-stack/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
 });
