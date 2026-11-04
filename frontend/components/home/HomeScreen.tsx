@@ -10,11 +10,15 @@ import {
   BAND_LABEL,
   CONSTRUCTION_BADGE,
   CONSTRUCTION_LAYER,
+  MORE_ROUTES,
+  SHOW_UNPUBLISHED,
   isDomainPublished,
   isGoalPublished,
   layerIsClosed,
   requirementPlainText,
   stepHref,
+  visibleGoals,
+  visibleLayers,
 } from "@/lib/publishedScope";
 import { listStoredStudy, subscribePersonal } from "@/lib/personalStore";
 import { CARD_SECTION_COUNT, readReadingProgress, type ReadingProgress } from "@/lib/readingProgress";
@@ -155,10 +159,11 @@ export function HomeScreen({
           <span className="home-note">Ordenados de inicial a avanzado</span>
         </div>
         <div className="home-goals">
-          {GOALS.map((item) => (
+          {visibleGoals(GOALS).map((item) => (
             <GoalCard key={item.key} goal={item} pressed={item.key === goalKey} onPick={pickGoal} />
           ))}
         </div>
+        {SHOW_UNPUBLISHED ? null : <p className="scope-more">{MORE_ROUTES}</p>}
         <p className="home-note">
           Próximamente:{" "}
           {UPCOMING_GOALS.map((item, index) => (
@@ -343,10 +348,13 @@ function PlatformMap({ path, domainsById }: { path: GoalPath; domainsById: Map<s
   const special = [...domainsById.values()].find((domain) => domain.band === "especializacion") ?? null;
   return (
     <section className="home-map" aria-label="Mapa de la plataforma">
-      {special && special.stages.length > 0 ? <SpecializationBand domain={special} path={path} /> : null}
-      {LAYERS.map((layer) => (
+      {special && special.stages.length > 0 && (SHOW_UNPUBLISHED || isDomainPublished(special)) ? (
+        <SpecializationBand domain={special} path={path} />
+      ) : null}
+      {visibleLayers(LAYERS).map((layer) => (
         <LayerRow key={layer.key} layer={layer} path={path} domainsById={domainsById} />
       ))}
+      {SHOW_UNPUBLISHED ? null : <p className="scope-more">{MORE_ROUTES}</p>}
     </section>
   );
 }

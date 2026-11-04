@@ -8,6 +8,8 @@ import {
   BAND_LABEL,
   CONSTRUCTION_LAYER,
   CONSTRUCTION_MARK,
+  MORE_ROUTES,
+  SHOW_UNPUBLISHED,
   PUBLISHED_DOMAINS,
   PUBLISHED_GOALS,
   explorerHref,
@@ -20,6 +22,8 @@ import {
   scopeFromConcepts,
   snippetListed,
   stepHref,
+  visibleGoals,
+  visibleLayers,
 } from "../../frontend/lib/publishedScope.ts";
 
 const HOME = readFileSync(new URL("../../frontend/components/home/HomeScreen.tsx", import.meta.url), "utf8");
@@ -100,6 +104,20 @@ test("un enlace del §17 a una ficha fuera de alcance no lleva href", () => {
   assert.equal("href" in outside, false);
   assert.equal(CONSTRUCTION_MARK, "en construcción");
   assert.equal(conceptInline("pii-identification", refs).kind, "link");
+});
+
+test("con SHOW_UNPUBLISHED en false, Inicio y el mapa ocultan lo no publicado", () => {
+  assert.equal(SHOW_UNPUBLISHED, false);
+  assert.equal(MORE_ROUTES, "Más rutas en construcción");
+  assert.deepEqual(
+    visibleGoals(GOALS).map((goal) => goal.key),
+    ["ley21719"],
+  );
+  assert.equal(visibleLayers(LAYERS).length, 0);
+  assert.equal(visibleGoals(GOALS, true).length, GOALS.length);
+  assert.equal(visibleLayers(LAYERS, true).length, LAYERS.length);
+  assert.match(HOME, /visibleGoals\(GOALS\)/);
+  assert.match(HOME, /\{MORE_ROUTES\}/);
 });
 
 test("agregar un dominio a la lista reactiva su estación y sus fichas", () => {

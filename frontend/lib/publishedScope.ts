@@ -9,7 +9,11 @@ export const PUBLISHED_DOMAINS: readonly PublishedDomain[] = [
 
 export const PUBLISHED_GOALS: readonly string[] = ["ley21719"];
 
+/** false oculta lo no publicado. true vuelve al modo atenuado. */
+export const SHOW_UNPUBLISHED = false;
+
 export const BAND_LABEL = "Protección de datos personales";
+export const MORE_ROUTES = "Más rutas en construcción";
 
 export const CONSTRUCTION_LAYER = "En construcción · la estamos escribiendo ficha a ficha";
 export const CONSTRUCTION_MARK = "en construcción";
@@ -29,6 +33,21 @@ export function isDomainPublished(
 
 export function isGoalPublished(key: string, goals: readonly string[] = PUBLISHED_GOALS): boolean {
   return goals.includes(key);
+}
+
+export function visibleGoals<T extends { key: string }>(
+  goals: readonly T[],
+  showUnpublished: boolean = SHOW_UNPUBLISHED,
+): T[] {
+  return showUnpublished ? [...goals] : goals.filter((goal) => isGoalPublished(goal.key));
+}
+
+export function visibleLayers<T extends { domains: readonly string[] }>(
+  layers: readonly T[],
+  showUnpublished: boolean = SHOW_UNPUBLISHED,
+  published: readonly PublishedDomain[] = PUBLISHED_DOMAINS,
+): T[] {
+  return showUnpublished ? [...layers] : layers.filter((layer) => !layerIsClosed(layer.domains, published));
 }
 
 /** La banda visual está apagada cuando ninguno de sus dominios está publicado. */
