@@ -3,14 +3,13 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 
-import { GOALS, LAYERS, SHORT_NAMES, UPCOMING_GOALS, type Goal, type Layer } from "@/lib/learning-paths";
+import { GOALS, LAYERS, SHORT_NAMES, type Goal, type Layer } from "@/lib/learning-paths";
 import { contentStatus, paintStation, type GoalPath } from "@/lib/platformMap";
 import { goalPathIds, PRIVACY_SPACE_HREF } from "@/lib/privacySpace";
 import {
   BAND_LABEL,
   CONSTRUCTION_BADGE,
   CONSTRUCTION_LAYER,
-  MORE_ROUTES,
   SHOW_UNPUBLISHED,
   isDomainPublished,
   isGoalPublished,
@@ -163,17 +162,6 @@ export function HomeScreen({
             <GoalCard key={item.key} goal={item} pressed={item.key === goalKey} onPick={pickGoal} />
           ))}
         </div>
-        {SHOW_UNPUBLISHED ? null : <p className="scope-more">{MORE_ROUTES}</p>}
-        <p className="home-note">
-          Próximamente:{" "}
-          {UPCOMING_GOALS.map((item, index) => (
-            <span key={item.label}>
-              {index > 0 ? " y " : null}
-              <strong>{item.label}</strong> ({item.reason})
-            </span>
-          ))}
-          .
-        </p>
       </section>
 
       <div className="home-split">
@@ -354,7 +342,6 @@ function PlatformMap({ path, domainsById }: { path: GoalPath; domainsById: Map<s
       {visibleLayers(LAYERS).map((layer) => (
         <LayerRow key={layer.key} layer={layer} path={path} domainsById={domainsById} />
       ))}
-      {SHOW_UNPUBLISHED ? null : <p className="scope-more">{MORE_ROUTES}</p>}
     </section>
   );
 }

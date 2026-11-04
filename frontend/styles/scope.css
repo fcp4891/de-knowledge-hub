@@ -44,13 +44,6 @@
   color: var(--ink-muted);
 }
 
-.scope-more {
-  margin: 8px 0 0;
-  color: var(--ink-muted);
-  font-size: var(--text-sm);
-  line-height: 1.45;
-}
-
 .scope-layer-note {
   margin: 0;
   color: var(--ink-3);

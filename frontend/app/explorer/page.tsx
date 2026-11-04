@@ -7,7 +7,6 @@ import { LAYERS, SHORT_NAMES } from "@/lib/learning-paths";
 import {
   BAND_LABEL,
   CONSTRUCTION_LAYER,
-  MORE_ROUTES,
   SHOW_UNPUBLISHED,
   isDomainPublished,
   layerIsClosed,
@@ -67,7 +66,6 @@ export default async function ExplorerPage() {
               conceptsOk={concepts.ok}
             />
           ) : null}
-          {SHOW_UNPUBLISHED ? null : <p className="scope-more">{MORE_ROUTES}</p>}
         </div>
       ) : (
         <ApiFailure result={domains} />

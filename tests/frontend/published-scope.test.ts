@@ -8,7 +8,6 @@ import {
   BAND_LABEL,
   CONSTRUCTION_LAYER,
   CONSTRUCTION_MARK,
-  MORE_ROUTES,
   SHOW_UNPUBLISHED,
   PUBLISHED_DOMAINS,
   PUBLISHED_GOALS,
@@ -108,7 +107,6 @@ test("un enlace del §17 a una ficha fuera de alcance no lleva href", () => {
 
 test("con SHOW_UNPUBLISHED en false, Inicio y el mapa ocultan lo no publicado", () => {
   assert.equal(SHOW_UNPUBLISHED, false);
-  assert.equal(MORE_ROUTES, "Más rutas en construcción");
   assert.deepEqual(
     visibleGoals(GOALS).map((goal) => goal.key),
     ["ley21719"],
@@ -117,7 +115,7 @@ test("con SHOW_UNPUBLISHED en false, Inicio y el mapa ocultan lo no publicado", 
   assert.equal(visibleGoals(GOALS, true).length, GOALS.length);
   assert.equal(visibleLayers(LAYERS, true).length, LAYERS.length);
   assert.match(HOME, /visibleGoals\(GOALS\)/);
-  assert.match(HOME, /\{MORE_ROUTES\}/);
+  assert.doesNotMatch(HOME, /MORE_ROUTES|Próximamente/);   // sin «Más rutas en construcción» ni la línea «Próximamente» (Felipe, 2026-11-04)
 });
 
 test("agregar un dominio a la lista reactiva su estación y sus fichas", () => {

@@ -13,7 +13,6 @@ export const PUBLISHED_GOALS: readonly string[] = ["ley21719"];
 export const SHOW_UNPUBLISHED = false;
 
 export const BAND_LABEL = "Protección de datos personales";
-export const MORE_ROUTES = "Más rutas en construcción";
 
 export const CONSTRUCTION_LAYER = "En construcción · la estamos escribiendo ficha a ficha";
 export const CONSTRUCTION_MARK = "en construcción";

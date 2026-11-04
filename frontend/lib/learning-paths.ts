@@ -125,12 +125,6 @@ export const GOALS: Goal[] = [
   },
 ];
 
-// Objetivos futuros: se muestran solo como texto "Próximamente".
-export const UPCOMING_GOALS = [
-  { label: 'Pipeline en GCP', reason: 'filtrará conceptos y componentes de Google Cloud' },
-  { label: 'Entrevista para un rol', reason: 'alineará el contenido a la oferta que entregues' },
-];
-
 // Agrupación de las 22 secciones de la ficha en el índice lateral.
 export const CARD_SECTION_GROUPS: { group: string; sections: number[] }[] = [
   { group: 'Entender', sections: [1, 2, 3, 4, 5, 6] },
