@@ -66,7 +66,8 @@ relations:
 created_at: 2026-10-21
 updated_at: 2026-11-04
 last_verified: 2026-10-25
-verification_status: review_required
+owner_approved_at: 2026-11-04
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -515,7 +516,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-22: arts. 2, 3, 14 quinquies, 16 bis, 16 quinquies y 26 consultados ese día en BCN. `review_required` desde el 2026-11-04: el §10 se reescribió de punta a punta y espera la aprobación de Felipe. Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-22: arts. 2, 3, 14 quinquies, 16 bis, 16 quinquies y 26 consultados ese día en BCN. `verified`: aprobada de nuevo por Felipe el 2026-11-04 (`owner_approved_at`), con el §10 revisado en P10. Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -533,3 +534,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.
 - 2026-11-04: §10 reescrito de punta a punta (pedido de Felipe): pasos `# @paso 1–4` (normalizar y validar, seudónimo por dominio, ataque al hash simple, anonimizar y puerta); salida en frases; seudónimo con el id de la llave y rotación de k1 a k2 con su tabla de correspondencia; puerta de publicación con `K_MIN` y cuasi-identificadores declarados; tres escenarios (`publicar-exacto`, `publicar-generalizado`, `sin-normalizar`) con su línea `$ python seudonimizacion.py <escenario>`, iguales a la salida de la CI. Vuelve a `review_required` hasta la aprobación de Felipe.
 - 2026-11-04: revisión `docs/reviews/p10.md` aplicada (pedido de Felipe): `publicar-generalizado` ya no dice «se publica como anonimizado», sino que pasa la puerta de k según la política interna y que la anonimización requiere la evaluación de reidentificación (art. 2 k)); la salida informa cuántos grupos se suprimieron, sin sus cuasi-identificadores; la llave por dominio se demuestra con una unión real (0 coincidencias; 2 con llave compartida); el DV inválido se aparta a una lista de cuarentena con id y motivo, sin el valor. Sigue `review_required`.
+- 2026-11-04: aprobada por Felipe con la revisión P10 aplicada (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).

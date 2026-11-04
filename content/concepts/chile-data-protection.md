@@ -95,7 +95,8 @@ relations:
 created_at: 2026-10-21
 updated_at: 2026-11-04
 last_verified: 2026-10-28
-verification_status: review_required
+owner_approved_at: 2026-11-04
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -453,7 +454,7 @@ def replay(p: Platform) -> list[Row]:   # lo que vuelve a cargarse si se reconst
 
 # @paso 2 Controles
 def access_review(p: Platform) -> tuple[str, str]:
-    """Art. 3 h) Confidencialidad: «quienes tengan acceso a ellos deberán guardar secreto o confidencialidad»; «este
+    """Art. 3 h) Confidencialidad: «quienes tengan acceso a ellos deberán guardar secreto o confidencialidad»; «Este
     deber subsiste aún después de concluida la relación con el titular». Control técnico para la confidencialidad: un
     usuario inactivo no conserva acceso (authorized ⇒ active); esa regla es del ejemplo, no de la ley."""
     holders = [u.name for u in p.users if u.authorized and not u.active]
@@ -734,7 +735,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-28: textos legales vueltos a consultar en BCN (sin cambios) y estado del boletín 18.623-07 en el Senado (aprobado por el Senado y despachado a la Cámara). Antes, 2026-10-25: textos legales vueltos a consultar, sin cambios, y 2026-10-22: articulado, vigencia, estado del boletín 18.623-07 y Decreto 662 consultados ese día en BCN y en el Senado. `review_required` desde el 2026-11-04: revisión P10 aplicada al §10; vuelve a `verified` cuando Felipe la apruebe (`owner_approved_at`). Revisión mensual, y extraordinaria si se publica la ley de postergación.
+2026-10-28: textos legales vueltos a consultar en BCN (sin cambios) y estado del boletín 18.623-07 en el Senado (aprobado por el Senado y despachado a la Cámara). Antes, 2026-10-25: textos legales vueltos a consultar, sin cambios, y 2026-10-22: articulado, vigencia, estado del boletín 18.623-07 y Decreto 662 consultados ese día en BCN y en el Senado. `verified`: aprobada de nuevo por Felipe el 2026-11-04 (`owner_approved_at`), con el §10 revisado en P10. Revisión mensual, y extraordinaria si se publica la ley de postergación.
 
 ## 22. Historial de cambios importantes
 
@@ -762,3 +763,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-03: aprobada por Felipe con el §10 nuevo (`owner_approved_at: 2026-11-03`); vuelve a `verified` (ADR-023).
 - 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.
 - 2026-11-04: revisión `docs/reviews/p10.md` aplicada (pedido de Felipe): los docstrings del §10 citan el texto del art. 3 (confidencialidad con «la relación con el titular»; calidad «exactos, completos, actuales y pertinentes»; proporcionalidad «suprimidos o anonimizados») y dejan aparte, como control técnico, lo que la ley no fija (acceso del inactivo, replay, huella SHA-256); el párrafo del §10 nombra en negrita los principios, sin «la letra». Vuelve a `review_required`.
+- 2026-11-04: aprobada por Felipe con la revisión P10 y su verificación aplicadas (cita de confidencialidad con «Este», como en BCN) (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).

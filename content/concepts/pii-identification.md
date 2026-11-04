@@ -77,7 +77,8 @@ relations:
 created_at: 2026-10-21
 updated_at: 2026-11-04
 last_verified: 2026-10-25
-verification_status: review_required
+owner_approved_at: 2026-11-04
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -539,7 +540,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-21: texto legal consultado ese día en BCN. `review_required` desde el 2026-11-04: revisión P10 aplicada al §10; vuelve a `verified` cuando Felipe la apruebe (`owner_approved_at`). Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-21: texto legal consultado ese día en BCN. `verified`: aprobada de nuevo por Felipe el 2026-11-04 (`owner_approved_at`), con el §10 revisado en P10. Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -558,3 +559,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-03: §10 reescrito de punta a punta (pedido de Felipe): muestra → detección en cuatro frentes (identificadores directos con `clasificar_rut` y correo; sensibles por nombre comparando por token; sensibles en el contenido con un diccionario mínimo; combinación única de `comuna` + `edad`) → catálogo con fundamento, fecha y revisor → puerta con código de salida 0/1; marcadores `# @paso 1–4` y tres escenarios (`muestra`, `revisado`, `fuente-nueva`) con su línea `$ python detector.py <escenario>`, iguales a la salida de la CI. §15 suma el falso positivo por substring y §8 la evidencia de la puerta. Vuelve a `review_required` hasta la aprobación de Felipe.
 - 2026-11-03: aprobada por Felipe con el §10 nuevo (`owner_approved_at: 2026-11-03`); vuelve a `verified` (ADR-023).
 - 2026-11-04: revisión `docs/reviews/p10.md` aplicada (pedido de Felipe): en §15, el ejemplo falso «renta» en `herramienta_id` pasa a `rentabilidad_producto`, que sí contiene la subcadena; un test lo comprueba contra la ficha. Vuelve a `review_required`.
+- 2026-11-04: aprobada por Felipe con la revisión P10 aplicada (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).

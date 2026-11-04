@@ -60,7 +60,8 @@ relations:
 created_at: 2026-10-21
 updated_at: 2026-11-04
 last_verified: 2026-10-28
-verification_status: review_required
+owner_approved_at: 2026-11-04
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -467,7 +468,7 @@ Limitaciones:
 
 - **Consentimiento:** el ejemplo verifica que la actividad tenga un registro de consentimientos vinculado, con versión del texto y fecha; no que cada titular haya consentido ni que la revocación funcione.
 - **Finalidad real:** los campos permitidos se declaran a mano, y el control ve las columnas que se leen, no para qué se usan.
-- **Cobertura:** solo ve los usos que el linaje y los logs registran. Una cuenta sin mapear queda en `UNKNOWN` y bloquea, pero un uso que no deja registro no aparece.
+- **Cobertura:** solo ve los usos que el linaje y los logs registran. Una cuenta sin mapear queda en `UNKNOWN`: en la conciliación operacional deja el resultado en 1 como alerta, y en la puerta de despliegue bloquea. Un uso que no deja registro no aparece.
 - **Momento:** el código cubre los dos momentos, pero solo la puerta de la CI bloquea, y solo despliegues nuevos. La conciliación de lo que ya corre sale 1 con hallazgos; ese 1 es la alerta operacional del §9, no detiene un consumo en producción, y quién lo revisa y en qué plazo queda fuera del ejemplo.
 - **Política:** el insumo del art. 14 ter es un borrador para que privacidad lo revise, no la política publicada.
 
@@ -564,7 +565,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-28: art. 3 c) consultado en BCN para agregarlo; *About data lineage* consultada de nuevo. Antes, 2026-10-25: textos legales vueltos a consultar en BCN, sin cambios, y 2026-10-22: arts. 3, 12, 13, 14, 14 ter y 34 ter consultados ese día. `review_required` desde el 2026-11-04: revisión P10 aplicada al §10; vuelve a `verified` cuando Felipe la apruebe (`owner_approved_at`). Revisión mensual.
+2026-10-28: art. 3 c) consultado en BCN para agregarlo; *About data lineage* consultada de nuevo. Antes, 2026-10-25: textos legales vueltos a consultar en BCN, sin cambios, y 2026-10-22: arts. 3, 12, 13, 14, 14 ter y 34 ter consultados ese día. `verified`: aprobada de nuevo por Felipe el 2026-11-04 (`owner_approved_at`), con el §10 revisado en P10. Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -584,3 +585,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-03: §10 reescrito de punta a punta (pedido de Felipe): registro → usos observados (cuenta, activo, columnas) → conciliación → insumo del art. 14 ter → código de salida 0/1, con funciones que reciben el registro como parámetro; `Base` como `Literal` con el artículo en un mapa aparte, plazo en meses, aprobación con vencimiento y campos permitidos; brechas nuevas de **proporcionalidad**, consentimiento sin registro, aprobación vencida y consumidor no identificado (`UNKNOWN`); marcadores `# @paso 1–4` y tres escenarios (`actual`, `corregido`, `despliegue-nuevo`) con su línea `$ python inventario.py <escenario>`, iguales a la salida de la CI. §8 suma la evidencia de la conciliación y §15 el consumidor sin identificar. Vuelve a `review_required` hasta la aprobación de Felipe.
 - 2026-11-04: aprobada por Felipe con el §10 nuevo (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).
 - 2026-11-04: revisión `docs/reviews/p10.md` aplicada (pedido de Felipe): el §10 separa la conciliación operacional (`actual` y `corregido`: alerta sobre consumos que ya corren, 1 con hallazgos) de la puerta de la CI (`despliegue-nuevo`: cuatro despliegues contra el registro de hoy, tres bloqueados); un despliegue con su actividad sin aprobación vigente se informa como «actividad no vigente», no como «no declarado». Limitación «Momento», §8 y §9 ajustados. Vuelve a `review_required`.
+- 2026-11-04: aprobada por Felipe con la revisión P10 y su verificación aplicadas (limitación «Cobertura»: `UNKNOWN` es alerta en la conciliación y bloqueo en la puerta de despliegue) (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).
