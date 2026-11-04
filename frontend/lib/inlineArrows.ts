@@ -221,3 +221,102 @@ export function readInlineArrows(inlines: readonly Inline[]): ArrowRun[] | null 
   pushText(cursor, text.length);
   return runs;
 }
+
+function runText(run: ArrowRun): string {
+  if (run.kind === "pill" || run.kind === "text") {
+    return run.inlines.map((part) => part.value).join("");
+  }
+  return "";
+}
+
+function isTerm(run: ArrowRun): boolean {
+  return run.kind === "pill" || run.kind === "text";
+}
+
+/** Un término de la flecha cabe en el grupo si es píldora o cabe en tres palabras. */
+function shortTerm(run: ArrowRun): boolean {
+  if (run.kind === "pill") {
+    return true;
+  }
+  if (run.kind !== "text") {
+    return false;
+  }
+  const parts = runText(run).trim().split(/\s+/).filter(Boolean);
+  return parts.length >= 1 && parts.length <= 3;
+}
+
+function splitFirstWord(run: ArrowRun): [ArrowRun, ArrowRun | null] {
+  if ((run.kind !== "text" && run.kind !== "pill") || run.inlines.length !== 1) {
+    return [run, null];
+  }
+  const inline = run.inlines[0];
+  if (!inline) {
+    return [run, null];
+  }
+  const match = /^(\s*\S+)([\s\S]*)$/.exec(inline.value);
+  if (!match?.[1] || !match[2]) {
+    return [run, null];
+  }
+  return [
+    { kind: run.kind, inlines: [{ ...inline, value: match[1] }] },
+    { kind: run.kind, inlines: [{ ...inline, value: match[2] }] },
+  ];
+}
+
+/** Cada flecha queda en un grupo con el término de cada lado, para no partir la línea. */
+export function groupArrowRuns(runs: readonly ArrowRun[]): { nowrap: boolean; runs: ArrowRun[] }[] {
+  const out: { nowrap: boolean; runs: ArrowRun[] }[] = [];
+  let index = 0;
+  while (index < runs.length) {
+    const start = runs[index];
+    if (!start || !isTerm(start)) {
+      if (start) {
+        out.push({ nowrap: false, runs: [start] });
+      }
+      index += 1;
+      continue;
+    }
+    const grouped: ArrowRun[] = [start];
+    let cursor = index + 1;
+    let sawArrow = false;
+    let tail: ArrowRun | null = null;
+    while (cursor < runs.length) {
+      let look = cursor;
+      while (look < runs.length && runs[look]?.kind === "space") {
+        look += 1;
+      }
+      if (look >= runs.length || runs[look]?.kind !== "arrow") {
+        break;
+      }
+      const arrowEnd = look + 1;
+      let after = arrowEnd;
+      while (after < runs.length && runs[after]?.kind === "space") {
+        after += 1;
+      }
+      const next = runs[after];
+      if (!next || !isTerm(next)) {
+        break;
+      }
+      const piece = shortTerm(next) ? next : splitFirstWord(next)[0];
+      const rest = shortTerm(next) ? null : splitFirstWord(next)[1];
+      grouped.push(...runs.slice(cursor, after), piece);
+      sawArrow = true;
+      cursor = shortTerm(next) ? after + 1 : after + 1;
+      tail = rest;
+      if (rest) {
+        break;
+      }
+    }
+    if (sawArrow) {
+      out.push({ nowrap: true, runs: grouped });
+      if (tail) {
+        out.push({ nowrap: false, runs: [tail] });
+      }
+      index = cursor;
+      continue;
+    }
+    out.push({ nowrap: false, runs: [start] });
+    index += 1;
+  }
+  return out;
+}

@@ -24,8 +24,11 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: stretch;
+  justify-content: center;
   gap: 4px;
-  margin: 0;
+  width: max-content;
+  max-width: 100%;
+  margin: 0 auto;
   padding: 0;
   list-style: none;
 }
@@ -114,10 +117,14 @@
   vertical-align: baseline;
 }
 
+.flow-pair {
+  white-space: nowrap;
+}
+
 .flow-arrow {
   display: inline-flex;
   align-items: center;
-  margin-inline: 4px;
+  margin-inline: 0.25em;
   vertical-align: middle;
 }
 
@@ -161,6 +168,9 @@
   .markdown ol.pipeline[data-steps="many"] {
     flex-direction: column;
     align-items: stretch;
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0;
   }
 
   .pipeline-item,

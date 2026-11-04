@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { test } from "node:test";
 
-import { readInlineArrows, type ArrowRun } from "../../frontend/lib/inlineArrows.ts";
+import { groupArrowRuns, readInlineArrows, type ArrowRun } from "../../frontend/lib/inlineArrows.ts";
 import { parseMarkdown, type Inline, type ListItem } from "../../frontend/lib/markdown.ts";
 import { readPipeline } from "../../frontend/lib/pipeline.ts";
 
@@ -95,6 +95,18 @@ test("la celda de flujos es flecha en línea", () => {
     show(readInlineArrows(inlines)),
     "[Flujos Chile] → [Brasil] o Brasil → Chile tratados como si tuvieran adecuación",
   );
+});
+
+test("comuna y región quedan en el mismo grupo que la flecha", () => {
+  const runs = readInlineArrows(item("generalizar (comuna → región, año → década)"));
+  const groups = groupArrowRuns(runs ?? []);
+  const glued = groups.filter((group) => group.nowrap);
+  assert.equal(glued.length, 2);
+  assert.match(show(glued[0]?.runs ?? null) ?? "", /\[comuna\] → \[región\]/);
+  assert.match(show(glued[1]?.runs ?? null) ?? "", /\[año\] → \[década\]/);
+  const css = readFileSync(join(import.meta.dirname, "../../frontend/components/markdown/pipeline.css"), "utf8");
+  assert.match(css, /\.flow-pair\s*\{[^}]*white-space:\s*nowrap/);
+  assert.match(css, /margin-inline:\s*0\.25em/);
 });
 
 test("varios grupos entre paréntesis no se transforman", () => {

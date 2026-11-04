@@ -34,6 +34,26 @@ export function isGoalPublished(key: string, goals: readonly string[] = PUBLISHE
   return goals.includes(key);
 }
 
+/** Tramos visibles en /privacidad, el itinerario y el mapa. Para mostrar otro, agrégalo. */
+export const PUBLISHED_STAGES: readonly string[] = [
+  "fundamentos",
+  "diseno-protegido",
+  "derechos-ciclo-vida",
+  "riesgo-terceros-incidentes",
+  "evidencia-automatizacion",
+];
+
+export function isStagePublished(slug: string, stages: readonly string[] = PUBLISHED_STAGES): boolean {
+  return stages.includes(slug);
+}
+
+export function visibleStages<T extends { slug: string }>(
+  stages: readonly T[],
+  published: readonly string[] = PUBLISHED_STAGES,
+): T[] {
+  return stages.filter((stage) => isStagePublished(stage.slug, published));
+}
+
 export function visibleGoals<T extends { key: string }>(
   goals: readonly T[],
   showUnpublished: boolean = SHOW_UNPUBLISHED,
