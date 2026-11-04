@@ -60,8 +60,7 @@ relations:
 created_at: 2026-10-21
 updated_at: 2026-11-03
 last_verified: 2026-10-28
-owner_approved_at: 2026-11-01
-verification_status: verified
+verification_status: review_required
 ---
 
 ## 1. Resumen
@@ -160,6 +159,7 @@ Escenario genérico: una aerolínea con BigQuery, Airflow (Cloud Composer) y das
 | Vínculo actividad–activo–consumidor | Catálogo o registro técnico | Ingeniería | Qué consumidores y activos cubre cada actividad | La intención real de cada consulta |
 | Ejecuciones y accesos | Logs protegidos con retención definida | Plataforma | Qué consumidor leyó qué activo y cuándo | Por qué lo leyó |
 | Desviaciones y su cierre | Gestión de incidencias | Ingeniería y privacidad | Que la alerta se analizó y cómo se resolvió | Que no haya usos fuera de la cobertura del linaje |
+| Resultado de la conciliación (0 o 1) con sus hallazgos | Log de la CI | Pipeline de conciliación | Qué usos y actividades no cuadran con el registro a una fecha | Que los usos sin registro en el linaje estén cubiertos |
 
 ## 9. Arquitectura
 
@@ -179,95 +179,276 @@ La CI bloquea un despliegue nuevo no declarado; la conciliación cubre lo que ya
 ## 10. Código
 
 ```python
-# Python 3.12+, biblioteca estándar. Registro de actividades de tratamiento: la base de licitud vive en la
-# actividad, no en el dataset. Cada actividad declara sus activos y sus consumidores (DAG, job, dashboard). La CI
-# compara los usos observados (consumidor, activo) contra lo declarado y falla con brechas: tablas con PII sin
-# actividad, actividades aprobadas incompletas, consumos sin vínculo y consumos de una actividad no aprobada.
-# Una brecha es una alerta técnica para revisar, no la conclusión de que hubo una infracción.
+# Python 3.12+, biblioteca estándar. De punta a punta: registro de actividades → usos observados → conciliación →
+# insumo de la política (art. 14 ter) → código de salida (0 aprueba, 1 rechaza). Uso: python inventario.py actual |
+# corregido | despliegue-nuevo. La base de licitud vive en la actividad, no en la tabla. Las funciones reciben el
+# registro como parámetro. Una brecha es una alerta técnica para revisar, no la conclusión de que hubo una infracción;
+# UNKNOWN (falta el dato para decidir) nunca cuenta como OK. Datos ficticios.
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, field, replace
+from datetime import date
+from typing import Literal
 
-BASES = {"consentimiento (art. 12)", "obligación legal (art. 13 b)", "contrato (art. 13 c)",
-         "interés legítimo (art. 13 d)", "defensa de derechos (art. 13 e)", "obligaciones económicas (art. 13 a)"}
+# @paso 1 Registro
+Base = Literal["consentimiento", "obligación legal", "contrato", "interés legítimo", "defensa de derechos",
+               "obligaciones económicas"]
+ARTICULO: dict[Base, str] = {"consentimiento": "art. 12", "obligaciones económicas": "art. 13 a)",
+                             "obligación legal": "art. 13 b)", "contrato": "art. 13 c)",
+                             "interés legítimo": "art. 13 d)", "defensa de derechos": "art. 13 e)"}
+REFERENCIA = date(2026, 11, 3)   # fecha fija: resultado reproducible
+
+
+@dataclass(frozen=True)
+class Aprobacion:
+    fecha: date
+    vence: date
+
+
+@dataclass(frozen=True)
+class RegistroConsentimientos:   # por titular, finalidad, versión del texto y fecha (aquí, solo el vínculo)
+    version_texto: str
+    desde: date
 
 
 @dataclass(frozen=True)
 class Actividad:
-    nombre: str
+    id: str
     finalidad: str
-    base: str
-    plazo: str
-    aprobada: bool
+    base: Base | None              # None: pendiente de evaluación
+    plazo_meses: int | None
+    aprobacion: Aprobacion | None
     categorias: tuple[str, ...]
     destinatarios: tuple[str, ...]
     activos: frozenset[str]
     consumidores: frozenset[str]
+    campos: frozenset[str]         # columnas que la finalidad necesita
+    consentimientos: RegistroConsentimientos | None = None
 
 
-ACTIVIDADES = [
-    Actividad("venta_pasajes", "emitir y gestionar pasajes", "contrato (art. 13 c)", "5 años", True,
-              ("identificación", "contacto", "itinerario"), ("aerolíneas socias",),
-              frozenset({"silver.pasajeros", "silver.reservas"}), frozenset({"dag_reservas"})),
-    Actividad("marketing", "ofertas personalizadas", "consentimiento (art. 12)", "", True,
-              ("contacto", "preferencias"), ("plataforma de email",),
-              frozenset({"silver.pasajeros"}), frozenset({"dag_campanas"})),
-    Actividad("modelo_fraude", "detectar operaciones sospechosas", "pendiente de evaluación", "", False,
-              ("identificación", "pagos"), (), frozenset({"silver.pasajeros"}), frozenset({"job_fraude"})),
-]
-
-TABLAS_CON_PII = {"silver.pasajeros", "silver.reservas", "gold.score_fraude"}
-# Usos observados (consumidor, activo), desde logs de acceso y linaje. El consumidor sale de una identidad o
-# configuración confiable (cuenta de servicio, nombre del DAG), no se deduce del texto de la consulta.
-USOS_OBSERVADOS = [("dag_reservas", "silver.pasajeros"), ("job_fraude", "silver.pasajeros"),
-                   ("dashboard_externo", "silver.pasajeros")]
+@dataclass(frozen=True)
+class Registro:
+    actividades: tuple[Actividad, ...]
+    tablas_con_pii: frozenset[str]
+    identidades: dict[str, str] = field(default_factory=dict)   # cuenta de servicio -> consumidor declarado
 
 
-def brechas() -> list[str]:
-    salida: list[str] = []
-    cubiertas = {t for a in ACTIVIDADES for t in a.activos}
-    salida += [f"tabla con PII sin actividad: {t}" for t in sorted(TABLAS_CON_PII - cubiertas)]
-    for a in (a for a in ACTIVIDADES if a.aprobada):
-        if a.base not in BASES:
-            salida.append(f"{a.nombre}: base no reconocida")
-        if not a.plazo:
-            salida.append(f"{a.nombre}: sin plazo de conservación")
-    for consumidor, activo in USOS_OBSERVADOS:
-        vinculos = [a for a in ACTIVIDADES if consumidor in a.consumidores and activo in a.activos]
+@dataclass(frozen=True)
+class Uso:   # desde logs de acceso y linaje: quién leyó qué activo y qué columnas
+    cuenta: str
+    activo: str
+    columnas: frozenset[str]
+
+
+@dataclass(frozen=True)
+class Despliegue:   # un consumidor nuevo que se quiere desplegar
+    consumidor: str
+    activity_id: str | None
+
+
+def vigente(a: Actividad, hoy: date) -> bool:
+    return a.aprobacion is not None and a.aprobacion.vence >= hoy
+
+
+# @paso 2 Usos observados
+def consumidor_de(registro: Registro, uso: Uso) -> str | None:
+    """El consumidor sale de una identidad confiable (cuenta de servicio), no del texto de la consulta."""
+    return registro.identidades.get(uso.cuenta)
+
+
+# @paso 3 Conciliación
+@dataclass(frozen=True)
+class Hallazgo:
+    estado: Literal["BRECHA", "UNKNOWN"]
+    detalle: str
+
+
+def tablas_sin_actividad(registro: Registro) -> list[Hallazgo]:
+    cubiertas = {t for a in registro.actividades for t in a.activos}
+    sin_actividad = sorted(registro.tablas_con_pii - cubiertas)
+    return [Hallazgo("BRECHA", f"tabla con PII sin actividad: {t}") for t in sin_actividad]
+
+
+def actividades_incompletas(registro: Registro, hoy: date) -> list[Hallazgo]:
+    """Una actividad aprobada necesita base y plazo; la aprobación vence y el consentimiento se registra."""
+    hallazgos = []
+    for a in registro.actividades:
+        if a.aprobacion is None:
+            continue
+        if a.base is None:
+            hallazgos.append(Hallazgo("BRECHA", f"{a.id}: aprobada sin base de licitud"))
+        if a.plazo_meses is None:
+            hallazgos.append(Hallazgo("BRECHA", f"{a.id}: sin plazo de conservación"))
+        if a.aprobacion.vence < hoy:
+            hallazgos.append(Hallazgo("BRECHA", f"{a.id}: aprobación vencida el {a.aprobacion.vence}"))
+        if a.base == "consentimiento" and a.consentimientos is None:
+            hallazgos.append(Hallazgo("BRECHA", f"{a.id}: base consentimiento sin registro de consentimientos"))
+    return hallazgos
+
+
+def conciliar(registro: Registro, usos: list[Uso], hoy: date) -> list[Hallazgo]:
+    """Cada uso observado tiene que caer en una actividad vigente y leer solo los campos de su finalidad."""
+    hallazgos = []
+    for uso in usos:
+        consumidor = consumidor_de(registro, uso)
+        if consumidor is None:
+            hallazgos.append(Hallazgo("UNKNOWN", f"consumidor no identificado: {uso.cuenta} → {uso.activo}"))
+            continue
+        vinculos = [a for a in registro.actividades if consumidor in a.consumidores and uso.activo in a.activos]
         if not vinculos:
-            salida.append(f"sin vínculo: {consumidor} → {activo}")
-        elif not any(a.aprobada for a in vinculos):
-            salida.append(f"sin aprobación: {consumidor} → {activo} ({', '.join(a.nombre for a in vinculos)})")
-    return salida
+            hallazgos.append(Hallazgo("BRECHA", f"sin vínculo: {consumidor} → {uso.activo}"))
+            continue
+        if not any(vigente(a, hoy) for a in vinculos):
+            hallazgos.append(Hallazgo("BRECHA", f"sin aprobación vigente: {consumidor} → {uso.activo} "
+                                                f"({', '.join(a.id for a in vinculos)})"))
+        for a in vinculos:
+            sobran = sorted(uso.columnas - a.campos)
+            if a.campos and sobran:   # campos vacíos: la actividad todavía no se evalúa
+                hallazgos.append(Hallazgo("BRECHA", f"proporcionalidad: {consumidor} lee {', '.join(sobran)}, "
+                                                    f"no necesario para {a.id}"))
+    return hallazgos
 
 
-def insumo_14_ter() -> None:
+def verificar_despliegues(registro: Registro, despliegues: list[Despliegue], hoy: date) -> list[Hallazgo]:
+    """La CI bloquea un consumidor nuevo sin activity_id, o con una actividad que no lo declara o no está vigente."""
+    hallazgos = []
+    por_id = {a.id: a for a in registro.actividades}
+    for d in despliegues:
+        actividad = por_id.get(d.activity_id or "")
+        if actividad is None:
+            hallazgos.append(Hallazgo("BRECHA", f"despliegue bloqueado: {d.consumidor} sin activity_id válido"))
+        elif d.consumidor not in actividad.consumidores or not vigente(actividad, hoy):
+            hallazgos.append(Hallazgo("BRECHA", f"despliegue bloqueado: {d.consumidor} no declarado en {actividad.id}"))
+    return hallazgos
+
+
+# @paso 4 Insumo y salida
+def insumo_14_ter(registro: Registro, hoy: date) -> list[str]:
+    """Insumo para la política pública (art. 14 ter): solo actividades con aprobación vigente."""
+    filas = []
+    for a in registro.actividades:
+        if not vigente(a, hoy) or a.base is None:
+            continue
+        plazo = f"{a.plazo_meses} meses" if a.plazo_meses is not None else "POR DEFINIR"
+        filas.append(f"- {a.finalidad} | base: {a.base} ({ARTICULO[a.base]}) | datos: {', '.join(a.categorias)} "
+                     f"| destinatarios: {', '.join(a.destinatarios) or 'ninguno'} | plazo: {plazo}")
+    return filas
+
+
+def escenario(nombre: str) -> tuple[Registro, list[Uso], list[Despliegue]]:
+    venta = Actividad("venta_pasajes", "emitir y gestionar pasajes", "contrato", 60,
+                      Aprobacion(date(2026, 1, 15), date(2027, 1, 15)), ("identificación", "contacto", "itinerario"),
+                      ("aerolíneas socias",), frozenset({"silver.pasajeros", "silver.reservas"}),
+                      frozenset({"dag_reservas"}), frozenset({"pasajero_id", "nombre", "correo", "vuelo", "fecha"}))
+    marketing = Actividad("marketing", "ofertas personalizadas", "consentimiento", None,
+                          Aprobacion(date(2025, 10, 1), date(2026, 10, 1)), ("contacto", "preferencias"),
+                          ("plataforma de email",), frozenset({"silver.pasajeros"}), frozenset({"dag_campanas"}),
+                          frozenset({"pasajero_id", "correo", "preferencias"}))
+    fraude = Actividad("modelo_fraude", "detectar operaciones sospechosas", None, None, None,
+                       ("identificación", "pagos"), (), frozenset({"silver.pasajeros"}), frozenset({"job_fraude"}),
+                       frozenset())
+    pii = frozenset({"silver.pasajeros", "silver.reservas", "gold.score_fraude"})
+    registro = Registro((venta, marketing, fraude), pii,
+                        {"sa-reservas": "dag_reservas", "sa-campanas": "dag_campanas", "sa-fraude": "job_fraude",
+                         "sa-bi": "dashboard_externo"})
+    usos = [Uso("sa-reservas", "silver.pasajeros", frozenset({"pasajero_id", "nombre", "vuelo"})),
+            Uso("sa-campanas", "silver.pasajeros", frozenset({"correo", "rut"})),
+            Uso("sa-fraude", "silver.pasajeros", frozenset({"pasajero_id", "rut", "monto"})),
+            Uso("sa-bi", "silver.pasajeros", frozenset({"vuelo", "fecha"})),
+            Uso("sa-7f3c", "silver.reservas", frozenset({"pasajero_id"}))]
+    if nombre == "actual":
+        return registro, usos, []
+    hoy_aprobada = Aprobacion(date(2026, 10, 30), date(2027, 10, 30))
+    corregido = Registro((
+        replace(venta, consumidores=venta.consumidores | {"dashboard_externo", "job_conciliacion"}),
+        replace(marketing, plazo_meses=24, aprobacion=hoy_aprobada,
+                consentimientos=RegistroConsentimientos("v3", date(2026, 9, 1))),
+        replace(fraude, base="interés legítimo", plazo_meses=24, aprobacion=hoy_aprobada,
+                activos=frozenset({"silver.pasajeros", "gold.score_fraude"}),
+                campos=frozenset({"pasajero_id", "rut", "monto"}))),
+        registro.tablas_con_pii, {**registro.identidades, "sa-7f3c": "job_conciliacion"})
+    usos_corregidos = [replace(u, columnas=frozenset({"correo"})) if u.cuenta == "sa-campanas" else u for u in usos]
+    if nombre == "corregido":
+        return corregido, usos_corregidos, []
+    return corregido, usos_corregidos, [Despliegue("dag_recomendaciones", None)]   # despliegue-nuevo
+
+
+def main(nombre: str) -> int:
+    registro, usos, despliegues = escenario(nombre)
     print("insumo para la política (art. 14 ter), a revisar por privacidad antes de publicar:")
-    for a in (a for a in ACTIVIDADES if a.aprobada):
-        print(f"- {a.finalidad} | base: {a.base} | datos: {', '.join(a.categorias)} "
-              f"| destinatarios: {', '.join(a.destinatarios)} | plazo: {a.plazo or 'POR DEFINIR'}")
+    print("\n".join(insumo_14_ter(registro, REFERENCIA)))
+    hallazgos = (tablas_sin_actividad(registro) + actividades_incompletas(registro, REFERENCIA)
+                 + conciliar(registro, usos, REFERENCIA) + verificar_despliegues(registro, despliegues, REFERENCIA))
+    for h in hallazgos:
+        print(f"{h.estado} {h.detalle}")
+    if hallazgos:
+        print(f"CI: rechazada (1): {len(hallazgos)} hallazgo(s)")
+        return 1
+    print("CI: aprobada (0): sin hallazgos")
+    return 0
 
 
 if __name__ == "__main__":
-    insumo_14_ter()
-    b = brechas()
-    for x in b:
-        print("BRECHA", x)
-    sys.exit(1 if b else 0)
+    sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else "actual"))
 ```
 
-El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Imprime el insumo de las dos actividades aprobadas y cuatro brechas; termina con código 1:
+El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Recorre cuatro pasos: el registro de actividades (con su base, plazo en meses, aprobación con vencimiento y campos permitidos), los usos observados (cuenta de servicio, activo y columnas leídas), la conciliación y el insumo del art. 14 ter con su código de salida. Las funciones reciben el registro como parámetro, y la base se guarda sin el artículo, que sale de un mapa aparte.
+
+En el estado actual, la conciliación encuentra nueve hallazgos:
+
+- `gold.score_fraude` tiene datos personales y ninguna actividad la cubre.
+- `marketing` está aprobada pero incompleta: sin plazo de conservación, con la aprobación vencida a la fecha de referencia y con base consentimiento sin registro de consentimientos vinculado.
+- `dag_campanas` lee `rut`, que su actividad no necesita (**proporcionalidad**).
+- `job_fraude` consume una actividad pendiente de evaluación, y `dashboard_externo` lee datos sin ninguna actividad que lo declare.
+- La cuenta `sa-7f3c` no está mapeada a ningún consumidor: queda en `UNKNOWN`, que nunca cuenta como OK.
+
+El insumo de la política (art. 14 ter) solo incluye las actividades con aprobación vigente. Termina con código 1:
 
 ```text
+$ python inventario.py actual
 insumo para la política (art. 14 ter), a revisar por privacidad antes de publicar:
-- emitir y gestionar pasajes | base: contrato (art. 13 c) | datos: identificación, contacto, itinerario | destinatarios: aerolíneas socias | plazo: 5 años
-- ofertas personalizadas | base: consentimiento (art. 12) | datos: contacto, preferencias | destinatarios: plataforma de email | plazo: POR DEFINIR
+- emitir y gestionar pasajes | base: contrato (art. 13 c)) | datos: identificación, contacto, itinerario | destinatarios: aerolíneas socias | plazo: 60 meses
 BRECHA tabla con PII sin actividad: gold.score_fraude
 BRECHA marketing: sin plazo de conservación
-BRECHA sin aprobación: job_fraude → silver.pasajeros (modelo_fraude)
+BRECHA marketing: aprobación vencida el 2026-10-01
+BRECHA marketing: base consentimiento sin registro de consentimientos
+BRECHA sin aprobación vigente: dag_campanas → silver.pasajeros (marketing)
+BRECHA proporcionalidad: dag_campanas lee rut, no necesario para marketing
+BRECHA sin aprobación vigente: job_fraude → silver.pasajeros (modelo_fraude)
 BRECHA sin vínculo: dashboard_externo → silver.pasajeros
+UNKNOWN consumidor no identificado: sa-7f3c → silver.reservas
+CI: rechazada (1): 9 hallazgo(s)
 ```
 
-Las dos últimas son las importantes: con la base asignada al dataset, ambos consumos habrían pasado inadvertidos. **Limitaciones:** el ejemplo no prueba consentimiento, finalidad real ni cumplimiento; solo ve los usos que el linaje y los logs registran, y la CI bloquea despliegues nuevos, no consumos que ya corren (para eso, la alerta operacional del §9).
+En el escenario corregido se evalúa y aprueba el modelo de fraude, con su base, plazo, activos y campos. También se vinculan el dashboard y la cuenta `sa-7f3c` a `venta_pasajes`, se define el plazo de `marketing`, se renueva su aprobación y se vincula su registro de consentimientos, y `dag_campanas` deja de leer `rut`. El insumo pasa a tres actividades. Termina con código 0:
+
+```text
+$ python inventario.py corregido
+insumo para la política (art. 14 ter), a revisar por privacidad antes de publicar:
+- emitir y gestionar pasajes | base: contrato (art. 13 c)) | datos: identificación, contacto, itinerario | destinatarios: aerolíneas socias | plazo: 60 meses
+- ofertas personalizadas | base: consentimiento (art. 12) | datos: contacto, preferencias | destinatarios: plataforma de email | plazo: 24 meses
+- detectar operaciones sospechosas | base: interés legítimo (art. 13 d)) | datos: identificación, pagos | destinatarios: ninguno | plazo: 24 meses
+CI: aprobada (0): sin hallazgos
+```
+
+Sobre ese registro corregido, un consumidor nuevo, `dag_recomendaciones`, intenta desplegarse sin `activity_id`, y la CI lo bloquea. Termina con código 1:
+
+```text
+$ python inventario.py despliegue-nuevo
+insumo para la política (art. 14 ter), a revisar por privacidad antes de publicar:
+- emitir y gestionar pasajes | base: contrato (art. 13 c)) | datos: identificación, contacto, itinerario | destinatarios: aerolíneas socias | plazo: 60 meses
+- ofertas personalizadas | base: consentimiento (art. 12) | datos: contacto, preferencias | destinatarios: plataforma de email | plazo: 24 meses
+- detectar operaciones sospechosas | base: interés legítimo (art. 13 d)) | datos: identificación, pagos | destinatarios: ninguno | plazo: 24 meses
+BRECHA despliegue bloqueado: dag_recomendaciones sin activity_id válido
+CI: rechazada (1): 1 hallazgo(s)
+```
+
+Limitaciones:
+
+- **Consentimiento:** el ejemplo verifica que la actividad tenga un registro de consentimientos vinculado, con versión del texto y fecha; no que cada titular haya consentido ni que la revocación funcione.
+- **Finalidad real:** los campos permitidos se declaran a mano, y el control ve las columnas que se leen, no para qué se usan.
+- **Cobertura:** solo ve los usos que el linaje y los logs registran. Una cuenta sin mapear queda en `UNKNOWN` y bloquea, pero un uso que no deja registro no aparece.
+- **Momento:** la CI bloquea despliegues nuevos, no consumos que ya corren; para eso está la alerta operacional del §9.
+- **Política:** el insumo del art. 14 ter es un borrador para que privacidad lo revise, no la política publicada.
 
 ## 11. GCP
 
@@ -317,6 +498,7 @@ En Azure, **Unity Catalog** y **Purview Unified Catalog**. Según *Lineage in Un
 - **Consentimiento genérico** para «mejorar nuestros servicios»: no es específico por finalidad.
 - **Inventario en una planilla aislada:** no se actualiza cuando cambian los pipelines y deja de describir la plataforma.
 - **No registrar los usos analíticos y de modelos:** son los que más cambian de finalidad.
+- **Tratar un consumidor sin identificar como aprobado:** una cuenta de servicio sin mapear no prueba que el uso esté cubierto; queda en `UNKNOWN` y bloquea hasta que se identifica.
 
 ## 16. Trade-offs
 
@@ -361,7 +543,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-28: art. 3 c) consultado en BCN para agregarlo; *About data lineage* consultada de nuevo. Antes, 2026-10-25: textos legales vueltos a consultar en BCN, sin cambios, y 2026-10-22: arts. 3, 12, 13, 14, 14 ter y 34 ter consultados ese día. `verified`: aprobada por Felipe el 2026-11-01 (`owner_approved_at`). Revisión mensual.
+2026-10-28: art. 3 c) consultado en BCN para agregarlo; *About data lineage* consultada de nuevo. Antes, 2026-10-25: textos legales vueltos a consultar en BCN, sin cambios, y 2026-10-22: arts. 3, 12, 13, 14, 14 ter y 34 ter consultados ese día. `review_required` desde el 2026-11-03: el §10 se reescribió de punta a punta y espera la aprobación de Felipe (la anterior fue el 2026-11-01). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -378,3 +560,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
 - 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
 - 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra, y se quita «(Título III)» de las otras bases del art. 13. Sin cambios de fondo; el estado no cambia.
+- 2026-11-03: §10 reescrito de punta a punta (pedido de Felipe): registro → usos observados (cuenta, activo, columnas) → conciliación → insumo del art. 14 ter → código de salida 0/1, con funciones que reciben el registro como parámetro; `Base` como `Literal` con el artículo en un mapa aparte, plazo en meses, aprobación con vencimiento y campos permitidos; brechas nuevas de **proporcionalidad**, consentimiento sin registro, aprobación vencida y consumidor no identificado (`UNKNOWN`); marcadores `# @paso 1–4` y tres escenarios (`actual`, `corregido`, `despliegue-nuevo`) con su línea `$ python inventario.py <escenario>`, iguales a la salida de la CI. §8 suma la evidencia de la conciliación y §15 el consumidor sin identificar. Vuelve a `review_required` hasta la aprobación de Felipe.

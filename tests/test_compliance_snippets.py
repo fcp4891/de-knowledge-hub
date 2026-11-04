@@ -14,6 +14,7 @@
 from __future__ import annotations
 
 import importlib.util
+import inspect
 import json
 import os
 import secrets
@@ -129,12 +130,6 @@ STDLIB = {
         "'resultado': 'derivada a revisión humana', 'titular_puede_pedir_revision': True}"],
 }
 GATES = {
-    "processing-activities-inventory": [
-        "- emitir y gestionar pasajes | base: contrato (art. 13 c) | datos: identificación, contacto, itinerario "
-        "| destinatarios: aerolíneas socias | plazo: 5 años",
-        "BRECHA tabla con PII sin actividad: gold.score_fraude", "BRECHA marketing: sin plazo de conservación",
-        "BRECHA sin aprobación: job_fraude → silver.pasajeros (modelo_fraude)",
-        "BRECHA sin vínculo: dashboard_externo → silver.pasajeros"],
     "processors-and-international-transfers": [
         "flujos: 7; brechas: 6", "BRECHA tickets_soporte → API de LLM externa: sin contrato de encargo (art. 15 bis)",
         "BRECHA silver.pasajeros → plataforma de email: finalidad «perfilamiento» fuera del alcance aprobado "
@@ -322,3 +317,46 @@ def test_pii_detector_rules(tmp_path: Path) -> None:
     assert m.sensibles_por_nombre("herramienta_id") == []   # «renta» como substring no cuenta
     (indirecta,) = m.identificacion_indirecta(m.MUESTRA)
     assert (indirecta.categoria, indirecta.metodo) == ("revisión", "combinación única en 2 de 4 filas")
+
+
+INVENTORY_SCENARIOS = {"actual": 1, "corregido": 0, "despliegue-nuevo": 1}
+
+
+def run_inventory(tmp_path: Path, scenario: str) -> subprocess.CompletedProcess[str]:
+    (code,) = blocks("processing-activities-inventory", "python")
+    (tmp_path / "snippet.py").write_text(code, encoding="utf-8", newline="\n")   # assert_mypy_strict revisa snippet.py
+    return subprocess.run([sys.executable, "snippet.py", scenario], cwd=tmp_path, env={**os.environ, **UTF8},
+                          capture_output=True, text=True, encoding="utf-8", timeout=300)
+
+
+def test_inventory_each_scenario_prints_its_documented_output(tmp_path: Path) -> None:
+    """processing-activities-inventory §10: un bloque text por escenario, con su línea «$ python inventario.py …»."""
+    documented = {block.splitlines()[0].removeprefix("$ python inventario.py "): block
+                  for block in blocks("processing-activities-inventory", "text")}
+    assert list(documented) == list(INVENTORY_SCENARIOS)
+    for scenario, exit_code in INVENTORY_SCENARIOS.items():
+        result = run_inventory(tmp_path, scenario)
+        expected = documented[scenario].split("\n", 1)[1].strip()
+        assert result.returncode == exit_code and result.stdout.strip() == expected, result.stdout + result.stderr
+    assert_mypy_strict(tmp_path)
+
+
+def test_inventory_rules(tmp_path: Path) -> None:
+    (code,) = blocks("processing-activities-inventory", "python")
+    steps = [line.split("@paso", 1)[1].strip() for line in code.splitlines() if line.startswith("# @paso")]
+    assert steps == ["1 Registro", "2 Usos observados", "3 Conciliación", "4 Insumo y salida"]
+    module = tmp_path / "inventario.py"
+    module.write_text(code, encoding="utf-8", newline="\n")
+    spec = importlib.util.spec_from_file_location("inventario", module)
+    assert spec and spec.loader
+    m = importlib.util.module_from_spec(spec)
+    sys.modules["inventario"] = m   # dataclasses necesita el módulo registrado
+    spec.loader.exec_module(m)
+    assert set(m.ARTICULO) == set(m.Base.__args__)   # cada base tiene su artículo en el mapa aparte
+    registro, usos, _ = m.escenario("actual")
+    for f in (m.tablas_sin_actividad, m.actividades_incompletas, m.conciliar, m.verificar_despliegues, m.insumo_14_ter):
+        assert next(iter(inspect.signature(f).parameters)) == "registro", f.__name__   # sin globales: recibe el registro
+    unknown = [h for h in m.conciliar(registro, usos, m.REFERENCIA) if h.estado == "UNKNOWN"]
+    assert [h.detalle for h in unknown] == ["consumidor no identificado: sa-7f3c → silver.reservas"]
+    assert "BRECHA proporcionalidad: dag_campanas lee rut, no necesario para marketing" in run_inventory(
+        tmp_path, "actual").stdout
