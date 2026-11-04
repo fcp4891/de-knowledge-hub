@@ -3,7 +3,7 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-11-03
+**Última actualización:** 2026-11-04
 **Última actualización:** 2026-10-28
 
 ## Reglas de revisión
@@ -15,6 +15,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** revisión del lote P10. Informe en `docs/reviews/p10.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: los docstrings del art. 3, el substring de `pii-identification`, la puerta del inventario y «anonimizado» con k = 2. Propuestas bajas: el párrafo del §10, el mensaje de despliegue, la columna sin clasificar, el cruce entre dominios y la cuarentena del DV.
 - **Tarea activa:** `b/ui-ajustes-1103`. `SHOW_UNPUBLISHED` está en false: Inicio solo muestra el objetivo de la Ley 21.719 y el mapa solo la banda «Protección de datos personales». Debajo, «Más rutas en construcción». Con true vuelve el modo atenuado. Búsqueda, repaso, snippets, §17 y el aviso por URL directa no cambian.
 - **Tarea activa:** `b/ui-ajustes-1103`. Las flechas en línea usan el glifo del componente, en color de acento. Si el término cabe en una a tres palabras, en código o entre «y» u «o», va en píldora; si no, solo cambia la flecha. Las dos celdas (matriz de chile-data-protection y flujos de lgpd) no son pasos. `data-lineage` no se transforma. El texto copiado conserva → ← ↔.
 - **Tarea activa:** `b/ui-ajustes-1103`. En oscuro, la Base legal usa `--accent-soft`, texto `--ink` y enlaces `--accent`; el encabezado fijo conserva ese fondo opaco. El modo claro no cambia.
@@ -137,6 +139,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Tarea activa:** `b/ui-page-title` (ADR-012). Sin merge a `main`.
 - **Siguiente:** lo que asigne Felipe. Sigue abierta la revisión F3b-08c.
 - **Bloqueos:** ninguno.
+
+### Revisión · lote P10
+- Cinco §10 del dominio 24, el de seudonimización desde `4d7f6a6`. Los tests coinciden con la salida documentada, contra PostgreSQL 17.11 en minimización. Propuesta media nueva: la puerta llama «anonimizado» a un k = 2. No se editó `content/` ni `frontend/`.
 
 ### Revisión · lote 07b
 - Cinco arquitecturas de streaming. Las 15 vistas quedan en 7 nodos o menos y el §19 solo promete laboratorio en streaming y event-driven. El H1 de Fabric coincide con el `page_title`. Propuesta media: URL en las citas nuevas. No se editó `content/` ni `frontend/`.
@@ -475,6 +480,10 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - El pedido de un párrafo por nivel queda sin efecto. Esos nombres no se asignan a los tramos ni hace falta un campo nuevo: la interfaz muestra la caja «Cómo estudiar cada ficha: Comprender → Aplicar → Demostrar → Profundizar».
 
 ## Historial
+
+### Revisión · lote P10 (2026-11-03)
+- `b/review-p10`, desde `4153ed4`. Informe en `docs/reviews/p10.md`. §10 de cuatro fichas del dominio 24, ejecutados. No se editó `content/` ni `frontend/`.
+- 2026-11-04: se suma el §10 de `chilean-identifier-pseudonymization` en `4d7f6a6`. Misma rama. No se editó `content/` ni `frontend/`.
 
 ### Revisión · lote 07b (2026-11-03)
 - `b/review-07b`, desde `20cbe86`. Informe en `docs/reviews/lote-07b.md`. Tres vistas, fuentes nuevas, §9, §10, §18 y el H1 de Fabric. No se editó `content/` ni `frontend/`.
