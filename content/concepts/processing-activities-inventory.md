@@ -58,9 +58,10 @@ relations:
   - {type: RELATED_TO, target: processors-and-international-transfers, note: "Destinatarios y transferencias de cada actividad."}
   - {type: RELATED_TO, target: privacy-controls-as-code, note: "La conciliación como control automatizado."}
 created_at: 2026-10-21
-updated_at: 2026-11-03
+updated_at: 2026-11-04
 last_verified: 2026-10-28
-verification_status: review_required
+owner_approved_at: 2026-11-04
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -543,7 +544,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-28: art. 3 c) consultado en BCN para agregarlo; *About data lineage* consultada de nuevo. Antes, 2026-10-25: textos legales vueltos a consultar en BCN, sin cambios, y 2026-10-22: arts. 3, 12, 13, 14, 14 ter y 34 ter consultados ese día. `review_required` desde el 2026-11-03: el §10 se reescribió de punta a punta y espera la aprobación de Felipe (la anterior fue el 2026-11-01). Revisión mensual.
+2026-10-28: art. 3 c) consultado en BCN para agregarlo; *About data lineage* consultada de nuevo. Antes, 2026-10-25: textos legales vueltos a consultar en BCN, sin cambios, y 2026-10-22: arts. 3, 12, 13, 14, 14 ter y 34 ter consultados ese día. `verified`: aprobada de nuevo por Felipe el 2026-11-04 (`owner_approved_at`), con el §10 de punta a punta. Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -561,3 +562,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
 - 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra, y se quita «(Título III)» de las otras bases del art. 13. Sin cambios de fondo; el estado no cambia.
 - 2026-11-03: §10 reescrito de punta a punta (pedido de Felipe): registro → usos observados (cuenta, activo, columnas) → conciliación → insumo del art. 14 ter → código de salida 0/1, con funciones que reciben el registro como parámetro; `Base` como `Literal` con el artículo en un mapa aparte, plazo en meses, aprobación con vencimiento y campos permitidos; brechas nuevas de **proporcionalidad**, consentimiento sin registro, aprobación vencida y consumidor no identificado (`UNKNOWN`); marcadores `# @paso 1–4` y tres escenarios (`actual`, `corregido`, `despliegue-nuevo`) con su línea `$ python inventario.py <escenario>`, iguales a la salida de la CI. §8 suma la evidencia de la conciliación y §15 el consumidor sin identificar. Vuelve a `review_required` hasta la aprobación de Felipe.
+- 2026-11-04: aprobada por Felipe con el §10 nuevo (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).

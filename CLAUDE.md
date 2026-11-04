@@ -58,6 +58,7 @@ Trabajas en paralelo con Cursor (Carril B, frontend y revisión).
   - Solo `docs/` (salvo el contrato) o CLAUDE.md → nada.
 - La suite completa corre solo: de noche (cron de las 07:00 UTC: 04:00 en Chile en verano, 03:00 en invierno), a mano con `workflow_dispatch` (`gh workflow run ci.yml --ref main`), o cuando el diff toca backend, `schemas/`, `scripts/`, `tests/`, contrato, dependencias o `.github/`.
 - `make static` no espera la suite completa: basta con que pasen las pruebas impactadas por el cambio (la CI del push o `make test-changed`).
+- `make static` y el reinicio del local **no** se ejecutan en cada cambio: solo cuando Felipe pida «zip para hosting» o «actualiza el local». Un cambio chico termina con commit, push y CI en verde.
 - En `main` cada push conserva su run (un run selectivo no cubre lo que cambió el anterior); en PR, un push nuevo cancela el anterior.
 - En local, lo mismo: `make test-changed` corre solo lo que impacta el cambio (diff contra `origin/main` más el árbol de trabajo).
 - Verifica solo las URLs nuevas o modificadas.
