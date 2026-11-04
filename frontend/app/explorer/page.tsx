@@ -7,8 +7,11 @@ import { LAYERS, SHORT_NAMES } from "@/lib/learning-paths";
 import {
   BAND_LABEL,
   CONSTRUCTION_LAYER,
+  MORE_ROUTES,
+  SHOW_UNPUBLISHED,
   isDomainPublished,
   layerIsClosed,
+  visibleLayers,
 } from "@/lib/publishedScope";
 
 export default async function ExplorerPage() {
@@ -36,7 +39,7 @@ export default async function ExplorerPage() {
       <p className="lead">La banda publicada se recorre por sus estaciones. El resto se está escribiendo.</p>
       {domains.ok ? (
         <div>
-          {special.length > 0 ? (
+          {special.length > 0 && (SHOW_UNPUBLISHED || special.some((domain) => isDomainPublished(domain))) ? (
             <LayerBlock
               name={BAND_LABEL}
               closed={special.every((domain) => !isDomainPublished(domain))}
@@ -45,7 +48,7 @@ export default async function ExplorerPage() {
               conceptsOk={concepts.ok}
             />
           ) : null}
-          {LAYERS.map((layer) => (
+          {visibleLayers(LAYERS).map((layer) => (
             <LayerBlock
               key={layer.key}
               name={layer.name}
@@ -55,15 +58,16 @@ export default async function ExplorerPage() {
               conceptsOk={concepts.ok}
             />
           ))}
-          {rest.length > 0 ? (
+          {rest.length > 0 && (SHOW_UNPUBLISHED || rest.some((domain) => isDomainPublished(domain))) ? (
             <LayerBlock
               name="Otras estaciones"
               closed={rest.every((domain) => !isDomainPublished(domain))}
-              domains={rest}
+              domains={SHOW_UNPUBLISHED ? rest : rest.filter((domain) => isDomainPublished(domain))}
               withPage={withPage}
               conceptsOk={concepts.ok}
             />
           ) : null}
+          {SHOW_UNPUBLISHED ? null : <p className="scope-more">{MORE_ROUTES}</p>}
         </div>
       ) : (
         <ApiFailure result={domains} />
