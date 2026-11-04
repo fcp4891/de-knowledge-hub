@@ -231,7 +231,7 @@ def test_privacy_controls_validation_rejects_duplicates_stale_and_tampered_evide
     assert m.validate(results, stored) == []
 
 
-MINIMIZATION_SCENARIOS = {"correcto": 0, "deriva-esquema": 1, "select-star": 1, "sin-purga": 1}
+MINIMIZATION_SCENARIOS = {"correcto": 0, "deriva-esquema": 1, "select-star": 1, "sin-purga": 1, "sin-clasificar": 1}
 
 
 def test_minimization_each_scenario_prints_its_documented_output(pg_env: dict[str, str], tmp_path: Path) -> None:  # noqa: F811
@@ -257,6 +257,7 @@ def test_minimization_guided_code_rules() -> None:
     assert not [line for line in code.splitlines() if re.match(r"\s+def ", line)]   # sin funciones anidadas
     assert not [line for line in code.splitlines() if re.match(r"\s*assert ", line)]
     assert "PERSONALES" in code and "ingested_at" in code   # catálogo como base del control y dimensión de tiempo
+    assert "CLASIFICADAS" in code and "UNKNOWN" in code   # sin clasificar no aprueba, como en las otras fichas
 
 
 def test_erasure_expires_iceberg_snapshots(tmp_path: Path) -> None:
@@ -318,7 +319,13 @@ def test_pii_detector_rules(tmp_path: Path) -> None:
     assert [m.clasificar_rut(v) for v in (rut, m.con_dv_alterado(rut), "2026-01-10")] == ["valido", "dv_invalido", "no_rut"]
     assert m.sensibles_por_nombre("fecha_ingreso") == [] and m.sensibles_por_nombre("herramienta_renta_id")
     assert [h.fundamento for h in m.sensibles_por_nombre("tramo_ingreso")] == ["art. 2 g), situación socioeconómica"]
-    assert m.sensibles_por_nombre("herramienta_id") == []   # «renta» como substring no cuenta
+    # Los ejemplos del §15 son reales: cada término es substring de su columna y la regla por tokens no lo toma.
+    ficha = (Path(__file__).parents[1] / "content/concepts/pii-identification.md").read_text(encoding="utf-8")
+    (linea,) = [x for x in ficha.splitlines() if x.startswith("- Comparar nombres por substring")]
+    ejemplos = re.findall(r"«(\w+)»(?: calza)? en `(\w+)`", linea)
+    assert len(ejemplos) == 2
+    for termino, columna in ejemplos:
+        assert termino in columna and m.sensibles_por_nombre(columna) == [], columna
     (indirecta,) = m.identificacion_indirecta(m.MUESTRA)
     assert (indirecta.categoria, indirecta.metodo) == ("revisión", "combinación única en 2 de 4 filas")
 
@@ -364,6 +371,12 @@ def test_inventory_rules(tmp_path: Path) -> None:
     assert [h.detalle for h in unknown] == ["consumidor no identificado: sa-7f3c → silver.reservas"]
     assert "BRECHA proporcionalidad: dag_campanas lee rut, no necesario para marketing" in run_inventory(
         tmp_path, "actual").stdout
+    # Declarado en una actividad sin aprobación vigente: el motivo es «actividad no vigente», no «no declarado».
+    motivos = [h.detalle for h in m.verificar_despliegues(
+        registro, [m.Despliegue("job_fraude", "modelo_fraude"), m.Despliegue("dag_x", "modelo_fraude")], m.REFERENCIA)]
+    assert motivos == ["despliegue bloqueado: job_fraude → modelo_fraude: actividad no vigente",
+                       "despliegue bloqueado: dag_x no declarado en modelo_fraude"]
+    assert m.puerta_ci(registro, [m.Despliegue("dag_reservas", "venta_pasajes")]) == 0
 
 
 PSEUDONYM_SCENARIOS = {"publicar-exacto": 1, "publicar-generalizado": 0, "sin-normalizar": 1}

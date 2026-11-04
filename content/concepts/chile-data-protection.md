@@ -93,10 +93,9 @@ sources:
 relations:
   - {type: RELATED_TO, target: data-classification, note: "Clasificación técnica de datos."}
 created_at: 2026-10-21
-updated_at: 2026-11-03
+updated_at: 2026-11-04
 last_verified: 2026-10-28
-owner_approved_at: 2026-11-03
-verification_status: verified
+verification_status: review_required
 ---
 
 ## 1. Resumen
@@ -375,8 +374,8 @@ flowchart LR
 # Python 3.12+, biblioteca estándar. De punta a punta: datos ficticios → 4 controles → validación de la evidencia →
 # código de salida (0 aprueba, 1 rechaza). Uso: python controles.py con-brechas | corregido | sin-revision |
 # evidencia-alterada. PASS / FAIL / UNKNOWN como en privacy-controls-as-code: UNKNOWN (falta el dato para evaluar)
-# nunca cuenta como PASS. Didáctico: no certifica cumplimiento; cada docstring nombra la letra del art. 3 de la
-# Ley 19.628 que origina el requisito, no una interpretación legal.
+# nunca cuenta como PASS. Didáctico: no certifica cumplimiento; cada docstring cita el principio del art. 3 de la
+# Ley 19.628 que el control evidencia y separa la regla técnica, que la ley no fija.
 import hashlib
 import json
 import sys
@@ -454,8 +453,9 @@ def replay(p: Platform) -> list[Row]:   # lo que vuelve a cargarse si se reconst
 
 # @paso 2 Controles
 def access_review(p: Platform) -> tuple[str, str]:
-    """Art. 3 h) Confidencialidad: quienes tienen acceso guardan secreto, y el deber sigue después de terminada la
-    relación. Un usuario inactivo no debe conservar acceso (regla: authorized ⇒ active)."""
+    """Art. 3 h) Confidencialidad: «quienes tengan acceso a ellos deberán guardar secreto o confidencialidad»; «este
+    deber subsiste aún después de concluida la relación con el titular». Control técnico para la confidencialidad: un
+    usuario inactivo no conserva acceso (authorized ⇒ active); esa regla es del ejemplo, no de la ley."""
     holders = [u.name for u in p.users if u.authorized and not u.active]
     if holders:
         return "FAIL", f"inactivos con acceso: {holders}"
@@ -465,7 +465,8 @@ def access_review(p: Platform) -> tuple[str, str]:
 
 
 def erasure_replay_check(p: Platform) -> tuple[str, str]:
-    """Art. 3 d) Calidad: los datos deben ser actuales. Un registro suprimido no puede volver con un replay."""
+    """Art. 3 d) Calidad: los datos deben ser «exactos, completos, actuales y pertinentes». Control técnico para la
+    calidad: un registro suprimido no vuelve con un replay (tombstones); el artículo no habla de replays."""
     revived = [r["customer_id"] for r in replay(p) if r["customer_id"] in p.tombstones]
     if revived:
         return "FAIL", f"reaparecen: {revived}"
@@ -473,8 +474,9 @@ def erasure_replay_check(p: Platform) -> tuple[str, str]:
 
 
 def retention_check(p: Platform) -> tuple[str, str]:
-    """Art. 3 c) Proporcionalidad: los datos se conservan solo el tiempo necesario y luego se suprimen. Se evalúa
-    el warehouse y también la salida del replay, que puede volver a traer lo purgado."""
+    """Art. 3 c) Proporcionalidad: los datos se conservan el tiempo necesario, «luego de lo cual deben ser suprimidos
+    o anonimizados». Control técnico para ese plazo: se evalúa el warehouse y también la salida del replay, que puede
+    volver a traer lo purgado; el plazo de cada dato es política interna."""
     stored = [r["customer_id"] for r in p.warehouse if expired(r)]
     replayed = [r["customer_id"] for r in replay(p) if expired(r)]
     if stored or replayed:
@@ -505,8 +507,9 @@ def run_controls(p: Platform) -> list[Result]:
 
 # @paso 3 Validación
 def validate(results: list[Result], stored_sha256: dict[str, str]) -> list[str]:
-    """Art. 3 e) Responsabilidad: quien trata los datos responde por cumplir los principios. Un estado autodeclarado
-    no basta: la evidencia tiene que ser única, reciente y la misma que se guardó al ejecutar."""
+    """Art. 3 e) Responsabilidad: quienes tratan datos son responsables del cumplimiento de los principios y de los
+    deberes de la ley. Evidencia el principio de responsabilidad con un control técnico, no con texto legal: un estado
+    autodeclarado no basta, y la evidencia tiene que ser única, reciente y la misma (huella SHA-256) que se guardó."""
     gaps: list[str] = []
     seen: set[str] = set()
     for r in results:
@@ -545,7 +548,7 @@ if __name__ == "__main__":
     sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else "con-brechas"))
 ```
 
-El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Recorre cuatro pasos: los datos ficticios con sus brechas y la corrección, un control por función (cada docstring nombra la letra del art. 3 que origina el requisito), la validación de la evidencia y el resultado con código de salida. Cada escenario se corre por separado y su salida es la que imprime la CI.
+El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Recorre cuatro pasos: los datos ficticios con sus brechas y la corrección, un control por función (cada docstring cita el principio que el control evidencia, **confidencialidad**, **calidad**, **proporcionalidad** o **responsabilidad**, y aparte la regla técnica, que la ley no fija), la validación de la evidencia y el resultado con código de salida. Cada escenario se corre por separado y su salida es la que imprime la CI.
 
 El escenario con brechas inyecta cuatro, una por control: un ex usuario inactivo que conserva acceso, un replay que ignora los tombstones, un registro vencido sin purgar y una columna no aprobada. El replay desde `source` además **vuelve a traer el registro vencido**: por eso `retention_check` evalúa el warehouse y también la salida del replay. Termina con código 1:
 
@@ -731,7 +734,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-28: textos legales vueltos a consultar en BCN (sin cambios) y estado del boletín 18.623-07 en el Senado (aprobado por el Senado y despachado a la Cámara). Antes, 2026-10-25: textos legales vueltos a consultar, sin cambios, y 2026-10-22: articulado, vigencia, estado del boletín 18.623-07 y Decreto 662 consultados ese día en BCN y en el Senado. `verified`: aprobada de nuevo por Felipe el 2026-11-03 (`owner_approved_at`), con el §10 del piloto de código guiado. Revisión mensual, y extraordinaria si se publica la ley de postergación.
+2026-10-28: textos legales vueltos a consultar en BCN (sin cambios) y estado del boletín 18.623-07 en el Senado (aprobado por el Senado y despachado a la Cámara). Antes, 2026-10-25: textos legales vueltos a consultar, sin cambios, y 2026-10-22: articulado, vigencia, estado del boletín 18.623-07 y Decreto 662 consultados ese día en BCN y en el Senado. `review_required` desde el 2026-11-04: revisión P10 aplicada al §10; vuelve a `verified` cuando Felipe la apruebe (`owner_approved_at`). Revisión mensual, y extraordinaria si se publica la ley de postergación.
 
 ## 22. Historial de cambios importantes
 
@@ -758,3 +761,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-03: piloto de código guiado en el §10 (pedido de Felipe): una función por control con el docstring de su letra del art. 3 y sin ternarios encadenados; marcadores `# @paso 1–4`; el replay desde `source` reintroducía el registro vencido y `retention_check` ahora evalúa también su salida (`fix()` aplica la retención al replay); escenario nuevo `evidencia-alterada`, donde falla la huella SHA-256; una salida por escenario con su línea `$ python controles.py <escenario>`, igual a la de la CI. Vuelve a `review_required` hasta la aprobación de Felipe.
 - 2026-11-03: aprobada por Felipe con el §10 nuevo (`owner_approved_at: 2026-11-03`); vuelve a `verified` (ADR-023).
 - 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.
+- 2026-11-04: revisión `docs/reviews/p10.md` aplicada (pedido de Felipe): los docstrings del §10 citan el texto del art. 3 (confidencialidad con «la relación con el titular»; calidad «exactos, completos, actuales y pertinentes»; proporcionalidad «suprimidos o anonimizados») y dejan aparte, como control técnico, lo que la ley no fija (acceso del inactivo, replay, huella SHA-256); el párrafo del §10 nombra en negrita los principios, sin «la letra». Vuelve a `review_required`.

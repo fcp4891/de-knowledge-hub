@@ -88,8 +88,7 @@ relations:
 created_at: 2026-10-21
 updated_at: 2026-11-04
 last_verified: 2026-10-25
-owner_approved_at: 2026-11-04
-verification_status: verified
+verification_status: review_required
 ---
 
 ## 1. Resumen
@@ -200,8 +199,9 @@ Las capas son un patrón de arquitectura, no categorías legales. Transversalmen
 # en sus cuatro dimensiones. Cantidad: un contrato de columnas por capa. Granularidad: silver generaliza (tramo de
 # edad, comuna, coordenadas redondeadas, HMAC del RUT) y gold agrega y suprime grupos chicos. Accesibilidad: el
 # analista lee solo gold. Tiempo: bronze guarda ingested_at y purga lo vencido. Una puerta sale con 1 si un control
-# falla. Uso: python minimizacion.py correcto | deriva-esquema | select-star | sin-purga. PG_DSN: base vacía
-# temporal; las capas y el rol se borran al terminar. Datos ficticios.
+# falla o si una columna queda sin clasificar (UNKNOWN nunca cuenta como aprobado). Uso: python minimizacion.py
+# correcto | deriva-esquema | select-star | sin-purga | sin-clasificar. PG_DSN: base vacía temporal; las capas y el
+# rol se borran al terminar. Datos ficticios.
 import hashlib
 import hmac
 import os
@@ -217,10 +217,14 @@ from psycopg import errors
 REFERENCIA = date(2026, 11, 3)    # fecha fija: resultado reproducible
 RETENCION_BRONZE = timedelta(days=30)   # política interna ilustrativa, no un plazo legal
 # Contrato de columnas aprobadas por capa (versionado).
-CONTRATO = {"silver": {"cliente_key", "tramo_edad", "comuna", "lat", "lon", "monto"},
+CONTRATO = {"silver": {"cliente_key", "tramo_edad", "comuna", "lat", "lon", "monto", "segmento"},
             "gold": {"comuna", "clientes", "monto_total"}}
 # Clasificación del catálogo (la que produce pii-identification): columnas con datos personales en claro.
 PERSONALES = {"rut", "nombre", "email", "telefono", "fecha_nacimiento", "direccion"}
+# El resto de lo que el catálogo clasifica, sin datos personales en claro (cliente_key es un seudónimo: sigue siendo
+# dato personal, pero no en claro). Una columna fuera de las dos listas no está clasificada: queda UNKNOWN y bloquea.
+CLASIFICADAS = PERSONALES | {"cliente_key", "tramo_edad", "comuna", "lat", "lon", "monto", "ingested_at", "clientes",
+                             "monto_total"}
 RESPALDO = re.compile(r"[^@\s]+@[^@\s]+\.[a-z]{2,}|\d{1,2}\.?\d{3}\.?\d{3}-[\dK]", re.I)   # solo para texto libre
 BRONZE = [   # rut, nombre, email, telefono, fecha_nacimiento, direccion, lat, lon, monto, ingested_at
     ("11.111.111-1", "Ana", "ana@example.test", "+56 9 1111 1111", date(1991, 4, 2), "Irarrázaval 100, Ñuñoa",
@@ -315,6 +319,11 @@ def en_claro(conn: psycopg.Connection, capa: str) -> list[str]:
     return hallazgos
 
 
+def sin_clasificar(conn: psycopg.Connection, capa: str) -> list[str]:
+    """UNKNOWN: columnas que el catálogo no clasifica. Sin clasificación no se sabe si son personales."""
+    return [f"{capa}.{c}" for c in columnas(conn, capa) if c not in CLASIFICADAS]
+
+
 def vencidas_en_bronze(conn: psycopg.Connection, hoy: date) -> int:
     """Tiempo: filas de bronze que pasaron el plazo y siguen ahí."""
     corte = hoy - RETENCION_BRONZE
@@ -343,6 +352,8 @@ def construir(conn: psycopg.Connection, escenario: str, rol: str) -> int:
         construir_silver(conn, secrets.token_bytes(32), REFERENCIA)   # la clave del HMAC, en producción en un KMS
     if escenario == "deriva-esquema":
         conn.execute("ALTER TABLE silver.clientes ADD COLUMN email text")   # cambio de esquema sin aprobar
+    if escenario == "sin-clasificar":   # el contrato aprobó la columna, pero el catálogo todavía no la clasifica
+        conn.execute("ALTER TABLE silver.clientes ADD COLUMN segmento text DEFAULT 'frecuente'")
     construir_gold(conn, rol)
     return purgadas
 
@@ -362,10 +373,14 @@ def reporte(conn: psycopg.Connection, escenario: str, rol: str, purgadas: int) -
         fallas.append(f"bronze conserva {vencidas} fila(s) vencida(s)")
     if not lectura_bronze.startswith("denegado"):
         fallas.append("el analista lee bronze")
+    desconocidas = sin_clasificar(conn, "silver") + sin_clasificar(conn, "gold")
     for falla in fallas:
         print(f"FALLA {falla}")
-    if fallas:
-        print(f"puerta: rechazada (1): {len(fallas)} control(es) fallan")
+    for columna in desconocidas:
+        print(f"UNKNOWN {columna}: sin clasificar en el catálogo, no cuenta como aprobada")
+    if fallas or desconocidas:
+        extra = f", {len(desconocidas)} columna(s) UNKNOWN" if desconocidas else ""
+        print(f"puerta: rechazada (1): {len(fallas)} control(es) fallan{extra}")
         return 1
     print("puerta: aprobada (0): cantidad, granularidad, accesibilidad y tiempo en regla")
     return 0
@@ -393,7 +408,7 @@ El script se **ejecuta en la CI contra el servicio postgres:17** y pasa `mypy --
 - **Accesibilidad:** el analista lee gold y no bronze (`42501`), probado con su identidad.
 - **Tiempo:** bronze purga lo que ingresó hace más de 30 días, y un control falla si quedan filas vencidas.
 
-El control de «sin datos personales en claro fuera de bronze» recorre todas las tablas de silver y gold. Se basa en la clasificación del catálogo, las columnas marcadas como personales, como las que produce `pii-identification`. El patrón de correo o RUT queda solo de respaldo para el texto libre.
+El control de «sin datos personales en claro fuera de bronze» recorre todas las tablas de silver y gold. Se basa en la clasificación del catálogo, las columnas marcadas como personales, como las que produce `pii-identification`. El patrón de correo o RUT queda solo de respaldo para el texto libre. Una columna que el catálogo no clasifica queda `UNKNOWN` y bloquea la puerta, como en `chile-data-protection` y `processing-activities-inventory`: la falta de clasificación no aprueba.
 
 En el escenario correcto, la purga borra la fila vencida, silver queda con las columnas del contrato y la puerta aprueba con código 0:
 
@@ -444,9 +459,21 @@ FALLA bronze conserva 1 fila(s) vencida(s)
 puerta: rechazada (1): 1 control(es) fallan
 ```
 
+Si el contrato aprueba una columna nueva, `segmento`, pero el catálogo todavía no la clasifica, ningún control falla y aun así la puerta no aprueba: la columna queda `UNKNOWN`. Código 1:
+
+```text
+$ python minimizacion.py sin-clasificar
+purga de bronze (plazo 30 días): 1 fila(s)
+silver: ['cliente_key', 'tramo_edad', 'comuna', 'lat', 'lon', 'monto', 'segmento']
+gold: [('Maipú', 2), ('Ñuñoa', 2)]
+analista lee gold: ok (2 filas); lee bronze: denegado (42501)
+UNKNOWN silver.segmento: sin clasificar en el catálogo, no cuenta como aprobada
+puerta: rechazada (1): 0 control(es) fallan, 1 columna(s) UNKNOWN
+```
+
 Limitaciones:
 
-- **Clasificación:** el control confía en el catálogo. Una columna personal sin clasificar pasa, salvo que su texto traiga un correo o un RUT que el respaldo reconozca.
+- **Clasificación:** el control confía en el catálogo. Una columna sin clasificar bloquea (`UNKNOWN`), pero una columna personal mal clasificada como no personal pasa, salvo que su texto traiga un correo o un RUT que el respaldo reconozca.
 - **Identificación indirecta:** tramo de edad, comuna y coordenadas a 2 decimales siguen siendo datos personales si se combinan; el umbral de gold reduce el riesgo, no garantiza anonimato.
 - **Finalidad:** el contrato dice qué columnas se aprobaron, no si la finalidad es legítima.
 - **Plazo:** los 30 días de bronze son una política interna de ejemplo, no un plazo legal; la purga borra filas, no copias en respaldos (`privacy-backup-and-recovery`).
@@ -546,7 +573,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-21: texto legal consultado ese día en BCN. `verified`: aprobada de nuevo por Felipe el 2026-11-04 (`owner_approved_at`), con el §10 de punta a punta. Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-21: texto legal consultado ese día en BCN. `review_required` desde el 2026-11-04: revisión P10 aplicada al §10; vuelve a `verified` cuando Felipe la apruebe (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -565,3 +592,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.
 - 2026-11-04: §10 reescrito de punta a punta (pedido de Felipe), con PostgreSQL 17: funciones de nivel superior que reciben la conexión, sin `assert`; las cuatro dimensiones (contrato de columnas; tramo de edad, comuna, coordenadas a 2 decimales, teléfono que no pasa, HMAC del RUT y agregado con supresión; rol del analista con `42501`; `ingested_at`, purga y control de filas vencidas); el control «sin datos personales en claro fuera de bronze» usa la clasificación del catálogo y deja el patrón como respaldo para texto libre; marcadores `# @paso 1–4` y cuatro escenarios (`correcto`, `deriva-esquema`, `select-star`, `sin-purga`) con su línea `$ python minimizacion.py <escenario>`, iguales a la salida de la CI. §8 con la evidencia nueva y §15 con el código inline correcto. Vuelve a `review_required` hasta la aprobación de Felipe.
 - 2026-11-04: aprobada por Felipe con el §10 nuevo (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).
+- 2026-11-04: revisión `docs/reviews/p10.md` aplicada (pedido de Felipe): una columna que el catálogo no clasifica queda `UNKNOWN` y bloquea la puerta, como en las otras fichas; escenario `sin-clasificar` (1) igual a la salida de la CI; limitación «Clasificación» ajustada. Vuelve a `review_required`.

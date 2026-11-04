@@ -60,8 +60,7 @@ relations:
 created_at: 2026-10-21
 updated_at: 2026-11-04
 last_verified: 2026-10-28
-owner_approved_at: 2026-11-04
-verification_status: verified
+verification_status: review_required
 ---
 
 ## 1. Resumen
@@ -149,7 +148,7 @@ Escenario genérico: una aerolínea con BigQuery, Airflow (Cloud Composer) y das
 | Relación con activos | Tags en el catálogo: `actividad`, `plazo`, `finalidad` |
 | Consentimientos | Tabla por titular, finalidad, versión del texto, fecha y canal; revocación con la misma facilidad (su detalle, en las fichas hermanas) |
 | Usos observados | Linaje (del catálogo de la nube u OpenLineage) y logs de acceso |
-| Control | Job de la CI que concilia declarados contra observados |
+| Control | Job programado que concilia declarados contra observados (alerta), y puerta de la CI para despliegues nuevos (bloqueo) |
 
 ### Evidencia de cumplimiento
 
@@ -160,7 +159,7 @@ Escenario genérico: una aerolínea con BigQuery, Airflow (Cloud Composer) y das
 | Vínculo actividad–activo–consumidor | Catálogo o registro técnico | Ingeniería | Qué consumidores y activos cubre cada actividad | La intención real de cada consulta |
 | Ejecuciones y accesos | Logs protegidos con retención definida | Plataforma | Qué consumidor leyó qué activo y cuándo | Por qué lo leyó |
 | Desviaciones y su cierre | Gestión de incidencias | Ingeniería y privacidad | Que la alerta se analizó y cómo se resolvió | Que no haya usos fuera de la cobertura del linaje |
-| Resultado de la conciliación (0 o 1) con sus hallazgos | Log de la CI | Pipeline de conciliación | Qué usos y actividades no cuadran con el registro a una fecha | Que los usos sin registro en el linaje estén cubiertos |
+| Resultado de la conciliación (0 o 1) con sus hallazgos | Log del job de conciliación | Pipeline de conciliación | Qué usos y actividades no cuadran con el registro a una fecha | Que los usos sin registro en el linaje estén cubiertos |
 
 ## 9. Arquitectura
 
@@ -175,14 +174,15 @@ flowchart LR
   C -- "desvío" --> A["Alerta y revisión"]
 ```
 
-La CI bloquea un despliegue nuevo no declarado; la conciliación cubre lo que ya corre en producción. Para consentimientos y retención se integran las entidades de sus fichas hermanas, sin replicarlas.
+La puerta de la CI bloquea un despliegue nuevo no declarado o con su actividad no vigente. La conciliación revisa lo que ya corre en producción: no bloquea nada, y su resultado 1 dispara la alerta y la revisión. Para consentimientos y retención se integran las entidades de sus fichas hermanas, sin replicarlas.
 
 ## 10. Código
 
 ```python
-# Python 3.12+, biblioteca estándar. De punta a punta: registro de actividades → usos observados → conciliación →
-# insumo de la política (art. 14 ter) → código de salida (0 aprueba, 1 rechaza). Uso: python inventario.py actual |
-# corregido | despliegue-nuevo. La base de licitud vive en la actividad, no en la tabla. Las funciones reciben el
+# Python 3.12+, biblioteca estándar. De punta a punta: registro de actividades → usos observados → conciliación
+# operacional (lo que ya corre) e insumo de la política (art. 14 ter), o puerta de despliegue de la CI (lo nuevo) →
+# código de salida (0 sin hallazgos, 1 alerta o bloqueo). Uso: python inventario.py actual | corregido |
+# despliegue-nuevo. La base de licitud vive en la actividad, no en la tabla. Las funciones reciben el
 # registro como parámetro. Una brecha es una alerta técnica para revisar, no la conclusión de que hubo una infracción;
 # UNKNOWN (falta el dato para decidir) nunca cuenta como OK. Datos ficticios.
 import sys
@@ -310,15 +310,19 @@ def conciliar(registro: Registro, usos: list[Uso], hoy: date) -> list[Hallazgo]:
 
 
 def verificar_despliegues(registro: Registro, despliegues: list[Despliegue], hoy: date) -> list[Hallazgo]:
-    """La CI bloquea un consumidor nuevo sin activity_id, o con una actividad que no lo declara o no está vigente."""
+    """Puerta de la CI: bloquea un despliegue sin activity_id, con una actividad que no declara al consumidor o con una
+    actividad sin aprobación vigente; cada caso con su propio motivo."""
     hallazgos = []
     por_id = {a.id: a for a in registro.actividades}
     for d in despliegues:
         actividad = por_id.get(d.activity_id or "")
         if actividad is None:
             hallazgos.append(Hallazgo("BRECHA", f"despliegue bloqueado: {d.consumidor} sin activity_id válido"))
-        elif d.consumidor not in actividad.consumidores or not vigente(actividad, hoy):
+        elif d.consumidor not in actividad.consumidores:
             hallazgos.append(Hallazgo("BRECHA", f"despliegue bloqueado: {d.consumidor} no declarado en {actividad.id}"))
+        elif not vigente(actividad, hoy):
+            hallazgos.append(Hallazgo("BRECHA", f"despliegue bloqueado: {d.consumidor} → {actividad.id}: "
+                                                "actividad no vigente"))
     return hallazgos
 
 
@@ -358,6 +362,9 @@ def escenario(nombre: str) -> tuple[Registro, list[Uso], list[Despliegue]]:
             Uso("sa-7f3c", "silver.reservas", frozenset({"pasajero_id"}))]
     if nombre == "actual":
         return registro, usos, []
+    if nombre == "despliegue-nuevo":   # la puerta de la CI evalúa lo que se quiere desplegar contra el registro de hoy
+        return registro, usos, [Despliegue("dag_reservas", "venta_pasajes"), Despliegue("dag_recomendaciones", None),
+                                Despliegue("dag_segmentos", "venta_pasajes"), Despliegue("job_fraude", "modelo_fraude")]
     hoy_aprobada = Aprobacion(date(2026, 10, 30), date(2027, 10, 30))
     corregido = Registro((
         replace(venta, consumidores=venta.consumidores | {"dashboard_externo", "job_conciliacion"}),
@@ -368,31 +375,46 @@ def escenario(nombre: str) -> tuple[Registro, list[Uso], list[Despliegue]]:
                 campos=frozenset({"pasajero_id", "rut", "monto"}))),
         registro.tablas_con_pii, {**registro.identidades, "sa-7f3c": "job_conciliacion"})
     usos_corregidos = [replace(u, columnas=frozenset({"correo"})) if u.cuenta == "sa-campanas" else u for u in usos]
-    if nombre == "corregido":
-        return corregido, usos_corregidos, []
-    return corregido, usos_corregidos, [Despliegue("dag_recomendaciones", None)]   # despliegue-nuevo
+    return corregido, usos_corregidos, []
+
+
+def puerta_ci(registro: Registro, despliegues: list[Despliegue]) -> int:
+    """Lo nuevo: cada despliegue se evalúa antes de entrar a producción, y uno bloqueado no se despliega."""
+    hallazgos = verificar_despliegues(registro, despliegues, REFERENCIA)
+    for h in hallazgos:
+        print(f"{h.estado} {h.detalle}")
+    if hallazgos:
+        print(f"puerta de la CI: rechazada (1): {len(hallazgos)} de {len(despliegues)} despliegues bloqueados")
+        return 1
+    print(f"puerta de la CI: aprobada (0): {len(despliegues)} despliegues declarados y vigentes")
+    return 0
+
+
+def conciliacion(registro: Registro, usos: list[Uso]) -> int:
+    """Lo que ya corre: la conciliación no bloquea nada, levanta una alerta operacional para revisar."""
+    print("insumo para la política (art. 14 ter), a revisar por privacidad antes de publicar:")
+    print("\n".join(insumo_14_ter(registro, REFERENCIA)))
+    hallazgos = (tablas_sin_actividad(registro) + actividades_incompletas(registro, REFERENCIA)
+                 + conciliar(registro, usos, REFERENCIA))
+    for h in hallazgos:
+        print(f"{h.estado} {h.detalle}")
+    if hallazgos:
+        print(f"conciliación: alerta (1): {len(hallazgos)} hallazgo(s) en consumos que ya corren")
+        return 1
+    print("conciliación: sin hallazgos (0)")
+    return 0
 
 
 def main(nombre: str) -> int:
     registro, usos, despliegues = escenario(nombre)
-    print("insumo para la política (art. 14 ter), a revisar por privacidad antes de publicar:")
-    print("\n".join(insumo_14_ter(registro, REFERENCIA)))
-    hallazgos = (tablas_sin_actividad(registro) + actividades_incompletas(registro, REFERENCIA)
-                 + conciliar(registro, usos, REFERENCIA) + verificar_despliegues(registro, despliegues, REFERENCIA))
-    for h in hallazgos:
-        print(f"{h.estado} {h.detalle}")
-    if hallazgos:
-        print(f"CI: rechazada (1): {len(hallazgos)} hallazgo(s)")
-        return 1
-    print("CI: aprobada (0): sin hallazgos")
-    return 0
+    return puerta_ci(registro, despliegues) if despliegues else conciliacion(registro, usos)
 
 
 if __name__ == "__main__":
     sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else "actual"))
 ```
 
-El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Recorre cuatro pasos: el registro de actividades (con su base, plazo en meses, aprobación con vencimiento y campos permitidos), los usos observados (cuenta de servicio, activo y columnas leídas), la conciliación y el insumo del art. 14 ter con su código de salida. Las funciones reciben el registro como parámetro, y la base se guarda sin el artículo, que sale de un mapa aparte.
+El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Recorre cuatro pasos: el registro de actividades (con su base, plazo en meses, aprobación con vencimiento y campos permitidos), los usos observados (cuenta de servicio, activo y columnas leídas), la conciliación y el insumo del art. 14 ter con su código de salida. Hay dos momentos: la conciliación operacional (`actual` y `corregido`) revisa lo que ya corre y, con hallazgos, sale 1 como alerta; la puerta de la CI (`despliegue-nuevo`) evalúa lo que se quiere desplegar y bloquea. Las funciones reciben el registro como parámetro, y la base se guarda sin el artículo, que sale de un mapa aparte.
 
 En el estado actual, la conciliación encuentra nueve hallazgos:
 
@@ -417,7 +439,7 @@ BRECHA proporcionalidad: dag_campanas lee rut, no necesario para marketing
 BRECHA sin aprobación vigente: job_fraude → silver.pasajeros (modelo_fraude)
 BRECHA sin vínculo: dashboard_externo → silver.pasajeros
 UNKNOWN consumidor no identificado: sa-7f3c → silver.reservas
-CI: rechazada (1): 9 hallazgo(s)
+conciliación: alerta (1): 9 hallazgo(s) en consumos que ya corren
 ```
 
 En el escenario corregido se evalúa y aprueba el modelo de fraude, con su base, plazo, activos y campos. También se vinculan el dashboard y la cuenta `sa-7f3c` a `venta_pasajes`, se define el plazo de `marketing`, se renueva su aprobación y se vincula su registro de consentimientos, y `dag_campanas` deja de leer `rut`. El insumo pasa a tres actividades. Termina con código 0:
@@ -428,19 +450,17 @@ insumo para la política (art. 14 ter), a revisar por privacidad antes de public
 - emitir y gestionar pasajes | base: contrato (art. 13 c)) | datos: identificación, contacto, itinerario | destinatarios: aerolíneas socias | plazo: 60 meses
 - ofertas personalizadas | base: consentimiento (art. 12) | datos: contacto, preferencias | destinatarios: plataforma de email | plazo: 24 meses
 - detectar operaciones sospechosas | base: interés legítimo (art. 13 d)) | datos: identificación, pagos | destinatarios: ninguno | plazo: 24 meses
-CI: aprobada (0): sin hallazgos
+conciliación: sin hallazgos (0)
 ```
 
-Sobre ese registro corregido, un consumidor nuevo, `dag_recomendaciones`, intenta desplegarse sin `activity_id`, y la CI lo bloquea. Termina con código 1:
+La puerta de la CI evalúa cuatro despliegues contra el registro de hoy, el del escenario actual. `dag_reservas` está declarado en `venta_pasajes`, vigente, y pasa. `dag_recomendaciones` no trae `activity_id`; `dag_segmentos` cita `venta_pasajes`, que no lo declara, y `job_fraude` cita `modelo_fraude`, que lo declara pero no tiene aprobación vigente: se informa como «actividad no vigente», no como «no declarado». Termina con código 1:
 
 ```text
 $ python inventario.py despliegue-nuevo
-insumo para la política (art. 14 ter), a revisar por privacidad antes de publicar:
-- emitir y gestionar pasajes | base: contrato (art. 13 c)) | datos: identificación, contacto, itinerario | destinatarios: aerolíneas socias | plazo: 60 meses
-- ofertas personalizadas | base: consentimiento (art. 12) | datos: contacto, preferencias | destinatarios: plataforma de email | plazo: 24 meses
-- detectar operaciones sospechosas | base: interés legítimo (art. 13 d)) | datos: identificación, pagos | destinatarios: ninguno | plazo: 24 meses
 BRECHA despliegue bloqueado: dag_recomendaciones sin activity_id válido
-CI: rechazada (1): 1 hallazgo(s)
+BRECHA despliegue bloqueado: dag_segmentos no declarado en venta_pasajes
+BRECHA despliegue bloqueado: job_fraude → modelo_fraude: actividad no vigente
+puerta de la CI: rechazada (1): 3 de 4 despliegues bloqueados
 ```
 
 Limitaciones:
@@ -448,7 +468,7 @@ Limitaciones:
 - **Consentimiento:** el ejemplo verifica que la actividad tenga un registro de consentimientos vinculado, con versión del texto y fecha; no que cada titular haya consentido ni que la revocación funcione.
 - **Finalidad real:** los campos permitidos se declaran a mano, y el control ve las columnas que se leen, no para qué se usan.
 - **Cobertura:** solo ve los usos que el linaje y los logs registran. Una cuenta sin mapear queda en `UNKNOWN` y bloquea, pero un uso que no deja registro no aparece.
-- **Momento:** la CI bloquea despliegues nuevos, no consumos que ya corren; para eso está la alerta operacional del §9.
+- **Momento:** el código cubre los dos momentos, pero solo la puerta de la CI bloquea, y solo despliegues nuevos. La conciliación de lo que ya corre sale 1 con hallazgos; ese 1 es la alerta operacional del §9, no detiene un consumo en producción, y quién lo revisa y en qué plazo queda fuera del ejemplo.
 - **Política:** el insumo del art. 14 ter es un borrador para que privacidad lo revise, no la política publicada.
 
 ## 11. GCP
@@ -544,7 +564,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-28: art. 3 c) consultado en BCN para agregarlo; *About data lineage* consultada de nuevo. Antes, 2026-10-25: textos legales vueltos a consultar en BCN, sin cambios, y 2026-10-22: arts. 3, 12, 13, 14, 14 ter y 34 ter consultados ese día. `verified`: aprobada de nuevo por Felipe el 2026-11-04 (`owner_approved_at`), con el §10 de punta a punta. Revisión mensual.
+2026-10-28: art. 3 c) consultado en BCN para agregarlo; *About data lineage* consultada de nuevo. Antes, 2026-10-25: textos legales vueltos a consultar en BCN, sin cambios, y 2026-10-22: arts. 3, 12, 13, 14, 14 ter y 34 ter consultados ese día. `review_required` desde el 2026-11-04: revisión P10 aplicada al §10; vuelve a `verified` cuando Felipe la apruebe (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -563,3 +583,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra, y se quita «(Título III)» de las otras bases del art. 13. Sin cambios de fondo; el estado no cambia.
 - 2026-11-03: §10 reescrito de punta a punta (pedido de Felipe): registro → usos observados (cuenta, activo, columnas) → conciliación → insumo del art. 14 ter → código de salida 0/1, con funciones que reciben el registro como parámetro; `Base` como `Literal` con el artículo en un mapa aparte, plazo en meses, aprobación con vencimiento y campos permitidos; brechas nuevas de **proporcionalidad**, consentimiento sin registro, aprobación vencida y consumidor no identificado (`UNKNOWN`); marcadores `# @paso 1–4` y tres escenarios (`actual`, `corregido`, `despliegue-nuevo`) con su línea `$ python inventario.py <escenario>`, iguales a la salida de la CI. §8 suma la evidencia de la conciliación y §15 el consumidor sin identificar. Vuelve a `review_required` hasta la aprobación de Felipe.
 - 2026-11-04: aprobada por Felipe con el §10 nuevo (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).
+- 2026-11-04: revisión `docs/reviews/p10.md` aplicada (pedido de Felipe): el §10 separa la conciliación operacional (`actual` y `corregido`: alerta sobre consumos que ya corren, 1 con hallazgos) de la puerta de la CI (`despliegue-nuevo`: cuatro despliegues contra el registro de hoy, tres bloqueados); un despliegue con su actividad sin aprobación vigente se informa como «actividad no vigente», no como «no declarado». Limitación «Momento», §8 y §9 ajustados. Vuelve a `review_required`.

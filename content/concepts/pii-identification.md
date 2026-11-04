@@ -75,10 +75,9 @@ relations:
     target: data-breach-response
     note: Las categorías deciden el aviso a titulares.
 created_at: 2026-10-21
-updated_at: 2026-11-03
+updated_at: 2026-11-04
 last_verified: 2026-10-25
-owner_approved_at: 2026-11-03
-verification_status: verified
+verification_status: review_required
 ---
 
 ## 1. Resumen
@@ -491,7 +490,7 @@ En Azure, **Microsoft Purview**. Según *Chile identity card number*, consultada
 ## 15. Errores frecuentes
 
 - Clasificar solo por el nombre de la columna.
-- Comparar nombres por substring: «ingreso» calza en `fecha_ingreso` y «renta» en `herramienta_id`. Se compara por token (split por «_») y con reglas de varios tokens, como `tramo` + `ingreso`.
+- Comparar nombres por substring: «ingreso» calza en `fecha_ingreso` y «renta» en `rentabilidad_producto`, que no son datos socioeconómicos de una persona. Se compara por token (split por «_») y con reglas de varios tokens, como `tramo` + `ingreso`.
 - Tratar `cliente_id` o un hash como no personal sin analizar la reidentificación.
 - Equiparar cualquier dato financiero con sensible sin revisar qué revela; ojo: la situación socioeconómica sí es sensible según el art. 2 g).
 - Creer que un DV inválido elimina el carácter personal del dato.
@@ -540,7 +539,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-21: texto legal consultado ese día en BCN. `verified`: aprobada de nuevo por Felipe el 2026-11-03 (`owner_approved_at`), con el §10 de punta a punta. Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-21: texto legal consultado ese día en BCN. `review_required` desde el 2026-11-04: revisión P10 aplicada al §10; vuelve a `verified` cuando Felipe la apruebe (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -558,3 +557,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-03: a pedido de Felipe se quita del resumen «**Cómo leerla.** *Comprender* (§1–6): qué es un dato personal y uno sensible. *Aplicar* (§7–13): cómo se detecta y clasifica. *Demostrar*: la evidencia del §8, el detector del §10 y las preguntas del §18.» y, del §2, la buena práctica «El RUT tiene un dígito verificador (módulo 11) que separa un RUT bien escrito de un número cualquiera; un DV inválido no prueba que el dato no sea personal.»
 - 2026-11-03: §10 reescrito de punta a punta (pedido de Felipe): muestra → detección en cuatro frentes (identificadores directos con `clasificar_rut` y correo; sensibles por nombre comparando por token; sensibles en el contenido con un diccionario mínimo; combinación única de `comuna` + `edad`) → catálogo con fundamento, fecha y revisor → puerta con código de salida 0/1; marcadores `# @paso 1–4` y tres escenarios (`muestra`, `revisado`, `fuente-nueva`) con su línea `$ python detector.py <escenario>`, iguales a la salida de la CI. §15 suma el falso positivo por substring y §8 la evidencia de la puerta. Vuelve a `review_required` hasta la aprobación de Felipe.
 - 2026-11-03: aprobada por Felipe con el §10 nuevo (`owner_approved_at: 2026-11-03`); vuelve a `verified` (ADR-023).
+- 2026-11-04: revisión `docs/reviews/p10.md` aplicada (pedido de Felipe): en §15, el ejemplo falso «renta» en `herramienta_id` pasa a `rentabilidad_producto`, que sí contiene la subcadena; un test lo comprueba contra la ficha. Vuelve a `review_required`.
