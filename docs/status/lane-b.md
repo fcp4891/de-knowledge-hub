@@ -15,6 +15,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** revisión del lote PBA. Informe en `docs/reviews/pba.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuesta baja: la letra b) del art. 34 quáter no está completa.
 - **Tarea activa:** verificación P10. Informe en `docs/reviews/p10-verificacion.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuesta baja: la cita de confidencialidad abre con «este» y BCN dice «Este». En Cobertura, `UNKNOWN` sigue diciendo «bloquea».
 - **Tarea activa:** revisión del lote P10. Informe en `docs/reviews/p10.md`. No se editó `content/` ni `frontend/`.
@@ -142,6 +144,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Tarea activa:** `b/ui-page-title` (ADR-012). Sin merge a `main`.
 - **Siguiente:** lo que asigne Felipe. Sigue abierta la revisión F3b-08c.
 - **Bloqueos:** ninguno.
+
+### Revisión · lote PBA
+- El §10 de purpose-based-authorization coincide con las tres salidas y pasa `mypy --strict`. Deny por defecto, las tres decisiones y la revisión de 90 días están en la corrida. Propuesta baja: completar la letra b) del art. 34 quáter. No se editó `content/` ni `frontend/`.
 
 ### Revisión · verificación P10
 - `cf4edfd`. Cuatro citas del art. 3; tres literales. Siete tests en verde, con PostgreSQL en minimización. No se editó `content/` ni `frontend/`.
@@ -486,6 +491,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - El pedido de un párrafo por nivel queda sin efecto. Esos nombres no se asignan a los tramos ni hace falta un campo nuevo: la interfaz muestra la caja «Cómo estudiar cada ficha: Comprender → Aplicar → Demostrar → Profundizar».
 
 ## Historial
+
+### Revisión · lote PBA (2026-11-04)
+- `b/review-pba`, desde `60de40e`. Informe en `docs/reviews/pba.md`. Tres escenarios del §10 y la letra b) del art. 34 quáter. No se editó `content/`.
 
 ### Revisión · verificación P10 (2026-11-04)
 - `b/review-p10`. Informe en `docs/reviews/p10-verificacion.md`. Citas del art. 3 en `cf4edfd` y salidas de las otras tres fichas. No se editó `content/`.
