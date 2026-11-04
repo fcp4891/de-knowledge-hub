@@ -400,3 +400,12 @@ def test_pseudonymization_rules(tmp_path: Path) -> None:
     datos = [("RM", "1980s", "F")] * m.K_MIN
     assert m.puerta_publicacion(datos, m.CUASI_CATALOGO) == []
     assert m.puerta_publicacion(datos, ("comuna", "sexo")) == ["cuasi-identificador no declarado: nacimiento"]
+    validos, cuarentena = m.separar([("r1", "11.111.111-1"), ("r2", "11111111-0"), ("r3", "abc")])
+    assert validos == [("r1", "11111111-1")]
+    assert cuarentena == [("r2", "DV inválido"), ("r3", "formato no válido")]   # id y motivo, nunca el valor
+    rut = "11111111-1"
+    reservas = {m.seudonimo("reservas", "k1", rut): 1}
+    assert m.unir(reservas, {m.seudonimo("marketing", "k1", rut): "a"}) == 0
+    assert m.unir(reservas, {m.seudonimo("reservas", "k1", rut): "a"}) == 1
+    filas, suprimidos = m.suprimir_atipicos([("RM", "1980s", "F")] * m.K_MIN + [("Tarapacá", "1950s", "M")])
+    assert suprimidos == 1 and ("Tarapacá", "1950s", "M") not in filas

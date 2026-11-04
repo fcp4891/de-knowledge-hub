@@ -187,10 +187,11 @@ flowchart LR
 
 ```python
 # Python 3.12+, biblioteca estándar. Seudonimizar el RUT y probar que seudonimizar no es anonimizar, de punta a punta:
-# normalizar y validar → seudónimo HMAC con una llave por dominio y su id → ataque al hash simple → anonimizar y puerta
-# de publicación → código de salida (0 publica, 1 bloquea). Uso: python seudonimizacion.py publicar-exacto |
-# publicar-generalizado | sin-normalizar. Las llaves de este ejemplo se derivan de un texto fijo para que la salida sea
-# reproducible; en producción viven en un KMS o gestor de secretos, nunca junto a los datos. RUT ficticios.
+# normalizar y validar (lo inválido a cuarentena) → seudónimo HMAC con una llave por dominio y su id → ataque al hash
+# simple → k-anonimato y puerta de publicación → código de salida (0 pasa, 1 bloquea). Uso: python seudonimizacion.py
+# publicar-exacto | publicar-generalizado | sin-normalizar. Las llaves de este ejemplo se derivan de un texto fijo para
+# que la salida sea reproducible; en producción viven en un KMS o gestor de secretos, nunca junto a los datos. RUT
+# ficticios.
 import hashlib
 import hmac
 import re
@@ -213,12 +214,28 @@ def dv(numero: int) -> str:
     return {11: "0", 10: "K"}.get(resto, str(resto))
 
 
+FORMA = re.compile(r"(\d{7,8})-?([\dK])")
+
+
 def normalizar(valor: str) -> str | None:
     """Forma canónica «número-DV» (sin puntos ni espacios, K mayúscula); None si el formato o el DV no son válidos."""
-    m = re.fullmatch(r"(\d{7,8})-?([\dK])", re.sub(r"[.\s]", "", valor).upper())
+    m = FORMA.fullmatch(re.sub(r"[.\s]", "", valor).upper())
     if m is None or dv(int(m.group(1))) != m.group(2):
         return None
     return f"{int(m.group(1))}-{m.group(2)}"
+
+
+def separar(entrada: list[tuple[str, str]]) -> tuple[list[tuple[str, str]], list[tuple[str, str]]]:
+    """(id, RUT canónico) de los válidos y (id, motivo) de la cuarentena: el valor malo no se copia ni se descarta,
+    queda en bronze y la cuarentena guarda solo a qué registro mirar y por qué."""
+    validos, cuarentena = [], []
+    for id_registro, valor in entrada:
+        if (canonico := normalizar(valor)) is not None:
+            validos.append((id_registro, canonico))
+        else:
+            limpio = re.sub(r"[.\s]", "", valor).upper()
+            cuarentena.append((id_registro, "DV inválido" if FORMA.fullmatch(limpio) else "formato no válido"))
+    return validos, cuarentena
 
 
 # @paso 2 Seudónimo por dominio
@@ -231,6 +248,11 @@ def rotar(dominio: str, ruts: list[str], de: str, a: str) -> list[tuple[str, str
     """Tabla de correspondencia vieja → nueva: sin ella, una solicitud del titular registrada con el seudónimo viejo
     pierde su rastro. Se guarda con el mismo control de acceso que las llaves y se borra al cerrar las solicitudes."""
     return [(seudonimo(dominio, de, r), seudonimo(dominio, a, r)) for r in ruts]
+
+
+def unir(izquierda: dict[str, int], derecha: dict[str, str]) -> int:
+    """Coincidencias de una unión por seudónimo entre dos tablas."""
+    return len(izquierda.keys() & derecha.keys())
 
 
 # @paso 3 Ataque al hash simple
@@ -266,13 +288,15 @@ def generalizar(filas: list[Fila]) -> list[Fila]:
     return [("RM" if c != "Colchane" else "Tarapacá", f"{int(a) // 10 * 10}s", s) for c, a, s in filas]
 
 
-def suprimir_atipicos(filas: list[Fila]) -> tuple[list[Fila], list[Fila]]:
+def suprimir_atipicos(filas: list[Fila]) -> tuple[list[Fila], int]:
+    """Filas que quedan y cuántos grupos se suprimieron: los cuasi-identificadores del grupo suprimido no se informan."""
     conteo = Counter(filas)
-    return [f for f in filas if conteo[f] >= K_MIN], sorted({f for f in filas if conteo[f] < K_MIN})
+    return [f for f in filas if conteo[f] >= K_MIN], sum(1 for n in conteo.values() if n < K_MIN)
 
 
 def puerta_publicacion(filas: list[Fila], declarados: tuple[str, ...]) -> list[str]:
-    """Se publica como anonimizado solo con k ≥ K_MIN y todos los cuasi-identificadores del catálogo declarados."""
+    """Pasa solo con k ≥ K_MIN y todos los cuasi-identificadores del catálogo declarados. Pasar es cumplir la política
+    interna, no anonimizar: eso exige además la evaluación de reidentificación (art. 2 k))."""
     motivos = [f"cuasi-identificador no declarado: {c}" for c in CUASI_CATALOGO if c not in declarados]
     if k_minimo(filas) < K_MIN:
         motivos.append(f"k = {k_minimo(filas)}, menor que K_MIN = {K_MIN}: hay personas solas en su grupo")
@@ -281,19 +305,23 @@ def puerta_publicacion(filas: list[Fila], declarados: tuple[str, ...]) -> list[s
 
 def main(escenario: str) -> int:
     n = 11_111_111
-    variantes = [f"{n:,}".replace(",", ".") + f"-{dv(n)}", f"{n}-{dv(n)}", f" {n}{dv(n)} "]
+    entrada = [("r1", f"{n:,}".replace(",", ".") + f"-{dv(n)}"), ("r2", f"{n}-{dv(n)}"), ("r3", f" {n}{dv(n)} "),
+               ("r4", f"{n}-{'0' if dv(n) != '0' else '1'}")]   # r1–r3: la misma persona; r4: DV equivocado
+    validos, cuarentena = separar(entrada)
+    print(f"entrada: {len(entrada)} registros; cuarentena: {len(cuarentena)} "
+          f"({', '.join(f'{i}: {m}' for i, m in cuarentena)}), sin copiar el valor")
     canonico = escenario != "sin-normalizar"
-    claves = [normalizar(v) if canonico else v for v in variantes]
-    distintos = len({seudonimo("reservas", "k1", c) for c in claves if c is not None})
+    claves = [c for _, c in validos] if canonico else [v for i, v in entrada if i in dict(validos)]
+    distintos = len({seudonimo("reservas", "k1", c) for c in claves})
     palabra = "seudónimo" if distintos == 1 else "seudónimos"
-    print(f"las {len(variantes)} variantes del mismo RUT dan {distintos} {palabra}")
-    malformado = f"{n}-{'0' if dv(n) != '0' else '1'}"
-    if normalizar(malformado) is None:
-        print(f"{malformado}: DV inválido → cuarentena para revisión, no se descarta")
-    rut = f"{n}-{dv(n)}"
-    print(f"en reservas {seudonimo('reservas', 'k1', rut)}; en marketing {seudonimo('marketing', 'k1', rut)}: "
-          "el mismo RUT no se puede cruzar entre dominios")
-    otro = f"{22_222_222}-{dv(22_222_222)}"
+    print(f"los {len(claves)} registros válidos de la misma persona dan {distintos} {palabra}")
+    rut, otro = f"{n}-{dv(n)}", f"{22_222_222}-{dv(22_222_222)}"
+    reservas = {seudonimo("reservas", "k1", rut): 120, seudonimo("reservas", "k1", otro): 80}
+    marketing = {seudonimo("marketing", "k1", rut): "campaña-a", seudonimo("marketing", "k1", otro): "campaña-b"}
+    una_llave = {seudonimo("reservas", "k1", rut): "campaña-a", seudonimo("reservas", "k1", otro): "campaña-b"}
+    print(f"unión reservas–marketing por seudónimo (2 personas en ambos): {unir(reservas, marketing)} coincidencias "
+          "con una llave por dominio")
+    print(f"la misma unión si los dos dominios comparten la llave: {unir(reservas, una_llave)} coincidencias")
     print("rotación de k1 a k2 en reservas, tabla de correspondencia:")
     for vieja, nueva in rotar("reservas", [rut, otro], "k1", "k2"):
         print(f"  {vieja} → {nueva}")
@@ -305,7 +333,7 @@ def main(escenario: str) -> int:
                          ("Ñuñoa", "1990", "M"), ("Ñuñoa", "1991", "M"), ("Colchane", "1958", "M")]
     if escenario == "publicar-generalizado":
         filas, suprimidos = suprimir_atipicos(generalizar(filas))
-        print(f"generalizado a región y década; suprimidos por quedar solos: {suprimidos}")
+        print(f"generalizado a región y década; grupos suprimidos por quedar solos: {suprimidos}")
     print(f"k mínimo del dataset a publicar: {k_minimo(filas)} (K_MIN = {K_MIN})")
     if distintos > 1:
         print(f"puerta de calidad: bloqueada (1): una persona quedó con {distintos} seudónimos (falta normalizar)")
@@ -314,7 +342,8 @@ def main(escenario: str) -> int:
     if motivos:
         print(f"puerta de publicación: bloqueada (1): {'; '.join(motivos)}")
         return 1
-    print("puerta de publicación: se publica como anonimizado (0)")
+    print(f"puerta de publicación: pasa la puerta de k (K_MIN = {K_MIN}): apto para publicar según la política interna;"
+          " la anonimización requiere la evaluación de reidentificación (0)")
     return 0
 
 
@@ -324,10 +353,10 @@ if __name__ == "__main__":
 
 El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Recorre cuatro pasos:
 
-1. **Normalizar y validar:** quita puntos y espacios, pasa la K a mayúscula y valida el dígito verificador. Un RUT con DV inválido va a cuarentena, no se descarta.
-2. **Seudónimo por dominio:** un HMAC con la llave de cada dominio, con el id de la llave adelante («k1:…»). Al rotar a k2 cambian los seudónimos, y la tabla de correspondencia mantiene la trazabilidad de las solicitudes de titulares registradas con el seudónimo viejo.
+1. **Normalizar y validar:** quita puntos y espacios, pasa la K a mayúscula y valida el dígito verificador. El registro con DV inválido se aparta a una lista de cuarentena con su id y su motivo, sin copiar el valor; la salida informa cuántos quedaron ahí.
+2. **Seudónimo por dominio:** un HMAC con la llave de cada dominio, con el id de la llave adelante («k1:…»). Al rotar a k2 cambian los seudónimos, y la tabla de correspondencia mantiene la trazabilidad de las solicitudes de titulares registradas con el seudónimo viejo. Una unión real entre reservas y marketing por seudónimo da 0 coincidencias con llaves separadas, y 2 si los dominios comparten la llave.
 3. **Ataque al hash simple:** el hash sin llave se revierte probando 1.000.000 de RUT de un tramo; el mismo ataque contra el HMAC, sin la llave, no recupera nada.
-4. **Anonimizar y puerta:** el k-anonimato del dataset a publicar. Solo se publica como anonimizado con k ≥ `K_MIN` (2, una política interna de ejemplo) y con todos los cuasi-identificadores del catálogo declarados.
+4. **Anonimizar y puerta:** el k-anonimato del dataset a publicar. La puerta pasa con k ≥ `K_MIN` (2, una política interna de ejemplo) y con todos los cuasi-identificadores del catálogo declarados. Pasar es cumplir esa política, no anonimizar: el art. 2 k) exige un procedimiento irreversible, y eso requiere además la evaluación de reidentificación. La salida informa cuántos grupos se suprimieron, no sus cuasi-identificadores.
 
 Las llaves se derivan de un texto fijo para que la salida sea reproducible, y el RUT es ficticio (dígitos repetidos).
 
@@ -335,9 +364,10 @@ Con los datos exactos, una persona queda sola en su grupo: k = 1, y la puerta bl
 
 ```text
 $ python seudonimizacion.py publicar-exacto
-las 3 variantes del mismo RUT dan 1 seudónimo
-11111111-0: DV inválido → cuarentena para revisión, no se descarta
-en reservas k1:450dd7692874; en marketing k1:be63f2fd5155: el mismo RUT no se puede cruzar entre dominios
+entrada: 4 registros; cuarentena: 1 (r4: DV inválido), sin copiar el valor
+los 3 registros válidos de la misma persona dan 1 seudónimo
+unión reservas–marketing por seudónimo (2 personas en ambos): 0 coincidencias con una llave por dominio
+la misma unión si los dos dominios comparten la llave: 2 coincidencias
 rotación de k1 a k2 en reservas, tabla de correspondencia:
   k1:450dd7692874 → k2:c3ace169f7c6
   k1:a43f3577997f → k2:529fa9a6f4ec
@@ -347,30 +377,32 @@ k mínimo del dataset a publicar: 1 (K_MIN = 2)
 puerta de publicación: bloqueada (1): k = 1, menor que K_MIN = 2: hay personas solas en su grupo
 ```
 
-Al generalizar a región y década, la persona de Colchane sigue sola en su grupo; suprimir ese grupo deja k = 2 y la puerta publica. Termina con código 0:
+Al generalizar a región y década, la persona de Colchane sigue sola en su grupo; suprimir ese grupo deja k = 2 y pasa la puerta de k, según la política interna. Termina con código 0:
 
 ```text
 $ python seudonimizacion.py publicar-generalizado
-las 3 variantes del mismo RUT dan 1 seudónimo
-11111111-0: DV inválido → cuarentena para revisión, no se descarta
-en reservas k1:450dd7692874; en marketing k1:be63f2fd5155: el mismo RUT no se puede cruzar entre dominios
+entrada: 4 registros; cuarentena: 1 (r4: DV inválido), sin copiar el valor
+los 3 registros válidos de la misma persona dan 1 seudónimo
+unión reservas–marketing por seudónimo (2 personas en ambos): 0 coincidencias con una llave por dominio
+la misma unión si los dos dominios comparten la llave: 2 coincidencias
 rotación de k1 a k2 en reservas, tabla de correspondencia:
   k1:450dd7692874 → k2:c3ace169f7c6
   k1:a43f3577997f → k2:529fa9a6f4ec
 hash simple: probando 1.000.000 RUT del tramo, se recupera 11111111-1
 HMAC sin la llave: el mismo ataque no recupera ningún RUT
-generalizado a región y década; suprimidos por quedar solos: [('Tarapacá', '1950s', 'M')]
+generalizado a región y década; grupos suprimidos por quedar solos: 1
 k mínimo del dataset a publicar: 2 (K_MIN = 2)
-puerta de publicación: se publica como anonimizado (0)
+puerta de publicación: pasa la puerta de k (K_MIN = 2): apto para publicar según la política interna; la anonimización requiere la evaluación de reidentificación (0)
 ```
 
 Un pipeline que no normaliza da tres seudónimos para la misma persona. La puerta de calidad falla antes de evaluar la publicación. Termina con código 1:
 
 ```text
 $ python seudonimizacion.py sin-normalizar
-las 3 variantes del mismo RUT dan 3 seudónimos
-11111111-0: DV inválido → cuarentena para revisión, no se descarta
-en reservas k1:450dd7692874; en marketing k1:be63f2fd5155: el mismo RUT no se puede cruzar entre dominios
+entrada: 4 registros; cuarentena: 1 (r4: DV inválido), sin copiar el valor
+los 3 registros válidos de la misma persona dan 3 seudónimos
+unión reservas–marketing por seudónimo (2 personas en ambos): 0 coincidencias con una llave por dominio
+la misma unión si los dos dominios comparten la llave: 2 coincidencias
 rotación de k1 a k2 en reservas, tabla de correspondencia:
   k1:450dd7692874 → k2:c3ace169f7c6
   k1:a43f3577997f → k2:529fa9a6f4ec
@@ -500,3 +532,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
 - 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.
 - 2026-11-04: §10 reescrito de punta a punta (pedido de Felipe): pasos `# @paso 1–4` (normalizar y validar, seudónimo por dominio, ataque al hash simple, anonimizar y puerta); salida en frases; seudónimo con el id de la llave y rotación de k1 a k2 con su tabla de correspondencia; puerta de publicación con `K_MIN` y cuasi-identificadores declarados; tres escenarios (`publicar-exacto`, `publicar-generalizado`, `sin-normalizar`) con su línea `$ python seudonimizacion.py <escenario>`, iguales a la salida de la CI. Vuelve a `review_required` hasta la aprobación de Felipe.
+- 2026-11-04: revisión `docs/reviews/p10.md` aplicada (pedido de Felipe): `publicar-generalizado` ya no dice «se publica como anonimizado», sino que pasa la puerta de k según la política interna y que la anonimización requiere la evaluación de reidentificación (art. 2 k)); la salida informa cuántos grupos se suprimieron, sin sus cuasi-identificadores; la llave por dominio se demuestra con una unión real (0 coincidencias; 2 con llave compartida); el DV inválido se aparta a una lista de cuarentena con id y motivo, sin el valor. Sigue `review_required`.
