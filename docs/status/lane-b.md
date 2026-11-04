@@ -15,6 +15,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** verificación P10. Informe en `docs/reviews/p10-verificacion.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuesta baja: la cita de confidencialidad abre con «este» y BCN dice «Este». En Cobertura, `UNKNOWN` sigue diciendo «bloquea».
 - **Tarea activa:** revisión del lote P10. Informe en `docs/reviews/p10.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas media: los docstrings del art. 3, el substring de `pii-identification`, la puerta del inventario y «anonimizado» con k = 2. Propuestas bajas: el párrafo del §10, el mensaje de despliegue, la columna sin clasificar, el cruce entre dominios y la cuarentena del DV.
 - **Tarea activa:** `b/ui-ajustes-1103`. Los pasos en bloque se centran en el contenedor y a 390 px siguen apilados. Cada flecha en línea queda en el mismo renglón que sus dos términos, con espacio a los lados. La marca «en construcción» lleva un espacio antes. `PUBLISHED_STAGES` deja fuera de /privacidad, del itinerario y del mapa los tramos «Marcos regulatorios comparados» y «Laboratorio · F4»; gdpr y lgpd siguen por URL directa.
@@ -140,6 +142,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Tarea activa:** `b/ui-page-title` (ADR-012). Sin merge a `main`.
 - **Siguiente:** lo que asigne Felipe. Sigue abierta la revisión F3b-08c.
 - **Bloqueos:** ninguno.
+
+### Revisión · verificación P10
+- `cf4edfd`. Cuatro citas del art. 3; tres literales. Siete tests en verde, con PostgreSQL en minimización. No se editó `content/` ni `frontend/`.
 
 ### Revisión · lote P10
 - Cinco §10 del dominio 24, el de seudonimización desde `4d7f6a6`. Los tests coinciden con la salida documentada, contra PostgreSQL 17.11 en minimización. Propuesta media nueva: la puerta llama «anonimizado» a un k = 2. No se editó `content/` ni `frontend/`.
@@ -481,6 +486,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - El pedido de un párrafo por nivel queda sin efecto. Esos nombres no se asignan a los tramos ni hace falta un campo nuevo: la interfaz muestra la caja «Cómo estudiar cada ficha: Comprender → Aplicar → Demostrar → Profundizar».
 
 ## Historial
+
+### Revisión · verificación P10 (2026-11-04)
+- `b/review-p10`. Informe en `docs/reviews/p10-verificacion.md`. Citas del art. 3 en `cf4edfd` y salidas de las otras tres fichas. No se editó `content/`.
 
 ### Revisión · lote P10 (2026-11-03)
 - `b/review-p10`, desde `4153ed4`. Informe en `docs/reviews/p10.md`. §10 de cuatro fichas del dominio 24, ejecutados. No se editó `content/` ni `frontend/`.
