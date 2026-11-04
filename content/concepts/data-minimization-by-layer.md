@@ -53,6 +53,9 @@ sources:
     note: "Dynamic data masking (SQL Server 2016 y posteriores, Azure SQL Database, Azure SQL Managed Instance, Azure Synapse Analytics, SQL database en Fabric): limita la exposición enmascarando para usuarios sin privilegio, sin cambiar los datos en la base; el permiso UNMASK permite ver sin máscara, y los administradores con CONTROL siempre ven el original. La página aclara que DDM no busca impedir que usuarios de la base se conecten directo y corran consultas exhaustivas que expongan partes del dato, y recomienda usarlo junto con auditoría, cifrado y RLS."
 relations:
   - type: RELATED_TO
+    target: privacy-backup-and-recovery
+    note: La purga de bronze no alcanza a las copias en respaldos.
+  - type: RELATED_TO
     target: pseudonymization-vs-anonymization
     note: Silver seudonimiza; gold se acerca a anonimizar.
   - type: RELATED_TO
@@ -514,6 +517,7 @@ En Azure, **Azure SQL** con enmascaramiento dinámico. Según *Dynamic data mask
 - `processing-activities-inventory`: la finalidad de cada capa.
 - `chilean-identifier-pseudonymization`: el seudónimo de silver.
 - `retention-and-erasure`: la dimensión de tiempo.
+- `privacy-backup-and-recovery`: la purga y los respaldos.
 - `privacy-controls-as-code`: la regla de la CI.
 
 ## 18. Preguntas técnicas abiertas
