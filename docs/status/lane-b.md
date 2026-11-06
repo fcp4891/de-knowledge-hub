@@ -16,6 +16,8 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 
 ## Actual
 - **Tarea activa:** `b/ui-arrows-table`. En las celdas, el grupo «término › término» no se parte y la columna cabe ese grupo: la flecha de «Llave seudónima → tablas…» queda en el mismo renglón, visible, y el resto de la frase sigue abajo.
+- **Tarea activa:** revisión del lote DSR. Informe en `docs/reviews/dsr.md`. No se editó `content/` ni `frontend/`.
+- **Siguiente:** Esperar la aprobación de Felipe. Propuestas bajas: el cobro del art. 10, el plazo de bloqueo en la rectificación, la respuesta de acceso marcada completa, el feriado en sábado y el flag del art. 8 ter.
 - **Tarea activa:** revisión del lote PBA. Informe en `docs/reviews/pba.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuesta baja: la letra b) del art. 34 quáter no está completa.
 - **Tarea activa:** verificación P10. Informe en `docs/reviews/p10-verificacion.md`. No se editó `content/` ni `frontend/`.
@@ -145,6 +147,9 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - **Tarea activa:** `b/ui-page-title` (ADR-012). Sin merge a `main`.
 - **Siguiente:** lo que asigne Felipe. Sigue abierta la revisión F3b-08c.
 - **Bloqueos:** ninguno.
+
+### Revisión · lote DSR
+- El §10 de data-subject-rights-pipeline coincide con las cuatro salidas y pasa `mypy --strict`. Los plazos van en `plazos-2026.1` y el cómputo de hábiles queda como supuesto. Propuestas bajas: el art. 10, el plazo de bloqueo y la respuesta de acceso. No se editó `content/` ni `frontend/`.
 
 ### Revisión · lote PBA
 - El §10 de purpose-based-authorization coincide con las tres salidas y pasa `mypy --strict`. Deny por defecto, las tres decisiones y la revisión de 90 días están en la corrida. Propuesta baja: completar la letra b) del art. 34 quáter. No se editó `content/` ni `frontend/`.
@@ -492,6 +497,9 @@ Verificado en Chrome normal (no el navegador del IDE), a 1440 px y a 375 px:
 - El pedido de un párrafo por nivel queda sin efecto. Esos nombres no se asignan a los tramos ni hace falta un campo nuevo: la interfaz muestra la caja «Cómo estudiar cada ficha: Comprender → Aplicar → Demostrar → Profundizar».
 
 ## Historial
+
+### Revisión · lote DSR (2026-11-06)
+- `b/review-dsr`, desde `0efcacb`. Informe en `docs/reviews/dsr.md`. Cuatro escenarios del §10 y los arts. 4 a 11. No se editó `content/`.
 
 ### Revisión · lote PBA (2026-11-04)
 - `b/review-pba`, desde `60de40e`. Informe en `docs/reviews/pba.md`. Tres escenarios del §10 y la letra b) del art. 34 quáter. No se editó `content/`.
