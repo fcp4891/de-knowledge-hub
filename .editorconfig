@@ -1,0 +1,12 @@
+# Formato básico para cualquier editor: LF y UTF-8, como guarda el repositorio (.gitattributes).
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# En Markdown, dos espacios al final de una línea son un salto de línea: no se recortan.
+[*.md]
+trim_trailing_whitespace = false
