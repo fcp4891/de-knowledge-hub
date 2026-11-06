@@ -97,6 +97,26 @@ test("la celda de flujos es flecha en línea", () => {
   );
 });
 
+test("en una celda la flecha queda en el mismo grupo que el término", () => {
+  const inlines = cell(
+    "| Elemento | Qué guarda |\n|---|---|\n| Índice de titulares | Llave seudónima → tablas, actividades y sistemas donde aparece |",
+    0,
+    1,
+  );
+  const groups = groupArrowRuns(readInlineArrows(inlines) ?? []);
+  const glued = groups.filter((group) => group.nowrap);
+  assert.equal(glued.length, 1);
+  assert.match(show(glued[0]?.runs ?? null) ?? "", /\[Llave seudónima\] → \[tablas\]/);
+  const css = readFileSync(join(import.meta.dirname, "../../frontend/components/markdown/pipeline.css"), "utf8");
+  assert.match(css, /\.markdown td \.flow-pair,[\s\S]*?\{[^}]*white-space:\s*nowrap/);
+  assert.match(css, /\.markdown td \.flow-pair \.flow-pill,[\s\S]*?\{[^}]*overflow-wrap:\s*normal/);
+  assert.match(css, /\.markdown td \.flow-pair \.flow-pill,[\s\S]*?\{[^}]*max-width:\s*none/);
+  assert.match(
+    css,
+    /\.reading-summary \.markdown table:has\(\.flow-pair\),[\s\S]*?\{[^}]*min-width:\s*min-content;[^}]*table-layout:\s*auto/,
+  );
+});
+
 test("comuna y región quedan en el mismo grupo que la flecha", () => {
   const runs = readInlineArrows(item("generalizar (comuna → región, año → década)"));
   const groups = groupArrowRuns(runs ?? []);

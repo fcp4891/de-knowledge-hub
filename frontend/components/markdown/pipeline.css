@@ -121,6 +121,45 @@
   white-space: nowrap;
 }
 
+/* En una celda, el grupo es una caja atómica: la flecha no baja de renglón. */
+.markdown td .flow-pair,
+.markdown th .flow-pair {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+  vertical-align: baseline;
+}
+
+.markdown td .flow-pair .flow-pill,
+.markdown th .flow-pair .flow-pill {
+  flex: 0 0 auto;
+  max-width: none;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.markdown-table-wrap:has(.flow-pair),
+.arch-components .markdown-table-wrap:has(.flow-pair) {
+  overflow-x: auto;
+}
+
+.reading-summary .markdown table:has(.flow-pair),
+.arch-components .markdown table:has(.flow-pair) {
+  width: 100%;
+  min-width: min-content;
+  table-layout: auto;
+}
+
+.reading-summary .markdown table:has(.flow-pair) th,
+.reading-summary .markdown table:has(.flow-pair) td,
+.arch-components .markdown table:has(.flow-pair) th,
+.arch-components .markdown table:has(.flow-pair) td {
+  width: auto;
+}
+
 .flow-arrow {
   display: inline-flex;
   align-items: center;
