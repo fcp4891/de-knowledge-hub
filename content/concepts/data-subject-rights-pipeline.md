@@ -20,17 +20,17 @@ legal_basis:
   - {law: ley-19628, article: "5", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Acceso: datos y origen, finalidades, destinatarios, período, intereses legítimos y lógica de decisiones automatizadas.", implication: "La respuesta se arma desde el catálogo, no solo desde las tablas."}
   - {law: ley-19628, article: "6", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Rectificación comunicada a quienes recibieron los datos; no volver a tratar el dato sin rectificar.", implication: "Propagar la corrección e impedir que el valor antiguo vuelva."}
   - {law: ley-19628, article: "7", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Supresión, con causales y excepciones.", implication: "La supresión se ejecuta como en retention-and-erasure."}
-  - {law: ley-19628, article: "8", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Oposición: interés legítimo, marketing directo y perfiles, fuentes de acceso público.", implication: "Filtro por titular y por actividad."}
+  - {law: ley-19628, article: "8", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Oposición: interés legítimo, exclusivamente marketing directo (incluidos los perfiles), fuentes de acceso público; excepciones de la letra a) y de fines científicos, históricos o estadísticos.", implication: "Filtro por titular y por actividad."}
   - {law: ley-19628, article: "8 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Bloqueo: suspensión temporal sin afectar el almacenamiento.", implication: "Flag que excluye al titular del tratamiento."}
   - {law: ley-19628, article: "9", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Portabilidad de lo facilitado, tratado en forma automatizada y basado en consentimiento.", implication: "Export en JSON o CSV con esquema documentado."}
-  - {law: ley-19628, article: "10", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Mecanismos tecnológicos expeditos; gratuidad.", implication: "Canal automatizado y costo controlado."}
+  - {law: ley-19628, article: "10", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Mecanismos tecnológicos expeditos; gratuidad, con costos directos solo por un segundo acceso o portabilidad en el trimestre.", implication: "Canal automatizado y costo controlado."}
   - {law: ley-19628, article: "11", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Procedimiento, plazos, bloqueo temporal y respaldos de la respuesta.", implication: "SLA, evidencia y propagación."}
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
     accessed: 2026-10-25
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-25. Art. 4: derechos de acceso, rectificación, supresión, oposición, portabilidad y bloqueo, personales, intransferibles e irrenunciables. Art. 5: el acceso incluye a) datos y origen, b) finalidades, c) destinatarios, d) período, e) intereses legítimos y f) la lógica de las decisiones automatizadas. Art. 6: los datos rectificados se comunican a quienes los recibieron, salvo imposibilidad o esfuerzo desproporcionado; no se vuelven a tratar sin rectificar. Art. 7: supresión por causales, con excepciones como obligación legal o contrato. Art. 8: oposición si la base es interés legítimo, marketing directo con perfiles, o fuentes de acceso público sin otro fundamento. Art. 8 ter: bloqueo temporal; no afecta el almacenamiento. Art. 9: copia en formato estructurado, genérico y de uso común, cuando el tratamiento es automatizado y se basa en el consentimiento; transmisión directa entre responsables cuando sea técnicamente posible. Art. 10: mecanismos tecnológicos expeditos; rectificación, supresión y oposición gratuitas; acceso gratuito al menos trimestralmente. Art. 11: autenticación del titular; acuse de recibo y respuesta en 30 días corridos, prorrogables una vez por 30; respaldos de la respuesta; bloqueo temporal fundado respondido dentro de 2 días hábiles y, mientras no se resuelva, no se tratan los datos del requerimiento; los cambios se comunican a quienes recibieron los datos."
+    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-25. Art. 4: derechos de acceso, rectificación, supresión, oposición, portabilidad y bloqueo, personales, intransferibles e irrenunciables. Art. 5: el acceso incluye a) datos y origen, b) finalidades, c) destinatarios, d) período, e) intereses legítimos y f) la lógica de las decisiones automatizadas. Art. 6: los datos rectificados se comunican a quienes los recibieron, salvo imposibilidad o esfuerzo desproporcionado; no se vuelven a tratar sin rectificar. Art. 7: supresión por causales, con excepciones como obligación legal o contrato. Art. 8: oposición si la base es interés legítimo, si el tratamiento se hace exclusivamente para marketing directo (incluidos los perfiles), o si los datos vienen de fuentes de acceso público sin otro fundamento; la letra a) cede ante motivos legítimos imperiosos o reclamaciones, y no procede para fines de investigación científica o histórica o estadísticos necesarios para una función pública o una actividad de interés público. Art. 8 ter: bloqueo temporal; no afecta el almacenamiento. Art. 9: copia en formato estructurado, genérico y de uso común, cuando el tratamiento es automatizado y se basa en el consentimiento; transmisión directa entre responsables cuando sea técnicamente posible. Art. 10: mecanismos tecnológicos expeditos; rectificación, supresión y oposición siempre gratuitas; acceso gratuito al menos trimestralmente; costos directos solo si el acceso o la portabilidad se ejercen más de una vez en el trimestre, salvo los casos del inciso cuarto del art. 28. Art. 11: autenticación del titular; acuse de recibo y respuesta en 30 días corridos, prorrogables una vez por 30; respaldos de la respuesta; bloqueo temporal fundado respondido dentro de 2 días hábiles y, mientras no se resuelva, no se tratan los datos del requerimiento; los cambios se comunican a quienes recibieron los datos."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/row-level-security-intro
     accessed: 2026-10-22
@@ -68,14 +68,14 @@ Desde la vigencia de la ley, cualquier titular puede pedir qué datos se tienen 
 
 ## 2. Qué es
 
-- **[Obligación legal · art. 4]** Seis derechos: acceso, rectificación, supresión, oposición, portabilidad y bloqueo; son irrenunciables.
+- **[Obligación legal · art. 4]** Seis derechos: acceso, rectificación, supresión, oposición, portabilidad y bloqueo; son personales, intransferibles e irrenunciables.
 - **[Obligación legal · art. 11]** Respuesta en 30 días corridos, prorrogables una vez; el bloqueo temporal fundado se responde en 2 días hábiles y, mientras no se resuelva, no se tratan esos datos.
 - **[Obligación legal · art. 5]** Acceso: los datos y su origen, las finalidades, los destinatarios, el período de tratamiento, los intereses legítimos si esa es la base, y la lógica de las decisiones automatizadas.
 - **[Obligación legal · art. 6]** Rectificación: los datos rectificados se comunican a quienes los recibieron, salvo que sea imposible o desproporcionado, y no se vuelven a tratar sin rectificar.
 - **[Obligación legal · art. 7]** Supresión: procede por las causales del artículo, con excepciones.
-- **[Obligación legal · art. 8]** Oposición: si la base es el interés legítimo, si el fin es exclusivamente marketing directo (incluidos los perfiles) o si los datos vienen de una fuente de acceso público sin otro fundamento.
+- **[Obligación legal · art. 8]** Oposición: si la base es el interés legítimo, si el fin es exclusivamente marketing directo (incluidos los perfiles) o si los datos vienen de una fuente de acceso público sin otro fundamento. En la letra a), el tratamiento sigue si el responsable acredita «motivos legítimos imperiosos para el tratamiento que prevalezcan sobre los intereses, los derechos y las libertades del titular, o para la formulación, el ejercicio o la defensa de reclamaciones». Y «no procederá la oposición al tratamiento cuando éste se realice con fines de investigación científica o histórica o fines estadísticos, y siempre que fueran necesarios para el cumplimiento de una función pública o para el ejercicio de una actividad de interés público».
 - **[Obligación legal · art. 9]** Portabilidad: copia de lo que el titular facilitó, en formato estructurado, genérico y de uso común, si el tratamiento es automatizado y se basa en su consentimiento.
-- **[Obligación legal · art. 10]** Mecanismos tecnológicos expeditos; rectificación, supresión y oposición siempre gratuitas; acceso gratuito al menos trimestralmente.
+- **[Obligación legal · art. 10]** Mecanismos tecnológicos expeditos. «El ejercicio de los derechos de rectificación, supresión y oposición siempre serán gratuitos para el titular. El derecho de acceso también se ejercerá en forma gratuita, al menos trimestralmente.» El responsable «sólo puede exigir el pago de los costos directos en que incurra, cuando el titular ejerza su derecho de acceso y derecho a la portabilidad más de una vez en el trimestre»; ese cobro no se exige en los casos del inciso cuarto del art. 28.
 - **[Decisión de arquitectura]** Cinco elementos que conviene modelar por separado:
 
 | Elemento | Qué guarda | Quién lo produce |
@@ -131,13 +131,13 @@ Desde la vigencia de la ley, cualquier titular puede pedir qué datos se tienen 
 
 ## 7. Ejemplo sencillo
 
-Solicitud de supresión ingresada el jueves 2026-10-29, con pedido de bloqueo:
+Solicitud de supresión ingresada el lunes 2026-12-07, con pedido fundado de bloqueo temporal:
 
 | Hito | Fecha |
 |---|---|
-| Responder el bloqueo (2 días hábiles) | lunes 2026-11-02 |
-| Responder la solicitud (30 días corridos) | 2026-11-28 |
-| Con prórroga única | 2026-12-28 |
+| Responder el bloqueo (2 días hábiles; el martes 2026-12-08 es feriado) | jueves 2026-12-10 |
+| Responder la solicitud (30 días corridos) | 2027-01-06 |
+| Con prórroga única | 2027-02-05 |
 
 Rectificación del correo de una clienta, por etapas:
 
@@ -211,7 +211,7 @@ flowchart LR
 # acceso | rectificacion | bloqueo | reintento. Las funciones reciben catálogo, índice, configuración y plataforma; no
 # hay estado global. Titulares con llave seudónima (chilean-identifier-pseudonymization) y datos ficticios.
 import sys
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import date, timedelta
 from typing import Literal
 
@@ -238,10 +238,11 @@ class Solicitud:
     ingreso: date
     destinos: tuple[str, ...] = ()   # alcance que aprobó el área legal
     actividad: str | None = None     # oposición: la actividad objetada
+    bloqueo_temporal: bool = False   # art. 11: pedido fundado junto a una rectificación, supresión u oposición
 
 
 def configuracion() -> ConfigPlazos:
-    return ConfigPlazos("plazos-2026.1", frozenset({date(2026, 10, 31)}),
+    return ConfigPlazos("plazos-2026.2", frozenset({date(2026, 12, 8)}),
                         "lunes a viernes, sin feriados (supuesto a confirmar con el área legal)", 30, 30, 2)
 
 
@@ -257,9 +258,16 @@ def mas_dias_habiles(cfg: ConfigPlazos, inicio: date, n: int) -> date:
 def plazos(cfg: ConfigPlazos, s: Solicitud) -> dict[str, date]:
     respuesta = s.ingreso + timedelta(days=cfg.dias_respuesta)
     p = {"respuesta": respuesta, "con prórroga": respuesta + timedelta(days=cfg.dias_prorroga)}
-    if s.derecho in {"rectificación", "supresión", "oposición", "bloqueo"}:
+    if s.bloqueo_temporal and s.derecho in {"rectificación", "supresión", "oposición"}:
         p["bloqueo temporal"] = mas_dias_habiles(cfg, s.ingreso, cfg.dias_bloqueo)
     return p
+
+
+def efecto_feriados(cfg: ConfigPlazos, s: Solicitud) -> str:
+    """Muestra cuánto corre el plazo de bloqueo el calendario de feriados de la configuración."""
+    con = plazos(cfg, s).get("bloqueo temporal")
+    sin = plazos(replace(cfg, feriados=frozenset()), s).get("bloqueo temporal")
+    return f" (sin feriados sería {sin})" if con != sin else ""
 
 
 # @paso 2 Localizar
@@ -268,10 +276,12 @@ class Actividad:   # actividad de tratamiento en el catálogo (processing-activi
     nombre: str
     finalidad: str
     base: str
+    datos: str          # categorías de datos tratados (art. 5 a)), no los valores del titular
     origen: str
     destinatarios: str
     plazo: str
-    decision_automatizada: str | None
+    automatizada: bool  # hay decisiones automatizadas: la lógica es obligatoria en la respuesta
+    logica: str | None
 
 
 @dataclass(frozen=True)
@@ -284,12 +294,13 @@ class Ubicacion:   # entrada del índice titular → ubicaciones
 
 def catalogo() -> dict[str, Actividad]:
     actividades = [
-        Actividad("venta_pasajes", "emitir y gestionar pasajes", "contrato", "formulario de compra",
-                  "aerolíneas socias del itinerario", "5 años desde el vuelo", None),
-        Actividad("riesgo_fraude", "prevenir fraude en pagos", "interés legítimo", "procesador de pagos",
-                  "procesador de pagos", "2 años", "puntaje de riesgo; sobre el umbral pasa a revisión humana"),
-        Actividad("marketing_directo", "ofertas personalizadas", "consentimiento", "centro de preferencias",
-                  "plataforma de email", "hasta retirar el consentimiento", None),
+        Actividad("venta_pasajes", "emitir y gestionar pasajes", "contrato", "identificación, contacto e itinerario",
+                  "formulario de compra", "aerolíneas socias del itinerario", "5 años desde el vuelo", False, None),
+        Actividad("riesgo_fraude", "prevenir fraude en pagos", "interés legítimo", "monto y medio de pago",
+                  "procesador de pagos", "procesador de pagos", "2 años", True,
+                  "puntaje de riesgo; sobre el umbral pasa a revisión humana"),
+        Actividad("marketing_directo", "ofertas personalizadas", "consentimiento", "contacto y preferencias",
+                  "centro de preferencias", "plataforma de email", "hasta retirar el consentimiento", False, None),
     ]
     return {a.nombre: a for a in actividades}
 
@@ -314,19 +325,21 @@ def acceso(cat: dict[str, Actividad], idx: dict[str, list[Ubicacion]], titular: 
     for nombre in sorted({u.actividad for u in idx[titular]}):
         a = cat[nombre]
         n = sum(1 for u in idx[titular] if u.actividad == nombre)
-        extra = [x for x, hay in (("interés legítimo", a.base == "interés legítimo"),
-                                  ("lógica automatizada", a.decision_automatizada is not None)) if hay]
-        lineas.append(f"{a.nombre}: {a.finalidad} · base {a.base} · origen {a.origen} · {a.destinatarios} · {a.plazo}"
-                      f" · {n} ubicación(es)" + (f" · {' y '.join(extra)} informados" if extra else ""))
+        extra = (f" · interés legítimo: {a.finalidad}" if a.base == "interés legítimo" else "") + (
+            f" · lógica: {a.logica}" if a.automatizada else "")
+        lineas.append(f"{a.nombre}: {a.finalidad} · base {a.base} · datos {a.datos} (origen {a.origen}) · "
+                      f"{a.destinatarios} · {a.plazo} · {n} ubicación(es){extra}")
     return lineas
 
 
 def faltantes_art5(cat: dict[str, Actividad], idx: dict[str, list[Ubicacion]], titular: str) -> list[str]:
-    """Actividades del índice que no están en el catálogo o a las que les falta un dato del art. 5."""
+    """Actividades del índice que no están en el catálogo o a las que les falta un dato del art. 5: datos tratados y
+    origen (a)), finalidad, destinatarios, período y, si hay decisiones automatizadas, la lógica aplicada."""
     faltan = []
     for u in idx[titular]:
         a = cat.get(u.actividad)
-        if a is None or not all((a.finalidad, a.origen, a.destinatarios, a.plazo)):
+        if a is None or not all((a.datos, a.origen, a.finalidad, a.destinatarios, a.plazo)) or (
+                a.automatizada and not a.logica):
             faltan.append(f"{u.destino}: {u.actividad}")
     return faltan
 
@@ -375,7 +388,8 @@ def ejecutar(p: Plataforma, s: Solicitud, destino: str, operacion: str, valor: s
 
 
 def consumo(p: Plataforma, actividad: str) -> list[str]:
-    """Vista de consumo y job de una actividad: excluyen a los bloqueados y a quienes se opusieron a esa actividad."""
+    """Vista de consumo y job de una actividad. La ley suspende el tratamiento sin afectar el almacenamiento (art. 8
+    ter); el ejemplo lo modela como un flag que se excluye aquí (decisión de arquitectura), igual que la oposición."""
     return sorted(t for t in p.datos["silver.clientes"]
                   if t not in p.bloqueados and (t, actividad) not in p.oposiciones)
 
@@ -412,8 +426,9 @@ def plataforma() -> Plataforma:
 
 def ingreso(cfg: ConfigPlazos, s: Solicitud) -> None:
     p = "; ".join(f"{k} {v}" for k, v in plazos(cfg, s).items())
-    objeto = f" a {s.actividad}" if s.actividad else ""
-    print(f"{s.request_id} {s.derecho} de {s.titular}{objeto}, ingreso {s.ingreso} · {cfg.version}: {p}")
+    objeto = (f" a {s.actividad}" if s.actividad else "") + (" con bloqueo temporal" if s.bloqueo_temporal else "")
+    print(f"{s.request_id} {s.derecho} de {s.titular}{objeto}, ingreso {s.ingreso} · {cfg.version}: {p}"
+          f"{efecto_feriados(cfg, s)}")
 
 
 def propagar(p: Plataforma, s: Solicitud, valor: str, intentos: int) -> dict[str, Estado]:
@@ -438,34 +453,34 @@ def main(escenario: str) -> int:
     cfg, cat, idx, p = configuracion(), catalogo(), indice(), plataforma()
     a, b, c = "c3d3a94d7560c6ae", "7e1f04b2a9d35c18", "a90b5c2e1d7f3346"
     if escenario == "acceso":
-        ingreso(cfg, Solicitud("SOL-0101", a, "acceso", date(2026, 10, 29)))
+        ingreso(cfg, Solicitud("SOL-0101", a, "acceso", date(2026, 12, 7)))
         print("respuesta de acceso (art. 5), por actividad:")
         print("\n".join(f"  {linea}" for linea in acceso(cat, idx, a)))
         faltan = faltantes_art5(cat, idx, a)
         print(f"datos del art. 5 sin respaldo en el catálogo: {faltan or 'ninguno'}")
         for t in (a, b):
             print(f"portabilidad (art. 9) de {t}: {portabilidad(cat, idx, t)}")
-        print("acceso: " + ("incompleto (1)" if faltan else "respuesta completa (0)"))
+        print("acceso: " + ("incompleto (1)" if faltan else "respuesta completa: todos los datos del art. 5 (0)"))
         return 1 if faltan else 0
     if escenario == "rectificacion":
-        s = Solicitud("SOL-0102", a, "rectificación", date(2026, 10, 29), ("crm", "silver.clientes", "aerolinea_socia"))
+        s = Solicitud("SOL-0102", a, "rectificación", date(2026, 12, 7), ("crm", "silver.clientes", "aerolinea_socia"))
         ingreso(cfg, s)
         return informar_cierre(propagar(p, s, "ana@example.com", intentos=1))
     if escenario == "reintento":
-        s = Solicitud("SOL-0103", c, "rectificación", date(2026, 10, 29), ("crm", "silver.clientes"))
+        s = Solicitud("SOL-0103", c, "rectificación", date(2026, 12, 7), ("crm", "silver.clientes"))
         ingreso(cfg, s)
         p.fallas["crm"] = 1   # el conector del CRM falla la primera vez
         estados = propagar(p, s, "bea@example.com", intentos=2)
         print("aplicaciones por acción: " + "; ".join(f"{d}/{op} {n}" for (_, d, op), n in p.aplicadas.items()))
         return informar_cierre(estados)
-    # bloqueo, y una oposición acotada a una actividad
-    bloqueo = Solicitud("SOL-0104", a, "bloqueo", date(2026, 10, 29))
+    # rectificación con bloqueo temporal fundado (art. 11), y una oposición acotada a una actividad
+    bloqueo = Solicitud("SOL-0104", a, "rectificación", date(2026, 12, 7), bloqueo_temporal=True)
     ingreso(cfg, bloqueo)
-    aplicado, limite = date(2026, 10, 30), plazos(cfg, bloqueo)["bloqueo temporal"]
+    aplicado, limite = date(2026, 12, 9), plazos(cfg, bloqueo)["bloqueo temporal"]
     p.bloqueados.add(a)
     dentro = "dentro del plazo" if aplicado <= limite else "fuera de plazo"
     print(f"flag de bloqueo aplicado el {aplicado}: {dentro} ({limite}); no borra el dato")
-    oposicion = Solicitud("SOL-0105", b, "oposición", date(2026, 10, 29), actividad="marketing_directo")
+    oposicion = Solicitud("SOL-0105", b, "oposición", date(2026, 12, 7), actividad="marketing_directo")
     ingreso(cfg, oposicion)
     p.oposiciones.add((b, "marketing_directo"))
     print(f"consumo venta_pasajes: {consumo(p, 'venta_pasajes')}")
@@ -483,45 +498,47 @@ if __name__ == "__main__":
 
 El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Recorre cuatro pasos:
 
-1. **Ingreso y plazos:** los plazos del art. 11 salen de una configuración versionada (`plazos-2026.1`: feriados, regla de días hábiles, 30 días corridos de respuesta, prórroga única de 30 y 2 días hábiles para el bloqueo temporal), como pide el §4; cada línea de ingreso dice con qué versión se calculó. La regla de días hábiles (lunes a viernes, sin feriados) es un supuesto a confirmar con el área legal.
+1. **Ingreso y plazos:** los plazos del art. 11 salen de una configuración versionada (`plazos-2026.2`: feriados, regla de días hábiles, 30 días corridos de respuesta, prórroga única de 30 y 2 días hábiles para el bloqueo temporal), como pide el §4; cada línea de ingreso dice con qué versión se calculó. Los 2 días hábiles solo corren si la rectificación, supresión u oposición trae un pedido fundado de bloqueo temporal. La regla de días hábiles (lunes a viernes, sin feriados) es un supuesto a confirmar con el área legal.
 2. **Localizar:** el índice da las ubicaciones del titular por su llave seudónima, y el catálogo, la actividad de cada una.
-3. **Ejecutar por derecho:** el acceso arma la respuesta del art. 5 desde el catálogo por actividad (finalidad, base, origen, destinatarios, plazo, interés legítimo y lógica automatizada); la portabilidad se filtra por el art. 9; la rectificación (**calidad**: datos exactos y actuales) va a una capa de correcciones que gana en cada recálculo y se comunica a los terceros (art. 6); el bloqueo (art. 8 ter) es un flag que la vista de consumo y el job excluyen sin borrar el dato; la oposición (art. 8) saca al titular solo de la actividad objetada. Cada acción es idempotente por `request_id` + destino + operación.
-4. **Verificar y cerrar:** el estado «verificado» lo da una sonda que lee el destino y comprueba el efecto, no lo que declara el job. Un caso no se cierra mientras un destino siga pendiente.
+3. **Ejecutar por derecho:** el acceso arma la respuesta del art. 5 desde el catálogo por actividad: datos tratados y su origen, finalidad, base, destinatarios, plazo, interés legítimo y, si hay decisiones automatizadas, la lógica aplicada. La portabilidad se filtra por el art. 9. La rectificación (**calidad**: datos exactos y actuales) va a una capa de correcciones que gana en cada recálculo y se comunica a los terceros (art. 6). La oposición (art. 8) saca al titular solo de la actividad objetada. Cada acción es idempotente por `request_id` + destino + operación.
+   - **[Obligación legal · art. 8 ter]** El bloqueo suspende temporalmente el tratamiento y no afecta el almacenamiento de los datos.
+   - **[Decisión de arquitectura]** El ejemplo modela esa suspensión como un flag que la vista de consumo y el job excluyen, sin borrar el dato.
+4. **Verificar y cerrar:** el estado «verificado» lo da una sonda que lee el destino y comprueba el efecto, no lo que declara el job. Un caso no se cierra mientras un destino siga pendiente, y el acceso no se da por completo si al catálogo le falta un dato del art. 5.
 
 Las funciones reciben el catálogo, el índice, la configuración y la plataforma; no hay estado global. Los titulares se identifican con su llave seudónima y los correos son `@example.com`.
 
-En el acceso, la respuesta sale del catálogo por actividad, resumida aquí en una línea por actividad, no en el JSON completo. El primer titular tiene base contrato y no tiene nada portable. El segundo tiene preferencias con base consentimiento, y esas sí lo son. Termina con código 0:
+En el acceso, la respuesta sale del catálogo por actividad, resumida aquí en una línea por actividad, no en el JSON completo. Cada línea trae los datos tratados con su origen, y la de `riesgo_fraude`, la lógica de la decisión automatizada. El primer titular tiene base contrato y no tiene nada portable. El segundo tiene preferencias con base consentimiento, y esas sí lo son. Termina con código 0:
 
 ```text
 $ python derechos.py acceso
-SOL-0101 acceso de c3d3a94d7560c6ae, ingreso 2026-10-29 · plazos-2026.1: respuesta 2026-11-28; con prórroga 2026-12-28
+SOL-0101 acceso de c3d3a94d7560c6ae, ingreso 2026-12-07 · plazos-2026.2: respuesta 2027-01-06; con prórroga 2027-02-05
 respuesta de acceso (art. 5), por actividad:
-  riesgo_fraude: prevenir fraude en pagos · base interés legítimo · origen procesador de pagos · procesador de pagos · 2 años · 1 ubicación(es) · interés legítimo y lógica automatizada informados
-  venta_pasajes: emitir y gestionar pasajes · base contrato · origen formulario de compra · aerolíneas socias del itinerario · 5 años desde el vuelo · 2 ubicación(es)
+  riesgo_fraude: prevenir fraude en pagos · base interés legítimo · datos monto y medio de pago (origen procesador de pagos) · procesador de pagos · 2 años · 1 ubicación(es) · interés legítimo: prevenir fraude en pagos · lógica: puntaje de riesgo; sobre el umbral pasa a revisión humana
+  venta_pasajes: emitir y gestionar pasajes · base contrato · datos identificación, contacto e itinerario (origen formulario de compra) · aerolíneas socias del itinerario · 5 años desde el vuelo · 2 ubicación(es)
 datos del art. 5 sin respaldo en el catálogo: ninguno
 portabilidad (art. 9) de c3d3a94d7560c6ae: []
 portabilidad (art. 9) de 7e1f04b2a9d35c18: ['silver.preferencias']
-acceso: respuesta completa (0)
+acceso: respuesta completa: todos los datos del art. 5 (0)
 ```
 
-La rectificación sobrevive al backfill desde bronze, porque la capa de correcciones gana. Pero la aerolínea socia que recibió el dato no confirma la corrección, y el caso no se cierra. Termina con código 1:
+La rectificación sobrevive al backfill desde bronze, porque la capa de correcciones gana. Pero la aerolínea socia que recibió el dato no confirma la corrección, y el caso no se cierra. No se pidió bloqueo temporal, así que no hay plazo de 2 días hábiles. Termina con código 1:
 
 ```text
 $ python derechos.py rectificacion
-SOL-0102 rectificación de c3d3a94d7560c6ae, ingreso 2026-10-29 · plazos-2026.1: respuesta 2026-11-28; con prórroga 2026-12-28; bloqueo temporal 2026-11-02
+SOL-0102 rectificación de c3d3a94d7560c6ae, ingreso 2026-12-07 · plazos-2026.2: respuesta 2027-01-06; con prórroga 2027-02-05
 intento 1: crm · rectificar: aplicada; silver.clientes · rectificar: aplicada (capa de correcciones); aerolinea_socia · rectificar: aviso enviado al tercero (art. 6)
 backfill desde bronze (trae el valor antiguo): silver.clientes recalculado, la capa de correcciones gana
 sondas: crm verificado; silver.clientes verificado; aerolinea_socia pendiente
 cierre: bloqueado (1): aerolinea_socia: pendiente
 ```
 
-El bloqueo se aplica dentro de los 2 días hábiles: el titular desaparece de la vista de consumo y del job, y sigue almacenado. La oposición del segundo titular a `marketing_directo` lo saca del job de esa actividad, pero no de `venta_pasajes`. Termina con código 0:
+Una rectificación con pedido fundado de bloqueo temporal ingresa el lunes 2026-12-07. El feriado del martes 2026-12-08 corre el plazo al jueves 2026-12-10, y el flag se aplica antes: el titular desaparece de la vista de consumo y del job, y sigue almacenado. La oposición del segundo titular a `marketing_directo` lo saca del job de esa actividad, pero no de `venta_pasajes`. Termina con código 0:
 
 ```text
 $ python derechos.py bloqueo
-SOL-0104 bloqueo de c3d3a94d7560c6ae, ingreso 2026-10-29 · plazos-2026.1: respuesta 2026-11-28; con prórroga 2026-12-28; bloqueo temporal 2026-11-02
-flag de bloqueo aplicado el 2026-10-30: dentro del plazo (2026-11-02); no borra el dato
-SOL-0105 oposición de 7e1f04b2a9d35c18 a marketing_directo, ingreso 2026-10-29 · plazos-2026.1: respuesta 2026-11-28; con prórroga 2026-12-28; bloqueo temporal 2026-11-02
+SOL-0104 rectificación de c3d3a94d7560c6ae con bloqueo temporal, ingreso 2026-12-07 · plazos-2026.2: respuesta 2027-01-06; con prórroga 2027-02-05; bloqueo temporal 2026-12-10 (sin feriados sería 2026-12-09)
+flag de bloqueo aplicado el 2026-12-09: dentro del plazo (2026-12-10); no borra el dato
+SOL-0105 oposición de 7e1f04b2a9d35c18 a marketing_directo, ingreso 2026-12-07 · plazos-2026.2: respuesta 2027-01-06; con prórroga 2027-02-05
 consumo venta_pasajes: ['7e1f04b2a9d35c18', 'a90b5c2e1d7f3346']
 job marketing_directo: ['a90b5c2e1d7f3346']
 c3d3a94d7560c6ae sigue almacenado en silver.clientes: sí
@@ -533,7 +550,7 @@ En el reintento, el conector del CRM falla la primera vez. El segundo intento ap
 
 ```text
 $ python derechos.py reintento
-SOL-0103 rectificación de a90b5c2e1d7f3346, ingreso 2026-10-29 · plazos-2026.1: respuesta 2026-11-28; con prórroga 2026-12-28; bloqueo temporal 2026-11-02
+SOL-0103 rectificación de a90b5c2e1d7f3346, ingreso 2026-12-07 · plazos-2026.2: respuesta 2027-01-06; con prórroga 2027-02-05
 intento 1: crm · rectificar: falló (se reintenta); silver.clientes · rectificar: aplicada (capa de correcciones)
 intento 2: crm · rectificar: aplicada; silver.clientes · rectificar: ya aplicada, no se repite
 backfill desde bronze (trae el valor antiguo): silver.clientes recalculado, la capa de correcciones gana
@@ -544,8 +561,8 @@ cierre: permitido (0): todos los destinos verificados
 
 Limitaciones:
 
-- **Procedencia:** el ejemplo no decide si la solicitud procede ni autentica al titular; eso lo hacen el área legal y el canal.
-- **Plazos:** la regla de días hábiles y el calendario de feriados son supuestos de ejemplo, a confirmar con el área legal; el cómputo no cubre solicitudes incompletas ni la suspensión del plazo.
+- **Procedencia:** el ejemplo no decide si la solicitud procede ni autentica al titular; eso lo hacen el área legal y el canal. Tampoco evalúa las excepciones de la oposición (art. 8) ni el cobro de costos directos (art. 10).
+- **Plazos:** la regla de días hábiles y el calendario de feriados (aquí, solo el 8 de diciembre) son supuestos de ejemplo, a confirmar con el área legal; el cómputo no cubre solicitudes incompletas ni la suspensión del plazo.
 - **Cobertura:** el índice solo conoce las ubicaciones que la ingesta y el linaje registran; un destino fuera del índice no se ejecuta ni se verifica.
 - **Terceros:** una sonda no puede leer un sistema de otro responsable; ahí el estado depende de la confirmación del tercero.
 - **Consumidores:** el bloqueo y la oposición solo funcionan para los consumidores que leen la vista o el job; una extracción directa de la tabla no los respeta.
@@ -667,3 +684,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
 - 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
 - 2026-11-06: §10 reescrito de punta a punta al estándar de `chile-data-protection` (pedido de Felipe), conservando plazos del art. 11, acceso del art. 5 desde el catálogo, portabilidad del art. 9, rectificación que sobrevive al backfill y cierre bloqueado con destinos pendientes: pasos `# @paso 1–4`; funciones que reciben catálogo, índice, configuración y plataforma; plazos como configuración versionada (`plazos-2026.1`), con la regla de días hábiles como supuesto; bloqueo (art. 8 ter) como flag sin borrar; oposición (art. 8) por actividad; sondas que leen el destino; idempotencia por `request_id` + destino + operación; un segundo titular con base consentimiento y tablas portables; escenarios `acceso` (0), `rectificacion` (1), `bloqueo` (0) y `reintento` (0), iguales a la salida de la CI. Vuelve a `review_required`.
+- 2026-11-06: revisión `docs/reviews/dsr.md` aplicada (pedido de Felipe): el feriado de ejemplo pasa al martes 2026-12-08 y los ingresos al lunes 2026-12-07, así que el plazo de bloqueo se corre un día (§7 y §10, `plazos-2026.2`); los 2 días hábiles solo corren con un pedido fundado de bloqueo temporal (art. 11); el acceso incluye los datos tratados y su origen (art. 5 a)) y la lógica automatizada, y no se da por completo si falta uno; §2 con el texto de BCN del art. 4 («personales, intransferibles e irrenunciables»), del art. 8 (letra a) y fines científicos, históricos o estadísticos) y del art. 10 (costos directos del segundo acceso o de la portabilidad en el trimestre, salvo el art. 28); «exclusivamente» en la nota de la fuente; el flag de bloqueo se etiqueta como decisión de arquitectura y el art. 8 ter como la suspensión que no afecta el almacenamiento.

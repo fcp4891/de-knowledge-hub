@@ -489,14 +489,22 @@ def test_rights_pipeline_rules(tmp_path: Path) -> None:
     sys.modules["derechos"] = m   # dataclasses necesita el módulo registrado
     spec.loader.exec_module(m)
     cfg, cat, idx = m.configuracion(), m.catalogo(), m.indice()
-    # Plazos desde la configuración: un viernes de ingreso cruza el fin de semana y el feriado.
-    viernes = m.Solicitud("x", "t", "bloqueo", m.date(2026, 10, 30))
-    assert str(m.plazos(cfg, viernes)["bloqueo temporal"]) == "2026-11-03"
+    # Plazos desde la configuración: el feriado del martes corre un día el bloqueo temporal, que solo existe si se pide.
+    lunes = m.Solicitud("x", "t", "rectificación", m.date(2026, 12, 7), bloqueo_temporal=True)
+    assert str(m.plazos(cfg, lunes)["bloqueo temporal"]) == "2026-12-10"
+    assert str(m.plazos(m.replace(cfg, feriados=frozenset()), lunes)["bloqueo temporal"]) == "2026-12-09"
+    assert "bloqueo temporal" not in m.plazos(cfg, m.replace(lunes, bloqueo_temporal=False))
     a, b = "c3d3a94d7560c6ae", "7e1f04b2a9d35c18"
     assert m.portabilidad(cat, idx, a) == [] and m.portabilidad(cat, idx, b) == ["silver.preferencias"]
+    # Acceso completo exige la lógica de la decisión automatizada (art. 5) y los datos con su origen (art. 5 a)).
+    assert m.faltantes_art5(cat, idx, a) == []
+    sin_logica = {**cat, "riesgo_fraude": m.replace(cat["riesgo_fraude"], logica=None)}
+    assert m.faltantes_art5(sin_logica, idx, a) == ["gold.score_fraude: riesgo_fraude"]
+    sin_datos = {**cat, "venta_pasajes": m.replace(cat["venta_pasajes"], datos="")}
+    assert m.faltantes_art5(sin_datos, idx, a) == ["crm: venta_pasajes", "silver.clientes: venta_pasajes"]
     # La sonda lee el destino: si alguien revierte el valor, deja de estar verificado aunque el job diga «aplicada».
     p = m.plataforma()
-    s = m.Solicitud("SOL-T", a, "rectificación", viernes.ingreso, ("crm",))
+    s = m.Solicitud("SOL-T", a, "rectificación", lunes.ingreso, ("crm",))
     assert m.ejecutar(p, s, "crm", "rectificar", "nuevo@example.com") == "aplicada"
     assert m.sonda_valor(p, "crm", a, "nuevo@example.com") == "verificado"
     p.datos["crm"][a] = "antiguo@example.com"
