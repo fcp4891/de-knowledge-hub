@@ -57,7 +57,8 @@ relations:
 created_at: 2026-10-22
 updated_at: 2026-11-06
 last_verified: 2026-10-25
-verification_status: review_required
+owner_approved_at: 2026-11-06
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -668,7 +669,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-22: arts. 4 a 11 consultados ese día en BCN. `review_required` desde el 2026-11-06: el §10 se reescribió de punta a punta y espera la aprobación de Felipe. Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-22: arts. 4 a 11 consultados ese día en BCN. `verified`: aprobada de nuevo por Felipe el 2026-11-06 (`owner_approved_at`), con el §10 nuevo y la revisión DSR aplicada, tras la CI en verde (run 42306212683). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -685,3 +686,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
 - 2026-11-06: §10 reescrito de punta a punta al estándar de `chile-data-protection` (pedido de Felipe), conservando plazos del art. 11, acceso del art. 5 desde el catálogo, portabilidad del art. 9, rectificación que sobrevive al backfill y cierre bloqueado con destinos pendientes: pasos `# @paso 1–4`; funciones que reciben catálogo, índice, configuración y plataforma; plazos como configuración versionada (`plazos-2026.1`), con la regla de días hábiles como supuesto; bloqueo (art. 8 ter) como flag sin borrar; oposición (art. 8) por actividad; sondas que leen el destino; idempotencia por `request_id` + destino + operación; un segundo titular con base consentimiento y tablas portables; escenarios `acceso` (0), `rectificacion` (1), `bloqueo` (0) y `reintento` (0), iguales a la salida de la CI. Vuelve a `review_required`.
 - 2026-11-06: revisión `docs/reviews/dsr.md` aplicada (pedido de Felipe): el feriado de ejemplo pasa al martes 2026-12-08 y los ingresos al lunes 2026-12-07, así que el plazo de bloqueo se corre un día (§7 y §10, `plazos-2026.2`); los 2 días hábiles solo corren con un pedido fundado de bloqueo temporal (art. 11); el acceso incluye los datos tratados y su origen (art. 5 a)) y la lógica automatizada, y no se da por completo si falta uno; §2 con el texto de BCN del art. 4 («personales, intransferibles e irrenunciables»), del art. 8 (letra a) y fines científicos, históricos o estadísticos) y del art. 10 (costos directos del segundo acceso o de la portabilidad en el trimestre, salvo el art. 28); «exclusivamente» en la nota de la fuente; el flag de bloqueo se etiqueta como decisión de arquitectura y el art. 8 ter como la suspensión que no afecta el almacenamiento.
+- 2026-11-06: aprobada por Felipe con el §10 nuevo y la revisión DSR, condicionada a la CI en verde (run 42306212683): `owner_approved_at: 2026-11-06`; vuelve a `verified` (ADR-023).
