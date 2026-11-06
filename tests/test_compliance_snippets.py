@@ -80,13 +80,6 @@ STDLIB = {
         "CDC tardío con la versión 2: rechazado (versión 2 ≤ corte de la orden 2)",
         "¿reaparece en bigquery.silver?: False", "otro titular intacto: {'a1b2c3d4e5f60718': 5}",
         "cierre de SOL-2026-0042: ['proveedor_email: PENDING']"],
-    "data-subject-rights-pipeline": [
-        "plazos supresión: {'respuesta': '2026-11-28', 'con_prorroga': '2026-12-28', 'bloqueo_si_se_pide': '2026-11-02'}",
-        '"actividad": "riesgo_fraude"', '"interes_legitimo": "prevenir fraude en pagos"',
-        '"logica_automatizada": "puntaje de riesgo; transacciones sobre el umbral pasan a revisión humana"',
-        '"actividad": "venta_pasajes"', "tablas portables: []",
-        "tras el backfill, ¿sigue rectificado?: True",
-        "cierre de la rectificación: no permitido: ['plataforma_campanas: pendiente']"],
     "retention-and-erasure": [
         "evidencia: {'solicitud': 'SOL-2026-0042', 'borradas': {'bronze.reservas': 1, 'silver.pasajeros': 1}, "
         "'conservadas_por_obligacion_legal': {'gold.facturas': 1}, 'en_lista_supresion': True}",
@@ -462,3 +455,57 @@ def test_purpose_authorization_rules(tmp_path: Path) -> None:
     assert m.cuentas_compartidas(m.escenario("revision"), m.REFERENCIA) == [
         "cuenta compartida: sa-compartida usa campana_ofertas y atencion_cliente"]
     assert m.sin_confirmar(base, m.REFERENCIA) == [] and len(m.sin_confirmar(m.escenario("revision"), m.REFERENCIA)) == 1
+
+
+RIGHTS_SCENARIOS = {"acceso": 0, "rectificacion": 1, "bloqueo": 0, "reintento": 0}
+
+
+def test_rights_pipeline_each_scenario_prints_its_documented_output(tmp_path: Path) -> None:
+    """data-subject-rights-pipeline §10: un bloque text por escenario, con su línea «$ python derechos.py …»."""
+    documented = {block.splitlines()[0].removeprefix("$ python derechos.py "): block
+                  for block in blocks("data-subject-rights-pipeline", "text")}
+    assert list(documented) == list(RIGHTS_SCENARIOS)
+    (code,) = blocks("data-subject-rights-pipeline", "python")
+    (tmp_path / "snippet.py").write_text(code, encoding="utf-8", newline="\n")   # assert_mypy_strict revisa snippet.py
+    for scenario, exit_code in RIGHTS_SCENARIOS.items():
+        result = subprocess.run([sys.executable, "snippet.py", scenario], cwd=tmp_path, env={**os.environ, **UTF8},
+                                capture_output=True, text=True, encoding="utf-8", timeout=300)
+        expected = documented[scenario].split("\n", 1)[1].strip()
+        assert result.returncode == exit_code and result.stdout.strip() == expected, result.stdout + result.stderr
+        assert "@" not in result.stdout   # la salida no imprime correos
+    assert_mypy_strict(tmp_path)
+
+
+def test_rights_pipeline_rules(tmp_path: Path) -> None:
+    (code,) = blocks("data-subject-rights-pipeline", "python")
+    steps = [line.split("@paso", 1)[1].strip() for line in code.splitlines() if line.startswith("# @paso")]
+    assert steps == ["1 Ingreso y plazos", "2 Localizar", "3 Ejecutar por derecho", "4 Verificar y cerrar"]
+    assert not [line for line in code.splitlines() if re.match(r"\s*assert ", line)]
+    module = tmp_path / "derechos.py"
+    module.write_text(code, encoding="utf-8", newline="\n")
+    spec = importlib.util.spec_from_file_location("derechos", module)
+    assert spec and spec.loader
+    m = importlib.util.module_from_spec(spec)
+    sys.modules["derechos"] = m   # dataclasses necesita el módulo registrado
+    spec.loader.exec_module(m)
+    cfg, cat, idx = m.configuracion(), m.catalogo(), m.indice()
+    # Plazos desde la configuración: un viernes de ingreso cruza el fin de semana y el feriado.
+    viernes = m.Solicitud("x", "t", "bloqueo", m.date(2026, 10, 30))
+    assert str(m.plazos(cfg, viernes)["bloqueo temporal"]) == "2026-11-03"
+    a, b = "c3d3a94d7560c6ae", "7e1f04b2a9d35c18"
+    assert m.portabilidad(cat, idx, a) == [] and m.portabilidad(cat, idx, b) == ["silver.preferencias"]
+    # La sonda lee el destino: si alguien revierte el valor, deja de estar verificado aunque el job diga «aplicada».
+    p = m.plataforma()
+    s = m.Solicitud("SOL-T", a, "rectificación", viernes.ingreso, ("crm",))
+    assert m.ejecutar(p, s, "crm", "rectificar", "nuevo@example.com") == "aplicada"
+    assert m.sonda_valor(p, "crm", a, "nuevo@example.com") == "verificado"
+    p.datos["crm"][a] = "antiguo@example.com"
+    assert m.sonda_valor(p, "crm", a, "nuevo@example.com") == "pendiente"
+    # Idempotencia: la misma acción no se aplica dos veces.
+    assert m.ejecutar(p, s, "crm", "rectificar", "nuevo@example.com") == "ya aplicada, no se repite"
+    assert p.aplicadas == {("SOL-T", "crm", "rectificar"): 1}
+    # Bloqueo: fuera del consumo, sigue almacenado. Oposición: solo la actividad objetada.
+    p.bloqueados.add(a)
+    p.oposiciones.add((b, "marketing_directo"))
+    assert a not in m.consumo(p, "venta_pasajes") and a in p.datos["silver.clientes"]
+    assert b in m.consumo(p, "venta_pasajes") and b not in m.consumo(p, "marketing_directo")

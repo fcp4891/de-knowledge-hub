@@ -55,10 +55,9 @@ relations:
   - {type: RELATED_TO, target: row-level-security, note: "El bloqueo se aplica como filtro de fila."}
   - {type: RELATED_TO, target: privacy-controls-as-code, note: "El control de cierre y las pruebas de backfill como controles automatizados."}
 created_at: 2026-10-22
-updated_at: 2026-11-03
+updated_at: 2026-11-06
 last_verified: 2026-10-25
-owner_approved_at: 2026-11-01
-verification_status: verified
+verification_status: review_required
 ---
 
 ## 1. Resumen
@@ -206,95 +205,149 @@ flowchart LR
 ## 10. Código
 
 ```python
-# Python 3.12+, biblioteca estándar. Pipeline de derechos del titular (Ley 19.628 mod. por Ley 21.719):
-# calcula plazos (art. 11), localiza al titular con un índice de ubicaciones, arma la respuesta de acceso
-# con lo que pide el art. 5 desde el catálogo, filtra la portabilidad a lo que exige el art. 9, comprueba que una
-# rectificación sobreviva al recálculo desde bronze y no deja cerrar un caso con destinos pendientes.
-import json
-from dataclasses import dataclass
+# Python 3.12+, biblioteca estándar. Pipeline de derechos del titular (Ley 19.628 mod. por Ley 21.719), de punta a
+# punta: ingreso y plazos (art. 11) → localizar con el índice y el catálogo → ejecutar por derecho → verificar con una
+# sonda que lee cada destino y cerrar → código de salida (0 responde o cierra, 1 queda abierto). Uso: python derechos.py
+# acceso | rectificacion | bloqueo | reintento. Las funciones reciben catálogo, índice, configuración y plataforma; no
+# hay estado global. Titulares con llave seudónima (chilean-identifier-pseudonymization) y datos ficticios.
+import sys
+from dataclasses import dataclass, field
 from datetime import date, timedelta
+from typing import Literal
 
-FERIADOS: set[date] = {date(2026, 10, 31)}  # en producción: calendario oficial de feriados, versionado
+Derecho = Literal["acceso", "rectificación", "supresión", "oposición", "portabilidad", "bloqueo"]
+Estado = Literal["verificado", "pendiente"]
 
 
-def mas_dias_habiles(inicio: date, n: int) -> date:
+# @paso 1 Ingreso y plazos
+@dataclass(frozen=True)
+class ConfigPlazos:   # versionada: cada resultado dice con qué versión se calculó
+    version: str
+    feriados: frozenset[date]   # calendario de ejemplo; en producción, el oficial
+    regla_habiles: str
+    dias_respuesta: int         # corridos
+    dias_prorroga: int          # corridos, una sola vez
+    dias_bloqueo: int           # hábiles
+
+
+@dataclass(frozen=True)
+class Solicitud:
+    request_id: str
+    titular: str
+    derecho: Derecho
+    ingreso: date
+    destinos: tuple[str, ...] = ()   # alcance que aprobó el área legal
+    actividad: str | None = None     # oposición: la actividad objetada
+
+
+def configuracion() -> ConfigPlazos:
+    return ConfigPlazos("plazos-2026.1", frozenset({date(2026, 10, 31)}),
+                        "lunes a viernes, sin feriados (supuesto a confirmar con el área legal)", 30, 30, 2)
+
+
+def mas_dias_habiles(cfg: ConfigPlazos, inicio: date, n: int) -> date:
     d = inicio
     while n:
         d += timedelta(days=1)
-        if d.weekday() < 5 and d not in FERIADOS:
+        if d.weekday() < 5 and d not in cfg.feriados:
             n -= 1
     return d
 
 
+def plazos(cfg: ConfigPlazos, s: Solicitud) -> dict[str, date]:
+    respuesta = s.ingreso + timedelta(days=cfg.dias_respuesta)
+    p = {"respuesta": respuesta, "con prórroga": respuesta + timedelta(days=cfg.dias_prorroga)}
+    if s.derecho in {"rectificación", "supresión", "oposición", "bloqueo"}:
+        p["bloqueo temporal"] = mas_dias_habiles(cfg, s.ingreso, cfg.dias_bloqueo)
+    return p
+
+
+# @paso 2 Localizar
 @dataclass(frozen=True)
-class Actividad:          # actividad de tratamiento en el catálogo
+class Actividad:   # actividad de tratamiento en el catálogo (processing-activities-inventory)
     nombre: str
     finalidad: str
-    base: str             # "consentimiento", "contrato", "obligación legal", "interés legítimo"
-    plazo: str
+    base: str
+    origen: str
     destinatarios: str
+    plazo: str
     decision_automatizada: str | None
 
 
 @dataclass(frozen=True)
-class Ubicacion:          # entrada del índice titular → ubicaciones
-    tabla: str
+class Ubicacion:   # entrada del índice titular → ubicaciones
+    destino: str
     actividad: str
     facilitado_por_titular: bool   # art. 9: portabilidad solo de lo que el titular entregó
     automatizado: bool
 
 
-@dataclass(frozen=True)
-class Resultado:          # resultado de una acción en un destino
-    destino: str
-    estado: str           # "verificado" (con una prueba), "pendiente" o "fallido"
-
-
-CATALOGO = {
-    "venta_pasajes": Actividad("venta_pasajes", "emitir y gestionar pasajes", "contrato",
-                               "5 años desde el vuelo", "aerolíneas socias del itinerario", None),
-    "riesgo_fraude": Actividad("riesgo_fraude", "prevenir fraude en pagos", "interés legítimo",
-                               "2 años", "procesador de pagos",
-                               "puntaje de riesgo; transacciones sobre el umbral pasan a revisión humana"),
-}
-
-INDICE = {  # llave seudónima del titular → dónde están sus datos
-    "c3d3a94d7560c6ae": [
-        Ubicacion("silver.pasajeros", "venta_pasajes", True, True),
-        Ubicacion("silver.reservas", "venta_pasajes", True, True),
-        Ubicacion("gold.score_fraude", "riesgo_fraude", False, True),
+def catalogo() -> dict[str, Actividad]:
+    actividades = [
+        Actividad("venta_pasajes", "emitir y gestionar pasajes", "contrato", "formulario de compra",
+                  "aerolíneas socias del itinerario", "5 años desde el vuelo", None),
+        Actividad("riesgo_fraude", "prevenir fraude en pagos", "interés legítimo", "procesador de pagos",
+                  "procesador de pagos", "2 años", "puntaje de riesgo; sobre el umbral pasa a revisión humana"),
+        Actividad("marketing_directo", "ofertas personalizadas", "consentimiento", "centro de preferencias",
+                  "plataforma de email", "hasta retirar el consentimiento", None),
     ]
-}
+    return {a.nombre: a for a in actividades}
 
 
-def plazos(ingreso: date, derecho: str) -> dict[str, str]:
-    p = {"respuesta": str(ingreso + timedelta(days=30)),
-         "con_prorroga": str(ingreso + timedelta(days=60))}
-    if derecho in {"rectificación", "supresión", "oposición"}:
-        p["bloqueo_si_se_pide"] = str(mas_dias_habiles(ingreso, 2))   # art. 11: dos días hábiles
-    return p
+def indice() -> dict[str, list[Ubicacion]]:
+    return {
+        "c3d3a94d7560c6ae": [Ubicacion("crm", "venta_pasajes", True, True),
+                             Ubicacion("silver.clientes", "venta_pasajes", True, True),
+                             Ubicacion("gold.score_fraude", "riesgo_fraude", False, True)],
+        "7e1f04b2a9d35c18": [Ubicacion("crm", "venta_pasajes", True, True),
+                             Ubicacion("silver.clientes", "venta_pasajes", True, True),
+                             Ubicacion("silver.preferencias", "marketing_directo", True, True)],
+        "a90b5c2e1d7f3346": [Ubicacion("crm", "venta_pasajes", True, True),
+                             Ubicacion("silver.clientes", "venta_pasajes", True, True)],
+    }
 
 
-def acceso(titular: str) -> dict[str, object]:
+# @paso 3 Ejecutar por derecho
+def acceso(cat: dict[str, Actividad], idx: dict[str, list[Ubicacion]], titular: str) -> list[str]:
     """Art. 5: datos y origen, finalidades, destinatarios, período, interés legítimo y lógica automatizada."""
-    salida: list[dict[str, object]] = []
-    for nombre in sorted({u.actividad for u in INDICE[titular]}):
-        a = CATALOGO[nombre]
-        salida.append({
-            "actividad": a.nombre, "finalidad": a.finalidad, "base": a.base, "plazo": a.plazo,
-            "destinatarios": a.destinatarios,
-            "tablas": [u.tabla for u in INDICE[titular] if u.actividad == nombre],
-            "interes_legitimo": a.finalidad if a.base == "interés legítimo" else None,
-            "logica_automatizada": a.decision_automatizada,
-        })
-    return {"titular": titular, "tratamientos": salida}
+    lineas = []
+    for nombre in sorted({u.actividad for u in idx[titular]}):
+        a = cat[nombre]
+        n = sum(1 for u in idx[titular] if u.actividad == nombre)
+        extra = [x for x, hay in (("interés legítimo", a.base == "interés legítimo"),
+                                  ("lógica automatizada", a.decision_automatizada is not None)) if hay]
+        lineas.append(f"{a.nombre}: {a.finalidad} · base {a.base} · origen {a.origen} · {a.destinatarios} · {a.plazo}"
+                      f" · {n} ubicación(es)" + (f" · {' y '.join(extra)} informados" if extra else ""))
+    return lineas
 
 
-def portabilidad(titular: str) -> list[str]:
-    """Art. 9: datos facilitados por el titular, tratados en forma automatizada y basados en consentimiento.
-    Aquí la base es contrato: el resultado vacío muestra por qué el filtro se calcula y no se asume."""
-    return [u.tabla for u in INDICE[titular]
-            if u.facilitado_por_titular and u.automatizado and CATALOGO[u.actividad].base == "consentimiento"]
+def faltantes_art5(cat: dict[str, Actividad], idx: dict[str, list[Ubicacion]], titular: str) -> list[str]:
+    """Actividades del índice que no están en el catálogo o a las que les falta un dato del art. 5."""
+    faltan = []
+    for u in idx[titular]:
+        a = cat.get(u.actividad)
+        if a is None or not all((a.finalidad, a.origen, a.destinatarios, a.plazo)):
+            faltan.append(f"{u.destino}: {u.actividad}")
+    return faltan
+
+
+def portabilidad(cat: dict[str, Actividad], idx: dict[str, list[Ubicacion]], titular: str) -> list[str]:
+    """Art. 9: datos facilitados por el titular, tratados en forma automatizada y basados en consentimiento."""
+    return [u.destino for u in idx[titular]
+            if u.facilitado_por_titular and u.automatizado and cat[u.actividad].base == "consentimiento"]
+
+
+@dataclass
+class Plataforma:   # lo que los destinos guardan de verdad: lo que una sonda puede leer
+    bronze: dict[str, str]                                   # titular → valor de la fuente (lo que trae un backfill)
+    datos: dict[str, dict[str, str]]                         # destino → titular → valor
+    terceros: set[str] = field(default_factory=set)          # destinos que no se pueden leer directamente
+    confirmados: set[str] = field(default_factory=set)       # terceros que confirmaron el efecto
+    correcciones: dict[str, str] = field(default_factory=dict)
+    bloqueados: set[str] = field(default_factory=set)
+    oposiciones: set[tuple[str, str]] = field(default_factory=set)        # (titular, actividad)
+    aplicadas: dict[tuple[str, str, str], int] = field(default_factory=dict)
+    fallas: dict[str, int] = field(default_factory=dict)     # destino → fallas que va a dar el conector
 
 
 def recalcular(bronze: dict[str, str], correcciones: dict[str, str]) -> dict[str, str]:
@@ -302,73 +355,200 @@ def recalcular(bronze: dict[str, str], correcciones: dict[str, str]) -> dict[str
     return {titular: correcciones.get(titular, valor) for titular, valor in bronze.items()}
 
 
-def cierre(aprobada: bool, destinos: set[str], resultados: list[Resultado]) -> list[str]:
-    """Lo que impide cerrar el caso: sin aprobación, o destinos sin efecto verificado."""
-    pendientes = [] if aprobada else ["sin decisión aprobada"]
-    estados = {r.destino: r.estado for r in resultados}
-    pendientes += [f"{d}: {estados.get(d, 'sin resultado')}" for d in sorted(destinos) if estados.get(d) != "verificado"]
-    return pendientes
+def ejecutar(p: Plataforma, s: Solicitud, destino: str, operacion: str, valor: str) -> str:
+    """Idempotente por (request_id, destino, operación): un reintento no repite lo ya aplicado."""
+    clave = (s.request_id, destino, operacion)
+    if clave in p.aplicadas:
+        return "ya aplicada, no se repite"
+    if p.fallas.get(destino, 0):
+        p.fallas[destino] -= 1
+        return "falló (se reintenta)"
+    p.aplicadas[clave] = p.aplicadas.get(clave, 0) + 1
+    if destino in p.terceros:
+        return "aviso enviado al tercero (art. 6)"
+    if destino == "silver.clientes":
+        p.correcciones[s.titular] = valor
+        p.datos[destino] = recalcular(p.bronze, p.correcciones)
+        return "aplicada (capa de correcciones)"
+    p.datos[destino][s.titular] = valor
+    return "aplicada"
 
 
-def main() -> None:
-    t = "c3d3a94d7560c6ae"
-    print("plazos supresión:", plazos(date(2026, 10, 29), "supresión"))
-    print(json.dumps(acceso(t), ensure_ascii=False, indent=1))
-    print("tablas portables:", portabilidad(t))
+def consumo(p: Plataforma, actividad: str) -> list[str]:
+    """Vista de consumo y job de una actividad: excluyen a los bloqueados y a quienes se opusieron a esa actividad."""
+    return sorted(t for t in p.datos["silver.clientes"]
+                  if t not in p.bloqueados and (t, actividad) not in p.oposiciones)
 
-    bronze = {t: "antiguo@example.com"}           # la próxima carga desde el CRM trae el valor anterior
-    correcciones = {t: "nuevo@example.com"}
-    print("tras el backfill, ¿sigue rectificado?:", recalcular(bronze, correcciones)[t] == correcciones[t])
-    resultados = [Resultado("crm", "verificado"), Resultado("silver.clientes", "verificado"),
-                  Resultado("plataforma_campanas", "pendiente")]
-    bloqueos = cierre(True, {"crm", "silver.clientes", "plataforma_campanas"}, resultados)
-    print("cierre de la rectificación:", "permitido" if not bloqueos else f"no permitido: {bloqueos}")
+
+# @paso 4 Verificar y cerrar
+def sonda_valor(p: Plataforma, destino: str, titular: str, esperado: str) -> Estado:
+    """Lee el destino y compara: el estado no sale de lo que el job declara."""
+    if destino in p.terceros:
+        return "verificado" if destino in p.confirmados else "pendiente"
+    return "verificado" if p.datos[destino].get(titular) == esperado else "pendiente"
+
+
+def sonda_bloqueo(p: Plataforma, titular: str) -> Estado:
+    fuera = all(titular not in consumo(p, a) for a in ("venta_pasajes", "marketing_directo"))
+    return "verificado" if fuera and titular in p.datos["silver.clientes"] else "pendiente"
+
+
+def sonda_oposicion(p: Plataforma, titular: str, actividad: str) -> Estado:
+    otras_siguen = titular in consumo(p, "venta_pasajes")
+    return "verificado" if titular not in consumo(p, actividad) and otras_siguen else "pendiente"
+
+
+def cierre(estados: dict[str, Estado]) -> list[str]:
+    """Lo que impide cerrar: cualquier destino sin efecto verificado."""
+    return [f"{d}: {e}" for d, e in estados.items() if e != "verificado"]
+
+
+def plataforma() -> Plataforma:
+    clientes = {"c3d3a94d7560c6ae": "ana.antiguo@example.com", "7e1f04b2a9d35c18": "luis@example.com",
+                "a90b5c2e1d7f3346": "bea.antiguo@example.com"}
+    return Plataforma(bronze=dict(clientes), datos={"crm": dict(clientes), "silver.clientes": dict(clientes)},
+                      terceros={"aerolinea_socia"})
+
+
+def ingreso(cfg: ConfigPlazos, s: Solicitud) -> None:
+    p = "; ".join(f"{k} {v}" for k, v in plazos(cfg, s).items())
+    objeto = f" a {s.actividad}" if s.actividad else ""
+    print(f"{s.request_id} {s.derecho} de {s.titular}{objeto}, ingreso {s.ingreso} · {cfg.version}: {p}")
+
+
+def propagar(p: Plataforma, s: Solicitud, valor: str, intentos: int) -> dict[str, Estado]:
+    for intento in range(1, intentos + 1):
+        pasos = [f"{d} · rectificar: {ejecutar(p, s, d, 'rectificar', valor)}" for d in s.destinos]
+        print(f"intento {intento}: " + "; ".join(pasos))
+    p.datos["silver.clientes"] = recalcular(p.bronze, p.correcciones)   # backfill desde bronze
+    print("backfill desde bronze (trae el valor antiguo): silver.clientes recalculado, la capa de correcciones gana")
+    return {d: sonda_valor(p, d, s.titular, valor) for d in s.destinos}
+
+
+def informar_cierre(estados: dict[str, Estado]) -> int:
+    print("sondas: " + "; ".join(f"{d} {e}" for d, e in estados.items()))
+    if pendientes := cierre(estados):
+        print(f"cierre: bloqueado (1): {', '.join(pendientes)}")
+        return 1
+    print("cierre: permitido (0): todos los destinos verificados")
+    return 0
+
+
+def main(escenario: str) -> int:
+    cfg, cat, idx, p = configuracion(), catalogo(), indice(), plataforma()
+    a, b, c = "c3d3a94d7560c6ae", "7e1f04b2a9d35c18", "a90b5c2e1d7f3346"
+    if escenario == "acceso":
+        ingreso(cfg, Solicitud("SOL-0101", a, "acceso", date(2026, 10, 29)))
+        print("respuesta de acceso (art. 5), por actividad:")
+        print("\n".join(f"  {linea}" for linea in acceso(cat, idx, a)))
+        faltan = faltantes_art5(cat, idx, a)
+        print(f"datos del art. 5 sin respaldo en el catálogo: {faltan or 'ninguno'}")
+        for t in (a, b):
+            print(f"portabilidad (art. 9) de {t}: {portabilidad(cat, idx, t)}")
+        print("acceso: " + ("incompleto (1)" if faltan else "respuesta completa (0)"))
+        return 1 if faltan else 0
+    if escenario == "rectificacion":
+        s = Solicitud("SOL-0102", a, "rectificación", date(2026, 10, 29), ("crm", "silver.clientes", "aerolinea_socia"))
+        ingreso(cfg, s)
+        return informar_cierre(propagar(p, s, "ana@example.com", intentos=1))
+    if escenario == "reintento":
+        s = Solicitud("SOL-0103", c, "rectificación", date(2026, 10, 29), ("crm", "silver.clientes"))
+        ingreso(cfg, s)
+        p.fallas["crm"] = 1   # el conector del CRM falla la primera vez
+        estados = propagar(p, s, "bea@example.com", intentos=2)
+        print("aplicaciones por acción: " + "; ".join(f"{d}/{op} {n}" for (_, d, op), n in p.aplicadas.items()))
+        return informar_cierre(estados)
+    # bloqueo, y una oposición acotada a una actividad
+    bloqueo = Solicitud("SOL-0104", a, "bloqueo", date(2026, 10, 29))
+    ingreso(cfg, bloqueo)
+    aplicado, limite = date(2026, 10, 30), plazos(cfg, bloqueo)["bloqueo temporal"]
+    p.bloqueados.add(a)
+    dentro = "dentro del plazo" if aplicado <= limite else "fuera de plazo"
+    print(f"flag de bloqueo aplicado el {aplicado}: {dentro} ({limite}); no borra el dato")
+    oposicion = Solicitud("SOL-0105", b, "oposición", date(2026, 10, 29), actividad="marketing_directo")
+    ingreso(cfg, oposicion)
+    p.oposiciones.add((b, "marketing_directo"))
+    print(f"consumo venta_pasajes: {consumo(p, 'venta_pasajes')}")
+    print(f"job marketing_directo: {consumo(p, 'marketing_directo')}")
+    print(f"{a} sigue almacenado en silver.clientes: {'sí' if a in p.datos['silver.clientes'] else 'no'}")
+    estados = {"bloqueo": sonda_bloqueo(p, a), "oposición": sonda_oposicion(p, b, "marketing_directo")}
+    if aplicado > limite:
+        estados["bloqueo"] = "pendiente"
+    return informar_cierre(estados)
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else "acceso"))
 ```
 
-El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Imprime los plazos de una supresión ingresada el 2026-10-29 (respuesta el 2026-11-28, con prórroga el 2026-12-28, bloqueo el 2026-11-02), la respuesta de acceso armada desde el catálogo por actividad, `tablas portables: []`, y el caso de rectificación:
+El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Recorre cuatro pasos:
+
+1. **Ingreso y plazos:** los plazos del art. 11 salen de una configuración versionada (`plazos-2026.1`: feriados, regla de días hábiles, 30 días corridos de respuesta, prórroga única de 30 y 2 días hábiles para el bloqueo temporal), como pide el §4; cada línea de ingreso dice con qué versión se calculó. La regla de días hábiles (lunes a viernes, sin feriados) es un supuesto a confirmar con el área legal.
+2. **Localizar:** el índice da las ubicaciones del titular por su llave seudónima, y el catálogo, la actividad de cada una.
+3. **Ejecutar por derecho:** el acceso arma la respuesta del art. 5 desde el catálogo por actividad (finalidad, base, origen, destinatarios, plazo, interés legítimo y lógica automatizada); la portabilidad se filtra por el art. 9; la rectificación (**calidad**: datos exactos y actuales) va a una capa de correcciones que gana en cada recálculo y se comunica a los terceros (art. 6); el bloqueo (art. 8 ter) es un flag que la vista de consumo y el job excluyen sin borrar el dato; la oposición (art. 8) saca al titular solo de la actividad objetada. Cada acción es idempotente por `request_id` + destino + operación.
+4. **Verificar y cerrar:** el estado «verificado» lo da una sonda que lee el destino y comprueba el efecto, no lo que declara el job. Un caso no se cierra mientras un destino siga pendiente.
+
+Las funciones reciben el catálogo, el índice, la configuración y la plataforma; no hay estado global. Los titulares se identifican con su llave seudónima y los correos son `@example.com`.
+
+En el acceso, la respuesta sale del catálogo por actividad, resumida aquí en una línea por actividad, no en el JSON completo. El primer titular tiene base contrato y no tiene nada portable. El segundo tiene preferencias con base consentimiento, y esas sí lo son. Termina con código 0:
 
 ```text
-plazos supresión: {'respuesta': '2026-11-28', 'con_prorroga': '2026-12-28', 'bloqueo_si_se_pide': '2026-11-02'}
-{
- "titular": "c3d3a94d7560c6ae",
- "tratamientos": [
-  {
-   "actividad": "riesgo_fraude",
-   "finalidad": "prevenir fraude en pagos",
-   "base": "interés legítimo",
-   "plazo": "2 años",
-   "destinatarios": "procesador de pagos",
-   "tablas": [
-    "gold.score_fraude"
-   ],
-   "interes_legitimo": "prevenir fraude en pagos",
-   "logica_automatizada": "puntaje de riesgo; transacciones sobre el umbral pasan a revisión humana"
-  },
-  {
-   "actividad": "venta_pasajes",
-   "finalidad": "emitir y gestionar pasajes",
-   "base": "contrato",
-   "plazo": "5 años desde el vuelo",
-   "destinatarios": "aerolíneas socias del itinerario",
-   "tablas": [
-    "silver.pasajeros",
-    "silver.reservas"
-   ],
-   "interes_legitimo": null,
-   "logica_automatizada": null
-  }
- ]
-}
-tablas portables: []
-tras el backfill, ¿sigue rectificado?: True
-cierre de la rectificación: no permitido: ['plataforma_campanas: pendiente']
+$ python derechos.py acceso
+SOL-0101 acceso de c3d3a94d7560c6ae, ingreso 2026-10-29 · plazos-2026.1: respuesta 2026-11-28; con prórroga 2026-12-28
+respuesta de acceso (art. 5), por actividad:
+  riesgo_fraude: prevenir fraude en pagos · base interés legítimo · origen procesador de pagos · procesador de pagos · 2 años · 1 ubicación(es) · interés legítimo y lógica automatizada informados
+  venta_pasajes: emitir y gestionar pasajes · base contrato · origen formulario de compra · aerolíneas socias del itinerario · 5 años desde el vuelo · 2 ubicación(es)
+datos del art. 5 sin respaldo en el catálogo: ninguno
+portabilidad (art. 9) de c3d3a94d7560c6ae: []
+portabilidad (art. 9) de 7e1f04b2a9d35c18: ['silver.preferencias']
+acceso: respuesta completa (0)
 ```
 
-Cuatro lecciones: el acceso sale del **catálogo por actividad**, no de un `SELECT *`; la portabilidad no aplica a todo (aquí la base es contrato, así que el art. 9 no la exige); la corrección vive en una capa que gana en cada recálculo; y un caso no se cierra mientras un destino no tenga su efecto verificado. Cómo contar los días hábiles (feriados, sábados) es un supuesto a confirmar con el área legal. **Limitaciones:** «verificado» debe salir de una prueba sobre el destino, no de un valor declarado; el ejemplo no decide la procedencia ni demuestra cumplimiento.
+La rectificación sobrevive al backfill desde bronze, porque la capa de correcciones gana. Pero la aerolínea socia que recibió el dato no confirma la corrección, y el caso no se cierra. Termina con código 1:
+
+```text
+$ python derechos.py rectificacion
+SOL-0102 rectificación de c3d3a94d7560c6ae, ingreso 2026-10-29 · plazos-2026.1: respuesta 2026-11-28; con prórroga 2026-12-28; bloqueo temporal 2026-11-02
+intento 1: crm · rectificar: aplicada; silver.clientes · rectificar: aplicada (capa de correcciones); aerolinea_socia · rectificar: aviso enviado al tercero (art. 6)
+backfill desde bronze (trae el valor antiguo): silver.clientes recalculado, la capa de correcciones gana
+sondas: crm verificado; silver.clientes verificado; aerolinea_socia pendiente
+cierre: bloqueado (1): aerolinea_socia: pendiente
+```
+
+El bloqueo se aplica dentro de los 2 días hábiles: el titular desaparece de la vista de consumo y del job, y sigue almacenado. La oposición del segundo titular a `marketing_directo` lo saca del job de esa actividad, pero no de `venta_pasajes`. Termina con código 0:
+
+```text
+$ python derechos.py bloqueo
+SOL-0104 bloqueo de c3d3a94d7560c6ae, ingreso 2026-10-29 · plazos-2026.1: respuesta 2026-11-28; con prórroga 2026-12-28; bloqueo temporal 2026-11-02
+flag de bloqueo aplicado el 2026-10-30: dentro del plazo (2026-11-02); no borra el dato
+SOL-0105 oposición de 7e1f04b2a9d35c18 a marketing_directo, ingreso 2026-10-29 · plazos-2026.1: respuesta 2026-11-28; con prórroga 2026-12-28; bloqueo temporal 2026-11-02
+consumo venta_pasajes: ['7e1f04b2a9d35c18', 'a90b5c2e1d7f3346']
+job marketing_directo: ['a90b5c2e1d7f3346']
+c3d3a94d7560c6ae sigue almacenado en silver.clientes: sí
+sondas: bloqueo verificado; oposición verificado
+cierre: permitido (0): todos los destinos verificados
+```
+
+En el reintento, el conector del CRM falla la primera vez. El segundo intento aplica solo lo que faltaba (`silver.clientes` no se repite), cada acción queda aplicada una vez y el caso cierra al verificar. Termina con código 0:
+
+```text
+$ python derechos.py reintento
+SOL-0103 rectificación de a90b5c2e1d7f3346, ingreso 2026-10-29 · plazos-2026.1: respuesta 2026-11-28; con prórroga 2026-12-28; bloqueo temporal 2026-11-02
+intento 1: crm · rectificar: falló (se reintenta); silver.clientes · rectificar: aplicada (capa de correcciones)
+intento 2: crm · rectificar: aplicada; silver.clientes · rectificar: ya aplicada, no se repite
+backfill desde bronze (trae el valor antiguo): silver.clientes recalculado, la capa de correcciones gana
+aplicaciones por acción: silver.clientes/rectificar 1; crm/rectificar 1
+sondas: crm verificado; silver.clientes verificado
+cierre: permitido (0): todos los destinos verificados
+```
+
+Limitaciones:
+
+- **Procedencia:** el ejemplo no decide si la solicitud procede ni autentica al titular; eso lo hacen el área legal y el canal.
+- **Plazos:** la regla de días hábiles y el calendario de feriados son supuestos de ejemplo, a confirmar con el área legal; el cómputo no cubre solicitudes incompletas ni la suspensión del plazo.
+- **Cobertura:** el índice solo conoce las ubicaciones que la ingesta y el linaje registran; un destino fuera del índice no se ejecuta ni se verifica.
+- **Terceros:** una sonda no puede leer un sistema de otro responsable; ahí el estado depende de la confirmación del tercero.
+- **Consumidores:** el bloqueo y la oposición solo funcionan para los consumidores que leen la vista o el job; una extracción directa de la tabla no los respeta.
 
 ## 11. GCP
 
@@ -471,7 +651,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-22: arts. 4 a 11 consultados ese día en BCN. `verified`: aprobada por Felipe el 2026-11-01 (`owner_approved_at`). Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-22: arts. 4 a 11 consultados ese día en BCN. `review_required` desde el 2026-11-06: el §10 se reescribió de punta a punta y espera la aprobación de Felipe. Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -486,3 +666,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.
 - 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
 - 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
+- 2026-11-06: §10 reescrito de punta a punta al estándar de `chile-data-protection` (pedido de Felipe), conservando plazos del art. 11, acceso del art. 5 desde el catálogo, portabilidad del art. 9, rectificación que sobrevive al backfill y cierre bloqueado con destinos pendientes: pasos `# @paso 1–4`; funciones que reciben catálogo, índice, configuración y plataforma; plazos como configuración versionada (`plazos-2026.1`), con la regla de días hábiles como supuesto; bloqueo (art. 8 ter) como flag sin borrar; oposición (art. 8) por actividad; sondas que leen el destino; idempotencia por `request_id` + destino + operación; un segundo titular con base consentimiento y tablas portables; escenarios `acceso` (0), `rectificacion` (1), `bloqueo` (0) y `reintento` (0), iguales a la salida de la CI. Vuelve a `review_required`.
