@@ -3,7 +3,7 @@
 Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
 **Fase:** F3 (F2 cerrada el 2026-09-30)
-**Última actualización:** 2026-11-04
+**Última actualización:** 2026-11-06
 **Última actualización:** 2026-10-28
 
 ## Reglas de revisión
@@ -15,6 +15,7 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** `b/ui-arrows-table`. En las celdas, el grupo «término › término» no se parte y la columna cabe ese grupo: la flecha de «Llave seudónima → tablas…» queda en el mismo renglón, visible, y el resto de la frase sigue abajo.
 - **Tarea activa:** revisión del lote PBA. Informe en `docs/reviews/pba.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuesta baja: la letra b) del art. 34 quáter no está completa.
 - **Tarea activa:** verificación P10. Informe en `docs/reviews/p10-verificacion.md`. No se editó `content/` ni `frontend/`.
