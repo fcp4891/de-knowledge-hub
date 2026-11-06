@@ -17,7 +17,7 @@ jurisdiction: [CL]
 legal_basis:
   - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Finalidad: fines específicos, explícitos y lícitos. Proporcionalidad: solo los datos necesarios, adecuados y pertinentes.", implication: "El acceso se concede para una finalidad aprobada y a un producto con solo los datos que esa finalidad necesita."}
   - {law: ley-19628, article: "14 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Por defecto, solo los datos específicos y estrictamente necesarios, considerando el número de datos recogidos, la extensión del tratamiento, el plazo de conservación y su accesibilidad.", implication: "La configuración por defecto no da acceso; cada concesión es explícita, acotada y con vencimiento."}
-  - {law: ley-19628, article: "34 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "b) destinar maliciosamente los datos a una finalidad distinta de la consentida o prevista en la ley es infracción gravísima.", implication: "Un uso para otra finalidad se deniega o se escala, y queda auditado."}
+  - {law: ley-19628, article: "34 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "b) destinar maliciosamente los datos personales a una finalidad distinta de la consentida por el titular o prevista en la ley que autoriza su tratamiento es infracción gravísima.", implication: "Un uso para otra finalidad se deniega o se escala, y queda auditado."}
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
@@ -46,9 +46,10 @@ relations:
   - {type: RELATED_TO, target: data-minimization-by-layer, note: "El producto que se concede tiene solo lo necesario."}
   - {type: RELATED_TO, target: privacy-controls-as-code, note: "Pruebas negativas y concesiones vencidas como reglas de la CI."}
 created_at: 2026-10-28
-updated_at: 2026-11-04
+updated_at: 2026-11-06
 last_verified: 2026-10-28
-verification_status: review_required
+owner_approved_at: 2026-11-06
+verification_status: verified
 ---
 
 ## 1. Resumen
@@ -80,7 +81,7 @@ Los permisos tradicionales responden **quién** puede consultar. La autorizació
 
 **[Buena práctica]** Un analista con permiso para consultar `clientes` en tareas de soporte reutiliza el mismo dataset para una campaña de ofertas. IAM lo deja pasar, porque el permiso existe; nadie evaluó la finalidad nueva. Con concesiones por finalidad y productos por consumidor, el uso para la campaña se deniega o se escala, y la solicitud queda registrada.
 
-**[Obligación legal · art. 34 quáter]** Destinar maliciosamente los datos a una finalidad distinta de la consentida o prevista en la ley es infracción gravísima (letra b)). **[Buena práctica]** El control técnico no califica la intención: deja el uso denegado o escalado, y auditado, para que lo analice el área competente.
+**[Obligación legal · art. 34 quáter]** «Destinar maliciosamente los datos personales a una finalidad distinta de la consentida por el titular o prevista en la ley que autoriza su tratamiento» es infracción gravísima (letra b)). **[Buena práctica]** El control técnico no califica la intención: deja el uso denegado o escalado, y auditado, para que lo analice el área competente.
 
 ## 4. Cómo funciona
 
@@ -469,7 +470,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-28: arts. 3, 14 quáter y 34 quáter consultados ese día en BCN; *Authorized views* consultada ese día. `review_required` desde el 2026-11-04: el §10 se reescribió de punta a punta y espera la aprobación de Felipe. Revisión mensual.
+2026-10-28: arts. 3, 14 quáter y 34 quáter consultados ese día en BCN; *Authorized views* consultada ese día. `verified`: aprobada de nuevo por Felipe el 2026-11-06 (`owner_approved_at`), con el §10 nuevo y la revisión PBA aplicada. Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -481,3 +482,5 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
 - 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.
 - 2026-11-04: §10 reescrito de punta a punta al estándar de `chile-data-protection` (pedido de Felipe): pasos `# @paso 1–4` (registro de concesiones, decisión, pruebas negativas, revisión y salida); funciones que reciben el registro y la fecha; decisión `Literal` con motivo; `vigentes` excluye ahora las vencidas (la búsqueda por producto pasa a `del_producto`); cada caso declara su decisión esperada; producto mínimo con columnas («pide rut, fuera de contacto_minimo»); cuenta compartida y revisión periódica de 90 días (política interna); escenarios `solicitudes` (0), `fuga` (1) y `revision` (1), iguales a la salida de la CI. Vuelve a `review_required`.
+- 2026-11-06: revisión `docs/reviews/pba.md` aplicada (pedido de Felipe): la letra b) del art. 34 quáter se cita completa, como en BCN («los datos personales», «la consentida por el titular o prevista en la ley que autoriza su tratamiento»), en la nota de `legal_basis` y en el párrafo del art. 34 quáter; la nota de la fuente ya la traía completa.
+- 2026-11-06: aprobada por Felipe con el §10 nuevo (`owner_approved_at: 2026-11-06`); vuelve a `verified` (ADR-023).
