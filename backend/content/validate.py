@@ -30,6 +30,7 @@ from jsonschema import Draft202012Validator
 from referencing import Registry, Resource
 
 from backend.content import diagrams, page_sections
+from backend.content import views as page_views
 
 ROOT = Path(__file__).resolve().parents[2]
 CONTENT_EXTENSIONS = {".md", ".yaml", ".yml"}
@@ -501,8 +502,11 @@ def check_page_sections(content_dir: Path, docs: list[Document], report: Report)
         slug = doc.data["slug"]
         omittable = page_sections.OMITTABLE.get(slug, frozenset()) if doc.data["type"] in page_sections.PRACTICE_TYPES else frozenset()
         errors = page_sections.check(body, expected, omittable) + page_sections.check_annexes(body, slug)
-        if doc.data["type"] in page_sections.PRACTICE_TYPES:
-            errors += page_sections.check_practices(body)
+        if doc.data["type"] in page_sections.PRACTICE_TYPES and "practice_lanes" not in doc.data.get("views", {}):
+            errors += page_sections.check_practices(body)   # ADR-030: con practice_lanes, las prácticas van en la vista
+        if "views" in doc.data:
+            cited = [s["url"] for s in doc.data.get("sources", []) if "url" in s]
+            errors += page_views.check(doc.data["views"], body, cited)
         if doc.data["type"] == "architecture":
             errors += architecture_views(body)
         for error in errors:

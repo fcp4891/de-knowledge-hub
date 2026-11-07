@@ -2,6 +2,14 @@ import { ApiFailure } from "@/components/ApiFailure";
 import { NoteForm, NoteItem } from "@/components/card/PersonalForms";
 import { ConceptReading, type ReadingSectionModel } from "@/components/card/ConceptReading";
 import { LegalCatalog, LegalFoundations } from "@/components/card/LegalFoundations";
+import {
+  ApproachFallback,
+  CentralIdeaFallback,
+  PracticeLanesFallback,
+  SeverityCardsFallback,
+  SourcesGroupedFallback,
+  VigenciaTimelineFallback,
+} from "@/components/card/ViewFallbacks";
 import { canViewChangeHistory, canViewRelatedLab, currentViewer } from "@/lib/changeHistoryAccess";
 import { MarkdownBody } from "@/components/markdown/MarkdownBody";
 import { getConcept, getDomain, getRelations, getStudyState, listNotes } from "@/lib/api/client";
@@ -18,6 +26,16 @@ import { SHORT_NAMES } from "@/lib/learning-paths";
 import { isDomainPublished, relationVisible, scopeFromConcepts } from "@/lib/publishedScope";
 import { nextInRoute } from "@/lib/domainRoute";
 import { staticSlugs } from "@/lib/staticParams";
+import {
+  approachProps,
+  centralIdeaProps,
+  groupedSourceCount,
+  practiceLanesProps,
+  severityCardsProps,
+  sourcesGroupedProps,
+  vigenciaTimelineProps,
+  type Views,
+} from "@/lib/views";
 
 const CLOUD_KEYS = new Set(["gcp", "aws", "azure"]);
 const OPEN_NUMBERS = new Set<number>();
@@ -65,6 +83,16 @@ function SourceLinks({ sources }: { sources: SourceRef[] }) {
   );
 }
 
+/** ADR-030: lo que va en cada marca <!-- view: clave --> (render de respaldo hasta conectar los componentes). */
+function markedViews(views: Views | undefined): Record<string, React.ReactNode> {
+  const nodes: Record<string, React.ReactNode> = {};
+  if (views?.central_idea) nodes.central_idea = <CentralIdeaFallback {...centralIdeaProps(views.central_idea)} />;
+  if (views?.vigencia_timeline) nodes.vigencia_timeline = <VigenciaTimelineFallback {...vigenciaTimelineProps(views.vigencia_timeline)} />;
+  if (views?.practice_lanes) nodes.practice_lanes = <PracticeLanesFallback {...practiceLanesProps(views.practice_lanes)} />;
+  if (views?.severity_cards) nodes.severity_cards = <SeverityCardsFallback {...severityCardsProps(views.severity_cards)} />;
+  return nodes;
+}
+
 function sectionModels(
   sections: Section[],
   sources: SourceRef[],
@@ -72,7 +100,9 @@ function sectionModels(
   slug: string,
   conceptRefs: ConceptRefs,
   kind: string,
+  views?: Views,
 ): ReadingSectionModel[] {
+  const viewNodes = markedViews(views);
   const architecture = kind === "architecture";
   const styleArrows = slug !== "data-lineage";
   const titleOf = (section: Section) => (architecture ? architectureTitle(section.key, section.title) : section.title);
@@ -122,9 +152,22 @@ function sectionModels(
         presentation: "summary",
         listed: text,
         body: text ? (
-          <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} styleArrows={styleArrows} />
+          <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} styleArrows={styleArrows} views={viewNodes} />
         ) : null,
       });
+      if (views?.approach) {
+        // ADR-030: el enfoque es un desplegable propio, justo después del Resumen, sin número.
+        const approach = approachProps(views.approach);
+        models.push({
+          number: 30,
+          key: "approach",
+          title: approach.title,
+          presentation: "details",
+          listed: false,
+          annex: true,
+          body: <ApproachFallback {...approach} />,
+        });
+      }
       continue;
     }
     if (CLOUD_KEYS.has(section.key)) {
@@ -158,13 +201,31 @@ function sectionModels(
         title: "Fundamentos legales y aplicación técnica",
         presentation: "details",
         listed: true,
-        body: <LegalFoundations />,
+        body: (
+          <>
+            <LegalFoundations />
+            <p>
+              <a href="#s23">Detalle por tema y artículo en el Anexo · Catálogo legal</a>
+            </p>
+          </>
+        ),
       });
       continue;
     }
     if (section.key === "sources") {
       const showList = sources.length > 0;
       if (!text && !showList) {
+        continue;
+      }
+      if (views?.sources_grouped) {
+        models.push({
+          number: section.number,
+          key: section.key,
+          title: titleOf(section),
+          presentation: "details",
+          listed: true,
+          body: <SourcesGroupedFallback {...sourcesGroupedProps(views.sources_grouped)} />,
+        });
         continue;
       }
       models.push({
@@ -203,6 +264,7 @@ function sectionModels(
           markCodeStatus={architecture}
           horizontalDiagrams={section.key === "architecture"}
           styleArrows={styleArrows}
+          views={viewNodes}
         />
       ),
     });
@@ -365,12 +427,12 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
       legalNotice={data.jurisdiction.length > 0 ? legalNoticeCopy(noticeSplit.notice) : null}
       legalBasis={data.legal_basis}
       minutes={readingMinutes(sections)}
-      sourceCount={data.sources.length}
+      sourceCount={groupedSourceCount(data.views?.sources_grouped, data.sources.length)}
       crumb={crumb}
       next={next}
       construction={!domainOpen}
       sections={[
-        ...sectionModels(sections, data.sources, data.legal_basis, data.slug, conceptRefs, data.kind),
+        ...sectionModels(sections, data.sources, data.legal_basis, data.slug, conceptRefs, data.kind, data.views),
         ...annexModels(data.annexes ?? [], data.legal_basis, conceptRefs),
       ]}
       compactNumbering={data.slug === "chile-data-protection"}

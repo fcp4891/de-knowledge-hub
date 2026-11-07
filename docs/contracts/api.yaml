@@ -603,7 +603,140 @@ components:
         note: { type: [string, "null"], description: Nota de alcance del blueprint. }
         sections: { type: array, items: { $ref: "#/components/schemas/Section" }, description: Vacía si has_page es false. }
         annexes: { type: array, items: { $ref: "#/components/schemas/Annex" }, description: "Anexos tras la última sección (ADR-029); la propiedad solo aparece si la ficha los tiene." }
+        views: { $ref: "#/components/schemas/Views" }
       unevaluatedProperties: false
+    Views:
+      description: >-
+        Vistas estructuradas (ADR-030); la propiedad solo aparece si la ficha las tiene. Cada clave mapea 1:1 con las props
+        de su componente, en snake_case. central_idea, vigencia_timeline, practice_lanes y severity_cards van donde el
+        Markdown de su sección trae «<!-- view: clave -->»; approach es un desplegable tras el Resumen; sources_grouped
+        reemplaza la lista de Fuentes.
+      type: object
+      properties:
+        central_idea:
+          type: object
+          required: [checks_title, checks, status, risks_title, risks, closing]
+          properties:
+            checks_title: { type: string }
+            checks: { type: array, items: { type: string } }
+            status: { type: string }
+            risks_title: { type: string }
+            risks:
+              type: array
+              items: { type: object, required: [text, tag], properties: { text: { type: string }, tag: { type: string } }, additionalProperties: false }
+            closing: { type: string }
+          additionalProperties: false
+        vigencia_timeline:
+          type: object
+          required: [items, as_of]
+          properties:
+            items:
+              type: array
+              items:
+                type: object
+                required: [date, title, detail, state]
+                properties:
+                  date: { $ref: "#/components/schemas/Date" }
+                  title: { type: string }
+                  detail: { type: string }
+                  links: { type: array, items: { $ref: "#/components/schemas/ViewLink" } }
+                  state: { enum: [past, current, proposed] }
+                additionalProperties: false
+            as_of: { type: string }
+          additionalProperties: false
+        approach:
+          type: object
+          required: [title, intro, steps]
+          properties:
+            title: { type: string }
+            intro: { type: string }
+            steps:
+              type: array
+              items: { type: object, required: [name, description], properties: { name: { type: string }, description: { type: string } }, additionalProperties: false }
+            notes: { type: array, items: { $ref: "#/components/schemas/ViewTitled" } }
+          additionalProperties: false
+        practice_lanes:
+          type: object
+          required: [lanes]
+          properties:
+            start: { $ref: "#/components/schemas/ViewTitled" }
+            lanes:
+              type: array
+              items:
+                type: object
+                required: [title, items]
+                properties:
+                  title: { type: string }
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      required: [title, text]
+                      properties: { title: { type: string }, text: { type: string }, arq: { type: boolean } }
+                      additionalProperties: false
+                additionalProperties: false
+          additionalProperties: false
+        severity_cards:
+          type: object
+          required: [levels]
+          properties:
+            levels:
+              type: array
+              items:
+                type: object
+                required: [name, level, amount, examples]
+                properties:
+                  name: { type: string }
+                  level: { enum: [1, 2, 3] }
+                  amount: { type: string }
+                  note: { type: string }
+                  examples: { type: array, items: { type: string } }
+                additionalProperties: false
+          additionalProperties: false
+        sources_grouped:
+          type: object
+          required: [groups]
+          properties:
+            groups:
+              type: array
+              items:
+                type: object
+                required: [title, sources]
+                properties:
+                  title: { type: string }
+                  layout: { enum: [list, providers] }
+                  sources:
+                    type: array
+                    items:
+                      type: object
+                      required: [title, links, publisher, level]
+                      properties:
+                        title: { type: string }
+                        links:
+                          type: array
+                          items:
+                            type: object
+                            required: [href]
+                            properties: { label: { type: string }, href: { type: string, format: uri } }
+                            additionalProperties: false
+                        publisher: { type: string }
+                        level: { type: string, description: "«Nivel N» desde el registro de la fuente." }
+                        why: { type: string }
+                        provider: { type: string }
+                      additionalProperties: false
+                additionalProperties: false
+          additionalProperties: false
+      additionalProperties: false
+    ViewLink:
+      type: object
+      required: [label, href]
+      properties: { label: { type: string }, href: { type: string, format: uri } }
+      additionalProperties: false
+    ViewTitled:
+      type: object
+      required: [title, text]
+      properties: { title: { type: string }, text: { type: string } }
+      additionalProperties: false
     Annex:
       description: Anexo de la ficha (`## Anexo · Título`, ADR-029), en Markdown.
       type: object

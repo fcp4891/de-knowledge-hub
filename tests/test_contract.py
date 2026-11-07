@@ -250,3 +250,23 @@ def test_annexes_and_source_label_only_when_present() -> None:
     source = {"slug": "s", "title": "S", "url": "https://example.org", "source_type": "legislative", "authority_level": 1}
     refs = p.source_refs(replace(index, entities={"s": source}), [{"source": "s", "label": "mensaje"}, {"source": "s"}])
     assert refs[0]["label"] == "mensaje" and "label" not in refs[1]
+
+
+def test_views_project_only_when_present_and_resolve_grouped_sources() -> None:
+    """ADR-030: `views` aparece solo si la ficha la trae; sources_grouped resuelve links, rótulo y nivel."""
+    concept = {"slug": "c", "title": "C", "kind": "concept", "classification": "core", "level": "intermediate",
+               "importance": "high", "mvp": False}
+    entry = p.BlueprintEntry(domain={"slug": "d"}, subdomain={"slug": "s"}, concept=concept, position=0)
+    source = {"slug": "s", "title": "S", "url": "https://example.org", "source_type": "legislative", "authority_level": 1}
+    refs = [{"source": "s", "url": "https://example.org/t", "label": "tramitación"}, {"source": "s", "url": "https://example.org/m"}]
+    grouped = {"groups": [{"title": "Normativa", "layout": "list", "sources": [
+        {"title": "Boletín", "urls": ["https://example.org/t", "https://example.org/m"], "publisher": "Senado", "why": "Estado."}]}]}
+    page = {"slug": "c", "type": "concept", "sources": refs, "views": {"sources_grouped": grouped, "approach": {"title": "E"}}}
+    index = p.ContentIndex(entities={"c": page, "s": source}, bodies={"c": "## 1. Resumen\n\nx\n"}, concepts={"c": entry})
+    views = p.concept_detail(index, "c")["views"]
+    assert views["approach"] == {"title": "E"}
+    assert views["sources_grouped"]["groups"][0]["sources"] == [{
+        "title": "Boletín", "links": [{"label": "tramitación", "href": "https://example.org/t"}, {"href": "https://example.org/m"}],
+        "publisher": "Senado", "level": "Nivel 1", "why": "Estado."}]
+    plain = replace(index, entities={"c": {"slug": "c", "type": "concept"}, "s": source})
+    assert "views" not in p.concept_detail(plain, "c")

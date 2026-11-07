@@ -42,49 +42,49 @@ export type ChilePrinciple = {
 
 export const CHILE_PRINCIPLES: readonly ChilePrinciple[] = [
   {
-    label: "a) Licitud y lealtad.",
+    label: "Licitud y lealtad",
     description:
       "Los datos solo se tratan de manera lícita y leal. El responsable debe ser capaz de acreditar la licitud del tratamiento que realiza.",
     slug: "processing-activities-inventory",
   },
   {
-    label: "b) Finalidad.",
+    label: "Finalidad",
     description:
       "Los datos se recolectan con fines específicos, explícitos y lícitos. No se tratan con fines distintos a los informados al recolectarlos, salvo las excepciones de la letra: fines compatibles, relación contractual o precontractual, nuevo consentimiento o ley.",
     slug: "purpose-based-authorization",
   },
   {
-    label: "c) Proporcionalidad.",
+    label: "Proporcionalidad",
     description:
       "Los datos tratados se limitan estrictamente a los necesarios, adecuados y pertinentes para los fines. Se conservan solo el tiempo necesario y luego se suprimen o anonimizan.",
     slug: "data-minimization-by-layer",
   },
   {
-    label: "d) Calidad.",
+    label: "Calidad",
     description:
       "Los datos deben ser exactos, completos, actuales y pertinentes en relación con su proveniencia y los fines del tratamiento.",
     slug: "data-subject-rights-pipeline",
   },
   {
-    label: "e) Responsabilidad.",
+    label: "Responsabilidad",
     description:
       "Quienes realicen tratamiento de datos personales son legalmente responsables de cumplir los principios y las demás obligaciones de la ley.",
     slug: "privacy-controls-as-code",
   },
   {
-    label: "f) Seguridad.",
+    label: "Seguridad",
     description:
       "El responsable aplica medidas de seguridad apropiadas para proteger los datos contra el tratamiento no autorizado o ilícito y contra su pérdida, filtración, daño accidental o destrucción.",
     slug: "data-breach-response",
   },
   {
-    label: "g) Transparencia e información.",
+    label: "Transparencia e información",
     description:
       "El responsable entrega al titular, de manera precisa, clara, inequívoca y gratuita, la información necesaria para ejercer sus derechos, y mantiene accesibles sus políticas y prácticas de tratamiento.",
     slug: "processing-activities-inventory",
   },
   {
-    label: "h) Confidencialidad.",
+    label: "Confidencialidad",
     description: "El responsable y quienes tengan acceso a los datos deben guardar secreto sobre ellos. El deber sigue después de terminada la relación.",
     slug: "purpose-based-authorization",
   },

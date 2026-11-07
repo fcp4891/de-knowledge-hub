@@ -488,7 +488,92 @@ export interface components {
             sections: components["schemas"]["Section"][];
             /** @description Anexos tras la última sección (ADR-029); la propiedad solo aparece si la ficha los tiene. */
             annexes?: components["schemas"]["Annex"][];
+            views?: components["schemas"]["Views"];
         } & components["schemas"]["Metadata"];
+        /** @description Vistas estructuradas (ADR-030); la propiedad solo aparece si la ficha las tiene. Cada clave mapea 1:1 con las props de su componente, en snake_case. central_idea, vigencia_timeline, practice_lanes y severity_cards van donde el Markdown de su sección trae «<!-- view: clave -->»; approach es un desplegable tras el Resumen; sources_grouped reemplaza la lista de Fuentes. */
+        Views: {
+            central_idea?: {
+                checks_title: string;
+                checks: string[];
+                status: string;
+                risks_title: string;
+                risks: {
+                    text: string;
+                    tag: string;
+                }[];
+                closing: string;
+            };
+            vigencia_timeline?: {
+                items: {
+                    date: components["schemas"]["Date"];
+                    title: string;
+                    detail: string;
+                    links?: components["schemas"]["ViewLink"][];
+                    /** @enum {unknown} */
+                    state: "past" | "current" | "proposed";
+                }[];
+                as_of: string;
+            };
+            approach?: {
+                title: string;
+                intro: string;
+                steps: {
+                    name: string;
+                    description: string;
+                }[];
+                notes?: components["schemas"]["ViewTitled"][];
+            };
+            practice_lanes?: {
+                start?: components["schemas"]["ViewTitled"];
+                lanes: {
+                    title: string;
+                    items: {
+                        title: string;
+                        text: string;
+                        arq?: boolean;
+                    }[];
+                }[];
+            };
+            severity_cards?: {
+                levels: {
+                    name: string;
+                    /** @enum {unknown} */
+                    level: 1 | 2 | 3;
+                    amount: string;
+                    note?: string;
+                    examples: string[];
+                }[];
+            };
+            sources_grouped?: {
+                groups: {
+                    title: string;
+                    /** @enum {unknown} */
+                    layout?: "list" | "providers";
+                    sources: {
+                        title: string;
+                        links: {
+                            label?: string;
+                            /** Format: uri */
+                            href: string;
+                        }[];
+                        publisher: string;
+                        /** @description «Nivel N» desde el registro de la fuente. */
+                        level: string;
+                        why?: string;
+                        provider?: string;
+                    }[];
+                }[];
+            };
+        };
+        ViewLink: {
+            label: string;
+            /** Format: uri */
+            href: string;
+        };
+        ViewTitled: {
+            title: string;
+            text: string;
+        };
         /** @description Anexo de la ficha (`## Anexo · Título`, ADR-029), en Markdown. */
         Annex: {
             title: string;

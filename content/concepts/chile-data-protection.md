@@ -64,36 +64,146 @@ sources:
     note: "Decreto 662 del Ministerio de Hacienda, promulgado el 2025-06-13 y publicado el 2026-09-09: reglamento de los requisitos, modalidades y procedimientos para implementar, certificar, registrar y supervisar los modelos de prevención de infracciones del art. 49 de la Ley 19.628."
   - source: gcp-sensitive-data-protection-docs
     url: https://docs.cloud.google.com/sensitive-data-protection/docs/sensitive-data-protection-overview
-    accessed: 2026-10-21
+    accessed: 2026-11-07
     page_title: "Sensitive Data Protection overview"
     note: "Sensitive Data Protection overview: ayuda a descubrir, clasificar y desidentificar datos sensibles dentro y fuera de Google Cloud; un caso de uso es escanear y perfilar en forma continua activos de BigQuery, Cloud SQL y Cloud Storage para encontrar datos sensibles sin catalogar."
   - source: gcp-cloud-logging-docs
     url: https://docs.cloud.google.com/logging/docs/audit
-    accessed: 2026-10-21
+    accessed: 2026-11-07
     page_title: "Cloud Audit Logs overview"
     note: "Cloud Audit Logs overview: salvo en BigQuery, los Data Access audit logs están desactivados por defecto porque generan mucho volumen; para registrarlos en otros servicios hay que activarlos en forma explícita."
   - source: aws-macie-docs
     url: https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html
-    accessed: 2026-10-21
+    accessed: 2026-11-07
     page_title: "What is Amazon Macie?"
     note: "What is Amazon Macie?: servicio de seguridad de datos que descubre datos sensibles con machine learning y coincidencia de patrones, da visibilidad de los riesgos y permite protección automatizada; lleva un inventario de los buckets de propósito general de Amazon S3 y evalúa y monitorea su seguridad y control de acceso."
   - source: aws-cloudtrail-docs
     url: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html
-    accessed: 2026-10-21
+    accessed: 2026-11-07
     page_title: "Logging data events"
     note: "Logging data events (AWS CloudTrail): por defecto, los trails y event data stores no registran data events, que informan las operaciones sobre un recurso o dentro de él; registrarlos tiene cargos adicionales según la página de precios de CloudTrail."
   - source: microsoft-purview-docs
     url: https://learn.microsoft.com/en-us/purview/data-map-classification
-    accessed: 2026-10-21
-    page_title: "Data classification in Data Map"
-    note: "Data classification in Data Map (Purview): asignar etiquetas o clases lógicas a los activos según su contexto de negocio (número de pasaporte, de licencia, de tarjeta, código SWIFT, nombre de persona); ayuda a entender, buscar y gobernar, y a entender riesgos. Más de 200 clasificaciones de sistema incorporadas y clasificaciones propias; se clasifica automáticamente al escanear o a mano después."
+    accessed: 2026-11-07
+    page_title: "Data classification in Microsoft Purview Data Map"
+    note: "Data classification in Microsoft Purview Data Map: asignar etiquetas o clases lógicas a los activos según su contexto de negocio (número de pasaporte, de licencia, de tarjeta, código SWIFT, nombre de persona); ayuda a entender, buscar y gobernar, y a entender riesgos. Más de 200 clasificaciones de sistema incorporadas y clasificaciones propias; se clasifica automáticamente al escanear o a mano después."
   - source: azure-databricks-docs
     url: https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/
-    accessed: 2026-10-22
+    accessed: 2026-11-07
     page_title: "What is Unity Catalog?"
     note: "What is Unity Catalog? (Azure Databricks): herramientas de gobierno de datos e IA; el control de acceso cubre privilegios, políticas basadas en atributos y filtros de fila y de columna; además, auditoría y linaje."
+  - source: iso-iec-27701
+    url: https://www.iso.org/standard/27701
+    accessed: 2026-11-07
+    note: "Página oficial de ISO/IEC 27701 (Privacy information management systems). iso.org respondió HTTP 403 a la verificación automática el 2026-11-07: la URL sale del buscador de ISO y el título de la página queda por verificar (Felipe). Se cita como uno de los marcos que sintetiza el enfoque del Resumen."
+  - source: nist-privacy-framework
+    url: https://www.nist.gov/privacy-framework
+    accessed: 2026-11-07
+    page_title: "Privacy Framework"
+    note: "Privacy Framework (NIST): herramienta voluntaria, construida con las partes interesadas, para identificar y gestionar riesgos de privacidad. Se cita como uno de los marcos que sintetiza el enfoque del Resumen."
 relations:
   - {type: RELATED_TO, target: data-classification, note: "Clasificación técnica de datos."}
+views:
+  central_idea:
+    checks_title: El pipeline lo comprueba
+    checks: [Se ejecuta sin errores, Cumple sus controles de calidad, Entrega información confiable]
+    status: "estado: exitoso"
+    risks_title: Y aun así puede
+    risks:
+      - {text: Usar datos para una finalidad no autorizada, tag: Finalidad}
+      - {text: Recopilar o conservar datos que no son necesarios, tag: Proporcionalidad}
+      - {text: "Exponer datos por accesos, transformaciones o transferencias inadecuadas", tag: Seguridad}
+      - {text: Mantener copias que impiden rectificar o suprimir, tag: Derechos}
+      - {text: No tener evidencia para investigar o demostrar sus controles, tag: Responsabilidad}
+    closing: Por eso la privacidad es un criterio de diseño y operación, no una revisión posterior al desarrollo.
+  vigencia_timeline:
+    items:
+      - {date: "2024-12-13", title: Publicación, detail: Ley 21.719 en el Diario Oficial, links: [{label: BCN, href: "https://www.bcn.cl/leychile/navegar?idNorma=1209272"}], state: past}
+      - date: "2026-10-28"
+        title: Senado aprueba el boletín 18.623-07
+        detail: Pasa a la Cámara, con discusión inmediata
+        links:
+          - {label: tramitación, href: "https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07"}
+          - {label: mensaje, href: "https://tramitacion.senado.cl/appsenado/index.php?mo=tramitacion&ac=getDocto&iddocto=19307&tipodoc=mensaje_mocion"}
+        state: past
+      - {date: "2026-12-01", title: Entrada en vigencia, detail: Fecha que rige hoy, state: current}
+      - {date: "2027-12-01", title: Fecha propuesta, detail: Solo si el proyecto se publica como ley, state: proposed}
+    as_of: "Estado al 2026-10-28 · fuente oficial: tramitación del Senado"
+  approach:
+    title: De la normativa a la implementación técnica
+    intro: "La ley establece obligaciones y responsabilidades jurídicas. La Ingeniería de Datos contribuye a su cumplimiento mediante soluciones técnicas adecuadas al contexto, al riesgo y a las decisiones adoptadas por las áreas responsables. Para estudiar esa relación, es posible utilizar el enfoque:"
+    steps:
+      - {name: Requisito normativo, description: Qué exige la ley}
+      - {name: Riesgo identificado, description: Qué puede fallar en la plataforma}
+      - {name: Control técnico, description: Qué lo previene o detecta}
+      - {name: Verificación, description: Cómo se prueba que funciona}
+      - {name: Evidencia, description: Qué queda para demostrarlo}
+    notes:
+      - title: De dónde viene
+        text: "Es una síntesis de la gestión de riesgos de ISO/IEC 27001 y 27701 y del NIST Privacy Framework, junto con la práctica de auditoría de controles: diseñar el control, probarlo y conservar evidencia."
+      - title: Por qué se ajusta
+        text: La ley dice qué cumplir, pero no cómo implementarlo. El enfoque convierte cada obligación en algo que un pipeline puede ejecutar y probar, y la ficha lo aplica igual en la matriz de control y en el código.
+  practice_lanes:
+    start: {title: Por dónde empezar, text: "Por lo de mayor riesgo: datos sensibles (incluida la situación socioeconómica), datos de niños, niñas y adolescentes, copias y accesos."}
+    lanes:
+      - title: Descubrir
+        items:
+          - {title: Clasificación automática, text: Descubrir y clasificar datos personales sin depender de inventarios manuales.}
+          - {title: Linaje por actividad, text: Linaje técnico asociado a cada actividad de tratamiento.}
+          - {title: Metadatos en el catálogo, text: "Los metadatos legales viven en el catálogo, no en el código del pipeline.", arq: true}
+      - title: Proteger
+        items:
+          - {title: Privilegios mínimos, text: Segregación de funciones y revisiones de privilegios.}
+          - {title: Llaves y secretos, text: "Gestionados, con evidencia de configuración."}
+          - {title: Ambientes no productivos, text: "Sin datos personales reales: enmascarados o sintéticos."}
+      - title: Operar
+        items:
+          - {title: Logs limpios, text: "Sin datos personales; solicitudes y vulneraciones con identificadores internos."}
+          - {title: GenAI, text: "Una API externa de LLM que recibe datos personales es un encargado (art. 15 bis); revisar si hay transferencia internacional (art. 27)."}
+      - title: Demostrar
+        items:
+          - {title: Matriz viva, text: "Una fila por requisito, con dueño técnico y fecha de la última evidencia."}
+          - {title: Controles en la CI, text: La CI falla si falta un control o su evidencia.}
+          - {title: Alcance en horas, text: Dimensionar una vulneración con la consulta por linaje.}
+      - title: Suprimir
+        items:
+          - {title: Supresión consistente, text: "Entre capas, respaldos y reprocesos: un backfill no restaura lo suprimido."}
+  severity_cards:
+    levels:
+      - {name: Leve, level: 1, amount: 5.000 UTM, note: "máximo, o amonestación escrita", examples: [Responder solicitudes en forma incompleta o fuera de plazo]}
+      - name: Grave
+        level: 2
+        amount: 10.000 UTM
+        note: máximo
+        examples: [Datos innecesarios o inexactos, Fallas de seguridad, Omitir registros de vulneraciones, Transferencias contra la ley]
+      - name: Gravísima
+        level: 3
+        amount: 20.000 UTM
+        note: máximo
+        examples: [Omitir en forma deliberada la comunicación de una vulneración, No hacer la evaluación de impacto obligatoria]
+  sources_grouped:
+    groups:
+      - title: Normativa chilena
+        layout: list
+        sources:
+          - {title: Ley 19.628 · texto que rige desde el 2026-12-01, urls: ["https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01"], publisher: BCN, why: Base de todas las citas de artículos de la ficha.}
+          - {title: Ley 21.719 · ley modificatoria, urls: ["https://www.bcn.cl/leychile/navegar?idNorma=1209272"], publisher: BCN, why: "Origen de los cambios y del artículo primero transitorio (fecha de vigencia)."}
+          - {title: Boletín 18.623-07 · proyecto que posterga la vigencia, urls: ["https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07", "https://tramitacion.senado.cl/appsenado/index.php?mo=tramitacion&ac=getDocto&iddocto=19307&tipodoc=mensaje_mocion"], publisher: Senado, why: Estado del proyecto y propuesta de nueva fecha.}
+          - {title: Decreto 662 · reglamento del modelo de prevención, urls: ["https://www.bcn.cl/leychile/navegar?idNorma=1227971"], publisher: BCN, why: "Requisitos y certificación del modelo de prevención (arts. 49 y 51), citado en Sanciones."}
+      - title: Marcos de referencia del enfoque
+        layout: list
+        sources:
+          - {title: ISO/IEC 27701, urls: ["https://www.iso.org/standard/27701"], publisher: ISO, why: "Sistema de gestión de la información de privacidad: requisitos y guía para controles de privacidad que se pueden certificar."}
+          - {title: NIST Privacy Framework, urls: ["https://www.nist.gov/privacy-framework"], publisher: NIST, why: Gestión de riesgos de privacidad por funciones y resultados verificables.}
+      - title: Servicios cloud
+        layout: providers
+        sources:
+          - {title: Sensitive Data Protection, urls: ["https://docs.cloud.google.com/sensitive-data-protection/docs/sensitive-data-protection-overview"], publisher: Google Cloud, provider: GCP, why: Descubrir y clasificar}
+          - {title: Cloud Audit Logs, urls: ["https://docs.cloud.google.com/logging/docs/audit"], publisher: Google Cloud, provider: GCP, why: Evidencia de acceso}
+          - {title: Amazon Macie, urls: ["https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html"], publisher: AWS, provider: AWS, why: Descubrir y clasificar en S3}
+          - {title: CloudTrail · data events, urls: ["https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html"], publisher: AWS, provider: AWS, why: Evidencia de acceso a datos}
+          - {title: Purview Data Map, urls: ["https://learn.microsoft.com/en-us/purview/data-map-classification"], publisher: Microsoft, provider: Azure, why: Clasificación al escanear}
+          - {title: Unity Catalog, urls: ["https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/"], publisher: Microsoft, provider: Azure, why: "Gobierno, auditoría y linaje"}
 created_at: 2026-10-21
 updated_at: 2026-11-07
 last_verified: 2026-10-28
@@ -112,21 +222,13 @@ El propósito es desarrollar el criterio técnico necesario para identificar rie
 
 ### Idea central
 
-Un proceso puede ejecutarse sin errores, cumplir sus controles de calidad y entregar información confiable, pero al mismo tiempo:
-
-- Utilizar datos para una finalidad no autorizada.
-- Recopilar o conservar información que no resulta necesaria.
-- Exponer datos personales mediante accesos, transformaciones o transferencias inadecuadas.
-- Mantener copias o derivados que dificultan la rectificación o supresión.
-- Carecer de trazabilidad y evidencia suficiente para investigar incidentes o demostrar la eficacia de sus controles.
-
-Por ello, la Ingeniería de Datos debe incorporar la privacidad como un criterio transversal de diseño y operación, no únicamente como una revisión posterior al desarrollo.
+<!-- view: central_idea -->
 
 ### Contexto normativo
 
-La Ley 21.719 reescribe la Ley 19.628. Según BCN, fue publicada el 2024-12-13 y, por su artículo primero transitorio, sus modificaciones rigen desde el **2026-12-01**; BCN muestra la Ley 19.628 con una versión «Con Vigencia Diferida por Fecha» desde esa fecha.
+La Ley 21.719 reescribe la Ley 19.628. Mientras no se publique otra ley, sus modificaciones rigen desde el 1 de diciembre de 2026.
 
-**Estado al 2026-10-28.** El Ejecutivo ingresó el boletín 18.623-07 (mensaje N° 110-374). Su numeral 2 reemplaza esa fecha por el **1 de diciembre de 2027**. Según la tramitación oficial del Senado, el 2026-10-28 el Senado lo aprobó en general y en particular a la vez y lo despachó a la Cámara de Diputados (subetapa «Oficio de ley a Cámara Revisora»), con urgencia de discusión inmediata. Es un proyecto: **mientras no se publique otra ley, rige el 2026-12-01**.
+<!-- view: vigencia_timeline -->
 
 ### Qué implica para Ingeniería de Datos
 
@@ -145,30 +247,22 @@ En consecuencia, una arquitectura de datos debe permitir responder preguntas fun
 | Cómo respondemos | Mecanismos para gestionar derechos de los titulares, vulneraciones e incidentes. |
 | Cómo lo demostramos | Trazabilidad, verificaciones, registros y evidencia de los controles implementados. |
 
-### De la normativa a la implementación técnica
-
-La ley establece obligaciones y responsabilidades jurídicas. La Ingeniería de Datos contribuye a su cumplimiento mediante soluciones técnicas adecuadas al contexto, al riesgo y a las decisiones adoptadas por las áreas responsables.
-
-Para estudiar esa relación, utilizaremos el enfoque:
-
-**Requisito normativo → Riesgo identificado → Control técnico → Verificación → Evidencia**
-
-Este modelo permite conectar las obligaciones aplicables con decisiones concretas de arquitectura, desarrollo y operación.
-
 ## 2. Qué es
 
 **[Buena práctica]** **Obligación legal frente a patrón técnico.** La ley impone obligaciones a quien corresponde (responsable o encargado). La matriz requisito → control → evidencia, las pruebas en la CI y los plazos internos de revisión son patrones técnicos propuestos aquí: **no** son obligaciones literales ni exigen una herramienta específica.
 
 ### Ocho principios del artículo 3
 
-- **[Obligación legal · art. 3]** a) Licitud y lealtad.
-- **[Obligación legal · art. 3]** b) Finalidad.
-- **[Obligación legal · art. 3]** c) Proporcionalidad.
-- **[Obligación legal · art. 3]** d) Calidad.
-- **[Obligación legal · art. 3]** e) Responsabilidad.
-- **[Obligación legal · art. 3]** f) Seguridad.
-- **[Obligación legal · art. 3]** g) Transparencia e información.
-- **[Obligación legal · art. 3]** h) Confidencialidad.
+- **[Obligación legal · art. 3]** Licitud y lealtad.
+- **[Obligación legal · art. 3]** Finalidad.
+- **[Obligación legal · art. 3]** Proporcionalidad.
+- **[Obligación legal · art. 3]** Calidad.
+- **[Obligación legal · art. 3]** Responsabilidad.
+- **[Obligación legal · art. 3]** Seguridad.
+- **[Obligación legal · art. 3]** Transparencia e información.
+- **[Obligación legal · art. 3]** Confidencialidad.
+
+**[Buena práctica]** Detalle por tema y artículo en el Anexo · Catálogo legal.
 
 ### Responsabilidades: quién decide y quién implementa
 
@@ -579,12 +673,9 @@ Los servicios de GCP, AWS y Azure no son equivalencias exactas. Ningún servicio
 
 ## 14. Buenas prácticas
 
-- **[Buena práctica]** Una fila de la matriz por requisito, con dueño técnico y fecha de la última evidencia.
-- **[Decisión de arquitectura]** Los metadatos legales viven en el catálogo, por actividad de tratamiento, no en el código del pipeline.
-- **[Buena práctica]** **Seguridad:** ningún ambiente no productivo con datos personales reales; datos enmascarados o sintéticos.
-- **[Buena práctica]** **Observabilidad:** sin datos personales en los logs; los logs de solicitudes y de vulneraciones guardan identificadores internos.
-- **[Buena práctica]** **GenAI:** tratar una API externa de LLM que recibe datos personales como un encargado (art. 15 bis) y revisar si hay transferencia internacional (art. 27).
-- **[Buena práctica]** **Costo:** empezar por lo de mayor riesgo: datos sensibles (incluida la situación socioeconómica), datos de niños, niñas y adolescentes, copias y accesos.
+**[Buena práctica]** Las prácticas se ordenan por etapa del ciclo de vida de los datos, empezando por lo de mayor riesgo.
+
+<!-- view: practice_lanes -->
 
 ## 16. Trade-offs
 
@@ -600,23 +691,9 @@ No toda falla técnica es una infracción: la calificación jurídica depende de
 
 ### Sanciones
 
-| Tipo | Ejemplos con origen técnico | Multa máxima |
-|---|---|---|
-| Leve | Responder solicitudes en forma incompleta o fuera de plazo (34 bis c)) | 5.000 UTM o amonestación escrita |
-| Grave | Datos innecesarios o inexactos (34 ter c) y d)); fallas de seguridad (j)); omitir registros de vulneraciones (k)); transferencias contra la ley (m)) | 10.000 UTM |
-| Gravísima | Omitir en forma deliberada la comunicación de una vulneración (34 quáter f)); no hacer la evaluación de impacto obligatoria (k)) | 20.000 UTM |
+<!-- view: severity_cards -->
 
-En reincidencia, la Agencia puede aplicar hasta tres veces el monto de la infracción. Si una empresa que no es de menor tamaño reincide en infracciones graves o gravísimas, la multa puede alcanzar la más gravosa entre ese triple y el 2 % o 4 % de sus ingresos anuales por ventas y servicios del último año calendario, respectivamente (art. 35). Es atenuante haber cumplido diligentemente los deberes de dirección y supervisión, lo que se verifica con el certificado del art. 51 (art. 36 n.º 5). Ese certificado es del modelo de prevención de infracciones, que los responsables pueden adoptar voluntariamente (art. 49).
-
-### Qué se espera de un nivel senior
-
-- Automatiza el descubrimiento y la clasificación de datos personales.
-- Diseña segregación de funciones y revisiones de privilegios.
-- Diseña una supresión consistente entre capas, respaldos y reprocesamientos.
-- Gestiona llaves, secretos y evidencia de configuración.
-- Mantiene linaje técnico por actividad de tratamiento.
-- Pone controles de privacidad en la CI.
-- Calcula el alcance de una vulneración en horas.
+En reincidencia, la Agencia puede aplicar hasta tres veces el monto de la infracción. Si una empresa que no es de menor tamaño reincide en infracciones graves o gravísimas, la multa puede alcanzar la más gravosa entre ese triple y el 2 % o 4 % de sus ingresos anuales (art. 35). Es atenuante haber cumplido los deberes de dirección y supervisión, verificable con el certificado del modelo de prevención (arts. 36, 49 y 51).
 
 ## 18. Preguntas técnicas abiertas
 
@@ -628,17 +705,15 @@ En reincidencia, la Agencia puede aplicar hasta tres veces el monto de la infrac
 
 ## 20. Fuentes
 
-- BCN Ley Chile: *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* (versión con vigencia diferida desde 2026-12-01), *Ley 21719* y *Decreto 662*.
-- Senado: *Boletín 18623-07* (tramitación) y *Boletín N° 18.623-07* (mensaje N° 110-374).
-- Google Cloud: *Sensitive Data Protection overview* y *Cloud Audit Logs overview*.
-- AWS: *What is Amazon Macie?* y *Logging data events*.
-- Microsoft Learn: *Data classification in Data Map* y *What is Unity Catalog?*.
+- Normativa chilena (BCN y Senado): Ley 19.628 con el texto que rige desde el 2026-12-01, Ley 21.719, boletín 18.623-07 (tramitación y mensaje) y Decreto 662.
+- Marcos de referencia del enfoque: ISO/IEC 27701 y NIST Privacy Framework.
+- Servicios cloud: Sensitive Data Protection y Cloud Audit Logs (GCP), Amazon Macie y CloudTrail (AWS), Purview Data Map y Unity Catalog (Azure).
 
-El detalle de cada fuente está en `sources` del frontmatter.
+El detalle de cada fuente está en `sources` del frontmatter; la agrupación, en `views.sources_grouped`.
 
 ## 21. Fecha de última verificación
 
-2026-10-28: textos legales vueltos a consultar en BCN (sin cambios) y estado del boletín 18.623-07 en el Senado (aprobado por el Senado y despachado a la Cámara). Antes, 2026-10-25: textos legales vueltos a consultar, sin cambios, y 2026-10-22: articulado, vigencia, estado del boletín 18.623-07 y Decreto 662 consultados ese día en BCN y en el Senado. `review_required` desde el 2026-11-06: depuración de contenido pedida por Felipe; vuelve a `verified` cuando la apruebe (`owner_approved_at`). Revisión mensual, y extraordinaria si se publica la ley de postergación.
+2026-10-28: textos legales vueltos a consultar en BCN (sin cambios) y estado del boletín 18.623-07 en el Senado (aprobado por el Senado y despachado a la Cámara). Antes, 2026-10-25: textos legales vueltos a consultar, sin cambios, y 2026-10-22: articulado, vigencia, estado del boletín 18.623-07 y Decreto 662 consultados ese día en BCN y en el Senado. `review_required` desde el 2026-11-06: depuración de contenido pedida por Felipe; vuelve a `verified` cuando la apruebe (`owner_approved_at`). 2026-11-07: páginas de GCP, AWS y Azure vueltas a abrir (Purview cambió su título a «Data classification in Microsoft Purview Data Map»); NIST Privacy Framework verificado; ISO/IEC 27701 y BCN por verificar (Felipe): no se pudieron abrir desde esta sesión. Revisión mensual, y extraordinaria si se publica la ley de postergación.
 
 ## 22. Historial de cambios importantes
 
@@ -669,6 +744,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-04: aprobada por Felipe con la revisión P10 y su verificación aplicadas (cita de confidencialidad con «Este», como en BCN) (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).
 - 2026-11-06: depuración de contenido pedida por Felipe (ADR-029). Se eliminan las secciones 6 (Cuándo no utilizarlo), 7 (Ejemplo sencillo), 8 (Ejemplo de producción), 15 (Errores frecuentes, con la fila «Tenemos cifrado, cumplimos» y la frase sobre la infracción grave del art. 34 ter c) y d)), 17 (Conceptos relacionados) y 19 (Laboratorio relacionado). Además: en §1, el encabezado de la tabla de preguntas y «no es formar especialistas legales, sino»; en §3, el párrafo de la matriz requisito → control → evidencia ejecutada en la CI; en §4, las referencias entre paréntesis a artículos y fichas al final de cada paso; en §16, «(arts. 34 bis a 35)» del título de Sanciones y la columna básica de «Básico vs. senior», que pasa a la lista «Qué se espera de un nivel senior»; en §10, la explicación del código, que queda en una frase, una línea por escenario y una limitación. El catálogo legal agrupado por tema sale del §2 y pasa al anexo. Las dos citas del boletín 18.623-07 se rotulan «tramitación» y «mensaje». Vuelve a `review_required` hasta la aprobación de Felipe.
 - 2026-11-07: pedido de Felipe. La matriz del §4 sigue los cinco pasos del Resumen (requisito, riesgo, control técnico, verificación, evidencia) y deja la columna «Decisión aprobada por»; el nodo de la matriz del diagrama «Control y evidencia» nombra los cinco pasos; sale «Resultado esperado» del Resumen. §10: la validación exige que cada control aparezca una vez (falta o duplicado es brecha), separa «evidencia sin URI» de «huella distinta a la guardada» y suma los escenarios `control-faltante` y `evidencia-vencida`; los docstrings nombran el principio sin letra (seguridad en `access_review`) y el derecho de supresión (art. 7) en `erasure_replay_check`, parafraseados, sin citas textuales. Sigue en `review_required`.
+- 2026-11-07: maqueta de bloques 0–6, fase 1 (pedido de Felipe, ADR-030): datos estructurados en `views` del frontmatter con marcas `<!-- view: … -->` en el cuerpo. Idea central en dos lados (lo que el pipeline comprueba y lo que no ve); vigencia como línea de hitos (reemplaza el párrafo «Estado al 2026-10-28…»); el enfoque sale del Resumen a un desplegable propio con descripción por paso y dos recuadros («De dónde viene», «Por qué se ajusta»); principios sin letra y enlace al anexo; buenas prácticas en cinco etapas (absorbe y elimina «Qué se espera de un nivel senior»); sanciones en tres tarjetas, sin las letras de los artículos; fuentes agrupadas (las dos del boletín en una entrada) y nuevas ISO/IEC 27701 y NIST Privacy Framework. Sigue en `review_required`.
 
 ## Anexo · Catálogo legal por tema
 

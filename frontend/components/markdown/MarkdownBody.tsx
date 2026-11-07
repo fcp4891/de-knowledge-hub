@@ -1,3 +1,5 @@
+import { Fragment } from "react";
+
 import { ArrowInlines } from "@/components/markdown/InlineArrows";
 import { PipelineSteps } from "@/components/markdown/PipelineSteps";
 import type { ConceptRefs } from "@/lib/conceptNames";
@@ -16,6 +18,7 @@ export async function MarkdownBody({
   markCodeStatus = false,
   horizontalDiagrams = false,
   styleArrows = true,
+  views,
 }: {
   markdown: string;
   etiquetaColumn?: boolean;
@@ -24,6 +27,8 @@ export async function MarkdownBody({
   markCodeStatus?: boolean;
   horizontalDiagrams?: boolean;
   styleArrows?: boolean;
+  /** ADR-030: lo que se dibuja en cada marca <!-- view: clave -->; sin entrada, la marca no dibuja nada. */
+  views?: Readonly<Record<string, React.ReactNode>>;
 }) {
   const blocks = parseMarkdown(markdown);
   const notes = annotateCode(blocks);
@@ -38,7 +43,9 @@ export async function MarkdownBody({
   return (
     <div className="markdown">
       {grouped.map((block, index) =>
-        block.type === "evidence" ? (
+        block.type === "view" ? (
+          <Fragment key={index}>{views?.[block.name] ?? null}</Fragment>
+        ) : block.type === "evidence" ? (
           <EvidenceBlock
             key={index}
             titleId={`evidence-title-${index}`}
@@ -147,6 +154,9 @@ function MarkdownBlock({
   CodeBlock: ((props: CodePresentation) => React.ReactNode) | null;
   MermaidDiagram: ((props: { source: string }) => React.ReactNode) | null;
 }) {
+  if (block.type === "view") {
+    return null;
+  }
   if (block.type === "heading") {
     return <h3>{block.text}</h3>;
   }

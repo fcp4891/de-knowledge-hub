@@ -19,7 +19,8 @@ export type Block =
   | { type: "list"; ordered: boolean; items: ListItem[] }
   | { type: "table"; headers: Inline[][]; aligns: TableAlign[]; rows: Inline[][][] }
   | { type: "code"; language: string; code: string }
-  | { type: "note"; inlines: Inline[] };
+  | { type: "note"; inlines: Inline[] }
+  | { type: "view"; name: string }; // ADR-030: marca <!-- view: clave -->
 
 export const EVIDENCE_TITLE = "Evidencia de cumplimiento";
 
@@ -66,8 +67,11 @@ export function parseMarkdown(markdown: string): Block[] {
       flushProse();
       const end = text.indexOf("-->", index + 4);
       const raw = end === -1 ? text.slice(index + 4) : text.slice(index + 4, end);
+      const view = /^view:\s*([a-z_]+)$/.exec(raw.trim());
       const note = raw.trim().replace(/^VERIFY:\s*/, "");
-      if (note) {
+      if (view) {
+        blocks.push({ type: "view", name: view[1] });
+      } else if (note) {
         blocks.push({ type: "note", inlines: parseInline(note) });
       }
       index = end === -1 ? text.length : end + 3;
