@@ -1,13 +1,14 @@
 import { ApiFailure } from "@/components/ApiFailure";
 import { NoteForm, NoteItem } from "@/components/card/PersonalForms";
 import { ConceptReading, type ReadingSectionModel } from "@/components/card/ConceptReading";
-import { LegalFoundations } from "@/components/card/LegalFoundations";
+import { LegalCatalog, LegalFoundations } from "@/components/card/LegalFoundations";
 import { canViewChangeHistory, canViewRelatedLab, currentViewer } from "@/lib/changeHistoryAccess";
 import { MarkdownBody } from "@/components/markdown/MarkdownBody";
 import { getConcept, getDomain, getRelations, getStudyState, listNotes } from "@/lib/api/client";
 import type { ConceptRefs } from "@/lib/conceptNames";
 import { loadConceptRefs } from "@/lib/loadConceptRefs";
-import type { NoteList, RelationGroups, Section, SourceRef } from "@/lib/api/types";
+import type { Annex, NoteList, RelationGroups, Section, SourceRef } from "@/lib/api/types";
+import { CARD_SECTION_COUNT } from "@/lib/readingProgress";
 import { citationDetail, citationLinkText } from "@/lib/citation";
 import { extractLegalNotice, legalNoticeCopy, usesArchitectureMark, type ObligationBasis } from "@/lib/legal";
 import { withoutPartOf } from "@/lib/partOf";
@@ -220,6 +221,28 @@ function sectionModels(
   return models;
 }
 
+/** ADR-029: anexos al final, plegados y fuera del índice; el catálogo legal usa su componente. */
+function annexModels(
+  annexes: readonly Annex[],
+  obligations: readonly ObligationBasis[],
+  conceptRefs: ConceptRefs,
+): ReadingSectionModel[] {
+  return annexes.map((annex, index) => ({
+    number: CARD_SECTION_COUNT + 1 + index,
+    key: `annex-${index + 1}`,
+    title: `Anexo · ${annex.title}`,
+    presentation: "details",
+    listed: false,
+    annex: true,
+    body:
+      annex.title === "Catálogo legal por tema" ? (
+        <LegalCatalog />
+      ) : (
+        <MarkdownBody markdown={annex.markdown} obligations={obligations} conceptRefs={conceptRefs} />
+      ),
+  }));
+}
+
 function relatedItems(groups: RelationGroups["groups"], scope: ReadonlySet<string>) {
   const seen = new Set<string>();
   const items: { href: string; title: string; kind: string }[] = [];
@@ -346,7 +369,11 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
       crumb={crumb}
       next={next}
       construction={!domainOpen}
-      sections={sectionModels(sections, data.sources, data.legal_basis, data.slug, conceptRefs, data.kind)}
+      sections={[
+        ...sectionModels(sections, data.sources, data.legal_basis, data.slug, conceptRefs, data.kind),
+        ...annexModels(data.annexes ?? [], data.legal_basis, conceptRefs),
+      ]}
+      compactNumbering={data.slug === "chile-data-protection"}
       staticMode={staticMode}
       initialStudy={
         study?.ok ? { state: study.data.state, pendingDeepDive: study.data.pending_deep_dive } : null

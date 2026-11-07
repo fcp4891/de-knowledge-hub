@@ -498,7 +498,9 @@ def check_page_sections(content_dir: Path, docs: list[Document], report: Report)
         if expected is None or doc.path.suffix != ".md" or doc.data.get("stub"):
             continue
         body = page_sections.body_of((content_dir.parent / doc.path).read_text(encoding="utf-8"))
-        errors = page_sections.check(body, expected)
+        slug = doc.data["slug"]
+        omittable = page_sections.OMITTABLE.get(slug, frozenset()) if doc.data["type"] in page_sections.PRACTICE_TYPES else frozenset()
+        errors = page_sections.check(body, expected, omittable) + page_sections.check_annexes(body, slug)
         if doc.data["type"] in page_sections.PRACTICE_TYPES:
             errors += page_sections.check_practices(body)
         if doc.data["type"] == "architecture":
@@ -623,7 +625,8 @@ def check_legal_body(doc: Document, body: str, report: Report) -> set[tuple[str 
     parts = {n: content for n, _, content in page_sections.sections(clean)}
     if DISCLAIMER not in parts.get(1, ""):
         report.add(doc.location, f"[§1] falta el aviso «{DISCLAIMER}» (ADR-023)")
-    if not EVIDENCE_HEADING.search(parts.get(8, "")):
+    omitted_8 = 8 not in parts and 8 in page_sections.OMITTABLE.get(doc.data["slug"], frozenset())   # ADR-029
+    if not omitted_8 and not EVIDENCE_HEADING.search(parts.get(8, "")):
         report.add(doc.location, "[§8] falta la subsección «### Evidencia de cumplimiento» (ADR-023)")
     for number in LABELED_SECTIONS:
         for block in blocks(parts.get(number, "")):

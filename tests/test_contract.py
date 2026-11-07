@@ -232,3 +232,21 @@ def test_architecture_detail_uses_architecture_section_keys() -> None:
                            bodies={"arq": "## 3. Vista de contexto\n\nx\n\n## 18. Evolución\n\ny\n"}, concepts={"arq": entry})
     keys = [s["key"] for s in p.concept_detail(index, "arq")["sections"]]
     assert keys == ["context_view", "evolution"]
+
+
+def test_annexes_and_source_label_only_when_present() -> None:
+    """ADR-029: `annexes` y `label` aparecen solo si la ficha o la cita los trae."""
+    concept = {"slug": "c", "title": "C", "kind": "concept", "classification": "core", "level": "intermediate",
+               "importance": "high", "mvp": False}
+    entry = p.BlueprintEntry(domain={"slug": "d"}, subdomain={"slug": "s"}, concept=concept, position=0)
+    body = "## 21. Fecha\n\nx\n\n## 22. Historial\n\n- y\n\n## Anexo · Catálogo legal por tema\n\n### Grupo\n\n- z\n"
+    index = p.ContentIndex(entities={"c": {"slug": "c", "type": "concept"}}, bodies={"c": body}, concepts={"c": entry})
+    detail = p.concept_detail(index, "c")
+    assert [s["key"] for s in detail["sections"]] == ["last_verified", "change_history"]
+    assert detail["sections"][-1]["markdown"] == "- y"
+    assert detail["annexes"] == [{"title": "Catálogo legal por tema", "markdown": "### Grupo\n\n- z"}]
+    plain = replace(index, bodies={"c": "## 22. Historial\n\n- y\n"})
+    assert "annexes" not in p.concept_detail(plain, "c")
+    source = {"slug": "s", "title": "S", "url": "https://example.org", "source_type": "legislative", "authority_level": 1}
+    refs = p.source_refs(replace(index, entities={"s": source}), [{"source": "s", "label": "mensaje"}, {"source": "s"}])
+    assert refs[0]["label"] == "mensaje" and "label" not in refs[1]

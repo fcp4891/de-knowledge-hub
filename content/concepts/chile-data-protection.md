@@ -3,7 +3,7 @@ id: concept:chile-data-protection
 slug: chile-data-protection
 type: concept
 title: Ley 21.719 para ingenieros de datos
-description: "Ficha padre del dominio 24. Qué cambia la Ley 21.719 para quien diseña y opera plataformas de datos: casi todo pipeline es tratamiento y hay que demostrar que cumple. Mapa de artículos de la Ley 19.628 modificada a sus fichas hijas, vigencia y boletín 18.623-07 según BCN y el Senado, Decreto 662, sanciones, seis preguntas de diseño, un caso de supresión de punta a punta y cuatro controles con PASS, FAIL y UNKNOWN que hacen fallar la CI. No es asesoría legal."
+description: "Ficha padre del dominio 24. Qué cambia la Ley 21.719 para quien diseña y opera plataformas de datos: casi todo pipeline es tratamiento y hay que demostrar que cumple. Mapa de artículos de la Ley 19.628 modificada a sus fichas hijas, vigencia y boletín 18.623-07 según BCN y el Senado, Decreto 662, sanciones, seis preguntas de diseño y cuatro controles con PASS, FAIL y UNKNOWN que hacen fallar la CI. No es asesoría legal."
 domain: privacy-engineering
 subdomain: fundamentos
 category: compliance
@@ -49,11 +49,13 @@ sources:
     url: https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07
     accessed: 2026-10-28
     page_title: "Boletín 18623-07"
+    label: tramitación
     note: "Boletín 18623-07, «Modifica la ley N° 21.719 [...] en el sentido que indica», consultado el 2026-10-28 con el servicio de tramitación del Senado (https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=18623): ingreso el 2026-09-01 por mensaje; primeros informes de las comisiones de Constitución, Legislación, Justicia y Reglamento y de Hacienda el 2026-10-27; el 2026-10-28, «Discusión general. Aprobado en general y particular a la vez»; urgencia actual: discusión inmediata; etapa: primer trámite constitucional (Senado); subetapa: «Oficio de ley a Cámara Revisora»; estado: en tramitación."
   - source: senado-tramitacion
     url: https://tramitacion.senado.cl/appsenado/index.php?mo=tramitacion&ac=getDocto&iddocto=19307&tipodoc=mensaje_mocion
     accessed: 2026-10-28
     page_title: "Boletín N° 18.623-07"
+    label: mensaje
     note: "Mensaje N° 110-374 del 31 de agosto de 2026 (boletín 18.623-07), en el Senado: el numeral 2 del artículo único reemplaza, en el artículo primero transitorio de la Ley 21.719, la frase «día primero del mes vigésimo cuarto posterior a la publicación de esta ley en el Diario Oficial» por «1 de diciembre de 2027»; también aumenta el Consejo Directivo de la Agencia de tres a cinco consejeros y elimina la limitación a empresas de menor tamaño del artículo sexto transitorio. Es un proyecto, no una ley."
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=1227971
@@ -93,10 +95,9 @@ sources:
 relations:
   - {type: RELATED_TO, target: data-classification, note: "Clasificación técnica de datos."}
 created_at: 2026-10-21
-updated_at: 2026-11-04
+updated_at: 2026-11-06
 last_verified: 2026-10-28
-owner_approved_at: 2026-11-04
-verification_status: verified
+verification_status: review_required
 ---
 
 ## 1. Resumen
@@ -107,7 +108,7 @@ Esta ficha no es asesoría legal: explica el alcance técnico. El detalle de cad
 
 Comprender cómo la protección de datos personales influye en el diseño, desarrollo, operación, seguridad y auditoría de las plataformas de datos, conectando los principios y obligaciones de la normativa chilena con arquitecturas, herramientas y prácticas reales de Ingeniería de Datos.
 
-El propósito no es formar especialistas legales, sino desarrollar el criterio técnico necesario para identificar riesgos, diseñar soluciones responsables, implementar controles y generar evidencia verificable, integrando la privacidad durante todo el ciclo de vida de los datos.
+El propósito es desarrollar el criterio técnico necesario para identificar riesgos, diseñar soluciones responsables, implementar controles y generar evidencia verificable, integrando la privacidad durante todo el ciclo de vida de los datos.
 
 ### Idea central
 
@@ -133,7 +134,7 @@ Las actividades habituales de una plataforma de datos —recolección, ingesta, 
 
 En consecuencia, una arquitectura de datos debe permitir responder preguntas fundamentales:
 
-| Pregunta | Qué debe poder responder la plataforma |
+| | |
 |---|---|
 | Qué datos tratamos | Identificación, clasificación y contexto de los datos personales. |
 | Por qué los tratamos | Finalidad y fundamento de licitud definidos por los responsables correspondientes. |
@@ -172,42 +173,6 @@ Desarrollar conocimientos que permitan no solo comprender qué debe protegerse, 
 - **[Obligación legal · art. 3]** f) Seguridad.
 - **[Obligación legal · art. 3]** g) Transparencia e información.
 - **[Obligación legal · art. 3]** h) Confidencialidad.
-
-### Fundamentos, alcance y principios
-
-- **[Obligación legal · art. 1 bis]** Ámbito territorial. También alcanza al encargado fuera de Chile que trata por cuenta de un responsable en Chile y a quien, desde fuera, ofrece bienes o servicios a titulares en Chile o monitorea su comportamiento. Ficha: `processors-and-international-transfers`.
-- **[Obligación legal · art. 2]** Definiciones. Dato personal, sensible, anonimización, seudonimización, perfiles y encargado. Fichas: `pii-identification`, `chilean-identifier-pseudonymization`.
-- **[Obligación legal · art. 3]** Principios: **licitud y lealtad**, **finalidad**, **proporcionalidad**, **calidad**, **responsabilidad**, **seguridad**, **transparencia e información** y **confidencialidad**. Cada principio necesita un control y una evidencia. Ficha: esta ficha.
-
-### Derechos y decisiones automatizadas
-
-- **[Obligación legal · art. 4]** Derechos del titular, desarrollados en los arts. 5 a 11. Seis tipos de solicitud con plazo y evidencia. Ficha: `data-subject-rights-pipeline`.
-- **[Obligación legal · art. 8 bis]** Decisiones individuales automatizadas: explicación, intervención humana y revisión. Ficha: `dpia-and-automated-decisions`.
-
-### Licitud, responsabilidad y transparencia
-
-- **[Obligación legal · art. 12]** Consentimiento; el responsable prueba la licitud. Las demás bases están en el art. 13. Ficha: `processing-activities-inventory`.
-- **[Obligación legal · art. 14]** Obligaciones del responsable: acreditar la licitud y suprimir o anonimizar datos precontractuales. Ficha: `processing-activities-inventory`.
-- **[Obligación legal · art. 14 bis]** Secreto o confidencialidad, también de datos públicos organizados o combinados. Ficha: esta ficha.
-- **[Obligación legal · art. 14 ter]** Información y transparencia: la política pública se alimenta del catálogo. Ficha: `processing-activities-inventory`.
-
-### Privacidad desde el diseño y seguridad
-
-- **[Obligación legal · art. 14 quáter]** Protección desde el diseño y por defecto. Por defecto, solo los datos específicos y estrictamente necesarios, según número de datos, extensión, plazo y accesibilidad. Ficha: `data-minimization-by-layer`.
-- **[Obligación legal · art. 14 quinquies]** Medidas de seguridad y verificación regular. Ficha: `privacy-controls-as-code`.
-- **[Obligación legal · art. 14 sexies]** Reporte de vulneraciones a la Agencia, registro de esas comunicaciones y aviso a titulares en ciertos casos. Ficha: `data-breach-response`.
-
-### Encargados, impacto y datos sensibles
-
-- **[Obligación legal · art. 15 bis]** Tratamiento por un encargado. Suprime o devuelve al terminar; la cesión está en el art. 15. Ficha: `processors-and-international-transfers`.
-- **[Obligación legal · art. 15 ter]** Evaluación de impacto en los casos que el artículo enumera. Ficha: `dpia-and-automated-decisions`.
-- **[Obligación legal · art. 16]** Datos sensibles; reglas especiales en los arts. 16 bis a 16 sexies. Ficha: `pii-identification`.
-
-### Transferencias, sanciones y prevención
-
-- **[Obligación legal · art. 27]** Transferencia internacional. Cada flujo al exterior necesita un mecanismo. Países adecuados y cláusulas, en el art. 28. Ficha: `processors-and-international-transfers`.
-- **[Obligación legal · art. 35]** Sanciones. Varias infracciones nacen de fallas técnicas. Ficha: esta ficha (§16).
-- **[Buena práctica]** Art. 49. Modelo de prevención de infracciones, voluntario. El certificado del art. 51 acredita el atenuante del art. 36 n.º 5. Reglamento en el Decreto 662. Ficha: `privacy-controls-as-code`.
 
 ### Responsabilidades: quién decide y quién implementa
 
@@ -252,22 +217,20 @@ Desarrollar conocimientos que permitan no solo comprender qué debe protegerse, 
 
 **[Buena práctica]** Sin traducción técnica, la ley queda en un documento: hay copias de datos personales sin control, accesos amplios, tablas que no se pueden borrar, backfills que reintroducen datos suprimidos y ninguna evidencia de qué se hizo.
 
-**[Decisión de arquitectura]** Con una matriz requisito → control → evidencia, ejecutada en la CI, cada requisito tiene un dueño técnico, un control que funciona y una prueba reciente.
-
 **[Buena práctica]** **La pregunta central:** ¿podemos reconstruir qué ocurrió con los datos de una persona y demostrar qué medidas se aplicaron?
 
 **[Decisión de arquitectura]** Responderla exige coordinar negocio, legal y privacidad, seguridad, plataforma e ingeniería de datos. Ingeniería no decide la finalidad ni la base; sí identifica las implicancias técnicas, implementa los controles y reporta sus limitaciones.
 
 ## 4. Cómo funciona
 
-**[Buena práctica]** Seis preguntas de diseño; cada una lleva a su ficha hija.
+**[Buena práctica]** Seis preguntas de diseño.
 
-1. **[Buena práctica]** **¿Qué datos trato?** Descubrir identificadores directos e indirectos, datos sensibles y combinaciones reidentificables, según las definiciones del art. 2 (`pii-identification`).
-2. **[Decisión de arquitectura]** **¿Para qué se necesitan?** Registrar cada **actividad de tratamiento** con finalidad, base de licitud y plazo, y asociarla a los activos que usa; un dataset puede servir a varias actividades con bases distintas. De ahí sale la información pública que pide el art. 14 ter (`processing-activities-inventory`).
-3. **[Buena práctica]** **¿Dónde circulan?** Trazar fuentes, APIs, colas, buckets, tablas, modelos, exportaciones y proveedores, incluidos los que están fuera de Chile (arts. 1 bis y 27; `processors-and-international-transfers`).
-4. **[Decisión de arquitectura]** **¿Cómo los protejo?** Minimizar desde la ingesta con contratos que fijan los campos permitidos por capa (art. 14 quáter; `data-minimization-by-layer`), seudonimizar cuando proceda (`chilean-identifier-pseudonymization`) y evaluar el impacto en los casos que lo exigen (`dpia-and-automated-decisions`).
-5. **[Buena práctica]** **¿Cómo los corrijo, bloqueo o suprimo?** Capacidades para los derechos del art. 4 que alcancen derivados, historiales, respaldos, CDC y reprocesos (`data-subject-rights-pipeline`, `retention-and-erasure`).
-6. **[Decisión de arquitectura]** **¿Cómo lo demuestro?** Cada control produce evidencia automática y la CI falla si falta un control o su evidencia (verificación regular del art. 14 quinquies; `privacy-controls-as-code`); la consulta de alcance por linaje permite dimensionar una vulneración (art. 14 sexies; `data-breach-response`).
+1. **[Buena práctica]** **¿Qué datos trato?** Descubrir identificadores directos e indirectos, datos sensibles y combinaciones reidentificables.
+2. **[Decisión de arquitectura]** **¿Para qué se necesitan?** Registrar cada **actividad de tratamiento** con finalidad, base de licitud y plazo, y asociarla a los activos que usa; un dataset puede servir a varias actividades con bases distintas. De ahí sale la información pública.
+3. **[Buena práctica]** **¿Dónde circulan?** Trazar fuentes, APIs, colas, buckets, tablas, modelos, exportaciones y proveedores, incluidos los que están fuera de Chile.
+4. **[Decisión de arquitectura]** **¿Cómo los protejo?** Minimizar desde la ingesta con contratos que fijan los campos permitidos por capa, seudonimizar cuando proceda y evaluar el impacto en los casos que lo exigen.
+5. **[Buena práctica]** **¿Cómo los corrijo, bloqueo o suprimo?** Capacidades para los derechos del art. 4 que alcancen derivados, historiales, respaldos, CDC y reprocesos.
+6. **[Decisión de arquitectura]** **¿Cómo lo demuestro?** Cada control produce evidencia automática y la CI falla si falta un control o su evidencia; la consulta de alcance por linaje permite dimensionar una vulneración.
 
 **[Decisión de arquitectura]** Matriz de control:
 
@@ -291,57 +254,6 @@ Desarrollar conocimientos que permitan no solo comprender qué debe protegerse, 
 - Al habilitar ambientes de desarrollo y pruebas, respaldos y recuperación.
 - Al introducir servicios de IA o LLM que puedan recibir datos personales.
 - Al preparar una revisión interna, un modelo de prevención o la respuesta a un requerimiento.
-
-## 6. Cuándo no utilizarlo
-
-- Para decidir finalidades, bases de licitud o plazos: eso lo deciden el área legal y el responsable.
-- Como interpretación de la ley: esta ficha cita su texto y lo traduce a controles.
-- Para concluir por sí sola que una actividad es lícita, que una transferencia está habilitada o que una anonimización es suficiente. Tampoco dice que todo tratamiento exija consentimiento: la base se determina caso a caso.
-
-## 7. Ejemplo sencillo
-
-**[Buena práctica]** Minimización de una API. Una API entrega `customer_id`, `email`, `phone`, `birth_date`, `country` y `purchase_total`; el caso analítico aprobado solo necesita estadísticas de compras por país.
-
-| | Qué se hace |
-|---|---|
-| Diseño deficiente | `SELECT *` en cada carga y retención indefinida de todos los campos |
-| Diseño recomendado | Contrato de campos permitidos (`country`, `purchase_total`); no almacenar lo innecesario cuando sea viable; retención documentada; acceso restringido a la fuente; en gold, agregados acordes al riesgo de reidentificación |
-| Prueba | Una columna nueva no autorizada hace fallar la validación del contrato antes de llegar al producto de datos |
-
-El detalle por capa y su código están en `data-minimization-by-layer`.
-
-## 8. Ejemplo de producción
-
-Caso genérico: una aerolínea con datos de pasajeros, reservas y vuelos, en arquitectura por capas.
-
-| Capa | Qué contiene | Controles | Error frecuente |
-|---|---|---|---|
-| Ingesta | Reservas, CRM, check-in, APIs | Contrato de datos, clasificación, campos permitidos | Ingerir «todo por si acaso» |
-| Bronze | Datos de origen | Acceso restringido, retención definida, lista de supresión aplicada | Creer que bronze está exenta |
-| Silver | Validado y minimizado | Seudonimización con HMAC y llave separada | Creer que un seudónimo vuelve anónimo el dato |
-| Gold | Agregado o mínimo por caso de uso | Acceso por finalidad; agregación con umbral mínimo | Creer que gold no tiene datos personales |
-| Consumo | BI, APIs, modelos | Máscaras de columna, filtros de fila, registro de decisiones automatizadas | Exportaciones sin control |
-
-### Caso: solicitud de supresión, de punta a punta
-
-1. **[Buena práctica]** El responsable verifica identidad, alcance, procedencia y posibles obligaciones de conservación.
-2. **[Buena práctica]** Ingeniería localiza registros y derivados con un índice de titulares protegido y el linaje.
-3. **[Decisión de arquitectura]** Cada sistema ejecuta la acción autorizada: supresión, bloqueo u otra medida.
-4. **[Buena práctica]** Se revisan snapshots, exportaciones, respaldos y reprocesos: un `DELETE` en una tabla no resuelve todo.
-5. **[Decisión de arquitectura]** Las próximas cargas no reintroducen al titular, con reglas de exclusión que no retienen más datos de los necesarios.
-6. **[Buena práctica]** Se registra la evidencia técnica y el resultado vuelve al responsable para la respuesta formal.
-
-La dificultad no es el SQL del borrado, sino la consistencia entre capas, versiones, réplicas y cargas futuras. El procedimiento y su código están en `retention-and-erasure` y `data-subject-rights-pipeline`.
-
-### Evidencia de cumplimiento
-
-| Evidencia | Dónde queda | Quién la produce |
-|---|---|---|
-| Matriz requisito → control → evidencia | Repositorio, versionada | Ingeniería de datos |
-| Resultado de la matriz y fecha de cada evidencia | Log de la CI | CI |
-| Actividades de tratamiento con finalidad, base y plazo | Catálogo | Dueño del dato, área legal |
-| Solicitudes de titulares y su cierre | Log de solicitudes, sin datos del titular | Pipeline de derechos |
-| Vulneraciones | Registro de vulneraciones | Seguridad, ingeniería |
 
 ## 9. Arquitectura
 
@@ -549,9 +461,9 @@ if __name__ == "__main__":
     sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else "con-brechas"))
 ```
 
-El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Recorre cuatro pasos: los datos ficticios con sus brechas y la corrección, un control por función (cada docstring cita el principio que el control evidencia, **confidencialidad**, **calidad**, **proporcionalidad** o **responsabilidad**, y aparte la regla técnica, que la ley no fija), la validación de la evidencia y el resultado con código de salida. Cada escenario se corre por separado y su salida es la que imprime la CI.
+El script se **ejecuta en la CI**: evalúa cuatro controles de privacidad sobre datos ficticios, valida su evidencia y devuelve el código de salida con que la CI aprueba o rechaza.
 
-El escenario con brechas inyecta cuatro, una por control: un ex usuario inactivo que conserva acceso, un replay que ignora los tombstones, un registro vencido sin purgar y una columna no aprobada. El replay desde `source` además **vuelve a traer el registro vencido**: por eso `retention_check` evalúa el warehouse y también la salida del replay. Termina con código 1:
+`con-brechas`: las cuatro brechas inyectadas hacen fallar sus cuatro controles; código de salida 1.
 
 ```text
 $ python controles.py con-brechas
@@ -563,7 +475,7 @@ BRECHA schema_minimization: FAIL (columnas no aprobadas: ['nota_libre'])
 CI: rechazada (1)
 ```
 
-El escenario corregido aplica una corrección por brecha: quita el acceso al inactivo, respeta los tombstones, **purga** el registro vencido sin tocar el plazo de 90 días, descarta la columna y hace que el replay aplique la misma retención. Purgar solo el warehouse no alcanza: el siguiente replay lo devolvería. Termina con código 0:
+`corregido`: con cada brecha corregida, los cuatro controles pasan; código de salida 0.
 
 ```text
 $ python controles.py corregido
@@ -572,7 +484,7 @@ sin brechas
 CI: aprobada (0)
 ```
 
-Sin fecha de última revisión de accesos, `access_review` queda en `UNKNOWN` y la CI también falla: falta el dato, y eso no es un `PASS`:
+`sin-revision`: sin fecha de la última revisión de accesos, `access_review` queda en `UNKNOWN`, que no cuenta como `PASS`; código de salida 1.
 
 ```text
 $ python controles.py sin-revision
@@ -581,7 +493,7 @@ BRECHA access_review: UNKNOWN (sin fecha de última revisión)
 CI: rechazada (1)
 ```
 
-En el escenario de evidencia alterada, los cuatro controles pasan, pero alguien edita la evidencia de `retention_check` después de guardar su huella. La huella SHA-256 ya no coincide y la CI rechaza:
+`evidencia-alterada`: la evidencia de `retention_check` se edita después de guardar su huella y ya no coincide; código de salida 1.
 
 ```text
 $ python controles.py evidencia-alterada
@@ -590,7 +502,7 @@ BRECHA retention_check: evidencia sin URI o con huella distinta
 CI: rechazada (1)
 ```
 
-Cada resultado guarda `evidence_uri` y la huella de la evidencia serializada. La validación rechaza los resultados duplicados, la evidencia vencida (`MAX_AGE`, 30 días, política interna de ejemplo y **no un plazo legal**) y la huella que no coincide. Un estado autodeclarado no basta: en producción también se comprueba que la evidencia exista, tenga permisos adecuados y venga del sistema que la generó. Las excepciones con vencimiento, la deriva y las pruebas negativas están en `privacy-controls-as-code`.
+Limitación: es un ejemplo didáctico y no certifica cumplimiento; un `PASS` demuestra que el control funcionó, no que el tratamiento sea lícito.
 
 ## 11. GCP
 
@@ -621,7 +533,7 @@ En Azure, **Microsoft Purview** y **Unity Catalog** de Azure Databricks.
 | Descubrir y clasificar | Purview Data Map: clasificaciones de sistema y propias al escanear |
 | Gobierno en el lakehouse | Unity Catalog: privilegios, políticas por atributos, filtros de fila y columna, auditoría y linaje |
 
-Los servicios de §11 a §13 no son equivalencias exactas. Ningún servicio certifica cumplimiento por sí solo: cada uno se evalúa por alcance, configuración y evidencia disponible.
+Los servicios de GCP, AWS y Azure no son equivalencias exactas. Ningún servicio certifica cumplimiento por sí solo: cada uno se evalúa por alcance, configuración y evidencia disponible.
 
 ## 14. Buenas prácticas
 
@@ -631,26 +543,6 @@ Los servicios de §11 a §13 no son equivalencias exactas. Ningún servicio cert
 - **[Buena práctica]** **Observabilidad:** sin datos personales en los logs; los logs de solicitudes y de vulneraciones guardan identificadores internos.
 - **[Buena práctica]** **GenAI:** tratar una API externa de LLM que recibe datos personales como un encargado (art. 15 bis) y revisar si hay transferencia internacional (art. 27).
 - **[Buena práctica]** **Costo:** empezar por lo de mayor riesgo: datos sensibles (incluida la situación socioeconómica), datos de niños, niñas y adolescentes, copias y accesos.
-
-## 15. Errores frecuentes
-
-**[Buena práctica]**
-
-| Error | Por qué importa | Corrección |
-|---|---|---|
-| Tratar la ley como un tema solo del área legal | Las fallas nacen en el diseño | Controles con dueño técnico |
-| `SELECT *` permanente | Propaga campos innecesarios | Contratos explícitos |
-| «Es bronze, se guarda todo» | La capa raw también trata datos | Retención y acceso por riesgo |
-| «Tiene hash, es anónimo» | Un hash de un identificador se puede reidentificar | Evaluar técnica, llaves y contexto (`chilean-identifier-pseudonymization`) |
-| Una base de licitud para un dataset entero | Un dataset sirve a varias actividades | Base por actividad |
-| Borrar solo en gold | Quedan fuentes, derivados y respaldos | Linaje y proceso integral |
-| Ignorar los backfills | Reintroducen datos suprimidos | Reglas de reproceso consistentes |
-| PII en logs | Amplía la exposición | Identificadores internos protegidos |
-| «Tenemos cifrado, cumplimos» | La seguridad no cubre finalidad ni derechos | Revisar todos los principios |
-| «La CI pasó, cumplimos la ley» | Una prueba técnica no acredita el marco jurídico | Evidencia y revisión del responsable |
-| Controles documentados que nadie verifica | No demuestran que operan | Evidencia reciente en la CI |
-
-Tratar datos innecesarios o inexactos es infracción grave (art. 34 ter c) y d)).
 
 ## 16. Trade-offs
 
@@ -664,7 +556,7 @@ Tratar datos innecesarios o inexactos es infracción grave (art. 34 ter c) y d))
 
 No toda falla técnica es una infracción: la calificación jurídica depende del hecho y del procedimiento. Lo útil para ingeniería es prevenir las fallas que sí tienen origen técnico.
 
-### Sanciones (arts. 34 bis a 35)
+### Sanciones
 
 | Tipo | Ejemplos con origen técnico | Multa máxima |
 |---|---|---|
@@ -674,42 +566,15 @@ No toda falla técnica es una infracción: la calificación jurídica depende de
 
 En reincidencia, la Agencia puede aplicar hasta tres veces el monto de la infracción. Si una empresa que no es de menor tamaño reincide en infracciones graves o gravísimas, la multa puede alcanzar la más gravosa entre ese triple y el 2 % o 4 % de sus ingresos anuales por ventas y servicios del último año calendario, respectivamente (art. 35). Es atenuante haber cumplido diligentemente los deberes de dirección y supervisión, lo que se verifica con el certificado del art. 51 (art. 36 n.º 5). Ese certificado es del modelo de prevención de infracciones, que los responsables pueden adoptar voluntariamente (art. 49).
 
-### Básico vs. senior
+### Qué se espera de un nivel senior
 
-| Enfoque básico | Enfoque senior |
-|---|---|
-| Identifica datos personales | Automatiza su descubrimiento y clasificación |
-| Aplica permisos IAM | Diseña segregación de funciones y revisiones de privilegios |
-| Ejecuta un DELETE | Diseña supresión consistente entre capas, respaldos y reprocesamientos |
-| Conoce el cifrado | Gestiona llaves, secretos y evidencia de configuración |
-| Documenta pipelines | Mantiene linaje técnico por actividad de tratamiento |
-| Ejecuta pruebas de calidad | Pone controles de privacidad en la CI |
-| Responde ante incidentes | Calcula el alcance de una vulneración en horas |
-
-## 17. Conceptos relacionados
-
-Fichas hijas del dominio:
-
-- `pii-identification`: datos personales y sensibles.
-- `processing-activities-inventory`: actividades de tratamiento.
-- `data-minimization-by-layer`: proporcionalidad por capa.
-- `chilean-identifier-pseudonymization`: seudonimización del RUT.
-- `purpose-based-authorization`: acceso por finalidad.
-- `data-subject-rights-pipeline`: derechos del titular.
-- `distributed-erasure-propagation`: propagación de supresiones.
-- `retention-and-erasure`: retención y supresión.
-- `privacy-backup-and-recovery`: respaldos y restauraciones.
-- `data-breach-response`: vulneraciones.
-- `dpia-and-automated-decisions`: evaluación de impacto y decisiones automatizadas.
-- `processors-and-international-transfers`: encargados y transferencias.
-- `privacy-controls-as-code`: controles en la CI.
-- `privacy-in-ai-rag-llm`: IA, RAG y LLM.
-- `gdpr`: el RGPD comparado con la Ley 21.719 (tramo 6).
-- `lgpd`: la LGPD de Brasil comparada con la Ley 21.719 (tramo 6).
-
-Otras: `data-classification`.
-
-Regla editorial: esta ficha es el mapa y el ejemplo de punta a punta; los procedimientos, el SQL, el IAM detallado y los modelos de datos van en las fichas hijas.
+- Automatiza el descubrimiento y la clasificación de datos personales.
+- Diseña segregación de funciones y revisiones de privilegios.
+- Diseña una supresión consistente entre capas, respaldos y reprocesamientos.
+- Gestiona llaves, secretos y evidencia de configuración.
+- Mantiene linaje técnico por actividad de tratamiento.
+- Pone controles de privacidad en la CI.
+- Calcula el alcance de una vulneración en horas.
 
 ## 18. Preguntas técnicas abiertas
 
@@ -718,10 +583,6 @@ Regla editorial: esta ficha es el mapa y el ejemplo de punta a punta; los proced
 3. ¿Qué control tuyo tiene evidencia de los últimos 30 días?
 4. ¿Cómo impedirías que un backfill restaure datos que debían quedar suprimidos?
 5. ¿Qué información técnica necesitarían seguridad y privacidad para dimensionar una vulneración?
-
-## 19. Laboratorio relacionado
-
-Pendiente (F4).
 
 ## 20. Fuentes
 
@@ -735,7 +596,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-28: textos legales vueltos a consultar en BCN (sin cambios) y estado del boletín 18.623-07 en el Senado (aprobado por el Senado y despachado a la Cámara). Antes, 2026-10-25: textos legales vueltos a consultar, sin cambios, y 2026-10-22: articulado, vigencia, estado del boletín 18.623-07 y Decreto 662 consultados ese día en BCN y en el Senado. `verified`: aprobada de nuevo por Felipe el 2026-11-04 (`owner_approved_at`), con el §10 revisado en P10. Revisión mensual, y extraordinaria si se publica la ley de postergación.
+2026-10-28: textos legales vueltos a consultar en BCN (sin cambios) y estado del boletín 18.623-07 en el Senado (aprobado por el Senado y despachado a la Cámara). Antes, 2026-10-25: textos legales vueltos a consultar, sin cambios, y 2026-10-22: articulado, vigencia, estado del boletín 18.623-07 y Decreto 662 consultados ese día en BCN y en el Senado. `review_required` desde el 2026-11-06: depuración de contenido pedida por Felipe; vuelve a `verified` cuando la apruebe (`owner_approved_at`). Revisión mensual, y extraordinaria si se publica la ley de postergación.
 
 ## 22. Historial de cambios importantes
 
@@ -764,3 +625,42 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.
 - 2026-11-04: revisión `docs/reviews/p10.md` aplicada (pedido de Felipe): los docstrings del §10 citan el texto del art. 3 (confidencialidad con «la relación con el titular»; calidad «exactos, completos, actuales y pertinentes»; proporcionalidad «suprimidos o anonimizados») y dejan aparte, como control técnico, lo que la ley no fija (acceso del inactivo, replay, huella SHA-256); el párrafo del §10 nombra en negrita los principios, sin «la letra». Vuelve a `review_required`.
 - 2026-11-04: aprobada por Felipe con la revisión P10 y su verificación aplicadas (cita de confidencialidad con «Este», como en BCN) (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).
+- 2026-11-06: depuración de contenido pedida por Felipe (ADR-029). Se eliminan las secciones 6 (Cuándo no utilizarlo), 7 (Ejemplo sencillo), 8 (Ejemplo de producción), 15 (Errores frecuentes, con la fila «Tenemos cifrado, cumplimos» y la frase sobre la infracción grave del art. 34 ter c) y d)), 17 (Conceptos relacionados) y 19 (Laboratorio relacionado). Además: en §1, el encabezado de la tabla de preguntas y «no es formar especialistas legales, sino»; en §3, el párrafo de la matriz requisito → control → evidencia ejecutada en la CI; en §4, las referencias entre paréntesis a artículos y fichas al final de cada paso; en §16, «(arts. 34 bis a 35)» del título de Sanciones y la columna básica de «Básico vs. senior», que pasa a la lista «Qué se espera de un nivel senior»; en §10, la explicación del código, que queda en una frase, una línea por escenario y una limitación. El catálogo legal agrupado por tema sale del §2 y pasa al anexo. Las dos citas del boletín 18.623-07 se rotulan «tramitación» y «mensaje». Vuelve a `review_required` hasta la aprobación de Felipe.
+
+## Anexo · Catálogo legal por tema
+
+### Fundamentos, alcance y principios
+
+- **[Obligación legal · art. 1 bis]** Ámbito territorial. También alcanza al encargado fuera de Chile que trata por cuenta de un responsable en Chile y a quien, desde fuera, ofrece bienes o servicios a titulares en Chile o monitorea su comportamiento. Ficha: `processors-and-international-transfers`.
+- **[Obligación legal · art. 2]** Definiciones. Dato personal, sensible, anonimización, seudonimización, perfiles y encargado. Fichas: `pii-identification`, `chilean-identifier-pseudonymization`.
+- **[Obligación legal · art. 3]** Principios: **licitud y lealtad**, **finalidad**, **proporcionalidad**, **calidad**, **responsabilidad**, **seguridad**, **transparencia e información** y **confidencialidad**. Cada principio necesita un control y una evidencia. Ficha: esta ficha.
+
+### Derechos y decisiones automatizadas
+
+- **[Obligación legal · art. 4]** Derechos del titular, desarrollados en los arts. 5 a 11. Seis tipos de solicitud con plazo y evidencia. Ficha: `data-subject-rights-pipeline`.
+- **[Obligación legal · art. 8 bis]** Decisiones individuales automatizadas: explicación, intervención humana y revisión. Ficha: `dpia-and-automated-decisions`.
+
+### Licitud, responsabilidad y transparencia
+
+- **[Obligación legal · art. 12]** Consentimiento; el responsable prueba la licitud. Las demás bases están en el art. 13. Ficha: `processing-activities-inventory`.
+- **[Obligación legal · art. 14]** Obligaciones del responsable: acreditar la licitud y suprimir o anonimizar datos precontractuales. Ficha: `processing-activities-inventory`.
+- **[Obligación legal · art. 14 bis]** Secreto o confidencialidad, también de datos públicos organizados o combinados. Ficha: esta ficha.
+- **[Obligación legal · art. 14 ter]** Información y transparencia: la política pública se alimenta del catálogo. Ficha: `processing-activities-inventory`.
+
+### Privacidad desde el diseño y seguridad
+
+- **[Obligación legal · art. 14 quáter]** Protección desde el diseño y por defecto. Por defecto, solo los datos específicos y estrictamente necesarios, según número de datos, extensión, plazo y accesibilidad. Ficha: `data-minimization-by-layer`.
+- **[Obligación legal · art. 14 quinquies]** Medidas de seguridad y verificación regular. Ficha: `privacy-controls-as-code`.
+- **[Obligación legal · art. 14 sexies]** Reporte de vulneraciones a la Agencia, registro de esas comunicaciones y aviso a titulares en ciertos casos. Ficha: `data-breach-response`.
+
+### Encargados, impacto y datos sensibles
+
+- **[Obligación legal · art. 15 bis]** Tratamiento por un encargado. Suprime o devuelve al terminar; la cesión está en el art. 15. Ficha: `processors-and-international-transfers`.
+- **[Obligación legal · art. 15 ter]** Evaluación de impacto en los casos que el artículo enumera. Ficha: `dpia-and-automated-decisions`.
+- **[Obligación legal · art. 16]** Datos sensibles; reglas especiales en los arts. 16 bis a 16 sexies. Ficha: `pii-identification`.
+
+### Transferencias, sanciones y prevención
+
+- **[Obligación legal · art. 27]** Transferencia internacional. Cada flujo al exterior necesita un mecanismo. Países adecuados y cláusulas, en el art. 28. Ficha: `processors-and-international-transfers`.
+- **[Obligación legal · art. 35]** Sanciones. Varias infracciones nacen de fallas técnicas. Ficha: esta ficha (Trade-offs).
+- **[Buena práctica]** Art. 49. Modelo de prevención de infracciones, voluntario. El certificado del art. 51 acredita el atenuante del art. 36 n.º 5. Reglamento en el Decreto 662. Ficha: `privacy-controls-as-code`.

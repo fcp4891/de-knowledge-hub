@@ -572,7 +572,7 @@ components:
         verification_status: { oneOf: [{ $ref: "#/components/schemas/VerificationStatus" }, { type: "null" }] }
 
     Section:
-      description: Una de las 22 secciones de la ficha (§22) o de la arquitectura de referencia (ADR-028, `kind` architecture), en Markdown.
+      description: Una de las 22 secciones de la ficha (§22) o de la arquitectura de referencia (ADR-028, `kind` architecture), en Markdown. `number` es el de la plantilla; las fichas con la excepción del ADR-029 pueden omitir algunas.
       type: object
       required: [number, key, title, markdown]
       properties:
@@ -602,7 +602,16 @@ components:
         stub: { type: boolean, description: true si la ficha es un marcador con contenido pendiente. }
         note: { type: [string, "null"], description: Nota de alcance del blueprint. }
         sections: { type: array, items: { $ref: "#/components/schemas/Section" }, description: Vacía si has_page es false. }
+        annexes: { type: array, items: { $ref: "#/components/schemas/Annex" }, description: "Anexos tras la última sección (ADR-029); la propiedad solo aparece si la ficha los tiene." }
       unevaluatedProperties: false
+    Annex:
+      description: Anexo de la ficha (`## Anexo · Título`, ADR-029), en Markdown.
+      type: object
+      required: [title, markdown]
+      properties:
+        title: { type: string }
+        markdown: { type: string }
+      additionalProperties: false
 
     # --- Tecnologías ---
     TechnologySummary:
@@ -752,6 +761,7 @@ components:
         accessed: { oneOf: [{ $ref: "#/components/schemas/Date" }, { type: "null" }] }
         page_title: { type: [string, "null"], description: "Título de la página citada (ADR-012); null si no se pudo verificar. `title` sigue siendo el de la fuente del registro." }
         note: { type: [string, "null"] }
+        label: { type: string, description: "Rótulo que distingue citas con títulos casi iguales (ADR-029); solo aparece si la cita lo trae." }
       additionalProperties: false
     Source:
       type: object

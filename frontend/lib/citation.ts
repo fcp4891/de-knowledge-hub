@@ -4,13 +4,14 @@ export type CitationLabel = {
   authority_level: number;
   page_title?: string | null;
   source_type?: string | null;
+  label?: string;
 };
 
-/** Texto del enlace: el título de la página, o la ruta de la URL si no hay. */
-export function citationLinkText(citation: Pick<CitationLabel, "url" | "page_title">): string {
+/** Texto del enlace: el título de la página (con su rótulo, ADR-029), o la ruta de la URL si no hay. */
+export function citationLinkText(citation: Pick<CitationLabel, "url" | "page_title" | "label">): string {
   const pageTitle = citation.page_title?.trim();
   if (pageTitle) {
-    return pageTitle;
+    return citation.label ? `${pageTitle} · ${citation.label}` : pageTitle;
   }
   try {
     return new URL(citation.url).pathname;

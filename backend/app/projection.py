@@ -13,6 +13,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from backend.content import page_sections
 from backend.content import validate as v
 
 TECHNOLOGY_TYPES = {"technology", "cloud_service"}
@@ -167,6 +168,8 @@ def sections(body: str, keys: list[str] = SECTION_KEYS) -> list[dict[str, Any]]:
     current: dict[str, Any] | None = None
     buffer: list[str] = []
     for line in body.splitlines():
+        if page_sections.ANNEX_HEADING.match(line):
+            break  # ADR-029: los anexos van aparte, en `annexes`
         match = SECTION_HEADING.match(line)
         if match and 1 <= int(match.group(1)) <= len(keys):
             if current:
@@ -188,6 +191,7 @@ def source_refs(index: ContentIndex, refs: list[dict[str, Any]]) -> list[dict[st
             "source": source["slug"], "title": source["title"], "url": ref.get("url", source["url"]),
             "source_type": source["source_type"], "authority_level": source["authority_level"],
             "accessed": ref.get("accessed"), "page_title": ref.get("page_title"), "note": ref.get("note"),
+            **({"label": ref["label"]} if "label" in ref else {}),   # ADR-029: solo si la cita lo trae
         })
     return resolved
 
@@ -204,6 +208,12 @@ def union(*lists: list[str]) -> list[str]:
     for items in lists:
         seen += [item for item in items if item not in seen]
     return seen
+
+
+def annexes(body: str) -> dict[str, Any]:
+    """ADR-029: `annexes` solo en las fichas que tienen anexos, para no cambiar la forma de las demás."""
+    found = [{"title": title, "markdown": markdown.strip()} for title, markdown in page_sections.annexes(body)]
+    return {"annexes": found} if found else {}
 
 
 def concept_detail(index: ContentIndex, slug: str) -> dict[str, Any]:
@@ -227,6 +237,7 @@ def concept_detail(index: ContentIndex, slug: str) -> dict[str, Any]:
         "has_page": bool(page), "stub": page.get("stub", False), "note": concept.get("note"),
         "sections": sections(index.bodies.get(slug, ""),
                              ARCHITECTURE_SECTION_KEYS if concept["kind"] == "architecture" else SECTION_KEYS),
+        **annexes(index.bodies.get(slug, "")),
     }
 
 

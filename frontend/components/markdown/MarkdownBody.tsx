@@ -178,15 +178,17 @@ function MarkdownBlock({
     return (
       <div className={articleMap ? "markdown-table-wrap markdown-table-fit" : "markdown-table-wrap"}>
         <table>
-          <thead>
-            <tr>
-              {indexes.map((index) => (
-                <th key={index} data-align={block.aligns[index] ?? "left"}>
-                  <ArrowInlines inlines={block.headers[index]} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} styleArrows={styleArrows} />
-                </th>
-              ))}
-            </tr>
-          </thead>
+          {block.headers.some((cell) => cell.length > 0) ? (
+            <thead>
+              <tr>
+                {indexes.map((index) => (
+                  <th key={index} data-align={block.aligns[index] ?? "left"}>
+                    <ArrowInlines inlines={block.headers[index]} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} styleArrows={styleArrows} />
+                  </th>
+                ))}
+              </tr>
+            </thead>
+          ) : null}
           <tbody>
             {block.rows.map((row, rowIndex) => (
               <tr key={rowIndex}>

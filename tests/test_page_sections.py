@@ -228,3 +228,53 @@ def test_architecture_view_counts_subgraphs_as_nodes(with_architecture_template:
     big = f"```mermaid\nflowchart TB\n  subgraph S[\"Capa\"]\n{nodes}\n  end\n  subgraph T[\"Otra\"]\n  end\n```"
     write_md(with_architecture_template, "architectures/arq.md", architecture(), body=architecture_body({3: VIEW, 5: big, 6: VIEW}))
     assert_error(run(with_architecture_template), "[§5] la vista de datos tiene 9 nodos contando los subgraph; máximo 8")
+
+
+# --- Excepción de chile-data-protection (ADR-029) ------------------------------
+
+CDP = "chile-data-protection"
+CDP_OMITTED = {6, 7, 8, 15, 17, 19}
+
+
+def body_without(omitted: set[int], tail: str = "") -> str:
+    parts = [f"## {n}. {t}\n\n{PRACTICES if n == page_sections.PRACTICES_SECTION else 'Contenido.'}\n"
+             for n, t in enumerate(TITLES, 1) if n not in omitted]
+    return "\n".join(parts) + tail
+
+
+def test_chile_data_protection_may_omit_its_sections_and_keep_an_annex(with_template: Path) -> None:
+    write_md(with_template, f"concepts/{CDP}.md", concept(CDP), body=body_without(CDP_OMITTED, "\n## Anexo · Catálogo\n\nx\n"))
+    assert run(with_template).ok
+
+
+def test_chile_data_protection_may_still_have_all_sections(with_template: Path) -> None:
+    write_md(with_template, f"concepts/{CDP}.md", concept(CDP), body=full_body())
+    assert run(with_template).ok
+
+
+def test_other_pages_keep_the_22_sections(with_template: Path) -> None:
+    write_md(with_template, "concepts/a.md", concept("a"), body=body_without(CDP_OMITTED))
+    assert_error(run(with_template), "faltan [6, 7, 8, 15, 17, 19]")
+
+
+def test_chile_data_protection_cannot_omit_other_sections(with_template: Path) -> None:
+    write_md(with_template, f"concepts/{CDP}.md", concept(CDP), body=body_without(CDP_OMITTED | {5}))
+    assert_error(run(with_template), "faltan [5]")
+
+
+def test_annex_only_in_the_excepted_page(with_template: Path) -> None:
+    write_md(with_template, "concepts/a.md", concept("a"), body=full_body() + "\n## Anexo · Catálogo\n\nx\n")
+    assert_error(run(with_template), "solo las fichas con la excepción del ADR-029 llevan anexos")
+
+
+def test_annex_goes_last_and_is_not_empty() -> None:
+    assert page_sections.check_annexes("## 22. Historial\n\nx\n\n## Anexo · A\n\n<!-- nada -->\n", CDP) == [
+        "[secciones] el anexo 'A' está vacío"]
+    assert page_sections.check_annexes("## Anexo · A\n\nx\n\n## 22. Historial\n\nx\n", CDP) == [
+        "[secciones] los anexos van después de la última sección"]
+
+
+def test_annex_does_not_belong_to_the_last_section() -> None:
+    body = "## 22. Historial\n\n- línea\n\n## Anexo · Catálogo\n\n### Grupo\n\n- art.\n"
+    assert page_sections.sections(body) == [(22, "Historial", "\n- línea\n")]
+    assert page_sections.annexes(body) == [("Catálogo", "\n### Grupo\n\n- art.")]

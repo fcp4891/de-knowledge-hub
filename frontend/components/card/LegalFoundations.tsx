@@ -73,6 +73,9 @@ function findArticle(id: string): ChileArticle | null {
   return null;
 }
 
+const OPEN_EVENT = "lf:open"; // el catálogo del anexo pide abrir el modal del §2 (ADR-029)
+const HIT_EVENT = "lf:hit"; // el §2 pide resaltar la fila del catálogo (llegada por #lb-…)
+
 function PrincipleEye() {
   return (
     <svg className="lf-principle-eye" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -117,36 +120,16 @@ function Fichas({ fichas }: { fichas: ChileFicha[] }) {
 
 export function LegalFoundations() {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const [query, setQuery] = useState("");
-  const [theme, setTheme] = useState<string | null>(null);
   const [open, setOpen] = useState<ChileArticle | null>(null);
   const [tip, setTip] = useState<string | null>(null);
   const [pinned, setPinned] = useState(false);
   const tipHold = useRef(false);
-  const [hitId, setHitId] = useState<string | null>(null);
-  const [compactSearch, setCompactSearch] = useState(false);
-  const folded = fold(query.trim());
-
-  const visible = useMemo(() => {
-    return CHILE_GROUPS.filter((group) => theme === null || group.id === theme)
-      .map((group) => ({
-        ...group,
-        articles: group.articles.filter((item) => matches(item, folded)),
-      }))
-      .filter((group) => group.articles.length > 0);
-  }, [folded, theme]);
 
   function showArticle(item: ChileArticle, fromHash: boolean) {
     setOpen(item);
-    if (!fromHash) {
-      return;
+    if (fromHash) {
+      window.dispatchEvent(new CustomEvent(HIT_EVENT, { detail: legalRowId("ley-19628", item.article) }));
     }
-    const id = legalRowId("ley-19628", item.article);
-    setHitId(id);
-    window.setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "center" });
-    }, 40);
-    window.setTimeout(() => setHitId((current) => (current === id ? null : current)), 2400);
   }
 
   useEffect(() => {
@@ -184,17 +167,15 @@ export function LegalFoundations() {
       pushHash(id);
       showArticle(item, true);
     }
-    function syncGroup() {
-      setTheme(groupFromSearch(window.location.search));
+    function onOpen(event: Event) {
+      const item = findArticle(String((event as CustomEvent<string>).detail));
+      if (item) {
+        showArticle(item, false);
+      }
     }
-    const searchQuery = window.matchMedia("(max-width: 480px)");
-    const applySearch = () => setCompactSearch(searchQuery.matches);
-    applySearch();
-    searchQuery.addEventListener("change", applySearch);
-    syncGroup();
     openFromHash();
     window.addEventListener("hashchange", openFromHash);
-    window.addEventListener("popstate", syncGroup);
+    window.addEventListener(OPEN_EVENT, onOpen);
     function onKey(event: KeyboardEvent) {
       if (event.key !== "Escape") {
         return;
@@ -206,9 +187,8 @@ export function LegalFoundations() {
     document.addEventListener("click", onClick);
     document.addEventListener("keydown", onKey);
     return () => {
-      searchQuery.removeEventListener("change", applySearch);
       window.removeEventListener("hashchange", openFromHash);
-      window.removeEventListener("popstate", syncGroup);
+      window.removeEventListener(OPEN_EVENT, onOpen);
       document.removeEventListener("click", onClick);
       document.removeEventListener("keydown", onKey);
     };
@@ -250,7 +230,66 @@ export function LegalFoundations() {
           />
         ))}
       </ul>
-      <h3>Catálogo legal agrupado por temática</h3>
+      <ArticleModal dialogRef={dialogRef} article={open} onClose={() => setOpen(null)} />
+      <h3>Responsabilidades: quién decide y quién implementa</h3>
+      <ul>
+        {CHILE_ROLES.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/** Anexo · Catálogo legal por tema (ADR-029): búsqueda, filtros y grupos; el modal sigue en el §2. */
+export function LegalCatalog() {
+  const [query, setQuery] = useState("");
+  const [theme, setTheme] = useState<string | null>(null);
+  const [hitId, setHitId] = useState<string | null>(null);
+  const [compactSearch, setCompactSearch] = useState(false);
+  const folded = fold(query.trim());
+
+  const visible = useMemo(() => {
+    return CHILE_GROUPS.filter((group) => theme === null || group.id === theme)
+      .map((group) => ({
+        ...group,
+        articles: group.articles.filter((item) => matches(item, folded)),
+      }))
+      .filter((group) => group.articles.length > 0);
+  }, [folded, theme]);
+
+  useEffect(() => {
+    function syncGroup() {
+      setTheme(groupFromSearch(window.location.search));
+    }
+    function onHit(event: Event) {
+      const id = String((event as CustomEvent<string>).detail);
+      setHitId(id);
+      window.setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 40);
+      window.setTimeout(() => setHitId((current) => (current === id ? null : current)), 2400);
+    }
+    const searchQuery = window.matchMedia("(max-width: 480px)");
+    const applySearch = () => setCompactSearch(searchQuery.matches);
+    applySearch();
+    searchQuery.addEventListener("change", applySearch);
+    syncGroup();
+    window.addEventListener("popstate", syncGroup);
+    window.addEventListener(HIT_EVENT, onHit);
+    return () => {
+      searchQuery.removeEventListener("change", applySearch);
+      window.removeEventListener("popstate", syncGroup);
+      window.removeEventListener(HIT_EVENT, onHit);
+    };
+  }, []);
+
+  function openArticle(item: ChileArticle) {
+    window.dispatchEvent(new CustomEvent(OPEN_EVENT, { detail: legalRowId("ley-19628", item.article) }));
+  }
+
+  return (
+    <div className="legal-foundations">
       <div className="lf-tools">
         <input
           type="search"
@@ -287,15 +326,8 @@ export function LegalFoundations() {
       </div>
       {visible.length === 0 ? <p className="lf-quiet">Ningún artículo coincide con la búsqueda.</p> : null}
       {visible.map((group) => (
-        <GroupBlock key={group.id} group={group} hitId={hitId} onOpen={(item) => showArticle(item, false)} />
+        <GroupBlock key={group.id} group={group} hitId={hitId} onOpen={openArticle} />
       ))}
-      <ArticleModal dialogRef={dialogRef} article={open} onClose={() => setOpen(null)} />
-      <h3>Responsabilidades: quién decide y quién implementa</h3>
-      <ul>
-        {CHILE_ROLES.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
     </div>
   );
 }

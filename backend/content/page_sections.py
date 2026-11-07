@@ -7,6 +7,7 @@ encabezados `## N. Título` van en orden, con los títulos de la plantilla y sin
 (un comentario HTML solo no cuenta como contenido). En las fichas, la §14 (Buenas prácticas)
 lleva además las viñetas `- **Seguridad**`, `- **Observabilidad**` y `- **Costo**` (criterio de
 la revisión B-F3.1); el rótulo puede seguir con más texto, como `- **Costo y capacidad:**`.
+Excepción (ADR-029): las fichas de OMITTABLE pueden omitir esas secciones y llevar `## Anexo · Título` al final.
 """
 
 from __future__ import annotations
@@ -15,6 +16,10 @@ import re
 from pathlib import Path
 
 HEADING = re.compile(r"^## (\d+)\. (.+?)\s*$")
+ANNEX_HEADING = re.compile(r"^## Anexo · (.+?)\s*$")   # ADR-029: después de la última sección
+# ADR-029: única excepción a las 22 secciones; puede omitir estas y llevar anexos. Las demás fichas, sin cambios.
+OMITTABLE = {"chile-data-protection": frozenset({6, 7, 8, 15, 17, 19})}
+ANNEX_PAGES = frozenset(OMITTABLE)
 HTML_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
 TEMPLATE = Path("_templates") / "concept.md"
 SNIPPET_TEMPLATE = Path("_templates") / "snippet.md"
@@ -40,12 +45,44 @@ def sections(body: str) -> list[tuple[int, str, str]]:
     """(número, título, contenido) de cada encabezado `## N. Título`, en el orden del archivo."""
     found: list[tuple[int, str, list[str]]] = []
     for line in body.splitlines():
+        if ANNEX_HEADING.match(line):
+            break  # los anexos van al final y no son secciones (ADR-029)
         match = HEADING.match(line)
         if match:
             found.append((int(match.group(1)), match.group(2), []))
         elif found:
             found[-1][2].append(line)
     return [(number, title, "\n".join(lines)) for number, title, lines in found]
+
+
+def annexes(body: str) -> list[tuple[str, str]]:
+    """(título, contenido) de cada `## Anexo · Título`; un anexo termina en el encabezado `## ` siguiente."""
+    found: list[tuple[str, list[str]]] = []
+    current: list[str] | None = None
+    for line in body.splitlines():
+        match = ANNEX_HEADING.match(line)
+        if match:
+            found.append((match.group(1), []))
+            current = found[-1][1]
+        elif line.startswith("## "):
+            current = None
+        elif current is not None:
+            current.append(line)
+    return [(title, "\n".join(lines)) for title, lines in found]
+
+
+def check_annexes(body: str, slug: str) -> list[str]:
+    """ADR-029: solo las fichas de ANNEX_PAGES llevan anexos, al final y con contenido."""
+    found = annexes(body)
+    if not found:
+        return []
+    if slug not in ANNEX_PAGES:
+        return ["[secciones] solo las fichas con la excepción del ADR-029 llevan anexos"]
+    errors = [f"[secciones] el anexo '{title}' está vacío" for title, content in found if is_empty(content)]
+    tail = body.split("\n## Anexo · ", 1)[-1]
+    if re.search(r"^## \d+\. ", tail, re.M):
+        errors.append("[secciones] los anexos van después de la última sección")
+    return errors
 
 
 def template_titles(content_dir: Path, template: Path = TEMPLATE) -> list[str] | None:
@@ -61,12 +98,13 @@ def is_empty(content: str) -> bool:
     return not HTML_COMMENT.sub("", content).strip()
 
 
-def check(body: str, titles: list[str]) -> list[str]:
-    """Errores de estructura de la ficha frente a los títulos de la plantilla."""
+def check(body: str, titles: list[str], omittable: frozenset[int] = frozenset()) -> list[str]:
+    """Errores de estructura de la ficha frente a los títulos de la plantilla; `omittable`: las secciones
+    que la ficha puede omitir (ADR-029)."""
     found = sections(body)
     errors = []
     numbers = [number for number, _, _ in found]
-    expected = list(range(1, len(titles) + 1))
+    expected = [n for n in range(1, len(titles) + 1) if n not in omittable or n in numbers]
     if numbers != expected:
         missing = sorted(set(expected) - set(numbers))
         detail = f"faltan {missing}" if missing else f"orden encontrado {numbers}"

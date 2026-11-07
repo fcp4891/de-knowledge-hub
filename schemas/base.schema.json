@@ -150,6 +150,12 @@
           "minLength": 1,
           "maxLength": 300
         },
+        "label": {
+          "description": "Rótulo corto que distingue dos citas con títulos de página casi iguales (ADR-029); la UI lo agrega al texto del enlace.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
         "note": { "type": "string" }
       },
       "additionalProperties": false

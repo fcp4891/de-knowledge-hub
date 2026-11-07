@@ -43,3 +43,9 @@ test("una cita con page_title null muestra la ruta de la URL", () => {
     "/bigquery/docs/partitioned-tables",
   );
 });
+
+test("el rótulo de la cita distingue dos títulos casi iguales (ADR-029)", () => {
+  const base = { url: "https://tramitacion.senado.cl/", page_title: "Boletín 18623-07" };
+  assert.equal(citationLinkText({ ...base, label: "tramitación" }), "Boletín 18623-07 · tramitación");
+  assert.equal(citationLinkText(base), "Boletín 18623-07");
+});

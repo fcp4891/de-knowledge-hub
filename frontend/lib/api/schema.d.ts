@@ -459,7 +459,7 @@ export interface components {
             last_verified: components["schemas"]["Date"] | null;
             verification_status: components["schemas"]["VerificationStatus"] | null;
         };
-        /** @description Una de las 22 secciones de la ficha (§22) o de la arquitectura de referencia (ADR-028, `kind` architecture), en Markdown. */
+        /** @description Una de las 22 secciones de la ficha (§22) o de la arquitectura de referencia (ADR-028, `kind` architecture), en Markdown. `number` es el de la plantilla; las fichas con la excepción del ADR-029 pueden omitir algunas. */
         Section: {
             number: number;
             /** @enum {unknown} */
@@ -486,7 +486,14 @@ export interface components {
             note?: string | null;
             /** @description Vacía si has_page es false. */
             sections: components["schemas"]["Section"][];
+            /** @description Anexos tras la última sección (ADR-029); la propiedad solo aparece si la ficha los tiene. */
+            annexes?: components["schemas"]["Annex"][];
         } & components["schemas"]["Metadata"];
+        /** @description Anexo de la ficha (`## Anexo · Título`, ADR-029), en Markdown. */
+        Annex: {
+            title: string;
+            markdown: string;
+        };
         TechnologySummary: {
             slug: components["schemas"]["Slug"];
             title: string;
@@ -600,6 +607,8 @@ export interface components {
             /** @description Título de la página citada (ADR-012); null si no se pudo verificar. `title` sigue siendo el de la fuente del registro. */
             page_title?: string | null;
             note?: string | null;
+            /** @description Rótulo que distingue citas con títulos casi iguales (ADR-029); solo aparece si la cita lo trae. */
+            label?: string;
         };
         Source: {
             slug: components["schemas"]["Slug"];

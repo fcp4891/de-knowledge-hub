@@ -54,6 +54,8 @@ export type ReadingSectionModel = {
   title: string;
   presentation: "summary" | "open" | "details" | "cloud" | "view" | "components";
   listed: boolean;
+  /** ADR-029: anexo tras la última sección, sin número visible. */
+  annex?: boolean;
   body: React.ReactNode;
 };
 
@@ -198,6 +200,7 @@ export function ConceptReading({
   architectureLegend,
   pageKind = "concept",
   construction = false,
+  compactNumbering = false,
   children,
 }: {
   slug: string;
@@ -226,6 +229,8 @@ export function ConceptReading({
   architectureLegend: boolean;
   pageKind?: string;
   construction?: boolean;
+  /** ADR-029: ficha que omite secciones; numeración visible correlativa. */
+  compactNumbering?: boolean;
   children?: React.ReactNode;
 }) {
   const sectionGroups = pageKind === "architecture" ? ARCHITECTURE_GROUPS : CARD_SECTION_GROUPS;
@@ -292,7 +297,16 @@ export function ConceptReading({
   const hasDetails = sections.some((section) => section.presentation === "details");
   const badge = verificationBadge(verificationStatus, lastVerified);
   const meta = readingMeta(minutes, sourceCount);
-  const shown = Math.min(CARD_SECTION_COUNT, readMax);
+  // ADR-029: con secciones omitidas, la numeración visible es correlativa y M cuenta solo las presentes.
+  const present = sections
+    .filter((section) => !section.annex)
+    .map((section) => section.number)
+    .sort((left, right) => left - right);
+  const readUpTo = Math.min(CARD_SECTION_COUNT, readMax);
+  const total = compactNumbering ? present.length : CARD_SECTION_COUNT;
+  const shown = compactNumbering ? present.filter((number) => number <= readUpTo).length : readUpTo;
+  const shownNumber = (section: ReadingSectionModel): number | null =>
+    section.annex ? null : compactNumbering ? present.indexOf(section.number) + 1 : section.number;
   const listed = sections.filter((section) => section.listed);
   const parentPart = partOfParent(relationGroups);
   const listedGroups = withoutPartOf(relationGroups);
@@ -544,7 +558,7 @@ export function ConceptReading({
           data-reading-title={section.title}
         >
           <h2 id={`h-${section.number}`}>
-            {section.number} · {section.title}
+            {shownNumber(section)} · {section.title}
           </h2>
           {section.body}
         </section>,
@@ -560,7 +574,7 @@ export function ConceptReading({
           data-reading-title={section.title}
         >
           <h2 id={`h-${section.number}`}>
-            {section.number} · {section.title}
+            {shownNumber(section)} · {section.title}
           </h2>
           {section.body}
         </section>,
@@ -575,7 +589,7 @@ export function ConceptReading({
           data-reading-title={section.title}
         >
           <summary>
-            <span className="reading-num">{section.number}</span>
+            {section.annex ? null : <span className="reading-num">{shownNumber(section)}</span>}
             {section.title}
           </summary>
           <div className="reading-details-body">{section.body}</div>
@@ -636,13 +650,13 @@ export function ConceptReading({
           className="reading-progress"
           role="progressbar"
           aria-valuemin={0}
-          aria-valuemax={CARD_SECTION_COUNT}
+          aria-valuemax={total}
           aria-valuenow={shown}
-          aria-label={`Leído ${shown} de ${CARD_SECTION_COUNT}`}
+          aria-label={`Leído ${shown} de ${total}`}
         >
-          <span>{progressReady ? `Leído ${shown} de ${CARD_SECTION_COUNT}` : "Lectura"}</span>
+          <span>{progressReady ? `Leído ${shown} de ${total}` : "Lectura"}</span>
           <span className="reading-progress-track">
-            <span style={{ width: progressReady ? `${(shown / CARD_SECTION_COUNT) * 100}%` : "0%" }} />
+            <span style={{ width: progressReady ? `${(shown / total) * 100}%` : "0%" }} />
           </span>
         </div>
       </div>
@@ -668,7 +682,7 @@ export function ConceptReading({
                   {items.map((section) => {
                     const linkClass = [
                       "reading-toc-link",
-                      current === section.number ? "is-current" : section.number <= shown ? "is-read" : "",
+                      current === section.number ? "is-current" : section.number <= readUpTo ? "is-read" : "",
                     ]
                       .filter(Boolean)
                       .join(" ");
@@ -683,7 +697,7 @@ export function ConceptReading({
                           goTo(section);
                         }}
                       >
-                        <span className="reading-num">{section.number}</span>
+                        <span className="reading-num">{shownNumber(section)}</span>
                         <span>{section.title}</span>
                       </a>
                     );

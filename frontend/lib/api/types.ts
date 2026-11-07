@@ -24,6 +24,7 @@ export type LegalBasis = components["schemas"]["LegalBasis"];
 export type EntityType = components["schemas"]["EntityType"];
 export type VerificationStatus = components["schemas"]["VerificationStatus"];
 export type Section = components["schemas"]["Section"];
+export type Annex = components["schemas"]["Annex"];
 export type Language = components["schemas"]["Language"];
 export type Cloud = components["schemas"]["Cloud"];
 export type SnippetSummary = components["schemas"]["SnippetSummary"];
