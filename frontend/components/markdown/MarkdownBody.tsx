@@ -2,6 +2,7 @@ import { ArrowInlines } from "@/components/markdown/InlineArrows";
 import { PipelineSteps } from "@/components/markdown/PipelineSteps";
 import type { ConceptRefs } from "@/lib/conceptNames";
 import { annotateCode, type CodeAnnotation, type CodePresentation } from "@/lib/codeBlocks";
+import { isControlMatrix, stepNumber } from "@/lib/controlMatrix";
 import { horizontalFlowchart } from "@/lib/diagramDirection";
 import { articleMapColumns, droppedEtiquetaIndex, type ObligationBasis } from "@/lib/legal";
 import { groupEvidence, parseMarkdown, type Block, type EvidenceGroup, type Inline } from "@/lib/markdown";
@@ -175,14 +176,21 @@ function MarkdownBlock({
     const indexes = articleMap
       ? articleMap.columns
       : block.headers.map((_, index) => index).filter((index) => index !== drop);
+    const matrix = isControlMatrix(block.headers.map(cellLabel));
+    const wrapClass = articleMap
+      ? "markdown-table-wrap markdown-table-fit"
+      : matrix
+        ? "markdown-table-wrap markdown-table-steps"
+        : "markdown-table-wrap";
     return (
-      <div className={articleMap ? "markdown-table-wrap markdown-table-fit" : "markdown-table-wrap"}>
+      <div className={wrapClass}>
         <table>
           {block.headers.some((cell) => cell.length > 0) ? (
             <thead>
               <tr>
                 {indexes.map((index) => (
                   <th key={index} data-align={block.aligns[index] ?? "left"}>
+                    {matrix ? <span className="step-number">{stepNumber(index)}</span> : null}
                     <ArrowInlines inlines={block.headers[index]} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} styleArrows={styleArrows} />
                   </th>
                 ))}

@@ -246,3 +246,55 @@
     transition: none;
   }
 }
+
+/* Matriz de control (chile-data-protection §4): los encabezados son los pasos 01–05 del Resumen. Reutiliza
+   la tabla de .markdown y el número de .step-number; solo agrega el acento, los anchos y la columna fija. */
+.markdown-table-steps table {
+  width: 100%;
+  min-width: 680px;
+  table-layout: fixed;
+  border-collapse: separate; /* con collapse, la columna fija deja ver el texto que pasa por debajo */
+  border-spacing: 0;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+}
+
+.markdown-table-steps th,
+.markdown-table-steps td {
+  border-width: 0 1px 1px 0;
+}
+
+.markdown-table-steps th,
+.markdown-table-steps td {
+  width: 20%;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+
+.markdown-table-steps th .step-number {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--accent);
+}
+
+.markdown-table-steps td:first-child {
+  font-weight: 700;
+}
+
+/* Cuando la tabla no cabe (móvil, o escritorio con índice y estudio abiertos), se desplaza dentro de su
+   contenedor y la primera columna queda fija. */
+.markdown-table-steps th:first-child,
+.markdown-table-steps td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+
+.markdown-table-steps td:first-child {
+  background: var(--surface);
+}
+
+.markdown-table-steps th:first-child {
+  background: var(--surface-muted);
+}

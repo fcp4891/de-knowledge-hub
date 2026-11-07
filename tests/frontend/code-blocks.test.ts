@@ -272,15 +272,22 @@ test("censo de pasos, terminal y escenarios", () => {
 
   const chile = rows.filter((row) => row.file.endsWith("chile-data-protection.md") && row.language === "python");
   assert.equal(chile.length, 1);
-  assert.equal(chile[0].outputs, 4);   // piloto de código guiado (2026-11-03): un bloque text por escenario
-  assert.equal(chile[0].scenarios, 4);
+  assert.equal(chile[0].outputs, 6);   // un bloque text por escenario (6 desde 2026-11-07)
+  assert.equal(chile[0].scenarios, 6);
   assert.equal(chile[0].steps, 4);     // # @paso 1 Datos … 4 Resultado
   const chileView = viewsOf(body(readFileSync(join(content, "concepts/chile-data-protection.md"), "utf8"))).find(
     (item) => item.view.language === "python",
   );
   assert.equal(chileView?.view.status?.label, "ejecutado en CI");
-  assert.deepEqual(scenarioNames(chileView?.view.outputs ?? []), ["con-brechas", "corregido", "sin-revision", "evidencia-alterada"]);
-  assert.deepEqual(chileView?.view.outputs.map((output) => output.exitCode), [1, 0, 1, 1]);
+  assert.deepEqual(scenarioNames(chileView?.view.outputs ?? []), [
+    "con-brechas",
+    "corregido",
+    "sin-revision",
+    "evidencia-alterada",
+    "control-faltante",
+    "evidencia-vencida",
+  ]);
+  assert.deepEqual(chileView?.view.outputs.map((output) => output.exitCode), [1, 0, 1, 1, 1, 1]);
 
   const sql = rows.filter((row) => row.file.endsWith("cloud-sql-as-source.md") && row.language === "sql");
   assert.equal(sql.length, 2);

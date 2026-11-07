@@ -95,7 +95,7 @@ sources:
 relations:
   - {type: RELATED_TO, target: data-classification, note: "Clasificación técnica de datos."}
 created_at: 2026-10-21
-updated_at: 2026-11-06
+updated_at: 2026-11-07
 last_verified: 2026-10-28
 verification_status: review_required
 ---
@@ -154,10 +154,6 @@ Para estudiar esa relación, utilizaremos el enfoque:
 **Requisito normativo → Riesgo identificado → Control técnico → Verificación → Evidencia**
 
 Este modelo permite conectar las obligaciones aplicables con decisiones concretas de arquitectura, desarrollo y operación.
-
-### Resultado esperado
-
-Desarrollar conocimientos que permitan no solo comprender qué debe protegerse, sino también cómo diseñar, implementar, mantener y verificar soluciones de datos que incorporen la privacidad de forma consistente, trazable y sostenible.
 
 ## 2. Qué es
 
@@ -234,14 +230,14 @@ Desarrollar conocimientos que permitan no solo comprender qué debe protegerse, 
 
 **[Decisión de arquitectura]** Matriz de control:
 
-| Requisito o necesidad | Decisión aprobada por | Control técnico | Evidencia verificable |
-|---|---|---|---|
-| Minimización | Negocio y privacidad | Contrato de campos permitidos | Test de esquema y versión del contrato |
-| Retención | Privacidad y negocio | Política por clase de dato y almacenamiento | Configuración, ejecución y excepciones |
-| Acceso restringido | Seguridad y dueño del dato | IAM o RBAC, segregación y revisión | Inventario de permisos y revisión fechada |
-| Derechos del titular | Responsable y privacidad | Localizador de registros y flujo autorizado | ID interno de la solicitud, estados y resultado |
-| Vulneraciones | Seguridad y privacidad | Logs, alertas y consulta de alcance por linaje | Línea de tiempo, sistemas afectados y acciones |
-| Transferencias | Privacidad, compras y seguridad | Inventario de destinos y controles del proveedor | Contrato, evaluación y trazabilidad de flujos |
+| Requisito | Riesgo | Control técnico | Verificación | Evidencia |
+|---|---|---|---|---|
+| Minimización | Columnas no aprobadas llegan a capas analíticas | Contrato de campos permitidos | Test de esquema en CI | Resultado del test y versión del contrato |
+| Retención | Datos vencidos siguen guardados o vuelven con un replay | Política por clase de dato y almacenamiento | Control de vencidos tras la purga | Configuración, ejecución y excepciones |
+| Acceso restringido | Usuarios inactivos o con privilegios de más | IAM o RBAC, segregación | Revisión periódica de permisos | Inventario de permisos y revisión fechada |
+| Derechos del titular | Supresión parcial: el dato reaparece en derivados o reprocesos | Localizador de registros y flujo autorizado | Prueba de replay con tombstones | ID de la solicitud, estados y resultado |
+| Vulneraciones | No poder dimensionar el alcance a tiempo | Logs, alertas y consulta de alcance por linaje | Simulacro de consulta de alcance | Línea de tiempo, sistemas afectados y acciones |
+| Transferencias | Flujos a terceros o al extranjero sin control | Inventario de destinos y controles del proveedor | Conciliación de flujos contra el inventario | Contrato, evaluación y trazabilidad |
 
 **[Buena práctica]** La evidencia no guarda nombres, RUT ni datos sensibles cuando basta una referencia interna protegida.
 
@@ -276,7 +272,7 @@ flowchart TB
 flowchart LR
   R["Solicitudes de titulares"] --> X["Índice de titulares"]
   X --> P["Bronze, silver, gold"]
-  M["Matriz requisito,<br/>control, evidencia"] --> CI{"CI"}
+  M["Matriz requisito → riesgo →<br/>control → verificación →<br/>evidencia"] --> CI{"CI"}
   P --> CI
   CI -- "falla con brechas" --> E["Evidencia fechada"]
 ```
@@ -286,9 +282,10 @@ flowchart LR
 ```python
 # Python 3.12+, biblioteca estándar. De punta a punta: datos ficticios → 4 controles → validación de la evidencia →
 # código de salida (0 aprueba, 1 rechaza). Uso: python controles.py con-brechas | corregido | sin-revision |
-# evidencia-alterada. PASS / FAIL / UNKNOWN como en privacy-controls-as-code: UNKNOWN (falta el dato para evaluar)
-# nunca cuenta como PASS. Didáctico: no certifica cumplimiento; cada docstring cita el principio del art. 3 de la
-# Ley 19.628 que el control evidencia y separa la regla técnica, que la ley no fija.
+# evidencia-alterada | control-faltante | evidencia-vencida. PASS / FAIL / UNKNOWN como en privacy-controls-as-code:
+# UNKNOWN (falta el dato para evaluar) nunca cuenta como PASS. Didáctico: no certifica cumplimiento; cada docstring
+# nombra el principio o el derecho de la Ley 19.628, modificada por la Ley 21.719, que el control evidencia, y separa
+# la regla técnica, que la ley no fija.
 import hashlib
 import json
 import sys
@@ -300,7 +297,7 @@ REFERENCE = datetime(2026, 10, 26, 12, tzinfo=timezone.utc)   # fecha fija: resu
 MAX_AGE = timedelta(days=30)   # política interna ilustrativa, NO un plazo legal
 RETENTION_DAYS = 90            # plazo de la política. Alargarlo para que el control pase es un antipatrón: se purga
 CUTOFF = REFERENCE.date() - timedelta(days=RETENTION_DAYS)
-APPROVED = {"customer_id", "email", "created_at"}
+APPROVED = frozenset({"customer_id", "email", "created_at"})
 Row = dict[str, object]
 
 
@@ -313,10 +310,10 @@ class User:
 
 @dataclass(frozen=True)
 class Platform:
-    warehouse: list[Row]
-    source: list[Row]
-    tombstones: set[object]
-    users: list[User]
+    warehouse: tuple[Row, ...]
+    source: tuple[Row, ...]
+    tombstones: frozenset[object]
+    users: tuple[User, ...]
     last_access_review: date | None = date(2026, 10, 20)
     replay_honors_tombstones: bool = True
     replay_applies_retention: bool = True
@@ -344,16 +341,16 @@ def with_gaps() -> Platform:   # cada brecha se inyecta por separado y a la vist
     bruno: Row = {"customer_id": 102, "email": "bruno@example.test", "created_at": "2026-10-03"}   # suprimido
     old: Row = {"customer_id": 104, "email": "diego@example.test", "created_at": "2026-06-01"}
     return Platform(
-        warehouse=[{**ana, "nota_libre": "sin aprobar"}, old],      # brecha 4: columna no aprobada; 3: registro vencido
-        source=[ana, bruno, old], tombstones={102},
-        users=[User("analista", True, True), User("ex_usuario", False, True)],   # brecha 1: inactivo con acceso
+        warehouse=({**ana, "nota_libre": "sin aprobar"}, old),      # brecha 4: columna no aprobada; 3: registro vencido
+        source=(ana, bruno, old), tombstones=frozenset({102}),
+        users=(User("analista", True, True), User("ex_usuario", False, True)),   # brecha 1: inactivo con acceso
         replay_honors_tombstones=False,                                          # brecha 2: replay sin tombstones
         replay_applies_retention=False)              # bug: el replay desde source vuelve a traer el registro vencido
 
 
 def fix(p: Platform) -> Platform:   # corrige cada brecha; el plazo de retención no cambia
-    kept = [{c: v for c, v in r.items() if c in APPROVED} for r in p.warehouse if not expired(r)]   # purga y minimiza
-    users = [replace(u, authorized=u.authorized and u.active) for u in p.users]
+    kept = tuple({c: v for c, v in r.items() if c in APPROVED} for r in p.warehouse if not expired(r))   # purga y minimiza
+    users = tuple(replace(u, authorized=u.authorized and u.active) for u in p.users)
     return replace(p, warehouse=kept, users=users, replay_honors_tombstones=True, replay_applies_retention=True)
 
 
@@ -366,9 +363,9 @@ def replay(p: Platform) -> list[Row]:   # lo que vuelve a cargarse si se reconst
 
 # @paso 2 Controles
 def access_review(p: Platform) -> tuple[str, str]:
-    """Art. 3 h) Confidencialidad: «quienes tengan acceso a ellos deberán guardar secreto o confidencialidad»; «Este
-    deber subsiste aún después de concluida la relación con el titular». Control técnico para la confidencialidad: un
-    usuario inactivo no conserva acceso (authorized ⇒ active); esa regla es del ejemplo, no de la ley."""
+    """Principio de seguridad (art. 3): el tratamiento se protege con medidas técnicas y organizativas contra el acceso
+    no autorizado. Control técnico: un usuario inactivo no conserva acceso (authorized ⇒ active) y la revisión de
+    accesos tiene fecha; esa regla es del ejemplo, no de la ley."""
     holders = [u.name for u in p.users if u.authorized and not u.active]
     if holders:
         return "FAIL", f"inactivos con acceso: {holders}"
@@ -378,8 +375,9 @@ def access_review(p: Platform) -> tuple[str, str]:
 
 
 def erasure_replay_check(p: Platform) -> tuple[str, str]:
-    """Art. 3 d) Calidad: los datos deben ser «exactos, completos, actuales y pertinentes». Control técnico para la
-    calidad: un registro suprimido no vuelve con un replay (tombstones); el artículo no habla de replays."""
+    """Derecho de supresión (art. 7): el titular puede pedir que se supriman sus datos en los casos que el artículo
+    indica. Control técnico: un registro suprimido no vuelve con un replay (tombstones); el artículo no habla de
+    replays."""
     revived = [r["customer_id"] for r in replay(p) if r["customer_id"] in p.tombstones]
     if revived:
         return "FAIL", f"reaparecen: {revived}"
@@ -387,8 +385,8 @@ def erasure_replay_check(p: Platform) -> tuple[str, str]:
 
 
 def retention_check(p: Platform) -> tuple[str, str]:
-    """Art. 3 c) Proporcionalidad: los datos se conservan el tiempo necesario, «luego de lo cual deben ser suprimidos
-    o anonimizados». Control técnico para ese plazo: se evalúa el warehouse y también la salida del replay, que puede
+    """Principio de proporcionalidad (art. 3): los datos se conservan solo el tiempo necesario para la finalidad y
+    después se suprimen o anonimizan. Control técnico: se evalúa el warehouse y también la salida del replay, que puede
     volver a traer lo purgado; el plazo de cada dato es política interna."""
     stored = [r["customer_id"] for r in p.warehouse if expired(r)]
     replayed = [r["customer_id"] for r in replay(p) if expired(r)]
@@ -398,14 +396,16 @@ def retention_check(p: Platform) -> tuple[str, str]:
 
 
 def schema_minimization(p: Platform) -> tuple[str, str]:
-    """Art. 3 c) Proporcionalidad: los datos se limitan estrictamente a los necesarios, adecuados y pertinentes."""
+    """Principio de proporcionalidad (art. 3): solo los datos necesarios, adecuados y pertinentes para la finalidad.
+    Control técnico: ninguna columna fuera del contrato aprobado."""
     extra = sorted({c for r in p.warehouse for c in r} - APPROVED)
     if extra:
         return "FAIL", f"columnas no aprobadas: {extra}"
     return "PASS", "ok"
 
 
-CONTROLS = [access_review, erasure_replay_check, retention_check, schema_minimization]
+CONTROLS = (access_review, erasure_replay_check, retention_check, schema_minimization)
+CONTROL_IDS = tuple(control.__name__ for control in CONTROLS)
 
 
 def run_controls(p: Platform) -> list[Result]:
@@ -419,35 +419,59 @@ def run_controls(p: Platform) -> list[Result]:
 
 
 # @paso 3 Validación
-def validate(results: list[Result], stored_sha256: dict[str, str]) -> list[str]:
-    """Art. 3 e) Responsabilidad: quienes tratan datos son responsables del cumplimiento de los principios y de los
-    deberes de la ley. Evidencia el principio de responsabilidad con un control técnico, no con texto legal: un estado
-    autodeclarado no basta, y la evidencia tiene que ser única, reciente y la misma (huella SHA-256) que se guardó."""
-    gaps: list[str] = []
-    seen: set[str] = set()
+def completeness(results: list[Result], expected: tuple[str, ...]) -> list[str]:
+    """Cada control esperado aparece exactamente una vez: si falta o está duplicado, es brecha."""
+    ids = [r.control_id for r in results]
+    gaps = [f"{c}: falta el resultado" for c in expected if ids.count(c) == 0]
+    return gaps + [f"{c}: resultado duplicado" for c in expected if ids.count(c) > 1]
+
+
+def evidence_gaps(r: Result, stored_sha256: dict[str, str]) -> list[str]:
+    gaps = []
+    if r.status != "PASS":
+        gaps.append(f"{r.control_id}: {r.status} ({r.detail})")
+    if REFERENCE - r.executed_at > MAX_AGE:
+        gaps.append(f"{r.control_id}: evidencia vencida ({(REFERENCE - r.executed_at).days} días)")
+    if not r.evidence_uri:
+        gaps.append(f"{r.control_id}: evidencia sin URI")
+    if stored_sha256.get(r.control_id) != r.sha256():
+        gaps.append(f"{r.control_id}: huella distinta a la guardada")
+    return gaps
+
+
+def validate(results: list[Result], stored_sha256: dict[str, str], expected: tuple[str, ...]) -> list[str]:
+    """Principio de responsabilidad (art. 3): quien trata datos responde por el cumplimiento de los principios y
+    deberes de la ley. Control técnico: un estado autodeclarado no basta; cada control aparece una vez, con evidencia
+    reciente, con URI y con la misma huella SHA-256 que se guardó."""
+    gaps = completeness(results, expected)
     for r in results:
-        if r.control_id in seen:
-            gaps.append(f"{r.control_id}: resultado duplicado")
-        seen.add(r.control_id)
-        if r.status != "PASS":
-            gaps.append(f"{r.control_id}: {r.status} ({r.detail})")
-        if REFERENCE - r.executed_at > MAX_AGE:
-            gaps.append(f"{r.control_id}: evidencia vencida ({(REFERENCE - r.executed_at).days} días)")
-        if not r.evidence_uri or stored_sha256.get(r.control_id) != r.sha256():
-            gaps.append(f"{r.control_id}: evidencia sin URI o con huella distinta")
+        gaps += evidence_gaps(r, stored_sha256)
     return gaps
 
 
 # @paso 4 Resultado
-def main(scenario: str) -> int:
-    platforms = {"con-brechas": with_gaps(), "corregido": fix(with_gaps()),
-                 "sin-revision": replace(fix(with_gaps()), last_access_review=None),
-                 "evidencia-alterada": fix(with_gaps())}
-    results = run_controls(platforms[scenario])
+def scenario_results(scenario: str) -> tuple[list[Result], dict[str, str]]:
+    platforms = {"con-brechas": with_gaps(), "sin-revision": replace(fix(with_gaps()), last_access_review=None)}
+    results = run_controls(platforms.get(scenario, fix(with_gaps())))
     stored = {r.control_id: r.sha256() for r in results}   # en la CI, la huella se guarda al ejecutar
     if scenario == "evidencia-alterada":   # alguien edita la evidencia después de guardada su huella
         results[2] = replace(results[2], evidence={"status": "PASS", "detail": "editado a mano"})
-    gaps = validate(results, stored)
+    if scenario == "control-faltante":     # el resultado de schema_minimization no llega
+        results = [r for r in results if r.control_id != "schema_minimization"]
+    if scenario == "evidencia-vencida":    # access_review se ejecutó hace 31 días
+        results[0] = replace(results[0], executed_at=REFERENCE - timedelta(days=31))
+    return results, stored
+
+
+SCENARIOS = ("con-brechas", "corregido", "sin-revision", "evidencia-alterada", "control-faltante", "evidencia-vencida")
+
+
+def main(scenario: str) -> int:
+    if scenario not in SCENARIOS:
+        print(f"escenario desconocido: {scenario}; use uno de {', '.join(SCENARIOS)}")
+        return 1
+    results, stored = scenario_results(scenario)
+    gaps = validate(results, stored, CONTROL_IDS)
     print(f"{scenario}: " + ", ".join(f"{r.control_id}={r.status}" for r in results))
     print("\n".join(f"BRECHA {g}" for g in gaps) or "sin brechas")
     if gaps:
@@ -493,16 +517,34 @@ BRECHA access_review: UNKNOWN (sin fecha de última revisión)
 CI: rechazada (1)
 ```
 
-`evidencia-alterada`: la evidencia de `retention_check` se edita después de guardar su huella y ya no coincide; código de salida 1.
+`evidencia-alterada`: la evidencia de `retention_check` se edita después de guardar su huella y la huella ya no coincide; código de salida 1.
 
 ```text
 $ python controles.py evidencia-alterada
 evidencia-alterada: access_review=PASS, erasure_replay_check=PASS, retention_check=PASS, schema_minimization=PASS
-BRECHA retention_check: evidencia sin URI o con huella distinta
+BRECHA retention_check: huella distinta a la guardada
 CI: rechazada (1)
 ```
 
-Limitación: es un ejemplo didáctico y no certifica cumplimiento; un `PASS` demuestra que el control funcionó, no que el tratamiento sea lícito.
+`control-faltante`: no llega el resultado de `schema_minimization` y la validación lo marca como faltante; código de salida 1.
+
+```text
+$ python controles.py control-faltante
+control-faltante: access_review=PASS, erasure_replay_check=PASS, retention_check=PASS
+BRECHA schema_minimization: falta el resultado
+CI: rechazada (1)
+```
+
+`evidencia-vencida`: la evidencia de `access_review` tiene 31 días, más que los 30 de la política; código de salida 1.
+
+```text
+$ python controles.py evidencia-vencida
+evidencia-vencida: access_review=PASS, erasure_replay_check=PASS, retention_check=PASS, schema_minimization=PASS
+BRECHA access_review: evidencia vencida (31 días)
+CI: rechazada (1)
+```
+
+Limitación: es un ejemplo didáctico y no certifica cumplimiento; un `PASS` demuestra que el control funcionó, no que el tratamiento sea lícito. La huella se calcula en la misma ejecución; en producción se compara contra la evidencia guardada en un almacenamiento inmutable.
 
 ## 11. GCP
 
@@ -626,6 +668,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-04: revisión `docs/reviews/p10.md` aplicada (pedido de Felipe): los docstrings del §10 citan el texto del art. 3 (confidencialidad con «la relación con el titular»; calidad «exactos, completos, actuales y pertinentes»; proporcionalidad «suprimidos o anonimizados») y dejan aparte, como control técnico, lo que la ley no fija (acceso del inactivo, replay, huella SHA-256); el párrafo del §10 nombra en negrita los principios, sin «la letra». Vuelve a `review_required`.
 - 2026-11-04: aprobada por Felipe con la revisión P10 y su verificación aplicadas (cita de confidencialidad con «Este», como en BCN) (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).
 - 2026-11-06: depuración de contenido pedida por Felipe (ADR-029). Se eliminan las secciones 6 (Cuándo no utilizarlo), 7 (Ejemplo sencillo), 8 (Ejemplo de producción), 15 (Errores frecuentes, con la fila «Tenemos cifrado, cumplimos» y la frase sobre la infracción grave del art. 34 ter c) y d)), 17 (Conceptos relacionados) y 19 (Laboratorio relacionado). Además: en §1, el encabezado de la tabla de preguntas y «no es formar especialistas legales, sino»; en §3, el párrafo de la matriz requisito → control → evidencia ejecutada en la CI; en §4, las referencias entre paréntesis a artículos y fichas al final de cada paso; en §16, «(arts. 34 bis a 35)» del título de Sanciones y la columna básica de «Básico vs. senior», que pasa a la lista «Qué se espera de un nivel senior»; en §10, la explicación del código, que queda en una frase, una línea por escenario y una limitación. El catálogo legal agrupado por tema sale del §2 y pasa al anexo. Las dos citas del boletín 18.623-07 se rotulan «tramitación» y «mensaje». Vuelve a `review_required` hasta la aprobación de Felipe.
+- 2026-11-07: pedido de Felipe. La matriz del §4 sigue los cinco pasos del Resumen (requisito, riesgo, control técnico, verificación, evidencia) y deja la columna «Decisión aprobada por»; el nodo de la matriz del diagrama «Control y evidencia» nombra los cinco pasos; sale «Resultado esperado» del Resumen. §10: la validación exige que cada control aparezca una vez (falta o duplicado es brecha), separa «evidencia sin URI» de «huella distinta a la guardada» y suma los escenarios `control-faltante` y `evidencia-vencida`; los docstrings nombran el principio sin letra (seguridad en `access_review`) y el derecho de supresión (art. 7) en `erasure_replay_check`, parafraseados, sin citas textuales. Sigue en `review_required`.
 
 ## Anexo · Catálogo legal por tema
 

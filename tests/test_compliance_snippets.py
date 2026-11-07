@@ -158,7 +158,8 @@ def run_scenario(tmp_path: Path, scenario: str) -> subprocess.CompletedProcess[s
                           capture_output=True, text=True, encoding="utf-8", timeout=300)
 
 
-SCENARIOS = {"con-brechas": 1, "corregido": 0, "sin-revision": 1, "evidencia-alterada": 1}
+SCENARIOS = {"con-brechas": 1, "corregido": 0, "sin-revision": 1, "evidencia-alterada": 1, "control-faltante": 1,
+             "evidencia-vencida": 1}
 
 
 def load_controls(tmp_path: Path) -> Any:
@@ -186,14 +187,21 @@ def test_privacy_controls_each_scenario_prints_its_documented_output(tmp_path: P
 
 
 def test_privacy_controls_guided_code_rules(tmp_path: Path) -> None:
-    """Piloto de código guiado: pasos 1–4, un docstring con su letra del art. 3 por control y sin ternarios encadenados."""
+    """Código guiado: pasos 1–4, un docstring por control que nombra su principio o derecho sin letra, sin ternarios
+    encadenados, sin assert ni globals mutables (set/list) y la lista de escenarios igual a la documentada."""
     (code,) = blocks("chile-data-protection", "python")
     steps = [line.split("@paso", 1)[1].strip() for line in code.splitlines() if line.startswith("# @paso")]
     assert steps == ["1 Datos", "2 Controles", "3 Validación", "4 Resultado"]
     assert not [line for line in code.splitlines() if line.count(" if ") >= 2 and line.count(" else ") >= 2]
     m = load_controls(tmp_path)
-    for control in m.CONTROLS:
-        assert control.__doc__ and control.__doc__.startswith("Art. 3 "), control.__name__
+    assert not [line for line in code.splitlines() if re.match(r"\s*assert ", line)]
+    assert not [line for line in code.splitlines() if re.match(r"[A-Z_]+ = (\[|\{|set\()", line)]
+    docs = {control.__name__: control.__doc__ or "" for control in m.CONTROLS}
+    assert docs["access_review"].startswith("Principio de seguridad (art. 3)")
+    assert docs["erasure_replay_check"].startswith("Derecho de supresión (art. 7)")
+    assert all(doc.startswith(("Principio de ", "Derecho de ")) for doc in docs.values()), docs
+    assert not [name for name, doc in docs.items() if "«" in doc]   # sin citas textuales que no se pudieron verificar
+    assert list(m.SCENARIOS) == list(SCENARIOS)
 
 
 def test_privacy_controls_replay_brings_back_the_expired_record_until_fixed(tmp_path: Path) -> None:
@@ -210,11 +218,15 @@ def test_privacy_controls_validation_rejects_duplicates_stale_and_tampered_evide
     stored = {r.control_id: r.sha256() for r in results}
     stale = m.replace(results[0], executed_at=m.REFERENCE - m.timedelta(days=31))
     tampered = m.replace(results[1], evidence={"status": "PASS", "detail": "editado"})
-    gaps = m.validate([*results, results[2], stale, tampered], stored)
+    no_uri = m.replace(results[3], evidence_uri="")
+    gaps = m.validate([stale, tampered, results[2], results[2], no_uri], stored, m.CONTROL_IDS)
     assert "retention_check: resultado duplicado" in gaps
     assert "access_review: evidencia vencida (31 días)" in gaps
-    assert "erasure_replay_check: evidencia sin URI o con huella distinta" in gaps
-    assert m.validate(results, stored) == []
+    assert "erasure_replay_check: huella distinta a la guardada" in gaps
+    assert "schema_minimization: evidencia sin URI" in gaps
+    assert "schema_minimization: huella distinta a la guardada" not in gaps
+    assert m.validate(results[:3], stored, m.CONTROL_IDS) == ["schema_minimization: falta el resultado"]
+    assert m.validate(results, stored, m.CONTROL_IDS) == []
 
 
 MINIMIZATION_SCENARIOS = {"correcto": 0, "deriva-esquema": 1, "select-star": 1, "sin-purga": 1, "sin-clasificar": 1}
