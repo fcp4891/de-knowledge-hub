@@ -14,13 +14,18 @@ export function PipelineSteps({
   obligations = [],
   conceptRefs,
   markCodeStatus = false,
+  size,
+  descriptions,
 }: {
   chain: PipelineChain;
   obligations?: readonly ObligationBasis[];
   conceptRefs?: ConceptRefs;
   markCodeStatus?: boolean;
+  size?: "lg";
+  descriptions?: readonly string[];
 }) {
   const many = chain.steps.length >= 6;
+  const large = size === "lg";
   return (
     <div className="pipeline-container">
       {chain.chips.length > 0 ? (
@@ -35,7 +40,7 @@ export function PipelineSteps({
           <InlineText inlines={chain.label} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} />
         </p>
       ) : null}
-      <ol className="pipeline" data-steps={many ? "many" : "few"}>
+      <ol className="pipeline" data-steps={many ? "many" : "few"} data-size={large ? "lg" : undefined}>
         {chain.steps.map((step, index) => (
           <li key={index} className="pipeline-item">
             <div className="pipeline-step">
@@ -46,6 +51,7 @@ export function PipelineSteps({
                 <InlineText inlines={step.name} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={markCodeStatus} />
               </span>
               {step.note ? <span className="step-note">{step.note}</span> : null}
+              {large && descriptions?.[index] ? <span className="step-desc">{descriptions[index]}</span> : null}
             </div>
             {index < chain.steps.length - 1 ? (
               <span className="pipeline-arrow" aria-hidden="true">

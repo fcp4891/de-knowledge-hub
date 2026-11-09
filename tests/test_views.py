@@ -53,3 +53,18 @@ def test_views_are_validated_against_the_schema(with_template: Path) -> None:  #
     bad = {"severity_cards": {"levels": [{"name": "Leve", "level": 4, "amount": "1", "examples": ["x"]}]}}
     write_md(with_template, "concepts/a.md", concept("a", views=bad), body=full_body() + "\n<!-- view: severity_cards -->\n")
     assert_error(run(with_template), "views.severity_cards.levels.0.level")
+
+
+def test_every_link_in_a_view_is_a_citation() -> None:
+    """ADR-030, enmienda 1: href y enlaces Markdown dentro de los textos deben estar en sources."""
+    view = {"treatment_map": {"lead": "Ver [art. 2](https://example.org/ley).", "sources": [
+        {"title": "Ley", "href": "https://example.org/ley", "detail": "x"}]}}
+    body = "<!-- view: treatment_map -->"
+    assert views.check(view, body, ["https://example.org/ley"]) == []
+    assert views.check(view, body, []) == ["[views] el enlace 'https://example.org/ley' no es una cita de sources"]
+
+
+def test_a_view_mark_is_section_content() -> None:
+    from backend.content import page_sections
+    assert not page_sections.is_empty("\n<!-- view: problem_journey -->\n")
+    assert page_sections.is_empty("\n<!-- pendiente -->\n")

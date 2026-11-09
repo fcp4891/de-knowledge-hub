@@ -68,3 +68,39 @@ Con `practice_lanes`, no se exigen en la §14 las viñetas Seguridad, Observabil
 
 - Hay tests de las reglas de marca, de la cobertura de fuentes, de la exención de la §14, del schema, de la proyección y del parser.
 - La matriz de control del §4 (ADR-029) todavía se reconoce por sus encabezados. Este ADR no la cambia; pasarla a una marca queda pendiente de decisión.
+
+## Enmienda 1 (2026-11-09) — Componentes de diseño con datos del contrato
+
+Los componentes de Cursor (`ui/ficha-ley21719-componentes`) traían su texto fijo, y la vista previa los ubicaba buscando textos y encabezados con expresiones regulares. Con esta enmienda, cada componente recibe sus datos por props desde `views`, y nada se ubica por texto.
+
+### Vistas nuevas
+
+| Clave | Componente | Posición |
+|---|---|---|
+| `treatment_map` | `TreatmentMap` | Marca en §1 |
+| `legal_foundations` | `LegalFoundations` (título y recuadro de roles) | Fija: §2 |
+| `problem_journey` | `ProblemJourney` | Marca en §3 |
+| `design_board` | `DesignBoard` | Marca en §4 |
+| `control_matrix` | `ControlMatrix` | Marca en §4 |
+| `when_to_use` | `WhenToUse` | Marca en §5 |
+| `requirement_to_data` | `RequirementToData` | Marca en §9 |
+| `control_evidence` | `ControlEvidence` | Marca en §9 |
+| `code_guide` | `CodeGuide` | Marca en §10 |
+| `cloud_compare` | `CloudCompare` | Marca en §11 (ADR-029, enmienda 1) |
+
+Además, `approach` suma el ejemplo y la referencia de cada paso, los rótulos de sus filas y las fuentes; `vigencia_timeline` suma `note`, `icon`, `intro` e `intro_mark`.
+
+### Reglas
+
+- **Texto con enlaces.** Los campos marcados como texto enriquecido admiten Markdown en línea: `[rótulo](https://…)`, negrita, cursiva y código. Se dibujan con `RichText`.
+- **Enlaces citados.** Todo enlace de una vista, sea un campo `href` o un enlace Markdown dentro de un texto, tiene que ser una cita de `sources`. Lo comprueba el validador.
+- **Marca como contenido.** Una marca de vista cuenta como contenido de la sección, así que una sección que solo trae su marca no está vacía.
+- **Fecha de la legislación comparada (ADR-023).** La regla `accessed` = `last_verified` rige para la legislación de la jurisdicción de la ficha. La legislación comparada, como el RGPD en EUR-Lex dentro de una ficha `CL`, lleva su propia fecha de consulta.
+- **Guía del código.** Los escenarios de `code_guide` y sus salidas tienen que coincidir con los de la CI, y sus funciones con las de `CONTROLS`. Lo comprueba un test.
+
+### Componentes eliminados
+
+- `DataFlow`: lo reemplaza `TreatmentMap`.
+- `DesignQuestions`: no se usaba.
+- `ViewFallbacks`: ya no hace falta un render de respaldo.
+- La vista previa (`/preview-ficha`) dibuja la misma ficha, sin slots propios.

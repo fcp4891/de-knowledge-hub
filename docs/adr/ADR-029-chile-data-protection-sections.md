@@ -26,7 +26,7 @@ Hay un segundo problema en las citas del boletín 18.623-07. Sus dos títulos de
 
 ### 1. Enmienda a la regla de plantilla: solo chile-data-protection
 
-- **Secciones que puede omitir.** `chile-data-protection` puede omitir las secciones 6, 7, 8, 15, 17 y 19. Las demás secciones siguen siendo obligatorias, y todas las demás fichas siguen con las 22.
+- **Secciones que puede omitir.** `chile-data-protection` puede omitir las secciones 6, 7, 8, 12, 13, 15, 17 y 19 (12 y 13 desde la enmienda 1). Las demás secciones siguen siendo obligatorias, y todas las demás fichas siguen con las 22.
 - **Dónde se fija.** La excepción vive en `backend/content/page_sections.py`, en la constante `OMITTABLE`. Por ahora es la única entrada; agregar otra ficha exige enmendar este ADR.
 - **Numeración.** Los encabezados conservan el número de la plantilla, por ejemplo `## 9. Arquitectura`. Así no cambian las claves de la API, los anclas `#sN` ni el progreso guardado.
 - **Reglas que dejan de aplicarse.** Si falta el §8, no se exige su subsección «Evidencia de cumplimiento» (ADR-023). Si falta el §17, no se aplica la regla del §17; ya era así para cualquier ficha sin §17.
@@ -58,6 +58,15 @@ Hay un segundo problema en las citas del boletín 18.623-07. Sus dos títulos de
 
 ## Consecuencias
 
-- La ficha valida con 16 secciones y un anexo. Un test cubre cada regla: omitir solo esas seis, solo en esta ficha, anexo al final y no vacío, `annexes` y `label` solo cuando existen.
+- La ficha valida con 14 secciones y un anexo (16 antes de la enmienda 1). Un test cubre cada regla: omitir solo esas, solo en esta ficha, anexo al final y no vacío, `annexes` y `label` solo cuando existen.
 - Los mocks no cambian, salvo los de esta ficha: ninguna otra trae `annexes` ni `label`.
 - El recorrido del dominio en el explorador muestra «sección N de 22» según el número de la plantilla. Este ADR no lo cambia.
+
+## Enmienda 1 (2026-11-09) — §12 y §13
+
+Con el diseño final de Cursor, las tres pestañas GCP, AWS y Azure se reemplazan por una sola tabla, «En la nube» (vista `cloud_compare`, ADR-030).
+
+- **Dónde va la tabla.** La §11 conserva su título de plantilla («GCP») y lleva la marca de la vista. La UI la muestra con el título de la vista.
+- **Secciones omitidas.** La §12 y la §13 quedan sin contenido propio, así que pasan a ser omitibles en esta ficha. El conjunto queda en 6, 7, 8, 12, 13, 15, 17 y 19.
+- **Lo que no cambia.** Las demás fichas siguen con sus tres secciones por nube.
+- **Lo que se ve.** La ficha muestra 14 secciones, o 13 si el lector no ve el historial. La numeración visible es correlativa y «Leído N de M» cuenta solo las secciones visibles.

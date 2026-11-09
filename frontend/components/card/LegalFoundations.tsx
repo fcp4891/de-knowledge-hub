@@ -6,7 +6,6 @@ import {
   CHILE_CHILD_TITLES,
   CHILE_GROUPS,
   CHILE_PRINCIPLES,
-  CHILE_ROLES,
   type ChileArticle,
   type ChileFicha,
   type ChileGroup,
@@ -14,6 +13,8 @@ import {
 } from "@/lib/chileLegalCatalog";
 import { bcnLinkText, legalRowId } from "@/lib/legal";
 import { principleActivation, principleAriaLabel } from "@/lib/principleCards";
+import type { RolesProps } from "@/lib/views";
+import { RichText } from "@/components/ficha/RichText";
 
 function fold(value: string): string {
   return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -118,7 +119,8 @@ function Fichas({ fichas }: { fichas: ChileFicha[] }) {
   );
 }
 
-export function LegalFoundations() {
+/** §2 de chile-data-protection: principios, roles (ADR-030: datos de views.legal_foundations) y modal del catálogo. */
+export function LegalFoundations({ roles }: { roles?: RolesProps }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [open, setOpen] = useState<ChileArticle | null>(null);
   const [tip, setTip] = useState<string | null>(null);
@@ -231,12 +233,7 @@ export function LegalFoundations() {
         ))}
       </ul>
       <ArticleModal dialogRef={dialogRef} article={open} onClose={() => setOpen(null)} />
-      <h3>Responsabilidades: quién decide y quién implementa</h3>
-      <ul>
-        {CHILE_ROLES.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
+      {roles ? <RolesBoard roles={roles} /> : null}
     </div>
   );
 }
@@ -332,6 +329,58 @@ export function LegalCatalog() {
   );
 }
 
+function RolesBoard({ roles }: { roles: RolesProps }) {
+  const { responsible, processor, source, caption } = roles;
+  return (
+    <section className="lf-roles" aria-labelledby="lf-roles-title">
+      {caption ? <p className="lf-roles-lead">{caption}</p> : null}
+      <div className="lf-roles-org">
+        <h3 id="lf-roles-title">{responsible.title}</h3>
+        <p className="lf-roles-lead">
+          <RichText text={responsible.lead} />
+        </p>
+        <div className="lf-roles-split">
+          <div className="lf-roles-decide">
+            <p className="lf-roles-kicker">{responsible.decide.kicker}</p>
+            {responsible.decide.items.map((item) => (
+              <RoleItem key={item.title} item={item} />
+            ))}
+          </div>
+          <div className="lf-roles-build">
+            <p className="lf-roles-kicker">{responsible.build.kicker}</p>
+            {responsible.build.items.map((item) => (
+              <RoleItem key={item.title} item={item} />
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="lf-roles-vendor">
+        <h3>{processor.title}</h3>
+        <p>
+          <RichText text={processor.text} />
+        </p>
+      </div>
+      {source ? (
+        <p className="lf-roles-source">
+          <a href={source.href} target="_blank" rel="noopener noreferrer">
+            {source.title}
+          </a>
+          <span> · {source.detail}</span>
+        </p>
+      ) : null}
+    </section>
+  );
+}
+
+function RoleItem({ item }: { item: { title: string; text: string } }) {
+  return (
+    <>
+      <h4>{item.title}</h4>
+      <p>{item.text}</p>
+    </>
+  );
+}
+
 function PrincipleCard({
   index,
   principle,
@@ -353,6 +402,7 @@ function PrincipleCard({
 }) {
   const tipId = `lf-tip-${index}`;
   const child = CHILE_CHILD_TITLES[principle.slug] ?? principle.slug;
+  const name = principle.label.replace(/^[a-h]\)\s*/i, "");
   return (
     <li
       className="lf-principle"
@@ -372,7 +422,7 @@ function PrincipleCard({
       <a
         className={open ? "lf-principle-card is-open" : "lf-principle-card"}
         href={`/concepts/${principle.slug}/`}
-        aria-label={principleAriaLabel(principle.label, child)}
+        aria-label={principleAriaLabel(name, child)}
         aria-describedby={open ? tipId : undefined}
         onFocus={() => onShow()}
         onBlur={() => {
@@ -400,7 +450,7 @@ function PrincipleCard({
           }
         }}
       >
-        <span className="lf-principle-label">{principle.label}</span>
+        <span className="lf-principle-label">{name}</span>
         <PrincipleEye />
       </a>
       {open ? (

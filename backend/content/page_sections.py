@@ -18,7 +18,7 @@ from pathlib import Path
 HEADING = re.compile(r"^## (\d+)\. (.+?)\s*$")
 ANNEX_HEADING = re.compile(r"^## Anexo · (.+?)\s*$")   # ADR-029: después de la última sección
 # ADR-029: única excepción a las 22 secciones; puede omitir estas y llevar anexos. Las demás fichas, sin cambios.
-OMITTABLE = {"chile-data-protection": frozenset({6, 7, 8, 15, 17, 19})}
+OMITTABLE = {"chile-data-protection": frozenset({6, 7, 8, 12, 13, 15, 17, 19})}
 ANNEX_PAGES = frozenset(OMITTABLE)
 HTML_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
 TEMPLATE = Path("_templates") / "concept.md"
@@ -94,8 +94,12 @@ def template_titles(content_dir: Path, template: Path = TEMPLATE) -> list[str] |
     return titles or None
 
 
+VIEW_MARK = re.compile(r"<!--\s*view:\s*[a-z_]+\s*-->")
+
+
 def is_empty(content: str) -> bool:
-    return not HTML_COMMENT.sub("", content).strip()
+    """Un comentario HTML solo no es contenido; una marca de vista sí (ADR-030, enmienda 1)."""
+    return not VIEW_MARK.search(content) and not HTML_COMMENT.sub("", content).strip()
 
 
 def check(body: str, titles: list[str], omittable: frozenset[int] = frozenset()) -> list[str]:

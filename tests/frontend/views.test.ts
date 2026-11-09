@@ -6,6 +6,7 @@ import { parseMarkdown } from "../../frontend/lib/markdown.ts";
 import {
   centralIdeaProps,
   groupedSourceCount,
+  richParts,
   severityCardsProps,
   sourcesGroupedProps,
   vigenciaTimelineProps,
@@ -48,4 +49,19 @@ test("los ocho principios se nombran sin letra", () => {
     [],
   );
   assert.equal(CHILE_PRINCIPLES[0].label, "Licitud y lealtad");
+});
+
+test("el texto de una vista admite enlaces, negrita, cursiva y código (ADR-030)", () => {
+  assert.deepEqual(richParts("Ver ([art. 2 letra o](https://e.org/ley)) y **tratamiento**, *policy as code* y `validate()`."), [
+    { type: "text", value: "Ver (" },
+    { type: "link", value: "art. 2 letra o", href: "https://e.org/ley" },
+    { type: "text", value: ") y " },
+    { type: "strong", value: "tratamiento" },
+    { type: "text", value: ", " },
+    { type: "em", value: "policy as code" },
+    { type: "text", value: " y " },
+    { type: "code", value: "validate()" },
+    { type: "text", value: "." },
+  ]);
+  assert.deepEqual(richParts("[x](http://inseguro.org)"), [{ type: "text", value: "[x](http://inseguro.org)" }]);
 });

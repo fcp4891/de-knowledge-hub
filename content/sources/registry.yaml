@@ -3877,6 +3877,45 @@ updated_at: '2026-11-07'
 last_verified: '2026-11-07'
 verification_status: verified
 ---
+id: source:iso-iec-27001
+slug: iso-iec-27001
+type: source
+title: ISO/IEC 27001
+description: 'Norma ISO/IEC 27001 (sistemas de gestión de la seguridad de la información): página oficial de ISO. iso.org rechaza la verificación
+  automática (HTTP 403): título por verificar.'
+url: https://www.iso.org/standard/27001
+source_type: official_docs
+authority_level: 1
+provider: iso
+url_verified: false
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-11-09'
+updated_at: '2026-11-09'
+last_verified: '2026-11-09'
+verification_status: review_required
+---
+id: source:eur-lex
+slug: eur-lex
+type: source
+title: EUR-Lex
+description: Acceso oficial al Derecho de la Unión Europea; se usa para el Reglamento (UE) 2016/679 (RGPD) como legislación comparada.
+url: https://eur-lex.europa.eu/
+source_type: legislative
+authority_level: 1
+provider: eur-lex
+url_verified: true
+review_frequency: monthly
+trust: high
+technologies: []
+created_at: '2026-11-09'
+updated_at: '2026-11-09'
+last_verified: '2026-11-09'
+verification_status: verified
+jurisdiction:
+- EU
+---
 id: source:boe-doue
 slug: boe-doue
 type: source

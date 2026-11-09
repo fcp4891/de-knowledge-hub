@@ -2,14 +2,6 @@ import { ApiFailure } from "@/components/ApiFailure";
 import { NoteForm, NoteItem } from "@/components/card/PersonalForms";
 import { ConceptReading, type ReadingSectionModel } from "@/components/card/ConceptReading";
 import { LegalCatalog, LegalFoundations } from "@/components/card/LegalFoundations";
-import {
-  ApproachFallback,
-  CentralIdeaFallback,
-  PracticeLanesFallback,
-  SeverityCardsFallback,
-  SourcesGroupedFallback,
-  VigenciaTimelineFallback,
-} from "@/components/card/ViewFallbacks";
 import { canViewChangeHistory, canViewRelatedLab, currentViewer } from "@/lib/changeHistoryAccess";
 import { MarkdownBody } from "@/components/markdown/MarkdownBody";
 import { getConcept, getDomain, getRelations, getStudyState, listNotes } from "@/lib/api/client";
@@ -26,14 +18,40 @@ import { SHORT_NAMES } from "@/lib/learning-paths";
 import { isDomainPublished, relationVisible, scopeFromConcepts } from "@/lib/publishedScope";
 import { nextInRoute } from "@/lib/domainRoute";
 import { staticSlugs } from "@/lib/staticParams";
+import type { ReactNode } from "react";
+
+import { ApproachBoard } from "@/components/ficha/ApproachBoard";
+import { CentralIdea } from "@/components/ficha/CentralIdea";
+import { CloudCompare } from "@/components/ficha/CloudCompare";
+import { CodeGuide } from "@/components/ficha/CodeGuide";
+import { ControlEvidence, RequirementToData } from "@/components/ficha/ControlEvidence";
+import { ControlMatrix } from "@/components/ficha/ControlMatrix";
+import { DesignBoard } from "@/components/ficha/DesignBoard";
+import { PracticeLanes } from "@/components/ficha/PracticeLanes";
+import { ProblemJourney } from "@/components/ficha/ProblemJourney";
+import { SeverityCards } from "@/components/ficha/SeverityCards";
+import { SourcesGrouped } from "@/components/ficha/SourcesGrouped";
+import { TreatmentMap } from "@/components/ficha/TreatmentMap";
+import { VigenciaTimeline } from "@/components/ficha/VigenciaTimeline";
+import { WhenToUse } from "@/components/ficha/WhenToUse";
 import {
   approachProps,
   centralIdeaProps,
+  cloudCompareProps,
+  codeGuideProps,
+  controlEvidenceProps,
+  controlMatrixProps,
+  designBoardProps,
   groupedSourceCount,
+  legalFoundationsProps,
   practiceLanesProps,
+  problemJourneyProps,
+  requirementToDataProps,
   severityCardsProps,
   sourcesGroupedProps,
+  treatmentMapProps,
   vigenciaTimelineProps,
+  whenToUseProps,
   type Views,
 } from "@/lib/views";
 
@@ -83,13 +101,25 @@ function SourceLinks({ sources }: { sources: SourceRef[] }) {
   );
 }
 
-/** ADR-030: lo que va en cada marca <!-- view: clave --> (render de respaldo hasta conectar los componentes). */
-function markedViews(views: Views | undefined): Record<string, React.ReactNode> {
-  const nodes: Record<string, React.ReactNode> = {};
-  if (views?.central_idea) nodes.central_idea = <CentralIdeaFallback {...centralIdeaProps(views.central_idea)} />;
-  if (views?.vigencia_timeline) nodes.vigencia_timeline = <VigenciaTimelineFallback {...vigenciaTimelineProps(views.vigencia_timeline)} />;
-  if (views?.practice_lanes) nodes.practice_lanes = <PracticeLanesFallback {...practiceLanesProps(views.practice_lanes)} />;
-  if (views?.severity_cards) nodes.severity_cards = <SeverityCardsFallback {...severityCardsProps(views.severity_cards)} />;
+/** ADR-030: el componente de cada marca <!-- view: clave -->, con sus datos del contrato. Sin la vista, no dibuja nada. */
+function markedViews(views: Views | undefined): Record<string, ReactNode> {
+  const nodes: Record<string, ReactNode> = {};
+  if (!views) {
+    return nodes;
+  }
+  if (views.central_idea) nodes.central_idea = <CentralIdea {...centralIdeaProps(views.central_idea)} />;
+  if (views.vigencia_timeline) nodes.vigencia_timeline = <VigenciaTimeline {...vigenciaTimelineProps(views.vigencia_timeline)} />;
+  if (views.treatment_map) nodes.treatment_map = <TreatmentMap {...treatmentMapProps(views.treatment_map)} />;
+  if (views.problem_journey) nodes.problem_journey = <ProblemJourney {...problemJourneyProps(views.problem_journey)} />;
+  if (views.design_board) nodes.design_board = <DesignBoard {...designBoardProps(views.design_board)} />;
+  if (views.control_matrix) nodes.control_matrix = <ControlMatrix {...controlMatrixProps(views.control_matrix)} />;
+  if (views.when_to_use) nodes.when_to_use = <WhenToUse {...whenToUseProps(views.when_to_use)} />;
+  if (views.requirement_to_data) nodes.requirement_to_data = <RequirementToData {...requirementToDataProps(views.requirement_to_data)} />;
+  if (views.control_evidence) nodes.control_evidence = <ControlEvidence {...controlEvidenceProps(views.control_evidence)} />;
+  if (views.code_guide) nodes.code_guide = <CodeGuide {...codeGuideProps(views.code_guide)} />;
+  if (views.cloud_compare) nodes.cloud_compare = <CloudCompare {...cloudCompareProps(views.cloud_compare)} />;
+  if (views.practice_lanes) nodes.practice_lanes = <PracticeLanes {...practiceLanesProps(views.practice_lanes)} />;
+  if (views.severity_cards) nodes.severity_cards = <SeverityCards {...severityCardsProps(views.severity_cards)} />;
   return nodes;
 }
 
@@ -118,6 +148,19 @@ function sectionModels(
     clouds = [];
   }
 
+  const body = (section: Section, extra: { etiquetaColumn?: boolean } = {}) => (
+    <MarkdownBody
+      markdown={section.markdown}
+      obligations={obligations}
+      conceptRefs={conceptRefs}
+      markCodeStatus={architecture}
+      horizontalDiagrams={section.key === "architecture"}
+      styleArrows={styleArrows}
+      views={viewNodes}
+      {...extra}
+    />
+  );
+
   for (const section of ordered) {
     if (section.key === "change_history" && !showHistory) {
       continue;
@@ -138,7 +181,7 @@ function sectionModels(
         presentation: section.key === "components" ? "components" : "view",
         listed: true,
         body: (
-          <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus styleArrows={styleArrows} />
+          <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus styleArrows={styleArrows} views={viewNodes} />
         ),
       });
       continue;
@@ -151,12 +194,10 @@ function sectionModels(
         title: titleOf(section),
         presentation: "summary",
         listed: text,
-        body: text ? (
-          <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} styleArrows={styleArrows} views={viewNodes} />
-        ) : null,
+        body: text ? body(section) : null,
       });
       if (views?.approach) {
-        // ADR-030: el enfoque es un desplegable propio, justo después del Resumen, sin número.
+        // ADR-030: el enfoque es un desplegable propio, justo después del Resumen, cerrado y sin número.
         const approach = approachProps(views.approach);
         models.push({
           number: 30,
@@ -165,7 +206,22 @@ function sectionModels(
           presentation: "details",
           listed: false,
           annex: true,
-          body: <ApproachFallback {...approach} />,
+          body: <ApproachBoard {...approach} />,
+        });
+      }
+      continue;
+    }
+    if (CLOUD_KEYS.has(section.key) && views?.cloud_compare) {
+      // ADR-030: «En la nube» reemplaza las pestañas por nube; la sección 11 lleva la marca (12 y 13 se omiten, ADR-029).
+      flushClouds();
+      if (text) {
+        models.push({
+          number: section.number,
+          key: "cloud_compare",
+          title: views.cloud_compare.title,
+          presentation: "details",
+          listed: true,
+          body: body(section),
         });
       }
       continue;
@@ -180,30 +236,22 @@ function sectionModels(
         title: titleOf(section),
         presentation: "cloud",
         listed: !(architecture && (section.key === "aws" || section.key === "azure")),
-        body: (
-          <MarkdownBody
-            markdown={section.markdown}
-            etiquetaColumn
-            obligations={obligations}
-            conceptRefs={conceptRefs}
-            markCodeStatus={architecture}
-            styleArrows={styleArrows}
-          />
-        ),
+        body: body(section, { etiquetaColumn: true }),
       });
       continue;
     }
     flushClouds();
     if (section.key === "what_is" && slug === "chile-data-protection") {
+      const foundations = views?.legal_foundations ? legalFoundationsProps(views.legal_foundations) : null;
       models.push({
         number: section.number,
         key: section.key,
-        title: "Fundamentos legales y aplicación técnica",
+        title: foundations?.title ?? titleOf(section),
         presentation: "details",
         listed: true,
         body: (
           <>
-            <LegalFoundations />
+            <LegalFoundations roles={foundations?.roles} />
             <p>
               <a href="#s23">Detalle por tema y artículo en el Anexo · Catálogo legal</a>
             </p>
@@ -224,7 +272,7 @@ function sectionModels(
           title: titleOf(section),
           presentation: "details",
           listed: true,
-          body: <SourcesGroupedFallback {...sourcesGroupedProps(views.sources_grouped)} />,
+          body: <SourcesGrouped {...sourcesGroupedProps(views.sources_grouped)} />,
         });
         continue;
       }
@@ -256,17 +304,7 @@ function sectionModels(
             ? "open"
             : "details",
       listed: true,
-      body: (
-        <MarkdownBody
-          markdown={section.markdown}
-          obligations={obligations}
-          conceptRefs={conceptRefs}
-          markCodeStatus={architecture}
-          horizontalDiagrams={section.key === "architecture"}
-          styleArrows={styleArrows}
-          views={viewNodes}
-        />
-      ),
+      body: body(section),
     });
   }
   flushClouds();
@@ -353,8 +391,7 @@ function NoteListView({ slug, notes }: { slug: string; notes: NoteList }) {
   ));
 }
 
-export default async function ConceptPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export async function ConceptArticle({ slug }: { slug: string }) {
   const staticMode = process.env.API_MODE === "static";
   const [concept, relations, conceptRefs] = await Promise.all([
     getConcept(slug),
@@ -451,4 +488,9 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
       {staticMode ? null : <HybridNotes slug={data.slug} />}
     </ConceptReading>
   );
+}
+
+export default async function ConceptPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  return <ConceptArticle slug={slug} />;
 }

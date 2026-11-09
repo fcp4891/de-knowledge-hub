@@ -27,7 +27,12 @@ def ficha() -> tuple[dict[str, Any], str]:
     return yaml.safe_load(frontmatter), body
 
 
-MONTHS = {"12": "diciembre"}
+MONTHS = {"10": "octubre", "12": "diciembre"}
+
+
+def long_date(iso: str) -> str:
+    year, month, day = iso.split("-")
+    return f"{int(day)} de {MONTHS[month]} de {year}"
 
 
 def timeline() -> dict[str, Any]:
@@ -39,22 +44,21 @@ def test_effective_date_matches_the_framework() -> None:
     """La frase del Contexto normativo y el hito vigente de la línea (ADR-030) dicen la fecha del marco legal."""
     _, body = ficha()
     expected = str(facts()["effective-date"]["value"])
-    year, month, day = expected.split("-")
-    assert f"rigen desde el {int(day)} de {MONTHS[month]} de {year}" in body
+    assert f"rigen desde el {long_date(expected)}" in body
     current = [item for item in timeline()["items"] if item["state"] == "current"]
     assert [str(item["date"]) for item in current] == [expected]
 
 
 def test_postponement_state_matches_the_framework() -> None:
-    """El hito del Senado y «Estado al …» usan la fecha verificada del proyecto; la fecha propuesta es la del mensaje."""
+    """El hito del Senado (el que enlaza la tramitación) y el estado de la línea usan la fecha verificada del proyecto; la
+    fecha propuesta es la del mensaje."""
     bill = facts()["postponement-bill"]
     view = timeline()
-    senate = [item for item in view["items"] if "18.623-07" in item["title"]]
+    senate = [item for item in view["items"] if any(link["href"] == bill["url"] for link in item.get("links", []))]
     assert [str(item["date"]) for item in senate] == [str(bill["verified_at"])]
-    assert view["as_of"].startswith(f"Estado al {bill['verified_at']}")
+    assert long_date(str(bill["verified_at"])) in view["as_of"]
     assert "«1 de diciembre de 2027»" in bill["note"]
     assert [str(i["date"]) for i in view["items"] if i["state"] == "proposed"] == ["2027-12-01"]
-    assert {link["href"] for item in senate for link in item.get("links", [])} >= {bill["url"]}
 
 
 def test_senate_citation_was_read_the_day_of_the_framework() -> None:

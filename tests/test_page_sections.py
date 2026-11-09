@@ -233,7 +233,7 @@ def test_architecture_view_counts_subgraphs_as_nodes(with_architecture_template:
 # --- Excepción de chile-data-protection (ADR-029) ------------------------------
 
 CDP = "chile-data-protection"
-CDP_OMITTED = {6, 7, 8, 15, 17, 19}
+CDP_OMITTED = {6, 7, 8, 12, 13, 15, 17, 19}
 
 
 def body_without(omitted: set[int], tail: str = "") -> str:
@@ -254,7 +254,7 @@ def test_chile_data_protection_may_still_have_all_sections(with_template: Path) 
 
 def test_other_pages_keep_the_22_sections(with_template: Path) -> None:
     write_md(with_template, "concepts/a.md", concept("a"), body=body_without(CDP_OMITTED))
-    assert_error(run(with_template), "faltan [6, 7, 8, 15, 17, 19]")
+    assert_error(run(with_template), "faltan [6, 7, 8, 12, 13, 15, 17, 19]")
 
 
 def test_chile_data_protection_cannot_omit_other_sections(with_template: Path) -> None:

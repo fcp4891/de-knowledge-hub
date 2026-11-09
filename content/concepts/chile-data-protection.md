@@ -95,117 +95,850 @@ sources:
   - source: iso-iec-27701
     url: https://www.iso.org/standard/27701
     accessed: 2026-11-07
-    note: "Página oficial de ISO/IEC 27701 (Privacy information management systems). iso.org respondió HTTP 403 a la verificación automática el 2026-11-07: la URL sale del buscador de ISO y el título de la página queda por verificar (Felipe). Se cita como uno de los marcos que sintetiza el enfoque del Resumen."
+    note: "Página oficial de ISO/IEC 27701 (Privacy information management systems). iso.org respondió HTTP 403 a la verificación automática el 2026-11-07: la URL sale del buscador de ISO y el título de la página queda por verificar. Se cita como uno de los marcos que sintetiza el enfoque del Resumen."
   - source: nist-privacy-framework
     url: https://www.nist.gov/privacy-framework
     accessed: 2026-11-07
     page_title: "Privacy Framework"
     note: "Privacy Framework (NIST): herramienta voluntaria, construida con las partes interesadas, para identificar y gestionar riesgos de privacidad. Se cita como uno de los marcos que sintetiza el enfoque del Resumen."
+  - source: iso-iec-27001
+    url: https://www.iso.org/standard/27001
+    accessed: 2026-11-09
+    note: "Página oficial de ISO/IEC 27001. iso.org respondió HTTP 403 a la verificación automática el 2026-11-09: título por verificar (Felipe). El enfoque cita las cláusulas 4.2, 6.1.2, 6.1.3, 7.5, 9.1 y 9.2 y los controles A.5.31 y A.5.34 de la edición 2022."
+  - source: eur-lex
+    url: https://eur-lex.europa.eu/eli/reg/2016/679/oj
+    accessed: 2026-11-09
+    page_title: "Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC (General Data Protection Regulation)"
+    note: "Legislación comparada, no chilena. El art. 4.2 del RGPD define tratamiento e incluye expresamente la supresión o destrucción; la ficha lo usa solo como referencia comparada en el Resumen."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/column-level-security-intro
+    accessed: 2026-11-09
+    page_title: "Introduction to column-level access control"
+    note: "Control de acceso por columna en BigQuery con policy tags."
+  - source: gcp-bigquery-docs
+    url: https://docs.cloud.google.com/bigquery/docs/row-level-security-intro
+    accessed: 2026-11-09
+    page_title: "Introduction to BigQuery row-level security"
+    note: "Políticas de acceso por fila: filtros sobre una tabla que determinan qué filas ve cada usuario o grupo autorizado."
+  - source: aws-lake-formation-docs
+    url: https://docs.aws.amazon.com/lake-formation/latest/dg/data-filtering.html
+    accessed: 2026-11-09
+    page_title: "Data filtering and cell-level security in Lake Formation"
+    note: "Filtros de datos de Lake Formation: seguridad por columna, fila y celda."
+  - source: azure-databricks-docs
+    url: https://learn.microsoft.com/en-us/azure/databricks/admin/account-settings/audit-log-delivery
+    accessed: 2026-11-09
+    page_title: "Configure diagnostic log delivery"
+    note: "Entrega de los registros de diagnóstico de Azure Databricks a una cuenta de almacenamiento, Event Hubs o Log Analytics (Azure Monitor); hay que activarla en Diagnostic settings y requiere el plan Premium."
 relations:
   - {type: RELATED_TO, target: data-classification, note: "Clasificación técnica de datos."}
 views:
   central_idea:
     checks_title: El pipeline lo comprueba
-    checks: [Se ejecuta sin errores, Cumple sus controles de calidad, Entrega información confiable]
-    status: "estado: exitoso"
+    checks:
+    - Se ejecuta sin errores
+    - Cumple sus controles de calidad
+    - Entrega información confiable
+    status: 'estado: exitoso'
     risks_title: Y aun así puede
     risks:
-      - {text: Usar datos para una finalidad no autorizada, tag: Finalidad}
-      - {text: Recopilar o conservar datos que no son necesarios, tag: Proporcionalidad}
-      - {text: "Exponer datos por accesos, transformaciones o transferencias inadecuadas", tag: Seguridad}
-      - {text: Mantener copias que impiden rectificar o suprimir, tag: Derechos}
-      - {text: No tener evidencia para investigar o demostrar sus controles, tag: Responsabilidad}
-    closing: Por eso la privacidad es un criterio de diseño y operación, no una revisión posterior al desarrollo.
+    - text: Usar datos para una finalidad no autorizada
+      tag: Finalidad
+    - text: Recopilar o conservar datos que no son necesarios
+      tag: Proporcionalidad
+    - text: Exponer datos por accesos, transformaciones o transferencias inadecuadas
+      tag: Seguridad
+    - text: Mantener copias que impiden rectificar o suprimir
+      tag: Derechos
+    - text: Carecer de trazabilidad y evidencia suficiente para investigar incidentes o demostrar la eficacia de sus controles.
+      tag: Responsabilidad
+    closing: Por ello, la Ingeniería de Datos debe incorporar la privacidad como un criterio transversal de diseño y operación, no únicamente como una revisión posterior
+      al desarrollo.
   vigencia_timeline:
     items:
-      - {date: "2024-12-13", title: Publicación, detail: Ley 21.719 en el Diario Oficial, links: [{label: BCN, href: "https://www.bcn.cl/leychile/navegar?idNorma=1209272"}], state: past}
-      - date: "2026-10-28"
-        title: Senado aprueba el boletín 18.623-07
-        detail: Pasa a la Cámara, con discusión inmediata
-        links:
-          - {label: tramitación, href: "https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07"}
-          - {label: mensaje, href: "https://tramitacion.senado.cl/appsenado/index.php?mo=tramitacion&ac=getDocto&iddocto=19307&tipodoc=mensaje_mocion"}
-        state: past
-      - {date: "2026-12-01", title: Entrada en vigencia, detail: Fecha que rige hoy, state: current}
-      - {date: "2027-12-01", title: Fecha propuesta, detail: Solo si el proyecto se publica como ley, state: proposed}
-    as_of: "Estado al 2026-10-28 · fuente oficial: tramitación del Senado"
+    - date: '2024-12-13'
+      title: Publicación de la ley
+      icon: calendar
+      state: past
+      detail: Se publica la Ley 21.719, que moderniza la regulación sobre protección de datos personales en Chile.
+      links:
+      - label: BCN
+        href: https://www.bcn.cl/leychile/navegar?idNorma=1209272
+    - date: '2026-10-28'
+      title: Avance legislativo
+      icon: institution
+      state: past
+      detail: El Senado aprueba la propuesta de postergación y la envía a la Cámara de Diputados.
+      links:
+      - label: Boletín 18.623-07
+        href: https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07
+    - date: '2026-12-01'
+      title: Entrada en vigencia
+      icon: calendar
+      state: current
+      detail: Fecha establecida por la ley, mientras no se publique una modificación.
+      note: Fecha legal indicada
+    - date: '2027-12-01'
+      title: Postergación propuesta
+      icon: calendar
+      state: proposed
+      detail: Nueva fecha planteada, sujeta a aprobación y publicación como ley.
+      note: Proyecto en tramitación
+    as_of: 'Estado de la tramitación: 28 de octubre de 2026 · Fuentes: BCN y Senado.'
+  treatment_map:
+    lead: 'Para la ley, **tratamiento** es cualquier operación que permita recolectar, procesar, almacenar, comunicar, transmitir o utilizar datos personales ([art.
+      2 letra o](https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01)). En una plataforma de datos, esos verbos se ven así:'
+    law_label:
+      title: Ley
+      detail: art. 2 letra o
+    tech_label:
+      title: Ingeniería de datos
+      detail: interpretación técnica
+    verbs:
+    - verb: Recolectar
+      practice: Recolección e ingesta
+      examples: APIs · CDC · archivos
+    - verb: Procesar
+      practice: Transformación, integración y consulta
+      examples: bronze → gold
+    - verb: Almacenar
+      practice: Tablas, respaldos y retención
+      examples: lakehouse · backups
+    - verb: Comunicar
+      practice: Exportaciones y entrega a terceros
+      examples: archivos · APIs externas
+    - verb: Transmitir
+      practice: Envíos entre sistemas y réplicas
+      examples: 'fuera de Chile: revisar art. 27'
+    - verb: Utilizar
+      practice: Dashboards, modelos e IA
+      examples: reportes · entrenamiento
+    conclusion: Por eso, cualquier actividad de un pipeline que toque datos personales es tratamiento.
+    note: 'La fila de ingeniería es una interpretación técnica, no texto legal: una misma actividad puede caer en más de un verbo. Borrar también es una operación
+      sobre los datos; el RGPD lo incluye expresamente en su definición de tratamiento ([RGPD art. 4.2, referencia comparada](https://eur-lex.europa.eu/eli/reg/2016/679/oj)).'
+    sources:
+    - title: Ley 21.719
+      href: https://www.bcn.cl/leychile/navegar?idNorma=1209272
+      detail: Diario Oficial, 2024-12-13 · Legislación · Nivel 1 · art. 2 letra o), definición de tratamiento
+    - title: Reglamento (UE) 2016/679 (RGPD)
+      href: https://eur-lex.europa.eu/eli/reg/2016/679/oj
+      detail: EUR-Lex · Legislación comparada · Nivel 1 · art. 4.2
   approach:
     title: De la normativa a la implementación técnica
-    intro: "La ley establece obligaciones y responsabilidades jurídicas. La Ingeniería de Datos contribuye a su cumplimiento mediante soluciones técnicas adecuadas al contexto, al riesgo y a las decisiones adoptadas por las áreas responsables. Para estudiar esa relación, es posible utilizar el enfoque:"
+    intro: 'La ley establece obligaciones y responsabilidades jurídicas. La Ingeniería de Datos contribuye a su cumplimiento con soluciones técnicas adecuadas al
+      contexto, al riesgo y a las decisiones de las áreas responsables. Para estudiar esa relación, es posible utilizar este enfoque:'
+    step_label: Paso
+    example_label:
+      title: Ejemplo
+      detail: fila de la matriz
+    reference_label:
+      title: Referencia
+      detail: ISO/IEC 27001:2022
     steps:
-      - {name: Requisito normativo, description: Qué exige la ley}
-      - {name: Riesgo identificado, description: Qué puede fallar en la plataforma}
-      - {name: Control técnico, description: Qué lo previene o detecta}
-      - {name: Verificación, description: Cómo se prueba que funciona}
-      - {name: Evidencia, description: Qué queda para demostrarlo}
+    - name: Requisito normativo
+      description: Qué exige la ley
+      example: 'Minimización: solo los datos necesarios'
+      reference: 4.2 · A.5.31 requisitos legales
+    - name: Riesgo identificado
+      description: Qué puede fallar en la plataforma
+      example: Columnas no aprobadas llegan a capas analíticas
+      reference: 6.1.2 evaluación de riesgos
+    - name: Control técnico
+      description: Qué lo previene o detecta
+      example: Contrato de campos permitidos
+      reference: 6.1.3 · Anexo A tratamiento y controles
+    - name: Verificación
+      description: Cómo se prueba que funciona
+      example: Test de esquema en CI
+      reference: 9.1 · 9.2 medición y auditoría
+    - name: Evidencia
+      description: Qué queda para demostrarlo
+      example: Resultado del test y versión del contrato
+      reference: 7.5 información documentada
     notes:
-      - title: De dónde viene
-        text: "Es una síntesis de la gestión de riesgos de ISO/IEC 27001 y 27701 y del NIST Privacy Framework, junto con la práctica de auditoría de controles: diseñar el control, probarlo y conservar evidencia."
-      - title: Por qué se ajusta
-        text: La ley dice qué cumplir, pero no cómo implementarlo. El enfoque convierte cada obligación en algo que un pipeline puede ejecutar y probar, y la ficha lo aplica igual en la matriz de control y en el código.
+    - title: De dónde viene
+      text: Es una adaptación propia de la lógica de gestión de riesgos de ISO/IEC 27001, que ISO/IEC 27701 extiende a datos personales, y del NIST Privacy Framework.
+    - title: Por qué se ajusta
+      text: La ley fija principios y deberes, pero en general no prescribe tecnologías ni arquitecturas; el enfoque convierte cada obligación en un control que un
+        pipeline puede ejecutar y probar, y la ficha lo aplica igual en la matriz de control y en el código.
+    sources:
+    - title: ISO/IEC 27001:2022
+      href: https://www.iso.org/standard/27001
+      detail: Norma · Nivel 1 · cláusulas 4.2, 6.1.2, 6.1.3, 7.5, 9.1, 9.2; controles A.5.31 y A.5.34
+    - title: ISO/IEC 27701
+      href: https://www.iso.org/standard/27701
+      detail: Norma · Nivel 1 · extensión de privacidad
+    - title: NIST Privacy Framework
+      href: https://www.nist.gov/privacy-framework
+      detail: Marco · Nivel 1
+  legal_foundations:
+    title: Principios y responsabilidades
+    roles:
+      caption: Quién decide y quién implementa · modelo organizacional típico, no fijado por la ley
+      responsible:
+        title: Responsable · la organización
+        lead: Decide los fines y medios del tratamiento y responde ante la ley ([art. 2 letra n](https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01)).
+        decide:
+          kicker: Deciden y evalúan
+          items:
+          - title: Legal, privacidad y negocio
+            text: Definen finalidad, base de licitud y plazos.
+          - title: Privacidad
+            text: Evalúa el riesgo para los titulares.
+          - title: Seguridad
+            text: Evalúa el riesgo de seguridad y define las medidas de protección.
+        build:
+          kicker: Implementa
+          items:
+          - title: Ingeniería de Datos
+            text: Implementa controles, automatización, trazabilidad y evidencia. No decide la finalidad ni la base; reporta las implicancias técnicas y sus limitaciones.
+      processor:
+        title: Encargado · fuera de la organización
+        text: 'Proveedor que trata datos por cuenta del responsable: nube, SaaS, API de LLM ([art. 2 letra x](https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01);
+          [art. 15 bis](https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01)).'
+      source:
+        title: Ley 21.719
+        href: https://www.bcn.cl/leychile/navegar?idNorma=1209272
+        detail: Diario Oficial, 2024-12-13 · Legislación · Nivel 1 · art. 2 letras n) y x), art. 3, art. 15 bis
+  problem_journey:
+    question:
+      kicker: La pregunta central
+      text: ¿Podemos reconstruir qué ocurrió con los datos de una persona y demostrar qué medidas se aplicaron?
+    lead: 'Sin traducción técnica, la ley queda en un documento. Así se ve el recorrido de los datos de una persona por la plataforma:'
+    labels:
+      route: Recorrido
+      without: Sin controles
+      with: Con controles
+    stages:
+    - title: Ingesta
+      detail: fuente → bronze
+      gap: 'Copias sin registro: no se sabe dónde está'
+      gap_mark: '?'
+      control: Linaje e índice de titulares
+    - title: Consumo
+      detail: silver · gold
+      gap: 'Accesos amplios: no se sabe quién la vio'
+      gap_mark: '?'
+      control: Acceso por finalidad, revisado y fechado
+    - title: Almacenamiento
+      detail: tablas · respaldos
+      gap: Tablas que no se pueden borrar
+      gap_mark: ×
+      control: Supresión consistente entre capas y respaldos
+    - title: Reproceso
+      detail: backfill · replay
+      gap: El backfill reintroduce lo suprimido
+      gap_mark: ×
+      control: El replay respeta las supresiones
+    - title: Auditoría
+      detail: revisión · incidente
+      gap: Ninguna evidencia de qué se hizo
+      gap_mark: '?'
+      control: Evidencia fechada en la CI
+    note: Cada control de la fila inferior está en la matriz de control y, los de acceso, retención, minimización y supresión, en el código.
+  design_board:
+    intro: Ocho preguntas de diseño, desde identificar los datos hasta demostrar que los controles funcionan. Cada una indica dónde se desarrolla en esta ficha.
+    groups:
+    - title: Conocer
+      items:
+      - number: '01'
+        question: ¿Qué datos trato?
+        text: Descubrir identificadores directos e indirectos, datos sensibles y combinaciones reidentificables.
+        tags:
+        - kind: Prácticas
+          label: Clasificación automática
+      - number: '02'
+        question: ¿Para qué los necesito?
+        arq: true
+        text: Registrar cada actividad de tratamiento con finalidad, base de licitud y plazo, y asociarla a sus activos. Un dataset puede servir a varias actividades
+          con bases distintas.
+        tags:
+        - kind: Matriz
+          label: Finalidad
+    - title: Controlar
+      items:
+      - number: '03'
+        question: ¿Dónde circulan?
+        text: Trazar fuentes, APIs, colas, buckets, tablas, modelos, exportaciones y proveedores, incluidos los que están fuera de Chile.
+        tags:
+        - kind: Matriz
+          label: Transferencias
+      - number: '04'
+        question: ¿Quién accede?
+        text: Acceso por finalidad con IAM o RBAC, segregación de funciones y revisión periódica de permisos.
+        tags:
+        - kind: Matriz
+          label: Acceso restringido
+    - title: Proteger
+      items:
+      - number: '05'
+        question: ¿Cómo los protejo?
+        arq: true
+        text: Minimizar desde la ingesta con contratos de campos por capa, seudonimizar cuando proceda y evaluar el impacto cuando la ley lo exige.
+        tags:
+        - kind: Matriz
+          label: Minimización
+      - number: '06'
+        question: ¿Cuánto tiempo los guardo?
+        text: Plazo por clase de dato y almacenamiento; al vencer, suprimir o anonimizar.
+        tags:
+        - kind: Matriz
+          label: Retención
+    - title: Responder
+      items:
+      - number: '07'
+        question: ¿Cómo atiendo los derechos?
+        text: Corregir, bloquear o suprimir alcanzando derivados, historiales, respaldos, CDC y reprocesos.
+        tags:
+        - kind: Matriz
+          label: Derechos del titular
+        - label: art. 4
+      - number: 08
+        question: ¿Cómo lo demuestro?
+        arq: true
+        text: Cada control produce evidencia y la CI falla si falta un control o su evidencia. Ante una vulneración, la consulta por linaje dimensiona el alcance.
+        tags:
+        - kind: Matriz
+          label: Vulneraciones
+        - kind: Código
+          label: validate()
+  control_matrix:
+    title: Matriz de control
+    legend: '**art.** fundamento legal del requisito · **función** control implementado en el código de la ficha'
+    headers:
+    - Requisito
+    - Riesgo
+    - Control técnico
+    - Verificación
+    - Evidencia
+    rows:
+    - name: Finalidad
+      bases:
+      - Principio de finalidad · art. 3
+      risk: Datos usados para un fin no autorizado
+      control: Autorización por finalidad y catálogo de actividades
+      code: purpose_check
+      check: Test de que cada consumo declara una finalidad aprobada
+      evidence: Catálogo versionado y accesos por finalidad
+    - name: Minimización
+      bases:
+      - Principio de proporcionalidad · art. 3
+      code: schema_minimization
+      risk: Columnas no aprobadas llegan a capas analíticas
+      control: Contrato de campos permitidos
+      check: Test de esquema en CI
+      evidence: Resultado del test y versión del contrato
+    - name: Retención
+      bases:
+      - Principio de proporcionalidad · art. 3
+      code: retention_check
+      risk: Datos vencidos siguen guardados o vuelven con un replay
+      control: Política por clase de dato y almacenamiento
+      check: Control de vencidos tras la purga y en el replay
+      evidence: Configuración, ejecución y excepciones
+    - name: Acceso restringido
+      bases:
+      - Medidas de seguridad · art. 14 quinquies
+      code: access_review
+      risk: Usuarios inactivos o con privilegios de más
+      control: IAM o RBAC, segregación de funciones
+      check: Revisión periódica de permisos
+      evidence: Inventario de permisos y revisión fechada
+    - name: Derechos del titular
+      bases:
+      - Derechos · art. 4
+      code: erasure_replay_check
+      risk: No localizar todos los registros de un titular, o que lo suprimido reaparezca
+      control: Localizador de registros y flujo autorizado
+      check: 'Prueba de punta a punta: localizar, ejecutar y reprocesar'
+      evidence: ID interno de la solicitud, estados y resultado
+    - name: Vulneraciones
+      bases:
+      - Reporte de vulneraciones · art. 14 sexies
+      risk: No poder dimensionar el alcance a tiempo
+      control: Logs, alertas y consulta de alcance por linaje
+      check: Simulacro de consulta de alcance
+      evidence: Línea de tiempo, sistemas afectados y acciones
+    - name: Transferencias
+      bases:
+      - Transferencia internacional · arts. 27 a 29
+      - Encargado · art. 15 bis
+      risk: Flujos a terceros o al extranjero sin control
+      control: Inventario de destinos y controles del proveedor
+      check: Conciliación de flujos contra el inventario
+      evidence: Contrato, evaluación y trazabilidad
+    closing: La evidencia no guarda nombres, RUT ni datos sensibles cuando basta una referencia interna protegida.
+  when_to_use:
+    intro: En cada cambio de la plataforma o del uso de los datos. Estos son los disparadores más comunes; los de borde marcado tienen un deber legal asociado.
+    groups:
+    - title: Cambia la plataforma
+      hint: dónde y cómo se tratan
+      items:
+      - title: Diseño o rediseño
+        text: Una plataforma o pipeline nuevo que trata datos personales.
+        tags:
+        - kind: Matriz
+          label: Minimización
+      - title: Nueva fuente o integración
+        text: APIs, CDC, archivos o colas que traen datos personales.
+        tags:
+        - kind: Matriz
+          label: Transferencias
+      - title: Migración a la nube
+        text: Cambian ubicaciones, proveedores y copias.
+        tags:
+        - kind: Matriz
+          label: Transferencias
+      - title: Ambientes y respaldos
+        text: Desarrollo, pruebas, respaldos y recuperación.
+        tags:
+        - kind: Matriz
+          label: Retención
+    - title: Cambia el uso
+      hint: para qué y quién recibe
+      items:
+      - title: Nueva finalidad
+        text: Usar datos existentes para un fin distinto del original.
+        legal: true
+        tags:
+        - label: Principio de finalidad · art. 3
+          legal: true
+        - kind: Matriz
+          label: Finalidad
+      - title: Productos de datos
+        text: Modelos, dashboards y exportaciones.
+        tags:
+        - kind: Matriz
+          label: Finalidad
+      - title: Nuevo proveedor
+        legal: true
+        text: Un tercero que trata datos por cuenta de la organización, incluida una API de LLM.
+        tags:
+        - label: Encargado · art. 15 bis
+          legal: true
+      - title: Destino fuera de Chile
+        text: Réplicas, proveedores o APIs en otro país.
+        legal: true
+        tags:
+        - label: Transferencia internacional · arts. 27 a 29
+          legal: true
+    - title: Momentos de control
+      hint: revisar y demostrar
+      items:
+      - title: Tratamiento de alto riesgo
+        text: Antes de empezar, evaluar el impacto en protección de datos.
+        legal: true
+        tags:
+        - label: Evaluación de impacto · art. 15 ter
+          legal: true
+      - title: Vulneración
+        text: Dimensionar el alcance y reportar.
+        legal: true
+        tags:
+        - label: Reporte · art. 14 sexies
+          legal: true
+        - kind: Matriz
+          label: Vulneraciones
+      - title: Revisión periódica
+        text: Auditorías internas y requerimientos de la Agencia.
+        tags:
+        - kind: Matriz
+          label: Evidencia
+  requirement_to_data:
+    title: Del requisito al dato
+    lead: 'Arquitectura de referencia ilustrativa: dónde se ubica cada control en una plataforma por capas.'
+    governance:
+      kicker:
+        title: Gobierno
+        detail: qué se permite
+      items:
+      - title: Legal y negocio
+        detail: finalidad, base de licitud, plazo
+      - title: Catálogo de actividades
+        detail: metadatos por actividad
+      legend:
+      - el contrato fija los campos permitidos
+      - el plazo define la purga
+      - la finalidad autoriza el consumo
+    data:
+      kicker:
+        title: Datos
+        detail: cómo circulan
+      stages:
+      - title: Ingesta con contrato
+        pill: Minimización
+        tone: end
+      - title: Bronze
+        detail: crudo, solo campos permitidos
+        tone: layer
+      - title: Silver
+        pill: Seudonimización
+        tone: layer
+      - title: Gold
+        detail: agregado por producto
+        tone: layer
+      - title: Consumo por finalidad
+        pill: Finalidad
+        tone: end
+      banner: Retención y supresión en todas las capas, respaldos y reprocesos
+  control_evidence:
+    title: Control y evidencia
+    lead: 'Patrón de cumplimiento continuo (*policy as code*): cómo una plataforma demuestra que sus controles funcionan.'
+    steps:
+    - number: '1'
+      title: Recolectar el estado
+      items:
+      - Configuración y permisos
+      - Datos por capa y respaldos
+      - Solicitudes de titulares atendidas
+    - number: '2'
+      title: Evaluar controles
+      items:
+      - Cada control aplica una regla definida y responde PASS, FAIL o UNKNOWN
+      - UNKNOWN (falta el dato) no cuenta como PASS
+    - number: '3'
+      title: Validar la evidencia
+      items:
+      - 'Completa: están todos los controles'
+      - 'Reciente: dentro del plazo de la política'
+      - 'Íntegra: no se alteró después de generarse'
+    decide:
+      number: '4'
+      title: Decidir y registrar
+      outcomes:
+      - tone: pass
+        text: Sin brechas · se aprueba
+      - tone: fail
+        text: Con brechas · se rechaza
+      - tone: keep
+        text: En ambos casos se guarda la evidencia fechada
+    note: Herramientas como Open Policy Agent, AWS Config o Azure Policy implementan este patrón; ninguna certifica cumplimiento por sí sola.
+    example:
+      summary: Ver ejemplo con el código de la ficha
+      steps:
+      - title: '@paso 1 · Datos'
+        items:
+        - text: Warehouse y source ficticios
+        - text: Usuarios activos e inactivos
+        - text: Tombstones de supresiones
+      - title: '@paso 2 · Controles'
+        items:
+        - text: Todo consumo declara una finalidad aprobada
+          code: purpose_check
+        - text: Solo columnas aprobadas
+          code: schema_minimization
+        - text: Sin datos vencidos, tampoco tras un replay
+          code: retention_check
+        - text: Ningún usuario inactivo con acceso
+          code: access_review
+        - text: Lo suprimido no reaparece al reprocesar
+          code: erasure_replay_check
+      - title: '@paso 3 · Validación'
+        items:
+        - text: Cada control aparece una vez
+        - text: Evidencia de 30 días o menos (política de ejemplo)
+        - text: Huella SHA-256 igual a la guardada
+      - title: '@paso 4 · Resultado'
+        items:
+        - text: 'Salida 0: la CI aprueba'
+        - text: 'Salida 1: la CI rechaza'
+        - text: '6 escenarios: 1 aprueba y 5 rechazan'
+      note: Cubre 5 de los 7 requisitos de la matriz; vulneraciones y transferencias se verifican fuera de este ejemplo.
+  code_guide:
+    lead:
+      title: Qué hace.
+      text: Revisa automáticamente cinco reglas de privacidad sobre datos ficticios y valida que su evidencia sea completa, reciente e íntegra. Si algo falla, la
+        CI rechaza el cambio (salida 1); si todo pasa, lo aprueba (salida 0).
+    rules:
+      headers:
+      - Regla
+      - Función
+      - Requisito de la matriz
+      items:
+      - rule: Todo consumo declara una finalidad aprobada en el catálogo
+        fn: purpose_check
+        requirement: Finalidad
+      - rule: Solo columnas aprobadas
+        fn: schema_minimization
+        requirement: Minimización
+      - rule: Sin datos vencidos, tampoco tras un replay
+        fn: retention_check
+        requirement: Retención
+      - rule: Ningún usuario inactivo con acceso
+        fn: access_review
+        requirement: Acceso restringido
+      - rule: Lo suprimido no reaparece al reprocesar
+        fn: erasure_replay_check
+        requirement: Derechos del titular
+    not_covered:
+      title: Qué no cubre
+      intro: 'Cubre 5 de los 7 requisitos de la matriz. Los otros dos no se resuelven con una regla que pase o falle en cada cambio:'
+      items:
+      - title: 'Vulneraciones:'
+        text: 'es un proceso de respuesta a incidentes: detectar, dimensionar el alcance y reportar a la Agencia (art. 14 sexies). Se prueba con simulacros.'
+      - title: 'Transferencias:'
+        text: dependen de contratos con encargados y de evaluar cada destino (art. 15 bis; arts. 27 a 29). Un script puede conciliar flujos contra un inventario,
+          pero no juzgar si un contrato o un país dan garantías suficientes.
+    scenarios:
+      title: Escenarios
+      items:
+      - name: con-brechas
+        text: 'una brecha por regla: las cinco fallan'
+        exit_code: 1
+      - name: corregido
+        text: las cinco reglas pasan
+        exit_code: 0
+      - name: sin-revision
+        text: 'falta la fecha de la última revisión de accesos: queda en UNKNOWN, que no cuenta como aprobado'
+        exit_code: 1
+      - name: evidencia-alterada
+        text: la evidencia de retención se edita después de guardada y su huella ya no coincide
+        exit_code: 1
+      - name: control-faltante
+        text: no llega el resultado de minimización
+        exit_code: 1
+      - name: evidencia-vencida
+        text: la evidencia de accesos tiene 31 días, más que los 30 de la política de ejemplo
+        exit_code: 1
+    simplifies:
+      title: Qué simplifica
+      items:
+      - title: 'Finalidad:'
+        text: comprueba que el consumo declare una finalidad aprobada, no que el uso real sea compatible con ella; eso requiere revisión humana.
+      - title: 'Supresión:'
+        text: solo revisa la reconstrucción desde la fuente; en producción también debe alcanzar respaldos, CDC y derivados.
+      - title: 'Minimización:'
+        text: usa una sola lista de columnas aprobadas; en producción la lista es por finalidad y por capa.
+      - title: 'Evidencia:'
+        text: la huella se calcula en la misma ejecución; en producción se compara con la evidencia guardada en un almacenamiento inmutable.
+    limit:
+      title: 'Límite:'
+      text: es un ejemplo didáctico. Un resultado aprobado demuestra que los controles funcionaron, no que el tratamiento sea lícito.
+  cloud_compare:
+    title: En la nube
+    intro: Servicios nativos que apoyan tres controles de la ficha. No son equivalencias exactas.
+    alert:
+      title: Por defecto.
+      text: 'En las tres nubes, la auditoría de acceso a datos no queda activa sola: hay que configurarla. Sin ella no hay evidencia de quién accedió.'
+    headers:
+    - Necesidad
+    - GCP
+    - AWS
+    - Azure
+    rows:
+    - need: Descubrir y clasificar
+      meta: Cómo funciona · ¿Qué datos trato?
+      gcp:
+        name: Sensitive Data Protection
+        text: Perfila BigQuery, Cloud SQL y Cloud Storage; también desidentifica.
+      aws:
+        name: Amazon Macie
+        text: Datos sensibles en buckets de S3; no cubre otros almacenes.
+      azure:
+        name: Purview Data Map
+        text: Clasificaciones de sistema y propias al escanear.
+    - need: Restringir acceso a filas y columnas
+      meta: Matriz · Acceso restringido
+      gcp:
+        name: BigQuery
+        text: Seguridad por columna (policy tags) y políticas de acceso por fila.
+      aws:
+        name: Lake Formation
+        text: Permisos finos por tabla, columna y fila.
+      azure:
+        name: Unity Catalog
+        text: 'En Azure Databricks: privilegios, filtros de fila y máscaras de columna.'
+    - need: Auditar accesos a datos
+      meta: Matriz · Vulneraciones y evidencia
+      gcp:
+        name: Cloud Audit Logs
+        text: Data Access audit logs, configurables por servicio.
+        warn: Desactivados por defecto, salvo BigQuery
+      aws:
+        name: CloudTrail · data events
+        text: Registra lecturas y escrituras sobre los datos.
+        warn: No se registran por defecto
+      azure:
+        name: Registros de diagnóstico de Azure Databricks
+        text: Entrega de registros de auditoría a Azure Monitor o almacenamiento.
+        warn: Hay que configurar su entrega
+    closing: 'Ningún servicio certifica cumplimiento por sí solo: cada uno se evalúa por alcance, configuración y evidencia disponible.'
   practice_lanes:
-    start: {title: Por dónde empezar, text: "Por lo de mayor riesgo: datos sensibles (incluida la situación socioeconómica), datos de niños, niñas y adolescentes, copias y accesos."}
+    start:
+      title: Por dónde empezar
+      text: 'Por lo de mayor riesgo: datos sensibles (incluida la situación socioeconómica), datos de niños, niñas y adolescentes, copias y accesos.'
     lanes:
-      - title: Descubrir
-        items:
-          - {title: Clasificación automática, text: Descubrir y clasificar datos personales sin depender de inventarios manuales.}
-          - {title: Linaje por actividad, text: Linaje técnico asociado a cada actividad de tratamiento.}
-          - {title: Metadatos en el catálogo, text: "Los metadatos legales viven en el catálogo, no en el código del pipeline.", arq: true}
-      - title: Proteger
-        items:
-          - {title: Privilegios mínimos, text: Segregación de funciones y revisiones de privilegios.}
-          - {title: Llaves y secretos, text: "Gestionados, con evidencia de configuración."}
-          - {title: Ambientes no productivos, text: "Sin datos personales reales: enmascarados o sintéticos."}
-      - title: Operar
-        items:
-          - {title: Logs limpios, text: "Sin datos personales; solicitudes y vulneraciones con identificadores internos."}
-          - {title: GenAI, text: "Una API externa de LLM que recibe datos personales es un encargado (art. 15 bis); revisar si hay transferencia internacional (art. 27)."}
-      - title: Demostrar
-        items:
-          - {title: Matriz viva, text: "Una fila por requisito, con dueño técnico y fecha de la última evidencia."}
-          - {title: Controles en la CI, text: La CI falla si falta un control o su evidencia.}
-          - {title: Alcance en horas, text: Dimensionar una vulneración con la consulta por linaje.}
-      - title: Suprimir
-        items:
-          - {title: Supresión consistente, text: "Entre capas, respaldos y reprocesos: un backfill no restaura lo suprimido."}
+    - title: Descubrir
+      items:
+      - title: Clasificación automática
+        text: Descubrir y clasificar datos personales sin depender de inventarios manuales.
+      - title: Linaje por actividad
+        text: Linaje técnico asociado a cada actividad de tratamiento.
+      - title: Metadatos en el catálogo
+        text: Los metadatos legales viven en el catálogo, no en el código del pipeline.
+        arq: true
+    - title: Proteger
+      items:
+      - title: Privilegios mínimos
+        text: Segregación de funciones y revisiones de privilegios.
+      - title: Llaves y secretos
+        text: Gestionados, con evidencia de configuración.
+      - title: Ambientes no productivos
+        text: 'Sin datos personales reales: enmascarados o sintéticos.'
+    - title: Operar
+      items:
+      - title: Logs limpios
+        text: Sin datos personales; solicitudes y vulneraciones con identificadores internos.
+      - title: GenAI
+        text: Una API externa de LLM que recibe datos personales es un encargado (art. 15 bis); revisar si hay transferencia internacional (art. 27).
+    - title: Demostrar
+      items:
+      - title: Matriz viva
+        text: Una fila por requisito, con dueño técnico y fecha de la última evidencia.
+      - title: Controles en la CI
+        text: La CI falla si falta un control o su evidencia.
+      - title: Alcance en horas
+        text: Dimensionar una vulneración con la consulta por linaje.
+    - title: Suprimir
+      items:
+      - title: Supresión consistente
+        text: 'Entre capas, respaldos y reprocesos: un backfill no restaura lo suprimido.'
   severity_cards:
     levels:
-      - {name: Leve, level: 1, amount: 5.000 UTM, note: "máximo, o amonestación escrita", examples: [Responder solicitudes en forma incompleta o fuera de plazo]}
-      - name: Grave
-        level: 2
-        amount: 10.000 UTM
-        note: máximo
-        examples: [Datos innecesarios o inexactos, Fallas de seguridad, Omitir registros de vulneraciones, Transferencias contra la ley]
-      - name: Gravísima
-        level: 3
-        amount: 20.000 UTM
-        note: máximo
-        examples: [Omitir en forma deliberada la comunicación de una vulneración, No hacer la evaluación de impacto obligatoria]
+    - name: Leve
+      level: 1
+      amount: 5.000 UTM
+      note: máximo, o amonestación escrita
+      examples:
+      - Responder solicitudes en forma incompleta o fuera de plazo
+    - name: Grave
+      level: 2
+      amount: 10.000 UTM
+      note: máximo
+      examples:
+      - Datos innecesarios o inexactos
+      - Fallas de seguridad
+      - Omitir registros de vulneraciones
+      - Transferencias contra la ley
+    - name: Gravísima
+      level: 3
+      amount: 20.000 UTM
+      note: máximo
+      examples:
+      - Omitir en forma deliberada la comunicación de una vulneración
+      - No hacer la evaluación de impacto obligatoria
   sources_grouped:
     groups:
-      - title: Normativa chilena
-        layout: list
-        sources:
-          - {title: Ley 19.628 · texto que rige desde el 2026-12-01, urls: ["https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01"], publisher: BCN, why: Base de todas las citas de artículos de la ficha.}
-          - {title: Ley 21.719 · ley modificatoria, urls: ["https://www.bcn.cl/leychile/navegar?idNorma=1209272"], publisher: BCN, why: "Origen de los cambios y del artículo primero transitorio (fecha de vigencia)."}
-          - {title: Boletín 18.623-07 · proyecto que posterga la vigencia, urls: ["https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07", "https://tramitacion.senado.cl/appsenado/index.php?mo=tramitacion&ac=getDocto&iddocto=19307&tipodoc=mensaje_mocion"], publisher: Senado, why: Estado del proyecto y propuesta de nueva fecha.}
-          - {title: Decreto 662 · reglamento del modelo de prevención, urls: ["https://www.bcn.cl/leychile/navegar?idNorma=1227971"], publisher: BCN, why: "Requisitos y certificación del modelo de prevención (arts. 49 y 51), citado en Sanciones."}
-      - title: Marcos de referencia del enfoque
-        layout: list
-        sources:
-          - {title: ISO/IEC 27701, urls: ["https://www.iso.org/standard/27701"], publisher: ISO, why: "Sistema de gestión de la información de privacidad: requisitos y guía para controles de privacidad que se pueden certificar."}
-          - {title: NIST Privacy Framework, urls: ["https://www.nist.gov/privacy-framework"], publisher: NIST, why: Gestión de riesgos de privacidad por funciones y resultados verificables.}
-      - title: Servicios cloud
-        layout: providers
-        sources:
-          - {title: Sensitive Data Protection, urls: ["https://docs.cloud.google.com/sensitive-data-protection/docs/sensitive-data-protection-overview"], publisher: Google Cloud, provider: GCP, why: Descubrir y clasificar}
-          - {title: Cloud Audit Logs, urls: ["https://docs.cloud.google.com/logging/docs/audit"], publisher: Google Cloud, provider: GCP, why: Evidencia de acceso}
-          - {title: Amazon Macie, urls: ["https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html"], publisher: AWS, provider: AWS, why: Descubrir y clasificar en S3}
-          - {title: CloudTrail · data events, urls: ["https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html"], publisher: AWS, provider: AWS, why: Evidencia de acceso a datos}
-          - {title: Purview Data Map, urls: ["https://learn.microsoft.com/en-us/purview/data-map-classification"], publisher: Microsoft, provider: Azure, why: Clasificación al escanear}
-          - {title: Unity Catalog, urls: ["https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/"], publisher: Microsoft, provider: Azure, why: "Gobierno, auditoría y linaje"}
+    - title: Normativa chilena
+      layout: list
+      sources:
+      - title: Ley 19.628 · texto que rige desde el 2026-12-01
+        urls:
+        - https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
+        publisher: BCN
+        why: Base de todas las citas de artículos de la ficha.
+      - title: Ley 21.719 · publicada en el Diario Oficial el 2024-12-13
+        urls:
+        - https://www.bcn.cl/leychile/navegar?idNorma=1209272
+        publisher: BCN
+        why: Origen de los cambios, de las definiciones del art. 2 que cita la ficha y del artículo primero transitorio (fecha de vigencia).
+      - title: Boletín 18.623-07 · proyecto que posterga la vigencia
+        urls:
+        - https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07
+        - https://tramitacion.senado.cl/appsenado/index.php?mo=tramitacion&ac=getDocto&iddocto=19307&tipodoc=mensaje_mocion
+        publisher: Senado
+        why: Estado del proyecto y propuesta de nueva fecha.
+      - title: Decreto 662 · reglamento del modelo de prevención
+        urls:
+        - https://www.bcn.cl/leychile/navegar?idNorma=1227971
+        publisher: BCN
+        why: Requisitos y certificación del modelo de prevención (arts. 49 y 51), citado en Sanciones.
+    - title: Marcos de referencia del enfoque
+      layout: list
+      sources:
+      - title: ISO/IEC 27001:2022
+        urls:
+        - https://www.iso.org/standard/27001
+        publisher: ISO
+        why: Cláusulas y controles que se citan como referencia en cada paso del enfoque.
+      - title: ISO/IEC 27701
+        urls:
+        - https://www.iso.org/standard/27701
+        publisher: ISO
+        why: Extiende la gestión de ISO/IEC 27001 a la información de privacidad.
+      - title: NIST Privacy Framework
+        urls:
+        - https://www.nist.gov/privacy-framework
+        publisher: NIST
+        why: Gestión de riesgos de privacidad por funciones y resultados verificables.
+    - title: Legislación comparada
+      layout: list
+      sources:
+      - title: Reglamento (UE) 2016/679 (RGPD)
+        urls:
+        - https://eur-lex.europa.eu/eli/reg/2016/679/oj
+        publisher: EUR-Lex
+        why: 'Referencia comparada, no chilena: su definición de tratamiento (art. 4.2) incluye expresamente la supresión.'
+    - title: Servicios cloud
+      layout: providers
+      sources:
+      - title: Sensitive Data Protection
+        urls:
+        - https://docs.cloud.google.com/sensitive-data-protection/docs/sensitive-data-protection-overview
+        publisher: Google Cloud
+        why: Descubrir y clasificar
+        provider: GCP
+      - title: BigQuery · columnas y filas
+        urls:
+        - https://docs.cloud.google.com/bigquery/docs/column-level-security-intro
+        - https://docs.cloud.google.com/bigquery/docs/row-level-security-intro
+        publisher: Google Cloud
+        why: Restringir acceso a filas y columnas
+        provider: GCP
+      - title: Cloud Audit Logs
+        urls:
+        - https://docs.cloud.google.com/logging/docs/audit
+        publisher: Google Cloud
+        why: Auditar accesos a datos
+        provider: GCP
+      - title: Amazon Macie
+        urls:
+        - https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html
+        publisher: AWS
+        why: Descubrir y clasificar en S3
+        provider: AWS
+      - title: Lake Formation · filtros de datos
+        urls:
+        - https://docs.aws.amazon.com/lake-formation/latest/dg/data-filtering.html
+        publisher: AWS
+        why: Restringir acceso a filas y columnas
+        provider: AWS
+      - title: CloudTrail · data events
+        urls:
+        - https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html
+        publisher: AWS
+        why: Auditar accesos a datos
+        provider: AWS
+      - title: Purview Data Map
+        urls:
+        - https://learn.microsoft.com/en-us/purview/data-map-classification
+        publisher: Microsoft
+        why: Descubrir y clasificar
+        provider: Azure
+      - title: Unity Catalog
+        urls:
+        - https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/
+        publisher: Microsoft
+        why: Restringir acceso a filas y columnas
+        provider: Azure
+      - title: Registros de diagnóstico de Azure Databricks
+        urls:
+        - https://learn.microsoft.com/en-us/azure/databricks/admin/account-settings/audit-log-delivery
+        publisher: Microsoft
+        why: Auditar accesos a datos
+        provider: Azure
 created_at: 2026-10-21
-updated_at: 2026-11-07
+updated_at: 2026-11-09
 last_verified: 2026-10-28
 verification_status: review_required
 ---
@@ -232,20 +965,7 @@ La Ley 21.719 reescribe la Ley 19.628. Mientras no se publique otra ley, sus mod
 
 ### Qué implica para Ingeniería de Datos
 
-Las actividades habituales de una plataforma de datos —recolección, ingesta, consulta, transformación, almacenamiento, integración, transmisión, conservación y eliminación— pueden constituir operaciones de tratamiento de datos personales.
-
-En consecuencia, una arquitectura de datos debe permitir responder preguntas fundamentales:
-
-| | |
-|---|---|
-| Qué datos tratamos | Identificación, clasificación y contexto de los datos personales. |
-| Por qué los tratamos | Finalidad y fundamento de licitud definidos por los responsables correspondientes. |
-| Dónde se encuentran | Sistemas de origen, capas de procesamiento, derivados, respaldos y terceros. |
-| Quién puede utilizarlos | Identidades, permisos, condiciones de acceso y consumidores autorizados. |
-| Durante cuánto tiempo | Políticas de conservación, bloqueo, anonimización o supresión, según corresponda. |
-| Cómo protegemos los datos | Medidas de seguridad, minimización, seudonimización y prevención de exposiciones. |
-| Cómo respondemos | Mecanismos para gestionar derechos de los titulares, vulneraciones e incidentes. |
-| Cómo lo demostramos | Trazabilidad, verificaciones, registros y evidencia de los controles implementados. |
+<!-- view: treatment_map -->
 
 ## 2. Qué es
 
@@ -292,94 +1012,45 @@ En consecuencia, una arquitectura de datos debe permitir responder preguntas fun
 
 | Principio | Pregunta del ingeniero | Control orientativo |
 |---|---|---|
-| a) Licitud y lealtad | ¿Este tratamiento tiene una base validada para esta finalidad? | Cada actividad del catálogo con su base validada |
-| b) Finalidad | ¿Algún consumidor usa los datos para otro propósito? | Metadatos de uso, permisos y contratos de consumo |
-| c) Proporcionalidad | ¿Capturamos más campos de los necesarios? | Lista de columnas permitidas por producto y capa |
-| d) Calidad | ¿Los datos son exactos y están actualizados? | Pruebas de exactitud, vigencia y rectificación |
-| e) Responsabilidad | ¿Quién decide y quién opera cada control? | Dueños, aprobaciones y evidencia |
-| f) Seguridad | ¿Quién puede acceder y qué pasa ante una falla? | Mínimo privilegio, cifrado, respaldo y monitoreo |
-| g) Transparencia e información | ¿Podemos explicar qué tratamientos existen? | Catálogo conectado al inventario de actividades |
-| h) Confidencialidad | ¿Se exponen datos a usuarios o sistemas no autorizados? | Segregación, secretos, registros y control de exportaciones |
+| Licitud y lealtad | ¿Este tratamiento tiene una base validada para esta finalidad? | Cada actividad del catálogo con su base validada |
+| Finalidad | ¿Algún consumidor usa los datos para otro propósito? | Metadatos de uso, permisos y contratos de consumo |
+| Proporcionalidad | ¿Capturamos más campos de los necesarios? | Lista de columnas permitidas por producto y capa |
+| Calidad | ¿Los datos son exactos y están actualizados? | Pruebas de exactitud, vigencia y rectificación |
+| Responsabilidad | ¿Quién decide y quién opera cada control? | Dueños, aprobaciones y evidencia |
+| Seguridad | ¿Quién puede acceder y qué pasa ante una falla? | Mínimo privilegio, cifrado, respaldo y monitoreo |
+| Transparencia e información | ¿Podemos explicar qué tratamientos existen? | Catálogo conectado al inventario de actividades |
+| Confidencialidad | ¿Se exponen datos a usuarios o sistemas no autorizados? | Segregación, secretos, registros y control de exportaciones |
 
 **[Buena práctica]** Estos controles son propuestas de diseño: su suficiencia depende del contexto, del riesgo y de las obligaciones aplicables.
 
 ## 3. Problema que resuelve
 
-**[Buena práctica]** Sin traducción técnica, la ley queda en un documento: hay copias de datos personales sin control, accesos amplios, tablas que no se pueden borrar, backfills que reintroducen datos suprimidos y ninguna evidencia de qué se hizo.
-
-**[Buena práctica]** **La pregunta central:** ¿podemos reconstruir qué ocurrió con los datos de una persona y demostrar qué medidas se aplicaron?
-
-**[Decisión de arquitectura]** Responderla exige coordinar negocio, legal y privacidad, seguridad, plataforma e ingeniería de datos. Ingeniería no decide la finalidad ni la base; sí identifica las implicancias técnicas, implementa los controles y reporta sus limitaciones.
+<!-- view: problem_journey -->
 
 ## 4. Cómo funciona
 
-**[Buena práctica]** Seis preguntas de diseño.
+<!-- view: design_board -->
 
-1. **[Buena práctica]** **¿Qué datos trato?** Descubrir identificadores directos e indirectos, datos sensibles y combinaciones reidentificables.
-2. **[Decisión de arquitectura]** **¿Para qué se necesitan?** Registrar cada **actividad de tratamiento** con finalidad, base de licitud y plazo, y asociarla a los activos que usa; un dataset puede servir a varias actividades con bases distintas. De ahí sale la información pública.
-3. **[Buena práctica]** **¿Dónde circulan?** Trazar fuentes, APIs, colas, buckets, tablas, modelos, exportaciones y proveedores, incluidos los que están fuera de Chile.
-4. **[Decisión de arquitectura]** **¿Cómo los protejo?** Minimizar desde la ingesta con contratos que fijan los campos permitidos por capa, seudonimizar cuando proceda y evaluar el impacto en los casos que lo exigen.
-5. **[Buena práctica]** **¿Cómo los corrijo, bloqueo o suprimo?** Capacidades para los derechos del art. 4 que alcancen derivados, historiales, respaldos, CDC y reprocesos.
-6. **[Decisión de arquitectura]** **¿Cómo lo demuestro?** Cada control produce evidencia automática y la CI falla si falta un control o su evidencia; la consulta de alcance por linaje permite dimensionar una vulneración.
-
-**[Decisión de arquitectura]** Matriz de control:
-
-| Requisito | Riesgo | Control técnico | Verificación | Evidencia |
-|---|---|---|---|---|
-| Minimización | Columnas no aprobadas llegan a capas analíticas | Contrato de campos permitidos | Test de esquema en CI | Resultado del test y versión del contrato |
-| Retención | Datos vencidos siguen guardados o vuelven con un replay | Política por clase de dato y almacenamiento | Control de vencidos tras la purga | Configuración, ejecución y excepciones |
-| Acceso restringido | Usuarios inactivos o con privilegios de más | IAM o RBAC, segregación | Revisión periódica de permisos | Inventario de permisos y revisión fechada |
-| Derechos del titular | Supresión parcial: el dato reaparece en derivados o reprocesos | Localizador de registros y flujo autorizado | Prueba de replay con tombstones | ID de la solicitud, estados y resultado |
-| Vulneraciones | No poder dimensionar el alcance a tiempo | Logs, alertas y consulta de alcance por linaje | Simulacro de consulta de alcance | Línea de tiempo, sistemas afectados y acciones |
-| Transferencias | Flujos a terceros o al extranjero sin control | Inventario de destinos y controles del proveedor | Conciliación de flujos contra el inventario | Contrato, evaluación y trazabilidad |
-
-**[Buena práctica]** La evidencia no guarda nombres, RUT ni datos sensibles cuando basta una referencia interna protegida.
+<!-- view: control_matrix -->
 
 ## 5. Cuándo utilizarlo
 
-- Al diseñar una plataforma o un pipeline que trata datos de personas.
-- Al incorporar una fuente, API, CDC o pipeline nuevo que trate datos personales.
-- Al migrar una plataforma on-premise a la nube.
-- Al crear productos de datos, modelos, dashboards, exportaciones o integraciones externas.
-- Al habilitar ambientes de desarrollo y pruebas, respaldos y recuperación.
-- Al introducir servicios de IA o LLM que puedan recibir datos personales.
-- Al preparar una revisión interna, un modelo de prevención o la respuesta a un requerimiento.
+<!-- view: when_to_use -->
 
 ## 9. Arquitectura
 
-**Del requisito al dato.**
+<!-- view: requirement_to_data -->
 
-```mermaid
-flowchart TB
-  L["Legal y negocio:<br/>finalidad, base, plazo"] --> C["Catálogo de<br/>actividades"]
-  C --> I["Ingesta con contrato"]
-  subgraph Capas["Capas de datos"]
-    B["Bronze"] --> S["Silver seudonimizado"] --> G["Gold"]
-  end
-  I --> B
-  G --> U["Consumo por finalidad"]
-```
-
-**Control y evidencia.**
-
-```mermaid
-flowchart LR
-  R["Solicitudes de titulares"] --> X["Índice de titulares"]
-  X --> P["Bronze, silver, gold"]
-  M["Matriz requisito → riesgo →<br/>control → verificación →<br/>evidencia"] --> CI{"CI"}
-  P --> CI
-  CI -- "falla con brechas" --> E["Evidencia fechada"]
-```
+<!-- view: control_evidence -->
 
 ## 10. Código
 
 ```python
-# Python 3.12+, biblioteca estándar. De punta a punta: datos ficticios → 4 controles → validación de la evidencia →
+# Python 3.12+, biblioteca estándar. De punta a punta: datos ficticios → 5 controles → validación de la evidencia →
 # código de salida (0 aprueba, 1 rechaza). Uso: python controles.py con-brechas | corregido | sin-revision |
-# evidencia-alterada | control-faltante | evidencia-vencida. PASS / FAIL / UNKNOWN como en privacy-controls-as-code:
-# UNKNOWN (falta el dato para evaluar) nunca cuenta como PASS. Didáctico: no certifica cumplimiento; cada docstring
-# nombra el principio o el derecho de la Ley 19.628, modificada por la Ley 21.719, que el control evidencia, y separa
-# la regla técnica, que la ley no fija.
+# evidencia-alterada | control-faltante | evidencia-vencida. PASS / FAIL / UNKNOWN: UNKNOWN (falta el dato para
+# evaluar) nunca cuenta como PASS. Didáctico: no certifica cumplimiento. Cada docstring nombra el principio o deber
+# de la Ley 19.628, modificada por la Ley 21.719, que el control ayuda a evidenciar; la regla técnica es del ejemplo.
 import hashlib
 import json
 import sys
@@ -388,10 +1059,11 @@ from datetime import date, datetime, timedelta, timezone
 
 # @paso 1 Datos
 REFERENCE = datetime(2026, 10, 26, 12, tzinfo=timezone.utc)   # fecha fija: resultado reproducible
-MAX_AGE = timedelta(days=30)   # política interna ilustrativa, NO un plazo legal
+MAX_AGE = timedelta(days=30)   # vigencia de la evidencia: política interna de ejemplo, NO un plazo legal
 RETENTION_DAYS = 90            # plazo de la política. Alargarlo para que el control pase es un antipatrón: se purga
 CUTOFF = REFERENCE.date() - timedelta(days=RETENTION_DAYS)
-APPROVED = frozenset({"customer_id", "email", "created_at"})
+APPROVED_COLUMNS = frozenset({"customer_id", "email", "retention_start"})   # contrato de campos permitidos
+APPROVED_PURPOSES = frozenset({"analitica_ventas", "atencion_cliente"})     # finalidades del catálogo de ejemplo
 Row = dict[str, object]
 
 
@@ -403,11 +1075,18 @@ class User:
 
 
 @dataclass(frozen=True)
+class Consumer:
+    name: str
+    purpose: str | None   # finalidad declarada en el catálogo de actividades
+
+
+@dataclass(frozen=True)
 class Platform:
-    warehouse: tuple[Row, ...]
-    source: tuple[Row, ...]
-    tombstones: frozenset[object]
-    users: tuple[User, ...]
+    warehouse: list[Row]
+    source: list[Row]
+    tombstones: frozenset[object]   # supresiones de solicitudes de titulares ya atendidas
+    users: list[User]
+    consumers: list[Consumer]
     last_access_review: date | None = date(2026, 10, 20)
     replay_honors_tombstones: bool = True
     replay_applies_retention: bool = True
@@ -427,25 +1106,31 @@ class Result:
 
 
 def expired(row: Row) -> bool:
-    return date.fromisoformat(str(row["created_at"])) < CUTOFF
+    # retention_start: inicio del plazo que fija la política; en la práctica suele ser el fin de la relación con el
+    # titular o de la finalidad, no la fecha de creación del registro
+    return date.fromisoformat(str(row["retention_start"])) < CUTOFF
 
 
 def with_gaps() -> Platform:   # cada brecha se inyecta por separado y a la vista
-    ana: Row = {"customer_id": 101, "email": "ana@example.test", "created_at": "2026-10-01"}
-    bruno: Row = {"customer_id": 102, "email": "bruno@example.test", "created_at": "2026-10-03"}   # suprimido
-    old: Row = {"customer_id": 104, "email": "diego@example.test", "created_at": "2026-06-01"}
+    ana: Row = {"customer_id": 101, "email": "ana@example.test", "retention_start": "2026-10-01"}
+    bruno: Row = {"customer_id": 102, "email": "bruno@example.test", "retention_start": "2026-10-03"}   # suprimido
+    old: Row = {"customer_id": 104, "email": "diego@example.test", "retention_start": "2026-06-01"}
     return Platform(
-        warehouse=({**ana, "nota_libre": "sin aprobar"}, old),      # brecha 4: columna no aprobada; 3: registro vencido
-        source=(ana, bruno, old), tombstones=frozenset({102}),
-        users=(User("analista", True, True), User("ex_usuario", False, True)),   # brecha 1: inactivo con acceso
-        replay_honors_tombstones=False,                                          # brecha 2: replay sin tombstones
-        replay_applies_retention=False)              # bug: el replay desde source vuelve a traer el registro vencido
+        warehouse=[{**ana, "nota_libre": "sin aprobar"}, old],    # brecha: columna no aprobada; brecha: registro vencido
+        source=[ana, bruno, old], tombstones=frozenset({102}),
+        users=[User("analista", True, True), User("ex_usuario", False, True)],   # brecha: inactivo con acceso
+        consumers=[Consumer("dashboard_ventas", "analitica_ventas"),
+                   Consumer("export_marketing", "marketing")],                   # brecha: finalidad no aprobada
+        replay_honors_tombstones=False,                                          # brecha: replay sin tombstones
+        replay_applies_retention=False)   # el replay desde source vuelve a traer el registro vencido
 
 
 def fix(p: Platform) -> Platform:   # corrige cada brecha; el plazo de retención no cambia
-    kept = tuple({c: v for c, v in r.items() if c in APPROVED} for r in p.warehouse if not expired(r))   # purga y minimiza
-    users = tuple(replace(u, authorized=u.authorized and u.active) for u in p.users)
-    return replace(p, warehouse=kept, users=users, replay_honors_tombstones=True, replay_applies_retention=True)
+    kept = [{c: v for c, v in r.items() if c in APPROVED_COLUMNS} for r in p.warehouse if not expired(r)]
+    users = [replace(u, authorized=u.authorized and u.active) for u in p.users]
+    consumers = [c for c in p.consumers if c.purpose in APPROVED_PURPOSES]   # sin finalidad aprobada, sin acceso
+    return replace(p, warehouse=kept, users=users, consumers=consumers,
+                   replay_honors_tombstones=True, replay_applies_retention=True)
 
 
 def replay(p: Platform) -> list[Row]:   # lo que vuelve a cargarse si se reconstruye el warehouse desde source
@@ -456,10 +1141,39 @@ def replay(p: Platform) -> list[Row]:   # lo que vuelve a cargarse si se reconst
 
 
 # @paso 2 Controles
+def purpose_check(p: Platform) -> tuple[str, str]:
+    """Principio de finalidad (art. 3): los datos se tratan para fines específicos, explícitos y lícitos. Regla del
+    ejemplo: todo consumo declara una finalidad aprobada en el catálogo. Verifica la declaración, no que el uso real
+    sea compatible con ella; eso requiere revisión humana."""
+    bad = [c.name for c in p.consumers if c.purpose not in APPROVED_PURPOSES]
+    if bad:
+        return "FAIL", f"consumos sin finalidad aprobada: {bad}"
+    return "PASS", "ok"
+
+
+def schema_minimization(p: Platform) -> tuple[str, str]:
+    """Principio de proporcionalidad (art. 3): solo los datos necesarios, adecuados y pertinentes. Regla del ejemplo:
+    el warehouse contiene solo columnas del contrato aprobado."""
+    extra = sorted({c for r in p.warehouse for c in r} - APPROVED_COLUMNS)
+    if extra:
+        return "FAIL", f"columnas no aprobadas: {extra}"
+    return "PASS", "ok"
+
+
+def retention_check(p: Platform) -> tuple[str, str]:
+    """Principio de proporcionalidad (art. 3): los datos se conservan el tiempo necesario y luego se suprimen o
+    anonimizan. Regla del ejemplo: ningún registro vencido en el warehouse ni en la salida del replay, que puede
+    volver a traer lo purgado. El plazo de cada dato es política interna."""
+    stored = [r["customer_id"] for r in p.warehouse if expired(r)]
+    replayed = [r["customer_id"] for r in replay(p) if expired(r)]
+    if stored or replayed:
+        return "FAIL", f"vencidos sin purgar: {stored}; en la salida del replay: {replayed}"
+    return "PASS", "ok"
+
+
 def access_review(p: Platform) -> tuple[str, str]:
-    """Principio de seguridad (art. 3): el tratamiento se protege con medidas técnicas y organizativas contra el acceso
-    no autorizado. Control técnico: un usuario inactivo no conserva acceso (authorized ⇒ active) y la revisión de
-    accesos tiene fecha; esa regla es del ejemplo, no de la ley."""
+    """Principio de seguridad (art. 3) y medidas de seguridad (art. 14 quinquies). Regla del ejemplo: un usuario
+    inactivo no conserva acceso y existe una revisión de permisos fechada."""
     holders = [u.name for u in p.users if u.authorized and not u.active]
     if holders:
         return "FAIL", f"inactivos con acceso: {holders}"
@@ -469,37 +1183,15 @@ def access_review(p: Platform) -> tuple[str, str]:
 
 
 def erasure_replay_check(p: Platform) -> tuple[str, str]:
-    """Derecho de supresión (art. 7): el titular puede pedir que se supriman sus datos en los casos que el artículo
-    indica. Control técnico: un registro suprimido no vuelve con un replay (tombstones); el artículo no habla de
-    replays."""
+    """Derecho de supresión (art. 7). Regla del ejemplo: un registro suprimido no vuelve con un replay desde source;
+    en producción la supresión también debe alcanzar respaldos, CDC y derivados."""
     revived = [r["customer_id"] for r in replay(p) if r["customer_id"] in p.tombstones]
     if revived:
         return "FAIL", f"reaparecen: {revived}"
     return "PASS", "ok"
 
 
-def retention_check(p: Platform) -> tuple[str, str]:
-    """Principio de proporcionalidad (art. 3): los datos se conservan solo el tiempo necesario para la finalidad y
-    después se suprimen o anonimizan. Control técnico: se evalúa el warehouse y también la salida del replay, que puede
-    volver a traer lo purgado; el plazo de cada dato es política interna."""
-    stored = [r["customer_id"] for r in p.warehouse if expired(r)]
-    replayed = [r["customer_id"] for r in replay(p) if expired(r)]
-    if stored or replayed:
-        return "FAIL", f"vencidos sin purgar: {stored}; en la salida del replay: {replayed}"
-    return "PASS", "ok"
-
-
-def schema_minimization(p: Platform) -> tuple[str, str]:
-    """Principio de proporcionalidad (art. 3): solo los datos necesarios, adecuados y pertinentes para la finalidad.
-    Control técnico: ninguna columna fuera del contrato aprobado."""
-    extra = sorted({c for r in p.warehouse for c in r} - APPROVED)
-    if extra:
-        return "FAIL", f"columnas no aprobadas: {extra}"
-    return "PASS", "ok"
-
-
-CONTROLS = (access_review, erasure_replay_check, retention_check, schema_minimization)
-CONTROL_IDS = tuple(control.__name__ for control in CONTROLS)
+CONTROLS = (purpose_check, schema_minimization, retention_check, access_review, erasure_replay_check)
 
 
 def run_controls(p: Platform) -> list[Result]:
@@ -513,59 +1205,55 @@ def run_controls(p: Platform) -> list[Result]:
 
 
 # @paso 3 Validación
-def completeness(results: list[Result], expected: tuple[str, ...]) -> list[str]:
-    """Cada control esperado aparece exactamente una vez: si falta o está duplicado, es brecha."""
+def validate(results: list[Result], stored_sha256: dict[str, str]) -> list[str]:
+    """Principio de responsabilidad (art. 3): quien trata datos responde por cumplir los principios y deberes de la
+    ley. Regla del ejemplo: un estado autodeclarado no basta; la evidencia debe estar completa (cada control una vez),
+    ser reciente y tener la misma huella SHA-256 que se guardó."""
+    gaps: list[str] = []
     ids = [r.control_id for r in results]
-    gaps = [f"{c}: falta el resultado" for c in expected if ids.count(c) == 0]
-    return gaps + [f"{c}: resultado duplicado" for c in expected if ids.count(c) > 1]
-
-
-def evidence_gaps(r: Result, stored_sha256: dict[str, str]) -> list[str]:
-    gaps = []
-    if r.status != "PASS":
-        gaps.append(f"{r.control_id}: {r.status} ({r.detail})")
-    if REFERENCE - r.executed_at > MAX_AGE:
-        gaps.append(f"{r.control_id}: evidencia vencida ({(REFERENCE - r.executed_at).days} días)")
-    if not r.evidence_uri:
-        gaps.append(f"{r.control_id}: evidencia sin URI")
-    if stored_sha256.get(r.control_id) != r.sha256():
-        gaps.append(f"{r.control_id}: huella distinta a la guardada")
-    return gaps
-
-
-def validate(results: list[Result], stored_sha256: dict[str, str], expected: tuple[str, ...]) -> list[str]:
-    """Principio de responsabilidad (art. 3): quien trata datos responde por el cumplimiento de los principios y
-    deberes de la ley. Control técnico: un estado autodeclarado no basta; cada control aparece una vez, con evidencia
-    reciente, con URI y con la misma huella SHA-256 que se guardó."""
-    gaps = completeness(results, expected)
+    for control in CONTROLS:
+        count = ids.count(control.__name__)
+        if count == 0:
+            gaps.append(f"{control.__name__}: falta el resultado")
+        elif count > 1:
+            gaps.append(f"{control.__name__}: resultado duplicado ({count})")
     for r in results:
-        gaps += evidence_gaps(r, stored_sha256)
+        if r.status != "PASS":
+            gaps.append(f"{r.control_id}: {r.status} ({r.detail})")
+        if REFERENCE - r.executed_at > MAX_AGE:
+            gaps.append(f"{r.control_id}: evidencia vencida ({(REFERENCE - r.executed_at).days} días)")
+        if not r.evidence_uri:
+            gaps.append(f"{r.control_id}: evidencia sin URI")
+        if stored_sha256.get(r.control_id) != r.sha256():
+            gaps.append(f"{r.control_id}: huella distinta a la guardada")
     return gaps
+
+
+def tamper(results: list[Result], scenario: str) -> list[Result]:   # simula fallas de la evidencia, no del control
+    if scenario == "evidencia-alterada":   # alguien edita la evidencia después de guardada su huella
+        return [replace(r, evidence={"status": "PASS", "detail": "editado a mano"})
+                if r.control_id == "retention_check" else r for r in results]
+    if scenario == "control-faltante":     # el resultado de un control no llega a la validación
+        return [r for r in results if r.control_id != "schema_minimization"]
+    if scenario == "evidencia-vencida":    # la evidencia es más antigua que la política
+        return [replace(r, executed_at=REFERENCE - timedelta(days=31))
+                if r.control_id == "access_review" else r for r in results]
+    return results
 
 
 # @paso 4 Resultado
-def scenario_results(scenario: str) -> tuple[list[Result], dict[str, str]]:
-    platforms = {"con-brechas": with_gaps(), "sin-revision": replace(fix(with_gaps()), last_access_review=None)}
-    results = run_controls(platforms.get(scenario, fix(with_gaps())))
-    stored = {r.control_id: r.sha256() for r in results}   # en la CI, la huella se guarda al ejecutar
-    if scenario == "evidencia-alterada":   # alguien edita la evidencia después de guardada su huella
-        results[2] = replace(results[2], evidence={"status": "PASS", "detail": "editado a mano"})
-    if scenario == "control-faltante":     # el resultado de schema_minimization no llega
-        results = [r for r in results if r.control_id != "schema_minimization"]
-    if scenario == "evidencia-vencida":    # access_review se ejecutó hace 31 días
-        results[0] = replace(results[0], executed_at=REFERENCE - timedelta(days=31))
-    return results, stored
-
-
-SCENARIOS = ("con-brechas", "corregido", "sin-revision", "evidencia-alterada", "control-faltante", "evidencia-vencida")
-
-
 def main(scenario: str) -> int:
-    if scenario not in SCENARIOS:
-        print(f"escenario desconocido: {scenario}; use uno de {', '.join(SCENARIOS)}")
-        return 1
-    results, stored = scenario_results(scenario)
-    gaps = validate(results, stored, CONTROL_IDS)
+    corrected = fix(with_gaps())
+    platforms = {"con-brechas": with_gaps(), "corregido": corrected,
+                 "sin-revision": replace(corrected, last_access_review=None),
+                 "evidencia-alterada": corrected, "control-faltante": corrected, "evidencia-vencida": corrected}
+    if scenario not in platforms:
+        print(f"escenario desconocido: {scenario}; opciones: {', '.join(platforms)}")
+        return 2
+    results = run_controls(platforms[scenario])
+    stored = {r.control_id: r.sha256() for r in results}   # en la CI, la huella se guarda al ejecutar
+    results = tamper(results, scenario)
+    gaps = validate(results, stored)
     print(f"{scenario}: " + ", ".join(f"{r.control_id}={r.status}" for r in results))
     print("\n".join(f"BRECHA {g}" for g in gaps) or "sin brechas")
     if gaps:
@@ -579,97 +1267,59 @@ if __name__ == "__main__":
     sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else "con-brechas"))
 ```
 
-El script se **ejecuta en la CI**: evalúa cuatro controles de privacidad sobre datos ficticios, valida su evidencia y devuelve el código de salida con que la CI aprueba o rechaza.
-
-`con-brechas`: las cuatro brechas inyectadas hacen fallar sus cuatro controles; código de salida 1.
+El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`.
 
 ```text
 $ python controles.py con-brechas
-con-brechas: access_review=FAIL, erasure_replay_check=FAIL, retention_check=FAIL, schema_minimization=FAIL
+con-brechas: purpose_check=FAIL, schema_minimization=FAIL, retention_check=FAIL, access_review=FAIL, erasure_replay_check=FAIL
+BRECHA purpose_check: FAIL (consumos sin finalidad aprobada: ['export_marketing'])
+BRECHA schema_minimization: FAIL (columnas no aprobadas: ['nota_libre'])
+BRECHA retention_check: FAIL (vencidos sin purgar: [104]; en la salida del replay: [104])
 BRECHA access_review: FAIL (inactivos con acceso: ['ex_usuario'])
 BRECHA erasure_replay_check: FAIL (reaparecen: [102])
-BRECHA retention_check: FAIL (vencidos sin purgar: [104]; en la salida del replay: [104])
-BRECHA schema_minimization: FAIL (columnas no aprobadas: ['nota_libre'])
 CI: rechazada (1)
 ```
 
-`corregido`: con cada brecha corregida, los cuatro controles pasan; código de salida 0.
-
 ```text
 $ python controles.py corregido
-corregido: access_review=PASS, erasure_replay_check=PASS, retention_check=PASS, schema_minimization=PASS
+corregido: purpose_check=PASS, schema_minimization=PASS, retention_check=PASS, access_review=PASS, erasure_replay_check=PASS
 sin brechas
 CI: aprobada (0)
 ```
 
-`sin-revision`: sin fecha de la última revisión de accesos, `access_review` queda en `UNKNOWN`, que no cuenta como `PASS`; código de salida 1.
-
 ```text
 $ python controles.py sin-revision
-sin-revision: access_review=UNKNOWN, erasure_replay_check=PASS, retention_check=PASS, schema_minimization=PASS
+sin-revision: purpose_check=PASS, schema_minimization=PASS, retention_check=PASS, access_review=UNKNOWN, erasure_replay_check=PASS
 BRECHA access_review: UNKNOWN (sin fecha de última revisión)
 CI: rechazada (1)
 ```
 
-`evidencia-alterada`: la evidencia de `retention_check` se edita después de guardar su huella y la huella ya no coincide; código de salida 1.
-
 ```text
 $ python controles.py evidencia-alterada
-evidencia-alterada: access_review=PASS, erasure_replay_check=PASS, retention_check=PASS, schema_minimization=PASS
+evidencia-alterada: purpose_check=PASS, schema_minimization=PASS, retention_check=PASS, access_review=PASS, erasure_replay_check=PASS
 BRECHA retention_check: huella distinta a la guardada
 CI: rechazada (1)
 ```
 
-`control-faltante`: no llega el resultado de `schema_minimization` y la validación lo marca como faltante; código de salida 1.
-
 ```text
 $ python controles.py control-faltante
-control-faltante: access_review=PASS, erasure_replay_check=PASS, retention_check=PASS
+control-faltante: purpose_check=PASS, retention_check=PASS, access_review=PASS, erasure_replay_check=PASS
 BRECHA schema_minimization: falta el resultado
 CI: rechazada (1)
 ```
 
-`evidencia-vencida`: la evidencia de `access_review` tiene 31 días, más que los 30 de la política; código de salida 1.
-
 ```text
 $ python controles.py evidencia-vencida
-evidencia-vencida: access_review=PASS, erasure_replay_check=PASS, retention_check=PASS, schema_minimization=PASS
+evidencia-vencida: purpose_check=PASS, schema_minimization=PASS, retention_check=PASS, access_review=PASS, erasure_replay_check=PASS
 BRECHA access_review: evidencia vencida (31 días)
 CI: rechazada (1)
 ```
 
-Limitación: es un ejemplo didáctico y no certifica cumplimiento; un `PASS` demuestra que el control funcionó, no que el tratamiento sea lícito. La huella se calcula en la misma ejecución; en producción se compara contra la evidencia guardada en un almacenamiento inmutable.
+<!-- view: code_guide -->
 
 ## 11. GCP
 
-En GCP, **Sensitive Data Protection** y **Cloud Audit Logs**.
-
-| Necesidad | Servicio |
-|---|---|
-| Descubrir y clasificar | Sensitive Data Protection: descubre, clasifica y desidentifica; perfila BigQuery, Cloud SQL y Cloud Storage |
-| Auditar accesos a datos | Cloud Audit Logs: los Data Access audit logs están desactivados por defecto, salvo en BigQuery |
-
-Los Data Access audit logs se configuran por servicio: revisar BigQuery y cada recurso que se use.
-
-## 12. AWS
-
-En AWS, **Amazon Macie** y **AWS CloudTrail**.
-
-| Necesidad | Servicio |
-|---|---|
-| Descubrir | Amazon Macie: datos sensibles en buckets de S3 |
-| Auditar accesos a datos | CloudTrail: los data events no se registran por defecto |
-
-## 13. Azure
-
-En Azure, **Microsoft Purview** y **Unity Catalog** de Azure Databricks.
-
-| Necesidad | Servicio |
-|---|---|
-| Descubrir y clasificar | Purview Data Map: clasificaciones de sistema y propias al escanear |
-| Gobierno en el lakehouse | Unity Catalog: privilegios, políticas por atributos, filtros de fila y columna, auditoría y linaje |
-
-Los servicios de GCP, AWS y Azure no son equivalencias exactas. Ningún servicio certifica cumplimiento por sí solo: cada uno se evalúa por alcance, configuración y evidencia disponible.
+<!-- view: cloud_compare -->
 
 ## 14. Buenas prácticas
 
@@ -706,14 +1356,15 @@ En reincidencia, la Agencia puede aplicar hasta tres veces el monto de la infrac
 ## 20. Fuentes
 
 - Normativa chilena (BCN y Senado): Ley 19.628 con el texto que rige desde el 2026-12-01, Ley 21.719, boletín 18.623-07 (tramitación y mensaje) y Decreto 662.
-- Marcos de referencia del enfoque: ISO/IEC 27701 y NIST Privacy Framework.
-- Servicios cloud: Sensitive Data Protection y Cloud Audit Logs (GCP), Amazon Macie y CloudTrail (AWS), Purview Data Map y Unity Catalog (Azure).
+- Marcos de referencia del enfoque: ISO/IEC 27001:2022, ISO/IEC 27701 y NIST Privacy Framework.
+- Legislación comparada: Reglamento (UE) 2016/679 (RGPD), en EUR-Lex.
+- Servicios cloud: Sensitive Data Protection, BigQuery y Cloud Audit Logs (GCP); Amazon Macie, Lake Formation y CloudTrail (AWS); Purview Data Map, Unity Catalog y los registros de diagnóstico de Azure Databricks (Azure).
 
 El detalle de cada fuente está en `sources` del frontmatter; la agrupación, en `views.sources_grouped`.
 
 ## 21. Fecha de última verificación
 
-2026-10-28: textos legales vueltos a consultar en BCN (sin cambios) y estado del boletín 18.623-07 en el Senado (aprobado por el Senado y despachado a la Cámara). Antes, 2026-10-25: textos legales vueltos a consultar, sin cambios, y 2026-10-22: articulado, vigencia, estado del boletín 18.623-07 y Decreto 662 consultados ese día en BCN y en el Senado. `review_required` desde el 2026-11-06: depuración de contenido pedida por Felipe; vuelve a `verified` cuando la apruebe (`owner_approved_at`). 2026-11-07: páginas de GCP, AWS y Azure vueltas a abrir (Purview cambió su título a «Data classification in Microsoft Purview Data Map»); NIST Privacy Framework verificado; ISO/IEC 27701 y BCN por verificar (Felipe): no se pudieron abrir desde esta sesión. Revisión mensual, y extraordinaria si se publica la ley de postergación.
+2026-10-28: textos legales vueltos a consultar en BCN (sin cambios) y estado del boletín 18.623-07 en el Senado (aprobado por el Senado y despachado a la Cámara). Antes, 2026-10-25: textos legales vueltos a consultar, sin cambios, y 2026-10-22: articulado, vigencia, estado del boletín 18.623-07 y Decreto 662 consultados ese día en BCN y en el Senado. `review_required` desde el 2026-11-06: depuración de contenido pedida en la revisión; vuelve a `verified` cuando se apruebe (`owner_approved_at`). 2026-11-07: páginas de GCP, AWS y Azure vueltas a abrir (Purview cambió su título a «Data classification in Microsoft Purview Data Map»); NIST Privacy Framework verificado; ISO/IEC 27701 y BCN por verificar: no se pudieron abrir desde esta sesión. 2026-11-09: abiertas las páginas nuevas de BigQuery, Lake Formation, Azure Databricks y EUR-Lex; ISO/IEC 27001 por verificar (Felipe). Revisión mensual, y extraordinaria si se publica la ley de postergación.
 
 ## 22. Historial de cambios importantes
 
@@ -729,22 +1380,25 @@ El detalle de cada fuente está en `sources` del frontmatter; la agrupación, en
 - 2026-10-28: §17 nombra las cuatro fichas hijas del lote P2 (`purpose-based-authorization`, `distributed-erasure-propagation`, `privacy-backup-and-recovery`, `privacy-in-ai-rag-llm`), en el orden del blueprint. Sin otros cambios.
 - 2026-10-28: mismos errores que la revisión de P2: la fila del art. 14 quáter del mapa de artículos nombra sus cuatro factores.
 - 2026-10-28: el resumen pasa a ser la introducción del subdominio (objetivo, idea central, contexto normativo y preguntas que debe responder la arquitectura). La vigencia citada sigue siendo la de la ley publicada; el boletín 18.623-07 sigue siendo un proyecto.
-- 2026-10-30: sobre la versión de Felipe (`b/ui-ajustes-1030`), solo lo que exige ADR-023 para pasar `make validate`: etiquetas en el párrafo de marco y en los ítems del §2 (principios a) a h) y responsabilidades), y columna «Etiqueta» en la matriz del §4 y en las tablas de §11–13, con los mismos valores que tenían antes. La vigencia ya estaba en sincronía con `cl-ley-21719.yaml`.
+- 2026-10-30: sobre la versión en revisión (`b/ui-ajustes-1030`), solo lo que exige ADR-023 para pasar `make validate`: etiquetas en el párrafo de marco y en los ítems del §2 (principios a) a h) y responsabilidades), y columna «Etiqueta» en la matriz del §4 y en las tablas de §11–13, con los mismos valores que tenían antes. La vigencia ya estaba en sincronía con `cl-ley-21719.yaml`.
 - 2026-10-30: Enmienda 3 de ADR-023: en §4, §13, la tabla con la misma etiqueta en todas sus filas pasa a la línea «Etiqueta: […]» antes de la tabla, sin columna. Sin cambios de contenido.
 - 2026-10-30: se quitan del resumen «Cómo leerla» y el subtítulo «Ley 21.719: Protección de datos personales aplicada a Ingeniería de Datos»; del §2, el párrafo del marco de la Ley 19.628/21.719 y el bloque «Precisiones transversales».
 - 2026-10-30: §17 nombra las fichas hijas nuevas `gdpr` y `lgpd` (lote P4, tramo 6 «Marcos regulatorios comparados»). Sin cambios de contenido.
 - 2026-10-30: Enmienda 4 de ADR-023: 6 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
-- 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
-- 2026-11-01: §10 reemplazado a partir de la propuesta de Felipe: flujo de punta a punta (datos ficticios → cuatro controles → validación de la evidencia → código de salida 0/1 sin `assert`), estados PASS/FAIL/UNKNOWN, cuatro brechas inyectadas por separado, regla «autorizado ⇒ activo», purga del registro vencido sin cambiar el plazo, `evidence_sha256`, duplicados y evidencia vencida. Sale la entrada versionada `tests/fixtures/privacy-control-results.json`. **Por el cambio de código, la ficha vuelve a `review_required` hasta que Felipe la apruebe de nuevo.**
-- 2026-11-01: aprobada de nuevo por Felipe con el §10 nuevo, condicionada a la CI en verde (run 41354325642, 786 tests): `owner_approved_at: 2026-11-01`, vuelve a `verified`.
-- 2026-11-03: piloto de código guiado en el §10 (pedido de Felipe): una función por control con el docstring de su letra del art. 3 y sin ternarios encadenados; marcadores `# @paso 1–4`; el replay desde `source` reintroducía el registro vencido y `retention_check` ahora evalúa también su salida (`fix()` aplica la retención al replay); escenario nuevo `evidencia-alterada`, donde falla la huella SHA-256; una salida por escenario con su línea `$ python controles.py <escenario>`, igual a la de la CI. Vuelve a `review_required` hasta la aprobación de Felipe.
-- 2026-11-03: aprobada por Felipe con el §10 nuevo (`owner_approved_at: 2026-11-03`); vuelve a `verified` (ADR-023).
-- 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.
-- 2026-11-04: revisión `docs/reviews/p10.md` aplicada (pedido de Felipe): los docstrings del §10 citan el texto del art. 3 (confidencialidad con «la relación con el titular»; calidad «exactos, completos, actuales y pertinentes»; proporcionalidad «suprimidos o anonimizados») y dejan aparte, como control técnico, lo que la ley no fija (acceso del inactivo, replay, huella SHA-256); el párrafo del §10 nombra en negrita los principios, sin «la letra». Vuelve a `review_required`.
-- 2026-11-04: aprobada por Felipe con la revisión P10 y su verificación aplicadas (cita de confidencialidad con «Este», como en BCN) (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).
-- 2026-11-06: depuración de contenido pedida por Felipe (ADR-029). Se eliminan las secciones 6 (Cuándo no utilizarlo), 7 (Ejemplo sencillo), 8 (Ejemplo de producción), 15 (Errores frecuentes, con la fila «Tenemos cifrado, cumplimos» y la frase sobre la infracción grave del art. 34 ter c) y d)), 17 (Conceptos relacionados) y 19 (Laboratorio relacionado). Además: en §1, el encabezado de la tabla de preguntas y «no es formar especialistas legales, sino»; en §3, el párrafo de la matriz requisito → control → evidencia ejecutada en la CI; en §4, las referencias entre paréntesis a artículos y fichas al final de cada paso; en §16, «(arts. 34 bis a 35)» del título de Sanciones y la columna básica de «Básico vs. senior», que pasa a la lista «Qué se espera de un nivel senior»; en §10, la explicación del código, que queda en una frase, una línea por escenario y una limitación. El catálogo legal agrupado por tema sale del §2 y pasa al anexo. Las dos citas del boletín 18.623-07 se rotulan «tramitación» y «mensaje». Vuelve a `review_required` hasta la aprobación de Felipe.
-- 2026-11-07: pedido de Felipe. La matriz del §4 sigue los cinco pasos del Resumen (requisito, riesgo, control técnico, verificación, evidencia) y deja la columna «Decisión aprobada por»; el nodo de la matriz del diagrama «Control y evidencia» nombra los cinco pasos; sale «Resultado esperado» del Resumen. §10: la validación exige que cada control aparezca una vez (falta o duplicado es brecha), separa «evidencia sin URI» de «huella distinta a la guardada» y suma los escenarios `control-faltante` y `evidencia-vencida`; los docstrings nombran el principio sin letra (seguridad en `access_review`) y el derecho de supresión (art. 7) en `erasure_replay_check`, parafraseados, sin citas textuales. Sigue en `review_required`.
-- 2026-11-07: maqueta de bloques 0–6, fase 1 (pedido de Felipe, ADR-030): datos estructurados en `views` del frontmatter con marcas `<!-- view: … -->` en el cuerpo. Idea central en dos lados (lo que el pipeline comprueba y lo que no ve); vigencia como línea de hitos (reemplaza el párrafo «Estado al 2026-10-28…»); el enfoque sale del Resumen a un desplegable propio con descripción por paso y dos recuadros («De dónde viene», «Por qué se ajusta»); principios sin letra y enlace al anexo; buenas prácticas en cinco etapas (absorbe y elimina «Qué se espera de un nivel senior»); sanciones en tres tarjetas, sin las letras de los artículos; fuentes agrupadas (las dos del boletín en una entrada) y nuevas ISO/IEC 27701 y NIST Privacy Framework. Sigue en `review_required`.
+- 2026-11-01: aprobada con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-01: §10 reemplazado a partir de la propuesta: flujo de punta a punta (datos ficticios → cuatro controles → validación de la evidencia → código de salida 0/1 sin `assert`), estados PASS/FAIL/UNKNOWN, cuatro brechas inyectadas por separado, regla «autorizado ⇒ activo», purga del registro vencido sin cambiar el plazo, `evidence_sha256`, duplicados y evidencia vencida. Sale la entrada versionada `tests/fixtures/privacy-control-results.json`. **Por el cambio de código, la ficha vuelve a `review_required` hasta una nueva aprobación.**
+- 2026-11-01: aprobada de nuevo con el §10 nuevo, condicionada a la CI en verde (run 41354325642, 786 tests): `owner_approved_at: 2026-11-01`, vuelve a `verified`.
+- 2026-11-03: piloto de código guiado en el §10: una función por control con el docstring de su letra del art. 3 y sin ternarios encadenados; marcadores `# @paso 1–4`; el replay desde `source` reintroducía el registro vencido y `retention_check` ahora evalúa también su salida (`fix()` aplica la retención al replay); escenario nuevo `evidencia-alterada`, donde falla la huella SHA-256; una salida por escenario con su línea `$ python controles.py <escenario>`, igual a la de la CI. Vuelve a `review_required` hasta la aprobación.
+- 2026-11-03: aprobada con el §10 nuevo (`owner_approved_at: 2026-11-03`); vuelve a `verified` (ADR-023).
+- 2026-11-03: los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.
+- 2026-11-04: revisión `docs/reviews/p10.md` aplicada: los docstrings del §10 citan el texto del art. 3 (confidencialidad con «la relación con el titular»; calidad «exactos, completos, actuales y pertinentes»; proporcionalidad «suprimidos o anonimizados») y dejan aparte, como control técnico, lo que la ley no fija (acceso del inactivo, replay, huella SHA-256); el párrafo del §10 nombra en negrita los principios, sin «la letra». Vuelve a `review_required`.
+- 2026-11-04: aprobada con la revisión P10 y su verificación aplicadas (cita de confidencialidad con «Este», como en BCN) (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).
+- 2026-11-06: depuración de contenido pedida en la revisión (ADR-029). Se eliminan las secciones 6 (Cuándo no utilizarlo), 7 (Ejemplo sencillo), 8 (Ejemplo de producción), 15 (Errores frecuentes, con la fila «Tenemos cifrado, cumplimos» y la frase sobre la infracción grave del art. 34 ter c) y d)), 17 (Conceptos relacionados) y 19 (Laboratorio relacionado). Además: en §1, el encabezado de la tabla de preguntas y «no es formar especialistas legales, sino»; en §3, el párrafo de la matriz requisito → control → evidencia ejecutada en la CI; en §4, las referencias entre paréntesis a artículos y fichas al final de cada paso; en §16, «(arts. 34 bis a 35)» del título de Sanciones y la columna básica de «Básico vs. senior», que pasa a la lista «Qué se espera de un nivel senior»; en §10, la explicación del código, que queda en una frase, una línea por escenario y una limitación. El catálogo legal agrupado por tema sale del §2 y pasa al anexo. Las dos citas del boletín 18.623-07 se rotulan «tramitación» y «mensaje». Vuelve a `review_required` hasta la aprobación.
+- 2026-11-07: La matriz del §4 sigue los cinco pasos del Resumen (requisito, riesgo, control técnico, verificación, evidencia) y deja la columna «Decisión aprobada por»; el nodo de la matriz del diagrama «Control y evidencia» nombra los cinco pasos; sale «Resultado esperado» del Resumen. §10: la validación exige que cada control aparezca una vez (falta o duplicado es brecha), separa «evidencia sin URI» de «huella distinta a la guardada» y suma los escenarios `control-faltante` y `evidencia-vencida`; los docstrings nombran el principio sin letra (seguridad en `access_review`) y el derecho de supresión (art. 7) en `erasure_replay_check`, parafraseados, sin citas textuales. Sigue en `review_required`.
+- 2026-11-07: maqueta de bloques 0–6, fase 1 (ADR-030): datos estructurados en `views` del frontmatter con marcas `<!-- view: … -->` en el cuerpo. Idea central en dos lados (lo que el pipeline comprueba y lo que no ve); vigencia como línea de hitos (reemplaza el párrafo «Estado al 2026-10-28…»); el enfoque sale del Resumen a un desplegable propio con descripción por paso y dos recuadros («De dónde viene», «Por qué se ajusta»); principios sin letra y enlace al anexo; buenas prácticas en cinco etapas (absorbe y elimina «Qué se espera de un nivel senior»); sanciones en tres tarjetas, sin las letras de los artículos; fuentes agrupadas (las dos del boletín en una entrada) y nuevas ISO/IEC 27701 y NIST Privacy Framework. Sigue en `review_required`.
+
+- 2026-11-09: §10 suma el control de finalidad (`purpose_check`): cinco reglas, el filtro de consumos sin finalidad aprobada y las salidas de los seis escenarios. Sigue en `review_required`.
+- 2026-11-09: diseño final con los componentes de Cursor (ADR-030, enmienda 1). Los textos que estaban fijos en los componentes pasan a `views`: mapa de tratamiento (art. 2 letra o y nota comparada del RGPD), enfoque con ejemplo y referencia ISO/IEC 27001:2022 por paso, roles del §2 («Principios y responsabilidades»), recorrido del problema, ocho preguntas en cuatro fases, matriz de 7 filas con Finalidad, disparadores de uso, arquitectura de referencia, patrón de control y evidencia, guía del código y «En la nube» (reemplaza las pestañas GCP/AWS/Azure; §12 y §13 se omiten, ADR-029). Salen del cuerpo las 8 preguntas del Resumen, el párrafo de actividades, el párrafo [arq] del §3, las seis preguntas y la tabla del §4, la lista del §5, los diagramas del §9, la explicación del §10 y las letras a)…h) de los principios. Fuentes nuevas: ISO/IEC 27001, RGPD en EUR-Lex, BigQuery, Lake Formation y registros de diagnóstico de Azure Databricks. Sigue en `review_required`.
 
 ## Anexo · Catálogo legal por tema
 

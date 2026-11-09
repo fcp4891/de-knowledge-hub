@@ -734,7 +734,9 @@ def check_legal_content(
         last = data.get("last_verified")
         for i, ref in enumerate(data.get("sources", [])):
             target = by_slug.get(ref["source"])
-            if target is not None and target.data.get("source_type") == LEGISLATIVE and ref.get("accessed") != last:
+            own_law = target is not None and set(target.data.get("jurisdiction", [])) <= set(data["jurisdiction"])
+            # La legislación comparada (otra jurisdicción) lleva su propia fecha de consulta (ADR-030, enmienda 1).
+            if target is not None and target.data.get("source_type") == LEGISLATIVE and own_law and ref.get("accessed") != last:
                 report.add(doc.location, f"[sources.{i}.accessed] la cita legal se consulta el día de last_verified ({last})")
         if last and (today - dt.date.fromisoformat(str(last))).days > REVIEW_DAYS:
             report.warn(doc.location, f"[last_verified] {last}: más de {REVIEW_DAYS} días; revisar o pasar a potentially_outdated (ADR-023)")

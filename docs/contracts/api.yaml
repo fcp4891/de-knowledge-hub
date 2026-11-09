@@ -606,137 +606,1132 @@ components:
         views: { $ref: "#/components/schemas/Views" }
       unevaluatedProperties: false
     Views:
-      description: >-
-        Vistas estructuradas (ADR-030); la propiedad solo aparece si la ficha las tiene. Cada clave mapea 1:1 con las props
-        de su componente, en snake_case. central_idea, vigencia_timeline, practice_lanes y severity_cards van donde el
-        Markdown de su sección trae «<!-- view: clave -->»; approach es un desplegable tras el Resumen; sources_grouped
-        reemplaza la lista de Fuentes.
       type: object
+      required: []
       properties:
         central_idea:
+          description: CentralIdea (Resumen · Idea central).
           type: object
-          required: [checks_title, checks, status, risks_title, risks, closing]
+          required:
+          - checks_title
+          - checks
+          - status
+          - risks_title
+          - risks
+          - closing
           properties:
-            checks_title: { type: string }
-            checks: { type: array, items: { type: string } }
-            status: { type: string }
-            risks_title: { type: string }
+            checks_title:
+              type: string
+            checks:
+              type: array
+              items:
+                type: string
+            status:
+              type: string
+            risks_title:
+              type: string
             risks:
               type: array
-              items: { type: object, required: [text, tag], properties: { text: { type: string }, tag: { type: string } }, additionalProperties: false }
-            closing: { type: string }
+              items:
+                type: object
+                required:
+                - text
+                - tag
+                properties:
+                  text:
+                    type: string
+                  tag:
+                    type: string
+                additionalProperties: false
+            closing:
+              type: string
           additionalProperties: false
         vigencia_timeline:
+          description: VigenciaTimeline (Resumen · Contexto normativo).
           type: object
-          required: [items, as_of]
+          required:
+          - items
+          - as_of
           properties:
+            intro:
+              type: string
+            intro_mark:
+              type: string
             items:
               type: array
               items:
                 type: object
-                required: [date, title, detail, state]
+                required:
+                - date
+                - title
+                - detail
+                - state
                 properties:
-                  date: { $ref: "#/components/schemas/Date" }
-                  title: { type: string }
-                  detail: { type: string }
-                  links: { type: array, items: { $ref: "#/components/schemas/ViewLink" } }
-                  state: { enum: [past, current, proposed] }
+                  date:
+                    $ref: '#/components/schemas/Date'
+                  title:
+                    type: string
+                  detail:
+                    type: string
+                  links:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - label
+                      - href
+                      properties:
+                        label:
+                          type: string
+                        href:
+                          type: string
+                          format: uri
+                      additionalProperties: false
+                  note:
+                    type: string
+                  icon:
+                    enum:
+                    - calendar
+                    - institution
+                  state:
+                    enum:
+                    - past
+                    - current
+                    - proposed
                 additionalProperties: false
-            as_of: { type: string }
+            as_of:
+              type: string
           additionalProperties: false
-        approach:
+        treatment_map:
+          description: TreatmentMap (Resumen · Qué implica para Ingeniería de Datos).
           type: object
-          required: [title, intro, steps]
+          required:
+          - lead
+          - law_label
+          - tech_label
+          - verbs
+          - conclusion
+          - note
           properties:
-            title: { type: string }
-            intro: { type: string }
-            steps:
-              type: array
-              items: { type: object, required: [name, description], properties: { name: { type: string }, description: { type: string } }, additionalProperties: false }
-            notes: { type: array, items: { $ref: "#/components/schemas/ViewTitled" } }
-          additionalProperties: false
-        practice_lanes:
-          type: object
-          required: [lanes]
-          properties:
-            start: { $ref: "#/components/schemas/ViewTitled" }
-            lanes:
+            lead:
+              type: string
+              description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+            law_label:
+              type: object
+              required:
+              - title
+              properties:
+                title:
+                  type: string
+                detail:
+                  type: string
+              additionalProperties: false
+            tech_label:
+              type: object
+              required:
+              - title
+              properties:
+                title:
+                  type: string
+                detail:
+                  type: string
+              additionalProperties: false
+            verbs:
               type: array
               items:
                 type: object
-                required: [title, items]
+                required:
+                - verb
+                - practice
+                - examples
                 properties:
-                  title: { type: string }
+                  verb:
+                    type: string
+                  practice:
+                    type: string
+                  examples:
+                    type: string
+                additionalProperties: false
+            conclusion:
+              type: string
+            note:
+              type: string
+              description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+            sources:
+              type: array
+              items:
+                type: object
+                required:
+                - title
+                - href
+                - detail
+                properties:
+                  title:
+                    type: string
+                  href:
+                    type: string
+                    format: uri
+                  detail:
+                    type: string
+                additionalProperties: false
+          additionalProperties: false
+        approach:
+          description: 'ApproachBoard: desplegable propio tras el Resumen.'
+          type: object
+          required:
+          - title
+          - intro
+          - steps
+          properties:
+            title:
+              type: string
+            intro:
+              type: string
+            step_label:
+              type: string
+            example_label:
+              type: object
+              required:
+              - title
+              properties:
+                title:
+                  type: string
+                detail:
+                  type: string
+              additionalProperties: false
+            reference_label:
+              type: object
+              required:
+              - title
+              properties:
+                title:
+                  type: string
+                detail:
+                  type: string
+              additionalProperties: false
+            steps:
+              type: array
+              items:
+                type: object
+                required:
+                - name
+                - description
+                properties:
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  example:
+                    type: string
+                  reference:
+                    type: string
+                additionalProperties: false
+            notes:
+              type: array
+              items:
+                type: object
+                required:
+                - title
+                - text
+                properties:
+                  title:
+                    type: string
+                  text:
+                    type: string
+                additionalProperties: false
+            sources:
+              type: array
+              items:
+                type: object
+                required:
+                - title
+                - href
+                - detail
+                properties:
+                  title:
+                    type: string
+                  href:
+                    type: string
+                    format: uri
+                  detail:
+                    type: string
+                additionalProperties: false
+          additionalProperties: false
+        legal_foundations:
+          description: 'LegalFoundations (§2): título y recuadro de roles.'
+          type: object
+          required:
+          - title
+          - roles
+          properties:
+            title:
+              type: string
+            roles:
+              type: object
+              required:
+              - responsible
+              - processor
+              properties:
+                caption:
+                  type: string
+                responsible:
+                  type: object
+                  required:
+                  - title
+                  - lead
+                  - decide
+                  - build
+                  properties:
+                    title:
+                      type: string
+                    lead:
+                      type: string
+                      description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                    decide:
+                      type: object
+                      required:
+                      - kicker
+                      - items
+                      properties:
+                        kicker:
+                          type: string
+                        items:
+                          type: array
+                          items:
+                            type: object
+                            required:
+                            - title
+                            - text
+                            properties:
+                              title:
+                                type: string
+                              text:
+                                type: string
+                            additionalProperties: false
+                      additionalProperties: false
+                    build:
+                      type: object
+                      required:
+                      - kicker
+                      - items
+                      properties:
+                        kicker:
+                          type: string
+                        items:
+                          type: array
+                          items:
+                            type: object
+                            required:
+                            - title
+                            - text
+                            properties:
+                              title:
+                                type: string
+                              text:
+                                type: string
+                            additionalProperties: false
+                      additionalProperties: false
+                  additionalProperties: false
+                processor:
+                  type: object
+                  required:
+                  - title
+                  - text
+                  properties:
+                    title:
+                      type: string
+                    text:
+                      type: string
+                      description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                  additionalProperties: false
+                source:
+                  type: object
+                  required:
+                  - title
+                  - href
+                  - detail
+                  properties:
+                    title:
+                      type: string
+                    href:
+                      type: string
+                      format: uri
+                    detail:
+                      type: string
+                  additionalProperties: false
+              additionalProperties: false
+          additionalProperties: false
+        problem_journey:
+          description: ProblemJourney (§3).
+          type: object
+          required:
+          - question
+          - lead
+          - labels
+          - stages
+          - note
+          properties:
+            question:
+              type: object
+              required:
+              - kicker
+              - text
+              properties:
+                kicker:
+                  type: string
+                text:
+                  type: string
+              additionalProperties: false
+            lead:
+              type: string
+            labels:
+              type: object
+              required:
+              - route
+              - without
+              - with
+              properties:
+                route:
+                  type: string
+                without:
+                  type: string
+                with:
+                  type: string
+              additionalProperties: false
+            stages:
+              type: array
+              items:
+                type: object
+                required:
+                - title
+                - detail
+                - gap
+                - gap_mark
+                - control
+                properties:
+                  title:
+                    type: string
+                  detail:
+                    type: string
+                  gap:
+                    type: string
+                  gap_mark:
+                    enum:
+                    - '?'
+                    - ×
+                  control:
+                    type: string
+                additionalProperties: false
+            note:
+              type: string
+          additionalProperties: false
+        design_board:
+          description: DesignBoard (§4 · preguntas de diseño).
+          type: object
+          required:
+          - intro
+          - groups
+          properties:
+            intro:
+              type: string
+            groups:
+              type: array
+              items:
+                type: object
+                required:
+                - title
+                - items
+                properties:
+                  title:
+                    type: string
                   items:
                     type: array
                     items:
                       type: object
-                      required: [title, text]
-                      properties: { title: { type: string }, text: { type: string }, arq: { type: boolean } }
+                      required:
+                      - number
+                      - question
+                      - text
+                      - tags
+                      properties:
+                        number:
+                          type: string
+                        question:
+                          type: string
+                        text:
+                          type: string
+                        arq:
+                          type: boolean
+                        tags:
+                          type: array
+                          items:
+                            type: object
+                            required:
+                            - label
+                            properties:
+                              kind:
+                                type: string
+                              label:
+                                type: string
+                              legal:
+                                type: boolean
+                            additionalProperties: false
+                      additionalProperties: false
+                additionalProperties: false
+          additionalProperties: false
+        control_matrix:
+          description: ControlMatrix (§4).
+          type: object
+          required:
+          - title
+          - legend
+          - headers
+          - rows
+          - closing
+          properties:
+            title:
+              type: string
+            legend:
+              type: string
+              description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+            headers:
+              type: array
+              items:
+                type: string
+            rows:
+              type: array
+              items:
+                type: object
+                required:
+                - name
+                - bases
+                - risk
+                - control
+                - check
+                - evidence
+                properties:
+                  name:
+                    type: string
+                  bases:
+                    type: array
+                    items:
+                      type: string
+                  code:
+                    type: string
+                  risk:
+                    type: string
+                  control:
+                    type: string
+                  check:
+                    type: string
+                  evidence:
+                    type: string
+                additionalProperties: false
+            closing:
+              type: string
+          additionalProperties: false
+        when_to_use:
+          description: WhenToUse (§5).
+          type: object
+          required:
+          - intro
+          - groups
+          properties:
+            intro:
+              type: string
+            groups:
+              type: array
+              items:
+                type: object
+                required:
+                - title
+                - hint
+                - items
+                properties:
+                  title:
+                    type: string
+                  hint:
+                    type: string
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - title
+                      - text
+                      - tags
+                      properties:
+                        title:
+                          type: string
+                        text:
+                          type: string
+                        legal:
+                          type: boolean
+                        tags:
+                          type: array
+                          items:
+                            type: object
+                            required:
+                            - label
+                            properties:
+                              kind:
+                                type: string
+                              label:
+                                type: string
+                              legal:
+                                type: boolean
+                            additionalProperties: false
+                      additionalProperties: false
+                additionalProperties: false
+          additionalProperties: false
+        requirement_to_data:
+          description: RequirementToData (§9 · Del requisito al dato).
+          type: object
+          required:
+          - title
+          - lead
+          - governance
+          - data
+          properties:
+            title:
+              type: string
+            lead:
+              type: string
+            governance:
+              type: object
+              required:
+              - kicker
+              - items
+              - legend
+              properties:
+                kicker:
+                  type: object
+                  required:
+                  - title
+                  properties:
+                    title:
+                      type: string
+                    detail:
+                      type: string
+                  additionalProperties: false
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - title
+                    properties:
+                      title:
+                        type: string
+                      detail:
+                        type: string
+                    additionalProperties: false
+                legend:
+                  type: array
+                  items:
+                    type: string
+              additionalProperties: false
+            data:
+              type: object
+              required:
+              - kicker
+              - stages
+              - banner
+              properties:
+                kicker:
+                  type: object
+                  required:
+                  - title
+                  properties:
+                    title:
+                      type: string
+                    detail:
+                      type: string
+                  additionalProperties: false
+                banner:
+                  type: string
+                stages:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - title
+                    - tone
+                    properties:
+                      title:
+                        type: string
+                      detail:
+                        type: string
+                      pill:
+                        type: string
+                      tone:
+                        enum:
+                        - end
+                        - layer
+                    additionalProperties: false
+              additionalProperties: false
+          additionalProperties: false
+        control_evidence:
+          description: ControlEvidence (§9 · Control y evidencia).
+          type: object
+          required:
+          - title
+          - lead
+          - steps
+          - decide
+          - note
+          - example
+          properties:
+            title:
+              type: string
+            lead:
+              type: string
+              description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+            steps:
+              type: array
+              items:
+                type: object
+                required:
+                - number
+                - title
+                - items
+                properties:
+                  number:
+                    type: string
+                  title:
+                    type: string
+                  items:
+                    type: array
+                    items:
+                      type: string
+                additionalProperties: false
+            decide:
+              type: object
+              required:
+              - number
+              - title
+              - outcomes
+              properties:
+                number:
+                  type: string
+                title:
+                  type: string
+                outcomes:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - tone
+                    - text
+                    properties:
+                      tone:
+                        enum:
+                        - pass
+                        - fail
+                        - keep
+                      text:
+                        type: string
+                    additionalProperties: false
+              additionalProperties: false
+            note:
+              type: string
+            example:
+              type: object
+              required:
+              - summary
+              - steps
+              - note
+              properties:
+                summary:
+                  type: string
+                note:
+                  type: string
+                steps:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - title
+                    - items
+                    properties:
+                      title:
+                        type: string
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          required:
+                          - text
+                          properties:
+                            text:
+                              type: string
+                            code:
+                              type: string
+                          additionalProperties: false
+                    additionalProperties: false
+              additionalProperties: false
+          additionalProperties: false
+        code_guide:
+          description: CodeGuide (§10, bajo el código).
+          type: object
+          required:
+          - lead
+          - rules
+          - not_covered
+          - scenarios
+          - simplifies
+          - limit
+          properties:
+            lead:
+              type: object
+              required:
+              - title
+              - text
+              properties:
+                title:
+                  type: string
+                text:
+                  type: string
+              additionalProperties: false
+            rules:
+              type: object
+              required:
+              - headers
+              - items
+              properties:
+                headers:
+                  type: array
+                  items:
+                    type: string
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - rule
+                    - fn
+                    - requirement
+                    properties:
+                      rule:
+                        type: string
+                      fn:
+                        type: string
+                      requirement:
+                        type: string
+                    additionalProperties: false
+              additionalProperties: false
+            not_covered:
+              type: object
+              required:
+              - title
+              - intro
+              - items
+              properties:
+                title:
+                  type: string
+                intro:
+                  type: string
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - title
+                    - text
+                    properties:
+                      title:
+                        type: string
+                      text:
+                        type: string
+                    additionalProperties: false
+              additionalProperties: false
+            scenarios:
+              type: object
+              required:
+              - title
+              - items
+              properties:
+                title:
+                  type: string
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - name
+                    - text
+                    - exit_code
+                    properties:
+                      name:
+                        type: string
+                      text:
+                        type: string
+                      exit_code:
+                        enum:
+                        - 0
+                        - 1
+                    additionalProperties: false
+              additionalProperties: false
+            simplifies:
+              type: object
+              required:
+              - title
+              - items
+              properties:
+                title:
+                  type: string
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - title
+                    - text
+                    properties:
+                      title:
+                        type: string
+                      text:
+                        type: string
+                    additionalProperties: false
+              additionalProperties: false
+            limit:
+              type: object
+              required:
+              - title
+              - text
+              properties:
+                title:
+                  type: string
+                text:
+                  type: string
+              additionalProperties: false
+          additionalProperties: false
+        cloud_compare:
+          description: 'CloudCompare (§11 «En la nube»: reemplaza las pestañas GCP/AWS/Azure).'
+          type: object
+          required:
+          - title
+          - intro
+          - alert
+          - headers
+          - rows
+          - closing
+          properties:
+            title:
+              type: string
+            intro:
+              type: string
+            alert:
+              type: object
+              required:
+              - title
+              - text
+              properties:
+                title:
+                  type: string
+                text:
+                  type: string
+              additionalProperties: false
+            headers:
+              type: array
+              items:
+                type: string
+            rows:
+              type: array
+              items:
+                type: object
+                required:
+                - need
+                - meta
+                - gcp
+                - aws
+                - azure
+                properties:
+                  need:
+                    type: string
+                  meta:
+                    type: string
+                  gcp:
+                    type: object
+                    required:
+                    - name
+                    - text
+                    properties:
+                      name:
+                        type: string
+                      text:
+                        type: string
+                      warn:
+                        type: string
+                    additionalProperties: false
+                  aws:
+                    type: object
+                    required:
+                    - name
+                    - text
+                    properties:
+                      name:
+                        type: string
+                      text:
+                        type: string
+                      warn:
+                        type: string
+                    additionalProperties: false
+                  azure:
+                    type: object
+                    required:
+                    - name
+                    - text
+                    properties:
+                      name:
+                        type: string
+                      text:
+                        type: string
+                      warn:
+                        type: string
+                    additionalProperties: false
+                additionalProperties: false
+            closing:
+              type: string
+          additionalProperties: false
+        practice_lanes:
+          description: PracticeLanes (§14).
+          type: object
+          required:
+          - lanes
+          properties:
+            start:
+              type: object
+              required:
+              - title
+              - text
+              properties:
+                title:
+                  type: string
+                text:
+                  type: string
+              additionalProperties: false
+            lanes:
+              type: array
+              items:
+                type: object
+                required:
+                - title
+                - items
+                properties:
+                  title:
+                    type: string
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - title
+                      - text
+                      properties:
+                        title:
+                          type: string
+                        text:
+                          type: string
+                        arq:
+                          type: boolean
                       additionalProperties: false
                 additionalProperties: false
           additionalProperties: false
         severity_cards:
+          description: SeverityCards (§16 · Sanciones).
           type: object
-          required: [levels]
+          required:
+          - levels
           properties:
             levels:
               type: array
               items:
                 type: object
-                required: [name, level, amount, examples]
+                required:
+                - name
+                - level
+                - amount
+                - examples
                 properties:
-                  name: { type: string }
-                  level: { enum: [1, 2, 3] }
-                  amount: { type: string }
-                  note: { type: string }
-                  examples: { type: array, items: { type: string } }
+                  name:
+                    type: string
+                  level:
+                    enum:
+                    - 1
+                    - 2
+                    - 3
+                  amount:
+                    type: string
+                  note:
+                    type: string
+                  examples:
+                    type: array
+                    items:
+                      type: string
                 additionalProperties: false
           additionalProperties: false
         sources_grouped:
+          description: SourcesGrouped (§20).
           type: object
-          required: [groups]
+          required:
+          - groups
           properties:
             groups:
               type: array
               items:
                 type: object
-                required: [title, sources]
+                required:
+                - title
+                - sources
                 properties:
-                  title: { type: string }
-                  layout: { enum: [list, providers] }
+                  title:
+                    type: string
+                  layout:
+                    enum:
+                    - list
+                    - providers
                   sources:
                     type: array
                     items:
                       type: object
-                      required: [title, links, publisher, level]
+                      required:
+                      - title
+                      - links
+                      - publisher
+                      - level
                       properties:
-                        title: { type: string }
+                        title:
+                          type: string
                         links:
                           type: array
                           items:
                             type: object
-                            required: [href]
-                            properties: { label: { type: string }, href: { type: string, format: uri } }
+                            required:
+                            - href
                             additionalProperties: false
-                        publisher: { type: string }
-                        level: { type: string, description: "«Nivel N» desde el registro de la fuente." }
-                        why: { type: string }
-                        provider: { type: string }
+                            properties:
+                              label:
+                                type: string
+                              href:
+                                type: string
+                                format: uri
+                        publisher:
+                          type: string
+                        level:
+                          type: string
+                          description: «Nivel N» desde el registro de la fuente.
+                        why:
+                          type: string
+                        provider:
+                          type: string
                       additionalProperties: false
                 additionalProperties: false
           additionalProperties: false
       additionalProperties: false
-    ViewLink:
-      type: object
-      required: [label, href]
-      properties: { label: { type: string }, href: { type: string, format: uri } }
-      additionalProperties: false
-    ViewTitled:
-      type: object
-      required: [title, text]
-      properties: { title: { type: string }, text: { type: string } }
-      additionalProperties: false
+      description: 'Vistas estructuradas (ADR-030); la propiedad solo aparece si la ficha las tiene. Cada clave mapea 1:1 con las props de su componente,
+        en snake_case. Las vistas con marca van donde el Markdown trae «<!-- view: clave -->»; approach, legal_foundations y sources_grouped tienen
+        posición fija.'
     Annex:
       description: Anexo de la ficha (`## Anexo · Título`, ADR-029), en Markdown.
       type: object

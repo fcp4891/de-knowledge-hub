@@ -490,8 +490,9 @@ export interface components {
             annexes?: components["schemas"]["Annex"][];
             views?: components["schemas"]["Views"];
         } & components["schemas"]["Metadata"];
-        /** @description Vistas estructuradas (ADR-030); la propiedad solo aparece si la ficha las tiene. Cada clave mapea 1:1 con las props de su componente, en snake_case. central_idea, vigencia_timeline, practice_lanes y severity_cards van donde el Markdown de su sección trae «<!-- view: clave -->»; approach es un desplegable tras el Resumen; sources_grouped reemplaza la lista de Fuentes. */
+        /** @description Vistas estructuradas (ADR-030); la propiedad solo aparece si la ficha las tiene. Cada clave mapea 1:1 con las props de su componente, en snake_case. Las vistas con marca van donde el Markdown trae «<!-- view: clave -->»; approach, legal_foundations y sources_grouped tienen posición fija. */
         Views: {
+            /** @description CentralIdea (Resumen · Idea central). */
             central_idea?: {
                 checks_title: string;
                 checks: string[];
@@ -503,28 +504,337 @@ export interface components {
                 }[];
                 closing: string;
             };
+            /** @description VigenciaTimeline (Resumen · Contexto normativo). */
             vigencia_timeline?: {
+                intro?: string;
+                intro_mark?: string;
                 items: {
                     date: components["schemas"]["Date"];
                     title: string;
                     detail: string;
-                    links?: components["schemas"]["ViewLink"][];
+                    links?: {
+                        label: string;
+                        /** Format: uri */
+                        href: string;
+                    }[];
+                    note?: string;
+                    /** @enum {unknown} */
+                    icon?: "calendar" | "institution";
                     /** @enum {unknown} */
                     state: "past" | "current" | "proposed";
                 }[];
                 as_of: string;
             };
+            /** @description TreatmentMap (Resumen · Qué implica para Ingeniería de Datos). */
+            treatment_map?: {
+                /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                lead: string;
+                law_label: {
+                    title: string;
+                    detail?: string;
+                };
+                tech_label: {
+                    title: string;
+                    detail?: string;
+                };
+                verbs: {
+                    verb: string;
+                    practice: string;
+                    examples: string;
+                }[];
+                conclusion: string;
+                /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                note: string;
+                sources?: {
+                    title: string;
+                    /** Format: uri */
+                    href: string;
+                    detail: string;
+                }[];
+            };
+            /** @description ApproachBoard: desplegable propio tras el Resumen. */
             approach?: {
                 title: string;
                 intro: string;
+                step_label?: string;
+                example_label?: {
+                    title: string;
+                    detail?: string;
+                };
+                reference_label?: {
+                    title: string;
+                    detail?: string;
+                };
                 steps: {
                     name: string;
                     description: string;
+                    example?: string;
+                    reference?: string;
                 }[];
-                notes?: components["schemas"]["ViewTitled"][];
+                notes?: {
+                    title: string;
+                    text: string;
+                }[];
+                sources?: {
+                    title: string;
+                    /** Format: uri */
+                    href: string;
+                    detail: string;
+                }[];
             };
+            /** @description LegalFoundations (§2): título y recuadro de roles. */
+            legal_foundations?: {
+                title: string;
+                roles: {
+                    caption?: string;
+                    responsible: {
+                        title: string;
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                        lead: string;
+                        decide: {
+                            kicker: string;
+                            items: {
+                                title: string;
+                                text: string;
+                            }[];
+                        };
+                        build: {
+                            kicker: string;
+                            items: {
+                                title: string;
+                                text: string;
+                            }[];
+                        };
+                    };
+                    processor: {
+                        title: string;
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                        text: string;
+                    };
+                    source?: {
+                        title: string;
+                        /** Format: uri */
+                        href: string;
+                        detail: string;
+                    };
+                };
+            };
+            /** @description ProblemJourney (§3). */
+            problem_journey?: {
+                question: {
+                    kicker: string;
+                    text: string;
+                };
+                lead: string;
+                labels: {
+                    route: string;
+                    without: string;
+                    with: string;
+                };
+                stages: {
+                    title: string;
+                    detail: string;
+                    gap: string;
+                    /** @enum {unknown} */
+                    gap_mark: "?" | "×";
+                    control: string;
+                }[];
+                note: string;
+            };
+            /** @description DesignBoard (§4 · preguntas de diseño). */
+            design_board?: {
+                intro: string;
+                groups: {
+                    title: string;
+                    items: {
+                        number: string;
+                        question: string;
+                        text: string;
+                        arq?: boolean;
+                        tags: {
+                            kind?: string;
+                            label: string;
+                            legal?: boolean;
+                        }[];
+                    }[];
+                }[];
+            };
+            /** @description ControlMatrix (§4). */
+            control_matrix?: {
+                title: string;
+                /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                legend: string;
+                headers: string[];
+                rows: {
+                    name: string;
+                    bases: string[];
+                    code?: string;
+                    risk: string;
+                    control: string;
+                    check: string;
+                    evidence: string;
+                }[];
+                closing: string;
+            };
+            /** @description WhenToUse (§5). */
+            when_to_use?: {
+                intro: string;
+                groups: {
+                    title: string;
+                    hint: string;
+                    items: {
+                        title: string;
+                        text: string;
+                        legal?: boolean;
+                        tags: {
+                            kind?: string;
+                            label: string;
+                            legal?: boolean;
+                        }[];
+                    }[];
+                }[];
+            };
+            /** @description RequirementToData (§9 · Del requisito al dato). */
+            requirement_to_data?: {
+                title: string;
+                lead: string;
+                governance: {
+                    kicker: {
+                        title: string;
+                        detail?: string;
+                    };
+                    items: {
+                        title: string;
+                        detail?: string;
+                    }[];
+                    legend: string[];
+                };
+                data: {
+                    kicker: {
+                        title: string;
+                        detail?: string;
+                    };
+                    banner: string;
+                    stages: {
+                        title: string;
+                        detail?: string;
+                        pill?: string;
+                        /** @enum {unknown} */
+                        tone: "end" | "layer";
+                    }[];
+                };
+            };
+            /** @description ControlEvidence (§9 · Control y evidencia). */
+            control_evidence?: {
+                title: string;
+                /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                lead: string;
+                steps: {
+                    number: string;
+                    title: string;
+                    items: string[];
+                }[];
+                decide: {
+                    number: string;
+                    title: string;
+                    outcomes: {
+                        /** @enum {unknown} */
+                        tone: "pass" | "fail" | "keep";
+                        text: string;
+                    }[];
+                };
+                note: string;
+                example: {
+                    summary: string;
+                    note: string;
+                    steps: {
+                        title: string;
+                        items: {
+                            text: string;
+                            code?: string;
+                        }[];
+                    }[];
+                };
+            };
+            /** @description CodeGuide (§10, bajo el código). */
+            code_guide?: {
+                lead: {
+                    title: string;
+                    text: string;
+                };
+                rules: {
+                    headers: string[];
+                    items: {
+                        rule: string;
+                        fn: string;
+                        requirement: string;
+                    }[];
+                };
+                not_covered: {
+                    title: string;
+                    intro: string;
+                    items: {
+                        title: string;
+                        text: string;
+                    }[];
+                };
+                scenarios: {
+                    title: string;
+                    items: {
+                        name: string;
+                        text: string;
+                        /** @enum {unknown} */
+                        exit_code: 0 | 1;
+                    }[];
+                };
+                simplifies: {
+                    title: string;
+                    items: {
+                        title: string;
+                        text: string;
+                    }[];
+                };
+                limit: {
+                    title: string;
+                    text: string;
+                };
+            };
+            /** @description CloudCompare (§11 «En la nube»: reemplaza las pestañas GCP/AWS/Azure). */
+            cloud_compare?: {
+                title: string;
+                intro: string;
+                alert: {
+                    title: string;
+                    text: string;
+                };
+                headers: string[];
+                rows: {
+                    need: string;
+                    meta: string;
+                    gcp: {
+                        name: string;
+                        text: string;
+                        warn?: string;
+                    };
+                    aws: {
+                        name: string;
+                        text: string;
+                        warn?: string;
+                    };
+                    azure: {
+                        name: string;
+                        text: string;
+                        warn?: string;
+                    };
+                }[];
+                closing: string;
+            };
+            /** @description PracticeLanes (§14). */
             practice_lanes?: {
-                start?: components["schemas"]["ViewTitled"];
+                start?: {
+                    title: string;
+                    text: string;
+                };
                 lanes: {
                     title: string;
                     items: {
@@ -534,6 +844,7 @@ export interface components {
                     }[];
                 }[];
             };
+            /** @description SeverityCards (§16 · Sanciones). */
             severity_cards?: {
                 levels: {
                     name: string;
@@ -544,6 +855,7 @@ export interface components {
                     examples: string[];
                 }[];
             };
+            /** @description SourcesGrouped (§20). */
             sources_grouped?: {
                 groups: {
                     title: string;
@@ -564,15 +876,6 @@ export interface components {
                     }[];
                 }[];
             };
-        };
-        ViewLink: {
-            label: string;
-            /** Format: uri */
-            href: string;
-        };
-        ViewTitled: {
-            title: string;
-            text: string;
         };
         /** @description Anexo de la ficha (`## Anexo · Título`, ADR-029), en Markdown. */
         Annex: {
