@@ -1,3 +1,5 @@
+import { hideOwnerName } from "@/lib/hideOwnerName";
+
 import "./ficha-blocks.css";
 
 type SourceLink = { label?: string; href: string };
@@ -77,7 +79,7 @@ export function SourcesGrouped({
                           <p className="sources-meta">
                             {source.publisher} · {source.level}
                           </p>
-                          {source.why ? <p className="sources-why">{source.why}</p> : null}
+                          {source.why ? <p className="sources-why">{hideOwnerName(source.why)}</p> : null}
                           <SourceLinks links={source.links} />
                         </li>
                       ))}
@@ -95,7 +97,7 @@ export function SourcesGrouped({
                         {source.publisher} · {source.level}
                       </p>
                     </div>
-                    {source.why ? <p className="sources-why">{source.why}</p> : null}
+                    {source.why ? <p className="sources-why">{hideOwnerName(source.why)}</p> : null}
                     <SourceLinks links={source.links} />
                   </li>
                 ))}

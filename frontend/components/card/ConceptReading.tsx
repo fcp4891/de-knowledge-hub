@@ -308,6 +308,30 @@ export function ConceptReading({
   const shownNumber = (section: ReadingSectionModel): number | null =>
     section.annex ? null : compactNumbering ? present.indexOf(section.number) + 1 : section.number;
   const listed = sections.filter((section) => section.listed);
+  const compactGroups: { group: string; keys: string[] }[] = [
+    { group: "Entender", keys: ["purpose", "context", "summary", "what_is", "problem", "how_it_works", "when_to_use"] },
+    { group: "Aplicar", keys: ["architecture", "code"] },
+    { group: "Multicloud", keys: ["cloud_compare", "gcp", "aws", "azure"] },
+    { group: "Profundizar", keys: ["best_practices", "common_mistakes", "trade_offs", "sanctions", "related_concepts"] },
+    { group: "Practicar", keys: ["open_questions", "related_lab"] },
+    { group: "Referencias", keys: ["sources", "last_verified", "change_history"] },
+  ];
+  const tocGroups = compactNumbering
+    ? [
+        ...compactGroups.map((group) => ({
+          group: group.group,
+          items: group.keys
+            .map((key) => listed.find((section) => section.key === key && !section.annex))
+            .filter((section): section is ReadingSectionModel => section !== undefined),
+        })),
+        {
+          group: "Otras",
+          items: listed.filter(
+            (section) => !section.annex && !compactGroups.some((group) => group.keys.includes(section.key)),
+          ),
+        },
+      ].filter((group) => group.items.length > 0)
+    : null;
   const parentPart = partOfParent(relationGroups);
   const listedGroups = withoutPartOf(relationGroups);
   const hasRelations = listedGroups.some((group) => group.items.length > 0);
@@ -589,8 +613,16 @@ export function ConceptReading({
           data-reading-title={section.title}
         >
           <summary>
-            {section.annex ? null : <span className="reading-num">{shownNumber(section)}</span>}
-            {section.title}
+            {section.annex ? (
+              section.title
+            ) : compactNumbering ? (
+              `${shownNumber(section)} · ${section.title}`
+            ) : (
+              <>
+                <span className="reading-num">{shownNumber(section)}</span>
+                {section.title}
+              </>
+            )}
           </summary>
           <div className="reading-details-body">{section.body}</div>
         </details>,
@@ -602,7 +634,7 @@ export function ConceptReading({
   const known = alsoKnownLabel(aliases);
 
   return (
-    <div className="page reading-page reading">
+    <div className="page reading-page reading" data-compact={compactNumbering ? "true" : undefined}>
       {construction ? <ConstructionBanner /> : null}
       <div className="reading-top">
         <nav aria-label="Ruta de navegación">
@@ -669,7 +701,36 @@ export function ConceptReading({
         <nav className="reading-toc" aria-label="Índice de la ficha">
           <div className="reading-toc-nav">
             {listed.length === 0 ? <p className="reading-quiet">Sin secciones con contenido.</p> : null}
-            {sectionGroups.map((group) => {
+            {tocGroups
+              ? tocGroups.map((group) => (
+                  <div key={group.group}>
+                    <p className="reading-toc-group">{group.group}</p>
+                    {group.items.map((section) => {
+                      const linkClass = [
+                        "reading-toc-link",
+                        current === section.number ? "is-current" : section.number <= readUpTo ? "is-read" : "",
+                      ]
+                        .filter(Boolean)
+                        .join(" ");
+                      return (
+                        <a
+                          key={section.key}
+                          href={`#s${section.number}`}
+                          className={linkClass}
+                          aria-current={current === section.number ? "location" : undefined}
+                          onClick={(event) => {
+                            event.preventDefault();
+                            goTo(section);
+                          }}
+                        >
+                          <span className="reading-num">{shownNumber(section)}</span>
+                          <span>{section.title}</span>
+                        </a>
+                      );
+                    })}
+                  </div>
+                ))
+              : sectionGroups.map((group) => {
               const items = group.sections
                 .map((number) => listed.find((section) => section.number === number))
                 .filter((section): section is ReadingSectionModel => section !== undefined);

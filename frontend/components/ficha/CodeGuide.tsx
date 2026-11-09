@@ -20,8 +20,9 @@ const SCENARIOS: { name: string; text: string; exitCode: 0 | 1 }[] = [
 export function CodeGuide() {
   return (
     <section className="ficha-block code-guide" aria-label="Qué hace el ejemplo">
+      <h3>Qué hace</h3>
       <p className="code-guide-lead">
-        <strong>Qué hace.</strong> Revisa automáticamente cinco reglas de privacidad sobre datos ficticios y valida que su evidencia sea completa, reciente e íntegra. Si algo falla, la CI rechaza el cambio (salida 1); si todo pasa, lo aprueba (salida 0).
+        Revisa automáticamente cinco reglas de privacidad sobre datos ficticios y valida que su evidencia sea completa, reciente e íntegra. Si algo falla, la CI rechaza el cambio (salida 1); si todo pasa, lo aprueba (salida 0).
       </p>
 
       <table>

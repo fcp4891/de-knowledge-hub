@@ -333,19 +333,24 @@ function RolesBoard() {
   return (
     <section className="lf-roles" aria-labelledby="lf-roles-title">
       <div className="lf-roles-org">
-        <h3 id="lf-roles-title">Responsable · la organización</h3>
-        <p className="lf-roles-lead">
-          Decide los fines y medios del tratamiento y responde ante la ley (
-          <a href={LAW_URL} target="_blank" rel="noopener noreferrer">
-            art. 2 letra n
-          </a>
-          ).
-        </p>
+        <header className="lf-roles-head">
+          <h3 id="lf-roles-title">Responsable · la organización</h3>
+          <p className="lf-roles-lead">
+            Decide los fines y medios del tratamiento y responde ante la ley (
+            <a href={LAW_URL} target="_blank" rel="noopener noreferrer">
+              art. 2 letra n
+            </a>
+            ).
+          </p>
+        </header>
         <div className="lf-roles-split">
           <div className="lf-roles-decide">
-            <p className="lf-roles-kicker">Deciden y evalúan</p>
+            <p className="lf-roles-kicker">Decide</p>
             <h4>Legal, privacidad y negocio</h4>
             <p>Definen finalidad, base de licitud y plazos.</p>
+          </div>
+          <div className="lf-roles-assess">
+            <p className="lf-roles-kicker">Evalúa</p>
             <h4>Privacidad</h4>
             <p>Evalúa el riesgo para los titulares.</p>
             <h4>Seguridad</h4>
@@ -361,19 +366,27 @@ function RolesBoard() {
           </div>
         </div>
       </div>
-      <div className="lf-roles-vendor">
-        <h3>Encargado · fuera de la organización</h3>
-        <p>
-          Proveedor que trata datos por cuenta del responsable: nube, SaaS, API de LLM (
-          <a href={LAW_URL} target="_blank" rel="noopener noreferrer">
-            art. 2 letra x
-          </a>
-          ;{" "}
-          <a href={LAW_URL} target="_blank" rel="noopener noreferrer">
-            art. 15 bis
-          </a>
-          ).
-        </p>
+      <div className="lf-roles-foot">
+        <div className="lf-roles-vendor">
+          <h3>Encargado · fuera de la organización</h3>
+          <p>
+            Proveedor que trata datos por cuenta del responsable: nube, SaaS, API de LLM (
+            <a href={LAW_URL} target="_blank" rel="noopener noreferrer">
+              art. 2 letra x
+            </a>
+            ).
+          </p>
+        </div>
+        <aside className="lf-roles-warn">
+          <p className="lf-roles-kicker">Ojo</p>
+          <p>
+            Si los trata para otro fin o los cede sin autorización, se le considera responsable (
+            <a href={LAW_URL} target="_blank" rel="noopener noreferrer">
+              art. 15 bis
+            </a>
+            ).
+          </p>
+        </aside>
       </div>
       <p className="lf-roles-source">
         <a href={LAW_21719_URL} target="_blank" rel="noopener noreferrer">

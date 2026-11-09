@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import "./ficha-blocks.css";
 
 type Stage = {
@@ -160,6 +164,7 @@ export function RequirementToData() {
 }
 
 export function ControlEvidence() {
+  const [exampleOpen, setExampleOpen] = useState(false);
   return (
     <section className="ficha-block control-evidence" aria-label="Control y evidencia">
       <h3>Control y evidencia</h3>
@@ -201,30 +206,41 @@ export function ControlEvidence() {
         Herramientas como Open Policy Agent, AWS Config o Azure Policy implementan este patrón; ninguna certifica cumplimiento por sí sola.
       </p>
 
-      <details className="control-evidence-example" open>
-        <summary>Ver ejemplo con el código de la ficha</summary>
-        <div className="control-evidence-scroll">
-          <ol className="control-evidence-code">
-            {EXAMPLE.map((step, index) => (
-              <li key={step.title}>
-                <article>
-                  <h4>{step.title}</h4>
-                  <ul>
-                    {step.items.map((item) => (
-                      <li key={item.text}>
-                        {item.text}
-                        {item.code ? <code>{item.code}</code> : null}
-                      </li>
-                    ))}
-                  </ul>
-                </article>
-                {index < EXAMPLE.length - 1 ? <Arrow /> : null}
-              </li>
-            ))}
-          </ol>
-        </div>
-        <p>Cubre 5 de los 7 requisitos de la matriz; vulneraciones y transferencias se verifican fuera de este ejemplo.</p>
-      </details>
+      <div className="control-evidence-example">
+        <button
+          type="button"
+          className="control-evidence-example-toggle"
+          aria-expanded={exampleOpen}
+          onClick={() => setExampleOpen((open) => !open)}
+        >
+          Ver ejemplo con el código de la ficha
+        </button>
+        {exampleOpen ? (
+          <>
+            <div className="control-evidence-scroll">
+              <ol className="control-evidence-code">
+                {EXAMPLE.map((step, index) => (
+                  <li key={step.title}>
+                    <article>
+                      <h4>{step.title}</h4>
+                      <ul>
+                        {step.items.map((item) => (
+                          <li key={item.text}>
+                            {item.text}
+                            {item.code ? <code>{item.code}</code> : null}
+                          </li>
+                        ))}
+                      </ul>
+                    </article>
+                    {index < EXAMPLE.length - 1 ? <Arrow /> : null}
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <p>Cubre 5 de los 7 requisitos de la matriz; vulneraciones y transferencias se verifican fuera de este ejemplo.</p>
+          </>
+        ) : null}
+      </div>
     </section>
   );
 }

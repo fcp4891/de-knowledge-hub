@@ -743,6 +743,45 @@
   margin-top: 0.2rem;
 }
 
+.reading[data-compact="true"] .reading-details summary {
+  gap: 0;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.reading[data-compact="true"] .reading-details summary .reading-num {
+  width: auto;
+  font-family: inherit;
+  font-size: inherit;
+  opacity: 1;
+  color: inherit;
+}
+
+.reading[data-compact="true"] .reading-details-body {
+  padding-top: 10px;
+}
+
+.reading[data-compact="true"] .reading-details .markdown h3,
+.reading[data-compact="true"] .reading-section .markdown h3 {
+  margin: 1.6rem 0 0.75rem;
+  color: var(--ink);
+  font-family: var(--font-ui), system-ui, sans-serif;
+  font-size: 1.45rem;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.reading[data-compact="true"] .reading-details .markdown h3:first-child {
+  margin-top: 0.2rem;
+}
+
+.reading[data-compact="true"] .reading-details-body > :first-child .control-evidence > h3:first-of-type {
+  margin-top: 0.2rem;
+}
+
 .reading-summary .ficha-block {
   margin-bottom: 0;
 }
@@ -883,9 +922,9 @@
   min-height: calc(2 * 1.35 * var(--text-base) + 24px);
   margin: 0;
   padding: 12px 14px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--band-especializacion-200);
   border-radius: 12px;
-  background: var(--surface);
+  background: var(--band-especializacion-100);
   color: var(--ink);
   font-family: var(--font-ui), system-ui, sans-serif;
   font-size: var(--text-base);
@@ -984,6 +1023,12 @@
   .lf-principle-eye {
     color: var(--band-especializacion-100);
   }
+
+  .legal-foundations .lf-principles a.lf-principle-card {
+    background: color-mix(in srgb, var(--band-especializacion-900) 70%, var(--surface));
+    border-color: var(--band-especializacion-600);
+    color: var(--ink);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1010,59 +1055,68 @@
 }
 
 .lf-roles-org {
-  padding: 16px 18px 18px;
-  border: 1px solid var(--accent);
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   background: var(--surface);
 }
 
+.lf-roles-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding: 12px 16px;
+  background: var(--accent-soft);
+}
+
 .legal-foundations .lf-roles-org > h3,
+.legal-foundations .lf-roles-head h3,
 .legal-foundations .lf-roles a {
   color: var(--accent);
   font-weight: 650;
 }
 
-.lf-roles-lead {
-  margin-top: 4px;
+.lf-roles-head .lf-roles-lead {
+  flex: 1 1 16rem;
+  margin: 0;
   color: var(--ink-2);
+  text-align: right;
 }
 
 .lf-roles-split {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
 }
 
 .lf-roles-decide,
+.lf-roles-assess,
 .lf-roles-build {
   display: flex;
   flex-direction: column;
   gap: 4px;
   min-width: 0;
   padding: 14px 16px;
-  border-radius: var(--radius-md);
+  border: 0;
+  border-radius: 0;
   background: var(--surface);
 }
 
-.lf-roles-decide {
-  border: 1px solid var(--border);
-}
-
 .lf-roles-build {
-  border: 1px solid var(--accent);
+  background: var(--accent-soft);
 }
 
 .legal-foundations .lf-roles-kicker {
   margin-bottom: 6px;
+  color: var(--ink-muted);
   font-size: var(--text-xs);
   font-weight: 650;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-}
-
-.lf-roles-decide .lf-roles-kicker {
-  color: var(--ink-muted);
 }
 
 .lf-roles-build .lf-roles-kicker,
@@ -1072,21 +1126,30 @@
 
 .legal-foundations .lf-roles h4 {
   margin-top: 8px;
+  color: var(--ink);
   font-weight: 650;
 }
 
 .legal-foundations .lf-roles-decide h4:first-of-type,
+.legal-foundations .lf-roles-assess h4:first-of-type,
 .legal-foundations .lf-roles-build h4:first-of-type {
   margin-top: 0;
 }
 
 .legal-foundations .lf-roles-decide p,
+.legal-foundations .lf-roles-assess p,
 .legal-foundations .lf-roles-build p {
   color: var(--ink-2);
 }
 
+.lf-roles-foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: 12px;
+}
+
 .lf-roles-vendor {
-  margin-left: 22px;
+  margin: 0;
   padding: 14px 16px;
   border: 1px dashed var(--border-strong);
   border-radius: var(--radius-md);
@@ -1094,6 +1157,7 @@
 }
 
 .legal-foundations .lf-roles-vendor h3 {
+  color: var(--ink);
   font-weight: 650;
 }
 
@@ -1102,18 +1166,33 @@
   color: var(--ink-2);
 }
 
+.lf-roles-warn {
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: var(--severity-2-bg);
+  color: var(--severity-2-ink);
+}
+
+.lf-roles-warn .lf-roles-kicker,
+.legal-foundations .lf-roles-warn a,
+.legal-foundations .lf-roles-warn p {
+  color: var(--severity-2-ink);
+}
+
 .legal-foundations .lf-roles-source {
   color: var(--ink-muted);
   font-size: var(--text-sm);
 }
 
 @media (max-width: 720px) {
-  .lf-roles-split {
-    grid-template-columns: 1fr;
+  .lf-roles-head .lf-roles-lead {
+    flex-basis: 100%;
+    text-align: left;
   }
 
-  .lf-roles-vendor {
-    margin-left: 0;
+  .lf-roles-split,
+  .lf-roles-foot {
+    grid-template-columns: 1fr;
   }
 }
 

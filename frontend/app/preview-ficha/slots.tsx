@@ -75,7 +75,7 @@ export function renderPreviewView(id: string, views: unknown): ReactNode | null 
     return null;
   }
   const data = views as Views;
-  if (id === "design_questions") {
+  if (id === "design_questions" || id === "design_board") {
     return <DesignBoard />;
   }
   if (id === "control_matrix") {
@@ -96,7 +96,7 @@ export function renderPreviewView(id: string, views: unknown): ReactNode | null 
   if (id === "when_to_use") {
     return <WhenToUse />;
   }
-  if (id === "problem") {
+  if (id === "problem" || id === "problem_journey") {
     return <ProblemJourney />;
   }
   if (id === "treatment_map") {

@@ -3,6 +3,8 @@ import { NoteForm, NoteItem } from "@/components/card/PersonalForms";
 import { ConceptReading, type ReadingSectionModel } from "@/components/card/ConceptReading";
 import { LegalCatalog, LegalFoundations } from "@/components/card/LegalFoundations";
 import { canViewChangeHistory, canViewRelatedLab, currentViewer } from "@/lib/changeHistoryAccess";
+import { TradeOffs } from "@/components/ficha/TradeOffs";
+import { OpenQuestions } from "@/components/ficha/OpenQuestions";
 import { MarkdownBody } from "@/components/markdown/MarkdownBody";
 import { getConcept, getDomain, getRelations, getStudyState, listNotes } from "@/lib/api/client";
 import type { ConceptRefs } from "@/lib/conceptNames";
@@ -17,6 +19,7 @@ import { architectureTitle, isArchitectureView } from "@/lib/architecture";
 import { SHORT_NAMES } from "@/lib/learning-paths";
 import { isDomainPublished, relationVisible, scopeFromConcepts } from "@/lib/publishedScope";
 import { nextInRoute } from "@/lib/domainRoute";
+import { hideOwnerName } from "@/lib/hideOwnerName";
 import { staticSlugs } from "@/lib/staticParams";
 import type { ReactNode } from "react";
 
@@ -94,6 +97,18 @@ function markdownWithViews(
 }
 
 const CLOUD_KEYS = new Set(["gcp", "aws", "azure"]);
+
+function splitPurpose(markdown: string): { purpose: string; context: string } | null {
+  const objective = markdown.indexOf("### Objetivo");
+  const context = markdown.indexOf("### Contexto normativo");
+  if (objective < 0 || context <= objective) {
+    return null;
+  }
+  const before = markdown.slice(0, objective).trim();
+  const purpose = [before, markdown.slice(objective, context).trim()].filter(Boolean).join("\n\n");
+  const contextBody = markdown.slice(context).replace(/^### Contexto normativo[^\n]*\n?/, "").trim();
+  return { purpose, context: contextBody };
+}
 const OPEN_NUMBERS = new Set<number>();
 
 // El build estático cambia este literal a false: Next solo acepta true o false.
@@ -151,7 +166,11 @@ function sectionModels(
   const architecture = kind === "architecture";
   const styleArrows = slug !== "data-lineage";
   const titleOf = (section: Section) => (architecture ? architectureTitle(section.key, section.title) : section.title);
-  const ordered = [...sections].sort((left, right) => left.number - right.number);
+  const ordered = [...sections]
+    .sort((left, right) => left.number - right.number)
+    .map((section) =>
+      slug === "chile-data-protection" ? { ...section, markdown: hideOwnerName(section.markdown) } : section,
+    );
   const viewer = currentViewer();
   const showHistory = canViewChangeHistory(viewer);
   const showLab = canViewRelatedLab(viewer);
@@ -165,7 +184,7 @@ function sectionModels(
         number: clouds[0].number,
         key: "cloud_compare",
         title: "En la nube",
-        presentation: "open",
+        presentation: "details",
         listed: true,
         body: board,
       });
@@ -177,6 +196,9 @@ function sectionModels(
 
   for (const section of ordered) {
     if (section.key === "change_history" && !showHistory) {
+      continue;
+    }
+    if (section.key === "last_verified" && slug === "chile-data-protection") {
       continue;
     }
     if (section.key === "related_lab" && !showLab) {
@@ -205,30 +227,59 @@ function sectionModels(
     }
     if (section.key === "summary") {
       flushClouds();
-      const summaryBody = text
-        ? markdownWithViews(
-            section.markdown,
+      const viewProps = { obligations, conceptRefs, markCodeStatus: architecture, styleArrows };
+      const opening = slug === "chile-data-protection" ? splitPurpose(section.markdown) : null;
+      if (opening) {
+        const approach = section.markdown.includes("view: approach") ? null : renderView?.("approach");
+        models.push({
+          number: section.number,
+          key: "purpose",
+          title: "Propósito",
+          presentation: "summary",
+          listed: true,
+          body: (
+            <>
+              {markdownWithViews(
+                opening.purpose,
+                renderView,
+                <MarkdownBody markdown={opening.purpose} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} styleArrows={styleArrows} />,
+                viewProps,
+              )}
+              {approach}
+            </>
+          ),
+        });
+        models.push({
+          number: section.number + 0.5,
+          key: "context",
+          title: "Contexto normativo",
+          presentation: "details",
+          listed: true,
+          body: markdownWithViews(
+            opening.context,
             renderView,
-            <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} styleArrows={styleArrows} />,
-            { obligations, conceptRefs, markCodeStatus: architecture, styleArrows },
-          )
-        : null;
-      const approach = section.markdown.includes("view: approach") ? null : renderView?.("approach");
-      models.push({
-        number: section.number,
-        key: section.key,
-        title: titleOf(section),
-        presentation: "summary",
-        listed: text || Boolean(approach),
-        body: approach ? (
-          <>
-            {summaryBody}
-            {approach}
-          </>
-        ) : (
-          summaryBody
-        ),
-      });
+            <MarkdownBody markdown={opening.context} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} styleArrows={styleArrows} />,
+            viewProps,
+          ),
+        });
+      } else {
+        const summaryBody = section.markdown.trim()
+          ? markdownWithViews(
+              section.markdown,
+              renderView,
+              <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} styleArrows={styleArrows} />,
+              viewProps,
+            )
+          : null;
+        models.push({
+          number: section.number,
+          key: section.key,
+          title: titleOf(section),
+          presentation: "summary",
+          listed: Boolean(section.markdown.trim()),
+          body: summaryBody,
+        });
+      }
       continue;
     }
     if (CLOUD_KEYS.has(section.key)) {
@@ -320,6 +371,55 @@ function sectionModels(
       }
     }
     if (!text) {
+      continue;
+    }
+    if (section.key === "trade_offs" && slug === "chile-data-protection" && section.markdown.includes("### Sanciones")) {
+      flushClouds();
+      const cut = section.markdown.indexOf("### Sanciones");
+      const tradeMarkdown = section.markdown.slice(0, cut).trim();
+      const sanctionsMarkdown = section.markdown
+        .slice(cut)
+        .replace(/^### Sanciones[^\n]*\n?/, "")
+        .replace(renderView ? /\n+En reincidencia[\s\S]*$/ : /$^/, "")
+        .trim();
+      const closing = tradeMarkdown
+        .split(/\n\n/)
+        .map((part) => part.trim())
+        .find((part) => part.startsWith("No toda falla"));
+      const viewProps = { obligations, conceptRefs, markCodeStatus: architecture, styleArrows };
+      models.push({
+        number: section.number,
+        key: section.key,
+        title: titleOf(section),
+        presentation: "details",
+        listed: true,
+        body: <TradeOffs closing={closing} />,
+      });
+      models.push({
+        number: section.number + 0.5,
+        key: "sanctions",
+        title: "Sanciones",
+        presentation: "details",
+        listed: true,
+        body: markdownWithViews(
+          sanctionsMarkdown,
+          renderView,
+          <MarkdownBody markdown={sanctionsMarkdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} styleArrows={styleArrows} />,
+          viewProps,
+        ),
+      });
+      continue;
+    }
+    if (section.key === "open_questions" && slug === "chile-data-protection") {
+      flushClouds();
+      models.push({
+        number: section.number,
+        key: section.key,
+        title: titleOf(section),
+        presentation: "details",
+        listed: true,
+        body: <OpenQuestions />,
+      });
       continue;
     }
     models.push({
