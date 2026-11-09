@@ -32,7 +32,7 @@ export function CloudCompare({ intro, alert, headers, rows, closing }: CloudComp
           </thead>
           <tbody>
             {rows.map((row) => (
-              <tr key={row.need}>
+              <tr key={row.need} id={row.id}>
                 <td>
                   {row.need}
                   <span className="cloud-compare-meta">{row.meta}</span>

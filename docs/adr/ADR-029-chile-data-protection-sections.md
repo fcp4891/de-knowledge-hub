@@ -70,3 +70,11 @@ Con el diseño final de Cursor, las tres pestañas GCP, AWS y Azure se reemplaza
 - **Secciones omitidas.** La §12 y la §13 quedan sin contenido propio, así que pasan a ser omitibles en esta ficha. El conjunto queda en 6, 7, 8, 12, 13, 15, 17 y 19.
 - **Lo que no cambia.** Las demás fichas siguen con sus tres secciones por nube.
 - **Lo que se ve.** La ficha muestra 14 secciones, o 13 si el lector no ve el historial. La numeración visible es correlativa y «Leído N de M» cuenta solo las secciones visibles.
+
+## Enmienda 2 (2026-11-09) — §21
+
+- **Decisión.** A pedido de Felipe, la §21 (Fecha de última verificación) pasa a ser omitible en esta ficha.
+- **Dónde quedan las fechas.** En `last_verified` y en `accessed` de cada cita.
+- **Dónde quedan las verificaciones.** En el historial (§22).
+- **Conjunto de omitibles.** 6, 7, 8, 12, 13, 15, 17, 19 y 21.
+- **Lo que se ve.** La ficha muestra 13 secciones, o 12 si el lector no ve el historial.

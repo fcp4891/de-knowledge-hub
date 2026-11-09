@@ -98,3 +98,31 @@ def test_chile_data_protection_pills_link_to_real_anchors() -> None:
     assert tags and all(tag.get("href", "").startswith("#") for tag in tags)
     assert not [tag["href"] for tag in tags if tag["href"][1:] not in anchors]
     assert data["views"]["control_evidence"]["example"]["code_link"] == {"label": "Ver código ↓", "href": "#s10"}
+
+
+def test_chile_data_protection_principles_practices_sanctions_and_questions() -> None:
+    """Principios con píldoras, 13 prácticas (4 etapas y la franja «Demostrar»), 3 niveles con artículo y 4 modificadores,
+    y 8 preguntas con píldoras; todas las anclas existen."""
+    import yaml
+    from pathlib import Path
+
+    from backend.content import page_sections
+    text = (Path(__file__).resolve().parent.parent / "content/concepts/chile-data-protection.md").read_text(encoding="utf-8")
+    data = yaml.safe_load(text.split("---\n", 2)[1])
+    v = data["views"]
+    present = [n for n, _, _ in page_sections.sections(page_sections.body_of(text))]
+    anchors = views.page_anchors(v, present, data["legal_basis"])
+    principles = v["legal_foundations"]["principles"]
+    assert len(principles) == 8 and all(p["tags"] for p in principles)
+    lanes = v["practice_lanes"]
+    assert [lane["title"] for lane in lanes["lanes"]] == ["Descubrir", "Proteger", "Operar", "Suprimir"]
+    assert lanes["cross"]["title"] == "Demostrar"
+    assert sum(len(lane["items"]) for lane in lanes["lanes"]) + len(lanes["cross"]["items"]) == 13
+    sanctions = v["severity_cards"]
+    assert [level["article"] for level in sanctions["levels"]] == ["art. 34 bis", "art. 34 ter", "art. 34 quáter"]
+    assert [m["effect"] for m in sanctions["modifiers"]] == ["up", "up", "up", "down"]
+    questions = v["open_questions"]["items"]
+    assert len(questions) == 8 and all(q["tags"] for q in questions)
+    tags = [t for p in principles for t in p["tags"]] + [t for q in questions for t in q["tags"]]
+    assert not [t["href"] for t in tags if t["href"][1:] not in anchors]
+    assert len(v["trade_offs"]["items"]) == 5 and v["trade_offs"]["items"][1]["a"] == "Seudonimización"

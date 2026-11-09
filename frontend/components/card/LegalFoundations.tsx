@@ -13,7 +13,8 @@ import {
 } from "@/lib/chileLegalCatalog";
 import { bcnLinkText, legalRowId } from "@/lib/legal";
 import { principleActivation, principleAriaLabel } from "@/lib/principleCards";
-import type { RolesProps } from "@/lib/views";
+import type { RolesProps, Tag } from "@/lib/views";
+import { Pills } from "@/components/ficha/Pills";
 import { RichText } from "@/components/ficha/RichText";
 
 function fold(value: string): string {
@@ -120,7 +121,7 @@ function Fichas({ fichas }: { fichas: ChileFicha[] }) {
 }
 
 /** §2 de chile-data-protection: principios, roles (ADR-030: datos de views.legal_foundations) y modal del catálogo. */
-export function LegalFoundations({ roles }: { roles?: RolesProps }) {
+export function LegalFoundations({ roles, principles = [] }: { roles?: RolesProps; principles?: { label: string; tags: Tag[] }[] }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [open, setOpen] = useState<ChileArticle | null>(null);
   const [tip, setTip] = useState<string | null>(null);
@@ -205,6 +206,7 @@ export function LegalFoundations({ roles }: { roles?: RolesProps }) {
             key={item.label}
             index={index}
             principle={item}
+            tags={principles.find((entry) => entry.label === item.label.replace(/^[a-h]\)\s*/i, ""))?.tags ?? []}
             open={tip === item.label}
             pinned={pinned && tip === item.label}
             onShow={() => {
@@ -384,6 +386,7 @@ function RoleItem({ item }: { item: { title: string; text: string } }) {
 function PrincipleCard({
   index,
   principle,
+  tags,
   open,
   pinned,
   onShow,
@@ -393,6 +396,7 @@ function PrincipleCard({
 }: {
   index: number;
   principle: ChilePrinciple;
+  tags: Tag[];
   open: boolean;
   pinned: boolean;
   onShow: () => void;
@@ -458,6 +462,7 @@ function PrincipleCard({
           {principle.description}
         </span>
       ) : null}
+      <Pills tags={tags} />
     </li>
   );
 }

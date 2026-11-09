@@ -122,3 +122,37 @@ test("las píldoras con ancla son enlaces y el ejemplo enlaza al código (ADR-03
   });
   assert.match(example, /<a href="#s10">Ver código ↓<\/a>/);
 });
+
+test("trade-offs como balanza, preguntas con contador y modificadores de la multa (ADR-030, enmienda 3)", () => {
+  const trade = loadTsx(join(ficha, "TradeOffs.tsx"));
+  const balance = html(trade.TradeOffs, {
+    arq: true,
+    resolutionLabel: "Se resuelve con",
+    items: [{ a: "Seudonimización", b: "Anonimización", text: "t", resolution: "r." }],
+    note: "nota",
+  });
+  assert.match(balance, /Seudonimización<\/span><span class="tradeoff-arrow"[^>]*>⇄<\/span><span>Anonimización/);
+  assert.match(balance, /tradeoff-resolution"><strong>Se resuelve con<\/strong> r\./);
+  assert.match(balance, /claim-arq/);
+  const questions = loadTsx(join(ficha, "OpenQuestions.tsx"));
+  const cards = html(questions.OpenQuestions, {
+    intro: "i",
+    checkLabel: "Sé responderla",
+    counter: "{n} de {total} que sabes responder",
+    items: [
+      { question: "¿Uno?", tags: [{ kind: "Código", label: "purpose_check", href: "#codigo-purpose-check" }] },
+      { question: "¿Dos?", tags: [] },
+    ],
+  });
+  assert.match(cards, /0 de 2 que sabes responder/);
+  assert.match(cards, /<a href="#codigo-purpose-check"><b>Código<\/b><code>purpose_check<\/code><\/a>/);
+  assert.equal(cards.match(/type="checkbox"/g)?.length, 2);
+  const severity = loadTsx(join(ficha, "SeverityCards.tsx"));
+  const modifiers = html(severity.SeverityCards, {
+    levels: [{ name: "Leve", level: 1, article: "art. 34 bis", amount: "hasta 5.000 UTM", examplesLabel: "Ejemplos con origen técnico", examples: ["e"] }],
+    modifiers: [{ effect: "down", effectLabel: "Atenúa", title: "Modelo", text: "t", basis: "art. 51" }],
+  });
+  assert.match(modifiers, /severity-article">art\. 34 bis/);
+  assert.match(modifiers, /Ejemplos con origen técnico/);
+  assert.match(modifiers, /data-effect="down"/);
+});

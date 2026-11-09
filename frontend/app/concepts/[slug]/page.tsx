@@ -31,6 +31,8 @@ import { PracticeLanes } from "@/components/ficha/PracticeLanes";
 import { ProblemJourney } from "@/components/ficha/ProblemJourney";
 import { SeverityCards } from "@/components/ficha/SeverityCards";
 import { SourcesGrouped } from "@/components/ficha/SourcesGrouped";
+import { OpenQuestions } from "@/components/ficha/OpenQuestions";
+import { TradeOffs } from "@/components/ficha/TradeOffs";
 import { TreatmentMap } from "@/components/ficha/TreatmentMap";
 import { VigenciaTimeline } from "@/components/ficha/VigenciaTimeline";
 import { WhenToUse } from "@/components/ficha/WhenToUse";
@@ -44,10 +46,12 @@ import {
   designBoardProps,
   groupedSourceCount,
   legalFoundationsProps,
+  openQuestionsProps,
   practiceLanesProps,
   problemJourneyProps,
   requirementToDataProps,
   severityCardsProps,
+  tradeOffsProps,
   sourcesGroupedProps,
   treatmentMapProps,
   vigenciaTimelineProps,
@@ -119,7 +123,9 @@ function markedViews(views: Views | undefined): Record<string, ReactNode> {
   if (views.code_guide) nodes.code_guide = <CodeGuide {...codeGuideProps(views.code_guide)} />;
   if (views.cloud_compare) nodes.cloud_compare = <CloudCompare {...cloudCompareProps(views.cloud_compare)} />;
   if (views.practice_lanes) nodes.practice_lanes = <PracticeLanes {...practiceLanesProps(views.practice_lanes)} />;
+  if (views.trade_offs) nodes.trade_offs = <TradeOffs {...tradeOffsProps(views.trade_offs)} />;
   if (views.severity_cards) nodes.severity_cards = <SeverityCards {...severityCardsProps(views.severity_cards)} />;
+  if (views.open_questions) nodes.open_questions = <OpenQuestions {...openQuestionsProps(views.open_questions)} />;
   return nodes;
 }
 
@@ -251,7 +257,7 @@ function sectionModels(
         listed: true,
         body: (
           <>
-            <LegalFoundations roles={foundations?.roles} />
+            <LegalFoundations roles={foundations?.roles} principles={foundations?.principles} />
             <p>
               <a href="#s23">Detalle por tema y artículo en el Anexo · Catálogo legal</a>
             </p>

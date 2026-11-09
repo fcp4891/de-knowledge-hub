@@ -866,6 +866,34 @@ components:
           properties:
             title:
               type: string
+            principles:
+              type: array
+              items:
+                type: object
+                required:
+                - label
+                - tags
+                properties:
+                  label:
+                    type: string
+                  tags:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - label
+                      properties:
+                        kind:
+                          type: string
+                        label:
+                          type: string
+                        legal:
+                          type: boolean
+                        href:
+                          type: string
+                          description: Ancla interna de la ficha (ADR-030, enmienda 2).
+                      additionalProperties: false
+                additionalProperties: false
             roles:
               type: object
               required:
@@ -1054,6 +1082,9 @@ components:
                       - text
                       - tags
                       properties:
+                        id:
+                          type: string
+                          description: Id del elemento, destino de un ancla (ADR-030, enmienda 2).
                         number:
                           type: string
                         question:
@@ -1294,6 +1325,9 @@ components:
           - note
           - example
           properties:
+            id:
+              type: string
+              description: Id del elemento, destino de un ancla (ADR-030, enmienda 2).
             title:
               type: string
             lead:
@@ -1574,6 +1608,9 @@ components:
                 - aws
                 - azure
                 properties:
+                  id:
+                    type: string
+                    description: Id del elemento, destino de un ancla (ADR-030, enmienda 2).
                   need:
                     type: string
                   meta:
@@ -1622,7 +1659,7 @@ components:
               type: string
           additionalProperties: false
         practice_lanes:
-          description: PracticeLanes (§14).
+          description: 'PracticeLanes (§14): etapas en columnas y una franja transversal opcional.'
           type: object
           required:
           - lanes
@@ -1637,6 +1674,7 @@ components:
                   type: string
                 text:
                   type: string
+                  description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
               additionalProperties: false
             lanes:
               type: array
@@ -1665,11 +1703,155 @@ components:
                           type: string
                         arq:
                           type: boolean
+                        tags:
+                          type: array
+                          items:
+                            type: object
+                            required:
+                            - label
+                            properties:
+                              kind:
+                                type: string
+                              label:
+                                type: string
+                              legal:
+                                type: boolean
+                              href:
+                                type: string
+                                description: Ancla interna de la ficha (ADR-030, enmienda 2).
+                            additionalProperties: false
+                      additionalProperties: false
+                additionalProperties: false
+            cross:
+              type: object
+              required:
+              - title
+              - label
+              - items
+              properties:
+                title:
+                  type: string
+                label:
+                  type: string
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - title
+                    - text
+                    properties:
+                      id:
+                        type: string
+                        description: Id del elemento, destino de un ancla (ADR-030, enmienda 2).
+                      title:
+                        type: string
+                      text:
+                        type: string
+                      arq:
+                        type: boolean
+                      tags:
+                        type: array
+                        items:
+                          type: object
+                          required:
+                          - label
+                          properties:
+                            kind:
+                              type: string
+                            label:
+                              type: string
+                            legal:
+                              type: boolean
+                            href:
+                              type: string
+                              description: Ancla interna de la ficha (ADR-030, enmienda 2).
+                          additionalProperties: false
+                    additionalProperties: false
+              additionalProperties: false
+          additionalProperties: false
+        trade_offs:
+          description: 'TradeOffs (§16): cada trade-off como balanza «A ⇄ B» con su franja de resolución.'
+          type: object
+          required:
+          - items
+          - resolution_label
+          - note
+          properties:
+            arq:
+              type: boolean
+            resolution_label:
+              type: string
+            items:
+              type: array
+              items:
+                type: object
+                required:
+                - a
+                - b
+                - text
+                - resolution
+                properties:
+                  a:
+                    type: string
+                  b:
+                    type: string
+                  text:
+                    type: string
+                    description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                  resolution:
+                    type: string
+                additionalProperties: false
+            note:
+              type: string
+          additionalProperties: false
+        open_questions:
+          description: 'OpenQuestions (§18): tarjetas con casilla «Sé responderla»; el estado vive en memoria.'
+          type: object
+          required:
+          - intro
+          - items
+          - check_label
+          - counter
+          properties:
+            intro:
+              type: string
+            check_label:
+              type: string
+            counter:
+              type: string
+              description: Plantilla del contador con {n} y {total}.
+            items:
+              type: array
+              items:
+                type: object
+                required:
+                - question
+                - tags
+                properties:
+                  question:
+                    type: string
+                  tags:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - label
+                      properties:
+                        kind:
+                          type: string
+                        label:
+                          type: string
+                        legal:
+                          type: boolean
+                        href:
+                          type: string
+                          description: Ancla interna de la ficha (ADR-030, enmienda 2).
                       additionalProperties: false
                 additionalProperties: false
           additionalProperties: false
         severity_cards:
-          description: SeverityCards (§16 · Sanciones).
+          description: 'SeverityCards (§16 · Sanciones): niveles y modificadores de la multa.'
           type: object
           required:
           - levels
@@ -1691,14 +1873,42 @@ components:
                     - 1
                     - 2
                     - 3
+                  article:
+                    type: string
                   amount:
                     type: string
                   note:
+                    type: string
+                  examples_label:
                     type: string
                   examples:
                     type: array
                     items:
                       type: string
+                additionalProperties: false
+            modifiers:
+              type: array
+              items:
+                type: object
+                required:
+                - effect
+                - effect_label
+                - title
+                - text
+                - basis
+                properties:
+                  effect:
+                    enum:
+                    - up
+                    - down
+                  effect_label:
+                    type: string
+                  title:
+                    type: string
+                  text:
+                    type: string
+                  basis:
+                    type: string
                 additionalProperties: false
           additionalProperties: false
         sources_grouped:

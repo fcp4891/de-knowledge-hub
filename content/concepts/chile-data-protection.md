@@ -21,6 +21,7 @@ legal_basis:
   - {law: ley-19628, article: "2", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Definiciones.", implication: "Dato personal, sensible, anonimización, seudonimización, perfiles y encargado son las categorías con que se clasifican columnas, datasets y proveedores."}
   - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Principios: licitud y lealtad, finalidad, proporcionalidad, calidad, responsabilidad, seguridad, transparencia e información y confidencialidad.", implication: "Cada principio necesita un control y una evidencia."}
   - {law: ley-19628, article: "4", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Derechos del titular; desarrollados en los arts. 5 a 11.", implication: "Seis tipos de solicitud que la plataforma atiende con plazo y evidencia."}
+  - {law: ley-19628, article: "7", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Derecho de supresión, con las causales y excepciones del artículo.", implication: "La supresión alcanza derivados, respaldos, CDC y reprocesos, y un backfill no la deshace."}
   - {law: ley-19628, article: "8 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Decisiones individuales automatizadas.", implication: "Explicación, intervención humana y revisión en los modelos que deciden."}
   - {law: ley-19628, article: "12", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Consentimiento; el responsable prueba la licitud.", implication: "Las bases de licitud se registran por actividad de tratamiento."}
   - {law: ley-19628, article: "14", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Obligaciones del responsable.", implication: "Acreditar la licitud; suprimir o anonimizar los datos precontractuales."}
@@ -37,12 +38,13 @@ legal_basis:
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    accessed: 2026-10-28
+    accessed: 2026-11-09
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 en la versión «Con Vigencia Diferida por Fecha» desde 2026-12-01 (texto con las modificaciones de la Ley 21.719), consultada el 2026-10-25 y de nuevo el 2026-10-28, sin cambios. Art. 1 bis: se aplica al responsable o mandatario establecido en Chile, al mandatario que trata a nombre de un responsable en Chile y a quien, sin estar en Chile, ofrece bienes o servicios a titulares en Chile o monitorea su comportamiento. Art. 2: definiciones, entre ellas f) dato personal, g) sensibles (incluida la situación socioeconómica), k) anonimización, l) seudonimización, v) cesión, w) elaboración de perfiles y x) encargado. Art. 3: principios a) licitud y lealtad (el responsable acredita la licitud) a h) confidencialidad. Arts. 4 a 11: derechos y procedimiento. Art. 8 bis: decisiones automatizadas. Arts. 12 y 13: bases de licitud; el responsable prueba la licitud. Art. 14 a 14 septies: obligaciones, secreto, transparencia, diseño y por defecto, seguridad, vulneraciones y estándares diferenciados. Arts. 15 y 15 bis: cesión y encargo. Art. 15 ter: evaluación de impacto. Arts. 16 a 16 sexies: sensibles, salud, biométricos, niños, niñas y adolescentes, investigación y geolocalización. Arts. 27 y 28: transferencia internacional. Arts. 34 bis a 35: infracciones y sanciones. Art. 49: modelo de prevención voluntario."
+    note: "Ley 19.628 en la versión «Con Vigencia Diferida por Fecha» desde 2026-12-01 (texto con las modificaciones de la Ley 21.719), consultada el 2026-10-25 y de nuevo el 2026-10-28, sin cambios; Felipe la volvió a consultar el 2026-11-09 en su versión «Con Vigencia Diferida por Fecha - 01-DIC-2026». Art. 1 bis: se aplica al responsable o mandatario establecido en Chile, al mandatario que trata a nombre de un responsable en Chile y a quien, sin estar en Chile, ofrece bienes o servicios a titulares en Chile o monitorea su comportamiento. Art. 2: definiciones, entre ellas f) dato personal, g) sensibles (incluida la situación socioeconómica), k) anonimización, l) seudonimización, v) cesión, w) elaboración de perfiles y x) encargado. Art. 3: principios a) licitud y lealtad (el responsable acredita la licitud) a h) confidencialidad. Arts. 4 a 11: derechos y procedimiento. Art. 8 bis: decisiones automatizadas. Arts. 12 y 13: bases de licitud; el responsable prueba la licitud. Art. 14 a 14 septies: obligaciones, secreto, transparencia, diseño y por defecto, seguridad, vulneraciones y estándares diferenciados. Arts. 15 y 15 bis: cesión y encargo. Art. 15 ter: evaluación de impacto. Arts. 16 a 16 sexies: sensibles, salud, biométricos, niños, niñas y adolescentes, investigación y geolocalización. Arts. 27 y 28: transferencia internacional. Arts. 34 bis a 35: infracciones y sanciones. Art. 49: modelo de prevención voluntario."
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=1209272
     accessed: 2026-10-28
+    label: BCN
     page_title: "Ley 21719 REGULA LA PROTECCIÓN Y EL TRATAMIENTO DE LOS DATOS PERSONALES Y CREA LA AGENCIA DE PROTECCIÓN DE DATOS PERSONALES"
     note: "Ley 21.719, publicada en el Diario Oficial el 2024-12-13 (promulgada el 2024-11-25). Su artículo primero transitorio dispone que las modificaciones de sus artículos primero, segundo y tercero permanentes entran en vigencia el día primero del mes vigésimo cuarto posterior a su publicación en el Diario Oficial. BCN muestra para la Ley 19.628 una versión «Con Vigencia Diferida por Fecha» desde el 2026-12-01. Consultado el 2026-10-25 y de nuevo el 2026-10-28, sin cambios."
   - source: senado-tramitacion
@@ -105,6 +107,12 @@ sources:
     url: https://www.iso.org/standard/27001
     accessed: 2026-11-09
     note: "Página oficial de ISO/IEC 27001. iso.org respondió HTTP 403 a la verificación automática el 2026-11-09: título por verificar (Felipe). El enfoque cita las cláusulas 4.2, 6.1.2, 6.1.3, 7.5, 9.1 y 9.2 y los controles A.5.31 y A.5.34 de la edición 2022."
+  - source: diario-oficial-cl
+    url: https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
+    accessed: 2026-11-09
+    page_title: "LEY NÚM. 21.719 REGULA LA PROTECCIÓN Y EL TRATAMIENTO DE LOS DATOS PERSONALES Y CREA LA AGENCIA DE PROTECCIÓN DE DATOS PERSONALES"
+    label: Diario Oficial
+    note: "Ley 21.719 publicada en el Diario Oficial núm. 44.023, viernes 13 de diciembre de 2024 (CVE 2583630), consultada el 2026-11-09 por Felipe y en esta sesión. Texto publicado de la ley modificatoria: art. 2 letras g), k), n), o) y x) de la Ley 19.628 (pág. 2 y siguientes), art. 16 quáter, arts. 34 bis a 36 (infracciones, sanciones, atenuantes y agravantes; págs. 23 a 25) y art. 51."
   - source: eur-lex
     url: https://eur-lex.europa.eu/eli/reg/2016/679/oj
     accessed: 2026-11-09
@@ -162,8 +170,8 @@ views:
       state: past
       detail: Se publica la Ley 21.719, que moderniza la regulación sobre protección de datos personales en Chile.
       links:
-      - label: BCN
-        href: https://www.bcn.cl/leychile/navegar?idNorma=1209272
+      - label: Diario Oficial
+        href: https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
     - date: '2026-10-28'
       title: Avance legislativo
       icon: institution
@@ -187,7 +195,7 @@ views:
     as_of: 'Estado de la tramitación: 28 de octubre de 2026 · Fuentes: BCN y Senado.'
   treatment_map:
     lead: 'Para la ley, **tratamiento** es cualquier operación que permita recolectar, procesar, almacenar, comunicar, transmitir o utilizar datos personales ([art.
-      2 letra o](https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01)). En una plataforma de datos, esos verbos se ven así:'
+      2 letra o](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf)). En una plataforma de datos, esos verbos se ven así:'
     law_label:
       title: Ley
       detail: art. 2 letra o
@@ -218,7 +226,7 @@ views:
       sobre los datos; el RGPD lo incluye expresamente en su definición de tratamiento ([RGPD art. 4.2, referencia comparada](https://eur-lex.europa.eu/eli/reg/2016/679/oj)).'
     sources:
     - title: Ley 21.719
-      href: https://www.bcn.cl/leychile/navegar?idNorma=1209272
+      href: https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
       detail: Diario Oficial, 2024-12-13 · Legislación · Nivel 1 · art. 2 letra o), definición de tratamiento
     - title: Reglamento (UE) 2016/679 (RGPD)
       href: https://eur-lex.europa.eu/eli/reg/2016/679/oj
@@ -277,7 +285,7 @@ views:
       caption: Quién decide y quién implementa · modelo organizacional típico, no fijado por la ley
       responsible:
         title: Responsable · la organización
-        lead: Decide los fines y medios del tratamiento y responde ante la ley ([art. 2 letra n](https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01)).
+        lead: Decide los fines y medios del tratamiento y responde ante la ley ([art. 2 letra n](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf)).
         decide:
           kicker: Deciden y evalúan
           items:
@@ -294,12 +302,76 @@ views:
             text: Implementa controles, automatización, trazabilidad y evidencia. No decide la finalidad ni la base; reporta las implicancias técnicas y sus limitaciones.
       processor:
         title: Encargado · fuera de la organización
-        text: 'Proveedor que trata datos por cuenta del responsable: nube, SaaS, API de LLM ([art. 2 letra x](https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01);
+        text: 'Proveedor que trata datos por cuenta del responsable: nube, SaaS, API de LLM ([art. 2 letra x](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf);
           [art. 15 bis](https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01)).'
       source:
         title: Ley 21.719
-        href: https://www.bcn.cl/leychile/navegar?idNorma=1209272
+        href: https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
         detail: Diario Oficial, 2024-12-13 · Legislación · Nivel 1 · art. 2 letras n) y x), art. 3, art. 15 bis
+    principles:
+    - label: Licitud y lealtad
+      tags:
+      - &id001
+        kind: Cómo funciona
+        label: ¿Para qué los necesito?
+        href: '#como-funciona-02'
+    - label: Finalidad
+      tags:
+      - kind: Matriz
+        label: Finalidad
+        href: '#matriz-finalidad'
+      - kind: Código
+        label: purpose_check
+        href: '#codigo-purpose-check'
+    - label: Proporcionalidad
+      tags:
+      - kind: Matriz
+        label: Minimización
+        href: '#matriz-minimizacion'
+      - kind: Matriz
+        label: Retención
+        href: '#matriz-retencion'
+      - kind: Código
+        label: schema_minimization
+        href: '#codigo-schema-minimization'
+      - kind: Código
+        label: retention_check
+        href: '#codigo-retention-check'
+    - label: Calidad
+      tags:
+      - kind: Matriz
+        label: Derechos del titular
+        href: '#matriz-derechos-del-titular'
+    - label: Responsabilidad
+      tags:
+      - kind: Matriz
+        label: Evidencia
+        href: '#matriz'
+      - kind: Código
+        label: validate()
+        href: '#s10'
+    - label: Seguridad
+      tags:
+      - kind: Matriz
+        label: Acceso restringido
+        href: '#matriz-acceso-restringido'
+      - kind: Matriz
+        label: Vulneraciones
+        href: '#matriz-vulneraciones'
+      - kind: Código
+        label: access_review
+        href: '#codigo-access-review'
+    - label: Transparencia e información
+      tags:
+      - *id001
+    - label: Confidencialidad
+      tags:
+      - kind: Matriz
+        label: Acceso restringido
+        href: '#matriz-acceso-restringido'
+      - kind: Prácticas
+        label: Logs limpios
+        href: '#practica-logs-limpios'
   problem_journey:
     question:
       kicker: La pregunta central
@@ -348,6 +420,7 @@ views:
         - kind: Prácticas
           label: Clasificación automática
           href: '#practica-clasificacion-automatica'
+        id: como-funciona-01
       - number: '02'
         question: ¿Para qué los necesito?
         arq: true
@@ -357,6 +430,7 @@ views:
         - kind: Matriz
           label: Finalidad
           href: '#matriz-finalidad'
+        id: como-funciona-02
     - title: Controlar
       items:
       - number: '03'
@@ -366,6 +440,7 @@ views:
         - kind: Matriz
           label: Transferencias
           href: '#matriz-transferencias'
+        id: como-funciona-03
       - number: '04'
         question: ¿Quién accede?
         text: Acceso por finalidad con IAM o RBAC, segregación de funciones y revisión periódica de permisos.
@@ -373,6 +448,7 @@ views:
         - kind: Matriz
           label: Acceso restringido
           href: '#matriz-acceso-restringido'
+        id: como-funciona-04
     - title: Proteger
       items:
       - number: '05'
@@ -383,6 +459,7 @@ views:
         - kind: Matriz
           label: Minimización
           href: '#matriz-minimizacion'
+        id: como-funciona-05
       - number: '06'
         question: ¿Cuánto tiempo los guardo?
         text: Plazo por clase de dato y almacenamiento; al vencer, suprimir o anonimizar.
@@ -390,6 +467,7 @@ views:
         - kind: Matriz
           label: Retención
           href: '#matriz-retencion'
+        id: como-funciona-06
     - title: Responder
       items:
       - number: '07'
@@ -401,6 +479,7 @@ views:
           href: '#matriz-derechos-del-titular'
         - label: art. 4
           href: '#lb-ley-19628-4'
+        id: como-funciona-07
       - number: 08
         question: ¿Cómo lo demuestro?
         arq: true
@@ -412,6 +491,7 @@ views:
         - kind: Código
           label: validate()
           href: '#s10'
+        id: como-funciona-08
   control_matrix:
     title: Matriz de control
     legend: '**art.** fundamento legal del requisito · **función** control implementado en el código de la ficha'
@@ -678,6 +758,7 @@ views:
       code_link:
         label: Ver código ↓
         href: '#s10'
+    id: control-evidencia
   code_guide:
     lead:
       title: Qué hace.
@@ -776,6 +857,7 @@ views:
       azure:
         name: Purview Data Map
         text: Clasificaciones de sistema y propias al escanear.
+      id: nube-descubrir
     - need: Restringir acceso a filas y columnas
       meta: Matriz · Acceso restringido
       gcp:
@@ -787,6 +869,7 @@ views:
       azure:
         name: Unity Catalog
         text: 'En Azure Databricks: privilegios, filtros de fila y máscaras de columna.'
+      id: nube-restringir-acceso
     - need: Auditar accesos a datos
       meta: Matriz · Vulneraciones y evidencia
       gcp:
@@ -801,17 +884,20 @@ views:
         name: Registros de diagnóstico de Azure Databricks
         text: Entrega de registros de auditoría a Azure Monitor o almacenamiento.
         warn: Hay que configurar su entrega
+      id: nube-auditar-accesos
     closing: 'Ningún servicio certifica cumplimiento por sí solo: cada uno se evalúa por alcance, configuración y evidencia disponible.'
   practice_lanes:
     start:
       title: Por dónde empezar
-      text: 'Por lo de mayor riesgo: datos sensibles (incluida la situación socioeconómica), datos de niños, niñas y adolescentes, copias y accesos.'
+      text: 'Por lo de mayor riesgo: datos sensibles (incluida la situación socioeconómica, [art. 2 letra g](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf)),
+        datos de niños, niñas y adolescentes ([art. 16 quáter](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf)), copias y
+        accesos.'
     lanes:
     - title: Descubrir
       items:
-      - title: Clasificación automática
+      - id: practica-clasificacion-automatica
+        title: Clasificación automática
         text: Descubrir y clasificar datos personales sin depender de inventarios manuales.
-        id: practica-clasificacion-automatica
       - title: Linaje por actividad
         text: Linaje técnico asociado a cada actividad de tratamiento.
       - title: Metadatos en el catálogo
@@ -820,53 +906,197 @@ views:
     - title: Proteger
       items:
       - title: Privilegios mínimos
-        text: Segregación de funciones y revisiones de privilegios.
+        text: Segregación de funciones y revisión periódica de privilegios.
       - title: Llaves y secretos
-        text: Gestionados, con evidencia de configuración.
+        text: En un gestor de llaves, con rotación y evidencia de configuración.
       - title: Ambientes no productivos
         text: 'Sin datos personales reales: enmascarados o sintéticos.'
     - title: Operar
       items:
-      - title: Logs limpios
+      - id: practica-logs-limpios
+        title: Logs limpios
         text: Sin datos personales; solicitudes y vulneraciones con identificadores internos.
       - title: GenAI
-        text: Una API externa de LLM que recibe datos personales es un encargado (art. 15 bis); revisar si hay transferencia internacional (art. 27).
-    - title: Demostrar
+        text: Una API externa de LLM que recibe datos personales es un encargado; si los usa para fines propios, como entrenar sus modelos, se le considera responsable.
+          Revisar si hay transferencia internacional.
+        tags:
+        - label: art. 15 bis · art. 27
+          legal: true
+          href: '#lb-ley-19628-15-bis'
+    - title: Suprimir
+      items:
+      - title: Supresión consistente
+        text: 'Entre capas, respaldos y reprocesos: un backfill no restaura lo suprimido.'
+      - title: Plazo al vencer
+        text: Al terminar el plazo de la política, suprimir o anonimizar, no solo ocultar.
+    cross:
+      title: Demostrar
+      label: en todas las etapas
       items:
       - title: Matriz viva
         text: Una fila por requisito, con dueño técnico y fecha de la última evidencia.
       - title: Controles en la CI
         text: La CI falla si falta un control o su evidencia.
       - title: Alcance en horas
-        text: Dimensionar una vulneración con la consulta por linaje.
-    - title: Suprimir
-      items:
-      - title: Supresión consistente
-        text: 'Entre capas, respaldos y reprocesos: un backfill no restaura lo suprimido.'
+        text: Dimensionar una vulneración con la consulta por linaje, para reportarla sin dilaciones indebidas.
+        tags:
+        - label: art. 14 sexies
+          legal: true
+          href: '#lb-ley-19628-14-sexies'
+  trade_offs:
+    arq: true
+    resolution_label: Se resuelve con
+    items:
+    - a: Minimización
+      b: Flexibilidad analítica
+      text: Capturar menos reduce el riesgo y puede limitar análisis futuros.
+      resolution: finalidades explícitas, aprobaciones y productos de datos definidos, no recolectando por si acaso.
+    - a: Seudonimización
+      b: Anonimización
+      text: La seudonimización conserva la utilidad para unir y analizar, pero el dato sigue siendo personal. La anonimización exige un procedimiento irreversible
+        que impida vincular el dato a una persona ([art. 2 letra k](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf)) y pierde
+        detalle.
+      resolution: seudonimización en las capas de trabajo y anonimización solo en los productos que pasan la evaluación de reidentificación.
+    - a: Linaje completo
+      b: Costo
+      text: Rastrear todas las copias cuesta.
+      resolution: una priorización de los datos y flujos de mayor riesgo y un descubrimiento automatizado, de a poco.
+    - a: Retención
+      b: Auditoría y recuperación
+      text: Borrar demasiado pronto puede afectar obligaciones legítimas de conservación; conservar indefinidamente aumenta la exposición.
+      resolution: una política aprobada que se pueda ejecutar.
+    - a: Seguridad
+      b: Rendimiento
+      text: Tokenización, máscaras y controles finos agregan latencia y complejidad.
+      resolution: pruebas de carga y análisis de riesgo.
+    note: 'No toda falla técnica es una infracción: la calificación jurídica depende del hecho y del procedimiento. Lo útil para ingeniería es prevenir las fallas
+      que sí tienen origen técnico.'
   severity_cards:
     levels:
     - name: Leve
       level: 1
-      amount: 5.000 UTM
-      note: máximo, o amonestación escrita
+      article: art. 34 bis
+      amount: hasta 5.000 UTM
+      note: o amonestación escrita
+      examples_label: Ejemplos con origen técnico
       examples:
-      - Responder solicitudes en forma incompleta o fuera de plazo
+      - Omitir la respuesta o responder en forma incompleta o fuera de plazo las solicitudes de titulares
+      - Omitir comunicaciones obligatorias a la Agencia
     - name: Grave
       level: 2
-      amount: 10.000 UTM
-      note: máximo
+      article: art. 34 ter
+      amount: hasta 10.000 UTM
+      examples_label: Ejemplos con origen técnico
       examples:
-      - Datos innecesarios o inexactos
-      - Fallas de seguridad
-      - Omitir registros de vulneraciones
-      - Transferencias contra la ley
+      - Tratar datos innecesarios para los fines
+      - Tratar datos inexactos, incompletos o desactualizados
+      - Impedir u obstaculizar el ejercicio de los derechos
+      - Infringir las obligaciones de seguridad
+      - Omitir las comunicaciones o registros de vulneraciones
+      - Transferencias internacionales contra la ley
     - name: Gravísima
       level: 3
-      amount: 20.000 UTM
-      note: máximo
+      article: art. 34 quáter
+      amount: hasta 20.000 UTM
+      examples_label: Ejemplos con origen técnico
       examples:
-      - Omitir en forma deliberada la comunicación de una vulneración
-      - No hacer la evaluación de impacto obligatoria
+      - Omitir en forma deliberada la comunicación de vulneraciones
+      - Transferencias internacionales contra la ley, a sabiendas
+      - Tratar a sabiendas datos sensibles o de niños, niñas y adolescentes contra la ley
+      - No hacer la evaluación de impacto cuando corresponde (art. 15 ter)
+    modifiers:
+    - effect: up
+      effect_label: Aumenta
+      title: Sin corregir en 60 días
+      text: Recargo de 50 % a la multa.
+      basis: art. 35
+    - effect: up
+      effect_label: Aumenta
+      title: Reincidencia
+      text: Dos o más sanciones en los últimos 30 meses; hasta tres veces el monto.
+      basis: arts. 35 y 36
+    - effect: up
+      effect_label: Aumenta
+      title: Empresa que no es de menor tamaño
+      text: Si reincide en graves o gravísimas, la más gravosa entre el triple y el 2 % o 4 % de sus ingresos anuales.
+      basis: art. 35
+    - effect: down
+      effect_label: Atenúa
+      title: Modelo de prevención certificado
+      text: Haber cumplido diligentemente los deberes de dirección y supervisión, verificado con el certificado del modelo.
+      basis: art. 36 n.º 5; art. 51
+  open_questions:
+    intro: Respóndelas para tu propia plataforma. Hay una por cada fila de la matriz y una para la evidencia; si no sabes una, la ficha indica dónde se trabaja.
+    check_label: Sé responderla
+    counter: '{n} de {total} que sabes responder'
+    items:
+    - question: ¿Qué pipelines tuyos tratan datos de personas, incluidos datos sensibles o de niños, niñas y adolescentes, y para qué actividad registrada?
+      tags:
+      - kind: Matriz
+        label: Finalidad
+        href: '#matriz-finalidad'
+      - kind: Código
+        label: purpose_check
+        href: '#codigo-purpose-check'
+    - question: ¿Qué columnas personales llegan a tus capas analíticas sin que ninguna finalidad las necesite?
+      tags:
+      - kind: Matriz
+        label: Minimización
+        href: '#matriz-minimizacion'
+      - kind: Código
+        label: schema_minimization
+        href: '#codigo-schema-minimization'
+    - question: ¿Cuándo vence cada dato que guardas, y qué pasa con sus copias en respaldos y reprocesos?
+      tags:
+      - kind: Matriz
+        label: Retención
+        href: '#matriz-retencion'
+      - kind: Código
+        label: retention_check
+        href: '#codigo-retention-check'
+    - question: ¿Quién accedió a datos personales la semana pasada, y podrías demostrarlo con registros de auditoría activos?
+      tags:
+      - kind: Matriz
+        label: Acceso restringido
+        href: '#matriz-acceso-restringido'
+      - kind: En la nube
+        label: Auditar accesos
+        href: '#nube-auditar-accesos'
+    - question: Si mañana llega una solicitud de supresión, ¿en cuántas tablas, respaldos y exportaciones está ese titular, y un backfill lo restauraría?
+      tags:
+      - kind: Matriz
+        label: Derechos del titular
+        href: '#matriz-derechos-del-titular'
+      - kind: Código
+        label: erasure_replay_check
+        href: '#codigo-erasure-replay-check'
+      - label: art. 7
+        legal: true
+        href: '#lb-ley-19628-7'
+    - question: ¿Qué información técnica necesitarían seguridad y privacidad para dimensionar una vulneración y reportarla sin dilaciones?
+      tags:
+      - kind: Matriz
+        label: Vulneraciones
+        href: '#matriz-vulneraciones'
+      - label: art. 14 sexies
+        legal: true
+        href: '#lb-ley-19628-14-sexies'
+    - question: ¿Qué datos personales salen hacia proveedores, incluidas APIs de LLM, o fuera de Chile, y con qué contrato?
+      tags:
+      - kind: Matriz
+        label: Transferencias
+        href: '#matriz-transferencias'
+      - label: art. 15 bis · arts. 27 a 29
+        legal: true
+        href: '#lb-ley-19628-15-bis'
+    - question: ¿Qué controles tuyos tienen evidencia dentro del plazo de tu política, y cuáles harían fallar la CI hoy?
+      tags:
+      - kind: Arquitectura
+        label: Control y evidencia
+        href: '#control-evidencia'
+      - kind: Código
+        label: validate()
+        href: '#s10'
   sources_grouped:
     groups:
     - title: Normativa chilena
@@ -877,11 +1107,13 @@ views:
         - https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
         publisher: BCN
         why: Base de todas las citas de artículos de la ficha.
-      - title: Ley 21.719 · publicada en el Diario Oficial el 2024-12-13
+      - title: Ley 21.719 · Diario Oficial, 2024-12-13
         urls:
+        - https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
         - https://www.bcn.cl/leychile/navegar?idNorma=1209272
         publisher: BCN
-        why: Origen de los cambios, de las definiciones del art. 2 que cita la ficha y del artículo primero transitorio (fecha de vigencia).
+        why: 'Texto publicado de la ley modificatoria: definiciones del art. 2, art. 16 quáter, infracciones y sanciones (arts. 34 bis a 36), art. 51 y artículo primero
+          transitorio (fecha de vigencia).'
       - title: Boletín 18.623-07 · proyecto que posterga la vigencia
         urls:
         - https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07
@@ -1363,48 +1595,28 @@ CI: rechazada (1)
 
 ## 14. Buenas prácticas
 
-**[Buena práctica]** Las prácticas se ordenan por etapa del ciclo de vida de los datos, empezando por lo de mayor riesgo.
-
 <!-- view: practice_lanes -->
 
 ## 16. Trade-offs
 
-**[Decisión de arquitectura]**
-
-- **Minimización frente a flexibilidad analítica:** capturar menos reduce el riesgo y puede limitar análisis futuros; se resuelve con finalidades explícitas, aprobaciones y productos de datos definidos, no recolectando por si acaso.
-- **Linaje completo frente a costo:** rastrear todas las copias cuesta; priorizar los datos y flujos de mayor riesgo y automatizar el descubrimiento de a poco.
-- **Retención frente a auditoría y recuperación:** borrar demasiado pronto puede afectar obligaciones legítimas de conservación; conservar indefinidamente aumenta la exposición. La política se aprueba y debe poder ejecutarse.
-- **Seguridad frente a rendimiento:** tokenización, máscaras y controles finos agregan latencia y complejidad; se diseñan con pruebas de carga y análisis de riesgo.
-- **Matriz detallada frente a mantenible:** una fila por requisito, con el detalle en las fichas hijas; exigir evidencia reciente cuesta, pero es lo que demuestra que el control funciona.
-
-No toda falla técnica es una infracción: la calificación jurídica depende del hecho y del procedimiento. Lo útil para ingeniería es prevenir las fallas que sí tienen origen técnico.
+<!-- view: trade_offs -->
 
 ### Sanciones
 
 <!-- view: severity_cards -->
 
-En reincidencia, la Agencia puede aplicar hasta tres veces el monto de la infracción. Si una empresa que no es de menor tamaño reincide en infracciones graves o gravísimas, la multa puede alcanzar la más gravosa entre ese triple y el 2 % o 4 % de sus ingresos anuales (art. 35). Es atenuante haber cumplido los deberes de dirección y supervisión, verificable con el certificado del modelo de prevención (arts. 36, 49 y 51).
-
 ## 18. Preguntas técnicas abiertas
 
-1. ¿Qué pipelines tuyos tratan datos de personas, y para qué actividades?
-2. Si mañana llega una solicitud de supresión, ¿en cuántas tablas, respaldos y exportaciones está ese titular?
-3. ¿Qué control tuyo tiene evidencia de los últimos 30 días?
-4. ¿Cómo impedirías que un backfill restaure datos que debían quedar suprimidos?
-5. ¿Qué información técnica necesitarían seguridad y privacidad para dimensionar una vulneración?
+<!-- view: open_questions -->
 
 ## 20. Fuentes
 
-- Normativa chilena (BCN y Senado): Ley 19.628 con el texto que rige desde el 2026-12-01, Ley 21.719, boletín 18.623-07 (tramitación y mensaje) y Decreto 662.
+- Normativa chilena (Diario Oficial, BCN y Senado): Ley 19.628 con el texto que rige desde el 2026-12-01, Ley 21.719 (texto publicado en el Diario Oficial y ficha en BCN), boletín 18.623-07 (tramitación y mensaje) y Decreto 662.
 - Marcos de referencia del enfoque: ISO/IEC 27001:2022, ISO/IEC 27701 y NIST Privacy Framework.
 - Legislación comparada: Reglamento (UE) 2016/679 (RGPD), en EUR-Lex.
 - Servicios cloud: Sensitive Data Protection, BigQuery y Cloud Audit Logs (GCP); Amazon Macie, Lake Formation y CloudTrail (AWS); Purview Data Map, Unity Catalog y los registros de diagnóstico de Azure Databricks (Azure).
 
 El detalle de cada fuente está en `sources` del frontmatter; la agrupación, en `views.sources_grouped`.
-
-## 21. Fecha de última verificación
-
-2026-10-28: textos legales vueltos a consultar en BCN (sin cambios) y estado del boletín 18.623-07 en el Senado (aprobado por el Senado y despachado a la Cámara). Antes, 2026-10-25: textos legales vueltos a consultar, sin cambios, y 2026-10-22: articulado, vigencia, estado del boletín 18.623-07 y Decreto 662 consultados ese día en BCN y en el Senado. `review_required` desde el 2026-11-06: depuración de contenido pedida en la revisión; vuelve a `verified` cuando se apruebe (`owner_approved_at`). 2026-11-07: páginas de GCP, AWS y Azure vueltas a abrir (Purview cambió su título a «Data classification in Microsoft Purview Data Map»); NIST Privacy Framework verificado; ISO/IEC 27701 y BCN por verificar: no se pudieron abrir desde esta sesión. 2026-11-09: abiertas las páginas nuevas de BigQuery, Lake Formation, Azure Databricks y EUR-Lex; ISO/IEC 27001 por verificar (Felipe). Revisión mensual, y extraordinaria si se publica la ley de postergación.
 
 ## 22. Historial de cambios importantes
 
@@ -1440,6 +1652,8 @@ El detalle de cada fuente está en `sources` del frontmatter; la agrupación, en
 - 2026-11-09: §10 suma el control de finalidad (`purpose_check`): cinco reglas, el filtro de consumos sin finalidad aprobada y las salidas de los seis escenarios. Sigue en `review_required`.
 - 2026-11-09: diseño final con los componentes de Cursor (ADR-030, enmienda 1). Los textos que estaban fijos en los componentes pasan a `views`: mapa de tratamiento (art. 2 letra o y nota comparada del RGPD), enfoque con ejemplo y referencia ISO/IEC 27001:2022 por paso, roles del §2 («Principios y responsabilidades»), recorrido del problema, ocho preguntas en cuatro fases, matriz de 7 filas con Finalidad, disparadores de uso, arquitectura de referencia, patrón de control y evidencia, guía del código y «En la nube» (reemplaza las pestañas GCP/AWS/Azure; §12 y §13 se omiten, ADR-029). Salen del cuerpo las 8 preguntas del Resumen, el párrafo de actividades, el párrafo [arq] del §3, las seis preguntas y la tabla del §4, la lista del §5, los diagramas del §9, la explicación del §10 y las letras a)…h) de los principios. Fuentes nuevas: ISO/IEC 27001, RGPD en EUR-Lex, BigQuery, Lake Formation y registros de diagnóstico de Azure Databricks. Sigue en `review_required`.
 - 2026-11-09: píldoras de Cómo funciona y Cuándo utilizarlo enlazadas a anclas reales: fila de la matriz, práctica, código (§10) o artículo del catálogo legal (ADR-030, enmienda 2); enlace «Ver código ↓» al pie del ejemplo de Control y evidencia. Sin cambios de diseño ni de textos. Sigue en `review_required`.
+- 2026-11-09: pendientes de Felipe. Fuente nueva: Ley 21.719 en el Diario Oficial (2024-12-13), destino de los enlaces del art. 2 y de las citas de esa ley; la Ley 19.628 en BCN se consultó de nuevo (ADR-023, enmienda 8: una cita legal puede ser posterior a `last_verified`). Principios con píldoras a la matriz, al código y a las prácticas. Buenas prácticas en cuatro etapas más la franja «Demostrar» (13 tarjetas, nueva «Plazo al vencer»; textos nuevos de privilegios, llaves, GenAI y alcance). Trade-offs como balanzas, con «Seudonimización ⇄ Anonimización» y sin «Matriz detallada frente a mantenible». Sanciones con su artículo y cuatro modificadores de la multa (arts. 35, 36 y 51), sin el párrafo de reincidencia. Preguntas técnicas como tarjetas con píldoras y la casilla «Sé responderla». art. 7 en `legal_basis` y en el anexo. Sigue en `review_required`.
+- 2026-11-09: sale la sección 21 (Fecha de última verificación), a pedido de Felipe (ADR-029, enmienda 2). Las fechas de consulta siguen en `last_verified` y en `accessed` de cada cita, y las verificaciones, en este historial. Sigue en `review_required`.
 
 ## Anexo · Catálogo legal por tema
 
@@ -1451,6 +1665,7 @@ El detalle de cada fuente está en `sources` del frontmatter; la agrupación, en
 
 ### Derechos y decisiones automatizadas
 
+- **[Obligación legal · art. 7]** Supresión: procede en los casos del artículo, con excepciones. Fichas: `data-subject-rights-pipeline`, `retention-and-erasure`.
 - **[Obligación legal · art. 4]** Derechos del titular, desarrollados en los arts. 5 a 11. Seis tipos de solicitud con plazo y evidencia. Ficha: `data-subject-rights-pipeline`.
 - **[Obligación legal · art. 8 bis]** Decisiones individuales automatizadas: explicación, intervención humana y revisión. Ficha: `dpia-and-automated-decisions`.
 

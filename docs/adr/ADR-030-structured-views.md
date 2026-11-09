@@ -115,3 +115,22 @@ Además, `approach` suma el ejemplo y la referencia de cada paso, los rótulos d
   - es un `id` declarado en las vistas;
   - es una fila del catálogo legal (`lb-ley-19628-<artículo>`) de un artículo de `legal_basis`. Al hacer clic, abre el modal del artículo.
 - **Validación.** El validador rechaza un ancla que no existe, y un test revisa las píldoras de `chile-data-protection`.
+
+## Enmienda 3 (2026-11-09) — Principios, prácticas, trade-offs, sanciones y preguntas
+
+- **`legal_foundations.principles`.** Asigna píldoras a cada principio del §2 (`label`, `tags`). Se dibujan bajo cada tarjeta, y la descripción al pasar el mouse no cambia.
+- **`practice_lanes`.**
+  - `start` pasa a ser un recuadro de aviso y admite texto enriquecido.
+  - Las tarjetas aceptan `tags`.
+  - `cross` es una franja transversal (`title`, `label`, `items`) bajo las columnas.
+  - El número de columnas sigue al número de etapas (`data-count`).
+- **`trade_offs`** (componente nuevo, `TradeOffs`). Cada trade-off es una balanza «A ⇄ B» con su texto y la franja `resolution_label` + `resolution`. Lleva `arq` y la nota final. Marca en §16.
+- **`severity_cards`.** Cada nivel suma `article` y `examples_label`. `modifiers` agrega las tarjetas Aumenta / Atenúa (`effect`, `effect_label`, `title`, `text`, `basis`).
+- **`open_questions`** (componente nuevo, `OpenQuestions`, de cliente).
+  - Tarjetas con píldoras y la casilla `check_label`.
+  - El contador sale de la plantilla `counter`, con `{n}` y `{total}`.
+  - El estado vive en memoria, sin localStorage.
+  - Marca en §18.
+- **`Pills`.** Componente compartido con el estilo de las píldoras de Cómo funciona. Las de código muestran el rótulo en estilo código.
+- **Ids nuevos.** Se agregan `id` en las preguntas de `design_board`, en las filas de `cloud_compare` y en `control_evidence`, como destinos de anclas.
+- **Escala de sanciones.** Los tokens `--severity-1/2/3` pasan a amarillo, naranja y rojo, en claro y en oscuro.

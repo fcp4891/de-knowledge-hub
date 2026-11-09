@@ -14,7 +14,7 @@ MARKER = re.compile(r"<!--\s*view:\s*([a-z_]+)\s*-->")
 MARKED = (   # van donde está la marca
     "central_idea", "vigencia_timeline", "treatment_map", "problem_journey", "design_board", "control_matrix",
     "when_to_use", "requirement_to_data", "control_evidence", "code_guide", "cloud_compare", "practice_lanes",
-    "severity_cards",
+    "trade_offs", "severity_cards", "open_questions",
 )
 PLACED = ("approach", "legal_foundations", "sources_grouped")   # fija: tras el Resumen; en el §2; en Fuentes
 MD_LINK = re.compile(r"\]\((https://[^)\s]+)\)")

@@ -3916,6 +3916,26 @@ verification_status: verified
 jurisdiction:
 - EU
 ---
+id: source:diario-oficial-cl
+slug: diario-oficial-cl
+type: source
+title: Diario Oficial de la República de Chile
+description: Edición oficial de las leyes chilenas publicadas; se usa para el texto publicado de la Ley 21.719 (2024-12-13).
+url: https://www.diariooficial.interior.gob.cl/
+source_type: legislative
+authority_level: 1
+provider: diario-oficial
+url_verified: true
+review_frequency: monthly
+trust: high
+technologies: []
+created_at: '2026-11-09'
+updated_at: '2026-11-09'
+last_verified: '2026-11-09'
+verification_status: verified
+jurisdiction:
+- CL
+---
 id: source:boe-doue
 slug: boe-doue
 type: source

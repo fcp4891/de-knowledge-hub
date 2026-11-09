@@ -137,6 +137,17 @@ export const CHILE_GROUPS: ChileGroup[] = [
         [page("data-subject-rights-pipeline", "Pipeline de derechos del titular")],
       ),
       article(
+        "7",
+        "Supresión",
+        "Derecho de supresión, con las causales y excepciones del artículo.",
+        "La supresión alcanza derivados, respaldos, CDC y reprocesos, y un backfill no la deshace.",
+        null,
+        [
+          page("data-subject-rights-pipeline", "Pipeline de derechos del titular"),
+          page("retention-and-erasure", "Retención y supresión"),
+        ],
+      ),
+      article(
         "8 bis",
         "Decisiones individuales automatizadas",
         "Decisiones individuales automatizadas.",

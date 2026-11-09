@@ -72,7 +72,7 @@ export type RolesProps = {
   source?: Cite;
 };
 
-export type LegalFoundationsProps = { title: string; roles: RolesProps };
+export type LegalFoundationsProps = { title: string; roles: RolesProps; principles: { label: string; tags: Tag[] }[] };
 
 export type ProblemJourneyProps = {
   question: { kicker: string; text: string };
@@ -113,6 +113,7 @@ export type RequirementToDataProps = {
 };
 
 export type ControlEvidenceProps = {
+  id?: string;
   title: string;
   lead: string;
   steps: { number: string; title: string; items: string[] }[];
@@ -142,17 +143,44 @@ export type CloudCompareProps = {
   intro: string;
   alert: Titled;
   headers: string[];
-  rows: { need: string; meta: string; gcp: CloudCell; aws: CloudCell; azure: CloudCell }[];
+  rows: { id?: string; need: string; meta: string; gcp: CloudCell; aws: CloudCell; azure: CloudCell }[];
   closing: string;
 };
 
+export type PracticeItem = { id?: string; title: string; text: string; arq?: boolean; tags?: Tag[] };
+
 export type PracticeLanesProps = {
   start?: Titled;
-  lanes: { title: string; items: { id?: string; title: string; text: string; arq?: boolean }[] }[];
+  lanes: { title: string; items: PracticeItem[] }[];
+  cross?: { title: string; label: string; items: PracticeItem[] };
 };
 
 export type SeverityCardsProps = {
-  levels: { name: string; level: 1 | 2 | 3; amount: string; note?: string; examples: string[] }[];
+  levels: {
+    name: string;
+    level: 1 | 2 | 3;
+    article?: string;
+    amount: string;
+    note?: string;
+    examplesLabel?: string;
+    examples: string[];
+  }[];
+  modifiers?: { effect: "up" | "down"; effectLabel: string; title: string; text: string; basis: string }[];
+};
+
+export type TradeOffsProps = {
+  arq?: boolean;
+  resolutionLabel: string;
+  items: { a: string; b: string; text: string; resolution: string }[];
+  note: string;
+};
+
+export type OpenQuestionsProps = {
+  intro: string;
+  checkLabel: string;
+  /** Plantilla con {n} y {total}. */
+  counter: string;
+  items: { question: string; tags: Tag[] }[];
 };
 
 export type SourcesGroupedProps = {
@@ -217,7 +245,7 @@ export function approachProps(view: V["approach"]): ApproachProps {
 }
 
 export function legalFoundationsProps(view: V["legal_foundations"]): LegalFoundationsProps {
-  return { title: view.title, roles: view.roles };
+  return { title: view.title, roles: view.roles, principles: view.principles ?? [] };
 }
 
 export function problemJourneyProps(view: V["problem_journey"]): ProblemJourneyProps {
@@ -257,6 +285,7 @@ export function requirementToDataProps(view: V["requirement_to_data"]): Requirem
 
 export function controlEvidenceProps(view: V["control_evidence"]): ControlEvidenceProps {
   return {
+    id: view.id,
     title: view.title,
     lead: view.lead,
     steps: view.steps,
@@ -300,11 +329,36 @@ export function cloudCompareProps(view: V["cloud_compare"]): CloudCompareProps {
 }
 
 export function practiceLanesProps(view: V["practice_lanes"]): PracticeLanesProps {
-  return { start: view.start, lanes: view.lanes };
+  return { start: view.start, lanes: view.lanes, cross: view.cross };
 }
 
 export function severityCardsProps(view: V["severity_cards"]): SeverityCardsProps {
-  return { levels: view.levels.map((level) => ({ ...level, level: level.level as 1 | 2 | 3 })) };
+  return {
+    levels: view.levels.map((level) => ({
+      name: level.name,
+      level: level.level as 1 | 2 | 3,
+      article: level.article,
+      amount: level.amount,
+      note: level.note,
+      examplesLabel: level.examples_label,
+      examples: level.examples,
+    })),
+    modifiers: (view.modifiers ?? []).map((item) => ({
+      effect: item.effect as "up" | "down",
+      effectLabel: item.effect_label,
+      title: item.title,
+      text: item.text,
+      basis: item.basis,
+    })),
+  };
+}
+
+export function tradeOffsProps(view: V["trade_offs"]): TradeOffsProps {
+  return { arq: view.arq, resolutionLabel: view.resolution_label, items: view.items, note: view.note };
+}
+
+export function openQuestionsProps(view: V["open_questions"]): OpenQuestionsProps {
+  return { intro: view.intro, checkLabel: view.check_label, counter: view.counter, items: view.items };
 }
 
 export function sourcesGroupedProps(view: V["sources_grouped"]): SourcesGroupedProps {

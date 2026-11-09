@@ -530,6 +530,53 @@
               "type": "string",
               "minLength": 1
             },
+            "principles": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "label",
+                  "tags"
+                ],
+                "properties": {
+                  "label": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "label"
+                      ],
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "label": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "legal": {
+                          "type": "boolean"
+                        },
+                        "href": {
+                          "type": "string",
+                          "pattern": "^#[a-z0-9-]+$",
+                          "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "minItems": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
             "roles": {
               "type": "object",
               "required": [
@@ -821,6 +868,11 @@
                         "tags"
                       ],
                       "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[a-z0-9-]+$",
+                          "description": "Id del elemento, destino de un ancla (ADR-030, enmienda 2)."
+                        },
                         "number": {
                           "type": "string",
                           "minLength": 1
@@ -1221,6 +1273,11 @@
             "example"
           ],
           "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z0-9-]+$",
+              "description": "Id del elemento, destino de un ancla (ADR-030, enmienda 2)."
+            },
             "title": {
               "type": "string",
               "minLength": 1
@@ -1670,6 +1727,11 @@
                   "azure"
                 ],
                 "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9-]+$",
+                    "description": "Id del elemento, destino de un ancla (ADR-030, enmienda 2)."
+                  },
                   "need": {
                     "type": "string",
                     "minLength": 1
@@ -1757,7 +1819,7 @@
           "additionalProperties": false
         },
         "practice_lanes": {
-          "description": "PracticeLanes (§14).",
+          "description": "PracticeLanes (§14): etapas en columnas y una franja transversal opcional.",
           "type": "object",
           "required": [
             "lanes"
@@ -1776,7 +1838,8 @@
                 },
                 "text": {
                   "type": "string",
-                  "minLength": 1
+                  "minLength": 1,
+                  "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
                 }
               },
               "additionalProperties": false
@@ -1818,6 +1881,242 @@
                         },
                         "arq": {
                           "type": "boolean"
+                        },
+                        "tags": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "label"
+                            ],
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "label": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "legal": {
+                                "type": "boolean"
+                              },
+                              "href": {
+                                "type": "string",
+                                "pattern": "^#[a-z0-9-]+$",
+                                "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
+                              }
+                            },
+                            "additionalProperties": false
+                          },
+                          "minItems": 1
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "minItems": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
+            "cross": {
+              "type": "object",
+              "required": [
+                "title",
+                "label",
+                "items"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "title",
+                      "text"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9-]+$",
+                        "description": "Id del elemento, destino de un ancla (ADR-030, enmienda 2)."
+                      },
+                      "title": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "text": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "arq": {
+                        "type": "boolean"
+                      },
+                      "tags": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "label"
+                          ],
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "label": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "legal": {
+                              "type": "boolean"
+                            },
+                            "href": {
+                              "type": "string",
+                              "pattern": "^#[a-z0-9-]+$",
+                              "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
+                            }
+                          },
+                          "additionalProperties": false
+                        },
+                        "minItems": 1
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "minItems": 1
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "trade_offs": {
+          "description": "TradeOffs (§16): cada trade-off como balanza «A ⇄ B» con su franja de resolución.",
+          "type": "object",
+          "required": [
+            "items",
+            "resolution_label",
+            "note"
+          ],
+          "properties": {
+            "arq": {
+              "type": "boolean"
+            },
+            "resolution_label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "a",
+                  "b",
+                  "text",
+                  "resolution"
+                ],
+                "properties": {
+                  "a": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "b": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                  },
+                  "resolution": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
+            "note": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "open_questions": {
+          "description": "OpenQuestions (§18): tarjetas con casilla «Sé responderla»; el estado vive en memoria.",
+          "type": "object",
+          "required": [
+            "intro",
+            "items",
+            "check_label",
+            "counter"
+          ],
+          "properties": {
+            "intro": {
+              "type": "string",
+              "minLength": 1
+            },
+            "check_label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "counter": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Plantilla del contador con {n} y {total}."
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "question",
+                  "tags"
+                ],
+                "properties": {
+                  "question": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "label"
+                      ],
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "label": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "legal": {
+                          "type": "boolean"
+                        },
+                        "href": {
+                          "type": "string",
+                          "pattern": "^#[a-z0-9-]+$",
+                          "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
                         }
                       },
                       "additionalProperties": false
@@ -1833,7 +2132,7 @@
           "additionalProperties": false
         },
         "severity_cards": {
-          "description": "SeverityCards (§16 · Sanciones).",
+          "description": "SeverityCards (§16 · Sanciones): niveles y modificadores de la multa.",
           "type": "object",
           "required": [
             "levels"
@@ -1861,11 +2160,19 @@
                       3
                     ]
                   },
+                  "article": {
+                    "type": "string",
+                    "minLength": 1
+                  },
                   "amount": {
                     "type": "string",
                     "minLength": 1
                   },
                   "note": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "examples_label": {
                     "type": "string",
                     "minLength": 1
                   },
@@ -1876,6 +2183,45 @@
                       "minLength": 1
                     },
                     "minItems": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
+            "modifiers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "effect",
+                  "effect_label",
+                  "title",
+                  "text",
+                  "basis"
+                ],
+                "properties": {
+                  "effect": {
+                    "enum": [
+                      "up",
+                      "down"
+                    ]
+                  },
+                  "effect_label": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "basis": {
+                    "type": "string",
+                    "minLength": 1
                   }
                 },
                 "additionalProperties": false

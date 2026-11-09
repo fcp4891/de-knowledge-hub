@@ -87,9 +87,9 @@ export function RequirementToData({ title, lead, governance, data }: Requirement
   );
 }
 
-export function ControlEvidence({ title, lead, steps, decide, note, example }: ControlEvidenceProps) {
+export function ControlEvidence({ id, title, lead, steps, decide, note, example }: ControlEvidenceProps) {
   return (
-    <section className="ficha-block control-evidence" aria-label={title}>
+    <section id={id} className="ficha-block control-evidence" aria-label={title}>
       <h3>{title}</h3>
       <p className="control-evidence-lead">
         <RichText text={lead} />

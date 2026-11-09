@@ -585,6 +585,16 @@ export interface components {
             /** @description LegalFoundations (§2): título y recuadro de roles. */
             legal_foundations?: {
                 title: string;
+                principles?: {
+                    label: string;
+                    tags: {
+                        kind?: string;
+                        label: string;
+                        legal?: boolean;
+                        /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                        href?: string;
+                    }[];
+                }[];
                 roles: {
                     caption?: string;
                     responsible: {
@@ -647,6 +657,8 @@ export interface components {
                 groups: {
                     title: string;
                     items: {
+                        /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
+                        id?: string;
                         number: string;
                         question: string;
                         text: string;
@@ -734,6 +746,8 @@ export interface components {
             };
             /** @description ControlEvidence (§9 · Control y evidencia). */
             control_evidence?: {
+                /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
+                id?: string;
                 title: string;
                 /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                 lead: string;
@@ -824,6 +838,8 @@ export interface components {
                 };
                 headers: string[];
                 rows: {
+                    /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
+                    id?: string;
                     need: string;
                     meta: string;
                     gcp: {
@@ -844,10 +860,11 @@ export interface components {
                 }[];
                 closing: string;
             };
-            /** @description PracticeLanes (§14). */
+            /** @description PracticeLanes (§14): etapas en columnas y una franja transversal opcional. */
             practice_lanes?: {
                 start?: {
                     title: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                     text: string;
                 };
                 lanes: {
@@ -858,18 +875,83 @@ export interface components {
                         title: string;
                         text: string;
                         arq?: boolean;
+                        tags?: {
+                            kind?: string;
+                            label: string;
+                            legal?: boolean;
+                            /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                            href?: string;
+                        }[];
+                    }[];
+                }[];
+                cross?: {
+                    title: string;
+                    label: string;
+                    items: {
+                        /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
+                        id?: string;
+                        title: string;
+                        text: string;
+                        arq?: boolean;
+                        tags?: {
+                            kind?: string;
+                            label: string;
+                            legal?: boolean;
+                            /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                            href?: string;
+                        }[];
+                    }[];
+                };
+            };
+            /** @description TradeOffs (§16): cada trade-off como balanza «A ⇄ B» con su franja de resolución. */
+            trade_offs?: {
+                arq?: boolean;
+                resolution_label: string;
+                items: {
+                    a: string;
+                    b: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    text: string;
+                    resolution: string;
+                }[];
+                note: string;
+            };
+            /** @description OpenQuestions (§18): tarjetas con casilla «Sé responderla»; el estado vive en memoria. */
+            open_questions?: {
+                intro: string;
+                check_label: string;
+                /** @description Plantilla del contador con {n} y {total}. */
+                counter: string;
+                items: {
+                    question: string;
+                    tags: {
+                        kind?: string;
+                        label: string;
+                        legal?: boolean;
+                        /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                        href?: string;
                     }[];
                 }[];
             };
-            /** @description SeverityCards (§16 · Sanciones). */
+            /** @description SeverityCards (§16 · Sanciones): niveles y modificadores de la multa. */
             severity_cards?: {
                 levels: {
                     name: string;
                     /** @enum {unknown} */
                     level: 1 | 2 | 3;
+                    article?: string;
                     amount: string;
                     note?: string;
+                    examples_label?: string;
                     examples: string[];
+                }[];
+                modifiers?: {
+                    /** @enum {unknown} */
+                    effect: "up" | "down";
+                    effect_label: string;
+                    title: string;
+                    text: string;
+                    basis: string;
                 }[];
             };
             /** @description SourcesGrouped (§20). */
