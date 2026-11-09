@@ -22,8 +22,17 @@ export function DesignBoard({ intro, groups }: DesignBoardProps) {
                 <ul>
                   {item.tags.map((tag) => (
                     <li key={`${item.number}-${tag.label}`}>
-                      {tag.kind ? <b>{tag.kind}</b> : null}
-                      {tag.label}
+                      {tag.href ? (
+                        <a href={tag.href}>
+                          {tag.kind ? <b>{tag.kind}</b> : null}
+                          {tag.label}
+                        </a>
+                      ) : (
+                        <>
+                          {tag.kind ? <b>{tag.kind}</b> : null}
+                          {tag.label}
+                        </>
+                      )}
                     </li>
                   ))}
                 </ul>

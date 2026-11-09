@@ -220,3 +220,9 @@ Pedida por Felipe el 2026-10-24, junto con la aceptación de ADR-024.
 - **`legal_basis`** sigue exigiendo `jurisdiction`.
 - **Implementación:** `check_without_jurisdiction` en `backend/content/validate.py` ya no rechaza `owner_approved_at`; la descripción del campo en `schemas/base.schema.json` lo dice (sin cambio de forma). Test en `tests/test_validate_legal.py`.
 - **Contrato:** sin cambios; el campo no se publica en la API.
+
+## Enmienda 7 — Fecha propia de la legislación comparada (2026-11-09)
+
+- **Decisión:** la aprobó Felipe el 2026-11-09. Hasta entonces estaba propuesta en la enmienda 1 del ADR-030.
+- **Regla.** Una cita `legislative` tiene `accessed` igual a `last_verified` solo si su jurisdicción es la de la ficha. La legislación comparada, por ejemplo el RGPD en EUR-Lex dentro de una ficha `CL`, lleva su propia fecha de consulta. Así se evita registrar una fecha falsa.
+- **Implementación.** Está en `check_legal_content`, en `backend/content/validate.py`.

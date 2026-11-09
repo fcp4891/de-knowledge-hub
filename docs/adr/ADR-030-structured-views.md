@@ -104,3 +104,14 @@ Además, `approach` suma el ejemplo y la referencia de cada paso, los rótulos d
 - `DesignQuestions`: no se usaba.
 - `ViewFallbacks`: ya no hace falta un render de respaldo.
 - La vista previa (`/preview-ficha`) dibuja la misma ficha, sin slots propios.
+
+## Enmienda 2 (2026-11-09) — Anclas internas
+
+- **Píldoras enlazadas.** Las píldoras (`tags`) de `design_board` y `when_to_use` llevan `href` con un ancla interna `#…`, y se dibujan como enlaces.
+- **Destinos.** Las filas de `control_matrix`, la propia matriz, las reglas de `code_guide` y las tarjetas de `practice_lanes` pueden declarar un `id`.
+- **Enlace al código.** `control_evidence.example.code_link` agrega el enlace «Ver código ↓» al pie del ejemplo, apuntando al §10.
+- **Anclas válidas.** Un ancla existe si cumple una de estas condiciones:
+  - es una sección presente (`s{N}`, el número de la plantilla);
+  - es un `id` declarado en las vistas;
+  - es una fila del catálogo legal (`lb-ley-19628-<artículo>`) de un artículo de `legal_basis`. Al hacer clic, abre el modal del artículo.
+- **Validación.** El validador rechaza un ancla que no existe, y un test revisa las píldoras de `chile-data-protection`.

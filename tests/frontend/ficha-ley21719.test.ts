@@ -102,3 +102,23 @@ test("los pasos sin la variante grande no cambian", () => {
   assert.match(css, /\.pipeline\[data-size="lg"\] \.step-number\s*\{[^}]*font-size:\s*13px/);
   assert.match(css, /\.pipeline\[data-size="lg"\] \.step-name\s*\{[^}]*font-size:\s*15\.5px/);
 });
+
+test("las píldoras con ancla son enlaces y el ejemplo enlaza al código (ADR-030, enmienda 2)", () => {
+  const board = loadTsx(join(ficha, "DesignBoard.tsx"));
+  const markup = html(board.DesignBoard, {
+    intro: "x",
+    groups: [{ title: "Conocer", items: [{ number: "02", question: "¿Para qué?", text: "t", tags: [{ kind: "Matriz", label: "Finalidad", href: "#matriz-finalidad" }, { label: "sin ancla" }] }] }],
+  });
+  assert.match(markup, /<a href="#matriz-finalidad"><b>Matriz<\/b>Finalidad<\/a>/);
+  assert.match(markup, /<li>sin ancla<\/li>/);
+  const evidence = loadTsx(join(ficha, "ControlEvidence.tsx"));
+  const example = html(evidence.ControlEvidence, {
+    title: "Control y evidencia",
+    lead: "l",
+    steps: [],
+    decide: { number: "4", title: "d", outcomes: [] },
+    note: "n",
+    example: { summary: "Ver ejemplo", steps: [], note: "e", codeLink: { label: "Ver código ↓", href: "#s10" } },
+  });
+  assert.match(example, /<a href="#s10">Ver código ↓<\/a>/);
+});

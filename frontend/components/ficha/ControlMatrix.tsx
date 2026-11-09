@@ -6,7 +6,7 @@ import { RichText } from "./RichText";
 import "@/components/markdown/pipeline.css";
 import "./ficha-blocks.css";
 
-export function ControlMatrix({ title, legend, headers, rows, closing }: ControlMatrixProps) {
+export function ControlMatrix({ id, title, legend, headers, rows, closing }: ControlMatrixProps) {
   return (
     <div className="markdown">
       <h3>
@@ -15,7 +15,7 @@ export function ControlMatrix({ title, legend, headers, rows, closing }: Control
       <p className="matrix-legend">
         <RichText text={legend} />
       </p>
-      <div className="markdown-table-wrap markdown-table-steps">
+      <div id={id} className="markdown-table-wrap markdown-table-steps">
         <table>
           <thead>
             <tr>
@@ -29,7 +29,7 @@ export function ControlMatrix({ title, legend, headers, rows, closing }: Control
           </thead>
           <tbody>
             {rows.map((row) => (
-              <tr key={row.name}>
+              <tr key={row.name} id={row.id}>
                 <td>
                   {row.name}
                   {row.bases.map((basis) => (

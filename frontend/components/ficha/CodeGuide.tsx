@@ -19,7 +19,7 @@ export function CodeGuide({ lead, rules, notCovered, scenarios, simplifies, limi
         </thead>
         <tbody>
           {rules.items.map((row) => (
-            <tr key={row.fn}>
+            <tr key={row.fn} id={row.id}>
               <td>{row.rule}</td>
               <td>
                 <code>{row.fn}</code>

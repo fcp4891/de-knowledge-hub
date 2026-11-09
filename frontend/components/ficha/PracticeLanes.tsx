@@ -7,7 +7,7 @@ export function PracticeLanes({
   lanes,
 }: {
   start?: { title: string; text: string };
-  lanes: { title: string; items: { title: string; text: string; arq?: boolean }[] }[];
+  lanes: { title: string; items: { id?: string; title: string; text: string; arq?: boolean }[] }[];
 }) {
   return (
     <section className="ficha-block practice">
@@ -24,7 +24,7 @@ export function PracticeLanes({
             <h3>{lane.title}</h3>
             <ul>
               {lane.items.map((item) => (
-                <li key={item.title}>
+                <li key={item.title} id={item.id}>
                   <h4>
                     {item.arq ? <ArchitectureDot /> : null}
                     {item.title}

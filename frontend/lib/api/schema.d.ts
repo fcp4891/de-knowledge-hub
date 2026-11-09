@@ -655,17 +655,23 @@ export interface components {
                             kind?: string;
                             label: string;
                             legal?: boolean;
+                            /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                            href?: string;
                         }[];
                     }[];
                 }[];
             };
             /** @description ControlMatrix (§4). */
             control_matrix?: {
+                /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
+                id?: string;
                 title: string;
                 /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                 legend: string;
                 headers: string[];
                 rows: {
+                    /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
+                    id?: string;
                     name: string;
                     bases: string[];
                     code?: string;
@@ -690,6 +696,8 @@ export interface components {
                             kind?: string;
                             label: string;
                             legal?: boolean;
+                            /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                            href?: string;
                         }[];
                     }[];
                 }[];
@@ -747,6 +755,11 @@ export interface components {
                 example: {
                     summary: string;
                     note: string;
+                    code_link?: {
+                        label: string;
+                        /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                        href: string;
+                    };
                     steps: {
                         title: string;
                         items: {
@@ -765,6 +778,8 @@ export interface components {
                 rules: {
                     headers: string[];
                     items: {
+                        /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
+                        id?: string;
                         rule: string;
                         fn: string;
                         requirement: string;
@@ -838,6 +853,8 @@ export interface components {
                 lanes: {
                     title: string;
                     items: {
+                        /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
+                        id?: string;
                         title: string;
                         text: string;
                         arq?: boolean;

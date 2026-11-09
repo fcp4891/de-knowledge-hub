@@ -11,7 +11,7 @@ type V = Required<Views>;
 export type Titled = { title: string; text: string };
 export type Label = { title: string; detail?: string };
 export type Cite = { title: string; href: string; detail: string };
-export type Tag = { kind?: string; label: string; legal?: boolean };
+export type Tag = { kind?: string; label: string; legal?: boolean; href?: string };
 
 export type CentralIdeaProps = {
   checksTitle: string;
@@ -88,10 +88,11 @@ export type DesignBoardProps = {
 };
 
 export type ControlMatrixProps = {
+  id?: string;
   title: string;
   legend: string;
   headers: string[];
-  rows: { name: string; bases: string[]; code?: string; risk: string; control: string; check: string; evidence: string }[];
+  rows: { id?: string; name: string; bases: string[]; code?: string; risk: string; control: string; check: string; evidence: string }[];
   closing: string;
 };
 
@@ -117,12 +118,17 @@ export type ControlEvidenceProps = {
   steps: { number: string; title: string; items: string[] }[];
   decide: { number: string; title: string; outcomes: { tone: "pass" | "fail" | "keep"; text: string }[] };
   note: string;
-  example: { summary: string; steps: { title: string; items: { text: string; code?: string }[] }[]; note: string };
+  example: {
+    summary: string;
+    steps: { title: string; items: { text: string; code?: string }[] }[];
+    note: string;
+    codeLink?: { label: string; href: string };
+  };
 };
 
 export type CodeGuideProps = {
   lead: Titled;
-  rules: { headers: string[]; items: { rule: string; fn: string; requirement: string }[] };
+  rules: { headers: string[]; items: { id?: string; rule: string; fn: string; requirement: string }[] };
   notCovered: { title: string; intro: string; items: Titled[] };
   scenarios: { title: string; items: { name: string; text: string; exitCode: 0 | 1 }[] };
   simplifies: { title: string; items: Titled[] };
@@ -142,7 +148,7 @@ export type CloudCompareProps = {
 
 export type PracticeLanesProps = {
   start?: Titled;
-  lanes: { title: string; items: { title: string; text: string; arq?: boolean }[] }[];
+  lanes: { title: string; items: { id?: string; title: string; text: string; arq?: boolean }[] }[];
 };
 
 export type SeverityCardsProps = {
@@ -229,7 +235,7 @@ export function designBoardProps(view: V["design_board"]): DesignBoardProps {
 }
 
 export function controlMatrixProps(view: V["control_matrix"]): ControlMatrixProps {
-  return { title: view.title, legend: view.legend, headers: view.headers, rows: view.rows, closing: view.closing };
+  return { id: view.id, title: view.title, legend: view.legend, headers: view.headers, rows: view.rows, closing: view.closing };
 }
 
 export function whenToUseProps(view: V["when_to_use"]): WhenToUseProps {
@@ -259,7 +265,12 @@ export function controlEvidenceProps(view: V["control_evidence"]): ControlEviden
       outcomes: view.decide.outcomes.map((outcome) => ({ ...outcome, tone: outcome.tone as "pass" | "fail" | "keep" })),
     },
     note: view.note,
-    example: view.example,
+    example: {
+      summary: view.example.summary,
+      steps: view.example.steps,
+      note: view.example.note,
+      codeLink: view.example.code_link,
+    },
   };
 }
 

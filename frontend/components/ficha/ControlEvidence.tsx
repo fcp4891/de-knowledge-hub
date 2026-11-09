@@ -152,6 +152,11 @@ export function ControlEvidence({ title, lead, steps, decide, note, example }: C
           </ol>
         </div>
         <p>{example.note}</p>
+        {example.codeLink ? (
+          <p>
+            <a href={example.codeLink.href}>{example.codeLink.label}</a>
+          </p>
+        ) : null}
       </details>
     </section>
   );

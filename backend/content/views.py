@@ -7,6 +7,7 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 from typing import Any
 
 MARKER = re.compile(r"<!--\s*view:\s*([a-z_]+)\s*-->")
@@ -24,8 +25,8 @@ def markers(body: str) -> list[str]:
     return MARKER.findall(body)
 
 
-def check(views: dict[str, Any], body: str, cited_urls: list[str]) -> list[str]:
-    """Errores de coherencia entre `views`, las marcas del cuerpo y las citas de `sources`."""
+def check(views: dict[str, Any], body: str, cited_urls: list[str], anchors: set[str] | None = None) -> list[str]:
+    """Errores de coherencia entre `views`, las marcas del cuerpo, las citas de `sources` y las anclas de la ficha."""
     found = markers(body)
     errors = [f"[views] marca '{key}' sin datos en views" for key in found if key not in views]
     errors += [f"[views] marca '{key}' repetida" for key in sorted(set(found)) if found.count(key) > 1]
@@ -33,8 +34,35 @@ def check(views: dict[str, Any], body: str, cited_urls: list[str]) -> list[str]:
                if key in views and key not in found]
     errors += [f"[views] '{key}' no lleva marca: su posición es fija" for key in PLACED if key in found]
     errors += check_sources_grouped(views.get("sources_grouped"), cited_urls)
-    return errors + [f"[views] el enlace '{url}' no es una cita de sources" for url in sorted(set(hrefs(views)))
-                     if url not in cited_urls]
+    links = sorted(set(hrefs(views)))
+    errors += [f"[views] el enlace '{url}' no es una cita de sources" for url in links
+               if url.startswith("https://") and url not in cited_urls]
+    if anchors is not None:
+        errors += [f"[views] el ancla '{url}' no existe en la ficha" for url in links
+                   if url.startswith("#") and url[1:] not in anchors]
+    return errors
+
+
+def element_ids(node: Any) -> set[str]:
+    """Ids que las vistas ponen en filas, tarjetas y reglas (destinos de anclas, ADR-030 enmienda 2)."""
+    if isinstance(node, dict):
+        own = {node["id"]} if isinstance(node.get("id"), str) else set()
+        return own.union(*(element_ids(value) for value in node.values()))
+    if isinstance(node, list):
+        return set().union(*(element_ids(value) for value in node))
+    return set()
+
+
+def legal_row_id(law: str, article: str) -> str:
+    """Igual que legalRowId del frontend: lb-<ley>-<artículo en slug>."""
+    plain = unicodedata.normalize("NFD", article).encode("ascii", "ignore").decode().lower()
+    return f"lb-{law}-" + re.sub(r"[^a-z0-9]+", "-", plain).strip("-")
+
+
+def page_anchors(views: dict[str, Any], sections: list[int], legal_basis: list[dict[str, Any]]) -> set[str]:
+    """Anclas que existen en la ficha: secciones presentes, ids de las vistas y filas del catálogo legal."""
+    ids = {f"s{number}" for number in sections} | element_ids(views)
+    return ids | {legal_row_id(b["law"], str(b["article"])) for b in legal_basis}
 
 
 def hrefs(node: Any) -> list[str]:

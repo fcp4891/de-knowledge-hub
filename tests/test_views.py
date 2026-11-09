@@ -68,3 +68,33 @@ def test_a_view_mark_is_section_content() -> None:
     from backend.content import page_sections
     assert not page_sections.is_empty("\n<!-- view: problem_journey -->\n")
     assert page_sections.is_empty("\n<!-- pendiente -->\n")
+
+
+def test_anchors_must_exist_in_the_page() -> None:
+    """ADR-030, enmienda 2: un ancla interna va a una sección presente, a un id de las vistas o al catálogo legal."""
+    view = {"control_matrix": {"rows": [{"id": "matriz-finalidad"}]},
+            "design_board": {"groups": [{"items": [{"tags": [{"label": "x", "href": "#matriz-finalidad"},
+                                                             {"label": "y", "href": "#s10"},
+                                                             {"label": "art. 15 bis", "href": "#lb-ley-19628-15-bis"},
+                                                             {"label": "z", "href": "#matriz-otra"}]}]}]}}
+    anchors = views.page_anchors(view, [4, 10], [{"law": "ley-19628", "article": "15 bis"}])
+    body = "<!-- view: control_matrix -->\n<!-- view: design_board -->"
+    assert views.check(view, body, [], anchors) == ["[views] el ancla '#matriz-otra' no existe en la ficha"]
+    assert views.legal_row_id("ley-19628", "14 quáter") == "lb-ley-19628-14-quater"
+
+
+def test_chile_data_protection_pills_link_to_real_anchors() -> None:
+    """Cada píldora de Cómo funciona y Cuándo utilizarlo enlaza a un ancla que existe; «Ver código ↓» va al §10."""
+    import yaml
+    from pathlib import Path
+
+    from backend.content import page_sections
+    text = (Path(__file__).resolve().parent.parent / "content/concepts/chile-data-protection.md").read_text(encoding="utf-8")
+    data = yaml.safe_load(text.split("---\n", 2)[1])
+    present = [n for n, _, _ in page_sections.sections(page_sections.body_of(text))]
+    anchors = views.page_anchors(data["views"], present, data["legal_basis"])
+    tags = [tag for key in ("design_board", "when_to_use") for group in data["views"][key]["groups"]
+            for item in group["items"] for tag in item["tags"]]
+    assert tags and all(tag.get("href", "").startswith("#") for tag in tags)
+    assert not [tag["href"] for tag in tags if tag["href"][1:] not in anchors]
+    assert data["views"]["control_evidence"]["example"]["code_link"] == {"label": "Ver código ↓", "href": "#s10"}

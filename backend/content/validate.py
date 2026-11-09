@@ -506,7 +506,9 @@ def check_page_sections(content_dir: Path, docs: list[Document], report: Report)
             errors += page_sections.check_practices(body)   # ADR-030: con practice_lanes, las prácticas van en la vista
         if "views" in doc.data:
             cited = [s["url"] for s in doc.data.get("sources", []) if "url" in s]
-            errors += page_views.check(doc.data["views"], body, cited)
+            present = [number for number, _, _ in page_sections.sections(body)]
+            anchors = page_views.page_anchors(doc.data["views"], present, doc.data.get("legal_basis", []))
+            errors += page_views.check(doc.data["views"], body, cited, anchors)
         if doc.data["type"] == "architecture":
             errors += architecture_views(body)
         for error in errors:

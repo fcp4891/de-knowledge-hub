@@ -347,6 +347,7 @@ views:
         tags:
         - kind: Prácticas
           label: Clasificación automática
+          href: '#practica-clasificacion-automatica'
       - number: '02'
         question: ¿Para qué los necesito?
         arq: true
@@ -355,6 +356,7 @@ views:
         tags:
         - kind: Matriz
           label: Finalidad
+          href: '#matriz-finalidad'
     - title: Controlar
       items:
       - number: '03'
@@ -363,12 +365,14 @@ views:
         tags:
         - kind: Matriz
           label: Transferencias
+          href: '#matriz-transferencias'
       - number: '04'
         question: ¿Quién accede?
         text: Acceso por finalidad con IAM o RBAC, segregación de funciones y revisión periódica de permisos.
         tags:
         - kind: Matriz
           label: Acceso restringido
+          href: '#matriz-acceso-restringido'
     - title: Proteger
       items:
       - number: '05'
@@ -378,12 +382,14 @@ views:
         tags:
         - kind: Matriz
           label: Minimización
+          href: '#matriz-minimizacion'
       - number: '06'
         question: ¿Cuánto tiempo los guardo?
         text: Plazo por clase de dato y almacenamiento; al vencer, suprimir o anonimizar.
         tags:
         - kind: Matriz
           label: Retención
+          href: '#matriz-retencion'
     - title: Responder
       items:
       - number: '07'
@@ -392,7 +398,9 @@ views:
         tags:
         - kind: Matriz
           label: Derechos del titular
+          href: '#matriz-derechos-del-titular'
         - label: art. 4
+          href: '#lb-ley-19628-4'
       - number: 08
         question: ¿Cómo lo demuestro?
         arq: true
@@ -400,8 +408,10 @@ views:
         tags:
         - kind: Matriz
           label: Vulneraciones
+          href: '#matriz-vulneraciones'
         - kind: Código
           label: validate()
+          href: '#s10'
   control_matrix:
     title: Matriz de control
     legend: '**art.** fundamento legal del requisito · **función** control implementado en el código de la ficha'
@@ -420,6 +430,7 @@ views:
       code: purpose_check
       check: Test de que cada consumo declara una finalidad aprobada
       evidence: Catálogo versionado y accesos por finalidad
+      id: matriz-finalidad
     - name: Minimización
       bases:
       - Principio de proporcionalidad · art. 3
@@ -428,6 +439,7 @@ views:
       control: Contrato de campos permitidos
       check: Test de esquema en CI
       evidence: Resultado del test y versión del contrato
+      id: matriz-minimizacion
     - name: Retención
       bases:
       - Principio de proporcionalidad · art. 3
@@ -436,6 +448,7 @@ views:
       control: Política por clase de dato y almacenamiento
       check: Control de vencidos tras la purga y en el replay
       evidence: Configuración, ejecución y excepciones
+      id: matriz-retencion
     - name: Acceso restringido
       bases:
       - Medidas de seguridad · art. 14 quinquies
@@ -444,6 +457,7 @@ views:
       control: IAM o RBAC, segregación de funciones
       check: Revisión periódica de permisos
       evidence: Inventario de permisos y revisión fechada
+      id: matriz-acceso-restringido
     - name: Derechos del titular
       bases:
       - Derechos · art. 4
@@ -452,6 +466,7 @@ views:
       control: Localizador de registros y flujo autorizado
       check: 'Prueba de punta a punta: localizar, ejecutar y reprocesar'
       evidence: ID interno de la solicitud, estados y resultado
+      id: matriz-derechos-del-titular
     - name: Vulneraciones
       bases:
       - Reporte de vulneraciones · art. 14 sexies
@@ -459,6 +474,7 @@ views:
       control: Logs, alertas y consulta de alcance por linaje
       check: Simulacro de consulta de alcance
       evidence: Línea de tiempo, sistemas afectados y acciones
+      id: matriz-vulneraciones
     - name: Transferencias
       bases:
       - Transferencia internacional · arts. 27 a 29
@@ -467,7 +483,9 @@ views:
       control: Inventario de destinos y controles del proveedor
       check: Conciliación de flujos contra el inventario
       evidence: Contrato, evaluación y trazabilidad
+      id: matriz-transferencias
     closing: La evidencia no guarda nombres, RUT ni datos sensibles cuando basta una referencia interna protegida.
+    id: matriz
   when_to_use:
     intro: En cada cambio de la plataforma o del uso de los datos. Estos son los disparadores más comunes; los de borde marcado tienen un deber legal asociado.
     groups:
@@ -479,21 +497,25 @@ views:
         tags:
         - kind: Matriz
           label: Minimización
+          href: '#matriz-minimizacion'
       - title: Nueva fuente o integración
         text: APIs, CDC, archivos o colas que traen datos personales.
         tags:
         - kind: Matriz
           label: Transferencias
+          href: '#matriz-transferencias'
       - title: Migración a la nube
         text: Cambian ubicaciones, proveedores y copias.
         tags:
         - kind: Matriz
           label: Transferencias
+          href: '#matriz-transferencias'
       - title: Ambientes y respaldos
         text: Desarrollo, pruebas, respaldos y recuperación.
         tags:
         - kind: Matriz
           label: Retención
+          href: '#matriz-retencion'
     - title: Cambia el uso
       hint: para qué y quién recibe
       items:
@@ -503,25 +525,30 @@ views:
         tags:
         - label: Principio de finalidad · art. 3
           legal: true
+          href: '#lb-ley-19628-3'
         - kind: Matriz
           label: Finalidad
+          href: '#matriz-finalidad'
       - title: Productos de datos
         text: Modelos, dashboards y exportaciones.
         tags:
         - kind: Matriz
           label: Finalidad
+          href: '#matriz-finalidad'
       - title: Nuevo proveedor
         legal: true
         text: Un tercero que trata datos por cuenta de la organización, incluida una API de LLM.
         tags:
         - label: Encargado · art. 15 bis
           legal: true
+          href: '#lb-ley-19628-15-bis'
       - title: Destino fuera de Chile
         text: Réplicas, proveedores o APIs en otro país.
         legal: true
         tags:
         - label: Transferencia internacional · arts. 27 a 29
           legal: true
+          href: '#lb-ley-19628-27'
     - title: Momentos de control
       hint: revisar y demostrar
       items:
@@ -531,19 +558,23 @@ views:
         tags:
         - label: Evaluación de impacto · art. 15 ter
           legal: true
+          href: '#lb-ley-19628-15-ter'
       - title: Vulneración
         text: Dimensionar el alcance y reportar.
         legal: true
         tags:
         - label: Reporte · art. 14 sexies
           legal: true
+          href: '#lb-ley-19628-14-sexies'
         - kind: Matriz
           label: Vulneraciones
+          href: '#matriz-vulneraciones'
       - title: Revisión periódica
         text: Auditorías internas y requerimientos de la Agencia.
         tags:
         - kind: Matriz
           label: Evidencia
+          href: '#matriz'
   requirement_to_data:
     title: Del requisito al dato
     lead: 'Arquitectura de referencia ilustrativa: dónde se ubica cada control en una plataforma por capas.'
@@ -644,6 +675,9 @@ views:
         - text: 'Salida 1: la CI rechaza'
         - text: '6 escenarios: 1 aprueba y 5 rechazan'
       note: Cubre 5 de los 7 requisitos de la matriz; vulneraciones y transferencias se verifican fuera de este ejemplo.
+      code_link:
+        label: Ver código ↓
+        href: '#s10'
   code_guide:
     lead:
       title: Qué hace.
@@ -658,18 +692,23 @@ views:
       - rule: Todo consumo declara una finalidad aprobada en el catálogo
         fn: purpose_check
         requirement: Finalidad
+        id: codigo-purpose-check
       - rule: Solo columnas aprobadas
         fn: schema_minimization
         requirement: Minimización
+        id: codigo-schema-minimization
       - rule: Sin datos vencidos, tampoco tras un replay
         fn: retention_check
         requirement: Retención
+        id: codigo-retention-check
       - rule: Ningún usuario inactivo con acceso
         fn: access_review
         requirement: Acceso restringido
+        id: codigo-access-review
       - rule: Lo suprimido no reaparece al reprocesar
         fn: erasure_replay_check
         requirement: Derechos del titular
+        id: codigo-erasure-replay-check
     not_covered:
       title: Qué no cubre
       intro: 'Cubre 5 de los 7 requisitos de la matriz. Los otros dos no se resuelven con una regla que pase o falle en cada cambio:'
@@ -772,6 +811,7 @@ views:
       items:
       - title: Clasificación automática
         text: Descubrir y clasificar datos personales sin depender de inventarios manuales.
+        id: practica-clasificacion-automatica
       - title: Linaje por actividad
         text: Linaje técnico asociado a cada actividad de tratamiento.
       - title: Metadatos en el catálogo
@@ -1399,6 +1439,7 @@ El detalle de cada fuente está en `sources` del frontmatter; la agrupación, en
 
 - 2026-11-09: §10 suma el control de finalidad (`purpose_check`): cinco reglas, el filtro de consumos sin finalidad aprobada y las salidas de los seis escenarios. Sigue en `review_required`.
 - 2026-11-09: diseño final con los componentes de Cursor (ADR-030, enmienda 1). Los textos que estaban fijos en los componentes pasan a `views`: mapa de tratamiento (art. 2 letra o y nota comparada del RGPD), enfoque con ejemplo y referencia ISO/IEC 27001:2022 por paso, roles del §2 («Principios y responsabilidades»), recorrido del problema, ocho preguntas en cuatro fases, matriz de 7 filas con Finalidad, disparadores de uso, arquitectura de referencia, patrón de control y evidencia, guía del código y «En la nube» (reemplaza las pestañas GCP/AWS/Azure; §12 y §13 se omiten, ADR-029). Salen del cuerpo las 8 preguntas del Resumen, el párrafo de actividades, el párrafo [arq] del §3, las seis preguntas y la tabla del §4, la lista del §5, los diagramas del §9, la explicación del §10 y las letras a)…h) de los principios. Fuentes nuevas: ISO/IEC 27001, RGPD en EUR-Lex, BigQuery, Lake Formation y registros de diagnóstico de Azure Databricks. Sigue en `review_required`.
+- 2026-11-09: píldoras de Cómo funciona y Cuándo utilizarlo enlazadas a anclas reales: fila de la matriz, práctica, código (§10) o artículo del catálogo legal (ADR-030, enmienda 2); enlace «Ver código ↓» al pie del ejemplo de Control y evidencia. Sin cambios de diseño ni de textos. Sigue en `review_required`.
 
 ## Anexo · Catálogo legal por tema
 

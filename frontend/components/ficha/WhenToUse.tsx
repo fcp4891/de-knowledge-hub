@@ -20,8 +20,17 @@ export function WhenToUse({ intro, groups }: WhenToUseProps) {
                 <ul>
                   {item.tags.map((tag) => (
                     <li key={`${item.title}-${tag.label}`} className={tag.legal ? "is-legal" : undefined}>
-                      {tag.kind ? <b>{tag.kind}</b> : null}
-                      {tag.label}
+                      {tag.href ? (
+                        <a href={tag.href}>
+                          {tag.kind ? <b>{tag.kind}</b> : null}
+                          {tag.label}
+                        </a>
+                      ) : (
+                        <>
+                          {tag.kind ? <b>{tag.kind}</b> : null}
+                          {tag.label}
+                        </>
+                      )}
                     </li>
                   ))}
                 </ul>

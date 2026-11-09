@@ -854,6 +854,11 @@
                               },
                               "legal": {
                                 "type": "boolean"
+                              },
+                              "href": {
+                                "type": "string",
+                                "pattern": "^#[a-z0-9-]+$",
+                                "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
                               }
                             },
                             "additionalProperties": false
@@ -884,6 +889,11 @@
             "closing"
           ],
           "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z0-9-]+$",
+              "description": "Id del elemento, destino de un ancla (ADR-030, enmienda 2)."
+            },
             "title": {
               "type": "string",
               "minLength": 1
@@ -915,6 +925,11 @@
                   "evidence"
                 ],
                 "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9-]+$",
+                    "description": "Id del elemento, destino de un ancla (ADR-030, enmienda 2)."
+                  },
                   "name": {
                     "type": "string",
                     "minLength": 1
@@ -1028,6 +1043,11 @@
                               },
                               "legal": {
                                 "type": "boolean"
+                              },
+                              "href": {
+                                "type": "string",
+                                "pattern": "^#[a-z0-9-]+$",
+                                "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
                               }
                             },
                             "additionalProperties": false
@@ -1305,6 +1325,25 @@
                   "type": "string",
                   "minLength": 1
                 },
+                "code_link": {
+                  "type": "object",
+                  "required": [
+                    "label",
+                    "href"
+                  ],
+                  "properties": {
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "href": {
+                      "type": "string",
+                      "pattern": "^#[a-z0-9-]+$",
+                      "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
+                    }
+                  },
+                  "additionalProperties": false
+                },
                 "steps": {
                   "type": "array",
                   "items": {
@@ -1406,6 +1445,11 @@
                       "requirement"
                     ],
                     "properties": {
+                      "id": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9-]+$",
+                        "description": "Id del elemento, destino de un ancla (ADR-030, enmienda 2)."
+                      },
                       "rule": {
                         "type": "string",
                         "minLength": 1
@@ -1759,6 +1803,11 @@
                         "text"
                       ],
                       "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[a-z0-9-]+$",
+                          "description": "Id del elemento, destino de un ancla (ADR-030, enmienda 2)."
+                        },
                         "title": {
                           "type": "string",
                           "minLength": 1
