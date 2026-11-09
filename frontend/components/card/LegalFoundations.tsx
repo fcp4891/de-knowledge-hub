@@ -6,7 +6,6 @@ import {
   CHILE_CHILD_TITLES,
   CHILE_GROUPS,
   CHILE_PRINCIPLES,
-  CHILE_ROLES,
   type ChileArticle,
   type ChileFicha,
   type ChileGroup,
@@ -231,12 +230,7 @@ export function LegalFoundations() {
         ))}
       </ul>
       <ArticleModal dialogRef={dialogRef} article={open} onClose={() => setOpen(null)} />
-      <h3>Responsabilidades: quién decide y quién implementa</h3>
-      <ul>
-        {CHILE_ROLES.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
+      <RolesBoard />
     </div>
   );
 }
@@ -332,6 +326,65 @@ export function LegalCatalog() {
   );
 }
 
+const LAW_URL = "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01";
+const LAW_21719_URL = "https://www.bcn.cl/leychile/navegar?idNorma=1209272";
+
+function RolesBoard() {
+  return (
+    <section className="lf-roles" aria-labelledby="lf-roles-title">
+      <div className="lf-roles-org">
+        <h3 id="lf-roles-title">Responsable · la organización</h3>
+        <p className="lf-roles-lead">
+          Decide los fines y medios del tratamiento y responde ante la ley (
+          <a href={LAW_URL} target="_blank" rel="noopener noreferrer">
+            art. 2 letra n
+          </a>
+          ).
+        </p>
+        <div className="lf-roles-split">
+          <div className="lf-roles-decide">
+            <p className="lf-roles-kicker">Deciden y evalúan</p>
+            <h4>Legal, privacidad y negocio</h4>
+            <p>Definen finalidad, base de licitud y plazos.</p>
+            <h4>Privacidad</h4>
+            <p>Evalúa el riesgo para los titulares.</p>
+            <h4>Seguridad</h4>
+            <p>Evalúa el riesgo de seguridad y define las medidas de protección.</p>
+          </div>
+          <div className="lf-roles-build">
+            <p className="lf-roles-kicker">Implementa</p>
+            <h4>Ingeniería de Datos</h4>
+            <p>
+              Implementa controles, automatización, trazabilidad y evidencia. No decide la finalidad ni la base; reporta
+              las implicancias técnicas y sus limitaciones.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="lf-roles-vendor">
+        <h3>Encargado · fuera de la organización</h3>
+        <p>
+          Proveedor que trata datos por cuenta del responsable: nube, SaaS, API de LLM (
+          <a href={LAW_URL} target="_blank" rel="noopener noreferrer">
+            art. 2 letra x
+          </a>
+          ;{" "}
+          <a href={LAW_URL} target="_blank" rel="noopener noreferrer">
+            art. 15 bis
+          </a>
+          ).
+        </p>
+      </div>
+      <p className="lf-roles-source">
+        <a href={LAW_21719_URL} target="_blank" rel="noopener noreferrer">
+          Ley 21.719
+        </a>
+        <span> · Diario Oficial, 2024-12-13 · Legislación · Nivel 1 · art. 2 letras n) y x), art. 3, art. 15 bis</span>
+      </p>
+    </section>
+  );
+}
+
 function PrincipleCard({
   index,
   principle,
@@ -353,6 +406,7 @@ function PrincipleCard({
 }) {
   const tipId = `lf-tip-${index}`;
   const child = CHILE_CHILD_TITLES[principle.slug] ?? principle.slug;
+  const name = principle.label.replace(/^[a-h]\)\s*/i, "");
   return (
     <li
       className="lf-principle"
@@ -372,7 +426,7 @@ function PrincipleCard({
       <a
         className={open ? "lf-principle-card is-open" : "lf-principle-card"}
         href={`/concepts/${principle.slug}/`}
-        aria-label={principleAriaLabel(principle.label, child)}
+        aria-label={principleAriaLabel(name, child)}
         aria-describedby={open ? tipId : undefined}
         onFocus={() => onShow()}
         onBlur={() => {
@@ -400,7 +454,7 @@ function PrincipleCard({
           }
         }}
       >
-        <span className="lf-principle-label">{principle.label}</span>
+        <span className="lf-principle-label">{name}</span>
         <PrincipleEye />
       </a>
       {open ? (

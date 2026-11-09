@@ -29,7 +29,7 @@ export function PracticeLanes({
                     {item.arq ? <ArchitectureDot /> : null}
                     {item.title}
                   </h4>
-                  <p>{item.text}</p>
+                  {item.text ? <p>{item.text}</p> : null}
                 </li>
               ))}
             </ul>

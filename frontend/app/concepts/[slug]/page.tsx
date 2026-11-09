@@ -18,6 +18,80 @@ import { SHORT_NAMES } from "@/lib/learning-paths";
 import { isDomainPublished, relationVisible, scopeFromConcepts } from "@/lib/publishedScope";
 import { nextInRoute } from "@/lib/domainRoute";
 import { staticSlugs } from "@/lib/staticParams";
+import type { ReactNode } from "react";
+
+const VIEW_MARK = /<!-- view: ([a-z0-9_]+) -->/g;
+const ACTIVITY_FLOW = /[—–-]\s*recolección, ingesta, consulta, transformación, almacenamiento, integración, transmisión, conservación y eliminación\s*[—–-]/;
+const DESIGN_QUESTIONS =
+  /\*\*\[Buena práctica\]\*\* Seis preguntas de diseño\.[\s\S]*?(?=\*\*\[Decisión de arquitectura\]\*\* Matriz de control:)/;
+
+export type FichaViewRenderer = (id: string, views: unknown) => ReactNode | null;
+
+function withCodeGuide(markdown: string): string {
+  const start = markdown.indexOf("El script se");
+  if (start < 0) {
+    return markdown;
+  }
+  const head = markdown.slice(0, start).trimEnd();
+  const fences = [...markdown.slice(start).matchAll(/```text[\s\S]*?```/g)].map((match) => match[0]);
+  return `${head}\n\n${fences.join("\n\n")}\n\n<!-- view: code_guide -->\n`;
+}
+
+function markdownWithViews(
+  markdown: string,
+  renderView: ((id: string) => ReactNode | null) | undefined,
+  body: ReactNode,
+  props: {
+    obligations: readonly ObligationBasis[];
+    conceptRefs: ConceptRefs;
+    markCodeStatus?: boolean;
+    styleArrows?: boolean;
+    etiquetaColumn?: boolean;
+    horizontalDiagrams?: boolean;
+  },
+): ReactNode {
+  const source = renderView
+    ? markdown
+        .replace(
+          /### Qué implica para Ingeniería de Datos\s*\n[\s\S]*$/,
+          "### Qué implica para Ingeniería de Datos\n\n<!-- view: treatment_map -->\n",
+        )
+        .replace(ACTIVITY_FLOW, "\n\n<!-- view: data_flow -->\n\n")
+        .replace(DESIGN_QUESTIONS, "<!-- view: design_questions -->\n\n")
+        .replace(
+          /\*\*\[Decisión de arquitectura\]\*\* Matriz de control:[\s\S]*?referencia interna protegida\./,
+          "<!-- view: control_matrix -->\n",
+        )
+        .replace(/\*\*Del requisito al dato\.\*\*\s*```mermaid[\s\S]*?```\s*/, "<!-- view: requirement_to_data -->\n\n")
+        .replace(/\*\*Control y evidencia\.\*\*\s*```mermaid[\s\S]*?```/, "<!-- view: control_evidence -->")
+    : markdown;
+  const guided = renderView ? withCodeGuide(source) : source;
+  if (!renderView || !guided.includes("<!-- view:")) {
+    return body;
+  }
+  const parts: ReactNode[] = [];
+  let last = 0;
+  let index = 0;
+  for (const match of guided.matchAll(VIEW_MARK)) {
+    const start = match.index ?? 0;
+    const before = guided.slice(last, start);
+    if (before.trim()) {
+      parts.push(<MarkdownBody key={`md-${index}`} markdown={before} {...props} />);
+      index += 1;
+    }
+    const slot = renderView(match[1] ?? "");
+    if (slot) {
+      parts.push(<div key={`view-${index}`}>{slot}</div>);
+      index += 1;
+    }
+    last = start + match[0].length;
+  }
+  const after = guided.slice(last);
+  if (after.trim()) {
+    parts.push(<MarkdownBody key={`md-${index}`} markdown={after} {...props} />);
+  }
+  return <>{parts}</>;
+}
 
 const CLOUD_KEYS = new Set(["gcp", "aws", "azure"]);
 const OPEN_NUMBERS = new Set<number>();
@@ -72,6 +146,7 @@ function sectionModels(
   slug: string,
   conceptRefs: ConceptRefs,
   kind: string,
+  renderView?: (id: string) => ReactNode | null,
 ): ReadingSectionModel[] {
   const architecture = kind === "architecture";
   const styleArrows = slug !== "data-lineage";
@@ -84,7 +159,19 @@ function sectionModels(
   let clouds: ReadingSectionModel[] = [];
 
   function flushClouds() {
-    models.push(...clouds);
+    const board = clouds.length > 0 ? renderView?.("cloud_compare") : null;
+    if (board && clouds[0]) {
+      models.push({
+        number: clouds[0].number,
+        key: "cloud_compare",
+        title: "En la nube",
+        presentation: "open",
+        listed: true,
+        body: board,
+      });
+    } else {
+      models.push(...clouds);
+    }
     clouds = [];
   }
 
@@ -107,23 +194,40 @@ function sectionModels(
         title: titleOf(section),
         presentation: section.key === "components" ? "components" : "view",
         listed: true,
-        body: (
-          <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus styleArrows={styleArrows} />
+        body: markdownWithViews(
+          section.markdown,
+          renderView,
+          <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus styleArrows={styleArrows} />,
+          { obligations, conceptRefs, markCodeStatus: true, styleArrows },
         ),
       });
       continue;
     }
     if (section.key === "summary") {
       flushClouds();
+      const summaryBody = text
+        ? markdownWithViews(
+            section.markdown,
+            renderView,
+            <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} styleArrows={styleArrows} />,
+            { obligations, conceptRefs, markCodeStatus: architecture, styleArrows },
+          )
+        : null;
+      const approach = section.markdown.includes("view: approach") ? null : renderView?.("approach");
       models.push({
         number: section.number,
         key: section.key,
         title: titleOf(section),
         presentation: "summary",
-        listed: text,
-        body: text ? (
-          <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} styleArrows={styleArrows} />
-        ) : null,
+        listed: text || Boolean(approach),
+        body: approach ? (
+          <>
+            {summaryBody}
+            {approach}
+          </>
+        ) : (
+          summaryBody
+        ),
       });
       continue;
     }
@@ -137,7 +241,9 @@ function sectionModels(
         title: titleOf(section),
         presentation: "cloud",
         listed: !(architecture && (section.key === "aws" || section.key === "azure")),
-        body: (
+        body: markdownWithViews(
+          section.markdown,
+          renderView,
           <MarkdownBody
             markdown={section.markdown}
             etiquetaColumn
@@ -145,7 +251,8 @@ function sectionModels(
             conceptRefs={conceptRefs}
             markCodeStatus={architecture}
             styleArrows={styleArrows}
-          />
+          />,
+          { obligations, conceptRefs, markCodeStatus: architecture, styleArrows, etiquetaColumn: true },
         ),
       });
       continue;
@@ -163,8 +270,9 @@ function sectionModels(
       continue;
     }
     if (section.key === "sources") {
+      const grouped = renderView?.("sources_grouped");
       const showList = sources.length > 0;
-      if (!text && !showList) {
+      if (!text && !showList && !grouped) {
         continue;
       }
       models.push({
@@ -173,13 +281,43 @@ function sectionModels(
         title: titleOf(section),
         presentation: "details",
         listed: true,
-        body: showList ? (
+        body: grouped ? (
+          grouped
+        ) : showList ? (
           <SourceLinks sources={sources} />
         ) : (
           <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} styleArrows={styleArrows} />
         ),
       });
       continue;
+    }
+    if (section.key === "problem") {
+      const replacement = renderView?.("problem");
+      if (replacement) {
+        models.push({
+          number: section.number,
+          key: section.key,
+          title: titleOf(section),
+          presentation: "details",
+          listed: true,
+          body: replacement,
+        });
+        continue;
+      }
+    }
+    if (section.key === "when_to_use") {
+      const replacement = renderView?.("when_to_use");
+      if (replacement) {
+        models.push({
+          number: section.number,
+          key: section.key,
+          title: titleOf(section),
+          presentation: "details",
+          listed: true,
+          body: replacement,
+        });
+        continue;
+      }
     }
     if (!text) {
       continue;
@@ -195,7 +333,9 @@ function sectionModels(
             ? "open"
             : "details",
       listed: true,
-      body: (
+      body: markdownWithViews(
+        section.markdown,
+        renderView,
         <MarkdownBody
           markdown={section.markdown}
           obligations={obligations}
@@ -203,19 +343,27 @@ function sectionModels(
           markCodeStatus={architecture}
           horizontalDiagrams={section.key === "architecture"}
           styleArrows={styleArrows}
-        />
+        />,
+        {
+          obligations,
+          conceptRefs,
+          markCodeStatus: architecture,
+          styleArrows,
+          horizontalDiagrams: section.key === "architecture",
+        },
       ),
     });
   }
   flushClouds();
-  if (sources.length > 0 && !models.some((item) => item.key === "sources")) {
+  const groupedSources = renderView?.("sources_grouped");
+  if ((sources.length > 0 || groupedSources) && !models.some((item) => item.key === "sources")) {
     models.push({
       number: 20,
       key: "sources",
       title: "Fuentes",
       presentation: "details",
       listed: true,
-      body: <SourceLinks sources={sources} />,
+      body: groupedSources ?? <SourceLinks sources={sources} />,
     });
   }
   return models;
@@ -291,8 +439,13 @@ function NoteListView({ slug, notes }: { slug: string; notes: NoteList }) {
   ));
 }
 
-export default async function ConceptPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export async function ConceptArticle({
+  slug,
+  renderView,
+}: {
+  slug: string;
+  renderView?: FichaViewRenderer;
+}) {
   const staticMode = process.env.API_MODE === "static";
   const [concept, relations, conceptRefs] = await Promise.all([
     getConcept(slug),
@@ -370,7 +523,15 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
       next={next}
       construction={!domainOpen}
       sections={[
-        ...sectionModels(sections, data.sources, data.legal_basis, data.slug, conceptRefs, data.kind),
+        ...sectionModels(
+          sections,
+          data.sources,
+          data.legal_basis,
+          data.slug,
+          conceptRefs,
+          data.kind,
+          renderView ? (id) => renderView(id, (data as { views?: unknown }).views) : undefined,
+        ),
         ...annexModels(data.annexes ?? [], data.legal_basis, conceptRefs),
       ]}
       compactNumbering={data.slug === "chile-data-protection"}
@@ -389,4 +550,9 @@ export default async function ConceptPage({ params }: { params: Promise<{ slug: 
       {staticMode ? null : <HybridNotes slug={data.slug} />}
     </ConceptReading>
   );
+}
+
+export default async function ConceptPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  return <ConceptArticle slug={slug} />;
 }
