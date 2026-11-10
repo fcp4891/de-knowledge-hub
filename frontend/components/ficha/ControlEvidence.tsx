@@ -11,6 +11,15 @@ function Arrow() {
   );
 }
 
+function EyeIcon() {
+  return (
+    <svg className="control-evidence-eye" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z" stroke="currentColor" strokeWidth="1.8" />
+      <circle cx="12" cy="12" r="2.5" stroke="currentColor" strokeWidth="1.8" />
+    </svg>
+  );
+}
+
 function Kicker({ title, detail }: { title: string; detail?: string }) {
   return (
     <p className="control-evidence-kicker">
@@ -36,7 +45,7 @@ function DataCirculation({ data }: { data: RequirementToDataProps["data"] }) {
               <article className={stage.tone === "end" ? "is-end" : "is-layer"}>
                 <strong>{stage.title}</strong>
                 {stage.detail ? <span>{stage.detail}</span> : null}
-                {stage.pill ? <em>{stage.pill}</em> : null}
+                {stage.pill ? <em className={stage.tone === "end" ? "is-end" : "is-layer"}>{stage.pill}</em> : null}
               </article>
               {index < data.stages.length - 1 ? <Arrow /> : null}
             </li>
@@ -130,7 +139,10 @@ export function ControlEvidence({ id, title, lead, steps, decide, note, example 
       <p className="control-evidence-note">{note}</p>
 
       <details className="control-evidence-example">
-        <summary className="control-evidence-example-toggle">{example.summary}</summary>
+        <summary className="control-evidence-example-toggle">
+          <EyeIcon />
+          {example.summary}
+        </summary>
         <div className="control-evidence-scroll">
           <ol className="control-evidence-code">
             {example.steps.map((step, index) => (

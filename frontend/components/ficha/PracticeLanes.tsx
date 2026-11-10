@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 import { ArchitectureDot } from "@/components/markdown/InlineText";
 import type { PracticeLanesProps } from "@/lib/views";
 
@@ -11,7 +13,6 @@ function PracticeItem({ item }: { item: Item }) {
   return (
     <li id={item.id}>
       <article>
-        {item.arq ? <ArchitectureDot /> : null}
         <h4>{item.title}</h4>
         {item.text ? (
           <p>
@@ -19,6 +20,7 @@ function PracticeItem({ item }: { item: Item }) {
           </p>
         ) : null}
         {item.tags ? <Pills tags={item.tags} /> : null}
+        {item.arq ? <ArchitectureDot /> : null}
       </article>
     </li>
   );
@@ -28,15 +30,22 @@ export function PracticeLanes({ start, lanes, cross }: PracticeLanesProps) {
   return (
     <section className="ficha-block practice">
       {start ? (
-        <p className="practice-notice">
-          <strong>{start.title}.</strong> <RichText text={start.text} />
-        </p>
+        <div className="practice-start">
+          <h3>{start.title}</h3>
+          <p>
+            <RichText text={start.text} />
+          </p>
+        </div>
       ) : null}
-      <ol className="practice-lanes">
+      <ol
+        className="practice-lanes"
+        data-count={lanes.length}
+        style={{ "--practice-span": 1 + Math.max(0, ...lanes.map((lane) => lane.items.length)) } as CSSProperties}
+      >
         {lanes.map((lane, index) => (
           <li key={lane.title} className="practice-lane">
             <header>
-              <span className="practice-num">{String(index + 1).padStart(2, "0")}</span>
+              <span className="practice-num">{index + 1}</span>
               <h3>{lane.title}</h3>
             </header>
             <ul>

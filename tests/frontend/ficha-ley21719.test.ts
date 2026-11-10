@@ -52,7 +52,7 @@ test("las etapas numeran cinco carriles y marcan arquitectura", () => {
   assert.match(markup, /claim-arq/);
   assert.match(markup, /Control técnico/);
   const css = readFileSync(join(ficha, "ficha-blocks.css"), "utf8");
-  assert.match(css, /\.practice-lanes\s*\{[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/);
+  assert.match(css, /\.practice-lanes\s*\{[^}]*grid-template-columns:\s*repeat\(5,\s*minmax\(0,\s*1fr\)\)/);
   assert.match(css, /@media \(max-width:\s*620px\)[\s\S]*\.practice-lanes,\s*[\s\S]*grid-template-columns:\s*1fr/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
 });
@@ -108,8 +108,9 @@ test("las píldoras con ancla son enlaces y el ejemplo enlaza al código (ADR-03
     intro: "x",
     groups: [{ title: "Conocer", items: [{ number: "02", question: "¿Para qué?", text: "t", tags: [{ kind: "Matriz", label: "Finalidad", href: "#matriz-finalidad" }, { label: "sin ancla" }] }] }],
   });
-  assert.match(markup, /<a href="#matriz-finalidad"><b>Matriz<\/b>Finalidad<\/a>/);
-  assert.match(markup, /<li>sin ancla<\/li>/);
+  assert.match(markup, /¿Para qué?/);
+  assert.equal(markup.includes("#matriz-finalidad"), false);
+  assert.equal(markup.includes("sin ancla"), false);
   const evidence = loadTsx(join(ficha, "ControlEvidence.tsx"));
   const example = html(evidence.ControlEvidence, {
     title: "Control y evidencia",
