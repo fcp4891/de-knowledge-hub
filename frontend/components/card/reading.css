@@ -1005,7 +1005,7 @@
 
 @media (max-width: 560px) {
   .legal-foundations .lf-principles {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 
   .legal-foundations .lf-principles > li:nth-child(4n + 3) .lf-tip,
