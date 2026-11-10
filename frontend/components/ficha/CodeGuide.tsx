@@ -5,9 +5,8 @@ import "./ficha-blocks.css";
 export function CodeGuide({ lead, rules, notCovered, scenarios, simplifies, limit }: CodeGuideProps) {
   return (
     <section className="ficha-block code-guide" aria-label="Qué hace el ejemplo">
-      <p className="code-guide-lead">
-        <strong>{lead.title}</strong> {lead.text}
-      </p>
+      <h3>{lead.title.replace(/\.$/, "")}</h3>
+      <p className="code-guide-lead">{lead.text}</p>
 
       <table>
         <thead>

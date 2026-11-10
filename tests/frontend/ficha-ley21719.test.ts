@@ -52,9 +52,8 @@ test("las etapas numeran cinco carriles y marcan arquitectura", () => {
   assert.match(markup, /claim-arq/);
   assert.match(markup, /Control técnico/);
   const css = readFileSync(join(ficha, "ficha-blocks.css"), "utf8");
-  assert.match(css, /grid-template-columns:\s*repeat\(5,\s*minmax\(0,\s*1fr\)\)/);
-  assert.match(css, /@media \(max-width:\s*900px\)[\s\S]*repeat\(2,\s*minmax\(0,\s*1fr\)\)/);
-  assert.match(css, /@media \(max-width:\s*620px\)/);
+  assert.match(css, /\.practice-lanes\s*\{[^}]*grid-template-columns:\s*repeat\(5,\s*minmax\(0,\s*1fr\)\)/);
+  assert.match(css, /@media \(max-width:\s*620px\)[\s\S]*\.practice-lanes,\s*[\s\S]*grid-template-columns:\s*1fr/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
 });
 
@@ -109,8 +108,9 @@ test("las píldoras con ancla son enlaces y el ejemplo enlaza al código (ADR-03
     intro: "x",
     groups: [{ title: "Conocer", items: [{ number: "02", question: "¿Para qué?", text: "t", tags: [{ kind: "Matriz", label: "Finalidad", href: "#matriz-finalidad" }, { label: "sin ancla" }] }] }],
   });
-  assert.match(markup, /<a href="#matriz-finalidad"><b>Matriz<\/b>Finalidad<\/a>/);
-  assert.match(markup, /<li>sin ancla<\/li>/);
+  assert.match(markup, /¿Para qué?/);
+  assert.equal(markup.includes("#matriz-finalidad"), false);
+  assert.equal(markup.includes("sin ancla"), false);
   const evidence = loadTsx(join(ficha, "ControlEvidence.tsx"));
   const example = html(evidence.ControlEvidence, {
     title: "Control y evidencia",
@@ -123,7 +123,7 @@ test("las píldoras con ancla son enlaces y el ejemplo enlaza al código (ADR-03
   assert.match(example, /<a href="#s10">Ver código ↓<\/a>/);
 });
 
-test("trade-offs como balanza, preguntas con contador y modificadores de la multa (ADR-030, enmienda 3)", () => {
+test("trade-offs como tarjetas, preguntas con píldoras y modificadores de la multa", () => {
   const trade = loadTsx(join(ficha, "TradeOffs.tsx"));
   const balance = html(trade.TradeOffs, {
     arq: true,
@@ -131,9 +131,11 @@ test("trade-offs como balanza, preguntas con contador y modificadores de la mult
     items: [{ a: "Seudonimización", b: "Anonimización", text: "t", resolution: "r." }],
     note: "nota",
   });
-  assert.match(balance, /Seudonimización<\/span><span class="tradeoff-arrow"[^>]*>⇄<\/span><span>Anonimización/);
-  assert.match(balance, /tradeoff-resolution"><strong>Se resuelve con<\/strong> r\./);
+  assert.match(balance, /<h3>Seudonimización<\/h3>/);
+  assert.match(balance, /<h3>Anonimización<\/h3>/);
+  assert.match(balance, /trade-resolution"><strong>Se resuelve con<\/strong> r\./);
   assert.match(balance, /claim-arq/);
+  assert.match(balance, /nota/);
   const questions = loadTsx(join(ficha, "OpenQuestions.tsx"));
   const cards = html(questions.OpenQuestions, {
     intro: "i",
@@ -144,9 +146,11 @@ test("trade-offs como balanza, preguntas con contador y modificadores de la mult
       { question: "¿Dos?", tags: [] },
     ],
   });
-  assert.match(cards, /0 de 2 que sabes responder/);
+  assert.match(cards, /open-questions-lead">i/);
+  assert.equal(cards.includes("Sé responderla"), false);
+  assert.equal(cards.includes("que sabes responder"), false);
   assert.match(cards, /<a href="#codigo-purpose-check"><b>Código<\/b><code>purpose_check<\/code><\/a>/);
-  assert.equal(cards.match(/type="checkbox"/g)?.length, 2);
+  assert.equal(cards.includes('type="checkbox"'), false);
   const severity = loadTsx(join(ficha, "SeverityCards.tsx"));
   const modifiers = html(severity.SeverityCards, {
     levels: [{ name: "Leve", level: 1, article: "art. 34 bis", amount: "hasta 5.000 UTM", examplesLabel: "Ejemplos con origen técnico", examples: ["e"] }],
@@ -155,4 +159,6 @@ test("trade-offs como balanza, preguntas con contador y modificadores de la mult
   assert.match(modifiers, /severity-article">art\. 34 bis/);
   assert.match(modifiers, /Ejemplos con origen técnico/);
   assert.match(modifiers, /data-effect="down"/);
+  assert.match(modifiers, /Atenúa/);
+  assert.match(modifiers, /art\. 51/);
 });

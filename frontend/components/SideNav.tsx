@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import { SearchDialog } from "@/components/SearchDialog";
 import { listStoredStudy, subscribePersonal } from "@/lib/personalStore";
@@ -13,6 +13,7 @@ const AUTHOR_SITE = "https://felipe-a-cespedes-perez.cl/";
 type NavItem = { href: string; label: string; exact?: boolean };
 
 const NAV_KEY = "dekh:nav";
+const MENU_ID = "side-nav-menu";
 
 const ITEMS: NavItem[] = [
   { href: "/", label: "Inicio", exact: true },
@@ -159,7 +160,6 @@ function useReviewCount(serverCount: number | null): number | null {
 
 export function SideNav({ reviewCount, warning }: { reviewCount: number | null; warning?: string | null }) {
   const pathname = usePathname();
-  const menuId = useId();
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
@@ -242,13 +242,13 @@ export function SideNav({ reviewCount, warning }: { reviewCount: number | null; 
           type="button"
           className="side-menu-toggle"
           aria-expanded={menuOpen}
-          aria-controls={menuId}
+          aria-controls={MENU_ID}
           onClick={() => setMenuOpen((open) => !open)}
         >
           {menuOpen ? "Cerrar" : "Menú"}
         </button>
       </div>
-      <div id={menuId} className="side-nav-body" data-open={menuOpen ? "true" : "false"}>
+      <div id={MENU_ID} className="side-nav-body" data-open={menuOpen ? "true" : "false"}>
         <button
           type="button"
           className="side-search"

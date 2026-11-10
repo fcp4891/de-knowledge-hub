@@ -19,23 +19,6 @@ export function DesignBoard({ intro, groups }: DesignBoardProps) {
                   {item.arq ? <ArchitectureDot /> : null}
                 </h4>
                 <p>{item.text}</p>
-                <ul>
-                  {item.tags.map((tag) => (
-                    <li key={`${item.number}-${tag.label}`}>
-                      {tag.href ? (
-                        <a href={tag.href}>
-                          {tag.kind ? <b>{tag.kind}</b> : null}
-                          {tag.label}
-                        </a>
-                      ) : (
-                        <>
-                          {tag.kind ? <b>{tag.kind}</b> : null}
-                          {tag.label}
-                        </>
-                      )}
-                    </li>
-                  ))}
-                </ul>
               </article>
             ))}
           </div>

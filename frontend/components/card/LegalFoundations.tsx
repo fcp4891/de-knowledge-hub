@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 import {
   CHILE_CHILD_TITLES,
@@ -14,7 +15,6 @@ import {
 import { bcnLinkText, legalRowId } from "@/lib/legal";
 import { principleActivation, principleAriaLabel } from "@/lib/principleCards";
 import type { RolesProps, Tag } from "@/lib/views";
-import { Pills } from "@/components/ficha/Pills";
 import { RichText } from "@/components/ficha/RichText";
 
 function fold(value: string): string {
@@ -121,8 +121,7 @@ function Fichas({ fichas }: { fichas: ChileFicha[] }) {
 }
 
 /** §2 de chile-data-protection: principios, roles (ADR-030: datos de views.legal_foundations) y modal del catálogo. */
-export function LegalFoundations({ roles, principles = [] }: { roles?: RolesProps; principles?: { label: string; tags: Tag[] }[] }) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
+export function LegalFoundations({ roles }: { roles?: RolesProps; principles?: { label: string; tags: Tag[] }[] }) {
   const [open, setOpen] = useState<ChileArticle | null>(null);
   const [tip, setTip] = useState<string | null>(null);
   const [pinned, setPinned] = useState(false);
@@ -134,19 +133,6 @@ export function LegalFoundations({ roles, principles = [] }: { roles?: RolesProp
       window.dispatchEvent(new CustomEvent(HIT_EVENT, { detail: legalRowId("ley-19628", item.article) }));
     }
   }
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) {
-      return;
-    }
-    if (open && !dialog.open) {
-      dialog.showModal();
-    }
-    if (!open && dialog.open) {
-      dialog.close();
-    }
-  }, [open]);
 
   useEffect(() => {
     function openFromHash() {
@@ -206,7 +192,6 @@ export function LegalFoundations({ roles, principles = [] }: { roles?: RolesProp
             key={item.label}
             index={index}
             principle={item}
-            tags={principles.find((entry) => entry.label === item.label.replace(/^[a-h]\)\s*/i, ""))?.tags ?? []}
             open={tip === item.label}
             pinned={pinned && tip === item.label}
             onShow={() => {
@@ -234,7 +219,7 @@ export function LegalFoundations({ roles, principles = [] }: { roles?: RolesProp
           />
         ))}
       </ul>
-      <ArticleModal dialogRef={dialogRef} article={open} onClose={() => setOpen(null)} />
+      <ArticleModal article={open} onClose={() => setOpen(null)} />
       {roles ? <RolesBoard roles={roles} /> : null}
     </div>
   );
@@ -331,23 +316,55 @@ export function LegalCatalog() {
   );
 }
 
+function captionParts(caption: string): [string, string] {
+  const [kicker, ...rest] = caption.split(" · ");
+  return [kicker, rest.join(" · ")];
+}
+
+function articleHref(text: string, label: string): string | null {
+  const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return text.match(new RegExp(`\\[${escaped}\\]\\(([^)]+)\\)`))?.[1] ?? null;
+}
+
+function withoutArticle(text: string, label: string): string {
+  const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return text.replace(new RegExp(`;?\\s*\\[${escaped}\\]\\([^)]+\\)`), "");
+}
+
 function RolesBoard({ roles }: { roles: RolesProps }) {
   const { responsible, processor, source, caption } = roles;
+  const lead = responsible.decide.items[0];
+  const rest = responsible.decide.items.slice(1);
+  const [captionKicker, captionRest] = caption ? captionParts(caption) : ["", ""];
+  const warningHref = articleHref(processor.text, "art. 15 bis");
   return (
     <section className="lf-roles" aria-labelledby="lf-roles-title">
-      {caption ? <p className="lf-roles-lead">{caption}</p> : null}
-      <div className="lf-roles-org">
-        <h3 id="lf-roles-title">{responsible.title}</h3>
-        <p className="lf-roles-lead">
-          <RichText text={responsible.lead} />
+      {caption ? (
+        <p className="lf-roles-caption">
+          <span className="lf-roles-kicker">{captionKicker}</span>
+          {captionRest ? <span>{captionRest}</span> : null}
         </p>
-        <div className="lf-roles-split">
+      ) : null}
+      <div className="lf-roles-org">
+        <header className="lf-roles-head">
+          <h3 id="lf-roles-title">{responsible.title}</h3>
+          <p className="lf-roles-lead">
+            <RichText text={responsible.lead} />
+          </p>
+        </header>
+        <div className={rest.length > 0 ? "lf-roles-split" : "lf-roles-split is-pair"}>
           <div className="lf-roles-decide">
-            <p className="lf-roles-kicker">{responsible.decide.kicker}</p>
-            {responsible.decide.items.map((item) => (
-              <RoleItem key={item.title} item={item} />
-            ))}
+            <p className="lf-roles-kicker">Decide</p>
+            {lead ? <RoleItem item={lead} /> : null}
           </div>
+          {rest.length > 0 ? (
+            <div className="lf-roles-assess">
+              <p className="lf-roles-kicker">Evalúa</p>
+              {rest.map((item) => (
+                <RoleItem key={item.title} item={item} />
+              ))}
+            </div>
+          ) : null}
           <div className="lf-roles-build">
             <p className="lf-roles-kicker">{responsible.build.kicker}</p>
             {responsible.build.items.map((item) => (
@@ -356,18 +373,37 @@ function RolesBoard({ roles }: { roles: RolesProps }) {
           </div>
         </div>
       </div>
-      <div className="lf-roles-vendor">
-        <h3>{processor.title}</h3>
-        <p>
-          <RichText text={processor.text} />
-        </p>
+      <div className="lf-roles-foot">
+        <div className="lf-roles-vendor">
+          <h3>{processor.title}</h3>
+          <p>
+            <RichText text={withoutArticle(processor.text, "art. 15 bis")} />
+          </p>
+        </div>
+        <aside className="lf-roles-warn">
+          <p className="lf-roles-kicker">Ojo</p>
+          <p>
+            Si los trata para otro fin o los cede sin autorización, se le considera responsable
+            {warningHref ? (
+              <>
+                {" "}
+                (
+                <a href={warningHref} target="_blank" rel="noopener noreferrer">
+                  art. 15 bis
+                </a>
+                )
+              </>
+            ) : null}
+            .
+          </p>
+        </aside>
       </div>
       {source ? (
         <p className="lf-roles-source">
           <a href={source.href} target="_blank" rel="noopener noreferrer">
             {source.title}
           </a>
-          <span> · {source.detail}</span>
+          <span>{source.detail}</span>
         </p>
       ) : null}
     </section>
@@ -386,7 +422,6 @@ function RoleItem({ item }: { item: { title: string; text: string } }) {
 function PrincipleCard({
   index,
   principle,
-  tags,
   open,
   pinned,
   onShow,
@@ -396,7 +431,6 @@ function PrincipleCard({
 }: {
   index: number;
   principle: ChilePrinciple;
-  tags: Tag[];
   open: boolean;
   pinned: boolean;
   onShow: () => void;
@@ -462,7 +496,6 @@ function PrincipleCard({
           {principle.description}
         </span>
       ) : null}
-      <Pills tags={tags} />
     </li>
   );
 }
@@ -535,16 +568,32 @@ function ArticleBody({ article }: { article: ChileArticle }) {
   );
 }
 
-function ArticleModal({
-  dialogRef,
-  article,
-  onClose,
-}: {
-  dialogRef: RefObject<HTMLDialogElement | null>;
-  article: ChileArticle | null;
-  onClose: () => void;
-}) {
-  return (
+function ArticleModal({ article, onClose }: { article: ChileArticle | null; onClose: () => void }) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) {
+      return;
+    }
+    if (article && !dialog.open) {
+      dialog.showModal();
+    }
+    if (!article && dialog.open) {
+      dialog.close();
+    }
+  }, [article, mounted]);
+
+  if (!mounted) {
+    return null;
+  }
+
+  return createPortal(
     <dialog
       ref={dialogRef}
       className="lf-modal"
@@ -569,6 +618,7 @@ function ArticleModal({
           <ArticleBody article={article} />
         </>
       ) : null}
-    </dialog>
+    </dialog>,
+    document.body,
   );
 }

@@ -17,6 +17,7 @@ import { architectureTitle, isArchitectureView } from "@/lib/architecture";
 import { SHORT_NAMES } from "@/lib/learning-paths";
 import { isDomainPublished, relationVisible, scopeFromConcepts } from "@/lib/publishedScope";
 import { nextInRoute } from "@/lib/domainRoute";
+import { hideOwnerName } from "@/lib/hideOwnerName";
 import { staticSlugs } from "@/lib/staticParams";
 import type { ReactNode } from "react";
 
@@ -60,6 +61,18 @@ import {
 } from "@/lib/views";
 
 const CLOUD_KEYS = new Set(["gcp", "aws", "azure"]);
+
+function splitPurpose(markdown: string): { purpose: string; context: string } | null {
+  const objective = markdown.indexOf("### Objetivo");
+  const context = markdown.indexOf("### Contexto normativo");
+  if (objective < 0 || context <= objective) {
+    return null;
+  }
+  const before = markdown.slice(0, objective).trim();
+  const purpose = [before, markdown.slice(objective, context).trim()].filter(Boolean).join("\n\n");
+  const contextBody = markdown.slice(context).replace(/^### Contexto normativo[^\n]*\n?/, "").trim();
+  return { purpose, context: contextBody };
+}
 const OPEN_NUMBERS = new Set<number>();
 
 // El build estático cambia este literal a false: Next solo acepta true o false.
@@ -142,7 +155,11 @@ function sectionModels(
   const architecture = kind === "architecture";
   const styleArrows = slug !== "data-lineage";
   const titleOf = (section: Section) => (architecture ? architectureTitle(section.key, section.title) : section.title);
-  const ordered = [...sections].sort((left, right) => left.number - right.number);
+  const ordered = [...sections]
+    .sort((left, right) => left.number - right.number)
+    .map((section) =>
+      slug === "chile-data-protection" ? { ...section, markdown: hideOwnerName(section.markdown) } : section,
+    );
   const viewer = currentViewer();
   const showHistory = canViewChangeHistory(viewer);
   const showLab = canViewRelatedLab(viewer);
@@ -171,6 +188,9 @@ function sectionModels(
     if (section.key === "change_history" && !showHistory) {
       continue;
     }
+    if (section.key === "last_verified" && slug === "chile-data-protection") {
+      continue;
+    }
     if (section.key === "related_lab" && !showLab) {
       continue;
     }
@@ -194,31 +214,55 @@ function sectionModels(
     }
     if (section.key === "summary") {
       flushClouds();
-      models.push({
-        number: section.number,
-        key: section.key,
-        title: titleOf(section),
-        presentation: "summary",
-        listed: text,
-        body: text ? body(section) : null,
-      });
-      if (views?.approach) {
-        // ADR-030: el enfoque es un desplegable propio, justo después del Resumen, cerrado y sin número.
-        const approach = approachProps(views.approach);
+      const opening = slug === "chile-data-protection" ? splitPurpose(section.markdown) : null;
+      if (opening) {
+        const approach = views?.approach ? <ApproachBoard {...approachProps(views.approach)} /> : null;
         models.push({
-          number: 30,
-          key: "approach",
-          title: approach.title,
-          presentation: "details",
-          listed: false,
-          annex: true,
-          body: <ApproachBoard {...approach} />,
+          number: section.number,
+          key: "purpose",
+          title: "Propósito",
+          presentation: "summary",
+          listed: true,
+          body: (
+            <>
+              {body({ ...section, markdown: opening.purpose })}
+              {approach}
+            </>
+          ),
         });
+        models.push({
+          number: section.number + 0.5,
+          key: "context",
+          title: "Contexto normativo",
+          presentation: "details",
+          listed: true,
+          body: body({ ...section, markdown: opening.context }),
+        });
+      } else {
+        models.push({
+          number: section.number,
+          key: section.key,
+          title: titleOf(section),
+          presentation: "summary",
+          listed: text,
+          body: text ? body(section) : null,
+        });
+        if (views?.approach) {
+          const approach = approachProps(views.approach);
+          models.push({
+            number: 30,
+            key: "approach",
+            title: approach.title,
+            presentation: "details",
+            listed: false,
+            annex: true,
+            body: <ApproachBoard {...approach} />,
+          });
+        }
       }
       continue;
     }
     if (CLOUD_KEYS.has(section.key) && views?.cloud_compare) {
-      // ADR-030: «En la nube» reemplaza las pestañas por nube; la sección 11 lleva la marca (12 y 13 se omiten, ADR-029).
       flushClouds();
       if (text) {
         models.push({
@@ -297,6 +341,29 @@ function sectionModels(
       continue;
     }
     if (!text) {
+      continue;
+    }
+    if (section.key === "trade_offs" && slug === "chile-data-protection" && section.markdown.includes("### Sanciones")) {
+      flushClouds();
+      const cut = section.markdown.indexOf("### Sanciones");
+      const tradeMarkdown = section.markdown.slice(0, cut).trim();
+      const sanctionsMarkdown = section.markdown.slice(cut).replace(/^### Sanciones[^\n]*\n?/, "").trim();
+      models.push({
+        number: section.number,
+        key: section.key,
+        title: titleOf(section),
+        presentation: "details",
+        listed: true,
+        body: body({ ...section, markdown: tradeMarkdown }),
+      });
+      models.push({
+        number: section.number + 0.5,
+        key: "sanctions",
+        title: "Sanciones",
+        presentation: "details",
+        listed: true,
+        body: body({ ...section, markdown: sanctionsMarkdown }),
+      });
       continue;
     }
     models.push({

@@ -17,19 +17,19 @@ export function RichText({ text }: { text: string }) {
   });
 }
 
-/** Línea de cita de una vista: título enlazado y detalle. */
+/** Línea de cita de una vista: el título enlaza y el detalle queda en la línea de abajo. */
 export function CiteList({ className, sources }: { className: string; sources: { title: string; href: string; detail: string }[] }) {
   if (sources.length === 0) {
     return null;
   }
   return (
-    <ul className={className}>
+    <ul className={`cite-list ${className}`}>
       {sources.map((source) => (
         <li key={source.href + source.title}>
           <a href={source.href} target="_blank" rel="noopener noreferrer">
             {source.title}
           </a>
-          <span> · {source.detail}</span>
+          <p>{source.detail}</p>
         </li>
       ))}
     </ul>

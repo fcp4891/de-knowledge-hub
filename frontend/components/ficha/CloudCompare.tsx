@@ -19,7 +19,8 @@ export function CloudCompare({ intro, alert, headers, rows, closing }: CloudComp
     <div className="markdown cloud-compare">
       <p>{intro}</p>
       <p className="cloud-compare-note">
-        <strong>{alert.title}</strong> {alert.text}
+        <strong>{alert.title}</strong>
+        <span>{alert.text}</span>
       </p>
       <div className="markdown-table-wrap markdown-table-steps">
         <table>
@@ -45,7 +46,7 @@ export function CloudCompare({ intro, alert, headers, rows, closing }: CloudComp
           </tbody>
         </table>
       </div>
-      <p>{closing}</p>
+      <p className="cloud-compare-closing">{closing}</p>
     </div>
   );
 }
