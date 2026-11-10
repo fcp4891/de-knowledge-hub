@@ -320,4 +320,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-19: lote F3b-14a (regla del §17): relations y el §17 enlazan `delivery-semantics`, `event-ordering`, que ya tienen ficha; antes figuraban como pendientes de ficha.
 - 2026-10-19: lote F3b-14b (regla del §17): relations y el §17 enlazan `exactly-once-semantics`, que ya tiene ficha; antes figuraba como pendiente de ficha.
-- 2026-10-20: `page_title` sin la versión de parche del SDK (*Class Message*, *Class FlowControl*, *Class Client*), según la regla de CLAUDE.md de no citar versiones de parche de SDKs ni CLIs; sin cambios de contenido.
+- 2026-10-20: `page_title` sin la versión de parche del SDK (*Class Message*, *Class FlowControl*, *Class Client*), según la regla del proyecto de no citar versiones de parche de SDKs ni CLIs; sin cambios de contenido.

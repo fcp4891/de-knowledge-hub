@@ -29,7 +29,7 @@ sources:
     url: https://docs.aws.amazon.com/bedrock/latest/userguide/count-tokens.html
     accessed: 2026-10-25
     page_title: "Monitor your token usage by counting tokens before running inference"
-    note: "Monitor your token usage by counting tokens before running inference (Amazon Bedrock): los tokens de entrada cuentan para el costo y para la cuota por minuto y por día. CountTokens devuelve los tokens que usaría la misma entrada en una inferencia; no tiene costo; el conteo es propio de cada modelo porque cada uno tokeniza distinto y coincide con lo que se cobraría. Algunos modelos Claude no lo soportan en bedrock-runtime y se cuentan en el endpoint bedrock-mantle."
+    note: "Monitor your token usage by counting tokens before running inference (Amazon Bedrock): los tokens de entrada cuentan para el costo y para la cuota por minuto y por día. CountTokens devuelve los tokens que usaría la misma entrada en una inferencia; no tiene costo; el conteo es propio de cada modelo porque cada uno tokeniza distinto y coincide con lo que se cobraría. Algunos modelos de Anthropic no lo soportan en bedrock-runtime y se cuentan en el endpoint bedrock-mantle."
   - source: aws-bedrock-docs
     url: https://docs.aws.amazon.com/bedrock/latest/userguide/titan-embedding-models.html
     accessed: 2026-10-25
@@ -196,7 +196,7 @@ En AWS, **Amazon Bedrock**. Según *Monitor your token usage by counting tokens 
 | Conteo previo | Estimación o API del modelo | CountTokens, con cuerpo de InvokeModel o Converse |
 | Costo del conteo | — | Sin costo |
 | Exactitud | Depende del tokenizador | Coincide con lo que se cobraría en la inferencia |
-| Excepciones | — | Algunos modelos Claude se cuentan en el endpoint `bedrock-mantle` |
+| Excepciones | — | Algunos modelos de Anthropic se cuentan en el endpoint `bedrock-mantle` |
 
 ## 13. Azure
 

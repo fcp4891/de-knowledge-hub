@@ -470,7 +470,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-28: arts. 3, 14 quáter y 34 quáter consultados ese día en BCN; *Authorized views* consultada ese día. `verified`: aprobada de nuevo por Felipe el 2026-11-06 (`owner_approved_at`), con el §10 nuevo y la revisión PBA aplicada. Revisión mensual.
+2026-10-28: arts. 3, 14 quáter y 34 quáter consultados ese día en BCN; *Authorized views* consultada ese día. `verified`: aprobada de nuevo el 2026-11-06 (`owner_approved_at`), con el §10 nuevo y la revisión PBA aplicada. Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -478,9 +478,9 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: completada con lo que pedía el prompt de P2: la tupla (rol, finalidad, dataset o producto) y el deny por defecto en el §2 y en un comentario del código (la salida no cambia), y la revisión periódica de concesiones en el §4.
 - 2026-10-28: revisión `docs/reviews/p2.md` aplicada: el art. 14 quáter nombra sus cuatro factores (número de datos, extensión, plazo y accesibilidad) en el §2 y en `legal_basis`; etiqueta del nodo de logs en dos líneas.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
-- 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
-- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
-- 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.
-- 2026-11-04: §10 reescrito de punta a punta al estándar de `chile-data-protection` (pedido de Felipe): pasos `# @paso 1–4` (registro de concesiones, decisión, pruebas negativas, revisión y salida); funciones que reciben el registro y la fecha; decisión `Literal` con motivo; `vigentes` excluye ahora las vencidas (la búsqueda por producto pasa a `del_producto`); cada caso declara su decisión esperada; producto mínimo con columnas («pide rut, fuera de contacto_minimo»); cuenta compartida y revisión periódica de 90 días (política interna); escenarios `solicitudes` (0), `fuga` (1) y `revision` (1), iguales a la salida de la CI. Vuelve a `review_required`.
-- 2026-11-06: revisión `docs/reviews/pba.md` aplicada (pedido de Felipe): la letra b) del art. 34 quáter se cita completa, como en BCN («los datos personales», «la consentida por el titular o prevista en la ley que autoriza su tratamiento»), en la nota de `legal_basis` y en el párrafo del art. 34 quáter; la nota de la fuente ya la traía completa.
-- 2026-11-06: aprobada por Felipe con el §10 nuevo (`owner_approved_at: 2026-11-06`); vuelve a `verified` (ADR-023).
+- 2026-11-01: aprobada con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-03: se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
+- 2026-11-03: los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.
+- 2026-11-04: §10 reescrito de punta a punta al estándar de `chile-data-protection`: pasos `# @paso 1–4` (registro de concesiones, decisión, pruebas negativas, revisión y salida); funciones que reciben el registro y la fecha; decisión `Literal` con motivo; `vigentes` excluye ahora las vencidas (la búsqueda por producto pasa a `del_producto`); cada caso declara su decisión esperada; producto mínimo con columnas («pide rut, fuera de contacto_minimo»); cuenta compartida y revisión periódica de 90 días (política interna); escenarios `solicitudes` (0), `fuga` (1) y `revision` (1), iguales a la salida de la CI. Vuelve a `review_required`.
+- 2026-11-06: revisión `docs/reviews/pba.md` aplicada: la letra b) del art. 34 quáter se cita completa, como en BCN («los datos personales», «la consentida por el titular o prevista en la ley que autoriza su tratamiento»), en la nota de `legal_basis` y en el párrafo del art. 34 quáter; la nota de la fuente ya la traía completa.
+- 2026-11-06: aprobada con el §10 nuevo (`owner_approved_at: 2026-11-06`); vuelve a `verified` (ADR-023).

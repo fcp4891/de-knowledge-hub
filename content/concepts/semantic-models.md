@@ -297,5 +297,5 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: revisión B-F3.1 del lote F3b-04a aplicada (docs/reviews/cards-f3b-04a.md): filas aprobadas sin cambios en esta ficha.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
-- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): los consumidores en un nodo; la etiqueta del modelo en 2 líneas; el título del subgraph va entre comillas (con la coma, Mermaid no lo dibujaba).
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos): los consumidores en un nodo; la etiqueta del modelo en 2 líneas; el título del subgraph va entre comillas (con la coma, Mermaid no lo dibujaba).
 - 2026-10-26: §17 y `relations` enlazan `semantic-layer`, creada en el lote F3b-22b (regla del §17); sin otros cambios.

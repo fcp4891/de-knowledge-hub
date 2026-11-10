@@ -289,4 +289,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-11: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `pipeline-dependencies`.
-- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): relanzar y replay tras corregir en un nodo de reentrada.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos): relanzar y replay tras corregir en un nodo de reentrada.

@@ -3,7 +3,7 @@
  * La autenticación está pendiente: no hay sesión, así que `currentViewer` devuelve null
  * y esas secciones quedan ocultas. Cuando exista la sesión, devolver aquí ese usuario.
  */
-export const CHANGE_HISTORY_VIEWER_ID = "felipe";
+export const CHANGE_HISTORY_VIEWER_ID = "owner";
 
 export type Viewer = {
   id: string;

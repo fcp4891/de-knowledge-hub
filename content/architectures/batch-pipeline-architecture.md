@@ -317,11 +317,11 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-11-01: fichas de origen de cada cita revisadas; las páginas se consultaron en las fechas de `sources`. `verified`: aprobada por Felipe el 2026-11-03 (`owner_approved_at`).
+2026-11-01: fichas de origen de cada cita revisadas; las páginas se consultaron en las fechas de `sources`. `verified`: aprobada el 2026-11-03 (`owner_approved_at`).
 
 ## 22. Historial de cambios importantes
 
 - 2026-11-01: creación (lote 07a, ADR-028).
 - 2026-11-02: revisión de 07a aplicada (docs/reviews/lote-07a.md): las tres vistas usan los nombres del §4, §3 en TB, sin la frase de costo del reemplazo sin fuente y etiqueta del §6 en dos líneas.
 - 2026-11-02: lote 07b (regla del §17): relations y el §17 enlazan `streaming-pipeline-architecture`, que ya tiene ficha; antes figuraba como pendiente de ficha.
-- 2026-11-03: `verification_status: verified`, aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-03`).
+- 2026-11-03: `verification_status: verified`, aprobada con lista explícita (`owner_approved_at: 2026-11-03`).

@@ -17,7 +17,6 @@ import { architectureTitle, isArchitectureView } from "@/lib/architecture";
 import { SHORT_NAMES } from "@/lib/learning-paths";
 import { isDomainPublished, relationVisible, scopeFromConcepts } from "@/lib/publishedScope";
 import { nextInRoute } from "@/lib/domainRoute";
-import { hideOwnerName } from "@/lib/hideOwnerName";
 import { staticSlugs } from "@/lib/staticParams";
 import type { ReactNode } from "react";
 
@@ -155,11 +154,7 @@ function sectionModels(
   const architecture = kind === "architecture";
   const styleArrows = slug !== "data-lineage";
   const titleOf = (section: Section) => (architecture ? architectureTitle(section.key, section.title) : section.title);
-  const ordered = [...sections]
-    .sort((left, right) => left.number - right.number)
-    .map((section) =>
-      slug === "chile-data-protection" ? { ...section, markdown: hideOwnerName(section.markdown) } : section,
-    );
+  const ordered = [...sections].sort((left, right) => left.number - right.number);
   const viewer = currentViewer();
   const showHistory = canViewChangeHistory(viewer);
   const showLab = canViewRelatedLab(viewer);

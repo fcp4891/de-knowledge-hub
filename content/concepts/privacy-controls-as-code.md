@@ -462,14 +462,14 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-28: *Introduction to INFORMATION_SCHEMA*, *Privacy engineering* (NIST) y *GDPR developer's guide* (CNIL) consultadas ese día. Antes, 2026-10-25: textos legales vueltos a consultar en BCN, sin cambios, y 2026-10-22: arts. 3, 14 quáter, 14 quinquies, 14 septies, 36 y 49 y Decreto 662 consultados ese día. `verified`: aprobada por Felipe el 2026-11-01 (`owner_approved_at`). Revisión mensual.
+2026-10-28: *Introduction to INFORMATION_SCHEMA*, *Privacy engineering* (NIST) y *GDPR developer's guide* (CNIL) consultadas ese día. Antes, 2026-10-25: textos legales vueltos a consultar en BCN, sin cambios, y 2026-10-22: arts. 3, 14 quáter, 14 quinquies, 14 septies, 36 y 49 y Decreto 662 consultados ese día. `verified`: aprobada el 2026-11-01 (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-22: creación (upgrade de 19); reemplaza a `privacy-by-design-checklist`, que queda como alias; rescata sus reglas de `SELECT *`, datos en logs y contrato de datos.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
-- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): TB; la matriz pasa a la etiqueta de la evidencia.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos): TB; la matriz pasa a la etiqueta de la evidencia.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura y fusión de la propuesta de Privacy as Code avanzado (no es una ficha aparte): §1, §2 (control verificable, decisión frente a control y prueba, tabla PASS/FAIL/UNKNOWN, deriva; NIST y CNIL como referencias conceptuales de Nivel 4), §3 (permiso dado a mano), §4 (matriz riesgo → evidencia, fallar cerrado, excepciones con vencimiento, pruebas negativas), §5, §6 (UNKNOWN cuando no se puede observar), §7 (las reglas son decisiones locales), §8 (escenario y evidencia «qué demuestra y qué no»), §9, §10 (PASS/FAIL/UNKNOWN, excepción vigente y vencida, deriva Git–producción y pruebas negativas sobre las mismas reglas de estado y de cambio), §11–13 (`INFORMATION_SCHEMA`, lo que no cubre cada servicio y criterio común), §14–16, §17 (relaciones con `processing-activities-inventory` y `bigquery-information-schema`; nota editorial), §18 (criterio de dominio) y §19 (laboratorio para F4). Fuentes nuevas: `nist-privacy-engineering` y `cnil-gdpr-developers-guide` (Nivel 4). Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `evidencia-automatizacion` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/privacy-controls-as-code/`) no cambia.
 - 2026-10-28: mismos errores que la revisión de P2: el art. 14 quáter nombra sus cuatro factores (§2, `legal_basis` y nota de BCN).
@@ -477,6 +477,6 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-10-30: mismo hallazgo que la revisión de P4: `page_title` de Azure Policy con el H1 de la página, «List of built-in policy definitions» (ADR-012). Sin cambios de contenido.
 - 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.
-- 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
-- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
-- 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.
+- 2026-11-01: aprobada con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-03: se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
+- 2026-11-03: los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.

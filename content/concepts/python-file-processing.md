@@ -338,5 +338,5 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `beam-programming-model`, `pyspark-dataframes`; el §17 nombra `beam-programming-model`, `pyspark-dataframes`, que el cuerpo ya citaba.
-- 2026-10-20: `page_title` sin la versión de parche del SDK (*Class Blob*), según la regla de CLAUDE.md de no citar versiones de parche de SDKs ni CLIs; sin cambios de contenido.
-- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): la entrada y el listado en un nodo.
+- 2026-10-20: `page_title` sin la versión de parche del SDK (*Class Blob*), según la regla del proyecto de no citar versiones de parche de SDKs ni CLIs; sin cambios de contenido.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos): la entrada y el listado en un nodo.

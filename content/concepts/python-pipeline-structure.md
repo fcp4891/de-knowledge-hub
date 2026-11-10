@@ -338,4 +338,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-09: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `python-database-io`, `data-apis-with-fastapi`; el §17 nombra `data-apis-with-fastapi`, que el cuerpo ya citaba.
-- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): TB (la cadena tiene 7 nodos); Config en el nodo de main; sin las flechas de vuelta al orquestador: el código de salida va en la etiqueta.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos): TB (la cadena tiene 7 nodos); Config en el nodo de main; sin las flechas de vuelta al orquestador: el código de salida va en la etiqueta.

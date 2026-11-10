@@ -1,6 +1,6 @@
 # Knowledge Blueprint v1 · Dominio 24 (ADR-027): ingeniería de privacidad bajo la Ley 21.719.
 # Banda «Especialización», fuera de las 6 capas. Explicación técnica, no asesoría legal: rige ADR-023 (jurisdiction,
-# legal_basis, etiqueta por afirmación, aviso, y verified solo con owner_approved_at de Felipe). Las 11 fichas vienen
+# legal_basis, etiqueta por afirmación, aviso, y verified solo con owner_approved_at). Las 11 fichas vienen
 # de 19-compliance (2026-10-28) sin cambios de contenido. Desde el 2026-10-30 (ADR-027, Enmienda 1), 19 se integra
 # aquí: su subdominio regulatory-frameworks es el tramo 6, «Marcos regulatorios comparados» (GDPR y LGPD con ficha desde el lote P4, 2026-10-30).
 domain:

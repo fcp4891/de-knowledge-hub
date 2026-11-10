@@ -554,14 +554,14 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-22: artículos consultados ese día en BCN; comportamiento de BigQuery, S3 y Delta según sus páginas. `verified`: aprobada por Felipe el 2026-11-01 (`owner_approved_at`). Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-22: artículos consultados ese día en BCN; comportamiento de BigQuery, S3 y Delta según sus páginas. `verified`: aprobada el 2026-11-01 (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-22: creación (upgrade de 19); reemplaza a `erasure-across-copies`, que queda como alias.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
-- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): dos diagramas: la ingesta respeta la lista de supresión, y supresión y retención en cada copia.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos): dos diagramas: la ingesta respeta la lista de supresión, y supresión y retención en cada copia.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (retención frente a supresión), §2 (tabla de regla, supresión, borrado lógico, bloqueo y anonimización; plazos distintos para una misma persona; lista de supresión con alcance), §3 (caso del pasajero que vuelve con un backfill), §4 (diez pasos: alcance con inventario y linaje, plan por destino, `pendiente_expiracion_copias`, cierre con evidencia), §5, §6, §7 (preferencias y exportación a un proveedor), §8 (estados por destino y evidencia «qué demuestra y qué no»), §9 (alcance y estado por destino), §10 (lista de supresión con alcance y estados que impiden dar el caso por verificado, sobre el mismo ejemplo; RUT ficticios de dígitos repetidos en lugar de `12.345.678-5` y `9.876.543-2`), §11 (estado en la ventana de BigQuery), §14–16, §17 (relación con `data-lineage`), §18 (criterio de dominio) y §19 (laboratorio para F4). Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
 - 2026-10-28: dos ejemplos ejecutables más en el §10, con dependencias ya aprobadas: PyIceberg 0.12 (ADR-018: DELETE, `expire_snapshots` y ningún snapshot vigente devuelve al titular) y crypto-shredding con cryptography (ADR-022: llave por titular generada por el test, destruida, y registro del respaldo que ya no se descifra). §4 y §8 (dos filas de evidencia) ajustados; fuente `cryptography-docs`.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `derechos-ciclo-vida` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/retention-and-erasure/`) no cambia.
@@ -569,6 +569,6 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: Enmienda 3 de ADR-023: en §13, la tabla con la misma etiqueta en todas sus filas pasa a la línea «Etiqueta: […]» antes de la tabla, sin columna. Sin cambios de contenido.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.
-- 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
-- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
-- 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.
+- 2026-11-01: aprobada con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-03: se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
+- 2026-11-03: los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.

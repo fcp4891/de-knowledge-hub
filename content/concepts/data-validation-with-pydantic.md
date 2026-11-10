@@ -275,7 +275,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-02: creación (lote 5 de F3).
 - 2026-10-04: revisión B-F3.1 del lote 5 aplicada (docs/reviews/cards-lote5.md): viñeta de Observabilidad en §14.
 - 2026-10-04: `verification_status: verified` (revisión B-F3.1 del lote 5 aplicada; sin VERIFY pendientes).
-- 2026-10-05: §10, cambio mínimo de tipos para pasar `mypy --strict`: `list[dict]` pasa a `list[dict[str, Any]]` (con `from typing import Any`). Sin cambio de comportamiento; pendiente de revisión de Cursor.
+- 2026-10-05: §10, cambio mínimo de tipos para pasar `mypy --strict`: `list[dict]` pasa a `list[dict[str, Any]]` (con `from typing import Any`). Sin cambio de comportamiento; pendiente de revisión.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `data-contracts`, que ya tiene ficha.
 - 2026-10-08: §17 enlaza `python-typing`, que ya tiene ficha (lote F3b-03a); antes figuraba como pendiente de ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.

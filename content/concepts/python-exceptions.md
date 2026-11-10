@@ -235,4 +235,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-08: `verification_status: verified` (sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-13: se quita la cita a la URL genérica `/3/` (regla de URLs versionadas) y, con ella, la frase sobre el `SyntaxWarning` de 3.14, que solo esa cita sustentaba; el comportamiento de `finally` queda citado de `/3.12/`.
-- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): la fila entra en el nodo de parseo.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos): la fila entra en el nodo de parseo.

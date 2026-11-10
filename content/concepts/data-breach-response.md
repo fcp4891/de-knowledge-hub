@@ -350,18 +350,18 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-22: art. 14 sexies, Ley 21.663 (art. 9) y Decreto 295 consultados ese día en BCN. `verified`: aprobada por Felipe el 2026-11-01 (`owner_approved_at`). Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-22: art. 14 sexies, Ley 21.663 (art. 9) y Decreto 295 consultados ese día en BCN. `verified`: aprobada el 2026-11-01 (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-22: creación (upgrade de 19); reemplaza a `personal-data-breach-readiness`, que queda como alias.
 - 2026-10-24: `PART_OF` hacia `chile-data-protection` (ADR-024) e `implication` por artículo en `legal_basis` (enmienda de ADR-023). Sin cambios de contenido legal ni de código.
 - 2026-10-25: revisión del upgrade (`docs/reviews/cards-f3b-19-upgrade.md`) y auditoría de las etiquetas «Obligación legal»: cada una afirma solo lo que dice su artículo; lo demás pasa a buena práctica o decisión de arquitectura. Textos de BCN y del Senado consultados el 2026-10-25, sin cambios desde el 2026-10-22.
-- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): TB; Agencia, titulares y CSIRT en un nodo de comunicaciones; registro interno y registro de las comunicaciones separados.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos): TB; Agencia, titulares y CSIRT en un nodo de comunicaciones; registro interno y registro de las comunicaciones separados.
 - 2026-10-28: mejora de contenido (lote P1) con tres niveles de lectura: §1 (estimación trazable y revisable), §2 (activo comprometido, acceso observado, dato accesible, dato extraído y titular posiblemente afectado), §3 (exportaciones inusuales de una cuenta de servicio), §4 (diez pasos: hechos, inferencias y lagunas; calendario separado para la Ley 21.663; corregir y aprender), §5, §6, §7 (cómo leer la evidencia), §8 (escenario y evidencia «qué demuestra y qué no»), §10 (limitaciones de cobertura en el alcance; el aviso a titulares queda condicionado a que se reporte), §11–13 (cobertura de los logs y criterio común), §14–16, §17 (relación con `pii-identification`), §18 (criterio de dominio) y §19 (laboratorio para F4). Los plazos verificados de la Ley 21.663 y el Decreto 295 se mantienen. Sin cambios en `legal_basis`, etiquetas, aviso ni vigencia.
 - 2026-10-28: pasa al dominio 24-privacy-engineering, tramo `riesgo-terceros-incidentes` (ADR-027), desde 19-compliance; sin cambios de contenido. La URL de la ficha (`/concepts/data-breach-response/`) no cambia.
 - 2026-10-30: Enmienda 3 de ADR-023: en §13, la tabla con la misma etiqueta en todas sus filas pasa a la línea «Etiqueta: […]» antes de la tabla, sin columna. Sin cambios de contenido.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI.
-- 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
-- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
+- 2026-11-01: aprobada con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-03: se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.

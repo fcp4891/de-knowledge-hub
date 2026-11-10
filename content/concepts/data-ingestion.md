@@ -272,4 +272,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: `verification_status: verified` (revisión B-F3.1 del lote F3b-01a aplicada; sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `data-lake`, `oltp-vs-olap`; el §17 nombra `data-lake`, `oltp-vs-olap`, que el cuerpo ya citaba.
-- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): archivos y APIs (batch) en un nodo.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos): archivos y APIs (batch) en un nodo.

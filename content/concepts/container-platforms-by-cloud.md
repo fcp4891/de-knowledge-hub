@@ -311,4 +311,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-19: creación (lote F3b-13b).
 - 2026-10-19: revisión B-F3.1 del lote F3b-13b aplicada (docs/reviews/cards-f3b-13b.md): Fargate cita «per second with a 1-minute minimum» y «rounded up to the nearest second»; Cloud Run redondea hacia arriba al tramo de 100 ms; *run-task* sin número de versión de la AWS CLI.
 - 2026-10-19: `verification_status: verified` (sin VERIFY pendientes).
-- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): los servicios de cada familia van en un subgraph; la imagen apunta a cada familia.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos): los servicios de cada familia van en un subgraph; la imagen apunta a cada familia.

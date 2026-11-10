@@ -239,10 +239,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-27. `verified`: revisión B-F3.1 del lote F3b-23b aplicada y aprobada por Felipe el 2026-11-03 (`owner_approved_at`).
+2026-10-27. `verified`: revisión B-F3.1 del lote F3b-23b aplicada y aprobada el 2026-11-03 (`owner_approved_at`).
 
 ## 22. Historial de cambios importantes
 
 - 2026-10-27: creación (lote F3b-23b).
 - 2026-11-01: revisión `docs/reviews/cards-f3b-23b.md` aplicada: el §12 dice que el endpoint REST de Glue soporta las especificaciones de tabla v1 y v2, con v2 por defecto. La frase de renombre del §11 sigue en la página (banner) consultada el 2026-11-01: se mantiene; la fila de APIs ya dice que la API y los roles IAM conservan el nombre BigLake.
-- 2026-11-03: `verification_status: verified`, aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-03`).
+- 2026-11-03: `verification_status: verified`, aprobada con lista explícita (`owner_approved_at: 2026-11-03`).

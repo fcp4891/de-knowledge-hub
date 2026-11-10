@@ -24,7 +24,7 @@ sources:
     url: https://docs.aws.amazon.com/bedrock/latest/userguide/structured-output.html
     accessed: 2026-10-25
     page_title: "Get validated JSON results from models"
-    note: "Get validated JSON results from models (Amazon Bedrock): en la Converse API el JSON Schema va en outputConfig.textFormat; en InvokeModel con Claude, en output_config.format (output_format está obsoleto); con modelos de pesos abiertos, en response_format; la respuesta se ajusta al esquema. Con strict: true en la definición de una herramienta, los nombres y entradas de las llamadas a herramientas se validan contra el esquema."
+    note: "Get validated JSON results from models (Amazon Bedrock): en la Converse API el JSON Schema va en outputConfig.textFormat; en InvokeModel con los modelos de Anthropic, en output_config.format (output_format está obsoleto); con modelos de pesos abiertos, en response_format; la respuesta se ajusta al esquema. Con strict: true en la definición de una herramienta, los nombres y entradas de las llamadas a herramientas se validan contra el esquema."
   - source: microsoft-foundry-docs
     url: https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/structured-outputs
     accessed: 2026-10-25
@@ -187,7 +187,7 @@ En AWS, **Amazon Bedrock**. Según *Get validated JSON results from models* (no 
 | | Este concepto | Amazon Bedrock |
 |---|---|---|
 | Converse API | Esquema en el request | `outputConfig.textFormat` |
-| InvokeModel | — | `output_config.format` con Claude (`output_format` está obsoleto); `response_format` con modelos de pesos abiertos |
+| InvokeModel | — | `output_config.format` con los modelos de Anthropic (`output_format` está obsoleto); `response_format` con modelos de pesos abiertos |
 | Herramientas | — | `strict: true` valida nombres y entradas de las llamadas |
 
 ## 13. Azure

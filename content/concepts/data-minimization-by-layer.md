@@ -574,7 +574,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-21: texto legal consultado ese día en BCN. `verified`: aprobada de nuevo por Felipe el 2026-11-04 (`owner_approved_at`), con el §10 revisado en P10. Revisión mensual.
+2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-21: texto legal consultado ese día en BCN. `verified`: aprobada de nuevo el 2026-11-04 (`owner_approved_at`), con el §10 revisado en P10. Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -587,11 +587,11 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-28: mismos errores que la revisión de P2: el art. 14 quáter nombra sus cuatro factores en el §14 y en `legal_basis`.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-11-01: revisión `docs/reviews/p1.md` aplicada: el bloque `text` del §10 trae la salida completa que imprime el script, con todas las líneas que exige la CI; §9 en TB (cadena de 6 nodos) y etiqueta del nodo de tests en líneas de 4 palabras o menos.
-- 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-01: aprobada con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
 - 2026-11-01: `medallion-architecture` ya tiene ficha (lote 07a): se enlaza en `relations` y en el §17 (cambio mínimo). Sin cambios de contenido.
-- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
-- 2026-11-03: a pedido de Felipe, los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.
-- 2026-11-04: §10 reescrito de punta a punta (pedido de Felipe), con PostgreSQL 17: funciones de nivel superior que reciben la conexión, sin `assert`; las cuatro dimensiones (contrato de columnas; tramo de edad, comuna, coordenadas a 2 decimales, teléfono que no pasa, HMAC del RUT y agregado con supresión; rol del analista con `42501`; `ingested_at`, purga y control de filas vencidas); el control «sin datos personales en claro fuera de bronze» usa la clasificación del catálogo y deja el patrón como respaldo para texto libre; marcadores `# @paso 1–4` y cuatro escenarios (`correcto`, `deriva-esquema`, `select-star`, `sin-purga`) con su línea `$ python minimizacion.py <escenario>`, iguales a la salida de la CI. §8 con la evidencia nueva y §15 con el código inline correcto. Vuelve a `review_required` hasta la aprobación de Felipe.
-- 2026-11-04: aprobada por Felipe con el §10 nuevo (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).
-- 2026-11-04: revisión `docs/reviews/p10.md` aplicada (pedido de Felipe): una columna que el catálogo no clasifica queda `UNKNOWN` y bloquea la puerta, como en las otras fichas; escenario `sin-clasificar` (1) igual a la salida de la CI; limitación «Clasificación» ajustada. Vuelve a `review_required`.
-- 2026-11-04: aprobada por Felipe con la revisión P10 aplicada (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).
+- 2026-11-03: se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
+- 2026-11-03: los principios del art. 3 se nombran (en negrita en el texto) en vez de por su letra. Sin cambios de fondo; el estado no cambia.
+- 2026-11-04: §10 reescrito de punta a punta, con PostgreSQL 17: funciones de nivel superior que reciben la conexión, sin `assert`; las cuatro dimensiones (contrato de columnas; tramo de edad, comuna, coordenadas a 2 decimales, teléfono que no pasa, HMAC del RUT y agregado con supresión; rol del analista con `42501`; `ingested_at`, purga y control de filas vencidas); el control «sin datos personales en claro fuera de bronze» usa la clasificación del catálogo y deja el patrón como respaldo para texto libre; marcadores `# @paso 1–4` y cuatro escenarios (`correcto`, `deriva-esquema`, `select-star`, `sin-purga`) con su línea `$ python minimizacion.py <escenario>`, iguales a la salida de la CI. §8 con la evidencia nueva y §15 con el código inline correcto. Vuelve a `review_required` hasta la aprobación.
+- 2026-11-04: aprobada con el §10 nuevo (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).
+- 2026-11-04: revisión `docs/reviews/p10.md` aplicada: una columna que el catálogo no clasifica queda `UNKNOWN` y bloquea la puerta, como en las otras fichas; escenario `sin-clasificar` (1) igual a la salida de la CI; limitación «Clasificación» ajustada. Vuelve a `review_required`.
+- 2026-11-04: aprobada con la revisión P10 aplicada (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).

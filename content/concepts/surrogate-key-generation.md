@@ -291,7 +291,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-07: ficha completa (lote F3b-02c, dominio 02-sql).
 - 2026-10-07: revisión B-F3.1 del lote F3b-02c aplicada (docs/reviews/cards-f3b-02c.md): la unicidad de `IDENTITY` en Fabric se acota a su página (no vale con `IDENTITY_INSERT`; después, `DBCC CHECKIDENT … RESEED`), junto a las salvedades de Redshift (`BY DEFAULT`) y Synapse (`IDENTITY_INSERT`, semilla y `UPDATE` de la columna de distribución).
 - 2026-10-07: `verification_status: verified` (sin VERIFY pendientes).
-- 2026-10-07: cambio mínimo (aprobado por Felipe): los hashes de clave natural de §4, §8 y §10 usan el marcador de NULL de `change-detection`, porque `CONCAT` (BigQuery) y `||` (PostgreSQL) devuelven NULL con un argumento NULL. Pendiente de revisión de Cursor junto con el lote F3b-02c.
-- 2026-10-07: revisión de los cambios mínimos de NULL aplicada (docs/reviews/fixes-null-concat.md, aprobada por Felipe): §4, §8 y §10 usan `TO_JSON_STRING(STRUCT(...))` en BigQuery y `jsonb_build_array` en PostgreSQL en lugar de concatenar con marcador; el ejemplo ejecutado incluye una clave natural nula. Sigue `verified`.
+- 2026-10-07: cambio mínimo (aprobado): los hashes de clave natural de §4, §8 y §10 usan el marcador de NULL de `change-detection`, porque `CONCAT` (BigQuery) y `||` (PostgreSQL) devuelven NULL con un argumento NULL. Pendiente de revisión junto con el lote F3b-02c.
+- 2026-10-07: revisión de los cambios mínimos de NULL aplicada (docs/reviews/fixes-null-concat.md, aprobada): §4, §8 y §10 usan `TO_JSON_STRING(STRUCT(...))` en BigQuery y `jsonb_build_array` en PostgreSQL en lugar de concatenar con marcador; el ejemplo ejecutado incluye una clave natural nula. Sigue `verified`.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `change-detection`.

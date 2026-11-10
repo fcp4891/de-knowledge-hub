@@ -265,5 +265,5 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: revisión B-F3.1 del lote F3b-01a aplicada (docs/reviews/cards-f3b-01a.md): Lake Formation citado con su fuente.
 - 2026-10-06: `verification_status: verified` (revisión B-F3.1 del lote F3b-01a aplicada; sin VERIFY pendientes).
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
-- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos, CLAUDE.md): los motores de consulta en un nodo.
+- 2026-10-25: §9 con el estándar de diagramas (máximo 8 nodos): los motores de consulta en un nodo.
 - 2026-11-01: `lakehouse-architecture` ya tiene ficha (lote 07a): se enlaza en `relations` y en el §17 (cambio mínimo). Sin cambios de contenido.

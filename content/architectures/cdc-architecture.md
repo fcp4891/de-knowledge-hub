@@ -365,10 +365,10 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-11-03: fichas de origen de cada cita revisadas; *47.1. Logical Decoding Examples* y *F.43. test_decoding* leídas hoy (H1 y contenido). `verified`: aprobada por Felipe el 2026-11-03 (`owner_approved_at`).
+2026-11-03: fichas de origen de cada cita revisadas; *47.1. Logical Decoding Examples* y *F.43. test_decoding* leídas hoy (H1 y contenido). `verified`: aprobada el 2026-11-03 (`owner_approved_at`).
 
 ## 22. Historial de cambios importantes
 
 - 2026-11-03: creación (lote 07c, ADR-028).
 - 2026-11-03: revisión de 07c aplicada (docs/reviews/lote-07c.md): las citas nuevas del lote llevan su `url` (faltaba); el §5 tiene el nodo «Plugin de salida» del §4.
-- 2026-11-03: `verification_status: verified`, aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-03`).
+- 2026-11-03: `verification_status: verified`, aprobada con lista explícita (`owner_approved_at: 2026-11-03`).

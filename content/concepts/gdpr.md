@@ -435,7 +435,7 @@ El detalle de cada fuente está en `sources` del frontmatter.
 
 ## 21. Fecha de última verificación
 
-2026-10-30: RGPD (BOE, reproducción del DOUE; EUR-Lex no respondió a la lectura automática), Ley 19.628 en BCN, LGPD en la Câmara, lista de adecuación de la Comisión y páginas de GCP, AWS y Microsoft consultadas ese día. `verified`: aprobada por Felipe el 2026-11-01 (`owner_approved_at`). Revisión mensual.
+2026-10-30: RGPD (BOE, reproducción del DOUE; EUR-Lex no respondió a la lectura automática), Ley 19.628 en BCN, LGPD en la Câmara, lista de adecuación de la Comisión y páginas de GCP, AWS y Microsoft consultadas ese día. `verified`: aprobada el 2026-11-01 (`owner_approved_at`). Revisión mensual.
 
 ## 22. Historial de cambios importantes
 
@@ -443,5 +443,5 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-30: la Enmienda de jurisdicciones pasa a ser la Enmienda 5 de ADR-023; cita de la Res. CD/ANPD 15/2024 (art. 6 § 1º y art. 9) sobre el inicio del plazo brasileño.
 - 2026-10-30: Enmienda 4 de ADR-023: 4 tabla(s) sin columna ni línea «Etiqueta»; la fila con origen legal lleva «Obligación legal» al inicio de su primera celda. Sin cambios de contenido.
 - 2026-10-30: revisión `docs/reviews/p4.md` aplicada (hallazgos legales tratados como altos): art. 3.2 con «interesados que residan en la Unión» y la frase del pago; art. 1 bis como presencia en Chile, en frase aparte; art. 33.1 con «sin dilación indebida», «de ser posible» y la salvedad del riesgo improbable; art. 14 sexies con el riesgo razonable; inicio y doble plazo de la ANPD; Comisión con Noruega, Liechtenstein e Islandia; IAM siempre en us-east-1; `page_title` de Azure Policy con su H1 y exclusión de b2cDirectories.
-- 2026-11-01: aprobada por Felipe con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
-- 2026-11-03: a pedido de Felipe se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.
+- 2026-11-01: aprobada con lista explícita (`owner_approved_at: 2026-11-01`); pasa a `verified` (ADR-023).
+- 2026-11-03: se quita del §1 el párrafo «Cómo leerla» (guía de lectura por tramos de secciones). Sin cambios de fondo; el estado no cambia.

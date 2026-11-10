@@ -283,4 +283,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-06: la sección de conceptos relacionados ya no lista como pendiente de ficha a `data-ingestion`, que ya tiene ficha.
 - 2026-10-13: `page_title` en cada cita, con el título de la página citada (ADR-012); sin cambios de contenido.
 - 2026-10-14: lote F3b-rel (regla del §17): relations incluye `data-ingestion`.
-- 2026-10-20: `page_title` sin la versión de parche del SDK (*Class Client*, *Class LoadJob*), según la regla de CLAUDE.md de no citar versiones de parche de SDKs ni CLIs; sin cambios de contenido.
+- 2026-10-20: `page_title` sin la versión de parche del SDK (*Class Client*, *Class LoadJob*), según la regla del proyecto de no citar versiones de parche de SDKs ni CLIs; sin cambios de contenido.

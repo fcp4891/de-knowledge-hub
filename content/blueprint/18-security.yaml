@@ -120,7 +120,7 @@ subdomains:
         mvp: false
         added_by: blueprint
         related_concepts: [key-management, encryption-at-rest]
-        note: Borrar la clave para que los datos cifrados con ella queden ilegibles en todas las copias (decisión de Felipe, 2026-10-21).
+        note: Borrar la clave para que los datos cifrados con ella queden ilegibles en todas las copias (decisión del 2026-10-21).
 
   - slug: privacy-techniques
     title: Técnicas de privacidad
@@ -134,7 +134,7 @@ subdomains:
         mvp: false
         added_by: blueprint
         related_concepts: [tokenization, keyed-hashing, k-anonymity]
-        note: Una sola ficha; sin mencionar la ley (decisión de Felipe, 2026-10-21).
+        note: Una sola ficha; sin mencionar la ley (decisión del 2026-10-21).
       - slug: tokenization
         title: Tokenización
         kind: pattern
