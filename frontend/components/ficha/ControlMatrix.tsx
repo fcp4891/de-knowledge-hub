@@ -1,97 +1,25 @@
 import { ArchitectureDot } from "@/components/markdown/InlineText";
 import { stepNumber } from "@/lib/controlMatrix";
+import type { ControlMatrixProps } from "@/lib/views";
 
+import { RichText } from "./RichText";
 import "@/components/markdown/pipeline.css";
 import "./ficha-blocks.css";
 
-const HEADERS = ["Requisito", "Riesgo", "Control técnico", "Verificación", "Evidencia"];
-
-const ROWS: {
-  name: string;
-  bases: string[];
-  code?: string;
-  risk: string;
-  control: string;
-  check: string;
-  evidence: string;
-}[] = [
-  {
-    name: "Finalidad",
-    bases: ["Principio de finalidad · art. 3"],
-    risk: "Datos usados para un fin no autorizado",
-    control: "Autorización por finalidad y catálogo de actividades",
-    check: "Test de que cada consumo declara una finalidad aprobada",
-    evidence: "Catálogo versionado y accesos por finalidad",
-  },
-  {
-    name: "Minimización",
-    bases: ["Principio de proporcionalidad · art. 3"],
-    code: "schema_minimization",
-    risk: "Columnas no aprobadas llegan a capas analíticas",
-    control: "Contrato de campos permitidos",
-    check: "Test de esquema en CI",
-    evidence: "Resultado del test y versión del contrato",
-  },
-  {
-    name: "Retención",
-    bases: ["Principio de proporcionalidad · art. 3"],
-    code: "retention_check",
-    risk: "Datos vencidos siguen guardados o vuelven con un replay",
-    control: "Política por clase de dato y almacenamiento",
-    check: "Control de vencidos tras la purga y en el replay",
-    evidence: "Configuración, ejecución y excepciones",
-  },
-  {
-    name: "Acceso restringido",
-    bases: ["Medidas de seguridad · art. 14 quinquies"],
-    code: "access_review",
-    risk: "Usuarios inactivos o con privilegios de más",
-    control: "IAM o RBAC, segregación de funciones",
-    check: "Revisión periódica de permisos",
-    evidence: "Inventario de permisos y revisión fechada",
-  },
-  {
-    name: "Derechos del titular",
-    bases: ["Derechos · art. 4"],
-    code: "erasure_replay_check",
-    risk: "No localizar todos los registros de un titular, o que lo suprimido reaparezca",
-    control: "Localizador de registros y flujo autorizado",
-    check: "Prueba de punta a punta: localizar, ejecutar y reprocesar",
-    evidence: "ID interno de la solicitud, estados y resultado",
-  },
-  {
-    name: "Vulneraciones",
-    bases: ["Reporte de vulneraciones · art. 14 sexies"],
-    risk: "No poder dimensionar el alcance a tiempo",
-    control: "Logs, alertas y consulta de alcance por linaje",
-    check: "Simulacro de consulta de alcance",
-    evidence: "Línea de tiempo, sistemas afectados y acciones",
-  },
-  {
-    name: "Transferencias",
-    bases: ["Transferencia internacional · arts. 27 a 29", "Encargado · art. 15 bis"],
-    risk: "Flujos a terceros o al extranjero sin control",
-    control: "Inventario de destinos y controles del proveedor",
-    check: "Conciliación de flujos contra el inventario",
-    evidence: "Contrato, evaluación y trazabilidad",
-  },
-];
-
-export function ControlMatrix() {
+export function ControlMatrix({ id, title, legend, headers, rows, closing }: ControlMatrixProps) {
   return (
     <div className="markdown">
       <h3>
-        <ArchitectureDot /> Matriz de control
+        <ArchitectureDot /> {title}
       </h3>
       <p className="matrix-legend">
-        <strong>art.</strong> fundamento legal del requisito · <strong>función</strong> control implementado en el código
-        de la ficha
+        <RichText text={legend} />
       </p>
-      <div className="markdown-table-wrap markdown-table-steps">
+      <div id={id} className="markdown-table-wrap markdown-table-steps">
         <table>
           <thead>
             <tr>
-              {HEADERS.map((header, index) => (
+              {headers.map((header, index) => (
                 <th key={header}>
                   <span className="step-number">{stepNumber(index)}</span>
                   {header}
@@ -100,8 +28,8 @@ export function ControlMatrix() {
             </tr>
           </thead>
           <tbody>
-            {ROWS.map((row) => (
-              <tr key={row.name}>
+            {rows.map((row) => (
+              <tr key={row.name} id={row.id}>
                 <td>
                   {row.name}
                   {row.bases.map((basis) => (
@@ -120,7 +48,7 @@ export function ControlMatrix() {
           </tbody>
         </table>
       </div>
-      <p>La evidencia no guarda nombres, RUT ni datos sensibles cuando basta una referencia interna protegida.</p>
+      <p>{closing}</p>
     </div>
   );
 }

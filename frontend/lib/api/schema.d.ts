@@ -488,7 +488,494 @@ export interface components {
             sections: components["schemas"]["Section"][];
             /** @description Anexos tras la última sección (ADR-029); la propiedad solo aparece si la ficha los tiene. */
             annexes?: components["schemas"]["Annex"][];
+            views?: components["schemas"]["Views"];
         } & components["schemas"]["Metadata"];
+        /** @description Vistas estructuradas (ADR-030); la propiedad solo aparece si la ficha las tiene. Cada clave mapea 1:1 con las props de su componente, en snake_case. Las vistas con marca van donde el Markdown trae «<!-- view: clave -->»; approach, legal_foundations y sources_grouped tienen posición fija. */
+        Views: {
+            /** @description CentralIdea (Resumen · Idea central). */
+            central_idea?: {
+                checks_title: string;
+                checks: string[];
+                status: string;
+                risks_title: string;
+                risks: {
+                    text: string;
+                    tag: string;
+                }[];
+                closing: string;
+            };
+            /** @description VigenciaTimeline (Resumen · Contexto normativo). */
+            vigencia_timeline?: {
+                intro?: string;
+                intro_mark?: string;
+                items: {
+                    date: components["schemas"]["Date"];
+                    title: string;
+                    detail: string;
+                    links?: {
+                        label: string;
+                        /** Format: uri */
+                        href: string;
+                    }[];
+                    note?: string;
+                    /** @enum {unknown} */
+                    icon?: "calendar" | "institution";
+                    /** @enum {unknown} */
+                    state: "past" | "current" | "proposed";
+                }[];
+                as_of: string;
+            };
+            /** @description TreatmentMap (Resumen · Qué implica para Ingeniería de Datos). */
+            treatment_map?: {
+                /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                lead: string;
+                law_label: {
+                    title: string;
+                    detail?: string;
+                };
+                tech_label: {
+                    title: string;
+                    detail?: string;
+                };
+                verbs: {
+                    verb: string;
+                    practice: string;
+                    examples: string;
+                }[];
+                conclusion: string;
+                /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                note: string;
+                sources?: {
+                    title: string;
+                    /** Format: uri */
+                    href: string;
+                    detail: string;
+                }[];
+            };
+            /** @description ApproachBoard: desplegable propio tras el Resumen. */
+            approach?: {
+                title: string;
+                intro: string;
+                step_label?: string;
+                example_label?: {
+                    title: string;
+                    detail?: string;
+                };
+                reference_label?: {
+                    title: string;
+                    detail?: string;
+                };
+                steps: {
+                    name: string;
+                    description: string;
+                    example?: string;
+                    reference?: string;
+                }[];
+                notes?: {
+                    title: string;
+                    text: string;
+                }[];
+                sources?: {
+                    title: string;
+                    /** Format: uri */
+                    href: string;
+                    detail: string;
+                }[];
+            };
+            /** @description LegalFoundations (§2): título y recuadro de roles. */
+            legal_foundations?: {
+                title: string;
+                principles?: {
+                    label: string;
+                    tags: {
+                        kind?: string;
+                        label: string;
+                        legal?: boolean;
+                        /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                        href?: string;
+                    }[];
+                }[];
+                roles: {
+                    caption?: string;
+                    responsible: {
+                        title: string;
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                        lead: string;
+                        decide: {
+                            kicker: string;
+                            items: {
+                                title: string;
+                                text: string;
+                            }[];
+                        };
+                        build: {
+                            kicker: string;
+                            items: {
+                                title: string;
+                                text: string;
+                            }[];
+                        };
+                    };
+                    processor: {
+                        title: string;
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                        text: string;
+                    };
+                    source?: {
+                        title: string;
+                        /** Format: uri */
+                        href: string;
+                        detail: string;
+                    };
+                };
+            };
+            /** @description ProblemJourney (§3). */
+            problem_journey?: {
+                question: {
+                    kicker: string;
+                    text: string;
+                };
+                lead: string;
+                labels: {
+                    route: string;
+                    without: string;
+                    with: string;
+                };
+                stages: {
+                    title: string;
+                    detail: string;
+                    gap: string;
+                    /** @enum {unknown} */
+                    gap_mark: "?" | "×";
+                    control: string;
+                }[];
+                note: string;
+            };
+            /** @description DesignBoard (§4 · preguntas de diseño). */
+            design_board?: {
+                intro: string;
+                groups: {
+                    title: string;
+                    items: {
+                        /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
+                        id?: string;
+                        number: string;
+                        question: string;
+                        text: string;
+                        arq?: boolean;
+                        tags: {
+                            kind?: string;
+                            label: string;
+                            legal?: boolean;
+                            /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                            href?: string;
+                        }[];
+                    }[];
+                }[];
+            };
+            /** @description ControlMatrix (§4). */
+            control_matrix?: {
+                /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
+                id?: string;
+                title: string;
+                /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                legend: string;
+                headers: string[];
+                rows: {
+                    /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
+                    id?: string;
+                    name: string;
+                    bases: string[];
+                    code?: string;
+                    risk: string;
+                    control: string;
+                    check: string;
+                    evidence: string;
+                }[];
+                closing: string;
+            };
+            /** @description WhenToUse (§5). */
+            when_to_use?: {
+                intro: string;
+                groups: {
+                    title: string;
+                    hint: string;
+                    items: {
+                        title: string;
+                        text: string;
+                        legal?: boolean;
+                        tags: {
+                            kind?: string;
+                            label: string;
+                            legal?: boolean;
+                            /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                            href?: string;
+                        }[];
+                    }[];
+                }[];
+            };
+            /** @description RequirementToData (§9 · Del requisito al dato). */
+            requirement_to_data?: {
+                title: string;
+                lead: string;
+                governance: {
+                    kicker: {
+                        title: string;
+                        detail?: string;
+                    };
+                    items: {
+                        title: string;
+                        detail?: string;
+                    }[];
+                    legend: string[];
+                };
+                data: {
+                    kicker: {
+                        title: string;
+                        detail?: string;
+                    };
+                    banner: string;
+                    stages: {
+                        title: string;
+                        detail?: string;
+                        pill?: string;
+                        /** @enum {unknown} */
+                        tone: "end" | "layer";
+                    }[];
+                };
+            };
+            /** @description ControlEvidence (§9 · Control y evidencia). */
+            control_evidence?: {
+                /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
+                id?: string;
+                title: string;
+                /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                lead: string;
+                steps: {
+                    number: string;
+                    title: string;
+                    items: string[];
+                }[];
+                decide: {
+                    number: string;
+                    title: string;
+                    outcomes: {
+                        /** @enum {unknown} */
+                        tone: "pass" | "fail" | "keep";
+                        text: string;
+                    }[];
+                };
+                note: string;
+                example: {
+                    summary: string;
+                    note: string;
+                    code_link?: {
+                        label: string;
+                        /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                        href: string;
+                    };
+                    steps: {
+                        title: string;
+                        items: {
+                            text: string;
+                            code?: string;
+                        }[];
+                    }[];
+                };
+            };
+            /** @description CodeGuide (§10, bajo el código). */
+            code_guide?: {
+                lead: {
+                    title: string;
+                    text: string;
+                };
+                rules: {
+                    headers: string[];
+                    items: {
+                        /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
+                        id?: string;
+                        rule: string;
+                        fn: string;
+                        requirement: string;
+                    }[];
+                };
+                not_covered: {
+                    title: string;
+                    intro: string;
+                    items: {
+                        title: string;
+                        text: string;
+                    }[];
+                };
+                scenarios: {
+                    title: string;
+                    items: {
+                        name: string;
+                        text: string;
+                        /** @enum {unknown} */
+                        exit_code: 0 | 1;
+                    }[];
+                };
+                simplifies: {
+                    title: string;
+                    items: {
+                        title: string;
+                        text: string;
+                    }[];
+                };
+                limit: {
+                    title: string;
+                    text: string;
+                };
+            };
+            /** @description CloudCompare (§11 «En la nube»: reemplaza las pestañas GCP/AWS/Azure). */
+            cloud_compare?: {
+                title: string;
+                intro: string;
+                alert: {
+                    title: string;
+                    text: string;
+                };
+                headers: string[];
+                rows: {
+                    /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
+                    id?: string;
+                    need: string;
+                    meta: string;
+                    gcp: {
+                        name: string;
+                        text: string;
+                        warn?: string;
+                    };
+                    aws: {
+                        name: string;
+                        text: string;
+                        warn?: string;
+                    };
+                    azure: {
+                        name: string;
+                        text: string;
+                        warn?: string;
+                    };
+                }[];
+                closing: string;
+            };
+            /** @description PracticeLanes (§14): etapas en columnas y una franja transversal opcional. */
+            practice_lanes?: {
+                start?: {
+                    title: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    text: string;
+                };
+                lanes: {
+                    title: string;
+                    items: {
+                        /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
+                        id?: string;
+                        title: string;
+                        text: string;
+                        arq?: boolean;
+                        tags?: {
+                            kind?: string;
+                            label: string;
+                            legal?: boolean;
+                            /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                            href?: string;
+                        }[];
+                    }[];
+                }[];
+                cross?: {
+                    title: string;
+                    label: string;
+                    items: {
+                        /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
+                        id?: string;
+                        title: string;
+                        text: string;
+                        arq?: boolean;
+                        tags?: {
+                            kind?: string;
+                            label: string;
+                            legal?: boolean;
+                            /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                            href?: string;
+                        }[];
+                    }[];
+                };
+            };
+            /** @description TradeOffs (§16): cada trade-off como balanza «A ⇄ B» con su franja de resolución. */
+            trade_offs?: {
+                arq?: boolean;
+                resolution_label: string;
+                items: {
+                    a: string;
+                    b: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    text: string;
+                    resolution: string;
+                }[];
+                note: string;
+            };
+            /** @description OpenQuestions (§18): tarjetas con casilla «Sé responderla»; el estado vive en memoria. */
+            open_questions?: {
+                intro: string;
+                check_label: string;
+                /** @description Plantilla del contador con {n} y {total}. */
+                counter: string;
+                items: {
+                    question: string;
+                    tags: {
+                        kind?: string;
+                        label: string;
+                        legal?: boolean;
+                        /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                        href?: string;
+                    }[];
+                }[];
+            };
+            /** @description SeverityCards (§16 · Sanciones): niveles y modificadores de la multa. */
+            severity_cards?: {
+                levels: {
+                    name: string;
+                    /** @enum {unknown} */
+                    level: 1 | 2 | 3;
+                    article?: string;
+                    amount: string;
+                    note?: string;
+                    examples_label?: string;
+                    examples: string[];
+                }[];
+                modifiers?: {
+                    /** @enum {unknown} */
+                    effect: "up" | "down";
+                    effect_label: string;
+                    title: string;
+                    text: string;
+                    basis: string;
+                }[];
+            };
+            /** @description SourcesGrouped (§20). */
+            sources_grouped?: {
+                groups: {
+                    title: string;
+                    /** @enum {unknown} */
+                    layout?: "list" | "providers";
+                    sources: {
+                        title: string;
+                        links: {
+                            label?: string;
+                            /** Format: uri */
+                            href: string;
+                        }[];
+                        publisher: string;
+                        /** @description «Nivel N» desde el registro de la fuente. */
+                        level: string;
+                        why?: string;
+                        provider?: string;
+                    }[];
+                }[];
+            };
+        };
         /** @description Anexo de la ficha (`## Anexo · Título`, ADR-029), en Markdown. */
         Annex: {
             title: string;

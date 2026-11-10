@@ -30,6 +30,7 @@ from jsonschema import Draft202012Validator
 from referencing import Registry, Resource
 
 from backend.content import diagrams, page_sections
+from backend.content import views as page_views
 
 ROOT = Path(__file__).resolve().parents[2]
 CONTENT_EXTENSIONS = {".md", ".yaml", ".yml"}
@@ -501,8 +502,13 @@ def check_page_sections(content_dir: Path, docs: list[Document], report: Report)
         slug = doc.data["slug"]
         omittable = page_sections.OMITTABLE.get(slug, frozenset()) if doc.data["type"] in page_sections.PRACTICE_TYPES else frozenset()
         errors = page_sections.check(body, expected, omittable) + page_sections.check_annexes(body, slug)
-        if doc.data["type"] in page_sections.PRACTICE_TYPES:
-            errors += page_sections.check_practices(body)
+        if doc.data["type"] in page_sections.PRACTICE_TYPES and "practice_lanes" not in doc.data.get("views", {}):
+            errors += page_sections.check_practices(body)   # ADR-030: con practice_lanes, las prácticas van en la vista
+        if "views" in doc.data:
+            cited = [s["url"] for s in doc.data.get("sources", []) if "url" in s]
+            present = [number for number, _, _ in page_sections.sections(body)]
+            anchors = page_views.page_anchors(doc.data["views"], present, doc.data.get("legal_basis", []))
+            errors += page_views.check(doc.data["views"], body, cited, anchors)
         if doc.data["type"] == "architecture":
             errors += architecture_views(body)
         for error in errors:
@@ -730,8 +736,14 @@ def check_legal_content(
         last = data.get("last_verified")
         for i, ref in enumerate(data.get("sources", [])):
             target = by_slug.get(ref["source"])
-            if target is not None and target.data.get("source_type") == LEGISLATIVE and ref.get("accessed") != last:
-                report.add(doc.location, f"[sources.{i}.accessed] la cita legal se consulta el día de last_verified ({last})")
+            own_law = target is not None and set(target.data.get("jurisdiction", [])) <= set(data["jurisdiction"])
+            # ADR-023: la legislación comparada lleva su propia fecha (enmienda 7); la propia puede consultarse después de
+            # last_verified, nunca antes (enmienda 8).
+            accessed = ref.get("accessed")
+            if target is not None and target.data.get("source_type") == LEGISLATIVE and own_law and (
+                accessed is None or str(accessed) < str(last)
+            ):
+                report.add(doc.location, f"[sources.{i}.accessed] la cita legal no puede ser anterior a last_verified ({last})")
         if last and (today - dt.date.fromisoformat(str(last))).days > REVIEW_DAYS:
             report.warn(doc.location, f"[last_verified] {last}: más de {REVIEW_DAYS} días; revisar o pasar a potentially_outdated (ADR-023)")
         cited: set[tuple[str | None, str]] = set()

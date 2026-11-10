@@ -13,6 +13,9 @@ import {
 } from "@/lib/chileLegalCatalog";
 import { bcnLinkText, legalRowId } from "@/lib/legal";
 import { principleActivation, principleAriaLabel } from "@/lib/principleCards";
+import type { RolesProps, Tag } from "@/lib/views";
+import { Pills } from "@/components/ficha/Pills";
+import { RichText } from "@/components/ficha/RichText";
 
 function fold(value: string): string {
   return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -117,7 +120,8 @@ function Fichas({ fichas }: { fichas: ChileFicha[] }) {
   );
 }
 
-export function LegalFoundations() {
+/** §2 de chile-data-protection: principios, roles (ADR-030: datos de views.legal_foundations) y modal del catálogo. */
+export function LegalFoundations({ roles, principles = [] }: { roles?: RolesProps; principles?: { label: string; tags: Tag[] }[] }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [open, setOpen] = useState<ChileArticle | null>(null);
   const [tip, setTip] = useState<string | null>(null);
@@ -202,6 +206,7 @@ export function LegalFoundations() {
             key={item.label}
             index={index}
             principle={item}
+            tags={principles.find((entry) => entry.label === item.label.replace(/^[a-h]\)\s*/i, ""))?.tags ?? []}
             open={tip === item.label}
             pinned={pinned && tip === item.label}
             onShow={() => {
@@ -230,7 +235,7 @@ export function LegalFoundations() {
         ))}
       </ul>
       <ArticleModal dialogRef={dialogRef} article={open} onClose={() => setOpen(null)} />
-      <RolesBoard />
+      {roles ? <RolesBoard roles={roles} /> : null}
     </div>
   );
 }
@@ -326,81 +331,64 @@ export function LegalCatalog() {
   );
 }
 
-const LAW_URL = "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01";
-const LAW_21719_URL = "https://www.bcn.cl/leychile/navegar?idNorma=1209272";
-
-function RolesBoard() {
+function RolesBoard({ roles }: { roles: RolesProps }) {
+  const { responsible, processor, source, caption } = roles;
   return (
     <section className="lf-roles" aria-labelledby="lf-roles-title">
       <div className="lf-roles-org">
         <header className="lf-roles-head">
-          <h3 id="lf-roles-title">Responsable · la organización</h3>
+          <h3 id="lf-roles-title">{responsible.title}</h3>
           <p className="lf-roles-lead">
-            Decide los fines y medios del tratamiento y responde ante la ley (
-            <a href={LAW_URL} target="_blank" rel="noopener noreferrer">
-              art. 2 letra n
-            </a>
-            ).
+            <RichText text={responsible.lead} />
           </p>
         </header>
+        {caption ? <p className="lf-roles-caption">{caption}</p> : null}
         <div className="lf-roles-split">
           <div className="lf-roles-decide">
-            <p className="lf-roles-kicker">Decide</p>
-            <h4>Legal, privacidad y negocio</h4>
-            <p>Definen finalidad, base de licitud y plazos.</p>
-          </div>
-          <div className="lf-roles-assess">
-            <p className="lf-roles-kicker">Evalúa</p>
-            <h4>Privacidad</h4>
-            <p>Evalúa el riesgo para los titulares.</p>
-            <h4>Seguridad</h4>
-            <p>Evalúa el riesgo de seguridad y define las medidas de protección.</p>
+            <p className="lf-roles-kicker">{responsible.decide.kicker}</p>
+            {responsible.decide.items.map((item) => (
+              <RoleItem key={item.title} item={item} />
+            ))}
           </div>
           <div className="lf-roles-build">
-            <p className="lf-roles-kicker">Implementa</p>
-            <h4>Ingeniería de Datos</h4>
-            <p>
-              Implementa controles, automatización, trazabilidad y evidencia. No decide la finalidad ni la base; reporta
-              las implicancias técnicas y sus limitaciones.
-            </p>
+            <p className="lf-roles-kicker">{responsible.build.kicker}</p>
+            {responsible.build.items.map((item) => (
+              <RoleItem key={item.title} item={item} />
+            ))}
           </div>
         </div>
       </div>
-      <div className="lf-roles-foot">
-        <div className="lf-roles-vendor">
-          <h3>Encargado · fuera de la organización</h3>
-          <p>
-            Proveedor que trata datos por cuenta del responsable: nube, SaaS, API de LLM (
-            <a href={LAW_URL} target="_blank" rel="noopener noreferrer">
-              art. 2 letra x
-            </a>
-            ).
-          </p>
-        </div>
-        <aside className="lf-roles-warn">
-          <p className="lf-roles-kicker">Ojo</p>
-          <p>
-            Si los trata para otro fin o los cede sin autorización, se le considera responsable (
-            <a href={LAW_URL} target="_blank" rel="noopener noreferrer">
-              art. 15 bis
-            </a>
-            ).
-          </p>
-        </aside>
+      <div className="lf-roles-vendor">
+        <h3>{processor.title}</h3>
+        <p>
+          <RichText text={processor.text} />
+        </p>
       </div>
-      <p className="lf-roles-source">
-        <a href={LAW_21719_URL} target="_blank" rel="noopener noreferrer">
-          Ley 21.719
-        </a>
-        <span> · Diario Oficial, 2024-12-13 · Legislación · Nivel 1 · art. 2 letras n) y x), art. 3, art. 15 bis</span>
-      </p>
+      {source ? (
+        <p className="lf-roles-source">
+          <a href={source.href} target="_blank" rel="noopener noreferrer">
+            {source.title}
+          </a>
+          <span> · {source.detail}</span>
+        </p>
+      ) : null}
     </section>
+  );
+}
+
+function RoleItem({ item }: { item: { title: string; text: string } }) {
+  return (
+    <>
+      <h4>{item.title}</h4>
+      <p>{item.text}</p>
+    </>
   );
 }
 
 function PrincipleCard({
   index,
   principle,
+  tags,
   open,
   pinned,
   onShow,
@@ -410,6 +398,7 @@ function PrincipleCard({
 }: {
   index: number;
   principle: ChilePrinciple;
+  tags: Tag[];
   open: boolean;
   pinned: boolean;
   onShow: () => void;
@@ -475,6 +464,7 @@ function PrincipleCard({
           {principle.description}
         </span>
       ) : null}
+      <Pills tags={tags} />
     </li>
   );
 }

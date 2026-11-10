@@ -1,77 +1,67 @@
 import { ArchitectureDot } from "@/components/markdown/InlineText";
+import type { PracticeLanesProps } from "@/lib/views";
 
+import { Pills } from "./Pills";
+import { RichText } from "./RichText";
 import "./ficha-blocks.css";
 
-const ACROSS: Record<string, string> = {
-  Demostrar: "en todas las etapas",
-};
+type Item = PracticeLanesProps["lanes"][number]["items"][number];
 
-function articlePill(text: string): { body: string; pill: string | null } {
-  const found: string[] = [];
-  const body = text
-    .replace(/\(\s*(art\.[^)]*?)\)/gi, (_, article: string) => {
-      found.push(article.trim().replace(/\s+/g, " "));
-      return "";
-    })
-    .replace(/\s+([,.;])/g, "$1")
-    .replace(/\s{2,}/g, " ")
-    .trim();
-  if (!body) return { body: text, pill: null };
-  return { body, pill: found.length > 0 ? found.join(" · ") : null };
+function PracticeItem({ item }: { item: Item }) {
+  return (
+    <li id={item.id}>
+      <article>
+        {item.arq ? <ArchitectureDot /> : null}
+        <h4>{item.title}</h4>
+        {item.text ? (
+          <p>
+            <RichText text={item.text} />
+          </p>
+        ) : null}
+        {item.tags ? <Pills tags={item.tags} /> : null}
+      </article>
+    </li>
+  );
 }
 
-export function PracticeLanes({
-  start,
-  lanes,
-}: {
-  start?: { title: string; text: string };
-  lanes: { title: string; items: { title: string; text: string; arq?: boolean }[] }[];
-}) {
-  const across = lanes.filter((lane) => lane.title in ACROSS);
-  const ordered = [...lanes.filter((lane) => !(lane.title in ACROSS)), ...across];
+export function PracticeLanes({ start, lanes, cross }: PracticeLanesProps) {
   return (
     <section className="ficha-block practice">
       {start ? (
-        <header className="practice-start">
-          <h3>{start.title}</h3>
-          <p>{start.text}</p>
-        </header>
+        <p className="practice-notice">
+          <strong>{start.title}.</strong> <RichText text={start.text} />
+        </p>
       ) : null}
       <ol className="practice-lanes">
-        {ordered.map((lane, index) => {
-          const note = ACROSS[lane.title];
-          return (
-            <li key={lane.title} className={note ? "practice-lane is-across" : "practice-lane"}>
-              <header>
-                {note ? null : <span className="practice-num">{String(index + 1).padStart(2, "0")}</span>}
-                <h3>
-                  {lane.title}
-                  {note ? <small>{note}</small> : null}
-                </h3>
-              </header>
-              <ul>
-                {lane.items.map((item) => {
-                  const { body, pill } = articlePill(item.text ?? "");
-                  return (
-                    <li key={item.title}>
-                      <article>
-                        {item.arq ? <ArchitectureDot /> : null}
-                        <h4>{item.title}</h4>
-                        {body ? <p>{body}</p> : null}
-                        {pill ? (
-                          <ul className="practice-refs">
-                            <li>{pill}</li>
-                          </ul>
-                        ) : null}
-                      </article>
-                    </li>
-                  );
-                })}
-              </ul>
-            </li>
-          );
-        })}
+        {lanes.map((lane, index) => (
+          <li key={lane.title} className="practice-lane">
+            <header>
+              <span className="practice-num">{String(index + 1).padStart(2, "0")}</span>
+              <h3>{lane.title}</h3>
+            </header>
+            <ul>
+              {lane.items.map((item) => (
+                <PracticeItem key={item.title} item={item} />
+              ))}
+            </ul>
+          </li>
+        ))}
       </ol>
+      {cross ? (
+        <section className="practice-lane is-across" aria-label={cross.title}>
+          <header>
+            <h3>
+              {cross.title}
+              {cross.label ? <small>{cross.label}</small> : null}
+            </h3>
+          </header>
+          <ul>
+            {cross.items.map((item) => (
+              <PracticeItem key={item.title} item={item} />
+            ))}
+          </ul>
+        </section>
+      ) : null}
     </section>
   );
 }

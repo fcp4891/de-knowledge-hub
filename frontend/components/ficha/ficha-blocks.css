@@ -434,7 +434,8 @@
   line-height: 1.45;
 }
 
-.practice-lane .practice-refs {
+.practice-lane .practice-refs,
+.practice-lane .ficha-pills {
   flex-direction: row;
   flex-wrap: wrap;
   gap: 6px;
@@ -694,6 +695,15 @@
   background: var(--surface-muted);
   color: var(--ink-muted);
   font-size: var(--text-sm);
+}
+
+.trade-text {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 0 14px 10px;
+  color: var(--ink-2);
+  font-size: var(--text-sm);
+  line-height: 1.45;
 }
 
 .trade-resolution {
@@ -2111,6 +2121,23 @@
   color: var(--ink-muted);
 }
 
+.control-evidence-example {
+  margin: 0;
+}
+
+.control-evidence-example > summary.control-evidence-example-toggle {
+  width: fit-content;
+  list-style: none;
+}
+
+.control-evidence-example > summary.control-evidence-example-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.control-evidence-example[open] > summary.control-evidence-example-toggle::after {
+  content: "↑";
+}
+
 .control-evidence-example-toggle {
   display: inline-flex;
   align-items: center;
@@ -2367,4 +2394,328 @@
   .ficha-block * {
     transition: none;
   }
+}
+
+/* ADR-030, enmienda 3: píldoras compartidas, prácticas con franja transversal, balanzas, modificadores y preguntas.
+   Reutiliza los tokens y las medidas de los bloques existentes. */
+.ficha-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ficha-pills li {
+  display: inline-flex;
+  gap: 6px;
+  align-items: baseline;
+  padding: 2px 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  color: var(--ink-2);
+  font-size: var(--text-xs);
+  line-height: 1.4;
+}
+
+.ficha-pills li.is-legal {
+  border-color: var(--legal, var(--border-strong));
+}
+
+.ficha-pills li a {
+  display: inline-flex;
+  gap: 6px;
+  align-items: baseline;
+  color: inherit;
+  text-decoration: none;
+}
+
+.ficha-pills li a:hover,
+.ficha-pills li a:focus-visible {
+  text-decoration: underline;
+}
+
+.ficha-pills li b {
+  color: var(--ink-muted);
+  font-weight: 650;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.ficha-pills li code {
+  font-size: var(--text-xs);
+}
+
+.lf-principle .ficha-pills {
+  margin-top: 6px;
+}
+
+.practice-notice {
+  margin: 0 0 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--severity-2-bg);
+  color: var(--severity-2-ink);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+
+.practice-notice a {
+  color: inherit;
+}
+
+.practice-lanes[data-count="4"] {
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+}
+
+.practice-cross {
+  margin-top: 12px;
+  border-style: dashed;
+}
+
+.practice-cross > ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 12px;
+}
+
+.practice-cross > ul > li + li {
+  margin-top: 0;
+}
+
+.tradeoff-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tradeoff {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.tradeoff-scale {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: baseline;
+  margin: 0 0 6px;
+  font-size: 15.5px;
+  line-height: 1.3;
+}
+
+.tradeoff-arrow {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.tradeoff p {
+  margin: 0;
+  color: var(--ink-2);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+
+.tradeoff p.tradeoff-resolution {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  background: var(--accent-soft);
+}
+
+.tradeoff-note {
+  margin: 12px 0 0;
+  color: var(--ink-muted);
+  font-size: var(--text-sm);
+}
+
+.severity-article {
+  margin-left: 8px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.severity-label {
+  margin: 0 0 4px;
+  color: var(--sev-ink);
+  font-size: var(--text-xs);
+  font-weight: 650;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.severity-modifiers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 12px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.severity-modifier {
+  min-width: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.severity-modifier h4 {
+  margin: 6px 0 4px;
+  font-size: var(--text-sm);
+  line-height: 1.35;
+}
+
+.severity-modifier p {
+  margin: 0;
+  color: var(--ink-3);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+
+.severity-modifier p.severity-basis {
+  margin-top: 6px;
+  color: var(--ink-muted);
+  font-size: var(--text-xs);
+}
+
+.severity-effect {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: 650;
+}
+
+.severity-modifier[data-effect="up"] .severity-effect {
+  background: var(--severity-3-bg);
+  color: var(--severity-3-ink);
+}
+
+.severity-modifier[data-effect="down"] .severity-effect {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.open-questions-intro {
+  margin: 0 0 6px;
+  color: var(--ink-2);
+  font-size: var(--text-sm);
+}
+
+.open-questions-counter {
+  margin: 0 0 12px;
+  color: var(--accent);
+  font-size: var(--text-sm);
+  font-weight: 650;
+}
+
+.open-questions-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.open-question {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.open-question.is-known {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.open-question p {
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+
+.open-question-check {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 8px;
+  color: var(--ink-2);
+  font-size: var(--text-xs);
+  cursor: pointer;
+}
+
+.open-question-check input {
+  accent-color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .practice-lanes[data-count="4"] {
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .open-questions-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Píldoras bajo cada tarjeta de principio: la tarjeta deja de ser una fila y las píldoras no heredan la tipografía de lectura. */
+.legal-foundations .lf-principles > li {
+  flex-direction: column;
+  gap: 6px;
+}
+
+.legal-foundations .lf-principles > li > a.lf-principle-card {
+  flex: 1 1 auto;
+  height: auto;
+}
+
+.legal-foundations .lf-principles .ficha-pills {
+  margin-top: 0;
+}
+
+.legal-foundations .ficha-pills li {
+  font-family: var(--font-ui), system-ui, sans-serif;
+  font-size: var(--text-xs);
+  line-height: 1.4;
+}
+
+/* Las vistas se dibujan dentro de .markdown: sin la sangría de sus listas, y el código largo se parte. */
+.markdown .ficha-pills,
+.markdown .severity-list,
+.markdown .open-questions-list,
+.markdown .tradeoff-list,
+.markdown .severity-modifiers {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.markdown .ficha-pills li {
+  max-width: 100%;
+  margin: 0;
+}
+
+.ficha-pills li code {
+  overflow-wrap: anywhere;
+}
+
+.open-questions-list {
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
 }

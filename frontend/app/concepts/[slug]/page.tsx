@@ -3,8 +3,6 @@ import { NoteForm, NoteItem } from "@/components/card/PersonalForms";
 import { ConceptReading, type ReadingSectionModel } from "@/components/card/ConceptReading";
 import { LegalCatalog, LegalFoundations } from "@/components/card/LegalFoundations";
 import { canViewChangeHistory, canViewRelatedLab, currentViewer } from "@/lib/changeHistoryAccess";
-import { TradeOffs } from "@/components/ficha/TradeOffs";
-import { OpenQuestions } from "@/components/ficha/OpenQuestions";
 import { MarkdownBody } from "@/components/markdown/MarkdownBody";
 import { getConcept, getDomain, getRelations, getStudyState, listNotes } from "@/lib/api/client";
 import type { ConceptRefs } from "@/lib/conceptNames";
@@ -23,78 +21,44 @@ import { hideOwnerName } from "@/lib/hideOwnerName";
 import { staticSlugs } from "@/lib/staticParams";
 import type { ReactNode } from "react";
 
-const VIEW_MARK = /<!-- view: ([a-z0-9_]+) -->/g;
-const ACTIVITY_FLOW = /[—–-]\s*recolección, ingesta, consulta, transformación, almacenamiento, integración, transmisión, conservación y eliminación\s*[—–-]/;
-const DESIGN_QUESTIONS =
-  /\*\*\[Buena práctica\]\*\* Seis preguntas de diseño\.[\s\S]*?(?=\*\*\[Decisión de arquitectura\]\*\* Matriz de control:)/;
-
-export type FichaViewRenderer = (id: string, views: unknown) => ReactNode | null;
-
-function withCodeGuide(markdown: string): string {
-  const start = markdown.indexOf("El script se");
-  if (start < 0) {
-    return markdown;
-  }
-  const head = markdown.slice(0, start).trimEnd();
-  const fences = [...markdown.slice(start).matchAll(/```text[\s\S]*?```/g)].map((match) => match[0]);
-  return `${head}\n\n${fences.join("\n\n")}\n\n<!-- view: code_guide -->\n`;
-}
-
-function markdownWithViews(
-  markdown: string,
-  renderView: ((id: string) => ReactNode | null) | undefined,
-  body: ReactNode,
-  props: {
-    obligations: readonly ObligationBasis[];
-    conceptRefs: ConceptRefs;
-    markCodeStatus?: boolean;
-    styleArrows?: boolean;
-    etiquetaColumn?: boolean;
-    horizontalDiagrams?: boolean;
-  },
-): ReactNode {
-  const source = renderView
-    ? markdown
-        .replace(
-          /### Qué implica para Ingeniería de Datos\s*\n[\s\S]*$/,
-          "### Qué implica para Ingeniería de Datos\n\n<!-- view: treatment_map -->\n",
-        )
-        .replace(ACTIVITY_FLOW, "\n\n<!-- view: data_flow -->\n\n")
-        .replace(DESIGN_QUESTIONS, "<!-- view: design_questions -->\n\n")
-        .replace(
-          /\*\*\[Decisión de arquitectura\]\*\* Matriz de control:[\s\S]*?referencia interna protegida\./,
-          "<!-- view: control_matrix -->\n",
-        )
-        .replace(/\*\*Del requisito al dato\.\*\*\s*```mermaid[\s\S]*?```\s*/, "<!-- view: requirement_to_data -->\n\n")
-        .replace(/\*\*Control y evidencia\.\*\*\s*```mermaid[\s\S]*?```/, "<!-- view: control_evidence -->")
-    : markdown;
-  const guided = renderView ? withCodeGuide(source) : source;
-  if (!renderView || !guided.includes("<!-- view:")) {
-    return body;
-  }
-  const parts: ReactNode[] = [];
-  let last = 0;
-  let index = 0;
-  for (const match of guided.matchAll(VIEW_MARK)) {
-    const start = match.index ?? 0;
-    const before = guided.slice(last, start);
-    if (before.trim()) {
-      parts.push(<MarkdownBody key={`md-${index}`} markdown={before} {...props} />);
-      index += 1;
-    }
-    const slot = renderView(match[1] ?? "");
-    if (slot) {
-      parts.push(<div key={`view-${index}`}>{slot}</div>);
-      index += 1;
-    }
-    last = start + match[0].length;
-  }
-  const after = guided.slice(last);
-  if (after.trim()) {
-    parts.push(<MarkdownBody key={`md-${index}`} markdown={after} {...props} />);
-  }
-  return <>{parts}</>;
-}
+import { ApproachBoard } from "@/components/ficha/ApproachBoard";
+import { CentralIdea } from "@/components/ficha/CentralIdea";
+import { CloudCompare } from "@/components/ficha/CloudCompare";
+import { CodeGuide } from "@/components/ficha/CodeGuide";
+import { ControlEvidence, RequirementToData } from "@/components/ficha/ControlEvidence";
+import { ControlMatrix } from "@/components/ficha/ControlMatrix";
+import { DesignBoard } from "@/components/ficha/DesignBoard";
+import { PracticeLanes } from "@/components/ficha/PracticeLanes";
+import { ProblemJourney } from "@/components/ficha/ProblemJourney";
+import { SeverityCards } from "@/components/ficha/SeverityCards";
+import { SourcesGrouped } from "@/components/ficha/SourcesGrouped";
+import { OpenQuestions } from "@/components/ficha/OpenQuestions";
+import { TradeOffs } from "@/components/ficha/TradeOffs";
+import { TreatmentMap } from "@/components/ficha/TreatmentMap";
+import { VigenciaTimeline } from "@/components/ficha/VigenciaTimeline";
+import { WhenToUse } from "@/components/ficha/WhenToUse";
+import {
+  approachProps,
+  centralIdeaProps,
+  cloudCompareProps,
+  codeGuideProps,
+  controlEvidenceProps,
+  controlMatrixProps,
+  designBoardProps,
+  groupedSourceCount,
+  legalFoundationsProps,
+  openQuestionsProps,
+  practiceLanesProps,
+  problemJourneyProps,
+  requirementToDataProps,
+  severityCardsProps,
+  tradeOffsProps,
+  sourcesGroupedProps,
+  treatmentMapProps,
+  vigenciaTimelineProps,
+  whenToUseProps,
+  type Views,
+} from "@/lib/views";
 
 const CLOUD_KEYS = new Set(["gcp", "aws", "azure"]);
 
@@ -154,6 +118,30 @@ function SourceLinks({ sources }: { sources: SourceRef[] }) {
   );
 }
 
+/** ADR-030: el componente de cada marca <!-- view: clave -->, con sus datos del contrato. Sin la vista, no dibuja nada. */
+function markedViews(views: Views | undefined): Record<string, ReactNode> {
+  const nodes: Record<string, ReactNode> = {};
+  if (!views) {
+    return nodes;
+  }
+  if (views.central_idea) nodes.central_idea = <CentralIdea {...centralIdeaProps(views.central_idea)} />;
+  if (views.vigencia_timeline) nodes.vigencia_timeline = <VigenciaTimeline {...vigenciaTimelineProps(views.vigencia_timeline)} />;
+  if (views.treatment_map) nodes.treatment_map = <TreatmentMap {...treatmentMapProps(views.treatment_map)} />;
+  if (views.problem_journey) nodes.problem_journey = <ProblemJourney {...problemJourneyProps(views.problem_journey)} />;
+  if (views.design_board) nodes.design_board = <DesignBoard {...designBoardProps(views.design_board)} />;
+  if (views.control_matrix) nodes.control_matrix = <ControlMatrix {...controlMatrixProps(views.control_matrix)} />;
+  if (views.when_to_use) nodes.when_to_use = <WhenToUse {...whenToUseProps(views.when_to_use)} />;
+  if (views.requirement_to_data) nodes.requirement_to_data = <RequirementToData {...requirementToDataProps(views.requirement_to_data)} />;
+  if (views.control_evidence) nodes.control_evidence = <ControlEvidence {...controlEvidenceProps(views.control_evidence)} />;
+  if (views.code_guide) nodes.code_guide = <CodeGuide {...codeGuideProps(views.code_guide)} />;
+  if (views.cloud_compare) nodes.cloud_compare = <CloudCompare {...cloudCompareProps(views.cloud_compare)} />;
+  if (views.practice_lanes) nodes.practice_lanes = <PracticeLanes {...practiceLanesProps(views.practice_lanes)} />;
+  if (views.trade_offs) nodes.trade_offs = <TradeOffs {...tradeOffsProps(views.trade_offs)} />;
+  if (views.severity_cards) nodes.severity_cards = <SeverityCards {...severityCardsProps(views.severity_cards)} />;
+  if (views.open_questions) nodes.open_questions = <OpenQuestions {...openQuestionsProps(views.open_questions)} />;
+  return nodes;
+}
+
 function sectionModels(
   sections: Section[],
   sources: SourceRef[],
@@ -161,8 +149,9 @@ function sectionModels(
   slug: string,
   conceptRefs: ConceptRefs,
   kind: string,
-  renderView?: (id: string) => ReactNode | null,
+  views?: Views,
 ): ReadingSectionModel[] {
+  const viewNodes = markedViews(views);
   const architecture = kind === "architecture";
   const styleArrows = slug !== "data-lineage";
   const titleOf = (section: Section) => (architecture ? architectureTitle(section.key, section.title) : section.title);
@@ -178,21 +167,22 @@ function sectionModels(
   let clouds: ReadingSectionModel[] = [];
 
   function flushClouds() {
-    const board = clouds.length > 0 ? renderView?.("cloud_compare") : null;
-    if (board && clouds[0]) {
-      models.push({
-        number: clouds[0].number,
-        key: "cloud_compare",
-        title: "En la nube",
-        presentation: "details",
-        listed: true,
-        body: board,
-      });
-    } else {
-      models.push(...clouds);
-    }
+    models.push(...clouds);
     clouds = [];
   }
+
+  const body = (section: Section, extra: { etiquetaColumn?: boolean } = {}) => (
+    <MarkdownBody
+      markdown={section.markdown}
+      obligations={obligations}
+      conceptRefs={conceptRefs}
+      markCodeStatus={architecture}
+      horizontalDiagrams={section.key === "architecture"}
+      styleArrows={styleArrows}
+      views={viewNodes}
+      {...extra}
+    />
+  );
 
   for (const section of ordered) {
     if (section.key === "change_history" && !showHistory) {
@@ -216,21 +206,17 @@ function sectionModels(
         title: titleOf(section),
         presentation: section.key === "components" ? "components" : "view",
         listed: true,
-        body: markdownWithViews(
-          section.markdown,
-          renderView,
-          <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus styleArrows={styleArrows} />,
-          { obligations, conceptRefs, markCodeStatus: true, styleArrows },
+        body: (
+          <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus styleArrows={styleArrows} views={viewNodes} />
         ),
       });
       continue;
     }
     if (section.key === "summary") {
       flushClouds();
-      const viewProps = { obligations, conceptRefs, markCodeStatus: architecture, styleArrows };
       const opening = slug === "chile-data-protection" ? splitPurpose(section.markdown) : null;
       if (opening) {
-        const approach = section.markdown.includes("view: approach") ? null : renderView?.("approach");
+        const approach = views?.approach ? <ApproachBoard {...approachProps(views.approach)} /> : null;
         models.push({
           number: section.number,
           key: "purpose",
@@ -239,12 +225,7 @@ function sectionModels(
           listed: true,
           body: (
             <>
-              {markdownWithViews(
-                opening.purpose,
-                renderView,
-                <MarkdownBody markdown={opening.purpose} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} styleArrows={styleArrows} />,
-                viewProps,
-              )}
+              {body({ ...section, markdown: opening.purpose })}
               {approach}
             </>
           ),
@@ -255,29 +236,42 @@ function sectionModels(
           title: "Contexto normativo",
           presentation: "details",
           listed: true,
-          body: markdownWithViews(
-            opening.context,
-            renderView,
-            <MarkdownBody markdown={opening.context} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} styleArrows={styleArrows} />,
-            viewProps,
-          ),
+          body: body({ ...section, markdown: opening.context }),
         });
       } else {
-        const summaryBody = section.markdown.trim()
-          ? markdownWithViews(
-              section.markdown,
-              renderView,
-              <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} styleArrows={styleArrows} />,
-              viewProps,
-            )
-          : null;
         models.push({
           number: section.number,
           key: section.key,
           title: titleOf(section),
           presentation: "summary",
-          listed: Boolean(section.markdown.trim()),
-          body: summaryBody,
+          listed: text,
+          body: text ? body(section) : null,
+        });
+        if (views?.approach) {
+          const approach = approachProps(views.approach);
+          models.push({
+            number: 30,
+            key: "approach",
+            title: approach.title,
+            presentation: "details",
+            listed: false,
+            annex: true,
+            body: <ApproachBoard {...approach} />,
+          });
+        }
+      }
+      continue;
+    }
+    if (CLOUD_KEYS.has(section.key) && views?.cloud_compare) {
+      flushClouds();
+      if (text) {
+        models.push({
+          number: section.number,
+          key: "cloud_compare",
+          title: views.cloud_compare.title,
+          presentation: "details",
+          listed: true,
+          body: body(section),
         });
       }
       continue;
@@ -292,38 +286,44 @@ function sectionModels(
         title: titleOf(section),
         presentation: "cloud",
         listed: !(architecture && (section.key === "aws" || section.key === "azure")),
-        body: markdownWithViews(
-          section.markdown,
-          renderView,
-          <MarkdownBody
-            markdown={section.markdown}
-            etiquetaColumn
-            obligations={obligations}
-            conceptRefs={conceptRefs}
-            markCodeStatus={architecture}
-            styleArrows={styleArrows}
-          />,
-          { obligations, conceptRefs, markCodeStatus: architecture, styleArrows, etiquetaColumn: true },
-        ),
+        body: body(section, { etiquetaColumn: true }),
       });
       continue;
     }
     flushClouds();
     if (section.key === "what_is" && slug === "chile-data-protection") {
+      const foundations = views?.legal_foundations ? legalFoundationsProps(views.legal_foundations) : null;
       models.push({
         number: section.number,
         key: section.key,
-        title: "Fundamentos legales y aplicación técnica",
+        title: foundations?.title ?? titleOf(section),
         presentation: "details",
         listed: true,
-        body: <LegalFoundations />,
+        body: (
+          <>
+            <LegalFoundations roles={foundations?.roles} principles={foundations?.principles} />
+            <p>
+              <a href="#s23">Detalle por tema y artículo en el Anexo · Catálogo legal</a>
+            </p>
+          </>
+        ),
       });
       continue;
     }
     if (section.key === "sources") {
-      const grouped = renderView?.("sources_grouped");
       const showList = sources.length > 0;
-      if (!text && !showList && !grouped) {
+      if (!text && !showList) {
+        continue;
+      }
+      if (views?.sources_grouped) {
+        models.push({
+          number: section.number,
+          key: section.key,
+          title: titleOf(section),
+          presentation: "details",
+          listed: true,
+          body: <SourcesGrouped {...sourcesGroupedProps(views.sources_grouped)} />,
+        });
         continue;
       }
       models.push({
@@ -332,43 +332,13 @@ function sectionModels(
         title: titleOf(section),
         presentation: "details",
         listed: true,
-        body: grouped ? (
-          grouped
-        ) : showList ? (
+        body: showList ? (
           <SourceLinks sources={sources} />
         ) : (
           <MarkdownBody markdown={section.markdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} styleArrows={styleArrows} />
         ),
       });
       continue;
-    }
-    if (section.key === "problem") {
-      const replacement = renderView?.("problem");
-      if (replacement) {
-        models.push({
-          number: section.number,
-          key: section.key,
-          title: titleOf(section),
-          presentation: "details",
-          listed: true,
-          body: replacement,
-        });
-        continue;
-      }
-    }
-    if (section.key === "when_to_use") {
-      const replacement = renderView?.("when_to_use");
-      if (replacement) {
-        models.push({
-          number: section.number,
-          key: section.key,
-          title: titleOf(section),
-          presentation: "details",
-          listed: true,
-          body: replacement,
-        });
-        continue;
-      }
     }
     if (!text) {
       continue;
@@ -377,23 +347,14 @@ function sectionModels(
       flushClouds();
       const cut = section.markdown.indexOf("### Sanciones");
       const tradeMarkdown = section.markdown.slice(0, cut).trim();
-      const sanctionsMarkdown = section.markdown
-        .slice(cut)
-        .replace(/^### Sanciones[^\n]*\n?/, "")
-        .replace(renderView ? /\n+En reincidencia[\s\S]*$/ : /$^/, "")
-        .trim();
-      const closing = tradeMarkdown
-        .split(/\n\n/)
-        .map((part) => part.trim())
-        .find((part) => part.startsWith("No toda falla"));
-      const viewProps = { obligations, conceptRefs, markCodeStatus: architecture, styleArrows };
+      const sanctionsMarkdown = section.markdown.slice(cut).replace(/^### Sanciones[^\n]*\n?/, "").trim();
       models.push({
         number: section.number,
         key: section.key,
         title: titleOf(section),
         presentation: "details",
         listed: true,
-        body: <TradeOffs closing={closing} />,
+        body: body({ ...section, markdown: tradeMarkdown }),
       });
       models.push({
         number: section.number + 0.5,
@@ -401,24 +362,7 @@ function sectionModels(
         title: "Sanciones",
         presentation: "details",
         listed: true,
-        body: markdownWithViews(
-          sanctionsMarkdown,
-          renderView,
-          <MarkdownBody markdown={sanctionsMarkdown} obligations={obligations} conceptRefs={conceptRefs} markCodeStatus={architecture} styleArrows={styleArrows} />,
-          viewProps,
-        ),
-      });
-      continue;
-    }
-    if (section.key === "open_questions" && slug === "chile-data-protection") {
-      flushClouds();
-      models.push({
-        number: section.number,
-        key: section.key,
-        title: titleOf(section),
-        presentation: "details",
-        listed: true,
-        body: <OpenQuestions />,
+        body: body({ ...section, markdown: sanctionsMarkdown }),
       });
       continue;
     }
@@ -433,37 +377,18 @@ function sectionModels(
             ? "open"
             : "details",
       listed: true,
-      body: markdownWithViews(
-        section.markdown,
-        renderView,
-        <MarkdownBody
-          markdown={section.markdown}
-          obligations={obligations}
-          conceptRefs={conceptRefs}
-          markCodeStatus={architecture}
-          horizontalDiagrams={section.key === "architecture"}
-          styleArrows={styleArrows}
-        />,
-        {
-          obligations,
-          conceptRefs,
-          markCodeStatus: architecture,
-          styleArrows,
-          horizontalDiagrams: section.key === "architecture",
-        },
-      ),
+      body: body(section),
     });
   }
   flushClouds();
-  const groupedSources = renderView?.("sources_grouped");
-  if ((sources.length > 0 || groupedSources) && !models.some((item) => item.key === "sources")) {
+  if (sources.length > 0 && !models.some((item) => item.key === "sources")) {
     models.push({
       number: 20,
       key: "sources",
       title: "Fuentes",
       presentation: "details",
       listed: true,
-      body: groupedSources ?? <SourceLinks sources={sources} />,
+      body: <SourceLinks sources={sources} />,
     });
   }
   return models;
@@ -539,13 +464,7 @@ function NoteListView({ slug, notes }: { slug: string; notes: NoteList }) {
   ));
 }
 
-export async function ConceptArticle({
-  slug,
-  renderView,
-}: {
-  slug: string;
-  renderView?: FichaViewRenderer;
-}) {
+export async function ConceptArticle({ slug }: { slug: string }) {
   const staticMode = process.env.API_MODE === "static";
   const [concept, relations, conceptRefs] = await Promise.all([
     getConcept(slug),
@@ -618,20 +537,12 @@ export async function ConceptArticle({
       legalNotice={data.jurisdiction.length > 0 ? legalNoticeCopy(noticeSplit.notice) : null}
       legalBasis={data.legal_basis}
       minutes={readingMinutes(sections)}
-      sourceCount={data.sources.length}
+      sourceCount={groupedSourceCount(data.views?.sources_grouped, data.sources.length)}
       crumb={crumb}
       next={next}
       construction={!domainOpen}
       sections={[
-        ...sectionModels(
-          sections,
-          data.sources,
-          data.legal_basis,
-          data.slug,
-          conceptRefs,
-          data.kind,
-          renderView ? (id) => renderView(id, (data as { views?: unknown }).views) : undefined,
-        ),
+        ...sectionModels(sections, data.sources, data.legal_basis, data.slug, conceptRefs, data.kind, data.views),
         ...annexModels(data.annexes ?? [], data.legal_basis, conceptRefs),
       ]}
       compactNumbering={data.slug === "chile-data-protection"}

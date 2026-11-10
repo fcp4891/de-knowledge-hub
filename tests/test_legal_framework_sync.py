@@ -1,13 +1,12 @@
 """La vigencia de chile-data-protection no se desfasa del marco legal verificado (ADR-027).
 
-content/legal-frameworks/cl-ley-21719.yaml es el dato que lee la UI; la ficha padre lo cuenta en prosa. El test falla
-si difieren la fecha de vigencia, la fecha del estado del proyecto de postergación o los términos citados entre «»
-de ese estado, o si la cita del Senado en la ficha se consultó otro día.
+content/legal-frameworks/cl-ley-21719.yaml es el dato que lee la UI; la ficha padre lo cuenta en una frase y en la línea
+de vigencia (views.vigencia_timeline, ADR-030). El test falla si difieren la fecha de vigencia, la fecha del estado del
+proyecto de postergación o la fecha propuesta, o si la cita del Senado en la ficha se consultó otro día.
 """
 
 from __future__ import annotations
 
-import re
 from pathlib import Path
 from typing import Any
 
@@ -28,21 +27,38 @@ def ficha() -> tuple[dict[str, Any], str]:
     return yaml.safe_load(frontmatter), body
 
 
+MONTHS = {"10": "octubre", "12": "diciembre"}
+
+
+def long_date(iso: str) -> str:
+    year, month, day = iso.split("-")
+    return f"{int(day)} de {MONTHS[month]} de {year}"
+
+
+def timeline() -> dict[str, Any]:
+    data, _ = ficha()
+    return dict(data["views"]["vigencia_timeline"])
+
+
 def test_effective_date_matches_the_framework() -> None:
+    """La frase del Contexto normativo y el hito vigente de la línea (ADR-030) dicen la fecha del marco legal."""
     _, body = ficha()
-    expected = facts()["effective-date"]["value"]
-    assert f"rigen desde el **{expected}**" in body
-    assert f"mientras no se publique otra ley, rige el {expected}" in body
+    expected = str(facts()["effective-date"]["value"])
+    assert f"rigen desde el {long_date(expected)}" in body
+    current = [item for item in timeline()["items"] if item["state"] == "current"]
+    assert [str(item["date"]) for item in current] == [expected]
 
 
 def test_postponement_state_matches_the_framework() -> None:
-    _, body = ficha()
+    """El hito del Senado (el que enlaza la tramitación) y el estado de la línea usan la fecha verificada del proyecto; la
+    fecha propuesta es la del mensaje."""
     bill = facts()["postponement-bill"]
-    match = re.search(r"\*\*Estado al (\d{4}-\d{2}-\d{2})\.\*\*([^\n]*)", body)
-    assert match, "la ficha no tiene el párrafo «Estado al …»"
-    assert match.group(1) == str(bill["verified_at"]), "la fecha del estado difiere del marco legal"
-    for quoted in re.findall(r"«([^»]+)»", bill["value"]):
-        assert f"«{quoted}»" in match.group(2), f"el estado de la ficha no dice «{quoted}»"
+    view = timeline()
+    senate = [item for item in view["items"] if any(link["href"] == bill["url"] for link in item.get("links", []))]
+    assert [str(item["date"]) for item in senate] == [str(bill["verified_at"])]
+    assert long_date(str(bill["verified_at"])) in view["as_of"]
+    assert "«1 de diciembre de 2027»" in bill["note"]
+    assert [str(i["date"]) for i in view["items"] if i["state"] == "proposed"] == ["2027-12-01"]
 
 
 def test_senate_citation_was_read_the_day_of_the_framework() -> None:

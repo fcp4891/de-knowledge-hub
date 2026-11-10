@@ -44,8 +44,8 @@
   --warn-bg: #FBEBD3; --warn-ink: #7A4A00;   /* En revisión / Necesita repaso */
 
   /* Gravedad creciente (leve, grave, gravísima). El texto usa el ink sobre el bg. */
-  --severity-1-bg: #DDEFE4; --severity-1-ink: #165536; --severity-1-bar: #165536;
-  --severity-2-bg: #FBEBD3; --severity-2-ink: #7A4A00; --severity-2-bar: #7A4A00;
+  --severity-1-bg: #FBF3CF; --severity-1-ink: #5E4A00; --severity-1-bar: #B08A00;
+  --severity-2-bg: #FCE6D3; --severity-2-ink: #7F3A0A; --severity-2-bar: #C2591A;
   --severity-3-bg: #F6E4E1; --severity-3-ink: #6E2A24; --severity-3-bar: #8A2433;
 
   /* Niveles de objetivo */
@@ -114,12 +114,12 @@
     --ok-ink: #B7E4C7;
     --warn-bg: #3A2A12;
     --warn-ink: #F3D19C;
-    --severity-1-bg: #163628;
-    --severity-1-ink: #B7E4C7;
-    --severity-1-bar: #7DCEA0;
-    --severity-2-bg: #3A2A12;
-    --severity-2-ink: #F3D19C;
-    --severity-2-bar: #E2B86A;
+    --severity-1-bg: #332B0E;
+    --severity-1-ink: #F1DF8F;
+    --severity-1-bar: #D9C25A;
+    --severity-2-bg: #3A2214;
+    --severity-2-ink: #F6C29C;
+    --severity-2-bar: #E58A4E;
     --severity-3-bg: #3A1E1C;
     --severity-3-ink: #F3C4C0;
     --severity-3-bar: #E7A09A;

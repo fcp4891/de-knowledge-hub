@@ -752,6 +752,19 @@
   color: var(--accent);
 }
 
+.reading-details .control-evidence-example > summary {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 32px;
+  padding: 2px 0;
+  gap: 6px;
+  font-size: var(--text-sm);
+  font-weight: 650;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--accent);
+}
+
 .reading[data-compact="true"] .reading-details summary .reading-num {
   width: auto;
   font-family: inherit;
@@ -1086,9 +1099,17 @@
   text-align: right;
 }
 
+.lf-roles-caption {
+  margin: 0;
+  padding: 10px 16px 0;
+  color: var(--ink-muted);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+
 .lf-roles-split {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0;
   margin: 0;
 }

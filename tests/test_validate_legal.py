@@ -141,8 +141,17 @@ def test_verified_needs_owner_approval_and_legal_citation_accessed_on_last_verif
     sources = [{"source": "bcn-leychile", "url": LAW_URL, "accessed": "2026-09-01"}, {"source": "docs-a", "url": "https://example.org/a"}]
     report = setup(content, verification_status="verified", sources=sources)
     assert_error(report, "[owner_approved_at] verified exige la aprobación explícita del dueño",
-                 f"[sources.0.accessed] la cita legal se consulta el día de last_verified ({TODAY})")
+                 f"[sources.0.accessed] la cita legal no puede ser anterior a last_verified ({TODAY})")
     assert setup(content, verification_status="verified", owner_approved_at=TODAY).ok
+
+
+def test_legal_citation_may_be_accessed_after_last_verified(content: Path) -> None:   # ADR-023, Enmienda 8
+    later = (dt.date.fromisoformat(TODAY) + dt.timedelta(days=12)).isoformat()
+    earlier = (dt.date.fromisoformat(TODAY) - dt.timedelta(days=1)).isoformat()
+    for accessed, ok in ((later, True), (TODAY, True), (earlier, False)):
+        sources = [{"source": "bcn-leychile", "url": LAW_URL, "accessed": accessed, "page_title": "Ley Chile - Ley 19628"},
+                   {"source": "docs-a", "url": "https://example.org/a"}]
+        assert setup(content, sources=sources).ok is ok, accessed
 
 
 def test_owner_approval_is_allowed_without_jurisdiction(content: Path) -> None:   # ADR-023, Enmienda 6

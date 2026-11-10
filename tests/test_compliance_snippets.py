@@ -25,11 +25,13 @@ from pathlib import Path
 from typing import Any
 
 import pytest
+import yaml
 
 from tests.test_docker_snippets import blocks
 from tests.test_open_stack_snippets import pg_env, require_iceberg, run_python_block  # noqa: F401 - fixture
 
 UTF8 = {"PYTHONIOENCODING": "utf-8"}   # los ejemplos imprimen tildes; en Windows la salida sería cp1252
+CONTENT = Path(__file__).resolve().parent.parent / "content"
 
 
 def assert_mypy_strict(tmp_path: Path) -> None:
@@ -201,7 +203,19 @@ def test_privacy_controls_guided_code_rules(tmp_path: Path) -> None:
     assert docs["erasure_replay_check"].startswith("Derecho de supresión (art. 7)")
     assert all(doc.startswith(("Principio de ", "Derecho de ")) for doc in docs.values()), docs
     assert not [name for name, doc in docs.items() if "«" in doc]   # sin citas textuales que no se pudieron verificar
-    assert list(m.SCENARIOS) == list(SCENARIOS)
+    assert [c.__name__ for c in m.CONTROLS] == ["purpose_check", "schema_minimization", "retention_check", "access_review",
+                                                "erasure_replay_check"]
+
+
+def test_privacy_controls_code_guide_matches_the_ci() -> None:
+    """ADR-030: la guía bajo el código (views.code_guide) nombra los mismos escenarios y salidas que la CI, y sus reglas son
+    las funciones de CONTROLS."""
+    text = (CONTENT / "concepts" / "chile-data-protection.md").read_text(encoding="utf-8")
+    guide = yaml.safe_load(text.split("---\n", 2)[1])["views"]["code_guide"]
+    assert {item["name"]: item["exit_code"] for item in guide["scenarios"]["items"]} == SCENARIOS
+    assert [item["name"] for item in guide["scenarios"]["items"]] == list(SCENARIOS)
+    (code,) = blocks("chile-data-protection", "python")
+    assert all(f"def {item['fn']}(" in code for item in guide["rules"]["items"])
 
 
 def test_privacy_controls_replay_brings_back_the_expired_record_until_fixed(tmp_path: Path) -> None:
@@ -216,17 +230,18 @@ def test_privacy_controls_validation_rejects_duplicates_stale_and_tampered_evide
     m = load_controls(tmp_path)
     results = m.run_controls(m.fix(m.with_gaps()))
     stored = {r.control_id: r.sha256() for r in results}
-    stale = m.replace(results[0], executed_at=m.REFERENCE - m.timedelta(days=31))
-    tampered = m.replace(results[1], evidence={"status": "PASS", "detail": "editado"})
-    no_uri = m.replace(results[3], evidence_uri="")
-    gaps = m.validate([stale, tampered, results[2], results[2], no_uri], stored, m.CONTROL_IDS)
-    assert "retention_check: resultado duplicado" in gaps
+    purpose, schema, retention, access, erasure = results
+    stale = m.replace(access, executed_at=m.REFERENCE - m.timedelta(days=31))
+    tampered = m.replace(erasure, evidence={"status": "PASS", "detail": "editado"})
+    no_uri = m.replace(schema, evidence_uri="")
+    gaps = m.validate([purpose, no_uri, retention, retention, stale, tampered], stored)
+    assert "retention_check: resultado duplicado (2)" in gaps
     assert "access_review: evidencia vencida (31 días)" in gaps
     assert "erasure_replay_check: huella distinta a la guardada" in gaps
     assert "schema_minimization: evidencia sin URI" in gaps
     assert "schema_minimization: huella distinta a la guardada" not in gaps
-    assert m.validate(results[:3], stored, m.CONTROL_IDS) == ["schema_minimization: falta el resultado"]
-    assert m.validate(results, stored, m.CONTROL_IDS) == []
+    assert m.validate([purpose, retention, access, erasure], stored) == ["schema_minimization: falta el resultado"]
+    assert m.validate(results, stored) == []
 
 
 MINIMIZATION_SCENARIOS = {"correcto": 0, "deriva-esquema": 1, "select-star": 1, "sin-purga": 1, "sin-clasificar": 1}

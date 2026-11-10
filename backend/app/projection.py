@@ -216,6 +216,32 @@ def annexes(body: str) -> dict[str, Any]:
     return {"annexes": found} if found else {}
 
 
+def grouped_source(index: ContentIndex, page: dict[str, Any], entry: dict[str, Any]) -> dict[str, Any]:
+    """ADR-030: una entrada de sources_grouped con sus URLs resueltas contra las citas y el registro."""
+    refs = {ref["url"]: ref for ref in page.get("sources", []) if "url" in ref}
+    cited = [refs[url] for url in entry["urls"]]
+    levels = sorted({index.entities[ref["source"]]["authority_level"] for ref in cited})
+    links = [{**({"label": ref["label"]} if "label" in ref else {}), "href": ref["url"]} for ref in cited]
+    optional: dict[str, Any] = {key: entry[key] for key in ("why", "provider") if key in entry}
+    return {"title": entry["title"], "links": links, "publisher": entry["publisher"],
+            "level": " y ".join(f"Nivel {level}" for level in levels), **optional}
+
+
+def page_views(index: ContentIndex, page: dict[str, Any]) -> dict[str, Any]:
+    """`views` solo si la ficha las tiene (ADR-030); sources_grouped con links y nivel resueltos."""
+    views = page.get("views")
+    if not views:
+        return {}
+    projected = {key: value for key, value in views.items() if key != "sources_grouped"}
+    if "sources_grouped" in views:
+        projected["sources_grouped"] = {"groups": [
+            {**{k: v for k, v in group.items() if k != "sources"},
+             "sources": [grouped_source(index, page, s) for s in group["sources"]]}
+            for group in views["sources_grouped"]["groups"]
+        ]}
+    return {"views": projected}
+
+
 def concept_detail(index: ContentIndex, slug: str) -> dict[str, Any]:
     entry = index.concepts[slug]
     concept, page = entry.concept, index.entities.get(slug, {})
@@ -238,6 +264,7 @@ def concept_detail(index: ContentIndex, slug: str) -> dict[str, Any]:
         "sections": sections(index.bodies.get(slug, ""),
                              ARCHITECTURE_SECTION_KEYS if concept["kind"] == "architecture" else SECTION_KEYS),
         **annexes(index.bodies.get(slug, "")),
+        **page_views(index, page),
     }
 
 
