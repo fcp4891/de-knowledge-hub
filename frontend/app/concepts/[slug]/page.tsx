@@ -459,7 +459,7 @@ function NoteListView({ slug, notes }: { slug: string; notes: NoteList }) {
   ));
 }
 
-export async function ConceptArticle({ slug }: { slug: string }) {
+async function ConceptArticle({ slug }: { slug: string }) {
   const staticMode = process.env.API_MODE === "static";
   const [concept, relations, conceptRefs] = await Promise.all([
     getConcept(slug),

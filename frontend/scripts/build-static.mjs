@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process";
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -49,6 +49,18 @@ for (const relative of dynamicPages) {
 originals.set(personalActions, readFileSync(personalActions, "utf8"));
 writeFileSync(personalActions, readFileSync(personalStub, "utf8"));
 
+// Vistas previas internas: no se publican. Con el prefijo «_», Next.js no las trata como rutas durante el build.
+const internalPages = ["preview-ficha"];
+const hidden = [];
+for (const name of internalPages) {
+  const from = path.join(frontendRoot, "app", name);
+  if (existsSync(from)) {
+    const to = path.join(frontendRoot, "app", `_${name}`);
+    renameSync(from, to);
+    hidden.push([to, from]);
+  }
+}
+
 let result;
 try {
   result = spawnSync("npx", ["next", "build"], {
@@ -60,6 +72,9 @@ try {
 } finally {
   for (const [file, text] of originals) {
     writeFileSync(file, text);
+  }
+  for (const [to, from] of hidden) {
+    renameSync(to, from);
   }
 }
 

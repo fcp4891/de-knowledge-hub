@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { ConceptArticle } from "../concepts/[slug]/page";
+import ConceptPage from "../concepts/[slug]/page";
 
 export const dynamic = "force-dynamic";
 
@@ -14,5 +14,5 @@ export default async function PreviewFichaPage({
   if (typeof params.grupo !== "string") {
     redirect("/preview-ficha?grupo=lf-fundamentos");
   }
-  return <ConceptArticle slug="chile-data-protection" />;
+  return <ConceptPage params={Promise.resolve({ slug: "chile-data-protection" })} />;
 }
