@@ -40,7 +40,7 @@ sources:
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
     accessed: 2026-11-09
     label: versión desde el 2026-12-01
-    page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
+    page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES · Con Vigencia Diferida por Fecha - 01-DIC-2026"
     note: "Ley 19.628 en la versión «Con Vigencia Diferida por Fecha» desde 2026-12-01 (texto con las modificaciones de la Ley 21.719), consultada el 2026-10-25 y de nuevo el 2026-10-28, sin cambios; se volvió a consultar el 2026-11-09 en su versión «Con Vigencia Diferida por Fecha - 01-DIC-2026». Art. 1 bis: se aplica al responsable o mandatario establecido en Chile, al mandatario que trata a nombre de un responsable en Chile y a quien, sin estar en Chile, ofrece bienes o servicios a titulares en Chile o monitorea su comportamiento. Art. 2: definiciones, entre ellas f) dato personal, g) sensibles (incluida la situación socioeconómica), k) anonimización, l) seudonimización, v) cesión, w) elaboración de perfiles y x) encargado. Art. 3: principios a) licitud y lealtad (el responsable acredita la licitud) a h) confidencialidad. Arts. 4 a 11: derechos y procedimiento. Art. 8 bis: decisiones automatizadas. Arts. 12 y 13: bases de licitud; el responsable prueba la licitud. Art. 14 a 14 septies: obligaciones, secreto, transparencia, diseño y por defecto, seguridad, vulneraciones y estándares diferenciados. Arts. 15 y 15 bis: cesión y encargo. Art. 15 ter: evaluación de impacto. Arts. 16 a 16 sexies: sensibles, salud, biométricos, niños, niñas y adolescentes, investigación y geolocalización. Arts. 27 y 28: transferencia internacional. Arts. 34 bis a 35: infracciones y sanciones. Art. 49: modelo de prevención voluntario."
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599
@@ -113,7 +113,7 @@ sources:
     accessed: 2026-11-09
     page_title: "LEY NÚM. 21.719 REGULA LA PROTECCIÓN Y EL TRATAMIENTO DE LOS DATOS PERSONALES Y CREA LA AGENCIA DE PROTECCIÓN DE DATOS PERSONALES"
     label: Diario Oficial
-    note: "Ley 21.719 publicada en el Diario Oficial núm. 44.023, viernes 13 de diciembre de 2024 (CVE 2583630), consultada el 2026-11-09. Texto publicado de la ley modificatoria: art. 2 letras g), k), n), o) y x) de la Ley 19.628 (pág. 2 y siguientes), art. 16 quáter, arts. 34 bis a 36 (infracciones, sanciones, atenuantes y agravantes; págs. 23 a 25) y art. 51."
+    note: "Ley 21.719 publicada en el Diario Oficial núm. 44.023, viernes 13 de diciembre de 2024 (CVE 2583630), consultada el 2026-11-09. Texto publicado de la ley modificatoria: art. 2 letras g), k), l), n), o) y x) de la Ley 19.628 (pág. 2 y siguientes), art. 16 quáter, arts. 34 bis a 36 (infracciones, sanciones, atenuantes y agravantes; págs. 23 a 25) y art. 51."
   - source: eur-lex
     url: https://eur-lex.europa.eu/eli/reg/2016/679/oj
     accessed: 2026-11-09
@@ -288,7 +288,7 @@ views:
       caption: Quién decide y quién implementa · modelo organizacional típico, no fijado por la ley
       responsible:
         title: Responsable · la organización
-        lead: Decide los fines y medios del tratamiento y responde ante la ley ([art. 2 letra n](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf)).
+        lead: Decide los fines y medios del tratamiento ([art. 2 letra n](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf)) y responde por el cumplimiento de los principios y deberes de la ley (principio de responsabilidad, [art. 3](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf)).
         decide:
           kicker: Decide
           items:
@@ -847,7 +847,7 @@ views:
       text: es un ejemplo didáctico. Un resultado aprobado demuestra que los controles funcionaron, no que el tratamiento sea lícito.
   cloud_compare:
     title: En la nube
-    intro: Servicios nativos que apoyan tres controles de la ficha. No son equivalencias exactas.
+    intro: 'Servicios nativos que apoyan tres de los siete requisitos de la matriz: descubrir, restringir acceso y auditar. No son equivalencias exactas.'
     alert:
       title: Por defecto.
       text: 'En las tres nubes, la auditoría de acceso a datos no queda activa sola: hay que configurarla. Sin ella no hay evidencia de quién accedió.'
@@ -1024,19 +1024,20 @@ views:
     - effect: up
       effect_label: Aumenta
       title: Reincidencia
-      text: Dos o más sanciones en los últimos 30 meses; hasta tres veces el monto.
+      text: 'Dos o más sanciones firmes o ejecutoriadas en los últimos 30 meses: hasta tres veces el monto de la infracción.'
       basis: arts. 35 y 36
     - effect: up
       effect_label: Aumenta
       title: Empresa que no es de menor tamaño
-      text: Si reincide en graves o gravísimas, la más gravosa entre el triple y el 2 % o 4 % de sus ingresos anuales.
-      basis: art. 35
+      text: 'Si reincide en infracciones graves o gravísimas: la más gravosa entre el triple y el 2 % de sus ingresos anuales si son graves, o el 4 % si son gravísimas.'
+      basis: art. 35 · ley 20.416
     - effect: down
       effect_label: Atenúa
       title: Modelo de prevención certificado
-      text: Haber cumplido diligentemente los deberes de dirección y supervisión, verificado con el certificado del modelo. El programa exige un registro de actividades
-        y una matriz de riesgos, la misma lógica de esta ficha; el certificado dura 3 años.
-      basis: art. 36 n.º 5; art. 51; Decreto 662, arts. 3 y 15
+      text: Haber cumplido diligentemente los deberes de dirección y supervisión, acreditado con el certificado del modelo de prevención. El programa debe incluir
+        una matriz de riesgos de infracción, la misma lógica de esta ficha, y puede caracterizar los tratamientos con un registro de actividades. El certificado
+        dura 3 años.
+      basis: art. 36 n.º 5 · art. 51 · art. 52 · Decreto 662, arts. 3 y 15
   open_questions:
     intro: Respóndelas para tu propia plataforma. Hay una por cada fila de la matriz y una para la evidencia; si no sabes una, la ficha indica dónde se trabaja.
     check_label: Sé responderla
@@ -1668,6 +1669,7 @@ El detalle de cada fuente está en `sources` del frontmatter; la agrupación, en
 - 2026-11-09: Fuente nueva: Ley 21.719 en el Diario Oficial (2024-12-13), destino de los enlaces del art. 2 y de las citas de esa ley; la Ley 19.628 en BCN se consultó de nuevo (ADR-023, enmienda 8: una cita legal puede ser posterior a `last_verified`). Principios con píldoras a la matriz, al código y a las prácticas. Buenas prácticas en cuatro etapas más la franja «Demostrar» (13 tarjetas, nueva «Plazo al vencer»; textos nuevos de privilegios, llaves, GenAI y alcance). Trade-offs como balanzas, con «Seudonimización ⇄ Anonimización» y sin «Matriz detallada frente a mantenible». Sanciones con su artículo y cuatro modificadores de la multa (arts. 35, 36 y 51), sin el párrafo de reincidencia. Preguntas técnicas como tarjetas con píldoras y la casilla «Sé responderla». art. 7 en `legal_basis` y en el anexo. Sigue en `review_required`.
 - 2026-11-09: sale la sección 21 (Fecha de última verificación) (ADR-029, enmienda 2). Las fechas de consulta siguen en `last_verified` y en `accessed` de cada cita, y las verificaciones, en este historial. Sigue en `review_required`.
 - 2026-11-09: roles del §2 con campos explícitos (decide, evalúa, implementa, encargado y aviso; ADR-030, enmienda 4) y textos nuevos. Fuentes: Ley 19.628 con el enlace general y el de la versión 2026-12-01; Ley 21.719 solo con el Diario Oficial (sale el enlace de BCN, que no se pudo verificar); Decreto 662 consultado el 2026-11-09; ISO/IEC 27701:2025; Cloud Audit Logs y Unity Catalog apuntan a la página de cada control; BigQuery con enlaces «columnas» y «filas». Cómo funciona 02 enlaza a la arquitectura (§9) y el atenuante del modelo de prevención cita el Decreto 662, arts. 3 y 15. Sigue en `review_required`.
+- 2026-11-10: revisión aplicada. Sanciones: atenuante del modelo de prevención (acreditado con el certificado; matriz de riesgos de infracción obligatoria, registro de actividades opcional; art. 52), reincidencia con sanciones firmes o ejecutoriadas y gran empresa con el 2 % o el 4 % según la gravedad (ley 20.416). Roles: el responsable responde por los principios y deberes (art. 3). En la nube: tres de los siete requisitos de la matriz. La cita versionada de la Ley 19.628 indica su versión en el título. Sigue en `review_required`.
 
 ## Anexo · Catálogo legal por tema
 
