@@ -1,7 +1,7 @@
 # STATUS — Data Engineering Knowledge Hub
 
 **Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 24-privacy-engineering (en aprobación; 19 integrado al 24 el 2026-10-30) (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08, 03-python el 2026-10-10, 04-data-modeling, 05-pipelines, 06-orchestration y los conceptos de 07-architecture el 2026-10-11, 08-gcp el 2026-10-12, 09-aws el 2026-10-13, 10-azure y 11-devops el 2026-10-14, 12-infrastructure-as-code y 13-containers el 2026-10-19, 14-streaming, 20-open-data-stack, 15-data-quality y 16-observability el 2026-10-20, 17-governance y 18-security el 2026-10-21). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
-**Última actualización:** 2026-11-04
+**Última actualización:** 2026-11-10
 **Demo estática:** https://felipe-a-cespedes-perez.cl/aprendizaje-continuo/ (`make static`, `BASE_PATH` por defecto `/aprendizaje-continuo`).
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**
@@ -15,6 +15,14 @@
 | `D:\Proyectos_IA\DES_conocimiento-ui` | Cursor UI | `b/ui-redesign` (cerrada y mergeada a `main` el 2026-10-07) | Solo `frontend/` y `docs/design/`. |
 | `D:\Proyectos_IA\DES_conocimiento-review` | Cursor revisión | `b/f3b-review-*` | Revisiones de fichas (`docs/reviews/`, `lane-b.md`). |
 | `D:\Proyectos_IA\DES_conocimiento` (raíz) | — | — | No se edita. |
+
+## Pendientes técnicos
+- **Tests intermitentes de Kafka (pendiente de investigar):**
+  - `tests/test_kafka_snippets.py::test_committed_offset_lag_and_reset_to_earliest` falló una vez en la suite local. El 2026-11-10 el ejemplo de `offsets` pasó a esperar 20 s (antes 8 s), sin confirmar que esa sea la causa.
+  - En otra corrida local, con el equipo suspendido a mitad de camino, fallaron:
+    - `tests/test_open_stack_snippets.py::test_kafka_quorum_partition_state_and_compaction`: leyó 0 eventos antes de compactar; su ejemplo espera 5 s;
+    - `tests/test_observability_snippets.py::test_freshness_compares_latest_data_with_agreement`: `TimeoutExpired` con tiempo negativo, lo que apunta a la suspensión del equipo.
+  - Queda revisar los márgenes de espera de los ejemplos de Kafka.
 
 ## Carriles
 | Carril | Tarea activa | Siguiente | Bloqueos |
