@@ -155,7 +155,7 @@ kafka kafka-topics.sh --create --topic ventas --partitions 1 > /dev/null
 printf '%s\n' 'venta 1' 'venta 2' 'venta 3' 'venta 4' | kafka kafka-console-producer.sh --topic ventas
 
 read_n() { kafka kafka-console-consumer.sh --topic ventas --group carga --from-beginning --max-messages "$1" \
-             --timeout-ms 8000 2> /dev/null | wc -l; }
+             --timeout-ms 20000 2> /dev/null | wc -l; }
 echo "primera lectura: $(read_n 2)"
 kafka kafka-consumer-groups.sh --describe --group carga 2> /dev/null |
   awk '$2 == "ventas" {print "offset confirmado " $4 ", fin del log " $5 ", lag " $6}'
@@ -251,3 +251,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-10-19: creación (lote F3b-14a).
 - 2026-10-20: revisión B-F3.1 del lote F3b-14a aplicada (docs/reviews/cards-f3b-14a.md): la cita de la referencia de Pub/Sub dice *Class Message*, sin la versión del cliente.
 - 2026-10-20: `verification_status: verified` (sin VERIFY pendientes).
+- 2026-11-10: el ejemplo del §10 espera hasta 20 s por mensaje (antes 8 s), como `events` y `event-ordering`: unirse al grupo incluye el retardo inicial de rebalanceo y, con la máquina cargada, 8 s no alcanzaban. Con `--max-messages` la lectura termina al llegar los mensajes, así que no se alarga. Sin cambios de contenido.
