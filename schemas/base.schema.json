@@ -642,6 +642,42 @@
                       },
                       "additionalProperties": false
                     },
+                    "evaluate": {
+                      "type": "object",
+                      "required": [
+                        "kicker",
+                        "items"
+                      ],
+                      "properties": {
+                        "kicker": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "title",
+                              "text"
+                            ],
+                            "properties": {
+                              "title": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "text": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "additionalProperties": false
+                          },
+                          "minItems": 1
+                        }
+                      },
+                      "additionalProperties": false
+                    },
                     "build": {
                       "type": "object",
                       "required": [
@@ -696,6 +732,25 @@
                       "type": "string",
                       "minLength": 1,
                       "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                    },
+                    "alert": {
+                      "type": "object",
+                      "required": [
+                        "title",
+                        "text"
+                      ],
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "text": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                        }
+                      },
+                      "additionalProperties": false
                     }
                   },
                   "additionalProperties": false

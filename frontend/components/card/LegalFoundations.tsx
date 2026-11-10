@@ -321,22 +321,10 @@ function captionParts(caption: string): [string, string] {
   return [kicker, rest.join(" · ")];
 }
 
-function articleHref(text: string, label: string): string | null {
-  const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  return text.match(new RegExp(`\\[${escaped}\\]\\(([^)]+)\\)`))?.[1] ?? null;
-}
-
-function withoutArticle(text: string, label: string): string {
-  const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  return text.replace(new RegExp(`;?\\s*\\[${escaped}\\]\\([^)]+\\)`), "");
-}
-
 function RolesBoard({ roles }: { roles: RolesProps }) {
   const { responsible, processor, source, caption } = roles;
-  const lead = responsible.decide.items[0];
-  const rest = responsible.decide.items.slice(1);
+  const { decide, evaluate, build } = responsible;
   const [captionKicker, captionRest] = caption ? captionParts(caption) : ["", ""];
-  const warningHref = articleHref(processor.text, "art. 15 bis");
   return (
     <section className="lf-roles" aria-labelledby="lf-roles-title">
       {caption ? (
@@ -352,22 +340,24 @@ function RolesBoard({ roles }: { roles: RolesProps }) {
             <RichText text={responsible.lead} />
           </p>
         </header>
-        <div className={rest.length > 0 ? "lf-roles-split" : "lf-roles-split is-pair"}>
+        <div className={evaluate ? "lf-roles-split" : "lf-roles-split is-pair"}>
           <div className="lf-roles-decide">
-            <p className="lf-roles-kicker">Decide</p>
-            {lead ? <RoleItem item={lead} /> : null}
+            <p className="lf-roles-kicker">{decide.kicker}</p>
+            {decide.items.map((item) => (
+              <RoleItem key={item.title} item={item} />
+            ))}
           </div>
-          {rest.length > 0 ? (
+          {evaluate ? (
             <div className="lf-roles-assess">
-              <p className="lf-roles-kicker">Evalúa</p>
-              {rest.map((item) => (
+              <p className="lf-roles-kicker">{evaluate.kicker}</p>
+              {evaluate.items.map((item) => (
                 <RoleItem key={item.title} item={item} />
               ))}
             </div>
           ) : null}
           <div className="lf-roles-build">
-            <p className="lf-roles-kicker">{responsible.build.kicker}</p>
-            {responsible.build.items.map((item) => (
+            <p className="lf-roles-kicker">{build.kicker}</p>
+            {build.items.map((item) => (
               <RoleItem key={item.title} item={item} />
             ))}
           </div>
@@ -377,26 +367,17 @@ function RolesBoard({ roles }: { roles: RolesProps }) {
         <div className="lf-roles-vendor">
           <h3>{processor.title}</h3>
           <p>
-            <RichText text={withoutArticle(processor.text, "art. 15 bis")} />
+            <RichText text={processor.text} />
           </p>
         </div>
-        <aside className="lf-roles-warn">
-          <p className="lf-roles-kicker">Ojo</p>
-          <p>
-            Si los trata para otro fin o los cede sin autorización, se le considera responsable
-            {warningHref ? (
-              <>
-                {" "}
-                (
-                <a href={warningHref} target="_blank" rel="noopener noreferrer">
-                  art. 15 bis
-                </a>
-                )
-              </>
-            ) : null}
-            .
-          </p>
-        </aside>
+        {processor.alert ? (
+          <aside className="lf-roles-warn">
+            <p className="lf-roles-kicker">{processor.alert.title}</p>
+            <p>
+              <RichText text={processor.alert.text} />
+            </p>
+          </aside>
+        ) : null}
       </div>
       {source ? (
         <p className="lf-roles-source">

@@ -66,9 +66,10 @@ export type RolesProps = {
     title: string;
     lead: string;
     decide: { kicker: string; items: Titled[] };
+    evaluate?: { kicker: string; items: Titled[] };
     build: { kicker: string; items: Titled[] };
   };
-  processor: Titled;
+  processor: Titled & { alert?: Titled };
   source?: Cite;
 };
 

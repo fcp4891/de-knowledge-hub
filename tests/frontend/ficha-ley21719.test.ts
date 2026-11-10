@@ -162,3 +162,13 @@ test("trade-offs como tarjetas, preguntas con píldoras y modificadores de la mu
   assert.match(modifiers, /Atenúa/);
   assert.match(modifiers, /art\. 51/);
 });
+
+test("los roles del §2 salen de campos explícitos del contrato, sin texto fijo", () => {
+  const source = readFileSync(join(import.meta.dirname, "../../frontend/components/card/LegalFoundations.tsx"), "utf8");
+  for (const fixed of [">Decide<", ">Evalúa<", ">Ojo<", "se le considera responsable", "articleHref", "withoutArticle"]) {
+    assert.equal(source.includes(fixed), false, fixed);
+  }
+  assert.match(source, /evaluate\.kicker/);
+  assert.match(source, /processor\.alert\.title/);
+  assert.match(source, /decide\.items\.map/);
+});

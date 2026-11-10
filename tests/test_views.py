@@ -126,3 +126,23 @@ def test_chile_data_protection_principles_practices_sanctions_and_questions() ->
     tags = [t for p in principles for t in p["tags"]] + [t for q in questions for t in q["tags"]]
     assert not [t["href"] for t in tags if t["href"][1:] not in anchors]
     assert len(v["trade_offs"]["items"]) == 5 and v["trade_offs"]["items"][1]["a"] == "Seudonimización"
+
+
+ROLES = {"responsible": {"title": "Responsable", "lead": "Decide fines y medios.",
+                         "decide": {"kicker": "Decide", "items": [{"title": "Negocio", "text": "Finalidad."}]},
+                         "build": {"kicker": "Implementa", "items": [{"title": "Datos", "text": "Controles."}]}},
+         "processor": {"title": "Encargado", "text": "Trata datos por cuenta del responsable."}}
+
+
+def test_roles_validate_without_evaluate_or_alert(with_template: Path) -> None:  # noqa: F811
+    """ADR-030, enmienda 4: responsible.evaluate y processor.alert son opcionales; con ellos también valida."""
+    import copy
+    write_md(with_template, "concepts/a.md", concept("a", views={"legal_foundations": {"title": "Roles", "roles": ROLES}}),
+             body=full_body())
+    assert run(with_template).ok
+    full = copy.deepcopy(ROLES)
+    full["responsible"]["evaluate"] = {"kicker": "Evalúa", "items": [{"title": "Privacidad", "text": "Riesgo."}]}
+    full["processor"]["alert"] = {"title": "Ojo", "text": "Si los cede, es responsable."}
+    write_md(with_template, "concepts/a.md", concept("a", views={"legal_foundations": {"title": "Roles", "roles": full}}),
+             body=full_body())
+    assert run(with_template).ok

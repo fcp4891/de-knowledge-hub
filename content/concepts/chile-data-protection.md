@@ -39,14 +39,15 @@ sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
     accessed: 2026-11-09
+    label: versión desde el 2026-12-01
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
     note: "Ley 19.628 en la versión «Con Vigencia Diferida por Fecha» desde 2026-12-01 (texto con las modificaciones de la Ley 21.719), consultada el 2026-10-25 y de nuevo el 2026-10-28, sin cambios; Felipe la volvió a consultar el 2026-11-09 en su versión «Con Vigencia Diferida por Fecha - 01-DIC-2026». Art. 1 bis: se aplica al responsable o mandatario establecido en Chile, al mandatario que trata a nombre de un responsable en Chile y a quien, sin estar en Chile, ofrece bienes o servicios a titulares en Chile o monitorea su comportamiento. Art. 2: definiciones, entre ellas f) dato personal, g) sensibles (incluida la situación socioeconómica), k) anonimización, l) seudonimización, v) cesión, w) elaboración de perfiles y x) encargado. Art. 3: principios a) licitud y lealtad (el responsable acredita la licitud) a h) confidencialidad. Arts. 4 a 11: derechos y procedimiento. Art. 8 bis: decisiones automatizadas. Arts. 12 y 13: bases de licitud; el responsable prueba la licitud. Art. 14 a 14 septies: obligaciones, secreto, transparencia, diseño y por defecto, seguridad, vulneraciones y estándares diferenciados. Arts. 15 y 15 bis: cesión y encargo. Art. 15 ter: evaluación de impacto. Arts. 16 a 16 sexies: sensibles, salud, biométricos, niños, niñas y adolescentes, investigación y geolocalización. Arts. 27 y 28: transferencia internacional. Arts. 34 bis a 35: infracciones y sanciones. Art. 49: modelo de prevención voluntario."
   - source: bcn-leychile
-    url: https://www.bcn.cl/leychile/navegar?idNorma=1209272
-    accessed: 2026-10-28
-    label: BCN
-    page_title: "Ley 21719 REGULA LA PROTECCIÓN Y EL TRATAMIENTO DE LOS DATOS PERSONALES Y CREA LA AGENCIA DE PROTECCIÓN DE DATOS PERSONALES"
-    note: "Ley 21.719, publicada en el Diario Oficial el 2024-12-13 (promulgada el 2024-11-25). Su artículo primero transitorio dispone que las modificaciones de sus artículos primero, segundo y tercero permanentes entran en vigencia el día primero del mes vigésimo cuarto posterior a su publicación en el Diario Oficial. BCN muestra para la Ley 19.628 una versión «Con Vigencia Diferida por Fecha» desde el 2026-12-01. Consultado el 2026-10-25 y de nuevo el 2026-10-28, sin cambios."
+    url: https://www.bcn.cl/leychile/navegar?idNorma=141599
+    accessed: 2026-11-09
+    label: norma
+    page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
+    note: "Ficha de la Ley 19.628 en BCN, enlace general de la norma usado en Fuentes. El texto que rige desde el 2026-12-01 es la versión «Con Vigencia Diferida por Fecha» que citan los artículos de la ficha (idVersion=2026-12-01)."
   - source: senado-tramitacion
     url: https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07
     accessed: 2026-10-28
@@ -61,7 +62,7 @@ sources:
     note: "Mensaje N° 110-374 del 31 de agosto de 2026 (boletín 18.623-07), en el Senado: el numeral 2 del artículo único reemplaza, en el artículo primero transitorio de la Ley 21.719, la frase «día primero del mes vigésimo cuarto posterior a la publicación de esta ley en el Diario Oficial» por «1 de diciembre de 2027»; también aumenta el Consejo Directivo de la Agencia de tres a cinco consejeros y elimina la limitación a empresas de menor tamaño del artículo sexto transitorio. Es un proyecto, no una ley."
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=1227971
-    accessed: 2026-10-28
+    accessed: 2026-11-09
     page_title: "Decreto 662 APRUEBA REGLAMENTO QUE REGULA LOS REQUISITOS, MODALIDADES Y PROCEDIMIENTOS PARA LA IMPLEMENTACIÓN, CERTIFICACIÓN, REGISTRO Y SUPERVISIÓN DE LOS MODELOS DE PREVENCIÓN DE INFRACCIONES A QUE SE REFIERE EL ARTÍCULO 49 QUE INCORPORA LA LEY N° 21.719 A LA LEY N° 19.628"
     note: "Decreto 662 del Ministerio de Hacienda, promulgado el 2025-06-13 y publicado el 2026-09-09: reglamento de los requisitos, modalidades y procedimientos para implementar, certificar, registrar y supervisar los modelos de prevención de infracciones del art. 49 de la Ley 19.628."
   - source: gcp-sensitive-data-protection-docs
@@ -70,10 +71,10 @@ sources:
     page_title: "Sensitive Data Protection overview"
     note: "Sensitive Data Protection overview: ayuda a descubrir, clasificar y desidentificar datos sensibles dentro y fuera de Google Cloud; un caso de uso es escanear y perfilar en forma continua activos de BigQuery, Cloud SQL y Cloud Storage para encontrar datos sensibles sin catalogar."
   - source: gcp-cloud-logging-docs
-    url: https://docs.cloud.google.com/logging/docs/audit
-    accessed: 2026-11-07
-    page_title: "Cloud Audit Logs overview"
-    note: "Cloud Audit Logs overview: salvo en BigQuery, los Data Access audit logs están desactivados por defecto porque generan mucho volumen; para registrarlos en otros servicios hay que activarlos en forma explícita."
+    url: https://docs.cloud.google.com/logging/docs/audit/configure-data-access
+    accessed: 2026-11-09
+    page_title: "Enable Data Access audit logs"
+    note: "Enable Data Access audit logs (Cloud Logging): los Data Access audit logs están desactivados por defecto en todos los servicios salvo algunos de BigQuery; para que se escriban en los demás hay que activarlos en forma explícita."
   - source: aws-macie-docs
     url: https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html
     accessed: 2026-11-07
@@ -90,10 +91,10 @@ sources:
     page_title: "Data classification in Microsoft Purview Data Map"
     note: "Data classification in Microsoft Purview Data Map: asignar etiquetas o clases lógicas a los activos según su contexto de negocio (número de pasaporte, de licencia, de tarjeta, código SWIFT, nombre de persona); ayuda a entender, buscar y gobernar, y a entender riesgos. Más de 200 clasificaciones de sistema incorporadas y clasificaciones propias; se clasifica automáticamente al escanear o a mano después."
   - source: azure-databricks-docs
-    url: https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/
-    accessed: 2026-11-07
-    page_title: "What is Unity Catalog?"
-    note: "What is Unity Catalog? (Azure Databricks): herramientas de gobierno de datos e IA; el control de acceso cubre privilegios, políticas basadas en atributos y filtros de fila y de columna; además, auditoría y linaje."
+    url: https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/access-control
+    accessed: 2026-11-09
+    page_title: "Access control in Unity Catalog"
+    note: "Access control in Unity Catalog (Azure Databricks): privilegios y propiedad con grants sobre objetos asegurables, políticas basadas en atributos (ABAC) con etiquetas gobernadas, y filtros de fila y máscaras de columna para lógica por tabla."
   - source: iso-iec-27701
     url: https://www.iso.org/standard/27701
     accessed: 2026-11-07
@@ -122,11 +123,13 @@ sources:
     url: https://docs.cloud.google.com/bigquery/docs/column-level-security-intro
     accessed: 2026-11-09
     page_title: "Introduction to column-level access control"
+    label: columnas
     note: "Control de acceso por columna en BigQuery con policy tags."
   - source: gcp-bigquery-docs
     url: https://docs.cloud.google.com/bigquery/docs/row-level-security-intro
     accessed: 2026-11-09
     page_title: "Introduction to BigQuery row-level security"
+    label: filas
     note: "Políticas de acceso por fila: filtros sobre una tabla que determinan qué filas ve cada usuario o grupo autorizado."
   - source: aws-lake-formation-docs
     url: https://docs.aws.amazon.com/lake-formation/latest/dg/data-filtering.html
@@ -287,23 +290,28 @@ views:
         title: Responsable · la organización
         lead: Decide los fines y medios del tratamiento y responde ante la ley ([art. 2 letra n](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf)).
         decide:
-          kicker: Deciden y evalúan
+          kicker: Decide
           items:
-          - title: Legal, privacidad y negocio
-            text: Definen finalidad, base de licitud y plazos.
+          - title: Negocio, legal y privacidad
+            text: Finalidad, base de licitud y plazos.
+        evaluate:
+          kicker: Evalúa
+          items:
           - title: Privacidad
-            text: Evalúa el riesgo para los titulares.
+            text: Riesgo para los titulares.
           - title: Seguridad
-            text: Evalúa el riesgo de seguridad y define las medidas de protección.
+            text: Riesgo de seguridad y medidas de protección.
         build:
           kicker: Implementa
           items:
           - title: Ingeniería de Datos
-            text: Implementa controles, automatización, trazabilidad y evidencia. No decide la finalidad ni la base; reporta las implicancias técnicas y sus limitaciones.
+            text: Controles, automatización, trazabilidad y evidencia. Reporta implicancias técnicas y limitaciones.
       processor:
         title: Encargado · fuera de la organización
-        text: 'Proveedor que trata datos por cuenta del responsable: nube, SaaS, API de LLM ([art. 2 letra x](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf);
-          [art. 15 bis](https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01)).'
+        text: 'Trata datos por cuenta del responsable: nube, SaaS, API de LLM ([art. 2 letra x](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf)).'
+        alert:
+          title: Ojo
+          text: Si los trata para otro fin o los cede sin autorización, se le considera responsable ([art. 15 bis](https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01)).
       source:
         title: Ley 21.719
         href: https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
@@ -430,6 +438,9 @@ views:
         - kind: Matriz
           label: Finalidad
           href: '#matriz-finalidad'
+        - kind: Arquitectura
+          label: Catálogo de actividades
+          href: '#s9'
         id: como-funciona-02
     - title: Controlar
       items:
@@ -1023,8 +1034,9 @@ views:
     - effect: down
       effect_label: Atenúa
       title: Modelo de prevención certificado
-      text: Haber cumplido diligentemente los deberes de dirección y supervisión, verificado con el certificado del modelo.
-      basis: art. 36 n.º 5; art. 51
+      text: Haber cumplido diligentemente los deberes de dirección y supervisión, verificado con el certificado del modelo. El programa exige un registro de actividades
+        y una matriz de riesgos, la misma lógica de esta ficha; el certificado dura 3 años.
+      basis: art. 36 n.º 5; art. 51; Decreto 662, arts. 3 y 15
   open_questions:
     intro: Respóndelas para tu propia plataforma. Hay una por cada fila de la matriz y una para la evidencia; si no sabes una, la ficha indica dónde se trabaja.
     check_label: Sé responderla
@@ -1104,16 +1116,16 @@ views:
       sources:
       - title: Ley 19.628 · texto que rige desde el 2026-12-01
         urls:
+        - https://www.bcn.cl/leychile/navegar?idNorma=141599
         - https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
         publisher: BCN
-        why: Base de todas las citas de artículos de la ficha.
+        why: Texto consolidado en la versión que rige desde el 2026-12-01.
       - title: Ley 21.719 · Diario Oficial, 2024-12-13
         urls:
         - https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
-        - https://www.bcn.cl/leychile/navegar?idNorma=1209272
-        publisher: BCN
-        why: 'Texto publicado de la ley modificatoria: definiciones del art. 2, art. 16 quáter, infracciones y sanciones (arts. 34 bis a 36), art. 51 y artículo primero
-          transitorio (fecha de vigencia).'
+        publisher: Diario Oficial
+        why: 'Fuente de las citas de artículos de la ficha: arts. 2, 3, 4, 7, 14 bis a 14 sexies, 15 bis, 15 ter, 16 quáter, 27 a 29, 34 a 37, 49 a 51 y artículo
+          primero transitorio (vigencia).'
       - title: Boletín 18.623-07 · proyecto que posterga la vigencia
         urls:
         - https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07
@@ -1124,7 +1136,8 @@ views:
         urls:
         - https://www.bcn.cl/leychile/navegar?idNorma=1227971
         publisher: BCN
-        why: Requisitos y certificación del modelo de prevención (arts. 49 y 51), citado en Sanciones.
+        why: 'Reglamento de los modelos de prevención de infracciones (arts. 49 a 53): programa de cumplimiento, delegado de protección de datos, certificación
+          y registro. Ministerio de Hacienda; publicado el 2026-09-09.'
     - title: Marcos de referencia del enfoque
       layout: list
       sources:
@@ -1133,11 +1146,11 @@ views:
         - https://www.iso.org/standard/27001
         publisher: ISO
         why: Cláusulas y controles que se citan como referencia en cada paso del enfoque.
-      - title: ISO/IEC 27701
+      - title: ISO/IEC 27701:2025 · sistema de gestión de la información de privacidad
         urls:
         - https://www.iso.org/standard/27701
         publisher: ISO
-        why: Extiende la gestión de ISO/IEC 27001 a la información de privacidad.
+        why: Desde la edición 2025 es una norma independiente de ISO/IEC 27001.
       - title: NIST Privacy Framework
         urls:
         - https://www.nist.gov/privacy-framework
@@ -1169,7 +1182,7 @@ views:
         provider: GCP
       - title: Cloud Audit Logs
         urls:
-        - https://docs.cloud.google.com/logging/docs/audit
+        - https://docs.cloud.google.com/logging/docs/audit/configure-data-access
         publisher: Google Cloud
         why: Auditar accesos a datos
         provider: GCP
@@ -1199,7 +1212,7 @@ views:
         provider: Azure
       - title: Unity Catalog
         urls:
-        - https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/
+        - https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/access-control
         publisher: Microsoft
         why: Restringir acceso a filas y columnas
         provider: Azure
@@ -1611,8 +1624,8 @@ CI: rechazada (1)
 
 ## 20. Fuentes
 
-- Normativa chilena (Diario Oficial, BCN y Senado): Ley 19.628 con el texto que rige desde el 2026-12-01, Ley 21.719 (texto publicado en el Diario Oficial y ficha en BCN), boletín 18.623-07 (tramitación y mensaje) y Decreto 662.
-- Marcos de referencia del enfoque: ISO/IEC 27001:2022, ISO/IEC 27701 y NIST Privacy Framework.
+- Normativa chilena (Diario Oficial, BCN y Senado): Ley 19.628 con el texto que rige desde el 2026-12-01, Ley 21.719 (texto publicado en el Diario Oficial), boletín 18.623-07 (tramitación y mensaje) y Decreto 662.
+- Marcos de referencia del enfoque: ISO/IEC 27001:2022, ISO/IEC 27701:2025 y NIST Privacy Framework.
 - Legislación comparada: Reglamento (UE) 2016/679 (RGPD), en EUR-Lex.
 - Servicios cloud: Sensitive Data Protection, BigQuery y Cloud Audit Logs (GCP); Amazon Macie, Lake Formation y CloudTrail (AWS); Purview Data Map, Unity Catalog y los registros de diagnóstico de Azure Databricks (Azure).
 
@@ -1654,6 +1667,7 @@ El detalle de cada fuente está en `sources` del frontmatter; la agrupación, en
 - 2026-11-09: píldoras de Cómo funciona y Cuándo utilizarlo enlazadas a anclas reales: fila de la matriz, práctica, código (§10) o artículo del catálogo legal (ADR-030, enmienda 2); enlace «Ver código ↓» al pie del ejemplo de Control y evidencia. Sin cambios de diseño ni de textos. Sigue en `review_required`.
 - 2026-11-09: pendientes de Felipe. Fuente nueva: Ley 21.719 en el Diario Oficial (2024-12-13), destino de los enlaces del art. 2 y de las citas de esa ley; la Ley 19.628 en BCN se consultó de nuevo (ADR-023, enmienda 8: una cita legal puede ser posterior a `last_verified`). Principios con píldoras a la matriz, al código y a las prácticas. Buenas prácticas en cuatro etapas más la franja «Demostrar» (13 tarjetas, nueva «Plazo al vencer»; textos nuevos de privilegios, llaves, GenAI y alcance). Trade-offs como balanzas, con «Seudonimización ⇄ Anonimización» y sin «Matriz detallada frente a mantenible». Sanciones con su artículo y cuatro modificadores de la multa (arts. 35, 36 y 51), sin el párrafo de reincidencia. Preguntas técnicas como tarjetas con píldoras y la casilla «Sé responderla». art. 7 en `legal_basis` y en el anexo. Sigue en `review_required`.
 - 2026-11-09: sale la sección 21 (Fecha de última verificación), a pedido de Felipe (ADR-029, enmienda 2). Las fechas de consulta siguen en `last_verified` y en `accessed` de cada cita, y las verificaciones, en este historial. Sigue en `review_required`.
+- 2026-11-09: roles del §2 con campos explícitos (decide, evalúa, implementa, encargado y aviso; ADR-030, enmienda 4) y textos nuevos. Fuentes: Ley 19.628 con el enlace general y el de la versión 2026-12-01; Ley 21.719 solo con el Diario Oficial (sale el enlace de BCN, que no se pudo verificar); Decreto 662 consultado el 2026-11-09; ISO/IEC 27701:2025; Cloud Audit Logs y Unity Catalog apuntan a la página de cada control; BigQuery con enlaces «columnas» y «filas». Cómo funciona 02 enlaza a la arquitectura (§9) y el atenuante del modelo de prevención cita el Decreto 662, arts. 3 y 15. Sigue en `review_required`.
 
 ## Anexo · Catálogo legal por tema
 

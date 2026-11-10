@@ -134,3 +134,15 @@ Además, `approach` suma el ejemplo y la referencia de cada paso, los rótulos d
 - **`Pills`.** Componente compartido con el estilo de las píldoras de Cómo funciona. Las de código muestran el rótulo en estilo código.
 - **Ids nuevos.** Se agregan `id` en las preguntas de `design_board`, en las filas de `cloud_compare` y en `control_evidence`, como destinos de anclas.
 - **Escala de sanciones.** Los tokens `--severity-1/2/3` pasan a amarillo, naranja y rojo, en claro y en oscuro.
+
+## Enmienda 4 (2026-11-09): roles con campos explícitos
+
+- **Antes.** `LegalFoundations` tenía fijos los rótulos «Decide», «Evalúa» y «Ojo». Armaba «Evalúa» partiendo `decide.items` y sacaba el enlace del aviso desde `processor.text`.
+- **Ahora.** Los roles leen campos explícitos de `views.legal_foundations.roles`:
+  - `responsible.decide{kicker, items}`;
+  - `responsible.evaluate{kicker, items}`, opcional;
+  - `responsible.build{kicker, items}`;
+  - `processor{title, text, alert?{title, text}}`.
+- **Sin `evaluate`,** el recuadro queda en dos columnas (`is-pair`). **Sin `alert`,** no se muestra el aviso. En ambos casos la ficha valida igual.
+- **Diseño.** No cambia: con los mismos textos, las capturas a 1366 px y 390 px son idénticas antes y después.
+- **Contrato.** `schemas/base.schema.json` y `docs/contracts/api.yaml` se regeneran con los dos campos opcionales. Las demás fichas no usan la vista y no cambian.

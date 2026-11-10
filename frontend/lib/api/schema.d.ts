@@ -608,6 +608,13 @@ export interface components {
                                 text: string;
                             }[];
                         };
+                        evaluate?: {
+                            kicker: string;
+                            items: {
+                                title: string;
+                                text: string;
+                            }[];
+                        };
                         build: {
                             kicker: string;
                             items: {
@@ -620,6 +627,11 @@ export interface components {
                         title: string;
                         /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                         text: string;
+                        alert?: {
+                            title: string;
+                            /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                            text: string;
+                        };
                     };
                     source?: {
                         title: string;

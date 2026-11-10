@@ -937,6 +937,28 @@ components:
                                 type: string
                             additionalProperties: false
                       additionalProperties: false
+                    evaluate:
+                      type: object
+                      required:
+                      - kicker
+                      - items
+                      properties:
+                        kicker:
+                          type: string
+                        items:
+                          type: array
+                          items:
+                            type: object
+                            required:
+                            - title
+                            - text
+                            properties:
+                              title:
+                                type: string
+                              text:
+                                type: string
+                            additionalProperties: false
+                      additionalProperties: false
                     build:
                       type: object
                       required:
@@ -971,6 +993,18 @@ components:
                     text:
                       type: string
                       description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                    alert:
+                      type: object
+                      required:
+                      - title
+                      - text
+                      properties:
+                        title:
+                          type: string
+                        text:
+                          type: string
+                          description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                      additionalProperties: false
                   additionalProperties: false
                 source:
                   type: object
