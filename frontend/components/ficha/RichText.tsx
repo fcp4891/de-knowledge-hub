@@ -1,6 +1,7 @@
 "use client";
 
 import { anchorAttrs, conceptSlugFromHref } from "@/lib/anchorAttrs";
+import { sectionRefLabel } from "@/lib/sectionNumbering";
 import { richParts } from "@/lib/views";
 
 import { AvailabilityMark } from "@/components/availability/AvailabilityMark";
@@ -21,7 +22,7 @@ export function RichText({ text }: { text: string }) {
           </span>
         );
       }
-      const pill = sectionPill(part.href, part.value, sections);
+      const pill = sectionRefLabel(part.href, part.value, sections);
       if (pill) {
         return (
           <a key={index} className="section-pill" href={part.href}>
@@ -41,21 +42,6 @@ export function RichText({ text }: { text: string }) {
     if (part.type === "code") return <code key={index}>{part.value}</code>;
     return <span key={index}>{part.value}</span>;
   });
-}
-
-function sectionPill(href: string, label: string, sections: readonly { section: number; title: string; ref?: string }[]): string | null {
-  if (label !== "§") {
-    return null;
-  }
-  const match = /^#s(\d+)$/.exec(href);
-  if (!match) {
-    return null;
-  }
-  const section = sections.find((item) => item.section === Number(match[1]));
-  if (!section) {
-    return null;
-  }
-  return `§${section.section} · ${section.ref ?? section.title}`;
 }
 
 /** Línea de cita de una vista: el título enlaza y el detalle queda en la línea de abajo. */

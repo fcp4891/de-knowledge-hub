@@ -193,6 +193,10 @@ def test_pii_identification_views_are_complete() -> None:
     assert data["verification_status"] == "review_required" and "owner_approved_at" not in data
     assert len(data["views"]["decision_tree"]["examples"]) == 8 and len(data["views"]["practice_pairs"]["items"]) == 8
     assert [r["count"] for r in data["views"]["coverage_strip"]["rows"]] == ["3 de 9", "7 de 9", "9 de 9"]
+    cdp_text = (Path(__file__).resolve().parent.parent / "content/concepts/chile-data-protection.md").read_text(encoding="utf-8")
+    cdp = yaml.safe_load(cdp_text.split("---\n", 2)[1])
+    cdp_present = [n for n, _, _ in page_sections.sections(page_sections.body_of(cdp_text)) if n != 22]
+    assert [t["section"] for t in cdp["views"]["section_titles"]] == cdp_present   # numeración por contrato también en chile
 
 
 def test_a_pdf_page_link_counts_as_its_citation() -> None:

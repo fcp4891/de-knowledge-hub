@@ -11,7 +11,7 @@ type V = Required<Views>;
 export type Titled = { title: string; text: string };
 export type Label = { title: string; detail?: string };
 export type Cite = { title: string; href: string; detail: string };
-export type Tag = { kind?: string; label: string; legal?: boolean; href?: string };
+export type Tag = { kind?: string; label: string; legal?: boolean; href?: string; section?: number };
 
 export type CentralIdeaProps = {
   checksTitle: string;

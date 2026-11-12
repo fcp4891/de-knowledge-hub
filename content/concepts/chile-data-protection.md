@@ -145,6 +145,31 @@ sources:
 relations:
   - {type: RELATED_TO, target: data-classification, note: "Clasificación técnica de datos."}
 views:
+  section_titles:
+  - section: 1
+    title: Propósito
+  - section: 2
+    title: Principios y responsabilidades
+  - section: 3
+    title: Problema que resuelve
+  - section: 4
+    title: Cómo funciona
+  - section: 5
+    title: Cuándo utilizarlo
+  - section: 9
+    title: Arquitectura
+  - section: 10
+    title: Código
+  - section: 11
+    title: En la nube
+  - section: 14
+    title: Buenas prácticas
+  - section: 16
+    title: Trade-offs
+  - section: 18
+    title: Preguntas técnicas abiertas
+  - section: 20
+    title: Fuentes
   central_idea:
     checks_title: El pipeline lo comprueba
     checks:

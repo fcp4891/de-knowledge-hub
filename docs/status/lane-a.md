@@ -5,6 +5,13 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-11-12
 
 ## Actual
+- **2026-11-12 · Integración de la interfaz de pii (`fa89642`) y numeración por contrato:**
+  - Merge en `f7a1598`, sin conflictos.
+  - La numeración compacta se activa por contrato cuando la ficha trae `views.section_titles` (antes, por slug), y los títulos visibles salen de `section_titles`.
+  - Las referencias «[§](#sN)» y las píldoras con `section` usan el número visible: «§6 · Código».
+  - chile-data-protection recibe `section_titles` con sus títulos actuales: mismas 14 secciones y «Leído N de 14».
+  - La píldora legal y los enlaces de Fuentes pasan por `anchorAttrs`.
+  - **Pedido a Carril B:** el enlace «Diario Oficial» de `VigenciaTimeline` (chile) sigue sin `anchorAttrs`.
 - **2026-11-12 · Decisiones sobre 9dc8d01:**
   - Citas con página aprobadas (ADR-030, enmienda 6): el validador acepta `<pdf>#page=N` si el PDF ya es una cita. `pii-identification` cita el art. 2 en la página 2, el 14 quinquies en la 10, el 16 en la 12 y el 16 quáter en la 13; el `target` queda para Carril B.
   - Búsqueda: las fichas no disponibles indexan solo el título en la base, y el título y la etiqueta en la proyección y en el índice estático.

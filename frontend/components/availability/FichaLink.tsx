@@ -8,7 +8,9 @@ import { AvailabilityMark, type UnavailableStatus } from "./AvailabilityMark";
 
 export type FichaLinkState = { slug: string; status: UnavailableStatus; label: string };
 
-export type SectionTitle = { section: number; title: string; ref?: string };
+import type { NumberedSectionTitle } from "@/lib/sectionNumbering";
+
+export type SectionTitle = NumberedSectionTitle;
 
 type FichaLinksValue = {
   links: ReadonlyMap<string, FichaLinkState>;

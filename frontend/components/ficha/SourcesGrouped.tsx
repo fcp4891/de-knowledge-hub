@@ -1,6 +1,7 @@
 import type { CitationSource, PageSource } from "@/lib/views";
 
 import { FichaAnchor } from "@/components/availability/FichaLink";
+import { anchorAttrs } from "@/lib/anchorAttrs";
 
 import { RichText } from "./RichText";
 import "./ficha-blocks.css";
@@ -53,7 +54,9 @@ function SourceLinks({ links }: { links: SourceLink[] }) {
     <ul className="sources-links">
       {links.map((link) => (
         <li key={link.href}>
-          <a href={link.href}>{linkLabel(link)}</a>
+          <a href={link.href} {...anchorAttrs(link.href)}>
+            {linkLabel(link)}
+          </a>
         </li>
       ))}
     </ul>

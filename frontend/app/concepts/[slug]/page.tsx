@@ -24,6 +24,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { PRIVACY_SPACE_HREF } from "@/lib/privacySpace";
+import { numberedTitles, usesCompactNumbering, visibleNumbers, withSectionTitles } from "@/lib/sectionNumbering";
 
 import { AvailabilityIcon } from "@/components/availability/AvailabilityMark";
 import { FichaLinksProvider } from "@/components/availability/FichaLink";
@@ -619,9 +620,16 @@ async function ConceptArticle({ slug }: { slug: string }) {
 
   const copy = await loadAvailabilityCopy(conceptRefs);
   const links = fichaLinkStates(conceptRefs, data.unavailable_links, copy);
+  // ADR-029/030: con views.section_titles, títulos de la ficha y numeración visible 1 a M.
+  const sectionTitles = data.views?.section_titles ?? [];
+  const readingSections = [
+    ...withSectionTitles(sectionModels(sections, data.sources, data.legal_basis, data.slug, conceptRefs, data.kind, data.views), sectionTitles),
+    ...annexModels(data.annexes ?? [], data.legal_basis, conceptRefs),
+  ];
+  const refSections = numberedTitles(sectionTitles, visibleNumbers(readingSections));
 
   return (
-    <FichaLinksProvider links={links} sections={data.views?.section_titles ?? []}>
+    <FichaLinksProvider links={links} sections={refSections}>
     <ExamplePickProvider>
     <ConceptReading
       slug={data.slug}
@@ -640,11 +648,8 @@ async function ConceptArticle({ slug }: { slug: string }) {
       crumb={crumb}
       next={next}
       construction={!domainOpen}
-      sections={[
-        ...sectionModels(sections, data.sources, data.legal_basis, data.slug, conceptRefs, data.kind, data.views),
-        ...annexModels(data.annexes ?? [], data.legal_basis, conceptRefs),
-      ]}
-      compactNumbering={data.slug === "chile-data-protection"}
+      sections={readingSections}
+      compactNumbering={usesCompactNumbering(sectionTitles)}
       staticMode={staticMode}
       initialStudy={
         study?.ok ? { state: study.data.state, pendingDeepDive: study.data.pending_deep_dive } : null
