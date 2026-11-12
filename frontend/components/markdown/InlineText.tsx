@@ -16,6 +16,7 @@ import { splitCodeStatus } from "@/lib/architecture";
 import { conceptInline, PENDING_MARK, type ConceptRefs } from "@/lib/conceptNames";
 import { CONSTRUCTION_MARK } from "@/lib/publishedScope";
 import type { Inline } from "@/lib/markdown";
+import { sectionRefLabel } from "@/lib/sectionNumbering";
 
 export function ArchitectureDot({ labelled = true }: { labelled?: boolean }) {
   if (!labelled) {
@@ -175,7 +176,7 @@ export function InlineText({
           </span>
         );
       }
-      const pill = sectionPill(part.href, value, sections);
+      const pill = sectionRefLabel(part.href, value, sections);
       if (pill) {
         return (
           <a key={key} className="section-pill" href={part.href}>
@@ -197,17 +198,3 @@ export function InlineText({
   });
 }
 
-function sectionPill(href: string, label: string, sections: readonly { section: number; title: string; ref?: string }[]): string | null {
-  if (label !== "§") {
-    return null;
-  }
-  const match = /^#s(\d+)$/.exec(href);
-  if (!match) {
-    return null;
-  }
-  const section = sections.find((item) => item.section === Number(match[1]));
-  if (!section) {
-    return null;
-  }
-  return `§${section.section} · ${section.ref ?? section.title}`;
-}

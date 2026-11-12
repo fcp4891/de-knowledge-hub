@@ -83,3 +83,15 @@ test("la numeración compacta depende del contrato, no del slug; píldoras y Fue
     assert.match(source, /\{\.\.\.anchorAttrs\(/, file);
   }
 });
+
+test("el cuerpo Markdown reconoce [rótulo](url): cita a una página del PDF, ancla y otra ficha", async () => {
+  const { parseMarkdown } = await import("../../frontend/lib/markdown.ts");
+  const pdf = "https://example.org/ley.pdf#page=2";
+  const [block] = parseMarkdown(`Persona identificable [(art. 2 letra f)](${pdf}), ver [§](#s10) y [la ficha](/concepts/otra/).`);
+  const links = JSON.stringify(block).match(/"type":"link","href":"[^"]+","value":"[^"]+"/g);
+  assert.deepEqual(links, [
+    `"type":"link","href":"${pdf}","value":"(art. 2 letra f)"`,
+    '"type":"link","href":"#s10","value":"§"',
+    '"type":"link","href":"/concepts/otra/","value":"la ficha"',
+  ]);
+});

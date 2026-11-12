@@ -233,7 +233,9 @@ function tableAlign(cell: string): TableAlign {
 
 function parseInline(input: string): Inline[] {
   const inlines: Inline[] = [];
-  const pattern = /`([^`]+)`|\*\*([^*]+)\*\*|~~([^~]+)~~|\*([^*]+)\*|<(https?:\/\/[^>\s]+)>|<([^>\s]+@[^>\s]+)>/g;
+  // [rótulo](url): https, ancla «#…» o ruta «/…» (ADR-030, enmienda 6: citas a una página del PDF).
+  const pattern =
+    /`([^`]+)`|\[([^\]\n]+)\]\(((?:https?:\/\/|#|\/)[^)\s]*)\)|\*\*([^*]+)\*\*|~~([^~]+)~~|\*([^*]+)\*|<(https?:\/\/[^>\s]+)>|<([^>\s]+@[^>\s]+)>/g;
   let last = 0;
   for (const match of input.matchAll(pattern)) {
     const start = match.index ?? 0;
@@ -242,16 +244,18 @@ function parseInline(input: string): Inline[] {
     }
     if (match[1] != null) {
       inlines.push({ type: "code", value: match[1] });
-    } else if (match[2] != null) {
-      inlines.push({ type: "strong", value: match[2] });
-    } else if (match[3] != null) {
-      inlines.push({ type: "del", value: match[3] });
+    } else if (match[2] != null && match[3] != null) {
+      inlines.push({ type: "link", href: match[3], value: match[2] });
     } else if (match[4] != null) {
-      inlines.push({ type: "em", value: match[4] });
+      inlines.push({ type: "strong", value: match[4] });
     } else if (match[5] != null) {
-      inlines.push({ type: "link", href: match[5], value: match[5] });
+      inlines.push({ type: "del", value: match[5] });
     } else if (match[6] != null) {
-      inlines.push({ type: "link", href: `mailto:${match[6]}`, value: match[6] });
+      inlines.push({ type: "em", value: match[6] });
+    } else if (match[7] != null) {
+      inlines.push({ type: "link", href: match[7], value: match[7] });
+    } else if (match[8] != null) {
+      inlines.push({ type: "link", href: `mailto:${match[8]}`, value: match[8] });
     }
     last = start + match[0].length;
   }
