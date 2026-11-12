@@ -60,8 +60,10 @@ def test_links_to_unavailable_pages_are_marked(index: projection.ContentIndex) -
 
 
 def test_ui_files_need_their_schema(content: Path) -> None:  # noqa: F811
-    write_yaml(content, "ui/availability.yaml", {"in_review": {"label": "x", "help": "y"},
-                                                 "in_development": {"label": "x", "help": "y"}, "back_label": "z"})
+    write_yaml(content, "ui/availability.yaml", {"in_review": {"label": "x", "help": "y", "count": "{n} x"},
+                                                 "in_development": {"label": "x", "help": "y", "count": "{n} x"},
+                                                 "available": {"count": "{n} disponibles"},
+                                                 "route_count": "{n} de {total}", "back_label": "z"})
     assert run(content).ok
     write_yaml(content, "ui/availability.yaml", {"in_review": {"label": "x"}, "back_label": "z"})
     assert_error(run(content), "'help' is a required property")
@@ -86,3 +88,11 @@ def test_unavailable_pages_do_not_index_their_body(index: projection.ContentInde
     assert (doc["body"], doc["summary"], doc["tags"], doc["snippet"]) == ("", "", "", page["title"])
     available = entity_search_document(index.entities["pii-identification"], index.bodies["pii-identification"])
     assert available["body"]
+
+
+def test_domain_detail_exposes_the_route_texts(index: projection.ContentIndex) -> None:
+    """ADR-031, enmienda 1: el itinerario toma de DomainDetail las etiquetas y los conteos por tramo."""
+    texts = projection.domain_detail(index, "privacy-engineering")["availability_texts"]
+    assert texts["available"]["count"] == "{n} disponibles"
+    assert texts["in_review"]["count"] == "{n} en revisión"
+    assert texts["route_count"] == "{n} de {total} fichas disponibles"
