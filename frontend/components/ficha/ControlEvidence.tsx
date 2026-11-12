@@ -136,7 +136,9 @@ export function ControlEvidence({ id, title, lead, steps, decide, note, example 
         </ol>
       </div>
 
-      <p className="control-evidence-note">{note}</p>
+      <p className="control-evidence-note">
+        <RichText text={note} />
+      </p>
 
       <details className="control-evidence-example">
         <summary className="control-evidence-example-toggle">
@@ -163,7 +165,9 @@ export function ControlEvidence({ id, title, lead, steps, decide, note, example 
             ))}
           </ol>
         </div>
-        <p>{example.note}</p>
+        <p>
+          <RichText text={example.note} />
+        </p>
         {example.codeLink ? (
           <p>
             <a href={example.codeLink.href}>{example.codeLink.label}</a>

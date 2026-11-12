@@ -1,3 +1,5 @@
+import { loadSearchFile, type SearchDocument } from "@/lib/browserSearch";
+
 export type SearchAvailability = {
   status: "in_review" | "in_development";
   label: string;
@@ -41,8 +43,25 @@ export function loadUnavailableSearchMarks(): Promise<Map<string, SearchAvailabi
   return searchMarks;
 }
 
+/** Sitio estático: el estado y la etiqueta vienen en search-index.json (ADR-031). */
+export function marksFromDocuments(documents: readonly SearchDocument[]): Map<string, SearchAvailability> {
+  const marks = new Map<string, SearchAvailability>();
+  for (const document of documents) {
+    if (document.availability) {
+      marks.set(document.slug, document.availability);
+    }
+  }
+  return marks;
+}
+
 async function fetchMarks(): Promise<Map<string, SearchAvailability>> {
-  const base = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000/api/v1";
+  if (process.env.NEXT_PUBLIC_API_MODE === "static") {
+    return marksFromDocuments((await loadSearchFile()).documents);
+  }
+  const base = process.env.NEXT_PUBLIC_API_BASE_URL;
+  if (!base) {
+    return new Map();
+  }
   const concepts: { slug: string; availability?: string | null }[] = [];
   let offset = 0;
   let total = 0;

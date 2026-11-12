@@ -107,10 +107,14 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const concept = await getConcept(slug);
-  if (concept.ok && concept.data.availability !== "available") {
-    return { robots: { index: false, follow: true } };
+  if (!concept.ok) {
+    return {};
   }
-  return {};
+  // B3: el título de la ficha (también en la página mínima, que además no se indexa).
+  if (concept.data.availability !== "available") {
+    return { title: concept.data.title, robots: { index: false, follow: true } };
+  }
+  return { title: concept.data.title };
 }
 
 function itineraryHref(domain: string | null, subdomain: string | null): string {

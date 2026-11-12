@@ -96,3 +96,14 @@ def test_domain_detail_exposes_the_route_texts(index: projection.ContentIndex) -
     assert texts["available"]["count"] == "{n} disponibles"
     assert texts["in_review"]["count"] == "{n} en revisión"
     assert texts["route_count"] == "{n} de {total} fichas disponibles"
+
+
+def test_static_search_index_carries_availability(index: projection.ContentIndex) -> None:
+    """A1: la búsqueda del sitio estático lee el estado y la etiqueta de search-index.json, sin llamar a una API."""
+    from scripts.static.build_static_data import search_documents
+
+    docs = {d["slug"]: d for d in search_documents(index)}
+    assert docs["data-minimization-by-layer"]["availability"] == {
+        "status": "in_development", "label": "En desarrollo", "help": "Contenido y diseño en preparación."}
+    assert docs["processing-activities-inventory"]["availability"]["label"] == "En revisión"
+    assert "availability" not in docs["pii-identification"]

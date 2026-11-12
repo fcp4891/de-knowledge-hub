@@ -36,42 +36,22 @@ export function ConceptMap({ view }: { view: MapView }) {
         </span>
         <div className="pii-also">
           <small className="pii-kicker">{view.personal.also.kicker}</small>
-          {view.personal.also.items.map((item) => {
-            const body = (
-              <>
-                <strong>
-                  <RichText text={item.title} />
-                </strong>
-                <span>
-                  <RichText text={item.text} />
-                </span>
-                {item.example ? <em>{item.example.label}</em> : null}
-              </>
-            );
-            if (!item.example) {
-              return (
-                <article key={item.title} className="pii-card">
-                  {body}
-                </article>
-              );
-            }
-            const column = item.example.column;
-            return (
-              <button
-                key={item.title}
-                type="button"
-                className="pii-card"
-                onClick={(event) => {
-                  if ((event.target as HTMLElement).closest("a")) {
-                    return;
-                  }
-                  pick?.pick(column);
-                }}
-              >
-                {body}
-              </button>
-            );
-          })}
+          {view.personal.also.items.map((item) => (
+            <article key={item.title} className="pii-card">
+              <strong>
+                <RichText text={item.title} />
+              </strong>
+              <span>
+                <RichText text={item.text} />
+              </span>
+              {item.example ? (
+                <button type="button" className="pii-card-pick" onClick={() => pick?.pick(item.example!.column)}>
+                  {item.example.label} <code>{item.example.column}</code>
+                  <span aria-hidden="true"> →</span>
+                </button>
+              ) : null}
+            </article>
+          ))}
         </div>
         <aside className="pii-sensitive">
           <small className="pii-kicker">

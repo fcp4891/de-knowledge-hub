@@ -49,6 +49,7 @@ const STUDY_STATES: StudyStatus[] = [
 const CLOUD_ORDER = ["gcp", "aws", "azure"];
 const TOC_KEY = "dekh:toc";
 const STUDY_KEY = "dekh:study";
+export const STUDY_OPEN_QUERY = "(min-width: 1400px)";
 
 export type ReadingSectionModel = {
   number: number;
@@ -270,7 +271,8 @@ export function ConceptReading({
     if (toc === "open" || toc === "closed") {
       setTocMode(toc);
     }
-    if (study === "closed") {
+    // Sin preferencia guardada, el panel de estudio parte plegado bajo 1400 px; se abre a demanda.
+    if (study === "closed" || (study !== "open" && !window.matchMedia(STUDY_OPEN_QUERY).matches)) {
       setStudyOpen(false);
     }
     const media = window.matchMedia("(min-width: 1180px)");
@@ -397,6 +399,11 @@ export function ConceptReading({
           if (!Number.isInteger(number)) {
             continue;
           }
+          // M1: una sección que solo se atraviesa colapsada no cuenta como leída.
+          if (element instanceof HTMLDetailsElement && !element.open) {
+            seen.delete(number);
+            continue;
+          }
           if (entry.isIntersecting) {
             seen.set(number, { top: entry.boundingClientRect.top, title: sectionTitle });
           } else {
@@ -480,6 +487,47 @@ export function ConceptReading({
     pendingScroll.current = section.number;
     setScrollToken((value) => value + 1);
   }
+
+  const goToRef = useRef(goTo);
+  goToRef.current = goTo;
+
+  useEffect(() => {
+    const root = articleRef.current;
+    if (!root) {
+      return;
+    }
+    const sectionFor = (hash: string): ReadingSectionModel | null => {
+      const match = /^#s(\d+(?:\.\d+)?)$/.exec(hash);
+      return match ? (sections.find((section) => section.number === Number(match[1])) ?? null) : null;
+    };
+    function onClick(event: MouseEvent) {
+      const link = (event.target as Element | null)?.closest("a[href^='#s']");
+      if (!(link instanceof HTMLAnchorElement)) {
+        return;
+      }
+      const hash = link.getAttribute("href") ?? "";
+      const target = sectionFor(hash);
+      if (!target) {
+        return;
+      }
+      event.preventDefault();
+      history.pushState(null, "", hash);
+      goToRef.current(target);
+    }
+    function onHash() {
+      const target = sectionFor(window.location.hash);
+      if (target) {
+        goToRef.current(target);
+      }
+    }
+    root.addEventListener("click", onClick);
+    window.addEventListener("hashchange", onHash);
+    onHash();
+    return () => {
+      root.removeEventListener("click", onClick);
+      window.removeEventListener("hashchange", onHash);
+    };
+  }, [sections]);
 
   function toggleAll() {
     const nextOpen = !allOpen;

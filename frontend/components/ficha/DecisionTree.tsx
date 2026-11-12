@@ -15,7 +15,12 @@ type Answer = "yes" | "no";
 
 export function DecisionTree({ view }: { view: Tree }) {
   const external = useExamplePick();
-  const selected = view.examples.find((item) => item.column === external?.column) ?? view.examples[0] ?? null;
+  // M5: sin elección, la columna inicial es la del contrato (view.default: tramo_ingreso).
+  const selected =
+    view.examples.find((item) => item.column === external?.column) ??
+    view.examples.find((item) => item.column === view.default) ??
+    view.examples[0] ??
+    null;
   const [flash, setFlash] = useState(false);
 
   useEffect(() => {
@@ -90,7 +95,6 @@ function Result({ view, example, flash }: { view: Tree; example: Example; flash:
           <dt>{view.catalog_fields.review}</dt>
           <dd>{view.review}</dd>
         </dl>
-        <p className="pii-row-note">{view.default}</p>
       </aside>
       {example.law ? (
         <details className="pii-law">

@@ -564,7 +564,7 @@ views:
     - Por qué
     rows:
     - type: Identificador directo
-      examples: '`rut_cliente`, `contacto`'
+      examples: '`rut_cliente` `contacto`'
       patterns:
         mark: ok
         text: RUT y correo
@@ -602,7 +602,7 @@ views:
         tone: sensitive
       why: Puede traer cualquier dato, incluida la salud [(art. 2 letra g)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
     - type: Atributo que revela una categoría sensible
-      examples: '`diagnostico`, `tramo_ingreso`'
+      examples: '`diagnostico` `tramo_ingreso`'
       patterns:
         mark: miss
         text: Nada
@@ -638,7 +638,7 @@ views:
         tone: personal
       why: Identifica si se puede enlazar con la tabla de clientes. Se clasifica por conocimiento del dominio.
     - type: Sin señal propia
-      examples: '`fecha_ingreso`, `producto`'
+      examples: '`fecha_ingreso` `producto`'
       patterns:
         mark: miss
         text: Nada

@@ -66,13 +66,32 @@
   font-weight: 500;
   line-height: 1.4;
   white-space: normal;
-  visibility: hidden;
+  /* Cerrado: fuera del flujo y sin ocupar ancho (oculto pero presente, desbordaba a 390 px). */
+  display: none;
 }
 
 .availability-tip:hover .availability-help,
 .availability-tip:focus-within .availability-help,
 .availability-tip[data-open="true"] .availability-help {
-  visibility: visible;
+  display: block;
+  max-width: min(18rem, calc(100vw - 2rem));
+}
+
+/* En pantallas angostas el globo abierto entra al flujo bajo la etiqueta, anclado al borde del contenedor. */
+@media (max-width: 600px) {
+  .availability-tip {
+    flex-wrap: wrap;
+  }
+
+  .availability-tip:hover .availability-help,
+  .availability-tip:focus-within .availability-help,
+  .availability-tip[data-open="true"] .availability-help {
+    position: static;
+    flex-basis: 100%;
+    width: auto;
+    max-width: 100%;
+    margin-top: 6px;
+  }
 }
 
 .availability-tag:focus-visible {

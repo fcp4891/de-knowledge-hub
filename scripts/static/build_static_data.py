@@ -60,6 +60,15 @@ def page_tags(index: p.ContentIndex, slug: str) -> list[str]:
     return [] if p.availability(page) != p.AVAILABLE else list(page.get("tags") or [])
 
 
+def search_availability(index: p.ContentIndex, slug: str) -> dict[str, Any]:
+    """ADR-031: estado y etiqueta de una ficha no disponible, para que la búsqueda estática no llame a una API."""
+    status = p.availability(index.entities.get(slug))
+    if status == p.AVAILABLE:
+        return {}
+    text = p.availability_text(index, status)
+    return {"availability": {"status": status, "label": text["label"], "help": text["help"]}}
+
+
 def search_documents(index: p.ContentIndex) -> list[dict[str, Any]]:
     """Mismos candidatos y texto que la búsqueda de la API, más las etiquetas de cada ficha."""
     documents = []
@@ -77,6 +86,7 @@ def search_documents(index: p.ContentIndex) -> list[dict[str, Any]]:
             "snippet": item["text"],
             "tags": sorted(page_tags(index, item["slug"])),
             "aliases": item["aliases"],   # ADR-010; el navegador los indexa si browserSearch.ts los incluye
+            **search_availability(index, item["slug"]),
         })
     return sorted(documents, key=lambda d: d["id"])
 

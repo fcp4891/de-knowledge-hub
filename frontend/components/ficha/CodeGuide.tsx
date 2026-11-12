@@ -32,7 +32,14 @@ export function CodeGuide({ lead, rules, notCovered, scenarios, simplifies, limi
                   <RichText text={row.requirement} />
                 </td>
                 {rules.headers.length > 3 ? (
-                  <td data-c={rules.headers[3]}>{row.finds ? <RichText text={row.finds} /> : null}</td>
+                  <td data-c={rules.headers[3]}>
+                    {/* Un solo hijo: en la tabla apilada, cada hijo de la celda ocupa una fila de la rejilla. */}
+                    {row.finds ? (
+                      <span>
+                        <RichText text={row.finds} />
+                      </span>
+                    ) : null}
+                  </td>
                 ) : null}
               </tr>
             ))}
