@@ -36,4 +36,6 @@ El itinerario publica sus cinco tramos, pero solo algunas fichas están listas p
 
 - Cambiar el estado de una ficha es una línea de frontmatter; los textos se editan en un solo archivo.
 - El sitio no tiene sitemap. Si se agrega uno, debe excluir las fichas no disponibles.
-- La búsqueda sigue indexando el título y el cuerpo de las fichas no disponibles. Queda pendiente decidir si se excluyen.
+- **Búsqueda.** Una ficha no disponible no indexa su cuerpo, su descripción, sus etiquetas ni sus alias:
+  - en la base (`search_documents`) queda solo el título;
+  - en la búsqueda de la proyección y en el índice estático del navegador, el título y la etiqueta de disponibilidad.

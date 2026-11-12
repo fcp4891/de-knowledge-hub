@@ -188,3 +188,10 @@ Además, `approach` suma el ejemplo y la referencia de cada paso, los rótulos d
 - `sources_grouped`: una entrada puede ser otra ficha (`page` y `label`) en vez de `urls` y `publisher`; `why` acepta texto enriquecido.
 
 **Validador:** con `practice_pairs`, como con `practice_lanes`, la §14 no exige las viñetas Seguridad, Observabilidad y Costo.
+
+## Enmienda 6 (2026-11-12): página de un PDF citado
+
+- Un enlace `<pdf>#page=N` en una vista es válido si el mismo PDF sin fragmento ya es una cita de `sources`. No se agrega otra cita, así que tampoco hay avisos de URL ni de título repetido.
+- `pii-identification` cita el texto publicado de la Ley 21.719 en su página: art. 2 → 2; art. 14 quinquies letra a → 10; art. 16 → 12; art. 16 quáter → 13.
+- El atributo `target="ley-21719"`, para abrir siempre la misma pestaña, lo pone el componente de Carril B.
+- Otro fragmento distinto de `#page=N` sigue exigiendo su propia cita.

@@ -542,11 +542,15 @@ def candidates(index: ContentIndex) -> list[dict[str, Any]]:
     items = []
     for slug, entry in index.concepts.items():
         page = index.entities.get(slug, {})
+        status = availability(page)
+        if status != AVAILABLE:   # ADR-031: solo el título y la etiqueta de disponibilidad
+            text, aliases = availability_text(index, status)["label"], []
+        else:
+            text = page.get("description") or entry.concept.get("note") or entry.concept["title"]
+            aliases = page.get("aliases", [])
         items.append({
             "slug": slug, "title": entry.concept["title"], "type": entry.concept["kind"], "domain": entry.domain["slug"],
-            "classification": entry.concept["classification"],
-            "text": page.get("description") or entry.concept.get("note") or entry.concept["title"],
-            "has_page": bool(page), "aliases": page.get("aliases", []),
+            "classification": entry.concept["classification"], "text": text, "has_page": bool(page), "aliases": aliases,
         })
     for e in index.entities.values():
         if e["type"] in TECHNOLOGY_TYPES or e["type"] in ("source", SNIPPET_TYPE):

@@ -193,3 +193,14 @@ def test_pii_identification_views_are_complete() -> None:
     assert data["verification_status"] == "review_required" and "owner_approved_at" not in data
     assert len(data["views"]["decision_tree"]["examples"]) == 8 and len(data["views"]["practice_pairs"]["items"]) == 8
     assert [r["count"] for r in data["views"]["coverage_strip"]["rows"]] == ["3 de 9", "7 de 9", "9 de 9"]
+
+
+def test_a_pdf_page_link_counts_as_its_citation() -> None:
+    """ADR-030, enmienda 6: «<pdf>#page=N» vale si el PDF sin fragmento es una cita; sin citas nuevas."""
+    pdf = "https://example.org/ley.pdf"
+    view = {"notes": {"a": {"text": f"Ver [(art. 2 letra f)]({pdf}#page=2) y [otro]({pdf}#capitulo)."}}}
+    body = "<!-- view: note a -->"
+    assert views.check(view, body, [pdf]) == [f"[views] el enlace '{pdf}#capitulo' no es una cita de sources"]
+    assert views.check(view, body, []) == [f"[views] el enlace '{pdf}#capitulo' no es una cita de sources",
+                                           f"[views] el enlace '{pdf}#page=2' no es una cita de sources"]
+    assert views.cited_articles(view) == {"2"}

@@ -162,6 +162,10 @@ def insert_search_document(conn: Connection, file_path: str, origin: str, doc: d
 
 
 def entity_search_document(data: dict[str, Any], body: str | None) -> dict[str, Any]:
+    if data.get("availability", "available") != "available":   # ADR-031: sin cuerpo, descripción ni etiquetas
+        return {"slug": data["slug"], "type": data["type"], "title": data["title"], "domain": data.get("domain"),
+                "classification": data.get("classification"), "snippet": data["title"], "tags": "", "summary": "",
+                "body": "", "aliases": []}
     return {
         "slug": data["slug"], "type": data["type"], "title": data["title"], "domain": data.get("domain"),
         "classification": data.get("classification"), "snippet": data.get("description") or data["title"],

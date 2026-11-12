@@ -178,7 +178,7 @@ views:
     - Para qué sirve
     rows:
     - field: Categoría
-      text: Qué es la columna para la ley. Si es de un niño, niña o adolescente, se marca además la regla especial [(art. 16 quáter)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf).
+      text: Qué es la columna para la ley. Si es de un niño, niña o adolescente, se marca además la regla especial [(art. 16 quáter)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=13).
       categories:
       - label: personal
         tone: personal
@@ -249,40 +249,40 @@ views:
       kicker: Fuera de la ley
       items:
       - title: Anonimizado
-        text: El vínculo con la persona se destruyó de forma irreversible. Deja de ser dato personal [(art. 2 letra k)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf).
+        text: El vínculo con la persona se destruyó de forma irreversible. Deja de ser dato personal [(art. 2 letra k)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
       - title: Sin vínculo con personas
         text: 'Precios, productos, métricas de máquinas: en esa tabla no se refieren a una persona.'
       hint: Preguntas 1 y 2
     personal:
-      kicker: Dato personal · [art. 2 letra f](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf)
+      kicker: Dato personal · [art. 2 letra f](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2)
       definition: «Cualquier información vinculada o referida a una persona natural identificada o identificable».
       text: 'Identificable: su identidad puede determinarse directa o indirectamente, con los medios que razonablemente se podrían usar. No hace
         falta un nombre: puede bastar un número de identificación o una combinación de rasgos, si con esos medios se llega a la persona.'
       also:
         kicker: Siguen siendo dato personal
         items:
-        - title: Seudonimizado [(art. 2 letra l)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf)
+        - title: Seudonimizado [(art. 2 letra l)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2)
           text: El identificador se reemplaza por un código, pero con información guardada aparte se vuelve a la persona. No saca el dato de la
             ley.
           example:
             label: Ver con
             column: rut_hash
-        - title: De fuente pública [(art. 2 letra i)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf)
+        - title: De fuente pública [(art. 2 letra i)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2)
           text: 'Que cualquiera pueda consultarlo lícitamente no lo libera: su tratamiento también se somete a la ley.'
           example:
             label: Ver con
             column: nombre_directorio
-        - title: Cifrado [(art. 14 quinquies letra a)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf)
+        - title: Cifrado [(art. 14 quinquies letra a)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=10)
           text: 'La ley lo menciona como medida de seguridad. Quien tiene la llave puede volver al dato: por eso no es la anonimización del [art.
-            2 letra k](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf).'
+            2 letra k](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).'
     sensitive:
-      kicker: Dato sensible · [art. 2 letra g](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf)
+      kicker: Dato sensible · [art. 2 letra g](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2)
       text: 'Un dato personal que revela algo íntimo: salud, origen étnico, situación socioeconómica, creencias, vida u orientación sexual, biometría,
         entre otros. Exige consentimiento expreso, por declaración escrita, verbal o un medio tecnológico equivalente, salvo excepciones [(art.
-        16)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf).'
+        16)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=12).'
       hint: Pregunta 3
     minors:
-      kicker: Niños, niñas y adolescentes · [art. 16 quáter](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf)
+      kicker: Niños, niñas y adolescentes · [art. 16 quáter](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=13)
       text: 'No es otra categoría: es una regla de interés superior y de consentimiento que se suma, según la edad.'
       hint: Pregunta 4
   decision_tree:
@@ -312,7 +312,7 @@ views:
         label: Si es sí
         outcome: anonymized
         title: No es dato personal
-        text: Un dato anonimizado deja de ser dato personal [(art. 2 letra k)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf).
+        text: Un dato anonimizado deja de ser dato personal [(art. 2 letra k)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
     - number: 2
       question: ¿Está vinculada a una persona identificada o identificable?
       help: Porque la identifica (nombre, RUT, combinación de atributos) o porque está en la misma fila que algo que la identifica. Se consideran
@@ -338,7 +338,7 @@ views:
         label: Si es sí
         outcome: sensitive
         title: Dato sensible
-        text: Consentimiento expreso, salvo las excepciones de la ley [(art. 16)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf).
+        text: Consentimiento expreso, salvo las excepciones de la ley [(art. 16)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=12).
     - number: 4
       question: ¿Es de un niño, niña o adolescente?
       help: 'Niños y niñas: menores de 14. Adolescentes: mayores de 14 y menores de 18.'
@@ -350,17 +350,17 @@ views:
         label: Si es sí
         outcome: minor
         title: Regla especial
-        text: Interés superior y reglas de consentimiento según la edad [(art. 16 quáter)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf).
+        text: Interés superior y reglas de consentimiento según la edad [(art. 16 quáter)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=13).
       - answer: 'no'
         label: Si es no
         outcome: personal
         title: Dato personal
-        text: Persona identificada o identificable [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf).
+        text: Persona identificada o identificable [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
     fallback:
       label: En los demás casos
       outcome: personal
       title: Dato personal
-      text: Persona identificada o identificable [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf).
+      text: Persona identificada o identificable [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
     catalog_fields:
       category: Categoría
       basis: Fundamento
@@ -506,7 +506,7 @@ views:
   coverage_strip:
     label: Cobertura sobre las nueve columnas de la muestra
     lead: 'La muestra del código tiene nueve columnas, todas en la misma fila que un RUT, así que todas son información vinculada a una persona
-      [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf). Esto es lo que ve cada enfoque:'
+      [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2). Esto es lo que ve cada enfoque:'
     columns:
     - rut_cliente
     - contacto
@@ -574,7 +574,7 @@ views:
       categories:
       - label: Personal
         tone: personal
-      why: Identifica a la persona por sí solo [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf).
+      why: Identifica a la persona por sí solo [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
     - type: Valor malformado
       examples: RUT con DV inválido en `rut_cliente`
       patterns:
@@ -600,7 +600,7 @@ views:
         tone: personal
       - label: Sensible
         tone: sensitive
-      why: Puede traer cualquier dato, incluida la salud [(art. 2 letra g)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf).
+      why: Puede traer cualquier dato, incluida la salud [(art. 2 letra g)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
     - type: Atributo que revela una categoría sensible
       examples: '`diagnostico`, `tramo_ingreso`'
       patterns:
@@ -612,7 +612,7 @@ views:
       categories:
       - label: Sensible
         tone: sensitive
-      why: Salud y situación socioeconómica, si se asocian a una persona identificable [(art. 2 letra g)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf).
+      why: Salud y situación socioeconómica, si se asocian a una persona identificable [(art. 2 letra g)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
     - type: Combinación de atributos
       examples: '`comuna` + `edad`'
       patterns:
@@ -648,7 +648,7 @@ views:
       categories:
       - label: Personal
         tone: personal
-      why: 'Solas no identifican, pero están en la misma fila que un RUT: son información vinculada a esa persona [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf).
+      why: 'Solas no identifican, pero están en la misma fila que un RUT: son información vinculada a esa persona [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
         El detector no lo marca: «sin hallazgo» no es «anónimo».'
     legend:
     - ✓ detecta
@@ -702,7 +702,7 @@ views:
       title: No usarlo para
       items:
       - 'Certificar que no hay datos personales: «sin hallazgos» no significa anónimo.'
-      - 'Anonimizar: detectar o enmascarar no es anonimizar, que exige que el vínculo se destruya de forma irreversible [(art. 2 letra k)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf).'
+      - 'Anonimizar: detectar o enmascarar no es anonimizar, que exige que el vínculo se destruya de forma irreversible [(art. 2 letra k)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).'
       - 'Decidir la base de licitud de un dato sensible: es una decisión jurídica, no técnica.'
       - 'Reemplazar la revisión: un patrón no sabe que una clave interna se enlaza con otra tabla.'
   control_evidence:
@@ -811,7 +811,7 @@ views:
         text: un `cliente_id` parece un código cualquiera; es personal porque se puede enlazar con la tabla de clientes, y eso solo lo sabe quien
           conoce el dominio.
       - title: 'Sin señal propia:'
-        text: '`fecha_ingreso` o `producto` no dicen nada por sí solas; son personales por estar en la misma fila que un RUT [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf).
+        text: '`fecha_ingreso` o `producto` no dicen nada por sí solas; son personales por estar en la misma fila que un RUT [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
           Por eso el reporte las lista como «sin hallazgos (no significa anónimo)».'
       note: 'Tampoco responde la pregunta 4 del árbol [§](#s2): la edad del titular no se infiere de la muestra.'
     scenarios:
@@ -950,9 +950,9 @@ views:
       avoid: Clasificar solo por el nombre de la columna. [§](#s3)
     - do: Comparar nombres por token, con reglas de varios tokens (`tramo` + `ingreso`).
       avoid: 'Comparar por subcadena: «renta» calza en `rentabilidad_producto`. [§](#s10)'
-    - do: Analizar si una clave interna o un hash permite volver a la persona [(art. 2 letra l)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf).
+    - do: Analizar si una clave interna o un hash permite volver a la persona [(art. 2 letra l)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
       avoid: Tratar `cliente_id` o un hash como no personal sin analizarlo. [§](#s2)
-    - do: Usar las categorías sensibles de la ley chilena, que incluyen la situación socioeconómica [(art. 2 letra g)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf).
+    - do: Usar las categorías sensibles de la ley chilena, que incluyen la situación socioeconómica [(art. 2 letra g)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
       avoid: 'Copiar la lista de datos sensibles del RGPD (art. 9): no incluye la situación socioeconómica. [§](#s2)'
     - do: Dejar en revisión un RUT con dígito verificador inválido.
       avoid: 'Descartarlo: un error de captura puede seguir apuntando a una persona. [§](#s3)'
@@ -1022,7 +1022,7 @@ views:
         href: '#s2'
       - label: art. 16 quáter
         legal: true
-        href: https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
+        href: https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=13
     - question: ¿Quién confirma los casos dudosos y dónde queda esa decisión?
       tags:
       - section: 4
@@ -1144,7 +1144,7 @@ Esta ficha no es asesoría legal: cubre la parte técnica de identificar datos p
 
 ### Saber qué columnas tienen datos personales, cuáles son sensibles y con qué fundamento
 
-**Identificar** es encontrar las columnas con información vinculada o referida a una persona identificada o identificable [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf), aunque no la nombren: claves internas, texto libre y combinaciones de atributos también cuentan. **Clasificar** es dejar esa conclusión en el catálogo, con su fundamento, para que otros puedan revisarla y aplicar los controles que corresponden.
+**Identificar** es encontrar las columnas con información vinculada o referida a una persona identificada o identificable [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2), aunque no la nombren: claves internas, texto libre y combinaciones de atributos también cuentan. **Clasificar** es dejar esa conclusión en el catálogo, con su fundamento, para que otros puedan revisarla y aplicar los controles que corresponden.
 
 <!-- view: catalog_fields -->
 

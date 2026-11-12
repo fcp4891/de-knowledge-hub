@@ -67,3 +67,22 @@ def test_ui_files_need_their_schema(content: Path) -> None:  # noqa: F811
     assert_error(run(content), "'help' is a required property")
     write_yaml(content, "ui/otro.yaml", {"a": 1})
     assert_error(run(content), "content/ui/otro.yaml no tiene schema (ADR-031)")
+
+
+def test_unavailable_pages_do_not_index_their_body(index: projection.ContentIndex) -> None:
+    """La búsqueda de una ficha no disponible ve solo el título y la etiqueta (API, navegador y base)."""
+    from backend.db.compiler import entity_search_document
+    from scripts.static.build_static_data import search_documents
+
+    item = next(i for i in projection.candidates(index) if i["slug"] == "data-minimization-by-layer")
+    assert (item["text"], item["aliases"]) == ("En desarrollo", [])
+    assert projection.search(index, "seudónimos")["total"] == 0 or all(
+        hit["slug"] != "data-minimization-by-layer" for g in projection.search(index, "seudónimos")["groups"] for hit in g["items"])
+    static = {d["slug"]: d for d in search_documents(index)}
+    assert static["data-minimization-by-layer"]["tags"] == [] and static["data-minimization-by-layer"]["snippet"] == "En desarrollo"
+    assert static["pii-identification"]["tags"]   # una ficha disponible conserva sus etiquetas
+    page = index.entities["data-minimization-by-layer"]
+    doc = entity_search_document(page, index.bodies["data-minimization-by-layer"])
+    assert (doc["body"], doc["summary"], doc["tags"], doc["snippet"]) == ("", "", "", page["title"])
+    available = entity_search_document(index.entities["pii-identification"], index.bodies["pii-identification"])
+    assert available["body"]

@@ -54,6 +54,12 @@ def write_knowledge(index: p.ContentIndex, w: MockWriter) -> None:
         w.write(f"GET /sources/{slug}", f"sources/{slug}.json", p.source_detail(index, slug))
 
 
+def page_tags(index: p.ContentIndex, slug: str) -> list[str]:
+    """Etiquetas de la ficha; una ficha no disponible no aporta las suyas (ADR-031)."""
+    page = index.entities.get(slug, {})
+    return [] if p.availability(page) != p.AVAILABLE else list(page.get("tags") or [])
+
+
 def search_documents(index: p.ContentIndex) -> list[dict[str, Any]]:
     """Mismos candidatos y texto que la búsqueda de la API, más las etiquetas de cada ficha."""
     documents = []
@@ -69,7 +75,7 @@ def search_documents(index: p.ContentIndex) -> list[dict[str, Any]]:
             "classification": item["classification"],
             "has_page": item["has_page"],
             "snippet": item["text"],
-            "tags": sorted(index.entities.get(item["slug"], {}).get("tags") or []),
+            "tags": sorted(page_tags(index, item["slug"])),
             "aliases": item["aliases"],   # ADR-010; el navegador los indexa si browserSearch.ts los incluye
         })
     return sorted(documents, key=lambda d: d["id"])

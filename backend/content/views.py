@@ -32,6 +32,15 @@ def markers(body: str) -> list[str]:
     return [f"{key} {item}" if item else key for key, item in MARKER.findall(body)]
 
 
+PDF_PAGE = re.compile(r"^(https://[^#]+\.pdf)#page=\d+$")
+
+
+def is_cited(url: str, cited_urls: list[str]) -> bool:
+    """Enmienda 6: «<pdf>#page=N» enlaza una página de un PDF que ya es una cita; no hace falta otra cita."""
+    page = PDF_PAGE.match(url)
+    return url in cited_urls or (page is not None and page.group(1) in cited_urls)
+
+
 def check_keyed(views: dict[str, Any], found: list[str]) -> list[str]:
     """Enmienda 5: cada marca «note <id>» o «chips <id>» tiene su entrada, y cada entrada se marca una vez."""
     errors = []
@@ -58,7 +67,7 @@ def check(views: dict[str, Any], body: str, cited_urls: list[str], anchors: set[
     errors += check_sources_grouped(views.get("sources_grouped"), cited_urls)
     links = sorted(set(hrefs(views)))
     errors += [f"[views] el enlace '{url}' no es una cita de sources" for url in links
-               if url.startswith("https://") and url not in cited_urls]
+               if url.startswith("https://") and not is_cited(url, cited_urls)]
     if anchors is not None:
         errors += [f"[views] el ancla '{url}' no existe en la ficha" for url in links
                    if url.startswith("#") and url[1:] not in anchors]
