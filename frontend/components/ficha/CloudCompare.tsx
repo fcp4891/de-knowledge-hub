@@ -2,28 +2,46 @@ import type { CloudCell, CloudCompareProps } from "@/lib/views";
 
 import "@/components/markdown/pipeline.css";
 
+import { RichText } from "./RichText";
 import "./ficha-blocks.css";
+import "./pii-views.css";
 
-function Service({ cell }: { cell: CloudCell }) {
+function Service({ cell, label }: { cell: CloudCell; label?: string }) {
   return (
-    <td>
-      <strong>{cell.name}</strong>
-      {cell.text}
-      {cell.warn ? <span className="cloud-compare-warn">{cell.warn}</span> : null}
+    <td data-c={label}>
+      <strong>
+        <RichText text={cell.name} />
+      </strong>
+      {cell.text ? <RichText text={cell.text} /> : null}
+      {cell.warn ? (
+        <span className="cloud-compare-warn">
+          <RichText text={cell.warn} />
+        </span>
+      ) : null}
     </td>
   );
 }
 
 export function CloudCompare({ intro, alert, headers, rows, closing }: CloudCompareProps) {
+  const ownHeader = headers.length > 4 ? headers[1] : undefined;
+  const serviceHeaders = ownHeader ? headers.slice(2) : headers.slice(1);
   return (
     <div className="markdown cloud-compare">
-      <p>{intro}</p>
-      <p className="cloud-compare-note">
-        <strong>{alert.title}</strong>
-        <span>{alert.text}</span>
-      </p>
-      <div className="markdown-table-wrap markdown-table-steps">
-        <table>
+      {intro ? (
+        <p>
+          <RichText text={intro} />
+        </p>
+      ) : null}
+      {alert ? (
+        <p className="cloud-compare-note">
+          <strong>{alert.title}</strong>
+          <span>
+            <RichText text={alert.text} />
+          </span>
+        </p>
+      ) : null}
+      <div className="markdown-table-wrap markdown-table-steps pii-table-wrap">
+        <table className="pii-table">
           <thead>
             <tr>
               {headers.map((header) => (
@@ -33,20 +51,29 @@ export function CloudCompare({ intro, alert, headers, rows, closing }: CloudComp
           </thead>
           <tbody>
             {rows.map((row) => (
-              <tr key={row.need} id={row.id}>
-                <td>
+              <tr key={row.need} id={row.id} data-tone={row.tone}>
+                <td data-c={headers[0]}>
                   {row.need}
-                  <span className="cloud-compare-meta">{row.meta}</span>
+                  {row.meta ? <span className="cloud-compare-meta">{row.meta}</span> : null}
                 </td>
-                <Service cell={row.gcp} />
-                <Service cell={row.aws} />
-                <Service cell={row.azure} />
+                {ownHeader ? (
+                  <td className="cloud-own" data-c={ownHeader}>
+                    {row.own ? <RichText text={row.own.text} /> : null}
+                  </td>
+                ) : null}
+                <Service cell={row.gcp} label={serviceHeaders[0]} />
+                <Service cell={row.aws} label={serviceHeaders[1]} />
+                <Service cell={row.azure} label={serviceHeaders[2]} />
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <p className="cloud-compare-closing">{closing}</p>
+      {closing ? (
+        <p className="cloud-compare-closing">
+          <RichText text={closing} />
+        </p>
+      ) : null}
     </div>
   );
 }

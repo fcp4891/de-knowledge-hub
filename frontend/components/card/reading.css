@@ -1855,6 +1855,13 @@
   scroll-margin-top: 72px;
 }
 
+.reading-article {
+  container-type: inline-size;
+  container-name: reading;
+  min-width: 0;
+  max-width: 100%;
+}
+
 @media (max-width: 719px) {
   .reading-next {
     align-items: flex-start;

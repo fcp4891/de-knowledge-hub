@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+
+import { FichaAnchor } from "@/components/availability/FichaLink";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -903,10 +905,10 @@ export function ConceptReading({
               <p className="reading-quiet">Sin relaciones.</p>
             ) : null}
             {related.map((item) => (
-              <Link key={item.href} className="reading-related" href={item.href}>
+              <FichaAnchor key={item.href} className="reading-related" href={item.href}>
                 {item.title}
                 <span>{item.kind}</span>
-              </Link>
+              </FichaAnchor>
             ))}
             {hasRelations ? (
               <button

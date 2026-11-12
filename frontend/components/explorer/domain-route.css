@@ -277,6 +277,22 @@ a.route-card:hover {
   opacity: 0.62;
 }
 
+.route-card[data-unavailable] {
+  opacity: 0.72;
+  border-style: dashed;
+  cursor: default;
+}
+
+.route-icon[data-unavailable] {
+  border: 0;
+  background: transparent;
+  color: var(--pii-personal);
+}
+
+.route-icon[data-unavailable="in_review"] {
+  color: var(--warn-ink);
+}
+
 .route-icon {
   flex: 0 0 24px;
   width: 24px;

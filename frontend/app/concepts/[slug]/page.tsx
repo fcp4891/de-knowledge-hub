@@ -16,6 +16,8 @@ import { entityHref } from "@/lib/entityHref";
 import { architectureTitle, isArchitectureView } from "@/lib/architecture";
 import { SHORT_NAMES } from "@/lib/learning-paths";
 import { isDomainPublished, relationVisible, scopeFromConcepts } from "@/lib/publishedScope";
+import { fichaLinkStates, loadAvailabilityCopy } from "@/lib/availability";
+import { anchorAttrs } from "@/lib/anchorAttrs";
 import { nextInRoute } from "@/lib/domainRoute";
 import { staticSlugs } from "@/lib/staticParams";
 import type { Metadata } from "next";
@@ -23,6 +25,9 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { PRIVACY_SPACE_HREF } from "@/lib/privacySpace";
 
+import { AvailabilityIcon } from "@/components/availability/AvailabilityMark";
+import { FichaLinksProvider } from "@/components/availability/FichaLink";
+import "@/components/availability/availability.css";
 import { ApproachBoard } from "@/components/ficha/ApproachBoard";
 import { CentralIdea } from "@/components/ficha/CentralIdea";
 import { CloudCompare } from "@/components/ficha/CloudCompare";
@@ -38,6 +43,16 @@ import { OpenQuestions } from "@/components/ficha/OpenQuestions";
 import { TradeOffs } from "@/components/ficha/TradeOffs";
 import { TreatmentMap } from "@/components/ficha/TreatmentMap";
 import { VigenciaTimeline } from "@/components/ficha/VigenciaTimeline";
+import { CatalogFields } from "@/components/ficha/CatalogFields";
+import { ColumnTypes } from "@/components/ficha/ColumnTypes";
+import { ConceptMap } from "@/components/ficha/ConceptMap";
+import { CoverageStrip } from "@/components/ficha/CoverageStrip";
+import { DecisionTree } from "@/components/ficha/DecisionTree";
+import { EvidenceSteps } from "@/components/ficha/EvidenceSteps";
+import { ExamplePickProvider } from "@/components/ficha/ExamplePick";
+import { FichaChips, FichaNote } from "@/components/ficha/FichaNotes";
+import { PracticePairs } from "@/components/ficha/PracticePairs";
+import { UseAvoid } from "@/components/ficha/UseAvoid";
 import { WhenToUse } from "@/components/ficha/WhenToUse";
 import {
   approachProps,
@@ -109,21 +124,28 @@ function UnavailablePage({
   title,
   text,
   href,
+  status,
 }: {
   title: string;
   text: { label: string; help: string; back_label: string };
   href: string;
+  status: "in_review" | "in_development";
 }) {
   return (
     <div className="page">
-      <article className="unavailable-page">
+        <article className="unavailable-page" data-availability={status}>
         <h1>{title}</h1>
         <p>
-          <span className="unavailable-tag">{text.label}</span>
+          <span className={`availability-tag is-${status}`}>
+            <AvailabilityIcon status={status} />
+            {text.label}
+          </span>
         </p>
         <p>{text.help}</p>
         <p>
-          <Link href={href}>{text.back_label}</Link>
+          <Link className="unavailable-back" href={href}>
+            {text.back_label}
+          </Link>
         </p>
       </article>
     </div>
@@ -155,7 +177,9 @@ function SourceLinks({ sources }: { sources: SourceRef[] }) {
     <ul className="reading-sources">
       {sources.map((source) => (
         <li key={`${source.source}-${source.url}`}>
-          <a href={source.url}>{citationLinkText(source)}</a>
+          <a href={source.url} {...anchorAttrs(source.url)}>
+            {citationLinkText(source)}
+          </a>
           <p className="reading-quiet">{citationDetail(source)}</p>
         </li>
       ))}
@@ -184,6 +208,24 @@ function markedViews(views: Views | undefined): Record<string, ReactNode> {
   if (views.trade_offs) nodes.trade_offs = <TradeOffs {...tradeOffsProps(views.trade_offs)} />;
   if (views.severity_cards) nodes.severity_cards = <SeverityCards {...severityCardsProps(views.severity_cards)} />;
   if (views.open_questions) nodes.open_questions = <OpenQuestions {...openQuestionsProps(views.open_questions)} />;
+  if (views.catalog_fields) nodes.catalog_fields = <CatalogFields view={views.catalog_fields} />;
+  if (views.concept_map) nodes.concept_map = <ConceptMap view={views.concept_map} />;
+  if (views.decision_tree) nodes.decision_tree = <DecisionTree view={views.decision_tree} />;
+  if (views.coverage_strip) nodes.coverage_strip = <CoverageStrip view={views.coverage_strip} />;
+  if (views.column_types) nodes.column_types = <ColumnTypes view={views.column_types} />;
+  if (views.evidence_steps) nodes.evidence_steps = <EvidenceSteps view={views.evidence_steps} />;
+  if (views.use_avoid) nodes.use_avoid = <UseAvoid view={views.use_avoid} />;
+  if (views.practice_pairs) nodes.practice_pairs = <PracticePairs view={views.practice_pairs} />;
+  if (views.notes) {
+    for (const [id, note] of Object.entries(views.notes)) {
+      nodes[`note ${id}`] = <FichaNote note={note} />;
+    }
+  }
+  if (views.chips) {
+    for (const [id, chips] of Object.entries(views.chips)) {
+      nodes[`chips ${id}`] = <FichaChips chips={chips} />;
+    }
+  }
   return nodes;
 }
 
@@ -524,7 +566,12 @@ async function ConceptArticle({ slug }: { slug: string }) {
   const data = concept.data;
   if (data.availability !== "available" && data.availability_text) {
     return (
-      <UnavailablePage title={data.title} text={data.availability_text} href={itineraryHref(data.domain, data.subdomain)} />
+      <UnavailablePage
+        title={data.title}
+        text={data.availability_text}
+        href={itineraryHref(data.domain, data.subdomain)}
+        status={data.availability === "in_review" ? "in_review" : "in_development"}
+      />
     );
   }
   const summary = data.sections.find((section) => section.key === "summary");
@@ -563,13 +610,19 @@ async function ConceptArticle({ slug }: { slug: string }) {
         level: conceptItem.level,
         hasPage: conceptItem.has_page,
         blueprintIndex: index,
+        available: conceptItem.availability === "available",
       })),
     }));
     const found = nextInRoute(stages, data.slug);
     next = found && scope.has(found.slug) ? { slug: found.slug, title: found.title } : null;
   }
 
+  const copy = await loadAvailabilityCopy(conceptRefs);
+  const links = fichaLinkStates(conceptRefs, data.unavailable_links, copy);
+
   return (
+    <FichaLinksProvider links={links} sections={data.views?.section_titles ?? []}>
+    <ExamplePickProvider>
     <ConceptReading
       slug={data.slug}
       title={data.title}
@@ -606,6 +659,8 @@ async function ConceptArticle({ slug }: { slug: string }) {
     >
       {staticMode ? null : <HybridNotes slug={data.slug} />}
     </ConceptReading>
+    </ExamplePickProvider>
+    </FichaLinksProvider>
   );
 }
 

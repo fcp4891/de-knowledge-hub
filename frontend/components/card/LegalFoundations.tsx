@@ -12,6 +12,8 @@ import {
   type ChileGroup,
   type ChilePrinciple,
 } from "@/lib/chileLegalCatalog";
+import { AvailabilityMark } from "@/components/availability/AvailabilityMark";
+import { FichaAnchor, useFichaLink } from "@/components/availability/FichaLink";
 import { bcnLinkText, legalRowId } from "@/lib/legal";
 import { principleActivation, principleAriaLabel } from "@/lib/principleCards";
 import type { RolesProps, Tag } from "@/lib/views";
@@ -105,9 +107,9 @@ function Fichas({ fichas }: { fichas: ChileFicha[] }) {
     <div className="lf-links">
       {fichas.map((ficha) =>
         ficha.kind === "page" ? (
-          <a key={ficha.slug} href={`/concepts/${ficha.slug}/`}>
+          <FichaAnchor key={ficha.slug} href={`/concepts/${ficha.slug}/`}>
             {ficha.title}
-          </a>
+          </FichaAnchor>
         ) : ficha.href ? (
           <a key={ficha.label} href={ficha.href}>
             {ficha.label}
@@ -422,6 +424,17 @@ function PrincipleCard({
   const tipId = `lf-tip-${index}`;
   const child = CHILE_CHILD_TITLES[principle.slug] ?? principle.slug;
   const name = principle.label.replace(/^[a-h]\)\s*/i, "");
+  const unavailable = useFichaLink(`/concepts/${principle.slug}/`);
+  if (unavailable) {
+    return (
+      <li className="lf-principle">
+        <span className="lf-principle-card" aria-disabled="true">
+          <span className="lf-principle-label">{name}</span>
+          <AvailabilityMark compact status={unavailable.status} label={unavailable.label} />
+        </span>
+      </li>
+    );
+  }
   return (
     <li
       className="lf-principle"

@@ -2,6 +2,7 @@ import { ApiFailure } from "@/components/ApiFailure";
 import { HomeScreen, type HomeConcept, type HomeDomain } from "@/components/home/HomeScreen";
 import { getDomain, listAllConcepts, listDomains, listStudyStates } from "@/lib/api/client";
 import type { ApiResult, StudyState } from "@/lib/api/types";
+import { countsAsFicha } from "@/lib/availability";
 import { verifiedCount } from "@/lib/privacySpace";
 
 async function latestReviewing(): Promise<ApiResult<StudyState | null>> {
@@ -47,8 +48,13 @@ export default async function HomePage() {
   }
 
   const withPage = new Map<string, number>();
+  const unavailable = new Map<string, number>();
   if (conceptList.ok) {
     for (const concept of conceptList.data) {
+      if (!countsAsFicha(concept)) {
+        unavailable.set(concept.domain, (unavailable.get(concept.domain) ?? 0) + 1);
+        continue;
+      }
       if (concept.has_page) {
         withPage.set(concept.domain, (withPage.get(concept.domain) ?? 0) + 1);
       }
@@ -58,9 +64,10 @@ export default async function HomePage() {
   const domains: HomeDomain[] = domainItems.map((domain) => {
     const detail = details.find((item) => item.ok && item.data.id === domain.id);
     const data = detail && detail.ok ? detail.data : null;
-    const stageOf = (subdomain: { slug: string; title: string; concepts: { has_page: boolean; verification_status: string | null }[] }) => {
-      const progress = verifiedCount(subdomain.concepts.map((concept) => concept.verification_status));
-      const pages = subdomain.concepts.filter((concept) => concept.has_page).length;
+    const stageOf = (subdomain: { slug: string; title: string; concepts: { has_page: boolean; verification_status: string | null; availability?: string | null }[] }) => {
+      const visible = subdomain.concepts.filter((concept) => countsAsFicha(concept));
+      const progress = verifiedCount(visible.map((concept) => concept.verification_status));
+      const pages = visible.filter((concept) => concept.has_page).length;
       return { slug: subdomain.slug, title: subdomain.title, ...progress, withPage: pages };
     };
     const stages =
@@ -80,7 +87,7 @@ export default async function HomePage() {
       slug: domain.slug,
       title: domain.title,
       band: domain.band,
-      conceptCount: domain.concept_count,
+      conceptCount: domain.concept_count - (unavailable.get(domain.slug) ?? 0),
       withPage: conceptList.ok ? (withPage.get(domain.slug) ?? 0) : null,
       stages,
     };

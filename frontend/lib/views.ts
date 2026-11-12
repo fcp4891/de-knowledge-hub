@@ -130,8 +130,8 @@ export type ControlEvidenceProps = {
 
 export type CodeGuideProps = {
   lead: Titled;
-  rules: { headers: string[]; items: { id?: string; rule: string; fn: string; requirement: string }[] };
-  notCovered: { title: string; intro: string; items: Titled[] };
+  rules: { headers: string[]; items: { id?: string; rule: string; fn: string; requirement: string; finds?: string }[] };
+  notCovered: { title: string; intro: string; items: Titled[]; note?: string };
   scenarios: { title: string; items: { name: string; text: string; exitCode: 0 | 1 }[] };
   simplifies: { title: string; items: Titled[] };
   limit: Titled;
@@ -182,7 +182,7 @@ export type SeverityCardsProps = {
 export type TradeOffsProps = {
   arq?: boolean;
   resolutionLabel: string;
-  /** text: los dos lados en una frase; con a_text y b_text (enmienda 5) el adaptador los une. */
+  /** text es la frase sin partir. a_text y b_text, si vienen, son cada lado. */
   items: { a: string; b: string; text: string; aText?: string; bText?: string; resolution: string }[];
   note?: string;
 };
@@ -195,11 +195,30 @@ export type OpenQuestionsProps = {
   items: { question: string; tags: Tag[] }[];
 };
 
+export type CitationSource = {
+  kind: "citation";
+  title: string;
+  links: { label?: string; href: string }[];
+  publisher: string;
+  level: string;
+  why?: string;
+  provider?: string;
+};
+
+export type PageSource = {
+  kind: "page";
+  title: string;
+  page: string;
+  label: string;
+  why?: string;
+  targetAvailability?: "in_review" | "in_development";
+};
+
 export type SourcesGroupedProps = {
   groups: {
     title: string;
     layout?: "list" | "providers";
-    sources: { title: string; links: { label?: string; href: string }[]; publisher: string; level: string; why?: string; provider?: string }[];
+    sources: (CitationSource | PageSource)[];
   }[];
 };
 
@@ -318,8 +337,22 @@ export function controlEvidenceProps(view: V["control_evidence"]): ControlEviden
 export function codeGuideProps(view: V["code_guide"]): CodeGuideProps {
   return {
     lead: view.lead,
-    rules: view.rules,
-    notCovered: view.not_covered,
+    rules: {
+      headers: view.rules.headers,
+      items: view.rules.items.map((item) => ({
+        id: item.id,
+        rule: item.rule,
+        fn: item.fn,
+        requirement: item.requirement,
+        finds: item.finds,
+      })),
+    },
+    notCovered: {
+      title: view.not_covered.title,
+      intro: view.not_covered.intro,
+      items: view.not_covered.items,
+      note: view.not_covered.note,
+    },
     scenarios: {
       title: view.scenarios.title,
       items: view.scenarios.items.map((item) => ({ name: item.name, text: item.text, exitCode: item.exit_code as 0 | 1 })),
@@ -381,19 +414,39 @@ export function openQuestionsProps(view: V["open_questions"]): OpenQuestionsProp
   return { intro: view.intro, checkLabel: view.check_label, counter: view.counter, items: view.items };
 }
 
-type GroupedSource = SourcesGroupedProps["groups"][number]["sources"][number];
-
-/** ADR-030 enmienda 5: las entradas `page` (otra ficha) esperan su componente; aquí pasan solo las citas. */
-function isCitation(source: V["sources_grouped"]["groups"][number]["sources"][number]): source is GroupedSource {
-  return source.links !== undefined && source.publisher !== undefined && source.level !== undefined;
-}
-
 export function sourcesGroupedProps(view: V["sources_grouped"]): SourcesGroupedProps {
   return {
     groups: view.groups.map((group) => ({
       title: group.title,
       layout: group.layout as "list" | "providers" | undefined,
-      sources: group.sources.filter(isCitation),
+      sources: group.sources.flatMap((source): (CitationSource | PageSource)[] => {
+        if (source.page && source.label) {
+          return [
+            {
+              kind: "page" as const,
+              title: source.title,
+              page: source.page,
+              label: source.label,
+              why: source.why,
+              targetAvailability: source.target_availability,
+            },
+          ];
+        }
+        if (source.links && source.publisher && source.level) {
+          return [
+            {
+              kind: "citation" as const,
+              title: source.title,
+              links: source.links,
+              publisher: source.publisher,
+              level: source.level,
+              why: source.why,
+              provider: source.provider,
+            },
+          ];
+        }
+        return [];
+      }),
     })),
   };
 }
@@ -411,7 +464,7 @@ export type RichPart =
   | { type: "em"; value: string }
   | { type: "code"; value: string };
 
-const RICH = /\[([^\]]+)\]\((https:\/\/[^)\s]+)\)|\*\*([^*]+)\*\*|\*([^*]+)\*|`([^`]+)`/g;
+const RICH = /\[([^\]]+)\]\((https:\/\/[^)\s]+|\/[^)\s]+|#[^)\s]+)\)|\*\*([^*]+)\*\*|\*([^*]+)\*|`([^`]+)`/g;
 
 export function richParts(text: string): RichPart[] {
   const parts: RichPart[] = [];

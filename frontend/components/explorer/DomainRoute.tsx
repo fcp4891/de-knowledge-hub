@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
+import { AvailabilityGlyph, AvailabilityMark } from "@/components/availability/AvailabilityMark";
 import { ConstructionBanner } from "@/components/ConstructionBanner";
 import { SearchDialog } from "@/components/SearchDialog";
 import type { Level, StudyStatus } from "@/lib/api/types";
-import { domainIsComplete, isMastered, nextGoalDomain, nextRecommended, orderByLevel } from "@/lib/domainRoute";
+import type { AvailabilityCopyMap } from "@/lib/availability";
+import { domainIsComplete, isAvailableFicha, isMastered, nextGoalDomain, nextRecommended, orderByLevel } from "@/lib/domainRoute";
 import { SHORT_NAMES } from "@/lib/learning-paths";
 import { isDomainPublished, isGoalPublished } from "@/lib/publishedScope";
 import { listStoredStudy, subscribePersonal } from "@/lib/personalStore";
@@ -30,6 +32,8 @@ export type RouteConcept = {
   verified: boolean;
   blueprintIndex: number;
   kind?: "concept" | "pattern" | "architecture";
+  available?: boolean;
+  availability?: "available" | "in_review" | "in_development";
 };
 
 export type RouteStage = {
@@ -84,6 +88,7 @@ export function DomainRoute({
   disabledStage,
   verifiedTotal,
   construction = false,
+  availabilityCopy,
 }: {
   id: string;
   slug: string;
@@ -102,6 +107,7 @@ export function DomainRoute({
   disabledStage?: { id: string; title: string };
   verifiedTotal?: number;
   construction?: boolean;
+  availabilityCopy?: AvailabilityCopyMap;
 }) {
   const [localStudy, setLocalStudy] = useState<Record<string, RouteStudy> | null>(staticMode ? null : study);
   const [goalKey, setGoalKey] = useState<string | null>(null);
@@ -157,7 +163,7 @@ export function DomainRoute({
   const recommended = nextRecommended(orderedStages, lookup);
   const complete = domainIsComplete(orderedStages, lookup);
   const concepts = orderedStages.flatMap((stage) => stage.concepts);
-  const fichas = concepts.filter((concept) => concept.hasPage);
+  const fichas = concepts.filter((concept) => isAvailableFicha(concept));
   const verified = fichas.filter((concept) => concept.verified).length;
   const verifiedBase = verifiedTotal ?? fichas.length;
   const shownStages = [
@@ -166,8 +172,8 @@ export function DomainRoute({
       ? [{ slug: disabledStage.id, title: disabledStage.title, concepts: [] as RouteConcept[], disabled: true }]
       : []),
   ];
-  const mastered = concepts.filter((concept) => isMastered(lookup(concept.slug))).length;
-  const reviewItems = concepts.filter((concept) => lookup(concept.slug) === "needs_review");
+  const mastered = fichas.filter((concept) => isMastered(lookup(concept.slug))).length;
+  const reviewItems = fichas.filter((concept) => lookup(concept.slug) === "needs_review");
   const crumb = `${id} ${SHORT_NAMES[id] ?? title}`;
   const nextDomainId = complete ? nextGoalDomain(goalKey, id) : null;
   const nextDomain =
@@ -242,11 +248,12 @@ export function DomainRoute({
       <div className="route-split">
         <ol className="route-stages" aria-label="Etapas de la ruta">
           {shownStages.map((stage, index) => {
-            const done = stage.concepts.filter((concept) => isMastered(lookup(concept.slug))).length;
-            const started = stage.concepts.some((concept) => lookup(concept.slug) !== "not_reviewed");
+            const stageFichas = stage.concepts.filter((concept) => isAvailableFicha(concept));
+            const done = stageFichas.filter((concept) => isMastered(lookup(concept.slug))).length;
+            const started = stageFichas.some((concept) => lookup(concept.slug) !== "not_reviewed");
             const marker = stage.disabled
               ? "pending"
-              : stage.concepts.length > 0 && done === stage.concepts.length
+              : stageFichas.length > 0 && done === stageFichas.length
                 ? "complete"
                 : started
                   ? "started"
@@ -263,9 +270,9 @@ export function DomainRoute({
                 <div className="route-stage-body">
                   <div className="route-stage-head">
                     <h2>{stage.title}</h2>
-                    {stage.disabled ? null : (
+                    {stage.disabled || stageFichas.length === 0 ? null : (
                       <span className="route-stage-count">
-                        {done} de {stage.concepts.length} comprendidos
+                        {done} de {stageFichas.length} comprendidos
                       </span>
                     )}
                   </div>
@@ -277,6 +284,7 @@ export function DomainRoute({
                           concept={concept}
                           state={lookup(concept.slug)}
                           recommended={recommended?.slug === concept.slug}
+                          availabilityCopy={availabilityCopy}
                           section={sections[concept.slug]}
                           markArchitecture={id === "07" && concept.kind === "architecture"}
                         />
@@ -356,14 +364,39 @@ function ConceptCard({
   recommended,
   section,
   markArchitecture = false,
+  availabilityCopy,
 }: {
   concept: RouteConcept;
   state: StudyStatus;
   recommended: boolean;
   section: number | undefined;
   markArchitecture?: boolean;
+  availabilityCopy?: AvailabilityCopyMap;
 }) {
   const level = LEVEL_NAME[concept.level];
+  if (concept.hasPage && concept.available === false && (concept.availability === "in_review" || concept.availability === "in_development")) {
+    const copy = availabilityCopy?.[concept.availability];
+    return (
+      <div className="route-card" data-unavailable={concept.availability} aria-disabled="true">
+        <span className="route-icon" data-unavailable={concept.availability} aria-hidden="true">
+          <AvailabilityGlyph status={concept.availability} />
+        </span>
+        <span className="route-card-text">
+          {markArchitecture ? <span className="route-card-kind">Arquitectura</span> : null}
+          <span className="route-card-title">{concept.title}</span>
+          <span className="route-card-meta">
+            {level}
+            {copy ? (
+              <>
+                {" · "}
+                <AvailabilityMark status={concept.availability} label={copy.label} help={copy.help} />
+              </>
+            ) : null}
+          </span>
+        </span>
+      </div>
+    );
+  }
   if (!concept.hasPage) {
     return (
       <div className="route-card" data-pending="true">

@@ -2,6 +2,7 @@ import { ApiFailure } from "@/components/ApiFailure";
 import { DomainRoute, type GoalDomain, type RouteStage, type RouteStudy } from "@/components/explorer/DomainRoute";
 import { getConcept, getDomain, listDomains, listStudyStates } from "@/lib/api/client";
 import type { ApiResult } from "@/lib/api/types";
+import { availabilityCopyFrom } from "@/lib/availability";
 import { isDomainPublished } from "@/lib/publishedScope";
 import { staticSlugs } from "@/lib/staticParams";
 
@@ -46,7 +47,7 @@ function readingMinutes(markdown: string): number | null {
   return Math.max(1, Math.round(words / 200));
 }
 
-async function loadMinutes(slugs: string[]): Promise<Record<string, number>> {
+async function loadMinutes(slugs: string[]) {
   const details = await Promise.all(slugs.map((slug) => getConcept(slug)));
   const minutes: Record<string, number> = {};
   for (const detail of details) {
@@ -59,7 +60,8 @@ async function loadMinutes(slugs: string[]): Promise<Record<string, number>> {
       minutes[detail.data.slug] = estimate;
     }
   }
-  return minutes;
+  const copy = availabilityCopyFrom(details.flatMap((detail) => (detail.ok ? [detail.data] : [])));
+  return { minutes, copy };
 }
 
 export default async function DomainPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -87,6 +89,8 @@ export default async function DomainPage({ params }: { params: Promise<{ slug: s
       verified: concept.verification_status === "verified",
       blueprintIndex: index,
       kind: concept.kind,
+      available: concept.availability === "available",
+      availability: concept.availability,
     })),
   });
   const stages: RouteStage[] = data.subdomains.map(toStage);
@@ -111,7 +115,7 @@ export default async function DomainPage({ params }: { params: Promise<{ slug: s
   const slugs = new Set(stages.flatMap((stage) => stage.concepts.map((concept) => concept.slug)));
   const withPage = stages.flatMap((stage) => stage.concepts.filter((concept) => concept.hasPage).map((concept) => concept.slug));
 
-  const [studyResult, catalog, minutes] = await Promise.all([
+  const [studyResult, catalog, routeFacts] = await Promise.all([
     staticMode ? Promise.resolve(null) : loadStudy(slugs),
     listDomains(),
     loadMinutes(withPage),
@@ -131,7 +135,8 @@ export default async function DomainPage({ params }: { params: Promise<{ slug: s
         description={data.description}
         conceptCount={stages.reduce((sum, stage) => sum + stage.concepts.length, 0)}
         stages={stages}
-        minutes={minutes}
+        minutes={routeFacts.minutes}
+        availabilityCopy={routeFacts.copy}
         study={studyResult && studyResult.ok ? studyResult.data : null}
         staticMode={staticMode}
         goalDomains={goalDomains}

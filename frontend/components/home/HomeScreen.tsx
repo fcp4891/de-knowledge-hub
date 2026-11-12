@@ -272,7 +272,9 @@ function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsById: Map<
               const stage = step.stage ? domain?.stages.find((item) => item.slug === step.stage) : undefined;
               const layer = step.stage ? undefined : LAYERS.find((item) => item.domains.includes(step.domain));
               const status = stage
-                ? `${stage.verified}/${stage.total} verificadas`
+                ? stage.total > 0
+                  ? `${stage.verified}/${stage.total} verificadas`
+                  : null
                 : domain
                   ? contentStatus(domain.withPage, domain.conceptCount)
                   : null;
