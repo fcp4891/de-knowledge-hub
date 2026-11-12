@@ -74,6 +74,19 @@
   --band-especializacion-800: #5C234F;
   --band-especializacion-900: #3A1632;
 
+  /* Tonos de pii-identification. Apuntan a tokens que ya cambian con el tema. */
+  --pii-personal: var(--band-especializacion);
+  --pii-personal-bg: var(--lvl-avanzado-bg);
+  --pii-sensitive: var(--severity-3-ink);
+  --pii-sensitive-bg: var(--severity-3-bg);
+  --pii-result: var(--lvl-intermedio-ink);
+  --pii-result-bg: var(--lvl-intermedio-bg);
+  --pii-pick: var(--severity-1-ink);
+  --pii-pick-bg: var(--severity-1-bg);
+  --pii-pick-line: var(--severity-1-bar);
+  --pii-minor: var(--warn-ink);
+  --pii-minor-bg: var(--warn-bg);
+
   /* Cromo de código: igual en claro y oscuro, para que el texto claro siga en AA. */
   --code-bg: #15171C;
   --code-bar: #1C1F27;

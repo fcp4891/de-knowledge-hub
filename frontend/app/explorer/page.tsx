@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ApiFailure } from "@/components/ApiFailure";
 import { listAllConcepts, listDomains } from "@/lib/api/client";
 import type { DomainSummary } from "@/lib/api/types";
+import { countsAsFicha } from "@/lib/availability";
 import { LAYERS, SHORT_NAMES } from "@/lib/learning-paths";
 import {
   BAND_LABEL,
@@ -16,8 +17,13 @@ import {
 export default async function ExplorerPage() {
   const [domains, concepts] = await Promise.all([listDomains(), listAllConcepts()]);
   const withPage = new Map<string, number>();
+  const unavailable = new Map<string, number>();
   if (concepts.ok) {
     for (const concept of concepts.data) {
+      if (!countsAsFicha(concept)) {
+        unavailable.set(concept.domain, (unavailable.get(concept.domain) ?? 0) + 1);
+        continue;
+      }
       if (concept.has_page) {
         withPage.set(concept.domain, (withPage.get(concept.domain) ?? 0) + 1);
       }
@@ -44,6 +50,7 @@ export default async function ExplorerPage() {
               closed={special.every((domain) => !isDomainPublished(domain))}
               domains={special}
               withPage={withPage}
+              unavailable={unavailable}
               conceptsOk={concepts.ok}
             />
           ) : null}
@@ -54,6 +61,7 @@ export default async function ExplorerPage() {
               closed={layerIsClosed(layer.domains)}
               domains={layer.domains.map((id) => byId.get(id) ?? null)}
               withPage={withPage}
+              unavailable={unavailable}
               conceptsOk={concepts.ok}
             />
           ))}
@@ -63,6 +71,7 @@ export default async function ExplorerPage() {
               closed={rest.every((domain) => !isDomainPublished(domain))}
               domains={SHOW_UNPUBLISHED ? rest : rest.filter((domain) => isDomainPublished(domain))}
               withPage={withPage}
+              unavailable={unavailable}
               conceptsOk={concepts.ok}
             />
           ) : null}
@@ -80,12 +89,14 @@ function LayerBlock({
   closed,
   domains,
   withPage,
+  unavailable,
   conceptsOk,
 }: {
   name: string;
   closed: boolean;
   domains: (DomainSummary | null)[];
   withPage: Map<string, number>;
+  unavailable: Map<string, number>;
   conceptsOk: boolean;
 }) {
   return (
@@ -99,7 +110,8 @@ function LayerBlock({
           }
           const open = isDomainPublished(domain);
           const label = `${domain.id} · ${SHORT_NAMES[domain.id] ?? domain.title}`;
-          const count = conceptsOk ? `${withPage.get(domain.slug) ?? 0} de ${domain.concept_count} con ficha` : `${domain.concept_count} conceptos`;
+          const total = domain.concept_count - (unavailable.get(domain.slug) ?? 0);
+          const count = conceptsOk ? `${withPage.get(domain.slug) ?? 0} de ${total} con ficha` : `${total} conceptos`;
           return (
             <li key={domain.slug}>
               {open ? (

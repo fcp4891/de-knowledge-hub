@@ -67,10 +67,10 @@ export function parseMarkdown(markdown: string): Block[] {
       flushProse();
       const end = text.indexOf("-->", index + 4);
       const raw = end === -1 ? text.slice(index + 4) : text.slice(index + 4, end);
-      const view = /^view:\s*([a-z_]+)$/.exec(raw.trim());
+      const view = /^view:\s*([a-z_]+)(?:\s+([a-z0-9][a-z0-9_-]*))?$/.exec(raw.trim());
       const note = raw.trim().replace(/^VERIFY:\s*/, "");
       if (view) {
-        blocks.push({ type: "view", name: view[1] });
+        blocks.push({ type: "view", name: view[2] ? `${view[1]} ${view[2]}` : view[1] });
       } else if (note) {
         blocks.push({ type: "note", inlines: parseInline(note) });
       }

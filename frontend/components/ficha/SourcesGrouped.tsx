@@ -1,15 +1,13 @@
+import type { CitationSource, PageSource } from "@/lib/views";
+
+import { FichaAnchor } from "@/components/availability/FichaLink";
+
+import { RichText } from "./RichText";
 import "./ficha-blocks.css";
 
 type SourceLink = { label?: string; href: string };
 
-type SourceItem = {
-  title: string;
-  links: SourceLink[];
-  publisher: string;
-  level: string;
-  why?: string;
-  provider?: string;
-};
+type SourceItem = CitationSource | PageSource;
 
 function linkLabel(link: SourceLink): string {
   if (link.label) {
@@ -22,9 +20,18 @@ function linkLabel(link: SourceLink): string {
   }
 }
 
-function providerColumns(sources: SourceItem[]): { provider: string; sources: SourceItem[] }[] {
+function citations(sources: SourceItem[]): CitationSource[] {
+  return sources.filter((source): source is CitationSource => {
+    if (source.kind === "page") {
+      return false;
+    }
+    return "links" in source;
+  });
+}
+
+function providerColumns(sources: CitationSource[]): { provider: string; sources: CitationSource[] }[] {
   const order: string[] = [];
-  const groups = new Map<string, SourceItem[]>();
+  const groups = new Map<string, CitationSource[]>();
   for (const source of sources) {
     const provider = source.provider ?? "Otros";
     const column = groups.get(provider);
@@ -62,12 +69,31 @@ export function SourcesGrouped({
     <section className="ficha-block sources">
       {groups.map((group) => {
         const layout = group.layout ?? "list";
+        const pages = group.sources.filter((source): source is PageSource => source.kind === "page" && "page" in source);
+        const cited = citations(group.sources);
         return (
           <section key={group.title} className="sources-group">
             <h3>{group.title}</h3>
+            {pages.length > 0 ? (
+              <ul className="sources-list">
+                {pages.map((source) => (
+                  <li key={source.page}>
+                    <h4>{source.title}</h4>
+                    <FichaAnchor href={`/concepts/${source.page}/`} blocked={source.targetAvailability !== undefined}>
+                      {source.label}
+                    </FichaAnchor>
+                    {source.why ? (
+                      <p className="sources-why">
+                        <RichText text={source.why} />
+                      </p>
+                    ) : null}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
             {layout === "providers" ? (
               <div className="sources-providers">
-                {providerColumns(group.sources).map((column) => (
+                {providerColumns(cited).map((column) => (
                   <section key={column.provider} className="sources-provider">
                     <h4>{column.provider}</h4>
                     <ul className="sources-list">
@@ -87,7 +113,7 @@ export function SourcesGrouped({
               </div>
             ) : (
               <ul className="sources-list">
-                {group.sources.map((source) => (
+                {cited.map((source) => (
                   <li key={source.title}>
                     <div className="sources-row">
                       <h4>{source.title}</h4>

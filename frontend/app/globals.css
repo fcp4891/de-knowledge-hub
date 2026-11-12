@@ -641,6 +641,10 @@ details.panel summary + * {
   text-decoration: underline;
 }
 
+.markdown a {
+  overflow-wrap: anywhere;
+}
+
 .markdown .ficha-pending-mark {
   margin-left: 0.4em;
   padding: 0.05em 0.4em;

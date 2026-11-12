@@ -3,11 +3,17 @@
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 
-import type { ApiResult, SearchResults } from "@/lib/api/types";
+import { SearchUnavailable } from "@/components/availability/SearchUnavailable";
+import { loadUnavailableSearchMarks, type SearchAvailability } from "@/lib/searchAvailability";
+import type { ApiResult, ResultType, SearchResults } from "@/lib/api/types";
 import { searchLocal } from "@/lib/browserSearch";
 import { resultHref } from "@/lib/entityHref";
 import { RESULT_LABEL } from "@/lib/labels";
 import { inPublishedSearch } from "@/lib/publishedScope";
+
+function isFichaResult(type: ResultType): boolean {
+  return type === "concept" || type === "pattern" || type === "architecture";
+}
 
 const DEBOUNCE_MS = 250;
 
@@ -43,6 +49,19 @@ export function SearchDialog({
   const [debounced, setDebounced] = useState("");
   const [result, setResult] = useState<ApiResult<SearchResults> | null>(null);
   const [pending, setPending] = useState(false);
+  const [marks, setMarks] = useState<Map<string, SearchAvailability> | null>(null);
+
+  useEffect(() => {
+    let live = true;
+    void loadUnavailableSearchMarks().then((map) => {
+      if (live) {
+        setMarks(map);
+      }
+    });
+    return () => {
+      live = false;
+    };
+  }, []);
 
   useEffect(() => {
     const timer = window.setTimeout(() => setDebounced(query.trim()), DEBOUNCE_MS);
@@ -163,7 +182,11 @@ export function SearchDialog({
                 <h3>{RESULT_LABEL[group.type]}</h3>
                 <ul className="stack">
                   {group.items.map((item) => {
-                    const href = resultHref(item.type, item.slug);
+                    const mark = marks?.get(item.slug);
+                    if (mark) {
+                      return <SearchUnavailable key={`${item.type}-${item.slug}`} title={item.title} status={mark.status} label={mark.label} help={mark.help} />;
+                    }
+                    const href = marks === null && isFichaResult(item.type) ? null : resultHref(item.type, item.slug);
                     return (
                       <li key={`${item.type}-${item.slug}`}>
                         {href ? (
