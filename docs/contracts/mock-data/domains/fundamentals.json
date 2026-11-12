@@ -24,7 +24,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-06"
+          "last_verified": "2026-10-06",
+          "availability": "available"
         },
         {
           "slug": "data-lifecycle",
@@ -38,7 +39,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-06"
+          "last_verified": "2026-10-06",
+          "availability": "available"
         }
       ]
     },
@@ -58,7 +60,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-09-30"
+          "last_verified": "2026-09-30",
+          "availability": "available"
         },
         {
           "slug": "batch-vs-streaming",
@@ -72,7 +75,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-09-30"
+          "last_verified": "2026-09-30",
+          "availability": "available"
         },
         {
           "slug": "oltp-vs-olap",
@@ -86,7 +90,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-05"
+          "last_verified": "2026-10-05",
+          "availability": "available"
         }
       ]
     },
@@ -106,7 +111,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-04"
+          "last_verified": "2026-10-04",
+          "availability": "available"
         },
         {
           "slug": "data-warehouse",
@@ -120,7 +126,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-05"
+          "last_verified": "2026-10-05",
+          "availability": "available"
         },
         {
           "slug": "lakehouse",
@@ -134,7 +141,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-06"
+          "last_verified": "2026-10-06",
+          "availability": "available"
         },
         {
           "slug": "data-mart",
@@ -148,7 +156,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-06"
+          "last_verified": "2026-10-06",
+          "availability": "available"
         },
         {
           "slug": "schema-on-read-vs-schema-on-write",
@@ -162,7 +171,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-06"
+          "last_verified": "2026-10-06",
+          "availability": "available"
         }
       ]
     },
@@ -182,7 +192,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-01"
+          "last_verified": "2026-10-01",
+          "availability": "available"
         },
         {
           "slug": "data-ingestion",
@@ -196,7 +207,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-06"
+          "last_verified": "2026-10-06",
+          "availability": "available"
         },
         {
           "slug": "data-transformation",
@@ -210,7 +222,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-06"
+          "last_verified": "2026-10-06",
+          "availability": "available"
         },
         {
           "slug": "data-orchestration",
@@ -224,7 +237,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-06"
+          "last_verified": "2026-10-06",
+          "availability": "available"
         },
         {
           "slug": "idempotency",
@@ -238,7 +252,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-09-30"
+          "last_verified": "2026-09-30",
+          "availability": "available"
         },
         {
           "slug": "schema-evolution",
@@ -252,7 +267,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-01"
+          "last_verified": "2026-10-01",
+          "availability": "available"
         },
         {
           "slug": "late-arriving-data",
@@ -266,7 +282,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-09-30"
+          "last_verified": "2026-09-30",
+          "availability": "available"
         },
         {
           "slug": "data-contracts",
@@ -280,7 +297,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-06"
+          "last_verified": "2026-10-06",
+          "availability": "available"
         }
       ]
     },
@@ -300,7 +318,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-06"
+          "last_verified": "2026-10-06",
+          "availability": "available"
         },
         {
           "slug": "acid",
@@ -314,7 +333,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-05"
+          "last_verified": "2026-10-05",
+          "availability": "available"
         },
         {
           "slug": "cap-theorem",
@@ -328,7 +348,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-06"
+          "last_verified": "2026-10-06",
+          "availability": "available"
         }
       ]
     },
@@ -348,7 +369,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-05"
+          "last_verified": "2026-10-05",
+          "availability": "available"
         },
         {
           "slug": "parquet-format",
@@ -362,7 +384,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-01"
+          "last_verified": "2026-10-01",
+          "availability": "available"
         },
         {
           "slug": "avro-format",
@@ -376,7 +399,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-06"
+          "last_verified": "2026-10-06",
+          "availability": "available"
         },
         {
           "slug": "json-format",
@@ -390,7 +414,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-06"
+          "last_verified": "2026-10-06",
+          "availability": "available"
         },
         {
           "slug": "csv-format",
@@ -404,7 +429,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-06"
+          "last_verified": "2026-10-06",
+          "availability": "available"
         },
         {
           "slug": "compression",
@@ -418,7 +444,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-06"
+          "last_verified": "2026-10-06",
+          "availability": "available"
         },
         {
           "slug": "partitioning",
@@ -432,7 +459,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-05"
+          "last_verified": "2026-10-05",
+          "availability": "available"
         }
       ]
     }

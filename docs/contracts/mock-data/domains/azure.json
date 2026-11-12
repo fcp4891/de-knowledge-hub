@@ -24,7 +24,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "adls-gen2-storage",
@@ -38,7 +39,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "data-factory-pipelines",
@@ -52,7 +54,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "fabric-onelake-and-workloads",
@@ -66,7 +69,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "synapse-analytics",
@@ -80,7 +84,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "azure-databricks-lakehouse",
@@ -94,7 +99,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         }
       ]
     },
@@ -114,7 +120,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "azure-functions-for-data",
@@ -128,7 +135,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "container-apps-for-data",
@@ -142,7 +150,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "azure-sql-as-source",
@@ -156,7 +165,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         }
       ]
     },
@@ -176,7 +186,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "entra-id-for-data",
@@ -190,7 +201,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "key-vault-secrets",
@@ -204,7 +216,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         }
       ]
     },
@@ -224,7 +237,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         }
       ]
     }

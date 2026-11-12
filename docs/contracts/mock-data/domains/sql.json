@@ -24,7 +24,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "sql-joins",
@@ -38,7 +39,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "sql-subqueries",
@@ -52,7 +54,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "sql-cte",
@@ -66,7 +69,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "sql-recursive-cte",
@@ -80,7 +84,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "sql-window-functions",
@@ -94,7 +99,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-05"
+          "last_verified": "2026-10-05",
+          "availability": "available"
         },
         {
           "slug": "sql-qualify",
@@ -108,7 +114,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "sql-case-expressions",
@@ -122,7 +129,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "sql-nulls",
@@ -136,7 +144,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "sql-arrays",
@@ -150,7 +159,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "sql-structs",
@@ -164,7 +174,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "sql-unnest",
@@ -178,7 +189,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "sql-pivot",
@@ -192,7 +204,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "sql-merge",
@@ -206,7 +219,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-05"
+          "last_verified": "2026-10-05",
+          "availability": "available"
         },
         {
           "slug": "sql-date-functions",
@@ -220,7 +234,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "sql-json-functions",
@@ -234,7 +249,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         }
       ]
     },
@@ -254,7 +270,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-09-30"
+          "last_verified": "2026-09-30",
+          "availability": "available"
         },
         {
           "slug": "deduplication",
@@ -268,7 +285,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-04"
+          "last_verified": "2026-10-04",
+          "availability": "available"
         },
         {
           "slug": "scd-type-1",
@@ -282,7 +300,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "scd-type-2",
@@ -296,7 +315,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-09-30"
+          "last_verified": "2026-09-30",
+          "availability": "available"
         },
         {
           "slug": "upsert",
@@ -310,7 +330,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-09-30"
+          "last_verified": "2026-09-30",
+          "availability": "available"
         },
         {
           "slug": "change-detection",
@@ -324,7 +345,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "data-reconciliation",
@@ -338,7 +360,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-01"
+          "last_verified": "2026-10-01",
+          "availability": "available"
         },
         {
           "slug": "sql-quality-checks",
@@ -352,7 +375,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "surrogate-key-generation",
@@ -366,7 +390,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         }
       ]
     },
@@ -386,7 +411,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "partition-pruning",
@@ -400,7 +426,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-09-30"
+          "last_verified": "2026-09-30",
+          "availability": "available"
         },
         {
           "slug": "clustering",
@@ -414,7 +441,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-01"
+          "last_verified": "2026-10-01",
+          "availability": "available"
         },
         {
           "slug": "predicate-pushdown",
@@ -428,7 +456,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "scan-reduction",
@@ -442,7 +471,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "materialization-strategies",
@@ -456,7 +486,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "join-optimization",
@@ -470,7 +501,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         },
         {
           "slug": "cloud-warehouse-optimization",
@@ -484,7 +516,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-07"
+          "last_verified": "2026-10-07",
+          "availability": "available"
         }
       ]
     }

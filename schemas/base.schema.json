@@ -64,6 +64,10 @@
     "updated_at": { "$ref": "enums.schema.json#/$defs/date" },
     "last_verified": { "$ref": "enums.schema.json#/$defs/date" },
     "verification_status": { "$ref": "enums.schema.json#/$defs/verification_status" },
+    "availability": {
+      "description": "ADR-031: disponibilidad pública de la ficha. Sin el campo, available. in_review e in_development se publican como página mínima (título, etiqueta, ayuda y vuelta al itinerario), con noindex.",
+      "enum": ["available", "in_review", "in_development"]
+    },
     "jurisdiction": {
       "description": "Países (o EU) cuya ley origina el contenido (ADR-023). Solo en fichas del dominio privacy-engineering (ADR-023, enmiendas por ADR-027; EU y BR por la Enmienda 5) y en fuentes legislative.",
       "type": "array",
@@ -562,10 +566,25 @@
                         "legal": {
                           "type": "boolean"
                         },
+                        "section": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 22,
+                          "description": "Número de sección de la plantilla (ADR-030, enmienda 5)."
+                        },
                         "href": {
-                          "type": "string",
-                          "pattern": "^#[a-z0-9-]+$",
-                          "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "pattern": "^#[a-z0-9-]+$",
+                              "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
+                            },
+                            {
+                              "type": "string",
+                              "format": "uri",
+                              "pattern": "^https://"
+                            }
+                          ]
                         }
                       },
                       "additionalProperties": false
@@ -962,10 +981,25 @@
                               "legal": {
                                 "type": "boolean"
                               },
+                              "section": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 22,
+                                "description": "Número de sección de la plantilla (ADR-030, enmienda 5)."
+                              },
                               "href": {
-                                "type": "string",
-                                "pattern": "^#[a-z0-9-]+$",
-                                "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "pattern": "^#[a-z0-9-]+$",
+                                    "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
+                                  },
+                                  {
+                                    "type": "string",
+                                    "format": "uri",
+                                    "pattern": "^https://"
+                                  }
+                                ]
                               }
                             },
                             "additionalProperties": false
@@ -1151,10 +1185,25 @@
                               "legal": {
                                 "type": "boolean"
                               },
+                              "section": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 22,
+                                "description": "Número de sección de la plantilla (ADR-030, enmienda 5)."
+                              },
                               "href": {
-                                "type": "string",
-                                "pattern": "^#[a-z0-9-]+$",
-                                "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "pattern": "^#[a-z0-9-]+$",
+                                    "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
+                                  },
+                                  {
+                                    "type": "string",
+                                    "format": "uri",
+                                    "pattern": "^https://"
+                                  }
+                                ]
                               }
                             },
                             "additionalProperties": false
@@ -1419,7 +1468,8 @@
             },
             "note": {
               "type": "string",
-              "minLength": 1
+              "minLength": 1,
+              "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
             },
             "example": {
               "type": "object",
@@ -1435,7 +1485,8 @@
                 },
                 "note": {
                   "type": "string",
-                  "minLength": 1
+                  "minLength": 1,
+                  "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
                 },
                 "code_link": {
                   "type": "object",
@@ -1545,7 +1596,7 @@
                     "minLength": 1
                   },
                   "minItems": 3,
-                  "maxItems": 3
+                  "maxItems": 4
                 },
                 "items": {
                   "type": "array",
@@ -1573,6 +1624,11 @@
                       "requirement": {
                         "type": "string",
                         "minLength": 1
+                      },
+                      "finds": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
                       }
                     },
                     "additionalProperties": false
@@ -1596,7 +1652,8 @@
                 },
                 "intro": {
                   "type": "string",
-                  "minLength": 1
+                  "minLength": 1,
+                  "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
                 },
                 "items": {
                   "type": "array",
@@ -1613,12 +1670,18 @@
                       },
                       "text": {
                         "type": "string",
-                        "minLength": 1
+                        "minLength": 1,
+                        "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
                       }
                     },
                     "additionalProperties": false
                   },
                   "minItems": 1
+                },
+                "note": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
                 }
               },
               "additionalProperties": false
@@ -1650,7 +1713,8 @@
                       },
                       "text": {
                         "type": "string",
-                        "minLength": 1
+                        "minLength": 1,
+                        "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
                       },
                       "exit_code": {
                         "enum": [
@@ -1731,8 +1795,7 @@
             "intro",
             "alert",
             "headers",
-            "rows",
-            "closing"
+            "rows"
           ],
           "properties": {
             "title": {
@@ -1741,7 +1804,8 @@
             },
             "intro": {
               "type": "string",
-              "minLength": 1
+              "minLength": 1,
+              "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
             },
             "alert": {
               "type": "object",
@@ -1756,7 +1820,8 @@
                 },
                 "text": {
                   "type": "string",
-                  "minLength": 1
+                  "minLength": 1,
+                  "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
                 }
               },
               "additionalProperties": false
@@ -1768,7 +1833,7 @@
                 "minLength": 1
               },
               "minItems": 4,
-              "maxItems": 4
+              "maxItems": 5
             },
             "rows": {
               "type": "array",
@@ -1776,7 +1841,6 @@
                 "type": "object",
                 "required": [
                   "need",
-                  "meta",
                   "gcp",
                   "aws",
                   "azure"
@@ -1795,20 +1859,40 @@
                     "type": "string",
                     "minLength": 1
                   },
+                  "tone": {
+                    "enum": [
+                      "where"
+                    ]
+                  },
+                  "own": {
+                    "type": "object",
+                    "required": [
+                      "text"
+                    ],
+                    "properties": {
+                      "text": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                      }
+                    },
+                    "additionalProperties": false
+                  },
                   "gcp": {
                     "type": "object",
                     "required": [
-                      "name",
-                      "text"
+                      "name"
                     ],
                     "properties": {
                       "name": {
                         "type": "string",
-                        "minLength": 1
+                        "minLength": 1,
+                        "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
                       },
                       "text": {
                         "type": "string",
-                        "minLength": 1
+                        "minLength": 1,
+                        "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
                       },
                       "warn": {
                         "type": "string",
@@ -1820,17 +1904,18 @@
                   "aws": {
                     "type": "object",
                     "required": [
-                      "name",
-                      "text"
+                      "name"
                     ],
                     "properties": {
                       "name": {
                         "type": "string",
-                        "minLength": 1
+                        "minLength": 1,
+                        "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
                       },
                       "text": {
                         "type": "string",
-                        "minLength": 1
+                        "minLength": 1,
+                        "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
                       },
                       "warn": {
                         "type": "string",
@@ -1842,17 +1927,18 @@
                   "azure": {
                     "type": "object",
                     "required": [
-                      "name",
-                      "text"
+                      "name"
                     ],
                     "properties": {
                       "name": {
                         "type": "string",
-                        "minLength": 1
+                        "minLength": 1,
+                        "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
                       },
                       "text": {
                         "type": "string",
-                        "minLength": 1
+                        "minLength": 1,
+                        "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
                       },
                       "warn": {
                         "type": "string",
@@ -1956,10 +2042,25 @@
                               "legal": {
                                 "type": "boolean"
                               },
+                              "section": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 22,
+                                "description": "Número de sección de la plantilla (ADR-030, enmienda 5)."
+                              },
                               "href": {
-                                "type": "string",
-                                "pattern": "^#[a-z0-9-]+$",
-                                "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "pattern": "^#[a-z0-9-]+$",
+                                    "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
+                                  },
+                                  {
+                                    "type": "string",
+                                    "format": "uri",
+                                    "pattern": "^https://"
+                                  }
+                                ]
                               }
                             },
                             "additionalProperties": false
@@ -2036,10 +2137,25 @@
                             "legal": {
                               "type": "boolean"
                             },
+                            "section": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 22,
+                              "description": "Número de sección de la plantilla (ADR-030, enmienda 5)."
+                            },
                             "href": {
-                              "type": "string",
-                              "pattern": "^#[a-z0-9-]+$",
-                              "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "pattern": "^#[a-z0-9-]+$",
+                                  "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
+                                },
+                                {
+                                  "type": "string",
+                                  "format": "uri",
+                                  "pattern": "^https://"
+                                }
+                              ]
                             }
                           },
                           "additionalProperties": false
@@ -2062,8 +2178,7 @@
           "type": "object",
           "required": [
             "items",
-            "resolution_label",
-            "note"
+            "resolution_label"
           ],
           "properties": {
             "arq": {
@@ -2080,7 +2195,6 @@
                 "required": [
                   "a",
                   "b",
-                  "text",
                   "resolution"
                 ],
                 "properties": {
@@ -2088,7 +2202,15 @@
                     "type": "string",
                     "minLength": 1
                   },
+                  "a_text": {
+                    "type": "string",
+                    "minLength": 1
+                  },
                   "b": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "b_text": {
                     "type": "string",
                     "minLength": 1
                   },
@@ -2118,9 +2240,7 @@
           "type": "object",
           "required": [
             "intro",
-            "items",
-            "check_label",
-            "counter"
+            "items"
           ],
           "properties": {
             "intro": {
@@ -2168,10 +2288,25 @@
                         "legal": {
                           "type": "boolean"
                         },
+                        "section": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 22,
+                          "description": "Número de sección de la plantilla (ADR-030, enmienda 5)."
+                        },
                         "href": {
-                          "type": "string",
-                          "pattern": "^#[a-z0-9-]+$",
-                          "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "pattern": "^#[a-z0-9-]+$",
+                              "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
+                            },
+                            {
+                              "type": "string",
+                              "format": "uri",
+                              "pattern": "^https://"
+                            }
+                          ]
                         }
                       },
                       "additionalProperties": false
@@ -2317,9 +2452,7 @@
                     "items": {
                       "type": "object",
                       "required": [
-                        "title",
-                        "urls",
-                        "publisher"
+                        "title"
                       ],
                       "properties": {
                         "title": {
@@ -2342,16 +2475,1256 @@
                         },
                         "why": {
                           "type": "string",
-                          "minLength": 1
+                          "minLength": 1,
+                          "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
                         },
                         "provider": {
                           "type": "string",
                           "minLength": 1
+                        },
+                        "page": {
+                          "type": "string",
+                          "pattern": "^[a-z0-9-]+$",
+                          "description": "Otra ficha de la plataforma, en vez de urls (ADR-030, enmienda 5)."
+                        },
+                        "label": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "additionalProperties": false,
+                      "anyOf": [
+                        {
+                          "required": [
+                            "urls",
+                            "publisher"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "page",
+                            "label"
+                          ]
+                        }
+                      ]
+                    },
+                    "minItems": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "section_titles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "section",
+              "title"
+            ],
+            "properties": {
+              "section": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 22,
+                "description": "Número de sección de la plantilla (ADR-030, enmienda 5)."
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "ref": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Nombre con que «[§](#sN)» cita la sección, si difiere de title."
+              }
+            },
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "description": "Título visible de cada sección presente (posición fija: no lleva marca)."
+        },
+        "notes": {
+          "description": "Notas con inicio en negrita (lead); tone risk para el recuadro «Riesgo». Marca: note <id>.",
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": false,
+          "patternProperties": {
+            "^[a-z0-9-]+$": {
+              "type": "object",
+              "required": [
+                "text"
+              ],
+              "properties": {
+                "lead": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                },
+                "tone": {
+                  "enum": [
+                    "note",
+                    "risk"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "chips": {
+          "description": "Fila de enlaces con rótulo (por ejemplo «En la ficha madre:»). Marca: chips <id>.",
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": false,
+          "patternProperties": {
+            "^[a-z0-9-]+$": {
+              "type": "object",
+              "required": [
+                "label",
+                "items"
+              ],
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "label",
+                      "href"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "label": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "href": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "pattern": "^#[a-z0-9-]+$",
+                            "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
+                          },
+                          {
+                            "type": "string",
+                            "pattern": "^/concepts/[a-z0-9-]+/(#[a-z0-9-]+)?$",
+                            "description": "Enlace a otra ficha; la API marca target_availability si no está disponible (ADR-031)."
+                          }
+                        ]
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "minItems": 1
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "catalog_fields": {
+          "description": "CatalogFields (§1): campos que el catálogo guarda por columna.",
+          "type": "object",
+          "required": [
+            "title",
+            "headers",
+            "rows"
+          ],
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "headers": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "field",
+                  "text"
+                ],
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                  },
+                  "categories": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "label",
+                        "tone"
+                      ],
+                      "properties": {
+                        "label": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "tone": {
+                          "enum": [
+                            "personal",
+                            "sensitive",
+                            "review",
+                            "none"
+                          ]
                         }
                       },
                       "additionalProperties": false
                     },
                     "minItems": 1
+                  },
+                  "note": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "concept_map": {
+          "description": "ConceptMap (§2): mapa «Qué protege la ley».",
+          "type": "object",
+          "required": [
+            "label",
+            "outside",
+            "personal",
+            "sensitive",
+            "minors"
+          ],
+          "properties": {
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "outside": {
+              "type": "object",
+              "required": [
+                "kicker",
+                "items",
+                "hint"
+              ],
+              "properties": {
+                "kicker": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "title",
+                      "text"
+                    ],
+                    "properties": {
+                      "title": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "text": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "minItems": 1
+                },
+                "hint": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            "personal": {
+              "type": "object",
+              "required": [
+                "kicker",
+                "definition",
+                "text",
+                "also"
+              ],
+              "properties": {
+                "kicker": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                },
+                "definition": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "also": {
+                  "type": "object",
+                  "required": [
+                    "kicker",
+                    "items"
+                  ],
+                  "properties": {
+                    "kicker": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "title",
+                          "text"
+                        ],
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "minLength": 1,
+                            "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                          },
+                          "text": {
+                            "type": "string",
+                            "minLength": 1,
+                            "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                          },
+                          "example": {
+                            "type": "object",
+                            "required": [
+                              "label",
+                              "column"
+                            ],
+                            "properties": {
+                              "label": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "column": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      "minItems": 1
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            },
+            "sensitive": {
+              "type": "object",
+              "required": [
+                "kicker",
+                "text",
+                "hint"
+              ],
+              "properties": {
+                "kicker": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                },
+                "hint": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            "minors": {
+              "type": "object",
+              "required": [
+                "kicker",
+                "text",
+                "hint"
+              ],
+              "properties": {
+                "kicker": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                },
+                "hint": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "decision_tree": {
+          "description": "DecisionTree (§2): cuatro preguntas, salidas, columnas de ejemplo y su entrada de catálogo.",
+          "type": "object",
+          "required": [
+            "intro",
+            "examples_title",
+            "path_label",
+            "result_label",
+            "catalog_label",
+            "answer_labels",
+            "step_labels",
+            "questions",
+            "fallback",
+            "catalog_fields",
+            "review",
+            "default",
+            "examples",
+            "law"
+          ],
+          "properties": {
+            "intro": {
+              "type": "object",
+              "required": [
+                "title",
+                "text"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            "examples_title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path_label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "result_label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "catalog_label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "answer_labels": {
+              "type": "object",
+              "required": [
+                "yes",
+                "no"
+              ],
+              "properties": {
+                "yes": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "no": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            "step_labels": {
+              "type": "object",
+              "required": [
+                "question",
+                "next",
+                "end"
+              ],
+              "properties": {
+                "question": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "next": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "end": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            "questions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "number",
+                  "question",
+                  "help",
+                  "gloss",
+                  "exits"
+                ],
+                "properties": {
+                  "number": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 4
+                  },
+                  "question": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "help": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "gloss": {
+                    "type": "object",
+                    "required": [
+                      "yes",
+                      "no"
+                    ],
+                    "properties": {
+                      "yes": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "no": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "exits": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "answer",
+                        "label",
+                        "outcome",
+                        "title",
+                        "text"
+                      ],
+                      "properties": {
+                        "answer": {
+                          "enum": [
+                            "yes",
+                            "no"
+                          ]
+                        },
+                        "label": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "outcome": {
+                          "enum": [
+                            "anonymized",
+                            "unlinked",
+                            "sensitive",
+                            "minor",
+                            "personal"
+                          ]
+                        },
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "text": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "minItems": 1,
+                    "maxItems": 2
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 4,
+              "maxItems": 4
+            },
+            "fallback": {
+              "type": "object",
+              "required": [
+                "label",
+                "outcome",
+                "title",
+                "text"
+              ],
+              "properties": {
+                "answer": {
+                  "enum": [
+                    "yes",
+                    "no"
+                  ]
+                },
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "outcome": {
+                  "enum": [
+                    "anonymized",
+                    "unlinked",
+                    "sensitive",
+                    "minor",
+                    "personal"
+                  ]
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                }
+              },
+              "additionalProperties": false
+            },
+            "catalog_fields": {
+              "type": "object",
+              "required": [
+                "category",
+                "basis",
+                "risk",
+                "method",
+                "review"
+              ],
+              "properties": {
+                "category": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "basis": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "risk": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "method": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "review": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            "review": {
+              "type": "string",
+              "minLength": 1
+            },
+            "default": {
+              "type": "string",
+              "minLength": 1
+            },
+            "examples": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "column",
+                  "description",
+                  "answers",
+                  "outcome",
+                  "title",
+                  "explanation",
+                  "catalog"
+                ],
+                "properties": {
+                  "column": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "answers": {
+                    "type": "array",
+                    "items": {
+                      "enum": [
+                        "yes",
+                        "no"
+                      ]
+                    },
+                    "minItems": 1,
+                    "maxItems": 4
+                  },
+                  "outcome": {
+                    "enum": [
+                      "anonymized",
+                      "unlinked",
+                      "sensitive",
+                      "minor",
+                      "personal"
+                    ]
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "explanation": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "catalog": {
+                    "type": "object",
+                    "required": [
+                      "category",
+                      "basis",
+                      "risk",
+                      "method"
+                    ],
+                    "properties": {
+                      "category": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "basis": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "risk": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "method": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "law": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
+            "law": {
+              "type": "object",
+              "required": [
+                "summary",
+                "items",
+                "link"
+              ],
+              "properties": {
+                "summary": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                  },
+                  "minItems": 1
+                },
+                "link": {
+                  "type": "object",
+                  "required": [
+                    "label",
+                    "href"
+                  ],
+                  "properties": {
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "href": {
+                      "type": "string",
+                      "pattern": "^/concepts/[a-z0-9-]+/(#[a-z0-9-]+)?$",
+                      "description": "Enlace a otra ficha; la API marca target_availability si no está disponible (ADR-031)."
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "coverage_strip": {
+          "description": "CoverageStrip (§3): qué columnas ve cada enfoque.",
+          "type": "object",
+          "required": [
+            "label",
+            "lead",
+            "columns",
+            "rows",
+            "note"
+          ],
+          "properties": {
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "lead": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "title",
+                  "text",
+                  "count",
+                  "hits",
+                  "tone"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                  },
+                  "count": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "hits": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 0
+                  },
+                  "tone": {
+                    "enum": [
+                      "detected",
+                      "law"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "note": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+            }
+          },
+          "additionalProperties": false
+        },
+        "column_types": {
+          "description": "ColumnTypes (§3): detalle por tipo de columna.",
+          "type": "object",
+          "required": [
+            "headers",
+            "rows",
+            "legend"
+          ],
+          "properties": {
+            "headers": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 5,
+              "maxItems": 5
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "examples",
+                  "patterns",
+                  "detector",
+                  "categories",
+                  "why"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "examples": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                  },
+                  "patterns": {
+                    "type": "object",
+                    "required": [
+                      "mark",
+                      "text"
+                    ],
+                    "properties": {
+                      "mark": {
+                        "enum": [
+                          "ok",
+                          "part",
+                          "miss"
+                        ]
+                      },
+                      "text": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "detector": {
+                    "type": "object",
+                    "required": [
+                      "mark",
+                      "text"
+                    ],
+                    "properties": {
+                      "mark": {
+                        "enum": [
+                          "ok",
+                          "part",
+                          "miss"
+                        ]
+                      },
+                      "text": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "categories": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "label",
+                        "tone"
+                      ],
+                      "properties": {
+                        "label": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "tone": {
+                          "enum": [
+                            "personal",
+                            "sensitive",
+                            "review",
+                            "none"
+                          ]
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "minItems": 1
+                  },
+                  "why": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
+            "legend": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "evidence_steps": {
+          "description": "EvidenceSteps (§4): pasos con su evidencia y el flujo catálogo → controles.",
+          "type": "object",
+          "required": [
+            "evidence_label",
+            "steps",
+            "flow"
+          ],
+          "properties": {
+            "evidence_label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "steps": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "number",
+                  "title",
+                  "text",
+                  "evidence"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9-]+$",
+                    "description": "Id del elemento, destino de un ancla (ADR-030, enmienda 2)."
+                  },
+                  "number": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "arq": {
+                    "type": "boolean"
+                  },
+                  "evidence": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
+            "flow": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "title",
+                  "text"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "additionalProperties": false
+        },
+        "use_avoid": {
+          "description": "UseAvoid (§5): usarlo y no usarlo para.",
+          "type": "object",
+          "required": [
+            "use",
+            "avoid"
+          ],
+          "properties": {
+            "use": {
+              "type": "object",
+              "required": [
+                "title",
+                "items"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                  },
+                  "minItems": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            "avoid": {
+              "type": "object",
+              "required": [
+                "title",
+                "items"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                  },
+                  "minItems": 1
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "practice_pairs": {
+          "description": "PracticePairs (§14 · Hacer y evitar): pares hacer / evitar.",
+          "type": "object",
+          "required": [
+            "start",
+            "labels",
+            "items"
+          ],
+          "properties": {
+            "start": {
+              "type": "object",
+              "required": [
+                "title",
+                "text"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                }
+              },
+              "additionalProperties": false
+            },
+            "labels": {
+              "type": "object",
+              "required": [
+                "do",
+                "avoid"
+              ],
+              "properties": {
+                "do": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "avoid": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "do",
+                  "avoid"
+                ],
+                "properties": {
+                  "do": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                  },
+                  "avoid": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
                   }
                 },
                 "additionalProperties": false

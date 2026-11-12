@@ -1,0 +1,9 @@
+# ADR-031: textos de la disponibilidad por ficha (frontmatter availability). La UI los toma de aquí.
+# available no tiene textos: la ficha se publica completa.
+in_review:
+  label: En revisión
+  help: Contenido listo; en revisión antes de publicarse.
+in_development:
+  label: En desarrollo
+  help: Contenido y diseño en preparación.
+back_label: Volver al itinerario

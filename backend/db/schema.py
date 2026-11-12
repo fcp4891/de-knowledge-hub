@@ -166,6 +166,14 @@ legal_frameworks = Table(
     file_fk(),
 )
 
+ui_texts = Table(  # ADR-031
+    "ui_texts",
+    metadata,
+    Column("key", String(100), primary_key=True, comment="Nombre del archivo de content/ui/ sin extensión."),
+    Column("data", JSONB, nullable=False),
+    file_fk(),
+)
+
 subdomains = Table(
     "subdomains",
     metadata,

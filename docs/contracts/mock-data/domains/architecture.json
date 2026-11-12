@@ -24,7 +24,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-11-01"
+          "last_verified": "2026-11-01",
+          "availability": "available"
         },
         {
           "slug": "streaming-pipeline-architecture",
@@ -38,7 +39,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-11-02"
+          "last_verified": "2026-11-02",
+          "availability": "available"
         },
         {
           "slug": "modern-data-warehouse-architecture",
@@ -52,7 +54,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-11-01"
+          "last_verified": "2026-11-01",
+          "availability": "available"
         },
         {
           "slug": "data-lake-architecture",
@@ -66,7 +69,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-11-01"
+          "last_verified": "2026-11-01",
+          "availability": "available"
         },
         {
           "slug": "lakehouse-architecture",
@@ -80,7 +84,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-11-01"
+          "last_verified": "2026-11-01",
+          "availability": "available"
         },
         {
           "slug": "medallion-architecture",
@@ -94,7 +99,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-11-01"
+          "last_verified": "2026-11-01",
+          "availability": "available"
         }
       ]
     },
@@ -114,7 +120,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-11-02"
+          "last_verified": "2026-11-02",
+          "availability": "available"
         },
         {
           "slug": "kappa-architecture",
@@ -128,7 +135,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-11-02"
+          "last_verified": "2026-11-02",
+          "availability": "available"
         },
         {
           "slug": "event-driven-architecture",
@@ -142,7 +150,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-11-02"
+          "last_verified": "2026-11-02",
+          "availability": "available"
         },
         {
           "slug": "real-time-analytics-architecture",
@@ -156,7 +165,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-11-02"
+          "last_verified": "2026-11-02",
+          "availability": "available"
         }
       ]
     },
@@ -176,7 +186,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-11-03"
+          "last_verified": "2026-11-03",
+          "availability": "available"
         },
         {
           "slug": "api-to-warehouse-architecture",
@@ -190,7 +201,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-11-03"
+          "last_verified": "2026-11-03",
+          "availability": "available"
         },
         {
           "slug": "iot-pipeline-architecture",
@@ -204,7 +216,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-11-03"
+          "last_verified": "2026-11-03",
+          "availability": "available"
         }
       ]
     },
@@ -224,7 +237,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-11-03"
+          "last_verified": "2026-11-03",
+          "availability": "available"
         },
         {
           "slug": "rag-data-pipeline-architecture",
@@ -238,7 +252,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-11-03"
+          "last_verified": "2026-11-03",
+          "availability": "available"
         }
       ]
     },
@@ -258,7 +273,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-11"
+          "last_verified": "2026-10-11",
+          "availability": "available"
         },
         {
           "slug": "data-products",
@@ -272,7 +288,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-11"
+          "last_verified": "2026-10-11",
+          "availability": "available"
         }
       ]
     }

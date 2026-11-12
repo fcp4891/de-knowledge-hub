@@ -278,3 +278,15 @@ def test_annex_does_not_belong_to_the_last_section() -> None:
     body = "## 22. Historial\n\n- línea\n\n## Anexo · Catálogo\n\n### Grupo\n\n- art.\n"
     assert page_sections.sections(body) == [(22, "Historial", "\n- línea\n")]
     assert page_sections.annexes(body) == [("Catálogo", "\n### Grupo\n\n- art.")]
+
+
+PII = "pii-identification"
+PII_OMITTED = {6, 7, 8, 9, 12, 13, 15, 17, 19, 21}
+
+
+def test_pii_identification_may_omit_its_sections(with_template: Path) -> None:
+    """ADR-029, enmienda 3: pii-identification omite las secciones que la maqueta no tiene."""
+    write_md(with_template, f"concepts/{PII}.md", concept(PII), body=body_without(PII_OMITTED))
+    assert run(with_template).ok
+    write_md(with_template, f"concepts/{PII}.md", concept(PII), body=body_without(PII_OMITTED | {5}))
+    assert_error(run(with_template), "faltan [5]")

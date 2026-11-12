@@ -137,15 +137,25 @@ export type CodeGuideProps = {
   limit: Titled;
 };
 
-export type CloudCell = { name: string; text: string; warn?: string };
+export type CloudCell = { name: string; text?: string; warn?: string };
 
 export type CloudCompareProps = {
   title: string;
   intro: string;
   alert: Titled;
   headers: string[];
-  rows: { id?: string; need: string; meta: string; gcp: CloudCell; aws: CloudCell; azure: CloudCell }[];
-  closing: string;
+  rows: {
+    id?: string;
+    need: string;
+    meta?: string;
+    /** ADR-030 enmienda 5: fila «Dónde busca» y columna «Este ejemplo». */
+    tone?: "where";
+    own?: { text: string };
+    gcp: CloudCell;
+    aws: CloudCell;
+    azure: CloudCell;
+  }[];
+  closing?: string;
 };
 
 export type PracticeItem = { id?: string; title: string; text: string; arq?: boolean; tags?: Tag[] };
@@ -172,15 +182,16 @@ export type SeverityCardsProps = {
 export type TradeOffsProps = {
   arq?: boolean;
   resolutionLabel: string;
-  items: { a: string; b: string; text: string; resolution: string }[];
-  note: string;
+  /** text: los dos lados en una frase; con a_text y b_text (enmienda 5) el adaptador los une. */
+  items: { a: string; b: string; text: string; aText?: string; bText?: string; resolution: string }[];
+  note?: string;
 };
 
 export type OpenQuestionsProps = {
   intro: string;
-  checkLabel: string;
+  checkLabel?: string;
   /** Plantilla con {n} y {total}. */
-  counter: string;
+  counter?: string;
   items: { question: string; tags: Tag[] }[];
 };
 
@@ -355,16 +366,35 @@ export function severityCardsProps(view: V["severity_cards"]): SeverityCardsProp
 }
 
 export function tradeOffsProps(view: V["trade_offs"]): TradeOffsProps {
-  return { arq: view.arq, resolutionLabel: view.resolution_label, items: view.items, note: view.note };
+  const items = view.items.map((item) => ({
+    a: item.a,
+    b: item.b,
+    text: item.text ?? [item.a_text, item.b_text].filter(Boolean).join(" "),
+    aText: item.a_text,
+    bText: item.b_text,
+    resolution: item.resolution,
+  }));
+  return { arq: view.arq, resolutionLabel: view.resolution_label, items, note: view.note };
 }
 
 export function openQuestionsProps(view: V["open_questions"]): OpenQuestionsProps {
   return { intro: view.intro, checkLabel: view.check_label, counter: view.counter, items: view.items };
 }
 
+type GroupedSource = SourcesGroupedProps["groups"][number]["sources"][number];
+
+/** ADR-030 enmienda 5: las entradas `page` (otra ficha) esperan su componente; aquí pasan solo las citas. */
+function isCitation(source: V["sources_grouped"]["groups"][number]["sources"][number]): source is GroupedSource {
+  return source.links !== undefined && source.publisher !== undefined && source.level !== undefined;
+}
+
 export function sourcesGroupedProps(view: V["sources_grouped"]): SourcesGroupedProps {
   return {
-    groups: view.groups.map((group) => ({ ...group, layout: group.layout as "list" | "providers" | undefined })),
+    groups: view.groups.map((group) => ({
+      title: group.title,
+      layout: group.layout as "list" | "providers" | undefined,
+      sources: group.sources.filter(isCitation),
+    })),
   };
 }
 

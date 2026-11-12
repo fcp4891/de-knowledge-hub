@@ -33,6 +33,7 @@ legal_basis:
   - {law: ley-19628, article: "15 bis", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Tratamiento por un encargado.", implication: "El encargado cumple secreto y seguridad, reporta las vulneraciones y suprime o devuelve al terminar."}
   - {law: ley-19628, article: "15 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Evaluación de impacto.", implication: "Evaluación de impacto obligatoria en los casos que el artículo enumera."}
   - {law: ley-19628, article: "16", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Datos sensibles; reglas especiales en los arts. 16 bis a 16 sexies.", implication: "Reglas más estrictas por categoría de dato sensible."}
+  - {law: ley-19628, article: "16 quáter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Datos de niños, niñas y adolescentes.", implication: "Interés superior, autonomía progresiva y consentimiento según la edad; se marca además de la categoría del dato."}
   - {law: ley-19628, article: "27", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Transferencia internacional.", implication: "Región de la nube, proveedores y APIs externas: cada flujo al exterior necesita un mecanismo."}
   - {law: ley-19628, article: "35", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Sanciones.", implication: "Varias infracciones nacen de fallas técnicas."}
 sources:
@@ -1227,6 +1228,7 @@ created_at: 2026-10-21
 updated_at: 2026-11-09
 last_verified: 2026-10-28
 verification_status: review_required
+availability: available
 ---
 
 ## 1. Resumen
@@ -1670,6 +1672,7 @@ El detalle de cada fuente está en `sources` del frontmatter; la agrupación, en
 - 2026-11-09: sale la sección 21 (Fecha de última verificación) (ADR-029, enmienda 2). Las fechas de consulta siguen en `last_verified` y en `accessed` de cada cita, y las verificaciones, en este historial. Sigue en `review_required`.
 - 2026-11-09: roles del §2 con campos explícitos (decide, evalúa, implementa, encargado y aviso; ADR-030, enmienda 4) y textos nuevos. Fuentes: Ley 19.628 con el enlace general y el de la versión 2026-12-01; Ley 21.719 solo con el Diario Oficial (sale el enlace de BCN, que no se pudo verificar); Decreto 662 consultado el 2026-11-09; ISO/IEC 27701:2025; Cloud Audit Logs y Unity Catalog apuntan a la página de cada control; BigQuery con enlaces «columnas» y «filas». Cómo funciona 02 enlaza a la arquitectura (§9) y el atenuante del modelo de prevención cita el Decreto 662, arts. 3 y 15. Sigue en `review_required`.
 - 2026-11-10: revisión aplicada. Sanciones: atenuante del modelo de prevención (acreditado con el certificado; matriz de riesgos de infracción obligatoria, registro de actividades opcional; art. 52), reincidencia con sanciones firmes o ejecutoriadas y gran empresa con el 2 % o el 4 % según la gravedad (ley 20.416). Roles: el responsable responde por los principios y deberes (art. 3). En la nube: tres de los siete requisitos de la matriz. La cita versionada de la Ley 19.628 indica su versión en el título. Sigue en `review_required`.
+- 2026-11-12: el art. 16 quáter (datos de niños, niñas y adolescentes) entra a `legal_basis`, al anexo y al catálogo: sus vistas ya lo citaban y `pii-identification` enlaza a su fila del catálogo (ADR-023, enmienda 9). Sigue en `review_required`.
 
 ## Anexo · Catálogo legal por tema
 
@@ -1703,6 +1706,7 @@ El detalle de cada fuente está en `sources` del frontmatter; la agrupación, en
 - **[Obligación legal · art. 15 bis]** Tratamiento por un encargado. Suprime o devuelve al terminar; la cesión está en el art. 15. Ficha: `processors-and-international-transfers`.
 - **[Obligación legal · art. 15 ter]** Evaluación de impacto en los casos que el artículo enumera. Ficha: `dpia-and-automated-decisions`.
 - **[Obligación legal · art. 16]** Datos sensibles; reglas especiales en los arts. 16 bis a 16 sexies. Ficha: `pii-identification`.
+- **[Obligación legal · art. 16 quáter]** Datos de niños, niñas y adolescentes: interés superior, autonomía progresiva y consentimiento según la edad. Ficha: `pii-identification`.
 
 ### Transferencias, sanciones y prevención
 

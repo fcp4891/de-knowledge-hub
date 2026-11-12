@@ -24,7 +24,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "available"
         },
         {
           "slug": "tokens",
@@ -38,7 +39,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "available"
         },
         {
           "slug": "context-windows",
@@ -52,7 +54,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "available"
         },
         {
           "slug": "embeddings",
@@ -66,7 +69,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "available"
         },
         {
           "slug": "structured-outputs",
@@ -80,7 +84,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "available"
         },
         {
           "slug": "tool-calling",
@@ -94,7 +99,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "available"
         },
         {
           "slug": "prompt-engineering",
@@ -108,7 +114,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "available"
         }
       ]
     },
@@ -128,7 +135,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "available"
         },
         {
           "slug": "chunking",
@@ -142,7 +150,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "available"
         },
         {
           "slug": "rag",
@@ -156,7 +165,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "available"
         },
         {
           "slug": "hybrid-rag",
@@ -170,7 +180,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "available"
         },
         {
           "slug": "reranking",
@@ -184,7 +195,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "available"
         },
         {
           "slug": "metadata-filtering",
@@ -198,7 +210,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "available"
         }
       ]
     },
@@ -218,7 +231,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-26"
+          "last_verified": "2026-10-26",
+          "availability": "available"
         },
         {
           "slug": "multi-agent-systems",
@@ -232,7 +246,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-26"
+          "last_verified": "2026-10-26",
+          "availability": "available"
         },
         {
           "slug": "llm-evaluation",
@@ -246,7 +261,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-26"
+          "last_verified": "2026-10-26",
+          "availability": "available"
         },
         {
           "slug": "llm-observability",
@@ -260,7 +276,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-26"
+          "last_verified": "2026-10-26",
+          "availability": "available"
         },
         {
           "slug": "guardrails",
@@ -274,7 +291,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-26"
+          "last_verified": "2026-10-26",
+          "availability": "available"
         }
       ]
     },
@@ -294,7 +312,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-26"
+          "last_verified": "2026-10-26",
+          "availability": "available"
         },
         {
           "slug": "ai-generated-documentation",
@@ -308,7 +327,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-26"
+          "last_verified": "2026-10-26",
+          "availability": "available"
         },
         {
           "slug": "ai-data-classification",
@@ -322,7 +342,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-26"
+          "last_verified": "2026-10-26",
+          "availability": "available"
         },
         {
           "slug": "ai-anomaly-detection",
@@ -336,7 +357,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-26"
+          "last_verified": "2026-10-26",
+          "availability": "available"
         },
         {
           "slug": "ai-metadata-enrichment",
@@ -350,7 +372,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-26"
+          "last_verified": "2026-10-26",
+          "availability": "available"
         },
         {
           "slug": "ai-pipeline-generation",
@@ -364,7 +387,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-26"
+          "last_verified": "2026-10-26",
+          "availability": "available"
         },
         {
           "slug": "ai-error-analysis",
@@ -378,7 +402,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-26"
+          "last_verified": "2026-10-26",
+          "availability": "available"
         },
         {
           "slug": "natural-language-catalog-interfaces",
@@ -392,7 +417,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-26"
+          "last_verified": "2026-10-26",
+          "availability": "available"
         },
         {
           "slug": "rag-over-technical-docs",
@@ -406,7 +432,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-26"
+          "last_verified": "2026-10-26",
+          "availability": "available"
         }
       ]
     }

@@ -146,3 +146,50 @@ def test_roles_validate_without_evaluate_or_alert(with_template: Path) -> None: 
     write_md(with_template, "concepts/a.md", concept("a", views={"legal_foundations": {"title": "Roles", "roles": full}}),
              body=full_body())
     assert run(with_template).ok
+
+
+def test_keyed_views_need_one_marker_per_entry() -> None:
+    """ADR-030, enmienda 5: «<!-- view: note <id> -->» toma views.notes.<id>; cada entrada se marca una vez."""
+    view = {"notes": {"a": {"text": "x"}, "b": {"text": "y"}}, "chips": {"c": {"label": "z", "items": []}}}
+    body = "<!-- view: note a -->\n<!-- view: note b -->\n<!-- view: chips c -->"
+    assert views.check(view, body, []) == []
+    assert views.check(view, "<!-- view: note a -->\n<!-- view: chips c -->\n<!-- view: note x -->", []) == [
+        "[views] marca 'note x' sin datos en views.notes", "[views] views.notes.b no se marca con <!-- view: note b -->"]
+    assert views.check({}, "<!-- view: otra a -->", []) == ["[views] marca 'otra a' desconocida"]
+
+
+def test_section_refs_and_internal_links_are_checked() -> None:
+    """Enmienda 5: «[§](#sN)» es un ancla de la ficha; los enlaces /concepts/<slug>/ y las entradas page se listan."""
+    view = {"notes": {"a": {"text": "Ver [§](#s4) y [la ficha](/concepts/otra/#x)."}},
+            "chips": {"c": {"label": "z", "items": [{"label": "y", "href": "/concepts/tercera/"}]}},
+            "sources_grouped": {"groups": [{"title": "g", "sources": [{"title": "t", "page": "cuarta", "label": "Ficha"}]}]}}
+    body = "<!-- view: note a -->\n<!-- view: chips c -->"
+    assert views.check(view, body, [], {"s3"}) == ["[views] el ancla '#s4' no existe en la ficha"]
+    assert views.check(view, body, [], {"s4"}) == []
+    assert sorted(views.internal_targets(view)) == ["cuarta", "otra", "tercera"]
+
+
+def test_articles_cited_by_views() -> None:
+    """ADR-023, enmienda 9: los artículos que las vistas citan con enlace cuentan como citados por la ficha."""
+    url = "https://example.org/ley"
+    view = {"concept_map": {"personal": {"kicker": f"Dato personal · [art. 2 letra f]({url})"}},
+            "notes": {"a": {"text": f"Cifrado [(art. 14 quinquies letra a)]({url}); regla [art. 16 quáter]({url})."}},
+            "trade_offs": {"items": [{"resolution": "las reglas del art. 2 letra g)."}]}}
+    assert views.cited_articles(view) == {"2", "14 quinquies", "16 quáter"}
+
+
+def test_pii_identification_views_are_complete() -> None:
+    """Las 11 secciones de la maqueta: cada sección presente tiene título visible y toda vista con datos tiene marca."""
+    import yaml
+    from pathlib import Path
+
+    from backend.content import page_sections
+    text = (Path(__file__).resolve().parent.parent / "content/concepts/pii-identification.md").read_text(encoding="utf-8")
+    data = yaml.safe_load(text.split("---\n", 2)[1])
+    body = page_sections.body_of(text)
+    present = [n for n, _, _ in page_sections.sections(body) if n != 22]
+    assert present == [1, 2, 3, 4, 5, 10, 11, 14, 16, 18, 20]
+    assert [t["section"] for t in data["views"]["section_titles"]] == present
+    assert data["verification_status"] == "review_required" and "owner_approved_at" not in data
+    assert len(data["views"]["decision_tree"]["examples"]) == 8 and len(data["views"]["practice_pairs"]["items"]) == 8
+    assert [r["count"] for r in data["views"]["coverage_strip"]["rows"]] == ["3 de 9", "7 de 9", "9 de 9"]

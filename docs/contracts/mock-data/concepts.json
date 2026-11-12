@@ -15,7 +15,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-06"
+      "last_verified": "2026-10-06",
+      "availability": "available"
     },
     {
       "slug": "data-lifecycle",
@@ -29,7 +30,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-06"
+      "last_verified": "2026-10-06",
+      "availability": "available"
     },
     {
       "slug": "etl-vs-elt",
@@ -43,7 +45,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-09-30"
+      "last_verified": "2026-09-30",
+      "availability": "available"
     },
     {
       "slug": "batch-vs-streaming",
@@ -57,7 +60,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-09-30"
+      "last_verified": "2026-09-30",
+      "availability": "available"
     },
     {
       "slug": "oltp-vs-olap",
@@ -71,7 +75,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-05"
+      "last_verified": "2026-10-05",
+      "availability": "available"
     },
     {
       "slug": "data-lake",
@@ -85,7 +90,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-04"
+      "last_verified": "2026-10-04",
+      "availability": "available"
     },
     {
       "slug": "data-warehouse",
@@ -99,7 +105,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-05"
+      "last_verified": "2026-10-05",
+      "availability": "available"
     },
     {
       "slug": "lakehouse",
@@ -113,7 +120,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-06"
+      "last_verified": "2026-10-06",
+      "availability": "available"
     },
     {
       "slug": "data-mart",
@@ -127,7 +135,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-06"
+      "last_verified": "2026-10-06",
+      "availability": "available"
     },
     {
       "slug": "schema-on-read-vs-schema-on-write",
@@ -141,7 +150,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-06"
+      "last_verified": "2026-10-06",
+      "availability": "available"
     },
     {
       "slug": "data-pipeline",
@@ -155,7 +165,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "data-ingestion",
@@ -169,7 +180,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-06"
+      "last_verified": "2026-10-06",
+      "availability": "available"
     },
     {
       "slug": "data-transformation",
@@ -183,7 +195,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-06"
+      "last_verified": "2026-10-06",
+      "availability": "available"
     },
     {
       "slug": "data-orchestration",
@@ -197,7 +210,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-06"
+      "last_verified": "2026-10-06",
+      "availability": "available"
     },
     {
       "slug": "idempotency",
@@ -211,7 +225,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-09-30"
+      "last_verified": "2026-09-30",
+      "availability": "available"
     },
     {
       "slug": "schema-evolution",
@@ -225,7 +240,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "late-arriving-data",
@@ -239,7 +255,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-09-30"
+      "last_verified": "2026-09-30",
+      "availability": "available"
     },
     {
       "slug": "data-contracts",
@@ -253,7 +270,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-06"
+      "last_verified": "2026-10-06",
+      "availability": "available"
     },
     {
       "slug": "data-consistency",
@@ -267,7 +285,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-06"
+      "last_verified": "2026-10-06",
+      "availability": "available"
     },
     {
       "slug": "acid",
@@ -281,7 +300,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-05"
+      "last_verified": "2026-10-05",
+      "availability": "available"
     },
     {
       "slug": "cap-theorem",
@@ -295,7 +315,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-06"
+      "last_verified": "2026-10-06",
+      "availability": "available"
     },
     {
       "slug": "row-vs-columnar-formats",
@@ -309,7 +330,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-05"
+      "last_verified": "2026-10-05",
+      "availability": "available"
     },
     {
       "slug": "parquet-format",
@@ -323,7 +345,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "avro-format",
@@ -337,7 +360,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-06"
+      "last_verified": "2026-10-06",
+      "availability": "available"
     },
     {
       "slug": "json-format",
@@ -351,7 +375,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-06"
+      "last_verified": "2026-10-06",
+      "availability": "available"
     },
     {
       "slug": "csv-format",
@@ -365,7 +390,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-06"
+      "last_verified": "2026-10-06",
+      "availability": "available"
     },
     {
       "slug": "compression",
@@ -379,7 +405,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-06"
+      "last_verified": "2026-10-06",
+      "availability": "available"
     },
     {
       "slug": "partitioning",
@@ -393,7 +420,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-05"
+      "last_verified": "2026-10-05",
+      "availability": "available"
     },
     {
       "slug": "sql-advanced-select",
@@ -407,7 +435,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "sql-joins",
@@ -421,7 +450,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "sql-subqueries",
@@ -435,7 +465,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "sql-cte",
@@ -449,7 +480,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "sql-recursive-cte",
@@ -463,7 +495,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "sql-window-functions",
@@ -477,7 +510,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-05"
+      "last_verified": "2026-10-05",
+      "availability": "available"
     },
     {
       "slug": "sql-qualify",
@@ -491,7 +525,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "sql-case-expressions",
@@ -505,7 +540,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "sql-nulls",
@@ -519,7 +555,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "sql-arrays",
@@ -533,7 +570,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "sql-structs",
@@ -547,7 +585,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "sql-unnest",
@@ -561,7 +600,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "sql-pivot",
@@ -575,7 +615,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "sql-merge",
@@ -589,7 +630,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-05"
+      "last_verified": "2026-10-05",
+      "availability": "available"
     },
     {
       "slug": "sql-date-functions",
@@ -603,7 +645,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "sql-json-functions",
@@ -617,7 +660,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "incremental-load",
@@ -631,7 +675,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-09-30"
+      "last_verified": "2026-09-30",
+      "availability": "available"
     },
     {
       "slug": "deduplication",
@@ -645,7 +690,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-04"
+      "last_verified": "2026-10-04",
+      "availability": "available"
     },
     {
       "slug": "scd-type-1",
@@ -659,7 +705,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "scd-type-2",
@@ -673,7 +720,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-09-30"
+      "last_verified": "2026-09-30",
+      "availability": "available"
     },
     {
       "slug": "upsert",
@@ -687,7 +735,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-09-30"
+      "last_verified": "2026-09-30",
+      "availability": "available"
     },
     {
       "slug": "change-detection",
@@ -701,7 +750,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "data-reconciliation",
@@ -715,7 +765,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "sql-quality-checks",
@@ -729,7 +780,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "surrogate-key-generation",
@@ -743,7 +795,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "query-plans",
@@ -757,7 +810,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "partition-pruning",
@@ -771,7 +825,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-09-30"
+      "last_verified": "2026-09-30",
+      "availability": "available"
     },
     {
       "slug": "clustering",
@@ -785,7 +840,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "predicate-pushdown",
@@ -799,7 +855,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "scan-reduction",
@@ -813,7 +870,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "materialization-strategies",
@@ -827,7 +885,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "join-optimization",
@@ -841,7 +900,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "cloud-warehouse-optimization",
@@ -855,7 +915,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-07"
+      "last_verified": "2026-10-07",
+      "availability": "available"
     },
     {
       "slug": "python-data-structures",
@@ -869,7 +930,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-08"
+      "last_verified": "2026-10-08",
+      "availability": "available"
     },
     {
       "slug": "python-comprehensions",
@@ -883,7 +945,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-08"
+      "last_verified": "2026-10-08",
+      "availability": "available"
     },
     {
       "slug": "python-functions",
@@ -897,7 +960,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-08"
+      "last_verified": "2026-10-08",
+      "availability": "available"
     },
     {
       "slug": "python-typing",
@@ -911,7 +975,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-08"
+      "last_verified": "2026-10-08",
+      "availability": "available"
     },
     {
       "slug": "python-classes",
@@ -925,7 +990,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-08"
+      "last_verified": "2026-10-08",
+      "availability": "available"
     },
     {
       "slug": "python-exceptions",
@@ -939,7 +1005,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-08"
+      "last_verified": "2026-10-08",
+      "availability": "available"
     },
     {
       "slug": "python-context-managers",
@@ -953,7 +1020,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-08"
+      "last_verified": "2026-10-08",
+      "availability": "available"
     },
     {
       "slug": "python-iterators",
@@ -967,7 +1035,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-08"
+      "last_verified": "2026-10-08",
+      "availability": "available"
     },
     {
       "slug": "python-generators",
@@ -981,7 +1050,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-08"
+      "last_verified": "2026-10-08",
+      "availability": "available"
     },
     {
       "slug": "python-decorators",
@@ -995,7 +1065,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-09"
+      "last_verified": "2026-10-09",
+      "availability": "available"
     },
     {
       "slug": "python-file-handling",
@@ -1009,7 +1080,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-08"
+      "last_verified": "2026-10-08",
+      "availability": "available"
     },
     {
       "slug": "python-concurrency",
@@ -1023,7 +1095,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-09"
+      "last_verified": "2026-10-09",
+      "availability": "available"
     },
     {
       "slug": "python-dataframes",
@@ -1037,7 +1110,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-09"
+      "last_verified": "2026-10-09",
+      "availability": "available"
     },
     {
       "slug": "arrow-columnar-memory",
@@ -1051,7 +1125,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-09"
+      "last_verified": "2026-10-09",
+      "availability": "available"
     },
     {
       "slug": "data-validation-with-pydantic",
@@ -1065,7 +1140,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-04"
+      "last_verified": "2026-10-04",
+      "availability": "available"
     },
     {
       "slug": "http-clients",
@@ -1079,7 +1155,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-09"
+      "last_verified": "2026-10-09",
+      "availability": "available"
     },
     {
       "slug": "data-apis-with-fastapi",
@@ -1093,7 +1170,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-09"
+      "last_verified": "2026-10-09",
+      "availability": "available"
     },
     {
       "slug": "testing-with-pytest",
@@ -1107,7 +1185,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-05"
+      "last_verified": "2026-10-05",
+      "availability": "available"
     },
     {
       "slug": "python-logging",
@@ -1121,7 +1200,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-04"
+      "last_verified": "2026-10-04",
+      "availability": "available"
     },
     {
       "slug": "beam-programming-model",
@@ -1135,7 +1215,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-09"
+      "last_verified": "2026-10-09",
+      "availability": "available"
     },
     {
       "slug": "pyspark-dataframes",
@@ -1149,7 +1230,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-09"
+      "last_verified": "2026-10-09",
+      "availability": "available"
     },
     {
       "slug": "python-api-consumption",
@@ -1163,7 +1245,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "python-file-processing",
@@ -1177,7 +1260,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-09"
+      "last_verified": "2026-10-09",
+      "availability": "available"
     },
     {
       "slug": "python-database-io",
@@ -1191,7 +1275,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-09"
+      "last_verified": "2026-10-09",
+      "availability": "available"
     },
     {
       "slug": "python-error-handling-and-retries",
@@ -1205,7 +1290,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "python-pipeline-structure",
@@ -1219,7 +1305,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-09"
+      "last_verified": "2026-10-09",
+      "availability": "available"
     },
     {
       "slug": "conceptual-data-model",
@@ -1233,7 +1320,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "logical-data-model",
@@ -1247,7 +1335,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "physical-data-model",
@@ -1261,7 +1350,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "normalization",
@@ -1275,7 +1365,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-05"
+      "last_verified": "2026-10-05",
+      "availability": "available"
     },
     {
       "slug": "denormalization",
@@ -1289,7 +1380,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "kimball-methodology",
@@ -1303,7 +1395,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "star-schema",
@@ -1317,7 +1410,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-04"
+      "last_verified": "2026-10-04",
+      "availability": "available"
     },
     {
       "slug": "snowflake-schema",
@@ -1331,7 +1425,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "fact-tables",
@@ -1345,7 +1440,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-04"
+      "last_verified": "2026-10-04",
+      "availability": "available"
     },
     {
       "slug": "dimension-tables",
@@ -1359,7 +1455,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "grain",
@@ -1373,7 +1470,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-05"
+      "last_verified": "2026-10-05",
+      "availability": "available"
     },
     {
       "slug": "surrogate-keys",
@@ -1387,7 +1485,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "slowly-changing-dimensions",
@@ -1401,7 +1500,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "conformed-dimensions",
@@ -1415,7 +1515,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "data-vault",
@@ -1429,7 +1530,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "one-big-table",
@@ -1443,7 +1545,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "semantic-models",
@@ -1457,7 +1560,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "pipeline-layers",
@@ -1471,7 +1575,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "batch-ingestion",
@@ -1485,7 +1590,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-04"
+      "last_verified": "2026-10-04",
+      "availability": "available"
     },
     {
       "slug": "streaming-ingestion",
@@ -1499,7 +1605,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-05"
+      "last_verified": "2026-10-05",
+      "availability": "available"
     },
     {
       "slug": "change-data-capture",
@@ -1513,7 +1620,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-09-30"
+      "last_verified": "2026-09-30",
+      "availability": "available"
     },
     {
       "slug": "api-ingestion",
@@ -1527,7 +1635,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "file-ingestion",
@@ -1541,7 +1650,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "database-ingestion",
@@ -1555,7 +1665,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "incremental-pipelines",
@@ -1569,7 +1680,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-09-30"
+      "last_verified": "2026-09-30",
+      "availability": "available"
     },
     {
       "slug": "event-driven-pipelines",
@@ -1583,7 +1695,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "pipeline-dependencies",
@@ -1597,7 +1710,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "retries",
@@ -1611,7 +1725,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-09-30"
+      "last_verified": "2026-09-30",
+      "availability": "available"
     },
     {
       "slug": "checkpoints",
@@ -1625,7 +1740,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "dead-letter-queue",
@@ -1639,7 +1755,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-09-30"
+      "last_verified": "2026-09-30",
+      "availability": "available"
     },
     {
       "slug": "replay",
@@ -1653,7 +1770,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-09-30"
+      "last_verified": "2026-09-30",
+      "availability": "available"
     },
     {
       "slug": "backfill",
@@ -1667,7 +1785,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-09-30"
+      "last_verified": "2026-09-30",
+      "availability": "available"
     },
     {
       "slug": "failure-recovery",
@@ -1681,7 +1800,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "dag",
@@ -1695,7 +1815,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "orchestration-task",
@@ -1709,7 +1830,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "scheduler",
@@ -1723,7 +1845,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "sensors",
@@ -1737,7 +1860,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "catchup",
@@ -1751,7 +1875,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "dynamic-workflows",
@@ -1765,7 +1890,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "event-driven-orchestration",
@@ -1779,7 +1905,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "orchestration-observability",
@@ -1793,7 +1920,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "airflow-architecture",
@@ -1807,7 +1935,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-04"
+      "last_verified": "2026-10-04",
+      "availability": "available"
     },
     {
       "slug": "airflow-operators-and-hooks",
@@ -1821,7 +1950,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "open-source-vs-managed-orchestration",
@@ -1835,7 +1965,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "orchestration-landscape",
@@ -1849,7 +1980,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "batch-pipeline-architecture",
@@ -1863,7 +1995,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-11-01"
+      "last_verified": "2026-11-01",
+      "availability": "available"
     },
     {
       "slug": "streaming-pipeline-architecture",
@@ -1877,7 +2010,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-11-02"
+      "last_verified": "2026-11-02",
+      "availability": "available"
     },
     {
       "slug": "modern-data-warehouse-architecture",
@@ -1891,7 +2025,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-11-01"
+      "last_verified": "2026-11-01",
+      "availability": "available"
     },
     {
       "slug": "data-lake-architecture",
@@ -1905,7 +2040,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-11-01"
+      "last_verified": "2026-11-01",
+      "availability": "available"
     },
     {
       "slug": "lakehouse-architecture",
@@ -1919,7 +2055,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-11-01"
+      "last_verified": "2026-11-01",
+      "availability": "available"
     },
     {
       "slug": "medallion-architecture",
@@ -1933,7 +2070,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-11-01"
+      "last_verified": "2026-11-01",
+      "availability": "available"
     },
     {
       "slug": "lambda-architecture",
@@ -1947,7 +2085,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-11-02"
+      "last_verified": "2026-11-02",
+      "availability": "available"
     },
     {
       "slug": "kappa-architecture",
@@ -1961,7 +2100,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-11-02"
+      "last_verified": "2026-11-02",
+      "availability": "available"
     },
     {
       "slug": "event-driven-architecture",
@@ -1975,7 +2115,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-11-02"
+      "last_verified": "2026-11-02",
+      "availability": "available"
     },
     {
       "slug": "real-time-analytics-architecture",
@@ -1989,7 +2130,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-11-02"
+      "last_verified": "2026-11-02",
+      "availability": "available"
     },
     {
       "slug": "cdc-architecture",
@@ -2003,7 +2145,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-11-03"
+      "last_verified": "2026-11-03",
+      "availability": "available"
     },
     {
       "slug": "api-to-warehouse-architecture",
@@ -2017,7 +2160,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-11-03"
+      "last_verified": "2026-11-03",
+      "availability": "available"
     },
     {
       "slug": "iot-pipeline-architecture",
@@ -2031,7 +2175,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-11-03"
+      "last_verified": "2026-11-03",
+      "availability": "available"
     },
     {
       "slug": "ml-feature-pipeline-architecture",
@@ -2045,7 +2190,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-11-03"
+      "last_verified": "2026-11-03",
+      "availability": "available"
     },
     {
       "slug": "rag-data-pipeline-architecture",
@@ -2059,7 +2205,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-11-03"
+      "last_verified": "2026-11-03",
+      "availability": "available"
     },
     {
       "slug": "data-mesh",
@@ -2073,7 +2220,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "data-products",
@@ -2087,7 +2235,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "bigquery-architecture",
@@ -2101,7 +2250,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "bigquery-sql-dialect",
@@ -2115,7 +2265,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "bigquery-partitioning",
@@ -2129,7 +2280,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-09-30"
+      "last_verified": "2026-09-30",
+      "availability": "available"
     },
     {
       "slug": "bigquery-clustering",
@@ -2143,7 +2295,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-09-30"
+      "last_verified": "2026-09-30",
+      "availability": "available"
     },
     {
       "slug": "bigquery-slots",
@@ -2157,7 +2310,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "bigquery-query-optimization",
@@ -2171,7 +2325,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "bigquery-cost-model",
@@ -2185,7 +2340,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-05"
+      "last_verified": "2026-10-05",
+      "availability": "available"
     },
     {
       "slug": "bigquery-materialized-views",
@@ -2199,7 +2355,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "bigquery-external-tables",
@@ -2213,7 +2370,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "bigquery-biglake-tables",
@@ -2227,7 +2385,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "bigquery-security",
@@ -2241,7 +2400,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "bigquery-policy-tags",
@@ -2255,7 +2415,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "bigquery-information-schema",
@@ -2269,7 +2430,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "bigquery-monitoring",
@@ -2283,7 +2445,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "bigquery-incremental-models",
@@ -2297,7 +2460,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "gcs-buckets-and-objects",
@@ -2311,7 +2475,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "gcs-storage-classes-and-lifecycle",
@@ -2325,7 +2490,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "pubsub-topics-and-subscriptions",
@@ -2339,7 +2505,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-04"
+      "last_verified": "2026-10-04",
+      "availability": "available"
     },
     {
       "slug": "pubsub-delivery-semantics",
@@ -2353,7 +2520,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "dataflow-execution-model",
@@ -2367,7 +2535,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-12"
+      "last_verified": "2026-10-12",
+      "availability": "available"
     },
     {
       "slug": "dataflow-streaming-pipelines",
@@ -2381,7 +2550,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-12"
+      "last_verified": "2026-10-12",
+      "availability": "available"
     },
     {
       "slug": "composer-environments",
@@ -2395,7 +2565,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-12"
+      "last_verified": "2026-10-12",
+      "availability": "available"
     },
     {
       "slug": "dataform-workflows",
@@ -2409,7 +2580,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-12"
+      "last_verified": "2026-10-12",
+      "availability": "available"
     },
     {
       "slug": "dataform-incremental-tables",
@@ -2423,7 +2595,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-04"
+      "last_verified": "2026-10-04",
+      "availability": "available"
     },
     {
       "slug": "cloud-run-for-data",
@@ -2437,7 +2610,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-12"
+      "last_verified": "2026-10-12",
+      "availability": "available"
     },
     {
       "slug": "cloud-sql-as-source",
@@ -2451,7 +2625,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-12"
+      "last_verified": "2026-10-12",
+      "availability": "available"
     },
     {
       "slug": "dataplex-governance",
@@ -2465,7 +2640,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "gcp-iam-for-data",
@@ -2479,7 +2655,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "gcp-secret-manager-usage",
@@ -2493,7 +2670,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "gcp-cmek-with-kms",
@@ -2507,7 +2685,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-11"
+      "last_verified": "2026-10-11",
+      "availability": "available"
     },
     {
       "slug": "vertex-ai-for-data-engineers",
@@ -2521,7 +2700,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-12"
+      "last_verified": "2026-10-12",
+      "availability": "available"
     },
     {
       "slug": "s3-data-lake",
@@ -2535,7 +2715,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-13"
+      "last_verified": "2026-10-13",
+      "availability": "available"
     },
     {
       "slug": "redshift-architecture",
@@ -2549,7 +2730,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-13"
+      "last_verified": "2026-10-13",
+      "availability": "available"
     },
     {
       "slug": "athena-serverless-queries",
@@ -2563,7 +2745,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-13"
+      "last_verified": "2026-10-13",
+      "availability": "available"
     },
     {
       "slug": "glue-catalog-and-etl",
@@ -2577,7 +2760,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-13"
+      "last_verified": "2026-10-13",
+      "availability": "available"
     },
     {
       "slug": "emr-spark-clusters",
@@ -2591,7 +2775,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-13"
+      "last_verified": "2026-10-13",
+      "availability": "available"
     },
     {
       "slug": "kinesis-data-streams",
@@ -2605,7 +2790,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-13"
+      "last_verified": "2026-10-13",
+      "availability": "available"
     },
     {
       "slug": "msk-managed-kafka",
@@ -2619,7 +2805,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-13"
+      "last_verified": "2026-10-13",
+      "availability": "available"
     },
     {
       "slug": "lambda-for-data",
@@ -2633,7 +2820,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-13"
+      "last_verified": "2026-10-13",
+      "availability": "available"
     },
     {
       "slug": "step-functions-workflows",
@@ -2647,7 +2835,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-13"
+      "last_verified": "2026-10-13",
+      "availability": "available"
     },
     {
       "slug": "mwaa-managed-airflow",
@@ -2661,7 +2850,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-13"
+      "last_verified": "2026-10-13",
+      "availability": "available"
     },
     {
       "slug": "rds-as-source",
@@ -2675,7 +2865,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-13"
+      "last_verified": "2026-10-13",
+      "availability": "available"
     },
     {
       "slug": "lake-formation-permissions",
@@ -2689,7 +2880,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-13"
+      "last_verified": "2026-10-13",
+      "availability": "available"
     },
     {
       "slug": "aws-iam-for-data",
@@ -2703,7 +2895,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-13"
+      "last_verified": "2026-10-13",
+      "availability": "available"
     },
     {
       "slug": "cloudwatch-for-data-pipelines",
@@ -2717,7 +2910,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-13"
+      "last_verified": "2026-10-13",
+      "availability": "available"
     },
     {
       "slug": "bedrock-for-data-engineers",
@@ -2731,7 +2925,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-13"
+      "last_verified": "2026-10-13",
+      "availability": "available"
     },
     {
       "slug": "sagemaker-for-data-engineers",
@@ -2745,7 +2940,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-13"
+      "last_verified": "2026-10-13",
+      "availability": "available"
     },
     {
       "slug": "azure-analytics-landscape",
@@ -2759,7 +2955,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "adls-gen2-storage",
@@ -2773,7 +2970,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "data-factory-pipelines",
@@ -2787,7 +2985,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "fabric-onelake-and-workloads",
@@ -2801,7 +3000,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "synapse-analytics",
@@ -2815,7 +3015,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "azure-databricks-lakehouse",
@@ -2829,7 +3030,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "event-hubs-streaming",
@@ -2843,7 +3045,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "azure-functions-for-data",
@@ -2857,7 +3060,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "container-apps-for-data",
@@ -2871,7 +3075,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "azure-sql-as-source",
@@ -2885,7 +3090,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "purview-governance",
@@ -2899,7 +3105,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "entra-id-for-data",
@@ -2913,7 +3120,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "key-vault-secrets",
@@ -2927,7 +3135,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "azure-ai-for-data-engineers",
@@ -2941,7 +3150,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "git-branching-strategies",
@@ -2955,7 +3165,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "pull-requests",
@@ -2969,7 +3180,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "code-review",
@@ -2983,7 +3195,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "git-tags-and-releases",
@@ -2997,7 +3210,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "ci-cd-pipelines",
@@ -3011,7 +3225,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "automated-testing-in-ci",
@@ -3025,7 +3240,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "build-artifacts",
@@ -3039,7 +3255,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "deployment-strategies",
@@ -3053,7 +3270,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "environment-promotion",
@@ -3067,7 +3285,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "ci-cd-secrets",
@@ -3081,7 +3300,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "rollback",
@@ -3095,7 +3315,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "ci-cd-for-data",
@@ -3109,7 +3330,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "gitops",
@@ -3123,7 +3345,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-14"
+      "last_verified": "2026-10-14",
+      "availability": "available"
     },
     {
       "slug": "infrastructure-as-code",
@@ -3137,7 +3360,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "terraform-providers",
@@ -3151,7 +3375,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "terraform-variables-and-outputs",
@@ -3165,7 +3390,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-19"
+      "last_verified": "2026-10-19",
+      "availability": "available"
     },
     {
       "slug": "terraform-modules",
@@ -3179,7 +3405,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-19"
+      "last_verified": "2026-10-19",
+      "availability": "available"
     },
     {
       "slug": "terraform-state",
@@ -3193,7 +3420,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "terraform-remote-state",
@@ -3207,7 +3435,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-19"
+      "last_verified": "2026-10-19",
+      "availability": "available"
     },
     {
       "slug": "terraform-plan-apply",
@@ -3221,7 +3450,8 @@
       "mvp": true,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-01"
+      "last_verified": "2026-10-01",
+      "availability": "available"
     },
     {
       "slug": "terraform-environments",
@@ -3235,7 +3465,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-19"
+      "last_verified": "2026-10-19",
+      "availability": "available"
     },
     {
       "slug": "terraform-drift",
@@ -3249,7 +3480,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-19"
+      "last_verified": "2026-10-19",
+      "availability": "available"
     },
     {
       "slug": "terraform-security",
@@ -3263,7 +3495,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-19"
+      "last_verified": "2026-10-19",
+      "availability": "available"
     },
     {
       "slug": "cloudformation-basics",
@@ -3277,7 +3510,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-19"
+      "last_verified": "2026-10-19",
+      "availability": "available"
     },
     {
       "slug": "bicep-basics",
@@ -3291,7 +3525,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-19"
+      "last_verified": "2026-10-19",
+      "availability": "available"
     },
     {
       "slug": "container-images",
@@ -3305,7 +3540,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-19"
+      "last_verified": "2026-10-19",
+      "availability": "available"
     },
     {
       "slug": "containers",
@@ -3319,7 +3555,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-19"
+      "last_verified": "2026-10-19",
+      "availability": "available"
     },
     {
       "slug": "dockerfile",
@@ -3333,7 +3570,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-19"
+      "last_verified": "2026-10-19",
+      "availability": "available"
     },
     {
       "slug": "container-volumes",
@@ -3347,7 +3585,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-19"
+      "last_verified": "2026-10-19",
+      "availability": "available"
     },
     {
       "slug": "container-networking",
@@ -3361,7 +3600,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-19"
+      "last_verified": "2026-10-19",
+      "availability": "available"
     },
     {
       "slug": "docker-compose-environments",
@@ -3375,7 +3615,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-19"
+      "last_verified": "2026-10-19",
+      "availability": "available"
     },
     {
       "slug": "container-registries",
@@ -3389,7 +3630,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-19"
+      "last_verified": "2026-10-19",
+      "availability": "available"
     },
     {
       "slug": "kubernetes-fundamentals",
@@ -3403,7 +3645,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-19"
+      "last_verified": "2026-10-19",
+      "availability": "available"
     },
     {
       "slug": "container-platforms-by-cloud",
@@ -3417,7 +3660,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-19"
+      "last_verified": "2026-10-19",
+      "availability": "available"
     },
     {
       "slug": "events",
@@ -3431,7 +3675,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "producers-and-consumers",
@@ -3445,7 +3690,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "message-brokers",
@@ -3459,7 +3705,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "topics-and-partitions",
@@ -3473,7 +3720,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "offsets",
@@ -3487,7 +3735,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "event-ordering",
@@ -3501,7 +3750,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "delivery-semantics",
@@ -3515,7 +3765,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "exactly-once-semantics",
@@ -3529,7 +3780,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "event-time-vs-processing-time",
@@ -3543,7 +3795,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "watermarks",
@@ -3557,7 +3810,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "windowing",
@@ -3571,7 +3825,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "stateful-stream-processing",
@@ -3585,7 +3840,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "backpressure",
@@ -3599,7 +3855,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "spark-structured-streaming",
@@ -3613,7 +3870,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "data-quality-dimensions",
@@ -3627,7 +3885,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "dbt-tests",
@@ -3641,7 +3900,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "dataform-assertions",
@@ -3655,7 +3915,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "great-expectations-validation",
@@ -3669,7 +3930,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "custom-data-validators",
@@ -3683,7 +3945,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "schema-validation",
@@ -3697,7 +3960,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "quality-gate",
@@ -3711,7 +3975,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "write-audit-publish",
@@ -3725,7 +3990,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "data-observability",
@@ -3739,7 +4005,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "observability-logs",
@@ -3753,7 +4020,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "observability-metrics",
@@ -3767,7 +4035,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "observability-traces",
@@ -3781,7 +4050,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "data-freshness",
@@ -3795,7 +4065,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "volume-anomalies",
@@ -3809,7 +4080,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "schema-change-detection",
@@ -3823,7 +4095,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "pipeline-health",
@@ -3837,7 +4110,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "data-sla",
@@ -3851,7 +4125,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "data-slo",
@@ -3865,7 +4140,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "alerting",
@@ -3879,7 +4155,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "incident-response",
@@ -3893,7 +4170,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "root-cause-analysis",
@@ -3907,7 +4185,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "data-catalog",
@@ -3921,7 +4200,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "metadata-management",
@@ -3935,7 +4215,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "data-lineage",
@@ -3949,7 +4230,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "data-ownership",
@@ -3963,7 +4245,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "data-stewardship",
@@ -3977,7 +4260,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "data-domains",
@@ -3991,7 +4275,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "data-classification",
@@ -4005,7 +4290,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "data-retention",
@@ -4019,7 +4305,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "data-lifecycle-management",
@@ -4033,7 +4320,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "iam-fundamentals",
@@ -4047,7 +4335,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "rbac",
@@ -4061,7 +4350,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "abac",
@@ -4075,7 +4365,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "least-privilege",
@@ -4089,7 +4380,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "service-accounts",
@@ -4103,7 +4395,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "row-level-security",
@@ -4117,7 +4410,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "column-level-security",
@@ -4131,7 +4425,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "data-masking",
@@ -4145,7 +4440,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "encryption-at-rest",
@@ -4159,7 +4455,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "encryption-in-transit",
@@ -4173,7 +4470,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "key-management",
@@ -4187,7 +4485,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "secrets-management",
@@ -4201,7 +4500,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "crypto-shredding",
@@ -4215,7 +4515,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "pseudonymization-vs-anonymization",
@@ -4229,7 +4530,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "tokenization",
@@ -4243,7 +4545,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "keyed-hashing",
@@ -4257,7 +4560,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "k-anonymity",
@@ -4271,7 +4575,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-21"
+      "last_verified": "2026-10-21",
+      "availability": "available"
     },
     {
       "slug": "open-data-stack-overview",
@@ -4285,7 +4590,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "open-table-formats",
@@ -4299,7 +4605,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "table-format-comparison",
@@ -4313,7 +4620,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "spark-execution-model",
@@ -4327,7 +4635,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "kafka-architecture",
@@ -4341,7 +4650,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "dbt-core-concepts",
@@ -4355,7 +4665,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "postgresql-for-data-engineers",
@@ -4369,7 +4680,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-20"
+      "last_verified": "2026-10-20",
+      "availability": "available"
     },
     {
       "slug": "llm-fundamentals",
@@ -4383,7 +4695,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "available"
     },
     {
       "slug": "tokens",
@@ -4397,7 +4710,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "available"
     },
     {
       "slug": "context-windows",
@@ -4411,7 +4725,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "available"
     },
     {
       "slug": "embeddings",
@@ -4425,7 +4740,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "available"
     },
     {
       "slug": "structured-outputs",
@@ -4439,7 +4755,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "available"
     },
     {
       "slug": "tool-calling",
@@ -4453,7 +4770,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "available"
     },
     {
       "slug": "prompt-engineering",
@@ -4467,7 +4785,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "available"
     },
     {
       "slug": "vector-databases",
@@ -4481,7 +4800,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "available"
     },
     {
       "slug": "chunking",
@@ -4495,7 +4815,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "available"
     },
     {
       "slug": "rag",
@@ -4509,7 +4830,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "available"
     },
     {
       "slug": "hybrid-rag",
@@ -4523,7 +4845,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "available"
     },
     {
       "slug": "reranking",
@@ -4537,7 +4860,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "available"
     },
     {
       "slug": "metadata-filtering",
@@ -4551,7 +4875,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "available"
     },
     {
       "slug": "llm-agents",
@@ -4565,7 +4890,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "multi-agent-systems",
@@ -4579,7 +4905,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "llm-evaluation",
@@ -4593,7 +4920,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "llm-observability",
@@ -4607,7 +4935,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "guardrails",
@@ -4621,7 +4950,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "ai-assisted-sql-generation",
@@ -4635,7 +4965,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "ai-generated-documentation",
@@ -4649,7 +4980,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "ai-data-classification",
@@ -4663,7 +4995,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "ai-anomaly-detection",
@@ -4677,7 +5010,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "ai-metadata-enrichment",
@@ -4691,7 +5025,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "ai-pipeline-generation",
@@ -4705,7 +5040,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "ai-error-analysis",
@@ -4719,7 +5055,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "natural-language-catalog-interfaces",
@@ -4733,7 +5070,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "rag-over-technical-docs",
@@ -4747,7 +5085,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "modern-data-stack",
@@ -4761,7 +5100,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "analytics-engineering",
@@ -4775,7 +5115,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "dataops",
@@ -4789,7 +5130,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "finops-for-data",
@@ -4803,7 +5145,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "data-platform-engineering",
@@ -4817,7 +5160,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "data-versioning",
@@ -4831,7 +5175,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "reverse-etl",
@@ -4845,7 +5190,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "data-sharing",
@@ -4859,7 +5205,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "semantic-layer",
@@ -4873,7 +5220,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "zero-etl-and-federation",
@@ -4887,7 +5235,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-26"
+      "last_verified": "2026-10-26",
+      "availability": "available"
     },
     {
       "slug": "model-context-protocol",
@@ -4901,7 +5250,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-27"
+      "last_verified": "2026-10-27",
+      "availability": "available"
     },
     {
       "slug": "data-agents",
@@ -4915,7 +5265,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-27"
+      "last_verified": "2026-10-27",
+      "availability": "available"
     },
     {
       "slug": "agentic-workflows",
@@ -4929,7 +5280,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-27"
+      "last_verified": "2026-10-27",
+      "availability": "available"
     },
     {
       "slug": "agentic-data-engineering",
@@ -4943,7 +5295,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-27"
+      "last_verified": "2026-10-27",
+      "availability": "available"
     },
     {
       "slug": "llm-driven-automation",
@@ -4957,7 +5310,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-27"
+      "last_verified": "2026-10-27",
+      "availability": "available"
     },
     {
       "slug": "ai-assisted-development",
@@ -4971,7 +5325,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-27"
+      "last_verified": "2026-10-27",
+      "availability": "available"
     },
     {
       "slug": "emerging-semantic-layers",
@@ -4985,7 +5340,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-27"
+      "last_verified": "2026-10-27",
+      "availability": "available"
     },
     {
       "slug": "interoperability-standards",
@@ -4999,7 +5355,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-27"
+      "last_verified": "2026-10-27",
+      "availability": "available"
     },
     {
       "slug": "open-table-format-evolution",
@@ -5013,7 +5370,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-27"
+      "last_verified": "2026-10-27",
+      "availability": "available"
     },
     {
       "slug": "chile-data-protection",
@@ -5027,7 +5385,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "review_required",
-      "last_verified": "2026-10-28"
+      "last_verified": "2026-10-28",
+      "availability": "available"
     },
     {
       "slug": "pii-identification",
@@ -5040,8 +5399,9 @@
       "importance": "high",
       "mvp": false,
       "has_page": true,
-      "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "verification_status": "review_required",
+      "last_verified": "2026-11-12",
+      "availability": "available"
     },
     {
       "slug": "processing-activities-inventory",
@@ -5055,7 +5415,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-28"
+      "last_verified": "2026-10-28",
+      "availability": "in_review"
     },
     {
       "slug": "data-minimization-by-layer",
@@ -5069,7 +5430,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "in_development"
     },
     {
       "slug": "chilean-identifier-pseudonymization",
@@ -5083,7 +5445,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "in_development"
     },
     {
       "slug": "purpose-based-authorization",
@@ -5097,7 +5460,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-28"
+      "last_verified": "2026-10-28",
+      "availability": "in_development"
     },
     {
       "slug": "data-subject-rights-pipeline",
@@ -5111,7 +5475,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "in_development"
     },
     {
       "slug": "distributed-erasure-propagation",
@@ -5125,7 +5490,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-28"
+      "last_verified": "2026-10-28",
+      "availability": "in_development"
     },
     {
       "slug": "retention-and-erasure",
@@ -5139,7 +5505,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "in_development"
     },
     {
       "slug": "privacy-backup-and-recovery",
@@ -5153,7 +5520,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-28"
+      "last_verified": "2026-10-28",
+      "availability": "in_development"
     },
     {
       "slug": "processors-and-international-transfers",
@@ -5167,7 +5535,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "in_development"
     },
     {
       "slug": "dpia-and-automated-decisions",
@@ -5181,7 +5550,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "in_development"
     },
     {
       "slug": "data-breach-response",
@@ -5195,7 +5565,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "in_development"
     },
     {
       "slug": "privacy-controls-as-code",
@@ -5209,7 +5580,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-25"
+      "last_verified": "2026-10-25",
+      "availability": "in_development"
     },
     {
       "slug": "privacy-in-ai-rag-llm",
@@ -5223,7 +5595,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-28"
+      "last_verified": "2026-10-28",
+      "availability": "in_development"
     },
     {
       "slug": "gdpr",
@@ -5237,7 +5610,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-30"
+      "last_verified": "2026-10-30",
+      "availability": "available"
     },
     {
       "slug": "lgpd",
@@ -5251,7 +5625,8 @@
       "mvp": false,
       "has_page": true,
       "verification_status": "verified",
-      "last_verified": "2026-10-30"
+      "last_verified": "2026-10-30",
+      "availability": "available"
     }
   ]
 }

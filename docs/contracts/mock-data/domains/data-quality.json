@@ -24,7 +24,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         }
       ]
     },
@@ -44,7 +45,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "dataform-assertions",
@@ -58,7 +60,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "great-expectations-validation",
@@ -72,7 +75,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "custom-data-validators",
@@ -86,7 +90,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "schema-validation",
@@ -100,7 +105,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         }
       ]
     },
@@ -120,7 +126,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "write-audit-publish",
@@ -134,7 +141,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         }
       ]
     }

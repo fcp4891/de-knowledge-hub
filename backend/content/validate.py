@@ -39,7 +39,9 @@ TECHNOLOGY_TYPES = {"technology", "cloud_service"}
 BLUEPRINT_DIR = "blueprint"
 MATRIX_DIR = "matrix"
 LEGAL_FRAMEWORKS_DIR = "legal-frameworks"   # ADR-027: marco legal verificado de un dominio
-STRUCTURE_DIRS = frozenset({BLUEPRINT_DIR, MATRIX_DIR, LEGAL_FRAMEWORKS_DIR})
+UI_DIR = "ui"   # ADR-031: textos de la UI que vienen del contenido (p. ej. availability.yaml)
+STRUCTURE_DIRS = frozenset({BLUEPRINT_DIR, MATRIX_DIR, LEGAL_FRAMEWORKS_DIR, UI_DIR})
+UI_SCHEMAS = {"availability": "ui-availability.schema.json"}
 CLOUD_COLUMNS = ("gcp", "aws", "azure")
 
 
@@ -502,13 +504,17 @@ def check_page_sections(content_dir: Path, docs: list[Document], report: Report)
         slug = doc.data["slug"]
         omittable = page_sections.OMITTABLE.get(slug, frozenset()) if doc.data["type"] in page_sections.PRACTICE_TYPES else frozenset()
         errors = page_sections.check(body, expected, omittable) + page_sections.check_annexes(body, slug)
-        if doc.data["type"] in page_sections.PRACTICE_TYPES and "practice_lanes" not in doc.data.get("views", {}):
-            errors += page_sections.check_practices(body)   # ADR-030: con practice_lanes, las prácticas van en la vista
+        practice_views = {"practice_lanes", "practice_pairs"} & set(doc.data.get("views", {}))
+        if doc.data["type"] in page_sections.PRACTICE_TYPES and not practice_views:
+            errors += page_sections.check_practices(body)   # ADR-030: con practice_lanes o practice_pairs, las prácticas van en la vista
         if "views" in doc.data:
             cited = [s["url"] for s in doc.data.get("sources", []) if "url" in s]
             present = [number for number, _, _ in page_sections.sections(body)]
             anchors = page_views.page_anchors(doc.data["views"], present, doc.data.get("legal_basis", []))
             errors += page_views.check(doc.data["views"], body, cited, anchors)
+            fichas = {d.data["slug"] for d in docs if d.data["type"] in page_sections.PAGE_TYPES}
+            errors += [f"[views] enlace a una ficha inexistente: '{target}'"
+                       for target in sorted(set(page_views.internal_targets(doc.data["views"]))) if target not in fichas]
         if doc.data["type"] == "architecture":
             errors += architecture_views(body)
         for error in errors:
@@ -750,6 +756,7 @@ def check_legal_content(
         if doc.path.suffix == ".md" and not data.get("stub"):
             body = page_sections.body_of((content_dir.parent / doc.path).read_text(encoding="utf-8"))
             cited = check_legal_body(doc, body, report)
+        cited |= {(None, article) for article in page_views.cited_articles(data.get("views", {}))}   # enmienda 9
         check_legal_basis(doc, by_slug, cited, report)
 
 
@@ -971,6 +978,17 @@ def validate_legal_frameworks(
     return slugs
 
 
+def validate_ui_texts(content_dir: Path, schemas_dir: Path, report: Report) -> None:
+    """ADR-031: cada archivo de content/ui/ tiene su schema; un archivo sin schema es un error."""
+    for doc in load_structures(content_dir, UI_DIR, report):
+        name = Path(doc.path).stem
+        if name not in UI_SCHEMAS:
+            report.add(doc.location, f"[ui] content/{UI_DIR}/{name}.yaml no tiene schema (ADR-031)")
+            continue
+        validator, _ = load_structure_schema(schemas_dir, UI_SCHEMAS[name])
+        validate_structure(doc, validator, report)
+
+
 def check_domain_legal_frameworks(content_dir: Path, frameworks: set[str], report: Report) -> None:
     for doc in load_structures(content_dir, BLUEPRINT_DIR, Report()):
         ref = doc.data.get("domain", {}).get("legal_framework")
@@ -1011,6 +1029,7 @@ def validate(content_dir: Path, schemas_dir: Path) -> Report:
     check_part_of(valid_docs, index, report)
     validate_matrices(content_dir, schemas_dir, index, by_slug, report)
     check_domain_legal_frameworks(content_dir, validate_legal_frameworks(content_dir, schemas_dir, by_slug, report), report)
+    validate_ui_texts(content_dir, schemas_dir, report)
     report.technologies = [doc.data for doc in valid_docs if doc.data["type"] in TECHNOLOGY_TYPES]
     return report
 

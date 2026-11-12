@@ -35,6 +35,10 @@ SNIPPET_SECTION_KEYS = [  # ADR-008: las 10 secciones de content/_templates/snip
 PAGE_BONUS = 0.3  # ADR-007: igual que backend/app/search.py
 SECTION_HEADING = re.compile(r"^## (\d+)\. (.+)$")
 CLOUDS = ("gcp", "aws", "azure")
+AVAILABLE = "available"   # ADR-031: sin el campo, la ficha está disponible
+CONCEPT_LINK = re.compile(r"\(/concepts/([a-z0-9-]+)/")   # enlace Markdown a otra ficha
+CONCEPT_PATH = re.compile(r"^/concepts/([a-z0-9-]+)/")      # href de una vista
+CODE_SLUG = re.compile(r"`([a-z0-9]+(?:-[a-z0-9]+)+)`")     # `slug` que la UI enlaza a su ficha
 
 
 @dataclass(frozen=True)
@@ -54,6 +58,7 @@ class ContentIndex:
     capabilities: list[dict[str, Any]] = field(default_factory=list)
     catalog: dict[str, dict[str, Any]] = field(default_factory=dict)
     legal_frameworks: dict[str, dict[str, Any]] = field(default_factory=dict)   # ADR-027
+    ui: dict[str, dict[str, Any]] = field(default_factory=dict)   # ADR-031: content/ui/, por nombre de archivo
 
 
 # --- Carga -------------------------------------------------------------------
@@ -86,6 +91,8 @@ def load_index(content_dir: Path, schemas_dir: Path) -> ContentIndex:
         index.capabilities.extend(doc.data["capabilities"])
     for doc in v.load_structures(content_dir, v.LEGAL_FRAMEWORKS_DIR, v.Report()):
         index.legal_frameworks[doc.data["slug"]] = doc.data
+    for doc in v.load_structures(content_dir, v.UI_DIR, v.Report()):
+        index.ui[Path(doc.path).stem] = doc.data
     return index
 
 
@@ -143,7 +150,58 @@ def concept_summary(index: ContentIndex, slug: str) -> dict[str, Any]:
         "mvp": concept["mvp"], "has_page": page is not None,
         "verification_status": page["verification_status"] if page else None,
         "last_verified": page.get("last_verified") if page else None,
+        "availability": availability(page),
     }
+
+
+# --- Disponibilidad (ADR-031) -------------------------------------------------
+
+
+def availability(page: dict[str, Any] | None) -> str:
+    return str((page or {}).get("availability", AVAILABLE))
+
+
+def availability_text(index: ContentIndex, status: str) -> dict[str, str]:
+    texts = index.ui["availability"]
+    return {"label": texts[status]["label"], "help": texts[status]["help"], "back_label": texts["back_label"]}
+
+
+def view_targets(node: Any) -> list[str]:
+    """Slugs de otras fichas en las vistas: hrefs /concepts/<slug>/, enlaces Markdown y entradas page de Fuentes."""
+    if isinstance(node, dict):
+        own = []
+        if isinstance(node.get("href"), str) and (m := CONCEPT_PATH.match(node["href"])):
+            own.append(m.group(1))
+        if isinstance(node.get("page"), str):
+            own.append(node["page"])
+        return own + [slug for key, value in node.items() if key not in ("href", "page") for slug in view_targets(value)]
+    if isinstance(node, list):
+        return [slug for value in node for slug in view_targets(value)]
+    if isinstance(node, str):
+        return CONCEPT_LINK.findall(node) + CODE_SLUG.findall(node)
+    return []
+
+
+def linked_slugs(index: ContentIndex, slug: str) -> list[str]:
+    """Fichas que esta enlaza, en orden de aparición: cuerpo, vistas, relaciones y temas relacionados."""
+    page = index.entities.get(slug, {})
+    body = index.bodies.get(slug, "")
+    entry = index.concepts.get(slug)
+    found = [*CONCEPT_LINK.findall(body), *CODE_SLUG.findall(body), *view_targets(page.get("views", {})),
+             *(r["target"] for r in page.get("relations", [])), *page.get("related_topics", []),
+             *(entry.concept.get("related_concepts", []) if entry else [])]
+    return [s for s in dict.fromkeys(found) if s != slug and (s in index.concepts or s in index.entities)]
+
+
+def unavailable_links(index: ContentIndex, slug: str) -> list[dict[str, str]]:
+    links = []
+    for target in linked_slugs(index, slug):
+        status = availability(index.entities.get(target))
+        if status != AVAILABLE:
+            title, _ = describe(index, target)
+            links.append({"slug": target, "title": title, "target_availability": status,
+                          "label": availability_text(index, status)["label"]})
+    return links
 
 
 def page_of(items: list[Any], limit: int, offset: int) -> dict[str, Any]:
@@ -217,7 +275,13 @@ def annexes(body: str) -> dict[str, Any]:
 
 
 def grouped_source(index: ContentIndex, page: dict[str, Any], entry: dict[str, Any]) -> dict[str, Any]:
-    """ADR-030: una entrada de sources_grouped con sus URLs resueltas contra las citas y el registro."""
+    """ADR-030: una entrada de sources_grouped con sus URLs resueltas contra las citas y el registro; o, con page,
+    otra ficha de la plataforma (enmienda 5), marcada con target_availability si no está disponible (ADR-031)."""
+    if "page" in entry:
+        status = availability(index.entities.get(entry["page"]))
+        marked = {"target_availability": status} if status != AVAILABLE else {}
+        return {"title": entry["title"], "page": entry["page"], "label": entry["label"],
+                **({"why": entry["why"]} if "why" in entry else {}), **marked}
     refs = {ref["url"]: ref for ref in page.get("sources", []) if "url" in ref}
     cited = [refs[url] for url in entry["urls"]]
     levels = sorted({index.entities[ref["source"]]["authority_level"] for ref in cited})
@@ -243,6 +307,17 @@ def page_views(index: ContentIndex, page: dict[str, Any]) -> dict[str, Any]:
 
 
 def concept_detail(index: ContentIndex, slug: str) -> dict[str, Any]:
+    detail = full_concept_detail(index, slug)
+    status = availability(index.entities.get(slug))
+    if status == AVAILABLE:
+        return {**detail, "availability": AVAILABLE, "unavailable_links": unavailable_links(index, slug)}
+    # ADR-031: página mínima; el contenido no se publica (tampoco en los datos estáticos).
+    minimal = {key: value for key, value in detail.items() if key not in ("views", "annexes")}
+    return {**minimal, "sections": [], "sources": [], "legal_basis": [], "availability": status,
+            "availability_text": availability_text(index, status), "unavailable_links": []}
+
+
+def full_concept_detail(index: ContentIndex, slug: str) -> dict[str, Any]:
     entry = index.concepts[slug]
     concept, page = entry.concept, index.entities.get(slug, {})
     return {
@@ -415,7 +490,9 @@ def describe(index: ContentIndex, slug: str) -> tuple[str, str]:
 
 def relation_item(index: ContentIndex, slug: str, edge: Edge) -> dict[str, Any]:
     title, entity_type = describe(index, slug)
-    return {"slug": slug, "title": title, "entity_type": entity_type, "origin": edge.origin, "note": edge.note}
+    status = availability(index.entities.get(slug))
+    marked = {"target_availability": status} if status != AVAILABLE else {}   # ADR-031
+    return {"slug": slug, "title": title, "entity_type": entity_type, "origin": edge.origin, "note": edge.note, **marked}
 
 
 def add_item(groups: dict[tuple[str, str], dict[str, Any]], key: tuple[str, str], label: str, item: dict[str, Any]) -> None:

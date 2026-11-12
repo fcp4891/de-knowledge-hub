@@ -24,7 +24,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-13"
+          "last_verified": "2026-10-13",
+          "availability": "available"
         },
         {
           "slug": "redshift-architecture",
@@ -38,7 +39,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-13"
+          "last_verified": "2026-10-13",
+          "availability": "available"
         },
         {
           "slug": "athena-serverless-queries",
@@ -52,7 +54,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-13"
+          "last_verified": "2026-10-13",
+          "availability": "available"
         },
         {
           "slug": "glue-catalog-and-etl",
@@ -66,7 +69,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-13"
+          "last_verified": "2026-10-13",
+          "availability": "available"
         }
       ]
     },
@@ -86,7 +90,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-13"
+          "last_verified": "2026-10-13",
+          "availability": "available"
         },
         {
           "slug": "kinesis-data-streams",
@@ -100,7 +105,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-13"
+          "last_verified": "2026-10-13",
+          "availability": "available"
         },
         {
           "slug": "msk-managed-kafka",
@@ -114,7 +120,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-13"
+          "last_verified": "2026-10-13",
+          "availability": "available"
         }
       ]
     },
@@ -134,7 +141,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-13"
+          "last_verified": "2026-10-13",
+          "availability": "available"
         },
         {
           "slug": "step-functions-workflows",
@@ -148,7 +156,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-13"
+          "last_verified": "2026-10-13",
+          "availability": "available"
         },
         {
           "slug": "mwaa-managed-airflow",
@@ -162,7 +171,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-13"
+          "last_verified": "2026-10-13",
+          "availability": "available"
         },
         {
           "slug": "rds-as-source",
@@ -176,7 +186,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-13"
+          "last_verified": "2026-10-13",
+          "availability": "available"
         }
       ]
     },
@@ -196,7 +207,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-13"
+          "last_verified": "2026-10-13",
+          "availability": "available"
         },
         {
           "slug": "aws-iam-for-data",
@@ -210,7 +222,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-13"
+          "last_verified": "2026-10-13",
+          "availability": "available"
         },
         {
           "slug": "cloudwatch-for-data-pipelines",
@@ -224,7 +237,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-13"
+          "last_verified": "2026-10-13",
+          "availability": "available"
         }
       ]
     },
@@ -244,7 +258,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-13"
+          "last_verified": "2026-10-13",
+          "availability": "available"
         },
         {
           "slug": "sagemaker-for-data-engineers",
@@ -258,7 +273,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-13"
+          "last_verified": "2026-10-13",
+          "availability": "available"
         }
       ]
     }

@@ -24,7 +24,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "metadata-management",
@@ -38,7 +39,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "data-lineage",
@@ -52,7 +54,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         }
       ]
     },
@@ -72,7 +75,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         },
         {
           "slug": "data-stewardship",
@@ -86,7 +90,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         },
         {
           "slug": "data-domains",
@@ -100,7 +105,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         },
         {
           "slug": "data-classification",
@@ -114,7 +120,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         }
       ]
     },
@@ -134,7 +141,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "data-lifecycle-management",
@@ -148,7 +156,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         }
       ]
     }

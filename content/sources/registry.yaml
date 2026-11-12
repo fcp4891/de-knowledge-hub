@@ -3978,6 +3978,24 @@ verification_status: verified
 jurisdiction:
 - BR
 ---
+id: source:who-icd-10
+slug: who-icd-10
+type: source
+title: CIE-10 (OMS)
+description: Clasificación Internacional de Enfermedades, décima revisión (versión 2019), navegador oficial de la Organización Mundial de la Salud; se usa para los códigos de diagnóstico de los ejemplos.
+url: https://icd.who.int/browse10/2019/en
+source_type: official_docs
+authority_level: 1
+provider: who
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-11-12'
+updated_at: '2026-11-12'
+last_verified: '2026-11-12'
+verification_status: verified
+---
 id: source:anpd-docs
 slug: anpd-docs
 type: source

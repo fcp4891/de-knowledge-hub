@@ -18,7 +18,10 @@ import { SHORT_NAMES } from "@/lib/learning-paths";
 import { isDomainPublished, relationVisible, scopeFromConcepts } from "@/lib/publishedScope";
 import { nextInRoute } from "@/lib/domainRoute";
 import { staticSlugs } from "@/lib/staticParams";
+import type { Metadata } from "next";
+import Link from "next/link";
 import type { ReactNode } from "react";
+import { PRIVACY_SPACE_HREF } from "@/lib/privacySpace";
 
 import { ApproachBoard } from "@/components/ficha/ApproachBoard";
 import { CentralIdea } from "@/components/ficha/CentralIdea";
@@ -82,6 +85,49 @@ export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
   return staticSlugs("concepts.json");
+}
+
+/** ADR-031: una ficha no disponible se publica como página mínima y sin indexar. */
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const concept = await getConcept(slug);
+  if (concept.ok && concept.data.availability !== "available") {
+    return { robots: { index: false, follow: true } };
+  }
+  return {};
+}
+
+function itineraryHref(domain: string | null, subdomain: string | null): string {
+  if (domain === "privacy-engineering" && subdomain) {
+    return `${PRIVACY_SPACE_HREF}#${subdomain}`;
+  }
+  return domain ? `/explorer/${domain}` : "/";
+}
+
+/** ADR-031: título, etiqueta, ayuda y vuelta al itinerario; los textos vienen de content/ui/availability.yaml. */
+function UnavailablePage({
+  title,
+  text,
+  href,
+}: {
+  title: string;
+  text: { label: string; help: string; back_label: string };
+  href: string;
+}) {
+  return (
+    <div className="page">
+      <article className="unavailable-page">
+        <h1>{title}</h1>
+        <p>
+          <span className="unavailable-tag">{text.label}</span>
+        </p>
+        <p>{text.help}</p>
+        <p>
+          <Link href={href}>{text.back_label}</Link>
+        </p>
+      </article>
+    </div>
+  );
 }
 
 function readingMinutes(sections: Section[]): number | null {
@@ -476,6 +522,11 @@ async function ConceptArticle({ slug }: { slug: string }) {
   }
 
   const data = concept.data;
+  if (data.availability !== "available" && data.availability_text) {
+    return (
+      <UnavailablePage title={data.title} text={data.availability_text} href={itineraryHref(data.domain, data.subdomain)} />
+    );
+  }
   const summary = data.sections.find((section) => section.key === "summary");
   const noticeSplit = extractLegalNotice(summary?.markdown ?? "");
   const sections = data.sections.map((section) =>

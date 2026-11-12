@@ -24,7 +24,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         }
       ]
     },
@@ -44,7 +45,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "table-format-comparison",
@@ -58,7 +60,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         }
       ]
     },
@@ -78,7 +81,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "kafka-architecture",
@@ -92,7 +96,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         }
       ]
     },
@@ -112,7 +117,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "postgresql-for-data-engineers",
@@ -126,7 +132,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         }
       ]
     }

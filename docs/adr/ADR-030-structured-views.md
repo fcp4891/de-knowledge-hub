@@ -146,3 +146,45 @@ Además, `approach` suma el ejemplo y la referencia de cada paso, los rótulos d
 - **Sin `evaluate`,** el recuadro queda en dos columnas (`is-pair`). **Sin `alert`,** no se muestra el aviso. En ambos casos la ficha valida igual.
 - **Diseño.** No cambia: con los mismos textos, las capturas a 1366 px y 390 px son idénticas antes y después.
 - **Contrato.** `schemas/base.schema.json` y `docs/contracts/api.yaml` se regeneran con los dos campos opcionales. Las demás fichas no usan la vista y no cambian.
+
+## Enmienda 5 (2026-11-12): vistas de pii-identification
+
+**Vistas nuevas.** El componente de cada una queda para Carril B, con estos nombres:
+
+| Clave | Componente | Sección | Marca |
+|---|---|---|---|
+| `catalog_fields` | CatalogFields | §1 | `<!-- view: catalog_fields -->` |
+| `concept_map` | ConceptMap | §2 | `<!-- view: concept_map -->` |
+| `decision_tree` | DecisionTree | §2 | `<!-- view: decision_tree -->` |
+| `coverage_strip` | CoverageStrip | §3 | `<!-- view: coverage_strip -->` |
+| `column_types` | ColumnTypes | §3 | `<!-- view: column_types -->` |
+| `evidence_steps` | EvidenceSteps | §4 | `<!-- view: evidence_steps -->` |
+| `use_avoid` | UseAvoid | §5 | `<!-- view: use_avoid -->` |
+| `practice_pairs` | PracticePairs | §14 | `<!-- view: practice_pairs -->` |
+| `notes` | Note | §1, §2, §3, §4, §11 | `<!-- view: note <id> -->` |
+| `chips` | Chips | §1, §4 | `<!-- view: chips <id> -->` |
+| `section_titles` | — | todas | sin marca (posición fija) |
+
+**Convenciones nuevas:**
+- **Marca con id.** `notes` y `chips` admiten varias instancias por ficha: la marca nombra el id. Cada entrada se marca una sola vez.
+- **`section_ref`.** En cualquier texto enriquecido, «[§](#sN)» es una referencia a otra sección. El componente la dibuja como «§<número visible> · <nombre>». El nombre es `section_titles[].ref` si existe y, si no, `title`. El validador comprueba que el ancla exista.
+- **Enlaces a otras fichas.** Usan `/concepts/<slug>/` (con ancla opcional), en `chips`, en `decision_tree.law.link` y en entradas `page` de `sources_grouped`. El validador comprueba que la ficha exista, y la API marca `target_availability` (ADR-031).
+- **`TAG.section`.** El número de sección de una píldora que apunta a otra sección; el componente muestra «§<número visible>» como `kind`. `TAG.href` admite además una cita https.
+
+**Extensiones opcionales** de vistas existentes, que no cambian chile-data-protection:
+- `control_evidence`: `note` y `example.note` aceptan texto enriquecido.
+- `code_guide`:
+  - `rules.headers` admite 3 o 4 columnas, y `rules.items[].finds` es la cuarta;
+  - `not_covered.intro` y sus ítems aceptan texto enriquecido;
+  - `not_covered.note` es nuevo;
+  - `scenarios.items[].text` acepta texto enriquecido.
+- `cloud_compare`:
+  - `headers` admite 4 o 5 columnas, y `rows[].own` es la columna «Este ejemplo»;
+  - `rows[].tone: where` marca la fila «Dónde busca», y `rows[].meta` pasa a ser opcional;
+  - las celdas tienen `name` y `text` enriquecidos, y `text` es opcional;
+  - `closing` pasa a ser opcional.
+- `trade_offs`: `items[].a_text` y `items[].b_text` (texto por lado); `items[].text` y `note` pasan a ser opcionales.
+- `open_questions`: `check_label` y `counter` pasan a ser opcionales.
+- `sources_grouped`: una entrada puede ser otra ficha (`page` y `label`) en vez de `urls` y `publisher`; `why` acepta texto enriquecido.
+
+**Validador:** con `practice_pairs`, como con `practice_lanes`, la §14 no exige las viñetas Seguridad, Observabilidad y Costo.

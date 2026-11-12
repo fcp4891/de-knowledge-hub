@@ -253,6 +253,14 @@ export const CHILE_GROUPS: ChileGroup[] = [
         "Datos sensibles: consentimiento expreso, salvo excepciones; salud, biométricos, niños, niñas y adolescentes, investigación y geolocalización, en los arts. 16 bis a 16 sexies.",
         [page("pii-identification", "Identificación de datos personales y sensibles")],
       ),
+      article(
+        "16 quáter",
+        "Niños, niñas y adolescentes",
+        "Datos de niños, niñas y adolescentes.",
+        "Interés superior, autonomía progresiva y consentimiento según la edad; se marca además de la categoría del dato.",
+        "Niños y niñas (menores de 14): consentimiento de sus padres, representantes legales o de quien tenga su cuidado personal, salvo que la ley lo autorice o mandate expresamente. Adolescentes (mayores de 14 y menores de 18): las normas de autorización de los adultos; sus datos sensibles, si son menores de 16, también requieren ese consentimiento.",
+        [page("pii-identification", "Identificación de datos personales y sensibles")],
+      ),
     ],
   },
   {

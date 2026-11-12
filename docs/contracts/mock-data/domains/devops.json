@@ -24,7 +24,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "pull-requests",
@@ -38,7 +39,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "code-review",
@@ -52,7 +54,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "git-tags-and-releases",
@@ -66,7 +69,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         }
       ]
     },
@@ -86,7 +90,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "automated-testing-in-ci",
@@ -100,7 +105,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "build-artifacts",
@@ -114,7 +120,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "deployment-strategies",
@@ -128,7 +135,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "environment-promotion",
@@ -142,7 +150,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "ci-cd-secrets",
@@ -156,7 +165,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "rollback",
@@ -170,7 +180,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "ci-cd-for-data",
@@ -184,7 +195,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         },
         {
           "slug": "gitops",
@@ -198,7 +210,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-14"
+          "last_verified": "2026-10-14",
+          "availability": "available"
         }
       ]
     }

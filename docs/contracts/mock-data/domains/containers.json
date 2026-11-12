@@ -24,7 +24,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-19"
+          "last_verified": "2026-10-19",
+          "availability": "available"
         },
         {
           "slug": "containers",
@@ -38,7 +39,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-19"
+          "last_verified": "2026-10-19",
+          "availability": "available"
         },
         {
           "slug": "dockerfile",
@@ -52,7 +54,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-19"
+          "last_verified": "2026-10-19",
+          "availability": "available"
         },
         {
           "slug": "container-volumes",
@@ -66,7 +69,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-19"
+          "last_verified": "2026-10-19",
+          "availability": "available"
         },
         {
           "slug": "container-networking",
@@ -80,7 +84,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-19"
+          "last_verified": "2026-10-19",
+          "availability": "available"
         },
         {
           "slug": "docker-compose-environments",
@@ -94,7 +99,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-19"
+          "last_verified": "2026-10-19",
+          "availability": "available"
         },
         {
           "slug": "container-registries",
@@ -108,7 +114,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-19"
+          "last_verified": "2026-10-19",
+          "availability": "available"
         }
       ]
     },
@@ -128,7 +135,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-19"
+          "last_verified": "2026-10-19",
+          "availability": "available"
         },
         {
           "slug": "container-platforms-by-cloud",
@@ -142,7 +150,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-19"
+          "last_verified": "2026-10-19",
+          "availability": "available"
         }
       ]
     }
