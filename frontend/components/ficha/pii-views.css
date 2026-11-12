@@ -810,3 +810,60 @@ button.pii-card:hover {
     grid-template-columns: 1fr;
   }
 }
+
+/* CatalogFields (§1): rejilla de la maqueta, campo de ~130 px y texto en la segunda columna; se apila si el bloque es angosto. */
+.pii-rec {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.pii-rec-head,
+.pii-rec-row {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  gap: 14px;
+  padding: 10px 14px;
+  align-items: baseline;
+}
+
+.pii-rec-head {
+  background: var(--surface-muted);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-weight: 600;
+}
+
+.pii-rec-row {
+  border-top: 1px solid var(--border);
+}
+
+.pii-rec-row > b {
+  font-size: 14px;
+}
+
+.pii-rec-row > span {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+@container (max-width: 400px) {
+  .pii-rec-head {
+    display: none;
+  }
+
+  .pii-rec-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .pii-rec-head + .pii-rec-row {
+    border-top: 0;
+  }
+}

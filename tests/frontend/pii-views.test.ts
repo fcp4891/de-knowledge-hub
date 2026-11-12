@@ -44,6 +44,17 @@ test("catalog_fields pinta tonos y la nota bajo la fila", () => {
   assert.match(markup, /categoria/);
 });
 
+test("catalog_fields: el rótulo solo es aria-label y la fila usa la rejilla campo / texto", () => {
+  const view = loadTsx(join(ficha, "CatalogFields.tsx"));
+  const markup = html(view.CatalogFields, { view: { ...catalog, label: "Qué guarda el catálogo por cada columna" } });
+  assert.match(markup, /aria-label="Qué guarda el catálogo por cada columna"/);
+  assert.equal((markup.match(/Qué guarda el catálogo por cada columna/g) ?? []).length, 1);
+  assert.match(markup, /class="pii-rec-row"[^>]*><b role="rowheader">categoria<\/b>/);
+  const css = readFileSync(join(ficha, "pii-views.css"), "utf8");
+  assert.match(css, /grid-template-columns: 130px minmax\(0, 1fr\)/);
+  assert.match(css, /@container \(max-width: 400px\)/);
+});
+
 test("el árbol muestra la columna elegida, solo su recorrido y la ley si el ejemplo la trae", () => {
   const view = loadTsx(join(ficha, "DecisionTree.tsx"));
   const tree = {
