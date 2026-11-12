@@ -125,7 +125,7 @@ def domain_detail(index: ContentIndex, slug: str) -> dict[str, Any]:
     ]
     framework = index.legal_frameworks.get(doc["domain"].get("legal_framework") or "")
     return {**domain_summary(doc), "legal_framework": legal_framework_out(framework) if framework else None,
-            "subdomains": subdomains}
+            "subdomains": subdomains, "availability_texts": index.ui["availability"]}   # ADR-031, enmienda 1
 
 
 FACT_KEYS = ("key", "label", "value", "url", "checked_with", "source", "verified_at", "note")

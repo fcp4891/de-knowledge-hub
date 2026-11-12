@@ -607,3 +607,119 @@
     overflow-x: hidden;
   }
 }
+
+/* ADR-031: tramos sin fichas disponibles, deshabilitados (datos de DomainDetail, textos de content/ui/availability.yaml). */
+.home-step-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin-top: 2px;
+}
+
+.availability-count {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--band-especializacion-dark);
+  background: color-mix(in srgb, var(--band-especializacion) 14%, var(--surface));
+}
+
+.home-step[data-disabled="true"] .home-step-text {
+  cursor: not-allowed;
+}
+
+.home-step[data-disabled="true"] .home-step-num {
+  box-sizing: border-box;
+  background: var(--surface);
+  color: var(--ink-muted);
+  border: 2px dashed var(--border-strong);
+}
+
+.home-step[data-disabled="true"] .home-step-name {
+  color: var(--ink-muted);
+}
+
+.home-step[data-disabled="true"] .home-weight {
+  background: transparent;
+  color: var(--ink-muted);
+  border: 1px solid var(--border-strong);
+}
+
+.home-station[data-disabled="true"] {
+  cursor: not-allowed;
+}
+
+.home-station-line[data-tone="disabled"] {
+  height: 0;
+  background: transparent;
+  border-top: 2px dashed var(--border-strong);
+}
+
+.home-station-dot[data-fill="disabled"] {
+  background: var(--surface);
+  color: var(--ink-muted);
+  border: 2px dashed var(--border-strong);
+}
+
+.home-station .availability-tag {
+  max-width: 100%;
+}
+
+.home-layer[data-layer="especializacion"] {
+  container-type: inline-size;
+}
+
+/* Bajo ~620 px de ancho del bloque, los pasos pasan a una lista vertical: número | título, etiqueta bajo el título. */
+@container (max-width: 620px) {
+  .home-layer[data-layer="especializacion"] .home-layer-label {
+    flex-basis: 100%;
+  }
+
+  .home-layer[data-layer="especializacion"] .home-stations-scroll {
+    flex-basis: 100%;
+    overflow-x: visible;
+  }
+
+  .home-layer[data-layer="especializacion"] .home-stations {
+    grid-template-columns: minmax(0, 1fr);
+    min-width: 0;
+    gap: 12px;
+  }
+
+  .home-layer[data-layer="especializacion"] .home-station {
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr);
+    column-gap: 10px;
+    row-gap: 3px;
+    align-items: center;
+    justify-items: start;
+    min-height: 0;
+    text-align: left;
+  }
+
+  .home-layer[data-layer="especializacion"] .home-station-track {
+    grid-row: 1 / span 2;
+    align-self: start;
+    width: auto;
+  }
+
+  .home-layer[data-layer="especializacion"] .home-station-line {
+    display: none;
+  }
+
+  .home-layer[data-layer="especializacion"] .home-station-name {
+    grid-column: 2;
+    padding: 0;
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+
+  .home-layer[data-layer="especializacion"] .home-station .availability-tag {
+    grid-column: 2;
+  }
+}

@@ -4,22 +4,74 @@
   "title": "Textos de disponibilidad por ficha",
   "description": "ADR-031: content/ui/availability.yaml. La UI toma de aquí la etiqueta y la ayuda de cada estado no disponible; ningún componente los escribe.",
   "type": "object",
-  "required": ["in_review", "in_development", "back_label"],
+  "required": [
+    "in_review",
+    "in_development",
+    "available",
+    "route_count",
+    "back_label"
+  ],
   "properties": {
-    "in_review": { "$ref": "#/$defs/state" },
-    "in_development": { "$ref": "#/$defs/state" },
-    "back_label": { "type": "string", "minLength": 1, "description": "Texto del enlace de vuelta al itinerario en la página mínima." }
+    "in_review": {
+      "$ref": "#/$defs/state"
+    },
+    "in_development": {
+      "$ref": "#/$defs/state"
+    },
+    "back_label": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Texto del enlace de vuelta al itinerario en la página mínima."
+    },
+    "available": {
+      "type": "object",
+      "required": [
+        "count"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "count": {
+          "$ref": "#/$defs/count"
+        }
+      },
+      "description": "Conteo de fichas disponibles de un tramo (p. ej. «2 disponibles»)."
+    },
+    "route_count": {
+      "type": "string",
+      "pattern": "\\{n\\}.*\\{total\\}",
+      "description": "Contador del recorrido: «{n} de {total} fichas disponibles»."
+    }
   },
   "additionalProperties": false,
   "$defs": {
     "state": {
       "type": "object",
-      "required": ["label", "help"],
+      "required": [
+        "label",
+        "help",
+        "count"
+      ],
       "properties": {
-        "label": { "type": "string", "minLength": 1, "description": "Etiqueta (tag) del estado." },
-        "help": { "type": "string", "minLength": 1, "description": "Texto de ayuda de la página mínima." }
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Etiqueta (tag) del estado."
+        },
+        "help": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Texto de ayuda de la página mínima."
+        },
+        "count": {
+          "$ref": "#/$defs/count"
+        }
       },
       "additionalProperties": false
+    },
+    "count": {
+      "type": "string",
+      "pattern": "\\{n\\}",
+      "description": "Conteo de un tramo; {n} es el número de fichas."
     }
   }
 }

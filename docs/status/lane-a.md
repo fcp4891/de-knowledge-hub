@@ -5,6 +5,11 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-11-12
 
 ## Actual
+- **2026-11-12 · Itinerario con tramos deshabilitados (ADR-031, enmienda 1):**
+  - Un tramo sin fichas disponibles se ve deshabilitado en la cabecera del recorrido y en el panel «Tu itinerario». La regla se calcula con los datos.
+  - Textos de conteo en `content/ui/availability.yaml`, expuestos en `DomainDetail.availability_texts`.
+  - La cabecera pasa a lista vertical con una consulta de contenedor bajo 620 px.
+  - `.htaccess`: ruta física primero, directo a HTTPS; HSTS de 86400.
 - **2026-11-12 · Integración de la interfaz de pii (`fa89642`) y numeración por contrato:**
   - Merge en `f7a1598`, sin conflictos.
   - La numeración compacta se activa por contrato cuando la ficha trae `views.section_titles` (antes, por slug), y los títulos visibles salen de `section_titles`.

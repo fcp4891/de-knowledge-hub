@@ -39,3 +39,19 @@ El itinerario publica sus cinco tramos, pero solo algunas fichas están listas p
 - **Búsqueda.** Una ficha no disponible no indexa su cuerpo, su descripción, sus etiquetas ni sus alias:
   - en la base (`search_documents`) queda solo el título;
   - en la búsqueda de la proyección y en el índice estático del navegador, el título y la etiqueta de disponibilidad.
+
+## Enmienda 1 (2026-11-12): tramos del itinerario
+
+- **Regla.** Un tramo está deshabilitado si ninguna de sus fichas tiene `availability = available`. Se calcula con los datos (`frontend/lib/routeAvailability.ts`), no por slug.
+- **Textos de conteo.** `content/ui/availability.yaml` suma:
+  - `available.count` («{n} disponibles»);
+  - `in_review.count` e `in_development.count`;
+  - `route_count` («{n} de {total} fichas disponibles»).
+- **Contrato.** `DomainDetail.availability_texts` expone el archivo completo.
+- **Cabecera del recorrido.**
+  - Contador «N de M fichas disponibles».
+  - Tramo deshabilitado: número en círculo punteado, título gris, línea punteada hacia él y etiqueta del estado. No navega y lleva `aria-disabled`.
+  - Bajo 620 px de ancho del bloque, los pasos pasan a una lista vertical. Es una consulta de contenedor, no de pantalla.
+- **Panel «Tu itinerario».**
+  - Un tramo con fichas disponibles muestra «{n} disponibles» y «{n} en revisión».
+  - Uno deshabilitado muestra el número punteado, el título gris, el peso con contorno y la etiqueta del estado.

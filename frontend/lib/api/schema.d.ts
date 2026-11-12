@@ -392,6 +392,7 @@ export interface components {
             items: components["schemas"]["DomainSummary"][];
         };
         DomainDetail: {
+            availability_texts: components["schemas"]["AvailabilityTexts"];
             /** @description ADR-027: marco legal verificado del dominio; null si no tiene. */
             legal_framework: components["schemas"]["LegalFramework"] | null;
             subdomains: {
@@ -449,6 +450,24 @@ export interface components {
             help: string;
             /** @description Texto del enlace de vuelta al itinerario. */
             back_label: string;
+        };
+        /** @description ADR-031, enmienda 1: content/ui/availability.yaml completo, para las etiquetas y los conteos por tramo del itinerario. {n} y {total} los reemplaza la UI. */
+        AvailabilityTexts: {
+            in_review: components["schemas"]["AvailabilityState"];
+            in_development: components["schemas"]["AvailabilityState"];
+            available: {
+                /** @description «{n} disponibles». */
+                count: string;
+            };
+            /** @description «{n} de {total} fichas disponibles». */
+            route_count: string;
+            back_label: string;
+        };
+        AvailabilityState: {
+            label: string;
+            help: string;
+            /** @description Conteo de un tramo, p. ej. «{n} en revisión». */
+            count: string;
         };
         /** @description ADR-031: ficha enlazada desde esta (cuerpo, vistas, relaciones o temas relacionados) que no está disponible; el componente la muestra con su etiqueta y sin navegar. */
         UnavailableLink: {

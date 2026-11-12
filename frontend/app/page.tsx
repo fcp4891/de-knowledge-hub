@@ -4,6 +4,7 @@ import { getDomain, listAllConcepts, listDomains, listStudyStates } from "@/lib/
 import type { ApiResult, StudyState } from "@/lib/api/types";
 import { countsAsFicha } from "@/lib/availability";
 import { verifiedCount } from "@/lib/privacySpace";
+import { stageAvailability, type AvailabilityTexts } from "@/lib/routeAvailability";
 
 async function latestReviewing(): Promise<ApiResult<StudyState | null>> {
   const items: StudyState[] = [];
@@ -68,7 +69,8 @@ export default async function HomePage() {
       const visible = subdomain.concepts.filter((concept) => countsAsFicha(concept));
       const progress = verifiedCount(visible.map((concept) => concept.verification_status));
       const pages = visible.filter((concept) => concept.has_page).length;
-      return { slug: subdomain.slug, title: subdomain.title, ...progress, withPage: pages };
+      // ADR-031: todas las fichas del tramo, también las no disponibles, para decidir si el tramo se habilita.
+      return { slug: subdomain.slug, title: subdomain.title, ...progress, withPage: pages, availability: stageAvailability(subdomain.concepts) };
     };
     const stages =
       domain.band === "especializacion" && data ? data.subdomains.map(stageOf) : [];
@@ -90,6 +92,7 @@ export default async function HomePage() {
       conceptCount: domain.concept_count - (unavailable.get(domain.slug) ?? 0),
       withPage: conceptList.ok ? (withPage.get(domain.slug) ?? 0) : null,
       stages,
+      availabilityTexts: (data?.availability_texts as AvailabilityTexts | undefined) ?? null,
     };
   });
   const idBySlug = new Map(domains.map((domain) => [domain.slug, domain.id]));

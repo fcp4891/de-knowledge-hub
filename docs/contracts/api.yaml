@@ -477,8 +477,9 @@ components:
     DomainDetail:
       allOf: [{ $ref: "#/components/schemas/DomainSummary" }]
       type: object
-      required: [legal_framework, subdomains]
+      required: [legal_framework, subdomains, availability_texts]
       properties:
+        availability_texts: { $ref: "#/components/schemas/AvailabilityTexts" }
         legal_framework:
           description: "ADR-027: marco legal verificado del dominio; null si no tiene."
           oneOf: [{ $ref: "#/components/schemas/LegalFramework" }, { type: "null" }]
@@ -551,6 +552,29 @@ components:
         label: { type: string, description: Etiqueta (tag) del estado. }
         help: { type: string, description: Texto de ayuda de la página mínima. }
         back_label: { type: string, description: Texto del enlace de vuelta al itinerario. }
+      additionalProperties: false
+    AvailabilityTexts:
+      description: "ADR-031, enmienda 1: content/ui/availability.yaml completo, para las etiquetas y los conteos por tramo del itinerario. {n} y {total} los reemplaza la UI."
+      type: object
+      required: [in_review, in_development, available, route_count, back_label]
+      properties:
+        in_review: { $ref: "#/components/schemas/AvailabilityState" }
+        in_development: { $ref: "#/components/schemas/AvailabilityState" }
+        available:
+          type: object
+          required: [count]
+          properties: { count: { type: string, description: "«{n} disponibles»." } }
+          additionalProperties: false
+        route_count: { type: string, description: "«{n} de {total} fichas disponibles»." }
+        back_label: { type: string }
+      additionalProperties: false
+    AvailabilityState:
+      type: object
+      required: [label, help, count]
+      properties:
+        label: { type: string }
+        help: { type: string }
+        count: { type: string, description: "Conteo de un tramo, p. ej. «{n} en revisión»." }
       additionalProperties: false
     UnavailableLink:
       description: "ADR-031: ficha enlazada desde esta (cuerpo, vistas, relaciones o temas relacionados) que no está disponible; el componente la muestra con su etiqueta y sin navegar."
