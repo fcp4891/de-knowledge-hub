@@ -145,6 +145,16 @@ sources:
 relations:
   - {type: RELATED_TO, target: data-classification, note: "Clasificación técnica de datos."}
 views:
+  reading:
+    summary_pairs: true
+    legal_basis_panel: false
+  section_splits:
+  - section: 1
+    key: context
+    title: Contexto normativo
+  - section: 16
+    key: sanctions
+    title: Sanciones
   section_titles:
   - section: 1
     title: Propósito
@@ -310,6 +320,9 @@ views:
       detail: Marco · Nivel 1
   legal_foundations:
     title: Principios y responsabilidades
+    annex_link:
+      label: Detalle por tema y artículo en el Anexo · Catálogo legal
+      href: '#s23'
     roles:
       caption: Quién decide y quién implementa · modelo organizacional típico, no fijado por la ley
       responsible:
@@ -1270,7 +1283,7 @@ El propósito es desarrollar el criterio técnico necesario para identificar rie
 
 <!-- view: central_idea -->
 
-### Contexto normativo
+<!-- split: context -->
 
 La Ley 21.719 reescribe la Ley 19.628. Mientras no se publique otra ley, sus modificaciones rigen desde el 1 de diciembre de 2026.
 
@@ -1642,7 +1655,7 @@ CI: rechazada (1)
 
 <!-- view: trade_offs -->
 
-### Sanciones
+<!-- split: sanctions -->
 
 <!-- view: severity_cards -->
 

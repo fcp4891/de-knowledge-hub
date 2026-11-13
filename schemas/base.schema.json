@@ -596,6 +596,25 @@
               },
               "minItems": 1
             },
+            "annex_link": {
+              "type": "object",
+              "required": [
+                "label",
+                "href"
+              ],
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "href": {
+                  "type": "string",
+                  "pattern": "^#[a-z0-9-]+$",
+                  "description": "Ancla interna de la ficha (ADR-030, enmienda 2)."
+                }
+              },
+              "additionalProperties": false
+            },
             "roles": {
               "type": "object",
               "required": [
@@ -3733,6 +3752,56 @@
             }
           },
           "additionalProperties": false
+        },
+        "reading": {
+          "description": "Opciones de lectura de la ficha (ADR-030, enmienda 7); posición fija, sin marca.",
+          "type": "object",
+          "required": [],
+          "properties": {
+            "inline_arrows": {
+              "type": "boolean",
+              "description": "false: las flechas «→» del cuerpo no se dibujan como flecha."
+            },
+            "summary_pairs": {
+              "type": "boolean",
+              "description": "true: el Resumen se maqueta en pares."
+            },
+            "legal_basis_panel": {
+              "type": "boolean",
+              "description": "false: sin el panel lateral de base legal (la ficha lo trae en una vista)."
+            }
+          },
+          "additionalProperties": false
+        },
+        "section_splits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "section",
+              "key",
+              "title"
+            ],
+            "properties": {
+              "section": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 22,
+                "description": "Número de sección de la plantilla (ADR-030, enmienda 5)."
+              },
+              "key": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "description": "Divide una sección en dos desplegables en la marca «<!-- split: <key> -->» de su cuerpo (ADR-030, enmienda 7)."
         }
       },
       "additionalProperties": false

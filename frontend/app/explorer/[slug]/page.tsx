@@ -94,24 +94,6 @@ export default async function DomainPage({ params }: { params: Promise<{ slug: s
     })),
   });
   const stages: RouteStage[] = data.subdomains.map(toStage);
-  if (slug === "privacy-engineering" && !stages.some((stage) => stage.slug === "regulatory-frameworks")) {
-    const compliance = await getDomain("compliance");
-    const regulatory = compliance.ok
-      ? compliance.data.subdomains.find((subdomain) => subdomain.slug === "regulatory-frameworks")
-      : undefined;
-    stages.push(
-      regulatory
-        ? toStage(regulatory)
-        : {
-            slug: "regulatory-frameworks",
-            title: "Marcos regulatorios",
-            concepts: [
-              { slug: "gdpr", title: "GDPR", level: "intermediate", hasPage: false, verified: false, blueprintIndex: 0 },
-              { slug: "lgpd", title: "LGPD", level: "intermediate", hasPage: false, verified: false, blueprintIndex: 1 },
-            ],
-          },
-    );
-  }
   const slugs = new Set(stages.flatMap((stage) => stage.concepts.map((concept) => concept.slug)));
   const withPage = stages.flatMap((stage) => stage.concepts.filter((concept) => concept.hasPage).map((concept) => concept.slug));
 

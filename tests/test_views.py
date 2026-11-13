@@ -208,3 +208,13 @@ def test_a_pdf_page_link_counts_as_its_citation() -> None:
     assert views.check(view, body, []) == [f"[views] el enlace '{pdf}#capitulo' no es una cita de sources",
                                            f"[views] el enlace '{pdf}#page=2' no es una cita de sources"]
     assert views.cited_articles(view) == {"2"}
+
+
+def test_section_splits_need_their_marker_and_back() -> None:
+    """ADR-030 enmienda 7: la división y su marca «<!-- split: <key> -->» van juntas."""
+    splits = {"section_splits": [{"section": 16, "key": "sanctions", "title": "Sanciones"}]}
+    assert views.check_splits(splits, [(16, "a\n<!-- split: sanctions -->\nb")]) == []
+    assert views.check_splits(splits, [(16, "sin marca")]) == [
+        "[views.section_splits] falta la marca <!-- split: sanctions --> en el §16"]
+    assert views.check_splits({}, [(1, "<!-- split: context -->")]) == [
+        "[views] marca <!-- split: context --> del §1 sin entrada en views.section_splits"]

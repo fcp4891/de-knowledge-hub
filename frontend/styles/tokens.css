@@ -164,10 +164,47 @@
 
 /* Tema oscuro elegido por la página: mismos valores que prefers-color-scheme para estos tokens. */
 :root[data-theme="dark"] {
+  /* Tema oscuro forzado: los mismos tokens que prefers-color-scheme: dark. */
+  --bg: #12141A;
+  --surface: #1C1F27;
+  --surface-muted: #262A33;
+  --border: #343842;
+  --border-strong: #454A55;
+  --ink: #F2F3F5;
+  --ink-2: #E4E6EB;
+  --ink-3: #C5C8D0;
+  --ink-muted: #A7ACB6;
+  --ink-disabled: #7C818C;
+  --accent: #7DCEC6;
+  --accent-hover: #B7E6E1;
+  --accent-soft: #163632;
+  --accent-on-dark: #DCEFEC;
+  --ok-bg: #163628;
+  --ok-ink: #B7E4C7;
+  --warn-bg: #3A2A12;
+  --warn-ink: #F3D19C;
+  --severity-1-bg: #332B0E;
+  --severity-1-ink: #F1DF8F;
+  --severity-1-bar: #D9C25A;
+  --severity-2-bg: #3A2214;
+  --severity-2-ink: #F6C29C;
+  --severity-2-bar: #E58A4E;
+  --severity-3-bg: #3A1E1C;
+  --severity-3-ink: #F3C4C0;
+  --severity-3-bar: #E7A09A;
+  --lvl-inicial-bg: #163628;
+  --lvl-inicial-ink: #B7E4C7;
+  --lvl-intermedio-bg: #1A2744;
+  --lvl-intermedio-ink: #C5D4F5;
+  --lvl-avanzado-bg: #2E1A38;
+  --lvl-avanzado-ink: #E4C6EF;
+  --band-especializacion: #E4C0EA;
+  --band-especializacion-fill: #7C3A6E;
+  --layer-cimientos-bg: #132825;
   --ink-inverse: #12141A;
-  --on-accent: #12141A;
-  --on-accent-muted: #1F3B38;
-  --on-accent-subtle: #244644;
   --availability-count-ink: #E4C6EF;
+  --on-accent: #12141A;          /* 10,1:1 */
+  --on-accent-muted: #1F3B38;    /* 6,61:1 */
+  --on-accent-subtle: #244644;   /* 5,66:1 */
   --availability-count-bg: #2E1A38;
 }

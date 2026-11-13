@@ -373,7 +373,7 @@ a.route-card:hover {
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #bfe3de;
+  color: var(--on-accent-subtle);
 }
 
 .route-next h2 {
@@ -387,7 +387,7 @@ a.route-card:hover {
   margin: 0;
   font-size: 14px;
   line-height: 1.55;
-  color: var(--accent-on-dark);
+  color: var(--on-accent-muted);
 }
 
 .route-next-action {
@@ -397,8 +397,8 @@ a.route-card:hover {
   min-height: 46px;
   margin-top: 4px;
   border-radius: var(--radius-md);
-  background: #fff;
-  color: var(--accent-hover);
+  background: var(--on-accent);
+  color: var(--accent);
   font-weight: 600;
   text-decoration: none;
 }

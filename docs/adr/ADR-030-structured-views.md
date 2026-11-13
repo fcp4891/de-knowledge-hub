@@ -195,3 +195,18 @@ Además, `approach` suma el ejemplo y la referencia de cada paso, los rótulos d
 - `pii-identification` cita el texto publicado de la Ley 21.719 en su página: art. 2 → 2; art. 14 quinquies letra a → 10; art. 16 → 12; art. 16 quáter → 13.
 - El atributo `target="ley-21719"`, para abrir siempre la misma pestaña, lo pone el componente de Carril B.
 - Otro fragmento distinto de `#page=N` sigue exigiendo su propia cita.
+
+## Enmienda 7 (2026-11-13): opciones de lectura y divisiones de sección
+
+Las vistas dejan de decidir por slug o por el texto visible de un encabezado. Lo que antes se resolvía así pasa al contrato.
+
+- **`views.reading`** (posición fija, sin marca):
+  - `inline_arrows: false`: las flechas «→» del cuerpo no se dibujan como flecha (antes, `slug !== "data-lineage"`);
+  - `summary_pairs: true`: el Resumen se maqueta en pares;
+  - `legal_basis_panel: false`: sin el panel lateral de base legal, porque la ficha la trae en una vista.
+- **`views.section_splits`**: `[{section, key, title}]`. Divide la sección `section` en dos desplegables en la marca `<!-- split: <key> -->` de su cuerpo. El segundo lleva `title` y el número `section + 0,5`. Reemplaza la detección de «### Contexto normativo» (§1) y «### Sanciones» (§16).
+- **`views.legal_foundations.annex_link`**: `{label, href}` opcional, el enlace bajo los fundamentos legales. Antes era un texto fijo en el componente.
+- **Validador:**
+  - cada `section_splits[]` exige su marca en el cuerpo de esa sección, y cada marca exige su entrada;
+  - las anclas de los anexos (`s23`, `s24`, …) son válidas para `href`.
+- Sin estas claves, la lectura no cambia: flechas, resumen simple y panel de base legal, como hasta ahora.

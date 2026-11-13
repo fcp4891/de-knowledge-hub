@@ -204,6 +204,8 @@ export function ConceptReading({
   pageKind = "concept",
   construction = false,
   compactNumbering = false,
+  summaryPairs = false,
+  legalBasisPanel = true,
   children,
 }: {
   slug: string;
@@ -234,6 +236,10 @@ export function ConceptReading({
   construction?: boolean;
   /** ADR-029: ficha que omite secciones; numeración visible correlativa. */
   compactNumbering?: boolean;
+  /** ADR-030 enmienda 7: views.reading.summary_pairs. */
+  summaryPairs?: boolean;
+  /** ADR-030 enmienda 7: views.reading.legal_basis_panel (false: sin el panel de base legal). */
+  legalBasisPanel?: boolean;
   children?: React.ReactNode;
 }) {
   const sectionGroups = pageKind === "architecture" ? ARCHITECTURE_GROUPS : CARD_SECTION_GROUPS;
@@ -315,25 +321,29 @@ export function ConceptReading({
     section.annex ? null : compactNumbering ? present.indexOf(section.number) + 1 : section.number;
   const listed = sections.filter((section) => section.listed);
   const compactGroups: { group: string; keys: string[] }[] = [
-    { group: "Entender", keys: ["purpose", "context", "summary", "what_is", "problem", "how_it_works", "when_to_use"] },
+    { group: "Entender", keys: ["summary", "what_is", "problem", "how_it_works", "when_to_use"] },
     { group: "Aplicar", keys: ["architecture", "code"] },
     { group: "Multicloud", keys: ["cloud_compare", "gcp", "aws", "azure"] },
-    { group: "Profundizar", keys: ["best_practices", "common_mistakes", "trade_offs", "sanctions", "related_concepts"] },
+    { group: "Profundizar", keys: ["best_practices", "common_mistakes", "trade_offs", "related_concepts"] },
     { group: "Practicar", keys: ["open_questions", "related_lab"] },
     { group: "Referencias", keys: ["sources", "last_verified", "change_history"] },
   ];
+  // Una división (views.section_splits, número x,5) va en el grupo de su sección madre; cada grupo, por número.
+  const groupKey = (section: ReadingSectionModel): string =>
+    Number.isInteger(section.number)
+      ? section.key
+      : (listed.find((item) => item.number === Math.floor(section.number))?.key ?? section.key);
+  const inGroup = (section: ReadingSectionModel, keys: string[]): boolean => !section.annex && keys.includes(groupKey(section));
   const tocGroups = compactNumbering
     ? [
         ...compactGroups.map((group) => ({
           group: group.group,
-          items: group.keys
-            .map((key) => listed.find((section) => section.key === key && !section.annex))
-            .filter((section): section is ReadingSectionModel => section !== undefined),
+          items: listed.filter((section) => inGroup(section, group.keys)).sort((a, b) => a.number - b.number),
         })),
         {
           group: "Otras",
           items: listed.filter(
-            (section) => !section.annex && !compactGroups.some((group) => group.keys.includes(section.key)),
+            (section) => !section.annex && !compactGroups.some((group) => inGroup(section, group.keys)),
           ),
         },
       ].filter((group) => group.items.length > 0)
@@ -347,7 +357,10 @@ export function ConceptReading({
       if (highlight) {
         setCurrent(number);
       }
-      setSeen(new Set(markSectionSeen(slug, number, sectionTitle)));
+      const seenNow = markSectionSeen(slug, number, sectionTitle);
+      if (seenNow.length > 0) {
+        setSeen(new Set(seenNow));
+      }
       if (Number.isInteger(number) && number > readMaxRef.current && number <= CARD_SECTION_COUNT) {
         readMaxRef.current = number;
         setReadMax(number);
@@ -629,9 +642,7 @@ export function ConceptReading({
         <section
           key={section.number}
           id={`s${section.number}`}
-          className={
-            slug === "chile-data-protection" ? "reading-summary reading-summary-pairs" : "reading-summary"
-          }
+          className={summaryPairs ? "reading-summary reading-summary-pairs" : "reading-summary"}
           aria-labelledby={`h-${section.number}`}
           data-reading-section={section.number}
           data-reading-title={section.title}
@@ -852,7 +863,7 @@ export function ConceptReading({
               {meta ? <p className="reading-meta">{meta}</p> : null}
             </header>
             {summaryBlocks}
-            {slug === "chile-data-protection" || legalBasis.length === 0 ? null : (
+            {!legalBasisPanel || legalBasis.length === 0 ? null : (
               <LegalBasisTable items={legalBasis} />
             )}
             {blocks}

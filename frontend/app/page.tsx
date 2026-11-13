@@ -74,16 +74,6 @@ export default async function HomePage() {
     };
     const stages =
       domain.band === "especializacion" && data ? data.subdomains.map(stageOf) : [];
-    if (domain.band === "especializacion" && !stages.some((stage) => stage.slug === "regulatory-frameworks")) {
-      const compliance = details.find((item) => item.ok && item.data.slug === "compliance");
-      const regulatory =
-        compliance && compliance.ok
-          ? compliance.data.subdomains.find((subdomain) => subdomain.slug === "regulatory-frameworks")
-          : undefined;
-      if (regulatory) {
-        stages.push(stageOf(regulatory));
-      }
-    }
     return {
       id: domain.id,
       slug: domain.slug,

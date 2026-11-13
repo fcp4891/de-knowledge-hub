@@ -63,7 +63,7 @@ pre {
   padding: 8px 14px;
   border-radius: 8px;
   background: var(--ink);
-  color: #fff;
+  color: var(--ink-inverse);
   font-weight: 600;
   text-decoration: none;
 }

@@ -21,7 +21,7 @@ MARKED = (   # van donde está la marca
 )
 # Enmienda 5: varias instancias por ficha; la marca lleva el id («<!-- view: note catalogo -->» -> views.notes.catalogo).
 KEYED = {"note": "notes", "chips": "chips"}
-PLACED = ("approach", "legal_foundations", "sources_grouped", "section_titles")   # fija: tras el Resumen; en el §2; en Fuentes; títulos
+PLACED = ("approach", "legal_foundations", "sources_grouped", "section_titles", "reading", "section_splits")   # fija: tras el Resumen; en el §2; en Fuentes; títulos
 MD_LINK = re.compile(r"\]\((https://[^)\s]+)\)")
 MD_ANCHOR = re.compile(r"\]\((#[a-z0-9-]+)\)")   # enmienda 5: «[§](#s10)» es una referencia a otra sección
 ARTICLE_LINK = re.compile(r"\[\(?art\. (\d+(?: (?:bis|ter|quáter|quinquies|sexies|septies))?)[^\]]*\]\(https://")
@@ -39,6 +39,18 @@ def is_cited(url: str, cited_urls: list[str]) -> bool:
     """Enmienda 6: «<pdf>#page=N» enlaza una página de un PDF que ya es una cita; no hace falta otra cita."""
     page = PDF_PAGE.match(url)
     return url in cited_urls or (page is not None and page.group(1) in cited_urls)
+
+
+SPLIT = re.compile(r"<!--\s*split:\s*([a-z][a-z0-9-]*)\s*-->")   # enmienda 7
+
+
+def check_splits(views: dict[str, Any], sections: list[tuple[int, str]]) -> list[str]:
+    """Enmienda 7: cada división de section_splits tiene su marca «<!-- split: <key> -->» en esa sección, y al revés."""
+    declared = {(item["section"], item["key"]) for item in views.get("section_splits", [])}
+    marked = {(number, key) for number, content in sections for key in SPLIT.findall(content)}
+    errors = [f"[views.section_splits] falta la marca <!-- split: {key} --> en el §{number}" for number, key in sorted(declared - marked)]
+    errors += [f"[views] marca <!-- split: {key} --> del §{number} sin entrada en views.section_splits" for number, key in sorted(marked - declared)]
+    return errors
 
 
 def check_keyed(views: dict[str, Any], found: list[str]) -> list[str]:
@@ -90,9 +102,10 @@ def legal_row_id(law: str, article: str) -> str:
     return f"lb-{law}-" + re.sub(r"[^a-z0-9]+", "-", plain).strip("-")
 
 
-def page_anchors(views: dict[str, Any], sections: list[int], legal_basis: list[dict[str, Any]]) -> set[str]:
-    """Anclas que existen en la ficha: secciones presentes, ids de las vistas y filas del catálogo legal."""
-    ids = {f"s{number}" for number in sections} | element_ids(views)
+def page_anchors(views: dict[str, Any], sections: list[int], legal_basis: list[dict[str, Any]], annexes: int = 0) -> set[str]:
+    """Anclas que existen en la ficha: secciones presentes, anexos (s23, s24…, como los numera la UI), ids de las vistas
+    y filas del catálogo legal."""
+    ids = {f"s{number}" for number in sections} | {f"s{23 + index}" for index in range(annexes)} | element_ids(views)
     return ids | {legal_row_id(b["law"], str(b["article"])) for b in legal_basis}
 
 

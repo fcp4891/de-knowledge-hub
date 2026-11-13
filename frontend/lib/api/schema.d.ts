@@ -644,6 +644,11 @@ export interface components {
                         href?: string;
                     }[];
                 }[];
+                annex_link?: {
+                    label: string;
+                    /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                    href: string;
+                };
                 roles: {
                     caption?: string;
                     responsible: {
@@ -1337,6 +1342,22 @@ export interface components {
                     avoid: string;
                 }[];
             };
+            /** @description Opciones de lectura de la ficha (ADR-030, enmienda 7); posición fija, sin marca. */
+            reading?: {
+                /** @description false: las flechas «→» del cuerpo no se dibujan como flecha. */
+                inline_arrows?: boolean;
+                /** @description true: el Resumen se maqueta en pares. */
+                summary_pairs?: boolean;
+                /** @description false: sin el panel lateral de base legal (la ficha lo trae en una vista). */
+                legal_basis_panel?: boolean;
+            };
+            /** @description Divide una sección en dos desplegables en la marca «<!-- split: <key> -->» de su cuerpo (ADR-030, enmienda 7). */
+            section_splits?: {
+                /** @description Número de sección de la plantilla (ADR-030, enmienda 5). */
+                section: number;
+                key: string;
+                title: string;
+            }[];
         };
         /** @description Anexo de la ficha (`## Anexo · Título`, ADR-029), en Markdown. */
         Annex: {

@@ -419,14 +419,13 @@ export function SpecializationBand({ domain, path }: { domain: HomeDomain; path:
     total: stage.total,
     href: `${PRIVACY_SPACE_HREF}#${stage.slug}`,
   }));
-  const withPage = visible.reduce((sum, stage) => sum + stage.withPage, 0);
-  const total = visible.reduce((sum, stage) => sum + stage.total, 0);
   const ids = stations.map((station) => station.id);
   // ADR-031: un tramo sin fichas con availability = available queda deshabilitado (no navega, aria-disabled, línea punteada).
   const texts = domain.availabilityTexts ?? null;
   const disabled = visible.map((stage) => Boolean(texts) && stageDisabled(stage.availability));
   const totals = routeTotals(visible.map((stage) => stage.availability));
-  const countLabel = texts ? fillCount(texts.route_count, { n: totals.available, total: totals.total }) : `${withPage}/${total} fichas`;
+  // El texto sale de content/ui/availability.yaml (route_count, obligatorio en su schema); sin él no se inventa uno.
+  const countLabel = texts ? fillCount(texts.route_count, { n: totals.available, total: totals.total }) : null;
   const style = {
     "--layer-color": "var(--band-especializacion)",
     "--layer-dark": "var(--band-especializacion-dark)",
@@ -441,7 +440,7 @@ export function SpecializationBand({ domain, path }: { domain: HomeDomain; path:
           <span className="home-swatch" />
           {BAND_LABEL}
         </span>
-        <span className="home-layer-count">{countLabel}</span>
+        {countLabel ? <span className="home-layer-count">{countLabel}</span> : null}
       </div>
       {open ? null : <p className="home-layer-note">{CONSTRUCTION_LAYER}</p>}
       <div className="home-stations-scroll">

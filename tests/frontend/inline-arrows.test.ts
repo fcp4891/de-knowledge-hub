@@ -144,5 +144,8 @@ test("las celdas no pasan por el lector de cadenas", () => {
   assert.equal(table.includes("readPipeline"), false);
   assert.match(table, /ArrowInlines/);
   const page = readFileSync(join(import.meta.dirname, "../../frontend/app/concepts/[slug]/page.tsx"), "utf8");
-  assert.match(page, /slug !== "data-lineage"/);
+  assert.match(page, /views\?\.reading\?\.inline_arrows !== false/);   // ADR-030 enmienda 7
+  assert.doesNotMatch(page, /slug !== "data-lineage"/);
+  const lineage = readFileSync(join(import.meta.dirname, "../../content/concepts/data-lineage.md"), "utf8");
+  assert.match(lineage, /reading:\n\s+inline_arrows: false/);
 });

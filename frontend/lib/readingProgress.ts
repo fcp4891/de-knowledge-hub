@@ -61,10 +61,14 @@ export function writeReadingProgress(slug: string, section: number, title: strin
 
 /** B-N5: agrega una sección abierta y vista; conserva la mayor sección para «Continuar». */
 export function markSectionSeen(slug: string, section: number, title: string): number[] {
-  if (typeof window === "undefined" || !(section > 0) || section > CARD_SECTION_COUNT) {
+  if (typeof window === "undefined") {
     return [];
   }
   const current = readReadingProgress(slug);
+  // Un anexo (número > 22) u otro valor fuera de rango no cuenta, pero tampoco borra lo ya visto.
+  if (!(section > 0) || section > CARD_SECTION_COUNT) {
+    return current?.seen ?? [];
+  }
   const seen = [...new Set([...(current?.seen ?? []), section])].sort((left, right) => left - right);
   const top = Math.max(current?.section ?? 0, Math.floor(section));
   const payload = {

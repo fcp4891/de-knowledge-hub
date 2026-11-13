@@ -954,6 +954,18 @@ components:
                             format: uri
                       additionalProperties: false
                 additionalProperties: false
+            annex_link:
+              type: object
+              required:
+              - label
+              - href
+              properties:
+                label:
+                  type: string
+                href:
+                  type: string
+                  description: Ancla interna de la ficha (ADR-030, enmienda 2).
+              additionalProperties: false
             roles:
               type: object
               required:
@@ -2903,6 +2915,41 @@ components:
                     description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
                 additionalProperties: false
           additionalProperties: false
+        reading:
+          description: Opciones de lectura de la ficha (ADR-030, enmienda 7); posición fija, sin marca.
+          type: object
+          required: []
+          properties:
+            inline_arrows:
+              type: boolean
+              description: 'false: las flechas «→» del cuerpo no se dibujan como flecha.'
+            summary_pairs:
+              type: boolean
+              description: 'true: el Resumen se maqueta en pares.'
+            legal_basis_panel:
+              type: boolean
+              description: 'false: sin el panel lateral de base legal (la ficha lo trae en una vista).'
+          additionalProperties: false
+        section_splits:
+          type: array
+          items:
+            type: object
+            required:
+            - section
+            - key
+            - title
+            properties:
+              section:
+                type: integer
+                minimum: 1
+                maximum: 22
+                description: Número de sección de la plantilla (ADR-030, enmienda 5).
+              key:
+                type: string
+              title:
+                type: string
+            additionalProperties: false
+          description: 'Divide una sección en dos desplegables en la marca «<!-- split: <key> -->» de su cuerpo (ADR-030, enmienda 7).'
       additionalProperties: false
       description: 'Vistas estructuradas (ADR-030); la propiedad solo aparece si la ficha las tiene. Cada clave mapea 1:1 con las props de su componente,
         en snake_case. Las vistas con marca van donde el Markdown trae «<!-- view: clave -->»; approach, legal_foundations y sources_grouped tienen

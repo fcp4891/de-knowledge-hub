@@ -80,16 +80,18 @@ import {
 
 const CLOUD_KEYS = new Set(["gcp", "aws", "azure"]);
 
-function splitPurpose(markdown: string): { purpose: string; context: string } | null {
-  const objective = markdown.indexOf("### Objetivo");
-  const context = markdown.indexOf("### Contexto normativo");
-  if (objective < 0 || context <= objective) {
+/** ADR-030 enmienda 7: parte el Markdown de una sección en la marca «<!-- split: <key> -->». */
+function splitAt(markdown: string, key: string): { before: string; after: string } | null {
+  const marker = new RegExp(`<!--\\s*split:\\s*${key}\\s*-->`);
+  const match = marker.exec(markdown);
+  if (!match) {
     return null;
   }
-  const before = markdown.slice(0, objective).trim();
-  const purpose = [before, markdown.slice(objective, context).trim()].filter(Boolean).join("\n\n");
-  const contextBody = markdown.slice(context).replace(/^### Contexto normativo[^\n]*\n?/, "").trim();
-  return { purpose, context: contextBody };
+  return { before: markdown.slice(0, match.index).trim(), after: markdown.slice(match.index + match[0].length).trim() };
+}
+
+function splitFor(views: Views | undefined, number: number): { key: string; title: string } | null {
+  return views?.section_splits?.find((item) => item.section === number) ?? null;
 }
 const OPEN_NUMBERS = new Set<number>();
 
@@ -245,7 +247,7 @@ function sectionModels(
 ): ReadingSectionModel[] {
   const viewNodes = markedViews(views);
   const architecture = kind === "architecture";
-  const styleArrows = slug !== "data-lineage";
+  const styleArrows = views?.reading?.inline_arrows !== false;   // ADR-030 enmienda 7
   const titleOf = (section: Section) => (architecture ? architectureTitle(section.key, section.title) : section.title);
   const ordered = [...sections].sort((left, right) => left.number - right.number);
   const viewer = currentViewer();
@@ -276,9 +278,6 @@ function sectionModels(
     if (section.key === "change_history" && !showHistory) {
       continue;
     }
-    if (section.key === "last_verified" && slug === "chile-data-protection") {
-      continue;
-    }
     if (section.key === "related_lab" && !showLab) {
       continue;
     }
@@ -302,29 +301,30 @@ function sectionModels(
     }
     if (section.key === "summary") {
       flushClouds();
-      const opening = slug === "chile-data-protection" ? splitPurpose(section.markdown) : null;
-      if (opening) {
+      const division = splitFor(views, section.number);
+      const opening = division ? splitAt(section.markdown, division.key) : null;
+      if (division && opening) {
         const approach = views?.approach ? <ApproachBoard {...approachProps(views.approach)} /> : null;
         models.push({
           number: section.number,
-          key: "purpose",
-          title: "Propósito",
+          key: section.key,
+          title: titleOf(section),
           presentation: "summary",
           listed: true,
           body: (
             <>
-              {body({ ...section, markdown: opening.purpose })}
+              {body({ ...section, markdown: opening.before })}
               {approach}
             </>
           ),
         });
         models.push({
           number: section.number + 0.5,
-          key: "context",
-          title: "Contexto normativo",
+          key: division.key,
+          title: division.title,
           presentation: "details",
           listed: true,
-          body: body({ ...section, markdown: opening.context }),
+          body: body({ ...section, markdown: opening.after }),
         });
       } else {
         models.push({
@@ -379,7 +379,7 @@ function sectionModels(
       continue;
     }
     flushClouds();
-    if (section.key === "what_is" && slug === "chile-data-protection") {
+    if (section.key === "what_is" && views?.legal_foundations) {
       const foundations = views?.legal_foundations ? legalFoundationsProps(views.legal_foundations) : null;
       models.push({
         number: section.number,
@@ -390,9 +390,11 @@ function sectionModels(
         body: (
           <>
             <LegalFoundations roles={foundations?.roles} principles={foundations?.principles} />
-            <p>
-              <a href="#s23">Detalle por tema y artículo en el Anexo · Catálogo legal</a>
-            </p>
+            {views.legal_foundations.annex_link ? (
+              <p>
+                <a href={views.legal_foundations.annex_link.href}>{views.legal_foundations.annex_link.label}</a>
+              </p>
+            ) : null}
           </>
         ),
       });
@@ -431,26 +433,25 @@ function sectionModels(
     if (!text) {
       continue;
     }
-    if (section.key === "trade_offs" && slug === "chile-data-protection" && section.markdown.includes("### Sanciones")) {
+    const division = splitFor(views, section.number);
+    const parts = division ? splitAt(section.markdown, division.key) : null;
+    if (division && parts) {
       flushClouds();
-      const cut = section.markdown.indexOf("### Sanciones");
-      const tradeMarkdown = section.markdown.slice(0, cut).trim();
-      const sanctionsMarkdown = section.markdown.slice(cut).replace(/^### Sanciones[^\n]*\n?/, "").trim();
       models.push({
         number: section.number,
         key: section.key,
         title: titleOf(section),
         presentation: "details",
         listed: true,
-        body: body({ ...section, markdown: tradeMarkdown }),
+        body: body({ ...section, markdown: parts.before }),
       });
       models.push({
         number: section.number + 0.5,
-        key: "sanctions",
-        title: "Sanciones",
+        key: division.key,
+        title: division.title,
         presentation: "details",
         listed: true,
-        body: body({ ...section, markdown: sanctionsMarkdown }),
+        body: body({ ...section, markdown: parts.after }),
       });
       continue;
     }
@@ -458,12 +459,7 @@ function sectionModels(
       number: section.number,
       key: section.key,
       title: titleOf(section),
-      presentation:
-        slug === "chile-data-protection" && section.number === 3
-          ? "details"
-          : OPEN_NUMBERS.has(section.number)
-            ? "open"
-            : "details",
+      presentation: OPEN_NUMBERS.has(section.number) ? "open" : "details",
       listed: true,
       body: body(section),
     });
@@ -654,6 +650,8 @@ async function ConceptArticle({ slug }: { slug: string }) {
       construction={!domainOpen}
       sections={readingSections}
       compactNumbering={usesCompactNumbering(sectionTitles)}
+      summaryPairs={data.views?.reading?.summary_pairs === true}
+      legalBasisPanel={data.views?.reading?.legal_basis_panel !== false}
       staticMode={staticMode}
       initialStudy={
         study?.ok ? { state: study.data.state, pendingDeepDive: study.data.pending_deep_dive } : null

@@ -82,6 +82,9 @@ relations:
   - type: RELATED_TO
     target: dag
     note: El DAG de un orquestador es parte del linaje, no todo.
+views:
+  reading:
+    inline_arrows: false
 created_at: 2026-10-20
 updated_at: 2026-10-20
 last_verified: 2026-10-20
