@@ -107,10 +107,10 @@ export function SourcesGrouped({
                             {source.publisher} · {source.level}
                           </p>
                           {source.why ? (
-                      <p className="sources-why">
-                        <RichText text={source.why} />
-                      </p>
-                    ) : null}
+                            <p className="sources-why">
+                              <RichText text={source.why} />
+                            </p>
+                          ) : null}
                           <SourceLinks links={source.links} />
                         </li>
                       ))}

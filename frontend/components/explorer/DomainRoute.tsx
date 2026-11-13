@@ -89,6 +89,7 @@ export function DomainRoute({
   verifiedTotal,
   construction = false,
   availabilityCopy,
+  routeCount,
 }: {
   id: string;
   slug: string;
@@ -108,6 +109,8 @@ export function DomainRoute({
   verifiedTotal?: number;
   construction?: boolean;
   availabilityCopy?: AvailabilityCopyMap;
+  /** ADR-031: «N de M fichas disponibles», ya formateado con el texto del contenido. */
+  routeCount?: string;
 }) {
   const [localStudy, setLocalStudy] = useState<Record<string, RouteStudy> | null>(staticMode ? null : study);
   const [goalKey, setGoalKey] = useState<string | null>(null);
@@ -233,6 +236,7 @@ export function DomainRoute({
           </p>
         ) : null}
         <div className="route-pills">
+          {routeCount ? <span className="route-pill route-pill-count">{routeCount}</span> : null}
           <span className="route-pill route-pill-ok">
             {verifiedBase === 0 ? "0 fichas verificadas" : `${verified} de ${verifiedBase} fichas verificadas`}
           </span>

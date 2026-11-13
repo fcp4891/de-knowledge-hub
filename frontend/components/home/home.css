@@ -165,7 +165,7 @@
 .home-goal[aria-pressed="true"] {
   border-color: var(--ink);
   background: var(--ink);
-  color: #fff;
+  color: var(--ink-inverse);
 }
 
 .home-goal-top {
@@ -205,7 +205,7 @@
 }
 
 .home-goal[aria-pressed="true"] .home-level {
-  background: #fff;
+  background: var(--ink-inverse);
   color: var(--ink);
 }
 
@@ -220,11 +220,11 @@
 }
 
 .home-goal[aria-pressed="true"] .home-goal-desc {
-  color: color-mix(in srgb, #fff 82%, transparent);
+  color: color-mix(in srgb, var(--ink-inverse) 82%, transparent);
 }
 
 .home-goal[aria-pressed="true"] .home-goal-meta {
-  color: color-mix(in srgb, #fff 68%, transparent);
+  color: color-mix(in srgb, var(--ink-inverse) 68%, transparent);
 }
 
 .home-goal[aria-disabled="true"] {
@@ -396,7 +396,7 @@
 
 .home-weight[data-weight="Esencial"] {
   background: var(--ink);
-  color: #fff;
+  color: var(--ink-inverse);
 }
 
 .home-weight[data-weight="Complementario"] {
@@ -625,8 +625,8 @@
   font-size: 11px;
   font-weight: 600;
   white-space: nowrap;
-  color: var(--band-especializacion-dark);
-  background: color-mix(in srgb, var(--band-especializacion) 14%, var(--surface));
+  color: var(--availability-count-ink);
+  background: var(--availability-count-bg);
 }
 
 .home-step[data-disabled="true"] .home-step-text {
@@ -722,4 +722,12 @@
   .home-layer[data-layer="especializacion"] .home-station .availability-tag {
     grid-column: 2;
   }
+}
+
+/* La cabecera del recorrido va a todo el ancho, sobre «Tu itinerario» y el mapa. */
+.home-route {
+  /* Fuera de .home-split: sin el flex 1 1 0 de .home-map, que en la columna de .home colapsaba su alto. */
+  flex: none;
+  width: 100%;
+  margin-bottom: var(--space-4);
 }

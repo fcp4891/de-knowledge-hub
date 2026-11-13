@@ -545,3 +545,9 @@ a.route-card:hover {
     gap: var(--space-3);
   }
 }
+
+/* ADR-031: «N de M fichas disponibles», mismos tokens que el chip del inicio (se invierten con el tema). */
+.route-pill-count {
+  background: var(--availability-count-bg);
+  color: var(--availability-count-ink);
+}

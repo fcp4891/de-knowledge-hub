@@ -34,7 +34,7 @@ import {
   removeStoredNote,
   saveStudy,
 } from "@/lib/personalStore";
-import { CARD_SECTION_COUNT, readReadingProgress, writeReadingProgress } from "@/lib/readingProgress";
+import { CARD_SECTION_COUNT, markSectionSeen, readReadingProgress, writeReadingProgress } from "@/lib/readingProgress";
 
 import "./reading.css";
 
@@ -253,6 +253,7 @@ export function ConceptReading({
   const [viewKey, setViewKey] = useState(viewSections[0]?.key ?? "");
   const [current, setCurrent] = useState<number | null>(null);
   const [readMax, setReadMax] = useState(0);
+  const [seen, setSeen] = useState<ReadonlySet<number>>(new Set());
   const [progressReady, setProgressReady] = useState(false);
   const [allOpen, setAllOpen] = useState(false);
   const [scrollToken, setScrollToken] = useState(0);
@@ -308,7 +309,8 @@ export function ConceptReading({
     .sort((left, right) => left - right);
   const readUpTo = Math.min(CARD_SECTION_COUNT, readMax);
   const total = compactNumbering ? present.length : CARD_SECTION_COUNT;
-  const shown = compactNumbering ? present.filter((number) => number <= readUpTo).length : readUpTo;
+  // B-N5: con numeración compacta, «Leído N de M» cuenta solo las secciones abiertas y vistas.
+  const shown = compactNumbering ? present.filter((number) => seen.has(number)).length : readUpTo;
   const shownNumber = (section: ReadingSectionModel): number | null =>
     section.annex ? null : compactNumbering ? present.indexOf(section.number) + 1 : section.number;
   const listed = sections.filter((section) => section.listed);
@@ -345,7 +347,8 @@ export function ConceptReading({
       if (highlight) {
         setCurrent(number);
       }
-      if (number > readMaxRef.current && number <= CARD_SECTION_COUNT) {
+      setSeen(new Set(markSectionSeen(slug, number, sectionTitle)));
+      if (Number.isInteger(number) && number > readMaxRef.current && number <= CARD_SECTION_COUNT) {
         readMaxRef.current = number;
         setReadMax(number);
         writeReadingProgress(slug, number, sectionTitle);
@@ -358,6 +361,7 @@ export function ConceptReading({
     const stored = readReadingProgress(slug);
     readMaxRef.current = stored?.section ?? 0;
     setReadMax(readMaxRef.current);
+    setSeen(new Set(stored?.seen ?? []));
     setCurrent(null);
     setProgressReady(true);
   }, [slug]);
@@ -396,7 +400,7 @@ export function ConceptReading({
           const element = entry.target as HTMLElement;
           const number = Number(element.dataset.readingSection);
           const sectionTitle = element.dataset.readingTitle ?? "";
-          if (!Number.isInteger(number)) {
+          if (!(number > 0)) {
             continue;
           }
           // M1: una sección que solo se atraviesa colapsada no cuenta como leída.
@@ -477,7 +481,8 @@ export function ConceptReading({
   }
 
   function goTo(section: ReadingSectionModel) {
-    note(section.number, section.title, true);
+    // B-N5: el salto solo resalta y abre; la sección cuenta como leída cuando el observador la ve abierta.
+    setCurrent(section.number);
     if (section.presentation === "cloud") {
       setCloudId(section.key);
     }

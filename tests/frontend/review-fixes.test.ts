@@ -115,3 +115,52 @@ test("B3: el título de la pestaña es el de la ficha", () => {
   assert.match(page, /return \{ title: concept\.data\.title, robots: \{ index: false, follow: true \} \};/);
   assert.match(page, /return \{ title: concept\.data\.title \};/);
 });
+
+test("ALTO-2 y MEDIO-1: tokens que se invierten con el tema, sin #fff sobre var(--ink)", () => {
+  const tokens = read("frontend/styles/tokens.css");
+  for (const name of ["--ink-inverse", "--availability-count-ink", "--availability-count-bg"]) {
+    assert.equal((tokens.match(new RegExp(`${name}:`, "g")) ?? []).length, 3, name);   // claro, prefers-color-scheme y data-theme
+  }
+  assert.match(tokens, /:root\[data-theme="dark"\] \{/);
+  const css = read("frontend/components/home/home.css");
+  assert.match(css, /\.availability-count \{[^}]*color: var\(--availability-count-ink\);[^}]*background: var\(--availability-count-bg\);/);
+  assert.match(css, /\.home-goal\[aria-pressed="true"\] \{[^}]*color: var\(--ink-inverse\);/);
+  assert.match(css, /\.home-weight\[data-weight="Esencial"\] \{[^}]*color: var\(--ink-inverse\);/);
+});
+
+test("Cabecera del recorrido a todo el ancho, sobre el panel y el mapa", () => {
+  const source = read("frontend/components/home/HomeScreen.tsx");
+  assert.ok(source.indexOf("<RouteHeader") < source.indexOf('<div className="home-split">'));
+  assert.match(source, /<section className="home-map home-route"/);
+});
+
+test("B-N4: /privacidad usa route_count, igual que el inicio", () => {
+  const page = read("frontend/app/privacidad/page.tsx");
+  assert.match(page, /fillCount\(routeTexts\.route_count, \{ n: totals\.available, total: totals\.total \}\)/);
+  assert.match(read("frontend/components/explorer/DomainRoute.tsx"), /route-pill route-pill-count">\{routeCount\}/);
+});
+
+test("B-N5: «Leído N de M» cuenta solo las secciones abiertas y vistas", () => {
+  const store = new Map<string, string>();
+  (globalThis as { window?: unknown }).window = {
+    localStorage: { getItem: (k: string) => store.get(k) ?? null, setItem: (k: string, v: string) => store.set(k, v) },
+  };
+  try {
+    const progress = loadTsx(join(import.meta.dirname, "../../frontend/lib/readingProgress.ts"));
+    progress.markSectionSeen("pii", 1, "Propósito");
+    progress.markSectionSeen("pii", 16.5, "Sanciones");
+    const stored = progress.readReadingProgress("pii");
+    assert.deepEqual(stored.seen, [1, 16.5]);
+    assert.equal(stored.section, 16);
+  } finally {
+    delete (globalThis as { window?: unknown }).window;
+  }
+  const reading = read("frontend/components/card/ConceptReading.tsx");
+  assert.match(reading, /present\.filter\(\(number\) => seen\.has\(number\)\)\.length/);
+  assert.match(reading, /function goTo\(section: ReadingSectionModel\) \{\n\s+\/\/ B-N5[^\n]*\n\s+setCurrent\(section\.number\);/);
+});
+
+test("client.ts no llama a la API en el sitio estático", () => {
+  const client = read("frontend/lib/api/client.ts");
+  assert.match(client, /=== "static"\) \{\n\s+return \{ ok: false, reason: "unavailable", detail: "El sitio estático no usa la API\." \};/);
+});

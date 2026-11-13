@@ -75,6 +75,9 @@
   --band-especializacion-900: #3A1632;
 
   /* Tonos de pii-identification. Apuntan a tokens que ya cambian con el tema. */
+  --ink-inverse: #FFFFFF;   /* texto sobre var(--ink); se invierte con el tema */
+  --availability-count-ink: #5C234F;   /* «N disponibles» (ADR-031) */
+  --availability-count-bg: #F8F1F6;
   --pii-personal: var(--band-especializacion);
   --pii-personal-bg: var(--lvl-avanzado-bg);
   --pii-sensitive: var(--severity-3-ink);
@@ -146,5 +149,15 @@
     /* #E4C0EA queda para línea y texto. El punto completo sigue con fondo AA y texto blanco (7,81:1). */
     --band-especializacion-fill: #7C3A6E;
     --layer-cimientos-bg: #132825;
+    --ink-inverse: #12141A;
+    --availability-count-ink: #E4C6EF;
+    --availability-count-bg: #2E1A38;
   }
+}
+
+/* Tema oscuro elegido por la página: mismos valores que prefers-color-scheme para estos tokens. */
+:root[data-theme="dark"] {
+  --ink-inverse: #12141A;
+  --availability-count-ink: #E4C6EF;
+  --availability-count-bg: #2E1A38;
 }

@@ -179,6 +179,8 @@ export function HomeScreen({
         </div>
       </section>
 
+      <RouteHeader path={path} domainsById={domainsById} />
+
       <div className="home-split">
         <Itinerary goal={goal} domainsById={domainsById} />
         <PlatformMap path={path} domainsById={domainsById} />
@@ -380,14 +382,27 @@ export function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsByI
   );
 }
 
-function PlatformMap({ path, domainsById }: { path: GoalPath; domainsById: Map<string, HomeDomain> }) {
+/** Cabecera del recorrido (banda de especialización) a todo el ancho, sobre el panel y el mapa. */
+function RouteHeader({ path, domainsById }: { path: GoalPath; domainsById: Map<string, HomeDomain> }) {
   const special = [...domainsById.values()].find((domain) => domain.band === "especializacion") ?? null;
+  if (!special || special.stages.length === 0 || !(SHOW_UNPUBLISHED || isDomainPublished(special))) {
+    return null;
+  }
+  return (
+    <section className="home-map home-route" aria-label={BAND_LABEL}>
+      <SpecializationBand domain={special} path={path} />
+    </section>
+  );
+}
+
+function PlatformMap({ path, domainsById }: { path: GoalPath; domainsById: Map<string, HomeDomain> }) {
+  const layers = visibleLayers(LAYERS);
+  if (layers.length === 0) {
+    return null;
+  }
   return (
     <section className="home-map" aria-label="Mapa de la plataforma">
-      {special && special.stages.length > 0 && (SHOW_UNPUBLISHED || isDomainPublished(special)) ? (
-        <SpecializationBand domain={special} path={path} />
-      ) : null}
-      {visibleLayers(LAYERS).map((layer) => (
+      {layers.map((layer) => (
         <LayerRow key={layer.key} layer={layer} path={path} domainsById={domainsById} />
       ))}
     </section>

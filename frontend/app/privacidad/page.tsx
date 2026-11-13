@@ -4,6 +4,7 @@ import { LegalFactLink } from "@/components/legal/LegalFactLink";
 import { getConcept, getDomain, listDomains, listStudyStates } from "@/lib/api/client";
 import type { ApiResult, DomainDetail } from "@/lib/api/types";
 import { availabilityCopyFrom } from "@/lib/availability";
+import { fillCount, routeTotals, stageAvailability, type AvailabilityTexts } from "@/lib/routeAvailability";
 import { BAND_LABEL, isStagePublished, visibleStages } from "@/lib/publishedScope";
 import { PRIVACY_LAB, STUDY_PATH, verifiedLegend } from "@/lib/privacySpace";
 
@@ -104,6 +105,10 @@ export default async function PrivacyPage() {
     })),
   });
   const stages: RouteStage[] = visibleStages(data.subdomains.map(toStage));
+  // B-N4: mismo contador que la cabecera del inicio («N de M fichas disponibles», content/ui/availability.yaml).
+  const routeTexts = (data as { availability_texts?: AvailabilityTexts }).availability_texts;
+  const totals = routeTotals(stages.map((stage) => stageAvailability(stage.concepts)));
+  const routeCount = routeTexts ? fillCount(routeTexts.route_count, { n: totals.available, total: totals.total }) : undefined;
   const slugs = new Set(stages.flatMap((stage) => stage.concepts.map((concept) => concept.slug)));
   const withPage = stages.flatMap((stage) => stage.concepts.filter((concept) => concept.hasPage).map((concept) => concept.slug));
   const [studyResult, catalog, routeFacts] = await Promise.all([
@@ -127,6 +132,7 @@ export default async function PrivacyPage() {
         stages={stages}
         minutes={routeFacts.minutes}
         availabilityCopy={routeFacts.copy}
+        routeCount={routeCount}
         study={studyResult && studyResult.ok ? studyResult.data : null}
         staticMode={localPersonal}
         goalDomains={goalDomains}
