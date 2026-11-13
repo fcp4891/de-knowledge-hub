@@ -894,7 +894,7 @@ details.panel summary + * {
 .cloud-tabs [role="tab"][aria-selected="true"] {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 @media (min-width: 960px) {

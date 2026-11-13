@@ -164,3 +164,30 @@ test("client.ts no llama a la API en el sitio estático", () => {
   const client = read("frontend/lib/api/client.ts");
   assert.match(client, /=== "static"\) \{\n\s+return \{ ok: false, reason: "unavailable", detail: "El sitio estático no usa la API\." \};/);
 });
+
+test("Contraste sobre --accent: todo texto usa --on-accent, definido en claro, oscuro y data-theme", () => {
+  const tokens = read("frontend/styles/tokens.css");
+  for (const name of ["--on-accent", "--on-accent-muted", "--on-accent-subtle"]) {
+    assert.equal((tokens.match(new RegExp(`${name}:`, "g")) ?? []).length, 3, name);
+  }
+  const files = [
+    "frontend/app/globals.css",
+    "frontend/components/card/reading.css",
+    "frontend/components/explorer/domain-route.css",
+    "frontend/components/ficha/pii-views.css",
+    "frontend/components/home/home.css",
+  ];
+  const offenders: string[] = [];
+  for (const file of files) {
+    const css = read(file).replace(/\/\*[\s\S]*?\*\//g, "");
+    for (const match of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+      const body = match[2];
+      const background = /background(?:-color)?:\s*([^;]+);/.exec(body)?.[1] ?? "";
+      const color = /(?:^|[;\s])color:\s*([^;]+);/.exec(body)?.[1];
+      if (/var\(--accent\)/.test(background) && color && !/var\(--on-accent/.test(color)) {
+        offenders.push(`${file}: ${match[1].trim()} → ${color}`);
+      }
+    }
+  }
+  assert.deepEqual(offenders, []);
+});

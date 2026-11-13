@@ -165,7 +165,7 @@
 
 .route-marker[data-state="complete"] {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   border-color: var(--accent);
 }
 
@@ -310,7 +310,7 @@ a.route-card:hover {
 
 .route-icon[data-look="done"] {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   border-color: var(--accent);
 }
 
@@ -365,7 +365,7 @@ a.route-card:hover {
   padding: var(--space-6);
   border-radius: var(--radius-lg);
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .route-next-kicker {

@@ -412,7 +412,7 @@ button.pii-card:hover {
   padding: 1px 9px;
   border-radius: var(--radius-pill);
   background: var(--accent);
-  color: var(--surface);
+  color: var(--on-accent);
   font-size: 11.5px;
   font-weight: 650;
   font-style: normal;

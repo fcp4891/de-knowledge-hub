@@ -42,7 +42,7 @@
   padding: 22px var(--space-6);
   border-radius: var(--radius-lg);
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .home-continue-body {
@@ -58,7 +58,7 @@
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #bfe3de;
+  color: var(--on-accent-subtle);
 }
 
 .home-continue h2 {
@@ -70,7 +70,7 @@
 .home-continue-meta {
   margin: 0;
   font-size: 14px;
-  color: var(--accent-on-dark);
+  color: var(--on-accent-muted);
 }
 
 .home-progress {
@@ -84,18 +84,18 @@
   max-width: 300px;
   height: 6px;
   border-radius: var(--radius-pill);
-  background: color-mix(in srgb, #fff 28%, var(--accent));
+  background: color-mix(in srgb, var(--on-accent) 28%, var(--accent));
 }
 
 .home-progress-fill {
   height: 6px;
   border-radius: var(--radius-pill);
-  background: #fff;
+  background: var(--on-accent);
 }
 
 .home-progress span {
   font-size: var(--text-xs);
-  color: var(--accent-on-dark);
+  color: var(--on-accent-muted);
 }
 
 .home-continue-action {
@@ -105,8 +105,8 @@
   min-height: 46px;
   padding: 0 22px;
   border-radius: var(--radius-md);
-  background: #fff;
-  color: var(--accent-hover);
+  background: var(--on-accent);
+  color: var(--accent);
   font-weight: 600;
   text-decoration: none;
 }
@@ -417,7 +417,7 @@
   padding: 0 var(--space-4);
   border-radius: var(--radius-md);
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   font-weight: 600;
   text-decoration: none;
 }

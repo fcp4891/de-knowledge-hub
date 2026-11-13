@@ -76,6 +76,9 @@
 
   /* Tonos de pii-identification. Apuntan a tokens que ya cambian con el tema. */
   --ink-inverse: #FFFFFF;   /* texto sobre var(--ink); se invierte con el tema */
+  --on-accent: #FFFFFF;          /* texto sobre var(--accent): 7,5:1 */
+  --on-accent-muted: #DCEFEC;    /* texto secundario sobre var(--accent): 6,28:1 */
+  --on-accent-subtle: #BFE3DE;   /* rótulo sobre var(--accent): 5,45:1 */
   --availability-count-ink: #5C234F;   /* «N disponibles» (ADR-031) */
   --availability-count-bg: #F8F1F6;
   --pii-personal: var(--band-especializacion);
@@ -151,6 +154,10 @@
     --layer-cimientos-bg: #132825;
     --ink-inverse: #12141A;
     --availability-count-ink: #E4C6EF;
+    /* Sobre el turquesa claro del tema oscuro, el texto blanco queda en 1,82:1: el texto pasa a oscuro. */
+    --on-accent: #12141A;          /* 10,1:1 */
+    --on-accent-muted: #1F3B38;    /* 6,61:1 */
+    --on-accent-subtle: #244644;   /* 5,66:1 */
     --availability-count-bg: #2E1A38;
   }
 }
@@ -158,6 +165,9 @@
 /* Tema oscuro elegido por la página: mismos valores que prefers-color-scheme para estos tokens. */
 :root[data-theme="dark"] {
   --ink-inverse: #12141A;
+  --on-accent: #12141A;
+  --on-accent-muted: #1F3B38;
+  --on-accent-subtle: #244644;
   --availability-count-ink: #E4C6EF;
   --availability-count-bg: #2E1A38;
 }
