@@ -1132,9 +1132,10 @@ views:
         label: Ficha
         why: Cómo la clasificación se vuelve un control en la CI.
 created_at: 2026-10-21
-updated_at: '2026-11-12'
+updated_at: '2026-11-14'
 last_verified: '2026-11-12'
-verification_status: review_required
+owner_approved_at: 2026-11-14
+verification_status: verified
 availability: available
 ---
 
@@ -1497,5 +1498,4 @@ puerta de silver.clientes: bloqueada (1), sin revisor: observacion_medica (sensi
 - 2026-11-04: revisión `docs/reviews/p10.md` aplicada: en §15, el ejemplo falso «renta» en `herramienta_id` pasa a `rentabilidad_producto`, que sí contiene la subcadena; un test lo comprueba contra la ficha. Vuelve a `review_required`.
 - 2026-11-04: aprobada con la revisión P10 aplicada (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).
 - 2026-11-12: migrada desde la maqueta aprobada: 11 secciones con su texto tal cual, en vistas (ADR-030, enmienda 5) y con la numeración y el «Leído N de M» del ADR-029 (enmienda 3). Salen las secciones 6, 7, 8, 9, 12, 13, 15, 17, 19 y 21. Citas a los artículos en el texto publicado en el Diario Oficial; servicios cloud consultados el 2026-11-12. §10 con el detector de la maqueta: la CI ejecuta muestra, revisado y fuente-nueva (salidas 1, 0 y 1) y mypy --strict. Vuelve a `review_required`, sin `owner_approved_at`, hasta la revisión.
-- 2026-11-12: migrada desde la maqueta aprobada: 11 secciones con su texto tal cual, en vistas (ADR-030, enmienda 5) y con la numeración y el «Leído N de M» del ADR-029 (enmienda 3). Salen las secciones 6, 7, 8, 9, 12, 13, 15, 17, 19 y 21. Citas a los artículos en el texto publicado en el Diario Oficial; servicios cloud consultados el 2026-11-12. §10 con el detector de la maqueta: la CI ejecuta muestra, revisado y fuente-nueva (salidas 1, 0 y 1) y mypy --strict. Vuelve a `review_required`, sin `owner_approved_at`, hasta la revisión.
-- 2026-11-12: migrada desde la maqueta aprobada: 11 secciones con su texto tal cual, en vistas (ADR-030, enmienda 5) y con la numeración y el «Leído N de M» del ADR-029 (enmienda 3). Salen las secciones 6, 7, 8, 9, 12, 13, 15, 17, 19 y 21. Citas a los artículos en el texto publicado en el Diario Oficial; servicios cloud consultados el 2026-11-12. §10 con el detector de la maqueta: la CI ejecuta muestra, revisado y fuente-nueva (salidas 1, 0 y 1) y mypy --strict. Vuelve a `review_required`, sin `owner_approved_at`, hasta la revisión.
+- 2026-11-14: aprobada con lista explícita (`owner_approved_at: 2026-11-14`) tras la re-revisión de la migración; pasa a `verified` (ADR-023). Se quitan dos copias repetidas de la entrada del 2026-11-12.

@@ -5,6 +5,12 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 **Última actualización:** 2026-11-12
 
 ## Actual
+- **2026-11-14 · Cierre de `a/pii-availability` (apto para merge tras la re-revisión de 2d04492):**
+  - Contraste en oscuro: `.route-next` como `.home-continue`, `.skip-link` con `--ink-inverse` y bloques de código con `--code-bg`; test de contraste calculado desde `tokens.css` en todos los CSS.
+  - B-N5: una sección fuera de 1–22 (anexo) no borra lo visto; «Leído 14 de 14» en el anexo de chile.
+  - ADR-030 enmienda 7: `views.reading`, `views.section_splits` (marca `<!-- split: <key> -->`) y `legal_foundations.annex_link`. Sin condiciones por slug en `frontend/components/`.
+  - `pii-identification` aprobada (`owner_approved_at: 2026-11-14`) y en `verified`.
+  - Al BACKLOG: `partOf.ts` y `chileLegalCatalog.ts` (enmienda 8 de ADR-030), marcas visibles de ADR-023, color del respaldo de Mermaid, duplicados en `check_splits` y cobertura de `contrast.test.ts`.
 - **2026-11-12 · Itinerario con tramos deshabilitados (ADR-031, enmienda 1):**
   - Un tramo sin fichas disponibles se ve deshabilitado en la cabecera del recorrido y en el panel «Tu itinerario». La regla se calcula con los datos.
   - Textos de conteo en `content/ui/availability.yaml`, expuestos en `DomainDetail.availability_texts`.
@@ -215,6 +221,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Las relaciones solo se guardan en la entidad origen. Para mostrar la inversa, usar `x-relation-catalog.<TIPO>.inverse` de `schemas/relationships.schema.json`.
 
 ## Cambios de contrato (con ADR)
+- Opciones de lectura y divisiones de sección (ADR-030, enmienda 7, aditivo): `views.reading`, `views.section_splits` y `views.legal_foundations.annex_link`.
 - Creación inicial de `schemas/` y ajuste de pares en el gate de F0 (ADR-000).
 - `blueprint.schema.json` (ADR-003).
 - Enumeración `category`, `mvp` y `note` en tecnologías, y `matrix.schema.json` (ADR-004).
