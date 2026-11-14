@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { ApiFailure } from "@/components/ApiFailure";
+import { FichaAnchor } from "@/components/availability/FichaLink";
 import type { ApiResult, EntityType, RelationGroups } from "@/lib/api/types";
 import { entityHref } from "@/lib/entityHref";
 import { RELATION_LABEL } from "@/lib/labels";
@@ -37,7 +38,13 @@ function RelationGroupsView({ groups }: { groups: RelationGroups }) {
           <ul className="stack">
             {group.items.map((item) => (
               <li key={`${group.type}-${item.slug}`}>
-                <Link href={entityHref(item.entity_type, item.slug)}>{item.title}</Link>
+                {item.target_availability ? (
+                  <FichaAnchor href={entityHref(item.entity_type, item.slug)} blocked>
+                    {item.title}
+                  </FichaAnchor>
+                ) : (
+                  <Link href={entityHref(item.entity_type, item.slug)}>{item.title}</Link>
+                )}
                 {item.note ? <p className="muted">{item.note}</p> : null}
               </li>
             ))}

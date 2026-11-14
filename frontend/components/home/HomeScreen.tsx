@@ -25,6 +25,16 @@ import { listStoredStudy, subscribePersonal } from "@/lib/personalStore";
 import { CARD_SECTION_COUNT, readReadingProgress, type ReadingProgress } from "@/lib/readingProgress";
 import type { StudyState } from "@/lib/api/types";
 
+import { AvailabilityMark } from "@/components/availability/AvailabilityMark";
+import {
+  disabledStatus,
+  fillCount,
+  routeTotals,
+  stageDisabled,
+  type AvailabilityTexts,
+  type StageAvailability,
+} from "@/lib/routeAvailability";
+
 import "./home.css";
 
 const GOAL_KEY = "dekh:goal";
@@ -35,6 +45,8 @@ export type HomeStage = {
   verified: number;
   total: number;
   withPage: number;
+  /** ADR-031: conteo por disponibilidad de todas las fichas del tramo. */
+  availability?: StageAvailability;
 };
 
 export type HomeDomain = {
@@ -45,6 +57,7 @@ export type HomeDomain = {
   conceptCount: number;
   withPage: number | null;
   stages: HomeStage[];
+  availabilityTexts?: AvailabilityTexts | null;
 };
 
 export type HomeConcept = {
@@ -166,6 +179,8 @@ export function HomeScreen({
         </div>
       </section>
 
+      <RouteHeader path={path} domainsById={domainsById} />
+
       <div className="home-split">
         <Itinerary goal={goal} domainsById={domainsById} />
         <PlatformMap path={path} domainsById={domainsById} />
@@ -247,7 +262,7 @@ function GoalCard({ goal, pressed, onPick }: { goal: Goal; pressed: boolean; onP
   );
 }
 
-function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsById: Map<string, HomeDomain> }) {
+export function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsById: Map<string, HomeDomain> }) {
   const steps = goal ? goal.steps.filter((step) => !step.stage || isStagePublished(step.stage)) : [];
   const first = steps[0];
   const firstDomain = first ? domainsById.get(first.domain) : undefined;
@@ -272,13 +287,35 @@ function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsById: Map<
               const stage = step.stage ? domain?.stages.find((item) => item.slug === step.stage) : undefined;
               const layer = step.stage ? undefined : LAYERS.find((item) => item.domains.includes(step.domain));
               const status = stage
-                ? `${stage.verified}/${stage.total} verificadas`
+                ? stage.total > 0
+                  ? `${stage.verified}/${stage.total} verificadas`
+                  : null
                 : domain
                   ? contentStatus(domain.withPage, domain.conceptCount)
                   : null;
               const place = step.stage ? BAND_LABEL : layer?.name;
               const name = stage?.title ?? SHORT_NAMES[step.domain] ?? domain?.slug ?? step.domain;
-              const href = stepHref(step, domain?.slug ?? null);
+              const texts = domain?.availabilityTexts ?? null;
+              const counts = stage?.availability;
+              const disabled = Boolean(texts) && stageDisabled(counts);
+              const href = disabled ? null : stepHref(step, domain?.slug ?? null);
+              const meta = counts && texts ? (
+                <span className="home-step-meta home-step-tags">
+                  {place ? <span>{place}</span> : null}
+                  {disabled ? (
+                    <AvailabilityMark compact status={disabledStatus(counts)} label={texts[disabledStatus(counts)].label} />
+                  ) : (
+                    <>
+                      <span className="availability-count">{fillCount(texts.available.count, { n: counts.available })}</span>
+                      {counts.inReview > 0 ? (
+                        <AvailabilityMark compact status="in_review" label={fillCount(texts.in_review.count, { n: counts.inReview })} />
+                      ) : null}
+                    </>
+                  )}
+                </span>
+              ) : (
+                <span className="home-step-meta">{[place, status].filter(Boolean).join(" · ")}</span>
+              );
               const body = (
                 <>
                   <span className="home-step-name">
@@ -287,11 +324,15 @@ function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsById: Map<
                       {step.weight}
                     </span>
                   </span>
-                  <span className="home-step-meta">{[place, status].filter(Boolean).join(" · ")}</span>
+                  {meta}
                 </>
               );
               return (
-                <li key={`${step.domain}-${step.stage ?? index}`} className="home-step">
+                <li
+                  key={`${step.domain}-${step.stage ?? index}`}
+                  className="home-step"
+                  data-disabled={disabled ? "true" : undefined}
+                >
                   <span className="home-step-rail">
                     {href ? (
                       <Link
@@ -304,14 +345,20 @@ function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsById: Map<
                     ) : (
                       <span
                         className="home-step-num"
-                        style={{ background: step.stage ? "var(--band-especializacion-dark)" : (layer?.dark ?? "var(--ink)") }}
+                        style={disabled ? undefined : { background: step.stage ? "var(--band-especializacion-dark)" : (layer?.dark ?? "var(--ink)") }}
                       >
                         {index + 1}
                       </span>
                     )}
                     <span className="home-step-line" data-last={index === steps.length - 1} />
                   </span>
-                  {href ? <Link href={href}>{body}</Link> : <span className="home-step-text">{body}</span>}
+                  {href ? (
+                    <Link href={href}>{body}</Link>
+                  ) : (
+                    <span className="home-step-text" aria-disabled={disabled ? "true" : undefined}>
+                      {body}
+                    </span>
+                  )}
                 </li>
               );
             })}
@@ -335,21 +382,34 @@ function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsById: Map<
   );
 }
 
-function PlatformMap({ path, domainsById }: { path: GoalPath; domainsById: Map<string, HomeDomain> }) {
+/** Cabecera del recorrido (banda de especialización) a todo el ancho, sobre el panel y el mapa. */
+function RouteHeader({ path, domainsById }: { path: GoalPath; domainsById: Map<string, HomeDomain> }) {
   const special = [...domainsById.values()].find((domain) => domain.band === "especializacion") ?? null;
+  if (!special || special.stages.length === 0 || !(SHOW_UNPUBLISHED || isDomainPublished(special))) {
+    return null;
+  }
+  return (
+    <section className="home-map home-route" aria-label={BAND_LABEL}>
+      <SpecializationBand domain={special} path={path} />
+    </section>
+  );
+}
+
+function PlatformMap({ path, domainsById }: { path: GoalPath; domainsById: Map<string, HomeDomain> }) {
+  const layers = visibleLayers(LAYERS);
+  if (layers.length === 0) {
+    return null;
+  }
   return (
     <section className="home-map" aria-label="Mapa de la plataforma">
-      {special && special.stages.length > 0 && (SHOW_UNPUBLISHED || isDomainPublished(special)) ? (
-        <SpecializationBand domain={special} path={path} />
-      ) : null}
-      {visibleLayers(LAYERS).map((layer) => (
+      {layers.map((layer) => (
         <LayerRow key={layer.key} layer={layer} path={path} domainsById={domainsById} />
       ))}
     </section>
   );
 }
 
-function SpecializationBand({ domain, path }: { domain: HomeDomain; path: GoalPath }) {
+export function SpecializationBand({ domain, path }: { domain: HomeDomain; path: GoalPath }) {
   const open = isDomainPublished(domain);
   const visible = visibleStages(domain.stages);
   const stations = visible.map((stage) => ({
@@ -359,9 +419,13 @@ function SpecializationBand({ domain, path }: { domain: HomeDomain; path: GoalPa
     total: stage.total,
     href: `${PRIVACY_SPACE_HREF}#${stage.slug}`,
   }));
-  const withPage = visible.reduce((sum, stage) => sum + stage.withPage, 0);
-  const total = visible.reduce((sum, stage) => sum + stage.total, 0);
   const ids = stations.map((station) => station.id);
+  // ADR-031: un tramo sin fichas con availability = available queda deshabilitado (no navega, aria-disabled, línea punteada).
+  const texts = domain.availabilityTexts ?? null;
+  const disabled = visible.map((stage) => Boolean(texts) && stageDisabled(stage.availability));
+  const totals = routeTotals(visible.map((stage) => stage.availability));
+  // El texto sale de content/ui/availability.yaml (route_count, obligatorio en su schema); sin él no se inventa uno.
+  const countLabel = texts ? fillCount(texts.route_count, { n: totals.available, total: totals.total }) : null;
   const style = {
     "--layer-color": "var(--band-especializacion)",
     "--layer-dark": "var(--band-especializacion-dark)",
@@ -376,9 +440,7 @@ function SpecializationBand({ domain, path }: { domain: HomeDomain; path: GoalPa
           <span className="home-swatch" />
           {BAND_LABEL}
         </span>
-        <span className="home-layer-count">
-          {withPage}/{total} fichas
-        </span>
+        {countLabel ? <span className="home-layer-count">{countLabel}</span> : null}
       </div>
       {open ? null : <p className="home-layer-note">{CONSTRUCTION_LAYER}</p>}
       <div className="home-stations-scroll">
@@ -392,7 +454,9 @@ function SpecializationBand({ domain, path }: { domain: HomeDomain; path: GoalPa
               withPage: station.total > 0 ? station.withPage : null,
               total: station.total,
             });
-            const emphasis = !open ? "dimmed" : paint.emphasized ? "step" : paint.dimmed ? "dimmed" : "plain";
+            const off = disabled[index];
+            const counts = visible[index].availability;
+            const emphasis = !open || off ? "dimmed" : paint.emphasized ? "step" : paint.dimmed ? "dimmed" : "plain";
             const dotStyle =
               paint.fill === "partial"
                 ? { background: `conic-gradient(var(--band-especializacion) ${paint.percent}%, var(--surface) 0)` }
@@ -400,17 +464,35 @@ function SpecializationBand({ domain, path }: { domain: HomeDomain; path: GoalPa
             const body = (
               <>
                 <span className="home-station-track">
-                  <span className="home-station-line" data-tone={paint.lineLeft} />
-                  <span className="home-station-dot" data-fill={open ? paint.fill : "empty"} data-dimmed={!open || paint.dimmed} style={dotStyle}>
-                    {open ? paint.stepNumber : ""}
+                  <span className="home-station-line" data-tone={off && paint.lineLeft !== "none" ? "disabled" : paint.lineLeft} />
+                  <span
+                    className="home-station-dot"
+                    data-fill={off ? "disabled" : open ? paint.fill : "empty"}
+                    data-dimmed={!open || paint.dimmed}
+                    style={off ? undefined : dotStyle}
+                  >
+                    {off ? index + 1 : open ? paint.stepNumber : ""}
                   </span>
-                  <span className="home-station-line" data-tone={paint.lineRight} />
+                  <span
+                    className="home-station-line"
+                    data-tone={disabled[index + 1] && paint.lineRight !== "none" ? "disabled" : paint.lineRight}
+                  />
                 </span>
                 <span className="home-station-name" data-emphasis={emphasis}>
                   {station.name}
                 </span>
+                {off && counts && texts ? (
+                  <AvailabilityMark compact status={disabledStatus(counts)} label={texts[disabledStatus(counts)].label} />
+                ) : null}
               </>
             );
+            if (off) {
+              return (
+                <span key={station.id} className="home-station" data-disabled="true" aria-disabled="true">
+                  {body}
+                </span>
+              );
+            }
             return open ? (
               <Link key={station.id} className="home-station" href={station.href}>
                 {body}

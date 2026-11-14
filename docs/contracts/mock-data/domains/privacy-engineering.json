@@ -60,7 +60,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "review_required",
-          "last_verified": "2026-10-28"
+          "last_verified": "2026-10-28",
+          "availability": "available"
         },
         {
           "slug": "pii-identification",
@@ -74,7 +75,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-11-12",
+          "availability": "available"
         },
         {
           "slug": "processing-activities-inventory",
@@ -88,7 +90,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-28"
+          "last_verified": "2026-10-28",
+          "availability": "in_review"
         }
       ]
     },
@@ -108,7 +111,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "in_development"
         },
         {
           "slug": "chilean-identifier-pseudonymization",
@@ -122,7 +126,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "in_development"
         },
         {
           "slug": "purpose-based-authorization",
@@ -136,7 +141,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-28"
+          "last_verified": "2026-10-28",
+          "availability": "in_development"
         }
       ]
     },
@@ -156,7 +162,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "in_development"
         },
         {
           "slug": "distributed-erasure-propagation",
@@ -170,7 +177,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-28"
+          "last_verified": "2026-10-28",
+          "availability": "in_development"
         },
         {
           "slug": "retention-and-erasure",
@@ -184,7 +192,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "in_development"
         },
         {
           "slug": "privacy-backup-and-recovery",
@@ -198,7 +207,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-28"
+          "last_verified": "2026-10-28",
+          "availability": "in_development"
         }
       ]
     },
@@ -218,7 +228,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "in_development"
         },
         {
           "slug": "dpia-and-automated-decisions",
@@ -232,7 +243,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "in_development"
         },
         {
           "slug": "data-breach-response",
@@ -246,7 +258,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "in_development"
         }
       ]
     },
@@ -266,7 +279,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-25"
+          "last_verified": "2026-10-25",
+          "availability": "in_development"
         },
         {
           "slug": "privacy-in-ai-rag-llm",
@@ -280,7 +294,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-28"
+          "last_verified": "2026-10-28",
+          "availability": "in_development"
         }
       ]
     },
@@ -300,7 +315,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-30"
+          "last_verified": "2026-10-30",
+          "availability": "available"
         },
         {
           "slug": "lgpd",
@@ -314,9 +330,27 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-30"
+          "last_verified": "2026-10-30",
+          "availability": "available"
         }
       ]
     }
-  ]
+  ],
+  "availability_texts": {
+    "in_review": {
+      "label": "En revisión",
+      "help": "Contenido listo; en revisión antes de publicarse.",
+      "count": "{n} en revisión"
+    },
+    "in_development": {
+      "label": "En desarrollo",
+      "help": "Contenido y diseño en preparación.",
+      "count": "{n} en desarrollo"
+    },
+    "available": {
+      "count": "{n} disponibles"
+    },
+    "route_count": "{n} de {total} fichas disponibles",
+    "back_label": "Volver al itinerario"
+  }
 }

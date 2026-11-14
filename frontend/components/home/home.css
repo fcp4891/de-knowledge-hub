@@ -42,7 +42,7 @@
   padding: 22px var(--space-6);
   border-radius: var(--radius-lg);
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .home-continue-body {
@@ -58,7 +58,7 @@
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #bfe3de;
+  color: var(--on-accent-subtle);
 }
 
 .home-continue h2 {
@@ -70,7 +70,7 @@
 .home-continue-meta {
   margin: 0;
   font-size: 14px;
-  color: var(--accent-on-dark);
+  color: var(--on-accent-muted);
 }
 
 .home-progress {
@@ -84,18 +84,18 @@
   max-width: 300px;
   height: 6px;
   border-radius: var(--radius-pill);
-  background: color-mix(in srgb, #fff 28%, var(--accent));
+  background: color-mix(in srgb, var(--on-accent) 28%, var(--accent));
 }
 
 .home-progress-fill {
   height: 6px;
   border-radius: var(--radius-pill);
-  background: #fff;
+  background: var(--on-accent);
 }
 
 .home-progress span {
   font-size: var(--text-xs);
-  color: var(--accent-on-dark);
+  color: var(--on-accent-muted);
 }
 
 .home-continue-action {
@@ -105,8 +105,8 @@
   min-height: 46px;
   padding: 0 22px;
   border-radius: var(--radius-md);
-  background: #fff;
-  color: var(--accent-hover);
+  background: var(--on-accent);
+  color: var(--accent);
   font-weight: 600;
   text-decoration: none;
 }
@@ -165,7 +165,7 @@
 .home-goal[aria-pressed="true"] {
   border-color: var(--ink);
   background: var(--ink);
-  color: #fff;
+  color: var(--ink-inverse);
 }
 
 .home-goal-top {
@@ -205,7 +205,7 @@
 }
 
 .home-goal[aria-pressed="true"] .home-level {
-  background: #fff;
+  background: var(--ink-inverse);
   color: var(--ink);
 }
 
@@ -220,11 +220,11 @@
 }
 
 .home-goal[aria-pressed="true"] .home-goal-desc {
-  color: color-mix(in srgb, #fff 82%, transparent);
+  color: color-mix(in srgb, var(--ink-inverse) 82%, transparent);
 }
 
 .home-goal[aria-pressed="true"] .home-goal-meta {
-  color: color-mix(in srgb, #fff 68%, transparent);
+  color: color-mix(in srgb, var(--ink-inverse) 68%, transparent);
 }
 
 .home-goal[aria-disabled="true"] {
@@ -396,7 +396,7 @@
 
 .home-weight[data-weight="Esencial"] {
   background: var(--ink);
-  color: #fff;
+  color: var(--ink-inverse);
 }
 
 .home-weight[data-weight="Complementario"] {
@@ -417,7 +417,7 @@
   padding: 0 var(--space-4);
   border-radius: var(--radius-md);
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   font-weight: 600;
   text-decoration: none;
 }
@@ -606,4 +606,128 @@
   .home-stations-scroll {
     overflow-x: hidden;
   }
+}
+
+/* ADR-031: tramos sin fichas disponibles, deshabilitados (datos de DomainDetail, textos de content/ui/availability.yaml). */
+.home-step-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin-top: 2px;
+}
+
+.availability-count {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--availability-count-ink);
+  background: var(--availability-count-bg);
+}
+
+.home-step[data-disabled="true"] .home-step-text {
+  cursor: not-allowed;
+}
+
+.home-step[data-disabled="true"] .home-step-num {
+  box-sizing: border-box;
+  background: var(--surface);
+  color: var(--ink-muted);
+  border: 2px dashed var(--border-strong);
+}
+
+.home-step[data-disabled="true"] .home-step-name {
+  color: var(--ink-muted);
+}
+
+.home-step[data-disabled="true"] .home-weight {
+  background: transparent;
+  color: var(--ink-muted);
+  border: 1px solid var(--border-strong);
+}
+
+.home-station[data-disabled="true"] {
+  cursor: not-allowed;
+}
+
+.home-station-line[data-tone="disabled"] {
+  height: 0;
+  background: transparent;
+  border-top: 2px dashed var(--border-strong);
+}
+
+.home-station-dot[data-fill="disabled"] {
+  background: var(--surface);
+  color: var(--ink-muted);
+  border: 2px dashed var(--border-strong);
+}
+
+.home-station .availability-tag {
+  max-width: 100%;
+}
+
+.home-layer[data-layer="especializacion"] {
+  container-type: inline-size;
+}
+
+/* Bajo ~620 px de ancho del bloque, los pasos pasan a una lista vertical: número | título, etiqueta bajo el título. */
+@container (max-width: 620px) {
+  .home-layer[data-layer="especializacion"] .home-layer-label {
+    flex-basis: 100%;
+  }
+
+  .home-layer[data-layer="especializacion"] .home-stations-scroll {
+    flex-basis: 100%;
+    overflow-x: visible;
+  }
+
+  .home-layer[data-layer="especializacion"] .home-stations {
+    grid-template-columns: minmax(0, 1fr);
+    min-width: 0;
+    gap: 12px;
+  }
+
+  .home-layer[data-layer="especializacion"] .home-station {
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr);
+    column-gap: 10px;
+    row-gap: 3px;
+    align-items: center;
+    justify-items: start;
+    min-height: 0;
+    text-align: left;
+  }
+
+  .home-layer[data-layer="especializacion"] .home-station-track {
+    grid-row: 1 / span 2;
+    align-self: start;
+    width: auto;
+  }
+
+  .home-layer[data-layer="especializacion"] .home-station-line {
+    display: none;
+  }
+
+  .home-layer[data-layer="especializacion"] .home-station-name {
+    grid-column: 2;
+    padding: 0;
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+
+  .home-layer[data-layer="especializacion"] .home-station .availability-tag {
+    grid-column: 2;
+  }
+}
+
+/* La cabecera del recorrido va a todo el ancho, sobre «Tu itinerario» y el mapa. */
+.home-route {
+  /* Fuera de .home-split: sin el flex 1 1 0 de .home-map, que en la columna de .home colapsaba su alto. */
+  flex: none;
+  width: 100%;
+  margin-bottom: var(--space-4);
 }

@@ -11,7 +11,7 @@ type V = Required<Views>;
 export type Titled = { title: string; text: string };
 export type Label = { title: string; detail?: string };
 export type Cite = { title: string; href: string; detail: string };
-export type Tag = { kind?: string; label: string; legal?: boolean; href?: string };
+export type Tag = { kind?: string; label: string; legal?: boolean; href?: string; section?: number };
 
 export type CentralIdeaProps = {
   checksTitle: string;
@@ -130,22 +130,32 @@ export type ControlEvidenceProps = {
 
 export type CodeGuideProps = {
   lead: Titled;
-  rules: { headers: string[]; items: { id?: string; rule: string; fn: string; requirement: string }[] };
-  notCovered: { title: string; intro: string; items: Titled[] };
+  rules: { headers: string[]; items: { id?: string; rule: string; fn: string; requirement: string; finds?: string }[] };
+  notCovered: { title: string; intro: string; items: Titled[]; note?: string };
   scenarios: { title: string; items: { name: string; text: string; exitCode: 0 | 1 }[] };
   simplifies: { title: string; items: Titled[] };
   limit: Titled;
 };
 
-export type CloudCell = { name: string; text: string; warn?: string };
+export type CloudCell = { name: string; text?: string; warn?: string };
 
 export type CloudCompareProps = {
   title: string;
   intro: string;
   alert: Titled;
   headers: string[];
-  rows: { id?: string; need: string; meta: string; gcp: CloudCell; aws: CloudCell; azure: CloudCell }[];
-  closing: string;
+  rows: {
+    id?: string;
+    need: string;
+    meta?: string;
+    /** ADR-030 enmienda 5: fila «Dónde busca» y columna «Este ejemplo». */
+    tone?: "where";
+    own?: { text: string };
+    gcp: CloudCell;
+    aws: CloudCell;
+    azure: CloudCell;
+  }[];
+  closing?: string;
 };
 
 export type PracticeItem = { id?: string; title: string; text: string; arq?: boolean; tags?: Tag[] };
@@ -172,23 +182,43 @@ export type SeverityCardsProps = {
 export type TradeOffsProps = {
   arq?: boolean;
   resolutionLabel: string;
-  items: { a: string; b: string; text: string; resolution: string }[];
-  note: string;
+  /** text es la frase sin partir. a_text y b_text, si vienen, son cada lado. */
+  items: { a: string; b: string; text: string; aText?: string; bText?: string; resolution: string }[];
+  note?: string;
 };
 
 export type OpenQuestionsProps = {
   intro: string;
-  checkLabel: string;
+  checkLabel?: string;
   /** Plantilla con {n} y {total}. */
-  counter: string;
+  counter?: string;
   items: { question: string; tags: Tag[] }[];
+};
+
+export type CitationSource = {
+  kind: "citation";
+  title: string;
+  links: { label?: string; href: string }[];
+  publisher: string;
+  level: string;
+  why?: string;
+  provider?: string;
+};
+
+export type PageSource = {
+  kind: "page";
+  title: string;
+  page: string;
+  label: string;
+  why?: string;
+  targetAvailability?: "in_review" | "in_development";
 };
 
 export type SourcesGroupedProps = {
   groups: {
     title: string;
     layout?: "list" | "providers";
-    sources: { title: string; links: { label?: string; href: string }[]; publisher: string; level: string; why?: string; provider?: string }[];
+    sources: (CitationSource | PageSource)[];
   }[];
 };
 
@@ -307,8 +337,22 @@ export function controlEvidenceProps(view: V["control_evidence"]): ControlEviden
 export function codeGuideProps(view: V["code_guide"]): CodeGuideProps {
   return {
     lead: view.lead,
-    rules: view.rules,
-    notCovered: view.not_covered,
+    rules: {
+      headers: view.rules.headers,
+      items: view.rules.items.map((item) => ({
+        id: item.id,
+        rule: item.rule,
+        fn: item.fn,
+        requirement: item.requirement,
+        finds: item.finds,
+      })),
+    },
+    notCovered: {
+      title: view.not_covered.title,
+      intro: view.not_covered.intro,
+      items: view.not_covered.items,
+      note: view.not_covered.note,
+    },
     scenarios: {
       title: view.scenarios.title,
       items: view.scenarios.items.map((item) => ({ name: item.name, text: item.text, exitCode: item.exit_code as 0 | 1 })),
@@ -355,7 +399,15 @@ export function severityCardsProps(view: V["severity_cards"]): SeverityCardsProp
 }
 
 export function tradeOffsProps(view: V["trade_offs"]): TradeOffsProps {
-  return { arq: view.arq, resolutionLabel: view.resolution_label, items: view.items, note: view.note };
+  const items = view.items.map((item) => ({
+    a: item.a,
+    b: item.b,
+    text: item.text ?? [item.a_text, item.b_text].filter(Boolean).join(" "),
+    aText: item.a_text,
+    bText: item.b_text,
+    resolution: item.resolution,
+  }));
+  return { arq: view.arq, resolutionLabel: view.resolution_label, items, note: view.note };
 }
 
 export function openQuestionsProps(view: V["open_questions"]): OpenQuestionsProps {
@@ -364,7 +416,38 @@ export function openQuestionsProps(view: V["open_questions"]): OpenQuestionsProp
 
 export function sourcesGroupedProps(view: V["sources_grouped"]): SourcesGroupedProps {
   return {
-    groups: view.groups.map((group) => ({ ...group, layout: group.layout as "list" | "providers" | undefined })),
+    groups: view.groups.map((group) => ({
+      title: group.title,
+      layout: group.layout as "list" | "providers" | undefined,
+      sources: group.sources.flatMap((source): (CitationSource | PageSource)[] => {
+        if (source.page && source.label) {
+          return [
+            {
+              kind: "page" as const,
+              title: source.title,
+              page: source.page,
+              label: source.label,
+              why: source.why,
+              targetAvailability: source.target_availability,
+            },
+          ];
+        }
+        if (source.links && source.publisher && source.level) {
+          return [
+            {
+              kind: "citation" as const,
+              title: source.title,
+              links: source.links,
+              publisher: source.publisher,
+              level: source.level,
+              why: source.why,
+              provider: source.provider,
+            },
+          ];
+        }
+        return [];
+      }),
+    })),
   };
 }
 
@@ -381,7 +464,7 @@ export type RichPart =
   | { type: "em"; value: string }
   | { type: "code"; value: string };
 
-const RICH = /\[([^\]]+)\]\((https:\/\/[^)\s]+)\)|\*\*([^*]+)\*\*|\*([^*]+)\*|`([^`]+)`/g;
+const RICH = /\[([^\]]+)\]\((https:\/\/[^)\s]+|\/[^)\s]+|#[^)\s]+)\)|\*\*([^*]+)\*\*|\*([^*]+)\*|`([^`]+)`/g;
 
 export function richParts(text: string): RichPart[] {
   const parts: RichPart[] = [];

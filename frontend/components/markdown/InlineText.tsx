@@ -1,3 +1,8 @@
+"use client";
+
+import { anchorAttrs, conceptSlugFromHref } from "@/lib/anchorAttrs";
+import { AvailabilityMark } from "@/components/availability/AvailabilityMark";
+import { useFichaLinks } from "@/components/availability/FichaLink";
 import {
   claimKind,
   claimLabel,
@@ -11,6 +16,7 @@ import { splitCodeStatus } from "@/lib/architecture";
 import { conceptInline, PENDING_MARK, type ConceptRefs } from "@/lib/conceptNames";
 import { CONSTRUCTION_MARK } from "@/lib/publishedScope";
 import type { Inline } from "@/lib/markdown";
+import { sectionRefLabel } from "@/lib/sectionNumbering";
 
 export function ArchitectureDot({ labelled = true }: { labelled?: boolean }) {
   if (!labelled) {
@@ -87,6 +93,7 @@ export function InlineText({
   conceptRefs?: ConceptRefs;
   markCodeStatus?: boolean;
 }) {
+  const { links, sections } = useFichaLinks();
   let trimLeading = false;
   return inlines.map((part, index) => {
     const key = `${part.type}-${index}`;
@@ -112,6 +119,15 @@ export function InlineText({
     }
     if (part.type === "code") {
       const named = conceptInline(value, conceptRefs);
+      if (named.kind === "unavailable") {
+        const state = links.get(named.slug);
+        return (
+          <span key={key} className="ficha-unavailable-link">
+            {named.label}
+            {state ? <AvailabilityMark compact status={state.status} label={state.label} /> : null}
+          </span>
+        );
+      }
       if (named.kind === "link") {
         return (
           <a key={key} className="ficha-name" href={named.href} title={named.slug}>
@@ -150,8 +166,26 @@ export function InlineText({
       return <del key={key}>{value}</del>;
     }
     if (part.type === "link") {
+      const slug = conceptSlugFromHref(part.href);
+      const unavailable = slug ? links.get(slug) : undefined;
+      if (unavailable) {
+        return (
+          <span key={key} className="ficha-unavailable-link">
+            {value}
+            <AvailabilityMark compact status={unavailable.status} label={unavailable.label} />
+          </span>
+        );
+      }
+      const pill = sectionRefLabel(part.href, value, sections);
+      if (pill) {
+        return (
+          <a key={key} className="section-pill" href={part.href}>
+            {pill}
+          </a>
+        );
+      }
       return (
-        <a key={key} href={part.href}>
+        <a key={key} href={part.href} {...anchorAttrs(part.href)}>
           {value}
         </a>
       );
@@ -163,3 +197,4 @@ export function InlineText({
     );
   });
 }
+

@@ -44,8 +44,14 @@ async function problemDetail(response: Response): Promise<string> {
   return "Datos no válidos.";
 }
 
+// Solo para desarrollo (hybrid/mock sin API_BASE_URL). El sitio estático nunca llama a una API.
+const DEV_API_BASE = "http://localhost:8000/api/v1";
+
 async function liveRequest<T>(method: string, livePath: string, body?: unknown): Promise<ApiResult<T>> {
-  const base = process.env.API_BASE_URL ?? "http://localhost:8000/api/v1";
+  if ((process.env.API_MODE ?? "hybrid") === "static") {
+    return { ok: false, reason: "unavailable", detail: "El sitio estático no usa la API." };
+  }
+  const base = process.env.API_BASE_URL ?? DEV_API_BASE;
   try {
     const response = await fetch(`${base}${livePath}`, {
       method,

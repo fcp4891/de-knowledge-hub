@@ -392,6 +392,7 @@ export interface components {
             items: components["schemas"]["DomainSummary"][];
         };
         DomainDetail: {
+            availability_texts: components["schemas"]["AvailabilityTexts"];
             /** @description ADR-027: marco legal verificado del dominio; null si no tiene. */
             legal_framework: components["schemas"]["LegalFramework"] | null;
             subdomains: {
@@ -434,6 +435,48 @@ export interface components {
             /** @description Estado de la ficha; null si aún no tiene ficha. */
             verification_status: components["schemas"]["VerificationStatus"] | null;
             last_verified: components["schemas"]["Date"] | null;
+            availability: components["schemas"]["Availability"];
+        };
+        /**
+         * @description ADR-031: available, o una ficha que se publica como página mínima (in_review: contenido listo, en revisión; in_development: contenido y diseño en preparación).
+         * @enum {unknown}
+         */
+        Availability: "available" | "in_review" | "in_development";
+        /** @description ADR-031: textos de content/ui/availability.yaml para un estado no disponible. */
+        AvailabilityText: {
+            /** @description Etiqueta (tag) del estado. */
+            label: string;
+            /** @description Texto de ayuda de la página mínima. */
+            help: string;
+            /** @description Texto del enlace de vuelta al itinerario. */
+            back_label: string;
+        };
+        /** @description ADR-031, enmienda 1: content/ui/availability.yaml completo, para las etiquetas y los conteos por tramo del itinerario. {n} y {total} los reemplaza la UI. */
+        AvailabilityTexts: {
+            in_review: components["schemas"]["AvailabilityState"];
+            in_development: components["schemas"]["AvailabilityState"];
+            available: {
+                /** @description «{n} disponibles». */
+                count: string;
+            };
+            /** @description «{n} de {total} fichas disponibles». */
+            route_count: string;
+            back_label: string;
+        };
+        AvailabilityState: {
+            label: string;
+            help: string;
+            /** @description Conteo de un tramo, p. ej. «{n} en revisión». */
+            count: string;
+        };
+        /** @description ADR-031: ficha enlazada desde esta (cuerpo, vistas, relaciones o temas relacionados) que no está disponible; el componente la muestra con su etiqueta y sin navegar. */
+        UnavailableLink: {
+            slug: components["schemas"]["Slug"];
+            title: string;
+            /** @enum {unknown} */
+            target_availability: "in_review" | "in_development";
+            /** @description Etiqueta del estado (AvailabilityText.label). */
+            label: string;
         };
         ConceptList: {
             items: components["schemas"]["ConceptSummary"][];
@@ -489,6 +532,11 @@ export interface components {
             /** @description Anexos tras la última sección (ADR-029); la propiedad solo aparece si la ficha los tiene. */
             annexes?: components["schemas"]["Annex"][];
             views?: components["schemas"]["Views"];
+            availability: components["schemas"]["Availability"];
+            /** @description ADR-031: solo si availability no es available. La ficha se publica como página mínima: sections, views, annexes, sources y legal_basis van vacíos. */
+            availability_text?: components["schemas"]["AvailabilityText"];
+            /** @description ADR-031: fichas no disponibles que esta enlaza; vacía si no hay. */
+            unavailable_links: components["schemas"]["UnavailableLink"][];
         } & components["schemas"]["Metadata"];
         /** @description Vistas estructuradas (ADR-030); la propiedad solo aparece si la ficha las tiene. Cada clave mapea 1:1 con las props de su componente, en snake_case. Las vistas con marca van donde el Markdown trae «<!-- view: clave -->»; approach, legal_foundations y sources_grouped tienen posición fija. */
         Views: {
@@ -591,10 +639,16 @@ export interface components {
                         kind?: string;
                         label: string;
                         legal?: boolean;
-                        /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                        /** @description Número de sección de la plantilla (ADR-030, enmienda 5). */
+                        section?: number;
                         href?: string;
                     }[];
                 }[];
+                annex_link?: {
+                    label: string;
+                    /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                    href: string;
+                };
                 roles: {
                     caption?: string;
                     responsible: {
@@ -679,7 +733,8 @@ export interface components {
                             kind?: string;
                             label: string;
                             legal?: boolean;
-                            /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                            /** @description Número de sección de la plantilla (ADR-030, enmienda 5). */
+                            section?: number;
                             href?: string;
                         }[];
                     }[];
@@ -720,7 +775,8 @@ export interface components {
                             kind?: string;
                             label: string;
                             legal?: boolean;
-                            /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                            /** @description Número de sección de la plantilla (ADR-030, enmienda 5). */
+                            section?: number;
                             href?: string;
                         }[];
                     }[];
@@ -777,9 +833,11 @@ export interface components {
                         text: string;
                     }[];
                 };
+                /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                 note: string;
                 example: {
                     summary: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                     note: string;
                     code_link?: {
                         label: string;
@@ -809,20 +867,27 @@ export interface components {
                         rule: string;
                         fn: string;
                         requirement: string;
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                        finds?: string;
                     }[];
                 };
                 not_covered: {
                     title: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                     intro: string;
                     items: {
                         title: string;
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                         text: string;
                     }[];
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    note?: string;
                 };
                 scenarios: {
                     title: string;
                     items: {
                         name: string;
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                         text: string;
                         /** @enum {unknown} */
                         exit_code: 0 | 1;
@@ -843,9 +908,11 @@ export interface components {
             /** @description CloudCompare (§11 «En la nube»: reemplaza las pestañas GCP/AWS/Azure). */
             cloud_compare?: {
                 title: string;
+                /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                 intro: string;
                 alert: {
                     title: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                     text: string;
                 };
                 headers: string[];
@@ -853,24 +920,36 @@ export interface components {
                     /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
                     id?: string;
                     need: string;
-                    meta: string;
-                    gcp: {
-                        name: string;
+                    meta?: string;
+                    /** @enum {unknown} */
+                    tone?: "where";
+                    own?: {
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                         text: string;
+                    };
+                    gcp: {
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                        name: string;
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                        text?: string;
                         warn?: string;
                     };
                     aws: {
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                         name: string;
-                        text: string;
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                        text?: string;
                         warn?: string;
                     };
                     azure: {
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                         name: string;
-                        text: string;
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                        text?: string;
                         warn?: string;
                     };
                 }[];
-                closing: string;
+                closing?: string;
             };
             /** @description PracticeLanes (§14): etapas en columnas y una franja transversal opcional. */
             practice_lanes?: {
@@ -891,7 +970,8 @@ export interface components {
                             kind?: string;
                             label: string;
                             legal?: boolean;
-                            /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                            /** @description Número de sección de la plantilla (ADR-030, enmienda 5). */
+                            section?: number;
                             href?: string;
                         }[];
                     }[];
@@ -909,7 +989,8 @@ export interface components {
                             kind?: string;
                             label: string;
                             legal?: boolean;
-                            /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                            /** @description Número de sección de la plantilla (ADR-030, enmienda 5). */
+                            section?: number;
                             href?: string;
                         }[];
                     }[];
@@ -921,26 +1002,29 @@ export interface components {
                 resolution_label: string;
                 items: {
                     a: string;
+                    a_text?: string;
                     b: string;
+                    b_text?: string;
                     /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
-                    text: string;
+                    text?: string;
                     resolution: string;
                 }[];
-                note: string;
+                note?: string;
             };
             /** @description OpenQuestions (§18): tarjetas con casilla «Sé responderla»; el estado vive en memoria. */
             open_questions?: {
                 intro: string;
-                check_label: string;
+                check_label?: string;
                 /** @description Plantilla del contador con {n} y {total}. */
-                counter: string;
+                counter?: string;
                 items: {
                     question: string;
                     tags: {
                         kind?: string;
                         label: string;
                         legal?: boolean;
-                        /** @description Ancla interna de la ficha (ADR-030, enmienda 2). */
+                        /** @description Número de sección de la plantilla (ADR-030, enmienda 5). */
+                        section?: number;
                         href?: string;
                     }[];
                 }[];
@@ -974,19 +1058,306 @@ export interface components {
                     layout?: "list" | "providers";
                     sources: {
                         title: string;
-                        links: {
+                        links?: {
                             label?: string;
                             /** Format: uri */
                             href: string;
                         }[];
-                        publisher: string;
+                        publisher?: string;
                         /** @description «Nivel N» desde el registro de la fuente. */
-                        level: string;
+                        level?: string;
                         why?: string;
                         provider?: string;
+                        page?: string;
+                        label?: string;
+                        /** @enum {string} */
+                        target_availability?: "in_review" | "in_development";
                     }[];
                 }[];
             };
+            /** @description Título visible de cada sección presente (posición fija: no lleva marca). */
+            section_titles?: {
+                /** @description Número de sección de la plantilla (ADR-030, enmienda 5). */
+                section: number;
+                title: string;
+                /** @description Nombre con que «[§](#sN)» cita la sección, si difiere de title. */
+                ref?: string;
+            }[];
+            /** @description Notas con inicio en negrita (lead); tone risk para el recuadro «Riesgo». Marca: note <id>. */
+            notes?: {
+                [key: string]: {
+                    lead?: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    text: string;
+                    /** @enum {unknown} */
+                    tone?: "note" | "risk";
+                };
+            };
+            /** @description Fila de enlaces con rótulo (por ejemplo «En la ficha madre:»). Marca: chips <id>. */
+            chips?: {
+                [key: string]: {
+                    label: string;
+                    items: {
+                        kind?: string;
+                        label: string;
+                        href: string;
+                    }[];
+                };
+            };
+            /** @description CatalogFields (§1): campos que el catálogo guarda por columna. */
+            catalog_fields?: {
+                title: string;
+                label?: string;
+                headers: string[];
+                rows: {
+                    field: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    text: string;
+                    categories?: {
+                        label: string;
+                        /** @enum {unknown} */
+                        tone: "personal" | "sensitive" | "review" | "none";
+                    }[];
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    note?: string;
+                }[];
+            };
+            /** @description ConceptMap (§2): mapa «Qué protege la ley». */
+            concept_map?: {
+                label: string;
+                outside: {
+                    kicker: string;
+                    items: {
+                        title: string;
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                        text: string;
+                    }[];
+                    hint: string;
+                };
+                personal: {
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    kicker: string;
+                    definition: string;
+                    text: string;
+                    also: {
+                        kicker: string;
+                        items: {
+                            /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                            title: string;
+                            /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                            text: string;
+                            example?: {
+                                label: string;
+                                column: string;
+                            };
+                        }[];
+                    };
+                };
+                sensitive: {
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    kicker: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    text: string;
+                    hint: string;
+                };
+                minors: {
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    kicker: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    text: string;
+                    hint: string;
+                };
+            };
+            /** @description DecisionTree (§2): cuatro preguntas, salidas, columnas de ejemplo y su entrada de catálogo. */
+            decision_tree?: {
+                intro: {
+                    title: string;
+                    text: string;
+                };
+                examples_title: string;
+                path_label: string;
+                result_label: string;
+                catalog_label: string;
+                answer_labels: {
+                    yes: string;
+                    no: string;
+                };
+                step_labels: {
+                    question: string;
+                    next: string;
+                    end: string;
+                };
+                questions: {
+                    number: number;
+                    question: string;
+                    help: string;
+                    gloss: {
+                        yes: string;
+                        no: string;
+                    };
+                    exits: {
+                        /** @enum {unknown} */
+                        answer: "yes" | "no";
+                        label: string;
+                        /** @enum {unknown} */
+                        outcome: "anonymized" | "unlinked" | "sensitive" | "minor" | "personal";
+                        title: string;
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                        text: string;
+                    }[];
+                }[];
+                fallback: {
+                    /** @enum {unknown} */
+                    answer?: "yes" | "no";
+                    label: string;
+                    /** @enum {unknown} */
+                    outcome: "anonymized" | "unlinked" | "sensitive" | "minor" | "personal";
+                    title: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    text: string;
+                };
+                catalog_fields: {
+                    category: string;
+                    basis: string;
+                    risk: string;
+                    method: string;
+                    review: string;
+                };
+                review: string;
+                default: string;
+                examples: {
+                    column: string;
+                    description: string;
+                    answers: ("yes" | "no")[];
+                    /** @enum {unknown} */
+                    outcome: "anonymized" | "unlinked" | "sensitive" | "minor" | "personal";
+                    title: string;
+                    explanation: string;
+                    catalog: {
+                        category: string;
+                        basis: string;
+                        risk: string;
+                        method: string;
+                    };
+                    law?: boolean;
+                }[];
+                law: {
+                    summary: string;
+                    items: string[];
+                    link: {
+                        label: string;
+                        /** @description Enlace a otra ficha; la API marca target_availability si no está disponible (ADR-031). */
+                        href: string;
+                    };
+                };
+            };
+            /** @description CoverageStrip (§3): qué columnas ve cada enfoque. */
+            coverage_strip?: {
+                label: string;
+                /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                lead: string;
+                columns: string[];
+                rows: {
+                    title: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    text: string;
+                    count: string;
+                    hits: string[];
+                    /** @enum {unknown} */
+                    tone: "detected" | "law";
+                }[];
+                /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                note: string;
+            };
+            /** @description ColumnTypes (§3): detalle por tipo de columna. */
+            column_types?: {
+                headers: string[];
+                rows: {
+                    type: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    examples: string;
+                    patterns: {
+                        /** @enum {unknown} */
+                        mark: "ok" | "part" | "miss";
+                        text: string;
+                    };
+                    detector: {
+                        /** @enum {unknown} */
+                        mark: "ok" | "part" | "miss";
+                        text: string;
+                    };
+                    categories: {
+                        label: string;
+                        /** @enum {unknown} */
+                        tone: "personal" | "sensitive" | "review" | "none";
+                    }[];
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    why: string;
+                }[];
+                legend: string[];
+            };
+            /** @description EvidenceSteps (§4): pasos con su evidencia y el flujo catálogo → controles. */
+            evidence_steps?: {
+                evidence_label: string;
+                steps: {
+                    /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
+                    id?: string;
+                    number: string;
+                    title: string;
+                    text: string;
+                    arq?: boolean;
+                    evidence: string;
+                }[];
+                flow: {
+                    title: string;
+                    text: string;
+                }[];
+            };
+            /** @description UseAvoid (§5): usarlo y no usarlo para. */
+            use_avoid?: {
+                use: {
+                    title: string;
+                    items: string[];
+                };
+                avoid: {
+                    title: string;
+                    items: string[];
+                };
+            };
+            /** @description PracticePairs (§14 · Hacer y evitar): pares hacer / evitar. */
+            practice_pairs?: {
+                start: {
+                    title: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    text: string;
+                };
+                labels: {
+                    do: string;
+                    avoid: string;
+                };
+                items: {
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    do: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    avoid: string;
+                }[];
+            };
+            /** @description Opciones de lectura de la ficha (ADR-030, enmienda 7); posición fija, sin marca. */
+            reading?: {
+                /** @description false: las flechas «→» del cuerpo no se dibujan como flecha. */
+                inline_arrows?: boolean;
+                /** @description true: el Resumen se maqueta en pares. */
+                summary_pairs?: boolean;
+                /** @description false: sin el panel lateral de base legal (la ficha lo trae en una vista). */
+                legal_basis_panel?: boolean;
+            };
+            /** @description Divide una sección en dos desplegables en la marca «<!-- split: <key> -->» de su cuerpo (ADR-030, enmienda 7). */
+            section_splits?: {
+                /** @description Número de sección de la plantilla (ADR-030, enmienda 5). */
+                section: number;
+                key: string;
+                title: string;
+            }[];
         };
         /** @description Anexo de la ficha (`## Anexo · Título`, ADR-029), en Markdown. */
         Annex: {
@@ -1075,6 +1446,11 @@ export interface components {
              */
             origin: "entity" | "blueprint";
             note?: string | null;
+            /**
+             * @description ADR-031: solo si la ficha destino no está disponible.
+             * @enum {unknown}
+             */
+            target_availability?: "in_review" | "in_development";
         };
         RelationGroup: {
             type: components["schemas"]["RelationType"];

@@ -232,3 +232,10 @@ Pedida por Felipe el 2026-10-24, junto con la aceptación de ADR-024.
 - **Decisión:** la tomó Felipe el 2026-11-09.
 - **Regla.** Una cita `legislative` de la jurisdicción de la ficha puede tener `accessed` **posterior** a `last_verified`, nunca anterior. Así se puede registrar una consulta nueva de un texto legal sin volver a verificar toda la ficha. Ejemplos: la Ley 21.719 en el Diario Oficial y la Ley 19.628 en BCN, ambas consultadas el 2026-11-09, mientras `last_verified` sigue en 2026-10-28.
 - **Implementación.** Está en `check_legal_content` y la prueba `tests/test_validate_legal.py::test_legal_citation_may_be_accessed_after_last_verified`.
+
+## Enmienda 9 — Artículos citados desde las vistas (2026-11-12)
+
+- En una ficha con vistas (ADR-030), los artículos que las vistas citan con un enlace también cuentan como citados por el cuerpo, para la coherencia con `legal_basis`. Por ejemplo, «[(art. 2 letra f)](https://…)» cuenta como art. 2.
+- **Motivo.** `pii-identification` lleva el texto de la maqueta en vistas, sin etiquetas «Obligación legal»: sus citas son enlaces al texto publicado en el Diario Oficial.
+- **Efecto en chile-data-protection.** Sus vistas ya citaban el art. 16 quáter, así que este entra a su `legal_basis`, a su anexo y al catálogo. Eso crea el ancla `#lb-ley-19628-16-quater`.
+- El aviso «Esta ficha no es asesoría legal» sigue siendo obligatorio en el §1.

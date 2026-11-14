@@ -2,9 +2,34 @@
 
 Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
-**Última actualización:** 2026-11-10
+**Última actualización:** 2026-11-12
 
 ## Actual
+- **2026-11-14 · Cierre de `a/pii-availability` (apto para merge tras la re-revisión de 2d04492):**
+  - Contraste en oscuro: `.route-next` como `.home-continue`, `.skip-link` con `--ink-inverse` y bloques de código con `--code-bg`; test de contraste calculado desde `tokens.css` en todos los CSS.
+  - B-N5: una sección fuera de 1–22 (anexo) no borra lo visto; «Leído 14 de 14» en el anexo de chile.
+  - ADR-030 enmienda 7: `views.reading`, `views.section_splits` (marca `<!-- split: <key> -->`) y `legal_foundations.annex_link`. Sin condiciones por slug en `frontend/components/`.
+  - `pii-identification` aprobada (`owner_approved_at: 2026-11-14`) y en `verified`.
+  - Al BACKLOG: `partOf.ts` y `chileLegalCatalog.ts` (enmienda 8 de ADR-030), marcas visibles de ADR-023, color del respaldo de Mermaid, duplicados en `check_splits` y cobertura de `contrast.test.ts`.
+- **2026-11-12 · Itinerario con tramos deshabilitados (ADR-031, enmienda 1):**
+  - Un tramo sin fichas disponibles se ve deshabilitado en la cabecera del recorrido y en el panel «Tu itinerario». La regla se calcula con los datos.
+  - Textos de conteo en `content/ui/availability.yaml`, expuestos en `DomainDetail.availability_texts`.
+  - La cabecera pasa a lista vertical con una consulta de contenedor bajo 620 px.
+  - `.htaccess`: ruta física primero, directo a HTTPS; HSTS de 86400.
+- **2026-11-12 · Integración de la interfaz de pii (`fa89642`) y numeración por contrato:**
+  - Merge en `f7a1598`, sin conflictos.
+  - La numeración compacta se activa por contrato cuando la ficha trae `views.section_titles` (antes, por slug), y los títulos visibles salen de `section_titles`.
+  - Las referencias «[§](#sN)» y las píldoras con `section` usan el número visible: «§6 · Código».
+  - chile-data-protection recibe `section_titles` con sus títulos actuales: mismas 14 secciones y «Leído N de 14».
+  - La píldora legal y los enlaces de Fuentes pasan por `anchorAttrs`.
+  - **Pedido a Carril B:** el enlace «Diario Oficial» de `VigenciaTimeline` (chile) sigue sin `anchorAttrs`.
+- **2026-11-12 · Decisiones sobre 9dc8d01:**
+  - Citas con página aprobadas (ADR-030, enmienda 6): el validador acepta `<pdf>#page=N` si el PDF ya es una cita. `pii-identification` cita el art. 2 en la página 2, el 14 quinquies en la 10, el 16 en la 12 y el 16 quáter en la 13; el `target` queda para Carril B.
+  - Búsqueda: las fichas no disponibles indexan solo el título en la base, y el título y la etiqueta en la proyección y en el índice estático.
+  - Art. 16 quáter: una sola entrada en `legal_basis`, en el anexo y en el catálogo; `#lb-ley-19628-16-quater` abre el modal.
+  - Migración 0008 y compilación de la base local, sin errores.
+  - Commit local, sin push.
+- **2026-11-12 · Disponibilidad por ficha y migración de `pii-identification`:** ADR-031: campo `availability`, textos en `content/ui/availability.yaml`, tabla `ui_texts` (migración 0008), página mínima con `noindex` y `unavailable_links` / `target_availability` en la API. El paso 1 del itinerario queda con 2 fichas `available` y `processing-activities-inventory` en `in_review`; los pasos 2 a 5, 12 fichas, en `in_development`. `pii-identification` se migró desde la maqueta: 11 secciones en vistas (ADR-030, enmienda 5; ADR-029, enmienda 3) y el detector de la maqueta en el §10 (salidas 1, 0 y 1; mypy --strict). Queda en `review_required`. ADR-023, enmienda 9: los artículos citados en las vistas cuentan como citados; por eso el art. 16 quáter entra a chile-data-protection. **Pedidos a Carril B:** componentes CatalogFields, ConceptMap, DecisionTree, CoverageStrip, ColumnTypes, EvidenceSteps, UseAvoid, PracticePairs, Note y Chips; las referencias «[§](#sN)»; `section_titles`; las extensiones de CloudCompare, CodeGuide, TradeOffs (a_text/b_text en vez de partir el texto) y las entradas `page` de Fuentes; el diseño de la página mínima y de los enlaces marcados. **Pendiente:** el fragmento `#page=N` en las citas espera decisión. Commit local, sin push.
 - **2026-11-10 · Ley 21.719: diseño de Cursor, roles, fuentes y nombres (Felipe):** merge de `ui/ficha-ley21719-componentes` (1ce1de6) sin conflictos. Roles del §2 con campos explícitos `decide`/`evaluate?`/`build`/`processor.alert?` (ADR-030, enmienda 4); solo cambia la lectura de datos de `LegalFoundations`, con capturas idénticas a 1366 y 390 px. Fuentes: Ley 19.628 con enlace general y versionado; Ley 21.719 solo en el Diario Oficial (el enlace de BCN sale: no se pudo verificar, BCN responde 401); Decreto 662 consultado el 2026-11-09; ISO/IEC 27701:2025; Cloud Audit Logs → `configure-data-access`; Unity Catalog → `access-control`; BigQuery con rótulos «columnas» y «filas». Píldora «Arquitectura · Catálogo de actividades» (#s9) en Cómo funciona 02, en el contrato. **Pendiente para Carril B:** el diseño de Cursor ya no muestra las píldoras de Cómo funciona ni las de los principios. Atenuante con Decreto 662, arts. 3 y 15. Nombres: stash `quitar-felipe-historiales-2026-11-09` aplicado (sigue en la lista); 184 menciones en 69 archivos; sale `hideOwnerName.ts`; test `test_no_editor_names.py`. Test intermitente: `test_committed_offset_lag_and_reset_to_earliest`. Margen de 8 s del consumidor de Kafka; `offsets` pasa a 20 s. Sigue en `review_required`.
 - **2026-11-09 · Pendientes de la Ley 21.719 (Felipe):** ADR-023 enmienda 8 (cita legal posterior a `last_verified`, con test); fuente nueva Ley 21.719 en el Diario Oficial (`diario-oficial-cl`), destino de los enlaces del art. 2 y de las citas de esa ley; Ley 19.628 en BCN con `accessed` 2026-11-09. ADR-030 enmienda 3: píldoras en los 8 principios; prácticas en 4 etapas más la franja «Demostrar» (13 tarjetas); `TradeOffs` y `OpenQuestions` (componentes nuevos), `Pills` compartido; sanciones con artículo, rótulo y 4 modificadores (verificados en el Diario Oficial, págs. 23–25); escala amarillo-naranja-rojo. art. 7 en `legal_basis`, en el anexo y en el catálogo. Las maquetas `docs/mockups/*.html` no existen: textos del pedido; los trade-offs, desde el texto de la ficha. Sale el §21 (ADR-029, enmienda 2). Sigue en `review_required`.
 - **2026-11-09 · Anclas de la Ley 21.719 (Felipe):** píldoras de Cómo funciona y Cuándo utilizarlo como enlaces a anclas reales (`id` en filas de la matriz, reglas del código y tarjeta de prácticas; `s10`; `lb-ley-19628-<art>`); el validador rechaza un ancla inexistente (ADR-030, enmienda 2); «Ver código ↓» al pie del ejemplo. ADR-023 enmienda 7 aprobada: la legislación comparada lleva su propia fecha. **Pendiente de decisión:** la cita del Diario Oficial de la Ley 21.719 choca con la regla accessed = last_verified (2026-10-28); las tarjetas de principios no tienen píldoras en el diseño de Cursor.
@@ -196,6 +221,7 @@ Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Las relaciones solo se guardan en la entidad origen. Para mostrar la inversa, usar `x-relation-catalog.<TIPO>.inverse` de `schemas/relationships.schema.json`.
 
 ## Cambios de contrato (con ADR)
+- Opciones de lectura y divisiones de sección (ADR-030, enmienda 7, aditivo): `views.reading`, `views.section_splits` y `views.legal_foundations.annex_link`.
 - Creación inicial de `schemas/` y ajuste de pares en el gate de F0 (ADR-000).
 - `blueprint.schema.json` (ADR-003).
 - Enumeración `category`, `mvp` y `note` en tecnologías, y `matrix.schema.json` (ADR-004).

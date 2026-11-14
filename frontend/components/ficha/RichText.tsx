@@ -1,11 +1,38 @@
+"use client";
+
+import { anchorAttrs, conceptSlugFromHref } from "@/lib/anchorAttrs";
+import { sectionRefLabel } from "@/lib/sectionNumbering";
 import { richParts } from "@/lib/views";
 
-/** Texto de una vista con Markdown en línea (ADR-030): enlaces externos, negrita, cursiva y código. */
+import { AvailabilityMark } from "@/components/availability/AvailabilityMark";
+import { useFichaLinks } from "@/components/availability/FichaLink";
+
+/** Texto de una vista con Markdown en línea (ADR-030): enlaces, negrita, cursiva y código. */
 export function RichText({ text }: { text: string }) {
+  const { links, sections } = useFichaLinks();
   return richParts(text).map((part, index) => {
     if (part.type === "link") {
+      const slug = conceptSlugFromHref(part.href);
+      const unavailable = slug ? links.get(slug) : undefined;
+      if (unavailable) {
+        return (
+          <span key={index} className="ficha-unavailable-link">
+            {part.value}
+            <AvailabilityMark compact status={unavailable.status} label={unavailable.label} />
+          </span>
+        );
+      }
+      const pill = sectionRefLabel(part.href, part.value, sections);
+      if (pill) {
+        return (
+          <a key={index} className="section-pill" href={part.href}>
+            {pill}
+          </a>
+        );
+      }
+      const attrs = anchorAttrs(part.href);
       return (
-        <a key={index} href={part.href} target="_blank" rel="noopener noreferrer">
+        <a key={index} href={part.href} {...attrs}>
           {part.value}
         </a>
       );
@@ -26,7 +53,7 @@ export function CiteList({ className, sources }: { className: string; sources: {
     <ul className={`cite-list ${className}`}>
       {sources.map((source) => (
         <li key={source.href + source.title}>
-          <a href={source.href} target="_blank" rel="noopener noreferrer">
+          <a href={source.href} {...anchorAttrs(source.href)}>
             {source.title}
           </a>
           <p>{source.detail}</p>

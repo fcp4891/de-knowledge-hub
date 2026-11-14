@@ -62,6 +62,7 @@ updated_at: 2026-11-04
 last_verified: 2026-10-28
 owner_approved_at: 2026-11-04
 verification_status: verified
+availability: in_review
 ---
 
 ## 1. Resumen

@@ -31,7 +31,7 @@ const jetbrainsMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Data Engineering Knowledge Hub",
+  title: { default: "Data Engineering Knowledge Hub", template: "%s · Data Engineering Knowledge Hub" },
   description: "Estudio de Data Engineering por dominios y conceptos.",
 };
 

@@ -15,6 +15,7 @@ import {
 test("la marca <!-- view: clave --> es un bloque de vista, no una nota pendiente (ADR-030)", () => {
   const blocks = parseMarkdown("Antes.\n\n<!-- view: central_idea -->\n\n<!-- VERIFY: revisar -->\n");
   assert.deepEqual(blocks[1], { type: "view", name: "central_idea" });
+  assert.deepEqual(parseMarkdown("<!-- view: note catalogo -->")[0], { type: "view", name: "note catalogo" });
   assert.equal(blocks[2].type, "note");
 });
 
@@ -64,4 +65,32 @@ test("el texto de una vista admite enlaces, negrita, cursiva y código (ADR-030)
     { type: "text", value: "." },
   ]);
   assert.deepEqual(richParts("[x](http://inseguro.org)"), [{ type: "text", value: "[x](http://inseguro.org)" }]);
+  assert.deepEqual(richParts("[§](#s6) y [ficha](/concepts/chile-data-protection/)"), [
+    { type: "link", value: "§", href: "#s6" },
+    { type: "text", value: " y " },
+    { type: "link", value: "ficha", href: "/concepts/chile-data-protection/" },
+  ]);
+});
+
+test("una entrada page de fuentes se conserva y no se parte un trade-off", async () => {
+  const { sourcesGroupedProps, tradeOffsProps } = await import("../../frontend/lib/views.ts");
+  const grouped = sourcesGroupedProps({
+    groups: [
+      {
+        title: "Fichas",
+        sources: [
+          { title: "Madre", page: "chile-data-protection", label: "Ley", why: "Base.", target_availability: "in_review" },
+          { title: "Web", links: [{ href: "https://e.org" }], publisher: "p", level: "Nivel 1" },
+        ],
+      },
+    ],
+  });
+  assert.equal(grouped.groups[0].sources[0].kind, "page");
+  assert.equal(grouped.groups[0].sources[1].kind, "citation");
+  const trade = tradeOffsProps({
+    resolution_label: "Se resuelve con",
+    items: [{ a: "A", b: "B", a_text: "lado a", b_text: "lado b", resolution: "r" }],
+  });
+  assert.equal(trade.items[0].aText, "lado a");
+  assert.equal(trade.items[0].bText, "lado b");
 });

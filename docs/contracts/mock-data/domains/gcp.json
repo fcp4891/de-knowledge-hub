@@ -24,7 +24,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-11"
+          "last_verified": "2026-10-11",
+          "availability": "available"
         },
         {
           "slug": "bigquery-sql-dialect",
@@ -38,7 +39,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-11"
+          "last_verified": "2026-10-11",
+          "availability": "available"
         },
         {
           "slug": "bigquery-partitioning",
@@ -52,7 +54,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-09-30"
+          "last_verified": "2026-09-30",
+          "availability": "available"
         },
         {
           "slug": "bigquery-clustering",
@@ -66,7 +69,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-09-30"
+          "last_verified": "2026-09-30",
+          "availability": "available"
         },
         {
           "slug": "bigquery-slots",
@@ -80,7 +84,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-11"
+          "last_verified": "2026-10-11",
+          "availability": "available"
         },
         {
           "slug": "bigquery-query-optimization",
@@ -94,7 +99,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-11"
+          "last_verified": "2026-10-11",
+          "availability": "available"
         },
         {
           "slug": "bigquery-cost-model",
@@ -108,7 +114,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-05"
+          "last_verified": "2026-10-05",
+          "availability": "available"
         },
         {
           "slug": "bigquery-materialized-views",
@@ -122,7 +129,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-11"
+          "last_verified": "2026-10-11",
+          "availability": "available"
         },
         {
           "slug": "bigquery-external-tables",
@@ -136,7 +144,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-11"
+          "last_verified": "2026-10-11",
+          "availability": "available"
         },
         {
           "slug": "bigquery-biglake-tables",
@@ -150,7 +159,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-11"
+          "last_verified": "2026-10-11",
+          "availability": "available"
         },
         {
           "slug": "bigquery-security",
@@ -164,7 +174,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-11"
+          "last_verified": "2026-10-11",
+          "availability": "available"
         },
         {
           "slug": "bigquery-policy-tags",
@@ -178,7 +189,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-11"
+          "last_verified": "2026-10-11",
+          "availability": "available"
         },
         {
           "slug": "bigquery-information-schema",
@@ -192,7 +204,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-11"
+          "last_verified": "2026-10-11",
+          "availability": "available"
         },
         {
           "slug": "bigquery-monitoring",
@@ -206,7 +219,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-11"
+          "last_verified": "2026-10-11",
+          "availability": "available"
         },
         {
           "slug": "bigquery-incremental-models",
@@ -220,7 +234,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-11"
+          "last_verified": "2026-10-11",
+          "availability": "available"
         }
       ]
     },
@@ -240,7 +255,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-01"
+          "last_verified": "2026-10-01",
+          "availability": "available"
         },
         {
           "slug": "gcs-storage-classes-and-lifecycle",
@@ -254,7 +270,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-11"
+          "last_verified": "2026-10-11",
+          "availability": "available"
         }
       ]
     },
@@ -274,7 +291,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-04"
+          "last_verified": "2026-10-04",
+          "availability": "available"
         },
         {
           "slug": "pubsub-delivery-semantics",
@@ -288,7 +306,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-01"
+          "last_verified": "2026-10-01",
+          "availability": "available"
         },
         {
           "slug": "dataflow-execution-model",
@@ -302,7 +321,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-12"
+          "last_verified": "2026-10-12",
+          "availability": "available"
         },
         {
           "slug": "dataflow-streaming-pipelines",
@@ -316,7 +336,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-12"
+          "last_verified": "2026-10-12",
+          "availability": "available"
         }
       ]
     },
@@ -336,7 +357,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-12"
+          "last_verified": "2026-10-12",
+          "availability": "available"
         },
         {
           "slug": "dataform-workflows",
@@ -350,7 +372,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-12"
+          "last_verified": "2026-10-12",
+          "availability": "available"
         },
         {
           "slug": "dataform-incremental-tables",
@@ -364,7 +387,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-04"
+          "last_verified": "2026-10-04",
+          "availability": "available"
         }
       ]
     },
@@ -384,7 +408,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-12"
+          "last_verified": "2026-10-12",
+          "availability": "available"
         },
         {
           "slug": "cloud-sql-as-source",
@@ -398,7 +423,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-12"
+          "last_verified": "2026-10-12",
+          "availability": "available"
         }
       ]
     },
@@ -418,7 +444,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-11"
+          "last_verified": "2026-10-11",
+          "availability": "available"
         },
         {
           "slug": "gcp-iam-for-data",
@@ -432,7 +459,8 @@
           "mvp": true,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-01"
+          "last_verified": "2026-10-01",
+          "availability": "available"
         },
         {
           "slug": "gcp-secret-manager-usage",
@@ -446,7 +474,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-11"
+          "last_verified": "2026-10-11",
+          "availability": "available"
         },
         {
           "slug": "gcp-cmek-with-kms",
@@ -460,7 +489,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-11"
+          "last_verified": "2026-10-11",
+          "availability": "available"
         }
       ]
     },
@@ -480,9 +510,27 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-12"
+          "last_verified": "2026-10-12",
+          "availability": "available"
         }
       ]
     }
-  ]
+  ],
+  "availability_texts": {
+    "in_review": {
+      "label": "En revisión",
+      "help": "Contenido listo; en revisión antes de publicarse.",
+      "count": "{n} en revisión"
+    },
+    "in_development": {
+      "label": "En desarrollo",
+      "help": "Contenido y diseño en preparación.",
+      "count": "{n} en desarrollo"
+    },
+    "available": {
+      "count": "{n} disponibles"
+    },
+    "route_count": "{n} de {total} fichas disponibles",
+    "back_label": "Volver al itinerario"
+  }
 }

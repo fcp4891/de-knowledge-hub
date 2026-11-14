@@ -2,7 +2,9 @@ import { ApiFailure } from "@/components/ApiFailure";
 import { HomeScreen, type HomeConcept, type HomeDomain } from "@/components/home/HomeScreen";
 import { getDomain, listAllConcepts, listDomains, listStudyStates } from "@/lib/api/client";
 import type { ApiResult, StudyState } from "@/lib/api/types";
+import { countsAsFicha } from "@/lib/availability";
 import { verifiedCount } from "@/lib/privacySpace";
+import { stageAvailability, type AvailabilityTexts } from "@/lib/routeAvailability";
 
 async function latestReviewing(): Promise<ApiResult<StudyState | null>> {
   const items: StudyState[] = [];
@@ -47,8 +49,13 @@ export default async function HomePage() {
   }
 
   const withPage = new Map<string, number>();
+  const unavailable = new Map<string, number>();
   if (conceptList.ok) {
     for (const concept of conceptList.data) {
+      if (!countsAsFicha(concept)) {
+        unavailable.set(concept.domain, (unavailable.get(concept.domain) ?? 0) + 1);
+        continue;
+      }
       if (concept.has_page) {
         withPage.set(concept.domain, (withPage.get(concept.domain) ?? 0) + 1);
       }
@@ -58,31 +65,24 @@ export default async function HomePage() {
   const domains: HomeDomain[] = domainItems.map((domain) => {
     const detail = details.find((item) => item.ok && item.data.id === domain.id);
     const data = detail && detail.ok ? detail.data : null;
-    const stageOf = (subdomain: { slug: string; title: string; concepts: { has_page: boolean; verification_status: string | null }[] }) => {
-      const progress = verifiedCount(subdomain.concepts.map((concept) => concept.verification_status));
-      const pages = subdomain.concepts.filter((concept) => concept.has_page).length;
-      return { slug: subdomain.slug, title: subdomain.title, ...progress, withPage: pages };
+    const stageOf = (subdomain: { slug: string; title: string; concepts: { has_page: boolean; verification_status: string | null; availability?: string | null }[] }) => {
+      const visible = subdomain.concepts.filter((concept) => countsAsFicha(concept));
+      const progress = verifiedCount(visible.map((concept) => concept.verification_status));
+      const pages = visible.filter((concept) => concept.has_page).length;
+      // ADR-031: todas las fichas del tramo, también las no disponibles, para decidir si el tramo se habilita.
+      return { slug: subdomain.slug, title: subdomain.title, ...progress, withPage: pages, availability: stageAvailability(subdomain.concepts) };
     };
     const stages =
       domain.band === "especializacion" && data ? data.subdomains.map(stageOf) : [];
-    if (domain.band === "especializacion" && !stages.some((stage) => stage.slug === "regulatory-frameworks")) {
-      const compliance = details.find((item) => item.ok && item.data.slug === "compliance");
-      const regulatory =
-        compliance && compliance.ok
-          ? compliance.data.subdomains.find((subdomain) => subdomain.slug === "regulatory-frameworks")
-          : undefined;
-      if (regulatory) {
-        stages.push(stageOf(regulatory));
-      }
-    }
     return {
       id: domain.id,
       slug: domain.slug,
       title: domain.title,
       band: domain.band,
-      conceptCount: domain.concept_count,
+      conceptCount: domain.concept_count - (unavailable.get(domain.slug) ?? 0),
       withPage: conceptList.ok ? (withPage.get(domain.slug) ?? 0) : null,
       stages,
+      availabilityTexts: (data?.availability_texts as AvailabilityTexts | undefined) ?? null,
     };
   });
   const idBySlug = new Map(domains.map((domain) => [domain.slug, domain.id]));

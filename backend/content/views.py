@@ -10,33 +10,76 @@ import re
 import unicodedata
 from typing import Any
 
-MARKER = re.compile(r"<!--\s*view:\s*([a-z_]+)\s*-->")
+MARKER = re.compile(r"<!--\s*view:\s*([a-z_]+)(?:\s+([a-z0-9-]+))?\s*-->")
 MARKED = (   # van donde está la marca
     "central_idea", "vigencia_timeline", "treatment_map", "problem_journey", "design_board", "control_matrix",
     "when_to_use", "requirement_to_data", "control_evidence", "code_guide", "cloud_compare", "practice_lanes",
     "trade_offs", "severity_cards", "open_questions",
+    # enmienda 5 (pii-identification)
+    "catalog_fields", "concept_map", "decision_tree", "coverage_strip", "column_types", "evidence_steps", "use_avoid",
+    "practice_pairs",
 )
-PLACED = ("approach", "legal_foundations", "sources_grouped")   # fija: tras el Resumen; en el §2; en Fuentes
+# Enmienda 5: varias instancias por ficha; la marca lleva el id («<!-- view: note catalogo -->» -> views.notes.catalogo).
+KEYED = {"note": "notes", "chips": "chips"}
+PLACED = ("approach", "legal_foundations", "sources_grouped", "section_titles", "reading", "section_splits")   # fija: tras el Resumen; en el §2; en Fuentes; títulos
 MD_LINK = re.compile(r"\]\((https://[^)\s]+)\)")
+MD_ANCHOR = re.compile(r"\]\((#[a-z0-9-]+)\)")   # enmienda 5: «[§](#s10)» es una referencia a otra sección
+ARTICLE_LINK = re.compile(r"\[\(?art\. (\d+(?: (?:bis|ter|quáter|quinquies|sexies|septies))?)[^\]]*\]\(https://")
 
 
 def markers(body: str) -> list[str]:
-    """Claves marcadas en el cuerpo, en orden."""
-    return MARKER.findall(body)
+    """Claves marcadas en el cuerpo, en orden; una marca con id se devuelve como «clave id»."""
+    return [f"{key} {item}" if item else key for key, item in MARKER.findall(body)]
+
+
+PDF_PAGE = re.compile(r"^(https://[^#]+\.pdf)#page=\d+$")
+
+
+def is_cited(url: str, cited_urls: list[str]) -> bool:
+    """Enmienda 6: «<pdf>#page=N» enlaza una página de un PDF que ya es una cita; no hace falta otra cita."""
+    page = PDF_PAGE.match(url)
+    return url in cited_urls or (page is not None and page.group(1) in cited_urls)
+
+
+SPLIT = re.compile(r"<!--\s*split:\s*([a-z][a-z0-9-]*)\s*-->")   # enmienda 7
+
+
+def check_splits(views: dict[str, Any], sections: list[tuple[int, str]]) -> list[str]:
+    """Enmienda 7: cada división de section_splits tiene su marca «<!-- split: <key> -->» en esa sección, y al revés."""
+    declared = {(item["section"], item["key"]) for item in views.get("section_splits", [])}
+    marked = {(number, key) for number, content in sections for key in SPLIT.findall(content)}
+    errors = [f"[views.section_splits] falta la marca <!-- split: {key} --> en el §{number}" for number, key in sorted(declared - marked)]
+    errors += [f"[views] marca <!-- split: {key} --> del §{number} sin entrada en views.section_splits" for number, key in sorted(marked - declared)]
+    return errors
+
+
+def check_keyed(views: dict[str, Any], found: list[str]) -> list[str]:
+    """Enmienda 5: cada marca «note <id>» o «chips <id>» tiene su entrada, y cada entrada se marca una vez."""
+    errors = []
+    for marker, field in KEYED.items():
+        used = [m.split(" ", 1)[1] for m in found if m.startswith(f"{marker} ")]
+        declared = views.get(field, {})
+        errors += [f"[views] marca '{marker} {item}' sin datos en views.{field}" for item in used if item not in declared]
+        errors += [f"[views] views.{field}.{item} no se marca con <!-- view: {marker} {item} -->" for item in declared
+                   if item not in used]
+    return errors
 
 
 def check(views: dict[str, Any], body: str, cited_urls: list[str], anchors: set[str] | None = None) -> list[str]:
     """Errores de coherencia entre `views`, las marcas del cuerpo, las citas de `sources` y las anclas de la ficha."""
     found = markers(body)
-    errors = [f"[views] marca '{key}' sin datos en views" for key in found if key not in views]
+    plain = [key for key in found if " " not in key]
+    errors = [f"[views] marca '{key}' sin datos en views" for key in plain if key not in views]
     errors += [f"[views] marca '{key}' repetida" for key in sorted(set(found)) if found.count(key) > 1]
+    errors += [f"[views] marca '{key}' desconocida" for key in found if " " in key and key.split(" ")[0] not in KEYED]
+    errors += check_keyed(views, found)
     errors += [f"[views] '{key}' no se marca en el cuerpo con <!-- view: {key} -->" for key in MARKED
                if key in views and key not in found]
     errors += [f"[views] '{key}' no lleva marca: su posición es fija" for key in PLACED if key in found]
     errors += check_sources_grouped(views.get("sources_grouped"), cited_urls)
     links = sorted(set(hrefs(views)))
     errors += [f"[views] el enlace '{url}' no es una cita de sources" for url in links
-               if url.startswith("https://") and url not in cited_urls]
+               if url.startswith("https://") and not is_cited(url, cited_urls)]
     if anchors is not None:
         errors += [f"[views] el ancla '{url}' no existe en la ficha" for url in links
                    if url.startswith("#") and url[1:] not in anchors]
@@ -59,9 +102,10 @@ def legal_row_id(law: str, article: str) -> str:
     return f"lb-{law}-" + re.sub(r"[^a-z0-9]+", "-", plain).strip("-")
 
 
-def page_anchors(views: dict[str, Any], sections: list[int], legal_basis: list[dict[str, Any]]) -> set[str]:
-    """Anclas que existen en la ficha: secciones presentes, ids de las vistas y filas del catálogo legal."""
-    ids = {f"s{number}" for number in sections} | element_ids(views)
+def page_anchors(views: dict[str, Any], sections: list[int], legal_basis: list[dict[str, Any]], annexes: int = 0) -> set[str]:
+    """Anclas que existen en la ficha: secciones presentes, anexos (s23, s24…, como los numera la UI), ids de las vistas
+    y filas del catálogo legal."""
+    ids = {f"s{number}" for number in sections} | {f"s{23 + index}" for index in range(annexes)} | element_ids(views)
     return ids | {legal_row_id(b["law"], str(b["article"])) for b in legal_basis}
 
 
@@ -73,15 +117,43 @@ def hrefs(node: Any) -> list[str]:
     if isinstance(node, list):
         return [url for value in node for url in hrefs(value)]
     if isinstance(node, str):
-        return MD_LINK.findall(node)
+        return MD_LINK.findall(node) + MD_ANCHOR.findall(node)
     return []
+
+
+INTERNAL_PATH = re.compile(r"^/concepts/([a-z0-9-]+)/")
+INTERNAL_LINK = re.compile(r"\]\(/concepts/([a-z0-9-]+)/")
+
+
+def internal_targets(node: Any) -> list[str]:
+    """Enmienda 5: fichas que las vistas enlazan (href /concepts/<slug>/, enlaces Markdown y entradas page)."""
+    if isinstance(node, dict):
+        own = [m.group(1) for m in [INTERNAL_PATH.match(node["href"])] if m] if isinstance(node.get("href"), str) else []
+        own += [node["page"]] if isinstance(node.get("page"), str) else []
+        return own + [slug for key, value in node.items() if key not in ("href", "page") for slug in internal_targets(value)]
+    if isinstance(node, list):
+        return [slug for value in node for slug in internal_targets(value)]
+    if isinstance(node, str):
+        return INTERNAL_LINK.findall(node)
+    return []
+
+
+def cited_articles(node: Any) -> set[str]:
+    """ADR-023, enmienda 9: artículos que las vistas citan con enlace («[(art. 2 letra f)](https://…)» -> «2»)."""
+    if isinstance(node, dict):
+        return set().union(*(cited_articles(value) for value in node.values()))
+    if isinstance(node, list):
+        return set().union(*(cited_articles(value) for value in node))
+    if isinstance(node, str):
+        return set(ARTICLE_LINK.findall(node))
+    return set()
 
 
 def check_sources_grouped(grouped: dict[str, Any] | None, cited_urls: list[str]) -> list[str]:
     """Cada URL agrupada es una cita de sources y cada cita aparece una sola vez en los grupos."""
     if grouped is None:
         return []
-    listed = [url for group in grouped["groups"] for source in group["sources"] for url in source["urls"]]
+    listed = [url for group in grouped["groups"] for source in group["sources"] for url in source.get("urls", [])]
     errors = [f"[views.sources_grouped] '{url}' no es una cita de sources" for url in listed if url not in cited_urls]
     errors += [f"[views.sources_grouped] '{url}' está en más de un grupo o entrada"
                for url in sorted(set(listed)) if listed.count(url) > 1]

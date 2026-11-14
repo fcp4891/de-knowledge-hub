@@ -24,7 +24,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         },
         {
           "slug": "rbac",
@@ -38,7 +39,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         },
         {
           "slug": "abac",
@@ -52,7 +54,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         },
         {
           "slug": "least-privilege",
@@ -66,7 +69,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         },
         {
           "slug": "service-accounts",
@@ -80,7 +84,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         },
         {
           "slug": "row-level-security",
@@ -94,7 +99,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         },
         {
           "slug": "column-level-security",
@@ -108,7 +114,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         },
         {
           "slug": "data-masking",
@@ -122,7 +129,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         }
       ]
     },
@@ -142,7 +150,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         },
         {
           "slug": "encryption-in-transit",
@@ -156,7 +165,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         },
         {
           "slug": "key-management",
@@ -170,7 +180,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         },
         {
           "slug": "secrets-management",
@@ -184,7 +195,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         },
         {
           "slug": "crypto-shredding",
@@ -198,7 +210,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         }
       ]
     },
@@ -218,7 +231,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         },
         {
           "slug": "tokenization",
@@ -232,7 +246,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         },
         {
           "slug": "keyed-hashing",
@@ -246,7 +261,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         },
         {
           "slug": "k-anonymity",
@@ -260,9 +276,27 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-21"
+          "last_verified": "2026-10-21",
+          "availability": "available"
         }
       ]
     }
-  ]
+  ],
+  "availability_texts": {
+    "in_review": {
+      "label": "En revisión",
+      "help": "Contenido listo; en revisión antes de publicarse.",
+      "count": "{n} en revisión"
+    },
+    "in_development": {
+      "label": "En desarrollo",
+      "help": "Contenido y diseño en preparación.",
+      "count": "{n} en desarrollo"
+    },
+    "available": {
+      "count": "{n} disponibles"
+    },
+    "route_count": "{n} de {total} fichas disponibles",
+    "back_label": "Volver al itinerario"
+  }
 }

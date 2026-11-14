@@ -3,176 +3,1199 @@ id: concept:pii-identification
 slug: pii-identification
 type: concept
 title: Identificación de datos personales y sensibles
-description: "Identificar qué permite reconocer a una persona, sola o combinada, y registrarlo con fundamento, revisor y fecha: es el primer control. La ley define dato personal y enumera los sensibles, incluida la situación socioeconómica. Seis pasos sin umbral universal y un detector didáctico (RUT con dígito verificador, correo, nombres sensibles) que da hallazgos para revisión sin imprimir valores; ejecutado en la CI. Detectores chilenos en Sensitive Data Protection, Macie y Purview. No es asesoría legal."
+description: 'Identificar qué permite reconocer a una persona, sola o combinada, y registrarlo con fundamento, revisor y fecha: es el primer control.
+  La ley define dato personal y enumera los sensibles, incluida la situación socioeconómica. Seis pasos sin umbral universal y un detector didáctico
+  (RUT con dígito verificador, correo, nombres sensibles) que da hallazgos para revisión sin imprimir valores; ejecutado en la CI. Detectores
+  chilenos en Sensitive Data Protection, Macie y Purview. No es asesoría legal.'
 domain: privacy-engineering
 subdomain: fundamentos
 category: compliance
 classification: core
 level: intermediate
 importance: high
-cloud: [agnostic]
-technologies: [python]
-tags: [compliance, privacy, pii, rut, classification]
-related_topics: [data-classification, data-masking]
-jurisdiction: [CL]
+cloud:
+- agnostic
+technologies:
+- python
+tags:
+- compliance
+- privacy
+- pii
+- rut
+- classification
+related_topics:
+- data-classification
+- data-masking
+jurisdiction:
+- CL
 legal_basis:
-  - law: ley-19628
-    article: "2"
-    url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    note: "Dato personal (persona identificada o identificable, también por medios indirectos) y datos personales sensibles (lista cerrada de categorías)."
-    implication: "Clasificar cada columna como personal, sensible o no personal, incluidas las que identifican por medios indirectos."
-  - law: ley-19628
-    article: "16"
-    url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    note: "Regla general para los datos sensibles: se tratan con consentimiento expreso del titular, salvo los casos que el artículo enumera."
-    implication: "Las columnas sensibles llevan una etiqueta propia y controles más estrictos."
+- law: ley-19628
+  article: '2'
+  url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
+  note: 'Dato personal (letra f: persona identificada o identificable), datos sensibles (letra g), fuente de acceso público (letra i), anonimización
+    (letra k) y seudonimización (letra l).'
+  implication: Clasificar cada columna como personal, sensible, anonimizada o sin vínculo, incluidas las que identifican por medios indirectos
+    y las seudonimizadas.
+- law: ley-19628
+  article: 14 quinquies
+  url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
+  note: Medidas de seguridad; la letra a) menciona el cifrado.
+  implication: 'El cifrado protege el dato, pero quien tiene la llave puede volver a él: no es anonimización.'
+- law: ley-19628
+  article: '16'
+  url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
+  note: Los datos sensibles se tratan con consentimiento expreso del titular, salvo las excepciones del artículo.
+  implication: Las columnas sensibles llevan su categoría propia; la base de licitud la decide el área legal.
+- law: ley-19628
+  article: 16 quáter
+  url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
+  note: 'Datos de niños, niñas y adolescentes: interés superior, autonomía progresiva y consentimiento según la edad.'
+  implication: La regla especial se marca además de la categoría; la edad del titular no se infiere de una muestra.
 sources:
-  - source: bcn-leychile
-    url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    accessed: 2026-10-25
-    page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01). Art. 2 f): dato personal es cualquier información vinculada o referida a una persona natural identificada o identificable; es identificable quien puede ser determinado directa o indirectamente, en particular mediante identificadores como el nombre o el número de cédula de identidad; se consideran todos los medios y factores objetivos que razonablemente se podrían usar para identificarla. Art. 2 g): son datos sensibles los que revelen el origen étnico o racial, la afiliación política, sindical o gremial, la situación socioeconómica, las convicciones ideológicas o filosóficas, las creencias religiosas, los datos relativos a la salud, al perfil biológico humano, los datos biométricos, y la información relativa a la vida sexual, la orientación sexual y la identidad de género. Art. 16: los sensibles solo se tratan con consentimiento expreso del titular, salvo los casos que enumera. Consultado el 2026-10-25."
-  - source: gcp-sensitive-data-protection-docs
-    url: https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference
-    accessed: 2026-10-27
-    page_title: "InfoType detector reference"
-    note: "InfoType detector reference: CHILE_CDI_NUMBER detecta la Cédula de Identidad chilena (CDI), documento de identidad principal de los ciudadanos; la tabla la ubica en CHILE, con las categorías GOVERNMENT_ID, PII y SPII."
-  - source: aws-macie-docs
-    url: https://docs.aws.amazon.com/macie/latest/user/mdis-reference-quick.html
-    accessed: 2026-10-27
-    page_title: "Quick reference: Managed data identifiers by type"
-    note: "Quick reference: Managed data identifiers by type: CHILE_RUT_NUMBER figura entre los identificadores administrados de número nacional de identificación y de identificación tributaria, con Chile entre los países soportados."
-  - source: microsoft-purview-docs
-    url: https://learn.microsoft.com/en-us/purview/sit-defn-chile-identity-card-number
-    accessed: 2026-10-27
-    page_title: "Chile identity card number"
-    note: "Chile identity card number (tipo de información sensible de Purview): siete a ocho dígitos con delimitadores opcionales y un dígito o letra verificador; checksum: sí. Confianza alta si a 300 caracteres o menos calza el patrón, aparece una palabra clave (por ejemplo «cédula de identidad») y pasa el checksum; confianza media sin la palabra clave."
-  - source: gcp-sensitive-data-protection-docs
-    url: https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-infotypes
-    accessed: 2026-10-21
-    page_title: "InfoTypes and infoType detectors"
-    note: "InfoTypes and infoType detectors (Sensitive Data Protection): un infoType es un tipo de dato sensible (nombre, correo, teléfono, número de identificación, número de tarjeta, entre otros) y un infoType detector es el mecanismo que detecta según los criterios de ese infoType. Hay detectores incorporados y personalizados (diccionarios, regex, etiquetas de metadata), y la probabilidad de coincidencia (likelihood) se puede ajustar."
+- source: diario-oficial-cl
+  url: https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
+  accessed: '2026-11-12'
+  page_title: LEY NÚM. 21.719 REGULA LA PROTECCIÓN Y EL TRATAMIENTO DE LOS DATOS PERSONALES Y CREA LA AGENCIA DE PROTECCIÓN DE DATOS PERSONALES
+  label: Diario Oficial
+  note: 'Ley 21.719 publicada en el Diario Oficial núm. 44.023, viernes 13 de diciembre de 2024 (CVE 2583630). Texto publicado de la ley modificatoria:
+    art. 2 letras f), g), i), k) y l) de la Ley 19.628 (pág. 2); art. 14 quinquies letra a) (pág. 10); art. 16 (pág. 12); art. 16 quáter (pág.
+    13). Rigen desde el 2026-12-01.'
+- source: bcn-leychile
+  url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
+  accessed: '2026-11-12'
+  page_title: Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES
+  note: 'Ley 19.628 en la versión «Con Vigencia Diferida por Fecha» desde el 2026-12-01: texto consolidado con las modificaciones de la Ley 21.719.'
+- source: eur-lex
+  url: https://eur-lex.europa.eu/eli/reg/2016/679/oj
+  accessed: '2026-11-12'
+  page_title: Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with
+    regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC (General Data Protection
+    Regulation)
+  note: 'Legislación comparada, no chilena. Art. 9: categorías especiales de datos personales; no incluye la situación socioeconómica.'
+- source: who-icd-10
+  url: https://icd.who.int/browse10/2019/en#/J45
+  accessed: '2026-11-12'
+  page_title: ICD-10 Version:2019
+  note: 'CIE-10 (OMS), versión 2019: J45 es asma. Código del ejemplo de la columna diagnostico.'
+- source: gcp-sensitive-data-protection-docs
+  url: https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference
+  accessed: '2026-11-12'
+  page_title: InfoType detector reference
+  note: CHILE_CDI_NUMBER (categorías GOVERNMENT_ID, PII y SPII), EMAIL_ADDRESS y detectores de salud, origen étnico, religión, política, orientación
+    sexual y sindicatos (MEDICAL_TERM, ETHNIC_GROUP, RELIGIOUS_TERM, POLITICAL_TERM, SEXUAL_ORIENTATION, TRADE_UNION).
+- source: gcp-sensitive-data-protection-docs
+  url: https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles
+  accessed: '2026-11-12'
+  page_title: Overview of sensitive data discovery
+  note: Perfiles de datos de BigQuery, Cloud SQL y Cloud Storage; también Amazon S3 y Azure Blob Storage. La página no dice que use el nombre
+    de la columna.
+- source: gcp-sensitive-data-protection-docs
+  url: https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-risk-analysis
+  accessed: '2026-11-12'
+  page_title: Re-identification risk analysis
+  note: 'Análisis de riesgo de reidentificación: k-anonimato, l-diversidad, k-map y δ-presencia.'
+- source: aws-macie-docs
+  url: https://docs.aws.amazon.com/macie/latest/user/mdis-reference-quick.html
+  accessed: '2026-11-12'
+  page_title: 'Quick reference: Managed data identifiers by type'
+  note: CHILE_RUT_NUMBER entre los identificadores administrados de Amazon Macie, con palabra clave cerca del valor; la referencia no incluye
+    correo electrónico.
+- source: aws-macie-docs
+  url: https://docs.aws.amazon.com/macie/latest/user/cdis-options.html
+  accessed: '2026-11-12'
+  page_title: Configuration options for custom data identifiers
+  note: 'Identificadores personalizados: expresión regular, palabras clave y nombre de columna o campo como palabra clave.'
+- source: microsoft-purview-docs
+  url: https://learn.microsoft.com/en-us/purview/sit-defn-chile-identity-card-number
+  accessed: '2026-11-12'
+  page_title: Chile identity card number
+  note: Tipo de información sensible de Purview para la cédula chilena; valida el dígito verificador y la confianza sube con una palabra clave
+    cerca.
+- source: microsoft-purview-docs
+  url: https://learn.microsoft.com/en-us/purview/data-map-classification-supported-list
+  accessed: '2026-11-12'
+  page_title: System classifications supported in Data Map
+  note: 'Clasificaciones de sistema de Purview Data Map: Email (según la documentación, no aplica a datos no estructurados); sin clasificaciones
+    de salud o religión.'
+- source: microsoft-purview-docs
+  url: https://learn.microsoft.com/en-us/purview/data-map-classification-custom
+  accessed: '2026-11-12'
+  page_title: Custom classifications in Data Map
+  note: Clasificaciones personalizadas con patrón de datos o de columna (expresión regular sobre el nombre); las reglas personalizadas se documentan
+    solo en inglés.
 relations:
-  - type: RELATED_TO
-    target: data-classification
-    note: La clasificación general; aquí, con las categorías de la ley.
-  - type: RELATED_TO
-    target: data-masking
-    note: Lo que se detecta como personal se enmascara al mostrar.
-  - type: PART_OF
-    target: chile-data-protection
-    note: El panorama de la ley.
-  - type: RELATED_TO
-    target: data-minimization-by-layer
-    note: Lo identificado decide qué columnas pasan de capa.
-  - type: RELATED_TO
-    target: chilean-identifier-pseudonymization
-    note: Qué hacer con el RUT detectado.
-  - type: RELATED_TO
-    target: privacy-controls-as-code
-    note: Reglas de cobertura de etiquetas sobre lo detectado.
-  - type: RELATED_TO
-    target: data-breach-response
-    note: Las categorías deciden el aviso a titulares.
+- type: RELATED_TO
+  target: data-classification
+  note: La clasificación general; aquí, con las categorías de la ley.
+- type: RELATED_TO
+  target: data-masking
+  note: Lo que se detecta como personal se enmascara al mostrar.
+- type: PART_OF
+  target: chile-data-protection
+  note: El panorama de la ley.
+- type: RELATED_TO
+  target: data-minimization-by-layer
+  note: Lo identificado decide qué columnas pasan de capa.
+- type: RELATED_TO
+  target: chilean-identifier-pseudonymization
+  note: Qué hacer con el RUT detectado.
+- type: RELATED_TO
+  target: privacy-controls-as-code
+  note: Reglas de cobertura de etiquetas sobre lo detectado.
+- type: RELATED_TO
+  target: data-breach-response
+  note: Las categorías deciden el aviso a titulares.
+views:
+  section_titles:
+  - section: 1
+    title: Propósito
+  - section: 2
+    title: Qué cuenta como dato personal y sensible
+    ref: Qué protege la ley
+  - section: 3
+    title: Problema que resuelve
+  - section: 4
+    title: Cómo funciona
+  - section: 5
+    title: Cuándo usarlo
+  - section: 10
+    title: Código
+  - section: 11
+    title: En la nube
+  - section: 14
+    title: Hacer y evitar
+  - section: 16
+    title: Trade-offs
+  - section: 18
+    title: Preguntas técnicas abiertas
+  - section: 20
+    title: Fuentes
+  catalog_fields:
+    title: Por cada columna, el catálogo guarda
+    label: Qué guarda el catálogo por cada columna
+    headers:
+    - Campo
+    - Para qué sirve
+    rows:
+    - field: Categoría
+      text: Qué es la columna para la ley. Si es de un niño, niña o adolescente, se marca además la regla especial [(art. 16 quáter)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=13).
+      categories:
+      - label: personal
+        tone: personal
+      - label: sensible
+        tone: sensitive
+      - label: anonimizada
+        tone: none
+      - label: sin vínculo con personas
+        tone: none
+      note: 'Mientras nadie la confirma, un candidato dudoso queda «en revisión»: así lo registra el código de [§](#s10), y el campo Revisión
+        dice quién lo resolvió.'
+    - field: Fundamento
+      text: El artículo y el motivo concreto, para que otra persona pueda revisar la decisión sin repetir el análisis.
+    - field: Riesgo técnico
+      text: 'Decisión de seguridad, separada de la categoría: define cifrado, acceso y enmascaramiento. No la fija la ley; la fija la organización.'
+    - field: Método
+      text: 'Cómo se llegó a la conclusión: patrón, nombre de columna, combinación de atributos o conocimiento del dominio. Muestra si bastó la
+        detección automática o hizo falta criterio humano.'
+    - field: Revisión
+      text: 'Quién confirmó la decisión y cuándo. No es permanente: se repite si cambia el esquema, llega una fuente nueva o aparece texto libre.'
+  notes:
+    catalogo:
+      lead: Los mismos campos en toda la ficha.
+      text: Son los que muestra el árbol de decisión en «Así queda en el catálogo» [§](#s2), y la revisión periódica es el paso «Mantener» de
+        [§](#s4).
+    categoria-riesgo:
+      lead: Categoría y riesgo van separados.
+      text: «Sensible» es una categoría de la ley; el riesgo técnico «alta» es una decisión de seguridad de la organización.
+    categoria-preliminar:
+      lead: La categoría es preliminar.
+      text: 'Se confirma en la revisión con el contexto real de cada columna: es el paso 04 de [§](#s4).'
+    riesgo:
+      lead: Riesgo
+      text: Publicar una tabla analítica o compartirla con un proveedor creyendo que no tiene datos personales.
+      tone: risk
+    umbral:
+      lead: No hay un umbral universal.
+      text: Un solo valor sensible en mil filas puede importar. Cuántos valores calzan sirve para priorizar la revisión, no para decidir que una
+        columna no tiene datos personales.
+    equivalencias:
+      lead: No son equivalencias exactas.
+      text: Ningún servicio certifica cumplimiento por sí solo. Documentación consultada el 2026-11-12.
+  chips:
+    ficha-madre:
+      label: 'En la ficha madre:'
+      items:
+      - kind: Cómo funciona
+        label: ¿Qué datos trato?
+        href: /concepts/chile-data-protection/#como-funciona-01
+      - kind: Matriz
+        label: Minimización
+        href: /concepts/chile-data-protection/#matriz-minimizacion
+      - kind: Prácticas
+        label: Clasificación automática
+        href: /concepts/chile-data-protection/#practica-clasificacion-automatica
+    conexiones:
+      label: 'Se conecta con:'
+      items:
+      - kind: Ficha
+        label: Minimización por capa
+        href: /concepts/data-minimization-by-layer/
+      - kind: Ficha
+        label: Controles de privacidad como código
+        href: /concepts/privacy-controls-as-code/
+  concept_map:
+    label: Qué protege la ley
+    outside:
+      kicker: Fuera de la ley
+      items:
+      - title: Anonimizado
+        text: El vínculo con la persona se destruyó de forma irreversible. Deja de ser dato personal [(art. 2 letra k)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
+      - title: Sin vínculo con personas
+        text: 'Precios, productos, métricas de máquinas: en esa tabla no se refieren a una persona.'
+      hint: Preguntas 1 y 2
+    personal:
+      kicker: Dato personal · [art. 2 letra f](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2)
+      definition: «Cualquier información vinculada o referida a una persona natural identificada o identificable».
+      text: 'Identificable: su identidad puede determinarse directa o indirectamente, con los medios que razonablemente se podrían usar. No hace
+        falta un nombre: puede bastar un número de identificación o una combinación de rasgos, si con esos medios se llega a la persona.'
+      also:
+        kicker: Siguen siendo dato personal
+        items:
+        - title: Seudonimizado [(art. 2 letra l)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2)
+          text: El identificador se reemplaza por un código, pero con información guardada aparte se vuelve a la persona. No saca el dato de la
+            ley.
+          example:
+            label: Ver con
+            column: rut_hash
+        - title: De fuente pública [(art. 2 letra i)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2)
+          text: 'Que cualquiera pueda consultarlo lícitamente no lo libera: su tratamiento también se somete a la ley.'
+          example:
+            label: Ver con
+            column: nombre_directorio
+        - title: Cifrado [(art. 14 quinquies letra a)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=10)
+          text: 'La ley lo menciona como medida de seguridad. Quien tiene la llave puede volver al dato: por eso no es la anonimización del [art.
+            2 letra k](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).'
+    sensitive:
+      kicker: Dato sensible · [art. 2 letra g](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2)
+      text: 'Un dato personal que revela algo íntimo: salud, origen étnico, situación socioeconómica, creencias, vida u orientación sexual, biometría,
+        entre otros. Exige consentimiento expreso, por declaración escrita, verbal o un medio tecnológico equivalente, salvo excepciones [(art.
+        16)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=12).'
+      hint: Pregunta 3
+    minors:
+      kicker: Niños, niñas y adolescentes · [art. 16 quáter](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=13)
+      text: 'No es otra categoría: es una regla de interés superior y de consentimiento que se suma, según la edad.'
+      hint: Pregunta 4
+  decision_tree:
+    intro:
+      title: Cuatro preguntas, en orden, ubican cada columna en este mapa.
+      text: 'Elige un ejemplo: se muestran solo las preguntas que recorre, y la caja de resultado indica en qué pregunta termina.'
+    examples_title: Elige una columna de ejemplo
+    path_label: Recorrido de la columna elegida
+    result_label: Resultado para
+    catalog_label: Así queda en el catálogo
+    answer_labels:
+      'yes': Sí
+      'no': 'No'
+    step_labels:
+      question: Pregunta
+      next: ↓ siguiente pregunta
+      end: → termina aquí
+    questions:
+    - number: 1
+      question: ¿Se destruyó el vínculo con la persona de forma irreversible?
+      help: Anonimizar exige que ya no se pueda asociar ni identificar a nadie.
+      gloss:
+        'yes': el vínculo se destruyó
+        'no': no fue anonimizada
+      exits:
+      - answer: 'yes'
+        label: Si es sí
+        outcome: anonymized
+        title: No es dato personal
+        text: Un dato anonimizado deja de ser dato personal [(art. 2 letra k)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
+    - number: 2
+      question: ¿Está vinculada a una persona identificada o identificable?
+      help: Porque la identifica (nombre, RUT, combinación de atributos) o porque está en la misma fila que algo que la identifica. Se consideran
+        los medios que razonablemente se podrían usar.
+      gloss:
+        'yes': está vinculada
+        'no': no hay vínculo
+      exits:
+      - answer: 'no'
+        label: Si es no
+        outcome: unlinked
+        title: Sin vínculo con personas
+        text: No es dato personal. Se registra el motivo, para revisarlo si cambia la tabla.
+    - number: 3
+      question: ¿Revela alguna categoría del art. 2 letra g)?
+      help: Origen étnico o racial; afiliación política, sindical o gremial; situación socioeconómica; convicciones ideológicas o filosóficas;
+        creencias religiosas; salud; perfil biológico humano; biometría; vida sexual, orientación sexual e identidad de género.
+      gloss:
+        'yes': revela una categoría sensible
+        'no': no revela ninguna
+      exits:
+      - answer: 'yes'
+        label: Si es sí
+        outcome: sensitive
+        title: Dato sensible
+        text: Consentimiento expreso, salvo las excepciones de la ley [(art. 16)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=12).
+    - number: 4
+      question: ¿Es de un niño, niña o adolescente?
+      help: 'Niños y niñas: menores de 14. Adolescentes: mayores de 14 y menores de 18.'
+      gloss:
+        'yes': es de un menor de edad
+        'no': no es de un menor de edad
+      exits:
+      - answer: 'yes'
+        label: Si es sí
+        outcome: minor
+        title: Regla especial
+        text: Interés superior y reglas de consentimiento según la edad [(art. 16 quáter)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=13).
+      - answer: 'no'
+        label: Si es no
+        outcome: personal
+        title: Dato personal
+        text: Persona identificada o identificable [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
+    fallback:
+      label: En los demás casos
+      outcome: personal
+      title: Dato personal
+      text: Persona identificada o identificable [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
+    catalog_fields:
+      category: Categoría
+      basis: Fundamento
+      risk: Riesgo técnico
+      method: Método
+      review: Revisión
+    review: privacidad · 2026-11-10
+    default: tramo_ingreso
+    examples:
+    - column: cliente_id
+      description: Código interno del cliente (C‑10293). La tabla de clientes tiene ese mismo código junto al nombre y el RUT.
+      answers:
+      - 'no'
+      - 'yes'
+      - 'no'
+      - 'no'
+      outcome: personal
+      title: Dato personal
+      explanation: 'Con la tabla de clientes, el código lleva al nombre y al RUT: identifica indirectamente (art. 2 letra f).'
+      catalog:
+        category: personal
+        basis: art. 2 letra f · identifica indirectamente
+        risk: media
+        method: conocimiento del dominio
+    - column: diagnostico
+      description: Código de diagnóstico médico del paciente (J45 = asma).
+      answers:
+      - 'no'
+      - 'yes'
+      - 'yes'
+      outcome: sensitive
+      title: Dato sensible
+      explanation: Es un dato relativo a la salud de una persona identificable (art. 2 letra g).
+      catalog:
+        category: sensible
+        basis: art. 2 letra g · salud
+        risk: alta
+        method: nombre de columna
+    - column: tramo_ingreso
+      description: 'Tramo de ingreso mensual del cliente: A, B o C, de menor a mayor.'
+      answers:
+      - 'no'
+      - 'yes'
+      - 'yes'
+      outcome: sensitive
+      title: Dato sensible
+      explanation: Revela la situación socioeconómica de una persona identificable (art. 2 letra g).
+      catalog:
+        category: sensible
+        basis: art. 2 letra g · situación socioeconómica
+        risk: alta
+        method: nombre de columna
+    - column: rut_hash
+      description: RUT reemplazado por un código; la tabla que lo traduce está en otro sistema.
+      answers:
+      - 'no'
+      - 'yes'
+      - 'no'
+      - 'no'
+      outcome: personal
+      title: Dato personal
+      explanation: 'Seudonimizado: con la tabla que lo traduce se vuelve al titular (art. 2 letra l).'
+      catalog:
+        category: personal
+        basis: art. 2 letra l · seudonimizado
+        risk: media
+        method: revisión del esquema
+    - column: nota_alumno
+      description: Nota de un alumno de 12 años, en la tabla de su colegio.
+      answers:
+      - 'no'
+      - 'yes'
+      - 'no'
+      - 'yes'
+      outcome: minor
+      title: Dato personal de un niño
+      explanation: 'El alumno tiene 12 años: es niño para la ley. Atendiendo a su interés superior y autonomía progresiva, se requiere el consentimiento
+        de sus padres, representantes legales o de quien tenga su cuidado personal, salvo que la ley lo autorice o mandate expresamente (art.
+        16 quáter).'
+      catalog:
+        category: personal · niño
+        basis: art. 16 quáter
+        risk: alta
+        method: conocimiento del dominio
+      law: true
+    - column: nombre_directorio
+      description: Nombre de una persona copiado de un registro público.
+      answers:
+      - 'no'
+      - 'yes'
+      - 'no'
+      - 'no'
+      outcome: personal
+      title: Dato personal
+      explanation: Venir de una fuente de acceso público no le quita el carácter personal (art. 2 letra i).
+      catalog:
+        category: personal
+        basis: art. 2 letra i · fuente pública
+        risk: media
+        method: origen de la fuente
+    - column: ventas_por_region
+      description: Total de ventas por región, sin el detalle por cliente; cada región tiene miles de clientes.
+      answers:
+      - 'yes'
+      outcome: anonymized
+      title: No es dato personal
+      explanation: 'Se agregó de forma irreversible: no conserva el detalle por cliente y ninguna región es tan pequeña como para llegar a alguien.
+        Así deja de ser dato personal (art. 2 letra k).'
+      catalog:
+        category: anonimizado
+        basis: art. 2 letra k
+        risk: baja
+        method: revisión de la agregación
+    - column: precio_lista
+      description: Precio de un producto en la tabla del catálogo, sin datos de clientes.
+      answers:
+      - 'no'
+      - 'no'
+      outcome: unlinked
+      title: Sin vínculo con personas
+      explanation: 'El precio de lista está en una tabla de productos, sin datos de clientes. Si se copia a una tabla de compras, cambia: ahí
+        queda vinculado a quien compró.'
+      catalog:
+        category: sin vínculo
+        basis: no es dato personal
+        risk: baja
+        method: revisión del esquema
+    law:
+      summary: Qué dice el art. 16 quáter
+      items:
+      - El tratamiento solo puede hacerse atendiendo al interés superior del niño, niña o adolescente y respetando su autonomía progresiva. Cumplido
+        eso, se aplican las reglas siguientes.
+      - '**Niños y niñas (menores de 14):** se requiere el consentimiento de sus padres, representantes legales o de quien tenga su cuidado personal,
+        salvo que la ley lo autorice o mandate expresamente.'
+      - '**Adolescentes (mayores de 14 y menores de 18):** se aplican las normas de autorización que la ley prevé para los adultos.'
+      - '**Datos sensibles de adolescentes menores de 16:** también requieren el consentimiento de padres, representantes legales o de quien tenga
+        su cuidado personal, con la misma salvedad.'
+      - Los establecimientos educacionales y quien trate o administre estos datos, incluido quien ejerce su cuidado personal, deben velar por
+        su uso lícito y su protección.
+      link:
+        label: Ver el texto en el Anexo · Catálogo legal
+        href: /concepts/chile-data-protection/#lb-ley-19628-16-quater
+  coverage_strip:
+    label: Cobertura sobre las nueve columnas de la muestra
+    lead: 'La muestra del código tiene nueve columnas, todas en la misma fila que un RUT, así que todas son información vinculada a una persona
+      [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2). Esto es lo que ve cada enfoque:'
+    columns:
+    - rut_cliente
+    - contacto
+    - comentarios
+    - diagnostico
+    - tramo_ingreso
+    - comuna
+    - edad
+    - fecha_ingreso
+    - producto
+    rows:
+    - title: Solo patrones
+      text: RUT y correo con expresiones regulares
+      count: 3 de 9
+      hits:
+      - rut_cliente
+      - contacto
+      - comentarios
+      tone: detected
+    - title: Detector de la ficha
+      text: los cuatro frentes de [§](#s10)
+      count: 7 de 9
+      hits:
+      - rut_cliente
+      - contacto
+      - comentarios
+      - diagnostico
+      - tramo_ingreso
+      - comuna
+      - edad
+      tone: detected
+    - title: Lo que exige la ley
+      text: todas son dato personal
+      count: 9 de 9
+      hits:
+      - rut_cliente
+      - contacto
+      - comentarios
+      - diagnostico
+      - tramo_ingreso
+      - comuna
+      - edad
+      - fecha_ingreso
+      - producto
+      tone: law
+    note: 'Las cifras del detector salen de ejecutar el escenario `muestra`; las de «solo patrones», de aplicar únicamente las expresiones de
+      RUT y correo. Las dos columnas restantes, y un `cliente_id` enlazable, se clasifican con conocimiento del dominio. El detalle por tipo de
+      columna:'
+  column_types:
+    headers:
+    - Tipo de columna
+    - Solo patrones
+    - Detector de la ficha
+    - Categoría probable
+    - Por qué
+    rows:
+    - type: Identificador directo
+      examples: '`rut_cliente` `contacto`'
+      patterns:
+        mark: ok
+        text: RUT y correo
+      detector:
+        mark: ok
+        text: RUT y correo
+      categories:
+      - label: Personal
+        tone: personal
+      why: Identifica a la persona por sí solo [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
+    - type: Valor malformado
+      examples: RUT con DV inválido en `rut_cliente`
+      patterns:
+        mark: miss
+        text: Lo descarta, si valida el DV
+      detector:
+        mark: part
+        text: Lo deja en revisión
+      categories:
+      - label: Revisar
+        tone: review
+      why: Un error de captura puede seguir apuntando a una persona.
+    - type: Texto libre
+      examples: '`comentarios`'
+      patterns:
+        mark: part
+        text: Solo el correo
+      detector:
+        mark: ok
+        text: Correo y «licencia médica»
+      categories:
+      - label: Personal
+        tone: personal
+      - label: Sensible
+        tone: sensitive
+      why: Puede traer cualquier dato, incluida la salud [(art. 2 letra g)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
+    - type: Atributo que revela una categoría sensible
+      examples: '`diagnostico` `tramo_ingreso`'
+      patterns:
+        mark: miss
+        text: Nada
+      detector:
+        mark: ok
+        text: Por el nombre de la columna
+      categories:
+      - label: Sensible
+        tone: sensitive
+      why: Salud y situación socioeconómica, si se asocian a una persona identificable [(art. 2 letra g)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
+    - type: Combinación de atributos
+      examples: '`comuna` + `edad`'
+      patterns:
+        mark: miss
+        text: Nada
+      detector:
+        mark: ok
+        text: Combinación única en 2 de 4 filas
+      categories:
+      - label: Revisar
+        tone: review
+      why: Solas no identifican; juntas pueden dejar a una sola persona.
+    - type: Clave interna enlazable
+      examples: '`cliente_id` (no está en la muestra)'
+      patterns:
+        mark: miss
+        text: Nada
+      detector:
+        mark: miss
+        text: Tampoco
+      categories:
+      - label: Personal
+        tone: personal
+      why: Identifica si se puede enlazar con la tabla de clientes. Se clasifica por conocimiento del dominio.
+    - type: Sin señal propia
+      examples: '`fecha_ingreso` `producto`'
+      patterns:
+        mark: miss
+        text: Nada
+      detector:
+        mark: miss
+        text: Nada
+      categories:
+      - label: Personal
+        tone: personal
+      why: 'Solas no identifican, pero están en la misma fila que un RUT: son información vinculada a esa persona [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
+        El detector no lo marca: «sin hallazgo» no es «anónimo».'
+    legend:
+    - ✓ detecta
+    - ~ detecta una parte
+    - ✕ no detecta
+    - Los ejemplos son las columnas de la muestra del código; su salida se puede comprobar al ejecutarlo.
+  evidence_steps:
+    evidence_label: Evidencia
+    steps:
+    - number: '01'
+      title: Inventariar
+      text: Fuentes, tablas, vistas, archivos, eventos, logs y exportaciones, con su esquema y su responsable.
+      evidence: Inventario de activos en el catálogo
+    - number: '02'
+      title: Detectar candidatos
+      text: Patrones sobre los valores, nombres de columna por token, diccionarios por categoría y detectores de la nube.
+      evidence: Hallazgos en el log del job, sin valores personales
+    - number: '03'
+      title: Evaluar el contexto
+      text: Enlaces con otras tablas, texto libre, campos codificados y combinaciones que dejan a una sola persona.
+      evidence: Relaciones y combinaciones revisadas
+    - number: '04'
+      title: Clasificar y revisar
+      arq: true
+      text: Categoría jurídica y etiqueta técnica, por separado. Lo dudoso va al dueño del dato y a privacidad.
+      evidence: Decisión con fundamento, revisor y fecha
+    - number: '05'
+      title: Registrar y habilitar
+      arq: true
+      text: La entrada queda en el catálogo. Una puerta bloquea la capa si hay candidatos sensibles o dudosos sin revisar.
+      evidence: Resultado de la puerta (0 o 1) y columnas que la bloquean
+    - number: '06'
+      title: Mantener
+      text: Reanalizar ante cambios de esquema, fuentes nuevas, transformaciones y revisiones periódicas según el riesgo.
+      evidence: Historial de cambios y reclasificaciones
+    flow:
+    - title: Catálogo
+      text: Qué columnas son personales o sensibles, con qué fundamento.
+    - title: Controles
+      text: Permisos, contratos de datos, minimización y monitoreo. La clasificación los alimenta, pero no los implementa.
+  use_avoid:
+    use:
+      title: Usarlo
+      items:
+      - 'Antes de incorporar una fuente o habilitar un consumidor nuevo: es la puerta de [§](#s10).'
+      - 'Cuando cambia un esquema o se cruzan tablas: un cruce nuevo puede volver identificable lo que antes no lo era.'
+      - Antes de publicar o compartir un agregado, para comprobar que ningún grupo es tan pequeño que identifique a alguien.
+      - En migraciones, copias a ambientes de desarrollo e integraciones con APIs, incluidas las de modelos de lenguaje.
+      - En el escaneo periódico de las capas, para encontrar datos personales donde no deberían estar.
+    avoid:
+      title: No usarlo para
+      items:
+      - 'Certificar que no hay datos personales: «sin hallazgos» no significa anónimo.'
+      - 'Anonimizar: detectar o enmascarar no es anonimizar, que exige que el vínculo se destruya de forma irreversible [(art. 2 letra k)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).'
+      - 'Decidir la base de licitud de un dato sensible: es una decisión jurídica, no técnica.'
+      - 'Reemplazar la revisión: un patrón no sabe que una clave interna se enlaza con otra tabla.'
+  control_evidence:
+    title: Detección y habilitación
+    lead: 'Patrón general: cómo una plataforma decide si una capa nueva puede habilitarse para consumo.'
+    steps:
+    - number: '1'
+      title: Muestrear
+      items:
+      - Columnas de la capa que se va a habilitar
+      - Una muestra mínima, sin copiar la tabla completa
+    - number: '2'
+      title: Detectar candidatos
+      items:
+      - Identificadores directos por patrón
+      - Sensibles por nombre y por contenido
+      - Combinaciones que dejan a una sola persona
+    - number: '3'
+      title: Registrar en el catálogo
+      items:
+      - Categoría, fundamento y método por hallazgo
+      - Lo ya revisado conserva su revisor
+      - Un candidato dudoso queda «en revisión», nunca como aprobado
+    decide:
+      number: '4'
+      title: Decidir la habilitación
+      outcomes:
+      - tone: pass
+        text: ✓ Todo revisado · se habilita
+      - tone: fail
+        text: ✕ Sensibles o dudosos sin revisor · se bloquea
+      - tone: keep
+        text: El reporte nunca imprime valores
+    note: Servicios como Sensitive Data Protection, Amazon Macie o Microsoft Purview automatizan la detección [§](#s11); ninguno decide la categoría
+      jurídica por sí solo.
+    example:
+      summary: Ver ejemplo con el código de la ficha
+      steps:
+      - title: '@paso 1 · Reglas'
+        items:
+        - text: Dígito verificador por módulo 11
+        - text: Nombres de columna que revelan salud, situación socioeconómica, creencias religiosas o biometría (art. 2 letra g)
+        - text: Diccionario mínimo de términos de salud
+        - text: 'Cuasi identificadores: comuna y edad'
+      - title: '@paso 2 · Detección'
+        items:
+        - text: RUT y correos, también en texto libre
+          code: identificadores_directos
+        - text: Sensibles por el nombre de la columna
+          code: sensibles_por_nombre
+        - text: Sensibles en el contenido
+          code: sensibles_en_contenido
+        - text: Combinación única de atributos
+          code: identificacion_indirecta
+      - title: '@paso 3 · Catálogo'
+        items:
+        - text: Una entrada por hallazgo
+          code: registrar
+        - text: Columna, categoría, fundamento, método, fecha y revisor
+        - text: Sin revisión, el revisor queda «pendiente»
+      - title: '@paso 4 · Puerta'
+        items:
+        - text: Bloquea si hay sensibles o dudosos sin revisor
+          code: puerta
+        - text: 'Salida 0: la CI habilita'
+        - text: 'Salida 1: la CI bloquea'
+        - text: '3 escenarios: 1 habilita y 2 bloquean'
+      note: Cubre 5 de los 7 tipos de columna de [§](#s3); las claves internas y las columnas sin señal propia se clasifican por conocimiento
+        del dominio.
+      code_link:
+        label: Ver código ↓
+        href: '#s10'
+  code_guide:
+    lead:
+      title: Qué hace
+      text: Revisa una muestra de columnas en cuatro frentes, registra cada hallazgo en el catálogo y bloquea la capa mientras haya candidatos
+        sensibles o dudosos sin revisor. Si bloquea, la CI sale con 1; si habilita, con 0. El reporte nunca imprime valores.
+    rules:
+      headers:
+      - Frente
+      - Función
+      - Tipo de columna de §3
+      - Qué encuentra en la muestra
+      items:
+      - rule: Identificadores directos
+        fn: identificadores_directos
+        requirement: Identificador directo · Valor malformado · Texto libre
+        finds: RUT válidos, uno con DV inválido (queda en revisión) y correos, también dentro del texto libre
+      - rule: Sensibles por nombre
+        fn: sensibles_por_nombre
+        requirement: Atributo que revela una categoría sensible
+        finds: '`diagnostico` (salud) y `tramo_ingreso` (situación socioeconómica); compara por token, así que `fecha_ingreso` no calza'
+      - rule: Sensibles en el contenido
+        fn: sensibles_en_contenido
+        requirement: Texto libre
+        finds: «licencia médica» en `comentarios`
+      - rule: Identificación indirecta
+        fn: identificacion_indirecta
+        requirement: Combinación de atributos
+        finds: '`comuna` + `edad`: combinación única en 2 de 4 filas'
+    not_covered:
+      title: Qué no cubre
+      intro: 'Cubre 5 de los 7 tipos de columna de [§](#s3). Los otros dos no se detectan con patrones:'
+      items:
+      - title: 'Clave interna enlazable:'
+        text: un `cliente_id` parece un código cualquiera; es personal porque se puede enlazar con la tabla de clientes, y eso solo lo sabe quien
+          conoce el dominio.
+      - title: 'Sin señal propia:'
+        text: '`fecha_ingreso` o `producto` no dicen nada por sí solas; son personales por estar en la misma fila que un RUT [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
+          Por eso el reporte las lista como «sin hallazgos (no significa anónimo)».'
+      note: 'Tampoco responde la pregunta 4 del árbol [§](#s2): la edad del titular no se infiere de la muestra.'
+    scenarios:
+      title: Escenarios
+      items:
+      - name: muestra
+        text: 'candidatos sin revisor: la puerta bloquea y dice cuáles'
+        exit_code: 1
+      - name: revisado
+        text: 'los mismos candidatos, ya revisados: la puerta habilita'
+        exit_code: 0
+      - name: fuente-nueva
+        text: 'aparece `observacion_medica`, sensible por nombre y contenido, sin revisor: vuelve a bloquear'
+        exit_code: 1
+    simplifies:
+      title: Qué simplifica
+      items:
+      - title: 'RUT:'
+        text: valida la forma y el dígito verificador, no que exista ni a quién pertenece.
+      - title: 'Correo:'
+        text: reconoce el formato, no que la dirección exista.
+      - title: 'Sensibles:'
+        text: un diccionario mínimo; un término ausente no se detecta.
+      - title: 'Combinaciones:'
+        text: solo prueba la declarada (comuna + edad), no otras ni relaciones entre tablas.
+      - title: 'Muestra:'
+        text: con 4 filas casi toda combinación parece única; en producción se usan muestras más grandes y minimizadas.
+    limit:
+      title: Límite.
+      text: Es un ejemplo didáctico. Produce candidatos para revisión humana; no declara que una columna sea legalmente sensible, y una puerta
+        habilitada no demuestra que el tratamiento sea lícito.
+  cloud_compare:
+    title: Detectores en la nube, por frente del código
+    intro: Los cuatro frentes del detector [§](#s10), comparados con lo que ofrece cada servicio. El RUT está cubierto en las tres nubes y el
+      correo en dos; los sensibles y las combinaciones, de forma desigual.
+    alert:
+      title: Ojo
+      text: 'Ningún detector administrado sabe por sí solo que tu `cliente_id` enlaza con la tabla de clientes, y ninguno de los tres trae un
+        detector de situación socioeconómica. Se les puede enseñar con reglas personalizadas, pero alguien tiene que definirlas: el criterio propio
+        y la revisión siguen siendo necesarios.'
+    headers:
+    - Necesidad
+    - Este ejemplo
+    - GCP
+    - AWS
+    - Azure
+    rows:
+    - need: RUT o cédula chilena
+      meta: Identificadores directos
+      own:
+        text: Forma y dígito verificador por módulo 11
+      gcp:
+        name: '[Sensitive Data Protection](https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference) · `CHILE_CDI_NUMBER`'
+        text: Categorías GOVERNMENT_ID, PII y SPII; sensibilidad alta. La documentación no dice si valida el dígito verificador.
+      aws:
+        name: '[Amazon Macie](https://docs.aws.amazon.com/macie/latest/user/mdis-reference-quick.html) · `CHILE_RUT_NUMBER`'
+        text: Requiere una palabra clave cerca del valor.
+      azure:
+        name: '[Purview](https://learn.microsoft.com/en-us/purview/sit-defn-chile-identity-card-number) · Chile identity card number'
+        text: Valida el dígito verificador; con palabra clave cerca sube la confianza.
+    - need: Correo electrónico
+      meta: Identificadores directos
+      own:
+        text: Formato, también dentro del texto libre
+      gcp:
+        name: '`EMAIL_ADDRESS`'
+        text: Detector global.
+      aws:
+        name: No figura en la [referencia de identificadores administrados](https://docs.aws.amazon.com/macie/latest/user/mdis-reference-quick.html)
+        text: Se crea un identificador personalizado con una expresión regular.
+      azure:
+        name: '[Email](https://learn.microsoft.com/en-us/purview/data-map-classification-supported-list)'
+        text: Según la documentación, no aplica a datos no estructurados.
+    - need: Sensible por el nombre de la columna
+      meta: Sensibles por nombre
+      own:
+        text: 'Tokens del nombre: `diagnostico`, `tramo_ingreso`'
+      gcp:
+        name: Sin equivalente documentado
+        text: La documentación de los [perfiles de datos](https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles) no dice
+          que use el nombre de la columna.
+      aws:
+        name: '[Identificador personalizado](https://docs.aws.amazon.com/macie/latest/user/cdis-options.html)'
+        text: La palabra clave puede estar en el nombre de la columna o del campo (CSV, Parquet, JSON, entre otros).
+      azure:
+        name: '[Clasificación personalizada](https://learn.microsoft.com/en-us/purview/data-map-classification-custom) con patrón de columna'
+        text: Una expresión regular sobre el nombre de la columna.
+    - need: Sensible en el contenido
+      meta: Sensibles en el contenido
+      own:
+        text: 'Diccionario mínimo: «licencia médica», «diagnóstico»'
+      gcp:
+        name: '`MEDICAL_TERM`, `ETHNIC_GROUP`, `RELIGIOUS_TERM`, `POLITICAL_TERM`, `SEXUAL_ORIENTATION`, `TRADE_UNION`'
+        text: 'Cubren varias categorías del art. 2 letra g. La documentación no indica su cobertura en español: conviene probarlos con una muestra
+          propia.'
+      aws:
+        name: Sin identificadores administrados para términos
+        text: Los de salud detectan números de seguros o registros de EE. UU., Canadá y Europa, no palabras como «diagnóstico». Para términos
+          se crea un identificador personalizado.
+      azure:
+        name: Sin clasificación de sistema para salud o religión
+        text: 'Se crea una clasificación personalizada. Las reglas personalizadas solo se documentan en inglés: un término en español hay que
+          probarlo, no darlo por cubierto.'
+    - need: Combinación de atributos
+      meta: Identificación indirecta
+      own:
+        text: Combinación única de `comuna` + `edad` en la muestra
+      gcp:
+        name: '[Análisis de riesgo](https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-risk-analysis)'
+        text: k-anonimato, l-diversidad, k-map y δ-presencia.
+      aws:
+        name: Sin equivalente en Macie
+        text: 'Su documentación no incluye análisis de reidentificación: se calcula con código propio, por ejemplo k-anonimato con un `GROUP BY`.'
+      azure:
+        name: Sin equivalente en Purview Data Map
+        text: 'Igual que en AWS: se calcula con código propio.'
+    - need: Dónde busca
+      tone: where
+      own:
+        text: La muestra que recibe en la CI
+      gcp:
+        name: Perfiles de BigQuery, Cloud SQL y Cloud Storage; también Amazon S3 y Azure Blob Storage
+      aws:
+        name: Buckets de S3
+      azure:
+        name: Orígenes escaneados por Purview Data Map
+  practice_pairs:
+    start:
+      title: Por dónde empezar
+      text: Activos con datos de clientes, trabajadores, pacientes o menores de edad, y columnas de texto libre.
+    labels:
+      do: Hacer
+      avoid: Evitar
+    items:
+    - do: Clasificar por contenido, contexto y nombre de columna.
+      avoid: Clasificar solo por el nombre de la columna. [§](#s3)
+    - do: Comparar nombres por token, con reglas de varios tokens (`tramo` + `ingreso`).
+      avoid: 'Comparar por subcadena: «renta» calza en `rentabilidad_producto`. [§](#s10)'
+    - do: Analizar si una clave interna o un hash permite volver a la persona [(art. 2 letra l)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
+      avoid: Tratar `cliente_id` o un hash como no personal sin analizarlo. [§](#s2)
+    - do: Usar las categorías sensibles de la ley chilena, que incluyen la situación socioeconómica [(art. 2 letra g)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
+      avoid: 'Copiar la lista de datos sensibles del RGPD (art. 9): no incluye la situación socioeconómica. [§](#s2)'
+    - do: Dejar en revisión un RUT con dígito verificador inválido.
+      avoid: 'Descartarlo: un error de captura puede seguir apuntando a una persona. [§](#s3)'
+    - do: Usar el conteo de coincidencias para priorizar la revisión.
+      avoid: 'Concluir que una columna no es personal porque pocas filas calzan: un solo RUT ya identifica a alguien. [§](#s10)'
+    - do: Reanalizar ante cambios de esquema, fuentes nuevas y texto libre.
+      avoid: Clasificar una vez y no volver a escanear. [§](#s4)
+    - do: 'Tratar las muestras como datos personales: mínimas, con acceso restringido y borradas al terminar.'
+      avoid: Imprimir valores en los logs o reportes del detector. [§](#s10)
+  trade_offs:
+    resolution_label: Se resuelve con
+    items:
+    - a: Cobertura
+      a_text: Escanear todo encuentra los casos raros.
+      b: Costo
+      b_text: El volumen crece con cada capa y cada copia.
+      resolution: escaneo completo donde hay más riesgo (texto libre, datos de clientes y pacientes) y selectivo en el resto.
+    - a: Precisión
+      a_text: Reglas estrictas generan menos alertas falsas.
+      b: Sensibilidad
+      b_text: Reglas amplias omiten menos casos reales.
+      resolution: 'ajustar por categoría: más sensibilidad para salud y menores, más precisión para el resto.'
+    - a: Automatización
+      a_text: Los detectores escalan a miles de columnas.
+      b: Revisión humana
+      b_text: Las personas resuelven lo ambiguo y mantienen las reglas.
+      resolution: automatizar la detección y reservar la revisión para lo sensible y lo dudoso.
+    - a: Detector propio
+      a_text: Entiende formatos locales y tu dominio.
+      b: Detector de la nube
+      b_text: Escala y cubre muchos tipos de datos.
+      resolution: 'usar los dos: la nube para lo general y el propio para el RUT, las claves internas y las reglas del art. 2 letra g).'
+  open_questions:
+    intro: Si no sabes responder una, el enlace indica en qué parte de la ficha se trabaja.
+    items:
+    - question: Ante una fuente nueva, ¿qué columnas son identificadores indirectos, texto libre o datos sin señal propia en la misma fila que
+        un identificador?
+      tags:
+      - section: 3
+        label: Problema que resuelve
+        href: '#s3'
+    - question: ¿Qué columnas se pueden enlazar con una tabla que identifica a la persona?
+      tags:
+      - section: 4
+        label: Evaluar el contexto
+        href: '#s4'
+    - question: ¿Tu lista de categorías sensibles incluye la situación socioeconómica, o la copiaste del RGPD o de una herramienta?
+      tags:
+      - section: 2
+        label: Qué protege la ley
+        href: '#s2'
+      - section: 14
+        label: Hacer y evitar
+        href: '#s14'
+    - question: ¿Qué casos locales se le escapan a tu detector, como un RUT sin una palabra clave cerca o con dígito verificador inválido?
+      tags:
+      - section: 10
+        label: Código
+        href: '#s10'
+      - section: 11
+        label: En la nube
+        href: '#s11'
+    - question: ¿Tratas datos de niños, niñas o adolescentes, y cómo lo sabes?
+      tags:
+      - section: 2
+        label: Pregunta 4
+        href: '#s2'
+      - label: art. 16 quáter
+        legal: true
+        href: https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=13
+    - question: ¿Quién confirma los casos dudosos y dónde queda esa decisión?
+      tags:
+      - section: 4
+        label: Clasificar y revisar
+        href: '#s4'
+    - question: ¿Qué pasa con la clasificación cuando cambia el esquema o llega una fuente nueva?
+      tags:
+      - section: 4
+        label: Mantener
+        href: '#s4'
+      - section: 10
+        label: Escenario fuente-nueva
+        href: '#s10'
+    - question: ¿Dónde quedan las muestras que usa tu detector, quién accede a ellas, y sus logs exponen valores?
+      tags:
+      - section: 14
+        label: Hacer y evitar
+        href: '#s14'
+  sources_grouped:
+    groups:
+    - title: Normativa chilena
+      layout: list
+      sources:
+      - title: Ley 21.719 · Diario Oficial, 2024-12-13
+        urls:
+        - https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
+        publisher: Diario Oficial
+        why: Art. 2 letras f, g, i, k y l; art. 14 quinquies; art. 16; art. 16 quáter. Rigen desde el 2026-12-01.
+      - title: Ley 19.628 · texto que rige desde el 2026-12-01
+        urls:
+        - https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
+        publisher: BCN
+        why: Texto consolidado, versión con vigencia diferida.
+    - title: Referencias de comparación
+      layout: list
+      sources:
+      - title: Reglamento (UE) 2016/679 (RGPD)
+        urls:
+        - https://eur-lex.europa.eu/eli/reg/2016/679/oj
+        publisher: EUR-Lex
+        why: 'Art. 9: categorías especiales; no incluye la situación socioeconómica.'
+      - title: CIE-10 · J45 Asma
+        urls:
+        - https://icd.who.int/browse10/2019/en#/J45
+        publisher: OMS
+        why: Código del ejemplo `diagnostico`.
+    - title: Servicios cloud · consultados el 2026-11-12
+      layout: list
+      sources:
+      - title: InfoType detector reference
+        urls:
+        - https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference
+        publisher: Google Cloud
+        why: CHILE_CDI_NUMBER, EMAIL_ADDRESS y detectores de salud, origen étnico, religión, política, orientación sexual y sindicatos.
+      - title: Sensitive data discovery
+        urls:
+        - https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles
+        publisher: Google Cloud
+        why: Perfiles de BigQuery, Cloud SQL y Cloud Storage; también Amazon S3 y Azure Blob Storage.
+      - title: Re-identification risk analysis
+        urls:
+        - https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-risk-analysis
+        publisher: Google Cloud
+        why: k-anonimato, l-diversidad, k-map y δ-presencia.
+      - title: Managed data identifiers by type
+        urls:
+        - https://docs.aws.amazon.com/macie/latest/user/mdis-reference-quick.html
+        publisher: AWS
+        why: CHILE_RUT_NUMBER en Amazon Macie; no incluye correo electrónico.
+      - title: Configuration options for custom data identifiers
+        urls:
+        - https://docs.aws.amazon.com/macie/latest/user/cdis-options.html
+        publisher: AWS
+        why: Expresión regular, palabras clave y nombre de columna como palabra clave.
+      - title: Chile identity card number
+        urls:
+        - https://learn.microsoft.com/en-us/purview/sit-defn-chile-identity-card-number
+        publisher: Microsoft
+        why: Tipo de información sensible de Purview; valida el dígito verificador.
+      - title: System classifications supported in Data Map
+        urls:
+        - https://learn.microsoft.com/en-us/purview/data-map-classification-supported-list
+        publisher: Microsoft
+        why: Clasificación Email; sin clasificaciones de salud o religión.
+      - title: Custom classifications in Data Map
+        urls:
+        - https://learn.microsoft.com/en-us/purview/data-map-classification-custom
+        publisher: Microsoft
+        why: Patrón de columna; reglas personalizadas documentadas solo en inglés.
+    - title: En esta plataforma
+      layout: list
+      sources:
+      - title: Ley 21.719 para ingenieros de datos
+        page: chile-data-protection
+        label: Ficha madre
+        why: Principios, matriz de control y sanciones.
+      - title: Seudonimización de identificadores chilenos
+        page: chilean-identifier-pseudonymization
+        label: Ficha
+        why: Qué hacer con el RUT detectado.
+      - title: Minimización por capa
+        page: data-minimization-by-layer
+        label: Ficha
+        why: Qué columnas pasan de capa.
+      - title: Controles de privacidad como código
+        page: privacy-controls-as-code
+        label: Ficha
+        why: Cómo la clasificación se vuelve un control en la CI.
 created_at: 2026-10-21
-updated_at: 2026-11-04
-last_verified: 2026-10-25
-owner_approved_at: 2026-11-04
+updated_at: '2026-11-14'
+last_verified: '2026-11-12'
+owner_approved_at: 2026-11-14
 verification_status: verified
+availability: available
 ---
 
 ## 1. Resumen
 
-Esta ficha no es asesoría legal: cubre la parte técnica de identificar datos personales y sensibles. Seudonimización, minimización, derechos e incidentes van en sus fichas hijas.
+Esta ficha no es asesoría legal: cubre la parte técnica de identificar datos personales y sensibles.
 
-**Identificar** es determinar qué información permite reconocer a una persona, por sí sola o combinada con otros datos. **Clasificar** es registrar esa conclusión con contexto y evidencia. No basta buscar RUT y correos: identificadores internos, texto libre y combinaciones de atributos también pueden identificar.
+### Saber qué columnas tienen datos personales, cuáles son sensibles y con qué fundamento
 
-**Resultado esperado:** un catálogo que diga qué activos tienen datos personales o sensibles, con qué fundamento se clasificaron, quién revisó los casos dudosos y cuándo se actualizó el análisis.
+**Identificar** es encontrar las columnas con información vinculada o referida a una persona identificada o identificable [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2), aunque no la nombren: claves internas, texto libre y combinaciones de atributos también cuentan. **Clasificar** es dejar esa conclusión en el catálogo, con su fundamento, para que otros puedan revisarla y aplicar los controles que corresponden.
+
+<!-- view: catalog_fields -->
+
+<!-- view: note catalogo -->
+
+<!-- view: chips ficha-madre -->
 
 ## 2. Qué es
 
-- **[Obligación legal · art. 2]** Dato personal es información vinculada o referida a una persona natural identificada o identificable; es identificable quien puede determinarse directa o indirectamente, y se consideran los medios y factores que razonablemente se podrían usar para identificarla.
-- **[Obligación legal · art. 2]** El art. 2 g) dice, tal cual: «Datos personales sensibles: tendrán esta condición aquellos datos personales que se refieren a las características físicas o morales de las personas o a hechos o circunstancias de su vida privada o intimidad, que revelen el origen étnico o racial, la afiliación política, sindical o gremial, la situación socioeconómica, las convicciones ideológicas o filosóficas, las creencias religiosas, los datos relativos a la salud, al perfil biológico humano, los datos biométricos, y la información relativa a la vida sexual, a la orientación sexual y a la identidad de género de una persona natural.»
-- **[Obligación legal · art. 16]** Los datos sensibles tienen una regla propia: consentimiento expreso del titular, salvo los casos que la ley enumera.
-- **[Buena práctica]** **Identificador directo:** RUT, correo personal, nombre junto a otros datos. **Identificador indirecto:** un código de cliente, una ubicación o una combinación de edad, comuna y otros atributos, cuando permiten identificar razonablemente a alguien.
-- **[Buena práctica]** Un dato seudonimizado sigue siendo personal si se puede reidentificar al titular con información adicional (`chilean-identifier-pseudonymization`).
-- **[Decisión de arquitectura]** **Distinción crítica:** una etiqueta técnica de riesgo (por ejemplo `HIGH`) no equivale a la categoría jurídica «dato sensible»; el catálogo guarda las dos por separado.
+### Qué protege la ley
+
+<!-- view: concept_map -->
+
+<!-- view: decision_tree -->
+
+<!-- view: note categoria-riesgo -->
 
 ## 3. Problema que resuelve
 
-**[Buena práctica]** Una ingesta trae `cliente_id`, `correo`, `tramo_ingreso`, `comuna` y `comentarios`. Un detector solo de expresiones regulares encuentra el correo, pero no ve que `tramo_ingreso` revela situación socioeconómica (sensible según el art. 2 g)), que `comentarios` trae texto libre sobre la salud de un cliente y que `cliente_id` se enlaza con la tabla que identifica a la persona.
+### Las nueve columnas de la muestra son personales; un detector de patrones ve tres
 
-**[Buena práctica]** **Riesgo:** publicar una tabla analítica o compartirla con un proveedor creyendo que no contiene datos personales.
+<!-- view: coverage_strip -->
+
+<!-- view: column_types -->
+
+<!-- view: note categoria-preliminar -->
+
+<!-- view: note riesgo -->
 
 ## 4. Cómo funciona
 
-1. **[Buena práctica]** **Inventariar:** fuentes, tablas, vistas, archivos, eventos, logs y exportaciones, con su esquema y su responsable.
-2. **[Buena práctica]** **Detectar candidatos:** patrones sobre los valores, nombres de columna, diccionarios, detectores de la nube y conocimiento del dominio.
-3. **[Buena práctica]** **Evaluar el contexto:** enlaces con otras tablas, texto libre, campos codificados y posibilidad razonable de identificación.
-4. **[Decisión de arquitectura]** **Clasificar y revisar:** categoría (personal, sensible) y confianza; lo ambiguo va al dueño del dato y a privacidad.
-5. **[Decisión de arquitectura]** **Registrar:** etiqueta, fundamento, método, fecha, revisor y versión del esquema en el catálogo.
-6. **[Buena práctica]** **Mantener:** reanalizar ante cambios de esquema, fuentes nuevas, transformaciones y revisiones periódicas según el riesgo.
+### Seis pasos, cada uno deja evidencia
 
-**[Buena práctica]** No hay un umbral universal (por ejemplo, «el 60 % de la muestra»): un solo valor sensible en mil filas puede importar. Cuántos valores calzan sirve para priorizar la revisión, no para decidir que la columna no tiene datos personales.
+<!-- view: evidence_steps -->
+
+<!-- view: note umbral -->
+
+<!-- view: chips conexiones -->
 
 ## 5. Cuándo utilizarlo
 
-- Antes de incorporar una fuente o de habilitar un consumidor nuevo.
-- Cuando cambia un esquema o una finalidad.
-- En migraciones, copias a ambientes de desarrollo e integraciones con APIs.
-- En el escaneo periódico de las capas, para encontrar datos personales donde no deberían estar.
+### Cada vez que cambia lo que entra o lo que sale
 
-## 6. Cuándo no utilizarlo
-
-- Como certificación de que no hay datos personales: «sin hallazgos» no significa anónimo.
-- Para decidir la base de licitud de un dato sensible: eso lo decide el área legal.
-- Como única prueba: un patrón no reconoce una combinación de columnas que identifica.
-
-## 7. Ejemplo sencillo
-
-| Columna | Clasificación preliminar | Motivo o precaución |
-|---|---|---|
-| `cliente_id` | Personal si es vinculable | Una clave interna se enlaza con la persona en otra tabla |
-| `diagnostico` | Sensible | Datos relativos a la salud (art. 2 g)) |
-| `tramo_ingreso` | Sensible si se asocia a un titular | Situación socioeconómica (art. 2 g)); confirmar qué significa |
-| `comuna` | Depende del contexto | Sola no identifica; combinada puede reidentificar |
-| `comentarios` | Revisión necesaria | El texto libre puede traer datos personales o sensibles |
-| `rut_malformado` | No descartar | Un DV inválido no elimina el carácter personal: puede ser un error de captura |
-
-## 8. Ejemplo de producción
-
-Escenario genérico: un pipeline de reservas y CRM alimenta un warehouse por capas.
-
-- **Ingesta y bronze:** registrar el esquema, detectar identificadores y restringir el acceso mientras se revisan los campos nuevos.
-- **Silver:** enriquecer el catálogo con las relaciones entre tablas; detectar identificadores indirectos y campos sensibles aunque vengan codificados.
-- **Gold:** cada vista expone solo lo necesario; agregar no garantiza anonimato (`data-minimization-by-layer`).
-- **Operación:** si aparece `observacion_medica` en una fuente, alerta y revisión antes de habilitar consumos.
-
-### Evidencia de cumplimiento
-
-| Evidencia | Dónde queda | Quién la produce |
-|---|---|---|
-| Inventario de activos con esquema y responsable | Catálogo | Ingeniería de datos |
-| Hallazgos del detector, sin valores personales | Log del job | Pipeline de clasificación |
-| Decisión de clasificación con fundamento, revisor y fecha | Catálogo | Dueño del dato y privacidad |
-| Resultado de la puerta de habilitación (0 o 1) y las columnas que la bloquean | Log del job o de la CI | Pipeline de clasificación |
-| Registro de cambios de esquema y reclasificaciones | Catálogo, versionado | Pipeline y dueño del dato |
-
-## 9. Arquitectura
-
-```mermaid
-flowchart TB
-  F["Fuente"] --> I["Inventario y esquema"]
-  I --> D["Detectores"]
-  D --> X["Análisis de contexto"]
-  X --> R["Revisión humana"]
-  R --> C["Catálogo"]
-  C --> P["Políticas de acceso<br/>y minimización"]
-```
-
-La clasificación alimenta los controles, pero no los implementa: hace falta una integración explícita con permisos, contratos de datos y monitoreo (`privacy-controls-as-code`).
+<!-- view: use_avoid -->
 
 ## 10. Código
+
+### Detector con puerta de habilitación
+
+<!-- view: control_evidence -->
 
 ```python
 # Python 3.12+, biblioteca estándar. De punta a punta: muestra de columnas → detección en cuatro frentes →
@@ -377,16 +1400,7 @@ if __name__ == "__main__":
     sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else "muestra"))
 ```
 
-El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Recorre cuatro pasos: las reglas, la detección en cuatro frentes (una función por frente), el registro en el catálogo y la puerta que decide si la capa se habilita. Los RUT son ficticios, de dígitos repetidos y con el DV calculado por módulo 11; `con_dv_alterado()` arma el RUT malformado; los correos usan `example.test`. El reporte nunca imprime valores.
-
-En la muestra, la detección encuentra:
-
-- **Identificadores directos:** RUT válidos y uno con DV inválido en `rut_cliente` (este queda en revisión), y correos en `contacto` y dentro del texto libre de `comentarios`.
-- **Sensibles por nombre de columna:** `diagnostico` (salud) y `tramo_ingreso` (situación socioeconómica). La comparación es por token, y una regla puede pedir varios tokens juntos: `tramo_ingreso` calza con `tramo` e `ingreso`; `fecha_ingreso` no.
-- **Sensibles en el contenido:** el término «licencia médica» en `comentarios`, con el diccionario mínimo de salud.
-- **Identificación indirecta:** `comuna` + `edad` forman una combinación única en 2 de 4 filas.
-
-Cada hallazgo es una entrada de catálogo con categoría, método, fundamento, fecha de referencia y revisor «pendiente». La puerta bloquea `silver.clientes` mientras haya un candidato sensible o de revisión sin revisor, y dice cuál. Termina con código 1:
+El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`.
 
 ```text
 $ python detector.py muestra
@@ -403,8 +1417,6 @@ sin hallazgos (no significa anónimo): ['fecha_ingreso', 'producto']
 puerta de silver.clientes: bloqueada (1), sin revisor: rut_cliente (revisión), comentarios (sensible), diagnostico (sensible), tramo_ingreso (sensible), comuna + edad (revisión)
 ```
 
-Con las mismas columnas revisadas, la puerta habilita la capa. Termina con código 0:
-
 ```text
 $ python detector.py revisado
 catálogo de silver.clientes · 4 filas · referencia 2026-11-03
@@ -419,8 +1431,6 @@ catálogo de silver.clientes · 4 filas · referencia 2026-11-03
 sin hallazgos (no significa anónimo): ['fecha_ingreso', 'producto']
 puerta de silver.clientes: habilitada (0)
 ```
-
-Si la fuente trae una columna nueva, `observacion_medica`, aparece como sensible por su nombre y por su contenido, sin revisor. La puerta vuelve a bloquear, como pide la operación del §8, aunque el resto ya esté revisado:
 
 ```text
 $ python detector.py fuente-nueva
@@ -439,108 +1449,35 @@ sin hallazgos (no significa anónimo): ['fecha_ingreso', 'producto']
 puerta de silver.clientes: bloqueada (1), sin revisor: observacion_medica (sensible)
 ```
 
-Limitaciones:
-
-- **RUT:** valida la forma y el DV, no que exista ni a quién pertenece. Un DV inválido no descarta el dato: queda en revisión.
-- **Correo:** reconoce el formato, no que la dirección exista.
-- **Sensibles:** el nombre de columna y un diccionario mínimo dan candidatos. Un término ausente del diccionario no se detecta, y la clasificación jurídica exige revisar contenido y contexto.
-- **Identificación indirecta:** solo prueba la combinación declarada (`comuna` + `edad`) en la muestra. No busca otras combinaciones ni relaciones entre tablas, y en una muestra chica casi toda combinación parece única.
-- **Identificadores internos:** un `cliente_id` vinculable no se detecta aquí; se clasifica en el catálogo por conocimiento del dominio.
-- **Logs:** el reporte no imprime valores; en producción, muestras minimizadas o sintéticas.
+<!-- view: code_guide -->
 
 ## 11. GCP
 
-En GCP, **Sensitive Data Protection**. Según *InfoType detector reference*, consultada el 2026-10-27, e *InfoTypes and infoType detectors* (no ejecutado):
+<!-- view: cloud_compare -->
 
-|  | Detector propio (este ejemplo) | Sensitive Data Protection |
-|---|---|---|
-| Identificador chileno | RUT con DV módulo 11 | `CHILE_CDI_NUMBER` (Cédula de Identidad), en las categorías GOVERNMENT_ID, PII y SPII |
-| Otros datos | Por nombre de columna | infoTypes incorporados y personalizados, con probabilidad ajustable |
-
-## 12. AWS
-
-En AWS, **Amazon Macie**. Según *Quick reference: Managed data identifiers by type*, consultada el 2026-10-27 (no ejecutado):
-
-|  | Detector propio (este ejemplo) | Amazon Macie |
-|---|---|---|
-| Identificador chileno | RUT con DV módulo 11 | `CHILE_RUT_NUMBER`, en número nacional de identificación y de identificación tributaria, con Chile entre los países |
-| Alcance | Una muestra en memoria | Objetos de Amazon S3 |
-
-## 13. Azure
-
-En Azure, **Microsoft Purview**. Según *Chile identity card number*, consultada el 2026-10-27 (no ejecutado):
-
-|  | Detector propio (este ejemplo) | Purview |
-|---|---|---|
-| Patrón | Siete u ocho dígitos y DV, con o sin puntos y guion | Siete a ocho dígitos con delimitadores opcionales y un dígito o letra verificador; checksum |
-| Confianza | Conteo para priorizar | Alta con patrón, palabra clave a 300 caracteres o menos y checksum; media sin la palabra clave |
-
-**Criterio de selección:** cobertura real de las fuentes, formatos locales, falsos negativos medidos, permisos y si los resultados llegan al catálogo. Ningún servicio sustituye la revisión de contexto.
+<!-- view: note equivalencias -->
 
 ## 14. Buenas prácticas
 
-- **[Buena práctica]** Priorizar activos con datos de clientes, trabajadores o pacientes y con texto libre.
-- **[Buena práctica]** Probar formatos locales y datos malformados, no solo coincidencias perfectas.
-- **[Buena práctica]** Usar la lista de sensibles del art. 2 g) tal cual: incluye la situación socioeconómica.
-- **[Buena práctica]** Registrar «no detectado» como resultado técnico, no como certificación de anonimato.
-- **[Decisión de arquitectura]** Conectar la clasificación con controles por finalidad y mínimo privilegio.
-- **[Buena práctica]** **Seguridad:** muestras, resultados del escaneo y reportes también son potencialmente personales.
-- **[Buena práctica]** **Observabilidad:** alertar cuando aparece una columna personal nueva en una capa que no debería tenerla.
-- **[Buena práctica]** **Costo:** escaneo selectivo por riesgo y completo donde importa; el volumen crece con cada capa y copia.
+### Ocho decisiones que separan una clasificación confiable de una que no lo es
 
-## 15. Errores frecuentes
-
-- Clasificar solo por el nombre de la columna.
-- Comparar nombres por substring: «ingreso» calza en `fecha_ingreso` y «renta» en `rentabilidad_producto`, que no son datos socioeconómicos de una persona. Se compara por token (split por «_») y con reglas de varios tokens, como `tramo` + `ingreso`.
-- Tratar `cliente_id` o un hash como no personal sin analizar la reidentificación.
-- Equiparar cualquier dato financiero con sensible sin revisar qué revela; ojo: la situación socioeconómica sí es sensible según el art. 2 g).
-- Creer que un DV inválido elimina el carácter personal del dato.
-- Usar un umbral de coincidencias para descartar columnas.
-- No revisar columnas nuevas ni texto libre; clasificar una vez y no volver a escanear.
+<!-- view: practice_pairs -->
 
 ## 16. Trade-offs
 
-- **Cobertura frente a costo:** muestrear reduce volumen y puede omitir casos raros; combinar escaneo selectivo y completo según el riesgo.
-- **Precisión frente a sensibilidad:** reglas estrictas reducen alertas y aumentan omisiones; ajustar por categoría y contexto.
-- **Automatización frente a revisión:** los detectores escalan; las personas resuelven lo ambiguo y mantienen las reglas.
-- **Detector propio frente a la nube:** el propio entiende formatos locales; el de la nube escala y cubre más tipos.
+### Cuatro equilibrios al diseñar el detector
 
-## 17. Conceptos relacionados
-
-- `chile-data-protection`: ficha padre.
-- `data-classification`: la clasificación general.
-- `data-masking`: qué hacer con lo detectado al mostrarlo.
-- `data-minimization-by-layer`: qué columnas pasan de capa.
-- `chilean-identifier-pseudonymization`: el RUT detectado.
-- `privacy-controls-as-code`: cobertura de etiquetas.
-- `data-breach-response`: categorías y aviso a titulares.
-
-Nota editorial: esta ficha cubre identificar y clasificar; la seudonimización, la minimización, los derechos y los incidentes se profundizan en sus fichas hijas.
+<!-- view: trade_offs -->
 
 ## 18. Preguntas técnicas abiertas
 
-1. Ante una fuente nueva, ¿hay identificadores indirectos o texto libre?
-2. ¿Alguna columna se puede enlazar con otra tabla que identifica a la persona?
-3. ¿Qué formatos locales no cubren tus detectores?
-4. ¿Quién confirma los casos dudosos y con qué evidencia?
-5. ¿Cómo se actualiza la etiqueta si cambia el esquema?
+### Respóndelas para tu plataforma
 
-## 19. Laboratorio relacionado
-
-Propuesta para F4: un dataset sintético con correos, RUT ficticios en formatos distintos (con y sin puntos, con DV inválido), identificadores internos, texto libre y campos socioeconómicos. Comparar la detección por patrón con la de contexto y registrar hallazgos y falsos negativos en un catálogo simulado. Sin datos personales reales.
+<!-- view: open_questions -->
 
 ## 20. Fuentes
 
-- BCN Ley Chile: *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* (versión con vigencia diferida desde 2026-12-01).
-- Google Cloud: *InfoType detector reference* e *InfoTypes and infoType detectors*.
-- AWS: *Quick reference: Managed data identifiers by type*.
-- Microsoft Learn: *Chile identity card number*.
-
-El detalle de cada fuente está en `sources` del frontmatter.
-
-## 21. Fecha de última verificación
-
-2026-10-25: textos legales vueltos a consultar en BCN, sin cambios. Antes, 2026-10-21: texto legal consultado ese día en BCN. `verified`: aprobada de nuevo el 2026-11-04 (`owner_approved_at`), con el §10 revisado en P10. Revisión mensual.
+### Fuentes
 
 ## 22. Historial de cambios importantes
 
@@ -560,3 +1497,5 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-03: aprobada con el §10 nuevo (`owner_approved_at: 2026-11-03`); vuelve a `verified` (ADR-023).
 - 2026-11-04: revisión `docs/reviews/p10.md` aplicada: en §15, el ejemplo falso «renta» en `herramienta_id` pasa a `rentabilidad_producto`, que sí contiene la subcadena; un test lo comprueba contra la ficha. Vuelve a `review_required`.
 - 2026-11-04: aprobada con la revisión P10 aplicada (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).
+- 2026-11-12: migrada desde la maqueta aprobada: 11 secciones con su texto tal cual, en vistas (ADR-030, enmienda 5) y con la numeración y el «Leído N de M» del ADR-029 (enmienda 3). Salen las secciones 6, 7, 8, 9, 12, 13, 15, 17, 19 y 21. Citas a los artículos en el texto publicado en el Diario Oficial; servicios cloud consultados el 2026-11-12. §10 con el detector de la maqueta: la CI ejecuta muestra, revisado y fuente-nueva (salidas 1, 0 y 1) y mypy --strict. Vuelve a `review_required`, sin `owner_approved_at`, hasta la revisión.
+- 2026-11-14: aprobada con lista explícita (`owner_approved_at: 2026-11-14`) tras la re-revisión de la migración; pasa a `verified` (ADR-023). Se quitan dos copias repetidas de la entrada del 2026-11-12.

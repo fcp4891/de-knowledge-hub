@@ -27,7 +27,7 @@ from backend.db import schema as t
 from backend.content import validate as v
 from backend.app.projection import markdown_body, sections
 
-COMPILER_VERSION = "7"  # 2: search_documents (A-F2.3); 3: aliases en la búsqueda (ADR-010); 4: page_title (ADR-012); 5: ADR-023; 6: implication (enmienda de ADR-023); 7: band y legal_frameworks (ADR-027)
+COMPILER_VERSION = "8"  # 8: ui_texts (ADR-031); 2: search_documents (A-F2.3); 3: aliases en la búsqueda (ADR-010); 4: page_title (ADR-012); 5: ADR-023; 6: implication (enmienda de ADR-023); 7: band y legal_frameworks (ADR-027)
 TECHNOLOGY_TYPES = {"technology", "cloud_service"}
 SEARCHABLE_TYPES = {"concept", "pattern", "architecture", "technology", "cloud_service", "code_snippet", "source"}
 SEARCH_CONFIGS = {"tsv_es": "es_unaccent", "tsv_en": "en_unaccent"}
@@ -162,6 +162,10 @@ def insert_search_document(conn: Connection, file_path: str, origin: str, doc: d
 
 
 def entity_search_document(data: dict[str, Any], body: str | None) -> dict[str, Any]:
+    if data.get("availability", "available") != "available":   # ADR-031: sin cuerpo, descripción ni etiquetas
+        return {"slug": data["slug"], "type": data["type"], "title": data["title"], "domain": data.get("domain"),
+                "classification": data.get("classification"), "snippet": data["title"], "tags": "", "summary": "",
+                "body": "", "aliases": []}
     return {
         "slug": data["slug"], "type": data["type"], "title": data["title"], "domain": data.get("domain"),
         "classification": data.get("classification"), "snippet": data.get("description") or data["title"],
@@ -234,8 +238,13 @@ def insert_legal_framework(conn: Connection, file_path: str, doc: dict[str, Any]
     conn.execute(insert(t.legal_frameworks).values(slug=doc["slug"], data=doc, file_path=file_path))
 
 
+def insert_ui_text(conn: Connection, file_path: str, doc: dict[str, Any]) -> None:
+    """ADR-031: un archivo de content/ui/ por fila; la clave es su nombre sin extensión."""
+    conn.execute(insert(t.ui_texts).values(key=Path(file_path).stem, data=doc, file_path=file_path))
+
+
 STRUCTURE_LOADERS = {v.BLUEPRINT_DIR: insert_blueprint, v.MATRIX_DIR: insert_matrix,
-                     v.LEGAL_FRAMEWORKS_DIR: insert_legal_framework}
+                     v.LEGAL_FRAMEWORKS_DIR: insert_legal_framework, v.UI_DIR: insert_ui_text}
 
 
 def load_file(conn: Connection, rel: str, path: Path) -> None:

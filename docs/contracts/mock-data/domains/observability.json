@@ -24,7 +24,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "observability-logs",
@@ -38,7 +39,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "observability-metrics",
@@ -52,7 +54,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "observability-traces",
@@ -66,7 +69,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         }
       ]
     },
@@ -86,7 +90,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "volume-anomalies",
@@ -100,7 +105,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "schema-change-detection",
@@ -114,7 +120,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "pipeline-health",
@@ -128,7 +135,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         }
       ]
     },
@@ -148,7 +156,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "data-slo",
@@ -162,7 +171,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "alerting",
@@ -176,7 +186,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "incident-response",
@@ -190,7 +201,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         },
         {
           "slug": "root-cause-analysis",
@@ -204,9 +216,27 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-20"
+          "last_verified": "2026-10-20",
+          "availability": "available"
         }
       ]
     }
-  ]
+  ],
+  "availability_texts": {
+    "in_review": {
+      "label": "En revisión",
+      "help": "Contenido listo; en revisión antes de publicarse.",
+      "count": "{n} en revisión"
+    },
+    "in_development": {
+      "label": "En desarrollo",
+      "help": "Contenido y diseño en preparación.",
+      "count": "{n} en desarrollo"
+    },
+    "available": {
+      "count": "{n} disponibles"
+    },
+    "route_count": "{n} de {total} fichas disponibles",
+    "back_label": "Volver al itinerario"
+  }
 }

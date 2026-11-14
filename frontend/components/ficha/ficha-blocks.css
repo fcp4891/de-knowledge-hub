@@ -2404,6 +2404,18 @@
   padding-left: 1.2em;
 }
 
+.code-guide li,
+.code-guide p,
+.code-guide td {
+  overflow-wrap: anywhere;
+}
+
+.code-guide-scenarios {
+  width: 100%;
+  max-width: 100%;
+  table-layout: fixed;
+}
+
 .code-guide li + li {
   margin-top: 8px;
 }
@@ -2550,8 +2562,18 @@
   font-size: var(--text-sm);
 }
 
+.cloud-compare tr[data-tone="where"] td {
+  background: var(--surface-muted);
+}
+
 .cloud-compare .markdown-table-steps table {
   min-width: 52rem;
+}
+
+@media (max-width: 720px) {
+  .cloud-compare .markdown-table-steps table {
+    min-width: 0;
+  }
 }
 
 .cloud-compare .markdown-table-steps th,

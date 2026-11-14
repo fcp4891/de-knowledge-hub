@@ -28,13 +28,20 @@ export type RouteCandidate = {
   hasPage: boolean;
   level: Level;
   blueprintIndex: number;
+  /** false: ficha publicada como página mínima (ADR-031). Ausente: se cuenta. */
+  available?: boolean;
 };
 
-/** Primer concepto con ficha que no está comprendido ni aplicado. `null` si no hay ninguno. */
+/** Ficha que se puede abrir y contar. Las no disponibles quedan fuera. */
+export function isAvailableFicha(concept: { hasPage: boolean; available?: boolean }): boolean {
+  return concept.hasPage && concept.available !== false;
+}
+
+/** Primer concepto con ficha disponible que no está comprendido ni aplicado. `null` si no hay ninguno. */
 export function nextRecommended<T extends RouteCandidate>(stages: { concepts: T[] }[], study: (slug: string) => StudyStatus): T | null {
   for (const stage of stages) {
     for (const concept of orderByLevel(stage.concepts)) {
-      if (!concept.hasPage) {
+      if (!isAvailableFicha(concept)) {
         continue;
       }
       if (!isMastered(study(concept.slug))) {
@@ -56,7 +63,7 @@ export function nextInRoute<T extends RouteCandidate & { title: string }>(
     return null;
   }
   for (const concept of ordered.slice(index + 1)) {
-    if (concept.hasPage) {
+    if (isAvailableFicha(concept)) {
       return concept;
     }
   }
@@ -64,7 +71,7 @@ export function nextInRoute<T extends RouteCandidate & { title: string }>(
 }
 
 export function domainIsComplete<T extends RouteCandidate>(stages: { concepts: T[] }[], study: (slug: string) => StudyStatus): boolean {
-  const withPage = stages.flatMap((stage) => stage.concepts).filter((concept) => concept.hasPage);
+  const withPage = stages.flatMap((stage) => stage.concepts).filter((concept) => isAvailableFicha(concept));
   return withPage.length > 0 && withPage.every((concept) => isMastered(study(concept.slug)));
 }
 

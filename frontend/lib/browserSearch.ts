@@ -13,6 +13,8 @@ export type SearchDocument = {
   snippet: string;
   tags?: string[] | string;
   aliases?: string[] | string;
+  /** ADR-031: solo en fichas no disponibles; viene del build (content/ui/availability.yaml). */
+  availability?: { status: "in_review" | "in_development"; label: string; help: string };
 };
 
 /** Mismo peso para el título y los alias (ADR-010). */
@@ -35,6 +37,7 @@ const GROUP_ORDER: ResultType[] = [
 ];
 
 let indexPromise: Promise<MiniSearch<SearchDocument>> | undefined;
+let filePromise: Promise<SearchIndexFile> | undefined;
 
 function fieldText(value: string[] | string | undefined): string {
   if (Array.isArray(value)) {
@@ -74,15 +77,20 @@ export function searchDocuments(documents: SearchDocument[], query: string): str
     .map((hit) => hit.title);
 }
 
+/** search-index.json del sitio publicado (misma ruta base); nunca una API. */
+export function loadSearchFile(): Promise<SearchIndexFile> {
+  filePromise ??= fetch(`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/data/search-index.json`).then(async (response) => {
+    if (!response.ok) {
+      filePromise = undefined;
+      throw new Error(String(response.status));
+    }
+    return (await response.json()) as SearchIndexFile;
+  });
+  return filePromise;
+}
+
 function loadIndex(): Promise<MiniSearch<SearchDocument>> {
-  indexPromise ??= fetch(`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/data/search-index.json`)
-    .then(async (response) => {
-      if (!response.ok) {
-        throw new Error(String(response.status));
-      }
-      return (await response.json()) as SearchIndexFile;
-    })
-    .then((file) => indexDocuments(file.documents));
+  indexPromise ??= loadSearchFile().then((file) => indexDocuments(file.documents));
   return indexPromise;
 }
 

@@ -24,7 +24,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-27"
+          "last_verified": "2026-10-27",
+          "availability": "available"
         },
         {
           "slug": "data-agents",
@@ -38,7 +39,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-27"
+          "last_verified": "2026-10-27",
+          "availability": "available"
         },
         {
           "slug": "agentic-workflows",
@@ -52,7 +54,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-27"
+          "last_verified": "2026-10-27",
+          "availability": "available"
         },
         {
           "slug": "agentic-data-engineering",
@@ -66,7 +69,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-27"
+          "last_verified": "2026-10-27",
+          "availability": "available"
         },
         {
           "slug": "llm-driven-automation",
@@ -80,7 +84,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-27"
+          "last_verified": "2026-10-27",
+          "availability": "available"
         },
         {
           "slug": "ai-assisted-development",
@@ -94,7 +99,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-27"
+          "last_verified": "2026-10-27",
+          "availability": "available"
         }
       ]
     },
@@ -114,7 +120,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-27"
+          "last_verified": "2026-10-27",
+          "availability": "available"
         },
         {
           "slug": "interoperability-standards",
@@ -128,7 +135,8 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-27"
+          "last_verified": "2026-10-27",
+          "availability": "available"
         },
         {
           "slug": "open-table-format-evolution",
@@ -142,9 +150,27 @@
           "mvp": false,
           "has_page": true,
           "verification_status": "verified",
-          "last_verified": "2026-10-27"
+          "last_verified": "2026-10-27",
+          "availability": "available"
         }
       ]
     }
-  ]
+  ],
+  "availability_texts": {
+    "in_review": {
+      "label": "En revisión",
+      "help": "Contenido listo; en revisión antes de publicarse.",
+      "count": "{n} en revisión"
+    },
+    "in_development": {
+      "label": "En desarrollo",
+      "help": "Contenido y diseño en preparación.",
+      "count": "{n} en desarrollo"
+    },
+    "available": {
+      "count": "{n} disponibles"
+    },
+    "route_count": "{n} de {total} fichas disponibles",
+    "back_label": "Volver al itinerario"
+  }
 }

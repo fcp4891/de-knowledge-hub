@@ -68,6 +68,11 @@ def read_legal_frameworks(conn: Connection, index: ContentIndex) -> None:
         index.legal_frameworks[slug] = data
 
 
+def read_ui_texts(conn: Connection, index: ContentIndex) -> None:
+    for key, data in conn.execute(select(t.ui_texts.c.key, t.ui_texts.c.data)):
+        index.ui[key] = data
+
+
 def read_matrix(conn: Connection, index: ContentIndex) -> None:
     rows = conn.execute(
         select(t.capabilities.c.data).order_by(t.capabilities.c.file_path, t.capabilities.c.position)
@@ -82,4 +87,5 @@ def load_index_from_db(engine: Engine, schemas_dir: Path) -> ContentIndex:
         read_blueprint(conn, index)
         read_legal_frameworks(conn, index)
         read_matrix(conn, index)
+        read_ui_texts(conn, index)
     return index

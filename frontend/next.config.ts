@@ -19,7 +19,8 @@ const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_API_MODE: process.env.API_MODE ?? "hybrid",
     NEXT_PUBLIC_BASE_PATH: isStatic ? basePath : "",
-    NEXT_PUBLIC_API_BASE_URL: process.env.API_BASE_URL ?? "http://localhost:8000/api/v1",
+    // El sitio estático no llama a ninguna API (ADR-031): sin URL base, tampoco localhost en el bundle.
+    NEXT_PUBLIC_API_BASE_URL: isStatic ? "" : (process.env.API_BASE_URL ?? "http://localhost:8000/api/v1"),
   },
 };
 

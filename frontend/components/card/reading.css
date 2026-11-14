@@ -1611,7 +1611,7 @@
 }
 
 .reading .code-block {
-  background: var(--ink);
+  background: var(--code-bg);   /* fondo de código fijo: var(--ink) se aclaraba en oscuro */
   border-radius: 12px;
 }
 
@@ -1633,7 +1633,7 @@
 
 .reading .code-block pre,
 .reading .code-block .hljs {
-  background: var(--ink);
+  background: var(--code-bg);   /* fondo de código fijo: var(--ink) se aclaraba en oscuro */
   color: #e6e8ec;
 }
 
@@ -1698,7 +1698,7 @@
   padding: 0 20px;
   border: 0;
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   font-weight: 600;
 }
 
@@ -1853,6 +1853,13 @@
 
 .reading [id^="s"] {
   scroll-margin-top: 72px;
+}
+
+.reading-article {
+  container-type: inline-size;
+  container-name: reading;
+  min-width: 0;
+  max-width: 100%;
 }
 
 @media (max-width: 719px) {

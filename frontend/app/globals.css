@@ -63,7 +63,7 @@ pre {
   padding: 8px 14px;
   border-radius: 8px;
   background: var(--ink);
-  color: #fff;
+  color: var(--ink-inverse);
   font-weight: 600;
   text-decoration: none;
 }
@@ -641,6 +641,10 @@ details.panel summary + * {
   text-decoration: underline;
 }
 
+.markdown a {
+  overflow-wrap: anywhere;
+}
+
 .markdown .ficha-pending-mark {
   margin-left: 0.4em;
   padding: 0.05em 0.4em;
@@ -890,7 +894,7 @@ details.panel summary + * {
 .cloud-tabs [role="tab"][aria-selected="true"] {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 @media (min-width: 960px) {

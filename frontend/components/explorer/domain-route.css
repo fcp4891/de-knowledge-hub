@@ -165,7 +165,7 @@
 
 .route-marker[data-state="complete"] {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   border-color: var(--accent);
 }
 
@@ -277,6 +277,22 @@ a.route-card:hover {
   opacity: 0.62;
 }
 
+.route-card[data-unavailable] {
+  opacity: 0.72;
+  border-style: dashed;
+  cursor: default;
+}
+
+.route-icon[data-unavailable] {
+  border: 0;
+  background: transparent;
+  color: var(--pii-personal);
+}
+
+.route-icon[data-unavailable="in_review"] {
+  color: var(--warn-ink);
+}
+
 .route-icon {
   flex: 0 0 24px;
   width: 24px;
@@ -294,7 +310,7 @@ a.route-card:hover {
 
 .route-icon[data-look="done"] {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   border-color: var(--accent);
 }
 
@@ -349,7 +365,7 @@ a.route-card:hover {
   padding: var(--space-6);
   border-radius: var(--radius-lg);
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .route-next-kicker {
@@ -357,7 +373,7 @@ a.route-card:hover {
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #bfe3de;
+  color: var(--on-accent-subtle);
 }
 
 .route-next h2 {
@@ -371,7 +387,7 @@ a.route-card:hover {
   margin: 0;
   font-size: 14px;
   line-height: 1.55;
-  color: var(--accent-on-dark);
+  color: var(--on-accent-muted);
 }
 
 .route-next-action {
@@ -381,8 +397,8 @@ a.route-card:hover {
   min-height: 46px;
   margin-top: 4px;
   border-radius: var(--radius-md);
-  background: #fff;
-  color: var(--accent-hover);
+  background: var(--on-accent);
+  color: var(--accent);
   font-weight: 600;
   text-decoration: none;
 }
@@ -528,4 +544,10 @@ a.route-card:hover {
   .route-stage {
     gap: var(--space-3);
   }
+}
+
+/* ADR-031: «N de M fichas disponibles», mismos tokens que el chip del inicio (se invierten con el tema). */
+.route-pill-count {
+  background: var(--availability-count-bg);
+  color: var(--availability-count-ink);
 }

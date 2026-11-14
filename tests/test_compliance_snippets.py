@@ -332,11 +332,12 @@ def test_pii_detector_rules(tmp_path: Path) -> None:
     assert [m.clasificar_rut(v) for v in (rut, m.con_dv_alterado(rut), "2026-01-10")] == ["valido", "dv_invalido", "no_rut"]
     assert m.sensibles_por_nombre("fecha_ingreso") == [] and m.sensibles_por_nombre("herramienta_renta_id")
     assert [h.fundamento for h in m.sensibles_por_nombre("tramo_ingreso")] == ["art. 2 g), situación socioeconómica"]
-    # Los ejemplos del §15 son reales: cada término es substring de su columna y la regla por tokens no lo toma.
+    # El ejemplo de «Hacer y evitar» es real: el término es subcadena de la columna y la regla por tokens no lo toma.
     ficha = (Path(__file__).parents[1] / "content/concepts/pii-identification.md").read_text(encoding="utf-8")
-    (linea,) = [x for x in ficha.splitlines() if x.startswith("- Comparar nombres por substring")]
+    pares = yaml.safe_load(ficha.split("---\n", 2)[1])["views"]["practice_pairs"]["items"]
+    (linea,) = [p["avoid"] for p in pares if p["avoid"].startswith("Comparar por subcadena")]
     ejemplos = re.findall(r"«(\w+)»(?: calza)? en `(\w+)`", linea)
-    assert len(ejemplos) == 2
+    assert len(ejemplos) == 1
     for termino, columna in ejemplos:
         assert termino in columna and m.sensibles_por_nombre(columna) == [], columna
     (indirecta,) = m.identificacion_indirecta(m.MUESTRA)
@@ -544,3 +545,13 @@ def test_rights_pipeline_rules(tmp_path: Path) -> None:
     p.oposiciones.add((b, "marketing_directo"))
     assert a not in m.consumo(p, "venta_pasajes") and a in p.datos["silver.clientes"]
     assert b in m.consumo(p, "venta_pasajes") and b not in m.consumo(p, "marketing_directo")
+
+
+def test_pii_detector_code_guide_matches_the_ci() -> None:
+    """ADR-030: la guía bajo el código de pii-identification nombra los mismos escenarios y salidas que la CI, y sus
+    reglas son funciones del detector."""
+    text = (CONTENT / "concepts" / "pii-identification.md").read_text(encoding="utf-8")
+    guide = yaml.safe_load(text.split("---\n", 2)[1])["views"]["code_guide"]
+    assert {item["name"]: item["exit_code"] for item in guide["scenarios"]["items"]} == PII_SCENARIOS
+    (code,) = blocks("pii-identification", "python")
+    assert all(f"def {item['fn']}(" in code for item in guide["rules"]["items"])

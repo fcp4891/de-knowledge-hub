@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+
+import { FichaAnchor } from "@/components/availability/FichaLink";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -32,7 +34,7 @@ import {
   removeStoredNote,
   saveStudy,
 } from "@/lib/personalStore";
-import { CARD_SECTION_COUNT, readReadingProgress, writeReadingProgress } from "@/lib/readingProgress";
+import { CARD_SECTION_COUNT, markSectionSeen, readReadingProgress, writeReadingProgress } from "@/lib/readingProgress";
 
 import "./reading.css";
 
@@ -47,6 +49,7 @@ const STUDY_STATES: StudyStatus[] = [
 const CLOUD_ORDER = ["gcp", "aws", "azure"];
 const TOC_KEY = "dekh:toc";
 const STUDY_KEY = "dekh:study";
+export const STUDY_OPEN_QUERY = "(min-width: 1400px)";
 
 export type ReadingSectionModel = {
   number: number;
@@ -201,6 +204,8 @@ export function ConceptReading({
   pageKind = "concept",
   construction = false,
   compactNumbering = false,
+  summaryPairs = false,
+  legalBasisPanel = true,
   children,
 }: {
   slug: string;
@@ -231,6 +236,10 @@ export function ConceptReading({
   construction?: boolean;
   /** ADR-029: ficha que omite secciones; numeración visible correlativa. */
   compactNumbering?: boolean;
+  /** ADR-030 enmienda 7: views.reading.summary_pairs. */
+  summaryPairs?: boolean;
+  /** ADR-030 enmienda 7: views.reading.legal_basis_panel (false: sin el panel de base legal). */
+  legalBasisPanel?: boolean;
   children?: React.ReactNode;
 }) {
   const sectionGroups = pageKind === "architecture" ? ARCHITECTURE_GROUPS : CARD_SECTION_GROUPS;
@@ -250,6 +259,7 @@ export function ConceptReading({
   const [viewKey, setViewKey] = useState(viewSections[0]?.key ?? "");
   const [current, setCurrent] = useState<number | null>(null);
   const [readMax, setReadMax] = useState(0);
+  const [seen, setSeen] = useState<ReadonlySet<number>>(new Set());
   const [progressReady, setProgressReady] = useState(false);
   const [allOpen, setAllOpen] = useState(false);
   const [scrollToken, setScrollToken] = useState(0);
@@ -268,7 +278,8 @@ export function ConceptReading({
     if (toc === "open" || toc === "closed") {
       setTocMode(toc);
     }
-    if (study === "closed") {
+    // Sin preferencia guardada, el panel de estudio parte plegado bajo 1400 px; se abre a demanda.
+    if (study === "closed" || (study !== "open" && !window.matchMedia(STUDY_OPEN_QUERY).matches)) {
       setStudyOpen(false);
     }
     const media = window.matchMedia("(min-width: 1180px)");
@@ -304,30 +315,35 @@ export function ConceptReading({
     .sort((left, right) => left - right);
   const readUpTo = Math.min(CARD_SECTION_COUNT, readMax);
   const total = compactNumbering ? present.length : CARD_SECTION_COUNT;
-  const shown = compactNumbering ? present.filter((number) => number <= readUpTo).length : readUpTo;
+  // B-N5: con numeración compacta, «Leído N de M» cuenta solo las secciones abiertas y vistas.
+  const shown = compactNumbering ? present.filter((number) => seen.has(number)).length : readUpTo;
   const shownNumber = (section: ReadingSectionModel): number | null =>
     section.annex ? null : compactNumbering ? present.indexOf(section.number) + 1 : section.number;
   const listed = sections.filter((section) => section.listed);
   const compactGroups: { group: string; keys: string[] }[] = [
-    { group: "Entender", keys: ["purpose", "context", "summary", "what_is", "problem", "how_it_works", "when_to_use"] },
+    { group: "Entender", keys: ["summary", "what_is", "problem", "how_it_works", "when_to_use"] },
     { group: "Aplicar", keys: ["architecture", "code"] },
     { group: "Multicloud", keys: ["cloud_compare", "gcp", "aws", "azure"] },
-    { group: "Profundizar", keys: ["best_practices", "common_mistakes", "trade_offs", "sanctions", "related_concepts"] },
+    { group: "Profundizar", keys: ["best_practices", "common_mistakes", "trade_offs", "related_concepts"] },
     { group: "Practicar", keys: ["open_questions", "related_lab"] },
     { group: "Referencias", keys: ["sources", "last_verified", "change_history"] },
   ];
+  // Una división (views.section_splits, número x,5) va en el grupo de su sección madre; cada grupo, por número.
+  const groupKey = (section: ReadingSectionModel): string =>
+    Number.isInteger(section.number)
+      ? section.key
+      : (listed.find((item) => item.number === Math.floor(section.number))?.key ?? section.key);
+  const inGroup = (section: ReadingSectionModel, keys: string[]): boolean => !section.annex && keys.includes(groupKey(section));
   const tocGroups = compactNumbering
     ? [
         ...compactGroups.map((group) => ({
           group: group.group,
-          items: group.keys
-            .map((key) => listed.find((section) => section.key === key && !section.annex))
-            .filter((section): section is ReadingSectionModel => section !== undefined),
+          items: listed.filter((section) => inGroup(section, group.keys)).sort((a, b) => a.number - b.number),
         })),
         {
           group: "Otras",
           items: listed.filter(
-            (section) => !section.annex && !compactGroups.some((group) => group.keys.includes(section.key)),
+            (section) => !section.annex && !compactGroups.some((group) => inGroup(section, group.keys)),
           ),
         },
       ].filter((group) => group.items.length > 0)
@@ -341,7 +357,11 @@ export function ConceptReading({
       if (highlight) {
         setCurrent(number);
       }
-      if (number > readMaxRef.current && number <= CARD_SECTION_COUNT) {
+      const seenNow = markSectionSeen(slug, number, sectionTitle);
+      if (seenNow.length > 0) {
+        setSeen(new Set(seenNow));
+      }
+      if (Number.isInteger(number) && number > readMaxRef.current && number <= CARD_SECTION_COUNT) {
         readMaxRef.current = number;
         setReadMax(number);
         writeReadingProgress(slug, number, sectionTitle);
@@ -354,6 +374,7 @@ export function ConceptReading({
     const stored = readReadingProgress(slug);
     readMaxRef.current = stored?.section ?? 0;
     setReadMax(readMaxRef.current);
+    setSeen(new Set(stored?.seen ?? []));
     setCurrent(null);
     setProgressReady(true);
   }, [slug]);
@@ -392,7 +413,12 @@ export function ConceptReading({
           const element = entry.target as HTMLElement;
           const number = Number(element.dataset.readingSection);
           const sectionTitle = element.dataset.readingTitle ?? "";
-          if (!Number.isInteger(number)) {
+          if (!(number > 0)) {
+            continue;
+          }
+          // M1: una sección que solo se atraviesa colapsada no cuenta como leída.
+          if (element instanceof HTMLDetailsElement && !element.open) {
+            seen.delete(number);
             continue;
           }
           if (entry.isIntersecting) {
@@ -468,7 +494,8 @@ export function ConceptReading({
   }
 
   function goTo(section: ReadingSectionModel) {
-    note(section.number, section.title, true);
+    // B-N5: el salto solo resalta y abre; la sección cuenta como leída cuando el observador la ve abierta.
+    setCurrent(section.number);
     if (section.presentation === "cloud") {
       setCloudId(section.key);
     }
@@ -478,6 +505,47 @@ export function ConceptReading({
     pendingScroll.current = section.number;
     setScrollToken((value) => value + 1);
   }
+
+  const goToRef = useRef(goTo);
+  goToRef.current = goTo;
+
+  useEffect(() => {
+    const root = articleRef.current;
+    if (!root) {
+      return;
+    }
+    const sectionFor = (hash: string): ReadingSectionModel | null => {
+      const match = /^#s(\d+(?:\.\d+)?)$/.exec(hash);
+      return match ? (sections.find((section) => section.number === Number(match[1])) ?? null) : null;
+    };
+    function onClick(event: MouseEvent) {
+      const link = (event.target as Element | null)?.closest("a[href^='#s']");
+      if (!(link instanceof HTMLAnchorElement)) {
+        return;
+      }
+      const hash = link.getAttribute("href") ?? "";
+      const target = sectionFor(hash);
+      if (!target) {
+        return;
+      }
+      event.preventDefault();
+      history.pushState(null, "", hash);
+      goToRef.current(target);
+    }
+    function onHash() {
+      const target = sectionFor(window.location.hash);
+      if (target) {
+        goToRef.current(target);
+      }
+    }
+    root.addEventListener("click", onClick);
+    window.addEventListener("hashchange", onHash);
+    onHash();
+    return () => {
+      root.removeEventListener("click", onClick);
+      window.removeEventListener("hashchange", onHash);
+    };
+  }, [sections]);
 
   function toggleAll() {
     const nextOpen = !allOpen;
@@ -574,9 +642,7 @@ export function ConceptReading({
         <section
           key={section.number}
           id={`s${section.number}`}
-          className={
-            slug === "chile-data-protection" ? "reading-summary reading-summary-pairs" : "reading-summary"
-          }
+          className={summaryPairs ? "reading-summary reading-summary-pairs" : "reading-summary"}
           aria-labelledby={`h-${section.number}`}
           data-reading-section={section.number}
           data-reading-title={section.title}
@@ -797,7 +863,7 @@ export function ConceptReading({
               {meta ? <p className="reading-meta">{meta}</p> : null}
             </header>
             {summaryBlocks}
-            {slug === "chile-data-protection" || legalBasis.length === 0 ? null : (
+            {!legalBasisPanel || legalBasis.length === 0 ? null : (
               <LegalBasisTable items={legalBasis} />
             )}
             {blocks}
@@ -903,10 +969,10 @@ export function ConceptReading({
               <p className="reading-quiet">Sin relaciones.</p>
             ) : null}
             {related.map((item) => (
-              <Link key={item.href} className="reading-related" href={item.href}>
+              <FichaAnchor key={item.href} className="reading-related" href={item.href}>
                 {item.title}
                 <span>{item.kind}</span>
-              </Link>
+              </FichaAnchor>
             ))}
             {hasRelations ? (
               <button

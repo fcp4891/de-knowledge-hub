@@ -207,7 +207,8 @@
           "title": "Propagación de supresiones en sistemas distribuidos",
           "entity_type": "pattern",
           "origin": "entity",
-          "note": "Los eventos que pueden reintroducir al titular."
+          "note": "Los eventos que pueden reintroducir al titular.",
+          "target_availability": "in_development"
         },
         {
           "slug": "rds-as-source",

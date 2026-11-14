@@ -78,3 +78,9 @@ Con el diseño final de Cursor, las tres pestañas GCP, AWS y Azure se reemplaza
 - **Dónde quedan las verificaciones.** En el historial (§22).
 - **Conjunto de omitibles.** 6, 7, 8, 12, 13, 15, 17, 19 y 21.
 - **Lo que se ve.** La ficha muestra 13 secciones, o 12 si el lector no ve el historial.
+
+## Enmienda 3 (2026-11-12) — pii-identification
+
+- `pii-identification` se migra desde su maqueta aprobada, que tiene 11 secciones. Entra a `OMITTABLE` con las secciones {6, 7, 8, 9, 12, 13, 15, 17, 19, 21}.
+- La numeración visible es compacta y el «Leído N de M» cuenta las 11 secciones presentes (el §22, historial, solo lo ve el dueño).
+- Las demás fichas no cambian.

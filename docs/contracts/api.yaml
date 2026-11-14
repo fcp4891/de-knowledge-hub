@@ -477,8 +477,9 @@ components:
     DomainDetail:
       allOf: [{ $ref: "#/components/schemas/DomainSummary" }]
       type: object
-      required: [legal_framework, subdomains]
+      required: [legal_framework, subdomains, availability_texts]
       properties:
+        availability_texts: { $ref: "#/components/schemas/AvailabilityTexts" }
         legal_framework:
           description: "ADR-027: marco legal verificado del dominio; null si no tiene."
           oneOf: [{ $ref: "#/components/schemas/LegalFramework" }, { type: "null" }]
@@ -522,7 +523,7 @@ components:
     # --- Conceptos ---
     ConceptSummary:
       type: object
-      required: [slug, title, kind, domain, subdomain, classification, level, importance, mvp, has_page, verification_status, last_verified]
+      required: [slug, title, kind, domain, subdomain, classification, level, importance, mvp, has_page, verification_status, last_verified, availability]
       properties:
         slug: { $ref: "#/components/schemas/Slug" }
         title: { type: string }
@@ -538,6 +539,52 @@ components:
           description: Estado de la ficha; null si aún no tiene ficha.
           oneOf: [{ $ref: "#/components/schemas/VerificationStatus" }, { type: "null" }]
         last_verified: { oneOf: [{ $ref: "#/components/schemas/Date" }, { type: "null" }] }
+        availability: { $ref: "#/components/schemas/Availability" }
+      additionalProperties: false
+    Availability:
+      description: "ADR-031: available, o una ficha que se publica como página mínima (in_review: contenido listo, en revisión; in_development: contenido y diseño en preparación)."
+      enum: [available, in_review, in_development]
+    AvailabilityText:
+      description: "ADR-031: textos de content/ui/availability.yaml para un estado no disponible."
+      type: object
+      required: [label, help, back_label]
+      properties:
+        label: { type: string, description: Etiqueta (tag) del estado. }
+        help: { type: string, description: Texto de ayuda de la página mínima. }
+        back_label: { type: string, description: Texto del enlace de vuelta al itinerario. }
+      additionalProperties: false
+    AvailabilityTexts:
+      description: "ADR-031, enmienda 1: content/ui/availability.yaml completo, para las etiquetas y los conteos por tramo del itinerario. {n} y {total} los reemplaza la UI."
+      type: object
+      required: [in_review, in_development, available, route_count, back_label]
+      properties:
+        in_review: { $ref: "#/components/schemas/AvailabilityState" }
+        in_development: { $ref: "#/components/schemas/AvailabilityState" }
+        available:
+          type: object
+          required: [count]
+          properties: { count: { type: string, description: "«{n} disponibles»." } }
+          additionalProperties: false
+        route_count: { type: string, description: "«{n} de {total} fichas disponibles»." }
+        back_label: { type: string }
+      additionalProperties: false
+    AvailabilityState:
+      type: object
+      required: [label, help, count]
+      properties:
+        label: { type: string }
+        help: { type: string }
+        count: { type: string, description: "Conteo de un tramo, p. ej. «{n} en revisión»." }
+      additionalProperties: false
+    UnavailableLink:
+      description: "ADR-031: ficha enlazada desde esta (cuerpo, vistas, relaciones o temas relacionados) que no está disponible; el componente la muestra con su etiqueta y sin navegar."
+      type: object
+      required: [slug, title, target_availability, label]
+      properties:
+        slug: { $ref: "#/components/schemas/Slug" }
+        title: { type: string }
+        target_availability: { enum: [in_review, in_development] }
+        label: { type: string, description: Etiqueta del estado (AvailabilityText.label). }
       additionalProperties: false
     ConceptList:
       allOf: [{ $ref: "#/components/schemas/Page" }]
@@ -589,7 +636,7 @@ components:
     ConceptDetail:
       allOf: [{ $ref: "#/components/schemas/Metadata" }]
       type: object
-      required: [kind, importance, mvp, has_page, stub, sections, aliases, jurisdiction, legal_basis, owner_approved_at]
+      required: [kind, importance, mvp, has_page, stub, sections, aliases, jurisdiction, legal_basis, owner_approved_at, availability, unavailable_links]
       properties:
         aliases: { type: array, items: { type: string }, description: Nombres anteriores o alternativos (ADR-010); vacía si no hay. }
         jurisdiction: { type: array, items: { $ref: "#/components/schemas/Jurisdiction" }, description: Países cuya ley origina la ficha (ADR-023); vacía si no aplica. }
@@ -604,6 +651,11 @@ components:
         sections: { type: array, items: { $ref: "#/components/schemas/Section" }, description: Vacía si has_page es false. }
         annexes: { type: array, items: { $ref: "#/components/schemas/Annex" }, description: "Anexos tras la última sección (ADR-029); la propiedad solo aparece si la ficha los tiene." }
         views: { $ref: "#/components/schemas/Views" }
+        availability: { $ref: "#/components/schemas/Availability" }
+        availability_text:
+          description: "ADR-031: solo si availability no es available. La ficha se publica como página mínima: sections, views, annexes, sources y legal_basis van vacíos."
+          $ref: "#/components/schemas/AvailabilityText"
+        unavailable_links: { type: array, items: { $ref: "#/components/schemas/UnavailableLink" }, description: "ADR-031: fichas no disponibles que esta enlaza; vacía si no hay." }
       unevaluatedProperties: false
     Views:
       type: object
@@ -889,11 +941,31 @@ components:
                           type: string
                         legal:
                           type: boolean
+                        section:
+                          type: integer
+                          minimum: 1
+                          maximum: 22
+                          description: Número de sección de la plantilla (ADR-030, enmienda 5).
                         href:
-                          type: string
-                          description: Ancla interna de la ficha (ADR-030, enmienda 2).
+                          anyOf:
+                          - type: string
+                            description: Ancla interna de la ficha (ADR-030, enmienda 2).
+                          - type: string
+                            format: uri
                       additionalProperties: false
                 additionalProperties: false
+            annex_link:
+              type: object
+              required:
+              - label
+              - href
+              properties:
+                label:
+                  type: string
+                href:
+                  type: string
+                  description: Ancla interna de la ficha (ADR-030, enmienda 2).
+              additionalProperties: false
             roles:
               type: object
               required:
@@ -1140,9 +1212,17 @@ components:
                                 type: string
                               legal:
                                 type: boolean
+                              section:
+                                type: integer
+                                minimum: 1
+                                maximum: 22
+                                description: Número de sección de la plantilla (ADR-030, enmienda 5).
                               href:
-                                type: string
-                                description: Ancla interna de la ficha (ADR-030, enmienda 2).
+                                anyOf:
+                                - type: string
+                                  description: Ancla interna de la ficha (ADR-030, enmienda 2).
+                                - type: string
+                                  format: uri
                             additionalProperties: false
                       additionalProperties: false
                 additionalProperties: false
@@ -1254,9 +1334,17 @@ components:
                                 type: string
                               legal:
                                 type: boolean
+                              section:
+                                type: integer
+                                minimum: 1
+                                maximum: 22
+                                description: Número de sección de la plantilla (ADR-030, enmienda 5).
                               href:
-                                type: string
-                                description: Ancla interna de la ficha (ADR-030, enmienda 2).
+                                anyOf:
+                                - type: string
+                                  description: Ancla interna de la ficha (ADR-030, enmienda 2).
+                                - type: string
+                                  format: uri
                             additionalProperties: false
                       additionalProperties: false
                 additionalProperties: false
@@ -1415,6 +1503,7 @@ components:
               additionalProperties: false
             note:
               type: string
+              description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
             example:
               type: object
               required:
@@ -1426,6 +1515,7 @@ components:
                   type: string
                 note:
                   type: string
+                  description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
                 code_link:
                   type: object
                   required:
@@ -1513,6 +1603,9 @@ components:
                         type: string
                       requirement:
                         type: string
+                      finds:
+                        type: string
+                        description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
                     additionalProperties: false
               additionalProperties: false
             not_covered:
@@ -1526,6 +1619,7 @@ components:
                   type: string
                 intro:
                   type: string
+                  description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
                 items:
                   type: array
                   items:
@@ -1538,7 +1632,11 @@ components:
                         type: string
                       text:
                         type: string
+                        description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
                     additionalProperties: false
+                note:
+                  type: string
+                  description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
               additionalProperties: false
             scenarios:
               type: object
@@ -1561,6 +1659,7 @@ components:
                         type: string
                       text:
                         type: string
+                        description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
                       exit_code:
                         enum:
                         - 0
@@ -1610,12 +1709,12 @@ components:
           - alert
           - headers
           - rows
-          - closing
           properties:
             title:
               type: string
             intro:
               type: string
+              description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
             alert:
               type: object
               required:
@@ -1626,6 +1725,7 @@ components:
                   type: string
                 text:
                   type: string
+                  description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
               additionalProperties: false
             headers:
               type: array
@@ -1637,7 +1737,6 @@ components:
                 type: object
                 required:
                 - need
-                - meta
                 - gcp
                 - aws
                 - azure
@@ -1649,16 +1748,29 @@ components:
                     type: string
                   meta:
                     type: string
+                  tone:
+                    enum:
+                    - where
+                  own:
+                    type: object
+                    required:
+                    - text
+                    properties:
+                      text:
+                        type: string
+                        description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                    additionalProperties: false
                   gcp:
                     type: object
                     required:
                     - name
-                    - text
                     properties:
                       name:
                         type: string
+                        description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
                       text:
                         type: string
+                        description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
                       warn:
                         type: string
                     additionalProperties: false
@@ -1666,12 +1778,13 @@ components:
                     type: object
                     required:
                     - name
-                    - text
                     properties:
                       name:
                         type: string
+                        description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
                       text:
                         type: string
+                        description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
                       warn:
                         type: string
                     additionalProperties: false
@@ -1679,12 +1792,13 @@ components:
                     type: object
                     required:
                     - name
-                    - text
                     properties:
                       name:
                         type: string
+                        description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
                       text:
                         type: string
+                        description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
                       warn:
                         type: string
                     additionalProperties: false
@@ -1750,9 +1864,17 @@ components:
                                 type: string
                               legal:
                                 type: boolean
+                              section:
+                                type: integer
+                                minimum: 1
+                                maximum: 22
+                                description: Número de sección de la plantilla (ADR-030, enmienda 5).
                               href:
-                                type: string
-                                description: Ancla interna de la ficha (ADR-030, enmienda 2).
+                                anyOf:
+                                - type: string
+                                  description: Ancla interna de la ficha (ADR-030, enmienda 2).
+                                - type: string
+                                  format: uri
                             additionalProperties: false
                       additionalProperties: false
                 additionalProperties: false
@@ -1797,9 +1919,17 @@ components:
                               type: string
                             legal:
                               type: boolean
+                            section:
+                              type: integer
+                              minimum: 1
+                              maximum: 22
+                              description: Número de sección de la plantilla (ADR-030, enmienda 5).
                             href:
-                              type: string
-                              description: Ancla interna de la ficha (ADR-030, enmienda 2).
+                              anyOf:
+                              - type: string
+                                description: Ancla interna de la ficha (ADR-030, enmienda 2).
+                              - type: string
+                                format: uri
                           additionalProperties: false
                     additionalProperties: false
               additionalProperties: false
@@ -1810,7 +1940,6 @@ components:
           required:
           - items
           - resolution_label
-          - note
           properties:
             arq:
               type: boolean
@@ -1823,12 +1952,15 @@ components:
                 required:
                 - a
                 - b
-                - text
                 - resolution
                 properties:
                   a:
                     type: string
+                  a_text:
+                    type: string
                   b:
+                    type: string
+                  b_text:
                     type: string
                   text:
                     type: string
@@ -1845,8 +1977,6 @@ components:
           required:
           - intro
           - items
-          - check_label
-          - counter
           properties:
             intro:
               type: string
@@ -1878,9 +2008,17 @@ components:
                           type: string
                         legal:
                           type: boolean
+                        section:
+                          type: integer
+                          minimum: 1
+                          maximum: 22
+                          description: Número de sección de la plantilla (ADR-030, enmienda 5).
                         href:
-                          type: string
-                          description: Ancla interna de la ficha (ADR-030, enmienda 2).
+                          anyOf:
+                          - type: string
+                            description: Ancla interna de la ficha (ADR-030, enmienda 2).
+                          - type: string
+                            format: uri
                       additionalProperties: false
                 additionalProperties: false
           additionalProperties: false
@@ -1971,9 +2109,6 @@ components:
                       type: object
                       required:
                       - title
-                      - links
-                      - publisher
-                      - level
                       properties:
                         title:
                           type: string
@@ -1999,9 +2134,822 @@ components:
                           type: string
                         provider:
                           type: string
+                        page:
+                          type: string
+                        label:
+                          type: string
+                        target_availability:
+                          type: string
+                          enum:
+                          - in_review
+                          - in_development
                       additionalProperties: false
                 additionalProperties: false
           additionalProperties: false
+        section_titles:
+          type: array
+          items:
+            type: object
+            required:
+            - section
+            - title
+            properties:
+              section:
+                type: integer
+                minimum: 1
+                maximum: 22
+                description: Número de sección de la plantilla (ADR-030, enmienda 5).
+              title:
+                type: string
+              ref:
+                type: string
+                description: Nombre con que «[§](#sN)» cita la sección, si difiere de title.
+            additionalProperties: false
+          description: 'Título visible de cada sección presente (posición fija: no lleva marca).'
+        notes:
+          description: 'Notas con inicio en negrita (lead); tone risk para el recuadro «Riesgo». Marca: note <id>.'
+          type: object
+          minProperties: 1
+          additionalProperties: false
+          patternProperties:
+            ^[a-z0-9-]+$:
+              type: object
+              required:
+              - text
+              properties:
+                lead:
+                  type: string
+                text:
+                  type: string
+                  description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                tone:
+                  enum:
+                  - note
+                  - risk
+              additionalProperties: false
+        chips:
+          description: 'Fila de enlaces con rótulo (por ejemplo «En la ficha madre:»). Marca: chips <id>.'
+          type: object
+          minProperties: 1
+          additionalProperties: false
+          patternProperties:
+            ^[a-z0-9-]+$:
+              type: object
+              required:
+              - label
+              - items
+              properties:
+                label:
+                  type: string
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - label
+                    - href
+                    properties:
+                      kind:
+                        type: string
+                      label:
+                        type: string
+                      href:
+                        anyOf:
+                        - type: string
+                          description: Ancla interna de la ficha (ADR-030, enmienda 2).
+                        - type: string
+                          description: Enlace a otra ficha; la API marca target_availability si no está disponible (ADR-031).
+                    additionalProperties: false
+              additionalProperties: false
+        catalog_fields:
+          description: 'CatalogFields (§1): campos que el catálogo guarda por columna.'
+          type: object
+          required:
+          - title
+          - headers
+          - rows
+          properties:
+            title:
+              type: string
+            label:
+              type: string
+            headers:
+              type: array
+              items:
+                type: string
+            rows:
+              type: array
+              items:
+                type: object
+                required:
+                - field
+                - text
+                properties:
+                  field:
+                    type: string
+                  text:
+                    type: string
+                    description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                  categories:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - label
+                      - tone
+                      properties:
+                        label:
+                          type: string
+                        tone:
+                          enum:
+                          - personal
+                          - sensitive
+                          - review
+                          - none
+                      additionalProperties: false
+                  note:
+                    type: string
+                    description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                additionalProperties: false
+          additionalProperties: false
+        concept_map:
+          description: 'ConceptMap (§2): mapa «Qué protege la ley».'
+          type: object
+          required:
+          - label
+          - outside
+          - personal
+          - sensitive
+          - minors
+          properties:
+            label:
+              type: string
+            outside:
+              type: object
+              required:
+              - kicker
+              - items
+              - hint
+              properties:
+                kicker:
+                  type: string
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - title
+                    - text
+                    properties:
+                      title:
+                        type: string
+                      text:
+                        type: string
+                        description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                    additionalProperties: false
+                hint:
+                  type: string
+              additionalProperties: false
+            personal:
+              type: object
+              required:
+              - kicker
+              - definition
+              - text
+              - also
+              properties:
+                kicker:
+                  type: string
+                  description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                definition:
+                  type: string
+                text:
+                  type: string
+                also:
+                  type: object
+                  required:
+                  - kicker
+                  - items
+                  properties:
+                    kicker:
+                      type: string
+                    items:
+                      type: array
+                      items:
+                        type: object
+                        required:
+                        - title
+                        - text
+                        properties:
+                          title:
+                            type: string
+                            description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                          text:
+                            type: string
+                            description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                          example:
+                            type: object
+                            required:
+                            - label
+                            - column
+                            properties:
+                              label:
+                                type: string
+                              column:
+                                type: string
+                            additionalProperties: false
+                        additionalProperties: false
+                  additionalProperties: false
+              additionalProperties: false
+            sensitive:
+              type: object
+              required:
+              - kicker
+              - text
+              - hint
+              properties:
+                kicker:
+                  type: string
+                  description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                text:
+                  type: string
+                  description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                hint:
+                  type: string
+              additionalProperties: false
+            minors:
+              type: object
+              required:
+              - kicker
+              - text
+              - hint
+              properties:
+                kicker:
+                  type: string
+                  description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                text:
+                  type: string
+                  description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                hint:
+                  type: string
+              additionalProperties: false
+          additionalProperties: false
+        decision_tree:
+          description: 'DecisionTree (§2): cuatro preguntas, salidas, columnas de ejemplo y su entrada de catálogo.'
+          type: object
+          required:
+          - intro
+          - examples_title
+          - path_label
+          - result_label
+          - catalog_label
+          - answer_labels
+          - step_labels
+          - questions
+          - fallback
+          - catalog_fields
+          - review
+          - default
+          - examples
+          - law
+          properties:
+            intro:
+              type: object
+              required:
+              - title
+              - text
+              properties:
+                title:
+                  type: string
+                text:
+                  type: string
+              additionalProperties: false
+            examples_title:
+              type: string
+            path_label:
+              type: string
+            result_label:
+              type: string
+            catalog_label:
+              type: string
+            answer_labels:
+              type: object
+              required:
+              - 'yes'
+              - 'no'
+              properties:
+                'yes':
+                  type: string
+                'no':
+                  type: string
+              additionalProperties: false
+            step_labels:
+              type: object
+              required:
+              - question
+              - next
+              - end
+              properties:
+                question:
+                  type: string
+                next:
+                  type: string
+                end:
+                  type: string
+              additionalProperties: false
+            questions:
+              type: array
+              items:
+                type: object
+                required:
+                - number
+                - question
+                - help
+                - gloss
+                - exits
+                properties:
+                  number:
+                    type: integer
+                    minimum: 1
+                    maximum: 4
+                  question:
+                    type: string
+                  help:
+                    type: string
+                  gloss:
+                    type: object
+                    required:
+                    - 'yes'
+                    - 'no'
+                    properties:
+                      'yes':
+                        type: string
+                      'no':
+                        type: string
+                    additionalProperties: false
+                  exits:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - answer
+                      - label
+                      - outcome
+                      - title
+                      - text
+                      properties:
+                        answer:
+                          enum:
+                          - 'yes'
+                          - 'no'
+                        label:
+                          type: string
+                        outcome:
+                          enum:
+                          - anonymized
+                          - unlinked
+                          - sensitive
+                          - minor
+                          - personal
+                        title:
+                          type: string
+                        text:
+                          type: string
+                          description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                      additionalProperties: false
+                additionalProperties: false
+            fallback:
+              type: object
+              required:
+              - label
+              - outcome
+              - title
+              - text
+              properties:
+                answer:
+                  enum:
+                  - 'yes'
+                  - 'no'
+                label:
+                  type: string
+                outcome:
+                  enum:
+                  - anonymized
+                  - unlinked
+                  - sensitive
+                  - minor
+                  - personal
+                title:
+                  type: string
+                text:
+                  type: string
+                  description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+              additionalProperties: false
+            catalog_fields:
+              type: object
+              required:
+              - category
+              - basis
+              - risk
+              - method
+              - review
+              properties:
+                category:
+                  type: string
+                basis:
+                  type: string
+                risk:
+                  type: string
+                method:
+                  type: string
+                review:
+                  type: string
+              additionalProperties: false
+            review:
+              type: string
+            default:
+              type: string
+            examples:
+              type: array
+              items:
+                type: object
+                required:
+                - column
+                - description
+                - answers
+                - outcome
+                - title
+                - explanation
+                - catalog
+                properties:
+                  column:
+                    type: string
+                  description:
+                    type: string
+                  answers:
+                    type: array
+                    items:
+                      enum:
+                      - 'yes'
+                      - 'no'
+                  outcome:
+                    enum:
+                    - anonymized
+                    - unlinked
+                    - sensitive
+                    - minor
+                    - personal
+                  title:
+                    type: string
+                  explanation:
+                    type: string
+                  catalog:
+                    type: object
+                    required:
+                    - category
+                    - basis
+                    - risk
+                    - method
+                    properties:
+                      category:
+                        type: string
+                      basis:
+                        type: string
+                      risk:
+                        type: string
+                      method:
+                        type: string
+                    additionalProperties: false
+                  law:
+                    type: boolean
+                additionalProperties: false
+            law:
+              type: object
+              required:
+              - summary
+              - items
+              - link
+              properties:
+                summary:
+                  type: string
+                items:
+                  type: array
+                  items:
+                    type: string
+                    description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                link:
+                  type: object
+                  required:
+                  - label
+                  - href
+                  properties:
+                    label:
+                      type: string
+                    href:
+                      type: string
+                      description: Enlace a otra ficha; la API marca target_availability si no está disponible (ADR-031).
+                  additionalProperties: false
+              additionalProperties: false
+          additionalProperties: false
+        coverage_strip:
+          description: 'CoverageStrip (§3): qué columnas ve cada enfoque.'
+          type: object
+          required:
+          - label
+          - lead
+          - columns
+          - rows
+          - note
+          properties:
+            label:
+              type: string
+            lead:
+              type: string
+              description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+            columns:
+              type: array
+              items:
+                type: string
+            rows:
+              type: array
+              items:
+                type: object
+                required:
+                - title
+                - text
+                - count
+                - hits
+                - tone
+                properties:
+                  title:
+                    type: string
+                  text:
+                    type: string
+                    description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                  count:
+                    type: string
+                  hits:
+                    type: array
+                    items:
+                      type: string
+                  tone:
+                    enum:
+                    - detected
+                    - law
+                additionalProperties: false
+            note:
+              type: string
+              description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+          additionalProperties: false
+        column_types:
+          description: 'ColumnTypes (§3): detalle por tipo de columna.'
+          type: object
+          required:
+          - headers
+          - rows
+          - legend
+          properties:
+            headers:
+              type: array
+              items:
+                type: string
+            rows:
+              type: array
+              items:
+                type: object
+                required:
+                - type
+                - examples
+                - patterns
+                - detector
+                - categories
+                - why
+                properties:
+                  type:
+                    type: string
+                  examples:
+                    type: string
+                    description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                  patterns:
+                    type: object
+                    required:
+                    - mark
+                    - text
+                    properties:
+                      mark:
+                        enum:
+                        - ok
+                        - part
+                        - miss
+                      text:
+                        type: string
+                    additionalProperties: false
+                  detector:
+                    type: object
+                    required:
+                    - mark
+                    - text
+                    properties:
+                      mark:
+                        enum:
+                        - ok
+                        - part
+                        - miss
+                      text:
+                        type: string
+                    additionalProperties: false
+                  categories:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - label
+                      - tone
+                      properties:
+                        label:
+                          type: string
+                        tone:
+                          enum:
+                          - personal
+                          - sensitive
+                          - review
+                          - none
+                      additionalProperties: false
+                  why:
+                    type: string
+                    description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                additionalProperties: false
+            legend:
+              type: array
+              items:
+                type: string
+          additionalProperties: false
+        evidence_steps:
+          description: 'EvidenceSteps (§4): pasos con su evidencia y el flujo catálogo → controles.'
+          type: object
+          required:
+          - evidence_label
+          - steps
+          - flow
+          properties:
+            evidence_label:
+              type: string
+            steps:
+              type: array
+              items:
+                type: object
+                required:
+                - number
+                - title
+                - text
+                - evidence
+                properties:
+                  id:
+                    type: string
+                    description: Id del elemento, destino de un ancla (ADR-030, enmienda 2).
+                  number:
+                    type: string
+                  title:
+                    type: string
+                  text:
+                    type: string
+                  arq:
+                    type: boolean
+                  evidence:
+                    type: string
+                additionalProperties: false
+            flow:
+              type: array
+              items:
+                type: object
+                required:
+                - title
+                - text
+                properties:
+                  title:
+                    type: string
+                  text:
+                    type: string
+                additionalProperties: false
+          additionalProperties: false
+        use_avoid:
+          description: 'UseAvoid (§5): usarlo y no usarlo para.'
+          type: object
+          required:
+          - use
+          - avoid
+          properties:
+            use:
+              type: object
+              required:
+              - title
+              - items
+              properties:
+                title:
+                  type: string
+                items:
+                  type: array
+                  items:
+                    type: string
+                    description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+              additionalProperties: false
+            avoid:
+              type: object
+              required:
+              - title
+              - items
+              properties:
+                title:
+                  type: string
+                items:
+                  type: array
+                  items:
+                    type: string
+                    description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+              additionalProperties: false
+          additionalProperties: false
+        practice_pairs:
+          description: 'PracticePairs (§14 · Hacer y evitar): pares hacer / evitar.'
+          type: object
+          required:
+          - start
+          - labels
+          - items
+          properties:
+            start:
+              type: object
+              required:
+              - title
+              - text
+              properties:
+                title:
+                  type: string
+                text:
+                  type: string
+                  description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+              additionalProperties: false
+            labels:
+              type: object
+              required:
+              - do
+              - avoid
+              properties:
+                do:
+                  type: string
+                avoid:
+                  type: string
+              additionalProperties: false
+            items:
+              type: array
+              items:
+                type: object
+                required:
+                - do
+                - avoid
+                properties:
+                  do:
+                    type: string
+                    description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                  avoid:
+                    type: string
+                    description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                additionalProperties: false
+          additionalProperties: false
+        reading:
+          description: Opciones de lectura de la ficha (ADR-030, enmienda 7); posición fija, sin marca.
+          type: object
+          required: []
+          properties:
+            inline_arrows:
+              type: boolean
+              description: 'false: las flechas «→» del cuerpo no se dibujan como flecha.'
+            summary_pairs:
+              type: boolean
+              description: 'true: el Resumen se maqueta en pares.'
+            legal_basis_panel:
+              type: boolean
+              description: 'false: sin el panel lateral de base legal (la ficha lo trae en una vista).'
+          additionalProperties: false
+        section_splits:
+          type: array
+          items:
+            type: object
+            required:
+            - section
+            - key
+            - title
+            properties:
+              section:
+                type: integer
+                minimum: 1
+                maximum: 22
+                description: Número de sección de la plantilla (ADR-030, enmienda 5).
+              key:
+                type: string
+              title:
+                type: string
+            additionalProperties: false
+          description: 'Divide una sección en dos desplegables en la marca «<!-- split: <key> -->» de su cuerpo (ADR-030, enmienda 7).'
       additionalProperties: false
       description: 'Vistas estructuradas (ADR-030); la propiedad solo aparece si la ficha las tiene. Cada clave mapea 1:1 con las props de su componente,
         en snake_case. Las vistas con marca van donde el Markdown trae «<!-- view: clave -->»; approach, legal_foundations y sources_grouped tienen
@@ -2131,6 +3079,7 @@ components:
         entity_type: { $ref: "#/components/schemas/EntityType" }
         origin: { enum: [entity, blueprint], description: entity = arista en content/; blueprint = related_* del blueprint. }
         note: { type: [string, "null"] }
+        target_availability: { enum: [in_review, in_development], description: "ADR-031: solo si la ficha destino no está disponible." }
       additionalProperties: false
     RelationGroup:
       type: object

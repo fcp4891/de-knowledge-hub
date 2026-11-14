@@ -16,10 +16,19 @@ import { entityHref } from "@/lib/entityHref";
 import { architectureTitle, isArchitectureView } from "@/lib/architecture";
 import { SHORT_NAMES } from "@/lib/learning-paths";
 import { isDomainPublished, relationVisible, scopeFromConcepts } from "@/lib/publishedScope";
+import { fichaLinkStates, loadAvailabilityCopy } from "@/lib/availability";
+import { anchorAttrs } from "@/lib/anchorAttrs";
 import { nextInRoute } from "@/lib/domainRoute";
 import { staticSlugs } from "@/lib/staticParams";
+import type { Metadata } from "next";
+import Link from "next/link";
 import type { ReactNode } from "react";
+import { PRIVACY_SPACE_HREF } from "@/lib/privacySpace";
+import { numberedTitles, usesCompactNumbering, visibleNumbers, withSectionTitles } from "@/lib/sectionNumbering";
 
+import { AvailabilityIcon } from "@/components/availability/AvailabilityMark";
+import { FichaLinksProvider } from "@/components/availability/FichaLink";
+import "@/components/availability/availability.css";
 import { ApproachBoard } from "@/components/ficha/ApproachBoard";
 import { CentralIdea } from "@/components/ficha/CentralIdea";
 import { CloudCompare } from "@/components/ficha/CloudCompare";
@@ -35,6 +44,16 @@ import { OpenQuestions } from "@/components/ficha/OpenQuestions";
 import { TradeOffs } from "@/components/ficha/TradeOffs";
 import { TreatmentMap } from "@/components/ficha/TreatmentMap";
 import { VigenciaTimeline } from "@/components/ficha/VigenciaTimeline";
+import { CatalogFields } from "@/components/ficha/CatalogFields";
+import { ColumnTypes } from "@/components/ficha/ColumnTypes";
+import { ConceptMap } from "@/components/ficha/ConceptMap";
+import { CoverageStrip } from "@/components/ficha/CoverageStrip";
+import { DecisionTree } from "@/components/ficha/DecisionTree";
+import { EvidenceSteps } from "@/components/ficha/EvidenceSteps";
+import { ExamplePickProvider } from "@/components/ficha/ExamplePick";
+import { FichaChips, FichaNote } from "@/components/ficha/FichaNotes";
+import { PracticePairs } from "@/components/ficha/PracticePairs";
+import { UseAvoid } from "@/components/ficha/UseAvoid";
 import { WhenToUse } from "@/components/ficha/WhenToUse";
 import {
   approachProps,
@@ -61,16 +80,18 @@ import {
 
 const CLOUD_KEYS = new Set(["gcp", "aws", "azure"]);
 
-function splitPurpose(markdown: string): { purpose: string; context: string } | null {
-  const objective = markdown.indexOf("### Objetivo");
-  const context = markdown.indexOf("### Contexto normativo");
-  if (objective < 0 || context <= objective) {
+/** ADR-030 enmienda 7: parte el Markdown de una sección en la marca «<!-- split: <key> -->». */
+function splitAt(markdown: string, key: string): { before: string; after: string } | null {
+  const marker = new RegExp(`<!--\\s*split:\\s*${key}\\s*-->`);
+  const match = marker.exec(markdown);
+  if (!match) {
     return null;
   }
-  const before = markdown.slice(0, objective).trim();
-  const purpose = [before, markdown.slice(objective, context).trim()].filter(Boolean).join("\n\n");
-  const contextBody = markdown.slice(context).replace(/^### Contexto normativo[^\n]*\n?/, "").trim();
-  return { purpose, context: contextBody };
+  return { before: markdown.slice(0, match.index).trim(), after: markdown.slice(match.index + match[0].length).trim() };
+}
+
+function splitFor(views: Views | undefined, number: number): { key: string; title: string } | null {
+  return views?.section_splits?.find((item) => item.section === number) ?? null;
 }
 const OPEN_NUMBERS = new Set<number>();
 
@@ -82,6 +103,60 @@ export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
   return staticSlugs("concepts.json");
+}
+
+/** ADR-031: una ficha no disponible se publica como página mínima y sin indexar. */
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const concept = await getConcept(slug);
+  if (!concept.ok) {
+    return {};
+  }
+  // B3: el título de la ficha (también en la página mínima, que además no se indexa).
+  if (concept.data.availability !== "available") {
+    return { title: concept.data.title, robots: { index: false, follow: true } };
+  }
+  return { title: concept.data.title };
+}
+
+function itineraryHref(domain: string | null, subdomain: string | null): string {
+  if (domain === "privacy-engineering" && subdomain) {
+    return `${PRIVACY_SPACE_HREF}#${subdomain}`;
+  }
+  return domain ? `/explorer/${domain}` : "/";
+}
+
+/** ADR-031: título, etiqueta, ayuda y vuelta al itinerario; los textos vienen de content/ui/availability.yaml. */
+function UnavailablePage({
+  title,
+  text,
+  href,
+  status,
+}: {
+  title: string;
+  text: { label: string; help: string; back_label: string };
+  href: string;
+  status: "in_review" | "in_development";
+}) {
+  return (
+    <div className="page">
+        <article className="unavailable-page" data-availability={status}>
+        <h1>{title}</h1>
+        <p>
+          <span className={`availability-tag is-${status}`}>
+            <AvailabilityIcon status={status} />
+            {text.label}
+          </span>
+        </p>
+        <p>{text.help}</p>
+        <p>
+          <Link className="unavailable-back" href={href}>
+            {text.back_label}
+          </Link>
+        </p>
+      </article>
+    </div>
+  );
 }
 
 function readingMinutes(sections: Section[]): number | null {
@@ -109,7 +184,9 @@ function SourceLinks({ sources }: { sources: SourceRef[] }) {
     <ul className="reading-sources">
       {sources.map((source) => (
         <li key={`${source.source}-${source.url}`}>
-          <a href={source.url}>{citationLinkText(source)}</a>
+          <a href={source.url} {...anchorAttrs(source.url)}>
+            {citationLinkText(source)}
+          </a>
           <p className="reading-quiet">{citationDetail(source)}</p>
         </li>
       ))}
@@ -138,6 +215,24 @@ function markedViews(views: Views | undefined): Record<string, ReactNode> {
   if (views.trade_offs) nodes.trade_offs = <TradeOffs {...tradeOffsProps(views.trade_offs)} />;
   if (views.severity_cards) nodes.severity_cards = <SeverityCards {...severityCardsProps(views.severity_cards)} />;
   if (views.open_questions) nodes.open_questions = <OpenQuestions {...openQuestionsProps(views.open_questions)} />;
+  if (views.catalog_fields) nodes.catalog_fields = <CatalogFields view={views.catalog_fields} />;
+  if (views.concept_map) nodes.concept_map = <ConceptMap view={views.concept_map} />;
+  if (views.decision_tree) nodes.decision_tree = <DecisionTree view={views.decision_tree} />;
+  if (views.coverage_strip) nodes.coverage_strip = <CoverageStrip view={views.coverage_strip} />;
+  if (views.column_types) nodes.column_types = <ColumnTypes view={views.column_types} />;
+  if (views.evidence_steps) nodes.evidence_steps = <EvidenceSteps view={views.evidence_steps} />;
+  if (views.use_avoid) nodes.use_avoid = <UseAvoid view={views.use_avoid} />;
+  if (views.practice_pairs) nodes.practice_pairs = <PracticePairs view={views.practice_pairs} />;
+  if (views.notes) {
+    for (const [id, note] of Object.entries(views.notes)) {
+      nodes[`note ${id}`] = <FichaNote note={note} />;
+    }
+  }
+  if (views.chips) {
+    for (const [id, chips] of Object.entries(views.chips)) {
+      nodes[`chips ${id}`] = <FichaChips chips={chips} />;
+    }
+  }
   return nodes;
 }
 
@@ -152,7 +247,7 @@ function sectionModels(
 ): ReadingSectionModel[] {
   const viewNodes = markedViews(views);
   const architecture = kind === "architecture";
-  const styleArrows = slug !== "data-lineage";
+  const styleArrows = views?.reading?.inline_arrows !== false;   // ADR-030 enmienda 7
   const titleOf = (section: Section) => (architecture ? architectureTitle(section.key, section.title) : section.title);
   const ordered = [...sections].sort((left, right) => left.number - right.number);
   const viewer = currentViewer();
@@ -183,9 +278,6 @@ function sectionModels(
     if (section.key === "change_history" && !showHistory) {
       continue;
     }
-    if (section.key === "last_verified" && slug === "chile-data-protection") {
-      continue;
-    }
     if (section.key === "related_lab" && !showLab) {
       continue;
     }
@@ -209,29 +301,30 @@ function sectionModels(
     }
     if (section.key === "summary") {
       flushClouds();
-      const opening = slug === "chile-data-protection" ? splitPurpose(section.markdown) : null;
-      if (opening) {
+      const division = splitFor(views, section.number);
+      const opening = division ? splitAt(section.markdown, division.key) : null;
+      if (division && opening) {
         const approach = views?.approach ? <ApproachBoard {...approachProps(views.approach)} /> : null;
         models.push({
           number: section.number,
-          key: "purpose",
-          title: "Propósito",
+          key: section.key,
+          title: titleOf(section),
           presentation: "summary",
           listed: true,
           body: (
             <>
-              {body({ ...section, markdown: opening.purpose })}
+              {body({ ...section, markdown: opening.before })}
               {approach}
             </>
           ),
         });
         models.push({
           number: section.number + 0.5,
-          key: "context",
-          title: "Contexto normativo",
+          key: division.key,
+          title: division.title,
           presentation: "details",
           listed: true,
-          body: body({ ...section, markdown: opening.context }),
+          body: body({ ...section, markdown: opening.after }),
         });
       } else {
         models.push({
@@ -286,7 +379,7 @@ function sectionModels(
       continue;
     }
     flushClouds();
-    if (section.key === "what_is" && slug === "chile-data-protection") {
+    if (section.key === "what_is" && views?.legal_foundations) {
       const foundations = views?.legal_foundations ? legalFoundationsProps(views.legal_foundations) : null;
       models.push({
         number: section.number,
@@ -297,9 +390,11 @@ function sectionModels(
         body: (
           <>
             <LegalFoundations roles={foundations?.roles} principles={foundations?.principles} />
-            <p>
-              <a href="#s23">Detalle por tema y artículo en el Anexo · Catálogo legal</a>
-            </p>
+            {views.legal_foundations.annex_link ? (
+              <p>
+                <a href={views.legal_foundations.annex_link.href}>{views.legal_foundations.annex_link.label}</a>
+              </p>
+            ) : null}
           </>
         ),
       });
@@ -338,26 +433,25 @@ function sectionModels(
     if (!text) {
       continue;
     }
-    if (section.key === "trade_offs" && slug === "chile-data-protection" && section.markdown.includes("### Sanciones")) {
+    const division = splitFor(views, section.number);
+    const parts = division ? splitAt(section.markdown, division.key) : null;
+    if (division && parts) {
       flushClouds();
-      const cut = section.markdown.indexOf("### Sanciones");
-      const tradeMarkdown = section.markdown.slice(0, cut).trim();
-      const sanctionsMarkdown = section.markdown.slice(cut).replace(/^### Sanciones[^\n]*\n?/, "").trim();
       models.push({
         number: section.number,
         key: section.key,
         title: titleOf(section),
         presentation: "details",
         listed: true,
-        body: body({ ...section, markdown: tradeMarkdown }),
+        body: body({ ...section, markdown: parts.before }),
       });
       models.push({
         number: section.number + 0.5,
-        key: "sanctions",
-        title: "Sanciones",
+        key: division.key,
+        title: division.title,
         presentation: "details",
         listed: true,
-        body: body({ ...section, markdown: sanctionsMarkdown }),
+        body: body({ ...section, markdown: parts.after }),
       });
       continue;
     }
@@ -365,12 +459,7 @@ function sectionModels(
       number: section.number,
       key: section.key,
       title: titleOf(section),
-      presentation:
-        slug === "chile-data-protection" && section.number === 3
-          ? "details"
-          : OPEN_NUMBERS.has(section.number)
-            ? "open"
-            : "details",
+      presentation: OPEN_NUMBERS.has(section.number) ? "open" : "details",
       listed: true,
       body: body(section),
     });
@@ -476,6 +565,16 @@ async function ConceptArticle({ slug }: { slug: string }) {
   }
 
   const data = concept.data;
+  if (data.availability !== "available" && data.availability_text) {
+    return (
+      <UnavailablePage
+        title={data.title}
+        text={data.availability_text}
+        href={itineraryHref(data.domain, data.subdomain)}
+        status={data.availability === "in_review" ? "in_review" : "in_development"}
+      />
+    );
+  }
   const summary = data.sections.find((section) => section.key === "summary");
   const noticeSplit = extractLegalNotice(summary?.markdown ?? "");
   const sections = data.sections.map((section) =>
@@ -512,13 +611,26 @@ async function ConceptArticle({ slug }: { slug: string }) {
         level: conceptItem.level,
         hasPage: conceptItem.has_page,
         blueprintIndex: index,
+        available: conceptItem.availability === "available",
       })),
     }));
     const found = nextInRoute(stages, data.slug);
     next = found && scope.has(found.slug) ? { slug: found.slug, title: found.title } : null;
   }
 
+  const copy = await loadAvailabilityCopy(conceptRefs);
+  const links = fichaLinkStates(conceptRefs, data.unavailable_links, copy);
+  // ADR-029/030: con views.section_titles, títulos de la ficha y numeración visible 1 a M.
+  const sectionTitles = data.views?.section_titles ?? [];
+  const readingSections = [
+    ...withSectionTitles(sectionModels(sections, data.sources, data.legal_basis, data.slug, conceptRefs, data.kind, data.views), sectionTitles),
+    ...annexModels(data.annexes ?? [], data.legal_basis, conceptRefs),
+  ];
+  const refSections = numberedTitles(sectionTitles, visibleNumbers(readingSections));
+
   return (
+    <FichaLinksProvider links={links} sections={refSections}>
+    <ExamplePickProvider>
     <ConceptReading
       slug={data.slug}
       title={data.title}
@@ -536,11 +648,10 @@ async function ConceptArticle({ slug }: { slug: string }) {
       crumb={crumb}
       next={next}
       construction={!domainOpen}
-      sections={[
-        ...sectionModels(sections, data.sources, data.legal_basis, data.slug, conceptRefs, data.kind, data.views),
-        ...annexModels(data.annexes ?? [], data.legal_basis, conceptRefs),
-      ]}
-      compactNumbering={data.slug === "chile-data-protection"}
+      sections={readingSections}
+      compactNumbering={usesCompactNumbering(sectionTitles)}
+      summaryPairs={data.views?.reading?.summary_pairs === true}
+      legalBasisPanel={data.views?.reading?.legal_basis_panel !== false}
       staticMode={staticMode}
       initialStudy={
         study?.ok ? { state: study.data.state, pendingDeepDive: study.data.pending_deep_dive } : null
@@ -555,6 +666,8 @@ async function ConceptArticle({ slug }: { slug: string }) {
     >
       {staticMode ? null : <HybridNotes slug={data.slug} />}
     </ConceptReading>
+    </ExamplePickProvider>
+    </FichaLinksProvider>
   );
 }
 
