@@ -62,7 +62,10 @@ def test_search_index_shape(out: Path) -> None:
     documents = read(out, "search-index.json")["documents"]
     assert len({d["id"] for d in documents}) == len(documents)
     expected = {"id", "slug", "title", "type", "domain", "classification", "has_page", "snippet", "tags", "aliases"}
-    assert all(set(d) == expected and isinstance(d["tags"], list) for d in documents)
+    # ADR-031: solo las fichas no disponibles llevan availability.
+    assert all(set(d) - {"availability"} == expected and isinstance(d["tags"], list) for d in documents)
+    unavailable = [d for d in documents if "availability" in d]
+    assert unavailable and all(d["availability"]["status"] in {"in_review", "in_development"} for d in unavailable)
     assert {d["type"] for d in documents} <= s.SEARCH_TYPES  # sin fuentes: no tienen página
     cdc = next(d for d in documents if d["slug"] == "change-data-capture")
     assert cdc["has_page"] and cdc["tags"]

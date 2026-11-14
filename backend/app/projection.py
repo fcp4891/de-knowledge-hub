@@ -125,7 +125,21 @@ def domain_detail(index: ContentIndex, slug: str) -> dict[str, Any]:
     ]
     framework = index.legal_frameworks.get(doc["domain"].get("legal_framework") or "")
     return {**domain_summary(doc), "legal_framework": legal_framework_out(framework) if framework else None,
-            "subdomains": subdomains, "availability_texts": index.ui["availability"]}   # ADR-031, enmienda 1
+            "subdomains": subdomains, "availability_texts": availability_texts(index)}   # ADR-031, enmienda 1
+
+
+AVAILABILITY_ORDER = ("in_review", "in_development", "available", "route_count", "back_label")
+STATE_ORDER = ("label", "help", "count")
+
+
+def availability_texts(index: ContentIndex) -> dict[str, Any]:
+    """Textos de disponibilidad en el orden del contrato: JSONB (ui_texts) no conserva el orden del YAML."""
+    texts = index.ui["availability"]
+    ordered: dict[str, Any] = {}
+    for key in AVAILABILITY_ORDER:
+        value = texts[key]
+        ordered[key] = {k: value[k] for k in STATE_ORDER if k in value} if isinstance(value, dict) else value
+    return ordered
 
 
 FACT_KEYS = ("key", "label", "value", "url", "checked_with", "source", "verified_at", "note")
