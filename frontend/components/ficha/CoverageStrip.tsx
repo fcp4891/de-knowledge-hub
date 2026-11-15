@@ -9,7 +9,7 @@ export function CoverageStrip({ view }: { view: Strip }) {
   return (
     <section className="pii-view" aria-label={view.label}>
       <p className="pii-kicker">{view.label}</p>
-      <p>
+      <p className="pii-lead">
         <RichText text={view.lead} />
       </p>
       <div className="pii-coverage">

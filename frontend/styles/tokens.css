@@ -12,6 +12,7 @@
   --text-sm: 13px;
   --text-base: 15px;
   --text-read: 18px;      /* cuerpo de lectura en la ficha */
+  --text-component: 14px; /* texto dentro de los componentes de pii (.pii-view) */
   --text-lead: 19px;      /* resumen de la ficha */
   --text-h3: 19px;
   --text-h2: 22px;

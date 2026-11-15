@@ -1,3 +1,23 @@
+/* Componentes de pii: sans de la UI, como la maqueta (antes heredaban la serif de 18 px de .markdown). */
+.pii-view,
+.pii-note,
+.pii-risk,
+.cloud-compare:has(td.cloud-own) .pii-table-wrap {
+  font-family: var(--font-ui), system-ui, sans-serif;
+}
+
+.pii-view {
+  font-size: var(--text-component);
+  line-height: 1.5;
+}
+
+/* Párrafo de entrada de un componente: sigue en la serif (maqueta: .lead, 16 px). */
+.pii-view .pii-lead {
+  font-family: var(--font-read), Georgia, serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
 .pii-view {
   min-width: 0;
   max-width: 100%;
@@ -105,6 +125,7 @@
 
 .pii-note {
   margin: 0;
+  font-size: 13.5px;   /* maqueta: nota en sans de 13,5 px */
   padding: 9px 12px;
   border-radius: 10px;
   background: var(--surface-muted);
@@ -118,6 +139,7 @@
 }
 
 .pii-risk {
+  font-size: var(--text-base);   /* maqueta: «Riesgo» en sans de 15 px */
   display: flex;
   gap: 12px;
   align-items: flex-start;

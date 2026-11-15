@@ -730,7 +730,7 @@
 }
 
 .reading-summary .markdown,
-.reading-summary .markdown p {
+.reading-summary .markdown p:not(.pii-view *, .pii-note, .pii-risk) {
   font-family: var(--font-read), Georgia, serif;
   font-size: var(--text-lead);
   line-height: 1.6;

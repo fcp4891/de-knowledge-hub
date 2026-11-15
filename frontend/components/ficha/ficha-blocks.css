@@ -2570,6 +2570,25 @@
   min-width: 52rem;
 }
 
+/* pii §7 a 1100 px: 52rem (832 px) superaba la columna de lectura (775 px) y Azure se cortaba; con la columna
+   «Este ejemplo» los anchos sumaban 128 % (16 % + 4 × 28 %). Acotado a la tabla con esa columna. */
+.cloud-compare .markdown-table-steps table.pii-table:has(td.cloud-own) {
+  min-width: 40rem;
+}
+
+.cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td) {
+  width: 22%;
+}
+
+.cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td):nth-child(-n + 2) {
+  width: 17%;
+}
+
+/* Columna «Este ejemplo»: la clase existía sin regla. */
+.cloud-compare td.cloud-own {
+  background: var(--ok-bg);
+}
+
 @media (max-width: 720px) {
   .cloud-compare .markdown-table-steps table {
     min-width: 0;
@@ -2579,7 +2598,8 @@
      Tres causas del texto letra por letra: width:28% y td:first-child { width:16% } pisaban el width:100% móvil, y la
      rejilla rótulo | contenido mandaba el segundo hijo de la celda (la descripción) a la columna del rótulo (88 px). */
   .cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td),
-  .cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td):first-child {
+  .cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td):first-child,
+  .cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td):nth-child(-n + 2) {
     display: block;
     position: static;
     width: 100%;
@@ -2605,7 +2625,8 @@
      Tres causas del texto letra por letra: width:28% y td:first-child { width:16% } pisaban el width:100% móvil, y la
      rejilla rótulo | contenido mandaba el segundo hijo de la celda (la descripción) a la columna del rótulo (88 px). */
   .cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td),
-  .cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td):first-child {
+  .cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td):first-child,
+  .cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td):nth-child(-n + 2) {
     display: block;
     position: static;
     width: 100%;
