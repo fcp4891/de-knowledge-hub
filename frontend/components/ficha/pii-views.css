@@ -1,12 +1,14 @@
 /* Componentes de pii: sans de la UI, como la maqueta (antes heredaban la serif de 18 px de .markdown). */
 .pii-view,
+.pii-use,
 .pii-note,
 .pii-risk,
 .cloud-compare:has(td.cloud-own) .pii-table-wrap {
   font-family: var(--font-ui), system-ui, sans-serif;
 }
 
-.pii-view {
+.pii-view,
+.pii-use {
   font-size: var(--text-component);
   line-height: 1.5;
 }

@@ -2597,6 +2597,10 @@
   /* pii §7 (tabla con la columna «Este ejemplo»): cada fila es una tarjeta; la necesidad arriba y cada nube debajo.
      Tres causas del texto letra por letra: width:28% y td:first-child { width:16% } pisaban el width:100% móvil, y la
      rejilla rótulo | contenido mandaba el segundo hijo de la celda (la descripción) a la columna del rótulo (88 px). */
+  .cloud-compare .markdown-table-steps table.pii-table:has(td.cloud-own) {
+    min-width: 0;   /* gana al min-width: 40rem de escritorio */
+  }
+
   .cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td),
   .cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td):first-child,
   .cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td):nth-child(-n + 2) {
@@ -2624,6 +2628,10 @@
   /* pii §7 (tabla con la columna «Este ejemplo»): cada fila es una tarjeta; la necesidad arriba y cada nube debajo.
      Tres causas del texto letra por letra: width:28% y td:first-child { width:16% } pisaban el width:100% móvil, y la
      rejilla rótulo | contenido mandaba el segundo hijo de la celda (la descripción) a la columna del rótulo (88 px). */
+  .cloud-compare .markdown-table-steps table.pii-table:has(td.cloud-own) {
+    min-width: 0;   /* gana al min-width: 40rem de escritorio */
+  }
+
   .cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td),
   .cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td):first-child,
   .cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td):nth-child(-n + 2) {

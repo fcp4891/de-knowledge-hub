@@ -51,6 +51,8 @@ test("§7 a 390 px: la tabla de pii (con «Este ejemplo») apila cada celda a to
   const container = blocks.slice(blocks.indexOf("@container reading (max-width: 720px) {\n  /* pii §7"));
   assert.ok(media.includes(rule) && container.includes(rule));
   assert.match(blocks, /table:has\(td\.cloud-own\) td::before \{\n    display: block;/);
+  // Sin desplazamiento a 390 px: el min-width de escritorio (40rem) se anula en los dos bloques móviles.
+  assert.equal((blocks.match(/table\.pii-table:has\(td\.cloud-own\) \{\n    min-width: 0;/g) ?? []).length, 2);
 });
 
 test("§2: el árbol pinta «Recorrido…», «Resultado para» y el título del desenlace (o el fallback)", () => {
@@ -84,6 +86,6 @@ test("el chip de pii «Cómo funciona · ¿Qué datos trato?» tiene destino: De
 });
 
 test("tipografía: .pii-view fija la sans de la UI y la serif del Resumen no alcanza a pii", () => {
-  assert.match(css("pii-views.css"), /\.pii-view,\n\.pii-note,\n\.pii-risk,\n[^{]*\{\n  font-family: var\(--font-ui\)/);
-  assert.match(readFileSync(join(FRONTEND, "components/card/reading.css"), "utf8"), /\.reading-summary \.markdown p:not\(\.pii-view \*, \.pii-note, \.pii-risk\)/);
+  assert.match(css("pii-views.css"), /\.pii-view,\n\.pii-use,\n\.pii-note,\n\.pii-risk,\n[^{]*\{\n  font-family: var\(--font-ui\)/);
+  assert.match(readFileSync(join(FRONTEND, "components/card/reading.css"), "utf8"), /\.reading-summary \.markdown p:not\(\.pii-view \*, \.pii-use \*, \.pii-note, \.pii-risk\)/);
 });
