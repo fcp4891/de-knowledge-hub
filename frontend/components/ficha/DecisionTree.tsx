@@ -56,10 +56,19 @@ export function DecisionTree({ view }: { view: Tree }) {
           </button>
         ))}
       </div>
-      {selected ? <Result view={view} example={selected} flash={flash} /> : null}
+      {/* Maqueta: recorrido · desenlace · «Resultado para <columna>». */}
       {selected ? <Path view={view} example={selected} /> : null}
+      {selected ? <Result view={view} example={selected} flash={flash} /> : null}
     </section>
   );
+}
+
+/** Salida de la última pregunta respondida; si ninguna salida corresponde, el desenlace por defecto (fallback). */
+function outcomeOf(view: Tree, example: Example): Tree["fallback"] {
+  const lastIndex = example.answers.length - 1;
+  const question = view.questions[lastIndex];
+  const answer = example.answers[lastIndex];
+  return question?.exits.find((exit) => exit.answer === answer) ?? view.fallback;
 }
 
 function Result({ view, example, flash }: { view: Tree; example: Example; flash: boolean }) {
@@ -70,12 +79,19 @@ function Result({ view, example, flash }: { view: Tree; example: Example; flash:
     question && answer
       ? `${view.step_labels.question} ${question.number} · ${view.answer_labels[answer]}, ${question.gloss[answer]}`
       : null;
+  const outcome = outcomeOf(view, example);
   return (
     <>
-      <aside className={flash ? "pii-live is-flash" : "pii-live"} aria-live="polite">
+      <div className="pii-outcome" data-outcome={outcome.outcome}>
         {line ? <p className="pii-path">{line}</p> : null}
+        <strong>{outcome.title}</strong>
         <p>
-          <code>{example.column}</code>
+          <RichText text={outcome.text} />
+        </p>
+      </div>
+      <aside className={flash ? "pii-live is-flash" : "pii-live"} aria-live="polite">
+        <p className="pii-label">
+          {view.result_label} <code>{example.column}</code>
         </p>
         <p className="pii-desc">{example.description}</p>
         <strong data-outcome={example.outcome}>{example.title}</strong>
@@ -122,7 +138,9 @@ function Path({ view, example }: { view: Tree; example: Example }) {
     return [{ question, answer: answer as Answer, last: index === example.answers.length - 1 }];
   });
   return (
-    <ol className="pii-questions">
+    <>
+      <p className="pii-label">{view.path_label}</p>
+      <ol className="pii-questions">
       {steps.map((step) => (
         <li key={step.question.number} className="pii-question">
           <small>
@@ -136,6 +154,7 @@ function Path({ view, example }: { view: Tree; example: Example }) {
           </em>
         </li>
       ))}
-    </ol>
+      </ol>
+    </>
   );
 }

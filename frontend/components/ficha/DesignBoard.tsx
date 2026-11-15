@@ -12,7 +12,7 @@ export function DesignBoard({ intro, groups }: DesignBoardProps) {
           <div key={group.title} className="design-board-col">
             <h3>{group.title}</h3>
             {group.items.map((item) => (
-              <article key={item.number}>
+              <article key={item.number} id={item.id}>
                 <h4>
                   <span>{item.number}</span>
                   {item.question}

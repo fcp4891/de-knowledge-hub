@@ -46,9 +46,44 @@ test("§3: una celda por encabezado; los ejemplos de columna van dentro de la ce
 
 test("§7 a 390 px: la tabla de pii (con «Este ejemplo») apila cada celda a todo el ancho, en el @media y en el contenedor", () => {
   const blocks = css("ficha-blocks.css");
-  const rule = ".cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td):first-child {\n    display: block;\n    position: static;\n    width: 100%;";
+  const rule = ".cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td):nth-child(-n + 2) {\n    display: block;\n    position: static;\n    width: 100%;";
   const media = blocks.slice(blocks.indexOf("@media (max-width: 720px) {\n  .cloud-compare"));
   const container = blocks.slice(blocks.indexOf("@container reading (max-width: 720px) {\n  /* pii §7"));
   assert.ok(media.includes(rule) && container.includes(rule));
   assert.match(blocks, /table:has\(td\.cloud-own\) td::before \{\n    display: block;/);
+});
+
+test("§2: el árbol pinta «Recorrido…», «Resultado para» y el título del desenlace (o el fallback)", () => {
+  const { DecisionTree } = loadTsx(join(ficha, "DecisionTree.tsx"));
+  const exit = { answer: "yes", label: "Sí", outcome: "sensitive", title: "Dato sensible", text: "Consentimiento expreso (art. 16)." };
+  const view = {
+    intro: { title: "Mapa", text: "t" }, examples_title: "Ejemplos", path_label: "Recorrido de la columna elegida",
+    result_label: "Resultado para", catalog_label: "Catálogo", answer_labels: { yes: "Sí", no: "No" },
+    step_labels: { question: "Pregunta", next: "siguiente", end: "termina" },
+    questions: [{ number: 1, question: "¿Sensible?", help: "h", gloss: { yes: "revela", no: "no revela" }, exits: [exit] }],
+    fallback: { label: "fin", outcome: "personal", title: "Dato personal", text: "Identificable." },
+    catalog_fields: { category: "C", basis: "B", risk: "R", method: "M", review: "V" }, review: "privacidad", default: "diagnostico",
+    examples: [{ column: "diagnostico", description: "d", answers: ["yes"], outcome: "sensitive", title: "Sensible", explanation: "e",
+      catalog: { category: "c", basis: "b", risk: "r", method: "m" } }],
+    law: { summary: "s", items: [], link: { label: "l", href: "/concepts/chile-data-protection/" } },
+  };
+  const markup = html(DecisionTree, { view });
+  assert.match(markup, /Recorrido de la columna elegida/);
+  assert.match(markup, /Resultado para <code>diagnostico<\/code>/);
+  assert.match(markup, /class="pii-outcome" data-outcome="sensitive"[\s\S]*<strong>Dato sensible<\/strong>/);
+  const fallback = html(DecisionTree, { view: { ...view, examples: [{ ...view.examples[0], answers: ["no"] }] } });
+  assert.match(fallback, /data-outcome="personal"[\s\S]*<strong>Dato personal<\/strong>/);
+});
+
+test("el chip de pii «Cómo funciona · ¿Qué datos trato?» tiene destino: DesignBoard pinta el id del contrato", () => {
+  const { DesignBoard } = loadTsx(join(ficha, "DesignBoard.tsx"));
+  const markup = html(DesignBoard, {
+    intro: "i", groups: [{ title: "Conocer", items: [{ id: "como-funciona-01", number: "01", question: "¿Qué datos?", text: "t", tags: [] }] }],
+  });
+  assert.match(markup, /<article id="como-funciona-01">/);
+});
+
+test("tipografía: .pii-view fija la sans de la UI y la serif del Resumen no alcanza a pii", () => {
+  assert.match(css("pii-views.css"), /\.pii-view,\n\.pii-note,\n\.pii-risk,\n[^{]*\{\n  font-family: var\(--font-ui\)/);
+  assert.match(readFileSync(join(FRONTEND, "components/card/reading.css"), "utf8"), /\.reading-summary \.markdown p:not\(\.pii-view \*, \.pii-note, \.pii-risk\)/);
 });

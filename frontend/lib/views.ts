@@ -85,7 +85,8 @@ export type ProblemJourneyProps = {
 
 export type DesignBoardProps = {
   intro: string;
-  groups: { title: string; items: { number: string; question: string; text: string; arq?: boolean; tags: Tag[] }[] }[];
+  /** id: ancla explícita del contrato (ADR-030, enmienda 2), p. ej. #como-funciona-01. */
+  groups: { title: string; items: { id?: string; number: string; question: string; text: string; arq?: boolean; tags: Tag[] }[] }[];
 };
 
 export type ControlMatrixProps = {
