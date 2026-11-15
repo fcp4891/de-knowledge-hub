@@ -9,6 +9,7 @@ import { AvailabilityMark, type UnavailableStatus } from "./AvailabilityMark";
 export type FichaLinkState = { slug: string; status: UnavailableStatus; label: string };
 
 import type { NumberedSectionTitle } from "@/lib/sectionNumbering";
+import { withBasePath } from "@/lib/basePath";
 
 export type SectionTitle = NumberedSectionTitle;
 
@@ -76,7 +77,7 @@ export function FichaAnchor({
     return <span className={className}>{children}</span>;
   }
   return (
-    <a className={className} href={href}>
+    <a className={className} href={withBasePath(href)}>
       {children}
     </a>
   );

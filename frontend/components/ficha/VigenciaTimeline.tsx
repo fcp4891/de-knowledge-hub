@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import "./ficha-blocks.css";
+import { withBasePath } from "@/lib/basePath";
 
 const MONTHS = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
 
@@ -80,7 +81,7 @@ export function VigenciaTimeline({
               <ul className="vigencia-links">
                 {item.links.map((link) => (
                   <li key={link.href}>
-                    <a href={link.href}>{link.label}</a>
+                    <a href={withBasePath(link.href)}>{link.label}</a>
                   </li>
                 ))}
               </ul>

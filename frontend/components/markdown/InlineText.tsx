@@ -17,6 +17,7 @@ import { conceptInline, PENDING_MARK, type ConceptRefs } from "@/lib/conceptName
 import { CONSTRUCTION_MARK } from "@/lib/publishedScope";
 import type { Inline } from "@/lib/markdown";
 import { sectionRefLabel } from "@/lib/sectionNumbering";
+import { withBasePath } from "@/lib/basePath";
 
 export function ArchitectureDot({ labelled = true }: { labelled?: boolean }) {
   if (!labelled) {
@@ -130,7 +131,7 @@ export function InlineText({
       }
       if (named.kind === "link") {
         return (
-          <a key={key} className="ficha-name" href={named.href} title={named.slug}>
+          <a key={key} className="ficha-name" href={withBasePath(named.href)} title={named.slug}>
             {named.label}
           </a>
         );
@@ -179,13 +180,13 @@ export function InlineText({
       const pill = sectionRefLabel(part.href, value, sections);
       if (pill) {
         return (
-          <a key={key} className="section-pill" href={part.href}>
+          <a key={key} className="section-pill" href={withBasePath(part.href)}>
             {pill}
           </a>
         );
       }
       return (
-        <a key={key} href={part.href} {...anchorAttrs(part.href)}>
+        <a key={key} href={withBasePath(part.href)} {...anchorAttrs(part.href)}>
           {value}
         </a>
       );

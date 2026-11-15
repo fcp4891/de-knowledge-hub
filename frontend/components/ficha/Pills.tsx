@@ -6,6 +6,7 @@ import { sectionKind } from "@/lib/sectionNumbering";
 import type { Tag } from "@/lib/views";
 
 import "./ficha-blocks.css";
+import { withBasePath } from "@/lib/basePath";
 
 /** Píldoras con el estilo de Cómo funciona (ADR-030): tipo en versalitas, rótulo y, si hay ancla, enlace. */
 export function Pills({ tags }: { tags: Tag[] }) {
@@ -27,7 +28,7 @@ export function Pills({ tags }: { tags: Tag[] }) {
         return (
           <li key={`${tag.kind ?? ""}-${tag.label}`} className={tag.legal ? "is-legal" : undefined}>
             {tag.href ? (
-              <a href={tag.href} {...anchorAttrs(tag.href)}>
+              <a href={withBasePath(tag.href)} {...anchorAttrs(tag.href)}>
                 {inner}
               </a>
             ) : (

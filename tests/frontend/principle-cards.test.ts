@@ -29,7 +29,7 @@ test("Esc cierra y la tarjeta es un enlace sin «Ver en detalle»", () => {
   assert.match(view, /event\.key !== "Escape"/);
   assert.match(view, /role="tooltip"/);
   assert.match(view, /aria-describedby=\{open \? tipId : undefined\}/);
-  assert.match(view, /href=\{`\/concepts\/\$\{principle\.slug\}\/`\}/);
+  assert.match(view, /href=\{withBasePath\(`\/concepts\/\$\{principle\.slug\}\/`\)\}/);   // con basePath en el sitio publicado
   assert.equal(view.includes("Ver en detalle"), false);
 });
 

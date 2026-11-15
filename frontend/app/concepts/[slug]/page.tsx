@@ -77,6 +77,7 @@ import {
   whenToUseProps,
   type Views,
 } from "@/lib/views";
+import { withBasePath } from "@/lib/basePath";
 
 const CLOUD_KEYS = new Set(["gcp", "aws", "azure"]);
 
@@ -392,7 +393,7 @@ function sectionModels(
             <LegalFoundations roles={foundations?.roles} principles={foundations?.principles} />
             {views.legal_foundations.annex_link ? (
               <p>
-                <a href={views.legal_foundations.annex_link.href}>{views.legal_foundations.annex_link.label}</a>
+                <a href={withBasePath(views.legal_foundations.annex_link.href)}>{views.legal_foundations.annex_link.label}</a>
               </p>
             ) : null}
           </>

@@ -1,6 +1,7 @@
 import type { WhenToUseProps } from "@/lib/views";
 
 import "./ficha-blocks.css";
+import { withBasePath } from "@/lib/basePath";
 
 export function WhenToUse({ intro, groups }: WhenToUseProps) {
   return (
@@ -21,7 +22,7 @@ export function WhenToUse({ intro, groups }: WhenToUseProps) {
                   {item.tags.map((tag) => (
                     <li key={`${item.title}-${tag.label}`} className={tag.legal ? "is-legal" : undefined}>
                       {tag.href ? (
-                        <a href={tag.href}>
+                        <a href={withBasePath(tag.href)}>
                           {tag.kind ? <b>{tag.kind}</b> : null}
                           {tag.label}
                         </a>

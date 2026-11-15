@@ -6,6 +6,7 @@ import { richParts } from "@/lib/views";
 
 import { AvailabilityMark } from "@/components/availability/AvailabilityMark";
 import { useFichaLinks } from "@/components/availability/FichaLink";
+import { withBasePath } from "@/lib/basePath";
 
 /** Texto de una vista con Markdown en línea (ADR-030): enlaces, negrita, cursiva y código. */
 export function RichText({ text }: { text: string }) {
@@ -25,14 +26,14 @@ export function RichText({ text }: { text: string }) {
       const pill = sectionRefLabel(part.href, part.value, sections);
       if (pill) {
         return (
-          <a key={index} className="section-pill" href={part.href}>
+          <a key={index} className="section-pill" href={withBasePath(part.href)}>
             {pill}
           </a>
         );
       }
       const attrs = anchorAttrs(part.href);
       return (
-        <a key={index} href={part.href} {...attrs}>
+        <a key={index} href={withBasePath(part.href)} {...attrs}>
           {part.value}
         </a>
       );

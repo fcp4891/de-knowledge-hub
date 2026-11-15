@@ -2,6 +2,7 @@ import type { ControlEvidenceProps, RequirementToDataProps } from "@/lib/views";
 
 import { RichText } from "./RichText";
 import "./ficha-blocks.css";
+import { withBasePath } from "@/lib/basePath";
 
 function Arrow() {
   return (
@@ -170,7 +171,7 @@ export function ControlEvidence({ id, title, lead, steps, decide, note, example 
         </p>
         {example.codeLink ? (
           <p>
-            <a href={example.codeLink.href}>{example.codeLink.label}</a>
+            <a href={withBasePath(example.codeLink.href)}>{example.codeLink.label}</a>
           </p>
         ) : null}
       </details>

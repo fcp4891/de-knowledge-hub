@@ -18,6 +18,7 @@ import { bcnLinkText, legalRowId } from "@/lib/legal";
 import { principleActivation, principleAriaLabel } from "@/lib/principleCards";
 import type { RolesProps, Tag } from "@/lib/views";
 import { RichText } from "@/components/ficha/RichText";
+import { withBasePath } from "@/lib/basePath";
 
 function fold(value: string): string {
   return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -111,7 +112,7 @@ function Fichas({ fichas }: { fichas: ChileFicha[] }) {
             {ficha.title}
           </FichaAnchor>
         ) : ficha.href ? (
-          <a key={ficha.label} href={ficha.href}>
+          <a key={ficha.label} href={withBasePath(ficha.href)}>
             {ficha.label}
           </a>
         ) : (
@@ -453,7 +454,7 @@ function PrincipleCard({
     >
       <a
         className={open ? "lf-principle-card is-open" : "lf-principle-card"}
-        href={`/concepts/${principle.slug}/`}
+        href={withBasePath(`/concepts/${principle.slug}/`)}
         aria-label={principleAriaLabel(name, child)}
         aria-describedby={open ? tipId : undefined}
         onFocus={() => onShow()}
