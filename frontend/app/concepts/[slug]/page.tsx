@@ -78,6 +78,7 @@ import {
   type Views,
 } from "@/lib/views";
 import { withBasePath } from "@/lib/basePath";
+import { SHOW_STUDY_ROUTES, studyHref } from "@/lib/siteConfig";
 
 const CLOUD_KEYS = new Set(["gcp", "aws", "azure"]);
 
@@ -136,7 +137,7 @@ function UnavailablePage({
 }: {
   title: string;
   text: { label: string; help: string; back_label: string };
-  href: string;
+  href: string | null;
   status: "in_review" | "in_development";
 }) {
   return (
@@ -150,11 +151,13 @@ function UnavailablePage({
           </span>
         </p>
         <p>{text.help}</p>
-        <p>
-          <Link className="unavailable-back" href={href}>
-            {text.back_label}
-          </Link>
-        </p>
+        {href ? (
+          <p>
+            <Link className="unavailable-back" href={href}>
+              {text.back_label}
+            </Link>
+          </p>
+        ) : null}
       </article>
     </div>
   );
@@ -573,7 +576,7 @@ async function ConceptArticle({ slug }: { slug: string }) {
       <UnavailablePage
         title={data.title}
         text={data.availability_text}
-        href={itineraryHref(data.domain, data.subdomain)}
+        href={studyHref(itineraryHref(data.domain, data.subdomain))}
         status={data.availability === "in_review" ? "in_review" : "in_development"}
       />
     );
@@ -602,10 +605,10 @@ async function ConceptArticle({ slug }: { slug: string }) {
     const short = SHORT_NAMES[domain.data.id] ?? domain.data.title;
     const subdomain = domain.data.subdomains.find((item) => item.slug === data.subdomain)?.title ?? null;
     crumb = {
-      domainHref: domainOpen ? `/explorer/${domain.data.slug}` : null,
+      domainHref: domainOpen ? studyHref(`/explorer/${domain.data.slug}`) : null,
       domainLabel: `${domain.data.id} ${short}`,
       subdomain,
-      subdomainHref: domainOpen && data.subdomain ? `/explorer/${domain.data.slug}#${data.subdomain}` : null,
+      subdomainHref: domainOpen && data.subdomain ? studyHref(`/explorer/${domain.data.slug}#${data.subdomain}`) : null,
     };
     const stages = domain.data.subdomains.map((item) => ({
       concepts: item.concepts.map((conceptItem, index) => ({
@@ -618,7 +621,8 @@ async function ConceptArticle({ slug }: { slug: string }) {
       })),
     }));
     const found = nextInRoute(stages, data.slug);
-    next = found && scope.has(found.slug) ? { slug: found.slug, title: found.title } : null;
+    // «Siguiente en la ruta» es navegación de la ruta de estudio: se oculta con ella (lib/siteConfig.ts).
+    next = SHOW_STUDY_ROUTES && found && scope.has(found.slug) ? { slug: found.slug, title: found.title } : null;
   }
 
   const copy = await loadAvailabilityCopy(conceptRefs);

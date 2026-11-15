@@ -12,6 +12,7 @@ import { conceptInline } from "@/lib/conceptNames";
 import { CLOUD_LABEL, LANGUAGE_LABEL } from "@/lib/labels";
 import { CONSTRUCTION_MARK, snippetListed, scopeFromConcepts } from "@/lib/publishedScope";
 import { staticSlugs } from "@/lib/staticParams";
+import { studyHref } from "@/lib/siteConfig";
 
 // El build estático cambia este literal a false: Next solo acepta true o false.
 export const dynamicParams = true;
@@ -71,7 +72,7 @@ export default async function SnippetPage({ params }: { params: Promise<{ slug: 
         mvp={false}
         lastVerified={data.last_verified}
         verificationStatus={data.verification_status}
-        backHref="/snippets"
+        backHref={studyHref("/snippets") ?? undefined}
         backLabel="Volver a snippets"
       />
       <p className="meta">

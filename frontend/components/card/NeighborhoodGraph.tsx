@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import type { EntityType, RelationGroups } from "@/lib/api/types";
 import { entityHref } from "@/lib/entityHref";
 import { RELATION_LABEL } from "@/lib/labels";
+import { isHiddenStudyRoute } from "@/lib/siteConfig";
 
 const ENTITY_COLOR: Record<string, string> = {
   concept: "#1f4d3a",
@@ -203,7 +204,11 @@ export function NeighborhoodGraph({
           return;
         }
         const entityType = event.target.data("entityType") as EntityType;
-        router.push(entityHref(entityType, slug));
+        const href = entityHref(entityType, slug);
+        if (isHiddenStudyRoute(href)) {
+          return;
+        }
+        router.push(href);
       });
       cy.fit(undefined, 16);
       graph = cy;

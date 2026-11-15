@@ -10,6 +10,7 @@ import { searchLocal } from "@/lib/browserSearch";
 import { resultHref } from "@/lib/entityHref";
 import { RESULT_LABEL } from "@/lib/labels";
 import { inPublishedSearch } from "@/lib/publishedScope";
+import { isHiddenStudyRoute } from "@/lib/siteConfig";
 
 function isFichaResult(type: ResultType): boolean {
   return type === "concept" || type === "pattern" || type === "architecture";
@@ -185,6 +186,9 @@ export function SearchDialog({
                     const mark = marks?.get(item.slug);
                     if (mark) {
                       return <SearchUnavailable key={`${item.type}-${item.slug}`} title={item.title} status={mark.status} label={mark.label} help={mark.help} />;
+                    }
+                    if (isHiddenStudyRoute(resultHref(item.type, item.slug))) {
+                      return null;   // rutas de estudio ocultas (lib/siteConfig.ts)
                     }
                     const href = marks === null && isFichaResult(item.type) ? null : resultHref(item.type, item.slug);
                     return (

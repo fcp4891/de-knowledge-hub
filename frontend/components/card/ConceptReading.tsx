@@ -37,6 +37,7 @@ import {
 import { CARD_SECTION_COUNT, markSectionSeen, readReadingProgress, writeReadingProgress } from "@/lib/readingProgress";
 
 import "./reading.css";
+import { SHOW_STUDY_ROUTES } from "@/lib/siteConfig";
 
 const STUDY_STATES: StudyStatus[] = [
   "not_reviewed",
@@ -901,14 +902,16 @@ export function ConceptReading({
                   </svg>
                   Marcar como comprendido
                 </button>
-                <button
-                  type="button"
-                  className="reading-secondary"
-                  disabled={!ready}
-                  onClick={() => persist("needs_review", pendingRef.current)}
-                >
-                  Necesita repaso
-                </button>
+                {SHOW_STUDY_ROUTES ? (
+                  <button
+                    type="button"
+                    className="reading-secondary"
+                    disabled={!ready}
+                    onClick={() => persist("needs_review", pendingRef.current)}
+                  >
+                    Necesita repaso
+                  </button>
+                ) : null}
               </div>
               {next ? (
                 <Link className="reading-next" href={`/concepts/${next.slug}`}>

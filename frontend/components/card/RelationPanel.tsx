@@ -5,6 +5,7 @@ import { FichaAnchor } from "@/components/availability/FichaLink";
 import type { ApiResult, EntityType, RelationGroups } from "@/lib/api/types";
 import { entityHref } from "@/lib/entityHref";
 import { RELATION_LABEL } from "@/lib/labels";
+import { isHiddenStudyRoute } from "@/lib/siteConfig";
 
 export async function RelationPanel({
   result,
@@ -38,7 +39,9 @@ function RelationGroupsView({ groups }: { groups: RelationGroups }) {
           <ul className="stack">
             {group.items.map((item) => (
               <li key={`${group.type}-${item.slug}`}>
-                {item.target_availability ? (
+                {isHiddenStudyRoute(entityHref(item.entity_type, item.slug)) ? (
+                  <span>{item.title}</span>
+                ) : item.target_availability ? (
                   <FichaAnchor href={entityHref(item.entity_type, item.slug)} blocked>
                     {item.title}
                   </FichaAnchor>

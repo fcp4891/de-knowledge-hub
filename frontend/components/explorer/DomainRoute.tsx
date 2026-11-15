@@ -15,6 +15,7 @@ import { listStoredStudy, subscribePersonal } from "@/lib/personalStore";
 import { CARD_SECTION_COUNT, readReadingProgress } from "@/lib/readingProgress";
 
 import "./domain-route.css";
+import { isHiddenStudyRoute } from "@/lib/siteConfig";
 
 const GOAL_KEY = "dekh:goal";
 
@@ -194,10 +195,14 @@ export function DomainRoute({
               <Link href="/">Inicio</Link>
             </li>
             <li aria-hidden="true">/</li>
-            <li>
-              <Link href="/explorer">Rutas</Link>
-            </li>
-            <li aria-hidden="true">/</li>
+            {isHiddenStudyRoute("/explorer") ? null : (
+              <>
+                <li>
+                  <Link href="/explorer">Rutas</Link>
+                </li>
+                <li aria-hidden="true">/</li>
+              </>
+            )}
             <li>
               <span aria-current="page">{crumb}</span>
             </li>
@@ -493,7 +498,7 @@ function NextStep({
         <h2>Dominio completo</h2>
         <p>Cada concepto con ficha está comprendido o aplicado.</p>
         {name ? <p>Siguiente paso de tu objetivo: {name}.</p> : null}
-        {nextDomain ? (
+        {nextDomain && !isHiddenStudyRoute(`/explorer/${nextDomain.slug}`) ? (
           <Link className="route-next-action" href={`/explorer/${nextDomain.slug}`}>
             {`Empezar por ${name}`}
           </Link>

@@ -50,7 +50,8 @@ test("una capa apagada no tiene enlace", () => {
   assert.equal(CONSTRUCTION_LAYER, "En construcción · la estamos escribiendo ficha a ficha");
   assert.match(HOME, /\{CONSTRUCTION_LAYER\}/);
   assert.match(HOME, /layerIsClosed\(layer\.domains\)/);
-  assert.match(HOME, /open && domain \?/);
+  // La estación enlaza solo si la capa está abierta y las rutas de estudio están visibles (lib/siteConfig.ts).
+  assert.match(HOME, /open && domain && !isHiddenStudyRoute\(`\/explorer\/\$\{domain\.slug\}`\) \?/);
 });
 
 test("un objetivo fuera de la lista queda deshabilitado y el requisito no enlaza", () => {

@@ -1,8 +1,12 @@
 import Link from "next/link";
 
 import type { RelationGroups } from "@/lib/api/types";
+import { isHiddenStudyRoute } from "@/lib/siteConfig";
 
 export function ImplementedSnippets({ groups }: { groups: RelationGroups }) {
+  if (isHiddenStudyRoute("/snippets")) {
+    return null;   // rutas de estudio ocultas (lib/siteConfig.ts)
+  }
   const seen = new Set<string>();
   const snippets = [];
   for (const group of groups.groups) {

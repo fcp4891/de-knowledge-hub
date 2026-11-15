@@ -36,6 +36,7 @@ import {
 } from "@/lib/routeAvailability";
 
 import "./home.css";
+import { isHiddenStudyRoute, studyHref } from "@/lib/siteConfig";
 
 const GOAL_KEY = "dekh:goal";
 
@@ -268,7 +269,7 @@ export function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsByI
   const firstDomain = first ? domainsById.get(first.domain) : undefined;
   const firstStage = first?.stage ? firstDomain?.stages.find((stage) => stage.slug === first.stage) : undefined;
   const firstName = firstStage?.title ?? (first ? SHORT_NAMES[first.domain] : undefined);
-  const startHref = first ? stepHref(first, firstDomain?.slug ?? null) : null;
+  const startHref = first ? studyHref(stepHref(first, firstDomain?.slug ?? null)) : null;
 
   return (
     <section className="home-itinerary" aria-labelledby="itin">
@@ -298,7 +299,7 @@ export function Itinerary({ goal, domainsById }: { goal: Goal | null; domainsByI
               const texts = domain?.availabilityTexts ?? null;
               const counts = stage?.availability;
               const disabled = Boolean(texts) && stageDisabled(counts);
-              const href = disabled ? null : stepHref(step, domain?.slug ?? null);
+              const href = disabled ? null : studyHref(stepHref(step, domain?.slug ?? null));
               const meta = counts && texts ? (
                 <span className="home-step-meta home-step-tags">
                   {place ? <span>{place}</span> : null}
@@ -581,7 +582,7 @@ function LayerRow({
                 </span>
               </>
             );
-            return open && domain ? (
+            return open && domain && !isHiddenStudyRoute(`/explorer/${domain.slug}`) ? (
               <Link key={id} className="home-station" href={`/explorer/${domain.slug}`}>
                 {body}
               </Link>
