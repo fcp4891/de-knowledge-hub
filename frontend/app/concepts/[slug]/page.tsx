@@ -209,8 +209,10 @@ function markedViews(views: Views | undefined): Record<string, ReactNode> {
   if (views.control_matrix) nodes.control_matrix = <ControlMatrix {...controlMatrixProps(views.control_matrix)} />;
   if (views.when_to_use) nodes.when_to_use = <WhenToUse {...whenToUseProps(views.when_to_use)} />;
   if (views.requirement_to_data) nodes.requirement_to_data = <RequirementToData {...requirementToDataProps(views.requirement_to_data)} />;
-  if (views.control_evidence) nodes.control_evidence = <ControlEvidence {...controlEvidenceProps(views.control_evidence)} />;
-  if (views.code_guide) nodes.code_guide = <CodeGuide {...codeGuideProps(views.code_guide)} />;
+  // ADR-030 enmienda 8: los nombres en código se parten en los guiones bajos solo si la ficha lo declara.
+  const breakCodes = views.reading?.break_identifiers === true;
+  if (views.control_evidence) nodes.control_evidence = <ControlEvidence {...controlEvidenceProps(views.control_evidence)} breakCodes={breakCodes} />;
+  if (views.code_guide) nodes.code_guide = <CodeGuide {...codeGuideProps(views.code_guide)} breakCodes={breakCodes} />;
   if (views.cloud_compare) nodes.cloud_compare = <CloudCompare {...cloudCompareProps(views.cloud_compare)} />;
   if (views.practice_lanes) nodes.practice_lanes = <PracticeLanes {...practiceLanesProps(views.practice_lanes)} />;
   if (views.trade_offs) nodes.trade_offs = <TradeOffs {...tradeOffsProps(views.trade_offs)} />;

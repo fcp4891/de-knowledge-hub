@@ -98,7 +98,16 @@ export function RequirementToData({ title, lead, governance, data }: Requirement
   );
 }
 
-export function ControlEvidence({ id, title, lead, steps, decide, note, example }: ControlEvidenceProps) {
+export function ControlEvidence({
+  id,
+  title,
+  lead,
+  steps,
+  decide,
+  note,
+  example,
+  breakCodes = false,
+}: ControlEvidenceProps & { breakCodes?: boolean }) {
   return (
     <section id={id} className="ficha-block control-evidence" aria-label={title}>
       <h3>{title}</h3>
@@ -157,7 +166,7 @@ export function ControlEvidence({ id, title, lead, steps, decide, note, example 
                     {step.items.map((item) => (
                       <li key={item.text}>
                         {item.text}
-                        {item.code ? <code>{breakAtUnderscores(item.code)}</code> : null}
+                        {item.code ? <code>{breakCodes ? breakAtUnderscores(item.code) : item.code}</code> : null}
                       </li>
                     ))}
                   </ul>

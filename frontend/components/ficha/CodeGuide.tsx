@@ -5,7 +5,15 @@ import "./ficha-blocks.css";
 import "./pii-views.css";
 import { breakAtUnderscores } from "@/lib/breakUnderscores";
 
-export function CodeGuide({ lead, rules, notCovered, scenarios, simplifies, limit }: CodeGuideProps) {
+export function CodeGuide({
+  lead,
+  rules,
+  notCovered,
+  scenarios,
+  simplifies,
+  limit,
+  breakCodes = false,
+}: CodeGuideProps & { breakCodes?: boolean }) {
   return (
     <section className="ficha-block code-guide" aria-label="Qué hace el ejemplo">
       <h3>{lead.title.replace(/\.$/, "")}</h3>
@@ -27,7 +35,7 @@ export function CodeGuide({ lead, rules, notCovered, scenarios, simplifies, limi
               <tr key={row.fn} id={row.id}>
                 <td data-c={rules.headers[0]}>{row.rule}</td>
                 <td data-c={rules.headers[1]}>
-                  <code>{breakAtUnderscores(row.fn)}</code>
+                  <code>{breakCodes ? breakAtUnderscores(row.fn) : row.fn}</code>
                 </td>
                 <td data-c={rules.headers[2]}>
                   <RichText text={row.requirement} />

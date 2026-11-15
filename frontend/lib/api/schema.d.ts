@@ -1354,6 +1354,8 @@ export interface components {
                 summary_pairs?: boolean;
                 /** @description false: sin el panel lateral de base legal (la ficha lo trae en una vista). */
                 legal_basis_panel?: boolean;
+                /** @description true: los nombres en código de los diagramas y tablas del ejemplo se parten en los guiones bajos (ADR-030, enmienda 8). */
+                break_identifiers?: boolean;
             };
             /** @description Divide una sección en dos desplegables en la marca «<!-- split: <key> -->» de su cuerpo (ADR-030, enmienda 7). */
             section_splits?: {

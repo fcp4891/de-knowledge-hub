@@ -2935,6 +2935,9 @@ components:
             legal_basis_panel:
               type: boolean
               description: 'false: sin el panel lateral de base legal (la ficha lo trae en una vista).'
+            break_identifiers:
+              type: boolean
+              description: 'true: los nombres en código de los diagramas y tablas del ejemplo se parten en los guiones bajos (ADR-030, enmienda 8).'
           additionalProperties: false
         section_splits:
           type: array

@@ -148,6 +148,7 @@ relations:
 views:
   reading:
     legal_basis_panel: false
+    break_identifiers: true
   section_titles:
   - section: 1
     title: Propósito

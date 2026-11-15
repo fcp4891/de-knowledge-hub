@@ -217,3 +217,4 @@ Las vistas dejan de decidir por slug o por el texto visible de un encabezado. Lo
 - **`views.sources_grouped.link_titles`** (opcional, booleano): con `true`, una fuente de un solo enlace pinta su título como enlace y no muestra el dominio aparte; una ficha de la plataforma (`page`) lleva el título enlazado y su tipo («Ficha madre», «Ficha») a la derecha, en la misma fila. Una fuente con varios enlaces sigue mostrándolos.
 - La API los proyecta en orden fijo, antes de `groups`.
 - Quien no los declara no cambia: chile-data-protection sigue con el título sin enlace y el dominio debajo.
+- **`views.reading.break_identifiers`** (opcional, booleano): con `true`, los nombres en código del ejemplo de `control_evidence` y de la tabla de `code_guide` llevan una oportunidad de corte tras cada guion bajo (`<wbr>`), para partirse ahí y no salirse de su tarjeta. Sin él no se agrega ninguna: chile no cambia.

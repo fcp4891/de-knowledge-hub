@@ -46,6 +46,16 @@ test("5 · la franja EVIDENCIA queda pegada al borde inferior de su tarjeta", ()
   assert.match(css("pii-views.css"), /\.pii-view \.pii-step \.pii-evidence \{\n  margin: auto 0 0;\n\}/);
 });
 
+test("6 · los <wbr> solo van si la ficha declara views.reading.break_identifiers (pii sí, chile no)", () => {
+  const page = readFileSync(join(ROOT, "frontend/app/concepts/[slug]/page.tsx"), "utf8");
+  assert.match(page, /const breakCodes = views\.reading\?\.break_identifiers === true;/);
+  assert.match(readFileSync(join(ficha, "ControlEvidence.tsx"), "utf8"), /breakCodes \? breakAtUnderscores\(item\.code\) : item\.code/);
+  assert.match(readFileSync(join(ficha, "CodeGuide.tsx"), "utf8"), /breakCodes \? breakAtUnderscores\(row\.fn\) : row\.fn/);
+  const pii = readFileSync(join(ROOT, "content/concepts/pii-identification.md"), "utf8");
+  assert.match(pii, /^  reading:\n    legal_basis_panel: false\n    break_identifiers: true\n/m);
+  assert.equal(readFileSync(join(ROOT, "content/concepts/chile-data-protection.md"), "utf8").includes("break_identifiers"), false);
+});
+
 test("6 · los nombres de función se parten en los guiones bajos, sin nowrap", () => {
   const { breakAtUnderscores } = loadTsx(join(ROOT, "frontend/lib/breakUnderscores.tsx"));
   const markup = renderToStaticMarkup(React.createElement("code", null, breakAtUnderscores("identificadores_directos")));
