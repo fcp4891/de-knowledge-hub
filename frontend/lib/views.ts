@@ -193,7 +193,7 @@ export type OpenQuestionsProps = {
   checkLabel?: string;
   /** Plantilla con {n} y {total}. */
   counter?: string;
-  items: { question: string; tags: Tag[] }[];
+  items: { question: string; tags?: Tag[] }[];
 };
 
 export type CitationSource = {

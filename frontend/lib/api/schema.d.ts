@@ -1019,7 +1019,8 @@ export interface components {
                 counter?: string;
                 items: {
                     question: string;
-                    tags: {
+                    /** @description Opcional (ADR-030, enmienda 8); si está, no vacío. */
+                    tags?: {
                         kind?: string;
                         label: string;
                         legal?: boolean;

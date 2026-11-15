@@ -1991,7 +1991,6 @@ components:
                 type: object
                 required:
                 - question
-                - tags
                 properties:
                   question:
                     type: string
@@ -2020,6 +2019,7 @@ components:
                           - type: string
                             format: uri
                       additionalProperties: false
+                    description: Opcional (ADR-030, enmienda 8); si está, no vacío.
                 additionalProperties: false
           additionalProperties: false
         severity_cards:

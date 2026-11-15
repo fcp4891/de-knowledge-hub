@@ -774,9 +774,6 @@ views:
         - text: '3 escenarios: 1 habilita y 2 bloquean'
       note: Cubre 5 de los 7 tipos de columna de la tabla «Tipo de columna»; las claves internas y las columnas sin señal propia se clasifican por conocimiento
         del dominio.
-      code_link:
-        label: Ver código ↓
-        href: '#s10'
   code_guide:
     lead:
       title: Qué hace
@@ -988,61 +985,21 @@ views:
       b_text: Escala y cubre muchos tipos de datos.
       resolution: 'usar los dos: la nube para lo general y el propio para el RUT, las claves internas y las reglas del art. 2 letra g).'
   open_questions:
-    intro: Si no sabes responder una, el enlace indica en qué parte de la ficha se trabaja.
+    intro: Si no sabes responder una, repasa la parte de la ficha que trata ese tema.
     items:
     - question: Ante una fuente nueva, ¿qué columnas son identificadores indirectos, texto libre o datos sin señal propia en la misma fila que
         un identificador?
-      tags:
-      - section: 3
-        label: Problema que resuelve
-        href: '#s3'
     - question: ¿Qué columnas se pueden enlazar con una tabla que identifica a la persona?
-      tags:
-      - section: 4
-        label: Evaluar el contexto
-        href: '#s4'
     - question: ¿Tu lista de categorías sensibles incluye la situación socioeconómica, o la copiaste del RGPD o de una herramienta?
-      tags:
-      - section: 2
-        label: Qué protege la ley
-        href: '#s2'
-      - section: 14
-        label: Hacer y evitar
-        href: '#s14'
     - question: ¿Qué casos locales se le escapan a tu detector, como un RUT sin una palabra clave cerca o con dígito verificador inválido?
-      tags:
-      - section: 10
-        label: Código
-        href: '#s10'
-      - section: 11
-        label: En la nube
-        href: '#s11'
     - question: ¿Tratas datos de niños, niñas o adolescentes, y cómo lo sabes?
       tags:
-      - section: 2
-        label: Pregunta 4
-        href: '#s2'
       - label: art. 16 quáter
         legal: true
         href: https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=13
     - question: ¿Quién confirma los casos dudosos y dónde queda esa decisión?
-      tags:
-      - section: 4
-        label: Clasificar y revisar
-        href: '#s4'
     - question: ¿Qué pasa con la clasificación cuando cambia el esquema o llega una fuente nueva?
-      tags:
-      - section: 4
-        label: Mantener
-        href: '#s4'
-      - section: 10
-        label: Escenario fuente-nueva
-        href: '#s10'
     - question: ¿Dónde quedan las muestras que usa tu detector, quién accede a ellas, y sus logs exponen valores?
-      tags:
-      - section: 14
-        label: Hacer y evitar
-        href: '#s14'
   sources_grouped:
     heading: Fuentes
     link_titles: true
@@ -1508,3 +1465,4 @@ puerta de silver.clientes: bloqueada (1), sin revisor: observacion_medica (sensi
 - 2026-11-14: los resultados de la puerta (`control_evidence.decide.outcomes`) dejan de empezar con ✓ / ✕: el ícono lo pone el `tone` (CSS) y salía dos veces. Lo que se ve no cambia; el validador rechaza un ícono al inicio de esos textos.
 - 2026-11-14: §11 (En la nube) muestra su subtítulo «Detectores en la nube, por frente del código» como `###` del cuerpo: `cloud_compare.title` ya lo tenía, pero `CloudCompare` es compartido y pintarlo agregaría «En la nube» repetido en chile-data-protection.
 - 2026-11-15: sin el panel «Base legal» en la lectura (`views.reading.legal_basis_panel: false`; `legal_basis` sigue en el frontmatter). Fuentes con título visible y el título de cada fuente como enlace (ADR-030, enmienda 8). Las 18 referencias en línea «§N · Nombre» se reescriben como texto corrido, sin cambiar el sentido; quedan los chips de §10 y «Ver código ↓».
+- 2026-11-15: §10 sin los chips «§N Nombre» (queda el de la cita legal «art. 16 quáter», ADR-023 enmienda 9) y con la entrada «Si no sabes responder una, repasa la parte de la ficha que trata ese tema.»; §6 sin «Ver código ↓».

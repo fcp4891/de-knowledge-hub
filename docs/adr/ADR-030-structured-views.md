@@ -218,3 +218,4 @@ Las vistas dejan de decidir por slug o por el texto visible de un encabezado. Lo
 - La API los proyecta en orden fijo, antes de `groups`.
 - Quien no los declara no cambia: chile-data-protection sigue con el título sin enlace y el dominio debajo.
 - **`views.reading.break_identifiers`** (opcional, booleano): con `true`, los nombres en código del ejemplo de `control_evidence` y de la tabla de `code_guide` llevan una oportunidad de corte tras cada guion bajo (`<wbr>`), para partirse ahí y no salirse de su tarjeta. Sin él no se agrega ninguna: chile no cambia.
+- **`views.open_questions.items[].tags`** pasa a ser opcional: una pregunta puede no llevar etiquetas; si las lleva, la lista no está vacía.

@@ -13,7 +13,7 @@ export function OpenQuestions({ intro, items }: OpenQuestionsProps) {
           <li key={item.question}>
             <article>
               <p>{item.question}</p>
-              <Pills tags={item.tags} />
+              <Pills tags={item.tags ?? []} />
             </article>
           </li>
         ))}

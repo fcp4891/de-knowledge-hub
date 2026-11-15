@@ -93,3 +93,17 @@ test("10 · el menú oculta Rutas, Repaso y Snippets sin borrar sus rutas", () =
     assert.ok(readFileSync(join(ROOT, "frontend", page), "utf8").length > 0, page);
   }
 });
+
+test("ronda 4 · §10 sin chips «§N» (queda «art. 16 quáter»), entrada sin «enlace», §6 sin «Ver código ↓»", () => {
+  const pii = readFileSync(join(ROOT, "content/concepts/pii-identification.md"), "utf8");
+  const block = pii.slice(pii.indexOf("  open_questions:\n"), pii.indexOf("  sources_grouped:\n"));
+  assert.equal(/- section: \d+/.test(block), false);
+  assert.match(block, /label: art\. 16 quáter\n        legal: true/);
+  assert.match(block, /intro: Si no sabes responder una, repasa la parte de la ficha que trata ese tema\./);
+  assert.equal(block.includes("enlace"), false);
+  assert.equal(pii.includes("Ver código ↓"), false);
+  const { OpenQuestions } = loadTsx(join(ficha, "OpenQuestions.tsx"));
+  const markup = html(OpenQuestions, { intro: "i", items: [{ question: "¿Sin etiquetas?" }] });
+  assert.match(markup, /¿Sin etiquetas\?/);
+  assert.equal(markup.includes("ficha-pills"), false);
+});
