@@ -218,3 +218,11 @@ def test_section_splits_need_their_marker_and_back() -> None:
         "[views.section_splits] falta la marca <!-- split: sanctions --> en el §16"]
     assert views.check_splits({}, [(1, "<!-- split: context -->")]) == [
         "[views] marca <!-- split: context --> del §1 sin entrada en views.section_splits"]
+
+
+def test_outcome_text_does_not_repeat_the_tone_icon() -> None:
+    """El ícono del resultado de la puerta sale del tone (CSS); el texto no lo repite."""
+    views_data: dict[str, Any] = {"control_evidence": {"decide": {"outcomes": [
+        {"tone": "pass", "text": "✓ Todo revisado"}, {"tone": "fail", "text": "Con brechas"}]}}}
+    assert views.check_outcome_icons(views_data) == [
+        "[views.control_evidence] el resultado '✓ Todo revisado' empieza con un ícono: lo pone el tone 'pass'"]

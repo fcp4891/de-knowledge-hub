@@ -77,6 +77,7 @@ def check(views: dict[str, Any], body: str, cited_urls: list[str], anchors: set[
                if key in views and key not in found]
     errors += [f"[views] '{key}' no lleva marca: su posición es fija" for key in PLACED if key in found]
     errors += check_sources_grouped(views.get("sources_grouped"), cited_urls)
+    errors += check_outcome_icons(views)
     links = sorted(set(hrefs(views)))
     errors += [f"[views] el enlace '{url}' no es una cita de sources" for url in links
                if url.startswith("https://") and not is_cited(url, cited_urls)]
@@ -84,6 +85,16 @@ def check(views: dict[str, Any], body: str, cited_urls: list[str], anchors: set[
         errors += [f"[views] el ancla '{url}' no existe en la ficha" for url in links
                    if url.startswith("#") and url[1:] not in anchors]
     return errors
+
+
+ICONS = ("✓", "✔", "✕", "✗", "✖")
+
+
+def check_outcome_icons(views: dict[str, Any]) -> list[str]:
+    """El ícono de cada resultado de la puerta sale del `tone` (CSS); el texto no lo repite."""
+    outcomes = views.get("control_evidence", {}).get("decide", {}).get("outcomes", [])
+    return [f"[views.control_evidence] el resultado '{item['text']}' empieza con un ícono: lo pone el tone '{item['tone']}'"
+            for item in outcomes if str(item.get("text", "")).lstrip().startswith(ICONS)]
 
 
 def element_ids(node: Any) -> set[str]:
