@@ -20,19 +20,22 @@ export function ColumnTypes({ view }: { view: Columns }) {
           <tbody>
             {view.rows.map((row) => (
               <tr key={row.type}>
+                {/* Cinco encabezados y seis datos: los ejemplos de columna van dentro de la celda del tipo (maqueta). */}
                 <td data-c={view.headers[0]}>
-                  <strong>{row.type}</strong>
+                  <div>
+                    <strong>{row.type}</strong>
+                    <span className="pii-type-examples">
+                      <RichText text={row.examples} />
+                    </span>
+                  </div>
                 </td>
                 <td data-c={view.headers[1]}>
-                  <RichText text={row.examples} />
-                </td>
-                <td data-c={view.headers[2]}>
                   <Mark mark={row.patterns.mark} text={row.patterns.text} />
                 </td>
-                <td data-c={view.headers[3]}>
+                <td data-c={view.headers[2]}>
                   <Mark mark={row.detector.mark} text={row.detector.text} />
                 </td>
-                <td data-c={view.headers[4]}>
+                <td data-c={view.headers[3]}>
                   <span className="pii-cats">
                     {row.categories.map((category) => (
                       <span key={category.label} className={`pii-tone is-${category.tone}`}>
@@ -40,9 +43,9 @@ export function ColumnTypes({ view }: { view: Columns }) {
                       </span>
                     ))}
                   </span>
-                  <span className="pii-row-note">
-                    <RichText text={row.why} />
-                  </span>
+                </td>
+                <td data-c={view.headers[4]}>
+                  <RichText text={row.why} />
                 </td>
               </tr>
             ))}

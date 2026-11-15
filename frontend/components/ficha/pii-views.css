@@ -975,3 +975,11 @@ button.pii-card:hover {
     gap: 4px;
   }
 }
+
+/* §3: los ejemplos de columna van bajo el tipo, dentro de su celda. */
+.pii-type-examples {
+  display: block;
+  margin-top: 4px;
+  color: var(--ink-3);
+  font-weight: 400;
+}
