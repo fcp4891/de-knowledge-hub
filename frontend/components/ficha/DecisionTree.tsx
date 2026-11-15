@@ -37,9 +37,8 @@ export function DecisionTree({ view }: { view: Tree }) {
 
   return (
     <section className="pii-view" aria-label={view.intro.title}>
-      <h3>{view.intro.title}</h3>
-      <p className="pii-note">
-        <RichText text={view.intro.text} />
+      <p className="pii-note pii-how">
+        <strong>{view.intro.title}</strong> <RichText text={view.intro.text} />
       </p>
       <div className="pii-examples">
         <h4>{view.examples_title}</h4>

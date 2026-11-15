@@ -3,6 +3,7 @@ import type { ControlEvidenceProps, RequirementToDataProps } from "@/lib/views";
 import { RichText } from "./RichText";
 import "./ficha-blocks.css";
 import { withBasePath } from "@/lib/basePath";
+import { breakAtUnderscores } from "@/lib/breakUnderscores";
 
 function Arrow() {
   return (
@@ -156,7 +157,7 @@ export function ControlEvidence({ id, title, lead, steps, decide, note, example 
                     {step.items.map((item) => (
                       <li key={item.text}>
                         {item.text}
-                        {item.code ? <code>{item.code}</code> : null}
+                        {item.code ? <code>{breakAtUnderscores(item.code)}</code> : null}
                       </li>
                     ))}
                   </ul>

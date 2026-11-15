@@ -130,7 +130,7 @@ test("ronda 2 · §6, §7 y §10: lo compartido con chile solo cambia bajo una f
   const sheet = css("pii-views.css");
   for (const rule of [
     ".reading-article:has(.pii-view) :is(.control-evidence-steps, .control-evidence-code) {\n  min-width: 42rem;",
-    ".reading-article:has(.pii-view) .code-guide td code {",
+    ".reading-article:has(.pii-view) :is(.code-guide td, .control-evidence-code) code {",
     ".reading-article:has(.pii-view) .open-questions article > p {",
     ".cloud-compare:has(td.cloud-own) .pii-table th {\n  color: var(--ink);",
   ]) {

@@ -2974,3 +2974,36 @@
 .open-questions-list {
   grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
 }
+
+/* ADR-030 enmienda 8 · Fuentes con link_titles (solo quien lo declara): título visible bajo el rótulo y el título de
+   cada fuente como enlace subrayado; el tipo de una ficha de la plataforma va a la derecha, en la misma fila. */
+.sources h3.sources-heading {
+  margin: 0 0 0.75rem;
+  color: var(--ink);
+  font-size: var(--text-h3);
+  font-weight: 650;
+}
+
+.sources.is-linked .sources-list h4 {
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.sources.is-linked .sources-list h4 a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.sources.is-linked .sources-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2px 12px;
+}
+
+.sources.is-linked .sources-kind {
+  color: var(--ink-muted);
+  font-size: var(--text-xs);
+}

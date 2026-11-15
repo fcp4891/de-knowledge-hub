@@ -146,6 +146,8 @@ relations:
   target: data-breach-response
   note: Las categorías deciden el aviso a titulares.
 views:
+  reading:
+    legal_basis_panel: false
   section_titles:
   - section: 1
     title: Propósito
@@ -188,7 +190,7 @@ views:
         tone: none
       - label: sin vínculo con personas
         tone: none
-      note: 'Mientras nadie la confirma, un candidato dudoso queda «en revisión»: así lo registra el código de [§](#s10), y el campo Revisión
+      note: 'Mientras nadie la confirma, un candidato dudoso queda «en revisión»: así lo registra el código de la ficha, y el campo Revisión
         dice quién lo resolvió.'
     - field: Fundamento
       text: El artículo y el motivo concreto, para que otra persona pueda revisar la decisión sin repetir el análisis.
@@ -202,14 +204,13 @@ views:
   notes:
     catalogo:
       lead: Los mismos campos en toda la ficha.
-      text: Son los que muestra el árbol de decisión en «Así queda en el catálogo» [§](#s2), y la revisión periódica es el paso «Mantener» de
-        [§](#s4).
+      text: Son los que muestra el árbol de decisión en «Así queda en el catálogo», y la revisión periódica es el paso «Mantener» del proceso.
     categoria-riesgo:
       lead: Categoría y riesgo van separados.
       text: «Sensible» es una categoría de la ley; el riesgo técnico «alta» es una decisión de seguridad de la organización.
     categoria-preliminar:
       lead: La categoría es preliminar.
-      text: 'Se confirma en la revisión con el contexto real de cada columna: es el paso 04 de [§](#s4).'
+      text: 'Se confirma en la revisión con el contexto real de cada columna: es el paso 04, «Clasificar y revisar».'
     riesgo:
       lead: Riesgo
       text: Publicar una tabla analítica o compartirla con un proveedor creyendo que no tiene datos personales.
@@ -527,7 +528,7 @@ views:
       - comentarios
       tone: detected
     - title: Detector de la ficha
-      text: los cuatro frentes de [§](#s10)
+      text: los cuatro frentes del código
       count: 7 de 9
       hits:
       - rut_cliente
@@ -693,7 +694,7 @@ views:
     use:
       title: Usarlo
       items:
-      - 'Antes de incorporar una fuente o habilitar un consumidor nuevo: es la puerta de [§](#s10).'
+      - 'Antes de incorporar una fuente o habilitar un consumidor nuevo: es la puerta de habilitación del código.'
       - 'Cuando cambia un esquema o se cruzan tablas: un cruce nuevo puede volver identificable lo que antes no lo era.'
       - Antes de publicar o compartir un agregado, para comprobar que ningún grupo es tan pequeño que identifique a alguien.
       - En migraciones, copias a ambientes de desarrollo e integraciones con APIs, incluidas las de modelos de lenguaje.
@@ -736,7 +737,7 @@ views:
         text: Sensibles o dudosos sin revisor · se bloquea
       - tone: keep
         text: El reporte nunca imprime valores
-    note: Servicios como Sensitive Data Protection, Amazon Macie o Microsoft Purview automatizan la detección [§](#s11); ninguno decide la categoría
+    note: Servicios como Sensitive Data Protection, Amazon Macie o Microsoft Purview automatizan la detección; ninguno decide la categoría
       jurídica por sí solo.
     example:
       summary: Ver ejemplo con el código de la ficha
@@ -770,7 +771,7 @@ views:
         - text: 'Salida 0: la CI habilita'
         - text: 'Salida 1: la CI bloquea'
         - text: '3 escenarios: 1 habilita y 2 bloquean'
-      note: Cubre 5 de los 7 tipos de columna de [§](#s3); las claves internas y las columnas sin señal propia se clasifican por conocimiento
+      note: Cubre 5 de los 7 tipos de columna de la tabla «Tipo de columna»; las claves internas y las columnas sin señal propia se clasifican por conocimiento
         del dominio.
       code_link:
         label: Ver código ↓
@@ -805,7 +806,7 @@ views:
         finds: '`comuna` + `edad`: combinación única en 2 de 4 filas'
     not_covered:
       title: Qué no cubre
-      intro: 'Cubre 5 de los 7 tipos de columna de [§](#s3). Los otros dos no se detectan con patrones:'
+      intro: 'Cubre 5 de los 7 tipos de columna de la tabla «Tipo de columna». Los otros dos no se detectan con patrones:'
       items:
       - title: 'Clave interna enlazable:'
         text: un `cliente_id` parece un código cualquiera; es personal porque se puede enlazar con la tabla de clientes, y eso solo lo sabe quien
@@ -813,7 +814,7 @@ views:
       - title: 'Sin señal propia:'
         text: '`fecha_ingreso` o `producto` no dicen nada por sí solas; son personales por estar en la misma fila que un RUT [(art. 2 letra f)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
           Por eso el reporte las lista como «sin hallazgos (no significa anónimo)».'
-      note: 'Tampoco responde la pregunta 4 del árbol [§](#s2): la edad del titular no se infiere de la muestra.'
+      note: 'Tampoco responde la pregunta 4 del árbol de decisión: la edad del titular no se infiere de la muestra.'
     scenarios:
       title: Escenarios
       items:
@@ -845,7 +846,7 @@ views:
         habilitada no demuestra que el tratamiento sea lícito.
   cloud_compare:
     title: Detectores en la nube, por frente del código
-    intro: Los cuatro frentes del detector [§](#s10), comparados con lo que ofrece cada servicio. El RUT está cubierto en las tres nubes y el
+    intro: Los cuatro frentes del detector, comparados con lo que ofrece cada servicio. El RUT está cubierto en las tres nubes y el
       correo en dos; los sensibles y las combinaciones, de forma desigual.
     alert:
       title: Ojo
@@ -947,21 +948,21 @@ views:
       avoid: Evitar
     items:
     - do: Clasificar por contenido, contexto y nombre de columna.
-      avoid: Clasificar solo por el nombre de la columna. [§](#s3)
+      avoid: Clasificar solo por el nombre de la columna.
     - do: Comparar nombres por token, con reglas de varios tokens (`tramo` + `ingreso`).
-      avoid: 'Comparar por subcadena: «renta» calza en `rentabilidad_producto`. [§](#s10)'
+      avoid: 'Comparar por subcadena: «renta» calza en `rentabilidad_producto`.'
     - do: Analizar si una clave interna o un hash permite volver a la persona [(art. 2 letra l)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
-      avoid: Tratar `cliente_id` o un hash como no personal sin analizarlo. [§](#s2)
+      avoid: Tratar `cliente_id` o un hash como no personal sin analizarlo.
     - do: Usar las categorías sensibles de la ley chilena, que incluyen la situación socioeconómica [(art. 2 letra g)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).
-      avoid: 'Copiar la lista de datos sensibles del RGPD (art. 9): no incluye la situación socioeconómica. [§](#s2)'
+      avoid: 'Copiar la lista de datos sensibles del RGPD (art. 9): no incluye la situación socioeconómica.'
     - do: Dejar en revisión un RUT con dígito verificador inválido.
-      avoid: 'Descartarlo: un error de captura puede seguir apuntando a una persona. [§](#s3)'
+      avoid: 'Descartarlo: un error de captura puede seguir apuntando a una persona.'
     - do: Usar el conteo de coincidencias para priorizar la revisión.
-      avoid: 'Concluir que una columna no es personal porque pocas filas calzan: un solo RUT ya identifica a alguien. [§](#s10)'
+      avoid: 'Concluir que una columna no es personal porque pocas filas calzan: un solo RUT ya identifica a alguien.'
     - do: Reanalizar ante cambios de esquema, fuentes nuevas y texto libre.
-      avoid: Clasificar una vez y no volver a escanear. [§](#s4)
+      avoid: Clasificar una vez y no volver a escanear.
     - do: 'Tratar las muestras como datos personales: mínimas, con acceso restringido y borradas al terminar.'
-      avoid: Imprimir valores en los logs o reportes del detector. [§](#s10)
+      avoid: Imprimir valores en los logs o reportes del detector.
   trade_offs:
     resolution_label: Se resuelve con
     items:
@@ -1042,6 +1043,8 @@ views:
         label: Hacer y evitar
         href: '#s14'
   sources_grouped:
+    heading: Fuentes
+    link_titles: true
     groups:
     - title: Normativa chilena
       layout: list
@@ -1503,3 +1506,4 @@ puerta de silver.clientes: bloqueada (1), sin revisor: observacion_medica (sensi
 - 2026-11-14: aprobada con lista explícita (`owner_approved_at: 2026-11-14`) tras la re-revisión de la migración; pasa a `verified` (ADR-023). Se quitan dos copias repetidas de la entrada del 2026-11-12.
 - 2026-11-14: los resultados de la puerta (`control_evidence.decide.outcomes`) dejan de empezar con ✓ / ✕: el ícono lo pone el `tone` (CSS) y salía dos veces. Lo que se ve no cambia; el validador rechaza un ícono al inicio de esos textos.
 - 2026-11-14: §11 (En la nube) muestra su subtítulo «Detectores en la nube, por frente del código» como `###` del cuerpo: `cloud_compare.title` ya lo tenía, pero `CloudCompare` es compartido y pintarlo agregaría «En la nube» repetido en chile-data-protection.
+- 2026-11-15: sin el panel «Base legal» en la lectura (`views.reading.legal_basis_panel: false`; `legal_basis` sigue en el frontmatter). Fuentes con título visible y el título de cada fuente como enlace (ADR-030, enmienda 8). Las 18 referencias en línea «§N · Nombre» se reescriben como texto corrido, sin cambiar el sentido; quedan los chips de §10 y «Ver código ↓».

@@ -210,3 +210,10 @@ Las vistas dejan de decidir por slug o por el texto visible de un encabezado. Lo
   - cada `section_splits[]` exige su marca en el cuerpo de esa sección, y cada marca exige su entrada;
   - las anclas de los anexos (`s23`, `s24`, …) son válidas para `href`.
 - Sin estas claves, la lectura no cambia: flechas, resumen simple y panel de base legal, como hasta ahora.
+
+## Enmienda 8 (2026-11-15): Fuentes con título visible y títulos enlazados
+
+- **`views.sources_grouped.heading`** (opcional): título visible bajo el rótulo de la sección «Fuentes». Sin él, no se pinta.
+- **`views.sources_grouped.link_titles`** (opcional, booleano): con `true`, una fuente de un solo enlace pinta su título como enlace y no muestra el dominio aparte; una ficha de la plataforma (`page`) lleva el título enlazado y su tipo («Ficha madre», «Ficha») a la derecha, en la misma fila. Una fuente con varios enlaces sigue mostrándolos.
+- La API los proyecta en orden fijo, antes de `groups`.
+- Quien no los declara no cambia: chile-data-protection sigue con el título sin enlace y el dominio debajo.

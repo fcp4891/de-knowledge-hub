@@ -134,3 +134,12 @@ def test_privacy_engineering_domain_has_band_and_legal_framework(out: Path) -> N
     domain = read(out, "domains/privacy-engineering.json")
     assert domain["band"] == "especializacion"
     assert [f["key"] for f in domain["legal_framework"]["facts"]] == ["law-name", "effective-date", "postponement-bill"]
+
+
+def test_sources_grouped_projects_heading_and_link_titles_before_groups(out: Path) -> None:
+    """ADR-030 enmienda 8: heading y link_titles llegan a la API, en orden fijo; chile no los declara."""
+    pii = read(out, "concepts/pii-identification.json")["views"]["sources_grouped"]
+    assert list(pii)[:3] == ["heading", "link_titles", "groups"]
+    assert pii["heading"] == "Fuentes" and pii["link_titles"] is True
+    chile = read(out, "concepts/chile-data-protection.json")["views"]["sources_grouped"]
+    assert list(chile) == ["groups"]

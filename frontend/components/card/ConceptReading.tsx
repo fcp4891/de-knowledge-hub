@@ -320,6 +320,8 @@ export function ConceptReading({
   const shownNumber = (section: ReadingSectionModel): number | null =>
     section.annex ? null : compactNumbering ? present.indexOf(section.number) + 1 : section.number;
   const listed = sections.filter((section) => section.listed);
+  // «art. N … enlaza su fila en Base legal»: solo si esa fila existe (panel de base legal o anexo con el catálogo legal).
+  const legalLegend = legalBasis.length > 0 && (legalBasisPanel || sections.some((section) => section.annex));
   const compactGroups: { group: string; keys: string[] }[] = [
     { group: "Entender", keys: ["summary", "what_is", "problem", "how_it_works", "when_to_use"] },
     { group: "Aplicar", keys: ["architecture", "code"] },
@@ -868,9 +870,9 @@ export function ConceptReading({
             )}
             {blocks}
             {sections.length === 0 ? <p className="reading-quiet">Esta ficha todavía no tiene secciones.</p> : null}
-            {legalBasis.length > 0 || architectureLegend ? (
+            {legalLegend || architectureLegend ? (
               <ul className="claim-legend">
-                {legalBasis.length > 0 ? (
+                {legalLegend ? (
                   <li>
                     <sup className="claim-art">
                       <span>art. N</span>

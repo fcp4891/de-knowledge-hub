@@ -216,6 +216,9 @@ export type PageSource = {
 };
 
 export type SourcesGroupedProps = {
+  /** ADR-030 enmienda 8: título visible bajo el rótulo y títulos de fuente como enlace. */
+  heading?: string;
+  linkTitles?: boolean;
   groups: {
     title: string;
     layout?: "list" | "providers";
@@ -417,6 +420,8 @@ export function openQuestionsProps(view: V["open_questions"]): OpenQuestionsProp
 
 export function sourcesGroupedProps(view: V["sources_grouped"]): SourcesGroupedProps {
   return {
+    heading: view.heading,
+    linkTitles: view.link_titles === true,
     groups: view.groups.map((group) => ({
       title: group.title,
       layout: group.layout as "list" | "providers" | undefined,

@@ -3,6 +3,7 @@ import type { CodeGuideProps } from "@/lib/views";
 import { RichText } from "./RichText";
 import "./ficha-blocks.css";
 import "./pii-views.css";
+import { breakAtUnderscores } from "@/lib/breakUnderscores";
 
 export function CodeGuide({ lead, rules, notCovered, scenarios, simplifies, limit }: CodeGuideProps) {
   return (
@@ -26,7 +27,7 @@ export function CodeGuide({ lead, rules, notCovered, scenarios, simplifies, limi
               <tr key={row.fn} id={row.id}>
                 <td data-c={rules.headers[0]}>{row.rule}</td>
                 <td data-c={rules.headers[1]}>
-                  <code>{row.fn}</code>
+                  <code>{breakAtUnderscores(row.fn)}</code>
                 </td>
                 <td data-c={rules.headers[2]}>
                   <RichText text={row.requirement} />

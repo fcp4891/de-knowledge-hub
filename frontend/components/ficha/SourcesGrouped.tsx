@@ -64,13 +64,37 @@ function SourceLinks({ links }: { links: SourceLink[] }) {
   );
 }
 
+/** ADR-030 enmienda 8: con link_titles, una fuente de un solo enlace lleva el título como enlace y sin el dominio aparte. */
+function SourceTitle({ source, linkTitles }: { source: CitationSource; linkTitles: boolean }) {
+  const only = source.links.length === 1 ? source.links[0] : null;
+  if (linkTitles && only) {
+    return (
+      <h4>
+        <a href={withBasePath(only.href)} {...anchorAttrs(only.href)}>
+          {source.title}
+        </a>
+      </h4>
+    );
+  }
+  return <h4>{source.title}</h4>;
+}
+
+function linkedTitle(source: CitationSource, linkTitles: boolean): boolean {
+  return linkTitles && source.links.length === 1;
+}
+
 export function SourcesGrouped({
+  heading,
+  linkTitles = false,
   groups,
 }: {
+  heading?: string;
+  linkTitles?: boolean;
   groups: { title: string; layout?: "list" | "providers"; sources: SourceItem[] }[];
 }) {
   return (
-    <section className="ficha-block sources">
+    <section className={linkTitles ? "ficha-block sources is-linked" : "ficha-block sources"}>
+      {heading ? <h3 className="sources-heading">{heading}</h3> : null}
       {groups.map((group) => {
         const layout = group.layout ?? "list";
         const pages = group.sources.filter((source): source is PageSource => source.kind === "page" && "page" in source);
@@ -82,10 +106,23 @@ export function SourcesGrouped({
               <ul className="sources-list">
                 {pages.map((source) => (
                   <li key={source.page}>
-                    <h4>{source.title}</h4>
-                    <FichaAnchor href={`/concepts/${source.page}/`} blocked={source.targetAvailability !== undefined}>
-                      {source.label}
-                    </FichaAnchor>
+                    {linkTitles ? (
+                      <div className="sources-row">
+                        <h4>
+                          <FichaAnchor href={`/concepts/${source.page}/`} blocked={source.targetAvailability !== undefined}>
+                            {source.title}
+                          </FichaAnchor>
+                        </h4>
+                        <span className="sources-kind">{source.label}</span>
+                      </div>
+                    ) : (
+                      <>
+                        <h4>{source.title}</h4>
+                        <FichaAnchor href={`/concepts/${source.page}/`} blocked={source.targetAvailability !== undefined}>
+                          {source.label}
+                        </FichaAnchor>
+                      </>
+                    )}
                     {source.why ? (
                       <p className="sources-why">
                         <RichText text={source.why} />
@@ -103,7 +140,7 @@ export function SourcesGrouped({
                     <ul className="sources-list">
                       {column.sources.map((source) => (
                         <li key={source.title}>
-                          <h4>{source.title}</h4>
+                          <SourceTitle source={source} linkTitles={linkTitles} />
                           <p className="sources-meta">
                             {source.publisher} · {source.level}
                           </p>
@@ -112,7 +149,7 @@ export function SourcesGrouped({
                               <RichText text={source.why} />
                             </p>
                           ) : null}
-                          <SourceLinks links={source.links} />
+                          {linkedTitle(source, linkTitles) ? null : <SourceLinks links={source.links} />}
                         </li>
                       ))}
                     </ul>
@@ -124,7 +161,7 @@ export function SourcesGrouped({
                 {cited.map((source) => (
                   <li key={source.title}>
                     <div className="sources-row">
-                      <h4>{source.title}</h4>
+                      <SourceTitle source={source} linkTitles={linkTitles} />
                       <p className="sources-meta">
                         {source.publisher} · {source.level}
                       </p>
@@ -134,7 +171,7 @@ export function SourcesGrouped({
                         <RichText text={source.why} />
                       </p>
                     ) : null}
-                    <SourceLinks links={source.links} />
+                    {linkedTitle(source, linkTitles) ? null : <SourceLinks links={source.links} />}
                   </li>
                 ))}
               </ul>

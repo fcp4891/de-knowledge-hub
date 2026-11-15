@@ -1218,11 +1218,13 @@ button.pii-card:hover {
   line-height: 1.5;
 }
 
-.reading-article:has(.pii-view) .code-guide td code {
+/* Nombres de función: se parten en los guiones bajos (<wbr> en el componente), nunca en cualquier letra ni con barra. */
+.reading-article:has(.pii-view) :is(.code-guide td, .control-evidence-code) code {
   color: var(--ink-muted);
   font-size: 11.5px;
-  white-space: nowrap;
+  white-space: normal;
   overflow-wrap: normal;
+  word-break: normal;
 }
 
 .reading-article:has(.pii-view) .code-guide-exit.is-ok {
@@ -1272,15 +1274,6 @@ button.pii-card:hover {
 
 @media (max-width: 720px) {
 
-  /* §2: en una columna angosta, las tres zonas se apilan. */
-  .pii-route {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .pii-route :is(.pii-outcome, .pii-live) {
-    margin-top: 0;
-  }
-
   /* §3 en móvil: la tabla no se apila en «rótulo | contenido» por celda (1,9 veces la maqueta): se conserva y se
      desplaza dentro de su contenedor, como en la maqueta. */
   .pii-column-types.pii-table-wrap .pii-table {
@@ -1316,15 +1309,6 @@ button.pii-card:hover {
 
 @container reading (max-width: 720px) {
 
-  /* §2: en una columna angosta, las tres zonas se apilan. */
-  .pii-route {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .pii-route :is(.pii-outcome, .pii-live) {
-    margin-top: 0;
-  }
-
   /* §3 en móvil: la tabla no se apila en «rótulo | contenido» por celda (1,9 veces la maqueta): se conserva y se
      desplaza dentro de su contenedor, como en la maqueta. */
   .pii-column-types.pii-table-wrap .pii-table {
@@ -1355,5 +1339,48 @@ button.pii-card:hover {
 
   .pii-column-types.pii-table-wrap .pii-table td::before {
     content: none;
+  }
+}
+
+/* §4 · las tarjetas de una fila miden lo mismo y la franja EVIDENCIA queda pegada al borde inferior
+   (la regla de párrafo de .markdown le daba margin-top: 6,4 px y anulaba el auto). */
+.pii-view .pii-step .pii-evidence {
+  margin: auto 0 0;
+}
+
+/* §2 · «Cuatro preguntas, en orden…» como franja gris a todo el ancho, con la frase en negrita y el texto seguido. */
+.pii-view .pii-note.pii-how {
+  max-width: none;
+}
+
+/* §2 · desenlace y «Resultado para» bajan con el scroll (maqueta: sticky, top 12 px). Quiebres de la maqueta:
+   hasta 900 px el panel derecho pasa arriba y deja de ser sticky; hasta 640 px todo va en una columna. */
+.pii-route .pii-outcome,
+.pii-route .pii-live {
+  position: sticky;
+  top: 12px;
+}
+
+@media (max-width: 900px) {
+  .pii-route {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 210px);
+  }
+
+  .pii-route .pii-live {
+    position: static;
+    grid-column: 1 / -1;
+    order: -1;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .pii-route {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pii-route .pii-outcome {
+    position: static;
+    margin-top: 0;
   }
 }

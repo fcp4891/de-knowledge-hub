@@ -8,7 +8,6 @@ type Strip = NonNullable<Views["coverage_strip"]>;
 export function CoverageStrip({ view }: { view: Strip }) {
   return (
     <section className="pii-view" aria-label={view.label}>
-      <p className="pii-kicker">{view.label}</p>
       <p className="pii-lead">
         <RichText text={view.lead} />
       </p>

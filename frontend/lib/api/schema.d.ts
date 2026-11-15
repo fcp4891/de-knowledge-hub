@@ -1052,6 +1052,10 @@ export interface components {
             };
             /** @description SourcesGrouped (§20). */
             sources_grouped?: {
+                /** @description Título visible bajo el rótulo de la sección (ADR-030, enmienda 8). Sin él, no se pinta. */
+                heading?: string;
+                /** @description true: el título de cada fuente es el enlace y no se muestra el dominio aparte (ADR-030, enmienda 8). */
+                link_titles?: boolean;
                 groups: {
                     title: string;
                     /** @enum {unknown} */
