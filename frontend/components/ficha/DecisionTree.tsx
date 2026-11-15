@@ -56,9 +56,18 @@ export function DecisionTree({ view }: { view: Tree }) {
           </button>
         ))}
       </div>
-      {/* Maqueta: recorrido · desenlace · «Resultado para <columna>». */}
-      {selected ? <Path view={view} example={selected} /> : null}
-      {selected ? <Result view={view} example={selected} flash={flash} /> : null}
+      {/* Maqueta: tres zonas, recorrido · desenlace · «Resultado para <columna>»; la ley, debajo. */}
+      {selected ? (
+        <>
+          <div className="pii-route">
+            <div className="pii-route-path">
+              <Path view={view} example={selected} />
+            </div>
+            <Result view={view} example={selected} flash={flash} />
+          </div>
+          <Law view={view} example={selected} />
+        </>
+      ) : null}
     </section>
   );
 }
@@ -112,6 +121,13 @@ function Result({ view, example, flash }: { view: Tree; example: Example; flash:
           <dd>{view.review}</dd>
         </dl>
       </aside>
+    </>
+  );
+}
+
+function Law({ view, example }: { view: Tree; example: Example }) {
+  return (
+    <>
       {example.law ? (
         <details className="pii-law">
           <summary>{view.law.summary}</summary>

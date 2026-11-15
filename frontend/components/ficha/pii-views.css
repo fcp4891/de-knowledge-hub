@@ -697,7 +697,7 @@ button.pii-card:hover {
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 600px) {
   .pii-also,
   .pii-examples {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -771,7 +771,7 @@ button.pii-card:hover {
   }
 }
 
-@container reading (max-width: 900px) {
+@container reading (max-width: 600px) {
   .pii-also,
   .pii-examples {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1047,4 +1047,313 @@ button.pii-card:hover {
 
 .pii-outcome[data-outcome="minor"] {
   background: var(--pii-minor-bg);
+}
+
+/* ---- Ronda 2 de la migración (maqueta aprobada). Clases propias de pii; lo compartido con chile va bajo
+   .reading-article:has(.pii-view), que solo cumple una ficha con vistas de pii. ---- */
+
+/* §2 · cita del kicker en minúsculas (el kicker va en versalitas). */
+.pii-kicker a {
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* §2 · tres zonas: recorrido · desenlace · «Resultado para <columna>»; se apilan en una columna angosta. */
+.pii-route {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 0.8fr) minmax(0, 1.15fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.pii-route .pii-outcome {
+  margin: 30px 0 0;   /* alinea con la primera pregunta, bajo el rótulo del recorrido */
+}
+
+.pii-route .pii-live {
+  margin-top: 30px;
+}
+
+/* §2 · la tarjeta completa es el botón: el ::after del botón real la cubre; los enlaces quedan encima. */
+.pii-card:has(.pii-card-pick) {
+  position: relative;
+  cursor: pointer;
+}
+
+.pii-card:has(.pii-card-pick):hover {
+  border-color: var(--accent);
+}
+
+.pii-card-pick {
+  text-align: left;
+}
+
+.pii-card-pick::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.pii-card:has(.pii-card-pick) a {
+  position: relative;
+  z-index: 1;
+}
+
+.pii-card-pick:focus-visible {
+  outline: none;
+}
+
+.pii-card:has(.pii-card-pick:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* §3 · marcas como ícono en un círculo y texto sans (maqueta), no chips mono. */
+.pii-column-types .pii-mark {
+  align-items: flex-start;
+}
+
+.pii-column-types .pii-mark b {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--ink-2);
+  font-family: var(--font-ui), system-ui, sans-serif;
+  font-size: 13.5px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.pii-column-types .pii-mark::before {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.pii-column-types .pii-mark.is-ok::before {
+  content: "✓";
+  background: var(--ok-bg);
+  color: var(--ok-ink);
+}
+
+.pii-column-types .pii-mark.is-part::before {
+  content: "~";
+  background: var(--warn-bg);
+  color: var(--warn-ink);
+}
+
+.pii-column-types .pii-mark.is-miss::before {
+  content: "✕";
+  background: var(--severity-3-bg);
+  color: var(--severity-3-ink);
+}
+
+/* §3 · leyenda en una sola línea de 12 px (maqueta). */
+.pii-view .pii-legend {
+  gap: 4px 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--ink-muted);
+  font-size: var(--text-xs);
+}
+
+.pii-view .pii-legend li {
+  margin: 0;
+}
+
+/* §4 · [arq] separado del título, en mono y color tinta. */
+.pii-view h4 .claim-arq,
+.pii-view strong .claim-arq {
+  margin-left: 0.35em;
+  color: var(--ink);
+  font-family: var(--font-code), ui-monospace, monospace;
+  font-size: 13px;
+}
+
+/* §8 · «Por dónde empezar» como franja ámbar. */
+.pii-view .pii-start {
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--warn-bg);
+  color: var(--ink-2);
+}
+
+.pii-view .pii-start strong {
+  color: var(--warn-ink);
+}
+
+/* §6 (bloques compartidos, solo en una ficha con vistas de pii): los diagramas caben a 1100 px y el texto va en la sans
+   de la UI; los párrafos de «Qué hace» siguen en serif de entrada, como la maqueta. */
+.reading-article:has(.pii-view) :is(.control-evidence-steps, .control-evidence-code) {
+  min-width: 42rem;
+}
+
+.reading-article:has(.pii-view) :is(.control-evidence-lead, .control-evidence-note) {
+  color: var(--ink-muted);
+  font-family: var(--font-ui), system-ui, sans-serif;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.reading-article:has(.pii-view) .code-guide {
+  font-family: var(--font-ui), system-ui, sans-serif;
+  font-size: var(--text-component);
+}
+
+.reading-article:has(.pii-view) .code-guide p {
+  font-size: 16px;
+}
+
+.reading-article:has(.pii-view) .code-guide li {
+  font-family: var(--font-ui), system-ui, sans-serif;
+  font-size: var(--text-component);
+  line-height: 1.5;
+}
+
+.reading-article:has(.pii-view) .code-guide td code {
+  color: var(--ink-muted);
+  font-size: 11.5px;
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
+.reading-article:has(.pii-view) .code-guide-exit.is-ok {
+  background: var(--ok-bg);
+  color: var(--ok-ink);
+}
+
+.reading-article:has(.pii-view) .code-guide p.code-guide-limit {
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--surface-muted);
+  font-family: var(--font-ui), system-ui, sans-serif;
+  font-size: 13.5px;
+}
+
+/* §7 · encabezados en minúsculas normales y códigos de detector en mono regular color tinta. */
+.cloud-compare:has(td.cloud-own) .pii-table th {
+  color: var(--ink);
+  font-size: var(--text-sm);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.cloud-compare:has(td.cloud-own) td strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.cloud-compare:has(td.cloud-own) td strong code {
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+/* §10 (compartido) · preguntas en serif de 15,5 px y entrada en sans gris, como la maqueta. */
+.reading-article:has(.pii-view) .open-questions-lead {
+  color: var(--ink-muted);
+  font-family: var(--font-ui), system-ui, sans-serif;
+  font-size: var(--text-sm);
+}
+
+.reading-article:has(.pii-view) .open-questions article > p {
+  font-family: var(--font-read), Georgia, serif;
+  font-size: 15.5px;
+  font-weight: 400;
+}
+
+@media (max-width: 720px) {
+
+  /* §2: en una columna angosta, las tres zonas se apilan. */
+  .pii-route {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pii-route :is(.pii-outcome, .pii-live) {
+    margin-top: 0;
+  }
+
+  /* §3 en móvil: la tabla no se apila en «rótulo | contenido» por celda (1,9 veces la maqueta): se conserva y se
+     desplaza dentro de su contenedor, como en la maqueta. */
+  .pii-column-types.pii-table-wrap .pii-table {
+    display: table;
+    width: 100%;
+    min-width: 640px;
+  }
+
+  .pii-column-types.pii-table-wrap .pii-table thead {
+    display: table-header-group;
+  }
+
+  .pii-column-types.pii-table-wrap .pii-table tbody {
+    display: table-row-group;
+  }
+
+  .pii-column-types.pii-table-wrap .pii-table tr {
+    display: table-row;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .pii-column-types.pii-table-wrap .pii-table :is(th, td) {
+    display: table-cell;
+    width: auto;
+  }
+
+  .pii-column-types.pii-table-wrap .pii-table td::before {
+    content: none;
+  }
+}
+
+@container reading (max-width: 720px) {
+
+  /* §2: en una columna angosta, las tres zonas se apilan. */
+  .pii-route {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pii-route :is(.pii-outcome, .pii-live) {
+    margin-top: 0;
+  }
+
+  /* §3 en móvil: la tabla no se apila en «rótulo | contenido» por celda (1,9 veces la maqueta): se conserva y se
+     desplaza dentro de su contenedor, como en la maqueta. */
+  .pii-column-types.pii-table-wrap .pii-table {
+    display: table;
+    width: 100%;
+    min-width: 640px;
+  }
+
+  .pii-column-types.pii-table-wrap .pii-table thead {
+    display: table-header-group;
+  }
+
+  .pii-column-types.pii-table-wrap .pii-table tbody {
+    display: table-row-group;
+  }
+
+  .pii-column-types.pii-table-wrap .pii-table tr {
+    display: table-row;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .pii-column-types.pii-table-wrap .pii-table :is(th, td) {
+    display: table-cell;
+    width: auto;
+  }
+
+  .pii-column-types.pii-table-wrap .pii-table td::before {
+    content: none;
+  }
 }

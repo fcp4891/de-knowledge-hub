@@ -89,3 +89,53 @@ test("tipografía: .pii-view fija la sans de la UI y la serif del Resumen no alc
   assert.match(css("pii-views.css"), /\.pii-view,\n\.pii-use,\n\.pii-note,\n\.pii-risk,\n[^{]*\{\n  font-family: var\(--font-ui\)/);
   assert.match(readFileSync(join(FRONTEND, "components/card/reading.css"), "utf8"), /\.reading-summary \.markdown p:not\(\.pii-view \*, \.pii-use \*, \.pii-note, \.pii-risk\)/);
 });
+
+test("ronda 2 · §2: recorrido, desenlace y «Resultado para» van en una rejilla de tres zonas; la ley queda fuera", () => {
+  const { DecisionTree } = loadTsx(join(ficha, "DecisionTree.tsx"));
+  const view = {
+    intro: { title: "Mapa", text: "t" }, examples_title: "Ejemplos", path_label: "Recorrido", result_label: "Resultado para",
+    catalog_label: "Catálogo", answer_labels: { yes: "Sí", no: "No" }, step_labels: { question: "Pregunta", next: "sigue", end: "termina" },
+    questions: [{ number: 1, question: "¿Sensible?", help: "h", gloss: { yes: "revela", no: "no revela" }, exits: [] }],
+    fallback: { label: "fin", outcome: "personal", title: "Dato personal", text: "t" },
+    catalog_fields: { category: "C", basis: "B", risk: "R", method: "M", review: "V" }, review: "v", default: "x",
+    examples: [{ column: "x", description: "d", answers: ["no"], outcome: "personal", title: "P", explanation: "e",
+      catalog: { category: "c", basis: "b", risk: "r", method: "m" }, law: true }],
+    law: { summary: "Ley", items: ["a"], link: { label: "l", href: "/concepts/chile-data-protection/" } },
+  };
+  const markup = html(DecisionTree, { view });
+  const route = /<div class="pii-route">([\s\S]*?)<\/aside><\/div>/.exec(markup)?.[1] ?? "";
+  assert.match(route, /^<div class="pii-route-path">[\s\S]*<div class="pii-outcome"[\s\S]*<aside class="pii-live"/);
+  assert.equal(route.includes("pii-law"), false);
+  assert.match(markup, /<\/div><details class="pii-law">/);
+  assert.match(css("pii-views.css"), /\.pii-route \{\n  display: grid;\n  grid-template-columns: minmax\(0, 1\.45fr\) minmax\(0, 0\.8fr\) minmax\(0, 1\.15fr\);/);
+});
+
+test("ronda 2 · §2: la tarjeta completa es un botón real con foco visible; ejemplos en cuatro columnas hasta 600 px", () => {
+  const sheet = css("pii-views.css");
+  assert.match(sheet, /\.pii-card-pick::after \{\n  content: "";\n  position: absolute;\n  inset: 0;/);
+  assert.match(sheet, /\.pii-card:has\(\.pii-card-pick:focus-visible\) \{\n  outline: 2px solid var\(--accent\);/);
+  assert.match(sheet, /\.pii-kicker a \{\n  text-transform: none;/);
+  assert.equal(sheet.includes("@container reading (max-width: 900px)"), false);
+  assert.match(sheet, /@container reading \(max-width: 600px\) \{\n  \.pii-also,\n  \.pii-examples \{/);
+});
+
+test("ronda 2 · §3 en móvil conserva la tabla con desplazamiento; marcas con ícono y leyenda en una línea", () => {
+  const sheet = css("pii-views.css");
+  assert.equal((sheet.match(/\.pii-column-types\.pii-table-wrap \.pii-table \{\n    display: table;\n    width: 100%;\n    min-width: 640px;/g) ?? []).length, 2);
+  assert.match(sheet, /\.pii-column-types \.pii-mark\.is-part::before \{\n  content: "~";/);
+  assert.match(sheet, /\.pii-view \.pii-legend \{[^}]*list-style: none;/);
+});
+
+test("ronda 2 · §6, §7 y §10: lo compartido con chile solo cambia bajo una ficha con vistas de pii", () => {
+  const sheet = css("pii-views.css");
+  for (const rule of [
+    ".reading-article:has(.pii-view) :is(.control-evidence-steps, .control-evidence-code) {\n  min-width: 42rem;",
+    ".reading-article:has(.pii-view) .code-guide td code {",
+    ".reading-article:has(.pii-view) .open-questions article > p {",
+    ".cloud-compare:has(td.cloud-own) .pii-table th {\n  color: var(--ink);",
+  ]) {
+    assert.ok(sheet.includes(rule), rule);
+  }
+  // Ningún selector nuevo de §6/§10 sin el alcance de pii en ficha-blocks.css.
+  assert.equal(css("ficha-blocks.css").includes("min-width: 42rem"), false);
+});
