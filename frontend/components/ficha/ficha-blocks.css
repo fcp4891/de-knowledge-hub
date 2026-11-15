@@ -2574,6 +2574,56 @@
   .cloud-compare .markdown-table-steps table {
     min-width: 0;
   }
+
+  /* pii §7 (tabla con la columna «Este ejemplo»): cada fila es una tarjeta; la necesidad arriba y cada nube debajo.
+     Tres causas del texto letra por letra: width:28% y td:first-child { width:16% } pisaban el width:100% móvil, y la
+     rejilla rótulo | contenido mandaba el segundo hijo de la celda (la descripción) a la columna del rótulo (88 px). */
+  .cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td),
+  .cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td):first-child {
+    display: block;
+    position: static;
+    width: 100%;
+  }
+
+  .cloud-compare .markdown-table-steps table:has(td.cloud-own) td::before {
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .cloud-compare .markdown-table-steps table:has(td.cloud-own) td:first-child {
+    background: var(--surface-muted);
+    font-weight: 700;
+  }
+
+  .cloud-compare .markdown-table-steps table:has(td.cloud-own) td:first-child::before {
+    content: none;
+  }
+}
+
+@container reading (max-width: 720px) {
+  /* pii §7 (tabla con la columna «Este ejemplo»): cada fila es una tarjeta; la necesidad arriba y cada nube debajo.
+     Tres causas del texto letra por letra: width:28% y td:first-child { width:16% } pisaban el width:100% móvil, y la
+     rejilla rótulo | contenido mandaba el segundo hijo de la celda (la descripción) a la columna del rótulo (88 px). */
+  .cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td),
+  .cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td):first-child {
+    display: block;
+    position: static;
+    width: 100%;
+  }
+
+  .cloud-compare .markdown-table-steps table:has(td.cloud-own) td::before {
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .cloud-compare .markdown-table-steps table:has(td.cloud-own) td:first-child {
+    background: var(--surface-muted);
+    font-weight: 700;
+  }
+
+  .cloud-compare .markdown-table-steps table:has(td.cloud-own) td:first-child::before {
+    content: none;
+  }
 }
 
 .cloud-compare .markdown-table-steps th,

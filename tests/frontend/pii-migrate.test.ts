@@ -43,3 +43,12 @@ test("§3: una celda por encabezado; los ejemplos de columna van dentro de la ce
   assert.match(tds[3], /Personal/);
   assert.match(tds[4], /Identifica sola/);
 });
+
+test("§7 a 390 px: la tabla de pii (con «Este ejemplo») apila cada celda a todo el ancho, en el @media y en el contenedor", () => {
+  const blocks = css("ficha-blocks.css");
+  const rule = ".cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td):first-child {\n    display: block;\n    position: static;\n    width: 100%;";
+  const media = blocks.slice(blocks.indexOf("@media (max-width: 720px) {\n  .cloud-compare"));
+  const container = blocks.slice(blocks.indexOf("@container reading (max-width: 720px) {\n  /* pii §7"));
+  assert.ok(media.includes(rule) && container.includes(rule));
+  assert.match(blocks, /table:has\(td\.cloud-own\) td::before \{\n    display: block;/);
+});
