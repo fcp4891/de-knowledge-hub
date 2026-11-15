@@ -101,7 +101,7 @@ test("ronda 4 · §10 sin chips «§N» (queda «art. 16 quáter»), entrada sin
   assert.match(block, /label: art\. 16 quáter\n        legal: true/);
   assert.match(block, /intro: Si no sabes responder una, repasa la parte de la ficha que trata ese tema\./);
   assert.equal(block.includes("enlace"), false);
-  assert.equal(pii.includes("Ver código ↓"), false);
+  assert.equal(pii.includes("code_link:"), false);   // el texto sigue en el historial, que registra el cambio
   const { OpenQuestions } = loadTsx(join(ficha, "OpenQuestions.tsx"));
   const markup = html(OpenQuestions, { intro: "i", items: [{ question: "¿Sin etiquetas?" }] });
   assert.match(markup, /¿Sin etiquetas\?/);
