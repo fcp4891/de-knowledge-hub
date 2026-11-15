@@ -27,6 +27,7 @@ test("cada enlace hacia /explorer, /repaso o /snippets pregunta a la bandera", (
   assert.match(read("app/concepts/[slug]/page.tsx"), /href=\{studyHref\(itineraryHref\(/);
   assert.match(read("components/card/ConceptReading.tsx"), /\{SHOW_STUDY_ROUTES \? \(\n\s+<button[\s\S]*?Necesita repaso/);
   assert.match(read("components/home/HomeScreen.tsx"), /studyHref\(stepHref\(step/);
+  assert.match(read("components/card/ConceptReading.tsx"), /\(state\) => SHOW_STUDY_ROUTES \|\| state !== "needs_review"/);
   assert.match(read("components/explorer/DomainRoute.tsx"), /isHiddenStudyRoute\("\/explorer"\) \? null/);
   assert.match(read("components/explorer/DomainRoute.tsx"), /nextDomain && !isHiddenStudyRoute/);
   assert.match(read("components/card/ImplementedSnippets.tsx"), /if \(isHiddenStudyRoute\("\/snippets"\)\) \{\n\s+return null;/);

@@ -39,13 +39,10 @@ import { CARD_SECTION_COUNT, markSectionSeen, readReadingProgress, writeReadingP
 import "./reading.css";
 import { SHOW_STUDY_ROUTES } from "@/lib/siteConfig";
 
-const STUDY_STATES: StudyStatus[] = [
-  "not_reviewed",
-  "reviewing",
-  "understood",
-  "applied",
-  "needs_review",
-];
+// «Necesita repaso» alimenta /repaso: con las rutas de estudio ocultas (lib/siteConfig.ts) tampoco se ofrece como estado.
+const STUDY_STATES: StudyStatus[] = (["not_reviewed", "reviewing", "understood", "applied", "needs_review"] as StudyStatus[]).filter(
+  (state) => SHOW_STUDY_ROUTES || state !== "needs_review",
+);
 
 const CLOUD_ORDER = ["gcp", "aws", "azure"];
 const TOC_KEY = "dekh:toc";
