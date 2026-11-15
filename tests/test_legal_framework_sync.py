@@ -27,7 +27,7 @@ def ficha() -> tuple[dict[str, Any], str]:
     return yaml.safe_load(frontmatter), body
 
 
-MONTHS = {"10": "octubre", "12": "diciembre"}
+MONTHS = {"10": "octubre", "11": "noviembre", "12": "diciembre"}
 
 
 def long_date(iso: str) -> str:

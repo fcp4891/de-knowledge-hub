@@ -51,10 +51,10 @@ sources:
     note: "Ficha de la Ley 19.628 en BCN, enlace general de la norma usado en Fuentes. El texto que rige desde el 2026-12-01 es la versión «Con Vigencia Diferida por Fecha» que citan los artículos de la ficha (idVersion=2026-12-01)."
   - source: senado-tramitacion
     url: https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07
-    accessed: 2026-10-28
+    accessed: 2026-11-15
     page_title: "Boletín 18623-07"
     label: tramitación
-    note: "Boletín 18623-07, «Modifica la ley N° 21.719 [...] en el sentido que indica», consultado el 2026-10-28 con el servicio de tramitación del Senado (https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=18623): ingreso el 2026-09-01 por mensaje; primeros informes de las comisiones de Constitución, Legislación, Justicia y Reglamento y de Hacienda el 2026-10-27; el 2026-10-28, «Discusión general. Aprobado en general y particular a la vez»; urgencia actual: discusión inmediata; etapa: primer trámite constitucional (Senado); subetapa: «Oficio de ley a Cámara Revisora»; estado: en tramitación."
+    note: "Boletín 18623-07, «Modifica la ley N° 21.719 [...] en el sentido que indica», consultado el 2026-11-15 con el servicio de tramitación del Senado (https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=18623): etapa: segundo trámite constitucional (Cámara de Diputados); subetapa: «Discusión general»; urgencia actual: discusión inmediata; estado: en tramitación; último trámite: 2026-11-11, «Cuenta del Mensaje 459-374 que retira y hace presente la urgencia Discusión inmediata»."
   - source: senado-tramitacion
     url: https://tramitacion.senado.cl/appsenado/index.php?mo=tramitacion&ac=getDocto&iddocto=19307&tipodoc=mensaje_mocion
     accessed: 2026-10-28
@@ -211,11 +211,11 @@ views:
       links:
       - label: Diario Oficial
         href: https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
-    - date: '2026-10-28'
+    - date: '2026-11-15'
       title: Avance legislativo
       icon: institution
       state: past
-      detail: El Senado aprueba la propuesta de postergación y la envía a la Cámara de Diputados.
+      detail: En tramitación en la Cámara de Diputados (segundo trámite constitucional), subetapa «Discusión general», con urgencia «Discusión inmediata».
       links:
       - label: Boletín 18.623-07
         href: https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07
@@ -231,7 +231,7 @@ views:
       state: proposed
       detail: Nueva fecha planteada, sujeta a aprobación y publicación como ley.
       note: Proyecto en tramitación
-    as_of: 'Estado de la tramitación: 28 de octubre de 2026 · Fuentes: BCN y Senado.'
+    as_of: 'Estado de la tramitación: 15 de noviembre de 2026 · Fuentes: BCN y Senado.'
   treatment_map:
     lead: 'Para la ley, **tratamiento** es cualquier operación que permita recolectar, procesar, almacenar, comunicar, transmitir o utilizar datos personales ([art.
       2 letra o](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf)). En una plataforma de datos, esos verbos se ven así:'
@@ -1263,7 +1263,7 @@ views:
         why: Auditar accesos a datos
         provider: Azure
 created_at: 2026-10-21
-updated_at: 2026-11-09
+updated_at: 2026-11-15
 last_verified: 2026-10-28
 verification_status: review_required
 availability: available
@@ -1711,6 +1711,7 @@ El detalle de cada fuente está en `sources` del frontmatter; la agrupación, en
 - 2026-11-09: roles del §2 con campos explícitos (decide, evalúa, implementa, encargado y aviso; ADR-030, enmienda 4) y textos nuevos. Fuentes: Ley 19.628 con el enlace general y el de la versión 2026-12-01; Ley 21.719 solo con el Diario Oficial (sale el enlace de BCN, que no se pudo verificar); Decreto 662 consultado el 2026-11-09; ISO/IEC 27701:2025; Cloud Audit Logs y Unity Catalog apuntan a la página de cada control; BigQuery con enlaces «columnas» y «filas». Cómo funciona 02 enlaza a la arquitectura (§9) y el atenuante del modelo de prevención cita el Decreto 662, arts. 3 y 15. Sigue en `review_required`.
 - 2026-11-10: revisión aplicada. Sanciones: atenuante del modelo de prevención (acreditado con el certificado; matriz de riesgos de infracción obligatoria, registro de actividades opcional; art. 52), reincidencia con sanciones firmes o ejecutoriadas y gran empresa con el 2 % o el 4 % según la gravedad (ley 20.416). Roles: el responsable responde por los principios y deberes (art. 3). En la nube: tres de los siete requisitos de la matriz. La cita versionada de la Ley 19.628 indica su versión en el título. Sigue en `review_required`.
 - 2026-11-12: el art. 16 quáter (datos de niños, niñas y adolescentes) entra a `legal_basis`, al anexo y al catálogo: sus vistas ya lo citaban y `pii-identification` enlaza a su fila del catálogo (ADR-023, enmienda 9). Sigue en `review_required`.
+- 2026-11-15: la línea de vigencia se sincroniza con la tarjeta de la Ley 21.719 (ADR-027): el hito del Senado pasa al estado consultado hoy en el servicio de tramitación (segundo trámite en la Cámara de Diputados, «Discusión general», urgencia «Discusión inmediata»); el «al día» de la línea y la cita de la página de tramitación pasan al 2026-11-15. La vigencia legal sigue en el 2026-12-01.
 
 ## Anexo · Catálogo legal por tema
 
