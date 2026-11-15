@@ -10,16 +10,17 @@ import { listStoredStudy, subscribePersonal } from "@/lib/personalStore";
 const IS_STATIC = process.env.NEXT_PUBLIC_API_MODE === "static";
 const AUTHOR_SITE = "https://felipe-a-cespedes-perez.cl/";
 
-type NavItem = { href: string; label: string; exact?: boolean };
+type NavItem = { href: string; label: string; exact?: boolean; hidden?: boolean };
 
 const NAV_KEY = "dekh:nav";
 const MENU_ID = "side-nav-menu";
 
 const ITEMS: NavItem[] = [
   { href: "/", label: "Inicio", exact: true },
-  { href: "/explorer", label: "Rutas" },
-  { href: "/repaso", label: "Repaso" },
-  { href: "/snippets", label: "Snippets" },
+  // Ocultos en el menú, no borrados: las rutas siguen vivas (el breadcrumb y «Siguiente en la ruta» usan /explorer/).
+  { href: "/explorer", label: "Rutas", hidden: true },
+  { href: "/repaso", label: "Repaso", hidden: true },
+  { href: "/snippets", label: "Snippets", hidden: true },
 ];
 
 function isTextField(target: EventTarget | null): boolean {
@@ -267,7 +268,7 @@ export function SideNav({ reviewCount, warning }: { reviewCount: number | null; 
         </button>
         <nav aria-label="Principal">
           <ul className="side-links">
-            {ITEMS.map((item) => {
+            {ITEMS.filter((item) => !item.hidden).map((item) => {
               const current = isCurrent(pathname, item);
               const showCount = item.href === "/repaso" && count !== null && count > 0;
               return (

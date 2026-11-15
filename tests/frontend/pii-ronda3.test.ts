@@ -72,3 +72,14 @@ test("8 · pii no tiene referencias en línea «§N · Nombre»", () => {
   const pii = readFileSync(join(ROOT, "content/concepts/pii-identification.md"), "utf8");
   assert.equal(pii.includes("[§](#s"), false);
 });
+
+test("10 · el menú oculta Rutas, Repaso y Snippets sin borrar sus rutas", () => {
+  const nav = readFileSync(join(ROOT, "frontend/components/SideNav.tsx"), "utf8");
+  for (const label of ["Rutas", "Repaso", "Snippets"]) {
+    assert.match(nav, new RegExp(`label: "${label}", hidden: true`));
+  }
+  assert.match(nav, /ITEMS\.filter\(\(item\) => !item\.hidden\)\.map/);
+  for (const page of ["app/explorer/page.tsx", "app/repaso/page.tsx", "app/snippets/page.tsx"]) {
+    assert.ok(readFileSync(join(ROOT, "frontend", page), "utf8").length > 0, page);
+  }
+});
