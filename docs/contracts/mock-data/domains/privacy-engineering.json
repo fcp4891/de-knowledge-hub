@@ -89,9 +89,9 @@
           "importance": "high",
           "mvp": false,
           "has_page": true,
-          "verification_status": "verified",
-          "last_verified": "2026-10-28",
-          "availability": "in_review"
+          "verification_status": "review_required",
+          "last_verified": "2026-11-15",
+          "availability": "available"
         }
       ]
     },
@@ -112,7 +112,7 @@
           "has_page": true,
           "verification_status": "verified",
           "last_verified": "2026-10-25",
-          "availability": "in_development"
+          "availability": "in_review"
         },
         {
           "slug": "chilean-identifier-pseudonymization",

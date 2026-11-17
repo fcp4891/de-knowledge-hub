@@ -3369,6 +3369,8 @@ components:
               - norm_button
               - proposal_button
               - proposal_suffix
+              - law_tab
+              - decree_tab
               properties:
                 unevaluated:
                   type: string
@@ -3389,6 +3391,12 @@ components:
                   description: Plantilla con {name}.
                 proposal_suffix:
                   type: string
+                law_tab:
+                  type: string
+                  description: Plantilla con {letter}.
+                decree_tab:
+                  type: string
+                  description: Plantilla con {roman}.
               additionalProperties: false
             sheet:
               type: object

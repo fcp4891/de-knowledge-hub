@@ -4471,7 +4471,9 @@
                 "close",
                 "norm_button",
                 "proposal_button",
-                "proposal_suffix"
+                "proposal_suffix",
+                "law_tab",
+                "decree_tab"
               ],
               "properties": {
                 "unevaluated": {
@@ -4508,6 +4510,16 @@
                 "proposal_suffix": {
                   "type": "string",
                   "minLength": 1
+                },
+                "law_tab": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Plantilla con {letter}."
+                },
+                "decree_tab": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Plantilla con {roman}."
                 }
               },
               "additionalProperties": false

@@ -526,6 +526,8 @@ views:
       norm_button: Ver la norma de {name}
       proposal_button: Ver lo propuesto de {name}
       proposal_suffix: no viene de la norma
+      law_tab: Art. 14 ter · letra {letter}
+      decree_tab: Decreto 662 · {roman}
     sheet:
       kicker: Registro de actividades de tratamiento
       sections:
@@ -1752,14 +1754,14 @@ views:
       own:
         text: Cuenta de servicio → consumidor declarado
       gcp:
-        name: '[`INFORMATION_SCHEMA.JOBS`](https://docs.cloud.google.com/bigquery/docs/information-schema-jobs-by-organization)'
+        name: '[INFORMATION_SCHEMA.JOBS](https://docs.cloud.google.com/bigquery/docs/information-schema-jobs-by-organization)'
         text: 'Por consulta: `user_email` y `referenced_tables`. No incluye consultas servidas desde la caché.'
       aws:
         name: '[CloudTrail](https://docs.aws.amazon.com/lake-formation/latest/dg/logging-using-cloudtrail.html) · Lake Formation'
         text: '`GetDataAccess` registra el principal cuando un servicio pide credenciales; para ver los accesos a objetos hay que activar los
           eventos de datos de S3 (costo adicional), y la tabla se obtiene correlacionando con esos accesos.'
       azure:
-        name: '[`system.access.audit`](https://learn.microsoft.com/en-us/azure/databricks/admin/system-tables/audit-logs)'
+        name: '[system.access.audit](https://learn.microsoft.com/en-us/azure/databricks/admin/system-tables/audit-logs)'
         text: '`user_identity` y la acción, por ejemplo `getTable`.'
     - need: Finalidad
       meta: Registro de actividades
