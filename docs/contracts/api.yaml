@@ -1667,7 +1667,6 @@ components:
               type: object
               required:
               - title
-              - intro
               - items
               properties:
                 title:
@@ -3178,6 +3177,7 @@ components:
           - literal
           - fields
           - platform
+          - labels
           - sheet
           - cases
           properties:
@@ -3356,6 +3356,38 @@ components:
                 limit:
                   type: string
                 example:
+                  type: string
+              additionalProperties: false
+            labels:
+              type: object
+              required:
+              - unevaluated
+              - sheet_pending
+              - live
+              - empty
+              - close
+              - norm_button
+              - proposal_button
+              - proposal_suffix
+              properties:
+                unevaluated:
+                  type: string
+                sheet_pending:
+                  type: string
+                live:
+                  type: string
+                  description: Plantilla con {n} y {total}.
+                empty:
+                  type: string
+                close:
+                  type: string
+                norm_button:
+                  type: string
+                  description: Plantilla con {name}.
+                proposal_button:
+                  type: string
+                  description: Plantilla con {name}.
+                proposal_suffix:
                   type: string
               additionalProperties: false
             sheet:
@@ -3539,6 +3571,9 @@ components:
                     type: boolean
                     description: Caja resaltada con contorno de acento (ADR-030, enmienda 9).
                 additionalProperties: false
+            lead:
+              type: string
+              description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
             intro:
               type: string
               description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
@@ -3715,6 +3750,9 @@ components:
           - headers
           - rows
           properties:
+            lead:
+              type: string
+              description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
             request:
               type: object
               required:

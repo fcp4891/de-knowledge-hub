@@ -1753,7 +1753,6 @@
               "type": "object",
               "required": [
                 "title",
-                "intro",
                 "items"
               ],
               "properties": {
@@ -4165,6 +4164,7 @@
             "literal",
             "fields",
             "platform",
+            "labels",
             "sheet",
             "cases"
           ],
@@ -4455,6 +4455,57 @@
                   "minLength": 1
                 },
                 "example": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            "labels": {
+              "type": "object",
+              "required": [
+                "unevaluated",
+                "sheet_pending",
+                "live",
+                "empty",
+                "close",
+                "norm_button",
+                "proposal_button",
+                "proposal_suffix"
+              ],
+              "properties": {
+                "unevaluated": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sheet_pending": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "live": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Plantilla con {n} y {total}."
+                },
+                "empty": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "close": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "norm_button": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Plantilla con {name}."
+                },
+                "proposal_button": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Plantilla con {name}."
+                },
+                "proposal_suffix": {
                   "type": "string",
                   "minLength": 1
                 }
@@ -4756,6 +4807,11 @@
               "minItems": 3,
               "maxItems": 3
             },
+            "lead": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+            },
             "intro": {
               "type": "string",
               "minLength": 1,
@@ -5045,6 +5101,11 @@
             "rows"
           ],
           "properties": {
+            "lead": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+            },
             "request": {
               "type": "object",
               "required": [
