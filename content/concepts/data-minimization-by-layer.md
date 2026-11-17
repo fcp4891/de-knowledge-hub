@@ -90,7 +90,7 @@ updated_at: 2026-11-04
 last_verified: 2026-10-25
 owner_approved_at: 2026-11-04
 verification_status: verified
-availability: in_development
+availability: in_review
 ---
 
 ## 1. Resumen
@@ -596,3 +596,4 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-04: aprobada con el §10 nuevo (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).
 - 2026-11-04: revisión `docs/reviews/p10.md` aplicada: una columna que el catálogo no clasifica queda `UNKNOWN` y bloquea la puerta, como en las otras fichas; escenario `sin-clasificar` (1) igual a la salida de la CI; limitación «Clasificación» ajustada. Vuelve a `review_required`.
 - 2026-11-04: aprobada con la revisión P10 aplicada (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).
+- 2026-11-17: pasa de «En desarrollo» a «En revisión» en la ruta (ADR-031). El contenido no cambia.
