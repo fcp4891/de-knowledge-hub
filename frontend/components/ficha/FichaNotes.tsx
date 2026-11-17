@@ -5,13 +5,14 @@ import type { Views } from "@/lib/views";
 import { FichaAnchor } from "@/components/availability/FichaLink";
 import { RichText } from "./RichText";
 import "./pii-views.css";
+import "./inventory-views.css";
 
 type Note = NonNullable<Views["notes"]>[string];
 type Chips = NonNullable<Views["chips"]>[string];
 
 export function FichaNote({ note }: { note: Note }) {
   return (
-    <p className={note.tone === "risk" ? "pii-risk" : "pii-note"}>
+    <p className={note.tone === "risk" ? "pii-risk" : note.tone === "key" ? "pii-note pii-key" : "pii-note"}>
       {note.lead ? <strong>{note.lead} </strong> : null}
       <RichText text={note.text} />
     </p>

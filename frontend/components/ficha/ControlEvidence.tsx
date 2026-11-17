@@ -44,7 +44,7 @@ function DataCirculation({ data }: { data: RequirementToDataProps["data"] }) {
         <ol>
           {data.stages.map((stage, index) => (
             <li key={stage.title}>
-              <article className={stage.tone === "end" ? "is-end" : "is-layer"}>
+              <article className={`${stage.tone === "end" ? "is-end" : "is-layer"}${stage.highlight ? " is-highlight" : ""}`}>
                 <strong>{stage.title}</strong>
                 {stage.detail ? <span>{stage.detail}</span> : null}
                 {stage.pill ? <em className={stage.tone === "end" ? "is-end" : "is-layer"}>{stage.pill}</em> : null}
@@ -53,7 +53,11 @@ function DataCirculation({ data }: { data: RequirementToDataProps["data"] }) {
             </li>
           ))}
         </ol>
-        <p className="control-evidence-banner">{data.banner}</p>
+        {data.banners.map((banner) => (
+          <p key={banner} className="control-evidence-banner">
+            {banner}
+          </p>
+        ))}
       </div>
     </div>
   );
@@ -78,7 +82,7 @@ export function RequirementToData({ title, lead, governance, data }: Requirement
                     ]
                   : []),
                 <li key={item.title}>
-                  <article>
+                  <article className={item.highlight ? "is-highlight" : undefined}>
                     <strong>{item.title}</strong>
                     {item.detail ? <span>{item.detail}</span> : null}
                   </article>
@@ -123,9 +127,15 @@ export function ControlEvidence({
                 <span>{step.number}</span>
                 <h4>{step.title}</h4>
                 <ul>
-                  {step.items.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
+                  {step.items.map((item) =>
+                    typeof item === "string" ? (
+                      <li key={item}>{item}</li>
+                    ) : (
+                      <li key={`${item.pill}-${item.text}`}>
+                        <span className="control-evidence-pill">{item.pill}</span> <RichText text={item.text} />
+                      </li>
+                    ),
+                  )}
                 </ul>
               </article>
               <Arrow />
@@ -151,7 +161,8 @@ export function ControlEvidence({
         <RichText text={note} />
       </p>
 
-      <details className="control-evidence-example">
+      {example ? (
+        <details className="control-evidence-example">
         <summary className="control-evidence-example-toggle">
           <EyeIcon />
           {example.summary}
@@ -184,7 +195,8 @@ export function ControlEvidence({
             <a href={withBasePath(example.codeLink.href)}>{example.codeLink.label}</a>
           </p>
         ) : null}
-      </details>
+        </details>
+      ) : null}
     </section>
   );
 }

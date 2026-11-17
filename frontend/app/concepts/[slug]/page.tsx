@@ -54,6 +54,9 @@ import { ExamplePickProvider } from "@/components/ficha/ExamplePick";
 import { FichaChips, FichaNote } from "@/components/ficha/FichaNotes";
 import { PracticePairs } from "@/components/ficha/PracticePairs";
 import { UseAvoid } from "@/components/ficha/UseAvoid";
+import { ActivityExplorer } from "@/components/ficha/ActivityExplorer";
+import { BuildCards, CaseCompare, CycleLanes, LawLadder } from "@/components/ficha/InventoryBlocks";
+import { RegisterFields } from "@/components/ficha/RegisterFields";
 import { WhenToUse } from "@/components/ficha/WhenToUse";
 import {
   approachProps,
@@ -229,6 +232,13 @@ function markedViews(views: Views | undefined): Record<string, ReactNode> {
   if (views.evidence_steps) nodes.evidence_steps = <EvidenceSteps view={views.evidence_steps} />;
   if (views.use_avoid) nodes.use_avoid = <UseAvoid view={views.use_avoid} />;
   if (views.practice_pairs) nodes.practice_pairs = <PracticePairs view={views.practice_pairs} />;
+  // ADR-030 enmienda 9: vistas del Inventario de actividades de tratamiento.
+  if (views.build_cards) nodes.build_cards = <BuildCards view={views.build_cards} />;
+  if (views.law_ladder) nodes.law_ladder = <LawLadder view={views.law_ladder} />;
+  if (views.register_fields) nodes.register_fields = <RegisterFields view={views.register_fields} />;
+  if (views.activity_explorer) nodes.activity_explorer = <ActivityExplorer view={views.activity_explorer} />;
+  if (views.case_compare) nodes.case_compare = <CaseCompare view={views.case_compare} />;
+  if (views.cycle_lanes) nodes.cycle_lanes = <CycleLanes view={views.cycle_lanes} />;
   if (views.notes) {
     for (const [id, note] of Object.entries(views.notes)) {
       nodes[`note ${id}`] = <FichaNote note={note} />;
