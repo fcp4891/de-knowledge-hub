@@ -2,9 +2,16 @@
 
 Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
-**Última actualización:** 2026-11-12
+**Última actualización:** 2026-11-17
 
 ## Actual
+- **2026-11-17 · `a/inventario-ficha` (borrador de PR, sin merge):**
+  - `processing-activities-inventory` migrada desde la maqueta (R1–R12): 13 secciones, «Qué exige la ley» como división de la §1, «Arquitectura» (§7) y «Código» (§8) en las canónicas 9 y 10 (ADR-029, enmienda 4). `inventario.py` nuevo (308 líneas; `actual` 1 con 14 hallazgos, `corregido` 0, `despliegue-nuevo` 1; `mypy --strict` limpio), cubierto por `test_compliance_snippets`: el badge «ejecutado en CI» se mantiene.
+  - ADR-030, enmienda 9 (aprobada): vistas `build_cards`, `law_ladder`, `register_fields`, `activity_explorer`, `case_compare` y `cycle_lanes`; extensiones retrocompatibles de `requirement_to_data`, `control_evidence` (`example` opcional), `code_guide`, `cloud_compare` y `sources_grouped`; desplegable «Ver detalle / Ocultar» reutilizable. La madre y pii validan sin cambios.
+  - `scripts/generators/inventory_views.py` escribe los casos de «Campos del registro» y el explorador desde el `inventario.py` de la ficha; `tests/test_inventory_views.py` falla si se desincronizan. Coincide con los datos de la maqueta en las 6 combinaciones.
+  - Disponibilidad: Inventario `available` y `review_required`, sin `owner_approved_at` (textos legales nuevos pendientes de aprobación, ADR-023); Minimización por capa pasa a `in_review`. Contador del tramo 1: «0 de 3».
+  - Madre: solo la etiqueta «Catálogo de actividades» → «Registro de actividades de tratamiento» en el diagrama de Arquitectura.
+  - **Pedidos a Carril B:** ninguno nuevo; los componentes los hizo Carril A en esta rama por pedido del dueño.
 - **2026-11-14 · Cierre de `a/pii-availability` (apto para merge tras la re-revisión de 2d04492):**
   - Contraste en oscuro: `.route-next` como `.home-continue`, `.skip-link` con `--ink-inverse` y bloques de código con `--code-bg`; test de contraste calculado desde `tokens.css` en todos los CSS.
   - B-N5: una sección fuera de 1–22 (anexo) no borra lo visto; «Leído 14 de 14» en el anexo de chile.

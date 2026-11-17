@@ -117,3 +117,10 @@ def test_explorer_activities_come_from_actual(views: dict[str, Any]) -> None:
     assert {r["column"]: r["state"] for r in by_key["marketing"]["read"]} == {"correo": "needed", "rut": "extra"}
     assert by_key["modelo_fraude"]["gaps"] == ["sin aprobación vigente: job_fraude → silver.pasajeros (modelo_fraude)"]
     assert {r["state"] for r in by_key["modelo_fraude"]["read"]} == {"unevaluated"}   # sin campos evaluados nunca es OK
+
+
+def test_ladder_names_the_real_fields(views: dict[str, Any]) -> None:
+    """Coherencia: cada campo en negrita de «El registro» en la escalera es una fila de «Campos del registro»."""
+    names = {f["name"] for f in views["register_fields"]["fields"]}
+    named = {b for row in views["law_ladder"]["rows"] for b in re.findall(r"\*\*([^*]+)\*\*", row["record"])}
+    assert named and named <= names, named - names
