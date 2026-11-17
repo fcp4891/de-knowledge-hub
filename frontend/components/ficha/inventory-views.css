@@ -137,6 +137,10 @@
 }
 
 /* Las listas del cuerpo de la ficha separan sus ítems: aquí la escalera va continua. */
+.inv-view.inv-ladder {
+  gap: 0;
+}
+
 .inv-view.inv-ladder > li {
   margin: 0;
 }
