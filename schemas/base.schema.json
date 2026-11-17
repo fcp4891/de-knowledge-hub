@@ -1285,6 +1285,14 @@
                   },
                   "additionalProperties": false
                 },
+                "legend": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 1
+                },
                 "items": {
                   "type": "array",
                   "items": {
@@ -1300,17 +1308,13 @@
                       "detail": {
                         "type": "string",
                         "minLength": 1
+                      },
+                      "highlight": {
+                        "type": "boolean",
+                        "description": "Caja resaltada con contorno de acento (ADR-030, enmienda 9)."
                       }
                     },
                     "additionalProperties": false
-                  },
-                  "minItems": 1
-                },
-                "legend": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "minLength": 1
                   },
                   "minItems": 1
                 }
@@ -1321,8 +1325,7 @@
               "type": "object",
               "required": [
                 "kicker",
-                "stages",
-                "banner"
+                "stages"
               ],
               "properties": {
                 "kicker": {
@@ -1345,6 +1348,15 @@
                 "banner": {
                   "type": "string",
                   "minLength": 1
+                },
+                "banners": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 1,
+                  "description": "Varias franjas punteadas en vez de una (ADR-030, enmienda 9)."
                 },
                 "stages": {
                   "type": "array",
@@ -1372,6 +1384,10 @@
                           "end",
                           "layer"
                         ]
+                      },
+                      "highlight": {
+                        "type": "boolean",
+                        "description": "Caja resaltada con contorno de acento (ADR-030, enmienda 9)."
                       }
                     },
                     "additionalProperties": false
@@ -1379,21 +1395,32 @@
                   "minItems": 1
                 }
               },
-              "additionalProperties": false
+              "additionalProperties": false,
+              "oneOf": [
+                {
+                  "required": [
+                    "banner"
+                  ]
+                },
+                {
+                  "required": [
+                    "banners"
+                  ]
+                }
+              ]
             }
           },
           "additionalProperties": false
         },
         "control_evidence": {
-          "description": "ControlEvidence (§9 · Control y evidencia).",
+          "description": "ControlEvidence (§9 · Control y evidencia); example es opcional desde la enmienda 9.",
           "type": "object",
           "required": [
             "title",
             "lead",
             "steps",
             "decide",
-            "note",
-            "example"
+            "note"
           ],
           "properties": {
             "id": {
@@ -1431,8 +1458,32 @@
                   "items": {
                     "type": "array",
                     "items": {
-                      "type": "string",
-                      "minLength": 1
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "required": [
+                            "pill",
+                            "text"
+                          ],
+                          "properties": {
+                            "pill": {
+                              "type": "string",
+                              "minLength": 1,
+                              "description": "Pastilla que distingue la pista, por ejemplo «Lo nuevo» (ADR-030, enmienda 9)."
+                            },
+                            "text": {
+                              "type": "string",
+                              "minLength": 1,
+                              "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
                     },
                     "minItems": 1
                   }
@@ -1470,8 +1521,10 @@
                         "enum": [
                           "pass",
                           "fail",
+                          "warn",
                           "keep"
-                        ]
+                        ],
+                        "description": "warn: alerta ámbar (ADR-030, enmienda 9)."
                       },
                       "text": {
                         "type": "string",
@@ -1583,6 +1636,11 @@
             "limit"
           ],
           "properties": {
+            "exit_codes_label": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Rótulo de la línea «escenario → código», que se arma con scenarios (ADR-030, enmienda 9)."
+            },
             "lead": {
               "type": "object",
               "required": [
@@ -1601,6 +1659,16 @@
               },
               "additionalProperties": false
             },
+            "lead_more": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+              },
+              "minItems": 1,
+              "description": "Párrafos que siguen a «Qué hace» (ADR-030, enmienda 9)."
+            },
             "rules": {
               "type": "object",
               "required": [
@@ -1608,6 +1676,23 @@
                 "items"
               ],
               "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Título del desplegable de la tabla (ADR-030, enmienda 9)."
+                },
+                "summary": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Resumen visible con el desplegable cerrado: {rows} y {total} se calculan de items."
+                },
+                "disclosure": {
+                  "enum": [
+                    "open",
+                    "closed"
+                  ],
+                  "description": "Desplegable «Ver detalle / Ocultar» y su estado inicial (ADR-030, enmienda 9)."
+                },
                 "headers": {
                   "type": "array",
                   "items": {
@@ -1634,7 +1719,8 @@
                       },
                       "rule": {
                         "type": "string",
-                        "minLength": 1
+                        "minLength": 1,
+                        "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
                       },
                       "fn": {
                         "type": "string",
@@ -1642,12 +1728,18 @@
                       },
                       "requirement": {
                         "type": "string",
-                        "minLength": 1
+                        "minLength": 1,
+                        "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
                       },
                       "finds": {
                         "type": "string",
                         "minLength": 1,
                         "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                      },
+                      "count": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "description": "Hallazgos de la regla en el escenario de referencia (×N)."
                       }
                     },
                     "additionalProperties": false
@@ -1701,6 +1793,76 @@
                   "type": "string",
                   "minLength": 1,
                   "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                },
+                "table": {
+                  "type": "object",
+                  "required": [
+                    "lead",
+                    "headers",
+                    "rows"
+                  ],
+                  "properties": {
+                    "lead": {
+                      "type": "object",
+                      "required": [
+                        "title",
+                        "text"
+                      ],
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "text": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "headers": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "minItems": 3,
+                      "maxItems": 3
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "item",
+                          "form",
+                          "code"
+                        ],
+                        "properties": {
+                          "item": {
+                            "type": "string",
+                            "minLength": 1,
+                            "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                          },
+                          "form": {
+                            "type": "string",
+                            "minLength": 1,
+                            "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                          },
+                          "code": {
+                            "type": "string",
+                            "minLength": 1,
+                            "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      "minItems": 1
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Tabla bajo la lista (ADR-030, enmienda 9)."
                 }
               },
               "additionalProperties": false
@@ -1715,6 +1877,13 @@
                 "title": {
                   "type": "string",
                   "minLength": 1
+                },
+                "disclosure": {
+                  "enum": [
+                    "open",
+                    "closed"
+                  ],
+                  "description": "Desplegable «Ver detalle / Ocultar» y su estado inicial (ADR-030, enmienda 9)."
                 },
                 "items": {
                   "type": "array",
@@ -1740,6 +1909,30 @@
                           0,
                           1
                         ]
+                      },
+                      "fixes": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "finding",
+                            "fix"
+                          ],
+                          "properties": {
+                            "finding": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "fix": {
+                              "type": "string",
+                              "minLength": 1,
+                              "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                            }
+                          },
+                          "additionalProperties": false
+                        },
+                        "minItems": 1,
+                        "description": "Hallazgo → corrección (ADR-030, enmienda 9)."
                       }
                     },
                     "additionalProperties": false
@@ -1859,10 +2052,7 @@
               "items": {
                 "type": "object",
                 "required": [
-                  "need",
-                  "gcp",
-                  "aws",
-                  "azure"
+                  "need"
                 ],
                 "properties": {
                   "id": {
@@ -1965,9 +2155,43 @@
                       }
                     },
                     "additionalProperties": false
+                  },
+                  "span": {
+                    "type": "object",
+                    "required": [
+                      "title",
+                      "text"
+                    ],
+                    "properties": {
+                      "title": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "text": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                      }
+                    },
+                    "additionalProperties": false,
+                    "description": "Una celda para las tres nubes cuando dicen lo mismo (ADR-030, enmienda 9)."
                   }
                 },
-                "additionalProperties": false
+                "additionalProperties": false,
+                "oneOf": [
+                  {
+                    "required": [
+                      "gcp",
+                      "aws",
+                      "azure"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "span"
+                    ]
+                  }
+                ]
               },
               "minItems": 1
             },
@@ -2456,6 +2680,11 @@
               "type": "boolean",
               "description": "true: el título de cada fuente es el enlace y no se muestra el dominio aparte (ADR-030, enmienda 8)."
             },
+            "legend": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Leyenda de los niveles de fuente bajo el título (ADR-030, enmienda 9)."
+            },
             "groups": {
               "type": "array",
               "items": {
@@ -2600,8 +2829,10 @@
                 "tone": {
                   "enum": [
                     "note",
-                    "risk"
-                  ]
+                    "risk",
+                    "key"
+                  ],
+                  "description": "key: idea central (ADR-030, enmienda 9)."
                 }
               },
               "additionalProperties": false
@@ -3815,6 +4046,1183 @@
           },
           "minItems": 1,
           "description": "Divide una sección en dos desplegables en la marca «<!-- split: <key> -->» de su cuerpo (ADR-030, enmienda 7)."
+        },
+        "build_cards": {
+          "description": "BuildCards (§1): lo que construyes con la ficha, en tarjetas numeradas (enmienda 9).",
+          "type": "object",
+          "required": [
+            "title",
+            "items"
+          ],
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "title",
+                  "text"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "law_ladder": {
+          "description": "LawLadder (§2): pregunta, lo que se espera y dónde se anota en el registro (enmienda 9).",
+          "type": "object",
+          "required": [
+            "headers",
+            "rows"
+          ],
+          "properties": {
+            "headers": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "question",
+                  "principle",
+                  "expected",
+                  "record"
+                ],
+                "properties": {
+                  "question": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "principle": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "cites": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                    },
+                    "minItems": 1
+                  },
+                  "expected": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                  },
+                  "record": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                  },
+                  "risk": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "register_fields": {
+          "description": "RegisterFields (§2): campos del registro, de dónde viene cada uno y la hoja del documento propuesto (enmienda 9).",
+          "type": "object",
+          "required": [
+            "title",
+            "intro",
+            "legend",
+            "case_label",
+            "state_label",
+            "counters",
+            "headers",
+            "literal",
+            "fields",
+            "platform",
+            "sheet",
+            "cases"
+          ],
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "intro": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+            },
+            "legend": {
+              "type": "object",
+              "required": [
+                "norm",
+                "proposal",
+                "document"
+              ],
+              "properties": {
+                "norm": {
+                  "type": "object",
+                  "required": [
+                    "title",
+                    "text"
+                  ],
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "proposal": {
+                  "type": "object",
+                  "required": [
+                    "title",
+                    "text"
+                  ],
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "document": {
+                  "type": "object",
+                  "required": [
+                    "title",
+                    "action"
+                  ],
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "action": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            },
+            "case_label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "state_label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "counters": {
+              "type": "object",
+              "required": [
+                "complete",
+                "pending",
+                "review"
+              ],
+              "properties": {
+                "complete": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "pending": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "review": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            "headers": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "literal": {
+              "type": "object",
+              "required": [
+                "law_source",
+                "law_intro",
+                "law",
+                "decree_source",
+                "decree_intro",
+                "decree",
+                "decree_note",
+                "art_49c",
+                "art_49c_link"
+              ],
+              "properties": {
+                "law_source": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "law_intro": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "law": {
+                  "type": "object",
+                  "minProperties": 1,
+                  "additionalProperties": false,
+                  "patternProperties": {
+                    "^[a-z]$": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "description": "Texto literal del art. 14 ter por letra."
+                },
+                "decree_source": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "decree_intro": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "decree": {
+                  "type": "object",
+                  "minProperties": 1,
+                  "additionalProperties": false,
+                  "patternProperties": {
+                    "^[ivx]+$": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "description": "Texto literal del Decreto 662, art. 3 letra d), por contenido."
+                },
+                "decree_note": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "art_49c": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "art_49c_link": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                }
+              },
+              "additionalProperties": false
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "key",
+                  "name",
+                  "why",
+                  "code",
+                  "check",
+                  "limit",
+                  "sheet_section"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9-]+$",
+                    "description": "Id del elemento, destino de un ancla (ADR-030, enmienda 2)."
+                  },
+                  "key": {
+                    "type": "string",
+                    "pattern": "^[a-z_]+$"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "why": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "code": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "check": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                  },
+                  "limit": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sheet_section": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "law_letter": {
+                    "type": "string",
+                    "pattern": "^[a-z]$"
+                  },
+                  "decree": {
+                    "type": "string",
+                    "pattern": "^[ivx]+$"
+                  },
+                  "art_49c": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Fragmento del art. 49 letra c que se marca en el modal."
+                  },
+                  "proposal": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "proposal_label": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
+            "platform": {
+              "type": "object",
+              "required": [
+                "title",
+                "code",
+                "check",
+                "limit",
+                "example"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "code": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "check": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "limit": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "example": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            "sheet": {
+              "type": "object",
+              "required": [
+                "kicker",
+                "sections",
+                "responsible",
+                "delegate",
+                "print",
+                "preview",
+                "footer"
+              ],
+              "properties": {
+                "kicker": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sections": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 1
+                },
+                "responsible": {
+                  "type": "object",
+                  "required": [
+                    "label",
+                    "value"
+                  ],
+                  "properties": {
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "value": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "delegate": {
+                  "type": "object",
+                  "required": [
+                    "label",
+                    "value"
+                  ],
+                  "properties": {
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "value": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "print": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "preview": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "footer": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Plantilla con {code}, {version}, {date} y {case}."
+                }
+              },
+              "additionalProperties": false
+            },
+            "cases": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "key",
+                  "name",
+                  "states"
+                ],
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "pattern": "^[a-z_]+$"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "states": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "additionalProperties": false,
+                    "patternProperties": {
+                      "^[a-z-]+$": {
+                        "type": "object",
+                        "required": [
+                          "values",
+                          "status",
+                          "sheet"
+                        ],
+                        "properties": {
+                          "values": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ],
+                              "description": "null: sin evaluar."
+                            }
+                          },
+                          "status": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "enum": [
+                                "ok",
+                                "pending",
+                                "review"
+                              ]
+                            }
+                          },
+                          "sheet": {
+                            "type": "object",
+                            "required": [
+                              "code",
+                              "version",
+                              "state",
+                              "title",
+                              "territory",
+                              "sections"
+                            ],
+                            "properties": {
+                              "code": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "version": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "state": {
+                                "enum": [
+                                  "Vigente",
+                                  "En revisión",
+                                  "Borrador"
+                                ]
+                              },
+                              "title": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "territory": {
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ],
+                                "description": "null: sin evaluar."
+                              },
+                              "note": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "sections": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "required": [
+                                    "title",
+                                    "rows"
+                                  ],
+                                  "properties": {
+                                    "title": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    },
+                                    "rows": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "required": [
+                                          "label"
+                                        ],
+                                        "properties": {
+                                          "label": {
+                                            "type": "string",
+                                            "minLength": 1
+                                          },
+                                          "value": {
+                                            "anyOf": [
+                                              {
+                                                "type": "string",
+                                                "minLength": 1
+                                              },
+                                              {
+                                                "type": "null"
+                                              }
+                                            ],
+                                            "description": "null: sin evaluar."
+                                          },
+                                          "blank": {
+                                            "type": "boolean",
+                                            "description": "Línea para completar a mano."
+                                          },
+                                          "field": {
+                                            "type": "string",
+                                            "pattern": "^[a-z0-9-]+$",
+                                            "description": "Campo de register_fields que la fila muestra (paridad tabla ↔ hoja)."
+                                          }
+                                        },
+                                        "additionalProperties": false
+                                      },
+                                      "minItems": 1
+                                    }
+                                  },
+                                  "additionalProperties": false
+                                },
+                                "minItems": 1
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 1,
+              "description": "Lo escribe scripts/generators/inventory_views.py desde el inventario.py de la ficha; no se edita a mano."
+            }
+          },
+          "additionalProperties": false
+        },
+        "activity_explorer": {
+          "description": "ActivityExplorer (§3): las cuatro piezas de una actividad con los datos del código (enmienda 9).",
+          "type": "object",
+          "required": [
+            "kinds",
+            "intro",
+            "asset",
+            "rows",
+            "labels",
+            "activities"
+          ],
+          "properties": {
+            "kinds": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "kicker",
+                  "question",
+                  "text"
+                ],
+                "properties": {
+                  "kicker": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "question": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "highlight": {
+                    "type": "boolean",
+                    "description": "Caja resaltada con contorno de acento (ADR-030, enmienda 9)."
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "intro": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+            },
+            "asset": {
+              "type": "string",
+              "minLength": 1
+            },
+            "rows": {
+              "type": "object",
+              "required": [
+                "activity",
+                "asset",
+                "consumer",
+                "evidence",
+                "result"
+              ],
+              "properties": {
+                "activity": {
+                  "type": "object",
+                  "required": [
+                    "title"
+                  ],
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "detail": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "asset": {
+                  "type": "object",
+                  "required": [
+                    "title"
+                  ],
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "detail": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "consumer": {
+                  "type": "object",
+                  "required": [
+                    "title"
+                  ],
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "detail": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "evidence": {
+                  "type": "object",
+                  "required": [
+                    "title"
+                  ],
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "detail": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "result": {
+                  "type": "object",
+                  "required": [
+                    "title"
+                  ],
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "detail": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            },
+            "labels": {
+              "type": "object",
+              "required": [
+                "pending",
+                "needs",
+                "read",
+                "account",
+                "no_fields",
+                "gaps_one",
+                "gaps_many"
+              ],
+              "properties": {
+                "pending": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "needs": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "read": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "account": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "no_fields": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "gaps_one": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "gaps_many": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            "activities": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "key",
+                  "name",
+                  "purpose",
+                  "facts",
+                  "fields",
+                  "consumer",
+                  "account",
+                  "read",
+                  "evidence",
+                  "evidence_ok",
+                  "gaps",
+                  "ok"
+                ],
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "pattern": "^[a-z_]+$"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "purpose": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "facts": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "label",
+                        "value"
+                      ],
+                      "properties": {
+                        "label": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "value": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "description": "null: sin evaluar."
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "minItems": 1
+                  },
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 0
+                  },
+                  "consumer": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "account": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "read": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "column",
+                        "state"
+                      ],
+                      "properties": {
+                        "column": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "state": {
+                          "enum": [
+                            "needed",
+                            "extra",
+                            "unevaluated"
+                          ]
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "minItems": 1
+                  },
+                  "evidence": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "evidence_ok": {
+                    "type": "boolean"
+                  },
+                  "gaps": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 0
+                  },
+                  "ok": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 1,
+              "description": "Lo escribe scripts/generators/inventory_views.py desde el inventario.py de la ficha; no se edita a mano."
+            }
+          },
+          "additionalProperties": false
+        },
+        "case_compare": {
+          "description": "CaseCompare (§3 · Problema): el mismo pedido sin y con inventario (enmienda 9).",
+          "type": "object",
+          "required": [
+            "request",
+            "headers",
+            "rows"
+          ],
+          "properties": {
+            "request": {
+              "type": "object",
+              "required": [
+                "kicker",
+                "text"
+              ],
+              "properties": {
+                "kicker": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                }
+              },
+              "additionalProperties": false
+            },
+            "headers": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "label",
+                  "without",
+                  "with"
+                ],
+                "properties": {
+                  "label": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "without": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                  },
+                  "with": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "cycle_lanes": {
+          "description": "CycleLanes (§4 · Cómo funciona): pasos en dos tiempos con caso, evidencia y lo que no demuestra (enmienda 9).",
+          "type": "object",
+          "required": [
+            "labels",
+            "lanes",
+            "loop"
+          ],
+          "properties": {
+            "intro": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+            },
+            "labels": {
+              "type": "object",
+              "required": [
+                "case",
+                "evidence",
+                "limit"
+              ],
+              "properties": {
+                "case": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "evidence": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "limit": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            "lanes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "title",
+                  "lead",
+                  "steps"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "lead": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "steps": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "number",
+                        "title",
+                        "text",
+                        "case",
+                        "evidence",
+                        "limit"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[a-z0-9-]+$",
+                          "description": "Id del elemento, destino de un ancla (ADR-030, enmienda 2)."
+                        },
+                        "number": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "text": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                        },
+                        "case": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                        },
+                        "evidence": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                        },
+                        "limit": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`."
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "minItems": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "loop": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
         }
       },
       "additionalProperties": false

@@ -1379,6 +1379,10 @@ components:
                     detail:
                       type: string
                   additionalProperties: false
+                legend:
+                  type: array
+                  items:
+                    type: string
                 items:
                   type: array
                   items:
@@ -1390,18 +1394,16 @@ components:
                         type: string
                       detail:
                         type: string
+                      highlight:
+                        type: boolean
+                        description: Caja resaltada con contorno de acento (ADR-030, enmienda 9).
                     additionalProperties: false
-                legend:
-                  type: array
-                  items:
-                    type: string
               additionalProperties: false
             data:
               type: object
               required:
               - kicker
               - stages
-              - banner
               properties:
                 kicker:
                   type: object
@@ -1415,6 +1417,11 @@ components:
                   additionalProperties: false
                 banner:
                   type: string
+                banners:
+                  type: array
+                  items:
+                    type: string
+                  description: Varias franjas punteadas en vez de una (ADR-030, enmienda 9).
                 stages:
                   type: array
                   items:
@@ -1433,11 +1440,19 @@ components:
                         enum:
                         - end
                         - layer
+                      highlight:
+                        type: boolean
+                        description: Caja resaltada con contorno de acento (ADR-030, enmienda 9).
                     additionalProperties: false
               additionalProperties: false
+              oneOf:
+              - required:
+                - banner
+              - required:
+                - banners
           additionalProperties: false
         control_evidence:
-          description: ControlEvidence (§9 · Control y evidencia).
+          description: ControlEvidence (§9 · Control y evidencia); example es opcional desde la enmienda 9.
           type: object
           required:
           - title
@@ -1445,7 +1460,6 @@ components:
           - steps
           - decide
           - note
-          - example
           properties:
             id:
               type: string
@@ -1471,7 +1485,20 @@ components:
                   items:
                     type: array
                     items:
-                      type: string
+                      anyOf:
+                      - type: string
+                      - type: object
+                        required:
+                        - pill
+                        - text
+                        properties:
+                          pill:
+                            type: string
+                            description: Pastilla que distingue la pista, por ejemplo «Lo nuevo» (ADR-030, enmienda 9).
+                          text:
+                            type: string
+                            description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                        additionalProperties: false
                 additionalProperties: false
             decide:
               type: object
@@ -1496,7 +1523,9 @@ components:
                         enum:
                         - pass
                         - fail
+                        - warn
                         - keep
+                        description: 'warn: alerta ámbar (ADR-030, enmienda 9).'
                       text:
                         type: string
                     additionalProperties: false
@@ -1564,6 +1593,9 @@ components:
           - simplifies
           - limit
           properties:
+            exit_codes_label:
+              type: string
+              description: Rótulo de la línea «escenario → código», que se arma con scenarios (ADR-030, enmienda 9).
             lead:
               type: object
               required:
@@ -1575,12 +1607,29 @@ components:
                 text:
                   type: string
               additionalProperties: false
+            lead_more:
+              type: array
+              items:
+                type: string
+                description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+              description: Párrafos que siguen a «Qué hace» (ADR-030, enmienda 9).
             rules:
               type: object
               required:
               - headers
               - items
               properties:
+                title:
+                  type: string
+                  description: Título del desplegable de la tabla (ADR-030, enmienda 9).
+                summary:
+                  type: string
+                  description: 'Resumen visible con el desplegable cerrado: {rows} y {total} se calculan de items.'
+                disclosure:
+                  enum:
+                  - open
+                  - closed
+                  description: Desplegable «Ver detalle / Ocultar» y su estado inicial (ADR-030, enmienda 9).
                 headers:
                   type: array
                   items:
@@ -1599,13 +1648,19 @@ components:
                         description: Id del elemento, destino de un ancla (ADR-030, enmienda 2).
                       rule:
                         type: string
+                        description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
                       fn:
                         type: string
                       requirement:
                         type: string
+                        description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
                       finds:
                         type: string
                         description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                      count:
+                        type: integer
+                        minimum: 0
+                        description: Hallazgos de la regla en el escenario de referencia (×N).
                     additionalProperties: false
               additionalProperties: false
             not_covered:
@@ -1637,6 +1692,50 @@ components:
                 note:
                   type: string
                   description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                table:
+                  type: object
+                  required:
+                  - lead
+                  - headers
+                  - rows
+                  properties:
+                    lead:
+                      type: object
+                      required:
+                      - title
+                      - text
+                      properties:
+                        title:
+                          type: string
+                        text:
+                          type: string
+                          description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                      additionalProperties: false
+                    headers:
+                      type: array
+                      items:
+                        type: string
+                    rows:
+                      type: array
+                      items:
+                        type: object
+                        required:
+                        - item
+                        - form
+                        - code
+                        properties:
+                          item:
+                            type: string
+                            description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                          form:
+                            type: string
+                            description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                          code:
+                            type: string
+                            description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                        additionalProperties: false
+                  additionalProperties: false
+                  description: Tabla bajo la lista (ADR-030, enmienda 9).
               additionalProperties: false
             scenarios:
               type: object
@@ -1646,6 +1745,11 @@ components:
               properties:
                 title:
                   type: string
+                disclosure:
+                  enum:
+                  - open
+                  - closed
+                  description: Desplegable «Ver detalle / Ocultar» y su estado inicial (ADR-030, enmienda 9).
                 items:
                   type: array
                   items:
@@ -1664,6 +1768,21 @@ components:
                         enum:
                         - 0
                         - 1
+                      fixes:
+                        type: array
+                        items:
+                          type: object
+                          required:
+                          - finding
+                          - fix
+                          properties:
+                            finding:
+                              type: string
+                            fix:
+                              type: string
+                              description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                          additionalProperties: false
+                        description: Hallazgo → corrección (ADR-030, enmienda 9).
                     additionalProperties: false
               additionalProperties: false
             simplifies:
@@ -1737,9 +1856,6 @@ components:
                 type: object
                 required:
                 - need
-                - gcp
-                - aws
-                - azure
                 properties:
                   id:
                     type: string
@@ -1802,7 +1918,27 @@ components:
                       warn:
                         type: string
                     additionalProperties: false
+                  span:
+                    type: object
+                    required:
+                    - title
+                    - text
+                    properties:
+                      title:
+                        type: string
+                      text:
+                        type: string
+                        description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                    additionalProperties: false
+                    description: Una celda para las tres nubes cuando dicen lo mismo (ADR-030, enmienda 9).
                 additionalProperties: false
+                oneOf:
+                - required:
+                  - gcp
+                  - aws
+                  - azure
+                - required:
+                  - span
             closing:
               type: string
           additionalProperties: false
@@ -2095,6 +2231,9 @@ components:
             link_titles:
               type: boolean
               description: 'true: el título de cada fuente es el enlace y no se muestra el dominio aparte (ADR-030, enmienda 8).'
+            legend:
+              type: string
+              description: Leyenda de los niveles de fuente bajo el título (ADR-030, enmienda 9).
             groups:
               type: array
               items:
@@ -2192,6 +2331,8 @@ components:
                   enum:
                   - note
                   - risk
+                  - key
+                  description: 'key: idea central (ADR-030, enmienda 9).'
               additionalProperties: false
         chips:
           description: 'Fila de enlaces con rótulo (por ejemplo «En la ficha madre:»). Marca: chips <id>.'
@@ -2959,6 +3100,730 @@ components:
                 type: string
             additionalProperties: false
           description: 'Divide una sección en dos desplegables en la marca «<!-- split: <key> -->» de su cuerpo (ADR-030, enmienda 7).'
+        build_cards:
+          description: 'BuildCards (§1): lo que construyes con la ficha, en tarjetas numeradas (enmienda 9).'
+          type: object
+          required:
+          - title
+          - items
+          properties:
+            title:
+              type: string
+            items:
+              type: array
+              items:
+                type: object
+                required:
+                - title
+                - text
+                properties:
+                  title:
+                    type: string
+                  text:
+                    type: string
+                    description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                additionalProperties: false
+          additionalProperties: false
+        law_ladder:
+          description: 'LawLadder (§2): pregunta, lo que se espera y dónde se anota en el registro (enmienda 9).'
+          type: object
+          required:
+          - headers
+          - rows
+          properties:
+            headers:
+              type: array
+              items:
+                type: string
+            rows:
+              type: array
+              items:
+                type: object
+                required:
+                - question
+                - principle
+                - expected
+                - record
+                properties:
+                  question:
+                    type: string
+                  principle:
+                    type: string
+                  cites:
+                    type: array
+                    items:
+                      type: string
+                      description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                  expected:
+                    type: string
+                    description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                  record:
+                    type: string
+                    description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                  risk:
+                    type: boolean
+                additionalProperties: false
+          additionalProperties: false
+        register_fields:
+          description: 'RegisterFields (§2): campos del registro, de dónde viene cada uno y la hoja del documento propuesto (enmienda 9).'
+          type: object
+          required:
+          - title
+          - intro
+          - legend
+          - case_label
+          - state_label
+          - counters
+          - headers
+          - literal
+          - fields
+          - platform
+          - sheet
+          - cases
+          properties:
+            title:
+              type: string
+            intro:
+              type: string
+              description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+            legend:
+              type: object
+              required:
+              - norm
+              - proposal
+              - document
+              properties:
+                norm:
+                  type: object
+                  required:
+                  - title
+                  - text
+                  properties:
+                    title:
+                      type: string
+                    text:
+                      type: string
+                  additionalProperties: false
+                proposal:
+                  type: object
+                  required:
+                  - title
+                  - text
+                  properties:
+                    title:
+                      type: string
+                    text:
+                      type: string
+                  additionalProperties: false
+                document:
+                  type: object
+                  required:
+                  - title
+                  - action
+                  properties:
+                    title:
+                      type: string
+                    action:
+                      type: string
+                  additionalProperties: false
+              additionalProperties: false
+            case_label:
+              type: string
+            state_label:
+              type: string
+            counters:
+              type: object
+              required:
+              - complete
+              - pending
+              - review
+              properties:
+                complete:
+                  type: string
+                pending:
+                  type: string
+                review:
+                  type: string
+              additionalProperties: false
+            headers:
+              type: array
+              items:
+                type: string
+            literal:
+              type: object
+              required:
+              - law_source
+              - law_intro
+              - law
+              - decree_source
+              - decree_intro
+              - decree
+              - decree_note
+              - art_49c
+              - art_49c_link
+              properties:
+                law_source:
+                  type: string
+                law_intro:
+                  type: string
+                law:
+                  type: object
+                  minProperties: 1
+                  additionalProperties: false
+                  patternProperties:
+                    ^[a-z]$:
+                      type: string
+                  description: Texto literal del art. 14 ter por letra.
+                decree_source:
+                  type: string
+                decree_intro:
+                  type: string
+                decree:
+                  type: object
+                  minProperties: 1
+                  additionalProperties: false
+                  patternProperties:
+                    ^[ivx]+$:
+                      type: string
+                  description: Texto literal del Decreto 662, art. 3 letra d), por contenido.
+                decree_note:
+                  type: string
+                art_49c:
+                  type: string
+                art_49c_link:
+                  type: string
+                  description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+              additionalProperties: false
+            fields:
+              type: array
+              items:
+                type: object
+                required:
+                - id
+                - key
+                - name
+                - why
+                - code
+                - check
+                - limit
+                - sheet_section
+                properties:
+                  id:
+                    type: string
+                    description: Id del elemento, destino de un ancla (ADR-030, enmienda 2).
+                  key:
+                    type: string
+                  name:
+                    type: string
+                  why:
+                    type: string
+                  code:
+                    type: string
+                  check:
+                    type: string
+                    description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                  limit:
+                    type: string
+                  sheet_section:
+                    type: string
+                  law_letter:
+                    type: string
+                  decree:
+                    type: string
+                  art_49c:
+                    type: string
+                    description: Fragmento del art. 49 letra c que se marca en el modal.
+                  proposal:
+                    type: string
+                  proposal_label:
+                    type: string
+                additionalProperties: false
+            platform:
+              type: object
+              required:
+              - title
+              - code
+              - check
+              - limit
+              - example
+              properties:
+                title:
+                  type: string
+                code:
+                  type: string
+                check:
+                  type: string
+                limit:
+                  type: string
+                example:
+                  type: string
+              additionalProperties: false
+            sheet:
+              type: object
+              required:
+              - kicker
+              - sections
+              - responsible
+              - delegate
+              - print
+              - preview
+              - footer
+              properties:
+                kicker:
+                  type: string
+                sections:
+                  type: array
+                  items:
+                    type: string
+                responsible:
+                  type: object
+                  required:
+                  - label
+                  - value
+                  properties:
+                    label:
+                      type: string
+                    value:
+                      type: string
+                  additionalProperties: false
+                delegate:
+                  type: object
+                  required:
+                  - label
+                  - value
+                  properties:
+                    label:
+                      type: string
+                    value:
+                      type: string
+                  additionalProperties: false
+                print:
+                  type: string
+                preview:
+                  type: string
+                footer:
+                  type: string
+                  description: Plantilla con {code}, {version}, {date} y {case}.
+              additionalProperties: false
+            cases:
+              type: array
+              items:
+                type: object
+                required:
+                - key
+                - name
+                - states
+                properties:
+                  key:
+                    type: string
+                  name:
+                    type: string
+                  states:
+                    type: object
+                    minProperties: 1
+                    additionalProperties: false
+                    patternProperties:
+                      ^[a-z-]+$:
+                        type: object
+                        required:
+                        - values
+                        - status
+                        - sheet
+                        properties:
+                          values:
+                            type: object
+                            additionalProperties:
+                              anyOf:
+                              - type: string
+                              - type: 'null'
+                              description: 'null: sin evaluar.'
+                          status:
+                            type: object
+                            additionalProperties:
+                              enum:
+                              - ok
+                              - pending
+                              - review
+                          sheet:
+                            type: object
+                            required:
+                            - code
+                            - version
+                            - state
+                            - title
+                            - territory
+                            - sections
+                            properties:
+                              code:
+                                type: string
+                              version:
+                                type: string
+                              state:
+                                enum:
+                                - Vigente
+                                - En revisión
+                                - Borrador
+                              title:
+                                type: string
+                              territory:
+                                anyOf:
+                                - type: string
+                                - type: 'null'
+                                description: 'null: sin evaluar.'
+                              note:
+                                type: string
+                              sections:
+                                type: array
+                                items:
+                                  type: object
+                                  required:
+                                  - title
+                                  - rows
+                                  properties:
+                                    title:
+                                      type: string
+                                    rows:
+                                      type: array
+                                      items:
+                                        type: object
+                                        required:
+                                        - label
+                                        properties:
+                                          label:
+                                            type: string
+                                          value:
+                                            anyOf:
+                                            - type: string
+                                            - type: 'null'
+                                            description: 'null: sin evaluar.'
+                                          blank:
+                                            type: boolean
+                                            description: Línea para completar a mano.
+                                          field:
+                                            type: string
+                                            description: Campo de register_fields que la fila muestra (paridad tabla ↔ hoja).
+                                        additionalProperties: false
+                                  additionalProperties: false
+                            additionalProperties: false
+                        additionalProperties: false
+                additionalProperties: false
+              description: Lo escribe scripts/generators/inventory_views.py desde el inventario.py de la ficha; no se edita a mano.
+          additionalProperties: false
+        activity_explorer:
+          description: 'ActivityExplorer (§3): las cuatro piezas de una actividad con los datos del código (enmienda 9).'
+          type: object
+          required:
+          - kinds
+          - intro
+          - asset
+          - rows
+          - labels
+          - activities
+          properties:
+            kinds:
+              type: array
+              items:
+                type: object
+                required:
+                - kicker
+                - question
+                - text
+                properties:
+                  kicker:
+                    type: string
+                  question:
+                    type: string
+                  text:
+                    type: string
+                  highlight:
+                    type: boolean
+                    description: Caja resaltada con contorno de acento (ADR-030, enmienda 9).
+                additionalProperties: false
+            intro:
+              type: string
+              description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+            asset:
+              type: string
+            rows:
+              type: object
+              required:
+              - activity
+              - asset
+              - consumer
+              - evidence
+              - result
+              properties:
+                activity:
+                  type: object
+                  required:
+                  - title
+                  properties:
+                    title:
+                      type: string
+                    detail:
+                      type: string
+                  additionalProperties: false
+                asset:
+                  type: object
+                  required:
+                  - title
+                  properties:
+                    title:
+                      type: string
+                    detail:
+                      type: string
+                  additionalProperties: false
+                consumer:
+                  type: object
+                  required:
+                  - title
+                  properties:
+                    title:
+                      type: string
+                    detail:
+                      type: string
+                  additionalProperties: false
+                evidence:
+                  type: object
+                  required:
+                  - title
+                  properties:
+                    title:
+                      type: string
+                    detail:
+                      type: string
+                  additionalProperties: false
+                result:
+                  type: object
+                  required:
+                  - title
+                  properties:
+                    title:
+                      type: string
+                    detail:
+                      type: string
+                  additionalProperties: false
+              additionalProperties: false
+            labels:
+              type: object
+              required:
+              - pending
+              - needs
+              - read
+              - account
+              - no_fields
+              - gaps_one
+              - gaps_many
+              properties:
+                pending:
+                  type: string
+                needs:
+                  type: string
+                read:
+                  type: string
+                account:
+                  type: string
+                no_fields:
+                  type: string
+                gaps_one:
+                  type: string
+                gaps_many:
+                  type: string
+              additionalProperties: false
+            activities:
+              type: array
+              items:
+                type: object
+                required:
+                - key
+                - name
+                - purpose
+                - facts
+                - fields
+                - consumer
+                - account
+                - read
+                - evidence
+                - evidence_ok
+                - gaps
+                - ok
+                properties:
+                  key:
+                    type: string
+                  name:
+                    type: string
+                  purpose:
+                    type: string
+                  facts:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - label
+                      - value
+                      properties:
+                        label:
+                          type: string
+                        value:
+                          anyOf:
+                          - type: string
+                          - type: 'null'
+                          description: 'null: sin evaluar.'
+                      additionalProperties: false
+                  fields:
+                    type: array
+                    items:
+                      type: string
+                  consumer:
+                    type: string
+                  account:
+                    type: string
+                  read:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - column
+                      - state
+                      properties:
+                        column:
+                          type: string
+                        state:
+                          enum:
+                          - needed
+                          - extra
+                          - unevaluated
+                      additionalProperties: false
+                  evidence:
+                    type: string
+                  evidence_ok:
+                    type: boolean
+                  gaps:
+                    type: array
+                    items:
+                      type: string
+                  ok:
+                    type: string
+                additionalProperties: false
+              description: Lo escribe scripts/generators/inventory_views.py desde el inventario.py de la ficha; no se edita a mano.
+          additionalProperties: false
+        case_compare:
+          description: 'CaseCompare (§3 · Problema): el mismo pedido sin y con inventario (enmienda 9).'
+          type: object
+          required:
+          - request
+          - headers
+          - rows
+          properties:
+            request:
+              type: object
+              required:
+              - kicker
+              - text
+              properties:
+                kicker:
+                  type: string
+                text:
+                  type: string
+                  description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+              additionalProperties: false
+            headers:
+              type: array
+              items:
+                type: string
+            rows:
+              type: array
+              items:
+                type: object
+                required:
+                - label
+                - without
+                - with
+                properties:
+                  label:
+                    type: string
+                  without:
+                    type: string
+                    description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                  with:
+                    type: string
+                    description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                additionalProperties: false
+          additionalProperties: false
+        cycle_lanes:
+          description: 'CycleLanes (§4 · Cómo funciona): pasos en dos tiempos con caso, evidencia y lo que no demuestra (enmienda 9).'
+          type: object
+          required:
+          - labels
+          - lanes
+          - loop
+          properties:
+            intro:
+              type: string
+              description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+            labels:
+              type: object
+              required:
+              - case
+              - evidence
+              - limit
+              properties:
+                case:
+                  type: string
+                evidence:
+                  type: string
+                limit:
+                  type: string
+              additionalProperties: false
+            lanes:
+              type: array
+              items:
+                type: object
+                required:
+                - title
+                - lead
+                - steps
+                properties:
+                  title:
+                    type: string
+                  lead:
+                    type: string
+                  steps:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - number
+                      - title
+                      - text
+                      - case
+                      - evidence
+                      - limit
+                      properties:
+                        id:
+                          type: string
+                          description: Id del elemento, destino de un ancla (ADR-030, enmienda 2).
+                        number:
+                          type: string
+                        title:
+                          type: string
+                        text:
+                          type: string
+                          description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                        case:
+                          type: string
+                          description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                        evidence:
+                          type: string
+                          description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                        limit:
+                          type: string
+                          description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                      additionalProperties: false
+                additionalProperties: false
+            loop:
+              type: string
+          additionalProperties: false
       additionalProperties: false
       description: 'Vistas estructuradas (ADR-030); la propiedad solo aparece si la ficha las tiene. Cada clave mapea 1:1 con las props de su componente,
         en snake_case. Las vistas con marca van donde el Markdown trae «<!-- view: clave -->»; approach, legal_foundations y sources_grouped tienen
