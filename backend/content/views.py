@@ -18,6 +18,8 @@ MARKED = (   # van donde está la marca
     # enmienda 5 (pii-identification)
     "catalog_fields", "concept_map", "decision_tree", "coverage_strip", "column_types", "evidence_steps", "use_avoid",
     "practice_pairs",
+    # enmienda 9 (processing-activities-inventory)
+    "build_cards", "law_ladder", "register_fields", "activity_explorer", "case_compare", "cycle_lanes",
 )
 # Enmienda 5: varias instancias por ficha; la marca lleva el id («<!-- view: note catalogo -->» -> views.notes.catalogo).
 KEYED = {"note": "notes", "chips": "chips"}

@@ -19,7 +19,8 @@ HEADING = re.compile(r"^## (\d+)\. (.+?)\s*$")
 ANNEX_HEADING = re.compile(r"^## Anexo · (.+?)\s*$")   # ADR-029: después de la última sección
 # ADR-029: excepciones a las 22 secciones; pueden omitir estas y llevar anexos. Las demás fichas, sin cambios.
 OMITTABLE = {"chile-data-protection": frozenset({6, 7, 8, 12, 13, 15, 17, 19, 21}),
-             "pii-identification": frozenset({6, 7, 8, 9, 12, 13, 15, 17, 19, 21})}   # enmienda 3
+             "pii-identification": frozenset({6, 7, 8, 9, 12, 13, 15, 17, 19, 21}),   # enmienda 3
+             "processing-activities-inventory": frozenset({6, 7, 8, 12, 13, 15, 17, 19, 21})}   # enmienda 4
 ANNEX_PAGES = frozenset(OMITTABLE)
 HTML_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
 TEMPLATE = Path("_templates") / "concept.md"
