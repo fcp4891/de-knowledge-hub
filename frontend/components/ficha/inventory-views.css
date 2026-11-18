@@ -1654,3 +1654,18 @@ button.inv-rg-icon.is-proposal:hover {
   font-family: var(--font-ui), system-ui, sans-serif;
   font-size: 12.5px;
 }
+
+/* Revisión independiente (M8): en el código del Inventario, decoradores, sus parámetros y la interpolación de f-strings
+   llegan a AA sobre --code-bg. Solo en esta ficha: el tema compartido (github.css) no cambia para pii ni la madre. */
+.reading-article:has(.inv-view) :is(.code-shell, .code-modal-panel) .hljs-meta {
+  color: #c4b5fd;
+}
+
+.reading-article:has(.inv-view) :is(.code-shell, .code-modal-panel) :is(.hljs-params, .hljs-subst) {
+  color: var(--code-ink);
+}
+
+/* La alerta de «En la nube» nombra INFORMATION_SCHEMA.JOBS_BY_ORGANIZATION: sin corte desborda a 390 px. Solo en el Inventario. */
+.reading-article:has(.inv-view) .cloud-compare-note span {
+  overflow-wrap: anywhere;
+}

@@ -4,8 +4,8 @@
   generar, el test falla.
 - «Campos del registro»: 13 campos, 11 con fuente en la norma y 3 con propuesta, y la hoja del documento muestra los
   mismos campos que la tabla (paridad tabla ↔ hoja) en los 3 casos × 2 estados.
-- «9 controles · 14 hallazgos»: las filas y la suma de ×N coinciden con las líneas BRECHA/UNKNOWN de la salida
-  documentada de `actual`, y cada corrección de `corregido` responde a un hallazgo real.
+- Las líneas BRECHA/UNKNOWN de la salida documentada de `actual` caen cada una en un control y coinciden con lo que
+  calcula el código; la salida de `corregido` no tiene hallazgos.
 """
 
 from __future__ import annotations
@@ -112,7 +112,7 @@ def test_unevaluated_sensitive_recipients_and_base_never_pass_as_ok(text: str) -
     assert (status["tipo"], status["destinatarios"]) == ("pending", "pending")
 
 
-# Los 9 controles del código (los que listaba la tabla retirada de §8) y cómo los nombra cada línea de la salida.
+# Los controles del código (los que listaba la tabla retirada de §8) y cómo los nombra cada línea de la salida.
 CONTROLS = {
     "tablas con PII sin actividad": r"^BRECHA tabla con PII sin actividad: ",
     "registro sin ámbito territorial": r"^BRECHA registro sin ámbito territorial$",
@@ -133,9 +133,9 @@ def documented(scenario: str) -> str:
 
 
 def test_controls_summary_matches_the_actual_output(text: str) -> None:
-    """«9 controles · 14 hallazgos», ahora contra la «Salida» de actual que muestra la página (la tabla se retiró):
-    cada línea BRECHA/UNKNOWN cae en exactamente uno de los 9 controles, aparecen los 9, y el total coincide con la
-    línea de resumen de esa salida y con lo que calcula el código."""
+    """La «Salida» de actual que muestra la página: cada línea BRECHA/UNKNOWN cae en exactamente uno de los controles de
+    CONTROLS, cada control aparece al menos una vez, y el total coincide con la línea de resumen de esa salida y con lo
+    que calcula el código."""
     findings = actual_findings()
     per_control = {name: [f for f in findings if re.search(rx, f)] for name, rx in CONTROLS.items()}
     assert all(sum(bool(re.search(rx, f)) for rx in CONTROLS.values()) == 1 for f in findings), findings
@@ -147,7 +147,6 @@ def test_controls_summary_matches_the_actual_output(text: str) -> None:
     computed = (m.tablas_sin_actividad(registro) + m.actividades_incompletas(registro, m.REFERENCIA)
                 + m.conciliar(registro, usos, m.REFERENCIA))
     assert [f"{h.estado} {h.detalle}" for h in computed] == findings
-    assert f"{len(CONTROLS)} controles · {len(findings)} hallazgos" == "9 controles · 14 hallazgos"
 
 
 def test_corregido_resolves_every_finding() -> None:
@@ -198,7 +197,7 @@ def test_cloud_footer_without_dates_but_sources_keep_them(views: dict[str, Any])
     note = views["notes"]["equivalencias"]
     assert (note["lead"], note["text"]) == ("No son equivalencias exactas.", "Ningún servicio certifica cumplimiento por sí solo.")
     titles = [g["title"] for g in views["sources_grouped"]["groups"]]
-    assert "Servicios cloud · verificados el 2026-11-17" in titles
+    assert "Servicios cloud · verificados el 2026-11-18" in titles
     pii = yaml.safe_load((inventory_views.ROOT / "content/concepts/pii-identification.md").read_text(encoding="utf-8").split("---\n", 2)[1])
     assert "Documentación consultada el 2026-11-12" in pii["views"]["notes"]["equivalencias"]["text"]
 

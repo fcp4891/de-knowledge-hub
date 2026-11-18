@@ -68,84 +68,84 @@ legal_basis:
 sources:
 - source: diario-oficial-cl
   url: https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
-  accessed: '2026-11-15'
+  accessed: '2026-11-18'
   label: Diario Oficial
   page_title: LEY NÚM. 21.719 REGULA LA PROTECCIÓN Y EL TRATAMIENTO DE LOS DATOS PERSONALES Y CREA LA AGENCIA DE PROTECCIÓN DE DATOS PERSONALES
   note: 'Ley 21.719 publicada en el Diario Oficial núm. 44.023, viernes 13 de diciembre de 2024 (CVE 2583630). Páginas que citan los enlaces de
-    la ficha, verificadas el 2026-11-15 contra el texto del PDF (34 páginas): art. 3 letras a, b y c (pág. 3), art. 12 (pág. 7), art. 13 letra
+    la ficha, verificadas el 2026-11-18 contra el texto del PDF (34 páginas): art. 3 letras a, b y c (pág. 3), art. 12 (pág. 7), art. 13 letra
     d (pág. 8), art. 14 ter (pág. 9), art. 16 (pág. 12), art. 34 ter letras a y c (pág. 24) y art. 49 letra c (pág. 30). Rigen desde el 2026-12-01.'
 - source: bcn-leychile
   url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-  accessed: '2026-11-15'
+  accessed: '2026-11-18'
   label: versión desde el 2026-12-01
   page_title: Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES · Con Vigencia Diferida por Fecha - 01-DIC-2026
-  note: 'Ley 19.628 en la versión «Con Vigencia Diferida por Fecha - 01-DIC-2026» (última modificación: Ley 21.719), consultada el 2026-11-15.
-    Arts. 1 bis, 3 letras a, b y c, 12, 13 letras a a e, 14 letra a, 14 ter letras d, h, i, j y l, 16, 27 y 34 ter letras a y c, verificados contra
-    lo que dice la ficha; 14 ter letra k, verificada el 2026-11-18 contra el texto de BCN y el del Diario Oficial (pág. 9). Fuera del modelo de prevención (arts. 49 a 53), el texto no impone llevar un registro de actividades de tratamiento:
+  note: 'Ley 19.628 en la versión «Con Vigencia Diferida por Fecha - 01-DIC-2026» (última modificación: Ley 21.719), consultada el 2026-11-18.
+    Arts. 1 bis, 3 letras a, b y c, 12, 13 letras a a e, 14 letra a, 14 ter letras d, h, i, j, k y l, 16, 27 y 34 ter letras a y c, verificados contra
+    lo que dice la ficha. Fuera del modelo de prevención (arts. 49 a 53), el texto no impone llevar un registro de actividades de tratamiento:
     los deberes cercanos son acreditar la licitud (arts. 3 a, 12, 13 y 14 a) y publicar la información del art. 14 ter.'
 - source: bcn-leychile
   url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idParte=10528059&idVersion=2026-12-01
-  accessed: '2026-11-17'
+  accessed: '2026-11-18'
   label: art. 14 ter
   page_title: Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES · Artículo 14 ter
   note: 'Enlace directo al art. 14 ter («Deber de información y transparencia») en la versión con vigencia desde el 2026-12-01: el idParte se
-    tomó del árbol de la norma en BCN y se comprobó en un navegador el 2026-11-17. Si BCN cambia el identificador, el enlace cae en la norma completa.'
+    tomó del árbol de la norma en BCN y se comprobó en un navegador el 2026-11-17; el texto se volvió a verificar el 2026-11-18. Si BCN cambia el identificador, el enlace cae en la norma completa.'
 - source: bcn-leychile
   url: https://www.bcn.cl/leychile/navegar?idNorma=1227971
-  accessed: '2026-11-15'
+  accessed: '2026-11-18'
   label: Decreto 662
   page_title: Decreto 662 APRUEBA REGLAMENTO QUE REGULA LOS REQUISITOS, MODALIDADES Y PROCEDIMIENTOS PARA LA IMPLEMENTACIÓN, CERTIFICACIÓN, REGISTRO
     Y SUPERVISIÓN DE LOS MODELOS DE PREVENCIÓN DE INFRACCIONES A QUE SE REFIERE EL ARTÍCULO 49 QUE INCORPORA LA LEY N° 21.719 A LA LEY N° 19.628
-  note: 'Decreto 662 del Ministerio de Hacienda, promulgado el 2025-06-13 y publicado el 2026-09-09, consultado el 2026-11-15. Art. 1: el modelo
+  note: 'Decreto 662 del Ministerio de Hacienda, promulgado el 2025-06-13 y publicado el 2026-09-09, consultado el 2026-11-18. Art. 1: el modelo
     de prevención es voluntario y no obsta al deber general de cumplir la ley. Art. 3 letra d): la caracterización de actividades de tratamiento
     con once contenidos (i a xi), transcritos en la ficha.'
 - source: bcn-leychile
   url: https://www.bcn.cl/leychile/navegar?idNorma=1227971&idParte=10609555
-  accessed: '2026-11-17'
+  accessed: '2026-11-18'
   label: art. 3
   page_title: Decreto 662 · Artículo 3
   note: 'Enlace directo al art. 3 del Decreto 662 («Requisitos del programa de cumplimiento»): el idParte se tomó del árbol de la norma en BCN
-    y se comprobó en un navegador el 2026-11-17.'
+    y se comprobó en un navegador el 2026-11-17; el texto se volvió a verificar el 2026-11-18.'
 - source: gcp-knowledge-catalog-docs
   url: https://docs.cloud.google.com/knowledge-catalog/docs/about-data-lineage
-  accessed: '2026-11-17'
+  accessed: '2026-11-18'
   page_title: About data lineage
-  note: 'About data lineage (Knowledge Catalog), consultada el 2026-11-17: BigQuery, Dataflow y otros servicios informan linaje automáticamente;
+  note: 'About data lineage (Knowledge Catalog), consultada el 2026-11-18: BigQuery, Dataflow y otros servicios informan linaje automáticamente;
     «All lineage information is retained in the system for only 30 days»; el linaje de columnas solo cubre columnas de primer nivel de tablas
     de BigQuery.'
 - source: gcp-bigquery-docs
   url: https://docs.cloud.google.com/bigquery/docs/information-schema-jobs-by-organization
-  accessed: '2026-11-17'
+  accessed: '2026-11-18'
   page_title: JOBS_BY_ORGANIZATION view
-  note: 'JOBS_BY_ORGANIZATION view, consultada el 2026-11-17: por trabajo, user_email (correo o cuenta de servicio) y referenced_tables, que «Only
-    populated for query jobs that are not cache hits». Retención, verificada el 2026-11-18: «This view displays running jobs along with job history
+  note: 'JOBS_BY_ORGANIZATION view, consultada el 2026-11-18: por trabajo, user_email (correo o cuenta de servicio) y referenced_tables, que «Only
+    populated for query jobs that are not cache hits». Retención: «This view displays running jobs along with job history
     for the past 180 days».'
 - source: aws-datazone-docs
   url: https://docs.aws.amazon.com/datazone/latest/userguide/datazone-data-lineage.html
-  accessed: '2026-11-17'
+  accessed: '2026-11-18'
   page_title: Data lineage in Amazon DataZone
-  note: 'Data lineage in Amazon DataZone, consultada el 2026-11-17: captura automática desde AWS Glue y Amazon Redshift, compatible con eventos
+  note: 'Data lineage in Amazon DataZone, consultada el 2026-11-18: captura automática desde AWS Glue y Amazon Redshift, compatible con eventos
     OpenLineage. La página no indica la retención.'
 - source: aws-lake-formation-docs
   url: https://docs.aws.amazon.com/lake-formation/latest/dg/logging-using-cloudtrail.html
-  accessed: '2026-11-17'
+  accessed: '2026-11-18'
   page_title: Logging AWS Lake Formation API calls using AWS CloudTrail
-  note: 'Logging AWS Lake Formation API calls using AWS CloudTrail, consultada el 2026-11-17: GetDataAccess se registra cuando un principal o
+  note: 'Logging AWS Lake Formation API calls using AWS CloudTrail, consultada el 2026-11-18: GetDataAccess se registra cuando un principal o
     un servicio integrado pide credenciales temporales; cada s3:GetObject se corresponde con un GetDataAccess, y para verlo hay que activar los
     eventos de datos de S3 en CloudTrail, con costo adicional; con el identificador del rol de IAM presente en ambos registros se rastrea el rol
-    que inició la consulta (verificado el 2026-11-18). Los catálogos federados de Amazon Redshift no generan GetDataAccess.'
+    que inició la consulta. Los catálogos federados de Amazon Redshift no generan GetDataAccess.'
 - source: azure-databricks-docs
   url: https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/data-lineage
-  accessed: '2026-11-17'
+  accessed: '2026-11-18'
   page_title: Lineage in Unity Catalog
-  note: 'Lineage in Unity Catalog (Azure Databricks), consultada el 2026-11-17: linaje hasta el nivel de columna; las tablas de sistema de linaje
+  note: 'Lineage in Unity Catalog (Azure Databricks), consultada el 2026-11-18: linaje hasta el nivel de columna; las tablas de sistema de linaje
     (system.access.table_lineage y system.access.column_lineage) guardan una ventana móvil de 395 días.'
 - source: azure-databricks-docs
   url: https://learn.microsoft.com/en-us/azure/databricks/admin/system-tables/audit-logs
-  accessed: '2026-11-17'
+  accessed: '2026-11-18'
   page_title: Audit log system table reference
-  note: 'Audit log system table reference (Azure Databricks), consultada el 2026-11-17: system.access.audit registra user_identity y action_name
-    (por ejemplo getTable). La página marca la tabla como Public Preview (verificado el 2026-11-18).'
+  note: 'Audit log system table reference (Azure Databricks), consultada el 2026-11-18: system.access.audit registra user_identity y action_name
+    (por ejemplo getTable). La página marca la tabla como Public Preview.'
 relations:
 - type: PART_OF
   target: chile-data-protection
@@ -1744,7 +1744,7 @@ views:
         - https://www.bcn.cl/leychile/navegar?idNorma=1227971&idParte=10609555
         publisher: BCN
         why: Art. 1 (modelo voluntario; no obsta al deber general) y art. 3 letra d).
-    - title: Servicios cloud · verificados el 2026-11-17
+    - title: Servicios cloud · verificados el 2026-11-18
       layout: list
       sources:
       - title: About data lineage
@@ -1809,8 +1809,8 @@ views:
         label: Ficha
         why: Automatizar las verificaciones.
 created_at: '2026-10-21'
-updated_at: '2026-11-17'
-last_verified: '2026-11-15'
+updated_at: '2026-11-18'
+last_verified: '2026-11-18'
 verification_status: review_required
 availability: available
 ---
@@ -2349,3 +2349,4 @@ puerta de la CI: rechazada (1): 3 de 4 despliegues bloqueados
 - 2026-11-18: revisión independiente, I1. En `inventario.py`, `categorias_sensibles` y `destinatarios` aceptan `None` (sin evaluar): en una actividad aprobada, cada uno genera una brecha («datos sensibles sin evaluar», «destinatarios sin evaluar»), y en el insumo del art. 14 ter salen como `[sin evaluar]`, no como «ninguno». Una actividad vigente sin base ya no se omite: sale con `base: [sin evaluar]`. Los escenarios declaran lo que cada actividad evaluó (`modelo_fraude` en `actual` queda sin evaluar). Conteos y salidas sin cambios: `actual` → 1 con 14 hallazgos, `corregido` → 0, `despliegue-nuevo` → 1 con 3 de 4 bloqueados. El estado no cambia.
 - 2026-11-18: revisión independiente, En la nube. La alerta «Ojo» distingue la retención de GCP: el linaje, 30 días; `INFORMATION_SCHEMA.JOBS_BY_ORGANIZATION`, 180 días, que también pasa a la nota de esa fuente en Fuentes. La fila de identidad rotula `INFORMATION_SCHEMA.JOBS_BY_ORGANIZATION`; en AWS, «se rastrea el rol que inició la consulta» reemplaza «la tabla se obtiene correlacionando con esos accesos»; `system.access.audit` lleva «(vista previa pública)». Sale de la fila «Finalidad» la frase sobre las etiquetas del catálogo de GCP, que no tenía fuente. Fuentes cloud verificadas el 2026-11-18. El estado no cambia.
 - 2026-11-18: revisión independiente, textos legales (pendientes de aprobación del dueño; sin `owner_approved_at`). En «Qué exige la ley», la columna se rotula «Lo que se espera (paráfrasis)», y «La ley no fija un plazo general: lo define el responsable según la finalidad» pasa a una línea propia «Interpretación de la ficha» (ADR-030, enmienda 11). La fila de proporcionalidad conserva la paráfrasis del art. 3 c), con «salvo las excepciones que establezca la ley». La fila de finalidad agrega la condición contractual del art. 3 b). La fila «¿Qué se publica?» suma la letra k del art. 14 ter, literal. La nota «La ley no exige este formato» cita literal la frase final del art. 3 d) del Decreto 662. La nota del Decreto en el modal dice «(paráfrasis del art. 1)», y el aviso legal pasa a «Esta ficha no es asesoría legal. Finalidad…», con mayúscula. El título de 2.1 y la quinta fila no cambian hasta que responda el dueño. El estado no cambia.
+- 2026-11-18: revisión independiente, verificación y detalles. `last_verified` pasa a 2026-11-18: ese día se volvieron a verificar las citas legales, contra BCN (versión 2026-12-01) y el Diario Oficial, y las seis páginas cloud, con `accessed` igual. La cabecera cuenta solo las fuentes oficiales: 9, sin las fichas de «En esta plataforma». En el código de la ficha, decoradores, sus parámetros y la interpolación de f-strings llegan a contraste AA. El estado no cambia.

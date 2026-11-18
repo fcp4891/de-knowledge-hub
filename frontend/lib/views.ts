@@ -503,9 +503,13 @@ export function sourcesGroupedProps(view: V["sources_grouped"]): SourcesGroupedP
   };
 }
 
-/** Cantidad de fuentes que muestra el encabezado: entradas agrupadas si hay sources_grouped. */
+/** Cantidad de «fuentes oficiales» del encabezado: entradas agrupadas si hay sources_grouped.
+ * Una ficha de la plataforma (`page`, ADR-030 enmienda 5) no es una fuente oficial y no se cuenta. */
 export function groupedSourceCount(view: V["sources_grouped"] | undefined, fallback: number): number {
-  return view ? view.groups.reduce((total, group) => total + group.sources.length, 0) : fallback;
+  if (!view) {
+    return fallback;
+  }
+  return view.groups.reduce((total, group) => total + group.sources.filter((source) => !source.page).length, 0);
 }
 
 /** Partes de un texto con Markdown en línea: enlaces, negrita, cursiva y código (sin HTML). */
