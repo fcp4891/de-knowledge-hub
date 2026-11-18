@@ -146,7 +146,7 @@ export function RegisterFields({ view }: { view: View }) {
 
   return (
     <section className="inv-view inv-rg" aria-label={view.title}>
-      <h4 className="inv-rg-title">{view.title}</h4>
+      {/* El título visible es la subsección ### del cuerpo (ADR-030, enmienda 10); aquí solo nombra la región. */}
       <p className="inv-rg-intro">
         <RichText text={view.intro} />
       </p>

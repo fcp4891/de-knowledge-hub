@@ -180,6 +180,7 @@ views:
   - section: 1
     key: ley
     title: Qué exige la ley
+    subsections: true
   section_titles:
   - section: 1
     title: Propósito
@@ -1955,6 +1956,8 @@ Es la base de los demás controles. Sin saber qué actividad usa qué datos, con
 
 <!-- view: law_ladder -->
 
+### Campos del registro y de dónde viene cada uno
+
 <!-- view: register_fields -->
 
 <!-- view: note sin-formato -->
@@ -2452,3 +2455,4 @@ puerta de la CI: rechazada (1): 3 de 4 despliegues bloqueados
 - 2026-11-04: revisión `docs/reviews/p10.md` aplicada: el §10 separa la conciliación operacional (`actual` y `corregido`: alerta sobre consumos que ya corren, 1 con hallazgos) de la puerta de la CI (`despliegue-nuevo`: cuatro despliegues contra el registro de hoy, tres bloqueados); un despliegue con su actividad sin aprobación vigente se informa como «actividad no vigente», no como «no declarado». Limitación «Momento», §8 y §9 ajustados. Vuelve a `review_required`.
 - 2026-11-04: aprobada con la revisión P10 y su verificación aplicadas (limitación «Cobertura»: `UNKNOWN` es alerta en la conciliación y bloqueo en la puerta de despliegue) (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).
 - 2026-11-17: la ficha pasa al formato de vistas (ADR-030, enmienda 9) desde la maqueta: 13 secciones, con «Qué exige la ley», «Arquitectura» y el código nuevo (`inventario.py`, 308 líneas, tres escenarios). Queda disponible y `review_required`: los textos legales nuevos esperan la aprobación del dueño (ADR-023).
+- 2026-11-18: «Qué exige la ley» queda en dos subsecciones numeradas con el mismo encabezado, 2.1 «Cinco preguntas que la ley obliga a poder responder» y 2.2 «Campos del registro y de dónde viene cada uno» (ADR-030, enmienda 10). Sin cambios de contenido; el estado no cambia.

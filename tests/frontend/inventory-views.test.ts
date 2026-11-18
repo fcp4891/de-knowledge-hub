@@ -164,3 +164,20 @@ test("contraste AA (4,5:1) de los pares nuevos, en claro y oscuro", () => {
     }
   }
 });
+
+test("§2: 2.1 y 2.2 comparten el encabezado de subsección; 2.2 ya no dibuja su propio título", async () => {
+  const { RegisterFields } = loadTsx(join(ficha, "RegisterFields.tsx"));
+  const markup = html(RegisterFields, { view: inv.register_fields });
+  assert.equal(markup.includes("inv-rg-title"), false);
+  assert.equal(/<h4[^>]*>Campos del registro y de dónde viene cada uno<\/h4>/.test(markup), false);
+  assert.match(markup, /<section class="inv-view inv-rg" aria-label="Campos del registro y de dónde viene cada uno">/);
+  const { subsectionAnchors } = loadTsx(join(ROOT, "frontend/components/markdown/MarkdownBody.tsx"));
+  const { parseMarkdown } = loadTsx(join(ROOT, "frontend/lib/markdown.ts"));
+  const blocks = parseMarkdown("### Cinco preguntas\n\n<!-- view: law_ladder -->\n\n### Campos del registro\n\n<!-- view: register_fields -->");
+  assert.deepEqual([...subsectionAnchors(blocks, "ley").values()], ["ley-1", "ley-2"]);
+  assert.equal(subsectionAnchors(blocks).size, 0);   // sin la clave de la división, ningún ### se numera
+  const css = readFileSync(join(ROOT, "frontend/components/card/reading.css"), "utf8");
+  assert.match(css, /\.reading-details \.markdown h3\.reading-subsection::before \{\n  content: var\(--section-number\) "\." counter\(subsection\)/);
+  const reading = readFileSync(join(ROOT, "frontend/components/card/ConceptReading.tsx"), "utf8");
+  assert.match(reading, /"--section-number": `"\$\{shownNumber\(section\)\}"`/);
+});

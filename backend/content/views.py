@@ -55,6 +55,34 @@ def check_splits(views: dict[str, Any], sections: list[tuple[int, str]]) -> list
     return errors
 
 
+SUBHEADING = re.compile(r"^### \S", re.M)
+
+
+def split_parts(views: dict[str, Any], sections: list[tuple[int, str]]) -> dict[str, str]:
+    """Contenido de cada división declarada (lo que sigue a su marca «<!-- split: <key> -->»)."""
+    parts = {}
+    for item in views.get("section_splits", []):
+        for number, content in sections:
+            marker = re.search(rf"<!--\s*split:\s*{re.escape(item['key'])}\s*-->", content)
+            if number == item["section"] and marker:
+                parts[item["key"]] = content[marker.end():]
+    return parts
+
+
+def subsection_anchors(views: dict[str, Any], sections: list[tuple[int, str]]) -> set[str]:
+    """Enmienda 10: en una división con subsections, el n-ésimo ### lleva el ancla <key>-<n>."""
+    parts = split_parts(views, sections)
+    flagged = [item["key"] for item in views.get("section_splits", []) if item.get("subsections")]
+    return {f"{key}-{n}" for key in flagged for n in range(1, len(SUBHEADING.findall(parts.get(key, ""))) + 1)}
+
+
+def check_subsections(views: dict[str, Any], sections: list[tuple[int, str]]) -> list[str]:
+    """Una división con subsections tiene al menos un ### que numerar."""
+    parts = split_parts(views, sections)
+    return [f"[views.section_splits] '{item['key']}' declara subsections y no tiene encabezados ###"
+            for item in views.get("section_splits", []) if item.get("subsections") and not SUBHEADING.search(parts.get(item["key"], ""))]
+
+
 def check_keyed(views: dict[str, Any], found: list[str]) -> list[str]:
     """Enmienda 5: cada marca «note <id>» o «chips <id>» tiene su entrada, y cada entrada se marca una vez."""
     errors = []

@@ -302,13 +302,6 @@
   border-radius: var(--radius-md);
 }
 
-.inv-rg-title {
-  margin: 0;
-  color: var(--ink-3);
-  font-size: var(--text-sm);
-  font-weight: 650;
-}
-
 .inv-rg-intro {
   color: var(--ink-3);
   font-size: 13px;

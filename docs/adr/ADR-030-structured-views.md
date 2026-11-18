@@ -234,3 +234,10 @@ Aprobada por el dueño el 2026-11-17. Es retrocompatible: chile-data-protection 
   - `notes.*.tone` admite `key` (idea central).
 - **Vistas nuevas:** `build_cards` (§1), `law_ladder` y `register_fields` (§2), `activity_explorer` (Qué es), `case_compare` (Problema) y `cycle_lanes` (Cómo funciona).
 - **Datos generados:** `register_fields.cases` y `activity_explorer.activities` los escribe `scripts/generators/inventory_views.py` desde el `inventario.py` de la ficha. Un test vuelve a generarlos y falla si el frontmatter no coincide.
+
+## Enmienda 10 (2026-11-18): subsecciones numeradas en una división
+
+- **`views.section_splits[].subsections`** (opcional, booleano): con `true`, cada `###` del cuerpo de esa división es una subsección numerada con el número visible de la sección (N.1, N.2…) y el ancla `#<key>-<n>`.
+- Todas las subsecciones usan el mismo encabezado, el `###` de la sección con su número antepuesto; un componente de la división ya no dibuja su propio título (`register_fields.title` queda solo como nombre de la región).
+- **Validador:** la división declarada tiene al menos un `###`, y las anclas `<key>-<n>` son válidas para `href`.
+- Sin la clave, nada cambia: chile-data-protection y pii-identification no la declaran.

@@ -95,7 +95,7 @@ function splitAt(markdown: string, key: string): { before: string; after: string
   return { before: markdown.slice(0, match.index).trim(), after: markdown.slice(match.index + match[0].length).trim() };
 }
 
-function splitFor(views: Views | undefined, number: number): { key: string; title: string } | null {
+function splitFor(views: Views | undefined, number: number): { key: string; title: string; subsections?: boolean } | null {
   return views?.section_splits?.find((item) => item.section === number) ?? null;
 }
 const OPEN_NUMBERS = new Set<number>();
@@ -277,7 +277,8 @@ function sectionModels(
     clouds = [];
   }
 
-  const body = (section: Section, extra: { etiquetaColumn?: boolean } = {}) => (
+  // ADR-030 enmienda 10: subsections lleva la clave de la división cuyos ### son subsecciones numeradas.
+  const body = (section: Section, extra: { etiquetaColumn?: boolean; subsections?: string } = {}) => (
     <MarkdownBody
       markdown={section.markdown}
       obligations={obligations}
@@ -340,7 +341,7 @@ function sectionModels(
           title: division.title,
           presentation: "details",
           listed: true,
-          body: body({ ...section, markdown: opening.after }),
+          body: body({ ...section, markdown: opening.after }, { subsections: division.subsections ? division.key : undefined }),
         });
       } else {
         models.push({
@@ -467,7 +468,7 @@ function sectionModels(
         title: division.title,
         presentation: "details",
         listed: true,
-        body: body({ ...section, markdown: parts.after }),
+        body: body({ ...section, markdown: parts.after }, { subsections: division.subsections ? division.key : undefined }),
       });
       continue;
     }

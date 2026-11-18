@@ -3097,6 +3097,9 @@ components:
                 type: string
               title:
                 type: string
+              subsections:
+                type: boolean
+                description: 'true: cada ### de la división es una subsección numerada (N.1, N.2…) con ancla #<key>-<n> (ADR-030, enmienda 10).'
             additionalProperties: false
           description: 'Divide una sección en dos desplegables en la marca «<!-- split: <key> -->» de su cuerpo (ADR-030, enmienda 7).'
         build_cards:

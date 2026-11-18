@@ -800,6 +800,21 @@
   margin-top: 0.2rem;
 }
 
+/* ADR-030 enmienda 10: subsecciones numeradas de una división (N.1, N.2…). Mismo encabezado que el ### de la
+   sección; solo se antepone el número. */
+.reading-details-body {
+  counter-reset: subsection;
+}
+
+.reading-details .markdown h3.reading-subsection {
+  counter-increment: subsection;
+  scroll-margin-top: 16px;
+}
+
+.reading-details .markdown h3.reading-subsection::before {
+  content: var(--section-number) "." counter(subsection) "\00a0\00a0";
+}
+
 .reading[data-compact="true"] .reading-details-body > :first-child .control-evidence > h3:first-of-type {
   margin-top: 0.2rem;
 }

@@ -124,3 +124,13 @@ def test_ladder_names_the_real_fields(views: dict[str, Any]) -> None:
     names = {f["name"] for f in views["register_fields"]["fields"]}
     named = {b for row in views["law_ladder"]["rows"] for b in re.findall(r"\*\*([^*]+)\*\*", row["record"])}
     assert named and named <= names, named - names
+
+
+def test_law_split_has_two_numbered_subsections(text: str, views: dict[str, Any]) -> None:
+    """§2 «Qué exige la ley»: 2.1 y 2.2 son los dos ### de la división, en este orden; anclas #ley-1 y #ley-2."""
+    (split,) = views["section_splits"]
+    assert (split["key"], split.get("subsections")) == ("ley", True)
+    part = text.split("<!-- split: ley -->", 1)[1].split("\n## 2.", 1)[0]
+    assert re.findall(r"^### (.+)$", part, re.M) == ["Cinco preguntas que la ley obliga a poder responder",
+                                                       "Campos del registro y de dónde viene cada uno"]
+    assert part.index("Campos del registro") < part.index("<!-- view: register_fields -->")

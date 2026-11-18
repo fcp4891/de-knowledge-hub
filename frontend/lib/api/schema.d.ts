@@ -1434,6 +1434,8 @@ export interface components {
                 section: number;
                 key: string;
                 title: string;
+                /** @description true: cada ### de la división es una subsección numerada (N.1, N.2…) con ancla #<key>-<n> (ADR-030, enmienda 10). */
+                subsections?: boolean;
             }[];
             /** @description BuildCards (§1): lo que construyes con la ficha, en tarjetas numeradas (enmienda 9). */
             build_cards?: {

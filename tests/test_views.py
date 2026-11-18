@@ -226,3 +226,15 @@ def test_outcome_text_does_not_repeat_the_tone_icon() -> None:
         {"tone": "pass", "text": "✓ Todo revisado"}, {"tone": "fail", "text": "Con brechas"}]}}}
     assert views.check_outcome_icons(views_data) == [
         "[views.control_evidence] el resultado '✓ Todo revisado' empieza con un ícono: lo pone el tone 'pass'"]
+
+
+def test_numbered_subsections_get_anchors_and_need_headings() -> None:
+    """ADR-030, enmienda 10: cada ### de una división con subsections lleva el ancla <key>-<n>; sin ### es un error."""
+    split = {"section_splits": [{"section": 1, "key": "ley", "title": "Qué exige la ley", "subsections": True}]}
+    sections = [(1, "Intro.\n\n### Subtítulo de la sección\n\n<!-- split: ley -->\n\n### Primera\n\ntexto\n\n### Segunda\n")]
+    assert views.subsection_anchors(split, sections) == {"ley-1", "ley-2"}   # el ### antes de la marca no cuenta
+    assert views.check_subsections(split, sections) == []
+    empty = [(1, "### Antes\n\n<!-- split: ley -->\n\nsolo texto\n")]
+    assert views.check_subsections(split, empty) == ["[views.section_splits] 'ley' declara subsections y no tiene encabezados ###"]
+    plain = {"section_splits": [{"section": 1, "key": "ley", "title": "Qué exige la ley"}]}
+    assert views.subsection_anchors(plain, sections) == set() and views.check_subsections(plain, empty) == []
