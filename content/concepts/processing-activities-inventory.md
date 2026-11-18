@@ -118,7 +118,8 @@ sources:
   accessed: '2026-11-17'
   page_title: JOBS_BY_ORGANIZATION view
   note: 'JOBS_BY_ORGANIZATION view, consultada el 2026-11-17: por trabajo, user_email (correo o cuenta de servicio) y referenced_tables, que «Only
-    populated for query jobs that are not cache hits».'
+    populated for query jobs that are not cache hits». Retención, verificada el 2026-11-18: «This view displays running jobs along with job history
+    for the past 180 days».'
 - source: aws-datazone-docs
   url: https://docs.aws.amazon.com/datazone/latest/userguide/datazone-data-lineage.html
   accessed: '2026-11-17'
@@ -131,7 +132,8 @@ sources:
   page_title: Logging AWS Lake Formation API calls using AWS CloudTrail
   note: 'Logging AWS Lake Formation API calls using AWS CloudTrail, consultada el 2026-11-17: GetDataAccess se registra cuando un principal o
     un servicio integrado pide credenciales temporales; cada s3:GetObject se corresponde con un GetDataAccess, y para verlo hay que activar los
-    eventos de datos de S3 en CloudTrail, con costo adicional. Los catálogos federados de Amazon Redshift no generan GetDataAccess.'
+    eventos de datos de S3 en CloudTrail, con costo adicional; con el identificador del rol de IAM presente en ambos registros se rastrea el rol
+    que inició la consulta (verificado el 2026-11-18). Los catálogos federados de Amazon Redshift no generan GetDataAccess.'
 - source: azure-databricks-docs
   url: https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/data-lineage
   accessed: '2026-11-17'
@@ -143,7 +145,7 @@ sources:
   accessed: '2026-11-17'
   page_title: Audit log system table reference
   note: 'Audit log system table reference (Azure Databricks), consultada el 2026-11-17: system.access.audit registra user_identity y action_name
-    (por ejemplo getTable).'
+    (por ejemplo getTable). La página marca la tabla como Public Preview (verificado el 2026-11-18).'
 relations:
 - type: PART_OF
   target: chile-data-protection
@@ -1602,7 +1604,8 @@ views:
     alert:
       title: Ojo
       text: 'Ningún linaje registra para qué se ejecutó una consulta. El registro de actividades es propio en las tres nubes, y la conciliación
-        depende de cuánto tiempo retenga cada servicio el linaje y los logs: en GCP, 30 días.'
+        depende de cuánto tiempo retenga cada servicio el linaje y los logs: en GCP, el linaje, 30 días; INFORMATION_SCHEMA.JOBS_BY_ORGANIZATION,
+        180 días.'
     headers:
     - Necesidad
     - Este ejemplo
@@ -1628,14 +1631,14 @@ views:
       own:
         text: Cuenta de servicio → consumidor declarado
       gcp:
-        name: '[INFORMATION_SCHEMA.JOBS](https://docs.cloud.google.com/bigquery/docs/information-schema-jobs-by-organization)'
+        name: '[INFORMATION_SCHEMA.JOBS_BY_ORGANIZATION](https://docs.cloud.google.com/bigquery/docs/information-schema-jobs-by-organization)'
         text: 'Por consulta: `user_email` y `referenced_tables`. No incluye consultas servidas desde la caché.'
       aws:
         name: '[CloudTrail](https://docs.aws.amazon.com/lake-formation/latest/dg/logging-using-cloudtrail.html) · Lake Formation'
         text: '`GetDataAccess` registra el principal cuando un servicio pide credenciales; para ver los accesos a objetos hay que activar los
-          eventos de datos de S3 (costo adicional), y la tabla se obtiene correlacionando con esos accesos.'
+          eventos de datos de S3 (costo adicional), y se rastrea el rol que inició la consulta.'
       azure:
-        name: '[system.access.audit](https://learn.microsoft.com/en-us/azure/databricks/admin/system-tables/audit-logs)'
+        name: '[system.access.audit](https://learn.microsoft.com/en-us/azure/databricks/admin/system-tables/audit-logs) (vista previa pública)'
         text: '`user_identity` y la acción, por ejemplo `getTable`.'
     - need: Finalidad
       meta: Registro de actividades
@@ -1643,8 +1646,7 @@ views:
         text: Actividad con base, plazo y campos
       span:
         title: Sin servicio nativo en las tres nubes
-        text: 'El linaje registra el movimiento, no la finalidad: el registro es propio y se enlaza a las ejecuciones. En GCP, las etiquetas del
-          catálogo pueden ayudar a anotarla.'
+        text: 'El linaje registra el movimiento, no la finalidad: el registro es propio y se enlaza a las ejecuciones.'
     - need: Puerta de despliegue
       tone: where
       own:
@@ -1748,7 +1750,7 @@ views:
         urls:
         - https://docs.cloud.google.com/bigquery/docs/information-schema-jobs-by-organization
         publisher: Google Cloud
-        why: '`user_email` y `referenced_tables` por consulta; sin las consultas servidas desde la caché.'
+        why: '`user_email` y `referenced_tables` por consulta; sin las consultas servidas desde la caché. Historial de 180 días.'
       - title: Data lineage in Amazon DataZone
         urls:
         - https://docs.aws.amazon.com/datazone/latest/userguide/datazone-data-lineage.html
@@ -2339,3 +2341,4 @@ puerta de la CI: rechazada (1): 3 de 4 despliegues bloqueados
 - 2026-11-18: en Código se retiran, por decisión del dueño, el desplegable «Controles del código y qué encuentra en actual» (tabla y resumen «9 controles · 14 hallazgos») y el desplegable «Escenarios» (tabla y pastillas de códigos de salida), con la línea «Códigos de salida» que se armaba con ellos. El código y sus tres salidas no cambian; el estado no cambia.
 - 2026-11-18: en «En la nube», el pie deja solo «No son equivalencias exactas. Ningún servicio certifica cumplimiento por sí solo.», por decisión del dueño; la fecha de verificación de las fuentes cloud sigue en Fuentes. El estado no cambia.
 - 2026-11-18: revisión independiente, I1. En `inventario.py`, `categorias_sensibles` y `destinatarios` aceptan `None` (sin evaluar): en una actividad aprobada, cada uno genera una brecha («datos sensibles sin evaluar», «destinatarios sin evaluar»), y en el insumo del art. 14 ter salen como `[sin evaluar]`, no como «ninguno». Una actividad vigente sin base ya no se omite: sale con `base: [sin evaluar]`. Los escenarios declaran lo que cada actividad evaluó (`modelo_fraude` en `actual` queda sin evaluar). Conteos y salidas sin cambios: `actual` → 1 con 14 hallazgos, `corregido` → 0, `despliegue-nuevo` → 1 con 3 de 4 bloqueados. El estado no cambia.
+- 2026-11-18: revisión independiente, En la nube. La alerta «Ojo» distingue la retención de GCP: el linaje, 30 días; `INFORMATION_SCHEMA.JOBS_BY_ORGANIZATION`, 180 días, que también pasa a la nota de esa fuente en Fuentes. La fila de identidad rotula `INFORMATION_SCHEMA.JOBS_BY_ORGANIZATION`; en AWS, «se rastrea el rol que inició la consulta» reemplaza «la tabla se obtiene correlacionando con esos accesos»; `system.access.audit` lleva «(vista previa pública)». Sale de la fila «Finalidad» la frase sobre las etiquetas del catálogo de GCP, que no tenía fuente. Fuentes cloud verificadas el 2026-11-18. El estado no cambia.
