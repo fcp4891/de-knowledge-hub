@@ -41,6 +41,9 @@ test("las props salen del contrato con un renombre 1:1", () => {
   assert.equal(sourcesGroupedProps(grouped).groups[1].layout, "providers");
   assert.equal(groupedSourceCount(grouped, 99), 1);
   assert.equal(groupedSourceCount(undefined, 13), 13);
+  // Una ficha de la plataforma (`page`) no cuenta como fuente oficial en el encabezado.
+  const withPage = { groups: [...grouped.groups, { title: "En esta plataforma", sources: [{ title: "f", page: "x", label: "Ficha" }] }] };
+  assert.equal(groupedSourceCount(withPage, 99), 1);
 });
 
 test("los ocho principios se nombran sin letra", () => {

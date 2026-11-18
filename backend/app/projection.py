@@ -314,7 +314,7 @@ def page_views(index: ContentIndex, page: dict[str, Any]) -> dict[str, Any]:
     if "sources_grouped" in views:
         grouped = views["sources_grouped"]
         # ADR-030 enmienda 8: heading y link_titles opcionales, en orden fijo (JSONB no conserva el del YAML).
-        options = {key: grouped[key] for key in ("heading", "link_titles") if key in grouped}
+        options = {key: grouped[key] for key in ("heading", "link_titles", "legend") if key in grouped}
         projected["sources_grouped"] = {**options, "groups": [
             {**{k: v for k, v in group.items() if k != "sources"},
              "sources": [grouped_source(index, page, s) for s in group["sources"]]}

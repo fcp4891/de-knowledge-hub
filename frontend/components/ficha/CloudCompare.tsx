@@ -4,6 +4,7 @@ import "@/components/markdown/pipeline.css";
 
 import { RichText } from "./RichText";
 import "./ficha-blocks.css";
+import "./inventory-views.css";
 import "./pii-views.css";
 
 function Service({ cell, label }: { cell: CloudCell; label?: string }) {
@@ -25,6 +26,10 @@ function Service({ cell, label }: { cell: CloudCell; label?: string }) {
 export function CloudCompare({ intro, alert, headers, rows, closing }: CloudCompareProps) {
   const ownHeader = headers.length > 4 ? headers[1] : undefined;
   const serviceHeaders = ownHeader ? headers.slice(2) : headers.slice(1);
+  // ADR-030 enmienda 9: con una celda para las tres nubes, los encabezados llevan id y la celda los nombra en headers.
+  const spans = rows.some((row) => row.span);
+  const headerId = (index: number) => (spans ? `cloud-h-${index}` : undefined);
+  const serviceIds = serviceHeaders.map((_, index) => `cloud-h-${index + (ownHeader ? 2 : 1)}`).join(" ");
   return (
     <div className="markdown cloud-compare">
       {intro ? (
@@ -44,8 +49,10 @@ export function CloudCompare({ intro, alert, headers, rows, closing }: CloudComp
         <table className="pii-table">
           <thead>
             <tr>
-              {headers.map((header) => (
-                <th key={header}>{header}</th>
+              {headers.map((header, index) => (
+                <th key={header} id={headerId(index)} scope={spans ? "col" : undefined}>
+                  {header}
+                </th>
               ))}
             </tr>
           </thead>
@@ -61,9 +68,18 @@ export function CloudCompare({ intro, alert, headers, rows, closing }: CloudComp
                     {row.own ? <RichText text={row.own.text} /> : null}
                   </td>
                 ) : null}
-                <Service cell={row.gcp} label={serviceHeaders[0]} />
-                <Service cell={row.aws} label={serviceHeaders[1]} />
-                <Service cell={row.azure} label={serviceHeaders[2]} />
+                {row.span ? (
+                  <td className="cloud-span" colSpan={3} headers={`${headerId(0)} ${serviceIds}`} data-c={serviceHeaders.join(" · ")}>
+                    <strong>{row.span.title}</strong>
+                    <RichText text={row.span.text} />
+                  </td>
+                ) : (
+                  <>
+                    {row.gcp ? <Service cell={row.gcp} label={serviceHeaders[0]} /> : <td />}
+                    {row.aws ? <Service cell={row.aws} label={serviceHeaders[1]} /> : <td />}
+                    {row.azure ? <Service cell={row.azure} label={serviceHeaders[2]} /> : <td />}
+                  </>
+                )}
               </tr>
             ))}
           </tbody>

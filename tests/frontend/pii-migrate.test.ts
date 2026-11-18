@@ -87,7 +87,7 @@ test("el chip de pii «Cómo funciona · ¿Qué datos trato?» tiene destino: De
 
 test("tipografía: .pii-view fija la sans de la UI y la serif del Resumen no alcanza a pii", () => {
   assert.match(css("pii-views.css"), /\.pii-view,\n\.pii-use,\n\.pii-note,\n\.pii-risk,\n[^{]*\{\n  font-family: var\(--font-ui\)/);
-  assert.match(readFileSync(join(FRONTEND, "components/card/reading.css"), "utf8"), /\.reading-summary \.markdown p:not\(\.pii-view \*, \.pii-use \*, \.pii-note, \.pii-risk\)/);
+  assert.match(readFileSync(join(FRONTEND, "components/card/reading.css"), "utf8"), /\.reading-summary \.markdown p:not\(\.pii-view \*, \.pii-use \*, \.pii-note, \.pii-risk, \.inv-view \*\)/);   // + Inventario (ADR-030, enmienda 9)
 });
 
 test("ronda 2 · §2: recorrido, desenlace y «Resultado para» van en una rejilla de tres zonas; la ley queda fuera", () => {

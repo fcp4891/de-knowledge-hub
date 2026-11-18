@@ -715,7 +715,7 @@ views:
       items:
       - title: Legal y negocio
         detail: finalidad, base de licitud, plazo
-      - title: Catálogo de actividades
+      - title: Registro de actividades de tratamiento
         detail: metadatos por actividad
       legend:
       - el contrato fija los campos permitidos
@@ -1712,6 +1712,7 @@ El detalle de cada fuente está en `sources` del frontmatter; la agrupación, en
 - 2026-11-10: revisión aplicada. Sanciones: atenuante del modelo de prevención (acreditado con el certificado; matriz de riesgos de infracción obligatoria, registro de actividades opcional; art. 52), reincidencia con sanciones firmes o ejecutoriadas y gran empresa con el 2 % o el 4 % según la gravedad (ley 20.416). Roles: el responsable responde por los principios y deberes (art. 3). En la nube: tres de los siete requisitos de la matriz. La cita versionada de la Ley 19.628 indica su versión en el título. Sigue en `review_required`.
 - 2026-11-12: el art. 16 quáter (datos de niños, niñas y adolescentes) entra a `legal_basis`, al anexo y al catálogo: sus vistas ya lo citaban y `pii-identification` enlaza a su fila del catálogo (ADR-023, enmienda 9). Sigue en `review_required`.
 - 2026-11-15: la línea de vigencia se sincroniza con la tarjeta de la Ley 21.719 (ADR-027): el hito del Senado pasa al estado consultado hoy en el servicio de tramitación (segundo trámite en la Cámara de Diputados, «Discusión general», urgencia «Discusión inmediata»); el «al día» de la línea y la cita de la página de tramitación pasan al 2026-11-15. La vigencia legal sigue en el 2026-12-01.
+- 2026-11-17: en «Del requisito al dato» (Arquitectura), el recuadro «Catálogo de actividades» pasa a «Registro de actividades de tratamiento», el nombre que usa la ficha Inventario. Sin cambios de fondo; el estado no cambia.
 
 ## Anexo · Catálogo legal por tema
 

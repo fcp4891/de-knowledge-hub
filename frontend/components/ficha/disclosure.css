@@ -1,0 +1,99 @@
+/* ADR-030 enmienda 9: desplegable «Ver detalle / Ocultar» (maqueta del Inventario, ronda 12). Solo tokens del sitio. */
+.disclosure {
+  padding: 10px 0 6px;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-ui), system-ui, sans-serif;
+}
+
+.disclosure-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.disclosure-head h4 {
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--text-base);
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.disclosure-summary {
+  color: var(--ink-3);
+  font-size: var(--text-sm);
+}
+
+.disclosure-button {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  min-height: 32px;
+  margin-left: auto;
+  padding: 0 12px;
+  border: 1px solid var(--accent);
+  border-radius: 7px;
+  background: var(--surface);
+  color: var(--accent);
+  font: 650 var(--text-sm) var(--font-ui), system-ui, sans-serif;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.disclosure-button:hover,
+.disclosure-button:focus-visible {
+  background: var(--accent-soft);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.disclosure-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.disclosure-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.disclosure-icon {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.15s;
+}
+
+.disclosure-button[aria-expanded="true"] .disclosure-icon {
+  transform: rotate(180deg);
+}
+
+.disclosure-region {
+  margin-top: 8px;
+}
+
+.disclosure-region[hidden] {
+  display: none;
+}
+
+@media (max-width: 620px) {
+  .disclosure-button {
+    min-height: var(--touch-min);
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .disclosure-icon {
+    transition: none;
+  }
+}

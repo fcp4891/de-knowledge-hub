@@ -84,3 +84,9 @@ Con el diseño final de Cursor, las tres pestañas GCP, AWS y Azure se reemplaza
 - `pii-identification` se migra desde su maqueta aprobada, que tiene 11 secciones. Entra a `OMITTABLE` con las secciones {6, 7, 8, 9, 12, 13, 15, 17, 19, 21}.
 - La numeración visible es compacta y el «Leído N de M» cuenta las 11 secciones presentes (el §22, historial, solo lo ve el dueño).
 - Las demás fichas no cambian.
+
+## Enmienda 4 (2026-11-17) — processing-activities-inventory
+
+- `processing-activities-inventory` se migra desde su maqueta, con 13 secciones visibles. Entra a `OMITTABLE` con las secciones {6, 7, 8, 12, 13, 15, 17, 19, 21}, las mismas que la ficha madre: conserva la §9 (Arquitectura).
+- «Qué exige la ley» es una división de la §1 (`views.section_splits`, ADR-030 enmienda 7), igual que «Contexto normativo» en la madre; así Arquitectura y Código quedan en las secciones canónicas 9 y 10, y se ven como 7 y 8.
+- Las demás fichas no cambian.
