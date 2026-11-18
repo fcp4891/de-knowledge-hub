@@ -139,7 +139,7 @@ export type CodeGuideProps = {
   exitCodesLabel?: string;
   lead: Titled;
   leadMore?: string[];
-  rules: {
+  rules?: {
     title?: string;
     summary?: string;
     disclosure?: Disclosure;
@@ -153,7 +153,7 @@ export type CodeGuideProps = {
     note?: string;
     table?: { lead: Titled; headers: string[]; rows: { item: string; form: string; code: string }[]; disclosure?: Disclosure };
   };
-  scenarios: {
+  scenarios?: {
     title: string;
     disclosure?: Disclosure;
     items: { name: string; text: string; exitCode: 0 | 1; fixes?: { finding: string; fix: string }[] }[];
@@ -373,7 +373,7 @@ export function codeGuideProps(view: V["code_guide"]): CodeGuideProps {
     exitCodesLabel: view.exit_codes_label,
     lead: view.lead,
     leadMore: view.lead_more,
-    rules: {
+    rules: view.rules && {
       title: view.rules.title,
       summary: view.rules.summary,
       disclosure: view.rules.disclosure as Disclosure | undefined,
@@ -396,7 +396,7 @@ export function codeGuideProps(view: V["code_guide"]): CodeGuideProps {
         ? { ...view.not_covered.table, disclosure: view.not_covered.table.disclosure as Disclosure | undefined }
         : undefined,
     },
-    scenarios: {
+    scenarios: view.scenarios && {
       title: view.scenarios.title,
       disclosure: view.scenarios.disclosure as Disclosure | undefined,
       items: view.scenarios.items.map((item) => ({

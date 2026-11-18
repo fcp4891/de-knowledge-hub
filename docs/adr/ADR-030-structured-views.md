@@ -241,3 +241,4 @@ Aprobada por el dueño el 2026-11-17. Es retrocompatible: chile-data-protection 
 - Todas las subsecciones usan el mismo encabezado, el `###` de la sección con su número antepuesto; un componente de la división ya no dibuja su propio título (`register_fields.title` queda solo como nombre de la región).
 - **Validador:** la división declarada tiene al menos un `###`, y las anclas `<key>-<n>` son válidas para `href`.
 - Sin la clave, nada cambia: chile-data-protection y pii-identification no la declaran.
+- **`code_guide.rules` y `code_guide.scenarios`** pasan a ser opcionales: una ficha puede no mostrar la tabla de reglas ni los escenarios (el Inventario los retiró el 2026-11-18). La línea de `exit_codes_label` solo se dibuja si hay `scenarios`. La madre y pii los siguen declarando.

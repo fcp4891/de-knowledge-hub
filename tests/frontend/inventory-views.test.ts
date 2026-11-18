@@ -61,9 +61,10 @@ test("los filtros dejan 11 (norma) y 3 (propuesto) campos, y el segundo clic vue
   assert.equal(visibleFields(fields, "all").length, 13);
 });
 
-test("«9 controles · 14 hallazgos» se calcula de las filas de la tabla", () => {
+test("rulesSummary calcula {rows} y {total} de las filas (CodeGuide; el Inventario ya no muestra esa tabla)", () => {
   const { rulesSummary } = loadTsx(join(ficha, "CodeGuide.tsx"));
-  assert.equal(rulesSummary(inv.code_guide.rules.summary, inv.code_guide.rules.items), "9 controles · 14 hallazgos");
+  const items = [{ count: 1 }, { count: 5 }, { count: 2 }, {}];
+  assert.equal(rulesSummary("{rows} controles · {total} hallazgos", items), "4 controles · 8 hallazgos");
 });
 
 test("«Ver detalle / Ocultar»: botón real con aria-expanded y aria-controls, región con hidden y el resumen visible", () => {
@@ -79,18 +80,44 @@ test("«Ver detalle / Ocultar»: botón real con aria-expanded y aria-controls, 
   assert.equal(/hidden=""/.test(open), false);
 });
 
-test("Código del Inventario sigue a la madre: sin ejemplo ni tarjetas de paso, desplegables y códigos de salida", () => {
+test("Código del Inventario: sin tabla de controles, sin «Escenarios» ni línea de códigos de salida; quedan las demás subsecciones", () => {
   const { CodeGuide } = loadTsx(join(ficha, "CodeGuide.tsx"));
   const { codeGuideProps } = loadTsx(join(ROOT, "frontend/lib/views.ts"));
+  // Retirados por decisión del dueño (2026-11-18); las cifras siguen en la «Salida» de actual (test_inventory_views).
+  assert.equal(inv.code_guide.rules, undefined);
+  assert.equal(inv.code_guide.scenarios, undefined);
+  assert.equal(inv.code_guide.exit_codes_label, undefined);
   const markup = html(CodeGuide, codeGuideProps(inv.code_guide));
-  assert.match(markup, /Códigos de salida<\/span> <span><code>actual<\/code> → 1<\/span>/);
-  assert.match(markup, /<h4 id="[^"]+">Controles del código y qué encuentra en actual<\/h4><span class="disclosure-summary">9 controles · 14 hallazgos<\/span>/);
-  assert.match(markup, /<h4 id="[^"]+">Escenarios<\/h4>/);
-  assert.equal((markup.match(/<li><code>[^<]+<\/code> → /g) ?? []).length, 14);   // hallazgo → corrección
-  assert.equal(markup.includes("control-evidence-example"), false);
-  const order = ["Qué hace", "Controles del código", "Qué no cubre", "Lo que el formulario muestra", "Escenarios", "Qué simplifica", "Límite"];
+  for (const gone of ["Controles del código", "9 controles", "Escenarios", "code-guide-exits", "code-guide-scenarios", "control-evidence-example"]) {
+    assert.equal(markup.includes(gone), false, gone);
+  }
+  const order = ["Qué hace", "Qué no cubre", "Lo que el formulario muestra", "Qué simplifica", "Límite"];
   const positions = order.map((label) => markup.indexOf(label));
+  assert.ok(positions.every((position) => position >= 0), "están todas las subsecciones que se quedan");
   assert.deepEqual([...positions].sort((a, b) => a - b), positions, "orden de las subsecciones");
+});
+
+test("CodeGuide conserva tabla de controles, «Escenarios» y códigos de salida cuando una ficha los declara", () => {
+  const { CodeGuide } = loadTsx(join(ficha, "CodeGuide.tsx"));
+  const { codeGuideProps } = loadTsx(join(ROOT, "frontend/lib/views.ts"));
+  const view = {
+    exit_codes_label: "Códigos de salida", lead: { title: "Qué hace.", text: "t" },
+    rules: { title: "Controles", summary: "{rows} controles · {total} hallazgos", disclosure: "open", headers: ["Control", "Función", "Encuentra", "Hallazgos"],
+             items: [{ rule: "r1", fn: "f", requirement: "q", count: 2 }, { rule: "r2", fn: "f", requirement: "q", count: 1 }] },
+    not_covered: { title: "Qué no cubre", items: [{ title: "A:", text: "b" }] },
+    scenarios: { title: "Escenarios", disclosure: "closed", items: [
+      { name: "actual", text: "t", exit_code: 1 }, { name: "corregido", text: "t", exit_code: 0, fixes: [{ finding: "x", fix: "y" }] }] },
+    simplifies: { title: "Qué simplifica", items: [{ title: "A:", text: "b" }] }, limit: { title: "Límite.", text: "l" },
+  };
+  const markup = html(CodeGuide, codeGuideProps(view));
+  assert.match(markup, /Códigos de salida<\/span> <span><code>actual<\/code> → 1<\/span>/);
+  assert.match(markup, /<h4 id="[^"]+">Controles<\/h4><span class="disclosure-summary">2 controles · 3 hallazgos<\/span>/);
+  assert.match(markup, /<h4 id="[^"]+">Escenarios<\/h4>/);
+  assert.match(markup, /<li><code>x<\/code> → (<!-- -->)?<span>y<\/span><\/li>/);
+  const madre = views("chile-data-protection");   // la madre sigue con su tabla de reglas y sus escenarios
+  const own = html(CodeGuide, codeGuideProps(madre.code_guide));
+  assert.match(own, /code-guide-scenarios/);
+  assert.match(own, /<th>Regla<\/th>/);
 });
 
 test("Arquitectura: el diagrama de la madre con el registro resaltado y dos franjas; sin «Control y evidencia»", () => {

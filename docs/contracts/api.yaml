@@ -1583,13 +1583,11 @@ components:
               additionalProperties: false
           additionalProperties: false
         code_guide:
-          description: CodeGuide (§10, bajo el código).
+          description: CodeGuide (§10, bajo el código). rules y scenarios son opcionales desde la enmienda 10 del ADR-030.
           type: object
           required:
           - lead
-          - rules
           - not_covered
-          - scenarios
           - simplifies
           - limit
           properties:

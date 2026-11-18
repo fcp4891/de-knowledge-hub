@@ -66,11 +66,12 @@ export function CodeGuide({
   limit,
   breakCodes = false,
 }: CodeGuideProps & { breakCodes?: boolean }) {
-  const counted = rules.items.some((row) => row.count !== undefined);
+  const counted = rules?.items.some((row) => row.count !== undefined) ?? false;
   const table = notCovered.table;
   return (
     <section className="ficha-block code-guide" aria-label="Qué hace el ejemplo">
-      {exitCodesLabel ? (
+      {/* ADR-030 enmienda 10: rules y scenarios son opcionales; la línea de códigos de salida necesita scenarios. */}
+      {exitCodesLabel && scenarios ? (
         <p className="code-guide-exits">
           <span>{exitCodesLabel}</span>{" "}
           {scenarios.items.map((item, index) => (
@@ -91,6 +92,7 @@ export function CodeGuide({
         </p>
       ))}
 
+      {rules ? (
       <Block
         title={rules.title}
         summary={rules.summary ? rulesSummary(rules.summary, rules.items) : undefined}
@@ -135,6 +137,7 @@ export function CodeGuide({
           </table>
         </div>
       </Block>
+      ) : null}
 
       <h3>{notCovered.title}</h3>
       {notCovered.intro ? (
@@ -188,6 +191,7 @@ export function CodeGuide({
         </Block>
       ) : null}
 
+      {scenarios ? (
       <Block
         title={scenarios.title}
         summary={scenarios.disclosure ? <ExitCodes items={scenarios.items} /> : undefined}
@@ -220,6 +224,7 @@ export function CodeGuide({
           </tbody>
         </table>
       </Block>
+      ) : null}
 
       <h3>{simplifies.title}</h3>
       <ul>

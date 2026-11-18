@@ -867,7 +867,7 @@ export interface components {
                     }[];
                 };
             };
-            /** @description CodeGuide (§10, bajo el código). */
+            /** @description CodeGuide (§10, bajo el código). rules y scenarios son opcionales desde la enmienda 10 del ADR-030. */
             code_guide?: {
                 /** @description Rótulo de la línea «escenario → código», que se arma con scenarios (ADR-030, enmienda 9). */
                 exit_codes_label?: string;
@@ -877,7 +877,7 @@ export interface components {
                 };
                 /** @description Párrafos que siguen a «Qué hace» (ADR-030, enmienda 9). */
                 lead_more?: string[];
-                rules: {
+                rules?: {
                     /** @description Título del desplegable de la tabla (ADR-030, enmienda 9). */
                     title?: string;
                     /** @description Resumen visible con el desplegable cerrado: {rows} y {total} se calculan de items. */
@@ -936,7 +936,7 @@ export interface components {
                         }[];
                     };
                 };
-                scenarios: {
+                scenarios?: {
                     title: string;
                     /**
                      * @description Desplegable «Ver detalle / Ocultar» y su estado inicial (ADR-030, enmienda 9).

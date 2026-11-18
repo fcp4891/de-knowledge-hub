@@ -1523,7 +1523,6 @@ views:
       - Retención y supresión en todas las capas, respaldos y reprocesos
       - 'Puerta de la CI: bloquea lo nuevo sin actividad vigente · Conciliación: alerta lo que ya corre contra el registro'
   code_guide:
-    exit_codes_label: Códigos de salida
     lead:
       title: Qué hace.
       text: Recorre el registro de actividades, los usos observados y dos controles. La conciliación (escenarios `actual` y `corregido`) revisa
@@ -1534,53 +1533,6 @@ views:
     - 'La base de licitud se registra sin artículo: el artículo sale de un mapa aparte (`ARTICULO`). El consumidor sale de la identidad, la cuenta
       de servicio, no del texto de la consulta (`consumidor_de`). `None` es **sin evaluar** y, como UNKNOWN (falta el dato para decidir), nunca
       cuenta como OK.'
-    rules:
-      title: Controles del código y qué encuentra en actual
-      summary: '{rows} controles · {total} hallazgos'
-      disclosure: open
-      headers:
-      - Control
-      - Función
-      - Qué encuentra en actual
-      - Hallazgos
-      items:
-      - rule: Tablas con PII sin actividad
-        fn: tablas_sin_actividad
-        requirement: '`gold.score_fraude`'
-        count: 1
-      - rule: Registro sin ámbito territorial
-        fn: actividades_incompletas
-        requirement: el registro no declara su ámbito territorial
-        count: 1
-      - rule: Actividad aprobada incompleta
-        fn: actividades_incompletas
-        requirement: '`marketing`: sin plazo, aprobación vencida el 2026-10-01, base consentimiento sin registro de consentimientos, y transferencias
-          internacionales y decisiones automatizadas sin evaluar'
-        count: 5
-      - rule: Datos sensibles con base distinta del consentimiento (revisión) [(art. 16)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=12)
-        fn: actividades_incompletas
-        requirement: '`asistencia_especial` declara datos de salud con base contrato: se deriva a revisión, sin concluir una infracción'
-        count: 1
-      - rule: Interés legítimo sin justificación [(art. 13 letra d)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=8)
-        fn: actividades_incompletas
-        requirement: '`encuesta_post_vuelo` no documenta cuál es su interés legítimo'
-        count: 1
-      - rule: Uso sin aprobación vigente
-        fn: conciliar
-        requirement: '`dag_campanas` (`marketing`) y `job_fraude` (`modelo_fraude`, pendiente de evaluación)'
-        count: 2
-      - rule: Uso sin vínculo
-        fn: conciliar
-        requirement: '`dashboard_externo` lee `silver.pasajeros` sin actividad que lo declare'
-        count: 1
-      - rule: Proporcionalidad [(art. 3 letra c)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=3)
-        fn: conciliar
-        requirement: '`dag_campanas` lee `rut`, que `marketing` no necesita'
-        count: 1
-      - rule: Consumidor no identificado
-        fn: consumidor_de
-        requirement: 'la cuenta `sa-7f3c` no está mapeada: UNKNOWN'
-        count: 1
     not_covered:
       title: Qué no cubre
       items:
@@ -1631,49 +1583,6 @@ views:
         - item: La hoja misma (secciones, una página por actividad)
           form: Por confirmar.
           code: '`inventario.py` no tiene una función de exportación: la ficha arma la hoja desde los mismos datos del registro.'
-    scenarios:
-      title: Escenarios
-      disclosure: closed
-      items:
-      - name: actual
-        text: 'catorce hallazgos en el registro y en lo que ya corre: alerta'
-        exit_code: 1
-      - name: corregido
-        text: 'Los catorce hallazgos de `actual` se resuelven en el registro; el insumo pasa a cinco actividades:'
-        exit_code: 0
-        fixes:
-        - finding: 'tabla con PII sin actividad: gold.score_fraude'
-          fix: '`modelo_fraude` declara `gold.score_fraude` como activo'
-        - finding: registro sin ámbito territorial
-          fix: el registro declara su ámbito territorial
-        - finding: 'marketing: sin plazo de conservación'
-          fix: '`marketing` fija 24 meses'
-        - finding: 'marketing: aprobación vencida el 2026-10-01'
-          fix: aprobación renovada hasta el 2027-10-30
-        - finding: 'marketing: base consentimiento sin registro de consentimientos'
-          fix: registro de consentimientos vinculado (versión v3)
-        - finding: 'marketing: transferencias internacionales sin evaluar'
-          fix: 'transferencia declarada: Estados Unidos · cláusulas contractuales con garantías adecuadas'
-        - finding: 'marketing: decisiones automatizadas sin evaluar'
-          fix: perfilamiento declarado, con su lógica y consecuencias
-        - finding: 'revisión: datos sensibles con base contrato en asistencia_especial'
-          fix: '`asistencia_especial` pasa a consentimiento expreso, con registro de consentimientos'
-        - finding: 'encuesta_post_vuelo: interés legítimo sin justificación'
-          fix: '`encuesta_post_vuelo` documenta su interés legítimo'
-        - finding: 'sin aprobación vigente: dag_campanas → silver.pasajeros (marketing)'
-          fix: '`marketing` vuelve a estar vigente'
-        - finding: 'proporcionalidad: dag_campanas lee rut, no necesario para marketing'
-          fix: '`dag_campanas` deja de leer `rut`'
-        - finding: 'sin aprobación vigente: job_fraude → silver.pasajeros (modelo_fraude)'
-          fix: '`modelo_fraude` evaluada y aprobada: interés legítimo con justificación y 24 meses'
-        - finding: 'sin vínculo: dashboard_externo → silver.pasajeros'
-          fix: '`dashboard_externo` queda declarado en `venta_pasajes`'
-        - finding: 'consumidor no identificado: sa-7f3c → silver.reservas'
-          fix: '`sa-7f3c` se mapea a `job_conciliacion`, declarado en `venta_pasajes`'
-      - name: despliegue-nuevo
-        text: '4 despliegues contra el registro actual: pasa `dag_reservas`; se bloquean `dag_recomendaciones` (sin `activity_id`), `dag_segmentos`
-          (no declarado) y `job_fraude` (actividad no vigente)'
-        exit_code: 1
     simplifies:
       title: Qué simplifica
       items:
@@ -2420,3 +2329,4 @@ puerta de la CI: rechazada (1): 3 de 4 despliegues bloqueados
 - 2026-11-18: «Qué exige la ley» queda en dos subsecciones numeradas con el mismo encabezado, 2.1 «Cinco preguntas que la ley obliga a poder responder» y 2.2 «Campos del registro y de dónde viene cada uno» (ADR-030, enmienda 10). Sin cambios de contenido; el estado no cambia.
 - 2026-11-18: en Código, la tabla «Lo que el formulario muestra y el código no guarda» pasa a un desplegable «Ver detalle / Ocultar», cerrado por defecto, como «Escenarios» y la tabla de controles. Sin cambios de contenido; el estado no cambia.
 - 2026-11-18: se retira de Arquitectura la subsección «Control y evidencia» (título, subtítulo, cuatro tarjetas y nota) por decisión del dueño; el diagrama «Del requisito al dato» se mantiene. Sin otros cambios de contenido; el estado no cambia.
+- 2026-11-18: en Código se retiran, por decisión del dueño, el desplegable «Controles del código y qué encuentra en actual» (tabla y resumen «9 controles · 14 hallazgos») y el desplegable «Escenarios» (tabla y pastillas de códigos de salida), con la línea «Códigos de salida» que se armaba con ellos. El código y sus tres salidas no cambian; el estado no cambia.

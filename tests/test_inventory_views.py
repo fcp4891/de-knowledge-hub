@@ -89,23 +89,56 @@ def test_no_unevaluated_value_counts_as_ok(views: dict[str, Any]) -> None:
             assert all(data["status"][key] != "ok" for key, value in data["values"].items() if value is None)
 
 
-def test_controls_summary_matches_the_actual_output(views: dict[str, Any]) -> None:
-    rules = views["code_guide"]["rules"]
+# Los 9 controles del código (los que listaba la tabla retirada de §8) y cómo los nombra cada línea de la salida.
+CONTROLS = {
+    "tablas con PII sin actividad": r"^BRECHA tabla con PII sin actividad: ",
+    "registro sin ámbito territorial": r"^BRECHA registro sin ámbito territorial$",
+    "actividad aprobada incompleta": r"^BRECHA [a-z_]+: (sin plazo|aprobación vencida|base consentimiento sin registro|"
+                                     r"transferencias internacionales sin evaluar|decisiones automatizadas sin evaluar)",
+    "datos sensibles con otra base (revisión)": r"^BRECHA revisión: datos sensibles con base ",
+    "interés legítimo sin justificación": r"^BRECHA [a-z_]+: interés legítimo sin justificación$",
+    "uso sin aprobación vigente": r"^BRECHA sin aprobación vigente: ",
+    "uso sin vínculo": r"^BRECHA sin vínculo: ",
+    "proporcionalidad": r"^BRECHA proporcionalidad: ",
+    "consumidor no identificado": r"^UNKNOWN consumidor no identificado: ",
+}
+
+
+def documented(scenario: str) -> str:
+    (block,) = [b for b in blocks(FICHA, "text") if b.startswith(f"$ python inventario.py {scenario}\n")]
+    return block
+
+
+def test_controls_summary_matches_the_actual_output(text: str) -> None:
+    """«9 controles · 14 hallazgos», ahora contra la «Salida» de actual que muestra la página (la tabla se retiró):
+    cada línea BRECHA/UNKNOWN cae en exactamente uno de los 9 controles, aparecen los 9, y el total coincide con la
+    línea de resumen de esa salida y con lo que calcula el código."""
     findings = actual_findings()
-    assert len(rules["items"]) == 9 and sum(item["count"] for item in rules["items"]) == len(findings) == 14
-    assert rules["summary"].format(rows=len(rules["items"]), total=len(findings)) == "9 controles · 14 hallazgos"
+    per_control = {name: [f for f in findings if re.search(rx, f)] for name, rx in CONTROLS.items()}
+    assert all(sum(bool(re.search(rx, f)) for rx in CONTROLS.values()) == 1 for f in findings), findings
+    assert all(per_control.values()), [name for name, hits in per_control.items() if not hits]
+    summary = re.search(r"^conciliación: alerta \(1\): (\d+) hallazgo\(s\) en lo que ya corre$", documented("actual"), re.M)
+    assert summary and int(summary.group(1)) == len(findings)
+    m = inventory_views.load_module(inventory_views.python_block(text))
+    registro, usos, _ = m.escenario("actual")
+    computed = (m.tablas_sin_actividad(registro) + m.actividades_incompletas(registro, m.REFERENCIA)
+                + m.conciliar(registro, usos, m.REFERENCIA))
+    assert [f"{h.estado} {h.detalle}" for h in computed] == findings
+    assert f"{len(CONTROLS)} controles · {len(findings)} hallazgos" == "9 controles · 14 hallazgos"
 
 
-def test_each_fix_answers_a_real_finding(views: dict[str, Any]) -> None:
-    (corregido,) = [s for s in views["code_guide"]["scenarios"]["items"] if s["name"] == "corregido"]
-    details = [line.split(" ", 1)[1] for line in actual_findings()]
-    assert len(corregido["fixes"]) == len(details)
-    for fix, detail in zip(corregido["fixes"], details, strict=True):
-        assert detail.startswith(fix["finding"]), (fix["finding"], detail)
+def test_corregido_resolves_every_finding() -> None:
+    """Sin «Escenarios», la «Salida» de corregido es la que muestra el arreglo: ningún hallazgo y cinco actividades en el insumo."""
+    salida = documented("corregido")
+    assert not re.search(r"^(BRECHA|UNKNOWN) ", salida, re.M)
+    assert salida.rstrip().endswith("conciliación: sin hallazgos (0)")
+    assert len(re.findall(r"^- .+ · base: ", salida, re.M)) == 5
 
 
-def test_exit_codes_match_the_documented_runs(views: dict[str, Any]) -> None:
-    codes = {s["name"]: s["exit_code"] for s in views["code_guide"]["scenarios"]["items"]}
+def test_exit_codes_match_the_documented_runs() -> None:
+    """Los códigos de salida que muestra cada «Salida» (la línea final de cada ejecución documentada)."""
+    endings = {name: documented(name).rstrip().splitlines()[-1] for name in ("actual", "corregido", "despliegue-nuevo")}
+    codes = {name: int(re.search(r"\((\d)\)", line).group(1)) for name, line in endings.items()}
     assert codes == {"actual": 1, "corregido": 0, "despliegue-nuevo": 1}
 
 
