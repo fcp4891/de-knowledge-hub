@@ -200,3 +200,16 @@ test("ancho y tipografía: los bloques <ol> del Inventario llenan su tarjeta y l
   const reading = readFileSync(join(ROOT, "frontend/components/card/reading.css"), "utf8");
   assert.match(reading, /\.reading-summary \.markdown p:not\(\.pii-view \*, \.pii-use \*, \.pii-note, \.pii-risk, \.inv-view \*\)/);
 });
+
+test("§5: pasos alineados por fila con subgrid solo lado a lado; «Usarlo» por debajo del subtítulo solo en el Inventario", () => {
+  const sheet = readFileSync(join(ficha, "inventory-views.css"), "utf8");
+  assert.match(sheet, /@media \(min-width: 821px\) \{\n  \.inv-lane ol \{\n    grid-template-rows: repeat\(6, auto\);\n  \}\n\n  \.inv-lane li \{\n    display: grid;\n    grid-row: span 6;\n    grid-template-rows: subgrid;/);
+  const { CycleLanes } = loadTsx(join(ficha, "InventoryBlocks.tsx"));
+  const markup = html(CycleLanes, { view: inv.cycle_lanes });
+  for (const step of [...markup.matchAll(/<li>(.*?)<\/li>/g)].map((m) => m[1])) {
+    // seis hijos en orden: número, título, descripción, caso, evidencia, no demuestra (una fila de la subgrid cada uno)
+    assert.match(step, /^<span class="inv-lane-n">[^<]+<\/span><b>[^<]+<\/b><p>.*<\/p><p class="inv-lane-case">.*<\/p><p class="inv-lane-evidence">.*<\/p><p class="inv-lane-limit">.*<\/p>$/);
+  }
+  assert.match(sheet, /\.reading-article:has\(\.inv-view\) \.reading-details \.pii-use \.pii-col > h3 \{\n  font-size: 15px;/);
+  assert.equal(readFileSync(join(ficha, "pii-views.css"), "utf8").includes("font-size: 15px;\n  letter-spacing: 0.06em"), false);   // pii no cambia
+});

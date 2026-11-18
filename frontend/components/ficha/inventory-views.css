@@ -1257,6 +1257,14 @@ button.inv-rg-icon.is-proposal:hover {
   }
 }
 
+/* Cuándo usarlo (UseAvoid, compartido con pii): en el Inventario, los rótulos «Usarlo» / «No usarlo para» quedan por
+   debajo del subtítulo de la sección. Sin :has(.inv-view), pii no cambia. */
+.reading-article:has(.inv-view) .reading-details .pii-use .pii-col > h3 {
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  line-height: 1.3;
+}
+
 /* Problema · el pedido sin y con inventario */
 .inv-case {
   overflow: hidden;
@@ -1440,6 +1448,23 @@ button.inv-rg-icon.is-proposal:hover {
   gap: 8px;
   min-width: 0;
   padding: 14px 16px;
+}
+
+/* Lado a lado, cada paso es una columna de una rejilla de 6 filas compartidas (subgrid): número, título,
+   descripción, caso, evidencia y «No demuestra» empiezan a la misma altura que en los pasos vecinos, y las cajas de
+   una fila toman la altura de la más alta. Cada franja es su propia rejilla. Apiladas (≤820 px), sin cambios. */
+@media (min-width: 821px) {
+  .inv-lane ol {
+    grid-template-rows: repeat(6, auto);
+  }
+
+  .inv-lane li {
+    display: grid;
+    grid-row: span 6;
+    grid-template-rows: subgrid;
+    row-gap: 8px;
+    align-content: start;
+  }
 }
 
 .inv-lane li + li {
