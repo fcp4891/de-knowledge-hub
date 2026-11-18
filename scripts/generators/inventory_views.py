@@ -45,7 +45,9 @@ GAP_FIELD = (
     (SIN_PLAZO, "plazo", "pending"),
     ("aprobación vencida", "aprob", "review"),
     ("sin registro de consentimientos", "aprob", "pending"),
+    ("datos sensibles sin evaluar", "tipo", "pending"),
     ("sin categorías de titulares", "titulares", "pending"),
+    ("destinatarios sin evaluar", "destinatarios", "pending"),
     ("fuente de los datos sin evaluar", "fuente", "pending"),
     ("transferencias internacionales sin evaluar", "transf", "pending"),
     ("decisiones automatizadas sin evaluar", "decisiones", "pending"),
@@ -97,14 +99,15 @@ def field_values(m: ModuleType, registro: Any, a: Any) -> dict[str, str | None]:
             aprob += f" · consentimientos {a.consentimientos.version_texto} desde {a.consentimientos.desde}"
     publico = None if a.acceso_publico is None else ("sí" if a.acceso_publico else "no")
     return {
-        "tipo": f"{cap(joined(a.categorias))} · sensibles: {joined(a.categorias_sensibles) or 'ninguno'}",
+        "tipo": f"{cap(joined(a.categorias))} · sensibles: "
+                + (m.SIN_EVALUAR if a.categorias_sensibles is None else joined(a.categorias_sensibles) or "ninguno"),
         "ambito": registro.ambito_territorial,
         "bases": joined(sorted(a.activos)),
         "titulares": cap(joined(a.titulares)) if a.titulares else None,
         "finalidad": cap(a.finalidad),
         "fuente": None if a.fuente is None or publico is None else f"{cap(a.fuente)} · acceso público: {publico}",
         "base": base,
-        "destinatarios": cap(joined(a.destinatarios)) if a.destinatarios else "Ninguno",
+        "destinatarios": None if a.destinatarios is None else cap(joined(a.destinatarios)) or "Ninguno",
         "transf": None if a.transferencias is None else joined(a.transferencias) or "Ninguna",
         "plazo": plazo or None,
         "decisiones": None if a.decisiones_automatizadas is None else cap(a.decisiones_automatizadas) or "Ninguna",
@@ -123,6 +126,8 @@ def field_status(m: ModuleType, registro: Any, a: Any, values: dict[str, str | N
     status = {key: "ok" if value is not None else "pending" for key, value in values.items()}
     if registro.ambito_territorial is None:
         status["ambito"] = "pending"
+    if a.categorias_sensibles is None:   # el valor muestra las categorías, pero los sensibles siguen sin evaluar
+        status["tipo"] = "pending"
     for gap in own_gaps(m, registro, a):
         for fragment, key, state in GAP_FIELD:
             if fragment in gap and status[key] != "review":
@@ -154,7 +159,8 @@ def sheet_rows(field: dict[str, Any], a: Any, sheet: dict[str, Any]) -> list[dic
             rows.append(row("Registro de consentimientos", None if c is None else f"{c.version_texto}, desde {c.desde}"))
         return rows
     if key == "tipo":
-        sensibles = f"Sí · {joined(a.categorias_sensibles)}" if a.categorias_sensibles else "No"
+        s = a.categorias_sensibles
+        sensibles = None if s is None else f"Sí · {joined(s)}" if s else "No"
         return [row(name, cap(joined(a.categorias))), row("Datos sensibles", sensibles)]
     if key == "bases":
         tablas = sorted(a.activos)
@@ -165,7 +171,8 @@ def sheet_rows(field: dict[str, Any], a: Any, sheet: dict[str, Any]) -> list[dic
         publico = None if a.acceso_publico is None else ("Sí" if a.acceso_publico else "No")
         return [row(name, None if a.fuente is None else cap(a.fuente)), row("Fuente de acceso público", publico)]
     if key == "destinatarios":
-        return [row(name, cap(joined(a.destinatarios)) if a.destinatarios else "Ninguno")]
+        d = a.destinatarios
+        return [row(name, None if d is None else cap(joined(d)) or "Ninguno")]
     if key == "transf":
         if a.transferencias is None:
             return [row(name, None)]

@@ -11,6 +11,7 @@
 from __future__ import annotations
 
 import re
+from dataclasses import replace
 from pathlib import Path
 from typing import Any
 
@@ -87,6 +88,28 @@ def test_no_unevaluated_value_counts_as_ok(views: dict[str, Any]) -> None:
     for case in views["register_fields"]["cases"]:
         for data in case["states"].values():
             assert all(data["status"][key] != "ok" for key, value in data["values"].items() if value is None)
+
+
+def test_unevaluated_sensitive_recipients_and_base_never_pass_as_ok(text: str) -> None:
+    """None es sin evaluar en sensibles, destinatarios y base: brecha si la actividad está aprobada, `[sin evaluar]` en el
+    insumo del art. 14 ter (nunca «ninguno» ni una actividad omitida) y estado pending en la tabla de campos."""
+    m = inventory_views.load_module(inventory_views.python_block(text))
+    registro, _, _ = m.escenario("corregido")
+    (fraude,) = [a for a in registro.actividades if a.id == "modelo_fraude"]
+    sin_evaluar = replace(registro, actividades=(replace(fraude, categorias_sensibles=None, destinatarios=None),))
+    gaps = [h.detalle for h in m.actividades_incompletas(sin_evaluar, m.REFERENCIA)]
+    assert {"modelo_fraude: datos sensibles sin evaluar", "modelo_fraude: destinatarios sin evaluar"} <= set(gaps)
+    filas = m.insumo_14_ter(sin_evaluar, m.REFERENCIA)
+    assert "  d) datos: identificación, pagos · sensibles: [sin evaluar]" in filas
+    assert "  d) titulares: pasajeros, compradores · destinatarios: [sin evaluar]" in filas
+    sin_base = replace(registro, actividades=(replace(fraude, base=None),))
+    assert m.insumo_14_ter(sin_base, m.REFERENCIA)[0] == "- detectar operaciones sospechosas · base: [sin evaluar]"
+    assert "modelo_fraude: aprobada sin base de licitud" in [h.detalle for h in m.actividades_incompletas(sin_base, m.REFERENCIA)]
+    a = sin_evaluar.actividades[0]
+    values = inventory_views.field_values(m, sin_evaluar, a)
+    status = inventory_views.field_status(m, sin_evaluar, a, values)
+    assert values["tipo"].endswith("sensibles: [sin evaluar]") and values["destinatarios"] is None
+    assert (status["tipo"], status["destinatarios"]) == ("pending", "pending")
 
 
 # Los 9 controles del código (los que listaba la tabla retirada de §8) y cómo los nombra cada línea de la salida.

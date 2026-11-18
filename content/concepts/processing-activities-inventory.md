@@ -375,7 +375,8 @@ views:
       name: Tipo de datos
       why: Qué datos se tratan y si entre ellos hay sensibles.
       code: Actividad.categorias · Actividad.categorias_sensibles
-      check: que un dato sensible declarado con una base distinta del consentimiento pase a revisión (art. 16)
+      check: que se haya evaluado si hay datos sensibles (vacío es **ninguno**; sin evaluar es **datos sensibles sin evaluar**) y que un
+        dato sensible declarado con una base distinta del consentimiento pase a revisión (art. 16)
       limit: que haya categorías declaradas ni que la lista de sensibles esté completa; eso lo aporta la ficha de identificación de datos personales
       sheet_section: Datos
       law_letter: d
@@ -452,7 +453,7 @@ views:
       name: Destinatarios
       why: Quién más recibe los datos, incluidos terceros países.
       code: Actividad.destinatarios
-      check: 'nada: una lista vacía se publica como **ninguno**'
+      check: 'que esté evaluado: vacío es **ninguno**; sin evaluar es **destinatarios sin evaluar**'
       limit: que la lista esté completa ni que exista un contrato con cada destinatario
       sheet_section: Comunicación de los datos
       law_letter: d
@@ -1909,7 +1910,7 @@ class Actividad:   # None = sin evaluar; () o "" = se evaluó y se declaró «ni
     plazo_meses: int | None
     aprobacion: Aprobacion | None
     categorias: tuple[str, ...]
-    destinatarios: tuple[str, ...]
+    destinatarios: tuple[str, ...] | None
     activos: frozenset[str]
     consumidores: frozenset[str]
     campos: frozenset[str]         # columnas que la finalidad necesita
@@ -1919,7 +1920,7 @@ class Actividad:   # None = sin evaluar; () o "" = se evaluó y se declaró «ni
     acceso_publico: bool | None = None
     transferencias: tuple[str, ...] | None = None    # cada una «país · mecanismo del art. 27»
     decisiones_automatizadas: str | None = None      # lógica y consecuencias
-    categorias_sensibles: tuple[str, ...] = ()       # subconjunto declarado de categorias
+    categorias_sensibles: tuple[str, ...] | None = None   # subconjunto declarado de categorias
     justificacion_interes_legitimo: str | None = None
     plazo_condicion: str | None = None               # «plazos o condiciones»: basta uno de los dos
 
@@ -1985,8 +1986,12 @@ def actividades_incompletas(registro: Registro, hoy: date) -> list[Hallazgo]:
             hallazgos.append(Hallazgo("BRECHA", f"{a.id}: aprobación vencida el {a.aprobacion.vence}"))
         if a.base == "consentimiento" and a.consentimientos is None:
             hallazgos.append(Hallazgo("BRECHA", f"{a.id}: base consentimiento sin registro de consentimientos"))
+        if a.categorias_sensibles is None:
+            hallazgos.append(Hallazgo("BRECHA", f"{a.id}: datos sensibles sin evaluar"))
         if not a.titulares:
             hallazgos.append(Hallazgo("BRECHA", f"{a.id}: sin categorías de titulares"))
+        if a.destinatarios is None:
+            hallazgos.append(Hallazgo("BRECHA", f"{a.id}: destinatarios sin evaluar"))
         if a.fuente is None or a.acceso_publico is None:
             hallazgos.append(Hallazgo("BRECHA", f"{a.id}: fuente de los datos sin evaluar"))
         if a.transferencias is None:
@@ -2054,7 +2059,7 @@ def insumo_14_ter(registro: Registro, hoy: date) -> list[str]:
     lo que falta sale como [sin evaluar], nunca se omite."""
     filas = []
     for a in registro.actividades:
-        if not vigente(a, hoy) or a.base is None:
+        if not vigente(a, hoy):
             continue
         plazo = " o ".join(p for p in (f"{a.plazo_meses} meses" if a.plazo_meses is not None else "",
                                        a.plazo_condicion or "") if p) or SIN_EVALUAR
@@ -2062,9 +2067,9 @@ def insumo_14_ter(registro: Registro, hoy: date) -> list[str]:
         decisiones = SIN_EVALUAR if a.decisiones_automatizadas is None else a.decisiones_automatizadas or "ninguna"
         interes = (f" · interés legítimo: {a.justificacion_interes_legitimo or SIN_EVALUAR}"
                    if a.base == "interés legítimo" else "")
-        articulo = ARTICULO[a.base] + ("; art. 16, expreso" if a.categorias_sensibles and a.base == "consentimiento"
-                                       else "")
-        filas += [f"- {a.finalidad} · base: {a.base} ({articulo}){interes}",
+        base = SIN_EVALUAR if a.base is None else f"{a.base} ({ARTICULO[a.base]}" + (
+            "; art. 16, expreso" if a.categorias_sensibles and a.base == "consentimiento" else "") + ")"
+        filas += [f"- {a.finalidad} · base: {base}{interes}",
                   f"  d) datos: {', '.join(a.categorias)} · sensibles: {lista(a.categorias_sensibles, 'ninguno')}",
                   f"  d) titulares: {lista(a.titulares, SIN_EVALUAR)} "
                   f"· destinatarios: {lista(a.destinatarios, 'ninguno')}",
@@ -2081,15 +2086,16 @@ def escenario(nombre: str) -> tuple[Registro, list[Uso], list[Despliegue]]:
                       ("aerolíneas socias",), frozenset({"silver.pasajeros", "silver.reservas"}),
                       frozenset({"dag_reservas"}), frozenset({"pasajero_id", "nombre", "correo", "vuelo", "fecha"}),
                       titulares=("pasajeros", "compradores"), fuente="el propio comprador, al reservar",
-                      acceso_publico=False, decisiones_automatizadas="",
+                      acceso_publico=False, decisiones_automatizadas="", categorias_sensibles=(),
                       transferencias=("Argentina · cláusulas contractuales con garantías adecuadas",))
     marketing = Actividad("marketing", "ofertas personalizadas", "consentimiento", None,
                           Aprobacion(date(2025, 10, 1), date(2026, 10, 1)), ("contacto", "preferencias"),
                           ("plataforma de email",), frozenset({"silver.pasajeros"}), frozenset({"dag_campanas"}),
                           frozenset({"pasajero_id", "correo", "preferencias"}),
-                          titulares=("pasajeros suscritos",), fuente="formulario de suscripción", acceso_publico=False)
+                          titulares=("pasajeros suscritos",), fuente="formulario de suscripción", acceso_publico=False,
+                          categorias_sensibles=())
     fraude = Actividad("modelo_fraude", "detectar operaciones sospechosas", None, None, None,
-                       ("identificación", "pagos"), (), frozenset({"silver.pasajeros"}), frozenset({"job_fraude"}),
+                       ("identificación", "pagos"), None, frozenset({"silver.pasajeros"}), frozenset({"job_fraude"}),
                        frozenset())
     asistencia = Actividad("asistencia_especial", "asistencia en aeropuerto a pasajeros con movilidad reducida",
                            "contrato", 12, Aprobacion(date(2026, 3, 1), date(2027, 3, 1)),
@@ -2102,7 +2108,8 @@ def escenario(nombre: str) -> tuple[Registro, list[Uso], list[Despliegue]]:
                          Aprobacion(date(2026, 5, 1), date(2027, 5, 1)), ("contacto", "itinerario"), (),
                          frozenset({"silver.reservas"}), frozenset({"dag_encuestas"}),
                          frozenset({"pasajero_id", "correo", "vuelo"}), titulares=("pasajeros",),
-                         fuente="la reserva", acceso_publico=False, transferencias=(), decisiones_automatizadas="")
+                         fuente="la reserva", acceso_publico=False, transferencias=(), decisiones_automatizadas="",
+                         categorias_sensibles=())
     pii = frozenset({"silver.pasajeros", "silver.reservas", "gold.score_fraude"})
     registro = Registro((venta, marketing, fraude, asistencia, encuesta), pii,
                         {"sa-reservas": "dag_reservas", "sa-campanas": "dag_campanas", "sa-fraude": "job_fraude",
@@ -2129,6 +2136,7 @@ def escenario(nombre: str) -> tuple[Registro, list[Uso], list[Despliegue]]:
                 activos=frozenset({"silver.pasajeros", "gold.score_fraude"}),
                 campos=frozenset({"pasajero_id", "rut", "monto"}), titulares=("pasajeros", "compradores"),
                 fuente="pagos registrados en la venta", acceso_publico=False, transferencias=(),
+                destinatarios=(), categorias_sensibles=(),
                 decisiones_automatizadas="puntaje de riesgo por operación; sobre el umbral, la operación se "
                                          "retiene para revisión humana",
                 justificacion_interes_legitimo="prevenir fraude en los pagos; ponderado frente a las expectativas "
@@ -2330,3 +2338,4 @@ puerta de la CI: rechazada (1): 3 de 4 despliegues bloqueados
 - 2026-11-18: se retira de Arquitectura la subsección «Control y evidencia» (título, subtítulo, cuatro tarjetas y nota) por decisión del dueño; el diagrama «Del requisito al dato» se mantiene. Sin otros cambios de contenido; el estado no cambia.
 - 2026-11-18: en Código se retiran, por decisión del dueño, el desplegable «Controles del código y qué encuentra en actual» (tabla y resumen «9 controles · 14 hallazgos») y el desplegable «Escenarios» (tabla y pastillas de códigos de salida), con la línea «Códigos de salida» que se armaba con ellos. El código y sus tres salidas no cambian; el estado no cambia.
 - 2026-11-18: en «En la nube», el pie deja solo «No son equivalencias exactas. Ningún servicio certifica cumplimiento por sí solo.», por decisión del dueño; la fecha de verificación de las fuentes cloud sigue en Fuentes. El estado no cambia.
+- 2026-11-18: revisión independiente, I1. En `inventario.py`, `categorias_sensibles` y `destinatarios` aceptan `None` (sin evaluar): en una actividad aprobada, cada uno genera una brecha («datos sensibles sin evaluar», «destinatarios sin evaluar»), y en el insumo del art. 14 ter salen como `[sin evaluar]`, no como «ninguno». Una actividad vigente sin base ya no se omite: sale con `base: [sin evaluar]`. Los escenarios declaran lo que cada actividad evaluó (`modelo_fraude` en `actual` queda sin evaluar). Conteos y salidas sin cambios: `actual` → 1 con 14 hallazgos, `corregido` → 0, `despliegue-nuevo` → 1 con 3 de 4 bloqueados. El estado no cambia.
