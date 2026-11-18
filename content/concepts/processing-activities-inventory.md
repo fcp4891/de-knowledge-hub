@@ -310,6 +310,7 @@ views:
       cites:
       - '[(art. 34 ter)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=24)'
       expected: Tratar datos sin base o con una finalidad distinta (letra a), o tratar datos innecesarios para los fines (letra c).
+      interpretation: '**Consecuencia, no obligación**'
       record: Un uso sin actividad registrada es una alerta que se revisa, no una infracción que se presume.
       risk: true
   register_fields:
@@ -1833,7 +1834,7 @@ Es la base de los demás controles. Sin saber qué actividad usa qué datos, con
 
 <!-- split: ley -->
 
-### Cinco preguntas que la ley obliga a poder responder
+### Cinco preguntas que conviene poder responder
 
 <!-- view: law_ladder -->
 
@@ -2350,3 +2351,4 @@ puerta de la CI: rechazada (1): 3 de 4 despliegues bloqueados
 - 2026-11-18: revisión independiente, En la nube. La alerta «Ojo» distingue la retención de GCP: el linaje, 30 días; `INFORMATION_SCHEMA.JOBS_BY_ORGANIZATION`, 180 días, que también pasa a la nota de esa fuente en Fuentes. La fila de identidad rotula `INFORMATION_SCHEMA.JOBS_BY_ORGANIZATION`; en AWS, «se rastrea el rol que inició la consulta» reemplaza «la tabla se obtiene correlacionando con esos accesos»; `system.access.audit` lleva «(vista previa pública)». Sale de la fila «Finalidad» la frase sobre las etiquetas del catálogo de GCP, que no tenía fuente. Fuentes cloud verificadas el 2026-11-18. El estado no cambia.
 - 2026-11-18: revisión independiente, textos legales (pendientes de aprobación del dueño; sin `owner_approved_at`). En «Qué exige la ley», la columna se rotula «Lo que se espera (paráfrasis)», y «La ley no fija un plazo general: lo define el responsable según la finalidad» pasa a una línea propia «Interpretación de la ficha» (ADR-030, enmienda 11). La fila de proporcionalidad conserva la paráfrasis del art. 3 c), con «salvo las excepciones que establezca la ley». La fila de finalidad agrega la condición contractual del art. 3 b). La fila «¿Qué se publica?» suma la letra k del art. 14 ter, literal. La nota «La ley no exige este formato» cita literal la frase final del art. 3 d) del Decreto 662. La nota del Decreto en el modal dice «(paráfrasis del art. 1)», y el aviso legal pasa a «Esta ficha no es asesoría legal. Finalidad…», con mayúscula. El título de 2.1 y la quinta fila no cambian hasta que responda el dueño. El estado no cambia.
 - 2026-11-18: revisión independiente, verificación y detalles. `last_verified` pasa a 2026-11-18: ese día se volvieron a verificar las citas legales, contra BCN (versión 2026-12-01) y el Diario Oficial, y las seis páginas cloud, con `accessed` igual. La cabecera cuenta solo las fuentes oficiales: 9, sin las fichas de «En esta plataforma». En el código de la ficha, decoradores, sus parámetros y la interpolación de f-strings llegan a contraste AA. El estado no cambia.
+- 2026-11-18: por decisión del dueño, 2.1 pasa a «Cinco preguntas que conviene poder responder» y la quinta fila de la escalera («¿Y si un uso no calza?») lleva la marca «Consecuencia, no obligación» en la línea de interpretación; su contenido legal no cambia. Textos pendientes de la aprobación del dueño (sin `owner_approved_at`); sigue en `review_required`.

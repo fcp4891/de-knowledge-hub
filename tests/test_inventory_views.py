@@ -186,7 +186,7 @@ def test_law_split_has_two_numbered_subsections(text: str, views: dict[str, Any]
     (split,) = views["section_splits"]
     assert (split["key"], split.get("subsections")) == ("ley", True)
     part = text.split("<!-- split: ley -->", 1)[1].split("\n## 2.", 1)[0]
-    assert re.findall(r"^### (.+)$", part, re.M) == ["Cinco preguntas que la ley obliga a poder responder",
+    assert re.findall(r"^### (.+)$", part, re.M) == ["Cinco preguntas que conviene poder responder",
                                                        "Campos del registro y de dónde viene cada uno"]
     assert part.index("Campos del registro") < part.index("<!-- view: register_fields -->")
 
@@ -208,7 +208,8 @@ def test_ladder_separates_paraphrase_from_interpretation_and_quotes_letter_k(vie
     ladder = views["law_ladder"]
     assert ladder["headers"][1] == "Lo que se espera (paráfrasis)"
     interpretations = [row for row in ladder["rows"] if row.get("interpretation")]
-    assert [row["principle"] for row in interpretations] == ["Proporcionalidad"]
+    # La quinta fila suma la marca «Consecuencia, no obligación» por decisión del dueño (2026-11-18).
+    assert [row["principle"] for row in interpretations] == ["Proporcionalidad", "Infracción grave"]
     moved = "La ley no fija un plazo general: lo define el responsable según la finalidad."
     assert interpretations[0]["interpretation"] == f"**Interpretación de la ficha:** {moved}"
     assert all("plazo general" not in row["expected"] for row in ladder["rows"])
@@ -218,3 +219,15 @@ def test_ladder_separates_paraphrase_from_interpretation_and_quotes_letter_k(vie
     assert f"la letra k pide (texto literal): «{letter_k}»." in published["expected"]
     assert "«Esta caracterización podrá realizarse a través de un registro de actividades de tratamiento»." in views["notes"]["sin-formato"]["text"]
     assert views["register_fields"]["literal"]["decree_note"].endswith("(paráfrasis del art. 1).")
+
+
+def test_fifth_row_is_a_consequence_not_an_obligation(views: dict[str, Any]) -> None:
+    """2.1, quinta fila: lleva la marca «Consecuencia, no obligación» en la línea de interpretación (ADR-030, enmienda
+    11) y su contenido legal no cambia: art. 34 ter, letras a y c, y la alerta que no presume infracción."""
+    row = views["law_ladder"]["rows"][4]
+    assert (row["question"], row["principle"], row.get("risk")) == ("¿Y si un uso no calza?", "Infracción grave", True)
+    assert row["interpretation"] == "**Consecuencia, no obligación**"
+    assert [c.split("]")[0] for c in row["cites"]] == ["[(art. 34 ter)"]
+    assert row["expected"] == ("Tratar datos sin base o con una finalidad distinta (letra a), o tratar datos innecesarios "
+                               "para los fines (letra c).")
+    assert row["record"] == "Un uso sin actividad registrada es una alerta que se revisa, no una infracción que se presume."

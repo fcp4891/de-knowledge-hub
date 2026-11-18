@@ -260,8 +260,10 @@ test("§5: pasos alineados por fila con subgrid solo lado a lado; «Usarlo» por
 test("enmienda 11: la interpretación de la escalera va en su propia línea, solo en la fila que la declara", () => {
   const { LawLadder } = loadTsx(join(ficha, "InventoryBlocks.tsx"));
   const markup = html(LawLadder, { view: inv.law_ladder });
-  assert.equal((markup.match(/<p class="inv-ladder-interp">/g) ?? []).length, 1);
+  // Dos filas la declaran: el plazo (interpretación) y la quinta fila (marca «Consecuencia, no obligación», 2026-11-18).
+  assert.equal((markup.match(/<p class="inv-ladder-interp">/g) ?? []).length, 2);
   assert.match(markup, /<p class="inv-ladder-interp"><strong>Interpretación de la ficha:<\/strong>(<span>)? La ley no fija un plazo general/);
+  assert.match(markup, /<p class="inv-ladder-interp"><strong>Consecuencia, no obligación<\/strong><\/p>/);
   assert.match(markup, /<span>Lo que se espera \(paráfrasis\)<\/span>/);
   const without = html(LawLadder, { view: { ...inv.law_ladder, rows: inv.law_ladder.rows.map(({ interpretation, ...row }) => row) } });
   assert.equal(without.includes("inv-ladder-interp"), false);
