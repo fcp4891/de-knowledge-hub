@@ -1460,6 +1460,8 @@ export interface components {
                     cites?: string[];
                     /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                     expected: string;
+                    /** @description Opcional (enmienda 11): interpretación separada de la paráfrasis, con su rótulo en el texto. Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    interpretation?: string;
                     /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                     record: string;
                     risk?: boolean;

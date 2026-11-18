@@ -56,6 +56,11 @@ export function LawLadder({ view }: { view: V["law_ladder"] }) {
             <p>
               <RichText text={row.expected} />
             </p>
+            {row.interpretation ? (
+              <p className="inv-ladder-interp">
+                <RichText text={row.interpretation} />
+              </p>
+            ) : null}
           </div>
           <div className="inv-ladder-record">
             <i className="inv-ladder-label">{record}</i>

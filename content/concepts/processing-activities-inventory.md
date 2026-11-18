@@ -46,8 +46,8 @@ legal_basis:
 - law: ley-19628
   article: 14 ter
   url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-  note: 'Información pública: categorías de datos, titulares, destinatarios, finalidades y base (d), transferencias (h), plazo (i), fuente (j)
-    y decisiones automatizadas (l).'
+  note: 'Información pública: categorías de datos, titulares, destinatarios, finalidades y base (d), transferencias (h), plazo (i), fuente (j),
+    derecho a retirar el consentimiento cuando esa es la base (k) y decisiones automatizadas (l).'
   implication: El registro genera el insumo de la política, que privacidad revisa antes de publicar.
 - law: ley-19628
   article: '16'
@@ -81,7 +81,7 @@ sources:
   page_title: Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES · Con Vigencia Diferida por Fecha - 01-DIC-2026
   note: 'Ley 19.628 en la versión «Con Vigencia Diferida por Fecha - 01-DIC-2026» (última modificación: Ley 21.719), consultada el 2026-11-15.
     Arts. 1 bis, 3 letras a, b y c, 12, 13 letras a a e, 14 letra a, 14 ter letras d, h, i, j y l, 16, 27 y 34 ter letras a y c, verificados contra
-    lo que dice la ficha. Fuera del modelo de prevención (arts. 49 a 53), el texto no impone llevar un registro de actividades de tratamiento:
+    lo que dice la ficha; 14 ter letra k, verificada el 2026-11-18 contra el texto de BCN y el del Diario Oficial (pág. 9). Fuera del modelo de prevención (arts. 49 a 53), el texto no impone llevar un registro de actividades de tratamiento:
     los deberes cercanos son acreditar la licitud (arts. 3 a, 12, 13 y 14 a) y publicar la información del art. 14 ter.'
 - source: bcn-leychile
   url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idParte=10528059&idVersion=2026-12-01
@@ -216,9 +216,11 @@ views:
         y compartirla no autoriza todos sus usos.
     sin-formato:
       lead: La ley no exige este formato.
-      text: El registro es evidencia de apoyo para acreditar la licitud, la finalidad y el plazo, no prueba suficiente por sí solo. El modelo
+      text: 'El registro es evidencia de apoyo para acreditar la licitud, la finalidad y el plazo, no prueba suficiente por sí solo. El modelo
         de prevención de infracciones es voluntario y no sustituye el deber general de cumplir la ley (art. 49 de la Ley 19.628, texto modificado
-        por la Ley 21.719, y art. 1 del [Decreto 662](https://www.bcn.cl/leychile/navegar?idNorma=1227971)).
+        por la Ley 21.719, y art. 1 del [Decreto 662](https://www.bcn.cl/leychile/navegar?idNorma=1227971)). Para quien lo adopta, el art. 3 letra
+        d) del [Decreto 662](https://www.bcn.cl/leychile/navegar?idNorma=1227971&idParte=10609555) dice (texto literal): «Esta caracterización
+        podrá realizarse a través de un registro de actividades de tratamiento».'
     muchos-a-muchos:
       lead: Muchos a muchos.
       text: 'Una actividad usa varios activos y un activo sirve a varias actividades; lo mismo con los consumidores. Por eso un único `legal_basis`
@@ -259,7 +261,7 @@ views:
   law_ladder:
     headers:
     - Pregunta
-    - Lo que se espera
+    - Lo que se espera (paráfrasis)
     - El registro
     rows:
     - question: ¿Para qué?
@@ -267,7 +269,8 @@ views:
       cites:
       - '[(art. 3 letra b)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=3)'
       expected: Fines específicos, explícitos y lícitos. Otro fin solo si es compatible con el original, si lo justifica una relación contractual
-        o precontractual, si el titular vuelve a consentir o si lo dispone la ley.
+        o precontractual que se enmarque en los fines del contrato o en las tratativas previas, si el titular vuelve a consentir o si lo dispone
+        la ley.
       record: Se anota en **Finalidad** y en **Activos y consumidores**. Un uso que no calza con ninguna actividad aparece como alerta.
     - question: ¿Con qué fundamento?
       principle: Licitud y base
@@ -285,20 +288,23 @@ views:
       principle: Proporcionalidad
       cites:
       - '[(art. 3 letra c)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=3)'
-      expected: 'Solo los datos necesarios, adecuados y pertinentes para los fines, y solo mientras se necesiten para cumplirlos; después se suprimen
-        o anonimizan. La ley no fija un plazo general: lo define el responsable según la finalidad, salvo que otra ley fije uno, y conservar por
-        más tiempo requiere autorización legal o consentimiento del titular.'
+      expected: Solo los datos necesarios, adecuados y pertinentes para los fines, y solo mientras se necesiten para cumplirlos; después se suprimen
+        o anonimizan, salvo las excepciones que establezca la ley. Conservarlos por más tiempo requiere autorización legal o consentimiento del
+        titular.
+      interpretation: '**Interpretación de la ficha:** La ley no fija un plazo general: lo define el responsable según la finalidad.'
       record: Se anota en **Activos y consumidores** y en **Plazo o condición de supresión**. Cada finalidad declara los campos que necesita y
         un plazo declarado.
     - question: ¿Qué se publica?
       principle: Información pública
       cites:
       - '[(art. 14 ter)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=9)'
-      expected: Categorías de datos, titulares, destinatarios, finalidades y base (letra d); transferencias (h); plazo (i); fuente (j); decisiones
-        automatizadas (l).
+      expected: 'Categorías de datos, titulares, destinatarios, finalidades y base (letra d); transferencias (h); plazo (i); fuente (j); decisiones
+        automatizadas (l). Si la base es el consentimiento, la letra k pide (texto literal): «Cuando el tratamiento está basado en el consentimiento
+        del titular, la existencia del derecho a retirarlo en cualquier momento, sin que ello afecte a la licitud del tratamiento basado en el consentimiento
+        previo a su retirada».'
       record: Se anota en **Tipo de datos**, **Titulares**, **Destinatarios**, **Finalidad**, **Base de licitud**, **Transferencias internacionales**,
         **Plazo o condición de supresión**, **Fuente** y **Decisiones automatizadas**. Con eso se genera el insumo para la política, que privacidad
-        revisa antes de publicar.
+        revisa antes de publicar. Para la letra k, **Base de licitud** dice qué actividades se basan en el consentimiento.
     - question: ¿Y si un uso no calza?
       principle: Infracción grave
       cites:
@@ -366,7 +372,7 @@ views:
         x: Los plazos o condiciones previstos para la supresión de las diferentes categorías de datos.
         xi: La existencia de decisiones automatizadas, incluida la elaboración de perfiles. Si el responsable realizare estas operaciones, deberá
           incluir información significativa sobre la lógica aplicada, así como las consecuencias previstas de dicho tratamiento para el titular.
-      decree_note: El modelo de prevención es voluntario y no sustituye el deber general de cumplir la ley.
+      decree_note: El modelo de prevención es voluntario y no sustituye el deber general de cumplir la ley (paráfrasis del art. 1).
       art_49c: La identificación del tipo de información que la entidad trata, el ámbito territorial en que opera, la categoría, clase o tipos
         de datos o bases de datos que administra, y la caracterización de los titulares de datos.
       art_49c_link: 'En la ley, el art. 49 letra c de la Ley 19.628, texto modificado por la Ley 21.719, pide (texto literal): «{quote}» [(art.
@@ -1811,7 +1817,7 @@ availability: available
 
 ## 1. Resumen
 
-Esta ficha no es asesoría legal: finalidad, base de licitud y plazo los definen el responsable, el negocio y el área legal; aquí se explica cómo modelarlos, vincularlos a la plataforma y controlarlos. Los ejemplos de bases y plazos son ilustrativos, no determinaciones legales.
+Esta ficha no es asesoría legal. Finalidad, base de licitud y plazo los definen el responsable, el negocio y el área legal; aquí se explica cómo modelarlos, vincularlos a la plataforma y controlarlos. Los ejemplos de bases y plazos son ilustrativos, no determinaciones legales.
 
 ### Saber para qué se tratan los datos personales, con qué fundamento y quién los usa
 
@@ -2342,3 +2348,4 @@ puerta de la CI: rechazada (1): 3 de 4 despliegues bloqueados
 - 2026-11-18: en «En la nube», el pie deja solo «No son equivalencias exactas. Ningún servicio certifica cumplimiento por sí solo.», por decisión del dueño; la fecha de verificación de las fuentes cloud sigue en Fuentes. El estado no cambia.
 - 2026-11-18: revisión independiente, I1. En `inventario.py`, `categorias_sensibles` y `destinatarios` aceptan `None` (sin evaluar): en una actividad aprobada, cada uno genera una brecha («datos sensibles sin evaluar», «destinatarios sin evaluar»), y en el insumo del art. 14 ter salen como `[sin evaluar]`, no como «ninguno». Una actividad vigente sin base ya no se omite: sale con `base: [sin evaluar]`. Los escenarios declaran lo que cada actividad evaluó (`modelo_fraude` en `actual` queda sin evaluar). Conteos y salidas sin cambios: `actual` → 1 con 14 hallazgos, `corregido` → 0, `despliegue-nuevo` → 1 con 3 de 4 bloqueados. El estado no cambia.
 - 2026-11-18: revisión independiente, En la nube. La alerta «Ojo» distingue la retención de GCP: el linaje, 30 días; `INFORMATION_SCHEMA.JOBS_BY_ORGANIZATION`, 180 días, que también pasa a la nota de esa fuente en Fuentes. La fila de identidad rotula `INFORMATION_SCHEMA.JOBS_BY_ORGANIZATION`; en AWS, «se rastrea el rol que inició la consulta» reemplaza «la tabla se obtiene correlacionando con esos accesos»; `system.access.audit` lleva «(vista previa pública)». Sale de la fila «Finalidad» la frase sobre las etiquetas del catálogo de GCP, que no tenía fuente. Fuentes cloud verificadas el 2026-11-18. El estado no cambia.
+- 2026-11-18: revisión independiente, textos legales (pendientes de aprobación del dueño; sin `owner_approved_at`). En «Qué exige la ley», la columna se rotula «Lo que se espera (paráfrasis)», y «La ley no fija un plazo general: lo define el responsable según la finalidad» pasa a una línea propia «Interpretación de la ficha» (ADR-030, enmienda 11). La fila de proporcionalidad conserva la paráfrasis del art. 3 c), con «salvo las excepciones que establezca la ley». La fila de finalidad agrega la condición contractual del art. 3 b). La fila «¿Qué se publica?» suma la letra k del art. 14 ter, literal. La nota «La ley no exige este formato» cita literal la frase final del art. 3 d) del Decreto 662. La nota del Decreto en el modal dice «(paráfrasis del art. 1)», y el aviso legal pasa a «Esta ficha no es asesoría legal. Finalidad…», con mayúscula. El título de 2.1 y la quinta fila no cambian hasta que responda el dueño. El estado no cambia.

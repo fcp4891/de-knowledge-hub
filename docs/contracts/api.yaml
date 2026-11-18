@@ -3162,6 +3162,9 @@ components:
                   expected:
                     type: string
                     description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
+                  interpretation:
+                    type: string
+                    description: 'Opcional (enmienda 11): interpretación separada de la paráfrasis, con su rótulo en el texto. Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'
                   record:
                     type: string
                     description: 'Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`.'

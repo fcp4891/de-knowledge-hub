@@ -201,3 +201,21 @@ def test_cloud_footer_without_dates_but_sources_keep_them(views: dict[str, Any])
     assert "Servicios cloud · verificados el 2026-11-17" in titles
     pii = yaml.safe_load((inventory_views.ROOT / "content/concepts/pii-identification.md").read_text(encoding="utf-8").split("---\n", 2)[1])
     assert "Documentación consultada el 2026-11-12" in pii["views"]["notes"]["equivalencias"]["text"]
+
+
+def test_ladder_separates_paraphrase_from_interpretation_and_quotes_letter_k(views: dict[str, Any]) -> None:
+    """Revisión independiente (I4, M4, M5, M6): la columna dice que es paráfrasis, la interpretación del plazo va aparte
+    (enmienda 11), la letra k del art. 14 ter y la frase final del art. 3 d) del Decreto 662 van literales."""
+    ladder = views["law_ladder"]
+    assert ladder["headers"][1] == "Lo que se espera (paráfrasis)"
+    interpretations = [row for row in ladder["rows"] if row.get("interpretation")]
+    assert [row["principle"] for row in interpretations] == ["Proporcionalidad"]
+    moved = "La ley no fija un plazo general: lo define el responsable según la finalidad."
+    assert interpretations[0]["interpretation"] == f"**Interpretación de la ficha:** {moved}"
+    assert all("plazo general" not in row["expected"] for row in ladder["rows"])
+    letter_k = ("Cuando el tratamiento está basado en el consentimiento del titular, la existencia del derecho a retirarlo en "
+                "cualquier momento, sin que ello afecte a la licitud del tratamiento basado en el consentimiento previo a su retirada")
+    (published,) = [row for row in ladder["rows"] if row["principle"] == "Información pública"]
+    assert f"la letra k pide (texto literal): «{letter_k}»." in published["expected"]
+    assert "«Esta caracterización podrá realizarse a través de un registro de actividades de tratamiento»." in views["notes"]["sin-formato"]["text"]
+    assert views["register_fields"]["literal"]["decree_note"].endswith("(paráfrasis del art. 1).")

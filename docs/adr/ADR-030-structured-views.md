@@ -242,3 +242,9 @@ Aprobada por el dueño el 2026-11-17. Es retrocompatible: chile-data-protection 
 - **Validador:** la división declarada tiene al menos un `###`, y las anclas `<key>-<n>` son válidas para `href`.
 - Sin la clave, nada cambia: chile-data-protection y pii-identification no la declaran.
 - **`code_guide.rules` y `code_guide.scenarios`** pasan a ser opcionales: una ficha puede no mostrar la tabla de reglas ni los escenarios (el Inventario los retiró el 2026-11-18). La línea de `exit_codes_label` solo se dibuja si hay `scenarios`. La madre y pii los siguen declarando.
+
+## Enmienda 11 (2026-11-18): interpretación aparte en la escalera de la ley
+
+- **`views.law_ladder.rows[].interpretation`** (opcional, texto con Markdown en línea): una interpretación que no es paráfrasis de la norma va en una línea propia debajo de «Lo que se espera», separada por una línea punteada. El rótulo visible viene en el propio texto (por ejemplo, `**Interpretación:** …`); el componente no agrega texto.
+- Motivo: la revisión independiente del Inventario (2026-11-18) pidió distinguir la paráfrasis de la ley de la interpretación de la ficha. La columna se rotula «Lo que se espera (paráfrasis)» desde `headers`, sin cambio de contrato.
+- Sin la clave, nada cambia: ninguna otra ficha usa `law_ladder`.

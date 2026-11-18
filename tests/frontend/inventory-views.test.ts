@@ -256,3 +256,13 @@ test("§5: pasos alineados por fila con subgrid solo lado a lado; «Usarlo» por
   assert.match(sheet, /\.reading-article:has\(\.inv-view\) \.reading-details \.pii-use \.pii-col > h3 \{\n  font-size: 15px;/);
   assert.equal(readFileSync(join(ficha, "pii-views.css"), "utf8").includes("font-size: 15px;\n  letter-spacing: 0.06em"), false);   // pii no cambia
 });
+
+test("enmienda 11: la interpretación de la escalera va en su propia línea, solo en la fila que la declara", () => {
+  const { LawLadder } = loadTsx(join(ficha, "InventoryBlocks.tsx"));
+  const markup = html(LawLadder, { view: inv.law_ladder });
+  assert.equal((markup.match(/<p class="inv-ladder-interp">/g) ?? []).length, 1);
+  assert.match(markup, /<p class="inv-ladder-interp"><strong>Interpretación de la ficha:<\/strong>(<span>)? La ley no fija un plazo general/);
+  assert.match(markup, /<span>Lo que se espera \(paráfrasis\)<\/span>/);
+  const without = html(LawLadder, { view: { ...inv.law_ladder, rows: inv.law_ladder.rows.map(({ interpretation, ...row }) => row) } });
+  assert.equal(without.includes("inv-ladder-interp"), false);
+});
