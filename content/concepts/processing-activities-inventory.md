@@ -1522,43 +1522,6 @@ views:
       banners:
       - Retención y supresión en todas las capas, respaldos y reprocesos
       - 'Puerta de la CI: bloquea lo nuevo sin actividad vigente · Conciliación: alerta lo que ya corre contra el registro'
-  control_evidence:
-    id: control-evidencia
-    title: Control y evidencia
-    lead: 'Patrón general: lo nuevo se bloquea antes de entrar; lo que ya corre se concilia y alerta.'
-    steps:
-    - number: '1'
-      title: Declarar
-      items:
-      - Base, plazo y finalidad por actividad
-      - Aprobación vigente y campos permitidos
-    - number: '2'
-      title: Observar
-      items:
-      - pill: Lo nuevo
-        text: Despliegue con `activity_id`
-      - pill: Lo que ya corre
-        text: 'Linaje y logs: identidad, activo, columnas'
-    - number: '3'
-      title: Contrastar
-      items:
-      - pill: Lo nuevo
-        text: 'CI: ¿actividad vigente y consumidor declarado?'
-      - pill: Lo que ya corre
-        text: Conciliación contra el registro; sin evaluar no cuenta como OK
-    decide:
-      number: '4'
-      title: Decidir y registrar
-      outcomes:
-      - tone: pass
-        text: Declarado y vigente · pasa
-      - tone: fail
-        text: Lo nuevo sin actividad vigente · se bloquea
-      - tone: warn
-        text: Lo que ya corre con brecha · alerta y revisión
-      - tone: keep
-        text: La puerta bloquea solo lo nuevo; la conciliación no detiene producción.
-    note: Consentimientos y retención se integran desde sus fichas, sin replicarlos.
   code_guide:
     exit_codes_label: Códigos de salida
     lead:
@@ -1994,8 +1957,6 @@ Es la base de los demás controles. Sin saber qué actividad usa qué datos, con
 ## 9. Arquitectura
 
 <!-- view: requirement_to_data -->
-
-<!-- view: control_evidence -->
 
 ## 10. Código
 
@@ -2458,3 +2419,4 @@ puerta de la CI: rechazada (1): 3 de 4 despliegues bloqueados
 - 2026-11-17: la ficha pasa al formato de vistas (ADR-030, enmienda 9) desde la maqueta: 13 secciones, con «Qué exige la ley», «Arquitectura» y el código nuevo (`inventario.py`, 308 líneas, tres escenarios). Queda disponible y `review_required`: los textos legales nuevos esperan la aprobación del dueño (ADR-023).
 - 2026-11-18: «Qué exige la ley» queda en dos subsecciones numeradas con el mismo encabezado, 2.1 «Cinco preguntas que la ley obliga a poder responder» y 2.2 «Campos del registro y de dónde viene cada uno» (ADR-030, enmienda 10). Sin cambios de contenido; el estado no cambia.
 - 2026-11-18: en Código, la tabla «Lo que el formulario muestra y el código no guarda» pasa a un desplegable «Ver detalle / Ocultar», cerrado por defecto, como «Escenarios» y la tabla de controles. Sin cambios de contenido; el estado no cambia.
+- 2026-11-18: se retira de Arquitectura la subsección «Control y evidencia» (título, subtítulo, cuatro tarjetas y nota) por decisión del dueño; el diagrama «Del requisito al dato» se mantiene. Sin otros cambios de contenido; el estado no cambia.

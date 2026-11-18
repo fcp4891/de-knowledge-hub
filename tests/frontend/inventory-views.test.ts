@@ -93,15 +93,31 @@ test("Código del Inventario sigue a la madre: sin ejemplo ni tarjetas de paso, 
   assert.deepEqual([...positions].sort((a, b) => a - b), positions, "orden de las subsecciones");
 });
 
-test("Arquitectura: el diagrama de la madre con el registro resaltado, dos franjas y «Control y evidencia» sin ejemplo", () => {
-  const { RequirementToData, ControlEvidence } = loadTsx(join(ficha, "ControlEvidence.tsx"));
-  const { requirementToDataProps, controlEvidenceProps } = loadTsx(join(ROOT, "frontend/lib/views.ts"));
+test("Arquitectura: el diagrama de la madre con el registro resaltado y dos franjas; sin «Control y evidencia»", () => {
+  const { RequirementToData } = loadTsx(join(ficha, "ControlEvidence.tsx"));
+  const { requirementToDataProps } = loadTsx(join(ROOT, "frontend/lib/views.ts"));
   const diagram = html(RequirementToData, requirementToDataProps(inv.requirement_to_data));
   assert.match(diagram, /<article class="is-highlight"><strong>Registro de actividades de tratamiento<\/strong>/);
   assert.match(diagram, /class="is-end is-highlight"><strong>Consumo por finalidad<\/strong>/);
   assert.equal((diagram.match(/class="control-evidence-banner"/g) ?? []).length, 2);
-  const control = html(ControlEvidence, controlEvidenceProps(inv.control_evidence));
-  assert.equal((control.match(/class="control-evidence-pill"/g) ?? []).length, 4);
+  // Retirado del Inventario por decisión del dueño (2026-11-18): ni la vista ni su marca en Arquitectura.
+  const text = readFileSync(join(ROOT, "content/concepts/processing-activities-inventory.md"), "utf8");
+  assert.equal(inv.control_evidence, undefined);
+  assert.equal(text.includes("<!-- view: control_evidence -->"), false);
+});
+
+test("ControlEvidence conserva las extensiones de la enmienda 9 aunque el Inventario no las use (pastillas, ámbar, sin ejemplo)", () => {
+  const { ControlEvidence } = loadTsx(join(ficha, "ControlEvidence.tsx"));
+  const { controlEvidenceProps } = loadTsx(join(ROOT, "frontend/lib/views.ts"));
+  const fixture = {
+    title: "Patrón", lead: "l",
+    steps: [{ number: "1", title: "Observar", items: ["simple", { pill: "Lo nuevo", text: "a" }, { pill: "Lo que ya corre", text: "b" }] }],
+    decide: { number: "2", title: "Decidir", outcomes: [
+      { tone: "pass", text: "p" }, { tone: "fail", text: "f" }, { tone: "warn", text: "w" }, { tone: "keep", text: "k" }] },
+    note: "n",
+  };
+  const control = html(ControlEvidence, controlEvidenceProps(fixture));
+  assert.equal((control.match(/class="control-evidence-pill"/g) ?? []).length, 2);
   for (const tone of ["is-pass", "is-fail", "is-warn", "is-keep"]) assert.match(control, new RegExp(`class="${tone}"`));
   assert.equal(control.includes("control-evidence-example"), false);
 });
@@ -148,7 +164,7 @@ test("contraste AA (4,5:1) de los pares nuevos, en claro y oscuro", () => {
     ["--pii-result", "--pii-result-bg"],      // ojo, pestaña del 14 ter y franja alternada
     ["--ink-2", "--pii-result-bg"],           // texto de la fila alternada
     ["--pii-personal", "--pii-personal-bg"],  // pestaña del Decreto
-    ["--warn-ink", "--warn-bg"],              // sin evaluar, ámbar de «Control y evidencia», nota de la hoja
+    ["--warn-ink", "--warn-bg"],              // sin evaluar, tono ámbar de ControlEvidence, nota de la hoja
     ["--pii-sensitive", "--pii-sensitive-bg"],// revisión, fila de riesgo, chip ✕
     ["--accent", "--accent-soft"],            // tarjeta activa, pastillas, botón «Ver detalle» con hover
     ["--accent", "--surface"],                // botón «Ver detalle» en reposo
