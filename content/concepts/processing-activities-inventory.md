@@ -229,8 +229,7 @@ views:
         la muestra como brecha y la deriva a revisión, sin calificarla.'
     equivalencias:
       lead: No son equivalencias exactas.
-      text: Ningún servicio certifica cumplimiento por sí solo. Documentación consultada el 2026-11-12; las filas de linaje y auditoría se volvieron
-        a verificar el 2026-11-17.
+      text: Ningún servicio certifica cumplimiento por sí solo.
     dominio:
       lead: Criterio de dominio.
       text: Dominas esta ficha si puedes explicar por qué una tabla no tiene una única base de licitud, cómo asociarías un DAG a una actividad
@@ -2330,3 +2329,4 @@ puerta de la CI: rechazada (1): 3 de 4 despliegues bloqueados
 - 2026-11-18: en Código, la tabla «Lo que el formulario muestra y el código no guarda» pasa a un desplegable «Ver detalle / Ocultar», cerrado por defecto, como «Escenarios» y la tabla de controles. Sin cambios de contenido; el estado no cambia.
 - 2026-11-18: se retira de Arquitectura la subsección «Control y evidencia» (título, subtítulo, cuatro tarjetas y nota) por decisión del dueño; el diagrama «Del requisito al dato» se mantiene. Sin otros cambios de contenido; el estado no cambia.
 - 2026-11-18: en Código se retiran, por decisión del dueño, el desplegable «Controles del código y qué encuentra en actual» (tabla y resumen «9 controles · 14 hallazgos») y el desplegable «Escenarios» (tabla y pastillas de códigos de salida), con la línea «Códigos de salida» que se armaba con ellos. El código y sus tres salidas no cambian; el estado no cambia.
+- 2026-11-18: en «En la nube», el pie deja solo «No son equivalencias exactas. Ningún servicio certifica cumplimiento por sí solo.», por decisión del dueño; la fecha de verificación de las fuentes cloud sigue en Fuentes. El estado no cambia.

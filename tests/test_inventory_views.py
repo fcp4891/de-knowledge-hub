@@ -167,3 +167,14 @@ def test_law_split_has_two_numbered_subsections(text: str, views: dict[str, Any]
     assert re.findall(r"^### (.+)$", part, re.M) == ["Cinco preguntas que la ley obliga a poder responder",
                                                        "Campos del registro y de dónde viene cada uno"]
     assert part.index("Campos del registro") < part.index("<!-- view: register_fields -->")
+
+
+def test_cloud_footer_without_dates_but_sources_keep_them(views: dict[str, Any]) -> None:
+    """«En la nube»: el pie del Inventario no lleva fechas (decisión del dueño); la verificación queda en Fuentes y en
+    `accessed` de cada fuente cloud. pii mantiene la fecha en su pie."""
+    note = views["notes"]["equivalencias"]
+    assert (note["lead"], note["text"]) == ("No son equivalencias exactas.", "Ningún servicio certifica cumplimiento por sí solo.")
+    titles = [g["title"] for g in views["sources_grouped"]["groups"]]
+    assert "Servicios cloud · verificados el 2026-11-17" in titles
+    pii = yaml.safe_load((inventory_views.ROOT / "content/concepts/pii-identification.md").read_text(encoding="utf-8").split("---\n", 2)[1])
+    assert "Documentación consultada el 2026-11-12" in pii["views"]["notes"]["equivalencias"]["text"]
