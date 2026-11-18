@@ -151,7 +151,7 @@ export type CodeGuideProps = {
     intro?: string;
     items: Titled[];
     note?: string;
-    table?: { lead: Titled; headers: string[]; rows: { item: string; form: string; code: string }[] };
+    table?: { lead: Titled; headers: string[]; rows: { item: string; form: string; code: string }[]; disclosure?: Disclosure };
   };
   scenarios: {
     title: string;
@@ -392,7 +392,9 @@ export function codeGuideProps(view: V["code_guide"]): CodeGuideProps {
       intro: view.not_covered.intro,
       items: view.not_covered.items,
       note: view.not_covered.note,
-      table: view.not_covered.table,
+      table: view.not_covered.table
+        ? { ...view.not_covered.table, disclosure: view.not_covered.table.disclosure as Disclosure | undefined }
+        : undefined,
     },
     scenarios: {
       title: view.scenarios.title,

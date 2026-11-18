@@ -1829,6 +1829,13 @@
                       "minItems": 3,
                       "maxItems": 3
                     },
+                    "disclosure": {
+                      "enum": [
+                        "open",
+                        "closed"
+                      ],
+                      "description": "Desplegable «Ver detalle / Ocultar» y su estado inicial (ADR-030, enmienda 9)."
+                    },
                     "rows": {
                       "type": "array",
                       "items": {

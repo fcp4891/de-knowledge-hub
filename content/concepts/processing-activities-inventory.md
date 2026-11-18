@@ -1639,6 +1639,7 @@ views:
         - Elemento
         - Por qué está en el formulario
         - Por qué no está en el código
+        disclosure: closed
         rows:
         - item: Aprobado por (y firma)
           form: 'Deja constancia de quién respondió por la aprobación. Es propuesta: el Decreto 662 no lo pide por actividad.'
@@ -2456,3 +2457,4 @@ puerta de la CI: rechazada (1): 3 de 4 despliegues bloqueados
 - 2026-11-04: aprobada con la revisión P10 y su verificación aplicadas (limitación «Cobertura»: `UNKNOWN` es alerta en la conciliación y bloqueo en la puerta de despliegue) (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).
 - 2026-11-17: la ficha pasa al formato de vistas (ADR-030, enmienda 9) desde la maqueta: 13 secciones, con «Qué exige la ley», «Arquitectura» y el código nuevo (`inventario.py`, 308 líneas, tres escenarios). Queda disponible y `review_required`: los textos legales nuevos esperan la aprobación del dueño (ADR-023).
 - 2026-11-18: «Qué exige la ley» queda en dos subsecciones numeradas con el mismo encabezado, 2.1 «Cinco preguntas que la ley obliga a poder responder» y 2.2 «Campos del registro y de dónde viene cada uno» (ADR-030, enmienda 10). Sin cambios de contenido; el estado no cambia.
+- 2026-11-18: en Código, la tabla «Lo que el formulario muestra y el código no guarda» pasa a un desplegable «Ver detalle / Ocultar», cerrado por defecto, como «Escenarios» y la tabla de controles. Sin cambios de contenido; el estado no cambia.

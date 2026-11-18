@@ -155,9 +155,9 @@ export function CodeGuide({
         </p>
       ) : null}
       {table ? (
-        <>
-          <p>
-            <strong>{table.lead.title}</strong> <RichText text={table.lead.text} />
+        <Block title={table.lead.title.replace(/\.$/, "")} disclosure={table.disclosure}>
+          <p className="code-guide-lead">
+            <RichText text={table.lead.text} />
           </p>
           <div className="pii-table-wrap">
             <table className="pii-table">
@@ -185,7 +185,7 @@ export function CodeGuide({
               </tbody>
             </table>
           </div>
-        </>
+        </Block>
       ) : null}
 
       <Block

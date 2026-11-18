@@ -181,3 +181,22 @@ test("§2: 2.1 y 2.2 comparten el encabezado de subsección; 2.2 ya no dibuja su
   const reading = readFileSync(join(ROOT, "frontend/components/card/ConceptReading.tsx"), "utf8");
   assert.match(reading, /"--section-number": `"\$\{shownNumber\(section\)\}"`/);
 });
+
+test("«Lo que el formulario muestra y el código no guarda» va en un desplegable cerrado, con la tabla sin cambios", () => {
+  const { CodeGuide } = loadTsx(join(ficha, "CodeGuide.tsx"));
+  const { codeGuideProps } = loadTsx(join(ROOT, "frontend/lib/views.ts"));
+  assert.equal(inv.code_guide.not_covered.table.disclosure, "closed");
+  const markup = html(CodeGuide, codeGuideProps(inv.code_guide));
+  const block = /<div class="disclosure" data-open="false"><div class="disclosure-head"><h4 id="[^"]+">Lo que el formulario muestra y el código no guarda<\/h4><button[^>]*aria-expanded="false"[^>]*>.*?<\/div><\/div><\/div>/.exec(markup)?.[0] ?? "";
+  assert.ok(block, "el desplegable con su título (sin el punto final) y cerrado");
+  assert.match(block, /hidden=""/);
+  assert.equal((block.match(/<tr>/g) ?? []).length, 1 + inv.code_guide.not_covered.table.rows.length);   // encabezado + 8 filas
+  assert.equal(markup.includes("<strong>Lo que el formulario muestra"), false);   // ya no es un título en el cuerpo
+});
+
+test("ancho y tipografía: los bloques <ol> del Inventario llenan su tarjeta y las tarjetas de §1 usan la sans de los componentes", () => {
+  const sheet = readFileSync(join(ficha, "inventory-views.css"), "utf8");
+  assert.match(sheet, /\.reading-measure \.markdown ol\.inv-build,\n\.reading-measure \.markdown ol\.inv-ladder,\n\.reading-measure \.markdown \.inv-lane ol \{\n  max-width: none;\n  padding-left: 0;\n\}/);
+  const reading = readFileSync(join(ROOT, "frontend/components/card/reading.css"), "utf8");
+  assert.match(reading, /\.reading-summary \.markdown p:not\(\.pii-view \*, \.pii-use \*, \.pii-note, \.pii-risk, \.inv-view \*\)/);
+});

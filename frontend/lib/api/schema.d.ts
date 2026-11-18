@@ -921,6 +921,11 @@ export interface components {
                             text: string;
                         };
                         headers: string[];
+                        /**
+                         * @description Desplegable «Ver detalle / Ocultar» y su estado inicial (ADR-030, enmienda 9).
+                         * @enum {unknown}
+                         */
+                        disclosure?: "open" | "closed";
                         rows: {
                             /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                             item: string;

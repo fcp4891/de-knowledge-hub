@@ -1714,6 +1714,11 @@ components:
                       type: array
                       items:
                         type: string
+                    disclosure:
+                      enum:
+                      - open
+                      - closed
+                      description: Desplegable «Ver detalle / Ocultar» y su estado inicial (ADR-030, enmienda 9).
                     rows:
                       type: array
                       items:
