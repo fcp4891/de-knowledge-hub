@@ -1271,6 +1271,7 @@ views:
 created_at: 2026-10-21
 updated_at: 2026-11-22
 last_verified: 2026-10-28
+owner_approved_at: 2026-11-22
 verification_status: review_required
 availability: available
 ---
@@ -1720,6 +1721,7 @@ El detalle de cada fuente está en `sources` del frontmatter; la agrupación, en
 - 2026-11-15: la línea de vigencia se sincroniza con la tarjeta de la Ley 21.719 (ADR-027): el hito del Senado pasa al estado consultado hoy en el servicio de tramitación (segundo trámite en la Cámara de Diputados, «Discusión general», urgencia «Discusión inmediata»); el «al día» de la línea y la cita de la página de tramitación pasan al 2026-11-15. La vigencia legal sigue en el 2026-12-01.
 - 2026-11-22: estado legislativo del boletín 18.623-07, consultado hoy en el Senado (servicio de tramitación y oficio 378-26): despachado al Presidente de la República el 2026-11-17, con nueva fecha propuesta 15 de octubre de 2027, pendiente de promulgación y publicación; el texto publicado sigue fijando el 1 de diciembre de 2026. Cambian el Contexto normativo (§2), la línea de vigencia, las fuentes del Senado (nueva: oficio 378-26) y los rótulos de la Ley 19.628 («versión con vigencia diferida» en vez de «texto que rige desde»). Esta ficha es la fuente única del estado legislativo; las demás remiten a ella. Textos legales pendientes de aprobación del dueño (sin `owner_approved_at`), por decisión del dueño. `last_verified` no cambia: solo se volvió a verificar la tramitación.
 - 2026-11-22: retoques previos a la aprobación. El hito del Senado de la línea de vigencia lleva la fecha del hecho (2026-11-17, despacho al Presidente); la fecha de consulta queda en «Estado de la tramitación». La nota del oficio 378-26 cita sus tres numerales (leído completo): no modifica el artículo sexto transitorio. La nota del mensaje, vuelto a leer completo, aclara «(no incluido en el texto despachado)». Textos pendientes de aprobación del dueño (sin `owner_approved_at`), por decisión del dueño.
+- 2026-11-22: por decisión del dueño, aprobada con lista explícita la redacción del estado legislativo de la Ley 21.719: §2 «Contexto normativo», línea de vigencia con el hito del 2026-11-17, fuentes del Senado y del oficio 378-26, y la tarjeta `cl-ley-21719` (`owner_approved_at: 2026-11-22`). Aprobación parcial: la ficha sigue en `review_required` porque los cambios pendientes desde el 2026-11-06 (vistas de ADR-030, §10, roles, sanciones, art. 16 quáter) no forman parte de esta aprobación (ADR-023). `last_verified` no cambia.
 
 ## Anexo · Catálogo legal por tema
 
