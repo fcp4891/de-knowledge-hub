@@ -111,7 +111,8 @@ def field_values(m: ModuleType, registro: Any, a: Any) -> dict[str, str | None]:
         "transf": None if a.transferencias is None else joined(a.transferencias) or "Ninguna",
         "plazo": plazo or None,
         "decisiones": None if a.decisiones_automatizadas is None else cap(a.decisiones_automatizadas) or "Ninguna",
-        "activos": f"{joined(sorted(a.consumidores))} · campos: {joined(sorted(a.campos))}",
+        "activos": f"{joined(sorted(a.consumidores))} · campos: "
+                   + (m.SIN_EVALUAR if a.campos is None else joined(sorted(a.campos)) or "ninguno"),
         "aprob": aprob,
     }
 
@@ -128,6 +129,8 @@ def field_status(m: ModuleType, registro: Any, a: Any, values: dict[str, str | N
         status["ambito"] = "pending"
     if a.categorias_sensibles is None:   # el valor muestra las categorías, pero los sensibles siguen sin evaluar
         status["tipo"] = "pending"
+    if a.campos is None:   # el valor muestra los consumidores, pero los campos siguen sin evaluar
+        status["activos"] = "pending"
     for gap in own_gaps(m, registro, a):
         for fragment, key, state in GAP_FIELD:
             if fragment in gap and status[key] != "review":
@@ -190,7 +193,7 @@ def sheet_rows(field: dict[str, Any], a: Any, sheet: dict[str, Any]) -> list[dic
         return [row(name, None if d is None else cap(d) if d else "No")]
     if key == "activos":
         return [row("Activos", joined(sorted(a.activos))), row("Consumidores", joined(sorted(a.consumidores))),
-                row("Campos necesarios", joined(sorted(a.campos)))]
+                row("Campos necesarios", None if a.campos is None else joined(sorted(a.campos)) or "Ninguno")]
     if key == "aprob":
         ap = a.aprobacion
         return [row("Fecha de aprobación", None if ap is None else str(ap.fecha)),
@@ -268,13 +271,13 @@ def explorer_activities(m: ModuleType) -> list[dict[str, Any]]:
             f"{cap(a.fuente)}; {'es' if a.acceso_publico else 'no es'} de acceso público")
         facts = [("Base (ilustrativa)", values["base"]), ("Plazo", values["plazo"]), ("Titulares", values["titulares"]),
                  ("Fuente", fuente), ("Transferencias", values["transf"]), ("Decisiones automatizadas", values["decisiones"])]
-        read = [{"column": c, "state": "unevaluated" if not a.campos else "needed" if c in a.campos else "extra"}
+        read = [{"column": c, "state": "unevaluated" if a.campos is None else "needed" if c in a.campos else "extra"}
                 for c in sorted(uso.columnas)]
         gaps = [h for h in hallazgos if a.id in h or consumidor in h]
         out.append({
             "key": key, "name": cap(a.finalidad), "purpose": cap(a.finalidad),
             "facts": [{"label": label, "value": value} for label, value in facts],
-            "fields": sorted(a.campos), "consumer": consumidor, "account": cuenta, "read": read,
+            "fields": sorted(a.campos or ()), "consumer": consumidor, "account": cuenta, "read": read,
             "evidence": evidence, "evidence_ok": m.vigente(a, m.REFERENCIA), "gaps": gaps,
             "ok": f"Sin hallazgos: {consumidor} lee solo columnas que su finalidad necesita.",
         })

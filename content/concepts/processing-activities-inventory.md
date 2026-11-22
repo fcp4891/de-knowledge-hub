@@ -351,6 +351,8 @@ views:
           tal transferencia.
         i: El periodo durante el que se conservarán los datos personales.
         j: La fuente de la cual provienen los datos personales y, en su caso, si proceden de fuentes de acceso público.
+        k: Cuando el tratamiento está basado en el consentimiento del titular, la existencia del derecho a retirarlo en cualquier momento, sin
+          que ello afecte a la licitud del tratamiento basado en el consentimiento previo a su retirada.
         l: La existencia de decisiones automatizadas, incluida la elaboración de perfiles. En tales casos, información significativa sobre la
           lógica aplicada, así como las consecuencias previstas de dicho tratamiento para el titular.
       decree_source: Decreto 662, de 2025 (Ministerio de Hacienda), art. 3 letra d), contenido {roman} · texto literal
@@ -502,8 +504,9 @@ views:
       name: Activos y consumidores
       why: Qué jobs, dashboards o servicios usan la actividad y qué campos necesitan. Permite conciliar con lo que corre.
       code: Actividad.consumidores · Actividad.campos
-      check: que cada consumo observado venga de un consumidor declarado en una actividad vigente y lea solo los campos declarados, y que la puerta
-        de la CI exija un consumidor declarado
+      check: 'que cada consumo observado venga de un consumidor declarado en una actividad vigente y lea solo los campos declarados (si la actividad
+        declara **ninguno**, toda columna leída es una brecha; con campos **sin evaluar** no se comparan), y que la puerta de la CI exija un consumidor
+        declarado'
       limit: usos que no dejan huella en el linaje ni en los logs
       sheet_section: Activos y consumidores
       proposal: La norma no pide vincular la actividad con lo que corre. Lo agregamos porque sin ese vínculo el registro no se puede comparar
@@ -1446,7 +1449,8 @@ views:
         limit: 'Que el job lea solo lo vinculado: eso se ve en 04.'
       - number: '03'
         title: Autorizar
-        text: Antes de dar acceso o desplegar, la CI verifica que la actividad exista, esté vigente y declare al consumidor.
+        text: Antes de dar acceso o desplegar, la CI verifica que la actividad exista, esté vigente (aprobada y sin vencer) y declare al consumidor.
+          Base, plazo y campos no se revisan aquí, sino al conciliar (05).
         case: '`despliegue bloqueado: job_fraude → modelo_fraude: actividad no vigente`'
         evidence: Resultado de la puerta en la CI
         limit: Los accesos que no pasan por la CI, como una consulta ad hoc.
@@ -1536,9 +1540,12 @@ views:
       title: Qué hace.
       text: Recorre el registro de actividades, los usos observados y dos controles. La conciliación (escenarios `actual` y `corregido`) revisa
         lo que ya corre y, con hallazgos, sale 1 como alerta. La puerta de la CI (`despliegue-nuevo`) evalúa lo que se quiere desplegar y bloquea.
-        El insumo del art. 14 ter solo incluye actividades con aprobación vigente y emite todas las letras que declara **Qué exige la ley**; lo
-        que falta sale como `[sin evaluar]`, nunca se omite.
+        El insumo del art. 14 ter solo incluye actividades con aprobación vigente y emite una línea por cada letra que declara **Qué exige la ley**
+        (d, h, i, j, k y l); lo que falta sale como `[sin evaluar]`, nunca se omite.
     lead_more:
+    - '`vigente` solo mira la aprobación: que exista y que no haya vencido. La puerta (`verificar_despliegues`) revisa tres cosas: un `activity_id`
+      válido, el consumidor declarado en esa actividad y que la actividad esté vigente; no revisa base, plazo ni campos. Base, plazo y los demás
+      contenidos se revisan en `actividades_incompletas`, y los campos leídos frente a los declarados, en `conciliar`.'
     - 'La base de licitud se registra sin artículo: el artículo sale de un mapa aparte (`ARTICULO`). El consumidor sale de la identidad, la cuenta
       de servicio, no del texto de la consulta (`consumidor_de`). `None` es **sin evaluar** y, como UNKNOWN (falta el dato para decidir), nunca
       cuenta como OK.'
@@ -1922,7 +1929,7 @@ class Actividad:   # None = sin evaluar; () o "" = se evaluó y se declaró «ni
     destinatarios: tuple[str, ...] | None
     activos: frozenset[str]
     consumidores: frozenset[str]
-    campos: frozenset[str]         # columnas que la finalidad necesita
+    campos: frozenset[str] | None  # columnas que la finalidad necesita; None: sin evaluar; vacío: ninguna permitida
     consentimientos: RegistroConsentimientos | None = None
     titulares: tuple[str, ...] = ()
     fuente: str | None = None
@@ -1956,6 +1963,7 @@ class Despliegue:   # un consumidor nuevo que se quiere desplegar
 
 
 def vigente(a: Actividad, hoy: date) -> bool:
+    """Solo mira la aprobación: que exista y que no haya vencido. No revisa base, plazo ni campos."""
     return a.aprobacion is not None and a.aprobacion.vence >= hoy
 
 
@@ -1979,8 +1987,8 @@ def tablas_sin_actividad(registro: Registro) -> list[Hallazgo]:
 
 
 def actividades_incompletas(registro: Registro, hoy: date) -> list[Hallazgo]:
-    """Una actividad aprobada necesita cada contenido declarado o evaluado; la aprobación vence y el consentimiento
-    se registra. Lo que falta es una brecha para revisar, nunca un OK."""
+    """Una actividad aprobada necesita cada contenido declarado o evaluado (base, plazo y los demás); la aprobación
+    vence y el consentimiento se registra. Lo que falta es una brecha para revisar, nunca un OK."""
     hallazgos = []
     if registro.ambito_territorial is None:
         hallazgos.append(Hallazgo("BRECHA", "registro sin ámbito territorial"))
@@ -2016,7 +2024,8 @@ def actividades_incompletas(registro: Registro, hoy: date) -> list[Hallazgo]:
 
 
 def conciliar(registro: Registro, usos: list[Uso], hoy: date) -> list[Hallazgo]:
-    """Cada uso observado tiene que caer en una actividad vigente y leer solo los campos de su finalidad."""
+    """Cada uso observado tiene que caer en una actividad vigente y leer solo los campos de su finalidad. Campos
+    vacíos (ninguno permitido) se evalúan: toda columna leída sobra; campos None (sin evaluar) no se comparan."""
     hallazgos = []
     for uso in usos:
         consumidor = consumidor_de(registro, uso)
@@ -2031,8 +2040,10 @@ def conciliar(registro: Registro, usos: list[Uso], hoy: date) -> list[Hallazgo]:
             hallazgos.append(Hallazgo("BRECHA", f"sin aprobación vigente: {consumidor} → {uso.activo} "
                                                 f"({', '.join(a.id for a in vinculos)})"))
         for a in vinculos:
+            if a.campos is None:   # sin evaluar: no hay contra qué comparar
+                continue
             sobran = sorted(uso.columnas - a.campos)
-            if a.campos and sobran:   # campos vacíos: la actividad todavía no se evalúa
+            if sobran:
                 hallazgos.append(Hallazgo("BRECHA", f"proporcionalidad: {consumidor} lee {', '.join(sobran)}, "
                                                     f"no necesario para {a.id}"))
     return hallazgos
@@ -2040,7 +2051,8 @@ def conciliar(registro: Registro, usos: list[Uso], hoy: date) -> list[Hallazgo]:
 
 def verificar_despliegues(registro: Registro, despliegues: list[Despliegue], hoy: date) -> list[Hallazgo]:
     """Puerta de la CI: bloquea un despliegue sin activity_id, con una actividad que no declara al consumidor o con una
-    actividad sin aprobación vigente; cada caso con su propio motivo."""
+    actividad sin aprobación vigente; cada caso con su propio motivo. No revisa base, plazo ni campos: eso lo hacen
+    actividades_incompletas y conciliar."""
     hallazgos = []
     por_id = {a.id: a for a in registro.actividades}
     for d in despliegues:
@@ -2078,6 +2090,10 @@ def insumo_14_ter(registro: Registro, hoy: date) -> list[str]:
                    if a.base == "interés legítimo" else "")
         base = SIN_EVALUAR if a.base is None else f"{a.base} ({ARTICULO[a.base]}" + (
             "; art. 16, expreso" if a.categorias_sensibles and a.base == "consentimiento" else "") + ")"
+        retiro = (SIN_EVALUAR if a.base is None else "no aplica" if a.base != "consentimiento"
+                  else "derecho a retirarlo en cualquier momento · registro de consentimientos: "
+                  + (f"{a.consentimientos.version_texto} desde {a.consentimientos.desde}" if a.consentimientos
+                     else SIN_EVALUAR))
         filas += [f"- {a.finalidad} · base: {base}{interes}",
                   f"  d) datos: {', '.join(a.categorias)} · sensibles: {lista(a.categorias_sensibles, 'ninguno')}",
                   f"  d) titulares: {lista(a.titulares, SIN_EVALUAR)} "
@@ -2085,6 +2101,7 @@ def insumo_14_ter(registro: Registro, hoy: date) -> list[str]:
                   f"  h) transferencias: {lista(a.transferencias, 'ninguna')}",
                   f"  i) plazo: {plazo}",
                   f"  j) fuente: {a.fuente or SIN_EVALUAR} · acceso público: {publico}",
+                  f"  k) retiro del consentimiento: {retiro}",
                   f"  l) decisiones automatizadas: {decisiones}"]
     return filas
 
@@ -2105,7 +2122,7 @@ def escenario(nombre: str) -> tuple[Registro, list[Uso], list[Despliegue]]:
                           categorias_sensibles=())
     fraude = Actividad("modelo_fraude", "detectar operaciones sospechosas", None, None, None,
                        ("identificación", "pagos"), None, frozenset({"silver.pasajeros"}), frozenset({"job_fraude"}),
-                       frozenset())
+                       None)
     asistencia = Actividad("asistencia_especial", "asistencia en aeropuerto a pasajeros con movilidad reducida",
                            "contrato", 12, Aprobacion(date(2026, 3, 1), date(2027, 3, 1)),
                            ("identificación", "salud"), ("operador de aeropuerto",), frozenset({"silver.reservas"}),
@@ -2207,6 +2224,7 @@ insumo para la política (art. 14 ter), a revisar por privacidad antes de public
   h) transferencias: Argentina · cláusulas contractuales con garantías adecuadas
   i) plazo: 60 meses
   j) fuente: el propio comprador, al reservar · acceso público: no
+  k) retiro del consentimiento: no aplica
   l) decisiones automatizadas: ninguna
 - asistencia en aeropuerto a pasajeros con movilidad reducida · base: contrato (art. 13 letra c)
   d) datos: identificación, salud · sensibles: salud
@@ -2214,6 +2232,7 @@ insumo para la política (art. 14 ter), a revisar por privacidad antes de public
   h) transferencias: ninguna
   i) plazo: 12 meses
   j) fuente: el propio pasajero, al pedir la asistencia · acceso público: no
+  k) retiro del consentimiento: no aplica
   l) decisiones automatizadas: ninguna
 - medir la satisfacción después del vuelo · base: interés legítimo (art. 13 letra d) · interés legítimo: [sin evaluar]
   d) datos: contacto, itinerario · sensibles: ninguno
@@ -2221,6 +2240,7 @@ insumo para la política (art. 14 ter), a revisar por privacidad antes de public
   h) transferencias: ninguna
   i) plazo: 12 meses
   j) fuente: la reserva · acceso público: no
+  k) retiro del consentimiento: no aplica
   l) decisiones automatizadas: ninguna
 BRECHA tabla con PII sin actividad: gold.score_fraude
 BRECHA registro sin ámbito territorial
@@ -2248,6 +2268,7 @@ insumo para la política (art. 14 ter), a revisar por privacidad antes de public
   h) transferencias: Argentina · cláusulas contractuales con garantías adecuadas
   i) plazo: 60 meses
   j) fuente: el propio comprador, al reservar · acceso público: no
+  k) retiro del consentimiento: no aplica
   l) decisiones automatizadas: ninguna
 - ofertas personalizadas · base: consentimiento (art. 12)
   d) datos: contacto, preferencias · sensibles: ninguno
@@ -2255,6 +2276,7 @@ insumo para la política (art. 14 ter), a revisar por privacidad antes de public
   h) transferencias: Estados Unidos · cláusulas contractuales con garantías adecuadas
   i) plazo: 24 meses
   j) fuente: formulario de suscripción · acceso público: no
+  k) retiro del consentimiento: derecho a retirarlo en cualquier momento · registro de consentimientos: v3 desde 2026-09-01
   l) decisiones automatizadas: perfilamiento por preferencias para elegir la oferta de cada pasajero; no cambia precios ni condiciones
 - detectar operaciones sospechosas · base: interés legítimo (art. 13 letra d) · interés legítimo: prevenir fraude en los pagos; ponderado frente a las expectativas del pasajero el 2026-10-30
   d) datos: identificación, pagos · sensibles: ninguno
@@ -2262,6 +2284,7 @@ insumo para la política (art. 14 ter), a revisar por privacidad antes de public
   h) transferencias: ninguna
   i) plazo: 24 meses
   j) fuente: pagos registrados en la venta · acceso público: no
+  k) retiro del consentimiento: no aplica
   l) decisiones automatizadas: puntaje de riesgo por operación; sobre el umbral, la operación se retiene para revisión humana
 - asistencia en aeropuerto a pasajeros con movilidad reducida · base: consentimiento (art. 12; art. 16, expreso)
   d) datos: identificación, salud · sensibles: salud
@@ -2269,6 +2292,7 @@ insumo para la política (art. 14 ter), a revisar por privacidad antes de public
   h) transferencias: ninguna
   i) plazo: 12 meses
   j) fuente: el propio pasajero, al pedir la asistencia · acceso público: no
+  k) retiro del consentimiento: derecho a retirarlo en cualquier momento · registro de consentimientos: salud-v1 desde 2026-10-15
   l) decisiones automatizadas: ninguna
 - medir la satisfacción después del vuelo · base: interés legítimo (art. 13 letra d) · interés legítimo: mejorar el servicio; el pasajero puede oponerse en cada encuesta
   d) datos: contacto, itinerario · sensibles: ninguno
@@ -2276,6 +2300,7 @@ insumo para la política (art. 14 ter), a revisar por privacidad antes de public
   h) transferencias: ninguna
   i) plazo: 12 meses
   j) fuente: la reserva · acceso público: no
+  k) retiro del consentimiento: no aplica
   l) decisiones automatizadas: ninguna
 conciliación: sin hallazgos (0)
 ```
@@ -2354,3 +2379,4 @@ puerta de la CI: rechazada (1): 3 de 4 despliegues bloqueados
 - 2026-11-18: por decisión del dueño, 2.1 pasa a «Cinco preguntas que conviene poder responder» y la quinta fila de la escalera («¿Y si un uso no calza?») lleva la marca «Consecuencia, no obligación» en la línea de interpretación; su contenido legal no cambia. Textos pendientes de la aprobación del dueño (sin `owner_approved_at`); sigue en `review_required`.
 - 2026-11-22: aprobada con lista explícita, por decisión del dueño, de los textos legales: introducción de «Campos del registro», caja «La ley no exige este formato», modales con el literal del art. 14 ter, del Decreto 662 y del art. 49 c, paráfrasis de 2.1 con sus líneas de interpretación, título de 2.1, marca «Consecuencia, no obligación» y los 7 artículos de `legal_basis` (`owner_approved_at: 2026-11-22`); pasa a `verified` (ADR-023). Sin cambios de contenido.
 - 2026-11-22: las menciones de vigencia remiten al Contexto normativo de `chile-data-protection`, fuente única del estado legislativo (boletín 18.623-07 despachado al Presidente el 2026-11-17): §13 pasa de «Ley 19.628 · texto que rige desde el 2026-12-01» a «versión con vigencia diferida (2026-12-01)» con la remisión, y las notas de la cita del Diario Oficial y del art. 14 ter dejan de decir «rigen desde» y «con vigencia desde». El enlace `idVersion=2026-12-01` se mantiene: es la versión de BCN con las modificaciones de la Ley 21.719 mientras no se publique otra ley. Texto legal cambiado: vuelve a `review_required` sin `owner_approved_at` hasta que el dueño apruebe la nueva redacción, por decisión del dueño. `last_verified` sigue en 2026-11-18.
+- 2026-11-22: revisión del código (T-06, T-02, T-01/T-04). `insumo_14_ter` emite la letra k (retiro del consentimiento: «no aplica», o el derecho a retirarlo con el registro de consentimientos), y el modal suma el literal del art. 14 ter letra k, verificado ese día contra BCN; «Qué hace» nombra las letras d, h, i, j, k y l. `campos` distingue `None` (sin evaluar: no se compara) de vacío (ninguna permitida: toda columna leída es una brecha); `modelo_fraude` pasa a `None`. «Qué hace», el paso 03 y «Activos y consumidores» precisan qué revisa cada función: `vigente` solo la aprobación; la puerta, `activity_id`, consumidor declarado y vigencia; base, plazo y campos, solo la conciliación. Conteos sin cambios: actual 1 con 14 hallazgos, corregido 0, despliegue-nuevo 1 con 3 de 4 bloqueados. Textos pendientes de aprobación del dueño; la ficha sigue en `review_required`.
