@@ -1810,9 +1810,10 @@ views:
         label: Ficha
         why: Automatizar las verificaciones.
 created_at: '2026-10-21'
-updated_at: '2026-11-18'
+updated_at: '2026-11-22'
 last_verified: '2026-11-18'
-verification_status: review_required
+owner_approved_at: 2026-11-22
+verification_status: verified
 availability: available
 ---
 
@@ -2352,3 +2353,4 @@ puerta de la CI: rechazada (1): 3 de 4 despliegues bloqueados
 - 2026-11-18: revisión independiente, textos legales (pendientes de aprobación del dueño; sin `owner_approved_at`). En «Qué exige la ley», la columna se rotula «Lo que se espera (paráfrasis)», y «La ley no fija un plazo general: lo define el responsable según la finalidad» pasa a una línea propia «Interpretación de la ficha» (ADR-030, enmienda 11). La fila de proporcionalidad conserva la paráfrasis del art. 3 c), con «salvo las excepciones que establezca la ley». La fila de finalidad agrega la condición contractual del art. 3 b). La fila «¿Qué se publica?» suma la letra k del art. 14 ter, literal. La nota «La ley no exige este formato» cita literal la frase final del art. 3 d) del Decreto 662. La nota del Decreto en el modal dice «(paráfrasis del art. 1)», y el aviso legal pasa a «Esta ficha no es asesoría legal. Finalidad…», con mayúscula. El título de 2.1 y la quinta fila no cambian hasta que responda el dueño. El estado no cambia.
 - 2026-11-18: revisión independiente, verificación y detalles. `last_verified` pasa a 2026-11-18: ese día se volvieron a verificar las citas legales, contra BCN (versión 2026-12-01) y el Diario Oficial, y las seis páginas cloud, con `accessed` igual. La cabecera cuenta solo las fuentes oficiales: 9, sin las fichas de «En esta plataforma». En el código de la ficha, decoradores, sus parámetros y la interpolación de f-strings llegan a contraste AA. El estado no cambia.
 - 2026-11-18: por decisión del dueño, 2.1 pasa a «Cinco preguntas que conviene poder responder» y la quinta fila de la escalera («¿Y si un uso no calza?») lleva la marca «Consecuencia, no obligación» en la línea de interpretación; su contenido legal no cambia. Textos pendientes de la aprobación del dueño (sin `owner_approved_at`); sigue en `review_required`.
+- 2026-11-22: aprobada con lista explícita, por decisión del dueño, de los textos legales: introducción de «Campos del registro», caja «La ley no exige este formato», modales con el literal del art. 14 ter, del Decreto 662 y del art. 49 c, paráfrasis de 2.1 con sus líneas de interpretación, título de 2.1, marca «Consecuencia, no obligación» y los 7 artículos de `legal_basis` (`owner_approved_at: 2026-11-22`); pasa a `verified` (ADR-023). Sin cambios de contenido.
