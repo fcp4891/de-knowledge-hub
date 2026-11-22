@@ -51,14 +51,14 @@ def test_effective_date_matches_the_framework() -> None:
 
 def test_postponement_state_matches_the_framework() -> None:
     """El hito del Senado (el que enlaza la tramitación) y el estado de la línea usan la fecha verificada del proyecto; la
-    fecha propuesta es la del mensaje."""
+    fecha propuesta es la del texto despachado al Presidente (oficio 378-26), no la del mensaje."""
     bill = facts()["postponement-bill"]
     view = timeline()
     senate = [item for item in view["items"] if any(link["href"] == bill["url"] for link in item.get("links", []))]
     assert [str(item["date"]) for item in senate] == [str(bill["verified_at"])]
     assert long_date(str(bill["verified_at"])) in view["as_of"]
-    assert "«1 de diciembre de 2027»" in bill["note"]
-    assert [str(i["date"]) for i in view["items"] if i["state"] == "proposed"] == ["2027-12-01"]
+    assert "«15 de octubre de 2027»" in bill["note"]
+    assert [str(i["date"]) for i in view["items"] if i["state"] == "proposed"] == ["2027-10-15"]
 
 
 def test_senate_citation_was_read_the_day_of_the_framework() -> None:
