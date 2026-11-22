@@ -1822,11 +1822,10 @@
 
 .approach-grid {
   display: grid;
-  /* Rótulo + 5 pasos caben en la columna de lectura a 1100 px (≈778 px); más angosto, el bloque se desplaza adentro. */
-  grid-template-columns: 7.2rem repeat(5, minmax(7.6rem, 1fr));
+  grid-template-columns: 7.2rem repeat(5, minmax(8.2rem, 1fr));
   column-gap: 8px;
   row-gap: 12px;
-  min-width: 48rem;
+  min-width: 52rem;
   margin: 0;
 }
 
