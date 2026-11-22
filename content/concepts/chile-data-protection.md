@@ -48,19 +48,24 @@ sources:
     accessed: 2026-11-09
     label: norma
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ficha de la Ley 19.628 en BCN, enlace general de la norma usado en Fuentes. El texto que rige desde el 2026-12-01 es la versión «Con Vigencia Diferida por Fecha» que citan los artículos de la ficha (idVersion=2026-12-01)."
+    note: "Ficha de la Ley 19.628 en BCN, enlace general de la norma usado en Fuentes. El texto con las modificaciones de la Ley 21.719 es la versión «Con Vigencia Diferida por Fecha» que citan los artículos de la ficha (idVersion=2026-12-01); el estado de esa fecha está en el Contexto normativo."
   - source: senado-tramitacion
     url: https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07
-    accessed: 2026-11-15
+    accessed: 2026-11-22
     page_title: "Boletín 18623-07"
     label: tramitación
-    note: "Boletín 18623-07, «Modifica la ley N° 21.719 [...] en el sentido que indica», consultado el 2026-11-15 con el servicio de tramitación del Senado (https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=18623): etapa: segundo trámite constitucional (Cámara de Diputados); subetapa: «Discusión general»; urgencia actual: discusión inmediata; estado: en tramitación; último trámite: 2026-11-11, «Cuenta del Mensaje 459-374 que retira y hace presente la urgencia Discusión inmediata»."
+    note: "Boletín 18623-07, «Modifica la ley N° 21.719 [...] en el sentido que indica», consultado el 2026-11-22 con el servicio de tramitación del Senado (https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=18623): el Senado lo aprobó en general y en particular el 2026-10-28; la Cámara de Diputados lo aprobó en general y en particular sin modificaciones el 2026-11-17; ese día salió el oficio de ley al Ejecutivo (oficio 378-26). Etapa: «Trámite de aprobacion presidencial (Senado)»; subetapa: «Ingreso de observaciones»; estado: en tramitación; sin número de ley ni publicación en el Diario Oficial."
   - source: senado-tramitacion
     url: https://tramitacion.senado.cl/appsenado/index.php?mo=tramitacion&ac=getDocto&iddocto=19307&tipodoc=mensaje_mocion
-    accessed: 2026-10-28
+    accessed: 2026-11-22
     page_title: "Boletín N° 18.623-07"
     label: mensaje
-    note: "Mensaje N° 110-374 del 31 de agosto de 2026 (boletín 18.623-07), en el Senado: el numeral 2 del artículo único reemplaza, en el artículo primero transitorio de la Ley 21.719, la frase «día primero del mes vigésimo cuarto posterior a la publicación de esta ley en el Diario Oficial» por «1 de diciembre de 2027»; también aumenta el Consejo Directivo de la Agencia de tres a cinco consejeros y elimina la limitación a empresas de menor tamaño del artículo sexto transitorio. Es un proyecto, no una ley."
+    note: "Mensaje N° 110-374 del 31 de agosto de 2026 (boletín 18.623-07), en el Senado: el numeral 2 del artículo único reemplaza, en el artículo primero transitorio de la Ley 21.719, la frase «día primero del mes vigésimo cuarto posterior a la publicación de esta ley en el Diario Oficial» por «1 de diciembre de 2027»; también aumenta el Consejo Directivo de la Agencia de tres a cinco consejeros y elimina la limitación a empresas de menor tamaño del artículo sexto transitorio (no incluido en el texto despachado). Es un proyecto, no una ley."
+  - source: senado-tramitacion
+    url: https://tramitacion.senado.cl/appsenado/index.php?mo=tramitacion&ac=getDocto&iddocto=37509&tipodoc=ofic
+    accessed: 2026-11-22
+    label: oficio de ley al Ejecutivo
+    note: "Oficio 378/SEC/26 del Senado, Valparaíso, 17 de noviembre de 2026, a Su Excelencia el Presidente de la República: el Congreso Nacional aprobó el proyecto (boletín 18.623-07). Artículo único: (1) en el art. 30 quáter, el Consejo Directivo pasa de «tres consejeros» a «cinco consejeros», los consejeros duran seis años sin nueva designación y «El Consejo se renovará parcialmente cada dos años», y en el inciso séptimo «dos consejeros» pasa a «tres consejeros»; (2) en el artículo primero transitorio, la fecha pasa a «15 de octubre de 2027»; (3) en el artículo cuarto transitorio, la primera propuesta al Senado se hace «en un solo acto» y se aprueba con «el voto favorable de dos tercios de los senadores en ejercicio». El artículo único tiene tres numerales: «1. En el artículo 30 quáter…», «2. Sustitúyese, en el artículo primero transitorio…» y «3. En el artículo cuarto transitorio…»; no modifica el artículo sexto transitorio, que el mensaje sí proponía cambiar (su numeral 4). Es un proyecto despachado, no una ley: sin número de ley ni publicación en el Diario Oficial al 2026-11-22."
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=1227971
     accessed: 2026-11-09
@@ -211,11 +216,11 @@ views:
       links:
       - label: Diario Oficial
         href: https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
-    - date: '2026-11-15'
+    - date: '2026-11-17'
       title: Avance legislativo
       icon: institution
       state: past
-      detail: En tramitación en la Cámara de Diputados (segundo trámite constitucional), subetapa «Discusión general», con urgencia «Discusión inmediata».
+      detail: Despachado al Presidente de la República el 17 de noviembre de 2026 (oficio 378-26), tras la aprobación del Senado (28 de octubre) y de la Cámara de Diputados sin modificaciones (17 de noviembre). Pendiente de promulgación y publicación en el Diario Oficial.
       links:
       - label: Boletín 18.623-07
         href: https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07
@@ -223,15 +228,15 @@ views:
       title: Entrada en vigencia
       icon: calendar
       state: current
-      detail: Fecha establecida por la ley, mientras no se publique una modificación.
+      detail: Fecha que fija el texto publicado de la Ley 21.719; sigue rigiendo mientras no se publique la modificación.
       note: Fecha legal indicada
-    - date: '2027-12-01'
-      title: Postergación propuesta
+    - date: '2027-10-15'
+      title: Postergación despachada
       icon: calendar
       state: proposed
-      detail: Nueva fecha planteada, sujeta a aprobación y publicación como ley.
-      note: Proyecto en tramitación
-    as_of: 'Estado de la tramitación: 15 de noviembre de 2026 · Fuentes: BCN y Senado.'
+      detail: Fecha del texto despachado al Presidente; rige solo si se promulga y se publica como ley. El mensaje proponía el 1 de diciembre de 2027.
+      note: Pendiente de promulgación y publicación
+    as_of: 'Estado de la tramitación: 22 de noviembre de 2026 · Fuentes: BCN y Senado.'
   treatment_map:
     lead: 'Para la ley, **tratamiento** es cualquier operación que permita recolectar, procesar, almacenar, comunicar, transmitir o utilizar datos personales ([art.
       2 letra o](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf)). En una plataforma de datos, esos verbos se ven así:'
@@ -1154,12 +1159,12 @@ views:
     - title: Normativa chilena
       layout: list
       sources:
-      - title: Ley 19.628 · texto que rige desde el 2026-12-01
+      - title: Ley 19.628 · versión con vigencia diferida (2026-12-01)
         urls:
         - https://www.bcn.cl/leychile/navegar?idNorma=141599
         - https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
         publisher: BCN
-        why: Texto consolidado en la versión que rige desde el 2026-12-01.
+        why: Texto consolidado con las modificaciones de la Ley 21.719; el estado de su fecha de vigencia está en Contexto normativo.
       - title: Ley 21.719 · Diario Oficial, 2024-12-13
         urls:
         - https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
@@ -1170,8 +1175,9 @@ views:
         urls:
         - https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07
         - https://tramitacion.senado.cl/appsenado/index.php?mo=tramitacion&ac=getDocto&iddocto=19307&tipodoc=mensaje_mocion
+        - https://tramitacion.senado.cl/appsenado/index.php?mo=tramitacion&ac=getDocto&iddocto=37509&tipodoc=ofic
         publisher: Senado
-        why: Estado del proyecto y propuesta de nueva fecha.
+        why: Estado del proyecto, mensaje y texto despachado al Presidente (oficio 378-26).
       - title: Decreto 662 · reglamento del modelo de prevención
         urls:
         - https://www.bcn.cl/leychile/navegar?idNorma=1227971
@@ -1263,8 +1269,9 @@ views:
         why: Auditar accesos a datos
         provider: Azure
 created_at: 2026-10-21
-updated_at: 2026-11-15
+updated_at: 2026-11-22
 last_verified: 2026-10-28
+owner_approved_at: 2026-11-22
 verification_status: review_required
 availability: available
 ---
@@ -1285,7 +1292,7 @@ El propósito es desarrollar el criterio técnico necesario para identificar rie
 
 <!-- split: context -->
 
-La Ley 21.719 reescribe la Ley 19.628. Mientras no se publique otra ley, sus modificaciones rigen desde el 1 de diciembre de 2026.
+La Ley 21.719 reescribe la Ley 19.628. Según el texto publicado, sus modificaciones rigen desde el 1 de diciembre de 2026. Al 22 de noviembre de 2026, el Congreso despachó al Presidente de la República (17 de noviembre de 2026) el proyecto del boletín 18.623-07, que fija una nueva fecha: el 15 de octubre de 2027. Está pendiente de promulgación y publicación en el Diario Oficial; mientras no se publique, rige la fecha del texto publicado.
 
 <!-- view: vigencia_timeline -->
 
@@ -1665,7 +1672,7 @@ CI: rechazada (1)
 
 ## 20. Fuentes
 
-- Normativa chilena (Diario Oficial, BCN y Senado): Ley 19.628 con el texto que rige desde el 2026-12-01, Ley 21.719 (texto publicado en el Diario Oficial), boletín 18.623-07 (tramitación y mensaje) y Decreto 662.
+- Normativa chilena (Diario Oficial, BCN y Senado): Ley 19.628 en su versión con vigencia diferida (2026-12-01), Ley 21.719 (texto publicado en el Diario Oficial), boletín 18.623-07 (tramitación, mensaje y oficio de ley al Ejecutivo) y Decreto 662.
 - Marcos de referencia del enfoque: ISO/IEC 27001:2022, ISO/IEC 27701:2025 y NIST Privacy Framework.
 - Legislación comparada: Reglamento (UE) 2016/679 (RGPD), en EUR-Lex.
 - Servicios cloud: Sensitive Data Protection, BigQuery y Cloud Audit Logs (GCP); Amazon Macie, Lake Formation y CloudTrail (AWS); Purview Data Map, Unity Catalog y los registros de diagnóstico de Azure Databricks (Azure).
@@ -1712,6 +1719,9 @@ El detalle de cada fuente está en `sources` del frontmatter; la agrupación, en
 - 2026-11-10: revisión aplicada. Sanciones: atenuante del modelo de prevención (acreditado con el certificado; matriz de riesgos de infracción obligatoria, registro de actividades opcional; art. 52), reincidencia con sanciones firmes o ejecutoriadas y gran empresa con el 2 % o el 4 % según la gravedad (ley 20.416). Roles: el responsable responde por los principios y deberes (art. 3). En la nube: tres de los siete requisitos de la matriz. La cita versionada de la Ley 19.628 indica su versión en el título. Sigue en `review_required`.
 - 2026-11-12: el art. 16 quáter (datos de niños, niñas y adolescentes) entra a `legal_basis`, al anexo y al catálogo: sus vistas ya lo citaban y `pii-identification` enlaza a su fila del catálogo (ADR-023, enmienda 9). Sigue en `review_required`.
 - 2026-11-15: la línea de vigencia se sincroniza con la tarjeta de la Ley 21.719 (ADR-027): el hito del Senado pasa al estado consultado hoy en el servicio de tramitación (segundo trámite en la Cámara de Diputados, «Discusión general», urgencia «Discusión inmediata»); el «al día» de la línea y la cita de la página de tramitación pasan al 2026-11-15. La vigencia legal sigue en el 2026-12-01.
+- 2026-11-22: estado legislativo del boletín 18.623-07, consultado hoy en el Senado (servicio de tramitación y oficio 378-26): despachado al Presidente de la República el 2026-11-17, con nueva fecha propuesta 15 de octubre de 2027, pendiente de promulgación y publicación; el texto publicado sigue fijando el 1 de diciembre de 2026. Cambian el Contexto normativo (§2), la línea de vigencia, las fuentes del Senado (nueva: oficio 378-26) y los rótulos de la Ley 19.628 («versión con vigencia diferida» en vez de «texto que rige desde»). Esta ficha es la fuente única del estado legislativo; las demás remiten a ella. Textos legales pendientes de aprobación del dueño (sin `owner_approved_at`), por decisión del dueño. `last_verified` no cambia: solo se volvió a verificar la tramitación.
+- 2026-11-22: retoques previos a la aprobación. El hito del Senado de la línea de vigencia lleva la fecha del hecho (2026-11-17, despacho al Presidente); la fecha de consulta queda en «Estado de la tramitación». La nota del oficio 378-26 cita sus tres numerales (leído completo): no modifica el artículo sexto transitorio. La nota del mensaje, vuelto a leer completo, aclara «(no incluido en el texto despachado)». Textos pendientes de aprobación del dueño (sin `owner_approved_at`), por decisión del dueño.
+- 2026-11-22: por decisión del dueño, aprobada con lista explícita la redacción del estado legislativo de la Ley 21.719: §2 «Contexto normativo», línea de vigencia con el hito del 2026-11-17, fuentes del Senado y del oficio 378-26, y la tarjeta `cl-ley-21719` (`owner_approved_at: 2026-11-22`). Aprobación parcial: la ficha sigue en `review_required` porque los cambios pendientes desde el 2026-11-06 (vistas de ADR-030, §10, roles, sanciones, art. 16 quáter) no forman parte de esta aprobación (ADR-023). `last_verified` no cambia.
 
 ## Anexo · Catálogo legal por tema
 
