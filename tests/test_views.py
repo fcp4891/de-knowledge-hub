@@ -190,7 +190,8 @@ def test_pii_identification_views_are_complete() -> None:
     present = [n for n, _, _ in page_sections.sections(body) if n != 22]
     assert present == [1, 2, 3, 4, 5, 10, 11, 14, 16, 18, 20]
     assert [t["section"] for t in data["views"]["section_titles"]] == present
-    assert data["verification_status"] == "verified" and str(data["owner_approved_at"]) == "2026-11-14"
+    # 2026-11-22: la vigencia remite a la madre; texto legal cambiado, pendiente de la aprobación del dueño (ADR-023).
+    assert data["verification_status"] == "review_required" and "owner_approved_at" not in data
     assert len(data["views"]["decision_tree"]["examples"]) == 8 and len(data["views"]["practice_pairs"]["items"]) == 8
     assert [r["count"] for r in data["views"]["coverage_strip"]["rows"]] == ["3 de 9", "7 de 9", "9 de 9"]
     cdp_text = (Path(__file__).resolve().parent.parent / "content/concepts/chile-data-protection.md").read_text(encoding="utf-8")

@@ -59,7 +59,7 @@ sources:
   label: Diario Oficial
   note: 'Ley 21.719 publicada en el Diario Oficial núm. 44.023, viernes 13 de diciembre de 2024 (CVE 2583630). Texto publicado de la ley modificatoria:
     art. 2 letras f), g), i), k) y l) de la Ley 19.628 (pág. 2); art. 14 quinquies letra a) (pág. 10); art. 16 (pág. 12); art. 16 quáter (pág.
-    13). Rigen desde el 2026-12-01.'
+    13). La fecha de vigencia y el estado legislativo están en la ficha chile-data-protection (Contexto normativo).'
 - source: bcn-leychile
   url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
   accessed: '2026-11-12'
@@ -1011,8 +1011,8 @@ views:
         urls:
         - https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
         publisher: Diario Oficial
-        why: Art. 2 letras f, g, i, k y l; art. 14 quinquies; art. 16; art. 16 quáter. Rigen desde el 2026-12-01.
-      - title: Ley 19.628 · texto que rige desde el 2026-12-01
+        why: Art. 2 letras f, g, i, k y l; art. 14 quinquies; art. 16; art. 16 quáter. Fecha de vigencia y estado legislativo en el [Contexto normativo de la ficha madre](/concepts/chile-data-protection/#s1.5).
+      - title: Ley 19.628 · versión con vigencia diferida (2026-12-01)
         urls:
         - https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
         publisher: BCN
@@ -1093,10 +1093,9 @@ views:
         label: Ficha
         why: Cómo la clasificación se vuelve un control en la CI.
 created_at: 2026-10-21
-updated_at: '2026-11-14'
+updated_at: '2026-11-22'
 last_verified: '2026-11-12'
-owner_approved_at: 2026-11-14
-verification_status: verified
+verification_status: review_required
 availability: available
 ---
 
@@ -1466,3 +1465,4 @@ puerta de silver.clientes: bloqueada (1), sin revisor: observacion_medica (sensi
 - 2026-11-14: §11 (En la nube) muestra su subtítulo «Detectores en la nube, por frente del código» como `###` del cuerpo: `cloud_compare.title` ya lo tenía, pero `CloudCompare` es compartido y pintarlo agregaría «En la nube» repetido en chile-data-protection.
 - 2026-11-15: sin el panel «Base legal» en la lectura (`views.reading.legal_basis_panel: false`; `legal_basis` sigue en el frontmatter). Fuentes con título visible y el título de cada fuente como enlace (ADR-030, enmienda 8). Las 18 referencias en línea «§N · Nombre» se reescriben como texto corrido, sin cambiar el sentido; quedan los chips de §10 y «Ver código ↓».
 - 2026-11-15: §10 sin los chips «§N Nombre» (queda el de la cita legal «art. 16 quáter», ADR-023 enmienda 9) y con la entrada «Si no sabes responder una, repasa la parte de la ficha que trata ese tema.»; §6 sin «Ver código ↓».
+- 2026-11-22: las menciones de vigencia («Rigen desde el 2026-12-01» en la cita del Diario Oficial y en Fuentes, y el rótulo «texto que rige desde el 2026-12-01» de la Ley 19.628) remiten al Contexto normativo de `chile-data-protection`, fuente única del estado legislativo (boletín 18.623-07 despachado al Presidente el 2026-11-17). Texto legal cambiado: vuelve a `review_required` sin `owner_approved_at` hasta la aprobación del dueño, por decisión del dueño. `last_verified` no cambia.
