@@ -104,16 +104,28 @@ sources:
   - source: iso-iec-27701
     url: https://www.iso.org/standard/27701
     accessed: 2026-11-07
-    note: "Página oficial de ISO/IEC 27701 (Privacy information management systems). iso.org respondió HTTP 403 a la verificación automática el 2026-11-07: la URL sale del buscador de ISO y el título de la página queda por verificar. Se cita como uno de los marcos que sintetiza el enfoque del Resumen."
+    note: "Ficha oficial de ISO/IEC 27701:2025 en iso.org (norma de pago). iso.org respondió HTTP 403 a la verificación automática el 2026-11-07 y de nuevo el 2026-11-22: la edición 2025, que sea una norma independiente y la fecha de publicación 2025-10-14 vienen de la revisión independiente del 2026-11-22; no se leyeron en la página. Referencia técnica del enfoque; no es legislación."
   - source: nist-privacy-framework
-    url: https://www.nist.gov/privacy-framework
-    accessed: 2026-11-07
+    url: https://www.nist.gov/privacy-framework/privacy-framework
+    accessed: 2026-11-22
+    label: versión 1.0
     page_title: "Privacy Framework"
-    note: "Privacy Framework (NIST): herramienta voluntaria, construida con las partes interesadas, para identificar y gestionar riesgos de privacidad. Se cita como uno de los marcos que sintetiza el enfoque del Resumen."
+    note: "Página de la versión del NIST Privacy Framework: «Version 1.0 (January 2020)». Referencia técnica del enfoque; no es legislación."
+  - source: nist-privacy-framework
+    url: https://www.nist.gov/privacy-framework/privacy-framework-version-11
+    accessed: 2026-11-22
+    label: borrador 1.1
+    page_title: "Privacy Framework 1.1"
+    note: "Privacy Framework 1.1: solo borrador. La página publica el «Initial Public Draft» del 2025-04-14 y dice que el período de comentarios «closed on June 13, 2025»; no hay versión final al 2026-11-22. La URL redirige a https://www.nist.gov/privacy-framework/new-projects/privacy-framework-version-11."
   - source: iso-iec-27001
     url: https://www.iso.org/standard/27001
     accessed: 2026-11-09
-    note: "Página oficial de ISO/IEC 27001. iso.org respondió HTTP 403 a la verificación automática el 2026-11-09: título por verificar. El enfoque cita las cláusulas 4.2, 6.1.2, 6.1.3, 7.5, 9.1 y 9.2 y los controles A.5.31 y A.5.34 de la edición 2022."
+    note: "Ficha oficial de ISO/IEC 27001 en iso.org (norma de pago). iso.org respondió HTTP 403 a la verificación automática el 2026-11-09 y de nuevo el 2026-11-22: la 3.ª edición, publicada el 2022-10-25, viene de la revisión independiente del 2026-11-22; no se leyó en la página. El enfoque no cita cláusulas: su texto no fue verificado por el autor."
+  - source: inn-chile
+    url: https://ecommerce.inn.cl/nch-iso-iec-27001202386060
+    accessed: 2026-11-22
+    page_title: "NCh-ISO IEC 27001:2023"
+    note: "Ficha de venta del INN (norma de pago): título «NCh-ISO IEC 27001:2023», estado «Vigente», fecha de publicación «30/08/2023», en español. La página no indica la edición ni qué norma ISO adopta."
   - source: diario-oficial-cl
     url: https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
     accessed: 2026-11-09
@@ -283,46 +295,48 @@ views:
     example_label:
       title: Ejemplo
       detail: fila de la matriz
-    reference_label:
-      title: Referencia
-      detail: ISO/IEC 27001:2022
     steps:
     - name: Requisito normativo
       description: Qué exige la ley
       example: 'Minimización: solo los datos necesarios'
-      reference: 4.2 · A.5.31 requisitos legales
     - name: Riesgo identificado
       description: Qué puede fallar en la plataforma
       example: Columnas no aprobadas llegan a capas analíticas
-      reference: 6.1.2 evaluación de riesgos
     - name: Control técnico
       description: Qué lo previene o detecta
       example: Contrato de campos permitidos
-      reference: 6.1.3 · Anexo A tratamiento y controles
     - name: Verificación
       description: Cómo se prueba que funciona
       example: Test de esquema en CI
-      reference: 9.1 · 9.2 medición y auditoría
     - name: Evidencia
       description: Qué queda para demostrarlo
       example: Resultado del test y versión del contrato
-      reference: 7.5 información documentada
     notes:
     - title: De dónde viene
-      text: Es una adaptación propia de la lógica de gestión de riesgos de ISO/IEC 27001, que ISO/IEC 27701 extiende a datos personales, y del NIST Privacy Framework.
+      text: Es una adaptación propia. Sus marcos de referencia son ISO/IEC 27001, ISO/IEC 27701:2025 · norma independiente (publicada el 2025-10-14) y
+        el NIST Privacy Framework 1.0 (enero de 2020).
+    - title: Relación con ISO/IEC 27001
+      text: El enfoque es compatible con las prácticas de gestión de riesgos de seguridad de la información de ISO/IEC 27001. Referencia técnica · norma de
+        pago; el enlace lleva a la ficha oficial · texto no verificado por el autor.
     - title: Por qué se ajusta
       text: La ley fija principios y deberes, pero en general no prescribe tecnologías ni arquitecturas; el enfoque convierte cada obligación en un control que un
         pipeline puede ejecutar y probar, y la ficha lo aplica igual en la matriz de control y en el código.
     sources:
     - title: ISO/IEC 27001:2022
       href: https://www.iso.org/standard/27001
-      detail: Norma · Nivel 1 · cláusulas 4.2, 6.1.2, 6.1.3, 7.5, 9.1, 9.2; controles A.5.31 y A.5.34
-    - title: ISO/IEC 27701
+      detail: Referencia técnica · A · 3.ª ed., publicada 2022-10-25 · Norma de pago · el enlace lleva a la ficha oficial
+    - title: NCh-ISO/IEC 27001:2023 · vigente · INN
+      href: https://ecommerce.inn.cl/nch-iso-iec-27001202386060
+      detail: Referencia técnica · A · norma chilena vigente, publicada el 2023-08-30 · Norma de pago · el enlace lleva a la ficha oficial
+    - title: ISO/IEC 27701:2025
       href: https://www.iso.org/standard/27701
-      detail: Norma · Nivel 1 · extensión de privacidad
-    - title: NIST Privacy Framework
-      href: https://www.nist.gov/privacy-framework
-      detail: Marco · Nivel 1
+      detail: Referencia técnica · A · norma independiente (publicada el 2025-10-14) · Norma de pago · el enlace lleva a la ficha oficial
+    - title: Privacy Framework 1.0 (enero de 2020)
+      href: https://www.nist.gov/privacy-framework/privacy-framework
+      detail: Referencia técnica · A · NIST
+    - title: Privacy Framework 1.1 · solo borrador
+      href: https://www.nist.gov/privacy-framework/privacy-framework-version-11
+      detail: Referencia técnica · A · borrador público inicial (2025-04-14), sin versión final · fecha de consulta 2026-11-22
   legal_foundations:
     title: Principios y responsabilidades
     annex_link:
@@ -1191,17 +1205,24 @@ views:
         urls:
         - https://www.iso.org/standard/27001
         publisher: ISO
-        why: Cláusulas y controles que se citan como referencia en cada paso del enfoque.
-      - title: ISO/IEC 27701:2025 · sistema de gestión de la información de privacidad
+        why: Referencia técnica · A · 3.ª ed., publicada 2022-10-25. Norma de pago · el enlace lleva a la ficha oficial. El enfoque es compatible con las
+          prácticas de gestión de riesgos de seguridad de la información de ISO/IEC 27001 (texto no verificado por el autor).
+      - title: NCh-ISO/IEC 27001:2023 · vigente · INN
+        urls:
+        - https://ecommerce.inn.cl/nch-iso-iec-27001202386060
+        publisher: INN
+        why: Referencia técnica · A · norma chilena vigente, publicada el 2023-08-30. Norma de pago · el enlace lleva a la ficha oficial.
+      - title: ISO/IEC 27701:2025 · norma independiente (publicada el 2025-10-14)
         urls:
         - https://www.iso.org/standard/27701
         publisher: ISO
-        why: Desde la edición 2025 es una norma independiente de ISO/IEC 27001.
-      - title: NIST Privacy Framework
+        why: Referencia técnica · A. Norma de pago · el enlace lleva a la ficha oficial.
+      - title: Privacy Framework 1.0 (enero de 2020)
         urls:
-        - https://www.nist.gov/privacy-framework
+        - https://www.nist.gov/privacy-framework/privacy-framework
+        - https://www.nist.gov/privacy-framework/privacy-framework-version-11
         publisher: NIST
-        why: Gestión de riesgos de privacidad por funciones y resultados verificables.
+        why: Referencia técnica · A. La versión 1.1 existe solo como borrador (borrador público inicial del 2025-04-14; fecha de consulta 2026-11-22).
     - title: Legislación comparada
       layout: list
       sources:
@@ -1673,7 +1694,7 @@ CI: rechazada (1)
 ## 20. Fuentes
 
 - Normativa chilena (Diario Oficial, BCN y Senado): Ley 19.628 en su versión con vigencia diferida (2026-12-01), Ley 21.719 (texto publicado en el Diario Oficial), boletín 18.623-07 (tramitación, mensaje y oficio de ley al Ejecutivo) y Decreto 662.
-- Marcos de referencia del enfoque: ISO/IEC 27001:2022, ISO/IEC 27701:2025 y NIST Privacy Framework.
+- Marcos de referencia del enfoque (referencia técnica, no legislación): ISO/IEC 27001:2022, NCh-ISO/IEC 27001:2023 (INN), ISO/IEC 27701:2025 y NIST Privacy Framework 1.0; la 1.1 es solo borrador.
 - Legislación comparada: Reglamento (UE) 2016/679 (RGPD), en EUR-Lex.
 - Servicios cloud: Sensitive Data Protection, BigQuery y Cloud Audit Logs (GCP); Amazon Macie, Lake Formation y CloudTrail (AWS); Purview Data Map, Unity Catalog y los registros de diagnóstico de Azure Databricks (Azure).
 
@@ -1722,6 +1743,7 @@ El detalle de cada fuente está en `sources` del frontmatter; la agrupación, en
 - 2026-11-22: estado legislativo del boletín 18.623-07, consultado hoy en el Senado (servicio de tramitación y oficio 378-26): despachado al Presidente de la República el 2026-11-17, con nueva fecha propuesta 15 de octubre de 2027, pendiente de promulgación y publicación; el texto publicado sigue fijando el 1 de diciembre de 2026. Cambian el Contexto normativo (§2), la línea de vigencia, las fuentes del Senado (nueva: oficio 378-26) y los rótulos de la Ley 19.628 («versión con vigencia diferida» en vez de «texto que rige desde»). Esta ficha es la fuente única del estado legislativo; las demás remiten a ella. Textos legales pendientes de aprobación del dueño (sin `owner_approved_at`), por decisión del dueño. `last_verified` no cambia: solo se volvió a verificar la tramitación.
 - 2026-11-22: retoques previos a la aprobación. El hito del Senado de la línea de vigencia lleva la fecha del hecho (2026-11-17, despacho al Presidente); la fecha de consulta queda en «Estado de la tramitación». La nota del oficio 378-26 cita sus tres numerales (leído completo): no modifica el artículo sexto transitorio. La nota del mensaje, vuelto a leer completo, aclara «(no incluido en el texto despachado)». Textos pendientes de aprobación del dueño (sin `owner_approved_at`), por decisión del dueño.
 - 2026-11-22: por decisión del dueño, aprobada con lista explícita la redacción del estado legislativo de la Ley 21.719: §2 «Contexto normativo», línea de vigencia con el hito del 2026-11-17, fuentes del Senado y del oficio 378-26, y la tarjeta `cl-ley-21719` (`owner_approved_at: 2026-11-22`). Aprobación parcial: la ficha sigue en `review_required` porque los cambios pendientes desde el 2026-11-06 (vistas de ADR-030, §10, roles, sanciones, art. 16 quáter) no forman parte de esta aprobación (ADR-023). `last_verified` no cambia.
+- 2026-11-22: bloque «Referencia» del enfoque y «Marcos de referencia del enfoque» del §20 corregidos tras una revisión independiente: sin citas a cláusulas ni controles de ISO/IEC 27001 en los pasos 1 a 5 ni en Fuentes (se reemplazan por una nota de compatibilidad rotulada «texto no verificado por el autor»); ISO/IEC 27701:2025 como norma independiente; NIST Privacy Framework 1.0 (enero de 2020) con la 1.1 solo como borrador; NCh-ISO/IEC 27001:2023 (INN) agregada; rótulos «Referencia técnica» y de norma de pago en lugar de «Nivel 1» en el bloque del enfoque. Pendiente de aprobación del dueño. `last_verified` sigue en 2026-10-28: llevarlo al 2026-11-22 exige volver a consultar las citas legales de BCN y del Diario Oficial (ADR-023).
 
 ## Anexo · Catálogo legal por tema
 
