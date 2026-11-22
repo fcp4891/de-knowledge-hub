@@ -53,7 +53,9 @@ test("el aviso sale del resumen y no queda como párrafo suelto", () => {
   assert.equal(split.markdown, "El resto del resumen sigue en la sección.");
   const copy = legalNoticeCopy(split.notice);
   assert.equal(copy.lead, "Esta ficha no es asesoría legal.");
-  assert.equal(copy.detail, "explica el alcance técnico.");
+  assert.equal(copy.detail, "Explica el alcance técnico.");   // segunda frase: mayúscula inicial
+  assert.equal(legalNoticeCopy("Esta ficha no es asesoría legal. Ya empieza con mayúscula.").detail, "Ya empieza con mayúscula.");
+  assert.equal(legalNoticeCopy("Esta ficha no es asesoría legal.").detail, null);
 });
 
 test("la obligación cita art. N y nombra la ley si no es la 19.628", () => {

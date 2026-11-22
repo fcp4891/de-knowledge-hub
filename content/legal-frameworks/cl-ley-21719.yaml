@@ -1,6 +1,8 @@
 # Marco legal del dominio 24-privacy-engineering (ADR-027). Datos para la UI: cada valor con su URL de Nivel 1 y la
 # fecha en que se verificó. Verificado el 2026-11-15 con el JSON de BCN (get_norma_json), el servicio de tramitación
-# del Senado y el texto publicado en el Diario Oficial (artículo primero transitorio, p. 33). Si cambia un valor, se vuelve a verificar y se actualiza verified_at; no se supone.
+# del Senado y el texto publicado en el Diario Oficial (artículo primero transitorio, p. 33). Vuelto a verificar el
+# 2026-11-22: los tres hechos, con el JSON de BCN de ambas leyes (metadatos, vigencias y artículo primero transitorio),
+# el servicio de tramitación del Senado y el oficio 378-26. Si cambia un valor, se vuelve a verificar y se actualiza verified_at; no se supone.
 slug: cl-ley-21719
 title: Ley 21.719 sobre protección de datos personales
 jurisdiction: CL
@@ -11,7 +13,7 @@ facts:
     url: https://www.bcn.cl/leychile/navegar?idNorma=1209272
     checked_with: https://nuevo.leychile.cl/servicios/Navegar/get_norma_json?idNorma=1209272
     source: bcn-leychile
-    verified_at: 2026-11-15
+    verified_at: 2026-11-22
     note: "BCN: título «REGULA LA PROTECCIÓN Y EL TRATAMIENTO DE LOS DATOS PERSONALES Y CREA LA AGENCIA DE PROTECCIÓN DE DATOS PERSONALES»; promulgada el 2024-11-25 y publicada el 2024-12-13. Modifica la Ley 19.628."
   - key: effective-date
     label: Vigencia de las modificaciones a la Ley 19.628
@@ -19,13 +21,13 @@ facts:
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
     checked_with: https://nuevo.leychile.cl/servicios/Navegar/get_norma_json?idNorma=141599&idVersion=2026-12-01
     source: bcn-leychile
-    verified_at: 2026-11-15
+    verified_at: 2026-11-22
     note: "BCN muestra la Ley 19.628 en una versión «Con Vigencia Diferida por Fecha» desde el 2026-12-01; la versión anterior rige hasta el 2026-11-30. El artículo primero transitorio de la Ley 21.719 fija la vigencia el «día primero del mes vigésimo cuarto posterior a la publicación de esta ley en el Diario Oficial»."
   - key: postponement-bill
     label: Proyecto de postergación (boletín 18.623-07)
-    value: "En tramitación en la Cámara de Diputados (segundo trámite constitucional), subetapa «Discusión general», con urgencia «Discusión inmediata»; el Senado lo aprobó en general y en particular el 2026-10-28. Es un proyecto, no una ley: la vigencia sigue siendo el 2026-12-01."
+    value: "Despachado al Presidente de la República el 2026-11-17 (oficio 378-26), tras la aprobación del Senado (2026-10-28) y de la Cámara de Diputados sin modificaciones (2026-11-17). Fija como nueva fecha el 15 de octubre de 2027. Pendiente de promulgación y publicación: es un proyecto, no una ley; la vigencia sigue siendo el 2026-12-01."
     url: https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07
     checked_with: https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=18623
     source: senado-tramitacion
-    verified_at: 2026-11-15
-    note: "Senado, servicio de tramitación (2026-11-15): ingreso el 2026-09-01 por mensaje. Primer trámite (Senado): primeros informes de Constitución y de Hacienda el 2026-10-27; el 2026-10-28, «Discusión general. Aprobado en general y particular a la vez»; el 2026-10-29, oficio de ley a la Cámara Revisora. Segundo trámite (Cámara de Diputados): el 2026-11-02, cuenta del proyecto, que pasa a las comisiones de Constitución y de Hacienda; el 2026-11-10, primer informe de Constitución, que lo pasa a Hacienda; urgencia «Discusión inmediata» hecha presente el 2026-11-02, el 2026-11-09 y el 2026-11-11. Etapa «Segundo trámite constitucional (C.Diputados)», subetapa «Discusión general», estado «En tramitación»; sin número de ley ni publicación en el Diario Oficial. El mensaje propone reemplazar la fecha del artículo primero transitorio por el «1 de diciembre de 2027»."
+    verified_at: 2026-11-22
+    note: "Senado, servicio de tramitación (2026-11-22): ingreso el 2026-09-01 por mensaje. Primer trámite (Senado): el 2026-10-28, «Discusión general. Aprobado en general y particular a la vez»; el 2026-10-29, oficio de ley a la Cámara Revisora. Segundo trámite (Cámara de Diputados): el 2026-11-16, primer informe de Hacienda; el 2026-11-17, «Aprobado en general y particular sin modificaciones» y oficio de aprobación sin modificaciones a la Cámara de Origen. Finalización en la Cámara de Origen (Senado): el 2026-11-17, oficio de ley al Ejecutivo (378-26). Etapa «Trámite de aprobacion presidencial (Senado)», subetapa «Ingreso de observaciones», estado «En tramitación»; sin número de ley ni publicación en el Diario Oficial. El texto despachado (oficio 378-26) reemplaza la fecha del artículo primero transitorio por el «15 de octubre de 2027»; el mensaje proponía el «1 de diciembre de 2027»."

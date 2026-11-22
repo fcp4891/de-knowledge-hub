@@ -3896,6 +3896,24 @@ updated_at: '2026-11-09'
 last_verified: '2026-11-09'
 verification_status: review_required
 ---
+id: source:inn-chile
+slug: inn-chile
+type: source
+title: Instituto Nacional de Normalización (INN)
+description: Tienda oficial de normas chilenas del INN; se usa para la ficha de venta de NCh-ISO IEC 27001:2023 (norma de pago).
+url: https://ecommerce.inn.cl/nch-iso-iec-27001202386060
+source_type: official_docs
+authority_level: 1
+provider: inn
+url_verified: true
+review_frequency: quarterly
+trust: high
+technologies: []
+created_at: '2026-11-22'
+updated_at: '2026-11-22'
+last_verified: '2026-11-22'
+verification_status: verified
+---
 id: source:eur-lex
 slug: eur-lex
 type: source
