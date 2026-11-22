@@ -254,5 +254,6 @@ export function legalNoticeCopy(paragraph: string | null): LegalNoticeCopy {
     return { lead, detail: null };
   }
   const rest = paragraph.replace(/^Esta ficha no es asesoría legal[:.]?\s*/, "").trim();
-  return { lead, detail: rest.length > 0 ? rest : null };
+  // El aviso se divide en dos frases: la segunda empieza con mayúscula aunque en la ficha siguiera a «:».
+  return { lead, detail: rest.length > 0 ? rest.charAt(0).toLocaleUpperCase("es") + rest.slice(1) : null };
 }
