@@ -216,7 +216,7 @@ views:
       links:
       - label: Diario Oficial
         href: https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
-    - date: '2026-11-22'
+    - date: '2026-11-17'
       title: Avance legislativo
       icon: institution
       state: past
