@@ -73,7 +73,7 @@ sources:
   page_title: LEY NÚM. 21.719 REGULA LA PROTECCIÓN Y EL TRATAMIENTO DE LOS DATOS PERSONALES Y CREA LA AGENCIA DE PROTECCIÓN DE DATOS PERSONALES
   note: 'Ley 21.719 publicada en el Diario Oficial núm. 44.023, viernes 13 de diciembre de 2024 (CVE 2583630). Páginas que citan los enlaces de
     la ficha, verificadas el 2026-11-18 contra el texto del PDF (34 páginas): art. 3 letras a, b y c (pág. 3), art. 12 (pág. 7), art. 13 letra
-    d (pág. 8), art. 14 ter (pág. 9), art. 16 (pág. 12), art. 34 ter letras a y c (pág. 24) y art. 49 letra c (pág. 30). Rigen desde el 2026-12-01.'
+    d (pág. 8), art. 14 ter (pág. 9), art. 16 (pág. 12), art. 34 ter letras a y c (pág. 24) y art. 49 letra c (pág. 30). La fecha de vigencia y el estado legislativo están en la ficha chile-data-protection (Contexto normativo).'
 - source: bcn-leychile
   url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
   accessed: '2026-11-18'
@@ -88,7 +88,7 @@ sources:
   accessed: '2026-11-18'
   label: art. 14 ter
   page_title: Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES · Artículo 14 ter
-  note: 'Enlace directo al art. 14 ter («Deber de información y transparencia») en la versión con vigencia desde el 2026-12-01: el idParte se
+  note: 'Enlace directo al art. 14 ter («Deber de información y transparencia») en la versión «Con Vigencia Diferida por Fecha - 01-DIC-2026»: el idParte se
     tomó del árbol de la norma en BCN y se comprobó en un navegador el 2026-11-17; el texto se volvió a verificar el 2026-11-18. Si BCN cambia el identificador, el enlace cae en la norma completa.'
 - source: bcn-leychile
   url: https://www.bcn.cl/leychile/navegar?idNorma=1227971
@@ -1733,12 +1733,12 @@ views:
         publisher: Diario Oficial
         why: Art. 3 letras a, b y c; arts. 12, 13, 14 letra a, 14 ter, 16, 27, 34 ter letras a y c, y 49 letra c de la Ley 19.628, texto modificado
           por la Ley 21.719.
-      - title: Ley 19.628 · texto que rige desde el 2026-12-01
+      - title: Ley 19.628 · versión con vigencia diferida (2026-12-01)
         urls:
         - https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
         - https://www.bcn.cl/leychile/navegar?idNorma=141599&idParte=10528059&idVersion=2026-12-01
         publisher: BCN
-        why: Texto consolidado, versión con vigencia diferida, y el art. 14 ter.
+        why: Texto consolidado, versión con vigencia diferida, y el art. 14 ter. Fecha de vigencia y estado legislativo en el [Contexto normativo de la ficha madre](/concepts/chile-data-protection/#s1.5).
       - title: Decreto 662, de 2025 · Ministerio de Hacienda, publicado el 2026-09-09
         urls:
         - https://www.bcn.cl/leychile/navegar?idNorma=1227971
@@ -1812,8 +1812,7 @@ views:
 created_at: '2026-10-21'
 updated_at: '2026-11-22'
 last_verified: '2026-11-18'
-owner_approved_at: 2026-11-22
-verification_status: verified
+verification_status: review_required
 availability: available
 ---
 
@@ -2354,3 +2353,4 @@ puerta de la CI: rechazada (1): 3 de 4 despliegues bloqueados
 - 2026-11-18: revisión independiente, verificación y detalles. `last_verified` pasa a 2026-11-18: ese día se volvieron a verificar las citas legales, contra BCN (versión 2026-12-01) y el Diario Oficial, y las seis páginas cloud, con `accessed` igual. La cabecera cuenta solo las fuentes oficiales: 9, sin las fichas de «En esta plataforma». En el código de la ficha, decoradores, sus parámetros y la interpolación de f-strings llegan a contraste AA. El estado no cambia.
 - 2026-11-18: por decisión del dueño, 2.1 pasa a «Cinco preguntas que conviene poder responder» y la quinta fila de la escalera («¿Y si un uso no calza?») lleva la marca «Consecuencia, no obligación» en la línea de interpretación; su contenido legal no cambia. Textos pendientes de la aprobación del dueño (sin `owner_approved_at`); sigue en `review_required`.
 - 2026-11-22: aprobada con lista explícita, por decisión del dueño, de los textos legales: introducción de «Campos del registro», caja «La ley no exige este formato», modales con el literal del art. 14 ter, del Decreto 662 y del art. 49 c, paráfrasis de 2.1 con sus líneas de interpretación, título de 2.1, marca «Consecuencia, no obligación» y los 7 artículos de `legal_basis` (`owner_approved_at: 2026-11-22`); pasa a `verified` (ADR-023). Sin cambios de contenido.
+- 2026-11-22: las menciones de vigencia remiten al Contexto normativo de `chile-data-protection`, fuente única del estado legislativo (boletín 18.623-07 despachado al Presidente el 2026-11-17): §13 pasa de «Ley 19.628 · texto que rige desde el 2026-12-01» a «versión con vigencia diferida (2026-12-01)» con la remisión, y las notas de la cita del Diario Oficial y del art. 14 ter dejan de decir «rigen desde» y «con vigencia desde». El enlace `idVersion=2026-12-01` se mantiene: es la versión de BCN con las modificaciones de la Ley 21.719 mientras no se publique otra ley. Texto legal cambiado: vuelve a `review_required` sin `owner_approved_at` hasta que el dueño apruebe la nueva redacción, por decisión del dueño. `last_verified` sigue en 2026-11-18.
