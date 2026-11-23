@@ -68,44 +68,44 @@ legal_basis:
 sources:
 - source: diario-oficial-cl
   url: https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
-  accessed: '2026-11-18'
+  accessed: '2026-11-23'
   label: Diario Oficial
   page_title: LEY NÚM. 21.719 REGULA LA PROTECCIÓN Y EL TRATAMIENTO DE LOS DATOS PERSONALES Y CREA LA AGENCIA DE PROTECCIÓN DE DATOS PERSONALES
   note: 'Ley 21.719 publicada en el Diario Oficial núm. 44.023, viernes 13 de diciembre de 2024 (CVE 2583630). Páginas que citan los enlaces de
-    la ficha, verificadas el 2026-11-18 contra el texto del PDF (34 páginas): art. 3 letras a, b y c (pág. 3), art. 12 (pág. 7), art. 13 letra
+    la ficha, verificadas el 2026-11-23 contra el texto del PDF (34 páginas): art. 3 letras a, b y c (pág. 3), art. 12 (pág. 7), art. 13 letra
     d (pág. 8), art. 14 ter (pág. 9), art. 16 (pág. 12), art. 34 ter letras a y c (pág. 24) y art. 49 letra c (pág. 30). La fecha de vigencia y el estado legislativo están en la ficha chile-data-protection (Contexto normativo).'
 - source: bcn-leychile
   url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-  accessed: '2026-11-18'
+  accessed: '2026-11-23'
   label: versión consolidada
   page_title: Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES · Con Vigencia Diferida por Fecha - 01-DIC-2026
-  note: 'Ley 19.628 en la versión «Con Vigencia Diferida por Fecha - 01-DIC-2026» (versión consolidada de la BCN con vigencia diferida; vigencia: 15-10-2027 según la Ley 21.855; última modificación: Ley 21.719), consultada el 2026-11-18.
+  note: 'Ley 19.628 en la versión «Con Vigencia Diferida por Fecha - 01-DIC-2026» (versión consolidada de la BCN con vigencia diferida; vigencia: 15-10-2027 según la Ley 21.855; última modificación: Ley 21.719), consultada el 2026-11-23.
     Arts. 1 bis, 3 letras a, b y c, 12, 13 letras a a e, 14 letra a, 14 ter letras d, h, i, j, k y l, 16, 27 y 34 ter letras a y c, verificados contra
     lo que dice la ficha. Fuera del modelo de prevención (arts. 49 a 53), el texto no impone llevar un registro de actividades de tratamiento:
     los deberes cercanos son acreditar la licitud (arts. 3 a, 12, 13 y 14 a) y publicar la información del art. 14 ter.'
 - source: bcn-leychile
   url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idParte=10528059&idVersion=2026-12-01
-  accessed: '2026-11-18'
+  accessed: '2026-11-23'
   label: art. 14 ter
   page_title: Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES · Artículo 14 ter
   note: 'Enlace directo al art. 14 ter («Deber de información y transparencia») en la versión «Con Vigencia Diferida por Fecha - 01-DIC-2026» (vigencia: 15-10-2027 según la Ley 21.855): el idParte se
-    tomó del árbol de la norma en BCN y se comprobó en un navegador el 2026-11-17; el texto se volvió a verificar el 2026-11-18. Si BCN cambia el identificador, el enlace cae en la norma completa.'
+    tomó del árbol de la norma en BCN y se comprobó en un navegador el 2026-11-17; el texto se volvió a verificar el 2026-11-23. Si BCN cambia el identificador, el enlace cae en la norma completa.'
 - source: bcn-leychile
   url: https://www.bcn.cl/leychile/navegar?idNorma=1227971
-  accessed: '2026-11-18'
+  accessed: '2026-11-23'
   label: Decreto 662
   page_title: Decreto 662 APRUEBA REGLAMENTO QUE REGULA LOS REQUISITOS, MODALIDADES Y PROCEDIMIENTOS PARA LA IMPLEMENTACIÓN, CERTIFICACIÓN, REGISTRO
     Y SUPERVISIÓN DE LOS MODELOS DE PREVENCIÓN DE INFRACCIONES A QUE SE REFIERE EL ARTÍCULO 49 QUE INCORPORA LA LEY N° 21.719 A LA LEY N° 19.628
-  note: 'Decreto 662 del Ministerio de Hacienda, promulgado el 2025-06-13 y publicado el 2026-09-09, consultado el 2026-11-18. Art. 1: el modelo
+  note: 'Decreto 662 del Ministerio de Hacienda, promulgado el 2025-06-13 y publicado el 2026-09-09, consultado el 2026-11-23. Art. 1: el modelo
     de prevención es voluntario y no obsta al deber general de cumplir la ley. Art. 3 letra d): la caracterización de actividades de tratamiento
     con once contenidos (i a xi), transcritos en la ficha.'
 - source: bcn-leychile
   url: https://www.bcn.cl/leychile/navegar?idNorma=1227971&idParte=10609555
-  accessed: '2026-11-18'
+  accessed: '2026-11-23'
   label: art. 3
   page_title: Decreto 662 · Artículo 3
   note: 'Enlace directo al art. 3 del Decreto 662 («Requisitos del programa de cumplimiento»): el idParte se tomó del árbol de la norma en BCN
-    y se comprobó en un navegador el 2026-11-17; el texto se volvió a verificar el 2026-11-18.'
+    y se comprobó en un navegador el 2026-11-17; el texto se volvió a verificar el 2026-11-23.'
 - source: gcp-knowledge-catalog-docs
   url: https://docs.cloud.google.com/knowledge-catalog/docs/about-data-lineage
   accessed: '2026-11-18'
@@ -1818,7 +1818,7 @@ views:
         why: Automatizar las verificaciones.
 created_at: '2026-10-21'
 updated_at: '2026-11-23'
-last_verified: '2026-11-18'
+last_verified: '2026-11-23'
 owner_approved_at: 2026-11-23
 verification_status: verified
 availability: available
@@ -2386,3 +2386,4 @@ puerta de la CI: rechazada (1): 3 de 4 despliegues bloqueados
 - 2026-11-22: por decisión del dueño, en 2.1 la quinta fila de la escalera pasa del principio «Infracción grave» a «Consecuencia: infracción grave (art. 34 ter)», y su marca, de «Consecuencia, no obligación» a «Lo que pasa si no se cumple, no un deber más», para no repetir la palabra. El resto de la fila no cambia; la paráfrasis de las letras a y c se comparó ese día con el art. 34 ter en BCN (versión 2026-12-01). El título de 2.1 se mantiene. Pendiente de aprobación del dueño; la ficha sigue en `review_required`.
 - 2026-11-23: con la Ley 21.855 publicada, el rótulo de la versión de BCN pasa a «versión consolidada de la BCN con vigencia diferida; vigencia: 15-10-2027 según la Ley 21.855», en la cita y en Fuentes; se mantienen los enlaces `idVersion=2026-12-01`. Ningún artículo citado por la ficha cambia con la Ley 21.855, y la ficha no cita los artículos transitorios. Pendiente de aprobación del dueño; la ficha sigue en `review_required`.
 - 2026-11-23: El dueño aprobó los textos legales de la ficha: §2 (introducción y recuadro "La ley no exige este formato"), escalera de 2.1, modales de campos (letras d, h, i, j y l), literal de la k, "Qué hace" y §13; incluye el rótulo de BCN vigente con la Ley 21.855 y los iconos de documento (`owner_approved_at: 2026-11-23`); pasa a `verified` (ADR-023).
+- 2026-11-23: relectura literal en BCN (versión «Con Vigencia Diferida por Fecha - 01-DIC-2026» de la Ley 19.628, consultada a las 19:19) de los arts. 1 bis, 3, 12, 13, 14, 14 ter, 16, 27, 34 ter y 49, del Decreto 662 (arts. 1 y 3 letra d) y del PDF del Diario Oficial de la Ley 21.719 (mismo archivo; páginas citadas comprobadas): coinciden con lo que dice la ficha. `last_verified` y el `accessed` de las citas legales pasan a 2026-11-23; las seis páginas cloud no se releyeron y conservan 2026-11-18. Sin cambios de texto; la aprobación del dueño (`owner_approved_at: 2026-11-23`) se mantiene (ADR-023 no exige otra por subir `last_verified`).
