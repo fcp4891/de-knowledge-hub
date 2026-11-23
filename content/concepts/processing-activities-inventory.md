@@ -1817,9 +1817,10 @@ views:
         label: Ficha
         why: Automatizar las verificaciones.
 created_at: '2026-10-21'
-updated_at: '2026-11-22'
+updated_at: '2026-11-23'
 last_verified: '2026-11-18'
-verification_status: review_required
+owner_approved_at: 2026-11-23
+verification_status: verified
 availability: available
 ---
 
@@ -2384,3 +2385,4 @@ puerta de la CI: rechazada (1): 3 de 4 despliegues bloqueados
 - 2026-11-22: por decisión del dueño, con `campos=None` la conciliación emite la brecha «campos permitidos: [sin evaluar]» (alerta técnica, no infracción), como los datos sensibles y los destinatarios sin evaluar; `actual` pasa de 14 a 15 hallazgos por `modelo_fraude`, y `corregido` (0) y `despliegue-nuevo` (3 de 4 bloqueados) no cambian. Sale el literal de la letra k de `register_fields.literal.law`: no se mostraba en ningún lado y duplicaba el de 2.1. Textos pendientes de aprobación del dueño; la ficha sigue en `review_required`.
 - 2026-11-22: por decisión del dueño, en 2.1 la quinta fila de la escalera pasa del principio «Infracción grave» a «Consecuencia: infracción grave (art. 34 ter)», y su marca, de «Consecuencia, no obligación» a «Lo que pasa si no se cumple, no un deber más», para no repetir la palabra. El resto de la fila no cambia; la paráfrasis de las letras a y c se comparó ese día con el art. 34 ter en BCN (versión 2026-12-01). El título de 2.1 se mantiene. Pendiente de aprobación del dueño; la ficha sigue en `review_required`.
 - 2026-11-23: con la Ley 21.855 publicada, el rótulo de la versión de BCN pasa a «versión consolidada de la BCN con vigencia diferida; vigencia: 15-10-2027 según la Ley 21.855», en la cita y en Fuentes; se mantienen los enlaces `idVersion=2026-12-01`. Ningún artículo citado por la ficha cambia con la Ley 21.855, y la ficha no cita los artículos transitorios. Pendiente de aprobación del dueño; la ficha sigue en `review_required`.
+- 2026-11-23: El dueño aprobó los textos legales de la ficha: §2 (introducción y recuadro "La ley no exige este formato"), escalera de 2.1, modales de campos (letras d, h, i, j y l), literal de la k, "Qué hace" y §13; incluye el rótulo de BCN vigente con la Ley 21.855 y los iconos de documento (`owner_approved_at: 2026-11-23`); pasa a `verified` (ADR-023).
