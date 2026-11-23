@@ -209,8 +209,8 @@ def test_ladder_separates_paraphrase_from_interpretation_and_quotes_letter_k(vie
     ladder = views["law_ladder"]
     assert ladder["headers"][1] == "Lo que se espera (paráfrasis)"
     interpretations = [row for row in ladder["rows"] if row.get("interpretation")]
-    # La quinta fila suma la marca «Consecuencia, no obligación» por decisión del dueño (2026-11-18).
-    assert [row["principle"] for row in interpretations] == ["Proporcionalidad", "Infracción grave"]
+    # La quinta fila lleva su marca (consecuencia, no obligación) por decisión del dueño (2026-11-18 y 2026-11-22).
+    assert [row["principle"] for row in interpretations] == ["Proporcionalidad", "Consecuencia: infracción grave (art. 34 ter)"]
     moved = "La ley no fija un plazo general: lo define el responsable según la finalidad."
     assert interpretations[0]["interpretation"] == f"**Interpretación de la ficha:** {moved}"
     assert all("plazo general" not in row["expected"] for row in ladder["rows"])
@@ -226,8 +226,10 @@ def test_fifth_row_is_a_consequence_not_an_obligation(views: dict[str, Any]) -> 
     """2.1, quinta fila: lleva la marca «Consecuencia, no obligación» en la línea de interpretación (ADR-030, enmienda
     11) y su contenido legal no cambia: art. 34 ter, letras a y c, y la alerta que no presume infracción."""
     row = views["law_ladder"]["rows"][4]
-    assert (row["question"], row["principle"], row.get("risk")) == ("¿Y si un uso no calza?", "Infracción grave", True)
-    assert row["interpretation"] == "**Consecuencia, no obligación**"
+    assert (row["question"], row["principle"], row.get("risk")) == (
+        "¿Y si un uso no calza?", "Consecuencia: infracción grave (art. 34 ter)", True)
+    assert row["interpretation"] == "**Lo que pasa si no se cumple, no un deber más**"
+    assert "consecuencia" not in row["interpretation"].lower()   # la marca no repite el principio
     assert [c.split("]")[0] for c in row["cites"]] == ["[(art. 34 ter)"]
     assert row["expected"] == ("Tratar datos sin base o con una finalidad distinta (letra a), o tratar datos innecesarios "
                                "para los fines (letra c).")

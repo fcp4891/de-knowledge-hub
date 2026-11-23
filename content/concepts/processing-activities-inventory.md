@@ -306,11 +306,11 @@ views:
         **Plazo o condición de supresión**, **Fuente** y **Decisiones automatizadas**. Con eso se genera el insumo para la política, que privacidad
         revisa antes de publicar. Para la letra k, **Base de licitud** dice qué actividades se basan en el consentimiento.
     - question: ¿Y si un uso no calza?
-      principle: Infracción grave
+      principle: 'Consecuencia: infracción grave (art. 34 ter)'
       cites:
       - '[(art. 34 ter)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=24)'
       expected: Tratar datos sin base o con una finalidad distinta (letra a), o tratar datos innecesarios para los fines (letra c).
-      interpretation: '**Consecuencia, no obligación**'
+      interpretation: '**Lo que pasa si no se cumple, no un deber más**'
       record: Un uso sin actividad registrada es una alerta que se revisa, no una infracción que se presume.
       risk: true
   register_fields:
@@ -2381,3 +2381,4 @@ puerta de la CI: rechazada (1): 3 de 4 despliegues bloqueados
 - 2026-11-22: las menciones de vigencia remiten al Contexto normativo de `chile-data-protection`, fuente única del estado legislativo (boletín 18.623-07 despachado al Presidente el 2026-11-17): §13 pasa de «Ley 19.628 · texto que rige desde el 2026-12-01» a «versión con vigencia diferida (2026-12-01)» con la remisión, y las notas de la cita del Diario Oficial y del art. 14 ter dejan de decir «rigen desde» y «con vigencia desde». El enlace `idVersion=2026-12-01` se mantiene: es la versión de BCN con las modificaciones de la Ley 21.719 mientras no se publique otra ley. Texto legal cambiado: vuelve a `review_required` sin `owner_approved_at` hasta que el dueño apruebe la nueva redacción, por decisión del dueño. `last_verified` sigue en 2026-11-18.
 - 2026-11-22: revisión del código (T-06, T-02, T-01/T-04). `insumo_14_ter` emite la letra k (retiro del consentimiento: «no aplica», o el derecho a retirarlo con el registro de consentimientos), y el modal suma el literal del art. 14 ter letra k, verificado ese día contra BCN; «Qué hace» nombra las letras d, h, i, j, k y l. `campos` distingue `None` (sin evaluar: no se compara) de vacío (ninguna permitida: toda columna leída es una brecha); `modelo_fraude` pasa a `None`. «Qué hace», el paso 03 y «Activos y consumidores» precisan qué revisa cada función: `vigente` solo la aprobación; la puerta, `activity_id`, consumidor declarado y vigencia; base, plazo y campos, solo la conciliación. Conteos sin cambios: actual 1 con 14 hallazgos, corregido 0, despliegue-nuevo 1 con 3 de 4 bloqueados. Textos pendientes de aprobación del dueño; la ficha sigue en `review_required`.
 - 2026-11-22: por decisión del dueño, con `campos=None` la conciliación emite la brecha «campos permitidos: [sin evaluar]» (alerta técnica, no infracción), como los datos sensibles y los destinatarios sin evaluar; `actual` pasa de 14 a 15 hallazgos por `modelo_fraude`, y `corregido` (0) y `despliegue-nuevo` (3 de 4 bloqueados) no cambian. Sale el literal de la letra k de `register_fields.literal.law`: no se mostraba en ningún lado y duplicaba el de 2.1. Textos pendientes de aprobación del dueño; la ficha sigue en `review_required`.
+- 2026-11-22: por decisión del dueño, en 2.1 la quinta fila de la escalera pasa del principio «Infracción grave» a «Consecuencia: infracción grave (art. 34 ter)», y su marca, de «Consecuencia, no obligación» a «Lo que pasa si no se cumple, no un deber más», para no repetir la palabra. El resto de la fila no cambia; la paráfrasis de las letras a y c se comparó ese día con el art. 34 ter en BCN (versión 2026-12-01). El título de 2.1 se mantiene. Pendiente de aprobación del dueño; la ficha sigue en `review_required`.
