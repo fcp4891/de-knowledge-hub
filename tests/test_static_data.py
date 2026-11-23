@@ -133,7 +133,7 @@ def test_privacy_engineering_domain_has_band_and_legal_framework(out: Path) -> N
     """ADR-027: el dominio 24 trae la banda y el marco legal para la UI."""
     domain = read(out, "domains/privacy-engineering.json")
     assert domain["band"] == "especializacion"
-    assert [f["key"] for f in domain["legal_framework"]["facts"]] == ["law-name", "effective-date", "postponement-bill"]
+    assert [f["key"] for f in domain["legal_framework"]["facts"]] == ["law-name", "effective-date", "amending-law"]
 
 
 def test_sources_grouped_projects_heading_and_link_titles_before_groups(out: Path) -> None:

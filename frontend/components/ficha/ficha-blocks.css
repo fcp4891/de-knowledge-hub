@@ -1818,14 +1818,16 @@
   margin-bottom: 16px;
   padding-bottom: 16px;
   overflow-x: auto;
+  container-type: inline-size;
 }
 
 .approach-grid {
   display: grid;
-  grid-template-columns: 7.2rem repeat(5, minmax(8.2rem, 1fr));
+  /* Rótulo + 5 pasos caben en la columna de lectura a 1100 px (≈778 px); más angosto, el bloque se desplaza adentro. */
+  grid-template-columns: 7.2rem repeat(5, minmax(7.6rem, 1fr));
   column-gap: 8px;
   row-gap: 12px;
-  min-width: 52rem;
+  min-width: 48rem;
   margin: 0;
 }
 
@@ -1908,6 +1910,28 @@
   border: 1px dashed var(--border-strong);
   background: var(--surface);
   text-align: center;
+}
+
+/* Caja de menos de 48 rem: la grilla se transpone a dos columnas (Paso | Ejemplo), un paso por fila, sin desplazamiento
+   interno. El orden del DOM (rótulo, 5 pasos, rótulo, 5 ejemplos) llena cada columna con grid-auto-flow: column. */
+@container (max-width: 47.99rem) {
+  .approach-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto repeat(5, auto);
+    grid-auto-flow: column;
+    min-width: 0;
+  }
+
+  .approach-label {
+    position: static;
+    justify-content: flex-start;
+    padding: 0 0 4px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .approach-label small {
+    display: none;   /* «fila de la matriz»: solo en la versión horizontal */
+  }
 }
 
 .approach-points {
