@@ -19,6 +19,7 @@ export async function MarkdownBody({
   horizontalDiagrams = false,
   styleArrows = true,
   views,
+  subsections,
 }: {
   markdown: string;
   etiquetaColumn?: boolean;
@@ -29,8 +30,11 @@ export async function MarkdownBody({
   styleArrows?: boolean;
   /** ADR-030: lo que se dibuja en cada marca <!-- view: clave -->; sin entrada, la marca no dibuja nada. */
   views?: Readonly<Record<string, React.ReactNode>>;
+  /** ADR-030 enmienda 10: clave de la división; cada ### es una subsección numerada con ancla <clave>-<n>. */
+  subsections?: string;
 }) {
   const blocks = parseMarkdown(markdown);
+  const subsectionIds = subsectionAnchors(blocks, subsections);
   const notes = annotateCode(blocks);
   const grouped = groupEvidence(blocks);
   const hasCode = blocks.some((block) => block.type === "code" && block.language !== "mermaid");
@@ -45,6 +49,10 @@ export async function MarkdownBody({
       {grouped.map((block, index) =>
         block.type === "view" ? (
           <Fragment key={index}>{views?.[block.name] ?? null}</Fragment>
+        ) : block.type === "heading" && subsectionIds.has(block) ? (
+          <h3 key={index} id={subsectionIds.get(block)} className="reading-subsection">
+            {block.text}
+          </h3>
         ) : block.type === "evidence" ? (
           <EvidenceBlock
             key={index}
@@ -77,6 +85,16 @@ export async function MarkdownBody({
       )}
     </div>
   );
+}
+
+/** Ancla de cada ### de una división con subsecciones: <clave>-1, <clave>-2… (sin clave, ninguna). */
+export function subsectionAnchors(blocks: Block[], key?: string): Map<Block, string> {
+  const ids = new Map<Block, string>();
+  if (!key) return ids;
+  for (const block of blocks) {
+    if (block.type === "heading" && block.level === 3) ids.set(block, `${key}-${ids.size + 1}`);
+  }
+  return ids;
 }
 
 function EvidenceBlock({

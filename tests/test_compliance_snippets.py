@@ -21,7 +21,9 @@ import re
 import secrets
 import subprocess
 import sys
+from dataclasses import replace
 from pathlib import Path
+from types import ModuleType
 from typing import Any
 
 import pytest
@@ -391,6 +393,58 @@ def test_inventory_rules(tmp_path: Path) -> None:
     assert motivos == ["despliegue bloqueado: job_fraude → modelo_fraude: actividad no vigente",
                        "despliegue bloqueado: dag_x no declarado en modelo_fraude"]
     assert m.puerta_ci(registro, [m.Despliegue("dag_reservas", "venta_pasajes")]) == 0
+
+
+def load_inventory(tmp_path: Path) -> ModuleType:
+    (code,) = blocks("processing-activities-inventory", "python")
+    module = tmp_path / "inventario.py"
+    module.write_text(code, encoding="utf-8", newline="\n")
+    spec = importlib.util.spec_from_file_location("inventario", module)
+    assert spec and spec.loader
+    m = importlib.util.module_from_spec(spec)
+    sys.modules["inventario"] = m   # dataclasses necesita el módulo registrado
+    spec.loader.exec_module(m)
+    return m
+
+
+def test_inventory_empty_fields_are_evaluated_and_none_is_not(tmp_path: Path) -> None:
+    """T-02: campos vacío es «ninguno permitido» y se evalúa (toda columna leída sobra); None es «sin evaluar» y genera
+    su propia brecha, nunca un OK."""
+    m = load_inventory(tmp_path)
+    registro, _, _ = m.escenario("corregido")
+    uso = m.Uso("sa-campanas", "silver.pasajeros", frozenset({"correo"}))
+
+    def proporcionalidad(campos: frozenset[str] | None) -> list[str]:
+        actividades = tuple(replace(a, campos=campos) if a.id == "marketing" else a for a in registro.actividades)
+        return [h.detalle for h in m.conciliar(replace(registro, actividades=actividades), [uso], m.REFERENCIA)
+                if h.detalle.startswith("proporcionalidad")]
+
+    assert proporcionalidad(frozenset()) == ["proporcionalidad: dag_campanas lee correo, no necesario para marketing"]
+    assert proporcionalidad(None) == []
+    assert proporcionalidad(frozenset({"correo"})) == []
+    sin_evaluar = tuple(replace(a, campos=None) if a.id == "marketing" else a for a in registro.actividades)
+    assert [h.detalle for h in m.conciliar(replace(registro, actividades=sin_evaluar), [uso], m.REFERENCIA)] == [
+        "marketing: campos permitidos: [sin evaluar]"]
+    actual, usos, _ = m.escenario("actual")
+    assert [h.detalle for h in m.conciliar(actual, usos, m.REFERENCIA) if "campos permitidos" in h.detalle] == [
+        "modelo_fraude: campos permitidos: [sin evaluar]"]
+
+
+def test_inventory_insumo_emits_letter_k(tmp_path: Path) -> None:
+    """T-06: el insumo del art. 14 ter emite la letra k en cada actividad vigente, con el registro si la base es el
+    consentimiento."""
+    m = load_inventory(tmp_path)
+    for nombre in ("actual", "corregido"):
+        registro, _, _ = m.escenario(nombre)
+        filas = m.insumo_14_ter(registro, m.REFERENCIA)
+        vigentes = [a for a in registro.actividades if m.vigente(a, m.REFERENCIA)]
+        letras = [f.split(")", 1)[0].strip() for f in filas if not f.startswith("- ")]
+        assert letras == ["d", "d", "h", "i", "j", "k", "l"] * len(vigentes), nombre
+    registro, _, _ = m.escenario("corregido")
+    k = [f for f in m.insumo_14_ter(registro, m.REFERENCIA) if f.startswith("  k)")]
+    assert k.count("  k) retiro del consentimiento: no aplica") == 3
+    assert ("  k) retiro del consentimiento: derecho a retirarlo en cualquier momento · registro de consentimientos: "
+            "v3 desde 2026-09-01") in k
 
 
 PSEUDONYM_SCENARIOS = {"publicar-exacto": 1, "publicar-generalizado": 0, "sin-normalizar": 1}

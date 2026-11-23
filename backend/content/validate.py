@@ -510,10 +510,13 @@ def check_page_sections(content_dir: Path, docs: list[Document], report: Report)
         if "views" in doc.data:
             cited = [s["url"] for s in doc.data.get("sources", []) if "url" in s]
             present = [number for number, _, _ in page_sections.sections(body)]
+            parts = [(n, c) for n, _, c in page_sections.sections(body)]
             anchors = page_views.page_anchors(doc.data["views"], present, doc.data.get("legal_basis", []),
                                               len(page_sections.annexes(body)))
+            anchors |= page_views.subsection_anchors(doc.data["views"], parts)   # ADR-030, enmienda 10
             errors += page_views.check(doc.data["views"], body, cited, anchors)
-            errors += page_views.check_splits(doc.data["views"], [(n, c) for n, _, c in page_sections.sections(body)])
+            errors += page_views.check_splits(doc.data["views"], parts)
+            errors += page_views.check_subsections(doc.data["views"], parts)
             fichas = {d.data["slug"] for d in docs if d.data["type"] in page_sections.PAGE_TYPES}
             errors += [f"[views] enlace a una ficha inexistente: '{target}'"
                        for target in sorted(set(page_views.internal_targets(doc.data["views"]))) if target not in fichas]

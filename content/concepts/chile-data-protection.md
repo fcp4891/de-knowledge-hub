@@ -505,7 +505,7 @@ views:
           label: Finalidad
           href: '#matriz-finalidad'
         - kind: Arquitectura
-          label: Catálogo de actividades
+          label: Registro de actividades de tratamiento
           href: '#s9'
         id: como-funciona-02
     - title: Controlar
@@ -742,7 +742,7 @@ views:
       items:
       - title: Legal y negocio
         detail: finalidad, base de licitud, plazo
-      - title: Catálogo de actividades
+      - title: Registro de actividades de tratamiento
         detail: metadatos por actividad
       legend:
       - el contrato fija los campos permitidos
@@ -1756,11 +1756,13 @@ El detalle de cada fuente está en `sources` del frontmatter; la agrupación, en
 - 2026-11-10: revisión aplicada. Sanciones: atenuante del modelo de prevención (acreditado con el certificado; matriz de riesgos de infracción obligatoria, registro de actividades opcional; art. 52), reincidencia con sanciones firmes o ejecutoriadas y gran empresa con el 2 % o el 4 % según la gravedad (ley 20.416). Roles: el responsable responde por los principios y deberes (art. 3). En la nube: tres de los siete requisitos de la matriz. La cita versionada de la Ley 19.628 indica su versión en el título. Sigue en `review_required`.
 - 2026-11-12: el art. 16 quáter (datos de niños, niñas y adolescentes) entra a `legal_basis`, al anexo y al catálogo: sus vistas ya lo citaban y `pii-identification` enlaza a su fila del catálogo (ADR-023, enmienda 9). Sigue en `review_required`.
 - 2026-11-15: la línea de vigencia se sincroniza con la tarjeta de la Ley 21.719 (ADR-027): el hito del Senado pasa al estado consultado hoy en el servicio de tramitación (segundo trámite en la Cámara de Diputados, «Discusión general», urgencia «Discusión inmediata»); el «al día» de la línea y la cita de la página de tramitación pasan al 2026-11-15. La vigencia legal sigue en el 2026-12-01.
+- 2026-11-17: en «Del requisito al dato» (Arquitectura), el recuadro «Catálogo de actividades» pasa a «Registro de actividades de tratamiento», el nombre que usa la ficha Inventario. Sin cambios de fondo; el estado no cambia.
 - 2026-11-22: estado legislativo del boletín 18.623-07, consultado hoy en el Senado (servicio de tramitación y oficio 378-26): despachado al Presidente de la República el 2026-11-17, con nueva fecha propuesta 15 de octubre de 2027, pendiente de promulgación y publicación; el texto publicado sigue fijando el 1 de diciembre de 2026. Cambian el Contexto normativo (§2), la línea de vigencia, las fuentes del Senado (nueva: oficio 378-26) y los rótulos de la Ley 19.628 («versión con vigencia diferida» en vez de «texto que rige desde»). Esta ficha es la fuente única del estado legislativo; las demás remiten a ella. Textos legales pendientes de aprobación del dueño (sin `owner_approved_at`), por decisión del dueño. `last_verified` no cambia: solo se volvió a verificar la tramitación.
 - 2026-11-22: retoques previos a la aprobación. El hito del Senado de la línea de vigencia lleva la fecha del hecho (2026-11-17, despacho al Presidente); la fecha de consulta queda en «Estado de la tramitación». La nota del oficio 378-26 cita sus tres numerales (leído completo): no modifica el artículo sexto transitorio. La nota del mensaje, vuelto a leer completo, aclara «(no incluido en el texto despachado)». Textos pendientes de aprobación del dueño (sin `owner_approved_at`), por decisión del dueño.
 - 2026-11-22: por decisión del dueño, aprobada con lista explícita la redacción del estado legislativo de la Ley 21.719: §2 «Contexto normativo», línea de vigencia con el hito del 2026-11-17, fuentes del Senado y del oficio 378-26, y la tarjeta `cl-ley-21719` (`owner_approved_at: 2026-11-22`). Aprobación parcial: la ficha sigue en `review_required` porque los cambios pendientes desde el 2026-11-06 (vistas de ADR-030, §10, roles, sanciones, art. 16 quáter) no forman parte de esta aprobación (ADR-023). `last_verified` no cambia.
 - 2026-11-22: bloque «Referencia» del enfoque y «Marcos de referencia del enfoque» del §20 corregidos tras una revisión independiente: sin citas a cláusulas ni controles de ISO/IEC 27001 en los pasos 1 a 5 ni en Fuentes (se reemplazan por una nota de compatibilidad rotulada «texto no verificado por el autor»); ISO/IEC 27701:2025 como norma independiente; NIST Privacy Framework 1.0 (enero de 2020) con la 1.1 solo como borrador; NCh-ISO/IEC 27001:2023 (INN) agregada; rótulos «Referencia técnica» y de norma de pago en lugar de «Nivel 1» en el bloque del enfoque. Pendiente de aprobación del dueño. `last_verified` sigue en 2026-10-28: llevarlo al 2026-11-22 exige volver a consultar las citas legales de BCN y del Diario Oficial (ADR-023).
 - 2026-11-23: publicada la Ley 21.855 (Diario Oficial núm. 44.606, CVE 2907953; BCN idNorma 1230520), que sustituye la fecha de vigencia de la Ley 21.719 por el 15 de octubre de 2027 y cambia el Consejo Directivo de la Agencia. Cambian el §2 «Contexto normativo», la línea de vigencia (hitos 2024-12-13, 2026-11-23 y 2027-10-15; el 2026-12-01 queda como fecha original, sustituida), las fuentes (nuevas: Ley 21.855 en el Diario Oficial y en BCN; el boletín 18.623-07 pasa a historia legislativa), los rótulos de la versión de BCN y la tarjeta `cl-ley-21719`. Se volvieron a leer literalmente las citas legales (Ley 19.628 en BCN, su ficha general, Decreto 662, Ley 21.719 en el Diario Oficial, y el mensaje y el oficio del Senado) y `last_verified` pasa a 2026-11-23. Sale el `owner_approved_at` del 2026-11-22: los textos legales nuevos quedan pendientes de aprobación del dueño, por decisión del dueño.
+- 2026-11-23: en «Cómo funciona», la pastilla «Arquitectura» del paso 02 pasa de «Catálogo de actividades» a «Registro de actividades de tratamiento», el nombre del recuadro del diagrama. Sin cambios de fondo; el estado no cambia.
 
 ## Anexo · Catálogo legal por tema
 

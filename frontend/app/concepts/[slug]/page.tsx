@@ -54,6 +54,9 @@ import { ExamplePickProvider } from "@/components/ficha/ExamplePick";
 import { FichaChips, FichaNote } from "@/components/ficha/FichaNotes";
 import { PracticePairs } from "@/components/ficha/PracticePairs";
 import { UseAvoid } from "@/components/ficha/UseAvoid";
+import { ActivityExplorer } from "@/components/ficha/ActivityExplorer";
+import { BuildCards, CaseCompare, CycleLanes, LawLadder } from "@/components/ficha/InventoryBlocks";
+import { RegisterFields } from "@/components/ficha/RegisterFields";
 import { WhenToUse } from "@/components/ficha/WhenToUse";
 import {
   approachProps,
@@ -92,7 +95,7 @@ function splitAt(markdown: string, key: string): { before: string; after: string
   return { before: markdown.slice(0, match.index).trim(), after: markdown.slice(match.index + match[0].length).trim() };
 }
 
-function splitFor(views: Views | undefined, number: number): { key: string; title: string } | null {
+function splitFor(views: Views | undefined, number: number): { key: string; title: string; subsections?: boolean } | null {
   return views?.section_splits?.find((item) => item.section === number) ?? null;
 }
 const OPEN_NUMBERS = new Set<number>();
@@ -229,6 +232,13 @@ function markedViews(views: Views | undefined): Record<string, ReactNode> {
   if (views.evidence_steps) nodes.evidence_steps = <EvidenceSteps view={views.evidence_steps} />;
   if (views.use_avoid) nodes.use_avoid = <UseAvoid view={views.use_avoid} />;
   if (views.practice_pairs) nodes.practice_pairs = <PracticePairs view={views.practice_pairs} />;
+  // ADR-030 enmienda 9: vistas del Inventario de actividades de tratamiento.
+  if (views.build_cards) nodes.build_cards = <BuildCards view={views.build_cards} />;
+  if (views.law_ladder) nodes.law_ladder = <LawLadder view={views.law_ladder} />;
+  if (views.register_fields) nodes.register_fields = <RegisterFields view={views.register_fields} />;
+  if (views.activity_explorer) nodes.activity_explorer = <ActivityExplorer view={views.activity_explorer} />;
+  if (views.case_compare) nodes.case_compare = <CaseCompare view={views.case_compare} />;
+  if (views.cycle_lanes) nodes.cycle_lanes = <CycleLanes view={views.cycle_lanes} />;
   if (views.notes) {
     for (const [id, note] of Object.entries(views.notes)) {
       nodes[`note ${id}`] = <FichaNote note={note} />;
@@ -267,7 +277,8 @@ function sectionModels(
     clouds = [];
   }
 
-  const body = (section: Section, extra: { etiquetaColumn?: boolean } = {}) => (
+  // ADR-030 enmienda 10: subsections lleva la clave de la división cuyos ### son subsecciones numeradas.
+  const body = (section: Section, extra: { etiquetaColumn?: boolean; subsections?: string } = {}) => (
     <MarkdownBody
       markdown={section.markdown}
       obligations={obligations}
@@ -330,7 +341,7 @@ function sectionModels(
           title: division.title,
           presentation: "details",
           listed: true,
-          body: body({ ...section, markdown: opening.after }),
+          body: body({ ...section, markdown: opening.after }, { subsections: division.subsections ? division.key : undefined }),
         });
       } else {
         models.push({
@@ -457,7 +468,7 @@ function sectionModels(
         title: division.title,
         presentation: "details",
         listed: true,
-        body: body({ ...section, markdown: parts.after }),
+        body: body({ ...section, markdown: parts.after }, { subsections: division.subsections ? division.key : undefined }),
       });
       continue;
     }

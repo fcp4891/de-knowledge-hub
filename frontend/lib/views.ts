@@ -106,11 +106,12 @@ export type WhenToUseProps = {
 export type RequirementToDataProps = {
   title: string;
   lead: string;
-  governance: { kicker: Label; items: Label[]; legend: string[] };
+  governance: { kicker: Label; items: (Label & { highlight?: boolean })[]; legend: string[] };
   data: {
     kicker: Label;
-    stages: { title: string; detail?: string; pill?: string; tone: "end" | "layer" }[];
-    banner: string;
+    stages: { title: string; detail?: string; pill?: string; tone: "end" | "layer"; highlight?: boolean }[];
+    /** ADR-030 enmienda 9: una o varias franjas punteadas. */
+    banners: string[];
   };
 };
 
@@ -118,10 +119,11 @@ export type ControlEvidenceProps = {
   id?: string;
   title: string;
   lead: string;
-  steps: { number: string; title: string; items: string[] }[];
-  decide: { number: string; title: string; outcomes: { tone: "pass" | "fail" | "keep"; text: string }[] };
+  /** ADR-030 enmienda 9: un ítem puede llevar la pastilla de su pista («Lo nuevo»). */
+  steps: { number: string; title: string; items: (string | { pill: string; text: string })[] }[];
+  decide: { number: string; title: string; outcomes: { tone: OutcomeTone; text: string }[] };
   note: string;
-  example: {
+  example?: {
     summary: string;
     steps: { title: string; items: { text: string; code?: string }[] }[];
     note: string;
@@ -129,11 +131,33 @@ export type ControlEvidenceProps = {
   };
 };
 
+export type OutcomeTone = "pass" | "fail" | "warn" | "keep";
+export type Disclosure = "open" | "closed";
+
 export type CodeGuideProps = {
+  /** ADR-030 enmienda 9: rótulo de la línea «escenario → código». */
+  exitCodesLabel?: string;
   lead: Titled;
-  rules: { headers: string[]; items: { id?: string; rule: string; fn: string; requirement: string; finds?: string }[] };
-  notCovered: { title: string; intro: string; items: Titled[]; note?: string };
-  scenarios: { title: string; items: { name: string; text: string; exitCode: 0 | 1 }[] };
+  leadMore?: string[];
+  rules?: {
+    title?: string;
+    summary?: string;
+    disclosure?: Disclosure;
+    headers: string[];
+    items: { id?: string; rule: string; fn: string; requirement: string; finds?: string; count?: number }[];
+  };
+  notCovered: {
+    title: string;
+    intro?: string;
+    items: Titled[];
+    note?: string;
+    table?: { lead: Titled; headers: string[]; rows: { item: string; form: string; code: string }[]; disclosure?: Disclosure };
+  };
+  scenarios?: {
+    title: string;
+    disclosure?: Disclosure;
+    items: { name: string; text: string; exitCode: 0 | 1; fixes?: { finding: string; fix: string }[] }[];
+  };
   simplifies: { title: string; items: Titled[] };
   limit: Titled;
 };
@@ -152,9 +176,11 @@ export type CloudCompareProps = {
     /** ADR-030 enmienda 5: fila «Dónde busca» y columna «Este ejemplo». */
     tone?: "where";
     own?: { text: string };
-    gcp: CloudCell;
-    aws: CloudCell;
-    azure: CloudCell;
+    gcp?: CloudCell;
+    aws?: CloudCell;
+    azure?: CloudCell;
+    /** ADR-030 enmienda 9: una celda para las tres nubes. */
+    span?: Titled;
   }[];
   closing?: string;
 };
@@ -219,6 +245,8 @@ export type SourcesGroupedProps = {
   /** ADR-030 enmienda 8: título visible bajo el rótulo y títulos de fuente como enlace. */
   heading?: string;
   linkTitles?: boolean;
+  /** ADR-030 enmienda 9: leyenda de los niveles de fuente. */
+  legend?: string;
   groups: {
     title: string;
     layout?: "list" | "providers";
@@ -313,7 +341,7 @@ export function requirementToDataProps(view: V["requirement_to_data"]): Requirem
     data: {
       kicker: view.data.kicker,
       stages: view.data.stages.map((stage) => ({ ...stage, tone: stage.tone as "end" | "layer" })),
-      banner: view.data.banner,
+      banners: view.data.banners ?? (view.data.banner ? [view.data.banner] : []),
     },
   };
 }
@@ -326,22 +354,29 @@ export function controlEvidenceProps(view: V["control_evidence"]): ControlEviden
     steps: view.steps,
     decide: {
       ...view.decide,
-      outcomes: view.decide.outcomes.map((outcome) => ({ ...outcome, tone: outcome.tone as "pass" | "fail" | "keep" })),
+      outcomes: view.decide.outcomes.map((outcome) => ({ ...outcome, tone: outcome.tone as OutcomeTone })),
     },
     note: view.note,
-    example: {
-      summary: view.example.summary,
-      steps: view.example.steps,
-      note: view.example.note,
-      codeLink: view.example.code_link,
-    },
+    example: view.example
+      ? {
+          summary: view.example.summary,
+          steps: view.example.steps,
+          note: view.example.note,
+          codeLink: view.example.code_link,
+        }
+      : undefined,
   };
 }
 
 export function codeGuideProps(view: V["code_guide"]): CodeGuideProps {
   return {
+    exitCodesLabel: view.exit_codes_label,
     lead: view.lead,
-    rules: {
+    leadMore: view.lead_more,
+    rules: view.rules && {
+      title: view.rules.title,
+      summary: view.rules.summary,
+      disclosure: view.rules.disclosure as Disclosure | undefined,
       headers: view.rules.headers,
       items: view.rules.items.map((item) => ({
         id: item.id,
@@ -349,6 +384,7 @@ export function codeGuideProps(view: V["code_guide"]): CodeGuideProps {
         fn: item.fn,
         requirement: item.requirement,
         finds: item.finds,
+        count: item.count,
       })),
     },
     notCovered: {
@@ -356,10 +392,19 @@ export function codeGuideProps(view: V["code_guide"]): CodeGuideProps {
       intro: view.not_covered.intro,
       items: view.not_covered.items,
       note: view.not_covered.note,
+      table: view.not_covered.table
+        ? { ...view.not_covered.table, disclosure: view.not_covered.table.disclosure as Disclosure | undefined }
+        : undefined,
     },
-    scenarios: {
+    scenarios: view.scenarios && {
       title: view.scenarios.title,
-      items: view.scenarios.items.map((item) => ({ name: item.name, text: item.text, exitCode: item.exit_code as 0 | 1 })),
+      disclosure: view.scenarios.disclosure as Disclosure | undefined,
+      items: view.scenarios.items.map((item) => ({
+        name: item.name,
+        text: item.text,
+        exitCode: item.exit_code as 0 | 1,
+        fixes: item.fixes,
+      })),
     },
     simplifies: view.simplifies,
     limit: view.limit,
@@ -422,6 +467,7 @@ export function sourcesGroupedProps(view: V["sources_grouped"]): SourcesGroupedP
   return {
     heading: view.heading,
     linkTitles: view.link_titles === true,
+    legend: view.legend,
     groups: view.groups.map((group) => ({
       title: group.title,
       layout: group.layout as "list" | "providers" | undefined,
@@ -457,9 +503,13 @@ export function sourcesGroupedProps(view: V["sources_grouped"]): SourcesGroupedP
   };
 }
 
-/** Cantidad de fuentes que muestra el encabezado: entradas agrupadas si hay sources_grouped. */
+/** Cantidad de «fuentes oficiales» del encabezado: entradas agrupadas si hay sources_grouped.
+ * Una ficha de la plataforma (`page`, ADR-030 enmienda 5) no es una fuente oficial y no se cuenta. */
 export function groupedSourceCount(view: V["sources_grouped"] | undefined, fallback: number): number {
-  return view ? view.groups.reduce((total, group) => total + group.sources.length, 0) : fallback;
+  if (!view) {
+    return fallback;
+  }
+  return view.groups.reduce((total, group) => total + group.sources.filter((source) => !source.page).length, 0);
 }
 
 /** Partes de un texto con Markdown en línea: enlaces, negrita, cursiva y código (sin HTML). */

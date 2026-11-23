@@ -3,180 +3,1886 @@ id: pattern:processing-activities-inventory
 slug: processing-activities-inventory
 type: pattern
 title: Inventario de actividades de tratamiento
-description: "El inventario explica para qué se tratan los datos personales y lo vincula con qué activos y consumidores los usan: la base de licitud vive en la actividad, no en la tabla. Actividad, activo, consumidor y evidencia son entidades distintas. La CI compara los usos observados con lo declarado y abre alertas (sin vínculo, sin aprobación) sin presumir infracciones; genera el insumo del art. 14 ter para revisión. Ejemplo ejecutado en la CI. No es asesoría legal."
+description: 'El inventario registra para qué se tratan los datos personales, con qué base y hasta cuándo, y lo vincula con los activos y consumidores
+  que los usan: la base vive en la actividad, no en la tabla. Una puerta en la CI bloquea lo nuevo sin actividad vigente y una conciliación alerta
+  lo que ya corre, sin presumir infracciones. Ejemplo ejecutado en la CI. No es asesoría legal.'
 domain: privacy-engineering
 subdomain: fundamentos
 classification: core
 level: intermediate
 importance: high
-cloud: [agnostic]
-technologies: [python]
-tags: [compliance, privacy, inventory, lawful-basis, lineage]
-related_topics: [data-catalog, data-lineage]
-jurisdiction: [CL]
+cloud:
+- agnostic
+technologies:
+- python
+tags:
+- compliance
+- privacy
+- inventory
+- lawful-basis
+- lineage
+related_topics:
+- data-catalog
+- data-lineage
+jurisdiction:
+- CL
 legal_basis:
-  - {law: ley-19628, article: "3", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Licitud y lealtad: el responsable acredita la licitud. Finalidad: fines específicos y sus excepciones. Proporcionalidad: solo los datos necesarios, adecuados y pertinentes para los fines.", implication: "Registro de actividades consultable y versionado (licitud), detección de usos no registrados (finalidad) y atributos necesarios por actividad (proporcionalidad)."}
-  - {law: ley-19628, article: "12", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Consentimiento libre, informado, específico, previo e inequívoco; revocable; el responsable lo prueba.", implication: "Guardar el consentimiento por finalidad, con fecha y versión."}
-  - {law: ley-19628, article: "13", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Otras bases: obligaciones económicas, obligación legal, contrato, interés legítimo, defensa de derechos.", implication: "Una base por actividad."}
-  - {law: ley-19628, article: "14", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "a) informar y poner a disposición los antecedentes de licitud.", implication: "Antecedentes de licitud exportables bajo demanda."}
-  - {law: ley-19628, article: "14 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "Información pública sobre categorías, destinatarios, finalidades, base, plazo, fuente y decisiones automatizadas.", implication: "El catálogo alimenta la política."}
-  - {law: ley-19628, article: "34 ter", url: "https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01", note: "a) tratar sin base o con finalidad distinta es infracción grave.", implication: "Un uso no registrado es una brecha de la CI."}
+- law: ley-19628
+  article: '3'
+  url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
+  note: 'Licitud y lealtad (a): el responsable acredita la licitud. Finalidad (b): fines específicos, explícitos y lícitos, con sus excepciones.
+    Proporcionalidad (c): solo los datos necesarios, adecuados y pertinentes, y solo mientras se necesiten.'
+  implication: Registro de actividades consultable, alerta ante usos que no calzan con una actividad y campos necesarios por finalidad.
+- law: ley-19628
+  article: '12'
+  url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
+  note: Consentimiento libre, informado, específico, previo e inequívoco; revocable; el responsable lo prueba.
+  implication: Registro de consentimientos vinculado a la actividad, con versión del texto y fecha.
+- law: ley-19628
+  article: '13'
+  url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
+  note: 'Otras bases: obligaciones económicas, obligación legal, contrato, interés legítimo y defensa de un derecho.'
+  implication: Una base por actividad; el interés legítimo, con su justificación.
+- law: ley-19628
+  article: 14 ter
+  url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
+  note: 'Información pública: categorías de datos, titulares, destinatarios, finalidades y base (d), transferencias (h), plazo (i), fuente (j),
+    derecho a retirar el consentimiento cuando esa es la base (k) y decisiones automatizadas (l).'
+  implication: El registro genera el insumo de la política, que privacidad revisa antes de publicar.
+- law: ley-19628
+  article: '16'
+  url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
+  note: 'Datos sensibles: consentimiento expreso, salvo las excepciones del artículo.'
+  implication: Un dato sensible con otra base se deriva a revisión.
+- law: ley-19628
+  article: 34 ter
+  url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
+  note: 'Infracciones graves: tratar sin base o con una finalidad distinta (a) y tratar datos innecesarios (c).'
+  implication: Un uso no registrado es una alerta que se revisa, no una infracción que se presume.
+- law: ley-19628
+  article: '49'
+  url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
+  note: Modelo de prevención de infracciones, voluntario; la letra c pide identificar el tipo de información, el ámbito territorial, las bases
+    de datos y los titulares.
+  implication: Quien adopta el modelo desarrolla su registro con los contenidos del Decreto 662, art. 3 letra d).
 sources:
-  - source: bcn-leychile
-    url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    accessed: 2026-10-28
-    page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ley 19.628 con las modificaciones de la Ley 21.719 (versión «Con Vigencia Diferida por Fecha» desde 2026-12-01), consultada el 2026-10-25 y, para el art. 3 c), el 2026-10-28. Art. 3 a): el responsable deberá ser capaz de acreditar la licitud; b): fines específicos, explícitos y lícitos; no se trata con fines distintos salvo fines compatibles, relación contractual o precontractual que lo justifique, nuevo consentimiento o ley; c) principio de proporcionalidad: los datos que se traten deben limitarse estrictamente a aquéllos que resulten necesarios, adecuados y pertinentes en relación con los fines del tratamiento. Art. 12: consentimiento libre, informado y específico en cuanto a su finalidad, previo e inequívoco; revocable en cualquier momento con medios similares; corresponde al responsable probar que contó con él. Art. 13: otras bases: a) obligaciones económicas según el Título III, b) obligación legal, c) contrato o medidas precontractuales, d) interés legítimo, e) defensa de un derecho; el responsable acredita la licitud. Art. 14 a): informar y poner a disposición del titular los antecedentes de licitud. Art. 14 ter: política de tratamiento pública con categorías de datos, universo de titulares, destinatarios, finalidades, base de legitimidad e intereses legítimos, seguridad, derechos, transferencias, plazo de conservación, fuente y decisiones automatizadas. Art. 34 ter a): tratar sin base o con finalidad distinta es infracción grave."
-  - source: gcp-knowledge-catalog-docs
-    url: https://docs.cloud.google.com/knowledge-catalog/docs/about-data-lineage
-    accessed: 2026-10-28
-    page_title: "About data lineage"
-    note: "About data lineage (Knowledge Catalog): el linaje es un mapa de dónde vienen los datos, adónde van y qué transformaciones ocurren; se ve en la consola para activos de Knowledge Catalog (formerly Dataplex Universal Catalog), BigQuery y Vertex AI, con linaje multirregión. Con la API activada, servicios como BigQuery y Dataflow informan linaje automáticamente; para otras fuentes, la Data Lineage API, y se recomienda importar eventos en el formato de OpenLineage. Hay linaje a nivel de columna. Consultada de nuevo el 2026-10-28: el linaje registra metadata sobre el movimiento de datos, no los datos; toda la información de linaje se retiene solo 30 días («All lineage information is retained in the system for only 30 days»)."
-  - source: aws-datazone-docs
-    url: https://docs.aws.amazon.com/datazone/latest/userguide/datazone-data-lineage.html
-    accessed: 2026-10-20
-    page_title: "Data lineage in Amazon DataZone"
-    note: "Data lineage in Amazon DataZone: función compatible con OpenLineage para capturar y visualizar eventos de linaje desde sistemas con OpenLineage o por API, rastrear orígenes y transformaciones y ver el consumo entre organizaciones; incluye la actividad dentro del catálogo de datos de negocio de DataZone."
-  - source: azure-databricks-docs
-    url: https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/data-lineage
-    accessed: 2026-10-22
-    page_title: "Lineage in Unity Catalog"
-    note: "Lineage in Unity Catalog (Azure Databricks): captura el linaje automáticamente para las consultas ejecutadas en Azure Databricks, hasta el nivel de columna, y lo agrega entre los workspaces del metastore; permite análisis de impacto antes de cambiar o borrar una tabla o columna. No se preserva para objetos renombrados."
-  - source: microsoft-purview-docs
-    url: https://learn.microsoft.com/en-us/purview/unified-catalog
-    accessed: 2026-10-20
-    page_title: "Learn about Microsoft Purview Unified Catalog"
-    note: "Learn about Microsoft Purview Unified Catalog: inventario de los activos de datos, su metadata y su linaje; herramientas para principios de gobierno: políticas de acceso de Unified Catalog, critical data elements, glossary terms, governance domains (organizar los datos por conceptos de negocio y distribuir el ownership) y data products (agrupar activos relacionados)."
+- source: diario-oficial-cl
+  url: https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
+  accessed: '2026-11-18'
+  label: Diario Oficial
+  page_title: LEY NÚM. 21.719 REGULA LA PROTECCIÓN Y EL TRATAMIENTO DE LOS DATOS PERSONALES Y CREA LA AGENCIA DE PROTECCIÓN DE DATOS PERSONALES
+  note: 'Ley 21.719 publicada en el Diario Oficial núm. 44.023, viernes 13 de diciembre de 2024 (CVE 2583630). Páginas que citan los enlaces de
+    la ficha, verificadas el 2026-11-18 contra el texto del PDF (34 páginas): art. 3 letras a, b y c (pág. 3), art. 12 (pág. 7), art. 13 letra
+    d (pág. 8), art. 14 ter (pág. 9), art. 16 (pág. 12), art. 34 ter letras a y c (pág. 24) y art. 49 letra c (pág. 30). La fecha de vigencia y el estado legislativo están en la ficha chile-data-protection (Contexto normativo).'
+- source: bcn-leychile
+  url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
+  accessed: '2026-11-18'
+  label: versión consolidada
+  page_title: Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES · Con Vigencia Diferida por Fecha - 01-DIC-2026
+  note: 'Ley 19.628 en la versión «Con Vigencia Diferida por Fecha - 01-DIC-2026» (versión consolidada de la BCN con vigencia diferida; vigencia: 15-10-2027 según la Ley 21.855; última modificación: Ley 21.719), consultada el 2026-11-18.
+    Arts. 1 bis, 3 letras a, b y c, 12, 13 letras a a e, 14 letra a, 14 ter letras d, h, i, j, k y l, 16, 27 y 34 ter letras a y c, verificados contra
+    lo que dice la ficha. Fuera del modelo de prevención (arts. 49 a 53), el texto no impone llevar un registro de actividades de tratamiento:
+    los deberes cercanos son acreditar la licitud (arts. 3 a, 12, 13 y 14 a) y publicar la información del art. 14 ter.'
+- source: bcn-leychile
+  url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idParte=10528059&idVersion=2026-12-01
+  accessed: '2026-11-18'
+  label: art. 14 ter
+  page_title: Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES · Artículo 14 ter
+  note: 'Enlace directo al art. 14 ter («Deber de información y transparencia») en la versión «Con Vigencia Diferida por Fecha - 01-DIC-2026» (vigencia: 15-10-2027 según la Ley 21.855): el idParte se
+    tomó del árbol de la norma en BCN y se comprobó en un navegador el 2026-11-17; el texto se volvió a verificar el 2026-11-18. Si BCN cambia el identificador, el enlace cae en la norma completa.'
+- source: bcn-leychile
+  url: https://www.bcn.cl/leychile/navegar?idNorma=1227971
+  accessed: '2026-11-18'
+  label: Decreto 662
+  page_title: Decreto 662 APRUEBA REGLAMENTO QUE REGULA LOS REQUISITOS, MODALIDADES Y PROCEDIMIENTOS PARA LA IMPLEMENTACIÓN, CERTIFICACIÓN, REGISTRO
+    Y SUPERVISIÓN DE LOS MODELOS DE PREVENCIÓN DE INFRACCIONES A QUE SE REFIERE EL ARTÍCULO 49 QUE INCORPORA LA LEY N° 21.719 A LA LEY N° 19.628
+  note: 'Decreto 662 del Ministerio de Hacienda, promulgado el 2025-06-13 y publicado el 2026-09-09, consultado el 2026-11-18. Art. 1: el modelo
+    de prevención es voluntario y no obsta al deber general de cumplir la ley. Art. 3 letra d): la caracterización de actividades de tratamiento
+    con once contenidos (i a xi), transcritos en la ficha.'
+- source: bcn-leychile
+  url: https://www.bcn.cl/leychile/navegar?idNorma=1227971&idParte=10609555
+  accessed: '2026-11-18'
+  label: art. 3
+  page_title: Decreto 662 · Artículo 3
+  note: 'Enlace directo al art. 3 del Decreto 662 («Requisitos del programa de cumplimiento»): el idParte se tomó del árbol de la norma en BCN
+    y se comprobó en un navegador el 2026-11-17; el texto se volvió a verificar el 2026-11-18.'
+- source: gcp-knowledge-catalog-docs
+  url: https://docs.cloud.google.com/knowledge-catalog/docs/about-data-lineage
+  accessed: '2026-11-18'
+  page_title: About data lineage
+  note: 'About data lineage (Knowledge Catalog), consultada el 2026-11-18: BigQuery, Dataflow y otros servicios informan linaje automáticamente;
+    «All lineage information is retained in the system for only 30 days»; el linaje de columnas solo cubre columnas de primer nivel de tablas
+    de BigQuery.'
+- source: gcp-bigquery-docs
+  url: https://docs.cloud.google.com/bigquery/docs/information-schema-jobs-by-organization
+  accessed: '2026-11-18'
+  page_title: JOBS_BY_ORGANIZATION view
+  note: 'JOBS_BY_ORGANIZATION view, consultada el 2026-11-18: por trabajo, user_email (correo o cuenta de servicio) y referenced_tables, que «Only
+    populated for query jobs that are not cache hits». Retención: «This view displays running jobs along with job history
+    for the past 180 days».'
+- source: aws-datazone-docs
+  url: https://docs.aws.amazon.com/datazone/latest/userguide/datazone-data-lineage.html
+  accessed: '2026-11-18'
+  page_title: Data lineage in Amazon DataZone
+  note: 'Data lineage in Amazon DataZone, consultada el 2026-11-18: captura automática desde AWS Glue y Amazon Redshift, compatible con eventos
+    OpenLineage. La página no indica la retención.'
+- source: aws-lake-formation-docs
+  url: https://docs.aws.amazon.com/lake-formation/latest/dg/logging-using-cloudtrail.html
+  accessed: '2026-11-18'
+  page_title: Logging AWS Lake Formation API calls using AWS CloudTrail
+  note: 'Logging AWS Lake Formation API calls using AWS CloudTrail, consultada el 2026-11-18: GetDataAccess se registra cuando un principal o
+    un servicio integrado pide credenciales temporales; cada s3:GetObject se corresponde con un GetDataAccess, y para verlo hay que activar los
+    eventos de datos de S3 en CloudTrail, con costo adicional; con el identificador del rol de IAM presente en ambos registros se rastrea el rol
+    que inició la consulta. Los catálogos federados de Amazon Redshift no generan GetDataAccess.'
+- source: azure-databricks-docs
+  url: https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/data-lineage
+  accessed: '2026-11-18'
+  page_title: Lineage in Unity Catalog
+  note: 'Lineage in Unity Catalog (Azure Databricks), consultada el 2026-11-18: linaje hasta el nivel de columna; las tablas de sistema de linaje
+    (system.access.table_lineage y system.access.column_lineage) guardan una ventana móvil de 395 días.'
+- source: azure-databricks-docs
+  url: https://learn.microsoft.com/en-us/azure/databricks/admin/system-tables/audit-logs
+  accessed: '2026-11-18'
+  page_title: Audit log system table reference
+  note: 'Audit log system table reference (Azure Databricks), consultada el 2026-11-18: system.access.audit registra user_identity y action_name
+    (por ejemplo getTable). La página marca la tabla como Public Preview.'
 relations:
-  - {type: PART_OF, target: chile-data-protection, note: "Ficha padre del dominio."}
-  - {type: RELATED_TO, target: data-catalog, note: "Donde viven las actividades y sus tags."}
-  - {type: RELATED_TO, target: data-lineage, note: "Usos observados de cada activo."}
-  - {type: RELATED_TO, target: pii-identification, note: "Qué activos tienen datos personales."}
-  - {type: RELATED_TO, target: data-subject-rights-pipeline, note: "El acceso se responde por actividad."}
-  - {type: RELATED_TO, target: retention-and-erasure, note: "El plazo viene de la actividad."}
-  - {type: RELATED_TO, target: dpia-and-automated-decisions, note: "Las actividades con perfiles o gran escala piden evaluación."}
-  - {type: RELATED_TO, target: processors-and-international-transfers, note: "Destinatarios y transferencias de cada actividad."}
-  - {type: RELATED_TO, target: privacy-controls-as-code, note: "La conciliación como control automatizado."}
-created_at: 2026-10-21
-updated_at: 2026-11-04
-last_verified: 2026-10-28
-owner_approved_at: 2026-11-04
+- type: PART_OF
+  target: chile-data-protection
+  note: Ficha padre del dominio.
+- type: RELATED_TO
+  target: data-catalog
+  note: Donde viven las actividades y sus tags.
+- type: RELATED_TO
+  target: data-lineage
+  note: Usos observados de cada activo.
+- type: RELATED_TO
+  target: pii-identification
+  note: Qué activos tienen datos personales.
+- type: RELATED_TO
+  target: data-subject-rights-pipeline
+  note: El acceso se responde por actividad.
+- type: RELATED_TO
+  target: retention-and-erasure
+  note: El plazo viene de la actividad.
+- type: RELATED_TO
+  target: dpia-and-automated-decisions
+  note: Las actividades con perfiles o gran escala piden evaluación.
+- type: RELATED_TO
+  target: processors-and-international-transfers
+  note: Destinatarios y transferencias de cada actividad.
+- type: RELATED_TO
+  target: privacy-controls-as-code
+  note: La conciliación como control automatizado.
+views:
+  reading:
+    legal_basis_panel: false
+    break_identifiers: true
+  section_splits:
+  - section: 1
+    key: ley
+    title: Qué exige la ley
+    subsections: true
+  section_titles:
+  - section: 1
+    title: Propósito
+  - section: 2
+    title: Qué es
+  - section: 3
+    title: Problema que resuelve
+  - section: 4
+    title: Cómo funciona
+  - section: 5
+    title: Cuándo usarlo
+  - section: 9
+    title: Arquitectura
+  - section: 10
+    title: Código
+  - section: 11
+    title: En la nube
+  - section: 14
+    title: Hacer y evitar
+  - section: 16
+    title: Trade-offs
+  - section: 18
+    title: Preguntas técnicas abiertas
+  - section: 20
+    title: Fuentes
+  notes:
+    idea-central:
+      lead: Idea central
+      tone: key
+      text: La finalidad y su fundamento pertenecen al tratamiento concreto, no a la tabla. Una tabla puede participar en varias actividades,
+        y compartirla no autoriza todos sus usos.
+    sin-formato:
+      lead: La ley no exige este formato.
+      text: 'El registro es evidencia de apoyo para acreditar la licitud, la finalidad y el plazo, no prueba suficiente por sí solo. El modelo
+        de prevención de infracciones es voluntario y no sustituye el deber general de cumplir la ley (art. 49 de la Ley 19.628, texto modificado
+        por la Ley 21.719, y art. 1 del [Decreto 662](https://www.bcn.cl/leychile/navegar?idNorma=1227971)). Para quien lo adopta, el art. 3 letra
+        d) del [Decreto 662](https://www.bcn.cl/leychile/navegar?idNorma=1227971&idParte=10609555) dice (texto literal): «Esta caracterización
+        podrá realizarse a través de un registro de actividades de tratamiento».'
+    muchos-a-muchos:
+      lead: Muchos a muchos.
+      text: 'Una actividad usa varios activos y un activo sirve a varias actividades; lo mismo con los consumidores. Por eso un único `legal_basis`
+        pegado a la tabla no alcanza: `silver.pasajeros` sirve aquí a tres actividades: una con base contrato, otra con consentimiento y otra
+        aún sin evaluar.'
+    alerta:
+      lead: Una alerta no es una infracción.
+      text: 'Tratar datos sin base, con una finalidad distinta o datos innecesarios es infracción grave [(art. 34 ter letras a y c)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=24).
+        Pero la falta de un registro no demuestra por sí sola ese supuesto: obliga a revisar los hechos con el área competente. Por eso el control
+        la muestra como brecha y la deriva a revisión, sin calificarla.'
+    equivalencias:
+      lead: No son equivalencias exactas.
+      text: Ningún servicio certifica cumplimiento por sí solo.
+    dominio:
+      lead: Criterio de dominio.
+      text: Dominas esta ficha si puedes explicar por qué una tabla no tiene una única base de licitud, cómo asociarías un DAG a una actividad
+        aprobada, qué demuestran los logs y el linaje y qué no, y cómo actuarías ante un consumidor no registrado.
+  chips:
+    ficha-madre:
+      label: 'En la ficha madre:'
+      items:
+      - kind: Cómo funciona
+        label: ¿Para qué los necesito?
+        href: /concepts/chile-data-protection/#como-funciona-02
+      - kind: Matriz
+        label: Finalidad
+        href: /concepts/chile-data-protection/#matriz-finalidad
+  build_cards:
+    title: Lo que construyes con esta ficha
+    items:
+    - title: Registro de actividades
+      text: Cada actividad con su finalidad, base, plazo, datos, destinatarios y aprobación, versionada y consultable.
+    - title: Vínculo con la plataforma
+      text: 'Cada actividad enlazada a sus activos, a los campos que necesita y a los consumidores que la usan: jobs, dashboards, modelos o APIs.'
+    - title: Dos controles automáticos
+      text: Una puerta en la CI que bloquea despliegues sin actividad vigente, y una conciliación que alerta cuando lo que corre no calza con
+        el registro.
+  law_ladder:
+    headers:
+    - Pregunta
+    - Lo que se espera (paráfrasis)
+    - Registro del documento a proponer
+    rows:
+    - question: ¿Para qué?
+      principle: Finalidad
+      cites:
+      - '[(art. 3 letra b)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=3)'
+      expected: Fines específicos, explícitos y lícitos. Otro fin solo si es compatible con el original, si lo justifica una relación contractual
+        o precontractual que se enmarque en los fines del contrato o en las tratativas previas, si el titular vuelve a consentir o si lo dispone
+        la ley.
+      record: Se anota en **Finalidad** y en **Activos y consumidores**. Un uso que no calza con ninguna actividad aparece como alerta.
+    - question: ¿Con qué fundamento?
+      principle: Licitud y base
+      cites:
+      - '[(art. 3 letra a)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=3)'
+      - '[(art. 12)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=7)'
+      - '[(art. 13)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=8)'
+      - '[(art. 16)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=12)'
+      expected: 'Solo de manera lícita y leal, y el responsable debe poder acreditarlo. La base es el consentimiento (libre, informado, específico
+        por finalidad, previo, inequívoco y revocable) u otra fuente: obligaciones económicas, obligación legal, contrato, interés legítimo o
+        defensa de un derecho. Los datos sensibles requieren consentimiento expreso, salvo las excepciones que establece la ley.'
+      record: Se anota en **Base de licitud** y en **Aprobación y versión**. Así se sabe qué base regía en cada fecha y dónde está el registro
+        de consentimientos por finalidad y versión del texto.
+    - question: ¿Qué datos y hasta cuándo?
+      principle: Proporcionalidad
+      cites:
+      - '[(art. 3 letra c)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=3)'
+      expected: Solo los datos necesarios, adecuados y pertinentes para los fines, y solo mientras se necesiten para cumplirlos; después se suprimen
+        o anonimizan, salvo las excepciones que establezca la ley. Conservarlos por más tiempo requiere autorización legal o consentimiento del
+        titular.
+      interpretation: '**Interpretación de la ficha:** La ley no fija un plazo general: lo define el responsable según la finalidad.'
+      record: Se anota en **Activos y consumidores** y en **Plazo o condición de supresión**. Cada finalidad declara los campos que necesita y
+        un plazo declarado.
+    - question: ¿Qué se publica?
+      principle: Información pública
+      cites:
+      - '[(art. 14 ter)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=9)'
+      expected: 'Categorías de datos, titulares, destinatarios, finalidades y base (letra d); transferencias (h); plazo (i); fuente (j); decisiones
+        automatizadas (l). Si la base es el consentimiento, la letra k pide (texto literal): «Cuando el tratamiento está basado en el consentimiento
+        del titular, la existencia del derecho a retirarlo en cualquier momento, sin que ello afecte a la licitud del tratamiento basado en el consentimiento
+        previo a su retirada».'
+      record: Se anota en **Tipo de datos**, **Titulares**, **Destinatarios**, **Finalidad**, **Base de licitud**, **Transferencias internacionales**,
+        **Plazo o condición de supresión**, **Fuente** y **Decisiones automatizadas**. Con eso se genera el insumo para la política, que privacidad
+        revisa antes de publicar. Para la letra k, **Base de licitud** dice qué actividades se basan en el consentimiento.
+    - question: ¿Y si un uso no calza?
+      principle: 'Consecuencia: infracción grave'
+      cites:
+      - '[(art. 34 ter)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=24)'
+      expected: Tratar datos sin base o con una finalidad distinta (letra a), o tratar datos innecesarios para los fines (letra c).
+      interpretation: '**Lo que pasa si no se cumple, no un deber más**'
+      record: Un uso sin actividad registrada es una alerta que se revisa, no una infracción que se presume.
+      risk: true
+  register_fields:
+    title: Campos del registro y de dónde viene cada uno
+    intro: '**Lo que se propone**: la ley no define un formato de registro. Estos campos ordenan lo que pide el [art. 14 ter](https://www.bcn.cl/leychile/navegar?idNorma=141599&idParte=10528059&idVersion=2026-12-01)
+      y, para quien adopta el modelo de prevención voluntario, el [Decreto 662](https://www.bcn.cl/leychile/navegar?idNorma=1227971&idParte=10609555).
+      Con **Documento propuesto** ves la ficha completa del caso elegido.'
+    legend:
+      norm:
+        title: Fuente en la norma
+        text: Art. 14 ter (información que se publica) y Decreto 662 (modelo voluntario), en un mismo modal.
+      proposal:
+        title: Lo propuesto
+        text: Campos o interpretaciones que no vienen de la norma.
+      document:
+        title: Documento propuesto
+        action: Exportar actividad de tratamiento
+    case_label: Casos de ejemplo
+    state_label: Estado del caso
+    counters:
+      complete: Campos completos
+      pending: Sin evaluar
+      review: Para revisión
+    headers:
+    - Campo
+    - Caso de ejemplo
+    - Fuente
+    literal:
+      law_source: Ley 19.628, texto modificado por la Ley 21.719, art. 14 ter, letra {letter} · texto literal
+      law_intro: 'Deber de información y transparencia. El responsable de datos debe facilitar y mantener permanentemente a disposición del público,
+        en su sitio web o en cualquier otro medio de información equivalente, al menos, la siguiente información:'
+      law:
+        d: Las categorías, clases o tipos de datos que trata; la descripción genérica del universo de personas que comprenden sus bases de datos;
+          los destinatarios a los que se prevé comunicar o ceder los datos; las finalidades de los tratamientos que realiza; la base de legitimidad
+          del tratamiento; y en caso de tratamientos que se basan en la satisfacción de intereses legítimos, cuáles serían éstos.
+        h: En su caso, la transferencia de datos personales a un tercer país u organización internacional y si éstos ofrecen o no un nivel adecuado
+          de protección. En caso de que no cuenten con un nivel adecuado de protección, se deberá informar si existen garantías que justifiquen
+          tal transferencia.
+        i: El periodo durante el que se conservarán los datos personales.
+        j: La fuente de la cual provienen los datos personales y, en su caso, si proceden de fuentes de acceso público.
+        l: La existencia de decisiones automatizadas, incluida la elaboración de perfiles. En tales casos, información significativa sobre la
+          lógica aplicada, así como las consecuencias previstas de dicho tratamiento para el titular.
+      decree_source: Decreto 662, de 2025 (Ministerio de Hacienda), art. 3 letra d), contenido {roman} · texto literal
+      decree_intro: 'La caracterización de actividades de tratamiento deberá contener, a lo menos, la siguiente información:'
+      decree:
+        i: El tipo de datos personales que el responsable trata, indicando si incluye datos personales sensibles o datos que se encuentren dentro
+          de las categorías especiales de datos que establece la ley.
+        ii: El ámbito territorial en que el responsable realiza el tratamiento de datos personales, de conformidad con lo establecido en el artículo
+          1° bis de la ley N° 19.628.
+        iii: Las categorías, clases o tipos de bases de datos que administra.
+        iv: La caracterización de las categorías de titulares de los datos personales que la entidad trata.
+        v: Los fines de las operaciones de tratamiento que realiza.
+        vi: La fuente de la cual provienen los datos personales y, en su caso, si proceden de fuentes de acceso público.
+        vii: La base de licitud del tratamiento, y el interés legítimo cuando el tratamiento se base en lo dispuesto en el literal d) del artículo
+          13 de la ley N° 19.628.
+        viii: Las categorías de terceros a quienes se prevé comunicar o ceder los datos personales, incluidos los destinatarios en terceros países
+          u organizaciones internacionales.
+        ix: La existencia de operaciones de transferencia internacional de datos, la identificación de dicho tercer país u organización internacional,
+          y los medios a través de los que se da cumplimiento a lo dispuesto en el artículo 27 de la ley N° 19.628.
+        x: Los plazos o condiciones previstos para la supresión de las diferentes categorías de datos.
+        xi: La existencia de decisiones automatizadas, incluida la elaboración de perfiles. Si el responsable realizare estas operaciones, deberá
+          incluir información significativa sobre la lógica aplicada, así como las consecuencias previstas de dicho tratamiento para el titular.
+      decree_note: El modelo de prevención es voluntario y no sustituye el deber general de cumplir la ley (paráfrasis del art. 1).
+      art_49c: La identificación del tipo de información que la entidad trata, el ámbito territorial en que opera, la categoría, clase o tipos
+        de datos o bases de datos que administra, y la caracterización de los titulares de datos.
+      art_49c_link: 'En la ley, el art. 49 letra c de la Ley 19.628, texto modificado por la Ley 21.719, pide (texto literal): «{quote}» [(art.
+        49 letra c)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=30)'
+    fields:
+    - id: tipo-de-datos
+      key: tipo
+      name: Tipo de datos
+      why: Qué datos se tratan y si entre ellos hay sensibles.
+      code: Actividad.categorias · Actividad.categorias_sensibles
+      check: que se haya evaluado si hay datos sensibles (vacío es **ninguno**; sin evaluar es **datos sensibles sin evaluar**) y que un
+        dato sensible declarado con una base distinta del consentimiento pase a revisión (art. 16)
+      limit: que haya categorías declaradas ni que la lista de sensibles esté completa; eso lo aporta la ficha de identificación de datos personales
+      sheet_section: Datos
+      law_letter: d
+      decree: i
+      art_49c: del tipo de información que la entidad trata
+    - id: ambito-territorial
+      key: ambito
+      name: Ámbito territorial
+      why: Dónde opera el tratamiento. Se declara una vez por registro.
+      code: Registro.ambito_territorial
+      check: que el registro lo declare; si falta, **registro sin ámbito territorial**
+      limit: que el ámbito declarado sea el correcto
+      sheet_section: Encabezado
+      decree: ii
+      art_49c: el ámbito territorial en que opera
+    - id: categorias-de-bases-de-datos
+      key: bases
+      name: Categorías de bases de datos
+      why: Qué bases participan; aquí se modelan como activos (tablas).
+      code: Actividad.activos
+      check: que cada tabla con datos personales esté cubierta por alguna actividad (**tabla con PII sin actividad**) y que cada uso observado
+        lea un activo que su actividad declara
+      limit: que los activos equivalgan a categorías de bases de datos
+      sheet_section: Datos
+      decree: iii
+      art_49c: la categoría, clase o tipos de datos o bases de datos que administra
+      proposal: 'El Decreto pide categorías de bases de datos. Aquí se modelan con los activos (tablas): es una aproximación de esta plataforma,
+        no una definición de la norma.'
+      proposal_label: Lo propuesto
+    - id: titulares
+      key: titulares
+      name: Titulares
+      why: A quiénes se refieren los datos.
+      code: Actividad.titulares
+      check: que estén declarados; si no, **sin categorías de titulares**
+      limit: que sean todas las categorías reales
+      sheet_section: Datos
+      law_letter: d
+      decree: iv
+      art_49c: la caracterización de los titulares de datos
+    - id: finalidad
+      key: finalidad
+      name: Finalidad
+      why: Para qué se tratan. Es la clave del registro.
+      code: Actividad.finalidad
+      check: 'que exista: es obligatoria en el tipo Actividad. La conciliación cruza consumidor y activo, no el texto de la finalidad'
+      limit: 'que la finalidad sea lícita o compatible con la original: lo decide privacidad'
+      sheet_section: Actividad
+      law_letter: d
+      decree: v
+    - id: fuente
+      key: fuente
+      name: Fuente
+      why: De dónde vienen los datos y si son de acceso público.
+      code: Actividad.fuente · Actividad.acceso_publico
+      check: que estén declaradas la fuente y si es de acceso público; si no, **fuente de los datos sin evaluar**
+      limit: que la fuente declarada sea cierta
+      sheet_section: Datos
+      law_letter: j
+      decree: vi
+    - id: base-de-licitud
+      key: base
+      name: Base de licitud
+      why: Con qué fundamento; si es interés legítimo, con su justificación.
+      code: Actividad.base · Actividad.justificacion_interes_legitimo
+      check: que una actividad aprobada tenga base, que el interés legítimo tenga justificación, que la base consentimiento tenga registro de
+        consentimientos y que un dato sensible con otra base pase a revisión
+      limit: que la base elegida sea la correcta ni que el consentimiento haya sido expreso
+      sheet_section: Actividad
+      law_letter: d
+      decree: vii
+    - id: destinatarios
+      key: destinatarios
+      name: Destinatarios
+      why: Quién más recibe los datos, incluidos terceros países.
+      code: Actividad.destinatarios
+      check: 'que esté evaluado: vacío es **ninguno**; sin evaluar es **destinatarios sin evaluar**'
+      limit: que la lista esté completa ni que exista un contrato con cada destinatario
+      sheet_section: Comunicación de los datos
+      law_letter: d
+      decree: viii
+    - id: transferencias-internacionales
+      key: transf
+      name: Transferencias internacionales
+      why: 'Si salen del país: a dónde y con qué mecanismo.'
+      code: Actividad.transferencias
+      check: 'que esté evaluado: vacío es **ninguna**; sin evaluar es brecha'
+      limit: el país ni que el mecanismo cumpla el art. 27
+      sheet_section: Comunicación de los datos
+      law_letter: h
+      decree: ix
+    - id: plazo-o-condicion-de-supresion
+      key: plazo
+      name: Plazo o condición de supresión
+      why: Hasta cuándo, en meses o con una condición.
+      code: Actividad.plazo_meses · Actividad.plazo_condicion
+      check: que haya meses o una condición; si no, **sin plazo de conservación**
+      limit: que el plazo esté justificado
+      sheet_section: Conservación
+      law_letter: i
+      decree: x
+    - id: decisiones-automatizadas
+      key: decisiones
+      name: Decisiones automatizadas
+      why: Si hay decisiones automatizadas o perfilamiento.
+      code: Actividad.decisiones_automatizadas
+      check: 'que esté evaluado: vacío es **ninguna**; sin evaluar es brecha'
+      limit: que la lógica y las consecuencias descritas sean suficientes
+      sheet_section: Decisiones automatizadas
+      law_letter: l
+      decree: xi
+    - id: activos-y-consumidores
+      key: activos
+      name: Activos y consumidores
+      why: Qué jobs, dashboards o servicios usan la actividad y qué campos necesitan. Permite conciliar con lo que corre.
+      code: Actividad.consumidores · Actividad.campos
+      check: 'que cada consumo observado venga de un consumidor declarado en una actividad vigente y lea solo los campos declarados (si la actividad
+        declara **ninguno**, toda columna leída es una brecha; con campos **sin evaluar**, la brecha es **campos permitidos: [sin evaluar]**),
+        y que la puerta de la CI exija un consumidor declarado'
+      limit: usos que no dejan huella en el linaje ni en los logs
+      sheet_section: Activos y consumidores
+      proposal: La norma no pide vincular la actividad con lo que corre. Lo agregamos porque sin ese vínculo el registro no se puede comparar
+        con la realidad.
+      proposal_label: Lo propuesto
+    - id: aprobacion-y-version
+      key: aprob
+      name: Aprobación y versión
+      why: Quién aprobó, hasta cuándo y con qué registro de consentimientos.
+      code: Actividad.aprobacion · Actividad.consentimientos
+      check: que la aprobación no esté vencida, que solo las actividades vigentes entren al insumo y pasen la puerta de la CI, y que la base consentimiento
+        tenga registro de consentimientos
+      limit: 'que quien aprobó tuviera la facultad, ni el historial de versiones: el código no guarda versiones'
+      sheet_section: Aprobación y versión
+      proposal: La norma no pide versionar aprobaciones. Lo agregamos para saber qué regía en cada fecha y para que una aprobación vencida no
+        pase inadvertida.
+      proposal_label: Lo propuesto
+    platform:
+      title: En esta plataforma
+      code: 'Campo en código:'
+      check: 'El código verifica:'
+      limit: 'No valida:'
+      example: 'Caso de ejemplo ({case}, {state}):'
+    labels:
+      unevaluated: '[sin evaluar]'
+      sheet_pending: Pendiente de evaluación
+      live: Mostrando {n} de {total} campos
+      empty: Ningún campo con este filtro.
+      close: Cerrar
+      norm_button: Ver la norma de {name}
+      proposal_button: Ver lo propuesto de {name}
+      proposal_suffix: no viene de la norma
+      law_tab: Art. 14 ter · letra {letter}
+      decree_tab: Decreto 662 · {roman}
+    sheet:
+      kicker: Registro de actividades de tratamiento
+      sections:
+      - Actividad
+      - Datos
+      - Comunicación de los datos
+      - Conservación
+      - Decisiones automatizadas
+      - Activos y consumidores
+      - Aprobación y versión
+      responsible:
+        label: Responsable
+        value: Aerolínea de ejemplo S.A.
+      delegate:
+        label: Delegado
+        value: por designar
+      print: Imprimir o guardar PDF
+      preview: Extracción PDF · vista previa
+      footer: Documento interno. Generado desde el registro de actividades · {code} · {version} · generado el {date} · página 1 de 1. Caso de
+        ejemplo · {case}.
+    # inicio del bloque generado por scripts/generators/inventory_views.py: no editar a mano
+    cases:
+    - key: venta_pasajes
+      name: Emitir y gestionar pasajes
+      states:
+        actual:
+          values:
+            tipo: 'Identificación, contacto, itinerario · sensibles: ninguno'
+            ambito: null
+            bases: silver.pasajeros, silver.reservas
+            titulares: Pasajeros, compradores
+            finalidad: Emitir y gestionar pasajes
+            fuente: 'El propio comprador, al reservar · acceso público: no'
+            base: Contrato (art. 13 letra c)
+            destinatarios: Aerolíneas socias
+            transf: Argentina · cláusulas contractuales con garantías adecuadas
+            plazo: 60 meses
+            decisiones: Ninguna
+            activos: 'dag_reservas · campos: correo, fecha, nombre, pasajero_id, vuelo'
+            aprob: Aprobada 2026-01-15 · vence 2027-01-15
+          status:
+            tipo: ok
+            ambito: pending
+            bases: ok
+            titulares: ok
+            finalidad: ok
+            fuente: ok
+            base: ok
+            destinatarios: ok
+            transf: ok
+            plazo: ok
+            decisiones: ok
+            activos: ok
+            aprob: ok
+          sheet:
+            code: venta_pasajes
+            version: v1
+            state: Vigente
+            title: Emitir y gestionar pasajes
+            territory: null
+            sections:
+            - title: Actividad
+              rows:
+              - label: Finalidad
+                value: Emitir y gestionar pasajes
+                field: finalidad
+              - label: Base de licitud
+                value: Contrato
+                field: base-de-licitud
+            - title: Datos
+              rows:
+              - label: Tipo de datos
+                value: Identificación, contacto, itinerario
+                field: tipo-de-datos
+              - label: Datos sensibles
+                value: 'No'
+                field: tipo-de-datos
+              - label: Categorías de bases de datos
+                value: silver.pasajeros, silver.reservas (tablas)
+                field: categorias-de-bases-de-datos
+              - label: Titulares
+                value: Pasajeros, compradores
+                field: titulares
+              - label: Fuente
+                value: El propio comprador, al reservar
+                field: fuente
+              - label: Fuente de acceso público
+                value: 'No'
+                field: fuente
+            - title: Comunicación de los datos
+              rows:
+              - label: Destinatarios
+                value: Aerolíneas socias
+                field: destinatarios
+              - label: Transferencias internacionales · país
+                value: Argentina
+                field: transferencias-internacionales
+              - label: Transferencias internacionales · mecanismo
+                value: cláusulas contractuales con garantías adecuadas
+                field: transferencias-internacionales
+            - title: Conservación
+              rows:
+              - label: Plazo o condición de supresión
+                value: 60 meses
+                field: plazo-o-condicion-de-supresion
+            - title: Decisiones automatizadas
+              rows:
+              - label: Decisiones automatizadas
+                value: 'No'
+                field: decisiones-automatizadas
+            - title: Activos y consumidores
+              rows:
+              - label: Activos
+                value: silver.pasajeros, silver.reservas
+                field: activos-y-consumidores
+              - label: Consumidores
+                value: dag_reservas
+                field: activos-y-consumidores
+              - label: Campos necesarios
+                value: correo, fecha, nombre, pasajero_id, vuelo
+                field: activos-y-consumidores
+            - title: Aprobación y versión
+              rows:
+              - label: Fecha de aprobación
+                value: '2026-01-15'
+                field: aprobacion-y-version
+              - label: Vence
+                value: '2027-01-15'
+                field: aprobacion-y-version
+              - label: Versión
+                value: v1
+                field: aprobacion-y-version
+              - label: Aprobado por
+                blank: true
+                field: aprobacion-y-version
+              - label: Firma
+                blank: true
+                field: aprobacion-y-version
+        corregido:
+          values:
+            tipo: 'Identificación, contacto, itinerario · sensibles: ninguno'
+            ambito: 'Chile: pasajeros que compran en Chile, también desde el extranjero'
+            bases: silver.pasajeros, silver.reservas
+            titulares: Pasajeros, compradores
+            finalidad: Emitir y gestionar pasajes
+            fuente: 'El propio comprador, al reservar · acceso público: no'
+            base: Contrato (art. 13 letra c)
+            destinatarios: Aerolíneas socias
+            transf: Argentina · cláusulas contractuales con garantías adecuadas
+            plazo: 60 meses
+            decisiones: Ninguna
+            activos: 'dag_reservas, dashboard_externo, job_conciliacion · campos: correo, fecha, nombre, pasajero_id, vuelo'
+            aprob: Aprobada 2026-01-15 · vence 2027-01-15
+          status:
+            tipo: ok
+            ambito: ok
+            bases: ok
+            titulares: ok
+            finalidad: ok
+            fuente: ok
+            base: ok
+            destinatarios: ok
+            transf: ok
+            plazo: ok
+            decisiones: ok
+            activos: ok
+            aprob: ok
+          sheet:
+            code: venta_pasajes
+            version: v2
+            state: Vigente
+            title: Emitir y gestionar pasajes
+            territory: Chile
+            sections:
+            - title: Actividad
+              rows:
+              - label: Finalidad
+                value: Emitir y gestionar pasajes
+                field: finalidad
+              - label: Base de licitud
+                value: Contrato
+                field: base-de-licitud
+            - title: Datos
+              rows:
+              - label: Tipo de datos
+                value: Identificación, contacto, itinerario
+                field: tipo-de-datos
+              - label: Datos sensibles
+                value: 'No'
+                field: tipo-de-datos
+              - label: Categorías de bases de datos
+                value: silver.pasajeros, silver.reservas (tablas)
+                field: categorias-de-bases-de-datos
+              - label: Titulares
+                value: Pasajeros, compradores
+                field: titulares
+              - label: Fuente
+                value: El propio comprador, al reservar
+                field: fuente
+              - label: Fuente de acceso público
+                value: 'No'
+                field: fuente
+            - title: Comunicación de los datos
+              rows:
+              - label: Destinatarios
+                value: Aerolíneas socias
+                field: destinatarios
+              - label: Transferencias internacionales · país
+                value: Argentina
+                field: transferencias-internacionales
+              - label: Transferencias internacionales · mecanismo
+                value: cláusulas contractuales con garantías adecuadas
+                field: transferencias-internacionales
+            - title: Conservación
+              rows:
+              - label: Plazo o condición de supresión
+                value: 60 meses
+                field: plazo-o-condicion-de-supresion
+            - title: Decisiones automatizadas
+              rows:
+              - label: Decisiones automatizadas
+                value: 'No'
+                field: decisiones-automatizadas
+            - title: Activos y consumidores
+              rows:
+              - label: Activos
+                value: silver.pasajeros, silver.reservas
+                field: activos-y-consumidores
+              - label: Consumidores
+                value: dag_reservas, dashboard_externo, job_conciliacion
+                field: activos-y-consumidores
+              - label: Campos necesarios
+                value: correo, fecha, nombre, pasajero_id, vuelo
+                field: activos-y-consumidores
+            - title: Aprobación y versión
+              rows:
+              - label: Fecha de aprobación
+                value: '2026-01-15'
+                field: aprobacion-y-version
+              - label: Vence
+                value: '2027-01-15'
+                field: aprobacion-y-version
+              - label: Versión
+                value: v2
+                field: aprobacion-y-version
+              - label: Aprobado por
+                blank: true
+                field: aprobacion-y-version
+              - label: Firma
+                blank: true
+                field: aprobacion-y-version
+    - key: asistencia_especial
+      name: Asistencia en aeropuerto
+      states:
+        actual:
+          values:
+            tipo: 'Identificación, salud · sensibles: salud'
+            ambito: null
+            bases: silver.reservas
+            titulares: Pasajeros
+            finalidad: Asistencia en aeropuerto a pasajeros con movilidad reducida
+            fuente: 'El propio pasajero, al pedir la asistencia · acceso público: no'
+            base: Contrato (art. 13 letra c)
+            destinatarios: Operador de aeropuerto
+            transf: Ninguna
+            plazo: 12 meses
+            decisiones: Ninguna
+            activos: 'dag_asistencia · campos: pasajero_id, tipo_asistencia, vuelo'
+            aprob: Aprobada 2026-03-01 · vence 2027-03-01
+          status:
+            tipo: ok
+            ambito: pending
+            bases: ok
+            titulares: ok
+            finalidad: ok
+            fuente: ok
+            base: review
+            destinatarios: ok
+            transf: ok
+            plazo: ok
+            decisiones: ok
+            activos: ok
+            aprob: ok
+          sheet:
+            code: asistencia_especial
+            version: v1
+            state: En revisión
+            title: Asistencia en aeropuerto a pasajeros con movilidad reducida
+            territory: null
+            note: 'Pendiente de revisión por privacidad: Base de licitud.'
+            sections:
+            - title: Actividad
+              rows:
+              - label: Finalidad
+                value: Asistencia en aeropuerto a pasajeros con movilidad reducida
+                field: finalidad
+              - label: Base de licitud
+                value: Contrato
+                field: base-de-licitud
+            - title: Datos
+              rows:
+              - label: Tipo de datos
+                value: Identificación, salud
+                field: tipo-de-datos
+              - label: Datos sensibles
+                value: Sí · salud
+                field: tipo-de-datos
+              - label: Categorías de bases de datos
+                value: silver.reservas (tabla)
+                field: categorias-de-bases-de-datos
+              - label: Titulares
+                value: Pasajeros
+                field: titulares
+              - label: Fuente
+                value: El propio pasajero, al pedir la asistencia
+                field: fuente
+              - label: Fuente de acceso público
+                value: 'No'
+                field: fuente
+            - title: Comunicación de los datos
+              rows:
+              - label: Destinatarios
+                value: Operador de aeropuerto
+                field: destinatarios
+              - label: Transferencias internacionales
+                value: Ninguna
+                field: transferencias-internacionales
+            - title: Conservación
+              rows:
+              - label: Plazo o condición de supresión
+                value: 12 meses
+                field: plazo-o-condicion-de-supresion
+            - title: Decisiones automatizadas
+              rows:
+              - label: Decisiones automatizadas
+                value: 'No'
+                field: decisiones-automatizadas
+            - title: Activos y consumidores
+              rows:
+              - label: Activos
+                value: silver.reservas
+                field: activos-y-consumidores
+              - label: Consumidores
+                value: dag_asistencia
+                field: activos-y-consumidores
+              - label: Campos necesarios
+                value: pasajero_id, tipo_asistencia, vuelo
+                field: activos-y-consumidores
+            - title: Aprobación y versión
+              rows:
+              - label: Fecha de aprobación
+                value: '2026-03-01'
+                field: aprobacion-y-version
+              - label: Vence
+                value: '2027-03-01'
+                field: aprobacion-y-version
+              - label: Versión
+                value: v1
+                field: aprobacion-y-version
+              - label: Aprobado por
+                blank: true
+                field: aprobacion-y-version
+              - label: Firma
+                blank: true
+                field: aprobacion-y-version
+        corregido:
+          values:
+            tipo: 'Identificación, salud · sensibles: salud'
+            ambito: 'Chile: pasajeros que compran en Chile, también desde el extranjero'
+            bases: silver.reservas
+            titulares: Pasajeros
+            finalidad: Asistencia en aeropuerto a pasajeros con movilidad reducida
+            fuente: 'El propio pasajero, al pedir la asistencia · acceso público: no'
+            base: Consentimiento (art. 12; art. 16, expreso)
+            destinatarios: Operador de aeropuerto
+            transf: Ninguna
+            plazo: 12 meses
+            decisiones: Ninguna
+            activos: 'dag_asistencia · campos: pasajero_id, tipo_asistencia, vuelo'
+            aprob: Aprobada 2026-03-01 · vence 2027-03-01 · consentimientos salud-v1 desde 2026-10-15
+          status:
+            tipo: ok
+            ambito: ok
+            bases: ok
+            titulares: ok
+            finalidad: ok
+            fuente: ok
+            base: ok
+            destinatarios: ok
+            transf: ok
+            plazo: ok
+            decisiones: ok
+            activos: ok
+            aprob: ok
+          sheet:
+            code: asistencia_especial
+            version: v2
+            state: Vigente
+            title: Asistencia en aeropuerto a pasajeros con movilidad reducida
+            territory: Chile
+            sections:
+            - title: Actividad
+              rows:
+              - label: Finalidad
+                value: Asistencia en aeropuerto a pasajeros con movilidad reducida
+                field: finalidad
+              - label: Base de licitud
+                value: Consentimiento (consentimiento expreso)
+                field: base-de-licitud
+              - label: Registro de consentimientos
+                value: salud-v1, desde 2026-10-15
+                field: base-de-licitud
+            - title: Datos
+              rows:
+              - label: Tipo de datos
+                value: Identificación, salud
+                field: tipo-de-datos
+              - label: Datos sensibles
+                value: Sí · salud
+                field: tipo-de-datos
+              - label: Categorías de bases de datos
+                value: silver.reservas (tabla)
+                field: categorias-de-bases-de-datos
+              - label: Titulares
+                value: Pasajeros
+                field: titulares
+              - label: Fuente
+                value: El propio pasajero, al pedir la asistencia
+                field: fuente
+              - label: Fuente de acceso público
+                value: 'No'
+                field: fuente
+            - title: Comunicación de los datos
+              rows:
+              - label: Destinatarios
+                value: Operador de aeropuerto
+                field: destinatarios
+              - label: Transferencias internacionales
+                value: Ninguna
+                field: transferencias-internacionales
+            - title: Conservación
+              rows:
+              - label: Plazo o condición de supresión
+                value: 12 meses
+                field: plazo-o-condicion-de-supresion
+            - title: Decisiones automatizadas
+              rows:
+              - label: Decisiones automatizadas
+                value: 'No'
+                field: decisiones-automatizadas
+            - title: Activos y consumidores
+              rows:
+              - label: Activos
+                value: silver.reservas
+                field: activos-y-consumidores
+              - label: Consumidores
+                value: dag_asistencia
+                field: activos-y-consumidores
+              - label: Campos necesarios
+                value: pasajero_id, tipo_asistencia, vuelo
+                field: activos-y-consumidores
+            - title: Aprobación y versión
+              rows:
+              - label: Fecha de aprobación
+                value: '2026-03-01'
+                field: aprobacion-y-version
+              - label: Vence
+                value: '2027-03-01'
+                field: aprobacion-y-version
+              - label: Versión
+                value: v2
+                field: aprobacion-y-version
+              - label: Aprobado por
+                blank: true
+                field: aprobacion-y-version
+              - label: Firma
+                blank: true
+                field: aprobacion-y-version
+    - key: encuesta_post_vuelo
+      name: Medir la satisfacción
+      states:
+        actual:
+          values:
+            tipo: 'Contacto, itinerario · sensibles: ninguno'
+            ambito: null
+            bases: silver.reservas
+            titulares: Pasajeros
+            finalidad: Medir la satisfacción después del vuelo
+            fuente: 'La reserva · acceso público: no'
+            base: 'Interés legítimo (art. 13 letra d) · justificación: [sin evaluar]'
+            destinatarios: Ninguno
+            transf: Ninguna
+            plazo: 12 meses
+            decisiones: Ninguna
+            activos: 'dag_encuestas · campos: correo, pasajero_id, vuelo'
+            aprob: Aprobada 2026-05-01 · vence 2027-05-01
+          status:
+            tipo: ok
+            ambito: pending
+            bases: ok
+            titulares: ok
+            finalidad: ok
+            fuente: ok
+            base: pending
+            destinatarios: ok
+            transf: ok
+            plazo: ok
+            decisiones: ok
+            activos: ok
+            aprob: ok
+          sheet:
+            code: encuesta_post_vuelo
+            version: v1
+            state: En revisión
+            title: Medir la satisfacción después del vuelo
+            territory: null
+            note: 'Pendiente de revisión por privacidad: Base de licitud.'
+            sections:
+            - title: Actividad
+              rows:
+              - label: Finalidad
+                value: Medir la satisfacción después del vuelo
+                field: finalidad
+              - label: Base de licitud
+                value: Interés legítimo
+                field: base-de-licitud
+              - label: Justificación del interés legítimo
+                value: null
+                field: base-de-licitud
+            - title: Datos
+              rows:
+              - label: Tipo de datos
+                value: Contacto, itinerario
+                field: tipo-de-datos
+              - label: Datos sensibles
+                value: 'No'
+                field: tipo-de-datos
+              - label: Categorías de bases de datos
+                value: silver.reservas (tabla)
+                field: categorias-de-bases-de-datos
+              - label: Titulares
+                value: Pasajeros
+                field: titulares
+              - label: Fuente
+                value: La reserva
+                field: fuente
+              - label: Fuente de acceso público
+                value: 'No'
+                field: fuente
+            - title: Comunicación de los datos
+              rows:
+              - label: Destinatarios
+                value: Ninguno
+                field: destinatarios
+              - label: Transferencias internacionales
+                value: Ninguna
+                field: transferencias-internacionales
+            - title: Conservación
+              rows:
+              - label: Plazo o condición de supresión
+                value: 12 meses
+                field: plazo-o-condicion-de-supresion
+            - title: Decisiones automatizadas
+              rows:
+              - label: Decisiones automatizadas
+                value: 'No'
+                field: decisiones-automatizadas
+            - title: Activos y consumidores
+              rows:
+              - label: Activos
+                value: silver.reservas
+                field: activos-y-consumidores
+              - label: Consumidores
+                value: dag_encuestas
+                field: activos-y-consumidores
+              - label: Campos necesarios
+                value: correo, pasajero_id, vuelo
+                field: activos-y-consumidores
+            - title: Aprobación y versión
+              rows:
+              - label: Fecha de aprobación
+                value: '2026-05-01'
+                field: aprobacion-y-version
+              - label: Vence
+                value: '2027-05-01'
+                field: aprobacion-y-version
+              - label: Versión
+                value: v1
+                field: aprobacion-y-version
+              - label: Aprobado por
+                blank: true
+                field: aprobacion-y-version
+              - label: Firma
+                blank: true
+                field: aprobacion-y-version
+        corregido:
+          values:
+            tipo: 'Contacto, itinerario · sensibles: ninguno'
+            ambito: 'Chile: pasajeros que compran en Chile, también desde el extranjero'
+            bases: silver.reservas
+            titulares: Pasajeros
+            finalidad: Medir la satisfacción después del vuelo
+            fuente: 'La reserva · acceso público: no'
+            base: 'Interés legítimo (art. 13 letra d) · justificación: mejorar el servicio; el pasajero puede oponerse en cada encuesta'
+            destinatarios: Ninguno
+            transf: Ninguna
+            plazo: 12 meses
+            decisiones: Ninguna
+            activos: 'dag_encuestas · campos: correo, pasajero_id, vuelo'
+            aprob: Aprobada 2026-05-01 · vence 2027-05-01
+          status:
+            tipo: ok
+            ambito: ok
+            bases: ok
+            titulares: ok
+            finalidad: ok
+            fuente: ok
+            base: ok
+            destinatarios: ok
+            transf: ok
+            plazo: ok
+            decisiones: ok
+            activos: ok
+            aprob: ok
+          sheet:
+            code: encuesta_post_vuelo
+            version: v2
+            state: Vigente
+            title: Medir la satisfacción después del vuelo
+            territory: Chile
+            sections:
+            - title: Actividad
+              rows:
+              - label: Finalidad
+                value: Medir la satisfacción después del vuelo
+                field: finalidad
+              - label: Base de licitud
+                value: Interés legítimo
+                field: base-de-licitud
+              - label: Justificación del interés legítimo
+                value: mejorar el servicio; el pasajero puede oponerse en cada encuesta
+                field: base-de-licitud
+            - title: Datos
+              rows:
+              - label: Tipo de datos
+                value: Contacto, itinerario
+                field: tipo-de-datos
+              - label: Datos sensibles
+                value: 'No'
+                field: tipo-de-datos
+              - label: Categorías de bases de datos
+                value: silver.reservas (tabla)
+                field: categorias-de-bases-de-datos
+              - label: Titulares
+                value: Pasajeros
+                field: titulares
+              - label: Fuente
+                value: La reserva
+                field: fuente
+              - label: Fuente de acceso público
+                value: 'No'
+                field: fuente
+            - title: Comunicación de los datos
+              rows:
+              - label: Destinatarios
+                value: Ninguno
+                field: destinatarios
+              - label: Transferencias internacionales
+                value: Ninguna
+                field: transferencias-internacionales
+            - title: Conservación
+              rows:
+              - label: Plazo o condición de supresión
+                value: 12 meses
+                field: plazo-o-condicion-de-supresion
+            - title: Decisiones automatizadas
+              rows:
+              - label: Decisiones automatizadas
+                value: 'No'
+                field: decisiones-automatizadas
+            - title: Activos y consumidores
+              rows:
+              - label: Activos
+                value: silver.reservas
+                field: activos-y-consumidores
+              - label: Consumidores
+                value: dag_encuestas
+                field: activos-y-consumidores
+              - label: Campos necesarios
+                value: correo, pasajero_id, vuelo
+                field: activos-y-consumidores
+            - title: Aprobación y versión
+              rows:
+              - label: Fecha de aprobación
+                value: '2026-05-01'
+                field: aprobacion-y-version
+              - label: Vence
+                value: '2027-05-01'
+                field: aprobacion-y-version
+              - label: Versión
+                value: v2
+                field: aprobacion-y-version
+              - label: Aprobado por
+                blank: true
+                field: aprobacion-y-version
+              - label: Firma
+                blank: true
+                field: aprobacion-y-version
+    # fin del bloque generado
+  activity_explorer:
+    lead: 'El registro de actividades de tratamiento guarda, versionado, cada uso de datos personales: para qué se usan, con qué base, qué datos,
+      quién los recibe y hasta cuándo. Cada uso queda vinculado a las tablas, jobs y servicios que lo ejecutan, para comparar lo declarado con
+      lo que realmente corre.'
+    kinds:
+    - kicker: Catálogo de datos
+      question: ¿Qué datos hay y dónde?
+      text: No dice para qué se usan.
+    - kicker: Linaje
+      question: ¿De dónde viene y a dónde va cada dato?
+      text: No dice con qué base ni con qué fin.
+    - kicker: Registro de actividades de tratamiento
+      question: ¿Para qué, con qué base y hasta cuándo?
+      text: Se apoya en los dos anteriores para vincular cada uso con lo que corre.
+      highlight: true
+    intro: 'Lo forman cuatro piezas que no conviene mezclar en un solo campo: actividad, activo, consumidor y evidencia. La conciliación es lo
+      que el código obtiene al cruzarlas. Elige una actividad sobre `silver.pasajeros` para verlas con los datos del código de la ficha (escenario
+      `actual`).'
+    asset: silver.pasajeros
+    rows:
+      activity:
+        title: Actividad
+        detail: Por qué se usan los datos
+      asset:
+        title: Activo
+        detail: Dónde están y qué columnas necesita la finalidad
+      consumer:
+        title: Consumidor
+        detail: Quién los usa y qué leyó, según los logs
+      evidence:
+        title: Evidencia
+        detail: Cómo se demuestra la aprobación
+      result:
+        title: Conciliación
+        detail: Lo que reporta el código
+    labels:
+      pending: Sin evaluar
+      needs: necesita
+      read: leyó
+      account: cuenta
+      no_fields: Campos aún no evaluados
+      gaps_one: '{n} brecha'
+      gaps_many: '{n} brechas'
+    # inicio del bloque generado por scripts/generators/inventory_views.py: no editar a mano
+    activities:
+    - key: venta_pasajes
+      name: Emitir y gestionar pasajes
+      purpose: Emitir y gestionar pasajes
+      facts:
+      - label: Base (ilustrativa)
+        value: Contrato (art. 13 letra c)
+      - label: Plazo
+        value: 60 meses
+      - label: Titulares
+        value: Pasajeros, compradores
+      - label: Fuente
+        value: El propio comprador, al reservar; no es de acceso público
+      - label: Transferencias
+        value: Argentina · cláusulas contractuales con garantías adecuadas
+      - label: Decisiones automatizadas
+        value: Ninguna
+      fields:
+      - correo
+      - fecha
+      - nombre
+      - pasajero_id
+      - vuelo
+      consumer: dag_reservas
+      account: sa-reservas
+      read:
+      - column: nombre
+        state: needed
+      - column: pasajero_id
+        state: needed
+      - column: vuelo
+        state: needed
+      evidence: Aprobada el 2026-01-15; vence el 2027-01-15
+      evidence_ok: true
+      gaps: []
+      ok: 'Sin hallazgos: dag_reservas lee solo columnas que su finalidad necesita.'
+    - key: marketing
+      name: Ofertas personalizadas
+      purpose: Ofertas personalizadas
+      facts:
+      - label: Base (ilustrativa)
+        value: Consentimiento (art. 12)
+      - label: Plazo
+        value: null
+      - label: Titulares
+        value: Pasajeros suscritos
+      - label: Fuente
+        value: Formulario de suscripción; no es de acceso público
+      - label: Transferencias
+        value: null
+      - label: Decisiones automatizadas
+        value: null
+      fields:
+      - correo
+      - pasajero_id
+      - preferencias
+      consumer: dag_campanas
+      account: sa-campanas
+      read:
+      - column: correo
+        state: needed
+      - column: rut
+        state: extra
+      evidence: Aprobación vencida el 2026-10-01; sin registro de consentimientos
+      evidence_ok: false
+      gaps:
+      - 'marketing: sin plazo de conservación'
+      - 'marketing: aprobación vencida el 2026-10-01'
+      - 'marketing: base consentimiento sin registro de consentimientos'
+      - 'marketing: transferencias internacionales sin evaluar'
+      - 'marketing: decisiones automatizadas sin evaluar'
+      - 'sin aprobación vigente: dag_campanas → silver.pasajeros (marketing)'
+      - 'proporcionalidad: dag_campanas lee rut, no necesario para marketing'
+      ok: 'Sin hallazgos: dag_campanas lee solo columnas que su finalidad necesita.'
+    - key: modelo_fraude
+      name: Detectar operaciones sospechosas
+      purpose: Detectar operaciones sospechosas
+      facts:
+      - label: Base (ilustrativa)
+        value: null
+      - label: Plazo
+        value: null
+      - label: Titulares
+        value: null
+      - label: Fuente
+        value: null
+      - label: Transferencias
+        value: null
+      - label: Decisiones automatizadas
+        value: null
+      fields: []
+      consumer: job_fraude
+      account: sa-fraude
+      read:
+      - column: monto
+        state: unevaluated
+      - column: pasajero_id
+        state: unevaluated
+      - column: rut
+        state: unevaluated
+      evidence: 'Sin aprobación: no habilitar hasta la revisión'
+      evidence_ok: false
+      gaps:
+      - 'sin aprobación vigente: job_fraude → silver.pasajeros (modelo_fraude)'
+      - 'modelo_fraude: campos permitidos: [sin evaluar]'
+      ok: 'Sin hallazgos: job_fraude lee solo columnas que su finalidad necesita.'
+    # fin del bloque generado
+  case_compare:
+    lead: 'Una tabla de pasajeros sirve para gestionar reservas. Otro equipo quiere usarla para detectar fraude y asume que, como ya está disponible,
+      puede hacerlo. La disponibilidad técnica no demuestra que el nuevo fin sea compatible con el original ni que tenga una base de licitud [(art.
+      3 letra b)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=3): eso hay que evaluarlo antes.'
+    request:
+      kicker: El pedido
+      text: Usar `silver.pasajeros` en un modelo de fraude (`job_fraude`)
+    headers:
+    - Base asignada a la tabla
+    - Con inventario
+    rows:
+    - label: Acceso
+      without: Se le da un permiso de IAM sobre la tabla completa.
+      with: 'Tiene que citar una actividad: `activity_id = modelo_fraude`.'
+    - label: Despliegue
+      without: Se despliega; nada lo detiene.
+      with: 'La CI lo bloquea: `job_fraude → modelo_fraude: actividad no vigente`.'
+    - label: Evaluación
+      without: Nadie revisa si el nuevo fin es compatible con el original ni con qué base se trata.
+      with: 'Privacidad evalúa compatibilidad y base (en el ejemplo, interés legítimo, que el Decreto 662 pide documentar con su justificación:
+        `justificacion_interes_legitimo`) y fija campos y plazo.'
+    - label: Más adelante
+      without: Llega una solicitud de acceso o una vulneración, y nadie sabe que el modelo usa esos datos.
+      with: El registro dice qué actividades y consumidores usan los datos, y desde cuándo.
+  cycle_lanes:
+    intro: 'Seis pasos, cada uno con la evidencia que deja y lo que esa evidencia no alcanza a demostrar. El caso del modelo de fraude recorre
+      todos: `job_fraude` quiere leer `silver.pasajeros`.'
+    labels:
+      case: Caso
+      evidence: Evidencia
+      limit: No demuestra
+    lanes:
+    - title: Antes de usar
+      lead: El uso se decide y se autoriza antes de que exista.
+      steps:
+      - number: '01'
+        title: Definir
+        text: 'Negocio y privacidad registran la actividad: finalidad, base, campos necesarios, plazo y destinatarios.'
+        case: '`modelo_fraude` entra sin base ni plazo: queda en evaluación.'
+        evidence: Versión del registro, con autor y fecha
+        limit: 'Que la base elegida sea la correcta: eso lo decide privacidad.'
+      - number: '02'
+        title: Vincular
+        text: Ingeniería asocia la actividad a activos, campos, jobs y consumidores, y propaga finalidad y plazo como etiquetas.
+        case: '`job_fraude → modelo_fraude`, sobre `silver.pasajeros`.'
+        evidence: Vínculo actividad–activo–consumidor
+        limit: 'Que el job lea solo lo vinculado: eso se ve en 04.'
+      - number: '03'
+        title: Autorizar
+        text: Antes de dar acceso o desplegar, la CI verifica que la actividad exista, esté vigente (aprobada y sin vencer) y declare al consumidor.
+          Base, plazo y campos no se revisan aquí, sino al conciliar (05).
+        case: '`despliegue bloqueado: job_fraude → modelo_fraude: actividad no vigente`'
+        evidence: Resultado de la puerta en la CI
+        limit: Los accesos que no pasan por la CI, como una consulta ad hoc.
+    - title: Mientras corre
+      lead: Lo que corre se compara con lo registrado.
+      steps:
+      - number: '04'
+        title: Observar
+        text: El linaje y los logs de acceso muestran qué identidad leyó qué activo y, según la plataforma, qué columnas. El alcance de cada nube
+          se compara en **En la nube**.
+        case: '`sa-fraude` lee `pasajero_id`, `rut` y `monto` de `silver.pasajeros`.'
+        evidence: Ejecuciones y accesos en logs protegidos
+        limit: 'Por qué se leyó: la finalidad se declara y se asocia a identidades, servicios o procesos; no se deduce del SQL.'
+      - number: '05'
+        title: Conciliar
+        text: Un consumo sin actividad, de una actividad no vigente o de columnas no aprobadas genera una brecha que se deriva a revisión.
+        case: 'Si ya corría: `sin aprobación vigente: job_fraude → silver.pasajeros`.'
+        evidence: Resultado de la conciliación y cierre de cada brecha
+        limit: Usos fuera de la cobertura del linaje, como exportaciones o copias locales.
+      - number: '06'
+        title: Mantener
+        text: Cada cambio de finalidad, datos, destinatarios, plazo o proceso crea una versión nueva, sin sobrescribir la anterior.
+        case: 'Privacidad aprueba interés legítimo y 24 meses: nueva versión vigente; la conciliación queda sin hallazgos.'
+        evidence: Historial de versiones del registro
+        limit: Que el registro esté al día si un cambio no pasa por aquí.
+    loop: 'Mantener vuelve a Definir: cada versión nueva pasa otra vez por vincular y autorizar.'
+  use_avoid:
+    use:
+      title: Usarlo
+      items:
+      - 'Antes de habilitar un pipeline, dashboard, modelo, API o transferencia nuevos que usen datos personales: es la puerta de habilitación
+        del código.'
+      - 'Al modificar un tratamiento existente: finalidad, datos, destinatarios o plazo.'
+      - 'Cuando vence una aprobación o se revoca un consentimiento: los consumidores de esa actividad tienen que revisarse.'
+      - Como fuente para derechos del titular, retención, vulneraciones, evaluación de impacto y auditoría.
+    avoid:
+      title: No usarlo para
+      items:
+      - 'Decidir si una finalidad es lícita, si una base aplica o cuánto se conserva un dato: es una decisión jurídica, no técnica.'
+      - 'Reemplazar el sistema de consentimientos, los controles de acceso, el catálogo técnico o una evaluación de impacto: es el vínculo entre
+        ellos.'
+      - 'Probar cumplimiento: el registro es evidencia de apoyo para acreditar licitud, finalidad y plazo, no prueba suficiente por sí solo, y
+        una conciliación limpia muestra coherencia técnica, no licitud.'
+  requirement_to_data:
+    title: Del requisito al dato
+    lead: 'Arquitectura de referencia ilustrativa: dónde vive el registro de actividades de tratamiento en una plataforma por capas.'
+    governance:
+      kicker:
+        title: Gobierno
+        detail: qué se permite
+      items:
+      - title: Legal y negocio
+        detail: finalidad, base de licitud, plazo
+      - title: Registro de actividades de tratamiento
+        detail: metadatos por actividad
+        highlight: true
+      legend:
+      - el contrato fija los campos permitidos
+      - el plazo define la purga
+      - la finalidad autoriza el consumo
+    data:
+      kicker:
+        title: Datos
+        detail: cómo circulan
+      stages:
+      - title: Ingesta con contrato
+        pill: Minimización
+        tone: end
+      - title: Bronze
+        detail: crudo, solo campos permitidos
+        tone: layer
+      - title: Silver
+        pill: Seudonimización
+        tone: layer
+      - title: Gold
+        detail: agregado por producto
+        tone: layer
+      - title: Consumo por finalidad
+        pill: Finalidad
+        tone: end
+        highlight: true
+      banners:
+      - Retención y supresión en todas las capas, respaldos y reprocesos
+      - 'Puerta de la CI: bloquea lo nuevo sin actividad vigente · Conciliación: alerta lo que ya corre contra el registro'
+  code_guide:
+    lead:
+      title: Qué hace.
+      text: Recorre el registro de actividades, los usos observados y dos controles. La conciliación (escenarios `actual` y `corregido`) revisa
+        lo que ya corre y, con hallazgos, sale 1 como alerta. La puerta de la CI (`despliegue-nuevo`) evalúa lo que se quiere desplegar y bloquea.
+        El insumo del art. 14 ter solo incluye actividades con aprobación vigente y emite una línea por cada letra que declara **Qué exige la ley**
+        (d, h, i, j, k y l); lo que falta sale como `[sin evaluar]`, nunca se omite.
+    lead_more:
+    - '`vigente` solo mira la aprobación: que exista y que no haya vencido. La puerta (`verificar_despliegues`) revisa tres cosas: un `activity_id`
+      válido, el consumidor declarado en esa actividad y que la actividad esté vigente; no revisa base, plazo ni campos. Base, plazo y los demás
+      contenidos se revisan en `actividades_incompletas`, y los campos leídos frente a los declarados, en `conciliar`.'
+    - 'La base de licitud se registra sin artículo: el artículo sale de un mapa aparte (`ARTICULO`). El consumidor sale de la identidad, la cuenta
+      de servicio, no del texto de la consulta (`consumidor_de`). `None` es **sin evaluar** y, como UNKNOWN (falta el dato para decidir), nunca
+      cuenta como OK.'
+    not_covered:
+      title: Qué no cubre
+      items:
+      - title: 'Consentimiento por titular:'
+        text: verifica que la actividad tenga un registro de consentimientos vinculado, con versión del texto y fecha; no que cada titular haya
+          consentido ni que la revocación funcione.
+      - title: 'Finalidad real:'
+        text: los campos permitidos se declaran a mano, y el control ve las columnas que se leen, no para qué se usan.
+      - title: 'Calidad de cada campo:'
+        text: 'verifica que cada contenido esté declarado o evaluado, no que sea correcto: no valida el país ni el mecanismo de una transferencia,
+          la lógica de una decisión automatizada ni que el consentimiento para datos sensibles haya sido expreso.'
+      - title: 'Usos sin huella:'
+        text: solo ve lo que el linaje y los logs registran; un uso que no deja huella en ellos no aparece.
+      table:
+        lead:
+          title: Lo que el formulario muestra y el código no guarda.
+          text: El formulario es una propuesta; el código de ejemplo cubre solo lo que la puerta de la CI y la conciliación necesitan verificar.
+        headers:
+        - Elemento
+        - Por qué está en el formulario
+        - Por qué no está en el código
+        disclosure: closed
+        rows:
+        - item: Aprobado por (y firma)
+          form: 'Deja constancia de quién respondió por la aprobación. Es propuesta: el Decreto 662 no lo pide por actividad.'
+          code: El ejemplo solo verifica que exista una aprobación vigente (fecha y vencimiento). Quién la dio sería un campo propio nuevo (por
+            ejemplo `aprobado_por`), pendiente.
+        - item: Responsable y Delegado
+          form: Individualizan al responsable y al delegado del modelo (Decreto 662, art. 3 letras a y b).
+          code: 'El código modela el registro de actividades, no la entidad ni su delegado: son datos del programa de cumplimiento.'
+        - item: Versión (v1, v2)
+          form: Permite saber qué regía en cada fecha.
+          code: El código no guarda historial de versiones; el generador de la ficha la calcula comparando `actual` con `corregido`.
+        - item: Código de la actividad
+          form: Identifica la hoja.
+          code: Se usa el id de la actividad.
+        - item: Estado (Vigente, En revisión, Borrador)
+          form: Por confirmar.
+          code: 'El código no guarda un estado. El generador de la ficha lo deriva al armar la hoja: sin aprobación, Borrador; con brechas propias
+            en `actividades_incompletas` o sin aprobación vigente (`vigente`), En revisión; si no, Vigente.'
+        - item: Nota «Pendiente de revisión por privacidad»
+          form: Por confirmar.
+          code: El código emite cada brecha como una línea `BRECHA`; el generador de la ficha las agrupa por campo para la nota de la hoja.
+        - item: Fecha de generación
+          form: Fecha del documento.
+          code: El código evalúa con una fecha fija (`REFERENCIA`) para que el resultado sea reproducible y no genera documentos; la hoja toma
+            la fecha al mostrarse.
+        - item: La hoja misma (secciones, una página por actividad)
+          form: Por confirmar.
+          code: '`inventario.py` no tiene una función de exportación: la ficha arma la hoja desde los mismos datos del registro.'
+    simplifies:
+      title: Qué simplifica
+      items:
+      - title: 'Cuentas sin mapear:'
+        text: 'en la conciliación quedan en UNKNOWN y mantienen la alerta. La puerta no mira cuentas: exige un `activity_id` válido.'
+      - title: 'Momento:'
+        text: solo la puerta bloquea, y solo despliegues nuevos. Quién revisa la alerta y en qué plazo queda fuera del ejemplo.
+      - title: 'Política:'
+        text: el insumo del art. 14 ter es un borrador para que privacidad lo revise, no la política publicada.
+    limit:
+      title: Límite.
+      text: Es un ejemplo didáctico con datos ficticios. Una brecha es una alerta técnica para revisar, no la conclusión de que hubo una infracción,
+        y una salida 0 no demuestra que el tratamiento sea lícito.
+  cloud_compare:
+    title: En la nube
+    intro: Lo que necesita la conciliación, comparado con lo que ofrece cada nube.
+    alert:
+      title: Ojo
+      text: 'Ningún linaje registra para qué se ejecutó una consulta. El registro de actividades es propio en las tres nubes, y la conciliación
+        depende de cuánto tiempo retenga cada servicio el linaje y los logs: en GCP, el linaje, 30 días; INFORMATION_SCHEMA.JOBS_BY_ORGANIZATION,
+        180 días.'
+    headers:
+    - Necesidad
+    - Este ejemplo
+    - GCP
+    - AWS
+    - Azure Databricks
+    rows:
+    - need: Linaje
+      meta: Usos observados
+      own:
+        text: Activo leído por cada consumidor
+      gcp:
+        name: '[Knowledge Catalog](https://docs.cloud.google.com/knowledge-catalog/docs/about-data-lineage) · linaje'
+        text: Lo informan BigQuery, Dataflow y otros servicios. Se retiene 30 días; a nivel de columna, solo columnas de primer nivel de BigQuery.
+      aws:
+        name: '[Amazon DataZone](https://docs.aws.amazon.com/datazone/latest/userguide/datazone-data-lineage.html) · linaje'
+        text: Automático desde AWS Glue y Amazon Redshift; acepta eventos OpenLineage. La página no indica la retención.
+      azure:
+        name: '[Unity Catalog](https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/data-lineage) · linaje'
+        text: Hasta nivel de columna. Las tablas de sistema guardan una ventana móvil de 395 días.
+    - need: Identidad que accedió
+      meta: Usos observados
+      own:
+        text: Cuenta de servicio → consumidor declarado
+      gcp:
+        name: '[INFORMATION_SCHEMA.JOBS_BY_ORGANIZATION](https://docs.cloud.google.com/bigquery/docs/information-schema-jobs-by-organization)'
+        text: 'Por consulta: `user_email` y `referenced_tables`. No incluye consultas servidas desde la caché.'
+      aws:
+        name: '[CloudTrail](https://docs.aws.amazon.com/lake-formation/latest/dg/logging-using-cloudtrail.html) · Lake Formation'
+        text: '`GetDataAccess` registra el principal cuando un servicio pide credenciales; para ver los accesos a objetos hay que activar los
+          eventos de datos de S3 (costo adicional), y se rastrea el rol que inició la consulta.'
+      azure:
+        name: '[system.access.audit](https://learn.microsoft.com/en-us/azure/databricks/admin/system-tables/audit-logs) (vista previa pública)'
+        text: '`user_identity` y la acción, por ejemplo `getTable`.'
+    - need: Finalidad
+      meta: Registro de actividades
+      own:
+        text: Actividad con base, plazo y campos
+      span:
+        title: Sin servicio nativo en las tres nubes
+        text: 'El linaje registra el movimiento, no la finalidad: el registro es propio y se enlaza a las ejecuciones.'
+    - need: Puerta de despliegue
+      tone: where
+      own:
+        text: Valida `activity_id` en la CI
+      span:
+        title: Igual en las tres nubes
+        text: Se programa en la CI de la plataforma, no en un servicio de la nube.
+  practice_pairs:
+    start:
+      title: Por dónde empezar
+      text: 'Actividades con datos sensibles, decisiones automatizadas o terceros; y las identidades y activos de mayor riesgo. Mide consumos
+        sin vínculo, actividades incompletas y aprobaciones vencidas: deben tender a cero.'
+    labels:
+      do: Hacer
+      avoid: Evitar
+    items:
+    - do: Registrar la base de licitud en la actividad; el dataset solo la referencia.
+      avoid: 'Asignar la base al dataset: todos sus consumidores quedan «cubiertos» y un uso nuevo pasa inadvertido.'
+    - do: Exigir `activity_id` antes de dar acceso a un consumidor nuevo de datos personales.
+      avoid: 'Tratar un permiso de IAM como autorización: no dice para qué finalidad.'
+    - do: Declarar los campos que cada finalidad necesita y conciliarlos con las columnas leídas.
+      avoid: Dar acceso a la tabla completa cuando la finalidad usa tres columnas.
+    - do: Mantener separadas la aprobación jurídica, la configuración técnica y la evidencia de ejecución.
+      avoid: 'Creer que el linaje revela por qué se ejecutó una consulta: muestra dependencias, no intención.'
+    - do: Versionar las actividades y definir qué pasa con las descontinuadas y las aprobaciones vencidas.
+      avoid: Mantener el inventario en una planilla aislada que no cambia cuando cambian los pipelines.
+    - do: Pedir consentimiento específico por finalidad y guardar versión del texto y fecha.
+      avoid: 'Usar un consentimiento genérico para «mejorar nuestros servicios»: no es específico.'
+    - do: Dejar en UNKNOWN y revisar una cuenta de servicio sin mapear.
+      avoid: Tratar un consumidor sin identificar como aprobado.
+    - do: Revisar el insumo del art. 14 ter antes de publicar la política.
+      avoid: 'Publicar la política generada sin revisión: puede estar incompleta o desactualizada.'
+  trade_offs:
+    resolution_label: Se resuelve con
+    items:
+    - a: Una actividad por consulta
+      a_text: inmanejable
+      b: Una por sistema
+      b_text: oculta finalidades distintas
+      resolution: una actividad por finalidad coherente, con consumidores y activos trazables.
+    - a: Inspeccionar cada consulta
+      a_text: caro
+      b: Solo lo declarado
+      b_text: no ve usos nuevos
+      resolution: priorizar identidades, servicios y activos de mayor riesgo, sin suponer cobertura completa.
+    - a: Bloquear todo cambio no aprobado
+      a_text: frena a los equipos
+      b: Solo alertar
+      b_text: el uso ya ocurrió
+      resolution: bloquear lo nuevo y conciliar lo que corre, con un alta de actividades ágil.
+    - a: Registro propio ligado a la CI y al linaje
+      a_text: control total, más mantención
+      b: Herramienta de terceros de gestión de privacidad
+      b_text: más rápida de arrancar; el vínculo con lo que corre depende de cómo se integre
+      resolution: un registro consultable desde la CI, sin importar quién lo aloje.
+  open_questions:
+    intro: Si no sabes responder una, repasa la parte de la ficha que trata ese tema.
+    items:
+    - question: ¿Puedes listar las actividades que usan una tabla dada, y con qué base cada una?
+    - question: ¿Cuántos consumidores de datos personales no declaran actividad hoy?
+    - question: ¿Qué pasa con los consumidores de una actividad cuando vence su aprobación o se revoca el consentimiento?
+    - question: ¿Dónde se guarda hoy la prueba del consentimiento, por finalidad y versión del texto?
+    - question: ¿Qué parte de los consumos reales cubre tu linaje y por cuánto tiempo lo retienes?
+    - question: ¿Cómo actuarías ante un consumidor no registrado, sin presumir una infracción?
+  sources_grouped:
+    heading: Fuentes
+    link_titles: true
+    legend: 'Nivel de la fuente: 1 = documentación oficial o texto legal oficial (BCN, Diario Oficial); 2 = notas de versión oficiales; 3 = blogs
+      técnicos oficiales; 4 = papers y organizaciones técnicas.'
+    groups:
+    - title: Normativa chilena
+      layout: list
+      sources:
+      - title: Ley 21.719 · Diario Oficial, 2024-12-13
+        urls:
+        - https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
+        publisher: Diario Oficial
+        why: Art. 3 letras a, b y c; arts. 12, 13, 14 letra a, 14 ter, 16, 27, 34 ter letras a y c, y 49 letra c de la Ley 19.628, texto modificado
+          por la Ley 21.719.
+      - title: Ley 19.628 · versión consolidada de la BCN con vigencia diferida
+        urls:
+        - https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
+        - https://www.bcn.cl/leychile/navegar?idNorma=141599&idParte=10528059&idVersion=2026-12-01
+        publisher: BCN
+        why: 'Texto consolidado y el art. 14 ter; vigencia: 15-10-2027 según la Ley 21.855. Estado legislativo en el [Contexto normativo de la ficha
+          madre](/concepts/chile-data-protection/#s1.5).'
+      - title: Decreto 662, de 2025 · Ministerio de Hacienda, publicado el 2026-09-09
+        urls:
+        - https://www.bcn.cl/leychile/navegar?idNorma=1227971
+        - https://www.bcn.cl/leychile/navegar?idNorma=1227971&idParte=10609555
+        publisher: BCN
+        why: Art. 1 (modelo voluntario; no obsta al deber general) y art. 3 letra d).
+    - title: Servicios cloud · verificados el 2026-11-18
+      layout: list
+      sources:
+      - title: About data lineage
+        urls:
+        - https://docs.cloud.google.com/knowledge-catalog/docs/about-data-lineage
+        publisher: Google Cloud
+        why: Knowledge Catalog (antes Dataplex Universal Catalog); retención de 30 días y alcance del linaje de columnas.
+      - title: JOBS_BY_ORGANIZATION view
+        urls:
+        - https://docs.cloud.google.com/bigquery/docs/information-schema-jobs-by-organization
+        publisher: Google Cloud
+        why: '`user_email` y `referenced_tables` por consulta; sin las consultas servidas desde la caché. Historial de 180 días.'
+      - title: Data lineage in Amazon DataZone
+        urls:
+        - https://docs.aws.amazon.com/datazone/latest/userguide/datazone-data-lineage.html
+        publisher: AWS
+        why: Glue, Redshift y OpenLineage.
+      - title: Logging Lake Formation API calls using CloudTrail
+        urls:
+        - https://docs.aws.amazon.com/lake-formation/latest/dg/logging-using-cloudtrail.html
+        publisher: AWS
+        why: '`GetDataAccess` con el principal que accede, y los eventos de datos de S3.'
+      - title: Lineage in Unity Catalog
+        urls:
+        - https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/data-lineage
+        publisher: Microsoft · Azure Databricks
+        why: Linaje hasta nivel de columna; tablas de sistema con una ventana de 395 días.
+      - title: Audit log system table reference
+        urls:
+        - https://learn.microsoft.com/en-us/azure/databricks/admin/system-tables/audit-logs
+        publisher: Microsoft · Azure Databricks
+        why: '`system.access.audit` con `user_identity`.'
+    - title: En esta plataforma
+      layout: list
+      sources:
+      - title: Ley 21.719 para ingenieros de datos
+        page: chile-data-protection
+        label: Ficha madre
+        why: Principios, matriz de control y sanciones.
+      - title: Identificación de datos personales y sensibles
+        page: pii-identification
+        label: Ficha
+        why: Qué activos contienen datos personales y sensibles; alimenta el campo **Tipo de datos** del registro.
+      - title: Retención y supresión
+        page: retention-and-erasure
+        label: Ficha
+        why: Aplicar el plazo de cada actividad.
+      - title: Pipeline de derechos del titular
+        page: data-subject-rights-pipeline
+        label: Ficha
+        why: Localizar los tratamientos ante una solicitud.
+      - title: Evaluación de impacto y decisiones automatizadas
+        page: dpia-and-automated-decisions
+        label: Ficha
+        why: Evaluar las actividades de mayor riesgo.
+      - title: Encargados y transferencias internacionales
+        page: processors-and-international-transfers
+        label: Ficha
+        why: Destinatarios, encargados y transferencias.
+      - title: Controles de privacidad como código
+        page: privacy-controls-as-code
+        label: Ficha
+        why: Automatizar las verificaciones.
+created_at: '2026-10-21'
+updated_at: '2026-11-23'
+last_verified: '2026-11-18'
+owner_approved_at: 2026-11-23
 verification_status: verified
-availability: in_review
+availability: available
 ---
 
 ## 1. Resumen
 
-Esta ficha no es asesoría legal: finalidad, base de licitud y plazo los definen el responsable, el negocio y el área legal; aquí se explica cómo modelarlos, vincularlos a la plataforma y controlarlos. Los ejemplos de bases y plazos son ilustrativos, no determinaciones legales.
+Esta ficha no es asesoría legal. Finalidad, base de licitud y plazo los definen el responsable, el negocio y el área legal; aquí se explica cómo modelarlos, vincularlos a la plataforma y controlarlos. Los ejemplos de bases y plazos son ilustrativos, no determinaciones legales.
 
-El inventario explica **para qué** se tratan datos personales y lo vincula con **qué activos, procesos y consumidores** los usan. No es una lista de tablas ni un catálogo técnico duplicado: conecta decisiones de negocio y privacidad con operaciones observables. Es la base de casi todos los demás controles: sin saber qué actividad usa qué datos, con qué base y por cuánto tiempo, no se puede responder un acceso, aplicar retención, dimensionar una vulneración ni detectar un uso indebido.
+### Saber para qué se tratan los datos personales, con qué fundamento y quién los usa
 
-**Idea central:** la finalidad y su fundamento pertenecen al tratamiento concreto; una tabla puede participar en varias actividades, y compartir una tabla no autoriza todos sus usos.
+El inventario registra cada actividad de tratamiento: para qué se tratan datos personales, con qué base de licitud y por cuánto tiempo, y la vincula con los activos, procesos y consumidores que los usan. No es una lista de tablas ni un catálogo técnico duplicado: conecta decisiones de negocio y privacidad con operaciones observables.
+
+<!-- view: note idea-central -->
+
+<!-- view: build_cards -->
+
+Es la base de los demás controles. Sin saber qué actividad usa qué datos, con qué base y por cuánto tiempo, no se puede responder una solicitud de acceso, aplicar un plazo de retención, dimensionar una vulneración ni detectar un uso indebido.
+
+<!-- view: chips ficha-madre -->
+
+<!-- split: ley -->
+
+### Cinco preguntas que conviene poder responder
+
+<!-- view: law_ladder -->
+
+### Campos del registro y de dónde viene cada uno
+
+<!-- view: register_fields -->
+
+<!-- view: note sin-formato -->
 
 ## 2. Qué es
 
-- **[Obligación legal · art. 3]** El responsable debe poder acreditar la licitud (**licitud y lealtad**); no puede tratar los datos con fines distintos de los informados salvo las excepciones del principio de **finalidad**; y los datos que se traten deben limitarse estrictamente a los necesarios, adecuados y pertinentes en relación con los fines (**proporcionalidad**).
-- **[Obligación legal · art. 12]** Si la base es el consentimiento, debe ser libre, informado, específico por finalidad, previo e inequívoco, y revocable; el responsable lo prueba.
-- **[Obligación legal · art. 13]** Otras bases: obligaciones económicas, obligación legal, contrato, interés legítimo y defensa de un derecho.
-- **[Decisión de arquitectura]** **Actividad de tratamiento:** unidad de gestión con identificador estable, responsable, finalidad, base validada, categorías de datos y de titulares, activos, destinatarios, transferencias, plazo, decisiones automatizadas, estado y versión.
-- **[Decisión de arquitectura]** Cuatro entidades distintas, que no conviene mezclar en un solo campo:
+### Un registro de usos, no de tablas
 
-| Entidad | Responde | Ejemplo |
-|---|---|---|
-| Actividad | Por qué se usan los datos | Gestionar una reserva |
-| Activo | Dónde están | `silver.pasajeros` |
-| Consumidor | Quién o qué los usa | `dag_reservas`, un dashboard, un servicio |
-| Evidencia | Cómo se demuestra la aprobación y la operación | Ticket de aprobación, ejecución, registro de auditoría |
+<!-- view: activity_explorer -->
 
-- **[Decisión de arquitectura]** **Relaciones muchos a muchos:** actividad ↔ activo y actividad ↔ consumidor. `silver.pasajeros` puede servir a venta de pasajes (contrato) y a marketing (consentimiento); un único `legal_basis` o `purpose` pegado a la tabla no alcanza.
-- **[Buena práctica]** **Usos observados:** qué consumidores leen cada activo, desde el linaje y los logs de acceso; se comparan con los usos declarados.
+<!-- view: note muchos-a-muchos -->
 
 ## 3. Problema que resuelve
 
-**[Buena práctica]** Una tabla de pasajeros sirve para gestionar reservas. Otro equipo crea un modelo de ofertas o de fraude y asume que, como la tabla ya está disponible, puede usarla. La disponibilidad técnica no demuestra autorización para una finalidad nueva. Con la base asignada al dataset, el modelo «hereda» la base de otra actividad y nadie lo nota; con actividades y consumidores explícitos, ese uso aparece como no vinculado o no aprobado.
+### Que una tabla esté disponible no autoriza una finalidad nueva
 
-**[Buena práctica]** Sin un inventario conectado a los procesos nadie puede contestar con seguridad: qué tratamiento justifica un consumo, qué datos necesita, quién lo aprobó y qué pasa si cambia la finalidad o se revoca un consentimiento.
+<!-- view: case_compare -->
 
-**[Obligación legal · art. 34 ter]** Tratar datos sin base o con una finalidad distinta es infracción grave (letra a)). **[Buena práctica]** La falta de un registro técnico no demuestra por sí sola ese supuesto: es una señal que obliga a determinar los hechos y el fundamento con el área competente. **[Decisión de arquitectura]** Por eso la CI la muestra como brecha y la deriva a revisión, sin calificarla.
+<!-- view: note alerta -->
 
 ## 4. Cómo funciona
 
-1. **[Decisión de arquitectura]** **Definir:** negocio y privacidad registran la actividad con su finalidad, base, plazo y destinatarios aprobados.
-2. **[Buena práctica]** **Vincular:** ingeniería la asocia a los activos, campos relevantes, jobs, aplicaciones, consumidores y proveedores, y propaga plazo y finalidad como tags.
-3. **[Decisión de arquitectura]** **Autorizar:** el uso propuesto se valida antes de conceder acceso o desplegar un consumidor nuevo; la CI verifica que la actividad exista, esté aprobada y declare al consumidor.
-4. **[Buena práctica]** **Observar:** el linaje y los logs de acceso dan los usos reales (consumidor, activo).
-5. **[Buena práctica]** **Gestionar desviaciones:** un consumo sin actividad vinculada o de una actividad no aprobada genera una alerta técnica; su licitud se investiga, no se presume.
-6. **[Buena práctica]** **Mantener:** se versionan los cambios de finalidad, datos, destinatarios, retención y procesos, sin sobrescribir decisiones anteriores.
-7. **[Obligación legal · art. 14 ter]** El responsable mantiene a disposición del público las categorías de datos, los destinatarios, las finalidades, la base de licitud y el plazo de conservación (letras d) e i)). **[Decisión de arquitectura]** El registro genera un insumo revisable para esa política; no la publica automáticamente.
-8. **[Obligación legal · art. 14]** El responsable informa y pone a disposición los antecedentes de la licitud del tratamiento (letra a)). **[Buena práctica]** El registro, sus versiones y su evidencia se exportan bajo demanda.
+### Un ciclo en dos tiempos: antes de usar y mientras corre
 
-**[Buena práctica]** Los logs y el linaje muestran operaciones y dependencias, no la intención jurídica de una consulta. La finalidad se declara y se asocia a identidades, servicios o procesos controlados; no se deduce del SQL.
+<!-- view: cycle_lanes -->
 
 ## 5. Cuándo utilizarlo
 
-- Antes de habilitar un pipeline, dashboard, modelo, API o transferencia nuevos que usen datos personales.
-- Al modificar un tratamiento existente: finalidad, datos, destinatarios o plazo.
-- Como fuente para derechos, retención, vulneraciones, evaluación de impacto y auditoría.
+### Cada vez que aparece o cambia un uso de datos personales
 
-## 6. Cuándo no utilizarlo
-
-- Para decidir si una finalidad es lícita, si una base aplica o cuánto se conserva cada dato: lo decide el área legal.
-- Como reemplazo del sistema de consentimientos, de los controles de acceso, del catálogo técnico o de una evaluación de impacto: es el vínculo entre ellos.
-- Como prueba de cumplimiento: una conciliación limpia muestra coherencia técnica, no licitud.
-
-## 7. Ejemplo sencillo
-
-| Actividad | Finalidad | Base (ilustrativa) | Activo compartido | Estado |
-|---|---|---|---|---|
-| venta_pasajes | Emitir y gestionar pasajes | Contrato (art. 13 c)), sujeto a validación | silver.pasajeros, silver.reservas | Aprobada; plazo ilustrativo de 5 años |
-| marketing | Ofertas personalizadas | Consentimiento (art. 12), si corresponde y se acredita | silver.pasajeros | Aprobada; falta el plazo y el control de revocación |
-| modelo_fraude | Detectar operaciones sospechosas | Pendiente de evaluación | silver.pasajeros | No habilitar hasta la revisión |
-
-El mismo activo aparece tres veces: lo que cambia es la actividad y sus condiciones de uso. No hay un plazo universal; cada plazo se justifica y se aprueba según el contexto.
-
-## 8. Ejemplo de producción
-
-Escenario genérico: una aerolínea con BigQuery, Airflow (Cloud Composer) y dashboards pide un modelo de fraude sobre `silver.pasajeros`.
-
-- Se abre una solicitud con un `activity_id` y la descripción del propósito.
-- Privacidad y negocio evalúan base, atributos necesarios, destinatarios y plazo.
-- Ingeniería asocia el `activity_id` al DAG, a su cuenta de servicio y a los activos permitidos; aplica IAM y minimización.
-- Al desplegar, la CI comprueba que la actividad exista, esté aprobada y declare al consumidor.
-- En operación, los jobs y los accesos se concilian con los consumidores declarados; una discrepancia abre una incidencia para análisis.
-
-| Componente | Implementación posible |
-|---|---|
-| Registro de actividades | Tablas versionadas `activities`, `activity_assets`, `activity_consumers`, `approvals`, `observed_uses`, o el módulo de una herramienta de privacidad |
-| Relación con activos | Tags en el catálogo: `actividad`, `plazo`, `finalidad` |
-| Consentimientos | Tabla por titular, finalidad, versión del texto, fecha y canal; revocación con la misma facilidad (su detalle, en las fichas hermanas) |
-| Usos observados | Linaje (del catálogo de la nube u OpenLineage) y logs de acceso |
-| Control | Job programado que concilia declarados contra observados (alerta), y puerta de la CI para despliegues nuevos (bloqueo) |
-
-### Evidencia de cumplimiento
-
-| Evidencia | Dónde queda | Quién la produce | Qué demuestra | Qué no demuestra |
-|---|---|---|---|---|
-| Registro de actividades versionado | Registro gobernado o repositorio | Privacidad y negocio | Qué finalidad, base y plazo se aprobaron y cuándo | Que la base sea la correcta |
-| Aprobación del uso nuevo | Sistema de solicitudes | Dueño del tratamiento | Quién autorizó el consumidor y con qué alcance | Que el consumidor use solo lo aprobado |
-| Vínculo actividad–activo–consumidor | Catálogo o registro técnico | Ingeniería | Qué consumidores y activos cubre cada actividad | La intención real de cada consulta |
-| Ejecuciones y accesos | Logs protegidos con retención definida | Plataforma | Qué consumidor leyó qué activo y cuándo | Por qué lo leyó |
-| Desviaciones y su cierre | Gestión de incidencias | Ingeniería y privacidad | Que la alerta se analizó y cómo se resolvió | Que no haya usos fuera de la cobertura del linaje |
-| Resultado de la conciliación (0 o 1) con sus hallazgos | Log del job de conciliación | Pipeline de conciliación | Qué usos y actividades no cuadran con el registro a una fecha | Que los usos sin registro en el linaje estén cubiertos |
+<!-- view: use_avoid -->
 
 ## 9. Arquitectura
 
-```mermaid
-flowchart LR
-  L["Negocio y privacidad"] --> R["Registro de actividades<br/>versionado"]
-  R --> V["Activos y<br/>consumidores declarados"]
-  V --> CI{"CI: ¿declarado<br/>y aprobado?"}
-  R --> P["Insumo de la política<br/>(art. 14 ter)"]
-  O["Usos observados:<br/>linaje y logs"] --> C{"Conciliación"}
-  V --> C
-  C -- "desvío" --> A["Alerta y revisión"]
-```
-
-La puerta de la CI bloquea un despliegue nuevo no declarado o con su actividad no vigente. La conciliación revisa lo que ya corre en producción: no bloquea nada, y su resultado 1 dispara la alerta y la revisión. Para consentimientos y retención se integran las entidades de sus fichas hermanas, sin replicarlas.
+<!-- view: requirement_to_data -->
 
 ## 10. Código
 
@@ -186,7 +1892,7 @@ La puerta de la CI bloquea un despliegue nuevo no declarado o con su actividad n
 # código de salida (0 sin hallazgos, 1 alerta o bloqueo). Uso: python inventario.py actual | corregido |
 # despliegue-nuevo. La base de licitud vive en la actividad, no en la tabla. Las funciones reciben el
 # registro como parámetro. Una brecha es una alerta técnica para revisar, no la conclusión de que hubo una infracción;
-# UNKNOWN (falta el dato para decidir) nunca cuenta como OK. Datos ficticios.
+# UNKNOWN o «sin evaluar» (falta el dato para decidir) nunca cuenta como OK. Datos ficticios.
 import sys
 from dataclasses import dataclass, field, replace
 from datetime import date
@@ -195,10 +1901,11 @@ from typing import Literal
 # @paso 1 Registro
 Base = Literal["consentimiento", "obligación legal", "contrato", "interés legítimo", "defensa de derechos",
                "obligaciones económicas"]
-ARTICULO: dict[Base, str] = {"consentimiento": "art. 12", "obligaciones económicas": "art. 13 a)",
-                             "obligación legal": "art. 13 b)", "contrato": "art. 13 c)",
-                             "interés legítimo": "art. 13 d)", "defensa de derechos": "art. 13 e)"}
+ARTICULO: dict[Base, str] = {"consentimiento": "art. 12", "obligaciones económicas": "art. 13 letra a",
+                             "obligación legal": "art. 13 letra b", "contrato": "art. 13 letra c",
+                             "interés legítimo": "art. 13 letra d", "defensa de derechos": "art. 13 letra e"}
 REFERENCIA = date(2026, 11, 3)   # fecha fija: resultado reproducible
+SIN_EVALUAR = "[sin evaluar]"
 
 
 @dataclass(frozen=True)
@@ -214,18 +1921,26 @@ class RegistroConsentimientos:   # por titular, finalidad, versión del texto y 
 
 
 @dataclass(frozen=True)
-class Actividad:
+class Actividad:   # None = sin evaluar; () o "" = se evaluó y se declaró «ninguna»
     id: str
     finalidad: str
     base: Base | None              # None: pendiente de evaluación
     plazo_meses: int | None
     aprobacion: Aprobacion | None
     categorias: tuple[str, ...]
-    destinatarios: tuple[str, ...]
+    destinatarios: tuple[str, ...] | None
     activos: frozenset[str]
     consumidores: frozenset[str]
-    campos: frozenset[str]         # columnas que la finalidad necesita
+    campos: frozenset[str] | None  # columnas que la finalidad necesita; None: sin evaluar; vacío: ninguna permitida
     consentimientos: RegistroConsentimientos | None = None
+    titulares: tuple[str, ...] = ()
+    fuente: str | None = None
+    acceso_publico: bool | None = None
+    transferencias: tuple[str, ...] | None = None    # cada una «país · mecanismo del art. 27»
+    decisiones_automatizadas: str | None = None      # lógica y consecuencias
+    categorias_sensibles: tuple[str, ...] | None = None   # subconjunto declarado de categorias
+    justificacion_interes_legitimo: str | None = None
+    plazo_condicion: str | None = None               # «plazos o condiciones»: basta uno de los dos
 
 
 @dataclass(frozen=True)
@@ -233,6 +1948,7 @@ class Registro:
     actividades: tuple[Actividad, ...]
     tablas_con_pii: frozenset[str]
     identidades: dict[str, str] = field(default_factory=dict)   # cuenta de servicio -> consumidor declarado
+    ambito_territorial: str | None = None                       # una vez por registro, no por actividad
 
 
 @dataclass(frozen=True)
@@ -249,6 +1965,7 @@ class Despliegue:   # un consumidor nuevo que se quiere desplegar
 
 
 def vigente(a: Actividad, hoy: date) -> bool:
+    """Solo mira la aprobación: que exista y que no haya vencido. No revisa base, plazo ni campos."""
     return a.aprobacion is not None and a.aprobacion.vence >= hoy
 
 
@@ -272,24 +1989,46 @@ def tablas_sin_actividad(registro: Registro) -> list[Hallazgo]:
 
 
 def actividades_incompletas(registro: Registro, hoy: date) -> list[Hallazgo]:
-    """Una actividad aprobada necesita base y plazo; la aprobación vence y el consentimiento se registra."""
+    """Una actividad aprobada necesita cada contenido declarado o evaluado (base, plazo y los demás); la aprobación
+    vence y el consentimiento se registra. Lo que falta es una brecha para revisar, nunca un OK."""
     hallazgos = []
+    if registro.ambito_territorial is None:
+        hallazgos.append(Hallazgo("BRECHA", "registro sin ámbito territorial"))
     for a in registro.actividades:
         if a.aprobacion is None:
             continue
         if a.base is None:
             hallazgos.append(Hallazgo("BRECHA", f"{a.id}: aprobada sin base de licitud"))
-        if a.plazo_meses is None:
+        if a.plazo_meses is None and a.plazo_condicion is None:
             hallazgos.append(Hallazgo("BRECHA", f"{a.id}: sin plazo de conservación"))
         if a.aprobacion.vence < hoy:
             hallazgos.append(Hallazgo("BRECHA", f"{a.id}: aprobación vencida el {a.aprobacion.vence}"))
         if a.base == "consentimiento" and a.consentimientos is None:
             hallazgos.append(Hallazgo("BRECHA", f"{a.id}: base consentimiento sin registro de consentimientos"))
+        if a.categorias_sensibles is None:
+            hallazgos.append(Hallazgo("BRECHA", f"{a.id}: datos sensibles sin evaluar"))
+        if not a.titulares:
+            hallazgos.append(Hallazgo("BRECHA", f"{a.id}: sin categorías de titulares"))
+        if a.destinatarios is None:
+            hallazgos.append(Hallazgo("BRECHA", f"{a.id}: destinatarios sin evaluar"))
+        if a.fuente is None or a.acceso_publico is None:
+            hallazgos.append(Hallazgo("BRECHA", f"{a.id}: fuente de los datos sin evaluar"))
+        if a.transferencias is None:
+            hallazgos.append(Hallazgo("BRECHA", f"{a.id}: transferencias internacionales sin evaluar"))
+        if a.decisiones_automatizadas is None:
+            hallazgos.append(Hallazgo("BRECHA", f"{a.id}: decisiones automatizadas sin evaluar"))
+        if a.base == "interés legítimo" and not a.justificacion_interes_legitimo:
+            hallazgos.append(Hallazgo("BRECHA", f"{a.id}: interés legítimo sin justificación"))
+        if a.categorias_sensibles and a.base is not None and a.base != "consentimiento":
+            hallazgos.append(Hallazgo("BRECHA", f"revisión: datos sensibles con base {a.base} en {a.id} "
+                                                "(art. 16: consentimiento expreso, salvo excepciones)"))
     return hallazgos
 
 
 def conciliar(registro: Registro, usos: list[Uso], hoy: date) -> list[Hallazgo]:
-    """Cada uso observado tiene que caer en una actividad vigente y leer solo los campos de su finalidad."""
+    """Cada uso observado tiene que caer en una actividad vigente y leer solo los campos de su finalidad. Campos
+    vacíos (ninguno permitido) se evalúan: toda columna leída sobra. Campos None (sin evaluar) son una brecha para
+    revisar, como los datos sensibles o los destinatarios sin evaluar: una alerta técnica, no una infracción."""
     hallazgos = []
     for uso in usos:
         consumidor = consumidor_de(registro, uso)
@@ -304,8 +2043,11 @@ def conciliar(registro: Registro, usos: list[Uso], hoy: date) -> list[Hallazgo]:
             hallazgos.append(Hallazgo("BRECHA", f"sin aprobación vigente: {consumidor} → {uso.activo} "
                                                 f"({', '.join(a.id for a in vinculos)})"))
         for a in vinculos:
+            if a.campos is None:   # sin evaluar: no hay contra qué comparar, y eso no cuenta como OK
+                hallazgos.append(Hallazgo("BRECHA", f"{a.id}: campos permitidos: {SIN_EVALUAR}"))
+                continue
             sobran = sorted(uso.columnas - a.campos)
-            if a.campos and sobran:   # campos vacíos: la actividad todavía no se evalúa
+            if sobran:
                 hallazgos.append(Hallazgo("BRECHA", f"proporcionalidad: {consumidor} lee {', '.join(sobran)}, "
                                                     f"no necesario para {a.id}"))
     return hallazgos
@@ -313,7 +2055,8 @@ def conciliar(registro: Registro, usos: list[Uso], hoy: date) -> list[Hallazgo]:
 
 def verificar_despliegues(registro: Registro, despliegues: list[Despliegue], hoy: date) -> list[Hallazgo]:
     """Puerta de la CI: bloquea un despliegue sin activity_id, con una actividad que no declara al consumidor o con una
-    actividad sin aprobación vigente; cada caso con su propio motivo."""
+    actividad sin aprobación vigente; cada caso con su propio motivo. No revisa base, plazo ni campos: eso lo hacen
+    actividades_incompletas y conciliar."""
     hallazgos = []
     por_id = {a.id: a for a in registro.actividades}
     for d in despliegues:
@@ -329,15 +2072,38 @@ def verificar_despliegues(registro: Registro, despliegues: list[Despliegue], hoy
 
 
 # @paso 4 Insumo y salida
+def lista(valores: tuple[str, ...] | None, vacio: str) -> str:
+    return SIN_EVALUAR if valores is None else ", ".join(valores) or vacio
+
+
 def insumo_14_ter(registro: Registro, hoy: date) -> list[str]:
-    """Insumo para la política pública (art. 14 ter): solo actividades con aprobación vigente."""
+    """Insumo para la política pública (art. 14 ter): solo actividades con aprobación vigente. Emite cada letra;
+    lo que falta sale como [sin evaluar], nunca se omite."""
     filas = []
     for a in registro.actividades:
-        if not vigente(a, hoy) or a.base is None:
+        if not vigente(a, hoy):
             continue
-        plazo = f"{a.plazo_meses} meses" if a.plazo_meses is not None else "POR DEFINIR"
-        filas.append(f"- {a.finalidad} | base: {a.base} ({ARTICULO[a.base]}) | datos: {', '.join(a.categorias)} "
-                     f"| destinatarios: {', '.join(a.destinatarios) or 'ninguno'} | plazo: {plazo}")
+        plazo = " o ".join(p for p in (f"{a.plazo_meses} meses" if a.plazo_meses is not None else "",
+                                       a.plazo_condicion or "") if p) or SIN_EVALUAR
+        publico = SIN_EVALUAR if a.acceso_publico is None else ("sí" if a.acceso_publico else "no")
+        decisiones = SIN_EVALUAR if a.decisiones_automatizadas is None else a.decisiones_automatizadas or "ninguna"
+        interes = (f" · interés legítimo: {a.justificacion_interes_legitimo or SIN_EVALUAR}"
+                   if a.base == "interés legítimo" else "")
+        base = SIN_EVALUAR if a.base is None else f"{a.base} ({ARTICULO[a.base]}" + (
+            "; art. 16, expreso" if a.categorias_sensibles and a.base == "consentimiento" else "") + ")"
+        retiro = (SIN_EVALUAR if a.base is None else "no aplica" if a.base != "consentimiento"
+                  else "derecho a retirarlo en cualquier momento · registro de consentimientos: "
+                  + (f"{a.consentimientos.version_texto} desde {a.consentimientos.desde}" if a.consentimientos
+                     else SIN_EVALUAR))
+        filas += [f"- {a.finalidad} · base: {base}{interes}",
+                  f"  d) datos: {', '.join(a.categorias)} · sensibles: {lista(a.categorias_sensibles, 'ninguno')}",
+                  f"  d) titulares: {lista(a.titulares, SIN_EVALUAR)} "
+                  f"· destinatarios: {lista(a.destinatarios, 'ninguno')}",
+                  f"  h) transferencias: {lista(a.transferencias, 'ninguna')}",
+                  f"  i) plazo: {plazo}",
+                  f"  j) fuente: {a.fuente or SIN_EVALUAR} · acceso público: {publico}",
+                  f"  k) retiro del consentimiento: {retiro}",
+                  f"  l) decisiones automatizadas: {decisiones}"]
     return filas
 
 
@@ -345,16 +2111,34 @@ def escenario(nombre: str) -> tuple[Registro, list[Uso], list[Despliegue]]:
     venta = Actividad("venta_pasajes", "emitir y gestionar pasajes", "contrato", 60,
                       Aprobacion(date(2026, 1, 15), date(2027, 1, 15)), ("identificación", "contacto", "itinerario"),
                       ("aerolíneas socias",), frozenset({"silver.pasajeros", "silver.reservas"}),
-                      frozenset({"dag_reservas"}), frozenset({"pasajero_id", "nombre", "correo", "vuelo", "fecha"}))
+                      frozenset({"dag_reservas"}), frozenset({"pasajero_id", "nombre", "correo", "vuelo", "fecha"}),
+                      titulares=("pasajeros", "compradores"), fuente="el propio comprador, al reservar",
+                      acceso_publico=False, decisiones_automatizadas="", categorias_sensibles=(),
+                      transferencias=("Argentina · cláusulas contractuales con garantías adecuadas",))
     marketing = Actividad("marketing", "ofertas personalizadas", "consentimiento", None,
                           Aprobacion(date(2025, 10, 1), date(2026, 10, 1)), ("contacto", "preferencias"),
                           ("plataforma de email",), frozenset({"silver.pasajeros"}), frozenset({"dag_campanas"}),
-                          frozenset({"pasajero_id", "correo", "preferencias"}))
+                          frozenset({"pasajero_id", "correo", "preferencias"}),
+                          titulares=("pasajeros suscritos",), fuente="formulario de suscripción", acceso_publico=False,
+                          categorias_sensibles=())
     fraude = Actividad("modelo_fraude", "detectar operaciones sospechosas", None, None, None,
-                       ("identificación", "pagos"), (), frozenset({"silver.pasajeros"}), frozenset({"job_fraude"}),
-                       frozenset())
+                       ("identificación", "pagos"), None, frozenset({"silver.pasajeros"}), frozenset({"job_fraude"}),
+                       None)
+    asistencia = Actividad("asistencia_especial", "asistencia en aeropuerto a pasajeros con movilidad reducida",
+                           "contrato", 12, Aprobacion(date(2026, 3, 1), date(2027, 3, 1)),
+                           ("identificación", "salud"), ("operador de aeropuerto",), frozenset({"silver.reservas"}),
+                           frozenset({"dag_asistencia"}), frozenset({"pasajero_id", "vuelo", "tipo_asistencia"}),
+                           titulares=("pasajeros",), fuente="el propio pasajero, al pedir la asistencia",
+                           acceso_publico=False, transferencias=(), decisiones_automatizadas="",
+                           categorias_sensibles=("salud",))
+    encuesta = Actividad("encuesta_post_vuelo", "medir la satisfacción después del vuelo", "interés legítimo", 12,
+                         Aprobacion(date(2026, 5, 1), date(2027, 5, 1)), ("contacto", "itinerario"), (),
+                         frozenset({"silver.reservas"}), frozenset({"dag_encuestas"}),
+                         frozenset({"pasajero_id", "correo", "vuelo"}), titulares=("pasajeros",),
+                         fuente="la reserva", acceso_publico=False, transferencias=(), decisiones_automatizadas="",
+                         categorias_sensibles=())
     pii = frozenset({"silver.pasajeros", "silver.reservas", "gold.score_fraude"})
-    registro = Registro((venta, marketing, fraude), pii,
+    registro = Registro((venta, marketing, fraude, asistencia, encuesta), pii,
                         {"sa-reservas": "dag_reservas", "sa-campanas": "dag_campanas", "sa-fraude": "job_fraude",
                          "sa-bi": "dashboard_externo"})
     usos = [Uso("sa-reservas", "silver.pasajeros", frozenset({"pasajero_id", "nombre", "vuelo"})),
@@ -371,11 +2155,25 @@ def escenario(nombre: str) -> tuple[Registro, list[Uso], list[Despliegue]]:
     corregido = Registro((
         replace(venta, consumidores=venta.consumidores | {"dashboard_externo", "job_conciliacion"}),
         replace(marketing, plazo_meses=24, aprobacion=hoy_aprobada,
-                consentimientos=RegistroConsentimientos("v3", date(2026, 9, 1))),
+                consentimientos=RegistroConsentimientos("v3", date(2026, 9, 1)),
+                transferencias=("Estados Unidos · cláusulas contractuales con garantías adecuadas",),
+                decisiones_automatizadas="perfilamiento por preferencias para elegir la oferta de cada pasajero; "
+                                         "no cambia precios ni condiciones"),
         replace(fraude, base="interés legítimo", plazo_meses=24, aprobacion=hoy_aprobada,
                 activos=frozenset({"silver.pasajeros", "gold.score_fraude"}),
-                campos=frozenset({"pasajero_id", "rut", "monto"}))),
-        registro.tablas_con_pii, {**registro.identidades, "sa-7f3c": "job_conciliacion"})
+                campos=frozenset({"pasajero_id", "rut", "monto"}), titulares=("pasajeros", "compradores"),
+                fuente="pagos registrados en la venta", acceso_publico=False, transferencias=(),
+                destinatarios=(), categorias_sensibles=(),
+                decisiones_automatizadas="puntaje de riesgo por operación; sobre el umbral, la operación se "
+                                         "retiene para revisión humana",
+                justificacion_interes_legitimo="prevenir fraude en los pagos; ponderado frente a las expectativas "
+                                               "del pasajero el 2026-10-30"),
+        replace(asistencia, base="consentimiento",
+                consentimientos=RegistroConsentimientos("salud-v1", date(2026, 10, 15))),
+        replace(encuesta, justificacion_interes_legitimo="mejorar el servicio; el pasajero puede oponerse en "
+                                                         "cada encuesta")),
+        registro.tablas_con_pii, {**registro.identidades, "sa-7f3c": "job_conciliacion"},
+        ambito_territorial="Chile: pasajeros que compran en Chile, también desde el extranjero")
     usos_corregidos = [replace(u, columnas=frozenset({"correo"})) if u.cuenta == "sa-campanas" else u for u in usos]
     return corregido, usos_corregidos, []
 
@@ -401,7 +2199,7 @@ def conciliacion(registro: Registro, usos: list[Uso]) -> int:
     for h in hallazgos:
         print(f"{h.estado} {h.detalle}")
     if hallazgos:
-        print(f"conciliación: alerta (1): {len(hallazgos)} hallazgo(s) en consumos que ya corren")
+        print(f"conciliación: alerta (1): {len(hallazgos)} hallazgo(s) en lo que ya corre")
         return 1
     print("conciliación: sin hallazgos (0)")
     return 0
@@ -416,46 +2214,98 @@ if __name__ == "__main__":
     sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else "actual"))
 ```
 
-El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`. Recorre cuatro pasos: el registro de actividades (con su base, plazo en meses, aprobación con vencimiento y campos permitidos), los usos observados (cuenta de servicio, activo y columnas leídas), la conciliación y el insumo del art. 14 ter con su código de salida. Hay dos momentos: la conciliación operacional (`actual` y `corregido`) revisa lo que ya corre y, con hallazgos, sale 1 como alerta; la puerta de la CI (`despliegue-nuevo`) evalúa lo que se quiere desplegar y bloquea. Las funciones reciben el registro como parámetro, y la base se guarda sin el artículo, que sale de un mapa aparte.
-
-En el estado actual, la conciliación encuentra nueve hallazgos:
-
-- `gold.score_fraude` tiene datos personales y ninguna actividad la cubre.
-- `marketing` está aprobada pero incompleta: sin plazo de conservación, con la aprobación vencida a la fecha de referencia y con base consentimiento sin registro de consentimientos vinculado.
-- `dag_campanas` lee `rut`, que su actividad no necesita (**proporcionalidad**).
-- `job_fraude` consume una actividad pendiente de evaluación, y `dashboard_externo` lee datos sin ninguna actividad que lo declare.
-- La cuenta `sa-7f3c` no está mapeada a ningún consumidor: queda en `UNKNOWN`, que nunca cuenta como OK.
-
-El insumo de la política (art. 14 ter) solo incluye las actividades con aprobación vigente. Termina con código 1:
+El script se **ejecuta en la CI** con la biblioteca estándar y pasa `mypy --strict`.
 
 ```text
 $ python inventario.py actual
 insumo para la política (art. 14 ter), a revisar por privacidad antes de publicar:
-- emitir y gestionar pasajes | base: contrato (art. 13 c)) | datos: identificación, contacto, itinerario | destinatarios: aerolíneas socias | plazo: 60 meses
+- emitir y gestionar pasajes · base: contrato (art. 13 letra c)
+  d) datos: identificación, contacto, itinerario · sensibles: ninguno
+  d) titulares: pasajeros, compradores · destinatarios: aerolíneas socias
+  h) transferencias: Argentina · cláusulas contractuales con garantías adecuadas
+  i) plazo: 60 meses
+  j) fuente: el propio comprador, al reservar · acceso público: no
+  k) retiro del consentimiento: no aplica
+  l) decisiones automatizadas: ninguna
+- asistencia en aeropuerto a pasajeros con movilidad reducida · base: contrato (art. 13 letra c)
+  d) datos: identificación, salud · sensibles: salud
+  d) titulares: pasajeros · destinatarios: operador de aeropuerto
+  h) transferencias: ninguna
+  i) plazo: 12 meses
+  j) fuente: el propio pasajero, al pedir la asistencia · acceso público: no
+  k) retiro del consentimiento: no aplica
+  l) decisiones automatizadas: ninguna
+- medir la satisfacción después del vuelo · base: interés legítimo (art. 13 letra d) · interés legítimo: [sin evaluar]
+  d) datos: contacto, itinerario · sensibles: ninguno
+  d) titulares: pasajeros · destinatarios: ninguno
+  h) transferencias: ninguna
+  i) plazo: 12 meses
+  j) fuente: la reserva · acceso público: no
+  k) retiro del consentimiento: no aplica
+  l) decisiones automatizadas: ninguna
 BRECHA tabla con PII sin actividad: gold.score_fraude
+BRECHA registro sin ámbito territorial
 BRECHA marketing: sin plazo de conservación
 BRECHA marketing: aprobación vencida el 2026-10-01
 BRECHA marketing: base consentimiento sin registro de consentimientos
+BRECHA marketing: transferencias internacionales sin evaluar
+BRECHA marketing: decisiones automatizadas sin evaluar
+BRECHA revisión: datos sensibles con base contrato en asistencia_especial (art. 16: consentimiento expreso, salvo excepciones)
+BRECHA encuesta_post_vuelo: interés legítimo sin justificación
 BRECHA sin aprobación vigente: dag_campanas → silver.pasajeros (marketing)
 BRECHA proporcionalidad: dag_campanas lee rut, no necesario para marketing
 BRECHA sin aprobación vigente: job_fraude → silver.pasajeros (modelo_fraude)
+BRECHA modelo_fraude: campos permitidos: [sin evaluar]
 BRECHA sin vínculo: dashboard_externo → silver.pasajeros
 UNKNOWN consumidor no identificado: sa-7f3c → silver.reservas
-conciliación: alerta (1): 9 hallazgo(s) en consumos que ya corren
+conciliación: alerta (1): 15 hallazgo(s) en lo que ya corre
 ```
-
-En el escenario corregido se evalúa y aprueba el modelo de fraude, con su base, plazo, activos y campos. También se vinculan el dashboard y la cuenta `sa-7f3c` a `venta_pasajes`, se define el plazo de `marketing`, se renueva su aprobación y se vincula su registro de consentimientos, y `dag_campanas` deja de leer `rut`. El insumo pasa a tres actividades. Termina con código 0:
 
 ```text
 $ python inventario.py corregido
 insumo para la política (art. 14 ter), a revisar por privacidad antes de publicar:
-- emitir y gestionar pasajes | base: contrato (art. 13 c)) | datos: identificación, contacto, itinerario | destinatarios: aerolíneas socias | plazo: 60 meses
-- ofertas personalizadas | base: consentimiento (art. 12) | datos: contacto, preferencias | destinatarios: plataforma de email | plazo: 24 meses
-- detectar operaciones sospechosas | base: interés legítimo (art. 13 d)) | datos: identificación, pagos | destinatarios: ninguno | plazo: 24 meses
+- emitir y gestionar pasajes · base: contrato (art. 13 letra c)
+  d) datos: identificación, contacto, itinerario · sensibles: ninguno
+  d) titulares: pasajeros, compradores · destinatarios: aerolíneas socias
+  h) transferencias: Argentina · cláusulas contractuales con garantías adecuadas
+  i) plazo: 60 meses
+  j) fuente: el propio comprador, al reservar · acceso público: no
+  k) retiro del consentimiento: no aplica
+  l) decisiones automatizadas: ninguna
+- ofertas personalizadas · base: consentimiento (art. 12)
+  d) datos: contacto, preferencias · sensibles: ninguno
+  d) titulares: pasajeros suscritos · destinatarios: plataforma de email
+  h) transferencias: Estados Unidos · cláusulas contractuales con garantías adecuadas
+  i) plazo: 24 meses
+  j) fuente: formulario de suscripción · acceso público: no
+  k) retiro del consentimiento: derecho a retirarlo en cualquier momento · registro de consentimientos: v3 desde 2026-09-01
+  l) decisiones automatizadas: perfilamiento por preferencias para elegir la oferta de cada pasajero; no cambia precios ni condiciones
+- detectar operaciones sospechosas · base: interés legítimo (art. 13 letra d) · interés legítimo: prevenir fraude en los pagos; ponderado frente a las expectativas del pasajero el 2026-10-30
+  d) datos: identificación, pagos · sensibles: ninguno
+  d) titulares: pasajeros, compradores · destinatarios: ninguno
+  h) transferencias: ninguna
+  i) plazo: 24 meses
+  j) fuente: pagos registrados en la venta · acceso público: no
+  k) retiro del consentimiento: no aplica
+  l) decisiones automatizadas: puntaje de riesgo por operación; sobre el umbral, la operación se retiene para revisión humana
+- asistencia en aeropuerto a pasajeros con movilidad reducida · base: consentimiento (art. 12; art. 16, expreso)
+  d) datos: identificación, salud · sensibles: salud
+  d) titulares: pasajeros · destinatarios: operador de aeropuerto
+  h) transferencias: ninguna
+  i) plazo: 12 meses
+  j) fuente: el propio pasajero, al pedir la asistencia · acceso público: no
+  k) retiro del consentimiento: derecho a retirarlo en cualquier momento · registro de consentimientos: salud-v1 desde 2026-10-15
+  l) decisiones automatizadas: ninguna
+- medir la satisfacción después del vuelo · base: interés legítimo (art. 13 letra d) · interés legítimo: mejorar el servicio; el pasajero puede oponerse en cada encuesta
+  d) datos: contacto, itinerario · sensibles: ninguno
+  d) titulares: pasajeros · destinatarios: ninguno
+  h) transferencias: ninguna
+  i) plazo: 12 meses
+  j) fuente: la reserva · acceso público: no
+  k) retiro del consentimiento: no aplica
+  l) decisiones automatizadas: ninguna
 conciliación: sin hallazgos (0)
 ```
-
-La puerta de la CI evalúa cuatro despliegues contra el registro de hoy, el del escenario actual. `dag_reservas` está declarado en `venta_pasajes`, vigente, y pasa. `dag_recomendaciones` no trae `activity_id`; `dag_segmentos` cita `venta_pasajes`, que no lo declara, y `job_fraude` cita `modelo_fraude`, que lo declara pero no tiene aprobación vigente: se informa como «actividad no vigente», no como «no declarado». Termina con código 1:
 
 ```text
 $ python inventario.py despliegue-nuevo
@@ -465,108 +2315,39 @@ BRECHA despliegue bloqueado: job_fraude → modelo_fraude: actividad no vigente
 puerta de la CI: rechazada (1): 3 de 4 despliegues bloqueados
 ```
 
-Limitaciones:
-
-- **Consentimiento:** el ejemplo verifica que la actividad tenga un registro de consentimientos vinculado, con versión del texto y fecha; no que cada titular haya consentido ni que la revocación funcione.
-- **Finalidad real:** los campos permitidos se declaran a mano, y el control ve las columnas que se leen, no para qué se usan.
-- **Cobertura:** solo ve los usos que el linaje y los logs registran. Una cuenta sin mapear queda en `UNKNOWN`: en la conciliación operacional deja el resultado en 1 como alerta, y en la puerta de despliegue bloquea. Un uso que no deja registro no aparece.
-- **Momento:** el código cubre los dos momentos, pero solo la puerta de la CI bloquea, y solo despliegues nuevos. La conciliación de lo que ya corre sale 1 con hallazgos; ese 1 es la alerta operacional del §9, no detiene un consumo en producción, y quién lo revisa y en qué plazo queda fuera del ejemplo.
-- **Política:** el insumo del art. 14 ter es un borrador para que privacidad lo revise, no la política publicada.
+<!-- view: code_guide -->
 
 ## 11. GCP
 
-En GCP, **Knowledge Catalog**. Según *About data lineage*, consultada el 2026-10-28 (no ejecutado):
+### Los servicios ven el movimiento; la finalidad la registras tú
 
-| Necesidad | Servicio | Limitación |
-|---|---|---|
-| Usos observados | Linaje de datos de Knowledge Catalog, informado por BigQuery y Dataflow | Registra metadata del movimiento, no la finalidad; la información de linaje se retiene solo 30 días |
-| Registro de actividades | Propio, con tags en el catálogo | Hay que mantenerlo enlazado a las ejecuciones |
+<!-- view: cloud_compare -->
 
-## 12. AWS
-
-En AWS, **Amazon DataZone**. Según *Data lineage in Amazon DataZone* (no ejecutado):
-
-| Necesidad | Servicio | Limitación |
-|---|---|---|
-| Usos observados | Linaje de DataZone, compatible con OpenLineage | Muestra orígenes, transformaciones y consumo, no la aprobación |
-| Registro de actividades | Propio, con metadatos de negocio | El catálogo no sustituye la aprobación del uso |
-
-## 13. Azure
-
-En Azure, **Unity Catalog** y **Purview Unified Catalog**. Según *Lineage in Unity Catalog* y *Learn about Microsoft Purview Unified Catalog* (no ejecutado):
-
-| Necesidad | Servicio | Limitación |
-|---|---|---|
-| Usos observados | Unity Catalog: linaje automático de las consultas en Azure Databricks, hasta el nivel de columna | No se preserva para objetos renombrados; fuera de Databricks depende de integraciones |
-| Catálogo corporativo | Purview Unified Catalog: inventario, metadata, linaje y governance domains | Organiza el ownership; no acredita la base de licitud |
-
-**Criterio de selección:** un registro de actividades independiente del proveedor, con identificadores estables enlazados al catálogo y a las ejecuciones de cada nube.
+<!-- view: note equivalencias -->
 
 ## 14. Buenas prácticas
 
-- **[Decisión de arquitectura]** La actividad es la unidad de licitud; el dataset solo la referencia.
-- **[Buena práctica]** Exigir `activity_id` al registrar un consumidor nuevo de datos personales, antes de darle acceso.
-- **[Decisión de arquitectura]** Mantener separadas la aprobación jurídica, la configuración técnica y la evidencia de ejecución.
-- **[Buena práctica]** Versionar las actividades sin sobrescribir decisiones anteriores; definir quién revisa y qué pasa con las actividades descontinuadas.
-- **[Buena práctica]** **Seguridad:** el acceso se concede por actividad y consumidor, no por dataset completo.
-- **[Buena práctica]** **Observabilidad:** métricas de consumos sin vínculo, actividades incompletas y aprobaciones vencidas; deben tender a cero.
-- **[Buena práctica]** **Costo:** empezar por las actividades con datos sensibles, decisiones automatizadas o terceros; conciliar primero las identidades y activos de mayor riesgo.
+### Ocho decisiones que separan un inventario útil de una planilla
 
-## 15. Errores frecuentes
-
-- **Base de licitud por dataset:** todos los consumidores de la tabla quedan «cubiertos» y un uso nuevo pasa inadvertido.
-- **Confundir un acceso permitido por IAM con un tratamiento autorizado:** el permiso técnico no dice para qué finalidad.
-- **Creer que el linaje revela por qué se ejecutó una consulta:** muestra dependencias, no intención.
-- **Publicar la política generada sin revisión:** el insumo del art. 14 ter puede estar incompleto o desactualizado.
-- **Consentimiento genérico** para «mejorar nuestros servicios»: no es específico por finalidad.
-- **Inventario en una planilla aislada:** no se actualiza cuando cambian los pipelines y deja de describir la plataforma.
-- **No registrar los usos analíticos y de modelos:** son los que más cambian de finalidad.
-- **Tratar un consumidor sin identificar como aprobado:** una cuenta de servicio sin mapear no prueba que el uso esté cubierto; queda en `UNKNOWN` y bloquea hasta que se identifica.
+<!-- view: practice_pairs -->
 
 ## 16. Trade-offs
 
-- **Granularidad:** una actividad por consulta es inmanejable; una por sistema oculta finalidades distintas. Conviene una por finalidad coherente, con consumidores y activos trazables.
-- **Observabilidad:** inspeccionar cada consulta cuesta; priorizar identidades, servicios y activos de mayor riesgo, sin suponer cobertura completa.
-- **Control de despliegue:** bloquear cambios no aprobados reduce exposición, pero exige un proceso ágil para dar de alta y modificar actividades.
+### Cuatro equilibrios al diseñar el inventario
 
-## 17. Conceptos relacionados
-
-- `chile-data-protection`: ficha padre.
-- `pii-identification`: qué activos contienen datos personales.
-- `data-catalog`, `data-lineage`: catálogo y linaje.
-- `data-subject-rights-pipeline`: localizar los tratamientos ante una solicitud.
-- `retention-and-erasure`: aplicar el plazo de cada actividad.
-- `dpia-and-automated-decisions`: evaluar las actividades de mayor riesgo.
-- `processors-and-international-transfers`: destinatarios, encargados y transferencias.
-- `privacy-controls-as-code`: automatizar las verificaciones.
-
-Nota editorial: esta ficha cubre el inventario y la vinculación de usos; consentimiento, retención, derechos y transferencias se profundizan en sus fichas hermanas.
+<!-- view: trade_offs -->
 
 ## 18. Preguntas técnicas abiertas
 
-1. ¿Puedes listar las actividades que usan una tabla dada?
-2. ¿Cuántos consumidores de datos personales no declaran actividad?
-3. ¿Dónde se guarda hoy la prueba del consentimiento?
-4. ¿Qué parte de los consumos reales cubre tu linaje y por cuánto tiempo lo retienes?
+### Respóndelas para tu plataforma
 
-**Criterio de dominio:** dominas esta ficha si puedes explicar por qué una tabla no tiene una única base de licitud, cómo asociarías un DAG a una actividad aprobada, qué demuestran los logs y el linaje y qué no, y cómo actuarías ante un consumidor no registrado sin presumir una infracción.
+<!-- view: open_questions -->
 
-## 19. Laboratorio relacionado
-
-Propuesta para F4: tres actividades ficticias, dos consumidores aprobados y un consumidor nuevo simulado. Comprobar que la conciliación detecta la desviación y genera evidencia sin decidir su licitud. Sin datos personales reales.
+<!-- view: note dominio -->
 
 ## 20. Fuentes
 
-- BCN Ley Chile: *Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES* (versión con vigencia diferida desde 2026-12-01).
-- Google Cloud: *About data lineage*.
-- AWS: *Data lineage in Amazon DataZone*.
-- Microsoft Learn: *Lineage in Unity Catalog* y *Learn about Microsoft Purview Unified Catalog*.
-
-El detalle de cada fuente está en `sources` del frontmatter.
-
-## 21. Fecha de última verificación
-
-2026-10-28: art. 3 c) consultado en BCN para agregarlo; *About data lineage* consultada de nuevo. Antes, 2026-10-25: textos legales vueltos a consultar en BCN, sin cambios, y 2026-10-22: arts. 3, 12, 13, 14, 14 ter y 34 ter consultados ese día. `verified`: aprobada de nuevo el 2026-11-04 (`owner_approved_at`), con el §10 revisado en P10. Revisión mensual.
+### Fuentes
 
 ## 22. Historial de cambios importantes
 
@@ -587,3 +2368,21 @@ El detalle de cada fuente está en `sources` del frontmatter.
 - 2026-11-04: aprobada con el §10 nuevo (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).
 - 2026-11-04: revisión `docs/reviews/p10.md` aplicada: el §10 separa la conciliación operacional (`actual` y `corregido`: alerta sobre consumos que ya corren, 1 con hallazgos) de la puerta de la CI (`despliegue-nuevo`: cuatro despliegues contra el registro de hoy, tres bloqueados); un despliegue con su actividad sin aprobación vigente se informa como «actividad no vigente», no como «no declarado». Limitación «Momento», §8 y §9 ajustados. Vuelve a `review_required`.
 - 2026-11-04: aprobada con la revisión P10 y su verificación aplicadas (limitación «Cobertura»: `UNKNOWN` es alerta en la conciliación y bloqueo en la puerta de despliegue) (`owner_approved_at: 2026-11-04`); vuelve a `verified` (ADR-023).
+- 2026-11-17: la ficha pasa al formato de vistas (ADR-030, enmienda 9) desde la maqueta: 13 secciones, con «Qué exige la ley», «Arquitectura» y el código nuevo (`inventario.py`, 308 líneas, tres escenarios). Queda disponible y `review_required`: los textos legales nuevos esperan la aprobación del dueño (ADR-023).
+- 2026-11-18: «Qué exige la ley» queda en dos subsecciones numeradas con el mismo encabezado, 2.1 «Cinco preguntas que la ley obliga a poder responder» y 2.2 «Campos del registro y de dónde viene cada uno» (ADR-030, enmienda 10). Sin cambios de contenido; el estado no cambia.
+- 2026-11-18: en Código, la tabla «Lo que el formulario muestra y el código no guarda» pasa a un desplegable «Ver detalle / Ocultar», cerrado por defecto, como «Escenarios» y la tabla de controles. Sin cambios de contenido; el estado no cambia.
+- 2026-11-18: se retira de Arquitectura la subsección «Control y evidencia» (título, subtítulo, cuatro tarjetas y nota) por decisión del dueño; el diagrama «Del requisito al dato» se mantiene. Sin otros cambios de contenido; el estado no cambia.
+- 2026-11-18: en Código se retiran, por decisión del dueño, el desplegable «Controles del código y qué encuentra en actual» (tabla y resumen «9 controles · 14 hallazgos») y el desplegable «Escenarios» (tabla y pastillas de códigos de salida), con la línea «Códigos de salida» que se armaba con ellos. El código y sus tres salidas no cambian; el estado no cambia.
+- 2026-11-18: en «En la nube», el pie deja solo «No son equivalencias exactas. Ningún servicio certifica cumplimiento por sí solo.», por decisión del dueño; la fecha de verificación de las fuentes cloud sigue en Fuentes. El estado no cambia.
+- 2026-11-18: revisión independiente, I1. En `inventario.py`, `categorias_sensibles` y `destinatarios` aceptan `None` (sin evaluar): en una actividad aprobada, cada uno genera una brecha («datos sensibles sin evaluar», «destinatarios sin evaluar»), y en el insumo del art. 14 ter salen como `[sin evaluar]`, no como «ninguno». Una actividad vigente sin base ya no se omite: sale con `base: [sin evaluar]`. Los escenarios declaran lo que cada actividad evaluó (`modelo_fraude` en `actual` queda sin evaluar). Conteos y salidas sin cambios: `actual` → 1 con 14 hallazgos, `corregido` → 0, `despliegue-nuevo` → 1 con 3 de 4 bloqueados. El estado no cambia.
+- 2026-11-18: revisión independiente, En la nube. La alerta «Ojo» distingue la retención de GCP: el linaje, 30 días; `INFORMATION_SCHEMA.JOBS_BY_ORGANIZATION`, 180 días, que también pasa a la nota de esa fuente en Fuentes. La fila de identidad rotula `INFORMATION_SCHEMA.JOBS_BY_ORGANIZATION`; en AWS, «se rastrea el rol que inició la consulta» reemplaza «la tabla se obtiene correlacionando con esos accesos»; `system.access.audit` lleva «(vista previa pública)». Sale de la fila «Finalidad» la frase sobre las etiquetas del catálogo de GCP, que no tenía fuente. Fuentes cloud verificadas el 2026-11-18. El estado no cambia.
+- 2026-11-18: revisión independiente, textos legales (pendientes de aprobación del dueño; sin `owner_approved_at`). En «Qué exige la ley», la columna se rotula «Lo que se espera (paráfrasis)», y «La ley no fija un plazo general: lo define el responsable según la finalidad» pasa a una línea propia «Interpretación de la ficha» (ADR-030, enmienda 11). La fila de proporcionalidad conserva la paráfrasis del art. 3 c), con «salvo las excepciones que establezca la ley». La fila de finalidad agrega la condición contractual del art. 3 b). La fila «¿Qué se publica?» suma la letra k del art. 14 ter, literal. La nota «La ley no exige este formato» cita literal la frase final del art. 3 d) del Decreto 662. La nota del Decreto en el modal dice «(paráfrasis del art. 1)», y el aviso legal pasa a «Esta ficha no es asesoría legal. Finalidad…», con mayúscula. El título de 2.1 y la quinta fila no cambian hasta que responda el dueño. El estado no cambia.
+- 2026-11-18: revisión independiente, verificación y detalles. `last_verified` pasa a 2026-11-18: ese día se volvieron a verificar las citas legales, contra BCN (versión 2026-12-01) y el Diario Oficial, y las seis páginas cloud, con `accessed` igual. La cabecera cuenta solo las fuentes oficiales: 9, sin las fichas de «En esta plataforma». En el código de la ficha, decoradores, sus parámetros y la interpolación de f-strings llegan a contraste AA. El estado no cambia.
+- 2026-11-18: por decisión del dueño, 2.1 pasa a «Cinco preguntas que conviene poder responder» y la quinta fila de la escalera («¿Y si un uso no calza?») lleva la marca «Consecuencia, no obligación» en la línea de interpretación; su contenido legal no cambia. Textos pendientes de la aprobación del dueño (sin `owner_approved_at`); sigue en `review_required`.
+- 2026-11-22: aprobada con lista explícita, por decisión del dueño, de los textos legales: introducción de «Campos del registro», caja «La ley no exige este formato», modales con el literal del art. 14 ter, del Decreto 662 y del art. 49 c, paráfrasis de 2.1 con sus líneas de interpretación, título de 2.1, marca «Consecuencia, no obligación» y los 7 artículos de `legal_basis` (`owner_approved_at: 2026-11-22`); pasa a `verified` (ADR-023). Sin cambios de contenido.
+- 2026-11-22: las menciones de vigencia remiten al Contexto normativo de `chile-data-protection`, fuente única del estado legislativo (boletín 18.623-07 despachado al Presidente el 2026-11-17): §13 pasa de «Ley 19.628 · texto que rige desde el 2026-12-01» a «versión con vigencia diferida (2026-12-01)» con la remisión, y las notas de la cita del Diario Oficial y del art. 14 ter dejan de decir «rigen desde» y «con vigencia desde». El enlace `idVersion=2026-12-01` se mantiene: es la versión de BCN con las modificaciones de la Ley 21.719 mientras no se publique otra ley. Texto legal cambiado: vuelve a `review_required` sin `owner_approved_at` hasta que el dueño apruebe la nueva redacción, por decisión del dueño. `last_verified` sigue en 2026-11-18.
+- 2026-11-22: revisión del código (T-06, T-02, T-01/T-04). `insumo_14_ter` emite la letra k (retiro del consentimiento: «no aplica», o el derecho a retirarlo con el registro de consentimientos), y el modal suma el literal del art. 14 ter letra k, verificado ese día contra BCN; «Qué hace» nombra las letras d, h, i, j, k y l. `campos` distingue `None` (sin evaluar: no se compara) de vacío (ninguna permitida: toda columna leída es una brecha); `modelo_fraude` pasa a `None`. «Qué hace», el paso 03 y «Activos y consumidores» precisan qué revisa cada función: `vigente` solo la aprobación; la puerta, `activity_id`, consumidor declarado y vigencia; base, plazo y campos, solo la conciliación. Conteos sin cambios: actual 1 con 14 hallazgos, corregido 0, despliegue-nuevo 1 con 3 de 4 bloqueados. Textos pendientes de aprobación del dueño; la ficha sigue en `review_required`.
+- 2026-11-22: por decisión del dueño, con `campos=None` la conciliación emite la brecha «campos permitidos: [sin evaluar]» (alerta técnica, no infracción), como los datos sensibles y los destinatarios sin evaluar; `actual` pasa de 14 a 15 hallazgos por `modelo_fraude`, y `corregido` (0) y `despliegue-nuevo` (3 de 4 bloqueados) no cambian. Sale el literal de la letra k de `register_fields.literal.law`: no se mostraba en ningún lado y duplicaba el de 2.1. Textos pendientes de aprobación del dueño; la ficha sigue en `review_required`.
+- 2026-11-22: por decisión del dueño, en 2.1 la quinta fila de la escalera pasa del principio «Infracción grave» a «Consecuencia: infracción grave (art. 34 ter)», y su marca, de «Consecuencia, no obligación» a «Lo que pasa si no se cumple, no un deber más», para no repetir la palabra. El resto de la fila no cambia; la paráfrasis de las letras a y c se comparó ese día con el art. 34 ter en BCN (versión 2026-12-01). El título de 2.1 se mantiene. Pendiente de aprobación del dueño; la ficha sigue en `review_required`.
+- 2026-11-23: con la Ley 21.855 publicada, el rótulo de la versión de BCN pasa a «versión consolidada de la BCN con vigencia diferida; vigencia: 15-10-2027 según la Ley 21.855», en la cita y en Fuentes; se mantienen los enlaces `idVersion=2026-12-01`. Ningún artículo citado por la ficha cambia con la Ley 21.855, y la ficha no cita los artículos transitorios. Pendiente de aprobación del dueño; la ficha sigue en `review_required`.
+- 2026-11-23: El dueño aprobó los textos legales de la ficha: §2 (introducción y recuadro "La ley no exige este formato"), escalera de 2.1, modales de campos (letras d, h, i, j y l), literal de la k, "Qué hace" y §13; incluye el rótulo de BCN vigente con la Ley 21.855 y los iconos de documento (`owner_approved_at: 2026-11-23`); pasa a `verified` (ADR-023).

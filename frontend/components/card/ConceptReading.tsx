@@ -677,6 +677,8 @@ export function ConceptReading({
           className="reading-details"
           data-reading-section={section.number}
           data-reading-title={section.title}
+          // ADR-030 enmienda 10: número visible para numerar las subsecciones (N.1, N.2…) de esta sección.
+          style={section.annex ? undefined : ({ "--section-number": `"${shownNumber(section)}"` } as React.CSSProperties)}
         >
           <summary>
             {section.annex ? (

@@ -2266,6 +2266,40 @@
   font-weight: 700;
 }
 
+/* ADR-030 enmienda 9: alerta ámbar, caja o etapa resaltada y pastilla de pista. */
+.control-evidence-outcomes .is-warn {
+  background: var(--warn-bg);
+  color: var(--warn-ink);
+}
+
+.control-evidence-outcomes .is-warn::before {
+  content: "! ";
+  font-weight: 700;
+}
+
+.control-evidence-flow article.is-highlight,
+.control-evidence-flow .requirement-gov article.is-highlight {
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.control-evidence-steps .control-evidence-pill {
+  display: inline-block;
+  margin-right: 2px;
+  padding: 0 7px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: var(--text-xs);
+  font-weight: 650;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.control-evidence p.control-evidence-banner + p.control-evidence-banner {
+  margin-top: 8px;
+}
+
 .control-evidence-outcomes .is-keep {
   border: 1px solid var(--lvl-intermedio-ink);
   background: var(--surface);

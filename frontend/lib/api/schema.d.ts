@@ -791,28 +791,34 @@ export interface components {
                         title: string;
                         detail?: string;
                     };
+                    legend: string[];
                     items: {
                         title: string;
                         detail?: string;
+                        /** @description Caja resaltada con contorno de acento (ADR-030, enmienda 9). */
+                        highlight?: boolean;
                     }[];
-                    legend: string[];
                 };
                 data: {
                     kicker: {
                         title: string;
                         detail?: string;
                     };
-                    banner: string;
+                    banner?: string;
+                    /** @description Varias franjas punteadas en vez de una (ADR-030, enmienda 9). */
+                    banners?: string[];
                     stages: {
                         title: string;
                         detail?: string;
                         pill?: string;
                         /** @enum {unknown} */
                         tone: "end" | "layer";
+                        /** @description Caja resaltada con contorno de acento (ADR-030, enmienda 9). */
+                        highlight?: boolean;
                     }[];
-                };
+                } & (unknown | unknown);
             };
-            /** @description ControlEvidence (§9 · Control y evidencia). */
+            /** @description ControlEvidence (§9 · Control y evidencia); example es opcional desde la enmienda 9. */
             control_evidence?: {
                 /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
                 id?: string;
@@ -822,20 +828,28 @@ export interface components {
                 steps: {
                     number: string;
                     title: string;
-                    items: string[];
+                    items: (string | {
+                        /** @description Pastilla que distingue la pista, por ejemplo «Lo nuevo» (ADR-030, enmienda 9). */
+                        pill: string;
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                        text: string;
+                    })[];
                 }[];
                 decide: {
                     number: string;
                     title: string;
                     outcomes: {
-                        /** @enum {unknown} */
-                        tone: "pass" | "fail" | "keep";
+                        /**
+                         * @description warn: alerta ámbar (ADR-030, enmienda 9).
+                         * @enum {unknown}
+                         */
+                        tone: "pass" | "fail" | "warn" | "keep";
                         text: string;
                     }[];
                 };
                 /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                 note: string;
-                example: {
+                example?: {
                     summary: string;
                     /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                     note: string;
@@ -853,28 +867,45 @@ export interface components {
                     }[];
                 };
             };
-            /** @description CodeGuide (§10, bajo el código). */
+            /** @description CodeGuide (§10, bajo el código). rules y scenarios son opcionales desde la enmienda 10 del ADR-030. */
             code_guide?: {
+                /** @description Rótulo de la línea «escenario → código», que se arma con scenarios (ADR-030, enmienda 9). */
+                exit_codes_label?: string;
                 lead: {
                     title: string;
                     text: string;
                 };
-                rules: {
+                /** @description Párrafos que siguen a «Qué hace» (ADR-030, enmienda 9). */
+                lead_more?: string[];
+                rules?: {
+                    /** @description Título del desplegable de la tabla (ADR-030, enmienda 9). */
+                    title?: string;
+                    /** @description Resumen visible con el desplegable cerrado: {rows} y {total} se calculan de items. */
+                    summary?: string;
+                    /**
+                     * @description Desplegable «Ver detalle / Ocultar» y su estado inicial (ADR-030, enmienda 9).
+                     * @enum {unknown}
+                     */
+                    disclosure?: "open" | "closed";
                     headers: string[];
                     items: {
                         /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
                         id?: string;
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                         rule: string;
                         fn: string;
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                         requirement: string;
                         /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                         finds?: string;
+                        /** @description Hallazgos de la regla en el escenario de referencia (×N). */
+                        count?: number;
                     }[];
                 };
                 not_covered: {
                     title: string;
                     /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
-                    intro: string;
+                    intro?: string;
                     items: {
                         title: string;
                         /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
@@ -882,15 +913,48 @@ export interface components {
                     }[];
                     /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                     note?: string;
+                    /** @description Tabla bajo la lista (ADR-030, enmienda 9). */
+                    table?: {
+                        lead: {
+                            title: string;
+                            /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                            text: string;
+                        };
+                        headers: string[];
+                        /**
+                         * @description Desplegable «Ver detalle / Ocultar» y su estado inicial (ADR-030, enmienda 9).
+                         * @enum {unknown}
+                         */
+                        disclosure?: "open" | "closed";
+                        rows: {
+                            /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                            item: string;
+                            /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                            form: string;
+                            /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                            code: string;
+                        }[];
+                    };
                 };
-                scenarios: {
+                scenarios?: {
                     title: string;
+                    /**
+                     * @description Desplegable «Ver detalle / Ocultar» y su estado inicial (ADR-030, enmienda 9).
+                     * @enum {unknown}
+                     */
+                    disclosure?: "open" | "closed";
                     items: {
                         name: string;
                         /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                         text: string;
                         /** @enum {unknown} */
                         exit_code: 0 | 1;
+                        /** @description Hallazgo → corrección (ADR-030, enmienda 9). */
+                        fixes?: {
+                            finding: string;
+                            /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                            fix: string;
+                        }[];
                     }[];
                 };
                 simplifies: {
@@ -916,7 +980,7 @@ export interface components {
                     text: string;
                 };
                 headers: string[];
-                rows: {
+                rows: ({
                     /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
                     id?: string;
                     need: string;
@@ -927,28 +991,34 @@ export interface components {
                         /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                         text: string;
                     };
-                    gcp: {
+                    gcp?: {
                         /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                         name: string;
                         /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                         text?: string;
                         warn?: string;
                     };
-                    aws: {
+                    aws?: {
                         /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                         name: string;
                         /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                         text?: string;
                         warn?: string;
                     };
-                    azure: {
+                    azure?: {
                         /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                         name: string;
                         /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                         text?: string;
                         warn?: string;
                     };
-                }[];
+                    /** @description Una celda para las tres nubes cuando dicen lo mismo (ADR-030, enmienda 9). */
+                    span?: {
+                        title: string;
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                        text: string;
+                    };
+                } & (unknown | unknown))[];
                 closing?: string;
             };
             /** @description PracticeLanes (§14): etapas en columnas y una franja transversal opcional. */
@@ -1057,6 +1127,8 @@ export interface components {
                 heading?: string;
                 /** @description true: el título de cada fuente es el enlace y no se muestra el dominio aparte (ADR-030, enmienda 8). */
                 link_titles?: boolean;
+                /** @description Leyenda de los niveles de fuente bajo el título (ADR-030, enmienda 9). */
+                legend?: string;
                 groups: {
                     title: string;
                     /** @enum {unknown} */
@@ -1094,8 +1166,11 @@ export interface components {
                     lead?: string;
                     /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
                     text: string;
-                    /** @enum {unknown} */
-                    tone?: "note" | "risk";
+                    /**
+                     * @description key: idea central (ADR-030, enmienda 9).
+                     * @enum {unknown}
+                     */
+                    tone?: "note" | "risk" | "key";
                 };
             };
             /** @description Fila de enlaces con rótulo (por ejemplo «En la ficha madre:»). Marca: chips <id>. */
@@ -1364,7 +1439,291 @@ export interface components {
                 section: number;
                 key: string;
                 title: string;
+                /** @description true: cada ### de la división es una subsección numerada (N.1, N.2…) con ancla #<key>-<n> (ADR-030, enmienda 10). */
+                subsections?: boolean;
             }[];
+            /** @description BuildCards (§1): lo que construyes con la ficha, en tarjetas numeradas (enmienda 9). */
+            build_cards?: {
+                title: string;
+                items: {
+                    title: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    text: string;
+                }[];
+            };
+            /** @description LawLadder (§2): pregunta, lo que se espera y dónde se anota en el registro (enmienda 9). */
+            law_ladder?: {
+                headers: string[];
+                rows: {
+                    question: string;
+                    principle: string;
+                    cites?: string[];
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    expected: string;
+                    /** @description Opcional (enmienda 11): interpretación separada de la paráfrasis, con su rótulo en el texto. Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    interpretation?: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    record: string;
+                    risk?: boolean;
+                }[];
+            };
+            /** @description RegisterFields (§2): campos del registro, de dónde viene cada uno y la hoja del documento propuesto (enmienda 9). */
+            register_fields?: {
+                title: string;
+                /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                intro: string;
+                legend: {
+                    norm: {
+                        title: string;
+                        text: string;
+                    };
+                    proposal: {
+                        title: string;
+                        text: string;
+                    };
+                    document: {
+                        title: string;
+                        action: string;
+                    };
+                };
+                case_label: string;
+                state_label: string;
+                counters: {
+                    complete: string;
+                    pending: string;
+                    review: string;
+                };
+                headers: string[];
+                literal: {
+                    law_source: string;
+                    law_intro: string;
+                    /** @description Texto literal del art. 14 ter por letra. */
+                    law: {
+                        [key: string]: string;
+                    };
+                    decree_source: string;
+                    decree_intro: string;
+                    /** @description Texto literal del Decreto 662, art. 3 letra d), por contenido. */
+                    decree: {
+                        [key: string]: string;
+                    };
+                    decree_note: string;
+                    art_49c: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    art_49c_link: string;
+                };
+                fields: {
+                    /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
+                    id: string;
+                    key: string;
+                    name: string;
+                    why: string;
+                    code: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    check: string;
+                    limit: string;
+                    sheet_section: string;
+                    law_letter?: string;
+                    decree?: string;
+                    /** @description Fragmento del art. 49 letra c que se marca en el modal. */
+                    art_49c?: string;
+                    proposal?: string;
+                    proposal_label?: string;
+                }[];
+                platform: {
+                    title: string;
+                    code: string;
+                    check: string;
+                    limit: string;
+                    example: string;
+                };
+                labels: {
+                    unevaluated: string;
+                    sheet_pending: string;
+                    /** @description Plantilla con {n} y {total}. */
+                    live: string;
+                    empty: string;
+                    close: string;
+                    /** @description Plantilla con {name}. */
+                    norm_button: string;
+                    /** @description Plantilla con {name}. */
+                    proposal_button: string;
+                    proposal_suffix: string;
+                    /** @description Plantilla con {letter}. */
+                    law_tab: string;
+                    /** @description Plantilla con {roman}. */
+                    decree_tab: string;
+                };
+                sheet: {
+                    kicker: string;
+                    sections: string[];
+                    responsible: {
+                        label: string;
+                        value: string;
+                    };
+                    delegate: {
+                        label: string;
+                        value: string;
+                    };
+                    print: string;
+                    preview: string;
+                    /** @description Plantilla con {code}, {version}, {date} y {case}. */
+                    footer: string;
+                };
+                /** @description Lo escribe scripts/generators/inventory_views.py desde el inventario.py de la ficha; no se edita a mano. */
+                cases: {
+                    key: string;
+                    name: string;
+                    states: {
+                        [key: string]: {
+                            values: {
+                                [key: string]: string | null;
+                            };
+                            status: {
+                                [key: string]: "ok" | "pending" | "review";
+                            };
+                            sheet: {
+                                code: string;
+                                version: string;
+                                /** @enum {unknown} */
+                                state: "Vigente" | "En revisión" | "Borrador";
+                                title: string;
+                                /** @description null: sin evaluar. */
+                                territory: string | null;
+                                note?: string;
+                                sections: {
+                                    title: string;
+                                    rows: {
+                                        label: string;
+                                        /** @description null: sin evaluar. */
+                                        value?: string | null;
+                                        /** @description Línea para completar a mano. */
+                                        blank?: boolean;
+                                        /** @description Campo de register_fields que la fila muestra (paridad tabla ↔ hoja). */
+                                        field?: string;
+                                    }[];
+                                }[];
+                            };
+                        };
+                    };
+                }[];
+            };
+            /** @description ActivityExplorer (§3): las cuatro piezas de una actividad con los datos del código (enmienda 9). */
+            activity_explorer?: {
+                kinds: {
+                    kicker: string;
+                    question: string;
+                    text: string;
+                    /** @description Caja resaltada con contorno de acento (ADR-030, enmienda 9). */
+                    highlight?: boolean;
+                }[];
+                /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                lead?: string;
+                /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                intro: string;
+                asset: string;
+                rows: {
+                    activity: {
+                        title: string;
+                        detail?: string;
+                    };
+                    asset: {
+                        title: string;
+                        detail?: string;
+                    };
+                    consumer: {
+                        title: string;
+                        detail?: string;
+                    };
+                    evidence: {
+                        title: string;
+                        detail?: string;
+                    };
+                    result: {
+                        title: string;
+                        detail?: string;
+                    };
+                };
+                labels: {
+                    pending: string;
+                    needs: string;
+                    read: string;
+                    account: string;
+                    no_fields: string;
+                    gaps_one: string;
+                    gaps_many: string;
+                };
+                /** @description Lo escribe scripts/generators/inventory_views.py desde el inventario.py de la ficha; no se edita a mano. */
+                activities: {
+                    key: string;
+                    name: string;
+                    purpose: string;
+                    facts: {
+                        label: string;
+                        /** @description null: sin evaluar. */
+                        value: string | null;
+                    }[];
+                    fields: string[];
+                    consumer: string;
+                    account: string;
+                    read: {
+                        column: string;
+                        /** @enum {unknown} */
+                        state: "needed" | "extra" | "unevaluated";
+                    }[];
+                    evidence: string;
+                    evidence_ok: boolean;
+                    gaps: string[];
+                    ok: string;
+                }[];
+            };
+            /** @description CaseCompare (§3 · Problema): el mismo pedido sin y con inventario (enmienda 9). */
+            case_compare?: {
+                /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                lead?: string;
+                request: {
+                    kicker: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    text: string;
+                };
+                headers: string[];
+                rows: {
+                    label: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    without: string;
+                    /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                    with: string;
+                }[];
+            };
+            /** @description CycleLanes (§4 · Cómo funciona): pasos en dos tiempos con caso, evidencia y lo que no demuestra (enmienda 9). */
+            cycle_lanes?: {
+                /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                intro?: string;
+                labels: {
+                    case: string;
+                    evidence: string;
+                    limit: string;
+                };
+                lanes: {
+                    title: string;
+                    lead: string;
+                    steps: {
+                        /** @description Id del elemento, destino de un ancla (ADR-030, enmienda 2). */
+                        id?: string;
+                        number: string;
+                        title: string;
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                        text: string;
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                        case: string;
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                        evidence: string;
+                        /** @description Texto con Markdown en línea: [rótulo](https://…), **negrita**, *cursiva*, `código`. */
+                        limit: string;
+                    }[];
+                }[];
+                loop: string;
+            };
         };
         /** @description Anexo de la ficha (`## Anexo · Título`, ADR-029), en Markdown. */
         Annex: {

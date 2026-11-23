@@ -5,6 +5,7 @@ import { anchorAttrs } from "@/lib/anchorAttrs";
 
 import { RichText } from "./RichText";
 import "./ficha-blocks.css";
+import "./inventory-views.css";
 import { withBasePath } from "@/lib/basePath";
 
 type SourceLink = { label?: string; href: string };
@@ -86,15 +87,18 @@ function linkedTitle(source: CitationSource, linkTitles: boolean): boolean {
 export function SourcesGrouped({
   heading,
   linkTitles = false,
+  legend,
   groups,
 }: {
   heading?: string;
   linkTitles?: boolean;
+  legend?: string;
   groups: { title: string; layout?: "list" | "providers"; sources: SourceItem[] }[];
 }) {
   return (
     <section className={linkTitles ? "ficha-block sources is-linked" : "ficha-block sources"}>
       {heading ? <h3 className="sources-heading">{heading}</h3> : null}
+      {legend ? <p className="sources-legend">{legend}</p> : null}
       {groups.map((group) => {
         const layout = group.layout ?? "list";
         const pages = group.sources.filter((source): source is PageSource => source.kind === "page" && "page" in source);

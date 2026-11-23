@@ -219,3 +219,32 @@ Las vistas dejan de decidir por slug o por el texto visible de un encabezado. Lo
 - Quien no los declara no cambia: chile-data-protection sigue con el título sin enlace y el dominio debajo.
 - **`views.reading.break_identifiers`** (opcional, booleano): con `true`, los nombres en código del ejemplo de `control_evidence` y de la tabla de `code_guide` llevan una oportunidad de corte tras cada guion bajo (`<wbr>`), para partirse ahí y no salirse de su tarjeta. Sin él no se agrega ninguna: chile no cambia.
 - **`views.open_questions.items[].tags`** pasa a ser opcional: una pregunta puede no llevar etiquetas; si las lleva, la lista no está vacía.
+
+## Enmienda 9 (2026-11-17): vistas del Inventario de actividades de tratamiento
+
+Aprobada por el dueño el 2026-11-17. Es retrocompatible: chile-data-protection y pii-identification validan sin cambios.
+
+- **Vistas extendidas** (todo lo nuevo es opcional):
+  - `requirement_to_data`: `governance.items[].highlight` y `data.stages[].highlight` (caja con contorno de acento), y `data.banners` (varias franjas punteadas) como alternativa a `data.banner`; se declara una de las dos.
+  - `control_evidence`: `example` pasa a ser opcional; un ítem de paso puede ser `{pill, text}`, con la pastilla que distingue la pista («Lo nuevo», «Lo que ya corre»); `decide.outcomes[].tone` admite `warn` (alerta ámbar).
+  - `code_guide`: `exit_codes_label` (la línea «escenario → código», armada con `scenarios`), `lead_more` (párrafos tras «Qué hace»), `rules.title`, `rules.summary` (con `{rows}` y `{total}` calculados), `rules.items[].count` (×N), `not_covered.table` y `scenarios.items[].fixes` (hallazgo → corrección).
+  - `rules.disclosure` y `scenarios.disclosure` (`open` o `closed`): el bloque se dibuja con el desplegable reutilizable «Ver detalle / Ocultar» (`<button aria-expanded aria-controls>` y una región con `hidden`; el título también abre y cierra).
+  - `cloud_compare.rows[].span`: `{title, text}`, una celda para las tres nubes cuando dicen lo mismo; reemplaza a `gcp`, `aws` y `azure` en esa fila.
+  - `sources_grouped.legend`: leyenda de los niveles de fuente.
+  - `notes.*.tone` admite `key` (idea central).
+- **Vistas nuevas:** `build_cards` (§1), `law_ladder` y `register_fields` (§2), `activity_explorer` (Qué es), `case_compare` (Problema) y `cycle_lanes` (Cómo funciona).
+- **Datos generados:** `register_fields.cases` y `activity_explorer.activities` los escribe `scripts/generators/inventory_views.py` desde el `inventario.py` de la ficha. Un test vuelve a generarlos y falla si el frontmatter no coincide.
+
+## Enmienda 10 (2026-11-18): subsecciones numeradas en una división
+
+- **`views.section_splits[].subsections`** (opcional, booleano): con `true`, cada `###` del cuerpo de esa división es una subsección numerada con el número visible de la sección (N.1, N.2…) y el ancla `#<key>-<n>`.
+- Todas las subsecciones usan el mismo encabezado, el `###` de la sección con su número antepuesto; un componente de la división ya no dibuja su propio título (`register_fields.title` queda solo como nombre de la región).
+- **Validador:** la división declarada tiene al menos un `###`, y las anclas `<key>-<n>` son válidas para `href`.
+- Sin la clave, nada cambia: chile-data-protection y pii-identification no la declaran.
+- **`code_guide.rules` y `code_guide.scenarios`** pasan a ser opcionales: una ficha puede no mostrar la tabla de reglas ni los escenarios (el Inventario los retiró el 2026-11-18). La línea de `exit_codes_label` solo se dibuja si hay `scenarios`. La madre y pii los siguen declarando.
+
+## Enmienda 11 (2026-11-18): interpretación aparte en la escalera de la ley
+
+- **`views.law_ladder.rows[].interpretation`** (opcional, texto con Markdown en línea): una interpretación que no es paráfrasis de la norma va en una línea propia debajo de «Lo que se espera», separada por una línea punteada. El rótulo visible viene en el propio texto (por ejemplo, `**Interpretación:** …`); el componente no agrega texto.
+- Motivo: la revisión independiente del Inventario (2026-11-18) pidió distinguir la paráfrasis de la ley de la interpretación de la ficha. La columna se rotula «Lo que se espera (paráfrasis)» desde `headers`, sin cambio de contrato.
+- Sin la clave, nada cambia: ninguna otra ficha usa `law_ladder`.
