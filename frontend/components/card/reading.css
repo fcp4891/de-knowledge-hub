@@ -988,7 +988,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr));
   align-items: stretch;
-  gap: 8px;
+  gap: 10px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1006,28 +1006,52 @@
   line-height: 1.35;
 }
 
-.legal-foundations .lf-principles a.lf-principle-card {
+/* Tarjeta de principio: letra del art. 3 y nombre. Con ficha disponible es un enlace (escala de Especialización, ojo y
+   tooltip); sin ficha disponible queda como texto, sin enlace ni chip de estado. */
+.legal-foundations .lf-principles .lf-principle-card {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
   min-height: calc(2 * 1.35 * var(--text-base) + 24px);
   margin: 0;
   padding: 12px 14px;
-  border: 1px solid var(--band-especializacion-200);
   border-radius: 12px;
-  background: var(--band-especializacion-100);
-  color: var(--ink);
   font-family: var(--font-ui), system-ui, sans-serif;
   font-size: var(--text-base);
   font-weight: 500;
   line-height: 1.35;
   text-align: left;
+}
+
+.legal-foundations .lf-principles a.lf-principle-card {
+  border: 1px solid var(--band-especializacion-200);
+  background: var(--band-especializacion-100);
+  color: var(--ink);
   text-decoration: none;
   cursor: pointer;
   transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.legal-foundations .lf-principles .lf-principle-card.is-static {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink-2);
+}
+
+.lf-principle-letter {
+  flex: none;
+  min-width: 1.6em;
+  color: var(--band-especializacion-800);
+  font-size: var(--text-sm);
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.lf-principle-card.is-static .lf-principle-letter {
+  color: var(--ink-muted);
 }
 
 .legal-foundations .lf-principles a.lf-principle-card:hover,
@@ -1116,6 +1140,14 @@
 
   .lf-principle-eye {
     color: var(--band-especializacion-100);
+  }
+
+  .lf-principle-letter {
+    color: var(--band-especializacion-100);
+  }
+
+  .lf-principle-card.is-static .lf-principle-letter {
+    color: var(--ink-muted);
   }
 
   .legal-foundations .lf-principles a.lf-principle-card {

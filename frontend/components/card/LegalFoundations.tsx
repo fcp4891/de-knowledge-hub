@@ -12,7 +12,6 @@ import {
   type ChileGroup,
   type ChilePrinciple,
 } from "@/lib/chileLegalCatalog";
-import { AvailabilityMark } from "@/components/availability/AvailabilityMark";
 import { FichaAnchor, useFichaLink } from "@/components/availability/FichaLink";
 import { bcnLinkText, legalRowId } from "@/lib/legal";
 import { principleActivation, principleAriaLabel } from "@/lib/principleCards";
@@ -425,13 +424,15 @@ function PrincipleCard({
   const tipId = `lf-tip-${index}`;
   const child = CHILE_CHILD_TITLES[principle.slug] ?? principle.slug;
   const name = principle.label.replace(/^[a-h]\)\s*/i, "");
+  const letter = `${"abcdefgh"[index] ?? ""})`;
   const unavailable = useFichaLink(`/concepts/${principle.slug}/`);
   if (unavailable) {
+    // Ficha aún no disponible: el principio queda como texto, sin enlace ni chip de estado.
     return (
       <li className="lf-principle">
-        <span className="lf-principle-card" aria-disabled="true">
+        <span className="lf-principle-card is-static">
+          <span className="lf-principle-letter">{letter}</span>
           <span className="lf-principle-label">{name}</span>
-          <AvailabilityMark compact status={unavailable.status} label={unavailable.label} />
         </span>
       </li>
     );
@@ -483,6 +484,9 @@ function PrincipleCard({
           }
         }}
       >
+        <span className="lf-principle-letter" aria-hidden="true">
+          {letter}
+        </span>
         <span className="lf-principle-label">{name}</span>
         <PrincipleEye />
       </a>
