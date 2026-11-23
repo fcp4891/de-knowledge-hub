@@ -39,38 +39,38 @@ legal_basis:
 sources:
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
-    accessed: 2026-11-09
-    label: versión desde el 2026-12-01
+    accessed: 2026-11-23
+    label: versión consolidada
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES · Con Vigencia Diferida por Fecha - 01-DIC-2026"
-    note: "Ley 19.628 en la versión «Con Vigencia Diferida por Fecha» desde 2026-12-01 (texto con las modificaciones de la Ley 21.719), consultada el 2026-10-25 y de nuevo el 2026-10-28, sin cambios; se volvió a consultar el 2026-11-09 en su versión «Con Vigencia Diferida por Fecha - 01-DIC-2026». Art. 1 bis: se aplica al responsable o mandatario establecido en Chile, al mandatario que trata a nombre de un responsable en Chile y a quien, sin estar en Chile, ofrece bienes o servicios a titulares en Chile o monitorea su comportamiento. Art. 2: definiciones, entre ellas f) dato personal, g) sensibles (incluida la situación socioeconómica), k) anonimización, l) seudonimización, v) cesión, w) elaboración de perfiles y x) encargado. Art. 3: principios a) licitud y lealtad (el responsable acredita la licitud) a h) confidencialidad. Arts. 4 a 11: derechos y procedimiento. Art. 8 bis: decisiones automatizadas. Arts. 12 y 13: bases de licitud; el responsable prueba la licitud. Art. 14 a 14 septies: obligaciones, secreto, transparencia, diseño y por defecto, seguridad, vulneraciones y estándares diferenciados. Arts. 15 y 15 bis: cesión y encargo. Art. 15 ter: evaluación de impacto. Arts. 16 a 16 sexies: sensibles, salud, biométricos, niños, niñas y adolescentes, investigación y geolocalización. Arts. 27 y 28: transferencia internacional. Arts. 34 bis a 35: infracciones y sanciones. Art. 49: modelo de prevención voluntario."
+    note: "Ley 19.628 en la versión consolidada de la BCN «Con Vigencia Diferida por Fecha» (texto con las modificaciones de la Ley 21.719), consultada el 2026-10-25, el 2026-10-28, el 2026-11-09 y el 2026-11-23, sin cambios en el texto. La BCN la rotula «Con Vigencia Diferida por Fecha - 01-DIC-2026», la fecha original; la vigencia es el 2027-10-15 según la Ley 21.855, y al 2026-11-23 la BCN no había creado una versión nueva. Art. 1 bis: se aplica al responsable o mandatario establecido en Chile, al mandatario que trata a nombre de un responsable en Chile y a quien, sin estar en Chile, ofrece bienes o servicios a titulares en Chile o monitorea su comportamiento. Art. 2: definiciones, entre ellas f) dato personal, g) sensibles (incluida la situación socioeconómica), k) anonimización, l) seudonimización, v) cesión, w) elaboración de perfiles y x) encargado. Art. 3: principios a) licitud y lealtad (el responsable acredita la licitud) a h) confidencialidad. Arts. 4 a 11: derechos y procedimiento. Art. 8 bis: decisiones automatizadas. Arts. 12 y 13: bases de licitud; el responsable prueba la licitud. Art. 14 a 14 septies: obligaciones, secreto, transparencia, diseño y por defecto, seguridad, vulneraciones y estándares diferenciados. Arts. 15 y 15 bis: cesión y encargo. Art. 15 ter: evaluación de impacto. Arts. 16 a 16 sexies: sensibles, salud, biométricos, niños, niñas y adolescentes, investigación y geolocalización. Arts. 27 y 28: transferencia internacional. Arts. 34 bis a 35: infracciones y sanciones. Art. 49: modelo de prevención voluntario."
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=141599
-    accessed: 2026-11-09
+    accessed: 2026-11-23
     label: norma
     page_title: "Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES"
-    note: "Ficha de la Ley 19.628 en BCN, enlace general de la norma usado en Fuentes. El texto con las modificaciones de la Ley 21.719 es la versión «Con Vigencia Diferida por Fecha» que citan los artículos de la ficha (idVersion=2026-12-01); el estado de esa fecha está en el Contexto normativo."
+    note: "Ficha de la Ley 19.628 en BCN, enlace general de la norma usado en Fuentes. El texto con las modificaciones de la Ley 21.719 es la versión «Con Vigencia Diferida por Fecha» que citan los artículos de la ficha (idVersion=2026-12-01); la vigencia, el 2027-10-15 según la Ley 21.855, está en el Contexto normativo. Consultada de nuevo el 2026-11-23."
   - source: senado-tramitacion
     url: https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07
-    accessed: 2026-11-22
+    accessed: 2026-11-23
     page_title: "Boletín 18623-07"
     label: tramitación
-    note: "Boletín 18623-07, «Modifica la ley N° 21.719 [...] en el sentido que indica», consultado el 2026-11-22 con el servicio de tramitación del Senado (https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=18623): el Senado lo aprobó en general y en particular el 2026-10-28; la Cámara de Diputados lo aprobó en general y en particular sin modificaciones el 2026-11-17; ese día salió el oficio de ley al Ejecutivo (oficio 378-26). Etapa: «Trámite de aprobacion presidencial (Senado)»; subetapa: «Ingreso de observaciones»; estado: en tramitación; sin número de ley ni publicación en el Diario Oficial."
+    note: "Historia legislativa de la Ley 21.855. Boletín 18623-07, «Modifica la ley N° 21.719 [...] en el sentido que indica», consultado el 2026-11-23 con el servicio de tramitación del Senado (https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=18623): etapa «Tramitación terminada», estado «Publicado», «Ley N° 21.855», publicada en el Diario Oficial el «23/11/2026». Trámites: el Senado lo aprobó en general y en particular el 2026-10-28; la Cámara de Diputados lo aprobó en general y en particular sin modificaciones el 2026-11-17; ese día salió el oficio de ley al Ejecutivo (oficio 378-26)."
   - source: senado-tramitacion
     url: https://tramitacion.senado.cl/appsenado/index.php?mo=tramitacion&ac=getDocto&iddocto=19307&tipodoc=mensaje_mocion
-    accessed: 2026-11-22
+    accessed: 2026-11-23
     page_title: "Boletín N° 18.623-07"
     label: mensaje
-    note: "Mensaje N° 110-374 del 31 de agosto de 2026 (boletín 18.623-07), en el Senado: el numeral 2 del artículo único reemplaza, en el artículo primero transitorio de la Ley 21.719, la frase «día primero del mes vigésimo cuarto posterior a la publicación de esta ley en el Diario Oficial» por «1 de diciembre de 2027»; también aumenta el Consejo Directivo de la Agencia de tres a cinco consejeros y elimina la limitación a empresas de menor tamaño del artículo sexto transitorio (no incluido en el texto despachado). Es un proyecto, no una ley."
+    note: "Mensaje N° 110-374 del 31 de agosto de 2026 (boletín 18.623-07), en el Senado: el numeral 2 del artículo único reemplaza, en el artículo primero transitorio de la Ley 21.719, la frase «día primero del mes vigésimo cuarto posterior a la publicación de esta ley en el Diario Oficial» por «1 de diciembre de 2027»; también aumenta el Consejo Directivo de la Agencia de tres a cinco consejeros y elimina la limitación a empresas de menor tamaño del artículo sexto transitorio (no incluido en el texto despachado). Historia legislativa: la Ley 21.855 publicada fija el «15 de octubre de 2027», no el 1 de diciembre de 2027."
   - source: senado-tramitacion
     url: https://tramitacion.senado.cl/appsenado/index.php?mo=tramitacion&ac=getDocto&iddocto=37509&tipodoc=ofic
-    accessed: 2026-11-22
+    accessed: 2026-11-23
     label: oficio de ley al Ejecutivo
-    note: "Oficio 378/SEC/26 del Senado, Valparaíso, 17 de noviembre de 2026, a Su Excelencia el Presidente de la República: el Congreso Nacional aprobó el proyecto (boletín 18.623-07). Artículo único: (1) en el art. 30 quáter, el Consejo Directivo pasa de «tres consejeros» a «cinco consejeros», los consejeros duran seis años sin nueva designación y «El Consejo se renovará parcialmente cada dos años», y en el inciso séptimo «dos consejeros» pasa a «tres consejeros»; (2) en el artículo primero transitorio, la fecha pasa a «15 de octubre de 2027»; (3) en el artículo cuarto transitorio, la primera propuesta al Senado se hace «en un solo acto» y se aprueba con «el voto favorable de dos tercios de los senadores en ejercicio». El artículo único tiene tres numerales: «1. En el artículo 30 quáter…», «2. Sustitúyese, en el artículo primero transitorio…» y «3. En el artículo cuarto transitorio…»; no modifica el artículo sexto transitorio, que el mensaje sí proponía cambiar (su numeral 4). Es un proyecto despachado, no una ley: sin número de ley ni publicación en el Diario Oficial al 2026-11-22."
+    note: "Oficio 378/SEC/26 del Senado, Valparaíso, 17 de noviembre de 2026, a Su Excelencia el Presidente de la República: el Congreso Nacional aprobó el proyecto (boletín 18.623-07). Artículo único: (1) en el art. 30 quáter, el Consejo Directivo pasa de «tres consejeros» a «cinco consejeros», los consejeros duran seis años sin nueva designación y «El Consejo se renovará parcialmente cada dos años», y en el inciso séptimo «dos consejeros» pasa a «tres consejeros»; (2) en el artículo primero transitorio, la fecha pasa a «15 de octubre de 2027»; (3) en el artículo cuarto transitorio, la primera propuesta al Senado se hace «en un solo acto» y se aprueba con «el voto favorable de dos tercios de los senadores en ejercicio». El artículo único tiene tres numerales: «1. En el artículo 30 quáter…», «2. Sustitúyese, en el artículo primero transitorio…» y «3. En el artículo cuarto transitorio…»; no modifica el artículo sexto transitorio, que el mensaje sí proponía cambiar (su numeral 4). Su texto es el que se publicó como Ley 21.855 el 2026-11-23 (comparado palabra por palabra el 2026-11-23: idéntico)."
   - source: bcn-leychile
     url: https://www.bcn.cl/leychile/navegar?idNorma=1227971
-    accessed: 2026-11-09
+    accessed: 2026-11-23
     page_title: "Decreto 662 APRUEBA REGLAMENTO QUE REGULA LOS REQUISITOS, MODALIDADES Y PROCEDIMIENTOS PARA LA IMPLEMENTACIÓN, CERTIFICACIÓN, REGISTRO Y SUPERVISIÓN DE LOS MODELOS DE PREVENCIÓN DE INFRACCIONES A QUE SE REFIERE EL ARTÍCULO 49 QUE INCORPORA LA LEY N° 21.719 A LA LEY N° 19.628"
-    note: "Decreto 662 del Ministerio de Hacienda, promulgado el 2025-06-13 y publicado el 2026-09-09: reglamento de los requisitos, modalidades y procedimientos para implementar, certificar, registrar y supervisar los modelos de prevención de infracciones del art. 49 de la Ley 19.628."
+    note: "Decreto 662 del Ministerio de Hacienda, promulgado el 2025-06-13 y publicado el 2026-09-09: reglamento de los requisitos, modalidades y procedimientos para implementar, certificar, registrar y supervisar los modelos de prevención de infracciones del art. 49 de la Ley 19.628. Releído el 2026-11-23: su considerando 3 dice que la Ley 21.719 «entrará en vigencia el día 1° de diciembre de 2026», la fecha original, sustituida por la Ley 21.855; el reglamento no tiene artículos transitorios con fechas."
   - source: gcp-sensitive-data-protection-docs
     url: https://docs.cloud.google.com/sensitive-data-protection/docs/sensitive-data-protection-overview
     accessed: 2026-11-07
@@ -128,10 +128,22 @@ sources:
     note: "Ficha de venta del INN (norma de pago): título «NCh-ISO IEC 27001:2023», estado «Vigente», fecha de publicación «30/08/2023», en español. La página no indica la edición ni qué norma ISO adopta."
   - source: diario-oficial-cl
     url: https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
-    accessed: 2026-11-09
+    accessed: 2026-11-23
     page_title: "LEY NÚM. 21.719 REGULA LA PROTECCIÓN Y EL TRATAMIENTO DE LOS DATOS PERSONALES Y CREA LA AGENCIA DE PROTECCIÓN DE DATOS PERSONALES"
     label: Diario Oficial
-    note: "Ley 21.719 publicada en el Diario Oficial núm. 44.023, viernes 13 de diciembre de 2024 (CVE 2583630), consultada el 2026-11-09. Texto publicado de la ley modificatoria: art. 2 letras g), k), l), n), o) y x) de la Ley 19.628 (pág. 2 y siguientes), art. 16 quáter, arts. 34 bis a 36 (infracciones, sanciones, atenuantes y agravantes; págs. 23 a 25) y art. 51."
+    note: "Ley 21.719 publicada en el Diario Oficial núm. 44.023, viernes 13 de diciembre de 2024 (CVE 2583630), consultada el 2026-11-09 y de nuevo el 2026-11-23. Texto publicado de la ley modificatoria: art. 2 letras g), k), l), n), o) y x) de la Ley 19.628 (pág. 2 y siguientes), art. 16 quáter, arts. 34 bis a 36 (infracciones, sanciones, atenuantes y agravantes; págs. 23 a 25) y art. 51."
+  - source: diario-oficial-cl
+    url: https://www.diariooficial.interior.gob.cl/publicaciones/2026/11/23/44606/01/2907953.pdf
+    accessed: 2026-11-23
+    page_title: "LEY NÚM. 21.855 MODIFICA LA LEY N° 21.719, QUE REGULA LA PROTECCIÓN Y EL TRATAMIENTO DE LOS DATOS PERSONALES Y CREA LA AGENCIA DE PROTECCIÓN DE DATOS PERSONALES, EN EL SENTIDO QUE INDICA"
+    label: Ley 21.855
+    note: "Ley 21.855 publicada en el Diario Oficial núm. 44.606, lunes 23 de noviembre de 2026 (CVE 2907953), promulgada el 19 de noviembre de 2026; leída completa el 2026-11-23. Artículo único: (1) en el artículo 30 quáter contenido en el numeral 14) del artículo primero de la Ley 21.719, «tres consejeros» por «cinco consejeros», el inciso quinto pasa a «Los consejeros durarán seis años en sus cargos y no podrán ser designados para un nuevo período. El Consejo se renovará parcialmente cada dos años.», y en el inciso séptimo «dos consejeros» por «tres consejeros»; (2) en el artículo primero transitorio, la frase «día primero del mes vigésimo cuarto posterior a la publicación de esta ley en el Diario Oficial» por «15 de octubre de 2027»; (3) cambios en el artículo cuarto transitorio (primera designación del Consejo). Su texto es idéntico al oficio 378-26."
+  - source: bcn-leychile
+    url: https://www.bcn.cl/leychile/navegar?idNorma=1230520
+    accessed: 2026-11-23
+    page_title: "Ley 21855 MODIFICA LA LEY N° 21.719, QUE REGULA LA PROTECCIÓN Y EL TRATAMIENTO DE LOS DATOS PERSONALES Y CREA LA AGENCIA DE PROTECCIÓN DE DATOS PERSONALES, EN EL SENTIDO QUE INDICA"
+    label: BCN
+    note: "Ficha de la Ley 21.855 en BCN (idNorma 1230520), consultada el 2026-11-23: promulgación 2026-11-19, publicación 2026-11-23. Al 2026-11-23 la BCN no había incorporado la modificación al texto de la Ley 21.719 ni creado una versión nueva de la Ley 19.628."
   - source: eur-lex
     url: https://eur-lex.europa.eu/eli/reg/2016/679/oj
     accessed: 2026-11-09
@@ -221,34 +233,30 @@ views:
   vigencia_timeline:
     items:
     - date: '2024-12-13'
-      title: Publicación de la ley
+      title: Publicación de la Ley 21.719
       icon: calendar
       state: past
       detail: Se publica la Ley 21.719, que moderniza la regulación sobre protección de datos personales en Chile.
       links:
       - label: Diario Oficial
         href: https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
-    - date: '2026-11-17'
-      title: Avance legislativo
+    - date: '2026-11-23'
+      title: Publicación de la Ley 21.855
       icon: institution
       state: past
-      detail: Despachado al Presidente de la República el 17 de noviembre de 2026 (oficio 378-26), tras la aprobación del Senado (28 de octubre) y de la Cámara de Diputados sin modificaciones (17 de noviembre). Pendiente de promulgación y publicación en el Diario Oficial.
+      detail: Sustituye la fecha de vigencia de la Ley 21.719 por el 15 de octubre de 2027. El 1 de diciembre de 2026 queda como fecha original, sustituida por la Ley 21.855.
       links:
-      - label: Boletín 18.623-07
-        href: https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07
-    - date: '2026-12-01'
+      - label: Diario Oficial
+        href: https://www.diariooficial.interior.gob.cl/publicaciones/2026/11/23/44606/01/2907953.pdf
+      - label: BCN
+        href: https://www.bcn.cl/leychile/navegar?idNorma=1230520
+    - date: '2027-10-15'
       title: Entrada en vigencia
       icon: calendar
       state: current
-      detail: Fecha que fija el texto publicado de la Ley 21.719; sigue rigiendo mientras no se publique la modificación.
-      note: Fecha legal indicada
-    - date: '2027-10-15'
-      title: Postergación despachada
-      icon: calendar
-      state: proposed
-      detail: Fecha del texto despachado al Presidente; rige solo si se promulga y se publica como ley. El mensaje proponía el 1 de diciembre de 2027.
-      note: Pendiente de promulgación y publicación
-    as_of: 'Estado de la tramitación: 22 de noviembre de 2026 · Fuentes: BCN y Senado.'
+      detail: Desde esta fecha rigen las modificaciones de la Ley 21.719 a la Ley 19.628, según su artículo primero transitorio en el texto que fijó la Ley 21.855.
+      note: Fecha legal vigente
+    as_of: 'Estado al 23 de noviembre de 2026 · Fuentes: Diario Oficial, BCN y Senado.'
   treatment_map:
     lead: 'Para la ley, **tratamiento** es cualquier operación que permita recolectar, procesar, almacenar, comunicar, transmitir o utilizar datos personales ([art.
       2 letra o](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf)). En una plataforma de datos, esos verbos se ven así:'
@@ -1173,25 +1181,34 @@ views:
     - title: Normativa chilena
       layout: list
       sources:
-      - title: Ley 19.628 · versión con vigencia diferida (2026-12-01)
+      - title: Ley 19.628 · versión consolidada de la BCN con vigencia diferida
         urls:
         - https://www.bcn.cl/leychile/navegar?idNorma=141599
         - https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
         publisher: BCN
-        why: Texto consolidado con las modificaciones de la Ley 21.719; el estado de su fecha de vigencia está en Contexto normativo.
+        why: 'Texto consolidado con las modificaciones de la Ley 21.719; vigencia: 15-10-2027 según la Ley 21.855. La BCN aún publica esta versión con
+          la fecha original, 2026-12-01.'
       - title: Ley 21.719 · Diario Oficial, 2024-12-13
         urls:
         - https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf
         publisher: Diario Oficial
         why: 'Fuente de las citas de artículos de la ficha: arts. 2, 3, 4, 7, 14 bis a 14 sexies, 15 bis, 15 ter, 16 quáter, 27 a 29, 34 a 37, 49 a 51 y artículo
-          primero transitorio (vigencia).'
-      - title: Boletín 18.623-07 · proyecto que posterga la vigencia
+          primero transitorio (vigencia, en su texto original).'
+      - title: Ley 21.855 · Diario Oficial, 2026-11-23
+        urls:
+        - https://www.diariooficial.interior.gob.cl/publicaciones/2026/11/23/44606/01/2907953.pdf
+        - https://www.bcn.cl/leychile/navegar?idNorma=1230520
+        publisher: Diario Oficial y BCN
+        why: 'Sustituye la fecha de vigencia de la Ley 21.719 por el 15 de octubre de 2027 (artículo primero transitorio) y cambia la composición del Consejo
+          Directivo de la Agencia. CVE 2907953; BCN idNorma 1230520.'
+      - title: Boletín 18.623-07 · historia legislativa
         urls:
         - https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18623-07
         - https://tramitacion.senado.cl/appsenado/index.php?mo=tramitacion&ac=getDocto&iddocto=19307&tipodoc=mensaje_mocion
         - https://tramitacion.senado.cl/appsenado/index.php?mo=tramitacion&ac=getDocto&iddocto=37509&tipodoc=ofic
         publisher: Senado
-        why: Estado del proyecto, mensaje y texto despachado al Presidente (oficio 378-26).
+        why: 'Tramitación, mensaje y oficio de ley al Ejecutivo (378-26) de la Ley 21.855. El texto publicado es idéntico al oficio; el mensaje proponía
+          el 1 de diciembre de 2027.'
       - title: Decreto 662 · reglamento del modelo de prevención
         urls:
         - https://www.bcn.cl/leychile/navegar?idNorma=1227971
@@ -1290,9 +1307,8 @@ views:
         why: Auditar accesos a datos
         provider: Azure
 created_at: 2026-10-21
-updated_at: 2026-11-22
-last_verified: 2026-10-28
-owner_approved_at: 2026-11-22
+updated_at: 2026-11-23
+last_verified: 2026-11-23
 verification_status: review_required
 availability: available
 ---
@@ -1313,7 +1329,7 @@ El propósito es desarrollar el criterio técnico necesario para identificar rie
 
 <!-- split: context -->
 
-La Ley 21.719 reescribe la Ley 19.628. Según el texto publicado, sus modificaciones rigen desde el 1 de diciembre de 2026. Al 22 de noviembre de 2026, el Congreso despachó al Presidente de la República (17 de noviembre de 2026) el proyecto del boletín 18.623-07, que fija una nueva fecha: el 15 de octubre de 2027. Está pendiente de promulgación y publicación en el Diario Oficial; mientras no se publique, rige la fecha del texto publicado.
+La Ley 21.719 reescribe la Ley 19.628, y sus modificaciones rigen desde el 15 de octubre de 2027. Esa fecha la fijó la Ley 21.855, publicada en el Diario Oficial el 23 de noviembre de 2026, que sustituyó en el artículo primero transitorio de la Ley 21.719 la frase «día primero del mes vigésimo cuarto posterior a la publicación de esta ley en el Diario Oficial» por «15 de octubre de 2027». El 1 de diciembre de 2026 es la fecha original, sustituida por la Ley 21.855. La misma ley cambia el Consejo Directivo de la Agencia: reemplaza «tres consejeros» por «cinco consejeros», dispone que «El Consejo se renovará parcialmente cada dos años» y, en el inciso séptimo de la norma que lo regula, reemplaza «dos consejeros» por «tres consejeros».
 
 <!-- view: vigencia_timeline -->
 
@@ -1693,7 +1709,7 @@ CI: rechazada (1)
 
 ## 20. Fuentes
 
-- Normativa chilena (Diario Oficial, BCN y Senado): Ley 19.628 en su versión con vigencia diferida (2026-12-01), Ley 21.719 (texto publicado en el Diario Oficial), boletín 18.623-07 (tramitación, mensaje y oficio de ley al Ejecutivo) y Decreto 662.
+- Normativa chilena (Diario Oficial, BCN y Senado): Ley 19.628 en la versión consolidada de la BCN con vigencia diferida (vigencia: 15-10-2027 según la Ley 21.855), Ley 21.719 (texto publicado en el Diario Oficial), Ley 21.855 (Diario Oficial y BCN), boletín 18.623-07 (historia legislativa: tramitación, mensaje y oficio de ley al Ejecutivo) y Decreto 662.
 - Marcos de referencia del enfoque (referencia técnica, no legislación): ISO/IEC 27001:2022, NCh-ISO/IEC 27001:2023 (INN), ISO/IEC 27701:2025 y NIST Privacy Framework 1.0; la 1.1 es solo borrador.
 - Legislación comparada: Reglamento (UE) 2016/679 (RGPD), en EUR-Lex.
 - Servicios cloud: Sensitive Data Protection, BigQuery y Cloud Audit Logs (GCP); Amazon Macie, Lake Formation y CloudTrail (AWS); Purview Data Map, Unity Catalog y los registros de diagnóstico de Azure Databricks (Azure).
@@ -1744,6 +1760,7 @@ El detalle de cada fuente está en `sources` del frontmatter; la agrupación, en
 - 2026-11-22: retoques previos a la aprobación. El hito del Senado de la línea de vigencia lleva la fecha del hecho (2026-11-17, despacho al Presidente); la fecha de consulta queda en «Estado de la tramitación». La nota del oficio 378-26 cita sus tres numerales (leído completo): no modifica el artículo sexto transitorio. La nota del mensaje, vuelto a leer completo, aclara «(no incluido en el texto despachado)». Textos pendientes de aprobación del dueño (sin `owner_approved_at`), por decisión del dueño.
 - 2026-11-22: por decisión del dueño, aprobada con lista explícita la redacción del estado legislativo de la Ley 21.719: §2 «Contexto normativo», línea de vigencia con el hito del 2026-11-17, fuentes del Senado y del oficio 378-26, y la tarjeta `cl-ley-21719` (`owner_approved_at: 2026-11-22`). Aprobación parcial: la ficha sigue en `review_required` porque los cambios pendientes desde el 2026-11-06 (vistas de ADR-030, §10, roles, sanciones, art. 16 quáter) no forman parte de esta aprobación (ADR-023). `last_verified` no cambia.
 - 2026-11-22: bloque «Referencia» del enfoque y «Marcos de referencia del enfoque» del §20 corregidos tras una revisión independiente: sin citas a cláusulas ni controles de ISO/IEC 27001 en los pasos 1 a 5 ni en Fuentes (se reemplazan por una nota de compatibilidad rotulada «texto no verificado por el autor»); ISO/IEC 27701:2025 como norma independiente; NIST Privacy Framework 1.0 (enero de 2020) con la 1.1 solo como borrador; NCh-ISO/IEC 27001:2023 (INN) agregada; rótulos «Referencia técnica» y de norma de pago en lugar de «Nivel 1» en el bloque del enfoque. Pendiente de aprobación del dueño. `last_verified` sigue en 2026-10-28: llevarlo al 2026-11-22 exige volver a consultar las citas legales de BCN y del Diario Oficial (ADR-023).
+- 2026-11-23: publicada la Ley 21.855 (Diario Oficial núm. 44.606, CVE 2907953; BCN idNorma 1230520), que sustituye la fecha de vigencia de la Ley 21.719 por el 15 de octubre de 2027 y cambia el Consejo Directivo de la Agencia. Cambian el §2 «Contexto normativo», la línea de vigencia (hitos 2024-12-13, 2026-11-23 y 2027-10-15; el 2026-12-01 queda como fecha original, sustituida), las fuentes (nuevas: Ley 21.855 en el Diario Oficial y en BCN; el boletín 18.623-07 pasa a historia legislativa), los rótulos de la versión de BCN y la tarjeta `cl-ley-21719`. Se volvieron a leer literalmente las citas legales (Ley 19.628 en BCN, su ficha general, Decreto 662, Ley 21.719 en el Diario Oficial, y el mensaje y el oficio del Senado) y `last_verified` pasa a 2026-11-23. Sale el `owner_approved_at` del 2026-11-22: los textos legales nuevos quedan pendientes de aprobación del dueño, por decisión del dueño.
 
 ## Anexo · Catálogo legal por tema
 
