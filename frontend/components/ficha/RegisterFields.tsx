@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import type { Views } from "@/lib/views";
 
+import { DocIcon } from "./DocIcon";
 import { RichText } from "./RichText";
 import "./inventory-views.css";
 
@@ -25,7 +26,7 @@ export function visibleFields(fields: Field[], filter: Filter): Field[] {
   return fields;
 }
 
-function Icon({ name }: { name: "eye" | "bulb" | "doc" | "close" | "print" }) {
+function Icon({ name }: { name: "eye" | "bulb" | "close" | "print" }) {
   const paths: Record<string, ReactNode> = {
     eye: (
       <>
@@ -37,12 +38,6 @@ function Icon({ name }: { name: "eye" | "bulb" | "doc" | "close" | "print" }) {
       <>
         <path d="M9 18h6M10 21h4" />
         <path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z" />
-      </>
-    ),
-    doc: (
-      <>
-        <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z" />
-        <path d="M14 3v5h5M9 13h6M9 17h6" />
       </>
     ),
     close: <path d="M6 6l12 12M18 6 6 18" />,
@@ -178,7 +173,7 @@ export function RegisterFields({ view }: { view: View }) {
         >
           <span className="inv-rg-card-head">
             <span className="inv-rg-icon is-doc">
-              <Icon name="doc" />
+              <DocIcon />
             </span>
             <b>{view.legend.document.title}</b>
           </span>

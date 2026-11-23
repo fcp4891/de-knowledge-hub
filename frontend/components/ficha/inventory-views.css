@@ -179,6 +179,18 @@
   padding-left: 15px;
 }
 
+/* «Registro del documento a proponer»: el icono azul del botón «Documento propuesto», alineado con el rótulo. */
+.inv-ladder-head-doc {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.inv-ladder-head-doc .inv-icon {
+  margin-top: 1px;
+  color: var(--lvl-intermedio-ink);   /* 7,85:1 sobre --surface-muted en claro, 9,66:1 en oscuro */
+}
+
 .inv-ladder-row {
   position: relative;
   border-top: 1px solid var(--border);
@@ -262,6 +274,10 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+.inv-ladder-label.inv-ladder-head-doc {
+  display: flex;
 }
 
 .inv-ladder-row.is-risk {
@@ -409,7 +425,7 @@
 
 .inv-rg-icon.is-doc {
   border: 1px solid var(--ink-muted);
-  color: var(--ink-2);
+  color: var(--lvl-intermedio-ink);   /* azul: 9,09:1 sobre --surface en claro, 11,07:1 en oscuro */
 }
 
 button.inv-rg-icon.is-norm:hover {

@@ -262,7 +262,7 @@ views:
     headers:
     - Pregunta
     - Lo que se espera (paráfrasis)
-    - El registro
+    - Registro del documento a proponer
     rows:
     - question: ¿Para qué?
       principle: Finalidad

@@ -1,5 +1,6 @@
 import type { Views } from "@/lib/views";
 
+import { DocIcon } from "./DocIcon";
 import { RichText } from "./RichText";
 import "./inventory-views.css";
 
@@ -34,7 +35,10 @@ export function LawLadder({ view }: { view: V["law_ladder"] }) {
     <ol className="inv-view inv-ladder">
       <li className="inv-ladder-head" aria-hidden="true">
         {view.headers.map((header) => (
-          <span key={header}>{header}</span>
+          <span key={header} className={header === record ? "inv-ladder-head-doc" : undefined}>
+            {header === record ? <DocIcon /> : null}
+            {header}
+          </span>
         ))}
       </li>
       {view.rows.map((row) => (
@@ -63,7 +67,10 @@ export function LawLadder({ view }: { view: V["law_ladder"] }) {
             ) : null}
           </div>
           <div className="inv-ladder-record">
-            <i className="inv-ladder-label">{record}</i>
+            <i className="inv-ladder-label inv-ladder-head-doc">
+              <DocIcon />
+              {record}
+            </i>
             <p>
               <RichText text={row.record} />
             </p>
