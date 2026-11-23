@@ -77,9 +77,9 @@ sources:
 - source: bcn-leychile
   url: https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
   accessed: '2026-11-18'
-  label: versión desde el 2026-12-01
+  label: versión consolidada
   page_title: Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES · Con Vigencia Diferida por Fecha - 01-DIC-2026
-  note: 'Ley 19.628 en la versión «Con Vigencia Diferida por Fecha - 01-DIC-2026» (última modificación: Ley 21.719), consultada el 2026-11-18.
+  note: 'Ley 19.628 en la versión «Con Vigencia Diferida por Fecha - 01-DIC-2026» (versión consolidada de la BCN con vigencia diferida; vigencia: 15-10-2027 según la Ley 21.855; última modificación: Ley 21.719), consultada el 2026-11-18.
     Arts. 1 bis, 3 letras a, b y c, 12, 13 letras a a e, 14 letra a, 14 ter letras d, h, i, j, k y l, 16, 27 y 34 ter letras a y c, verificados contra
     lo que dice la ficha. Fuera del modelo de prevención (arts. 49 a 53), el texto no impone llevar un registro de actividades de tratamiento:
     los deberes cercanos son acreditar la licitud (arts. 3 a, 12, 13 y 14 a) y publicar la información del art. 14 ter.'
@@ -88,7 +88,7 @@ sources:
   accessed: '2026-11-18'
   label: art. 14 ter
   page_title: Ley 19628 SOBRE PROTECCION DE LOS DATOS PERSONALES · Artículo 14 ter
-  note: 'Enlace directo al art. 14 ter («Deber de información y transparencia») en la versión «Con Vigencia Diferida por Fecha - 01-DIC-2026»: el idParte se
+  note: 'Enlace directo al art. 14 ter («Deber de información y transparencia») en la versión «Con Vigencia Diferida por Fecha - 01-DIC-2026» (vigencia: 15-10-2027 según la Ley 21.855): el idParte se
     tomó del árbol de la norma en BCN y se comprobó en un navegador el 2026-11-17; el texto se volvió a verificar el 2026-11-18. Si BCN cambia el identificador, el enlace cae en la norma completa.'
 - source: bcn-leychile
   url: https://www.bcn.cl/leychile/navegar?idNorma=1227971
@@ -1739,12 +1739,13 @@ views:
         publisher: Diario Oficial
         why: Art. 3 letras a, b y c; arts. 12, 13, 14 letra a, 14 ter, 16, 27, 34 ter letras a y c, y 49 letra c de la Ley 19.628, texto modificado
           por la Ley 21.719.
-      - title: Ley 19.628 · versión con vigencia diferida (2026-12-01)
+      - title: Ley 19.628 · versión consolidada de la BCN con vigencia diferida
         urls:
         - https://www.bcn.cl/leychile/navegar?idNorma=141599&idVersion=2026-12-01
         - https://www.bcn.cl/leychile/navegar?idNorma=141599&idParte=10528059&idVersion=2026-12-01
         publisher: BCN
-        why: Texto consolidado, versión con vigencia diferida, y el art. 14 ter. Fecha de vigencia y estado legislativo en el [Contexto normativo de la ficha madre](/concepts/chile-data-protection/#s1.5).
+        why: 'Texto consolidado y el art. 14 ter; vigencia: 15-10-2027 según la Ley 21.855. Estado legislativo en el [Contexto normativo de la ficha
+          madre](/concepts/chile-data-protection/#s1.5).'
       - title: Decreto 662, de 2025 · Ministerio de Hacienda, publicado el 2026-09-09
         urls:
         - https://www.bcn.cl/leychile/navegar?idNorma=1227971
@@ -2382,3 +2383,4 @@ puerta de la CI: rechazada (1): 3 de 4 despliegues bloqueados
 - 2026-11-22: revisión del código (T-06, T-02, T-01/T-04). `insumo_14_ter` emite la letra k (retiro del consentimiento: «no aplica», o el derecho a retirarlo con el registro de consentimientos), y el modal suma el literal del art. 14 ter letra k, verificado ese día contra BCN; «Qué hace» nombra las letras d, h, i, j, k y l. `campos` distingue `None` (sin evaluar: no se compara) de vacío (ninguna permitida: toda columna leída es una brecha); `modelo_fraude` pasa a `None`. «Qué hace», el paso 03 y «Activos y consumidores» precisan qué revisa cada función: `vigente` solo la aprobación; la puerta, `activity_id`, consumidor declarado y vigencia; base, plazo y campos, solo la conciliación. Conteos sin cambios: actual 1 con 14 hallazgos, corregido 0, despliegue-nuevo 1 con 3 de 4 bloqueados. Textos pendientes de aprobación del dueño; la ficha sigue en `review_required`.
 - 2026-11-22: por decisión del dueño, con `campos=None` la conciliación emite la brecha «campos permitidos: [sin evaluar]» (alerta técnica, no infracción), como los datos sensibles y los destinatarios sin evaluar; `actual` pasa de 14 a 15 hallazgos por `modelo_fraude`, y `corregido` (0) y `despliegue-nuevo` (3 de 4 bloqueados) no cambian. Sale el literal de la letra k de `register_fields.literal.law`: no se mostraba en ningún lado y duplicaba el de 2.1. Textos pendientes de aprobación del dueño; la ficha sigue en `review_required`.
 - 2026-11-22: por decisión del dueño, en 2.1 la quinta fila de la escalera pasa del principio «Infracción grave» a «Consecuencia: infracción grave (art. 34 ter)», y su marca, de «Consecuencia, no obligación» a «Lo que pasa si no se cumple, no un deber más», para no repetir la palabra. El resto de la fila no cambia; la paráfrasis de las letras a y c se comparó ese día con el art. 34 ter en BCN (versión 2026-12-01). El título de 2.1 se mantiene. Pendiente de aprobación del dueño; la ficha sigue en `review_required`.
+- 2026-11-23: con la Ley 21.855 publicada, el rótulo de la versión de BCN pasa a «versión consolidada de la BCN con vigencia diferida; vigencia: 15-10-2027 según la Ley 21.855», en la cita y en Fuentes; se mantienen los enlaces `idVersion=2026-12-01`. Ningún artículo citado por la ficha cambia con la Ley 21.855, y la ficha no cita los artículos transitorios. Pendiente de aprobación del dueño; la ficha sigue en `review_required`.
