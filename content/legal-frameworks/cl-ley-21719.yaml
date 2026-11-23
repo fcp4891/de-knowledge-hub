@@ -21,7 +21,7 @@ facts:
     checked_with: https://nuevo.leychile.cl/servicios/Navegar/get_norma_json?idNorma=1230520
     source: bcn-leychile
     verified_at: 2026-11-23
-    note: "La Ley 21.855 (BCN idNorma 1230520; Diario Oficial núm. 44.606, 2026-11-23, CVE 2907953, https://www.diariooficial.interior.gob.cl/publicaciones/2026/11/23/44606/01/2907953.pdf, leída completa el 2026-11-23) sustituye en el artículo primero transitorio de la Ley 21.719 la frase «día primero del mes vigésimo cuarto posterior a la publicación de esta ley en el Diario Oficial» por «15 de octubre de 2027». La fecha original era el 2026-12-01. Al 2026-11-23 la BCN aún muestra la Ley 19.628 en la versión «Con Vigencia Diferida por Fecha» del 2026-12-01 y no había incorporado la modificación."
+    note: "La Ley 21.855 (BCN idNorma 1230520; Diario Oficial núm. 44.606, 2026-11-23, CVE 2907953, https://www.diariooficial.interior.gob.cl/publicaciones/2026/11/23/44606/01/2907953.pdf, leída completa el 2026-11-23) sustituye en el artículo primero transitorio de la Ley 21.719 la frase «día primero del mes vigésimo cuarto posterior a la publicación de esta ley en el Diario Oficial» por «15 de octubre de 2027». La fecha original era el 2026-12-01. Al 2026-11-23 (16:50) la BCN incorporó la Ley 21.855 en el texto consolidado de la Ley 21.719 (vigencia 2027-10-15); la Ley 19.628 aún no tiene versión nueva (la más reciente es la del 2026-12-01)."
   - key: amending-law
     label: Ley que fija la vigencia
     value: "Ley 21.855, promulgada el 2026-11-19 y publicada el 2026-11-23: sustituye la fecha de vigencia de la Ley 21.719 por el 15 de octubre de 2027 y cambia el Consejo Directivo de la Agencia de tres a cinco consejeros."
