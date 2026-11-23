@@ -351,8 +351,6 @@ views:
           tal transferencia.
         i: El periodo durante el que se conservarán los datos personales.
         j: La fuente de la cual provienen los datos personales y, en su caso, si proceden de fuentes de acceso público.
-        k: Cuando el tratamiento está basado en el consentimiento del titular, la existencia del derecho a retirarlo en cualquier momento, sin
-          que ello afecte a la licitud del tratamiento basado en el consentimiento previo a su retirada.
         l: La existencia de decisiones automatizadas, incluida la elaboración de perfiles. En tales casos, información significativa sobre la
           lógica aplicada, así como las consecuencias previstas de dicho tratamiento para el titular.
       decree_source: Decreto 662, de 2025 (Ministerio de Hacienda), art. 3 letra d), contenido {roman} · texto literal
@@ -505,8 +503,8 @@ views:
       why: Qué jobs, dashboards o servicios usan la actividad y qué campos necesitan. Permite conciliar con lo que corre.
       code: Actividad.consumidores · Actividad.campos
       check: 'que cada consumo observado venga de un consumidor declarado en una actividad vigente y lea solo los campos declarados (si la actividad
-        declara **ninguno**, toda columna leída es una brecha; con campos **sin evaluar** no se comparan), y que la puerta de la CI exija un consumidor
-        declarado'
+        declara **ninguno**, toda columna leída es una brecha; con campos **sin evaluar**, la brecha es **campos permitidos: [sin evaluar]**),
+        y que la puerta de la CI exija un consumidor declarado'
       limit: usos que no dejan huella en el linaje ni en los logs
       sheet_section: Activos y consumidores
       proposal: La norma no pide vincular la actividad con lo que corre. Lo agregamos porque sin ese vínculo el registro no se puede comparar
@@ -1398,6 +1396,7 @@ views:
       evidence_ok: false
       gaps:
       - 'sin aprobación vigente: job_fraude → silver.pasajeros (modelo_fraude)'
+      - 'modelo_fraude: campos permitidos: [sin evaluar]'
       ok: 'Sin hallazgos: job_fraude lee solo columnas que su finalidad necesita.'
     # fin del bloque generado
   case_compare:
@@ -1904,6 +1903,7 @@ ARTICULO: dict[Base, str] = {"consentimiento": "art. 12", "obligaciones económi
                              "obligación legal": "art. 13 letra b", "contrato": "art. 13 letra c",
                              "interés legítimo": "art. 13 letra d", "defensa de derechos": "art. 13 letra e"}
 REFERENCIA = date(2026, 11, 3)   # fecha fija: resultado reproducible
+SIN_EVALUAR = "[sin evaluar]"
 
 
 @dataclass(frozen=True)
@@ -2025,7 +2025,8 @@ def actividades_incompletas(registro: Registro, hoy: date) -> list[Hallazgo]:
 
 def conciliar(registro: Registro, usos: list[Uso], hoy: date) -> list[Hallazgo]:
     """Cada uso observado tiene que caer en una actividad vigente y leer solo los campos de su finalidad. Campos
-    vacíos (ninguno permitido) se evalúan: toda columna leída sobra; campos None (sin evaluar) no se comparan."""
+    vacíos (ninguno permitido) se evalúan: toda columna leída sobra. Campos None (sin evaluar) son una brecha para
+    revisar, como los datos sensibles o los destinatarios sin evaluar: una alerta técnica, no una infracción."""
     hallazgos = []
     for uso in usos:
         consumidor = consumidor_de(registro, uso)
@@ -2040,7 +2041,8 @@ def conciliar(registro: Registro, usos: list[Uso], hoy: date) -> list[Hallazgo]:
             hallazgos.append(Hallazgo("BRECHA", f"sin aprobación vigente: {consumidor} → {uso.activo} "
                                                 f"({', '.join(a.id for a in vinculos)})"))
         for a in vinculos:
-            if a.campos is None:   # sin evaluar: no hay contra qué comparar
+            if a.campos is None:   # sin evaluar: no hay contra qué comparar, y eso no cuenta como OK
+                hallazgos.append(Hallazgo("BRECHA", f"{a.id}: campos permitidos: {SIN_EVALUAR}"))
                 continue
             sobran = sorted(uso.columnas - a.campos)
             if sobran:
@@ -2068,9 +2070,6 @@ def verificar_despliegues(registro: Registro, despliegues: list[Despliegue], hoy
 
 
 # @paso 4 Insumo y salida
-SIN_EVALUAR = "[sin evaluar]"
-
-
 def lista(valores: tuple[str, ...] | None, vacio: str) -> str:
     return SIN_EVALUAR if valores is None else ", ".join(valores) or vacio
 
@@ -2254,9 +2253,10 @@ BRECHA encuesta_post_vuelo: interés legítimo sin justificación
 BRECHA sin aprobación vigente: dag_campanas → silver.pasajeros (marketing)
 BRECHA proporcionalidad: dag_campanas lee rut, no necesario para marketing
 BRECHA sin aprobación vigente: job_fraude → silver.pasajeros (modelo_fraude)
+BRECHA modelo_fraude: campos permitidos: [sin evaluar]
 BRECHA sin vínculo: dashboard_externo → silver.pasajeros
 UNKNOWN consumidor no identificado: sa-7f3c → silver.reservas
-conciliación: alerta (1): 14 hallazgo(s) en lo que ya corre
+conciliación: alerta (1): 15 hallazgo(s) en lo que ya corre
 ```
 
 ```text
@@ -2380,3 +2380,4 @@ puerta de la CI: rechazada (1): 3 de 4 despliegues bloqueados
 - 2026-11-22: aprobada con lista explícita, por decisión del dueño, de los textos legales: introducción de «Campos del registro», caja «La ley no exige este formato», modales con el literal del art. 14 ter, del Decreto 662 y del art. 49 c, paráfrasis de 2.1 con sus líneas de interpretación, título de 2.1, marca «Consecuencia, no obligación» y los 7 artículos de `legal_basis` (`owner_approved_at: 2026-11-22`); pasa a `verified` (ADR-023). Sin cambios de contenido.
 - 2026-11-22: las menciones de vigencia remiten al Contexto normativo de `chile-data-protection`, fuente única del estado legislativo (boletín 18.623-07 despachado al Presidente el 2026-11-17): §13 pasa de «Ley 19.628 · texto que rige desde el 2026-12-01» a «versión con vigencia diferida (2026-12-01)» con la remisión, y las notas de la cita del Diario Oficial y del art. 14 ter dejan de decir «rigen desde» y «con vigencia desde». El enlace `idVersion=2026-12-01` se mantiene: es la versión de BCN con las modificaciones de la Ley 21.719 mientras no se publique otra ley. Texto legal cambiado: vuelve a `review_required` sin `owner_approved_at` hasta que el dueño apruebe la nueva redacción, por decisión del dueño. `last_verified` sigue en 2026-11-18.
 - 2026-11-22: revisión del código (T-06, T-02, T-01/T-04). `insumo_14_ter` emite la letra k (retiro del consentimiento: «no aplica», o el derecho a retirarlo con el registro de consentimientos), y el modal suma el literal del art. 14 ter letra k, verificado ese día contra BCN; «Qué hace» nombra las letras d, h, i, j, k y l. `campos` distingue `None` (sin evaluar: no se compara) de vacío (ninguna permitida: toda columna leída es una brecha); `modelo_fraude` pasa a `None`. «Qué hace», el paso 03 y «Activos y consumidores» precisan qué revisa cada función: `vigente` solo la aprobación; la puerta, `activity_id`, consumidor declarado y vigencia; base, plazo y campos, solo la conciliación. Conteos sin cambios: actual 1 con 14 hallazgos, corregido 0, despliegue-nuevo 1 con 3 de 4 bloqueados. Textos pendientes de aprobación del dueño; la ficha sigue en `review_required`.
+- 2026-11-22: por decisión del dueño, con `campos=None` la conciliación emite la brecha «campos permitidos: [sin evaluar]» (alerta técnica, no infracción), como los datos sensibles y los destinatarios sin evaluar; `actual` pasa de 14 a 15 hallazgos por `modelo_fraude`, y `corregido` (0) y `despliegue-nuevo` (3 de 4 bloqueados) no cambian. Sale el literal de la letra k de `register_fields.literal.law`: no se mostraba en ningún lado y duplicaba el de 2.1. Textos pendientes de aprobación del dueño; la ficha sigue en `review_required`.

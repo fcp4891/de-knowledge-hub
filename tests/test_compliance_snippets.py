@@ -408,7 +408,8 @@ def load_inventory(tmp_path: Path) -> ModuleType:
 
 
 def test_inventory_empty_fields_are_evaluated_and_none_is_not(tmp_path: Path) -> None:
-    """T-02: campos vacío es «ninguno permitido» y se evalúa (toda columna leída sobra); None es «sin evaluar»."""
+    """T-02: campos vacío es «ninguno permitido» y se evalúa (toda columna leída sobra); None es «sin evaluar» y genera
+    su propia brecha, nunca un OK."""
     m = load_inventory(tmp_path)
     registro, _, _ = m.escenario("corregido")
     uso = m.Uso("sa-campanas", "silver.pasajeros", frozenset({"correo"}))
@@ -421,6 +422,12 @@ def test_inventory_empty_fields_are_evaluated_and_none_is_not(tmp_path: Path) ->
     assert proporcionalidad(frozenset()) == ["proporcionalidad: dag_campanas lee correo, no necesario para marketing"]
     assert proporcionalidad(None) == []
     assert proporcionalidad(frozenset({"correo"})) == []
+    sin_evaluar = tuple(replace(a, campos=None) if a.id == "marketing" else a for a in registro.actividades)
+    assert [h.detalle for h in m.conciliar(replace(registro, actividades=sin_evaluar), [uso], m.REFERENCIA)] == [
+        "marketing: campos permitidos: [sin evaluar]"]
+    actual, usos, _ = m.escenario("actual")
+    assert [h.detalle for h in m.conciliar(actual, usos, m.REFERENCIA) if "campos permitidos" in h.detalle] == [
+        "modelo_fraude: campos permitidos: [sin evaluar]"]
 
 
 def test_inventory_insumo_emits_letter_k(tmp_path: Path) -> None:

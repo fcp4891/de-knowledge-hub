@@ -122,7 +122,7 @@ CONTROLS = {
     "interés legítimo sin justificación": r"^BRECHA [a-z_]+: interés legítimo sin justificación$",
     "uso sin aprobación vigente": r"^BRECHA sin aprobación vigente: ",
     "uso sin vínculo": r"^BRECHA sin vínculo: ",
-    "proporcionalidad": r"^BRECHA proporcionalidad: ",
+    "proporcionalidad": r"^BRECHA (proporcionalidad: |[a-z_]+: campos permitidos: \[sin evaluar\]$)",
     "consumidor no identificado": r"^UNKNOWN consumidor no identificado: ",
 }
 
@@ -170,7 +170,8 @@ def test_explorer_activities_come_from_actual(views: dict[str, Any]) -> None:
     assert by_key["venta_pasajes"]["gaps"] == [] and by_key["venta_pasajes"]["evidence_ok"] is True
     assert len(by_key["marketing"]["gaps"]) == 7
     assert {r["column"]: r["state"] for r in by_key["marketing"]["read"]} == {"correo": "needed", "rut": "extra"}
-    assert by_key["modelo_fraude"]["gaps"] == ["sin aprobación vigente: job_fraude → silver.pasajeros (modelo_fraude)"]
+    assert by_key["modelo_fraude"]["gaps"] == ["sin aprobación vigente: job_fraude → silver.pasajeros (modelo_fraude)",
+                                               "modelo_fraude: campos permitidos: [sin evaluar]"]
     assert {r["state"] for r in by_key["modelo_fraude"]["read"]} == {"unevaluated"}   # sin campos evaluados nunca es OK
 
 
