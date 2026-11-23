@@ -1928,6 +1928,10 @@
     padding: 0 0 4px;
     border-bottom: 1px solid var(--border);
   }
+
+  .approach-label small {
+    display: none;   /* «fila de la matriz»: solo en la versión horizontal */
+  }
 }
 
 .approach-points {
