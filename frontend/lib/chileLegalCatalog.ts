@@ -80,7 +80,7 @@ export const CHILE_PRINCIPLES: readonly ChilePrinciple[] = [
   {
     label: "Transparencia e información",
     description:
-      "El responsable entrega al titular, de manera precisa, clara, inequívoca y gratuita, la información necesaria para ejercer sus derechos, y mantiene accesibles sus políticas y prácticas de tratamiento.",
+      "El responsable entrega al titular la información necesaria para ejercer sus derechos, incluidas sus políticas y prácticas de tratamiento, que deben estar permanentemente accesibles y a disposición de cualquier interesado de manera precisa, clara, inequívoca y gratuita.",
     slug: "processing-activities-inventory",
   },
   {
