@@ -1,7 +1,7 @@
 # STATUS — Data Engineering Knowledge Hub
 
 **Fase actual:** F3b — Contenido por dominio (ADR-009), dominio 24-privacy-engineering (en aprobación; 19 integrado al 24 el 2026-10-30) (01-fundamentals aprobado el 2026-10-06, 02-sql el 2026-10-08, 03-python el 2026-10-10, 04-data-modeling, 05-pipelines, 06-orchestration y los conceptos de 07-architecture el 2026-10-11, 08-gcp el 2026-10-12, 09-aws el 2026-10-13, 10-azure y 11-devops el 2026-10-14, 12-infrastructure-as-code y 13-containers el 2026-10-19, 14-streaming, 20-open-data-stack, 15-data-quality y 16-observability el 2026-10-20, 17-governance y 18-security el 2026-10-21). F3 aprobada el 2026-10-05; F2 el 2026-09-30.
-**Última actualización:** 2026-11-14 (merge de `a/pii-availability`: disponibilidad por ficha ADR-031, `pii-identification` migrada y `verified`, ADR-030 enmienda 7)
+**Última actualización:** 2026-11-23 (merges de los PR #1, #7, #8, #9 y #10: Inventario aprobado y `verified`, Ley 21.855 publicada, principios y §7 de la madre, relectura del Inventario en BCN)
 **Demo estática:** https://felipe-a-cespedes-perez.cl/aprendizaje-continuo/ (`make static`, `BASE_PATH` por defecto `/aprendizaje-continuo`).
 
 > Resumen del proyecto. **Solo Carril A lo actualiza, al mergear a `main`.**
@@ -58,6 +58,7 @@
 - [x] 17-governance: 9/9 `verified`, aprobado por Felipe en el navegador el 2026-10-21 (ADR-021: OpenLineage en la CI, transporte a archivo).
 - [x] 18-security: 17/17 `verified`, aprobado por Felipe en el navegador el 2026-10-21 (ADR-022: cryptography). 18 no menciona la ley.
 - [x] 24-privacy-engineering: 17/17 `verified`, aprobado por Felipe con lista explícita el 2026-11-01 (`owner_approved_at`; ADR-023, ADR-027); `chile-data-protection` aprobada de nuevo el mismo día con el §10 nuevo. El 2026-11-04, Felipe aprueba de nuevo las cinco fichas con §10 de código guiado (`chile-data-protection`, `pii-identification`, `processing-activities-inventory`, `data-minimization-by-layer` y `chilean-identifier-pseudonymization`), con las revisiones P10 y su verificación aplicadas: 17/17 `verified`. Tramos 1–6, con `gdpr` y `lgpd` en «Marcos regulatorios comparados».
+- **Ruta de privacidad (2026-11-23):** 3 de 15 fichas disponibles; 2 de 3 `verified` (`pii-identification` y `processing-activities-inventory`, esta aprobada por el dueño el 2026-11-23, PR #1); `chile-data-protection` en `review_required` hasta que el dueño apruebe sus textos (PR #7 y #9). La Ley 21.855 (DO 2026-11-23) fija la vigencia de la Ley 21.719 en el 15 de octubre de 2027 (PR #7 y #8). PR #10: relectura literal del Inventario en BCN, `last_verified` 2026-11-23.
 - [x] 19-compliance: integrado al 24 el 2026-10-30 (ADR-027, Enmienda 1); su subdominio `regulatory-frameworks` es el tramo 6 de 24 (GDPR y LGPD en el BACKLOG). El blueprint tiene 23 dominios; Transversal queda con 15–18.
 - [x] 21-ai-for-data-engineering (27 fichas en 21a–21e, ADR-025): 27/27 `verified` el 2026-10-26.
 - [x] 22-modern-data-engineering: 10/10 `verified` el 2026-10-27.

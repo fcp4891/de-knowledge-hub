@@ -2,9 +2,18 @@
 
 Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
-**Última actualización:** 2026-11-18
+**Última actualización:** 2026-11-23
 
 ## Actual
+- **2026-11-23 · PR #1, #7, #8, #9 y #10 en `main`** (merges normales, CI de `main` en verde en cada uno):
+  - **PR #1 · `a/inventario-ficha`** (7e90401): `processing-activities-inventory` migrada a vistas, con §7 Arquitectura y desbloqueada en la ruta. El dueño aprobó sus textos legales el 2026-11-23 (`owner_approved_at: 2026-11-23`): pasa a `verified`.
+  - **PR #7 · `a/ley-21855`** (f9b073e): Ley 21.855 publicada en el Diario Oficial núm. 44.606 (2026-11-23, CVE 2907953); la vigencia de la Ley 21.719 pasa al 15 de octubre de 2027. Tarjeta `cl-ley-21719` (`effective-date` 2027-10-15, `amending-law`), línea de vigencia y §2 de `chile-data-protection`, y rótulo de BCN del Inventario.
+  - **PR #8 · `a/nota-bcn-21855`** (d146ae8): notas de BCN; la Ley 21.719 consolidada (idNorma 1209272) ya incluye la Ley 21.855; la Ley 19.628 (141599) sigue sin versión nueva (la más reciente, 2026-12-01).
+  - **PR #9 · `a/madre-principios-arquitectura`** (da697df): en la madre, bloque de principios del art. 3 con letra a)–h) y sin chips para las fichas no disponibles; descripción de la letra g) corregida contra el literal de BCN; §7 Arquitectura unificada con el Inventario (`requirement-to-data` con container queries) y la regla compartida de `control-evidence-lead/note` movida a `ficha-blocks.css`. Comparación de pii entre main y el PR (2406 elementos, 5 anchos, claro y oscuro): 0 diferencias. La madre sigue en `review_required`, sin `owner_approved_at`. Tocó `frontend/` por pedido del dueño (nota a Carril B en el BACKLOG).
+  - **PR #10 · `a/inventario-relectura`** (488178d): relectura literal en BCN de los arts. 1 bis, 3, 12, 13, 14, 14 ter, 16, 27, 34 ter y 49 de la Ley 19.628 (versión 2026-12-01), del Decreto 662 (arts. 1 y 3 d) y del PDF del Diario Oficial: coinciden. `last_verified` y las 5 citas legales del Inventario a 2026-11-23; las 6 páginas cloud conservan 2026-11-18. `owner_approved_at` se mantiene.
+  - **Ruta de privacidad:** 3 de 15 fichas disponibles (`chile-data-protection`, `pii-identification`, `processing-activities-inventory`); 2 de esas 3 `verified` (pii e Inventario); la madre, `review_required`.
+  - **Queda:** aprobación del dueño de los textos de la madre; PR #6 (`a/verificacion-bcn`, borrador) espera la clave activa de la API de BCN; entradas nuevas del BACKLOG (2026-11-23).
+  - **Pedidos a Carril B:** ver la nota del BACKLOG sobre PR #9 y `fixtures.ts`.
 - **2026-11-18 · `a/inventario-ficha`: correcciones de la revisión independiente (PR #1, borrador):**
   - I1 (código): `categorias_sensibles` y `destinatarios` aceptan `None` (sin evaluar), con brecha si la actividad está aprobada y `[sin evaluar]` en el insumo; una actividad vigente sin base ya no se omite. Conteos y salidas idénticos (`actual` 1 con 14, `corregido` 0, `despliegue-nuevo` 1 con 3 de 4).
   - En la nube: retención de JOBS_BY_ORGANIZATION (180 días), rótulos corregidos y fuera la frase sin fuente de las etiquetas del catálogo de GCP.
