@@ -210,7 +210,7 @@ def test_ladder_separates_paraphrase_from_interpretation_and_quotes_letter_k(vie
     assert ladder["headers"][1] == "Lo que se espera (paráfrasis)"
     interpretations = [row for row in ladder["rows"] if row.get("interpretation")]
     # La quinta fila lleva su marca (consecuencia, no obligación) por decisión del dueño (2026-11-18 y 2026-11-22).
-    assert [row["principle"] for row in interpretations] == ["Proporcionalidad", "Consecuencia: infracción grave (art. 34 ter)"]
+    assert [row["principle"] for row in interpretations] == ["Proporcionalidad", "Consecuencia: infracción grave"]
     moved = "La ley no fija un plazo general: lo define el responsable según la finalidad."
     assert interpretations[0]["interpretation"] == f"**Interpretación de la ficha:** {moved}"
     assert all("plazo general" not in row["expected"] for row in ladder["rows"])
@@ -227,7 +227,8 @@ def test_fifth_row_is_a_consequence_not_an_obligation(views: dict[str, Any]) -> 
     11) y su contenido legal no cambia: art. 34 ter, letras a y c, y la alerta que no presume infracción."""
     row = views["law_ladder"]["rows"][4]
     assert (row["question"], row["principle"], row.get("risk")) == (
-        "¿Y si un uso no calza?", "Consecuencia: infracción grave (art. 34 ter)", True)
+        "¿Y si un uso no calza?", "Consecuencia: infracción grave", True)
+    assert row["cites"] == ["[(art. 34 ter)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=24)"]
     assert row["interpretation"] == "**Lo que pasa si no se cumple, no un deber más**"
     assert "consecuencia" not in row["interpretation"].lower()   # la marca no repite el principio
     assert [c.split("]")[0] for c in row["cites"]] == ["[(art. 34 ter)"]

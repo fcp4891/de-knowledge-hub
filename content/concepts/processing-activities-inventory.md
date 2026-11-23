@@ -306,7 +306,7 @@ views:
         **Plazo o condición de supresión**, **Fuente** y **Decisiones automatizadas**. Con eso se genera el insumo para la política, que privacidad
         revisa antes de publicar. Para la letra k, **Base de licitud** dice qué actividades se basan en el consentimiento.
     - question: ¿Y si un uso no calza?
-      principle: 'Consecuencia: infracción grave (art. 34 ter)'
+      principle: 'Consecuencia: infracción grave'
       cites:
       - '[(art. 34 ter)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=24)'
       expected: Tratar datos sin base o con una finalidad distinta (letra a), o tratar datos innecesarios para los fines (letra c).
