@@ -1196,12 +1196,7 @@ button.pii-card:hover {
   min-width: 42rem;
 }
 
-.reading-article:has(.pii-view) :is(.control-evidence-lead, .control-evidence-note) {
-  color: var(--ink-muted);
-  font-family: var(--font-ui), system-ui, sans-serif;
-  font-size: var(--text-sm);
-  line-height: 1.5;
-}
+/* La bajada en la sans de la UI está en ficha-blocks.css (compartida con «Del requisito al dato»). */
 
 .reading-article:has(.pii-view) .code-guide {
   font-family: var(--font-ui), system-ui, sans-serif;

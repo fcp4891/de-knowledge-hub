@@ -2300,6 +2300,94 @@
   margin-top: 8px;
 }
 
+/* Bajada en la sans de la UI: bloques compartidos en fichas con vistas de pii, y «Del requisito al dato» en todas. */
+:is(.reading-article:has(.pii-view), .requirement-to-data) :is(.control-evidence-lead, .control-evidence-note) {
+  color: var(--ink-muted);
+  font-family: var(--font-ui), system-ui, sans-serif;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+/* «Del requisito al dato» (§7 Arquitectura de la madre y del Inventario): un solo bloque y una sola regla, sin
+   desplazamiento interno. Caja ancha: rótulo a la izquierda y filas horizontales. Caja angosta (container query): el
+   rótulo sube; muy angosta: todo apilado, con flechas hacia abajo. */
+.requirement-to-data .control-evidence-scroll {
+  overflow-x: visible;
+  container-type: inline-size;
+}
+
+.requirement-to-data .control-evidence-flow {
+  min-width: 0;
+  margin-bottom: 28px;
+}
+
+.requirement-to-data .control-evidence-flow:has(.requirement-gov) {
+  padding-bottom: 0;
+}
+
+.requirement-to-data .requirement-gov-wrap {
+  width: auto;
+}
+
+.requirement-to-data .requirement-legend {
+  position: static;
+  flex-wrap: wrap;
+  row-gap: 4px;
+  margin-top: 12px;
+  white-space: normal;
+  transform: none;
+}
+
+.requirement-to-data .control-evidence-flow ol:not(.requirement-gov) {
+  gap: 6px;
+}
+
+.requirement-to-data .control-evidence-flow ol:not(.requirement-gov) article {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+@container (max-width: 47.99rem) {
+  .requirement-to-data .control-evidence-flow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+}
+
+@container (max-width: 39.99rem) {
+  .requirement-to-data .control-evidence-flow ol,
+  .requirement-to-data .control-evidence-flow ol.requirement-gov {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .requirement-to-data .control-evidence-flow li {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .requirement-to-data .control-evidence-flow .requirement-gov article {
+    width: auto;
+  }
+
+  .requirement-to-data .requirement-legend {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .requirement-to-data .requirement-legend span + span::before {
+    content: none;
+  }
+
+  .requirement-to-data .control-evidence-flow li > .control-evidence-arrow,
+  .requirement-to-data .requirement-gov-arrow .control-evidence-arrow {
+    align-self: center;
+    transform: rotate(90deg);
+  }
+}
+
 .control-evidence-outcomes .is-keep {
   border: 1px solid var(--lvl-intermedio-ink);
   background: var(--surface);

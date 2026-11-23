@@ -65,7 +65,7 @@ function DataCirculation({ data }: { data: RequirementToDataProps["data"] }) {
 
 export function RequirementToData({ title, lead, governance, data }: RequirementToDataProps) {
   return (
-    <section className="ficha-block control-evidence" aria-label={title}>
+    <section className="ficha-block control-evidence requirement-to-data" aria-label={title}>
       <h3>{title}</h3>
       <p className="control-evidence-lead">{lead}</p>
       <div className="control-evidence-scroll">
