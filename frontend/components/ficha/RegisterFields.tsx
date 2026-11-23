@@ -172,9 +172,7 @@ export function RegisterFields({ view }: { view: View }) {
           onClick={(event) => open({ kind: "sheet" }, event.currentTarget)}
         >
           <span className="inv-rg-card-head">
-            <span className="inv-rg-icon is-doc">
-              <DocIcon />
-            </span>
+            <DocIcon size="card" />
             <b>{view.legend.document.title}</b>
           </span>
           <span className="inv-rg-card-text">

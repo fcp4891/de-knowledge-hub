@@ -36,7 +36,7 @@ export function LawLadder({ view }: { view: V["law_ladder"] }) {
       <li className="inv-ladder-head" aria-hidden="true">
         {view.headers.map((header) => (
           <span key={header} className={header === record ? "inv-ladder-head-doc" : undefined}>
-            {header === record ? <DocIcon /> : null}
+            {header === record ? <DocIcon size="head" /> : null}
             {header}
           </span>
         ))}
@@ -68,7 +68,7 @@ export function LawLadder({ view }: { view: V["law_ladder"] }) {
           </div>
           <div className="inv-ladder-record">
             <i className="inv-ladder-label inv-ladder-head-doc">
-              <DocIcon />
+              <DocIcon size="label" />
               {record}
             </i>
             <p>

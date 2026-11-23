@@ -175,20 +175,46 @@
   text-transform: uppercase;
 }
 
-.inv-ladder-head span:last-child {
+.inv-ladder-head > span:last-child {
   padding-left: 15px;
 }
 
 /* «Registro del documento a proponer»: el icono azul del botón «Documento propuesto», alineado con el rótulo. */
 .inv-ladder-head-doc {
   display: inline-flex;
-  align-items: flex-start;
-  gap: 6px;
+  align-items: center;
+  gap: 8px;
 }
 
-.inv-ladder-head-doc .inv-icon {
-  margin-top: 1px;
-  color: var(--lvl-intermedio-ink);   /* 7,85:1 sobre --surface-muted en claro, 9,66:1 en oscuro */
+/* Insignia de documento (DocIcon): círculo azul sólido con el glifo en --surface (blanco en claro, oscuro en oscuro).
+   Glifo/fondo: 9,09:1 en claro y 11,07:1 en oscuro. Fondo/entorno: 7,85:1 sobre --surface-muted en claro, 9,66:1 en
+   oscuro; 9,09:1 y 11,07:1 sobre --surface. */
+.inv-doc-badge {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--lvl-intermedio-ink);
+  color: var(--surface);
+}
+
+.inv-doc-badge.is-head {
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+}
+
+.inv-doc-badge.is-label {
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+}
+
+.inv-doc-badge.is-card {
+  width: 28px;
+  height: 28px;
+  font-size: 16px;
 }
 
 .inv-ladder-row {
@@ -421,11 +447,6 @@
 .inv-rg-icon.is-proposal {
   border: 1px dashed var(--ink-muted);
   color: var(--ink-3);
-}
-
-.inv-rg-icon.is-doc {
-  border: 1px solid var(--ink-muted);
-  color: var(--lvl-intermedio-ink);   /* azul: 9,09:1 sobre --surface en claro, 11,07:1 en oscuro */
 }
 
 button.inv-rg-icon.is-norm:hover {
