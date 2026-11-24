@@ -2,9 +2,14 @@
 
 Solo Carril A edita este archivo. El resumen del proyecto está en `docs/STATUS.md`; Carril A lo actualiza al mergear a `main`.
 
-**Última actualización:** 2026-11-23
+**Última actualización:** 2026-11-24
 
 ## Actual
+- **2026-11-24 · PR #13 y #14 en `main`** (merges normales, sin borrar ramas):
+  - **PR #13 · `a/arquitectura-inventario-pii`** (649e162): zoom de arquitectura en el Inventario y en `pii-identification` (ADR-030, enmienda 12). CI de `main`: run 45420657744, en verde.
+  - **PR #14 · `a/selector-tema`** (66c4a79; el botón queda fuera del flujo en bdb8ea9): selector claro/oscuro en el encabezado. Sin preferencia guardada sigue al sistema; la elección guardada manda. CI de la rama: run 45465328095 (`plan` y `frontend` en verde, `validate-and-test` omitido). CI de `main`: run 45474018356, en verde (`plan` y `frontend`; `validate-and-test` omitido).
+  - Atribución de los glifos de sol y luna (Tabler Icons, MIT) en `NOTICE`.
+  - **Pedidos a Carril B:** ninguno. El selector es frontend, por pedido del dueño.
 - **2026-11-23 · PR #1, #7, #8, #9 y #10 en `main`** (merges normales, CI de `main` en verde en cada uno):
   - **PR #1 · `a/inventario-ficha`** (7e90401): `processing-activities-inventory` migrada a vistas, con §7 Arquitectura y desbloqueada en la ruta. El dueño aprobó sus textos legales el 2026-11-23 (`owner_approved_at: 2026-11-23`): pasa a `verified`.
   - **PR #7 · `a/ley-21855`** (f9b073e): Ley 21.855 publicada en el Diario Oficial núm. 44.606 (2026-11-23, CVE 2907953); la vigencia de la Ley 21.719 pasa al 15 de octubre de 2027. Tarjeta `cl-ley-21719` (`effective-date` 2027-10-15, `amending-law`), línea de vigencia y §2 de `chile-data-protection`, y rótulo de BCN del Inventario.
