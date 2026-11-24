@@ -161,6 +161,8 @@ views:
     title: Cómo funciona
   - section: 5
     title: Cuándo usarlo
+  - section: 9
+    title: Arquitectura
   - section: 10
     title: Código
   - section: 11
@@ -707,6 +709,89 @@ views:
       - 'Anonimizar: detectar o enmascarar no es anonimizar, que exige que el vínculo se destruya de forma irreversible [(art. 2 letra k)](https://www.diariooficial.interior.gob.cl/publicaciones/2024/12/13/44023/01/2583630.pdf#page=2).'
       - 'Decidir la base de licitud de un dato sensible: es una decisión jurídica, no técnica.'
       - 'Reemplazar la revisión: un patrón no sabe que una clave interna se enlaza con otra tabla.'
+  architecture_zoom:
+    kicker: Zoom · Detección y habilitación
+    badge: Zoom
+    back:
+      label: ← Volver a la vista general
+      href: /concepts/chile-data-protection/#s9
+    fragment:
+      concept: chile-data-protection
+      lane: data
+      items:
+      - Bronze
+      - Silver
+      - Gold
+      highlight:
+      - Bronze
+      - Silver
+    title: De la columna a la etiqueta
+    lead: 'Patrón general: cómo una plataforma decide si una capa nueva puede habilitarse para consumo.'
+    decision:
+      phases:
+      - title: Detectar · reunir evidencia
+        layout: flow
+        cards:
+        - number: '1'
+          title: Muestrear
+          items:
+          - Columnas de la capa que se va a habilitar
+          - Una muestra mínima, sin copiar la tabla completa
+        - number: '2'
+          title: Detectores
+          evidence:
+          - icon: hash
+            text: Dígito verificador por módulo 11
+          - icon: cloud
+            text: Sensitive Data Protection
+          - icon: cloud
+            text: Amazon Macie
+          - icon: cloud
+            text: Microsoft Purview
+        - number: '3'
+          title: Detectar candidatos
+          items:
+          - Identificadores directos por patrón
+          - Sensibles por nombre y por contenido
+          - Combinaciones que dejan a una sola persona
+          - El reporte nunca imprime valores
+      - title: Decidir · qué sigue
+        layout: fork
+        cards:
+        - number: 4a
+          title: Personal
+          chip:
+            tone: open
+            text: No bloquea la puerta
+          items:
+          - Sin revisión, el revisor queda «pendiente»
+        - number: 4b
+          title: Sensibles o dudosos sin revisor
+          chip:
+            tone: lock
+            text: se bloquea
+          items:
+          - Un candidato dudoso queda «en revisión», nunca como aprobado
+      - title: Habilitar · quién pasa
+        layout: flow
+        cards:
+        - number: '5'
+          title: Registrar en el catálogo
+          items:
+          - Columna, categoría, fundamento, método, fecha y revisor
+        - number: '6'
+          title: Puerta
+          code: puerta
+          gate: true
+          items:
+          - Bloquea si hay sensibles o dudosos sin revisor
+          outputs:
+          - tone: lock
+            text: 'Salida 1: la CI bloquea'
+          - tone: open
+            text: 'Salida 0: la CI habilita'
+      note: Servicios como Sensitive Data Protection, Amazon Macie o Microsoft Purview automatizan la detección; ninguno decide la categoría jurídica
+        por sí solo.
   control_evidence:
     title: Detección y habilitación
     lead: 'Patrón general: cómo una plataforma decide si una capa nueva puede habilitarse para consumo.'
@@ -1151,6 +1236,10 @@ Esta ficha no es asesoría legal: cubre la parte técnica de identificar datos p
 ### Cada vez que cambia lo que entra o lo que sale
 
 <!-- view: use_avoid -->
+
+## 9. Arquitectura
+
+<!-- view: architecture_zoom -->
 
 ## 10. Código
 

@@ -120,15 +120,12 @@ test("CodeGuide conserva tabla de controles, «Escenarios» y códigos de salida
   assert.match(own, /<th>Regla<\/th>/);
 });
 
-test("Arquitectura: el diagrama de la madre con el registro resaltado y dos franjas; sin «Control y evidencia»", () => {
-  const { RequirementToData } = loadTsx(join(ficha, "ControlEvidence.tsx"));
-  const { requirementToDataProps } = loadTsx(join(ROOT, "frontend/lib/views.ts"));
-  const diagram = html(RequirementToData, requirementToDataProps(inv.requirement_to_data));
-  assert.match(diagram, /<article class="is-highlight"><strong>Registro de actividades de tratamiento<\/strong>/);
-  assert.match(diagram, /class="is-end is-highlight"><strong>Consumo por finalidad<\/strong>/);
-  assert.equal((diagram.match(/class="control-evidence-banner"/g) ?? []).length, 2);
-  // Retirado del Inventario por decisión del dueño (2026-11-18): ni la vista ni su marca en Arquitectura.
+test("Arquitectura: el zoom reemplaza la copia del diagrama de la madre; sin «Control y evidencia»", () => {
+  // ADR-030 enmienda 12: el §9 dibuja el zoom con los datos de la madre (tests/frontend/architecture-zoom.test.ts).
   const text = readFileSync(join(ROOT, "content/concepts/processing-activities-inventory.md"), "utf8");
+  assert.equal(inv.requirement_to_data, undefined);
+  assert.ok(text.includes("## 9. Arquitectura\n\n<!-- view: architecture_zoom -->"));
+  // Retirado del Inventario por decisión del dueño (2026-11-18): ni la vista ni su marca en Arquitectura.
   assert.equal(inv.control_evidence, undefined);
   assert.equal(text.includes("<!-- view: control_evidence -->"), false);
 });

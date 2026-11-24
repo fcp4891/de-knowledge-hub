@@ -36,7 +36,16 @@ function Kicker({ title, detail }: { title: string; detail?: string }) {
   );
 }
 
-function DataCirculation({ data }: { data: RequirementToDataProps["data"] }) {
+/** Insignia «Zoom» sobre la caja que amplía un zoom de arquitectura (ADR-030, enmienda 12). */
+function ZoomBadge({ label }: { label?: string }) {
+  return label ? <span className="zoom-badge">{label}</span> : null;
+}
+
+type GovernanceItem = RequirementToDataProps["governance"]["items"][number] & { badge?: string };
+type DataStage = RequirementToDataProps["data"]["stages"][number] & { badge?: string };
+
+/** Franja «Datos» de «Del requisito al dato»; el zoom de arquitectura dibuja con ella su recorte de la madre. */
+export function DataCirculation({ data }: { data: Omit<RequirementToDataProps["data"], "stages"> & { stages: DataStage[] } }) {
   return (
     <div className="control-evidence-flow">
       <Kicker title={data.kicker.title} detail={data.kicker.detail} />
@@ -45,6 +54,7 @@ function DataCirculation({ data }: { data: RequirementToDataProps["data"] }) {
           {data.stages.map((stage, index) => (
             <li key={stage.title}>
               <article className={`${stage.tone === "end" ? "is-end" : "is-layer"}${stage.highlight ? " is-highlight" : ""}`}>
+                <ZoomBadge label={stage.badge} />
                 <strong>{stage.title}</strong>
                 {stage.detail ? <span>{stage.detail}</span> : null}
                 {stage.pill ? <em className={stage.tone === "end" ? "is-end" : "is-layer"}>{stage.pill}</em> : null}
@@ -63,39 +73,49 @@ function DataCirculation({ data }: { data: RequirementToDataProps["data"] }) {
   );
 }
 
+/** Franja «Gobierno» de «Del requisito al dato»; sin `legend`, el zoom de arquitectura dibuja solo las cajas. */
+export function GovernanceLane({ kicker, items, legend }: { kicker: RequirementToDataProps["governance"]["kicker"]; items: GovernanceItem[]; legend?: string[] }) {
+  return (
+    <div className="control-evidence-flow">
+      <Kicker title={kicker.title} detail={kicker.detail} />
+      <div className="requirement-gov-wrap">
+        <ol className="requirement-gov">
+          {items.flatMap((item, index) => [
+            ...(index > 0
+              ? [
+                  <li key={`${item.title}-arrow`} className="requirement-gov-arrow">
+                    <Arrow />
+                  </li>,
+                ]
+              : []),
+            <li key={item.title}>
+              <article className={item.highlight ? "is-highlight" : undefined}>
+                <ZoomBadge label={item.badge} />
+                <strong>{item.title}</strong>
+                {item.detail ? <span>{item.detail}</span> : null}
+              </article>
+            </li>,
+          ])}
+        </ol>
+        {legend ? (
+          <p className="requirement-legend">
+            {legend.map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </p>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
 export function RequirementToData({ title, lead, governance, data }: RequirementToDataProps) {
   return (
     <section className="ficha-block control-evidence requirement-to-data" aria-label={title}>
       <h3>{title}</h3>
       <p className="control-evidence-lead">{lead}</p>
       <div className="control-evidence-scroll">
-        <div className="control-evidence-flow">
-          <Kicker title={governance.kicker.title} detail={governance.kicker.detail} />
-          <div className="requirement-gov-wrap">
-            <ol className="requirement-gov">
-              {governance.items.flatMap((item, index) => [
-                ...(index > 0
-                  ? [
-                      <li key={`${item.title}-arrow`} className="requirement-gov-arrow">
-                        <Arrow />
-                      </li>,
-                    ]
-                  : []),
-                <li key={item.title}>
-                  <article className={item.highlight ? "is-highlight" : undefined}>
-                    <strong>{item.title}</strong>
-                    {item.detail ? <span>{item.detail}</span> : null}
-                  </article>
-                </li>,
-              ])}
-            </ol>
-            <p className="requirement-legend">
-              {governance.legend.map((item) => (
-                <span key={item}>{item}</span>
-              ))}
-            </p>
-          </div>
-        </div>
+        <GovernanceLane kicker={governance.kicker} items={governance.items} legend={governance.legend} />
         <DataCirculation data={data} />
       </div>
     </section>

@@ -20,6 +20,8 @@ MARKED = (   # van donde está la marca
     "practice_pairs",
     # enmienda 9 (processing-activities-inventory)
     "build_cards", "law_ladder", "register_fields", "activity_explorer", "case_compare", "cycle_lanes",
+    # enmienda 12 (Inventario y pii-identification)
+    "architecture_zoom",
 )
 # Enmienda 5: varias instancias por ficha; la marca lleva el id («<!-- view: note catalogo -->» -> views.notes.catalogo).
 KEYED = {"note": "notes", "chips": "chips"}
@@ -114,6 +116,39 @@ def check(views: dict[str, Any], body: str, cited_urls: list[str], anchors: set[
     if anchors is not None:
         errors += [f"[views] el ancla '{url}' no existe en la ficha" for url in links
                    if url.startswith("#") and url[1:] not in anchors]
+    return errors
+
+
+
+def lane_titles(view: dict[str, Any], lane: str) -> list[str]:
+    """Títulos de las cajas de una franja de «Del requisito al dato»: gobierno (items) o datos (stages)."""
+    boxes = view.get("governance", {}).get("items", []) if lane == "governance" else view.get("data", {}).get("stages", [])
+    return [box["title"] for box in boxes]
+
+
+def check_zoom(views: dict[str, Any], source_views: dict[str, Any] | None) -> list[str]:
+    """Enmienda 12: la pieza del zoom existe en la ficha de origen, en su orden, y el registro cubre cada campo una vez."""
+    zoom = views.get("architecture_zoom")
+    if zoom is None:
+        return []
+    fragment = zoom["fragment"]
+    origin = (source_views or {}).get("requirement_to_data")
+    if origin is None:
+        return [f"[views.architecture_zoom] '{fragment['concept']}' no tiene requirement_to_data"]
+    titles = lane_titles(origin, fragment["lane"])
+    errors = [f"[views.architecture_zoom] '{item}' no está en la franja {fragment['lane']} de '{fragment['concept']}'"
+              for item in fragment["items"] if item not in titles]
+    if not errors and [t for t in titles if t in fragment["items"]] != fragment["items"]:
+        errors.append("[views.architecture_zoom] fragment.items no sigue el orden de la ficha de origen")
+    errors += [f"[views.architecture_zoom] highlight '{item}' no está en fragment.items"
+               for item in fragment["highlight"] if item not in fragment["items"]]
+    register = zoom.get("register")
+    if register is not None:
+        declared = [field["id"] for field in views.get("register_fields", {}).get("fields", [])]
+        used = [register["scope"]["field"]] + [field for group in register["groups"] for field in group["fields"]]
+        errors += [f"[views.architecture_zoom] campo '{field}' repetido" for field in sorted(set(used)) if used.count(field) > 1]
+        errors += [f"[views.architecture_zoom] campo '{field}' no está en register_fields" for field in used if field not in declared]
+        errors += [f"[views.architecture_zoom] falta el campo '{field}' de register_fields" for field in declared if field not in used]
     return errors
 
 

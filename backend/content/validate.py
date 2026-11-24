@@ -520,6 +520,10 @@ def check_page_sections(content_dir: Path, docs: list[Document], report: Report)
             fichas = {d.data["slug"] for d in docs if d.data["type"] in page_sections.PAGE_TYPES}
             errors += [f"[views] enlace a una ficha inexistente: '{target}'"
                        for target in sorted(set(page_views.internal_targets(doc.data["views"]))) if target not in fichas]
+            zoom = doc.data["views"].get("architecture_zoom")   # ADR-030, enmienda 12
+            if zoom is not None:
+                origin = next((d for d in docs if d.data["slug"] == zoom["fragment"]["concept"]), None)
+                errors += page_views.check_zoom(doc.data["views"], origin.data.get("views") if origin else None)
         if doc.data["type"] == "architecture":
             errors += architecture_views(body)
         for error in errors:

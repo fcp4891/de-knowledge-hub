@@ -782,6 +782,83 @@ export interface components {
                     }[];
                 }[];
             };
+            /** @description ArchitectureZoom (§9 · zoom sobre «Del requisito al dato» de otra ficha; ADR-030, enmienda 12). */
+            architecture_zoom?: {
+                kicker: string;
+                badge: string;
+                title: string;
+                lead: string;
+                back: {
+                    label: string;
+                    href: string;
+                };
+                fragment: {
+                    concept: string;
+                    /** @enum {string} */
+                    lane: "governance" | "data";
+                    items: string[];
+                    highlight: string[];
+                };
+                register?: {
+                    title: string;
+                    tag: string;
+                    bus: string;
+                    writers: {
+                        label: string;
+                        text: string;
+                    };
+                    scope: {
+                        field: string;
+                        text: string;
+                    };
+                    groups: {
+                        title: string;
+                        fields: string[];
+                    }[];
+                    uses: {
+                        /** @enum {string} */
+                        icon: "doc" | "lock" | "scale" | "checklist";
+                        title: string;
+                        code: string;
+                        text: string;
+                        result?: {
+                            /** @enum {string} */
+                            tone: "open" | "lock" | "block" | "alert" | "info" | "pass";
+                            text: string;
+                        };
+                    }[];
+                };
+                decision?: {
+                    note: string;
+                    phases: {
+                        title: string;
+                        /** @enum {string} */
+                        layout: "flow" | "fork";
+                        cards: {
+                            number: string;
+                            title: string;
+                            items?: string[];
+                            code?: string;
+                            gate?: boolean;
+                            evidence?: {
+                                /** @enum {string} */
+                                icon: "hash" | "cloud";
+                                text: string;
+                            }[];
+                            chip?: {
+                                /** @enum {string} */
+                                tone: "open" | "lock" | "block" | "alert" | "info" | "pass";
+                                text: string;
+                            };
+                            outputs?: {
+                                /** @enum {string} */
+                                tone: "open" | "lock" | "block" | "alert" | "info" | "pass";
+                                text: string;
+                            }[];
+                        }[];
+                    }[];
+                };
+            } & (unknown | unknown);
             /** @description RequirementToData (§9 · Del requisito al dato). */
             requirement_to_data?: {
                 title: string;
