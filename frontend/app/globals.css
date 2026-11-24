@@ -16,12 +16,23 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     color-scheme: dark;
     --core: #2A2E28;
     --modern: #1C2C38;
     --emerging: #3A301C;
   }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --core: #2A2E28;
+  --modern: #1C2C38;
+  --emerging: #3A301C;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
 }
 
 * {
@@ -143,6 +154,44 @@ a:hover {
   background: var(--surface);
   color: var(--ink);
   cursor: pointer;
+}
+
+.side-nav-tools {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 0 0 auto;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-min);
+  min-width: var(--touch-min);
+  min-height: var(--touch-min);
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.theme-toggle svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle {
+    transition: none;
+  }
 }
 
 .side-menu-toggle {
@@ -312,6 +361,10 @@ a:hover {
     padding-left: var(--space-2);
     padding-right: var(--space-2);
     justify-items: center;
+  }
+
+  html[data-nav="collapsed"] .side-nav-top {
+    flex-direction: column;
   }
 
   html[data-nav="collapsed"] .side-brand svg {

@@ -15,6 +15,7 @@ Solo Carril B edita este archivo. El resumen del proyecto está en `docs/STATUS.
 - Los agentes de Cursor, incluidos Background Agents, trabajan solo en el worktree DES_conocimiento-ui o en DES_conocimiento-review y en ramas b/*. Nunca escriben en content/, nunca abren DES_conocimiento-carril-a ni la raíz DES_conocimiento y nunca hacen push a ramas a/*.
 
 ## Actual
+- **Tarea activa:** `a/selector-tema` (pedido del dueño, desde `main`). Selector claro/oscuro en el encabezado. Solo frontend: comportamiento y estilo. No se tocó contenido, esquemas ni aprobaciones. PR en borrador, sin merge y sin ZIP.
 - **Tarea activa:** `b/ui-arrows-table`. En las celdas, el grupo «término › término» no se parte y la columna cabe ese grupo: la flecha de «Llave seudónima → tablas…» queda en el mismo renglón, visible, y el resto de la frase sigue abajo.
 - **Tarea activa:** revisión del lote DSR. Informe en `docs/reviews/dsr.md`. No se editó `content/` ni `frontend/`.
 - **Siguiente:** Esperar la aprobación de Felipe. Propuestas bajas: el cobro del art. 10, el plazo de bloqueo en la rectificación, la respuesta de acceso marcada completa, el feriado en sábado y el flag del art. 8 ter.
