@@ -115,7 +115,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #12141A;
     --surface: #1C1F27;
     --surface-muted: #262A33;

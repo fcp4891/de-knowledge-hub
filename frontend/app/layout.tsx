@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 
 import { SideNav } from "@/components/SideNav";
 import { listDomains, listStudyStates } from "@/lib/api/client";
+import { THEME_BOOT_SCRIPT } from "@/lib/theme";
 
 import "../styles/tokens.css";
 import "../styles/scope.css";
@@ -59,7 +60,10 @@ export default async function RootLayout({
         : (domains.detail ?? "No se pudo contactar la API.");
 
   return (
-    <html lang="es" className={`${plexSans.variable} ${sourceSerif.variable} ${jetbrainsMono.variable}`}>
+    <html lang="es" className={`${plexSans.variable} ${sourceSerif.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
+      </head>
       <body>
         <script
           dangerouslySetInnerHTML={{

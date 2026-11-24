@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import { SearchDialog } from "@/components/SearchDialog";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { listStoredStudy, subscribePersonal } from "@/lib/personalStore";
 
 const IS_STATIC = process.env.NEXT_PUBLIC_API_MODE === "static";
@@ -239,6 +240,7 @@ export function SideNav({ reviewCount, warning }: { reviewCount: number | null; 
             Data Engineering
           </span>
         </Link>
+        <ThemeToggle />
         <button
           type="button"
           className="side-menu-toggle"
