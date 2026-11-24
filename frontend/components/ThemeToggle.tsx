@@ -23,9 +23,7 @@ function applyStored(stored: ThemeChoice | null): ThemeChoice {
   } else {
     delete root.dataset.theme;
   }
-  const resolved = resolveTheme(stored, systemIsDark());
-  root.style.colorScheme = resolved;
-  return resolved;
+  return resolveTheme(stored, systemIsDark());
 }
 
 /** Un botón, dos estados. Sin preferencia guardada, el icono sigue al sistema. */

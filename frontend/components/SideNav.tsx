@@ -240,18 +240,16 @@ export function SideNav({ reviewCount, warning }: { reviewCount: number | null; 
             Data Engineering
           </span>
         </Link>
-        <div className="side-nav-tools">
-          <ThemeToggle />
-          <button
-            type="button"
-            className="side-menu-toggle"
-            aria-expanded={menuOpen}
-            aria-controls={MENU_ID}
-            onClick={() => setMenuOpen((open) => !open)}
-          >
-            {menuOpen ? "Cerrar" : "Menú"}
-          </button>
-        </div>
+        <ThemeToggle />
+        <button
+          type="button"
+          className="side-menu-toggle"
+          aria-expanded={menuOpen}
+          aria-controls={MENU_ID}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          {menuOpen ? "Cerrar" : "Menú"}
+        </button>
       </div>
       <div id={MENU_ID} className="side-nav-body" data-open={menuOpen ? "true" : "false"}>
         <button
