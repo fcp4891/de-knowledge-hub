@@ -1382,7 +1382,7 @@ La Ley 21.719 reescribe la Ley 19.628, y sus modificaciones rigen desde el 15 de
 
 | Principio | Pregunta del ingeniero | Control orientativo |
 |---|---|---|
-| Licitud y lealtad | ¿Este tratamiento tiene una base validada para esta finalidad? | Cada actividad del catálogo con su base validada |
+| Licitud y lealtad | ¿Este tratamiento tiene una base comprobada para esta finalidad? | Cada actividad del catálogo con su base comprobada |
 | Finalidad | ¿Algún consumidor usa los datos para otro propósito? | Metadatos de uso, permisos y contratos de consumo |
 | Proporcionalidad | ¿Capturamos más campos de los necesarios? | Lista de columnas permitidas por producto y capa |
 | Calidad | ¿Los datos son exactos y están actualizados? | Pruebas de exactitud, vigencia y rectificación |
@@ -1765,6 +1765,7 @@ El detalle de cada fuente está en `sources` del frontmatter; la agrupación, en
 - 2026-11-23: en «Cómo funciona», la pastilla «Arquitectura» del paso 02 pasa de «Catálogo de actividades» a «Registro de actividades de tratamiento», el nombre del recuadro del diagrama. Sin cambios de fondo; el estado no cambia.
 - 2026-11-23: con la consulta a BCN de las 16:50, las notas de la cita de la Ley 21.855 en BCN y de `effective-date` en la tarjeta `cl-ley-21719` dicen que la BCN ya incorporó la Ley 21.855 en el texto consolidado de la Ley 21.719 (vigencia 2027-10-15) y que la Ley 19.628 aún no tiene versión nueva. El §2 y la línea de vigencia no cambian. Pendiente de aprobación del dueño; la ficha sigue en `review_required`.
 - 2026-11-23: en «Ocho principios del artículo 3», se corrigió la paráfrasis de la letra g) (transparencia e información) según el literal de la BCN: «de manera precisa, clara, inequívoca y gratuita» califica la accesibilidad permanente de las políticas y prácticas para cualquier interesado. Queda pendiente de aprobación del dueño; la ficha sigue en `review_required`. Además, cambios solo visuales: los principios sin ficha disponible quedan como texto sin enlace ni chip de estado, y «Del requisito al dato» usa la misma distribución que el Inventario.
+- 2026-11-23: por decisión del dueño, en «Los ocho principios del art. 3 como decisiones técnicas», la fila «Licitud y lealtad» pasa de «base validada» a «base comprobada» en la pregunta y en el control orientativo: mismo sentido, sin la palabra «validada». Sin cambios de contenido legal; sigue en `review_required`, sin `owner_approved_at`.
 
 ## Anexo · Catálogo legal por tema
 
