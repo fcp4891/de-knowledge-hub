@@ -33,6 +33,7 @@ import { ApproachBoard } from "@/components/ficha/ApproachBoard";
 import { CentralIdea } from "@/components/ficha/CentralIdea";
 import { CloudCompare } from "@/components/ficha/CloudCompare";
 import { CodeGuide } from "@/components/ficha/CodeGuide";
+import { ArchitectureZoom } from "@/components/ficha/ArchitectureZoom";
 import { ControlEvidence, RequirementToData } from "@/components/ficha/ControlEvidence";
 import { ControlMatrix } from "@/components/ficha/ControlMatrix";
 import { DesignBoard } from "@/components/ficha/DesignBoard";
@@ -60,6 +61,7 @@ import { RegisterFields } from "@/components/ficha/RegisterFields";
 import { WhenToUse } from "@/components/ficha/WhenToUse";
 import {
   approachProps,
+  architectureZoomProps,
   centralIdeaProps,
   cloudCompareProps,
   codeGuideProps,
@@ -202,7 +204,7 @@ function SourceLinks({ sources }: { sources: SourceRef[] }) {
 }
 
 /** ADR-030: el componente de cada marca <!-- view: clave -->, con sus datos del contrato. Sin la vista, no dibuja nada. */
-function markedViews(views: Views | undefined): Record<string, ReactNode> {
+function markedViews(views: Views | undefined, zoomSource?: Views): Record<string, ReactNode> {
   const nodes: Record<string, ReactNode> = {};
   if (!views) {
     return nodes;
@@ -215,6 +217,8 @@ function markedViews(views: Views | undefined): Record<string, ReactNode> {
   if (views.control_matrix) nodes.control_matrix = <ControlMatrix {...controlMatrixProps(views.control_matrix)} />;
   if (views.when_to_use) nodes.when_to_use = <WhenToUse {...whenToUseProps(views.when_to_use)} />;
   if (views.requirement_to_data) nodes.requirement_to_data = <RequirementToData {...requirementToDataProps(views.requirement_to_data)} />;
+  // ADR-030 enmienda 12: el recorte sale de las vistas de fragment.concept (la madre).
+  if (views.architecture_zoom) nodes.architecture_zoom = <ArchitectureZoom {...architectureZoomProps(views.architecture_zoom, zoomSource, views)} />;
   // ADR-030 enmienda 8: los nombres en código se parten en los guiones bajos solo si la ficha lo declara.
   const breakCodes = views.reading?.break_identifiers === true;
   if (views.control_evidence) nodes.control_evidence = <ControlEvidence {...controlEvidenceProps(views.control_evidence)} breakCodes={breakCodes} />;
@@ -260,8 +264,9 @@ function sectionModels(
   conceptRefs: ConceptRefs,
   kind: string,
   views?: Views,
+  zoomSource?: Views,
 ): ReadingSectionModel[] {
-  const viewNodes = markedViews(views);
+  const viewNodes = markedViews(views, zoomSource);
   const architecture = kind === "architecture";
   const styleArrows = views?.reading?.inline_arrows !== false;   // ADR-030 enmienda 7
   const titleOf = (section: Section) => (architecture ? architectureTitle(section.key, section.title) : section.title);
@@ -640,8 +645,10 @@ async function ConceptArticle({ slug }: { slug: string }) {
   const links = fichaLinkStates(conceptRefs, data.unavailable_links, copy);
   // ADR-029/030: con views.section_titles, títulos de la ficha y numeración visible 1 a M.
   const sectionTitles = data.views?.section_titles ?? [];
+  const zoomOrigin = data.views?.architecture_zoom ? await getConcept(data.views.architecture_zoom.fragment.concept) : null;
+  const zoomSource = zoomOrigin?.ok ? zoomOrigin.data.views : undefined;
   const readingSections = [
-    ...withSectionTitles(sectionModels(sections, data.sources, data.legal_basis, data.slug, conceptRefs, data.kind, data.views), sectionTitles),
+    ...withSectionTitles(sectionModels(sections, data.sources, data.legal_basis, data.slug, conceptRefs, data.kind, data.views, zoomSource), sectionTitles),
     ...annexModels(data.annexes ?? [], data.legal_basis, conceptRefs),
   ];
   const refSections = numberedTitles(sectionTitles, visibleNumbers(readingSections));

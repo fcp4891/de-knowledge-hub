@@ -537,3 +537,97 @@ export function richParts(text: string): RichPart[] {
   if (last < text.length) parts.push({ type: "text", value: text.slice(last) });
   return parts;
 }
+
+/** ADR-030 enmienda 12: zoom de arquitectura sobre una pieza de «Del requisito al dato» de otra ficha. */
+export type ZoomTone = "open" | "lock" | "block" | "alert" | "info" | "pass";
+export type ZoomChip = { tone: ZoomTone; text: string };
+export type ZoomBox = { title: string; detail?: string; pill?: string; tone: "end" | "layer"; highlight: boolean; badge?: string };
+
+export type ZoomRegister = {
+  title: string;
+  tag: string;
+  writers: { label: string; text: string };
+  scope: { name: string; text: string };
+  groups: { title: string; fields: string[] }[];
+  bus: string;
+  uses: { icon: "doc" | "lock" | "scale" | "checklist"; title: string; code: string; text: string; result?: ZoomChip }[];
+};
+
+export type ZoomCard = {
+  number: string;
+  title: string;
+  items?: string[];
+  code?: string;
+  gate?: boolean;
+  evidence?: { icon: "hash" | "cloud"; text: string }[];
+  chip?: ZoomChip;
+  outputs?: ZoomChip[];
+};
+
+export type ZoomDecision = { phases: { title: string; layout: "flow" | "fork"; cards: ZoomCard[] }[]; note: string };
+
+export type ArchitectureZoomProps = {
+  kicker: string;
+  back: { label: string; href: string };
+  lane: "governance" | "data";
+  laneKicker?: Label;
+  /** Cajas de la ficha de origen, en su orden; vacío si no se pudo leer (el panel se dibuja igual). */
+  boxes: ZoomBox[];
+  title: string;
+  lead: string;
+  register?: ZoomRegister;
+  decision?: ZoomDecision;
+};
+
+type ZoomView = V["architecture_zoom"];
+
+function zoomBoxes(view: ZoomView, source: Views | undefined): { kicker?: Label; boxes: ZoomBox[] } {
+  const origin = source?.requirement_to_data;
+  if (!origin) {
+    return { boxes: [] };
+  }
+  const { lane, items, highlight } = view.fragment;
+  const all: Omit<ZoomBox, "highlight">[] =
+    lane === "governance"
+      ? origin.governance.items.map((item) => ({ title: item.title, detail: item.detail, tone: "end" as const }))
+      : origin.data.stages.map((stage) => ({ title: stage.title, detail: stage.detail, pill: stage.pill, tone: stage.tone as "end" | "layer" }));
+  const boxes = all.filter((box) => items.includes(box.title)).map((box) => ({ ...box, highlight: highlight.includes(box.title) }));
+  const first = boxes.find((box) => box.highlight);
+  if (first) {
+    first.badge = view.badge;
+  }
+  return { kicker: lane === "governance" ? origin.governance.kicker : origin.data.kicker, boxes };
+}
+
+/** `source`: las vistas de `fragment.concept` (la madre); `register_fields` de la propia ficha da los nombres de los campos. */
+export function architectureZoomProps(view: ZoomView, source: Views | undefined, own: Views): ArchitectureZoomProps {
+  const { kicker: laneKicker, boxes } = zoomBoxes(view, source);
+  const names = new Map((own.register_fields?.fields ?? []).map((field) => [field.id, field.name]));
+  const name = (id: string) => names.get(id) ?? id;
+  const register = view.register
+    ? {
+        title: view.register.title,
+        tag: view.register.tag,
+        writers: view.register.writers,
+        scope: { name: name(view.register.scope.field), text: view.register.scope.text },
+        groups: view.register.groups.map((group) => ({ title: group.title, fields: group.fields.map(name) })),
+        bus: view.register.bus,
+        uses: view.register.uses.map((use) => ({ ...use, result: use.result as ZoomChip | undefined })),
+      }
+    : undefined;
+  const decision = view.decision
+    ? {
+        note: view.decision.note,
+        phases: view.decision.phases.map((phase) => ({
+          title: phase.title,
+          layout: phase.layout,
+          cards: phase.cards.map((card) => ({
+            ...card,
+            chip: card.chip as ZoomChip | undefined,
+            outputs: card.outputs as ZoomChip[] | undefined,
+          })),
+        })),
+      }
+    : undefined;
+  return { kicker: view.kicker, back: view.back, lane: view.fragment.lane, laneKicker, boxes, title: view.title, lead: view.lead, register, decision };
+}

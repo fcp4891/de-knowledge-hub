@@ -179,7 +179,7 @@ def test_articles_cited_by_views() -> None:
 
 
 def test_pii_identification_views_are_complete() -> None:
-    """Las 11 secciones de la maqueta: cada sección presente tiene título visible y toda vista con datos tiene marca."""
+    """Las 11 secciones de la maqueta más «Arquitectura» (§9, ADR-030 enmienda 12): título visible y marca por vista."""
     import yaml
     from pathlib import Path
 
@@ -188,7 +188,7 @@ def test_pii_identification_views_are_complete() -> None:
     data = yaml.safe_load(text.split("---\n", 2)[1])
     body = page_sections.body_of(text)
     present = [n for n, _, _ in page_sections.sections(body) if n != 22]
-    assert present == [1, 2, 3, 4, 5, 10, 11, 14, 16, 18, 20]
+    assert present == [1, 2, 3, 4, 5, 9, 10, 11, 14, 16, 18, 20]
     assert [t["section"] for t in data["views"]["section_titles"]] == present
     # 2026-11-22: la remisión de la vigencia a la madre, aprobada por el dueño (ADR-023).
     assert data["verification_status"] == "verified" and str(data["owner_approved_at"]) == "2026-11-22"

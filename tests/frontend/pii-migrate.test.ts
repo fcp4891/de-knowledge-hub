@@ -48,7 +48,7 @@ test("§7 a 390 px: la tabla de pii (con «Este ejemplo») apila cada celda a to
   const blocks = css("ficha-blocks.css");
   const rule = ".cloud-compare .markdown-table-steps table:has(td.cloud-own) :is(th, td):nth-child(-n + 2) {\n    display: block;\n    position: static;\n    width: 100%;";
   const media = blocks.slice(blocks.indexOf("@media (max-width: 720px) {\n  .cloud-compare"));
-  const container = blocks.slice(blocks.indexOf("@container reading (max-width: 720px) {\n  /* pii §7"));
+  const container = blocks.slice(blocks.indexOf("@container reading (max-width: 720px) {\n  /* pii §8"));
   assert.ok(media.includes(rule) && container.includes(rule));
   assert.match(blocks, /table:has\(td\.cloud-own\) td::before \{\n    display: block;/);
   // Sin desplazamiento a 390 px: el min-width de escritorio (40rem) se anula en los dos bloques móviles.

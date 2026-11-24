@@ -248,3 +248,16 @@ Aprobada por el dueño el 2026-11-17. Es retrocompatible: chile-data-protection 
 - **`views.law_ladder.rows[].interpretation`** (opcional, texto con Markdown en línea): una interpretación que no es paráfrasis de la norma va en una línea propia debajo de «Lo que se espera», separada por una línea punteada. El rótulo visible viene en el propio texto (por ejemplo, `**Interpretación:** …`); el componente no agrega texto.
 - Motivo: la revisión independiente del Inventario (2026-11-18) pidió distinguir la paráfrasis de la ley de la interpretación de la ficha. La columna se rotula «Lo que se espera (paráfrasis)» desde `headers`, sin cambio de contrato.
 - Sin la clave, nada cambia: ninguna otra ficha usa `law_ladder`.
+
+## Enmienda 12 (2026-11-23): zoom de arquitectura sobre la vista general de la madre
+
+Encargo del dueño (2026-11-23), con la referencia visual que aprobó. Es aditiva: ninguna vista existente cambia de forma.
+
+- **Vista nueva `architecture_zoom`** (marcada, `<!-- view: architecture_zoom -->`): amplía una pieza de «Del requisito al dato» de otra ficha.
+  - `fragment`: `concept` (slug de la ficha que tiene `requirement_to_data`), `lane` (`governance` o `data`), `items` (títulos de las cajas que se muestran, en el orden de esa ficha) y `highlight` (las que se resaltan). La pieza se dibuja con los datos de esa ficha, leídos al armar la página; la ficha que hace el zoom no copia sus textos.
+  - `kicker`, `badge`, `back` (`label`, `href`: enlace a la vista general), `title` y `lead`.
+  - Una de dos variantes:
+    - `register` (registro con usos): `title`, `tag`, `writers`, `scope` (`field` + `text`), `groups` (títulos y `fields`, ids de `register_fields`), `bus` y `uses` (`icon`, `title`, `code`, `text` y `result` opcional con `tone`).
+    - `decision` (decisión con rama): `phases` (`title`, `layout` `flow` o `fork`, `cards` con `number`, `title`, `items`, `evidence`, `chip`, `outputs`, `code`, `gate`) y `note`.
+- **Validador:** `fragment.concept` existe y tiene `requirement_to_data`; cada título de `items` está en esa franja, en el mismo orden; `highlight` es parte de `items`. En `register`, `scope.field` y los `fields` de los grupos cubren cada campo de `register_fields` exactamente una vez.
+- Sin la clave, nada cambia. La usan `processing-activities-inventory` (§9, en lugar de su copia de `requirement_to_data`) y `pii-identification` (§9 nueva).

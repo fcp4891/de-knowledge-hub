@@ -1493,47 +1493,82 @@ views:
         ellos.'
       - 'Probar cumplimiento: el registro es evidencia de apoyo para acreditar licitud, finalidad y plazo, no prueba suficiente por sí solo, y
         una conciliación limpia muestra coherencia técnica, no licitud.'
-  requirement_to_data:
-    title: Del requisito al dato
-    lead: 'Arquitectura de referencia ilustrativa: dónde vive el registro de actividades de tratamiento en una plataforma por capas.'
-    governance:
-      kicker:
-        title: Gobierno
-        detail: qué se permite
+  architecture_zoom:
+    kicker: Zoom · Registro de actividades
+    badge: Zoom
+    back:
+      label: ← Volver a la vista general
+      href: /concepts/chile-data-protection/#s9
+    fragment:
+      concept: chile-data-protection
+      lane: governance
       items:
-      - title: Legal y negocio
-        detail: finalidad, base de licitud, plazo
-      - title: Registro de actividades de tratamiento
-        detail: metadatos por actividad
-        highlight: true
-      legend:
-      - el contrato fija los campos permitidos
-      - el plazo define la purga
-      - la finalidad autoriza el consumo
-    data:
-      kicker:
-        title: Datos
-        detail: cómo circulan
-      stages:
-      - title: Ingesta con contrato
-        pill: Minimización
-        tone: end
-      - title: Bronze
-        detail: crudo, solo campos permitidos
-        tone: layer
-      - title: Silver
-        pill: Seudonimización
-        tone: layer
-      - title: Gold
-        detail: agregado por producto
-        tone: layer
-      - title: Consumo por finalidad
-        pill: Finalidad
-        tone: end
-        highlight: true
-      banners:
-      - Retención y supresión en todas las capas, respaldos y reprocesos
-      - 'Puerta de la CI: bloquea lo nuevo sin actividad vigente · Conciliación: alerta lo que ya corre contra el registro'
+      - Legal y negocio
+      - Registro de actividades de tratamiento
+      highlight:
+      - Registro de actividades de tratamiento
+    title: Un registro, varios usos
+    lead: 'El registro de actividades de tratamiento guarda, versionado, cada uso de datos personales: para qué se usan, con qué base, qué datos,
+      quién los recibe y hasta cuándo.'
+    register:
+      title: Registro de actividades
+      tag: versionado
+      writers:
+        label: Escriben
+        text: Negocio y privacidad registran la actividad
+      scope:
+        field: ambito-territorial
+        text: Se declara una vez por registro.
+      groups:
+      - title: Qué datos
+        fields:
+        - tipo-de-datos
+        - categorias-de-bases-de-datos
+        - titulares
+      - title: Por qué
+        fields:
+        - finalidad
+        - fuente
+        - base-de-licitud
+      - title: Hacia dónde
+        fields:
+        - destinatarios
+        - transferencias-internacionales
+        - decisiones-automatizadas
+      - title: Cuánto y quién
+        fields:
+        - plazo-o-condicion-de-supresion
+        - activos-y-consumidores
+        - aprobacion-y-version
+      bus: el código lo consulta
+      uses:
+      - icon: lock
+        title: Puerta de la CI
+        code: verificar_despliegues
+        text: 'revisa tres cosas: un `activity_id` válido, el consumidor declarado en esa actividad y que la actividad esté vigente; no revisa
+          base, plazo ni campos.'
+        result:
+          tone: block
+          text: evalúa lo que se quiere desplegar y bloquea
+      - icon: scale
+        title: Conciliación
+        code: conciliar
+        text: revisa lo que ya corre
+        result:
+          tone: alert
+          text: con hallazgos, sale 1 como alerta
+      - icon: checklist
+        title: Actividades incompletas
+        code: actividades_incompletas
+        text: Base, plazo y los demás contenidos se revisan en `actividades_incompletas`
+      - icon: doc
+        title: Insumo del art. 14 ter
+        code: insumo_14_ter
+        text: solo incluye actividades con aprobación vigente y emite una línea por cada letra que declara **Qué exige la ley** (d, h, i, j, k
+          y l)
+        result:
+          tone: pass
+          text: lo que falta sale como `[sin evaluar]`, nunca se omite
   code_guide:
     lead:
       title: Qué hace.
@@ -1882,7 +1917,7 @@ Es la base de los demás controles. Sin saber qué actividad usa qué datos, con
 
 ## 9. Arquitectura
 
-<!-- view: requirement_to_data -->
+<!-- view: architecture_zoom -->
 
 ## 10. Código
 

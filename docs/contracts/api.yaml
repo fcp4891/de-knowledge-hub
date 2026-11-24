@@ -1349,6 +1349,213 @@ components:
                       additionalProperties: false
                 additionalProperties: false
           additionalProperties: false
+        architecture_zoom:
+          description: ArchitectureZoom (§9 · zoom sobre «Del requisito al dato» de otra ficha; ADR-030, enmienda 12).
+          type: object
+          required:
+          - kicker
+          - badge
+          - back
+          - fragment
+          - title
+          - lead
+          properties:
+            kicker: &id001
+              type: string
+              minLength: 1
+            badge: *id001
+            title: *id001
+            lead: *id001
+            back:
+              type: object
+              required:
+              - label
+              - href
+              properties:
+                label: *id001
+                href: *id001
+              additionalProperties: false
+            fragment:
+              type: object
+              required:
+              - concept
+              - lane
+              - items
+              - highlight
+              properties:
+                concept: *id001
+                lane:
+                  type: string
+                  enum:
+                  - governance
+                  - data
+                items:
+                  type: array
+                  items: *id001
+                  minItems: 1
+                highlight:
+                  type: array
+                  items: *id001
+                  minItems: 1
+              additionalProperties: false
+            register:
+              type: object
+              required:
+              - title
+              - tag
+              - writers
+              - scope
+              - groups
+              - bus
+              - uses
+              properties:
+                title: *id001
+                tag: *id001
+                bus: *id001
+                writers:
+                  type: object
+                  required:
+                  - label
+                  - text
+                  properties:
+                    label: *id001
+                    text: *id001
+                  additionalProperties: false
+                scope:
+                  type: object
+                  required:
+                  - field
+                  - text
+                  properties:
+                    field: *id001
+                    text: *id001
+                  additionalProperties: false
+                groups:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - title
+                    - fields
+                    properties:
+                      title: *id001
+                      fields:
+                        type: array
+                        items: *id001
+                        minItems: 1
+                    additionalProperties: false
+                  minItems: 1
+                uses:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - icon
+                    - title
+                    - code
+                    - text
+                    properties:
+                      icon:
+                        type: string
+                        enum:
+                        - doc
+                        - lock
+                        - scale
+                        - checklist
+                      title: *id001
+                      code: *id001
+                      text: *id001
+                      result: &id002
+                        type: object
+                        required:
+                        - tone
+                        - text
+                        properties:
+                          tone:
+                            type: string
+                            enum:
+                            - open
+                            - lock
+                            - block
+                            - alert
+                            - info
+                            - pass
+                          text: *id001
+                        additionalProperties: false
+                    additionalProperties: false
+                  minItems: 1
+              additionalProperties: false
+            decision:
+              type: object
+              required:
+              - phases
+              - note
+              properties:
+                note: *id001
+                phases:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - title
+                    - layout
+                    - cards
+                    properties:
+                      title: *id001
+                      layout:
+                        type: string
+                        enum:
+                        - flow
+                        - fork
+                      cards:
+                        type: array
+                        items:
+                          type: object
+                          required:
+                          - number
+                          - title
+                          properties:
+                            number: *id001
+                            title: *id001
+                            items:
+                              type: array
+                              items: *id001
+                              minItems: 1
+                            code: *id001
+                            gate:
+                              type: boolean
+                            evidence:
+                              type: array
+                              items:
+                                type: object
+                                required:
+                                - icon
+                                - text
+                                properties:
+                                  icon:
+                                    type: string
+                                    enum:
+                                    - hash
+                                    - cloud
+                                  text: *id001
+                                additionalProperties: false
+                              minItems: 1
+                            chip: *id002
+                            outputs:
+                              type: array
+                              items: *id002
+                              minItems: 1
+                          additionalProperties: false
+                        minItems: 1
+                    additionalProperties: false
+                  minItems: 1
+              additionalProperties: false
+          oneOf:
+          - required:
+            - register
+          - required:
+            - decision
+          additionalProperties: false
         requirement_to_data:
           description: RequirementToData (§9 · Del requisito al dato).
           type: object
